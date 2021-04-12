@@ -4,15 +4,15 @@ using static Main;
 
 public partial class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
 {
-    //private EcsComponentRef<SupportVisionComponent> _supportVisionComponentRef = default; //Programmer 2
+    private EcsComponentRef<SupportVisionComponent> _supportVisionComponentRef = default;
 
+    //Programmer 2
 
     internal SupportVisionSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
     {
         _supportVisionComponentRef = eCSmanager.EntitiesGeneralManager.SupportVisionComponentRef;
     }
 
-    // Programmer 2
     public void Run()
     {
         _supportVisionComponentRef.Unref().Unpack(out SupportVisionTypes supportVisionType, out bool isActive);
