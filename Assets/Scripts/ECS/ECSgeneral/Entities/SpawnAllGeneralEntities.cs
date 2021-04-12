@@ -6,19 +6,19 @@ using static Main;
 
 public sealed class SpawnAllGeneralEntities
 {
-    public void SpawnCells(EntitiesGeneralManager entitiesGeneralManager, ResourcesLoadManager resourcesLoadManager, NameValueManager nameValueManager)
+    public void SpawnCells(EntitiesGeneralManager entitiesGeneralManager, ResourcesLoadManager resourcesLoadManager, StartValuesConfig startValues)
     {
         var cellGO = resourcesLoadManager.CellGO;
-        var whiteCellSR = resourcesLoadManager.WhiteCellSpriteRender;
-        var blackCellSR = resourcesLoadManager.BlackCellSpriteRender;
+        var whiteCellSR = resourcesLoadManager.WhiteCellSprite;
+        var blackCellSR = resourcesLoadManager.BlackCellSprite;
 
-        var cellsGO = new GameObject[nameValueManager.CELL_COUNT_X, nameValueManager.CELL_COUNT_Y];
+        var cellsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
 
 
         // Setting cells on the map
-        for (int x = 0; x < nameValueManager.CELL_COUNT_X; x++)
+        for (int x = 0; x < startValues.CellCountX; x++)
         {
-            for (int y = 0; y < nameValueManager.CELL_COUNT_Y; y++)
+            for (int y = 0; y < startValues.CellCountY; y++)
             {
                 if (y % 2 == 0)
                 {
@@ -52,12 +52,12 @@ public sealed class SpawnAllGeneralEntities
 
 
         //var cellsGO = _cellsGO.Where(c => c != null).ToArray();
-        entitiesGeneralManager.CreateCellArray(nameValueManager.CELL_COUNT_X, nameValueManager.CELL_COUNT_Y);
+        entitiesGeneralManager.CreateCellArray(startValues.CellCountX, startValues.CellCountY);
         GameObject supportParent = new GameObject("Cells");
 
-        for (int x = 0; x < nameValueManager.CELL_COUNT_X; x++)
+        for (int x = 0; x < startValues.CellCountX; x++)
         {
-            for (int y = 0; y < nameValueManager.CELL_COUNT_Y; y++)
+            for (int y = 0; y < startValues.CellCountY; y++)
             {
                 cellsGO[x, y].transform.SetParent(supportParent.transform);
 
@@ -91,7 +91,7 @@ public sealed class SpawnAllGeneralEntities
 
 
                 CellComponent.UnitComponent cellUnitComponent = new CellComponent.UnitComponent
-                    (nameValueManager, Instance.MasterClient, cellsGO[x, y].transform.Find("UnitPawn").gameObject);
+                    (startValues, Instance.MasterClient, cellsGO[x, y].transform.Find("UnitPawn").gameObject);
 
 
                 CellComponent.BuildingComponent cellBuildingComponent = new CellComponent.BuildingComponent
@@ -108,23 +108,23 @@ public sealed class SpawnAllGeneralEntities
             }
         }
 
-        for (int x = 0; x < nameValueManager.CELL_COUNT_X; x++)
+        for (int x = 0; x < startValues.CellCountX; x++)
         {
-            for (int y = 0; y < nameValueManager.CELL_COUNT_Y; y++)
+            for (int y = 0; y < startValues.CellCountY; y++)
             {
                 entitiesGeneralManager.AddRefComponentsToCell(x, y);
             }
         }
     }
 
-    private GameObject CreatGameObject(GameObject go, SpriteRenderer spriteRenderer, int x, int y)
+    private GameObject CreatGameObject(GameObject go, Sprite sprite, int x, int y)
     {
         var mainGO = Instance.gameObject;
 
         var goo = Object.Instantiate(go, mainGO.transform.position + new Vector3(x, y, mainGO.transform.position.z), mainGO.transform.rotation);
 
         var SR = goo.GetComponent<SpriteRenderer>();
-        SR.sprite = spriteRenderer.sprite;
+        SR.sprite = sprite;
 
         return goo;
     }

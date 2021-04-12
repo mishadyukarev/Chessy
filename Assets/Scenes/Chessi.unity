@@ -204,7 +204,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 12.05
+  m_fontSize: 9.7
   m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -647,7 +647,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.8
+  m_fontSize: 9.6
   m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -851,7 +851,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.85
+  m_fontSize: 9.55
   m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -930,11 +930,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d0517f1a7fcff499b5f7cfe3fc523f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _percentTree: 30
-  _percentHill: 16
-  _percentMountain: 6
-  _cellCountX: 15
-  _cellCountY: 12
+  _startValues: {fileID: 11400000, guid: 361db03bd33af3543a0cdb6926e9cb8d, type: 2}
 --- !u!4 &515674466
 Transform:
   m_ObjectHideFlags: 0
@@ -3057,7 +3053,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 11.85
+  m_fontSize: 9.55
   m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 1

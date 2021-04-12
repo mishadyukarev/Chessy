@@ -5,38 +5,38 @@ using System.Linq;
 
 public class CellManager
 {
-    private NameValueManager _nameManager;
+    private StartValuesConfig _startValues;
 
-    public CellManager(NameValueManager nameManager)
+    public CellManager(StartValuesConfig startValues)
     {
-        _nameManager = nameManager;
+        _startValues = startValues;
     }
 
 
     internal int[] CopyXY(int[] inArray)
     {
-        int[] array = new int[_nameManager.XY_FOR_ARRAY];
+        int[] array = new int[_startValues.XYforArray];
         Array.Copy(inArray, array, array.Length);
         return array;
     }
 
     internal void CopyXYinTo(in int[] InXYCell, int[] ToXYCell)
     {
-        ToXYCell[_nameManager.X] = InXYCell[_nameManager.X];
-        ToXYCell[_nameManager.Y] = InXYCell[_nameManager.Y];
+        ToXYCell[_startValues.X] = InXYCell[_startValues.X];
+        ToXYCell[_startValues.Y] = InXYCell[_startValues.Y];
     }
 
 
     internal void CleanXY(int[] xy)
     {
-        xy[_nameManager.X] = default;
-        xy[_nameManager.Y] = default;
+        xy[_startValues.X] = default;
+        xy[_startValues.Y] = default;
     }
 
 
     internal bool CompareXY(in int[] xyLeft, in int[] xyRight)
     {
-        if (xyLeft[_nameManager.X] == xyRight[_nameManager.X] && xyLeft[_nameManager.Y] == xyRight[_nameManager.Y])
+        if (xyLeft[_startValues.X] == xyRight[_startValues.X] && xyLeft[_startValues.Y] == xyRight[_startValues.Y])
         {
             return true;
         }
@@ -50,12 +50,12 @@ public class CellManager
 
         for (int i = 0; i < inList.Count; i++)
         {
-            var array = new int[_nameManager.XY_FOR_ARRAY];
+            var array = new int[_startValues.XYforArray];
 
             var inArray = inList[i];
 
-            array[_nameManager.X] = inArray[_nameManager.X];
-            array[_nameManager.Y] = inArray[_nameManager.Y];
+            array[_startValues.X] = inArray[_startValues.X];
+            array[_startValues.Y] = inArray[_startValues.Y];
 
             toList.Add(array);
         }
@@ -69,12 +69,12 @@ public class CellManager
 
         for (int i = 0; i < inList.Count; i++)
         {
-            var array = new int[_nameManager.XY_FOR_ARRAY];
+            var array = new int[_startValues.XYforArray];
 
             var inArray = inList[i];
 
-            array[_nameManager.X] = inArray[_nameManager.X];
-            array[_nameManager.Y] = inArray[_nameManager.Y];
+            array[_startValues.X] = inArray[_startValues.X];
+            array[_startValues.Y] = inArray[_startValues.Y];
 
             toList.Add(array);
         }

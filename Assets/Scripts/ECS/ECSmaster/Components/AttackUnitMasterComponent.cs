@@ -11,13 +11,13 @@ public struct AttackUnitMasterComponent
     private Player _fromPlayerIN;
 
 
-    public AttackUnitMasterComponent(NameValueManager nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
+    public AttackUnitMasterComponent(StartValuesConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
     {
         _cellManager = cellManager;
         _systemsMasterManager = systemsMasterManager;
 
-        _xyPreviousCellIN = new int[nameValueManager.XY_FOR_ARRAY];
-        _xySelectedCellIN = new int[nameValueManager.XY_FOR_ARRAY];
+        _xyPreviousCellIN = new int[nameValueManager.XYforArray];
+        _xySelectedCellIN = new int[nameValueManager.XYforArray];
         _fromPlayerIN = default;
     }
 
@@ -28,7 +28,7 @@ public struct AttackUnitMasterComponent
         _cellManager.CopyXYinTo(xySelectedCellIN, _xySelectedCellIN);
         _fromPlayerIN = fromPlayerIN;
 
-        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Cell, nameof(AttackUnitMasterSystem));
+        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Else, nameof(AttackUnitMasterSystem));
     }
 
     public void Unpack(out int[] xyPreviousCellIN, out int[] xySelectedCellIN, out Player fromPlayerIN)

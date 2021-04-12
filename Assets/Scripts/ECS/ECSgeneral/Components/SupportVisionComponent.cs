@@ -2,7 +2,7 @@
 
 public struct SupportVisionComponent
 {
-    private NameValueManager _nameValueManager;
+    private StartValuesConfig _nameValueManager;
     private CellManager _cellManager;
     private SystemsGeneralManager _systemsGeneralManager;
 
@@ -16,7 +16,7 @@ public struct SupportVisionComponent
 
 
 
-    public SupportVisionComponent(SystemsGeneralManager systemsGeneralManager, NameValueManager nameValueManager, CellManager cellManager)
+    public SupportVisionComponent(SystemsGeneralManager systemsGeneralManager, StartValuesConfig nameValueManager, CellManager cellManager)
     {
         _isActiveVisionIN = default;
         _supportVisioTypeIN = default;
@@ -26,8 +26,8 @@ public struct SupportVisionComponent
         _nameValueManager = nameValueManager;
         _cellManager = cellManager;
         _systemsGeneralManager = systemsGeneralManager;
-        _xyPreviousCellIN = new int[nameValueManager.XY_FOR_ARRAY];
-        _xySelectedCellIN = new int[nameValueManager.XY_FOR_ARRAY];
+        _xyPreviousCellIN = new int[nameValueManager.XYforArray];
+        _xySelectedCellIN = new int[nameValueManager.XYforArray];
     }
 
 
@@ -116,6 +116,6 @@ public struct SupportVisionComponent
 
     private void InvokeRunSystem()
     {
-        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Cell, nameof(SupportVisionSystem));
+        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(SupportVisionSystem));
     }
 }

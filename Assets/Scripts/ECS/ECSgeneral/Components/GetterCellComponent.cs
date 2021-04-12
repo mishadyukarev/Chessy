@@ -11,10 +11,10 @@ public struct GetterCellComponent
     private SystemsGeneralManager _systemsGeneralManager;
 
 
-    public GetterCellComponent(NameValueManager nameValueManager, SystemsGeneralManager systemsGeneralManager)
+    public GetterCellComponent(StartValuesConfig nameValueManager, SystemsGeneralManager systemsGeneralManager)
     {
         _raycastHit2dIN = default;
-        _xyCurrentCellOUT = new int[nameValueManager.XY_FOR_ARRAY];
+        _xyCurrentCellOUT = new int[nameValueManager.XYforArray];
         _isReceivedOUT = default;
 
 
@@ -35,7 +35,7 @@ public struct GetterCellComponent
     {
         _raycastHit2dIN = raycastHit2D;
 
-        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Cell, nameof(GetterCellSystem));
+        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(GetterCellSystem));
 
         xyCurrentCell = _xyCurrentCellOUT;
         return _isReceivedOUT;

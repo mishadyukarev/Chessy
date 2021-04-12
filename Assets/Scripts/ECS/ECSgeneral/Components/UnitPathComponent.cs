@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public struct UnitPathComponent
 {
-    private NameValueManager _nameValueManager;
+    private StartValuesConfig _nameValueManager;
     private CellManager _cellManager;
     private SystemsGeneralManager _systemsGeneralManager;
 
@@ -17,7 +17,7 @@ public struct UnitPathComponent
 
 
 
-    public UnitPathComponent(SystemsGeneralManager systemsGeneralManager, NameValueManager nameValueManager, CellManager cellManager)
+    public UnitPathComponent(SystemsGeneralManager systemsGeneralManager, StartValuesConfig nameValueManager, CellManager cellManager)
     {
         _nameValueManager = nameValueManager;
         _systemsGeneralManager = systemsGeneralManager;
@@ -25,7 +25,7 @@ public struct UnitPathComponent
 
         _unitPathTypeIN = default;
 
-        _xyStartCellIN = new int[nameValueManager.XY_FOR_ARRAY];
+        _xyStartCellIN = new int[nameValueManager.XYforArray];
         _playerIN = default;
 
         _xyAvailableCellsForShiftOUT = new List<int[]>();
@@ -95,5 +95,5 @@ public struct UnitPathComponent
     }
 
 
-    private void InvokeSystem() => _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Cell, nameof(UnitPathSystem));
+    private void InvokeSystem() => _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(UnitPathSystem));
 }

@@ -6,8 +6,6 @@ public abstract class SystemsManager
     protected EcsWorld _ecsWorld;
 
     protected EcsSystems _updateSystems;
-    protected EcsSystems _cellSystems;
-    protected EcsSystems _economySystems;
     protected EcsSystems _elseSystems;
 
     protected EcsSystems _currentSystemsForInvoke;
@@ -18,28 +16,21 @@ public abstract class SystemsManager
         _ecsWorld = ecsWorld;
 
         _updateSystems = new EcsSystems(ecsWorld);
-        _cellSystems = new EcsSystems(ecsWorld);
-        _economySystems = new EcsSystems(ecsWorld);
         _elseSystems = new EcsSystems(ecsWorld);
     }
 
-    protected virtual void InitAndProcessInjectsSystems()
+    internal void InitAndProcessInjectsSystems()
     {
         _updateSystems.ProcessInjects();
-        _cellSystems.ProcessInjects();
-        _economySystems.ProcessInjects();
         _elseSystems.ProcessInjects();
 
         _updateSystems.Init();
-        _cellSystems.Init();
-        _economySystems.Init();
         _elseSystems.Init();
     }
 
-    public virtual void Destroy()
-    {
-        _updateSystems.Destroy();
-    }
+    internal void RunUpdate() => _updateSystems.Run();
+
+    internal void Destroy() =>_updateSystems.Destroy();
 
 
 

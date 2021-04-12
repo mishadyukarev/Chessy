@@ -10,9 +10,9 @@ public abstract class CellReductionSystem : ReductionSystem
     protected EcsComponentRef<CellComponent.UnitComponent>[,] _cellUnitComponentRef;
     protected EcsComponentRef<CellComponent.BuildingComponent>[,] _cellBuildingComponentRef;
 
-    protected int X => _nameValueManager.X;
-    protected int Y => _nameValueManager.Y;
-    protected int XYforArray => _nameValueManager.XY_FOR_ARRAY;
+    protected int X => _startValues.X;
+    protected int Y => _startValues.Y;
+    protected int XYforArray => _startValues.XYforArray;
 
     protected int Xcount => _cellComponentRef.GetUpperBound(X) + 1;
     protected int Ycount => _cellComponentRef.GetUpperBound(Y) + 1;

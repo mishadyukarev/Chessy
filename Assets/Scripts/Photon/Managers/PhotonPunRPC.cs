@@ -9,8 +9,8 @@ using static Main;
 
 public class PhotonPunRPC : MonoBehaviour
 {
-    private NameValueManager _nameValueManager = default;
     private PhotonView _photonView = default;
+    private StartValuesConfig _startValues;
 
     private EcsComponentRef<SetterUnitMasterComponent> _setterUnitMasterComponentRef = default;
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftUnitMasterComponentRef = default;
@@ -35,22 +35,23 @@ public class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<CellComponent.BuildingComponent>[,] _cellBuildingComponentRef = default;
 
     private ref CellComponent CellComponent(params int[] xy)
-        => ref _cellComponentRef[xy[_nameValueManager.X], xy[_nameValueManager.Y]].Unref();
+        => ref _cellComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
     private ref CellComponent.UnitComponent CellUnitComponent(params int[] xy)
-        => ref _cellUnitComponentRef[xy[_nameValueManager.X], xy[_nameValueManager.Y]].Unref();
+        => ref _cellUnitComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
     private ref CellComponent.EnvironmentComponent CellEnvironmentComponent(params int[] xy)
-        => ref _cellEnvironmentComponentRef[xy[_nameValueManager.X], xy[_nameValueManager.Y]].Unref();
+        => ref _cellEnvironmentComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
     private ref CellComponent.SupportVisionComponent CellSupportVisionComponent(params int[] xy)
-        => ref _cellSupportVisionComponentRef[xy[_nameValueManager.X], xy[_nameValueManager.Y]].Unref();
+        => ref _cellSupportVisionComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
     private ref CellComponent.BuildingComponent  CellBuildingComponent(params int[] xy)
-        => ref _cellBuildingComponentRef[xy[_nameValueManager.X], xy[_nameValueManager.Y]].Unref();
+        => ref _cellBuildingComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
 
 
 
     public void Constructor(SupportManager supportManager, PhotonManager photonManager)
     {
-        _nameValueManager = supportManager.NameValueManager;
+        _startValues = supportManager.StartValues;
         _photonView = photonManager.PhotonView;
+        _startValues = supportManager.StartValues;
 
         PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
     }
@@ -202,7 +203,7 @@ public class PhotonPunRPC : MonoBehaviour
         {
             CellUnitComponent(xyCell).IsProtected = true;
             CellUnitComponent(xyCell).IsRelaxed = false;
-            CellUnitComponent(xyCell).TakeAmountSteps(_nameValueManager.TAKE_AMOUNT_STEPS);
+            CellUnitComponent(xyCell).TakeAmountSteps(_startValues.TakeAmountSteps);
         }
 
         RefreshAll();
@@ -222,7 +223,7 @@ public class PhotonPunRPC : MonoBehaviour
         {
             CellUnitComponent(xyCell).IsRelaxed = true;
             CellUnitComponent(xyCell).IsProtected = false;
-            CellUnitComponent(xyCell).TakeAmountSteps(_nameValueManager.TAKE_AMOUNT_STEPS);
+            CellUnitComponent(xyCell).TakeAmountSteps(_startValues.TakeAmountSteps);
         }
 
         RefreshAll();
@@ -255,18 +256,18 @@ public class PhotonPunRPC : MonoBehaviour
     {
         if (info.Sender.IsMasterClient)
         {
-            if(_economyMasterComponentRef.Unref().GoldMaster >= _nameValueManager.GOLD_FOR_BUYING_PAWN)
+            if(_economyMasterComponentRef.Unref().GoldMaster >= _startValues.GoldForBuyingPawn)
             {
-                _economyMasterComponentRef.Unref().TakeGoldMaster(_nameValueManager.GOLD_FOR_BUYING_PAWN);
-                _economyUnitsMasterComponentRef.Unref().AddAmountUnitPawnMaster(_nameValueManager.AMOUNT_FOR_TAKE_UNIT);
+                _economyMasterComponentRef.Unref().TakeGoldMaster(_startValues.GoldForBuyingPawn);
+                _economyUnitsMasterComponentRef.Unref().AddAmountUnitPawnMaster(_startValues.AmountForTakeUnit);
             }
         }
         else
         {
-            if(_economyMasterComponentRef.Unref().GoldOther >= _nameValueManager.GOLD_FOR_BUYING_PAWN)
+            if(_economyMasterComponentRef.Unref().GoldOther >= _startValues.GoldForBuyingPawn)
             {
-                _economyMasterComponentRef.Unref().TakeGoldOther(_nameValueManager.GOLD_FOR_BUYING_PAWN);
-                _economyUnitsMasterComponentRef.Unref().AddAmountUnitPawnOther(_nameValueManager.AMOUNT_FOR_TAKE_UNIT);
+                _economyMasterComponentRef.Unref().TakeGoldOther(_startValues.GoldForBuyingPawn);
+                _economyUnitsMasterComponentRef.Unref().AddAmountUnitPawnOther(_startValues.AmountForTakeUnit);
             }
         }
 
@@ -284,11 +285,11 @@ public class PhotonPunRPC : MonoBehaviour
     private void RefreshAllMaster()
     {
         int countSync = 11;
-        object[] objects = new object[_nameValueManager.CELL_COUNT_X * _nameValueManager.CELL_COUNT_Y * countSync];
+        object[] objects = new object[_startValues.CellCountX * _startValues.CellCountY * countSync];
         int i = 0;
-        for (int x = 0; x < _nameValueManager.CELL_COUNT_X; x++)
+        for (int x = 0; x < _startValues.CellCountX; x++)
         {
-            for (int y = 0; y < _nameValueManager.CELL_COUNT_Y; y++)
+            for (int y = 0; y < _startValues.CellCountY; y++)
             {
                 objects[i++] = CellUnitComponent(x, y).UnitType;
                 objects[i++] = CellUnitComponent(x, y).ActorNumber;
@@ -329,9 +330,9 @@ public class PhotonPunRPC : MonoBehaviour
     private void RefreshCellsGeneral(object[] objects)
     {
         int i = 0;
-        for (int x = 0; x < _nameValueManager.CELL_COUNT_X; x++)
+        for (int x = 0; x < _startValues.CellCountX; x++)
         {
-            for (int y = 0; y < _nameValueManager.CELL_COUNT_Y; y++)
+            for (int y = 0; y < _startValues.CellCountY; y++)
             {
                 UnitTypes unitType = (UnitTypes)objects[i++];
                 int actorNumber = (int)objects[i++];
