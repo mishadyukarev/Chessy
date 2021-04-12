@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Background
+  - Cell
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Places
+    uniqueID: 1022102661
+    locked: 0
+  - name: Cells
+    uniqueID: 3505101863
+    locked: 0
+  - name: Environment
+    uniqueID: 156443979
+    locked: 0
+  - name: Buildings
+    uniqueID: 2015217643
+    locked: 0
+  - name: Units
+    uniqueID: 3112104483
+    locked: 0
+  - name: Effects
+    uniqueID: 2994770637
+    locked: 0
+  - name: Selectors
+    uniqueID: 3935270689
+    locked: 0
