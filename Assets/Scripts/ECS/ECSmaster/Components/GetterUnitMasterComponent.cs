@@ -28,7 +28,7 @@ internal struct GetterUnitMasterComponent
         _unitTypeIN = unitTypeIN;
         _playerIN = playerIN;
 
-        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Inventor, nameof(GetterUnitMasterSystem));
+        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Else, nameof(GetterUnitMasterSystem));
 
         return _isGettedOUT;
     }

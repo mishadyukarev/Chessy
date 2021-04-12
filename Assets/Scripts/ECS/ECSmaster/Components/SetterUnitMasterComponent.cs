@@ -9,14 +9,14 @@ public struct SetterUnitMasterComponent
 
     private bool _isSettedOUT;
 
-    private NameValueManager _nameValueManager;
+    private StartValuesConfig _nameValueManager;
     private CellManager _cellManager;
     private SystemsMasterManager _systemsMasterManager;
 
 
-    public SetterUnitMasterComponent(NameValueManager nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
+    public SetterUnitMasterComponent(StartValuesConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
     {
-        _xyCellIN = new int[nameValueManager.XY_FOR_ARRAY];
+        _xyCellIN = new int[nameValueManager.XYforArray];
         _unitTypeIN = default;
         _playerIN = default;
 
@@ -34,7 +34,7 @@ public struct SetterUnitMasterComponent
         _unitTypeIN = unitType;
         _playerIN = player;
 
-        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Cell, nameof(SetterUnitMasterSystem));
+        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Else, nameof(SetterUnitMasterSystem));
 
         return _isSettedOUT;
     }

@@ -18,18 +18,6 @@ public sealed class Main : MonoBehaviour
     #endregion
 
 
-    #region StartVariables
-
-    [Range(0, 100)] [SerializeField] private int _percentTree = 30;
-    [Range(0, 100)] [SerializeField] private int _percentHill = 10;
-    [Range(0, 100)] [SerializeField] private int _percentMountain = 2;
-
-    [SerializeField] private int _cellCountX = 15;
-    [SerializeField] private int _cellCountY = 12;
-
-    #endregion
-
-
     #region Properties
 
     static public Main Instance => _instance;
@@ -44,12 +32,12 @@ public sealed class Main : MonoBehaviour
 
     private void Start()
     {
-        _instance = this;//Master
+        _instance = this;
 
         _camera = Camera.main;
         if (!IsMasterClient) _camera.transform.Rotate(0, 0, 180);
 
-        _supportManager = new SupportManager(_percentTree, _percentHill, _percentMountain, _cellCountX, _cellCountY);
+        _supportManager = new SupportManager();
 
         _supportManager.BuilderManager.CreateGameObject(out _parentScriptsGO, "Scripts");
         gameObject.transform.SetParent(_parentScriptsGO.transform);

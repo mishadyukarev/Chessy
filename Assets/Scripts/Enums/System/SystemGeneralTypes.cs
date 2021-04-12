@@ -8,8 +8,5 @@ using System.Threading.Tasks;
 internal enum SystemGeneralTypes
 {
     Updates,
-    Cell,
-    Inventor,
-    Economy,
     Else,
 }

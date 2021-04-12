@@ -1,10 +1,10 @@
 ﻿
 public abstract class ReductionSystem
 {
-    protected NameValueManager _nameValueManager = default;
+    protected StartValuesConfig _startValues = default;
 
     protected ReductionSystem(SupportManager supportManager)
     {
-        _nameValueManager = supportManager.NameValueManager;
+        _startValues = supportManager.StartValues;
     }
 }

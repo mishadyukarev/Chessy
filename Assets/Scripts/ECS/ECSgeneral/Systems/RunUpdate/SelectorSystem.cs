@@ -10,6 +10,8 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
 
     private PhotonPunRPC _photonPunRPC = default;
     private SoundManager _soundManager = default;
+    private NameManager _nameManager;
+    private StartValuesConfig _startValues;
 
     #endregion
 
@@ -52,6 +54,8 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
     {
         _photonPunRPC = photonManager.PhotonPunRPC;
         _soundManager = supportManager.SoundManager;
+        _nameManager = supportManager.NameManager;
+        _startValues = supportManager.StartValues;
 
         _rayComponentRef = eCSmanager.EntitiesGeneralManager.RayComponentRef;
         _inputComponentRef = eCSmanager.EntitiesGeneralManager.InputComponentRef;
@@ -78,7 +82,7 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
     {
         if (_rayComponentRef.Unref().TryGetRaycastHit2D(out RaycastHit2D raycastHit2D))
         {
-            if (raycastHit2D.collider.gameObject.tag == _nameValueManager.TAG_CELL)
+            if (raycastHit2D.collider.gameObject.tag == _nameManager.TAG_CELL)
             {
                 if (_getterCellComponentRef.Unref().TryGetXYCurrentCell(raycastHit2D, out var xyCurrentCell))
                 {
@@ -136,7 +140,7 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
                                 {
                                     if (CellUnitComponent(_xySelectedCell).IsMine)
                                     {
-                                        if (CellUnitComponent(_xySelectedCell).AmountSteps >= _nameValueManager.TAKE_AMOUNT_STEPS)
+                                        if (CellUnitComponent(_xySelectedCell).AmountSteps >= _startValues.TakeAmountSteps)
                                         {
                                             _unitPathComponentRef.Unref().GetAvailableCellsForShift(_xySelectedCell, Instance.LocalPlayer, out _xyAvailableCellsForShift);
                                             _unitPathComponentRef.Unref().GetAvailableCellsForAttack(_xySelectedCell, Instance.LocalPlayer,  out _xyAvailableCellsForAttack);
@@ -257,7 +261,7 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
                 }
             }
 
-            else if (raycastHit2D.collider.gameObject.tag == _nameValueManager.TAG_BACKGROUND)
+            else if (raycastHit2D.collider.gameObject.tag == _nameManager.TAG_BACKGROUND)
             {
                 if (_inputComponentRef.Unref().IsClick)
                 {

@@ -11,12 +11,12 @@ internal struct BuilderCellMasterComponent
 
     private bool _isSettedOUT;
 
-    internal BuilderCellMasterComponent(NameValueManager nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
+    internal BuilderCellMasterComponent(StartValuesConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
     {
         _cellManager = cellManager;
         _systemsMasterManager = systemsMasterManager;
 
-        _xyCellIN = new int[nameValueManager.XY_FOR_ARRAY];
+        _xyCellIN = new int[nameValueManager.XYforArray];
         _buildingTypeIN = default;
         _playerIN = default;
 
@@ -30,7 +30,7 @@ internal struct BuilderCellMasterComponent
         _buildingTypeIN = buildingTypeIN;
         _playerIN = playerIN;
 
-        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Cell, nameof(BuilderCellMasterSystem));
+        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Else, nameof(BuilderCellMasterSystem));
 
         return _isSettedOUT;
     }

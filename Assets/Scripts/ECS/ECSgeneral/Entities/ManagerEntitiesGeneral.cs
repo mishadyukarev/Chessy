@@ -2,7 +2,7 @@
 
 public sealed class EntitiesGeneralManager : EntitiesManager
 {
-    private NameValueManager _nameValueManager;
+    private StartValuesConfig _startValues;
     private SpawnAllGeneralEntities _spawnAllForEntities;
 
     private EcsEntity[,] _cellsEntity;
@@ -24,7 +24,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
 
     internal EcsComponentRef<S> GetCellComponents<S>(params int[] xy) where S : struct 
-        => _cellsEntity[xy[_nameValueManager.X], xy[_nameValueManager.Y]].Ref<S>();
+        => _cellsEntity[xy[_startValues.X], xy[_startValues.Y]].Ref<S>();
 
     internal EcsComponentRef<CellComponent>[,] CellComponentRef => _cellComponentRef;
     internal EcsComponentRef<CellComponent.EnvironmentComponent>[,] CellEnvironmentComponentRef => _cellEnvironmentComponentRef;
@@ -56,7 +56,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     public void CreateEntities(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager)
     {
-        _nameValueManager = supportManager.NameValueManager;
+        _startValues = supportManager.StartValues;
         var systemsGeneralManager = eCSmanager.SystemsGeneralManager;
         var cellManager = supportManager.CellManager;
         var resourcesLoadManager = supportManager.ResourcesLoadManager;
@@ -72,19 +72,19 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             .Replace(new SelectedUnitComponent());
 
         _unitPathEntity = _ecsWorld.NewEntity()
-            .Replace(new UnitPathComponent(systemsGeneralManager, _nameValueManager, cellManager));
+            .Replace(new UnitPathComponent(systemsGeneralManager, _startValues, cellManager));
 
         _supportVisionEntity = _ecsWorld.NewEntity()
-            .Replace(new SupportVisionComponent(systemsGeneralManager, _nameValueManager, cellManager));
+            .Replace(new SupportVisionComponent(systemsGeneralManager, _startValues, cellManager));
 
         _rayEntity = _ecsWorld.NewEntity()
             .Replace(new RayComponent(systemsGeneralManager));
 
         _getterCellEntity = _ecsWorld.NewEntity()
-            .Replace(new GetterCellComponent(_nameValueManager, systemsGeneralManager));
+            .Replace(new GetterCellComponent(_startValues, systemsGeneralManager));
 
         _selectorEntity = _ecsWorld.NewEntity()
-            .Replace(new SelectorComponent(supportManager.NameValueManager));
+            .Replace(new SelectorComponent(supportManager.StartValues));
 
         _economyEntity = _ecsWorld.NewEntity()
             .Replace(new EconomyComponent())
@@ -93,7 +93,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
 
         _spawnAllForEntities = new SpawnAllGeneralEntities();
-        _spawnAllForEntities.SpawnCells(this, resourcesLoadManager, _nameValueManager);
+        _spawnAllForEntities.SpawnCells(this, resourcesLoadManager, supportManager.StartValues);
     }
 
 

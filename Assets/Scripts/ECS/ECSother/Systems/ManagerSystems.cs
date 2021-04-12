@@ -5,32 +5,19 @@ public sealed class SystemsOtherManager : SystemsManager
     public SystemsOtherManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
 
-    public void CreateInitProccessInjectsSystems(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager)
+    internal void CreateSystems(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager) { }
+
+
+    internal bool InvokeRunSystem(SystemOtherTypes systemOtherType, string namedSystem)
     {
-        base.InitAndProcessInjectsSystems();
-    }
-
-    public void RunUpdate()
-    {
-
-    }
-
-    public override void Destroy()
-    {
-        base.Destroy();
-    }
-
-
-    public bool InvokeRunSystem(SystemMasterTypes systemType, string namedSystem)
-    {
-        switch (systemType)
+        switch (systemOtherType)
         {
-            case SystemMasterTypes.UpdatesOther:
+            case SystemOtherTypes.Update:
                 _currentSystemsForInvoke = _updateSystems;
                 break;
 
-            case SystemMasterTypes.CellOther:
-                _currentSystemsForInvoke = _cellSystems;
+            case SystemOtherTypes.Else:
+                _currentSystemsForInvoke = _elseSystems;
                 break;
 
             default:

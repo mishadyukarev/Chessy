@@ -35,30 +35,30 @@ public class EntitiesMasterManager : EntitiesManager
     public void CreateEntities(ECSmanager eCSmanager, SupportManager supportManager)
     {
         _setterUnitEntity = _ecsWorld.NewEntity().
-            Replace(new SetterUnitMasterComponent(supportManager.NameValueManager, supportManager.CellManager, eCSmanager.SystemsMasterManager));
+            Replace(new SetterUnitMasterComponent(supportManager.StartValues, supportManager.CellManager, eCSmanager.SystemsMasterManager));
 
         _shiftUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new ShiftUnitMasterComponent(supportManager.NameValueManager, supportManager.CellManager, eCSmanager.SystemsMasterManager));
+            .Replace(new ShiftUnitMasterComponent(supportManager.StartValues, supportManager.CellManager, eCSmanager.SystemsMasterManager));
 
         _refresherEntity = _ecsWorld.NewEntity()
             .Replace(new RefresherMasterComponent(eCSmanager.SystemsMasterManager));
 
         _attackUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new AttackUnitMasterComponent(supportManager.NameValueManager, supportManager.CellManager, eCSmanager.SystemsMasterManager));
+            .Replace(new AttackUnitMasterComponent(supportManager.StartValues, supportManager.CellManager, eCSmanager.SystemsMasterManager));
 
         _getterUnitEntity = _ecsWorld.NewEntity()
             .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager));
 
         _economyEntity = _ecsWorld.NewEntity()
-            .Replace(new EconomyMasterComponent(supportManager.NameValueManager))
-            .Replace(new EconomyMasterComponent.UnitsMasterComponent(supportManager.NameValueManager))
-            .Replace(new EconomyMasterComponent.BuildingsMasterComponent(supportManager.NameValueManager));
+            .Replace(new EconomyMasterComponent(supportManager.StartValues))
+            .Replace(new EconomyMasterComponent.UnitsMasterComponent(supportManager.StartValues))
+            .Replace(new EconomyMasterComponent.BuildingsMasterComponent(supportManager.StartValues));
 
         _builderEntity = _ecsWorld.NewEntity()
-            .Replace(new BuilderCellMasterComponent(supportManager.NameValueManager, supportManager.CellManager, eCSmanager.SystemsMasterManager));
+            .Replace(new BuilderCellMasterComponent(supportManager.StartValues, supportManager.CellManager, eCSmanager.SystemsMasterManager));
 
 
         _spawnAllForMasterEntity = new SpawnAllForMasterEntity();
-        _spawnAllForMasterEntity.SetEnvironment(eCSmanager.EntitiesGeneralManager, supportManager.NameValueManager);
+        _spawnAllForMasterEntity.SetEnvironment(eCSmanager.EntitiesGeneralManager, supportManager.StartValues);
     }
 }

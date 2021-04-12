@@ -14,10 +14,10 @@ internal struct EconomyMasterComponent
     internal int GoldOther => _goldOther;
 
 
-    internal EconomyMasterComponent(NameValueManager nameValueManager)
+    internal EconomyMasterComponent(StartValuesConfig startValues)
     {
-        _goldMaster = nameValueManager.GOLD_MASTER;
-        _goldOther = nameValueManager.GOLD_OTHER;
+        _goldMaster = startValues.GoldMaster;
+        _goldOther = startValues.GoldOther;
     }
 
 
@@ -37,10 +37,10 @@ internal struct EconomyMasterComponent
         internal int AmountUnitPawnOther => _amountUnitPawnOther;
 
 
-        internal UnitsMasterComponent(NameValueManager nameValueManager)
+        internal UnitsMasterComponent(StartValuesConfig startValues)
         {
-            _amountUnitPawnMaster = nameValueManager.AMOUNT_MASTER_PAWN;
-            _amountUnitPawnOther = nameValueManager.AMOUNT_OTHER_PAWN;
+            _amountUnitPawnMaster = startValues.AmountPawnMaster;
+            _amountUnitPawnOther = startValues.AmountPawnOther;
         }
 
 
@@ -68,12 +68,12 @@ internal struct EconomyMasterComponent
         internal int[] XYsettedCityOther
         { get { return _xySettedCityOther; } set { _xySettedCityOther = value; } }
 
-        internal BuildingsMasterComponent(NameValueManager nameValueManager)
+        internal BuildingsMasterComponent(StartValuesConfig nameValueManager)
         {
             _isSettedCityMaster = default;
             _isSettedCityOther = default;
-            _xySettedCityMaster = new int[nameValueManager.XY_FOR_ARRAY];
-            _xySettedCityOther = new int[nameValueManager.XY_FOR_ARRAY];
+            _xySettedCityMaster = new int[nameValueManager.XYforArray];
+            _xySettedCityOther = new int[nameValueManager.XYforArray];
         }
     }
 }

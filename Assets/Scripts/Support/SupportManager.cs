@@ -5,29 +5,32 @@ using UnityEngine.EventSystems;
 public class SupportManager
 {
     private BuilderManager _builderManager;
-    private NameValueManager _nameValueManager;
     private CellManager _cellManager;
     private ResourcesLoadManager _resourcesLoadManager;
     private UnityEvents _eventDelegateManager;
     private SoundManager _soundManager;
+    private NameManager _nameManager;
+    private StartValuesConfig _startValues;
 
 
     public BuilderManager BuilderManager => _builderManager;
-    public NameValueManager NameValueManager => _nameValueManager;
     public CellManager CellManager => _cellManager;
     public ResourcesLoadManager ResourcesLoadManager => _resourcesLoadManager;
     public UnityEvents DelegateEventManager => _eventDelegateManager;
     internal SoundManager SoundManager => _soundManager;
+    internal NameManager NameManager => _nameManager;
+    internal StartValuesConfig StartValues => _startValues;
 
 
 
-    public SupportManager(int percentTree, int percentHill, int percentMountain, int cellCountX, int cellCountY)
+    public SupportManager()
     {
-        _nameValueManager = new NameValueManager(percentTree, percentHill, percentMountain, cellCountX, cellCountY);
-        _builderManager = new BuilderManager();
-        _cellManager = new CellManager(_nameValueManager);
         _resourcesLoadManager = new ResourcesLoadManager();
+        _startValues = _resourcesLoadManager.StartValuesConfig;
+        _builderManager = new BuilderManager();
+        _cellManager = new CellManager(_startValues);
         _eventDelegateManager = new UnityEvents(this);
         _soundManager = new SoundManager(this);
+        _nameManager = new NameManager();
     }
 }

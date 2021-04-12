@@ -96,9 +96,9 @@ public struct CellComponent
         private GameObject _unitPawnGO;
         private SpriteRenderer _unitSpriteRender;
         private GameObject _unitKingGO;
-        private NameValueManager _nameValueManager;
+        private StartValuesConfig _startValues;
 
-        public UnitComponent(NameValueManager nameValueManager, Player player, GameObject unitPawnGO)
+        public UnitComponent(StartValuesConfig startValues, Player player, GameObject unitPawnGO)
         {
             _unitType = default;
             _amountSteps = default;
@@ -107,7 +107,7 @@ public struct CellComponent
             _isProtected = default;
             _isRelaxed = default;
             _player = player;
-            _nameValueManager = nameValueManager;
+            _startValues = startValues;
             _unitPawnGO = unitPawnGO;
             _unitSpriteRender = _unitPawnGO.GetComponent<SpriteRenderer>();
             _unitKingGO = default;
@@ -122,7 +122,7 @@ public struct CellComponent
         {
             get
             {
-                if (_amountSteps >= _nameValueManager.TAKE_AMOUNT_STEPS) return true;
+                if (_amountSteps >= _startValues.TakeAmountSteps) return true;
                 else return false;
             }
         }
@@ -176,7 +176,7 @@ public struct CellComponent
                         break;
 
                     case UnitTypes.Pawn:
-                        _amountSteps = _nameValueManager.AMOUNT_STEPS_PAWN;
+                        _amountSteps = _startValues.AmountStepsPawn;
                         break;
 
                     default:
