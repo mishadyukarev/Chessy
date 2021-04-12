@@ -44,7 +44,7 @@ public sealed class Main : MonoBehaviour
 
     private void Start()
     {
-        _instance = this;
+        _instance = this;//Master
 
         _camera = Camera.main;
         if (!IsMasterClient) _camera.transform.Rotate(0, 0, 180);
