@@ -4,7 +4,7 @@ using static Main;
 
 public partial class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
 {
-    private EcsComponentRef<SupportVisionComponent> _supportVisionComponentRef = default;
+    //private EcsComponentRef<SupportVisionComponent> _supportVisionComponentRef = default; //Programmer 2
 
 
     internal SupportVisionSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
