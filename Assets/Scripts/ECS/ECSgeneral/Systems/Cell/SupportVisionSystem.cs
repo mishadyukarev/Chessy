@@ -9,7 +9,7 @@ public partial class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
 
     internal SupportVisionSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
     {
-        _supportVisionComponentRef = eCSmanager.EntitiesGeneralManager.SupportVisionComponentRef;
+        //_supportVisionComponentRef = eCSmanager.EntitiesGeneralManager.SupportVisionComponentRef; // Programmer 1
     }
 
 
