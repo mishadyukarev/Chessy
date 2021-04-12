@@ -86,12 +86,12 @@ public partial class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
 
     private void ActiveWayOfUnitVision(bool isActive)
     {
-        _supportVisionComponentRef.Unref().UnpackWayUnitVision(out List<int[]> xyAvailableCellsForShift);
+        //_supportVisionComponentRef.Unref().UnpackWayUnitVision(out List<int[]> xyAvailableCellsForShift);
 
-        foreach (var xy in xyAvailableCellsForShift)
-        {
-            CellSupportVisionComponent(xy).EnableVision(isActive, SupportVisionTypes.WayOfUnitVision);
-        }
+        //foreach (var xy in xyAvailableCellsForShift)
+        //{
+        //    CellSupportVisionComponent(xy).EnableVision(isActive, SupportVisionTypes.WayOfUnitVision);
+        //}
     }
 
     private void ActiveEnemyVision(bool isActive)
