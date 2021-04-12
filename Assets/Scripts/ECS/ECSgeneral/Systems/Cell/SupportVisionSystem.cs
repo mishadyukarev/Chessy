@@ -4,7 +4,7 @@ using static Main;
 
 public partial class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
 {
-    private EcsComponentRef<SupportVisionComponent> _supportVisionComponentRef = default;
+    //private EcsComponentRef<SupportVisionComponent> _supportVisionComponentRef = default; //Programmer 2
 
 
     internal SupportVisionSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
@@ -15,29 +15,29 @@ public partial class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
 
     public void Run()
     {
-        //_supportVisionComponentRef.Unref().Unpack(out SupportVisionTypes supportVisionType, out bool isActive);
+        _supportVisionComponentRef.Unref().Unpack(out SupportVisionTypes supportVisionType, out bool isActive);
 
-        //switch (supportVisionType)
-        //{
-        //    case SupportVisionTypes.SelectorVision:
-        //        ActiveSelectorVision(isActive);
-        //        break;
+        switch (supportVisionType)
+        {
+            case SupportVisionTypes.SelectorVision:
+                ActiveSelectorVision(isActive);
+                break;
 
-        //    case SupportVisionTypes.SpawnVision:
-        //        ActiveSpawnVision(isActive);
-        //        break;
+            case SupportVisionTypes.SpawnVision:
+                ActiveSpawnVision(isActive);
+                break;
 
-        //    case SupportVisionTypes.WayOfUnitVision:
-        //        ActiveWayOfUnitVision(isActive);
-        //        break;
+            case SupportVisionTypes.WayOfUnitVision:
+                ActiveWayOfUnitVision(isActive);
+                break;
 
-        //    case SupportVisionTypes.EnemyVision:
-        //        ActiveEnemyVision(isActive);
-        //        break;
+            case SupportVisionTypes.EnemyVision:
+                ActiveEnemyVision(isActive);
+                break;
 
-        //    default:
-        //        break;
-        //}
+            default:
+                break;
+        }
     }
 
     private void ActiveSelectorVision(in bool isActive)
