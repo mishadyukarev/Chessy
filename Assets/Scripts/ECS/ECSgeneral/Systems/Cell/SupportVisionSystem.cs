@@ -12,7 +12,7 @@ public partial class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
         _supportVisionComponentRef = eCSmanager.EntitiesGeneralManager.SupportVisionComponentRef; // Programmer 1
     }
 
-
+    // Main
     public void Run()
     {
         _supportVisionComponentRef.Unref().Unpack(out SupportVisionTypes supportVisionType, out bool isActive);
