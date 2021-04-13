@@ -30,7 +30,7 @@ public struct SelectorComponent
 
     internal SelectorComponent(StartValuesConfig nameValueManager)
     {
-        _xySelectedCell = new int[nameValueManager.XYforArray];
+        _xySelectedCell = new int[nameValueManager.XY_FOR_ARRAY];
 
         _setterUnitDelegate = default;
         _attackUnitDelegate = default;

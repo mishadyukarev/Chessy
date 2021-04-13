@@ -16,8 +16,8 @@ public struct AttackUnitMasterComponent
         _cellManager = cellManager;
         _systemsMasterManager = systemsMasterManager;
 
-        _xyPreviousCellIN = new int[nameValueManager.XYforArray];
-        _xySelectedCellIN = new int[nameValueManager.XYforArray];
+        _xyPreviousCellIN = new int[nameValueManager.XY_FOR_ARRAY];
+        _xySelectedCellIN = new int[nameValueManager.XY_FOR_ARRAY];
         _fromPlayerIN = default;
     }
 

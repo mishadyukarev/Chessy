@@ -35,7 +35,7 @@ public class PhotonManager
         _photonView.FindObservables(true);
 
         if (Instance.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
-        else _photonView.ViewID = supportManager.StartValuesConfig.NumberPhotonView;
+        else _photonView.ViewID = supportManager.StartValuesConfig.NUMBER_PHOTON_VIEW;
     }
 
     public void InitAfterECS(ECSmanager eCSmanager)

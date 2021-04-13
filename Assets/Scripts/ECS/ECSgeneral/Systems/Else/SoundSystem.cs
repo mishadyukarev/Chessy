@@ -13,10 +13,10 @@ internal class SoundSystem :  IEcsRunSystem
     private EcsComponentRef<SoundComponent> _soundComponentRef = default;
 
 
-    internal SoundSystem(ECSmanager eCSmanager)
+    internal SoundSystem(ECSmanager eCSmanager, StartSpawnManager startSpawnManager)
     {
         _soundComponentRef = eCSmanager.EntitiesGeneralManager.SoundComponentRef;
-        _audioSource = Main.Instance.StartSpawnManager.AudioSource;
+        _audioSource = startSpawnManager.AudioSource;
 
         _soundComponentRef.Unref().MistakeSoundDelegate = MistakeSound;
     }

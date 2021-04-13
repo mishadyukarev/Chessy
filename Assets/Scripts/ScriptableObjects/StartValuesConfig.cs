@@ -6,9 +6,9 @@ public class StartValuesConfig : ScriptableObject
     [Space(12)]
     [SerializeField] internal int CellCountX = 15;
     [SerializeField] internal int CellCountY = 12;
-    internal int X = 0;
-    internal int Y = 1;
-    internal int XYforArray = 2;
+    internal readonly int X = 0;
+    internal readonly int Y = 1;
+    internal readonly int XY_FOR_ARRAY = 2;
 
 
     [Space(12)]
@@ -29,13 +29,17 @@ public class StartValuesConfig : ScriptableObject
     [Space(12)]
     [SerializeField] internal int AmountPawnMaster = 1;
     [SerializeField] internal int AmountPawnOther = 3;
-
+    [SerializeField] internal int AmountKingMaster = 1;
+    [SerializeField] internal int AmountKingOther = 1;
 
     [Space(12)]
     [SerializeField] internal int AmountStepsPawn = 1;
     [SerializeField] internal int AmountHealthPawn = 100;
-    [SerializeField] internal int PawerDamagePawn = 50;
+    [SerializeField] internal int PowerDamagePawn = 50;
     [SerializeField] internal int ProtectionPawn = 10;
+
+    [Space(12)]
+    [SerializeField] internal int AmountStepsKing = 1;
 
 
     [Space(12)]
@@ -43,11 +47,11 @@ public class StartValuesConfig : ScriptableObject
     [SerializeField] internal int ProtectionTree = 20;
     [SerializeField] internal int ProtectionCity = 25;
 
-    internal int TakeAmountSteps = 1;
-    internal int TakeUnit = 1;
+    internal readonly int TAKE_AMOUNT_STEPS = 1;
+    internal readonly int TAKE_UNIT = 1;
 
-    internal int AmountForTakeUnit = 1;
-    internal int AmountForDeath = 0;
+    internal readonly int AMOUNT_FOR_TAKE_UNIT = 1;
+    internal readonly int AMOUNT_FOR_DEATH = 0;
 
-    internal int NumberPhotonView = 1001;
+    internal readonly int NUMBER_PHOTON_VIEW = 1001;
 }

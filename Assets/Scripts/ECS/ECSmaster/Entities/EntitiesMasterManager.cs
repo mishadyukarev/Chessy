@@ -1,9 +1,8 @@
 ﻿using Leopotam.Ecs;
+using UnityEngine;
 
 public class EntitiesMasterManager : EntitiesManager
 {
-    private SpawnAllForMasterEntity _spawnAllForMasterEntity;
-
     private EcsEntity _setterUnitEntity;
     private EcsEntity _shiftUnitEntity;
     private EcsEntity _refresherEntity;
@@ -58,7 +57,23 @@ public class EntitiesMasterManager : EntitiesManager
             .Replace(new BuilderCellMasterComponent(supportManager.StartValuesConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));
 
 
-        _spawnAllForMasterEntity = new SpawnAllForMasterEntity();
-        _spawnAllForMasterEntity.SetEnvironment(eCSmanager.EntitiesGeneralManager, supportManager.StartValuesConfig);
+        for (int x = 0; x < supportManager.StartValuesConfig.CellCountX; x++)
+        {
+            for (int y = 0; y < supportManager.StartValuesConfig.CellCountY; y++)
+            {
+                int random;
+                random = Random.Range(1, 100);
+                if (random <= supportManager.StartValuesConfig.PercentTree) 
+                    eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Tree);
+
+                random = Random.Range(1, 100);
+                if (random <= supportManager.StartValuesConfig.PercentHill) 
+                    eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Hill);
+
+                random = Random.Range(1, 100);
+                if (random <= supportManager.StartValuesConfig.PercentMountain) 
+                    eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Mountain);
+            }
+        }
     }
 }

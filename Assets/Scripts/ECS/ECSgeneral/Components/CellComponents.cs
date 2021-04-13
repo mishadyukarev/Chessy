@@ -11,7 +11,7 @@ public struct CellComponent
     private GameObject _cellGO;
 
 
-    public CellComponent(bool isStartMaster, bool isStartOther,  GameObject cellGO)
+    internal CellComponent(bool isStartMaster, bool isStartOther,  GameObject cellGO)
     {
         _isStartMaster = isStartMaster;
         _isStartOther = isStartOther;
@@ -21,12 +21,14 @@ public struct CellComponent
     }
 
 
-    public bool IsStartMaster => _isStartMaster;
-    public bool IsStartOther => _isStartOther;
-    public bool IsSelected => _isSelected;
-    public int InstanceIDcell => _cellGO.GetInstanceID();
-
-    public void SetIsSelected(bool isActive) => _isSelected = isActive;
+    internal bool IsStartMaster => _isStartMaster;
+    internal bool IsStartOther => _isStartOther;
+    internal int InstanceIDcell => _cellGO.GetInstanceID();
+    internal bool IsSelected
+    {
+        get { return _isSelected; }
+        set { _isSelected = value; }
+    }
 
 
 
@@ -39,23 +41,23 @@ public struct CellComponent
         private GameObject _treeGO;
         private GameObject _hillGO;
 
-        public EnvironmentComponent(GameObject mountainGO, GameObject treeGO, GameObject hillGO)
+        internal EnvironmentComponent(int x, int y, StartSpawnManager startSpawnManager)
         {
             _haveMountain = default;
             _haveTree = default;
             _haveHill = default;
 
-            _mountainGO = mountainGO;
-            _treeGO = treeGO;
-            _hillGO = hillGO;
+            _mountainGO = startSpawnManager.MountainsGO[x,y];
+            _treeGO = startSpawnManager.TreesGO[x, y];
+            _hillGO = startSpawnManager.HillsGO[x, y];
         }
 
 
-        public bool HaveMountain => _haveMountain;
-        public bool HaveTree => _haveTree;
-        public bool HaveHill => _haveHill;
+        internal bool HaveMountain => _haveMountain;
+        internal bool HaveTree => _haveTree;
+        internal bool HaveHill => _haveHill;
 
-        public void SetResetEnvironment(bool isActive, EnvironmentTypes environmentType)
+        internal void SetResetEnvironment(bool isActive, EnvironmentTypes environmentType)
         {
             switch (environmentType)
             {
@@ -92,11 +94,12 @@ public struct CellComponent
         private bool _isRelaxed;
         private Player _player;
         private GameObject _unitPawnGO;
-        private SpriteRenderer _unitSpriteRender;
         private GameObject _unitKingGO;
+        private SpriteRenderer _unitPawnSpriteRender;
+        private SpriteRenderer _unitKingSpriteRender;
         private StartValuesConfig _startValues;
 
-        public UnitComponent(StartValuesConfig startValues, Player player, GameObject unitPawnGO)
+        internal UnitComponent(int x, int y, StartSpawnManager startSpawnManager, StartValuesConfig startValues)
         {
             _unitType = default;
             _amountSteps = default;
@@ -104,51 +107,40 @@ public struct CellComponent
             _powerDamage = default;
             _isProtected = default;
             _isRelaxed = default;
-            _player = player;
+            _player = Instance.MasterClient;
             _startValues = startValues;
-            _unitPawnGO = unitPawnGO;
-            _unitSpriteRender = _unitPawnGO.GetComponent<SpriteRenderer>();
-            _unitKingGO = default;
+
+            _unitPawnGO = startSpawnManager.UnitPawnsGO[x,y];
+            _unitKingGO = startSpawnManager.UnitKingsGO[x, y];
+            _unitPawnSpriteRender = startSpawnManager.UnitPawnsGOsr[x,y];
+            _unitKingSpriteRender = startSpawnManager.UnitKingsGOsr[x, y];
+
         }
 
 
-        public UnitTypes UnitType => _unitType;
-        public int AmountSteps => _amountSteps;
-        public int AmountHealth => _amountHealth;
-        public int PowerDamage => _powerDamage;
-        public bool HaveAmountSteps
+        internal UnitTypes UnitType => _unitType;
+        internal int PowerDamage => _powerDamage;
+        internal bool HaveAmountSteps => _amountSteps >= _startValues.TAKE_AMOUNT_STEPS;
+        internal int ActorNumber => _player.ActorNumber;
+        internal bool IsMine => _player.IsLocal;
+        internal bool HaveUnit => UnitType != UnitTypes.None;
+        internal bool IsProtected 
+        { get { return _isProtected; } set { _isProtected = value; } }
+        internal bool IsRelaxed
         {
-            get
-            {
-                if (_amountSteps >= _startValues.TakeAmountSteps) return true;
-                else return false;
-            }
+            get{ return _isRelaxed; }
+            set { _isRelaxed = value; }
         }
-        public int ActorNumber => _player.ActorNumber;
-        public bool IsMine
+        internal int AmountSteps
         {
-            get
-            {
-                if (_player.ActorNumber == Instance.LocalPlayer.ActorNumber)
-                {
-                    return true;
-                }
-                return false;
-            }
+            get { return _amountSteps; }
+            set { _amountSteps = value; }
         }
-        public bool HaveUnit
+        internal int AmountHealth
         {
-            get
-            {
-                if (UnitType == UnitTypes.None)
-                {
-                    return false;
-                }
-                return true;
-            }
+            get { return _amountHealth; }
+            set { _amountHealth = value; }
         }
-        public bool IsProtected { get { return _isProtected; } set { _isProtected = value; } }
-        public bool IsRelaxed { get { return _isRelaxed; } set { _isRelaxed = value; } }
 
 
         private void SetColorUnit(in SpriteRenderer unitSpriteRender, in Player player)
@@ -157,11 +149,7 @@ public struct CellComponent
             else unitSpriteRender.color = Color.yellow;
         }
 
-        public void TakeAmountSteps(int takeAmountSteps) => _amountSteps -= takeAmountSteps;
-
-        public void TakeHealth(in int powerDamage) => _amountHealth -= powerDamage;
-
-        public void RefreshAmountSteps(int amountSteps = -1)
+        internal void RefreshAmountSteps(int amountSteps = -1)
         {
             if (amountSteps == -1)
             {
@@ -171,6 +159,7 @@ public struct CellComponent
                         break;
 
                     case UnitTypes.King:
+                        _amountSteps = _startValues.AmountStepsKing;
                         break;
 
                     case UnitTypes.Pawn:
@@ -190,6 +179,7 @@ public struct CellComponent
                         break;
 
                     case UnitTypes.King:
+                        _amountSteps = amountSteps;
                         break;
 
                     case UnitTypes.Pawn:
@@ -203,7 +193,7 @@ public struct CellComponent
 
         }
 
-        public void ResetUnit()
+        internal void ResetUnit()
         {
             UnitTypes unitType = default;
             int amountHealth = default;
@@ -213,10 +203,10 @@ public struct CellComponent
             bool isRelaxed = default;
             Player player = Instance.MasterClient;
 
-            SetResetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed,  player);
+            SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed,  player);
         }
 
-        public void SetResetUnit(in UnitComponent cellUnitComponent)
+        internal void SetUnit(in UnitComponent cellUnitComponent)
         {
             var unitType = cellUnitComponent._unitType;
             var amountHealth = cellUnitComponent._amountHealth;
@@ -226,10 +216,10 @@ public struct CellComponent
             var isRelaxed = cellUnitComponent._isRelaxed;
             var player = cellUnitComponent._player;
 
-            SetResetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed, player);
+            SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed, player);
         }
 
-        public void SetResetUnit(in UnitTypes unitType, in int amountHealth, in int powerDamage, in int amountSteps, in bool isProtected, in bool isRelaxed, in Player player)
+        internal void SetUnit(in UnitTypes unitType, in int amountHealth, in int powerDamage, in int amountSteps, in bool isProtected, in bool isRelaxed, in Player player)
         {
             _unitType = unitType;
             _amountSteps = amountSteps;
@@ -239,20 +229,23 @@ public struct CellComponent
             _isRelaxed = isRelaxed;
             _player = player;
 
-            SetColorUnit(_unitSpriteRender, _player);
+
 
             switch (_unitType)
             {
                 case UnitTypes.None:
                     _unitPawnGO.SetActive(false);
+                    _unitKingGO.SetActive(false);
                     break;
 
                 case UnitTypes.King:
                     _unitKingGO.SetActive(true);
+                    SetColorUnit(_unitKingSpriteRender, _player);
                     break;
 
                 case UnitTypes.Pawn:
                     _unitPawnGO.SetActive(true);
+                    SetColorUnit(_unitPawnSpriteRender, _player);
                     break;
 
                 default:
@@ -260,7 +253,7 @@ public struct CellComponent
             }
         }
 
-        public void EnableVisionCell(bool isActive, UnitTypes unitType, Player player)
+        internal void ActiveVisionCell(bool isActive, UnitTypes unitType, Player player)
         {
             switch (unitType)
             {
@@ -268,11 +261,13 @@ public struct CellComponent
                     break;
 
                 case UnitTypes.King:
+                    _unitKingGO.SetActive(isActive);
+                    SetColorUnit(_unitKingSpriteRender, player);
                     break;
 
                 case UnitTypes.Pawn:
                     _unitPawnGO.SetActive(isActive);
-                    SetColorUnit(_unitSpriteRender, player);
+                    SetColorUnit(_unitPawnSpriteRender, player);
                     break;
 
                 default:
@@ -280,7 +275,7 @@ public struct CellComponent
             }
         }
 
-        public bool IsHim(Player player) => _player.ActorNumber == player.ActorNumber;
+        internal bool IsHim(Player player) => _player.ActorNumber == player.ActorNumber;
     }
 
 
@@ -289,18 +284,17 @@ public struct CellComponent
         private BuildingTypes _buildingType;
         private GameObject _campGO;
 
+        internal BuildingComponent(int x, int y, StartSpawnManager startSpawnManager)
+        {
+            _buildingType = default;
+            _campGO = startSpawnManager.CampsGO[x,y];
+        }
+
         internal BuildingTypes BuildingType => _buildingType;
         internal bool HaveBuilding => _buildingType != BuildingTypes.None;
 
 
-        public BuildingComponent(GameObject campGO)
-        {
-            _buildingType = default;
-            _campGO = campGO;
-        }
-
-
-        public void SetResetBuilding(in BuildingTypes buildingType)
+        internal void SetBuilding(in BuildingTypes buildingType)
         {
             _buildingType = buildingType;
 
@@ -318,6 +312,12 @@ public struct CellComponent
                     break;
             }
         }
+
+        internal void ResetBuilding()
+        {
+            var buildingType = BuildingTypes.None;
+            SetBuilding(buildingType);
+        }
     }
 
 
@@ -328,16 +328,16 @@ public struct CellComponent
         private GameObject _wayUnitVisionGO;
         private GameObject _enemyVisionGO;
 
-        public SupportVisionComponent(GameObject selectorVisionGO, GameObject spawnVisionGO, GameObject wayUnitVisionGO, GameObject enemyVisionGO)
+        internal SupportVisionComponent(int x,int y, StartSpawnManager startSpawnManager)
         {
-            _selectorVisionGO = selectorVisionGO;
-            _spawnVisionGO = spawnVisionGO;
-            _wayUnitVisionGO = wayUnitVisionGO;
-            _enemyVisionGO = enemyVisionGO;
+            _selectorVisionGO = startSpawnManager.SelectorVisionsGO[x,y];
+            _spawnVisionGO = startSpawnManager.SpawnVisionsGO[x,y];
+            _wayUnitVisionGO = startSpawnManager.WayUnitVisionsGO[x, y];
+            _enemyVisionGO = startSpawnManager.EnemyVisionsGO[x, y];
         }
 
 
-        public void EnableVision(bool isActive, SupportVisionTypes supportVisionType)
+        internal void ActiveVision(bool isActive, SupportVisionTypes supportVisionType)
         {
             switch (supportVisionType)
             {

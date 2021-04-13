@@ -30,24 +30,41 @@ internal struct EconomyMasterComponent
 
     internal struct UnitsMasterComponent
     {
+        private int _amountKingMaster;
+        private int _amountKingOther;
         private int _amountUnitPawnMaster;
         private int _amountUnitPawnOther;
 
-        internal int AmountUnitPawnMaster => _amountUnitPawnMaster;
-        internal int AmountUnitPawnOther => _amountUnitPawnOther;
+        internal int AmountKingMaster
+        {
+            get { return _amountKingMaster; }
+            set { _amountKingMaster = value; }
+        }
+        internal int AmountKingOther
+        {
+            get { return _amountKingOther; }
+            set { _amountKingOther = value; }
+        }
+        internal int AmountUnitPawnMaster
+        {
+            get { return _amountUnitPawnMaster; }
+            set { _amountUnitPawnMaster = value; }
+        }
+        internal int AmountUnitPawnOther
+        { 
+            get { return _amountUnitPawnOther; }
+            set { _amountUnitPawnOther= value; }
+        }
+                
 
 
         internal UnitsMasterComponent(StartValuesConfig startValues)
         {
+            _amountKingMaster = startValues.AmountKingMaster;
+            _amountKingOther = startValues.AmountKingOther;
             _amountUnitPawnMaster = startValues.AmountPawnMaster;
             _amountUnitPawnOther = startValues.AmountPawnOther;
         }
-
-
-        internal void TakeAmountUnitPawnMaster(int takeAmount) => _amountUnitPawnMaster -= takeAmount;
-        internal void TakeAmountUnitPawnOther(int takeAmount) => _amountUnitPawnOther -= takeAmount;
-        internal void AddAmountUnitPawnMaster(int addAmount) => _amountUnitPawnMaster += addAmount;
-        internal void AddAmountUnitPawnOther(int addAmount) => _amountUnitPawnOther += addAmount;
     }
 
 
@@ -72,8 +89,8 @@ internal struct EconomyMasterComponent
         {
             _isSettedCityMaster = default;
             _isSettedCityOther = default;
-            _xySettedCityMaster = new int[nameValueManager.XYforArray];
-            _xySettedCityOther = new int[nameValueManager.XYforArray];
+            _xySettedCityMaster = new int[nameValueManager.XY_FOR_ARRAY];
+            _xySettedCityOther = new int[nameValueManager.XY_FOR_ARRAY];
         }
     }
 }

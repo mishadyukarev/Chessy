@@ -4,8 +4,6 @@ using System.Collections.Generic;
 
 public class AttackUnitMasterSystem : CellReductionSystem, IEcsRunSystem
 {
-    private StartValuesConfig _startValues;
-
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
     private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
 
@@ -29,12 +27,17 @@ public class AttackUnitMasterSystem : CellReductionSystem, IEcsRunSystem
         {
             if (_cellManager.TryFindCellInList(xySelectedCellIN, xyAvailableCellsForAttack))
             {
+                CellUnitComponent(xyPreviousCellIN).AmountSteps -= _startValues.AmountStepsPawn;
                 CellUnitComponent(xyPreviousCellIN).IsProtected = false;
                 CellUnitComponent(xyPreviousCellIN).IsRelaxed = false;
 
-                int commonDamage = 0;
-                if (CellEnvironmentComponent(xySelectedCellIN).HaveHill) commonDamage -= _startValues.ProtectionHill;
-                if (CellEnvironmentComponent(xySelectedCellIN).HaveTree) commonDamage -= _startValues.ProtectionTree;
+
+
+                int damageToSelelected = 0;
+
+                if (CellEnvironmentComponent(xySelectedCellIN).HaveHill) damageToSelelected -= _startValues.ProtectionHill;
+                if (CellEnvironmentComponent(xySelectedCellIN).HaveTree) damageToSelelected -= _startValues.ProtectionTree;
+
 
                 switch (CellBuildingComponent(xySelectedCellIN).BuildingType)
                 {
@@ -42,7 +45,7 @@ public class AttackUnitMasterSystem : CellReductionSystem, IEcsRunSystem
                         break;
 
                     case BuildingTypes.City:
-                        commonDamage -= _startValues.ProtectionCity;
+                        damageToSelelected -= _startValues.ProtectionCity;
                         break;
 
                     default:
@@ -58,29 +61,46 @@ public class AttackUnitMasterSystem : CellReductionSystem, IEcsRunSystem
                         break;
 
                     case UnitTypes.Pawn:
-                        ExecutePawnAttack(xyPreviousCellIN, xySelectedCellIN, commonDamage);
+
+                        damageToSelelected += _startValues.PowerDamagePawn;
+                        if (CellUnitComponent(xySelectedCellIN).IsProtected) damageToSelelected -= _startValues.ProtectionPawn;
+
                         break;
 
                     default:
                         break;
                 }
+
+                switch (CellUnitComponent(xySelectedCellIN).UnitType)
+                {
+                    case UnitTypes.None:
+                        break;
+
+                    case UnitTypes.King:
+                        break;
+
+                    case UnitTypes.Pawn:
+                        break;
+
+                    default:
+                        break;
+                }
+
+
+                CellUnitComponent(xySelectedCellIN).AmountHealth -= damageToSelelected;
+                CellUnitComponent(xyPreviousCellIN).AmountHealth -= CellUnitComponent(xySelectedCellIN).PowerDamage;
+
+                if(CellUnitComponent(xyPreviousCellIN).AmountHealth <= _startValues.AMOUNT_FOR_DEATH)
+                {
+                    CellUnitComponent(xyPreviousCellIN).ResetUnit();
+                }   
+
+                if (CellUnitComponent(xySelectedCellIN).AmountHealth <= _startValues.AMOUNT_FOR_DEATH)
+                {
+                    CellUnitComponent(xySelectedCellIN).SetUnit(CellUnitComponent(xyPreviousCellIN));
+                    CellUnitComponent(xyPreviousCellIN).ResetUnit();
+                }
             }
-        }
-    }
-
-    private void ExecutePawnAttack(int[] xyPreviousCellIN, int[] xySelectedCellIN, int commonDamage)
-    {
-        commonDamage += _startValues.PawerDamagePawn;
-        if (CellUnitComponent(xySelectedCellIN).IsProtected) commonDamage -= _startValues.ProtectionPawn;
-
-        CellUnitComponent(xySelectedCellIN).TakeHealth(commonDamage);
-
-        CellUnitComponent(xyPreviousCellIN).TakeAmountSteps(_startValues.AmountStepsPawn);
-
-        if (CellUnitComponent(xySelectedCellIN).AmountHealth <= _startValues.AmountForDeath)
-        {
-            CellUnitComponent(xySelectedCellIN).SetResetUnit(CellUnitComponent(xyPreviousCellIN));
-            CellUnitComponent(xyPreviousCellIN).ResetUnit();
         }
     }
 }

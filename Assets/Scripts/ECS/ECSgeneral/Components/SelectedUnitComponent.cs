@@ -7,9 +7,6 @@ public struct SelectedUnitComponent
     internal bool IsSelectedUnit => _selectedUnitType != UnitTypes.None;
     internal UnitTypes SelectedUnitType => _selectedUnitType;
 
-
-    internal void SetReset(UnitTypes unitType)
-    {
-        _selectedUnitType = unitType;
-    }
+    internal void ResetSelectedUnit() => SetSelectedUnit(UnitTypes.None);
+    internal void SetSelectedUnit(UnitTypes unitType) => _selectedUnitType = unitType;
 }

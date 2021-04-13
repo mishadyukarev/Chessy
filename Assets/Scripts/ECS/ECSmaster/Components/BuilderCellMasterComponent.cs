@@ -16,7 +16,7 @@ internal struct BuilderCellMasterComponent
         _cellManager = cellManager;
         _systemsMasterManager = systemsMasterManager;
 
-        _xyCellIN = new int[nameValueManager.XYforArray];
+        _xyCellIN = new int[nameValueManager.XY_FOR_ARRAY];
         _buildingTypeIN = default;
         _playerIN = default;
 

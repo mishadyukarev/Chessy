@@ -3,8 +3,6 @@ using Photon.Realtime;
 
 internal class BuilderCellMasterSystem : CellReductionSystem, IEcsRunSystem
 {
-    private StartValuesConfig _startValues;
-
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
 
     private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitsMasterComponentRef;
@@ -30,8 +28,8 @@ internal class BuilderCellMasterSystem : CellReductionSystem, IEcsRunSystem
 
         if (!CellEnvironmentComponent(xyCellIN).HaveMountain && CellUnitComponent(xyCellIN).HaveAmountSteps)
         {
-            CellBuildingComponent(xyCellIN).SetResetBuilding(buildingTypeIN);
-            CellUnitComponent(xyCellIN).TakeAmountSteps(_startValues.TakeAmountSteps);
+            CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN);
+            CellUnitComponent(xyCellIN).AmountSteps -=_startValues.TAKE_AMOUNT_STEPS;
 
             isBuilded = true;
             _builderCellMasterComponentRef.Unref().Pack(isBuilded);

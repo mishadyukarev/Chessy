@@ -3,7 +3,6 @@
 public sealed class EntitiesGeneralManager : EntitiesManager
 {
     private StartValuesConfig _startValues;
-    private ConstructorGeneralEntities _spawnAllForEntities;
 
     private EcsEntity[,] _cellsEntity;
     private EcsEntity _inputEntity;
@@ -56,12 +55,13 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     public EntitiesGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    public void CreateEntities(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager)
+    internal void CreateEntities(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
     {
         _startValues = supportManager.StartValuesConfig;
         var systemsGeneralManager = eCSmanager.SystemsGeneralManager;
         var cellManager = supportManager.CellManager;
         var resourcesLoadManager = supportManager.ResourcesLoadManager;
+        var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
 
 
         _buttonEntity = _ecsWorld.NewEntity()
@@ -97,8 +97,59 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             .Replace(new SoundComponent());
 
 
-        _spawnAllForEntities = new ConstructorGeneralEntities();
-        _spawnAllForEntities.ConstructorCellsEntities(this, supportManager.StartValuesConfig);
+        #region Cells
+
+        var cellsGO = startSpawnManager.CellsGO;
+        entitiesGeneralManager.CreateCellArray(_startValues.CellCountX, _startValues.CellCountY);
+        for (int x = 0; x < _startValues.CellCountX; x++)
+        {
+            for (int y = 0; y < _startValues.CellCountY; y++)
+            {
+                bool isStartMaster = false;
+                bool isStartOther = false;
+                if (y < 3 && x > 2 && x < 12) isStartMaster = true;
+                if (y > 8 && x > 2 && x < 12) isStartOther = true;
+
+                CellComponent cellComponent = new CellComponent(isStartMaster, isStartOther, cellsGO[x, y]);
+
+
+
+                CellComponent.EnvironmentComponent cellEnvironmentComponent
+                    = new CellComponent.EnvironmentComponent(x, y, startSpawnManager);
+
+
+                CellComponent.SupportVisionComponent cellSupportVisionComponent
+                    = new CellComponent.SupportVisionComponent(x, y, startSpawnManager);
+
+
+
+                CellComponent.UnitComponent cellUnitComponent = new CellComponent.UnitComponent
+                    (x, y, startSpawnManager, _startValues);
+
+
+                CellComponent.BuildingComponent cellBuildingComponent = new CellComponent.BuildingComponent(x, y, startSpawnManager);
+
+
+                entitiesGeneralManager.CreateCellArrayEntity(x, y);
+
+                entitiesGeneralManager.AddComponentToCellEntity(x, y, cellComponent);
+                entitiesGeneralManager.AddComponentToCellEntity(x, y, cellEnvironmentComponent);
+                entitiesGeneralManager.AddComponentToCellEntity(x, y, cellSupportVisionComponent);
+                entitiesGeneralManager.AddComponentToCellEntity(x, y, cellUnitComponent);
+                entitiesGeneralManager.AddComponentToCellEntity(x, y, cellBuildingComponent);
+            }
+        }
+
+        for (int x = 0; x < _startValues.CellCountX; x++)
+        {
+            for (int y = 0; y < _startValues.CellCountY; y++)
+            {
+                entitiesGeneralManager.AddRefComponentsToCell(x, y);
+            }
+        }
+
+        #endregion
+
     }
 
 

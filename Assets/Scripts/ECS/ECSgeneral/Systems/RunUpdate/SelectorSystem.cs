@@ -10,7 +10,6 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
 
     private PhotonPunRPC _photonPunRPC = default;
     private NameManager _nameManager;
-    private StartValuesConfig _startValues;
 
     #endregion
 
@@ -142,11 +141,11 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
                                 {
                                     if (CellUnitComponent(_xySelectedCell).IsMine)
                                     {
-                                        if (CellUnitComponent(_xySelectedCell).AmountSteps >= _startValues.TakeAmountSteps)
+                                        if (CellUnitComponent(_xySelectedCell).AmountSteps >= _startValues.TAKE_AMOUNT_STEPS)
                                         {
                                             _unitPathComponentRef.Unref().GetAvailableCellsForShift(_xySelectedCell, Instance.LocalPlayer, out _xyAvailableCellsForShift);
-                                            _unitPathComponentRef.Unref().GetAvailableCellsForAttack(_xySelectedCell, Instance.LocalPlayer,  out _xyAvailableCellsForAttack);
-                                            
+                                            _unitPathComponentRef.Unref().GetAvailableCellsForAttack(_xySelectedCell, Instance.LocalPlayer, out _xyAvailableCellsForAttack);
+
                                             _supportVisionComponentRef.Unref().ActiveWayUnitVisionInvoke(true, _xyAvailableCellsForShift);
                                             _supportVisionComponentRef.Unref().ActiveEnemyVision(true, _xyAvailableCellsForAttack);
 
@@ -238,25 +237,26 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
                     {
                         if (_selectedUnitComponentRef.Unref().IsSelectedUnit)
                         {
-                            if (_isStartSelectedDirect)
+                            _supportVisionComponentRef.Unref().ActiveSpawnVisionInvoke(true);
+                            if (!CellUnitComponent(xyCurrentCell).HaveUnit)
                             {
-                                _supportVisionComponentRef.Unref().ActiveSpawnVisionInvoke(true);
+                                if (_isStartSelectedDirect)
+                                {
+                                    if (!CellUnitComponent(xyCurrentCell).HaveUnit)
+                                        CellUnitComponent(xyCurrentCell).ActiveVisionCell(true, _selectedUnitComponentRef.Unref().SelectedUnitType, Instance.LocalPlayer);
 
-                                if (!CellUnitComponent(xyCurrentCell).HaveUnit)
-                                    CellUnitComponent(xyCurrentCell).EnableVisionCell(true, UnitTypes.Pawn, Instance.LocalPlayer);
+                                    _cellManager.CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
+                                    _isStartSelectedDirect = false;
+                                }
+                                else
+                                {
+                                    if (!CellUnitComponent(_xyPreviousVisionCell).HaveUnit)
+                                        CellUnitComponent(_xyPreviousVisionCell).ActiveVisionCell(false, _selectedUnitComponentRef.Unref().SelectedUnitType, Instance.LocalPlayer);
 
-                                _cellManager.CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
-                                _isStartSelectedDirect = false;
-                            }
-                            else
-                            {
-                                _supportVisionComponentRef.Unref().ActiveSpawnVisionInvoke(true);
+                                    CellUnitComponent(xyCurrentCell).ActiveVisionCell(true, _selectedUnitComponentRef.Unref().SelectedUnitType, Instance.LocalPlayer);
+                                    _cellManager.CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
+                                }
 
-                                if (!CellUnitComponent(_xyPreviousVisionCell).HaveUnit)
-                                    CellUnitComponent(_xyPreviousVisionCell).EnableVisionCell(false, UnitTypes.Pawn, Instance.LocalPlayer);
-
-                                CellUnitComponent(xyCurrentCell).EnableVisionCell(true, UnitTypes.Pawn, Instance.LocalPlayer);
-                                _cellManager.CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
                             }
                         }
                     }
@@ -273,6 +273,10 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
                     ActivateSelectorAndSelectorVision(false, _xyPreviousCell, _xySelectedCell);
                     _supportVisionComponentRef.Unref().ActiveWayUnitVisionInvoke(false, _xyAvailableCellsForShift);
                     _supportVisionComponentRef.Unref().ActiveEnemyVision(false, _xyAvailableCellsForAttack);
+                    _supportVisionComponentRef.Unref().ActiveSpawnVisionInvoke(false);
+
+                    CellUnitComponent(_xyPreviousVisionCell).ActiveVisionCell(false, _selectedUnitComponentRef.Unref().SelectedUnitType, Instance.LocalPlayer);
+                    _selectedUnitComponentRef.Unref().ResetSelectedUnit();
 
                     _cellManager.CleanXY(_xyPreviousCell);
                 }
@@ -289,8 +293,8 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
 
     private void ActivateSelectorAndSelectorVision(in bool isActive, in int[] xyPreviousCell, in int[] xySelectedCell)
     {
-        CellComponent(xyPreviousCell).SetIsSelected(false);
-        CellComponent(xySelectedCell).SetIsSelected(isActive);
+        CellComponent(xyPreviousCell).IsSelected = false;
+        CellComponent(xySelectedCell).IsSelected = isActive;
 
         _supportVisionComponentRef.Unref().ActiveSelectorVisionInvoke(isActive, xyPreviousCell, xySelectedCell);
     }
@@ -301,7 +305,7 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
         {
             Debug.Log("Done");
 
-            _selectedUnitComponentRef.Unref().SetReset(UnitTypes.None);
+            _selectedUnitComponentRef.Unref().ResetSelectedUnit();
             _supportVisionComponentRef.Unref().ActiveSpawnVisionInvoke(false);
             _isStartSelectedDirect = true;
         }

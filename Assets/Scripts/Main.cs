@@ -22,11 +22,9 @@ public sealed class Main : MonoBehaviour
 
     static public Main Instance => _instance;
 
-    public bool IsMasterClient => PhotonNetwork.IsMasterClient;
-    public Player MasterClient => PhotonNetwork.MasterClient;
-    public Player LocalPlayer => PhotonNetwork.LocalPlayer;
-
-    internal StartSpawnManager StartSpawnManager => _startSpawnManager;
+    internal bool IsMasterClient => PhotonNetwork.IsMasterClient;
+    internal Player MasterClient => PhotonNetwork.MasterClient;
+    internal Player LocalPlayer => PhotonNetwork.LocalPlayer;
 
     #endregion
 
@@ -46,7 +44,7 @@ public sealed class Main : MonoBehaviour
 
 
         _photonManager = new PhotonManager(_supportManager, parentTransformScrips);
-        _eCSmanager = new ECSmanager(_supportManager, _photonManager);
+        _eCSmanager = new ECSmanager(_supportManager, _photonManager, _startSpawnManager);
 
         _photonManager.InitAfterECS(_eCSmanager);
 

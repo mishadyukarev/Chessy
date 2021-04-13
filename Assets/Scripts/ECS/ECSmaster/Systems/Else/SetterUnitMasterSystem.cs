@@ -2,18 +2,18 @@
 using Photon.Realtime;
 using System;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 using static Main;
 
 public class SetterUnitMasterSystem : CellReductionSystem, IEcsRunSystem
 {
-    private StartValuesConfig _startValues;
-
     private EcsComponentRef<SetterUnitMasterComponent> _setterUnitMasterComponentRef = default;
-
+    private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitMasterComponent = default;
 
     internal SetterUnitMasterSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
     {
         _setterUnitMasterComponentRef = eCSmanager.EntitiesMasterManager.SetterUnitMasterComponentRef;
+        _economyUnitMasterComponent = eCSmanager.EntitiesMasterManager.EconomyUnitsMasterComponentRef;
 
         _startValues = supportManager.StartValuesConfig;
     }
@@ -29,10 +29,11 @@ public class SetterUnitMasterSystem : CellReductionSystem, IEcsRunSystem
                 break;
 
             case UnitTypes.King:
+                ExecuteSetUnitKing(xyCell, player);
                 break;
 
             case UnitTypes.Pawn:
-                ExecuteSetUnit(xyCell, unitType, player);
+                ExecuteSetUnitPawn(xyCell, player);
                 break;
 
             default:
@@ -40,19 +41,43 @@ public class SetterUnitMasterSystem : CellReductionSystem, IEcsRunSystem
         }
     }
 
-    private void ExecuteSetUnit(int[] xyCell, UnitTypes unitType, Player player)
+    private void ExecuteSetUnitPawn(int[] xyCell, Player player)
     {
         if (!CellEnvironmentComponent(xyCell).HaveMountain && !CellUnitComponent(xyCell).HaveUnit)
         {
             if (player.IsMasterClient && CellComponent(xyCell).IsStartMaster)
             {
-                CellUnitComponent(xyCell).SetResetUnit(unitType, _startValues.AmountHealthPawn, _startValues.PawerDamagePawn, _startValues.AmountStepsPawn,false, false, player);
+                CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, _startValues.AmountHealthPawn, _startValues.PowerDamagePawn, _startValues.AmountStepsPawn,false, false, player);
+                _economyUnitMasterComponent.Unref().AmountUnitPawnMaster -= _startValues.TAKE_UNIT;
                 _setterUnitMasterComponentRef.Unref().SetValues(true);
             }
 
             else if (CellComponent(xyCell).IsStartOther)
             {
-                CellUnitComponent(xyCell).SetResetUnit(unitType, _startValues.AmountHealthPawn, _startValues.PawerDamagePawn, _startValues.AmountStepsPawn, false, false, player);
+                CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, _startValues.AmountHealthPawn, _startValues.PowerDamagePawn, _startValues.AmountStepsPawn, false, false, player);
+                _economyUnitMasterComponent.Unref().AmountUnitPawnOther -= _startValues.TAKE_UNIT;
+                _setterUnitMasterComponentRef.Unref().SetValues(true);
+            }
+
+            else _setterUnitMasterComponentRef.Unref().SetValues(false);
+        }
+    }
+
+    private void ExecuteSetUnitKing(int[] xyCell, Player player)
+    {
+        if (!CellEnvironmentComponent(xyCell).HaveMountain && !CellUnitComponent(xyCell).HaveUnit)
+        {
+            if (player.IsMasterClient && CellComponent(xyCell).IsStartMaster)
+            {
+                CellUnitComponent(xyCell).SetUnit(UnitTypes.King, _startValues.AmountHealthPawn, _startValues.PowerDamagePawn, _startValues.AmountStepsPawn, false, false, player);
+                _economyUnitMasterComponent.Unref().AmountKingMaster -= _startValues.TAKE_UNIT;
+                _setterUnitMasterComponentRef.Unref().SetValues(true);
+            }
+
+            else if (CellComponent(xyCell).IsStartOther)
+            {
+                CellUnitComponent(xyCell).SetUnit(UnitTypes.King, _startValues.AmountHealthPawn, _startValues.PowerDamagePawn, _startValues.AmountStepsPawn, false, false, player);
+                _economyUnitMasterComponent.Unref().AmountKingOther -= _startValues.TAKE_UNIT;
                 _setterUnitMasterComponentRef.Unref().SetValues(true);
             }
 

@@ -6,8 +6,6 @@ using System.Linq;
 
 public class ShiftUnitMasterSystem : CellReductionSystem, IEcsRunSystem
 {
-    private StartValuesConfig _startValues;
-
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftComponentRef = default;
     private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
 
@@ -33,9 +31,9 @@ public class ShiftUnitMasterSystem : CellReductionSystem, IEcsRunSystem
         {
             if (_cellManager.TryFindCellInList(xySelectedCell, xyAvailableCellsForShift))
             {
-                CellUnitComponent(xyPreviousCell).TakeAmountSteps(_startValues.TakeAmountSteps);
+                CellUnitComponent(xyPreviousCell).AmountSteps -= _startValues.TAKE_AMOUNT_STEPS;
 
-                CellUnitComponent(xySelectedCell).SetResetUnit(CellUnitComponent(xyPreviousCell));
+                CellUnitComponent(xySelectedCell).SetUnit(CellUnitComponent(xyPreviousCell));
                 CellUnitComponent(xySelectedCell).IsProtected = false;
                 CellUnitComponent(xySelectedCell).IsRelaxed = false;
 

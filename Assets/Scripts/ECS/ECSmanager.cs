@@ -31,15 +31,15 @@ public sealed class ECSmanager
 
 
 
-    public ECSmanager(SupportManager supportManager, PhotonManager photonManager)
+    internal ECSmanager(SupportManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
     {
         _ecsWorld = new EcsWorld();
 
         _entitiesGeneralManager = new EntitiesGeneralManager(_ecsWorld);
         _systemsGeneralManager = new SystemsGeneralManager(_ecsWorld);
 
-        _entitiesGeneralManager.CreateEntities(this, supportManager, photonManager);
-        _systemsGeneralManager.CreateInitSystems(this, supportManager, photonManager);
+        _entitiesGeneralManager.CreateEntities(this, supportManager, photonManager, startSpawnManager);
+        _systemsGeneralManager.CreateInitSystems(this, supportManager, photonManager, startSpawnManager);
 
         if (Instance.IsMasterClient)
         {

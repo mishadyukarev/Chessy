@@ -25,7 +25,7 @@ public struct UnitPathComponent
 
         _unitPathTypeIN = default;
 
-        _xyStartCellIN = new int[nameValueManager.XYforArray];
+        _xyStartCellIN = new int[nameValueManager.XY_FOR_ARRAY];
         _playerIN = default;
 
         _xyAvailableCellsForShiftOUT = new List<int[]>();
