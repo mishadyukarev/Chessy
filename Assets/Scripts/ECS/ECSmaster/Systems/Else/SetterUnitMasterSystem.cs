@@ -15,7 +15,7 @@ public class SetterUnitMasterSystem : CellReductionSystem, IEcsRunSystem
     {
         _setterUnitMasterComponentRef = eCSmanager.EntitiesMasterManager.SetterUnitMasterComponentRef;
 
-        _startValues = supportManager.StartValues;
+        _startValues = supportManager.StartValuesConfig;
     }
 
 

@@ -49,9 +49,9 @@ public class PhotonPunRPC : MonoBehaviour
 
     public void Constructor(SupportManager supportManager, PhotonManager photonManager)
     {
-        _startValues = supportManager.StartValues;
+        _startValues = supportManager.StartValuesConfig;
         _photonView = photonManager.PhotonView;
-        _startValues = supportManager.StartValues;
+        _startValues = supportManager.StartValuesConfig;
 
         PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
     }

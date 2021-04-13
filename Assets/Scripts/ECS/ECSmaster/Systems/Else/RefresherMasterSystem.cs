@@ -13,7 +13,7 @@ public class RefresherMasterSystem : CellReductionSystem, IEcsRunSystem
     {
         _refresherMasterComponent = eCSmanager.EntitiesMasterManager.RefresherMasterComponentRef;
         _economyMasterComponent = eCSmanager.EntitiesMasterManager.EconomyMasterComponentRef;
-        _startValues = supportManager.StartValues;
+        _startValues = supportManager.StartValuesConfig;
     }
 
 

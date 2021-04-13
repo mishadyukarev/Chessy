@@ -8,17 +8,15 @@ public struct CellComponent
     private bool _isStartMaster;
     private bool _isStartOther;
     private bool _isSelected;
-    private GameObject _parent;
     private GameObject _cellGO;
 
 
-    public CellComponent(bool isStartMaster, bool isStartOther, GameObject parentGO, GameObject cellGO)
+    public CellComponent(bool isStartMaster, bool isStartOther,  GameObject cellGO)
     {
         _isStartMaster = isStartMaster;
         _isStartOther = isStartOther;
         _isSelected = default;
 
-        _parent = parentGO;
         _cellGO = cellGO;
     }
 

@@ -18,7 +18,7 @@ internal class BuilderCellMasterSystem : CellReductionSystem, IEcsRunSystem
         _economyUnitsMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyUnitsMasterComponentRef;
         _economyBuildingsMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyBuildingsMasterComponentRef;
 
-        _startValues = supportManager.StartValues;
+        _startValues = supportManager.StartValuesConfig;
     }
 
 

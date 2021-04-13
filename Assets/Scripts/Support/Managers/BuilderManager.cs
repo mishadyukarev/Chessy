@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class BuilderManager
 {
-    public void CreateGameObject(out GameObject gameObject, string name, Type[] types = default, Transform parent = default)
+    public GameObject CreateGameObject(string name, Type[] types = default, Transform parent = default)
     {
-        gameObject = new GameObject(name);
+        var gameObject = new GameObject(name);
 
         if (types != default)
         {
@@ -17,5 +17,9 @@ public class BuilderManager
 
         if (parent != default)
             gameObject.transform.SetParent(parent);
+
+        return gameObject;
     }
+
+    internal GameObject Instantiate(GameObject gameObject) => GameObject.Instantiate(gameObject);
 }

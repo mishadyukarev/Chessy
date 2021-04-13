@@ -39,8 +39,7 @@ public sealed class ECSmanager
         _systemsGeneralManager = new SystemsGeneralManager(_ecsWorld);
 
         _entitiesGeneralManager.CreateEntities(this, supportManager, photonManager);
-        _systemsGeneralManager.CreateSystems(this, supportManager, photonManager);
-        _systemsGeneralManager.InitAndProcessInjectsSystems();
+        _systemsGeneralManager.CreateInitSystems(this, supportManager, photonManager);
 
         if (Instance.IsMasterClient)
         {
@@ -48,8 +47,7 @@ public sealed class ECSmanager
             _systemsMasterManager = new SystemsMasterManager(_ecsWorld);
 
             _entitiesMasterManager.CreateEntities(this, supportManager);
-            _systemsMasterManager.CreateSystems(this, supportManager, photonManager);
-            _systemsMasterManager.InitAndProcessInjectsSystems();
+            _systemsMasterManager.CreateInitSystems(this, supportManager, photonManager);
         }
         else
         {
@@ -57,8 +55,7 @@ public sealed class ECSmanager
             _systemsOtherManager = new SystemsOtherManager(_ecsWorld);
 
             _entitiesOtherManager.CreateEntities();
-            _systemsOtherManager.CreateSystems(this, supportManager, photonManager);
-            _systemsOtherManager.InitAndProcessInjectsSystems();
+            _systemsOtherManager.CreateInitSystems(this, supportManager, photonManager);
         }
     }
 
@@ -72,7 +69,11 @@ public sealed class ECSmanager
 
     public void OnDestroy()
     {
-        _systemsGeneralManager.Destroy();
-        _ecsWorld.Destroy();
+        //_systemsGeneralManager.Destroy();
+
+        //if (Instance.IsMasterClient)_systemsMasterManager.Destroy();
+        //else _systemsOtherManager.Destroy();
+
+        //_ecsWorld.Destroy();
     }
 }

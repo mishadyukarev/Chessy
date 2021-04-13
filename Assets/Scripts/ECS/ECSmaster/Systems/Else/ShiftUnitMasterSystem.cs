@@ -17,7 +17,7 @@ public class ShiftUnitMasterSystem : CellReductionSystem, IEcsRunSystem
         _shiftComponentRef = eCSmanager.EntitiesMasterManager.ShiftUnitComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
 
-        _startValues = supportManager.StartValues;
+        _startValues = supportManager.StartValuesConfig;
     }
 
 

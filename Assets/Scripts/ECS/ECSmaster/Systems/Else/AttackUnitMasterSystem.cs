@@ -15,7 +15,7 @@ public class AttackUnitMasterSystem : CellReductionSystem, IEcsRunSystem
         _attackUnitMasterComponentRef = eCSmanager.EntitiesMasterManager.AttackUnitMasterComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
 
-        _startValues = supportManager.StartValues;
+        _startValues = supportManager.StartValuesConfig;
     }
 
 

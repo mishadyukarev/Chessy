@@ -5,7 +5,7 @@ public class SystemsGeneralManager : SystemsManager
     internal SystemsGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
 
-    internal void CreateSystems(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager)
+    internal void CreateInitSystems(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager)
     {
         _updateSystems
             .Add(new InputWindowsSystem(eCSmanager), nameof(InputWindowsSystem))
@@ -17,7 +17,10 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new RaySystem(eCSmanager), nameof(RaySystem))
             .Add(new UnitPathSystem(eCSmanager, supportManager), nameof(UnitPathSystem))
             .Add(new GetterCellSystem(eCSmanager, supportManager), nameof(GetterCellSystem))
-            .Add(new SupportVisionSystem(eCSmanager, supportManager), nameof(SupportVisionSystem));
+            .Add(new SupportVisionSystem(eCSmanager, supportManager), nameof(SupportVisionSystem))
+            .Add(new SoundSystem(eCSmanager), nameof(SoundSystem));
+
+        InitAndProcessInjectsSystems();
     }
 
     internal bool InvokeRunSystem(SystemGeneralTypes systemGeneralType, string namedSystem)

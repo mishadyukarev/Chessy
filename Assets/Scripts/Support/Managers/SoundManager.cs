@@ -8,9 +8,9 @@ internal class SoundManager
 
     internal Action MistakeSoundDelegate;
 
-    internal SoundManager(SupportManager supportManager)
+    internal SoundManager(StartSpawnManager startSpawnManager)
     {
-        _audioSource = UnityEngine.Object.Instantiate(supportManager.ResourcesLoadManager.AudioSource);
+        _audioSource = startSpawnManager.AudioSource;
         MistakeSoundDelegate = MistakeSound;
     }
 

@@ -4,70 +4,24 @@ using Photon.Realtime;
 using UnityEngine;
 using static Main;
 
-public sealed class SpawnAllGeneralEntities
+public sealed class ConstructorGeneralEntities
 {
-    public void SpawnCells(EntitiesGeneralManager entitiesGeneralManager, ResourcesLoadManager resourcesLoadManager, StartValuesConfig startValues)
+    public void ConstructorCellsEntities(EntitiesGeneralManager entitiesGeneralManager, StartValuesConfig startValues)
     {
-        var cellGO = resourcesLoadManager.CellGO;
-        var whiteCellSR = resourcesLoadManager.WhiteCellSprite;
-        var blackCellSR = resourcesLoadManager.BlackCellSprite;
+        var cellsGO = Instance.StartSpawnManager.CellsGO;
 
-        var cellsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
-
-
-        // Setting cells on the map
-        for (int x = 0; x < startValues.CellCountX; x++)
-        {
-            for (int y = 0; y < startValues.CellCountY; y++)
-            {
-                if (y % 2 == 0)
-                {
-                    if (x % 2 == 0)
-                    {
-                        cellsGO[x, y] = CreatGameObject(cellGO, blackCellSR, x, y);
-                        SetActive(cellsGO[x, y], x, y);
-                    }
-                    if (x % 2 != 0)
-                    {
-                        cellsGO[x, y] = CreatGameObject(cellGO, whiteCellSR, x, y);
-                        SetActive(cellsGO[x, y], x, y);
-                    }
-                }
-                if (y % 2 != 0)
-                {
-                    if (x % 2 != 0)
-                    {
-                        cellsGO[x, y] = CreatGameObject(cellGO, blackCellSR, x, y);
-                        SetActive(cellsGO[x, y], x, y);
-                    }
-                    if (x % 2 == 0)
-                    {
-                        cellsGO[x, y] = CreatGameObject(cellGO, whiteCellSR, x, y);
-                        SetActive(cellsGO[x, y], x, y);
-                    }
-                }
-            }
-        }
-
-
-
-        //var cellsGO = _cellsGO.Where(c => c != null).ToArray();
         entitiesGeneralManager.CreateCellArray(startValues.CellCountX, startValues.CellCountY);
-        GameObject supportParent = new GameObject("Cells");
 
         for (int x = 0; x < startValues.CellCountX; x++)
         {
             for (int y = 0; y < startValues.CellCountY; y++)
             {
-                cellsGO[x, y].transform.SetParent(supportParent.transform);
-
-
                 bool isStartMaster = false;
                 bool isStartOther = false;
                 if (y < 3 && x > 2 && x < 12) isStartMaster = true;
                 if (y > 8 && x > 2 && x < 12) isStartOther = true;
 
-                CellComponent cellComponent = new CellComponent(isStartMaster, isStartOther, supportParent, cellsGO[x, y]);
+                CellComponent cellComponent = new CellComponent(isStartMaster, isStartOther, cellsGO[x, y]);
 
 
 

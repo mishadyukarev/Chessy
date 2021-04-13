@@ -3,7 +3,7 @@
 public sealed class EntitiesGeneralManager : EntitiesManager
 {
     private StartValuesConfig _startValues;
-    private SpawnAllGeneralEntities _spawnAllForEntities;
+    private ConstructorGeneralEntities _spawnAllForEntities;
 
     private EcsEntity[,] _cellsEntity;
     private EcsEntity _inputEntity;
@@ -15,6 +15,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     private EcsEntity _selectorEntity;
     private EcsEntity _buttonEntity;
     private EcsEntity _economyEntity;
+    private EcsEntity _soundEntity;
 
     private EcsComponentRef<CellComponent>[,] _cellComponentRef;
     private EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef;
@@ -47,6 +48,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal EcsComponentRef<GetterCellComponent> GetterCellComponentRef => _getterCellEntity.Ref<GetterCellComponent>();
     internal EcsComponentRef<SelectorComponent> SelectorComponentRef => _selectorEntity.Ref<SelectorComponent>();
     internal EcsComponentRef<ButtonComponent> ButtonComponentRef => _buttonEntity.Ref<ButtonComponent>();
+    internal EcsComponentRef<SoundComponent> SoundComponentRef => _soundEntity.Ref<SoundComponent>();
 
 
 
@@ -56,7 +58,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     public void CreateEntities(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager)
     {
-        _startValues = supportManager.StartValues;
+        _startValues = supportManager.StartValuesConfig;
         var systemsGeneralManager = eCSmanager.SystemsGeneralManager;
         var cellManager = supportManager.CellManager;
         var resourcesLoadManager = supportManager.ResourcesLoadManager;
@@ -84,16 +86,19 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             .Replace(new GetterCellComponent(_startValues, systemsGeneralManager));
 
         _selectorEntity = _ecsWorld.NewEntity()
-            .Replace(new SelectorComponent(supportManager.StartValues));
+            .Replace(new SelectorComponent(supportManager.StartValuesConfig));
 
         _economyEntity = _ecsWorld.NewEntity()
             .Replace(new EconomyComponent())
             .Replace(new EconomyComponent.UnitsComponent())
             .Replace(new EconomyComponent.BuildingsComponent());
 
+        _soundEntity = _ecsWorld.NewEntity()
+            .Replace(new SoundComponent());
 
-        _spawnAllForEntities = new SpawnAllGeneralEntities();
-        _spawnAllForEntities.SpawnCells(this, resourcesLoadManager, supportManager.StartValues);
+
+        _spawnAllForEntities = new ConstructorGeneralEntities();
+        _spawnAllForEntities.ConstructorCellsEntities(this, supportManager.StartValuesConfig);
     }
 
 

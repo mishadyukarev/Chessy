@@ -9,7 +9,7 @@ public class UnityEvents
     private EventSystem _eventSystem;
     private StandaloneInputModule _standaloneInputModule;
 
-    public UnityEvents(SupportManager supportManager)
+    public UnityEvents(BuilderManager builderManager)
     {
         var types = new Type[]
         {
@@ -17,7 +17,7 @@ public class UnityEvents
             typeof(StandaloneInputModule),
         };
 
-        supportManager.BuilderManager.CreateGameObject(out GameObject goES, "EventSystem", types);
+        var goES = builderManager.CreateGameObject("EventSystem", types);
 
         _eventSystem = goES.GetComponent<EventSystem>();
         _standaloneInputModule = goES.GetComponent<StandaloneInputModule>();

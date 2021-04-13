@@ -5,6 +5,6 @@ public abstract class ReductionSystem
 
     protected ReductionSystem(SupportManager supportManager)
     {
-        _startValues = supportManager.StartValues;
+        _startValues = supportManager.StartValuesConfig;
     }
 }

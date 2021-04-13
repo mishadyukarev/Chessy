@@ -9,7 +9,6 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
     #region Other classes and else
 
     private PhotonPunRPC _photonPunRPC = default;
-    private SoundManager _soundManager = default;
     private NameManager _nameManager;
     private StartValuesConfig _startValues;
 
@@ -41,6 +40,7 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
     private EcsComponentRef<GetterCellComponent> _getterCellComponentRef = default;
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
     private EcsComponentRef<ButtonComponent> _buttonComponent = default;
+    private EcsComponentRef<SoundComponent> _soundComponentRef = default;
 
     private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
 
@@ -53,9 +53,8 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
     internal SelectorSystem(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager) : base(eCSmanager, supportManager)
     {
         _photonPunRPC = photonManager.PhotonPunRPC;
-        _soundManager = supportManager.SoundManager;
         _nameManager = supportManager.NameManager;
-        _startValues = supportManager.StartValues;
+        _startValues = supportManager.StartValuesConfig;
 
         _rayComponentRef = eCSmanager.EntitiesGeneralManager.RayComponentRef;
         _inputComponentRef = eCSmanager.EntitiesGeneralManager.InputComponentRef;
@@ -65,6 +64,7 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
         _getterCellComponentRef = eCSmanager.EntitiesGeneralManager.GetterCellComponentRef;
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
         _buttonComponent = eCSmanager.EntitiesGeneralManager.ButtonComponentRef;
+        _soundComponentRef = eCSmanager.EntitiesGeneralManager.SoundComponentRef;
     }
 
 
@@ -124,9 +124,11 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsInitSystem, IEcsRu
 
                                     else if (CellComponent(xyCurrentCell).IsStartOther)
                                         _photonPunRPC.SetUnit(xyCurrentCell, _selectedUnitComponentRef.Unref().SelectedUnitType);
+
+                                    else _soundComponentRef.Unref().MistakeSoundDelegate();
                                 }
 
-                                else _soundManager.MistakeSoundDelegate();
+                                else _soundComponentRef.Unref().MistakeSoundDelegate();
                             }
 
                             else if (_canExecuteStartClick)
