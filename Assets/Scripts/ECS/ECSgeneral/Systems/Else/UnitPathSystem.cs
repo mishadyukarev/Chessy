@@ -62,6 +62,7 @@ public partial class UnitPathSystem : CellReductionSystem, IEcsInitSystem, IEcsR
                         break;
 
                     case UnitTypes.King:
+                        RealizeKingPathForAttack(xyStartCellIN, playerIN);
                         break;
 
                     case UnitTypes.Pawn:
@@ -111,6 +112,29 @@ public partial class UnitPathSystem : CellReductionSystem, IEcsInitSystem, IEcsR
         }
 
         _unitPathComponentRef.Unref().PackForShift(xyAvailableCellsForShift);
+    }
+
+    private void RealizeKingPathForAttack(int[] xyStartCellIN, Player playerIN)
+    {
+        var xyAvailableCellsForAttack = new List<int[]>();
+
+        for (int i = 0; i < (int)ForUnitPathTypes.LeftDown + 1; i++)
+        {
+            GetCurrentCell(true, (ForUnitPathTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
+
+            if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
+            {
+                if (CellUnitComponent(xyCurrentCellForShift).HaveUnit)
+                {
+                    if (playerIN.ActorNumber != CellUnitComponent(xyCurrentCellForShift).ActorNumber)
+                    {
+                        xyAvailableCellsForAttack.Add(xyCurrentCellForShift);
+                    }
+                }
+            }
+        }
+
+        _unitPathComponentRef.Unref().PackForAttack(xyAvailableCellsForAttack);
     }
 
     private void RealizePawnPathForAttack(int[] xyStartCellIN, Player playerIN)

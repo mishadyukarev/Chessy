@@ -159,11 +159,11 @@ public struct CellComponent
                         break;
 
                     case UnitTypes.King:
-                        _amountSteps = _startValues.AmountStepsKing;
+                        _amountSteps = _startValues.AMOUNT_STEPS_KING;
                         break;
 
                     case UnitTypes.Pawn:
-                        _amountSteps = _startValues.AmountStepsPawn;
+                        _amountSteps = _startValues.AMOUNT_STEPS_PAWN;
                         break;
 
                     default:

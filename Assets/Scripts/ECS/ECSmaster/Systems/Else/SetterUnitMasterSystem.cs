@@ -47,14 +47,14 @@ public class SetterUnitMasterSystem : CellReductionSystem, IEcsRunSystem
         {
             if (player.IsMasterClient && CellComponent(xyCell).IsStartMaster)
             {
-                CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, _startValues.AmountHealthPawn, _startValues.PowerDamagePawn, _startValues.AmountStepsPawn,false, false, player);
+                CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, _startValues.AmountHealthPawn, _startValues.PowerDamagePawn, _startValues.AMOUNT_STEPS_PAWN,false, false, player);
                 _economyUnitMasterComponent.Unref().AmountUnitPawnMaster -= _startValues.TAKE_UNIT;
                 _setterUnitMasterComponentRef.Unref().SetValues(true);
             }
 
             else if (CellComponent(xyCell).IsStartOther)
             {
-                CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, _startValues.AmountHealthPawn, _startValues.PowerDamagePawn, _startValues.AmountStepsPawn, false, false, player);
+                CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, _startValues.AmountHealthPawn, _startValues.PowerDamagePawn, _startValues.AMOUNT_STEPS_PAWN, false, false, player);
                 _economyUnitMasterComponent.Unref().AmountUnitPawnOther -= _startValues.TAKE_UNIT;
                 _setterUnitMasterComponentRef.Unref().SetValues(true);
             }
@@ -69,14 +69,14 @@ public class SetterUnitMasterSystem : CellReductionSystem, IEcsRunSystem
         {
             if (player.IsMasterClient && CellComponent(xyCell).IsStartMaster)
             {
-                CellUnitComponent(xyCell).SetUnit(UnitTypes.King, _startValues.AmountHealthPawn, _startValues.PowerDamagePawn, _startValues.AmountStepsPawn, false, false, player);
+                CellUnitComponent(xyCell).SetUnit(UnitTypes.King, _startValues.AmountHealthKing, _startValues.PowerDamageKing, _startValues.AMOUNT_STEPS_KING, false, false, player);
                 _economyUnitMasterComponent.Unref().AmountKingMaster -= _startValues.TAKE_UNIT;
                 _setterUnitMasterComponentRef.Unref().SetValues(true);
             }
 
             else if (CellComponent(xyCell).IsStartOther)
             {
-                CellUnitComponent(xyCell).SetUnit(UnitTypes.King, _startValues.AmountHealthPawn, _startValues.PowerDamagePawn, _startValues.AmountStepsPawn, false, false, player);
+                CellUnitComponent(xyCell).SetUnit(UnitTypes.King, _startValues.AmountHealthKing, _startValues.PowerDamageKing, _startValues.AMOUNT_STEPS_KING, false, false, player);
                 _economyUnitMasterComponent.Unref().AmountKingOther -= _startValues.TAKE_UNIT;
                 _setterUnitMasterComponentRef.Unref().SetValues(true);
             }

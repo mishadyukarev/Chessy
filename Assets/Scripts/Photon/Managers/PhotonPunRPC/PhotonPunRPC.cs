@@ -1,10 +1,7 @@
 ﻿using ExitGames.Client.Photon;
-using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using static Main;
 
@@ -12,6 +9,10 @@ public partial class PhotonPunRPC : MonoBehaviour
 {
     private PhotonView _photonView = default;
     private StartValuesConfig _startValues = default;
+
+    #region ComponetsRef
+
+    #region Master
 
     private EcsComponentRef<SetterUnitMasterComponent> _setterUnitMasterComponentRef = default;
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftUnitMasterComponentRef = default;
@@ -23,10 +24,10 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitsMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef = default;
 
+    #endregion
 
-    private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
-    private EcsComponentRef<ButtonComponent> _buttonComponentRef = default;
-    private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
+
+    #region General
 
     private EcsComponentRef<EconomyComponent> _economyComponentRef = default;
     private EcsComponentRef<EconomyComponent.BuildingsComponent> _economyBuildingsComponentRef = default;
@@ -38,6 +39,14 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<CellComponent.UnitComponent>[,] _cellUnitComponentRef = default;
     private EcsComponentRef<CellComponent.BuildingComponent>[,] _cellBuildingComponentRef = default;
 
+    private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
+    private EcsComponentRef<ButtonComponent> _buttonComponentRef = default;
+    private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
+
+    #endregion
+
+    #endregion
+
     private ref CellComponent CellComponent(params int[] xy)
         => ref _cellComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
     private ref CellComponent.UnitComponent CellUnitComponent(params int[] xy)
@@ -46,7 +55,7 @@ public partial class PhotonPunRPC : MonoBehaviour
         => ref _cellEnvironmentComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
     private ref CellComponent.SupportVisionComponent CellSupportVisionComponent(params int[] xy)
         => ref _cellSupportVisionComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
-    private ref CellComponent.BuildingComponent  CellBuildingComponent(params int[] xy)
+    private ref CellComponent.BuildingComponent CellBuildingComponent(params int[] xy)
         => ref _cellBuildingComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
 
 
@@ -91,9 +100,6 @@ public partial class PhotonPunRPC : MonoBehaviour
         _buttonComponentRef = entitiesGeneralManager.ButtonComponentRef;
         _selectedUnitComponentRef = entitiesGeneralManager.SelectedUnitComponentRef;
         _economyUnitsComponentRef = entitiesGeneralManager.EconomyUnitsComponentRef;
-
-
-
 
         RefreshAll();
     }
@@ -150,22 +156,29 @@ public partial class PhotonPunRPC : MonoBehaviour
 
     #region SetUnit
 
-    internal void SetUnit(in int[] xyCell, UnitTypes unitType) 
+    internal void SetUnit(in int[] xyCell, UnitTypes unitType)
         => _photonView.RPC("SetUnitToMaster", RpcTarget.MasterClient, xyCell, unitType);
 
     [PunRPC]
     private void SetUnitToMaster(int[] xyCell, UnitTypes unitType, PhotonMessageInfo info)
     {
         bool isSetted = _setterUnitMasterComponentRef.Unref().TrySetUnit(xyCell, unitType, info.Sender);
+
+        if (unitType == UnitTypes.King)
+        {
+            if (info.Sender.IsMasterClient) _economyUnitsMasterComponentRef.Unref().IsSettedKingMaster = isSetted;
+            else _economyUnitsMasterComponentRef.Unref().IsSettedKingOther = isSetted;
+        }
+
+
         _photonView.RPC("SetUnitToGeneral", info.Sender, unitType, isSetted);
 
         RefreshAll();
     }
 
     [PunRPC]
-    private void SetUnitToGeneral(UnitTypes unitType,bool isSetted)
+    private void SetUnitToGeneral(UnitTypes unitType, bool isSetted)
     {
-        if (unitType == UnitTypes.King) _economyUnitsComponentRef.Unref().IsSettedKing = isSetted;
         _selectorComponentRef.Unref().SetterUnitDelegate(isSetted);
     }
 
@@ -222,7 +235,7 @@ public partial class PhotonPunRPC : MonoBehaviour
         {
             CellUnitComponent(xyCell).IsProtected = true;
             CellUnitComponent(xyCell).IsRelaxed = false;
-            CellUnitComponent(xyCell).AmountSteps -=_startValues.TAKE_AMOUNT_STEPS;
+            CellUnitComponent(xyCell).AmountSteps -= _startValues.TAKE_AMOUNT_STEPS;
         }
 
         RefreshAll();
@@ -242,7 +255,7 @@ public partial class PhotonPunRPC : MonoBehaviour
         {
             CellUnitComponent(xyCell).IsRelaxed = true;
             CellUnitComponent(xyCell).IsProtected = false;
-            CellUnitComponent(xyCell).AmountSteps -=_startValues.TAKE_AMOUNT_STEPS;
+            CellUnitComponent(xyCell).AmountSteps -= _startValues.TAKE_AMOUNT_STEPS;
         }
 
         RefreshAll();
@@ -258,7 +271,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void BuildMaster(int[] xyCell, BuildingTypes buildingType, PhotonMessageInfo info)
     {
-        var isSetted = _builderCellMasterComponentRef.Unref().Build(xyCell, buildingType, info.Sender);
+        _builderCellMasterComponentRef.Unref().Build(xyCell, buildingType, info.Sender);
 
         RefreshAll();
     }
@@ -275,15 +288,15 @@ public partial class PhotonPunRPC : MonoBehaviour
     {
         if (info.Sender.IsMasterClient)
         {
-            if(_economyMasterComponentRef.Unref().GoldMaster >= _startValues.GoldForBuyingPawn)
+            if (_economyMasterComponentRef.Unref().GoldMaster >= _startValues.GoldForBuyingPawn)
             {
                 _economyMasterComponentRef.Unref().TakeGoldMaster(_startValues.GoldForBuyingPawn);
-                _economyUnitsMasterComponentRef.Unref().AmountUnitPawnMaster +=_startValues.AMOUNT_FOR_TAKE_UNIT;
+                _economyUnitsMasterComponentRef.Unref().AmountUnitPawnMaster += _startValues.AMOUNT_FOR_TAKE_UNIT;
             }
         }
         else
         {
-            if(_economyMasterComponentRef.Unref().GoldOther >= _startValues.GoldForBuyingPawn)
+            if (_economyMasterComponentRef.Unref().GoldOther >= _startValues.GoldForBuyingPawn)
             {
                 _economyMasterComponentRef.Unref().TakeGoldOther(_startValues.GoldForBuyingPawn);
                 _economyUnitsMasterComponentRef.Unref().AmountUnitPawnOther += _startValues.AMOUNT_FOR_TAKE_UNIT;
@@ -292,13 +305,6 @@ public partial class PhotonPunRPC : MonoBehaviour
 
         RefreshAll();
     }
-
-    #endregion
-
-
-    #region RefreshAll
-
-    
 
     #endregion
 

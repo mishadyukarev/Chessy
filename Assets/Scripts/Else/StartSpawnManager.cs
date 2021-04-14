@@ -39,26 +39,17 @@ internal class StartSpawnManager
 
     #region Canvas
 
-    #region UI
 
     internal TextMeshProUGUI GoldAmmountText;
     internal Image RightUpUnitImage;
     internal Image RightMiddleUnitImage;
-    internal Image RightDownUnitImage;
+    internal Image AbilitiesImage;
     internal Image LeftEconomyImage;
 
-    #endregion
 
-
-    #region Buttons
 
     internal Button Button0;
     internal Button Button1;
-
-    internal Button ButtonAbility1;
-    internal Button ButtonAbility2;
-    internal Button ButtonAbility3;
-    internal Button ButtonAbility4;
 
     internal Button BuyPawnButton;
     internal Button ImproveCityButton;
@@ -66,10 +57,28 @@ internal class StartSpawnManager
     internal Button ButtonLeave;
     internal Button RequestDoneButton;
 
-    #endregion
 
     #endregion
 
+
+    #region Buttons Ability
+
+    internal Button BuildingAbilityButton0;
+
+    internal Button BuildingAbilityButton1;
+    internal Button BuildingAbilityButton2;
+    internal Button BuildingAbilityButton3;
+    internal Button BuildingAbilityButton4;
+
+    internal Button UniqueAbilityButton1;
+    internal Button UniqueAbilityButton2;
+    internal Button UniqueAbilityButton3;
+    internal Button UniqueAbilityButton4;
+
+    internal Button StandartAbilityButton1;
+    internal Button StandartAbilityButton2;
+
+    #endregion
 
 
     internal StartSpawnManager(SupportManager supportManager, out Transform parentTransformScrips)
@@ -94,23 +103,45 @@ internal class StartSpawnManager
         GoldAmmountText = GameObject.Find("GoldAmmount").GetComponent<TextMeshProUGUI>();
         RightUpUnitImage = GameObject.Find("RightUpUnitImage").GetComponent<Image>();
         RightMiddleUnitImage = GameObject.Find("RightMiddleUnitImage").GetComponent<Image>();
-        RightDownUnitImage = GameObject.Find("RightDownUnitImage").GetComponent<Image>();
+
         LeftEconomyImage = GameObject.Find("LeftEconomy").GetComponent<Image>();
-
-        #endregion
-
 
         Button0 = GameObject.Find("Button0").GetComponent<Button>();
         Button1 = GameObject.Find("Button1").GetComponent<Button>();
         RequestDoneButton = GameObject.Find("ButtonDone").GetComponent<Button>();
-        ButtonAbility1 = GameObject.Find("ButtonAbility1").GetComponent<Button>();
-        ButtonAbility2 = GameObject.Find("ButtonAbility2").GetComponent<Button>();
-        ButtonAbility3 = GameObject.Find("ButtonAbility3").GetComponent<Button>();
-        ButtonAbility4 = GameObject.Find("ButtonAbility4").GetComponent<Button>();
+
         ButtonLeave = GameObject.Find("ButtonLeave").GetComponent<Button>();
         BuyPawnButton = GameObject.Find("BuyPawnButton").GetComponent<Button>();
         ImproveCityButton = GameObject.Find("ImproveCityButton").GetComponent<Button>();
+
+        #endregion
+
+
+
+        #region Abilities
+
+        BuildingAbilityButton0 = GameObject.Find("BuildingAbilityButton0").GetComponent<Button>();
+
+        BuildingAbilityButton1 = GameObject.Find("BuildingAbilityButton1").GetComponent<Button>();
+        BuildingAbilityButton2 = GameObject.Find("BuildingAbilityButton2").GetComponent<Button>();
+        BuildingAbilityButton3 = GameObject.Find("BuildingAbilityButton3").GetComponent<Button>();
+        BuildingAbilityButton4 = GameObject.Find("BuildingAbilityButton4").GetComponent<Button>();
+
+        StandartAbilityButton1 = GameObject.Find("StandartAbilityButton1").GetComponent<Button>();
+        StandartAbilityButton2 = GameObject.Find("StandartAbilityButton2").GetComponent<Button>();
+
+        UniqueAbilityButton1 = GameObject.Find("UniqueAbilityButton1").GetComponent<Button>();
+        UniqueAbilityButton2 = GameObject.Find("UniqueAbilityButton2").GetComponent<Button>();
+        UniqueAbilityButton3 = GameObject.Find("UniqueAbilityButton3").GetComponent<Button>();
+        UniqueAbilityButton4 = GameObject.Find("UniqueAbilityButton4").GetComponent<Button>();
+
+
+        AbilitiesImage = GameObject.Find("RightDownUnitImage").GetComponent<Image>();
+
+        #endregion
+
     }
+
     public void SpawnCells(ResourcesLoadManager resourcesLoadManager, StartValuesConfig startValues)
     {
         var cellGO = resourcesLoadManager.CellGO;

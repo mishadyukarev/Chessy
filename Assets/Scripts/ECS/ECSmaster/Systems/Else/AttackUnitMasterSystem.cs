@@ -27,7 +27,7 @@ public class AttackUnitMasterSystem : CellReductionSystem, IEcsRunSystem
         {
             if (_cellManager.TryFindCellInList(xySelectedCellIN, xyAvailableCellsForAttack))
             {
-                CellUnitComponent(xyPreviousCellIN).AmountSteps -= _startValues.AmountStepsPawn;
+                CellUnitComponent(xyPreviousCellIN).AmountSteps -= _startValues.AMOUNT_STEPS_PAWN;
                 CellUnitComponent(xyPreviousCellIN).IsProtected = false;
                 CellUnitComponent(xyPreviousCellIN).IsRelaxed = false;
 
@@ -58,12 +58,15 @@ public class AttackUnitMasterSystem : CellReductionSystem, IEcsRunSystem
                         break;
 
                     case UnitTypes.King:
+
+                        damageToSelelected += _startValues.PowerDamageKing;
+
                         break;
 
                     case UnitTypes.Pawn:
 
                         damageToSelelected += _startValues.PowerDamagePawn;
-                        if (CellUnitComponent(xySelectedCellIN).IsProtected) damageToSelelected -= _startValues.ProtectionPawn;
+
 
                         break;
 
@@ -77,9 +80,15 @@ public class AttackUnitMasterSystem : CellReductionSystem, IEcsRunSystem
                         break;
 
                     case UnitTypes.King:
+
+                        if (CellUnitComponent(xySelectedCellIN).IsProtected) damageToSelelected -= _startValues.ProtectionKing;
+
                         break;
 
                     case UnitTypes.Pawn:
+
+                        if (CellUnitComponent(xySelectedCellIN).IsProtected) damageToSelelected -= _startValues.ProtectionPawn;
+
                         break;
 
                     default:
@@ -97,6 +106,7 @@ public class AttackUnitMasterSystem : CellReductionSystem, IEcsRunSystem
 
                 if (CellUnitComponent(xySelectedCellIN).AmountHealth <= _startValues.AMOUNT_FOR_DEATH)
                 {
+                    CellUnitComponent(xySelectedCellIN).ResetUnit();
                     CellUnitComponent(xySelectedCellIN).SetUnit(CellUnitComponent(xyPreviousCellIN));
                     CellUnitComponent(xyPreviousCellIN).ResetUnit();
                 }

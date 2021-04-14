@@ -34,6 +34,8 @@ internal struct EconomyMasterComponent
         private int _amountKingOther;
         private int _amountUnitPawnMaster;
         private int _amountUnitPawnOther;
+        private bool _isSettedKingMaster;
+        private bool _isSettedKingOther;
 
         internal int AmountKingMaster
         {
@@ -55,15 +57,26 @@ internal struct EconomyMasterComponent
             get { return _amountUnitPawnOther; }
             set { _amountUnitPawnOther= value; }
         }
-                
+        internal bool IsSettedKingMaster
+        {
+            get { return _isSettedKingMaster; }
+            set { _isSettedKingMaster = value; }
+        }
+        internal bool IsSettedKingOther
+        {
+            get { return _isSettedKingOther; }
+            set { _isSettedKingOther = value; }
+        }
 
 
         internal UnitsMasterComponent(StartValuesConfig startValues)
         {
-            _amountKingMaster = startValues.AmountKingMaster;
-            _amountKingOther = startValues.AmountKingOther;
+            _amountKingMaster = startValues.AMOUNT_KING_MASTER;
+            _amountKingOther = startValues.AMOUNT_KING_OTHER;
             _amountUnitPawnMaster = startValues.AmountPawnMaster;
             _amountUnitPawnOther = startValues.AmountPawnOther;
+            _isSettedKingMaster = default;
+            _isSettedKingOther = default;
         }
     }
 
@@ -77,7 +90,10 @@ internal struct EconomyMasterComponent
         private int[] _xySettedCityOther;
 
         internal bool IsBuildedCityMaster
-        { get { return _isSettedCityMaster; } set { _isSettedCityMaster = value; } }
+        {
+            get { return _isSettedCityMaster; }
+            set { _isSettedCityMaster = value; }
+        }
         internal bool IsBuildedCityOther
         { get { return _isSettedCityOther; } set { _isSettedCityOther = value; } }
         internal int[] XYsettedCityMaster

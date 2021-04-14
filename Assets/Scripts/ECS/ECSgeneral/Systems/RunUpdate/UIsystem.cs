@@ -18,14 +18,27 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
 
     private Button _button0;
     private Button _button1;
-    private Button _buttonAbility1;
-    private Button _buttonAbility2;
-    private Button _buttonAbility3;
-    private Button _buttonAbility4;
     private Button _buyPawnButton;
     private Button _improveCityButton;
     private Button _buttonLeave;
     private Button _requestDoneButton;
+
+
+
+    private Button _buildingAbilityButton0;
+    private Button _buildingAbilityButton1;
+    private Button _buildingAbilityButton2;
+    private Button _buildingAbilityButton3;
+    private Button _buildingAbilityButton4;
+
+    private Button _standartAbilityButton1;
+    private Button _standartAbilityButton2;
+
+    private Button _uniqueAbilityButton1;
+    private Button _uniqueAbilityButton2;
+    private Button _uniqueAbilityButton3;
+    private Button _uniqueAbilityButton4;
+
 
 
     private EcsComponentRef<ButtonComponent> _buttonComponentRef;
@@ -70,7 +83,7 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
 
         _rightUpUnitImage = startSpawnManager.RightUpUnitImage;
         _rightMiddleUnitImage = startSpawnManager.RightMiddleUnitImage;
-        _rightDownUnitImage = startSpawnManager.RightDownUnitImage;
+        _rightDownUnitImage = startSpawnManager.AbilitiesImage;
         _leftEconomyImage = startSpawnManager.LeftEconomyImage;
 
         _rightMiddleUnitImage.gameObject.SetActive(false);
@@ -78,14 +91,11 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
         #endregion
 
 
-        #region Buttons
-
         _button0 = startSpawnManager.Button0;
-        _button0.onClick.AddListener(delegate { Button0(true, false); });
+        _button0.onClick.AddListener(delegate { GetUnit(UnitTypes.King); });
 
         _button1 = startSpawnManager.Button1;
-        _button1.onClick.AddListener(delegate { Button1(true, false); });
-        _buttonComponentRef.Unref().Button1Delegate = Button1;
+        _button1.onClick.AddListener(delegate { GetUnit(UnitTypes.Pawn); });
 
 
         _buttonComponentRef.Unref().DonerDelegate = Doner;
@@ -93,28 +103,39 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
         _requestDoneButton.onClick.AddListener(delegate { Doner(true, false); });
 
 
-        _buttonAbility1 = startSpawnManager.ButtonAbility1;
-        _buttonAbility1.onClick.AddListener(delegate { BittonAbility1(); });
+        #region Abilities
 
-        _buttonAbility2 = startSpawnManager.ButtonAbility2;
-        _buttonAbility2.onClick.AddListener(delegate { BittonAbility2(); });
+        _buildingAbilityButton0 = startSpawnManager.BuildingAbilityButton0;
+        _buildingAbilityButton0.onClick.AddListener(delegate { Build(BuildingTypes.City); });
 
-        _buttonAbility3 = startSpawnManager.ButtonAbility3;
-        _buttonAbility3.onClick.AddListener(delegate { BittonAbility3(); });
+        _buildingAbilityButton1 = startSpawnManager.BuildingAbilityButton1;
+        _buildingAbilityButton2 = startSpawnManager.BuildingAbilityButton2;
+        _buildingAbilityButton3 = startSpawnManager.BuildingAbilityButton3;
+        _buildingAbilityButton4 = startSpawnManager.BuildingAbilityButton4;
 
-        _buttonAbility4 = startSpawnManager.ButtonAbility4;
-        _buttonAbility4.onClick.AddListener(delegate { BittonAbility4(); });
+        _standartAbilityButton1 = startSpawnManager.StandartAbilityButton1;
+        _standartAbilityButton1.onClick.AddListener(delegate { StandartAbilityButton1(); });
+        _standartAbilityButton2 = startSpawnManager.StandartAbilityButton2;
+        _standartAbilityButton2.onClick.AddListener(delegate { StandartAbilityButton2(); });
+
+        _uniqueAbilityButton1 = startSpawnManager.UniqueAbilityButton1;
+        _uniqueAbilityButton2 = startSpawnManager.UniqueAbilityButton2;
+        _uniqueAbilityButton3 = startSpawnManager.UniqueAbilityButton3;
+        _uniqueAbilityButton4 = startSpawnManager.UniqueAbilityButton4;
+
+
+        #endregion
+
 
         _buttonLeave = startSpawnManager.ButtonLeave;
         _buttonLeave.onClick.AddListener(delegate { Leave(); });
 
         _buyPawnButton = startSpawnManager.BuyPawnButton;
-        _buyPawnButton.onClick.AddListener(delegate { BuyPawn(); });
+        _buyPawnButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Pawn); });
 
         _improveCityButton = startSpawnManager.ImproveCityButton;
         _improveCityButton.onClick.AddListener(delegate { ImproveCity(); });
 
-        #endregion
     }
 
 
@@ -126,123 +147,125 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
 
         var xySelectedCell = _selectorComponetRef.Unref().XYselectedCell;
 
-        if (CellUnitComponent(xySelectedCell).HaveUnit)
+
+        if (CellUnitComponent(xySelectedCell).IsMine)
         {
-            if (CellUnitComponent(xySelectedCell).IsMine)
+            switch (CellUnitComponent(xySelectedCell).UnitType)
             {
-                switch (CellUnitComponent(xySelectedCell).UnitType)
-                {
-                    case UnitTypes.None:
-                        ActiveRightDown(false);
-                        break;
+                case UnitTypes.None:
 
-                    case UnitTypes.King:
-                        break;
+                    ActiveAbilities(false);
 
-                    case UnitTypes.Pawn:
-                        ActiveRightDown(true);
-
-                        if (CellUnitComponent(xySelectedCell).IsProtected) _buttonAbility1.image.color = Color.yellow;
-                        else _buttonAbility1.image.color = Color.white;
-
-                        if (CellUnitComponent(xySelectedCell).IsRelaxed) _buttonAbility2.image.color = Color.green;
-                        else _buttonAbility2.image.color = Color.white;
-
-                        if (_economyBuildingsComponentRef.Unref().IsSettedCity) _buttonAbility4.gameObject.SetActive(false);
-                        else _buttonAbility4.gameObject.SetActive(true);
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-        }
-
-        else
-        {
-            ActiveRightDown(false);
-        }
-
-
-        if (CellBuildingComponent(xySelectedCell).HaveBuilding)
-        {
-            switch (CellBuildingComponent(xySelectedCell).BuildingType)
-            {
-                case BuildingTypes.None:
-                    ActiveLeftEconomy(false);
                     break;
 
-                case BuildingTypes.City:
-                    ActiveLeftEconomy(true);
+                case UnitTypes.King:
+
+                    ActiveAbilities(true);
+
+
+                    if (_economyBuildingsComponentRef.Unref().IsSettedCity) _buildingAbilityButton0.gameObject.SetActive(false);
+                    else _buildingAbilityButton0.gameObject.SetActive(true);
+
+                    if (CellUnitComponent(xySelectedCell).IsProtected) _standartAbilityButton1.image.color = Color.yellow;
+                    else _standartAbilityButton1.image.color = Color.white;
+
+                    if (CellUnitComponent(xySelectedCell).IsRelaxed) _standartAbilityButton2.image.color = Color.green;
+                    else _standartAbilityButton2.image.color = Color.white;
+
+                    break;
+
+                case UnitTypes.Pawn:
+
+                    ActiveAbilities(true);
+
+
+
+                    if (_economyBuildingsComponentRef.Unref().IsSettedCity) _buildingAbilityButton0.gameObject.SetActive(false);
+                    else _buildingAbilityButton0.gameObject.SetActive(true);
+
+                    if (CellUnitComponent(xySelectedCell).IsProtected) _standartAbilityButton1.image.color = Color.yellow;
+                    else _standartAbilityButton1.image.color = Color.white;
+
+                    if (CellUnitComponent(xySelectedCell).IsRelaxed) _standartAbilityButton2.image.color = Color.green;
+                    else _standartAbilityButton2.image.color = Color.white;
+
                     break;
 
                 default:
                     break;
+
+
+                    void ActiveAbilities(bool isActive)
+                    {
+                        _buildingAbilityButton0.gameObject.SetActive(isActive);
+
+                        _buildingAbilityButton1.gameObject.SetActive(isActive);
+                        _buildingAbilityButton2.gameObject.SetActive(isActive);
+                        _buildingAbilityButton3.gameObject.SetActive(isActive);
+                        _buildingAbilityButton4.gameObject.SetActive(isActive);
+
+                        _standartAbilityButton1.gameObject.SetActive(isActive);
+                        _standartAbilityButton2.gameObject.SetActive(isActive);
+
+                        _uniqueAbilityButton1.gameObject.SetActive(isActive);
+                        _uniqueAbilityButton2.gameObject.SetActive(isActive);
+                        _uniqueAbilityButton3.gameObject.SetActive(isActive);
+                        _uniqueAbilityButton4.gameObject.SetActive(isActive);
+
+                        _rightDownUnitImage.gameObject.SetActive(isActive);
+                    }
             }
         }
 
-        else
+
+        switch (CellBuildingComponent(xySelectedCell).BuildingType)
         {
-            ActiveLeftEconomy(false);
+            case BuildingTypes.None:
+                ActiveLeftEconomy(false);
+                break;
+
+            case BuildingTypes.City:
+                ActiveLeftEconomy(true);
+                break;
+
+            default:
+                break;
+
+                void ActiveLeftEconomy(bool isActive)
+                {
+                    _leftEconomyImage.gameObject.SetActive(isActive);
+                    _buyPawnButton.gameObject.SetActive(isActive);
+                    _improveCityButton.gameObject.SetActive(isActive);
+                }
         }
     }
 
-    private void ActiveRightDown(bool isActive)
-    {
-        _buttonAbility1.gameObject.SetActive(isActive);
-        _buttonAbility2.gameObject.SetActive(isActive);
-        _buttonAbility3.gameObject.SetActive(isActive);
-        _buttonAbility4.gameObject.SetActive(isActive);
 
-        _rightDownUnitImage.gameObject.SetActive(isActive);
-    }
-
-    private void ActiveLeftEconomy(bool isActive)
-    {
-        _leftEconomyImage.gameObject.SetActive(isActive);
-        _buyPawnButton.gameObject.SetActive(isActive);
-        _improveCityButton.gameObject.SetActive(isActive);
-    }
 
 
     #region Button Methods
 
-    private void Button0(bool isRequest, bool isActive)
-    {
-        _photonPunRPC.GetUnit(UnitTypes.King);
-    }
 
-    private void Button1(bool isRequest, bool isActive)
-    {
-        if (isRequest) _photonPunRPC.GetUnit(UnitTypes.Pawn);
-        else if (isActive) _selectedUnitComponentRef.Unref().SetSelectedUnit(UnitTypes.Pawn);
-    }
+    private void GetUnit(UnitTypes unitType) => _photonPunRPC.GetUnit(unitType);
 
-    private void BittonAbility1()
-    {
-        _photonPunRPC.ProtectUnit(_selectorComponentRef.Unref().XYselectedCell);
-    }
-    private void BittonAbility2()
-    {
-        _photonPunRPC.RelaxUnit(_selectorComponentRef.Unref().XYselectedCell);
-    }
-    private void BittonAbility3()
-    {
 
-    }
-    private void BittonAbility4()
-    {
-        _photonPunRPC.Build(_selectorComponentRef.Unref().XYselectedCell, BuildingTypes.City);
-    }
+    #region Abilities
 
-    private void BuyPawn()
-    {
-        _photonPunRPC.BuyUnit(UnitTypes.Pawn);
-    }
-    private void ImproveCity()
-    {
+    private void Build(BuildingTypes buildingType) => _photonPunRPC.Build(_selectorComponentRef.Unref().XYselectedCell, buildingType);
 
-    }
+    private void StandartAbilityButton1() => _photonPunRPC.ProtectUnit(_selectorComponentRef.Unref().XYselectedCell);
+    private void StandartAbilityButton2() => _photonPunRPC.RelaxUnit(_selectorComponentRef.Unref().XYselectedCell);
+
+    #endregion
+
+
+    #region Economy
+
+    private void BuyUnit(UnitTypes unitType) => _photonPunRPC.BuyUnit(unitType);
+    private void ImproveCity() { }
+
+    #endregion
+
 
     private void Leave() => _photonManagerScene.Leave();
 

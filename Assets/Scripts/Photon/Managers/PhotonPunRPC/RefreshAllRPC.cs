@@ -1,4 +1,5 @@
-﻿using Leopotam.Ecs;
+﻿using ExitGames.Client.Photon.StructWrapping;
+using Leopotam.Ecs;
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,6 +41,7 @@ public partial class PhotonPunRPC : MonoBehaviour
             _economyMasterComponentRef.Unref().GoldOther,
             _economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther,
             _economyBuildingsMasterComponentRef.Unref().XYsettedCityOther,
+                        _economyUnitsMasterComponentRef.Unref().IsSettedKingOther,
         };
         _photonView.RPC("RefreshEconomyGeneral", RpcTarget.Others, objects);
 
@@ -48,6 +50,7 @@ public partial class PhotonPunRPC : MonoBehaviour
             _economyMasterComponentRef.Unref().GoldMaster,
             _economyBuildingsMasterComponentRef.Unref().IsBuildedCityMaster,
             _economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster,
+            _economyUnitsMasterComponentRef.Unref().IsSettedKingMaster,
         };
         _photonView.RPC("RefreshEconomyGeneral", RpcTarget.MasterClient, objects);
     }
@@ -94,10 +97,13 @@ public partial class PhotonPunRPC : MonoBehaviour
         var gold = (int)objects[0];
         var isSettedCity = (bool)objects[1];
         int[] xySettedCity = (int[])objects[2];
+        bool isSettedKing = (bool)objects[3];
 
         _economyComponentRef.Unref().Gold = gold;
         _economyBuildingsComponentRef.Unref().IsSettedCity = isSettedCity;
         _economyBuildingsComponentRef.Unref().XYsettedCity = xySettedCity;
+
+        _economyUnitsComponentRef.Unref().IsSettedKing = isSettedKing;
     }
 
 }

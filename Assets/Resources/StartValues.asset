@@ -22,10 +22,12 @@ MonoBehaviour:
   GoldForBuyingPawn: 50
   AmountPawnMaster: 1
   AmountPawnOther: 3
-  AmountStepsPawn: 1
   AmountHealthPawn: 100
-  PawerDamagePawn: 50
+  PowerDamagePawn: 50
   ProtectionPawn: 10
+  AmountHealthKing: 200
+  PowerDamageKing: 70
+  ProtectionKing: 10
   ProtectionHill: 10
   ProtectionTree: 20
   ProtectionCity: 25
