@@ -12,8 +12,9 @@ public class StartValuesConfig : ScriptableObject
 
 
     [Space(12)]
-    [Range(0, 100)] [SerializeField] internal int PercentTree = 30;
-    [Range(0, 100)] [SerializeField] internal int PercentHill = 10;
+    [Range(0, 100)] [SerializeField] internal int PercentFood = 10;
+    [Range(0, 100)] [SerializeField] internal int PercentTree = 20;
+    [Range(0, 100)] [SerializeField] internal int PercentHill = 5;
     [Range(0, 100)] [SerializeField] internal int PercentMountain = 2;
 
 

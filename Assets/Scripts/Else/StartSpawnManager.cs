@@ -23,6 +23,7 @@ internal class StartSpawnManager
     internal SpriteRenderer[,] UnitPawnsGOsr;
     internal SpriteRenderer[,] UnitKingsGOsr;
 
+    internal GameObject[,] FoodsGO;
     internal GameObject[,] MountainsGO;
     internal GameObject[,] TreesGO;
     internal GameObject[,] HillsGO;
@@ -73,7 +74,6 @@ internal class StartSpawnManager
     internal Button UniqueAbilityButton1;
     internal Button UniqueAbilityButton2;
     internal Button UniqueAbilityButton3;
-    internal Button UniqueAbilityButton4;
 
     internal Button StandartAbilityButton1;
     internal Button StandartAbilityButton2;
@@ -92,8 +92,6 @@ internal class StartSpawnManager
 
         SpawnCells(supportManager.ResourcesLoadManager, supportManager.StartValuesConfig);
         SpawnUI();
-
-
     }
 
     private void SpawnUI()
@@ -133,7 +131,6 @@ internal class StartSpawnManager
         UniqueAbilityButton1 = GameObject.Find("UniqueAbilityButton1").GetComponent<Button>();
         UniqueAbilityButton2 = GameObject.Find("UniqueAbilityButton2").GetComponent<Button>();
         UniqueAbilityButton3 = GameObject.Find("UniqueAbilityButton3").GetComponent<Button>();
-        UniqueAbilityButton4 = GameObject.Find("UniqueAbilityButton4").GetComponent<Button>();
 
 
         AbilitiesImage = GameObject.Find("RightDownUnitImage").GetComponent<Image>();
@@ -150,6 +147,7 @@ internal class StartSpawnManager
 
         _cellsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
 
+        FoodsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
         MountainsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
         TreesGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
         HillsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
@@ -202,7 +200,7 @@ internal class StartSpawnManager
 
                 _cellsGO[x, y].transform.SetParent(supportParent.transform);
 
-
+                FoodsGO[x, y] = _cellsGO[x, y].transform.Find("FoodP").gameObject;
                 MountainsGO[x, y] = _cellsGO[x, y].transform.Find("MountainP").gameObject;
                 TreesGO[x, y] = _cellsGO[x, y].transform.Find("TreeP").gameObject;
                 HillsGO[x, y] = _cellsGO[x, y].transform.Find("HillP").gameObject;

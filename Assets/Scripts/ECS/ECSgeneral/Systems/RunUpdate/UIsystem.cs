@@ -37,7 +37,6 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
     private Button _uniqueAbilityButton1;
     private Button _uniqueAbilityButton2;
     private Button _uniqueAbilityButton3;
-    private Button _uniqueAbilityButton4;
 
 
 
@@ -121,7 +120,6 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
         _uniqueAbilityButton1 = startSpawnManager.UniqueAbilityButton1;
         _uniqueAbilityButton2 = startSpawnManager.UniqueAbilityButton2;
         _uniqueAbilityButton3 = startSpawnManager.UniqueAbilityButton3;
-        _uniqueAbilityButton4 = startSpawnManager.UniqueAbilityButton4;
 
 
         #endregion
@@ -154,68 +152,60 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
             {
                 case UnitTypes.None:
 
-                    ActiveAbilities(false);
+                    _buildingAbilityButton0.gameObject.SetActive(false);
+                    ActivateBuildingAbilities(false);
+                    ActivateStandartAbilities(false);
 
                     break;
 
                 case UnitTypes.King:
 
-                    ActiveAbilities(true);
-
-
-                    if (_economyBuildingsComponentRef.Unref().IsSettedCity) _buildingAbilityButton0.gameObject.SetActive(false);
-                    else _buildingAbilityButton0.gameObject.SetActive(true);
-
-                    if (CellUnitComponent(xySelectedCell).IsProtected) _standartAbilityButton1.image.color = Color.yellow;
-                    else _standartAbilityButton1.image.color = Color.white;
-
-                    if (CellUnitComponent(xySelectedCell).IsRelaxed) _standartAbilityButton2.image.color = Color.green;
-                    else _standartAbilityButton2.image.color = Color.white;
+                    _buildingAbilityButton0.gameObject.SetActive(false);
+                    ActivateBuildingAbilities(false);
+                    ActivateStandartAbilities(true);
+                    ActivateUniqueAbilities(default, true);
 
                     break;
 
                 case UnitTypes.Pawn:
 
-                    ActiveAbilities(true);
+                    ActivateStandartAbilities(true);
+                    ActivateUniqueAbilities(default, true);
 
-
-
-                    if (_economyBuildingsComponentRef.Unref().IsSettedCity) _buildingAbilityButton0.gameObject.SetActive(false);
-                    else _buildingAbilityButton0.gameObject.SetActive(true);
-
-                    if (CellUnitComponent(xySelectedCell).IsProtected) _standartAbilityButton1.image.color = Color.yellow;
-                    else _standartAbilityButton1.image.color = Color.white;
-
-                    if (CellUnitComponent(xySelectedCell).IsRelaxed) _standartAbilityButton2.image.color = Color.green;
-                    else _standartAbilityButton2.image.color = Color.white;
+                    if (_economyBuildingsComponentRef.Unref().IsSettedCity)
+                    {
+                        _buildingAbilityButton0.gameObject.SetActive(false);
+                        ActivateBuildingAbilities(true);
+                    }
+                    else
+                    {
+                        _buildingAbilityButton0.gameObject.SetActive(true);
+                        ActivateBuildingAbilities(false);
+                    }
 
                     break;
 
                 default:
                     break;
-
-
-                    void ActiveAbilities(bool isActive)
-                    {
-                        _buildingAbilityButton0.gameObject.SetActive(isActive);
-
-                        _buildingAbilityButton1.gameObject.SetActive(isActive);
-                        _buildingAbilityButton2.gameObject.SetActive(isActive);
-                        _buildingAbilityButton3.gameObject.SetActive(isActive);
-                        _buildingAbilityButton4.gameObject.SetActive(isActive);
-
-                        _standartAbilityButton1.gameObject.SetActive(isActive);
-                        _standartAbilityButton2.gameObject.SetActive(isActive);
-
-                        _uniqueAbilityButton1.gameObject.SetActive(isActive);
-                        _uniqueAbilityButton2.gameObject.SetActive(isActive);
-                        _uniqueAbilityButton3.gameObject.SetActive(isActive);
-                        _uniqueAbilityButton4.gameObject.SetActive(isActive);
-
-                        _rightDownUnitImage.gameObject.SetActive(isActive);
-                    }
             }
+
+            if (CellUnitComponent(xySelectedCell).IsProtected) _standartAbilityButton1.image.color = Color.yellow;
+            else _standartAbilityButton1.image.color = Color.white;
+
+            if (CellUnitComponent(xySelectedCell).IsRelaxed) _standartAbilityButton2.image.color = Color.green;
+            else _standartAbilityButton2.image.color = Color.white;
+
         }
+        else
+        {
+            _buildingAbilityButton0.gameObject.SetActive(false);
+            ActivateBuildingAbilities(false);
+            ActivateStandartAbilities(false);
+            ActivateUniqueAbilities(default, false);
+            _rightDownUnitImage.gameObject.SetActive(false);
+        }
+
+
 
 
         switch (CellBuildingComponent(xySelectedCell).BuildingType)
@@ -240,6 +230,48 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
         }
     }
 
+    private void ActivateBuildingAbilities(bool isActive)
+    {
+        _buildingAbilityButton1.gameObject.SetActive(isActive);
+        _buildingAbilityButton2.gameObject.SetActive(isActive);
+        _buildingAbilityButton3.gameObject.SetActive(isActive);
+        _buildingAbilityButton4.gameObject.SetActive(isActive);
+    }
+
+    private void ActivateStandartAbilities(bool isActive)
+    {
+        _standartAbilityButton1.gameObject.SetActive(isActive);
+        _standartAbilityButton2.gameObject.SetActive(isActive);
+    }
+
+    private void ActivateUniqueAbilities(UnitTypes unitType,bool isActive)
+    {
+        switch (unitType)
+        {
+            case UnitTypes.None:
+                break;
+
+            case UnitTypes.King:
+
+
+
+                break;
+
+            case UnitTypes.Pawn:
+
+
+
+                break;
+
+            default:
+                break;
+        }
+
+        _uniqueAbilityButton1.gameObject.SetActive(isActive);
+        _uniqueAbilityButton2.gameObject.SetActive(isActive);
+        _uniqueAbilityButton3.gameObject.SetActive(isActive);
+
+    }
 
 
 
@@ -255,6 +287,8 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
 
     private void StandartAbilityButton1() => _photonPunRPC.ProtectUnit(_selectorComponentRef.Unref().XYselectedCell);
     private void StandartAbilityButton2() => _photonPunRPC.RelaxUnit(_selectorComponentRef.Unref().XYselectedCell);
+
+    private void UniqueAbilityButton1() => _photonPunRPC.RelaxUnit(_selectorComponentRef.Unref().XYselectedCell);
 
     #endregion
 

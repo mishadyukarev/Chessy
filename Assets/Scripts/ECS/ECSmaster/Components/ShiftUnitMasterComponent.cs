@@ -25,7 +25,7 @@ public struct ShiftUnitMasterComponent
     }
 
 
-    public bool CanShiftUnit(int[] xyPreviousCell, int[] xySelectedCell, Player player)
+    public bool ShiftUnit(int[] xyPreviousCell, int[] xySelectedCell, Player player)
     {
         _cellManager.CopyXYinTo(xyPreviousCell, _xyPreviousCellIN);
         _cellManager.CopyXYinTo(xySelectedCell, _xySelectedCellIN);

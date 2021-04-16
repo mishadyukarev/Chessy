@@ -14,8 +14,6 @@ public class ShiftUnitMasterSystem : CellReductionSystem, IEcsRunSystem
     {
         _shiftComponentRef = eCSmanager.EntitiesMasterManager.ShiftUnitComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
-
-        _startValues = supportManager.StartValuesConfig;
     }
 
 
@@ -25,7 +23,7 @@ public class ShiftUnitMasterSystem : CellReductionSystem, IEcsRunSystem
 
         _shiftComponentRef.Unref().Unpack(out int[] xyPreviousCell, out int[] xySelectedCell, out Player fromPlayer);
 
-        _unitPathComponentRef.Unref().GetAvailableCellsForShift(xyPreviousCell, fromPlayer, out List<int[]> xyAvailableCellsForShift);
+        List<int[]> xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCellsForShift(xyPreviousCell, fromPlayer);
 
         if (CellUnitComponent(xyPreviousCell).IsHim(fromPlayer) && CellUnitComponent(xyPreviousCell).HaveAmountSteps)
         {

@@ -8,7 +8,6 @@ public struct UnitPathComponent
     private SystemsGeneralManager _systemsGeneralManager;
 
     private UnitPathTypes _unitPathTypeIN;
-
     private int[] _xyStartCellIN;
     private Player _playerIN;
 
@@ -35,15 +34,12 @@ public struct UnitPathComponent
 
 
 
-    internal void Unpack(out UnitPathTypes unitPathTypeIN)
-    {
-        unitPathTypeIN = _unitPathTypeIN;
-    }
+    internal void Unpack(out UnitPathTypes unitPathTypeIN) => unitPathTypeIN = _unitPathTypeIN;
 
 
 
 
-    internal void GetAvailableCellsForShift(in int[] xyStartCellIN, in Player playerIN, out List<int[]> xyAvailableCellsForShiftOUT)
+    internal List<int[]> GetAvailableCellsForShift(in int[] xyStartCellIN, in Player playerIN)
     {
         _xyAvailableCellsForShiftOUT.Clear();
 
@@ -53,7 +49,7 @@ public struct UnitPathComponent
 
         InvokeSystem();
 
-        xyAvailableCellsForShiftOUT = _cellManager.CopyListXY(_xyAvailableCellsForShiftOUT);
+        return _cellManager.CopyListXY(_xyAvailableCellsForShiftOUT);
     }
 
     internal void UnpackForShift(out int[] xyStartCellIN, out Player playerIN)
@@ -70,7 +66,7 @@ public struct UnitPathComponent
 
 
 
-    internal void GetAvailableCellsForAttack(in int[] xyStartCellIN, in Player playerIN, out List<int[]> xyAvailableCellsForAttackOUT)
+    internal List<int[]> GetAvailableCellsForAttack(in int[] xyStartCellIN, in Player playerIN)
     {
         _xyAvailableCellsForAttackOUT.Clear();
 
@@ -80,7 +76,7 @@ public struct UnitPathComponent
 
         InvokeSystem();
 
-        xyAvailableCellsForAttackOUT = _cellManager.CopyListXY(_xyAvailableCellsForAttackOUT);
+        return _cellManager.CopyListXY(_xyAvailableCellsForAttackOUT);
     }
 
     internal void UnpackForAttack(out int[] xyStartCellIN, out Player playerIN)

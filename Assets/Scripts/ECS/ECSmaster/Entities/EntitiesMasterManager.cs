@@ -73,6 +73,18 @@ public class EntitiesMasterManager : EntitiesManager
                 random = Random.Range(1, 100);
                 if (random <= supportManager.StartValuesConfig.PercentMountain) 
                     eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Mountain);
+
+
+
+                if(!eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().HaveHill
+                    && !eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().HaveMountain
+                    && !eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().HaveTree)
+                {
+                    random = Random.Range(1, 100);
+                    if (random <= supportManager.StartValuesConfig.PercentFood)
+                        eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Food);
+                }
+                
             }
         }
     }

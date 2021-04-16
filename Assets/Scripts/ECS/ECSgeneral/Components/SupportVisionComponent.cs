@@ -116,6 +116,6 @@ public struct SupportVisionComponent
 
     private void InvokeRunSystem()
     {
-        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(SupportVisionSystem));
+        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(SupportVision2System));
     }
 }

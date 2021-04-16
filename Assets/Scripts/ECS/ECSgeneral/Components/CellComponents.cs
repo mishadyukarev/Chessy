@@ -34,25 +34,29 @@ public struct CellComponent
 
     public struct EnvironmentComponent
     {
+        private bool _haveFood;
         private bool _haveMountain;
         private bool _haveTree;
         private bool _haveHill;
+        private GameObject _foodGO;
         private GameObject _mountainGO;
         private GameObject _treeGO;
         private GameObject _hillGO;
 
         internal EnvironmentComponent(int x, int y, StartSpawnManager startSpawnManager)
         {
+            _haveFood = default;
             _haveMountain = default;
             _haveTree = default;
             _haveHill = default;
 
+            _foodGO = startSpawnManager.FoodsGO[x, y];
             _mountainGO = startSpawnManager.MountainsGO[x,y];
             _treeGO = startSpawnManager.TreesGO[x, y];
             _hillGO = startSpawnManager.HillsGO[x, y];
         }
 
-
+        internal bool HaveFood => _haveFood;
         internal bool HaveMountain => _haveMountain;
         internal bool HaveTree => _haveTree;
         internal bool HaveHill => _haveHill;
@@ -74,6 +78,11 @@ public struct CellComponent
                 case EnvironmentTypes.Hill:
                     _haveHill = isActive;
                     _hillGO.SetActive(isActive);
+                    break;
+
+                case EnvironmentTypes.Food:
+                    _haveFood = isActive;
+                    _foodGO.SetActive(isActive);
                     break;
 
                 default:
@@ -107,7 +116,7 @@ public struct CellComponent
             _powerDamage = default;
             _isProtected = default;
             _isRelaxed = default;
-            _player = Instance.MasterClient;
+            _player = default;
             _startValues = startValues;
 
             _unitPawnGO = startSpawnManager.UnitPawnsGO[x,y];
@@ -121,11 +130,31 @@ public struct CellComponent
         internal UnitTypes UnitType => _unitType;
         internal int PowerDamage => _powerDamage;
         internal bool HaveAmountSteps => _amountSteps >= _startValues.TAKE_AMOUNT_STEPS;
-        internal int ActorNumber => _player.ActorNumber;
-        internal bool IsMine => _player.IsLocal;
+        internal int ActorNumber
+        {
+            get
+            {
+                if (_player != default)
+                    return _player.ActorNumber;
+                else return -1;
+            }
+        }
+        internal bool IsMine
+        {
+            get
+            {
+                if (_player != default)
+                    return _player.IsLocal;
+                else return false;
+            }
+        }
+
         internal bool HaveUnit => UnitType != UnitTypes.None;
-        internal bool IsProtected 
-        { get { return _isProtected; } set { _isProtected = value; } }
+        internal bool IsProtected
+        {
+            get { return _isProtected; }
+            set { _isProtected = value; }
+        }
         internal bool IsRelaxed
         {
             get{ return _isRelaxed; }

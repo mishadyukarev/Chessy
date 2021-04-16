@@ -7,7 +7,7 @@ public sealed class Main : MonoBehaviour
 
     #region Variables
 
-    static private Main _instance;
+    private static Main _instance;
 
     private Camera _camera;
     private ECSmanager _eCSmanager;

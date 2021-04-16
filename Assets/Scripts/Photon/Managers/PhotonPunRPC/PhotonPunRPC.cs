@@ -128,6 +128,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     #endregion
 
 
+
     #region GetUnit
 
     internal void GetUnit(UnitTypes unitTypes) => _photonView.RPC("GetUnitToMaster", RpcTarget.MasterClient, unitTypes);
@@ -144,7 +145,6 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void GetUnitToGeneral(UnitTypes unitType, bool isGetted)
     {
-        //_buttonComponentRef.Unref().Button1Delegate(false, isGetted);
         if (isGetted)
         {
             _selectedUnitComponentRef.Unref().SetSelectedUnit(unitType);
@@ -171,15 +171,15 @@ public partial class PhotonPunRPC : MonoBehaviour
         }
 
 
-        _photonView.RPC("SetUnitToGeneral", info.Sender, unitType, isSetted);
+        _photonView.RPC("SetUnitToGeneral", info.Sender, isSetted);
 
         RefreshAll();
     }
 
     [PunRPC]
-    private void SetUnitToGeneral(UnitTypes unitType, bool isSetted)
+    private void SetUnitToGeneral(bool isSetted)
     {
-        _selectorComponentRef.Unref().SetterUnitDelegate(isSetted);
+        if (isSetted) _selectorComponentRef.Unref().SetterUnitDelegate();
     }
 
     #endregion
@@ -193,14 +193,17 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void AttackUnitMaster(int[] xyPreviousCell, int[] xySelectedCell, PhotonMessageInfo info)
     {
-        _attackUnitMasterComponentRef.Unref().AttackUnit(xyPreviousCell, xySelectedCell, info.Sender);
-        var attacked = true;
+        var attacked = _attackUnitMasterComponentRef.Unref().AttackUnit(xyPreviousCell, xySelectedCell, info.Sender);
         _photonView.RPC("AttackUnitGeneral", info.Sender, attacked);
 
         RefreshAll();
     }
 
-    [PunRPC] private void AttackUnitGeneral(bool isAttacked) => _selectorComponentRef.Unref().AttackUnitDelegate(isAttacked);
+    [PunRPC]
+    private void AttackUnitGeneral(bool isAttacked)
+    {
+        if (isAttacked) _selectorComponentRef.Unref().AttackUnitDelegate();
+    }
 
     #endregion
 
@@ -213,13 +216,17 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void ShiftUnitMaster(int[] xyPreviousCell, int[] xySelectedCell, PhotonMessageInfo info)
     {
-        bool isShifted = _shiftUnitMasterComponentRef.Unref().CanShiftUnit(xyPreviousCell, xySelectedCell, info.Sender);
+        bool isShifted = _shiftUnitMasterComponentRef.Unref().ShiftUnit(xyPreviousCell, xySelectedCell, info.Sender);
         _photonView.RPC("ShiftUnitGeneral", info.Sender, isShifted);
 
         RefreshAll();
     }
 
-    [PunRPC] private void ShiftUnitGeneral(bool isShifted) => _selectorComponentRef.Unref().ShiftUnitDelegate(isShifted);
+    [PunRPC]
+    private void ShiftUnitGeneral(bool isShifted)
+    {
+        if (isShifted) _selectorComponentRef.Unref().ShiftUnitDelegate();
+    }
 
     #endregion
 

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using static Main;
 
-public partial class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
+public partial class SupportVision2System : CellReductionSystem, IEcsRunSystem
 {
     private EcsComponentRef<SupportVisionComponent> _supportVisionComponentRef = default;
 
 
-    internal SupportVisionSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
+    internal SupportVision2System(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
     {
         _supportVisionComponentRef = eCSmanager.EntitiesGeneralManager.SupportVisionComponentRef;
     }
@@ -19,19 +19,19 @@ public partial class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
         switch (supportVisionType)
         {
             case SupportVisionTypes.SelectorVision:
-                ActiveSelectorVision(isActive);
+                //ActiveSelectorVision(isActive);
                 break;
 
             case SupportVisionTypes.SpawnVision:
-                ActiveSpawnVision(isActive);
+                //ActiveSpawnVision(isActive);
                 break;
 
             case SupportVisionTypes.WayOfUnitVision:
-                ActiveWayOfUnitVision(isActive);
+                //ActiveWayOfUnitVision(isActive);
                 break;
 
             case SupportVisionTypes.EnemyVision:
-                ActiveEnemyVision(isActive);
+                //ActiveEnemyVision(isActive);
                 break;
 
             default:
@@ -59,18 +59,18 @@ public partial class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
                     {
                         if (Instance.IsMasterClient)
                         {
-                            if(CellComponent(x, y).IsStartMaster)
+                            if (CellComponent(x, y).IsStartMaster)
                             {
                                 CellSupportVisionComponent(x, y).ActiveVision(isActive, SupportVisionTypes.SpawnVision);
-                            }                
+                            }
                         }
 
                         else
                         {
-                            if(CellComponent(x, y).IsStartOther)
+                            if (CellComponent(x, y).IsStartOther)
                             {
                                 CellSupportVisionComponent(x, y).ActiveVision(isActive, SupportVisionTypes.SpawnVision);
-                            }                           
+                            }
                         }
                     }
                 }

@@ -107,8 +107,8 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             {
                 bool isStartMaster = false;
                 bool isStartOther = false;
-                if (y < 3 && x > 2 && x < 12) isStartMaster = true;
-                if (y > 8 && x > 2 && x < 12) isStartOther = true;
+                /*if (y < 3 && x > 2 && x < 12) */isStartMaster = true;
+                /*if (y > 8 && x > 2 && x < 12) */isStartOther = true;
 
                 CellComponent cellComponent = new CellComponent(isStartMaster, isStartOther, cellsGO[x, y]);
 
