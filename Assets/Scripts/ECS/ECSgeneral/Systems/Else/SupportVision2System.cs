@@ -18,19 +18,19 @@ public partial class SupportVision2System : CellReductionSystem, IEcsRunSystem
 
         switch (supportVisionType)
         {
-            case SupportVisionTypes.SelectorVision:
+            case SupportVisionTypes.Selector:
                 //ActiveSelectorVision(isActive);
                 break;
 
-            case SupportVisionTypes.SpawnVision:
+            case SupportVisionTypes.Spawn:
                 //ActiveSpawnVision(isActive);
                 break;
 
-            case SupportVisionTypes.WayOfUnitVision:
+            case SupportVisionTypes.WayOfUnit:
                 //ActiveWayOfUnitVision(isActive);
                 break;
 
-            case SupportVisionTypes.EnemyVision:
+            case SupportVisionTypes.Enemy:
                 //ActiveEnemyVision(isActive);
                 break;
 
@@ -43,8 +43,8 @@ public partial class SupportVision2System : CellReductionSystem, IEcsRunSystem
     {
         _supportVisionComponentRef.Unref().UnpackSelector(out var xyPreviousCell, out int[] xySelectedCell);
 
-        CellSupportVisionComponent(xyPreviousCell).ActiveVision(false, SupportVisionTypes.SelectorVision);
-        CellSupportVisionComponent(xySelectedCell).ActiveVision(isActive, SupportVisionTypes.SelectorVision);
+        CellSupportVisionComponent(xyPreviousCell).ActiveVision(false, SupportVisionTypes.Selector);
+        CellSupportVisionComponent(xySelectedCell).ActiveVision(isActive, SupportVisionTypes.Selector);
     }
 
     private void ActiveSpawnVision(in bool isActive)
@@ -61,7 +61,7 @@ public partial class SupportVision2System : CellReductionSystem, IEcsRunSystem
                         {
                             if (CellComponent(x, y).IsStartMaster)
                             {
-                                CellSupportVisionComponent(x, y).ActiveVision(isActive, SupportVisionTypes.SpawnVision);
+                                CellSupportVisionComponent(x, y).ActiveVision(isActive, SupportVisionTypes.Spawn);
                             }
                         }
 
@@ -69,7 +69,7 @@ public partial class SupportVision2System : CellReductionSystem, IEcsRunSystem
                         {
                             if (CellComponent(x, y).IsStartOther)
                             {
-                                CellSupportVisionComponent(x, y).ActiveVision(isActive, SupportVisionTypes.SpawnVision);
+                                CellSupportVisionComponent(x, y).ActiveVision(isActive, SupportVisionTypes.Spawn);
                             }
                         }
                     }
@@ -77,7 +77,7 @@ public partial class SupportVision2System : CellReductionSystem, IEcsRunSystem
 
                 else if (!CellComponent(x, y).IsSelected)
                 {
-                    CellSupportVisionComponent(x, y).ActiveVision(isActive, SupportVisionTypes.SpawnVision);
+                    CellSupportVisionComponent(x, y).ActiveVision(isActive, SupportVisionTypes.Spawn);
                 }
             }
         }
@@ -89,7 +89,7 @@ public partial class SupportVision2System : CellReductionSystem, IEcsRunSystem
 
         foreach (var xy in xyAvailableCellsForShift)
         {
-            CellSupportVisionComponent(xy).ActiveVision(isActive, SupportVisionTypes.WayOfUnitVision);
+            CellSupportVisionComponent(xy).ActiveVision(isActive, SupportVisionTypes.WayOfUnit);
         }
     }
 
@@ -99,7 +99,7 @@ public partial class SupportVision2System : CellReductionSystem, IEcsRunSystem
 
         foreach (var xy in xyAvailableCellsWithEnemyIN)
         {
-            CellSupportVisionComponent(xy).ActiveVision(isActive, SupportVisionTypes.EnemyVision);
+            CellSupportVisionComponent(xy).ActiveVision(isActive, SupportVisionTypes.Enemy);
         }
     }
 }

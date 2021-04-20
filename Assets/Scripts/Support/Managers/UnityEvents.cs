@@ -1,8 +1,5 @@
-﻿using Leopotam.Ecs;
-using System;
-using UnityEngine;
+﻿using System;
 using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 public class UnityEvents
 {

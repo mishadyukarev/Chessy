@@ -1,18 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
+﻿
 internal struct EconomyMasterComponent
 {
     private int _goldMaster;
     private int _goldOther;
-
-    internal int GoldMaster => _goldMaster;
-    internal int GoldOther => _goldOther;
-
 
     internal EconomyMasterComponent(StartValuesConfig startValues)
     {
@@ -21,11 +11,16 @@ internal struct EconomyMasterComponent
     }
 
 
-    internal int AddGoldMaster(int addGold) => _goldMaster += addGold;
-    internal int AddGoldOther(int addGold) => _goldOther += addGold;
-
-    internal int TakeGoldMaster(int takeGold) => _goldMaster -= takeGold;
-    internal int TakeGoldOther(int takeGold) => _goldOther -= takeGold;
+    internal int GoldMaster
+    {
+        get { return _goldMaster; }
+        set { _goldMaster = value; }
+    }
+    internal int GoldOther
+    {
+        get { return _goldOther; }
+        set { _goldOther = value; }
+    }
 
 
     internal struct UnitsMasterComponent
@@ -36,6 +31,17 @@ internal struct EconomyMasterComponent
         private int _amountUnitPawnOther;
         private bool _isSettedKingMaster;
         private bool _isSettedKingOther;
+
+        internal UnitsMasterComponent(StartValuesConfig startValues)
+        {
+            _amountKingMaster = startValues.AMOUNT_KING_MASTER;
+            _amountKingOther = startValues.AMOUNT_KING_OTHER;
+            _amountUnitPawnMaster = startValues.AmountPawnMaster;
+            _amountUnitPawnOther = startValues.AmountPawnOther;
+            _isSettedKingMaster = default;
+            _isSettedKingOther = default;
+        }
+
 
         internal int AmountKingMaster
         {
@@ -53,9 +59,9 @@ internal struct EconomyMasterComponent
             set { _amountUnitPawnMaster = value; }
         }
         internal int AmountUnitPawnOther
-        { 
+        {
             get { return _amountUnitPawnOther; }
-            set { _amountUnitPawnOther= value; }
+            set { _amountUnitPawnOther = value; }
         }
         internal bool IsSettedKingMaster
         {
@@ -66,17 +72,6 @@ internal struct EconomyMasterComponent
         {
             get { return _isSettedKingOther; }
             set { _isSettedKingOther = value; }
-        }
-
-
-        internal UnitsMasterComponent(StartValuesConfig startValues)
-        {
-            _amountKingMaster = startValues.AMOUNT_KING_MASTER;
-            _amountKingOther = startValues.AMOUNT_KING_OTHER;
-            _amountUnitPawnMaster = startValues.AmountPawnMaster;
-            _amountUnitPawnOther = startValues.AmountPawnOther;
-            _isSettedKingMaster = default;
-            _isSettedKingOther = default;
         }
     }
 
@@ -89,24 +84,34 @@ internal struct EconomyMasterComponent
         private int[] _xySettedCityMaster;
         private int[] _xySettedCityOther;
 
-        internal bool IsBuildedCityMaster
-        {
-            get { return _isSettedCityMaster; }
-            set { _isSettedCityMaster = value; }
-        }
-        internal bool IsBuildedCityOther
-        { get { return _isSettedCityOther; } set { _isSettedCityOther = value; } }
-        internal int[] XYsettedCityMaster
-        { get { return _xySettedCityMaster; } set { _xySettedCityMaster = value; } }
-        internal int[] XYsettedCityOther
-        { get { return _xySettedCityOther; } set { _xySettedCityOther = value; } }
-
         internal BuildingsMasterComponent(StartValuesConfig nameValueManager)
         {
             _isSettedCityMaster = default;
             _isSettedCityOther = default;
             _xySettedCityMaster = new int[nameValueManager.XY_FOR_ARRAY];
             _xySettedCityOther = new int[nameValueManager.XY_FOR_ARRAY];
+        }
+
+
+        internal bool IsBuildedCityMaster
+        {
+            get { return _isSettedCityMaster; }
+            set { _isSettedCityMaster = value; }
+        }
+        internal bool IsBuildedCityOther
+        {
+            get { return _isSettedCityOther; }
+            set { _isSettedCityOther = value; }
+        }
+        internal int[] XYsettedCityMaster
+        {
+            get { return _xySettedCityMaster; }
+            set { _xySettedCityMaster = value; }
+        }
+        internal int[] XYsettedCityOther
+        {
+            get { return _xySettedCityOther; }
+            set { _xySettedCityOther = value; }
         }
     }
 }

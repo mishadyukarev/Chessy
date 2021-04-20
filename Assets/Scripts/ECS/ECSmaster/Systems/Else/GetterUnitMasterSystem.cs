@@ -1,7 +1,5 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
-using UnityEngine;
-using static Main;
 
 internal class GetterUnitMasterSystem : CellReductionSystem, IEcsRunSystem
 {
@@ -68,7 +66,7 @@ internal class GetterUnitMasterSystem : CellReductionSystem, IEcsRunSystem
             if (_economyCountUnitMasterComponent.Unref().AmountUnitPawnMaster >= _startValues.TAKE_UNIT)
             {
                 _getterUnitMasterComponentRef.Unref().Pack(true);
-               // _economyCountUnitMasterComponent.Unref().AmountUnitPawnMaster -= _startValues.TakeUnit;
+                // _economyCountUnitMasterComponent.Unref().AmountUnitPawnMaster -= _startValues.TakeUnit;
             }
             else _getterUnitMasterComponentRef.Unref().Pack(false);
         }

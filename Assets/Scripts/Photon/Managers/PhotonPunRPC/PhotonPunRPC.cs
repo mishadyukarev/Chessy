@@ -297,7 +297,7 @@ public partial class PhotonPunRPC : MonoBehaviour
         {
             if (_economyMasterComponentRef.Unref().GoldMaster >= _startValues.GoldForBuyingPawn)
             {
-                _economyMasterComponentRef.Unref().TakeGoldMaster(_startValues.GoldForBuyingPawn);
+                _economyMasterComponentRef.Unref().GoldMaster -= _startValues.GoldForBuyingPawn;
                 _economyUnitsMasterComponentRef.Unref().AmountUnitPawnMaster += _startValues.AMOUNT_FOR_TAKE_UNIT;
             }
         }
@@ -305,7 +305,7 @@ public partial class PhotonPunRPC : MonoBehaviour
         {
             if (_economyMasterComponentRef.Unref().GoldOther >= _startValues.GoldForBuyingPawn)
             {
-                _economyMasterComponentRef.Unref().TakeGoldOther(_startValues.GoldForBuyingPawn);
+                _economyMasterComponentRef.Unref().GoldOther -= _startValues.GoldForBuyingPawn;
                 _economyUnitsMasterComponentRef.Unref().AmountUnitPawnOther += _startValues.AMOUNT_FOR_TAKE_UNIT;
             }
         }

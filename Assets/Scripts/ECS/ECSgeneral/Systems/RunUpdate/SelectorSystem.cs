@@ -1,7 +1,6 @@
 ﻿using Leopotam.Ecs;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 using static Main;
 
 public sealed class SelectorSystem : CellReductionSystem, IEcsRunSystem

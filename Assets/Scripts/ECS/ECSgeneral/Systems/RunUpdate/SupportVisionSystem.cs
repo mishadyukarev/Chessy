@@ -17,15 +17,15 @@ internal class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
 
     public void Run()
     {
-        CellSupportVisionComponent(_selectorComponentRef.Unref().XYpreviousCell).ActiveVision(false, SupportVisionTypes.SelectorVision);
+        CellSupportVisionComponent(_selectorComponentRef.Unref().XYpreviousCell).ActiveVision(false, SupportVisionTypes.Selector);
 
         if (CellComponent(_selectorComponentRef.Unref().XYselectedCell).IsSelected)
         {
-            CellSupportVisionComponent(_selectorComponentRef.Unref().XYselectedCell).ActiveVision(true, SupportVisionTypes.SelectorVision);
+            CellSupportVisionComponent(_selectorComponentRef.Unref().XYselectedCell).ActiveVision(true, SupportVisionTypes.Selector);
         }
         else
         {
-            CellSupportVisionComponent(_selectorComponentRef.Unref().XYselectedCell).ActiveVision(false, SupportVisionTypes.SelectorVision);
+            CellSupportVisionComponent(_selectorComponentRef.Unref().XYselectedCell).ActiveVision(false, SupportVisionTypes.Selector);
         }
 
 
@@ -47,7 +47,7 @@ internal class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
                             {
                                 if (CellComponent(x, y).IsStartMaster)
                                 {
-                                    CellSupportVisionComponent(x, y).ActiveVision(true, SupportVisionTypes.SpawnVision);
+                                    CellSupportVisionComponent(x, y).ActiveVision(true, SupportVisionTypes.Spawn);
                                 }
                             }
 
@@ -55,7 +55,7 @@ internal class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
                             {
                                 if (CellComponent(x, y).IsStartOther)
                                 {
-                                    CellSupportVisionComponent(x, y).ActiveVision(true, SupportVisionTypes.SpawnVision);
+                                    CellSupportVisionComponent(x, y).ActiveVision(true, SupportVisionTypes.Spawn);
                                 }
                             }
                         }
@@ -63,7 +63,7 @@ internal class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
 
                     else if (!CellComponent(x, y).IsSelected)
                     {
-                        CellSupportVisionComponent(x, y).ActiveVision(false, SupportVisionTypes.SpawnVision);
+                        CellSupportVisionComponent(x, y).ActiveVision(false, SupportVisionTypes.Spawn);
                     }
                 }
 
@@ -75,18 +75,18 @@ internal class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
         {
             for (int y = 0; y < Ycount; y++)
             {
-                CellSupportVisionComponent(x, y).ActiveVision(false, SupportVisionTypes.WayOfUnitVision);
-                CellSupportVisionComponent(x, y).ActiveVision(false, SupportVisionTypes.EnemyVision);
+                CellSupportVisionComponent(x, y).ActiveVision(false, SupportVisionTypes.WayOfUnit);
+                CellSupportVisionComponent(x, y).ActiveVision(false, SupportVisionTypes.Enemy);
             }
         }
 
         foreach (var xy in _selectorComponentRef.Unref().XYavailableCellsForShift)
         {
-            CellSupportVisionComponent(xy).ActiveVision(true, SupportVisionTypes.WayOfUnitVision);
+            CellSupportVisionComponent(xy).ActiveVision(true, SupportVisionTypes.WayOfUnit);
         }
         foreach (var xy in _selectorComponentRef.Unref().XYavailableCellsForAttack)
         {
-            CellSupportVisionComponent(xy).ActiveVision(true, SupportVisionTypes.EnemyVision);
+            CellSupportVisionComponent(xy).ActiveVision(true, SupportVisionTypes.Enemy);
         }
     }
 }

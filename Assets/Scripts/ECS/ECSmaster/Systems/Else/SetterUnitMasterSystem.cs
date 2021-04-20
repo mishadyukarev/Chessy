@@ -1,9 +1,5 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
-using System;
-using UnityEngine;
-using UnityEngine.Assertions.Must;
-using static Main;
 
 public class SetterUnitMasterSystem : CellReductionSystem, IEcsRunSystem
 {
@@ -47,7 +43,7 @@ public class SetterUnitMasterSystem : CellReductionSystem, IEcsRunSystem
         {
             if (player.IsMasterClient && CellComponent(xyCell).IsStartMaster)
             {
-                CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, _startValues.AmountHealthPawn, _startValues.PowerDamagePawn, _startValues.AMOUNT_STEPS_PAWN,false, false, player);
+                CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, _startValues.AmountHealthPawn, _startValues.PowerDamagePawn, _startValues.AMOUNT_STEPS_PAWN, false, false, player);
                 _economyUnitMasterComponent.Unref().AmountUnitPawnMaster -= _startValues.TAKE_UNIT;
                 _setterUnitMasterComponentRef.Unref().SetValues(true);
             }

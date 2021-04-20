@@ -30,7 +30,7 @@ public abstract class SystemsManager
 
     internal void RunUpdate() => _updateSystems.Run();
 
-    internal void Destroy() =>_updateSystems.Destroy();
+    internal void Destroy() => _updateSystems.Destroy();
 
 
 

@@ -1,7 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
 using System.Collections.Generic;
-using System.Linq;
 
 
 public class ShiftUnitMasterSystem : CellReductionSystem, IEcsRunSystem

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(menuName ="StartValues", fileName = "StartValues")]
+[CreateAssetMenu(menuName = "StartValues", fileName = "StartValues")]
 public class StartValuesConfig : ScriptableObject
 {
     [Space(12)]

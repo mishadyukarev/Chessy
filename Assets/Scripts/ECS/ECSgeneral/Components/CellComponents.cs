@@ -1,7 +1,5 @@
-﻿using Photon.Pun;
-using Photon.Realtime;
+﻿using Photon.Realtime;
 using UnityEngine;
-using static Main;
 
 public struct CellComponent
 {
@@ -10,8 +8,7 @@ public struct CellComponent
     private bool _isSelected;
     private GameObject _cellGO;
 
-
-    internal CellComponent(bool isStartMaster, bool isStartOther,  GameObject cellGO)
+    internal CellComponent(bool isStartMaster, bool isStartOther, GameObject cellGO)
     {
         _isStartMaster = isStartMaster;
         _isStartOther = isStartOther;
@@ -51,10 +48,11 @@ public struct CellComponent
             _haveHill = default;
 
             _foodGO = startSpawnManager.FoodsGO[x, y];
-            _mountainGO = startSpawnManager.MountainsGO[x,y];
+            _mountainGO = startSpawnManager.MountainsGO[x, y];
             _treeGO = startSpawnManager.TreesGO[x, y];
             _hillGO = startSpawnManager.HillsGO[x, y];
         }
+
 
         internal bool HaveFood => _haveFood;
         internal bool HaveMountain => _haveMountain;
@@ -93,6 +91,7 @@ public struct CellComponent
     }
 
 
+
     public struct UnitComponent
     {
         private UnitTypes _unitType;
@@ -119,9 +118,9 @@ public struct CellComponent
             _player = default;
             _startValues = startValues;
 
-            _unitPawnGO = startSpawnManager.UnitPawnsGO[x,y];
+            _unitPawnGO = startSpawnManager.UnitPawnsGO[x, y];
             _unitKingGO = startSpawnManager.UnitKingsGO[x, y];
-            _unitPawnSpriteRender = startSpawnManager.UnitPawnsGOsr[x,y];
+            _unitPawnSpriteRender = startSpawnManager.UnitPawnsGOsr[x, y];
             _unitKingSpriteRender = startSpawnManager.UnitKingsGOsr[x, y];
 
         }
@@ -148,7 +147,6 @@ public struct CellComponent
                 else return false;
             }
         }
-
         internal bool HaveUnit => UnitType != UnitTypes.None;
         internal bool IsProtected
         {
@@ -157,7 +155,7 @@ public struct CellComponent
         }
         internal bool IsRelaxed
         {
-            get{ return _isRelaxed; }
+            get { return _isRelaxed; }
             set { _isRelaxed = value; }
         }
         internal int AmountSteps
@@ -177,7 +175,6 @@ public struct CellComponent
             if (player.IsMasterClient) unitSpriteRender.color = Color.blue;
             else unitSpriteRender.color = Color.yellow;
         }
-
         internal void RefreshAmountSteps(int amountSteps = -1)
         {
             if (amountSteps == -1)
@@ -221,7 +218,6 @@ public struct CellComponent
             }
 
         }
-
         internal void ResetUnit()
         {
             UnitTypes unitType = default;
@@ -232,9 +228,8 @@ public struct CellComponent
             bool isRelaxed = default;
             Player player = default;
 
-            SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed,  player);
+            SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed, player);
         }
-
         internal void SetUnit(in UnitComponent cellUnitComponent)
         {
             var unitType = cellUnitComponent._unitType;
@@ -247,7 +242,6 @@ public struct CellComponent
 
             SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed, player);
         }
-
         internal void SetUnit(in UnitTypes unitType, in int amountHealth, in int powerDamage, in int amountSteps, in bool isProtected, in bool isRelaxed, in Player player)
         {
             _unitType = unitType;
@@ -281,7 +275,6 @@ public struct CellComponent
                     break;
             }
         }
-
         internal void ActiveVisionCell(bool isActive, UnitTypes unitType, Player player)
         {
             switch (unitType)
@@ -303,9 +296,9 @@ public struct CellComponent
                     break;
             }
         }
-
         internal bool IsHim(Player player) => _player.ActorNumber == player.ActorNumber;
     }
+
 
 
     public struct BuildingComponent
@@ -316,12 +309,12 @@ public struct CellComponent
         internal BuildingComponent(int x, int y, StartSpawnManager startSpawnManager)
         {
             _buildingType = default;
-            _campGO = startSpawnManager.CampsGO[x,y];
+            _campGO = startSpawnManager.CampsGO[x, y];
         }
+
 
         internal BuildingTypes BuildingType => _buildingType;
         internal bool HaveBuilding => _buildingType != BuildingTypes.None;
-
 
         internal void SetBuilding(in BuildingTypes buildingType)
         {
@@ -341,13 +334,13 @@ public struct CellComponent
                     break;
             }
         }
-
         internal void ResetBuilding()
         {
             var buildingType = BuildingTypes.None;
             SetBuilding(buildingType);
         }
     }
+
 
 
     public struct SupportVisionComponent
@@ -357,10 +350,10 @@ public struct CellComponent
         private GameObject _wayUnitVisionGO;
         private GameObject _enemyVisionGO;
 
-        internal SupportVisionComponent(int x,int y, StartSpawnManager startSpawnManager)
+        internal SupportVisionComponent(int x, int y, StartSpawnManager startSpawnManager)
         {
-            _selectorVisionGO = startSpawnManager.SelectorVisionsGO[x,y];
-            _spawnVisionGO = startSpawnManager.SpawnVisionsGO[x,y];
+            _selectorVisionGO = startSpawnManager.SelectorVisionsGO[x, y];
+            _spawnVisionGO = startSpawnManager.SpawnVisionsGO[x, y];
             _wayUnitVisionGO = startSpawnManager.WayUnitVisionsGO[x, y];
             _enemyVisionGO = startSpawnManager.EnemyVisionsGO[x, y];
         }
@@ -373,19 +366,19 @@ public struct CellComponent
                 case SupportVisionTypes.None:
                     break;
 
-                case SupportVisionTypes.SelectorVision:
+                case SupportVisionTypes.Selector:
                     _selectorVisionGO.SetActive(isActive);
                     break;
 
-                case SupportVisionTypes.SpawnVision:
+                case SupportVisionTypes.Spawn:
                     _spawnVisionGO.SetActive(isActive);
                     break;
 
-                case SupportVisionTypes.WayOfUnitVision:
+                case SupportVisionTypes.WayOfUnit:
                     _wayUnitVisionGO.SetActive(isActive);
                     break;
 
-                case SupportVisionTypes.EnemyVision:
+                case SupportVisionTypes.Enemy:
                     _enemyVisionGO.SetActive(isActive);
                     break;
 

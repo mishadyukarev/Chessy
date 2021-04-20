@@ -1,7 +1,4 @@
 ﻿using Leopotam.Ecs;
-using System;
-using TMPro;
-using UnityEngine;
 
 public class RefresherMasterSystem : CellReductionSystem, IEcsRunSystem
 {
@@ -33,8 +30,8 @@ public class RefresherMasterSystem : CellReductionSystem, IEcsRunSystem
 
             _refresherMasterComponent.Unref().SetValues(true);
 
-            _economyMasterComponent.Unref().AddGoldMaster(20);
-            _economyMasterComponent.Unref().AddGoldOther(10);
+            _economyMasterComponent.Unref().GoldMaster += 20;
+            _economyMasterComponent.Unref().GoldOther += 20;
         }
     }
 }

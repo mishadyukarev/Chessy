@@ -1,5 +1,4 @@
-﻿using ExitGames.Client.Photon.StructWrapping;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;

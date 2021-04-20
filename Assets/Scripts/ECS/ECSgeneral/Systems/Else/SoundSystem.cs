@@ -1,12 +1,7 @@
 ﻿using Leopotam.Ecs;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
-internal class SoundSystem :  IEcsRunSystem 
+internal class SoundSystem : IEcsRunSystem
 {
     private AudioSource _audioSource;
 
@@ -23,7 +18,7 @@ internal class SoundSystem :  IEcsRunSystem
 
     public void Run()
     {
-        
+
     }
 
     private void MistakeSound() => _audioSource.Play();

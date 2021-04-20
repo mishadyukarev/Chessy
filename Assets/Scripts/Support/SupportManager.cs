@@ -1,8 +1,4 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.EventSystems;
-
-public class SupportManager
+﻿public class SupportManager
 {
     private BuilderManager _builderManager;
     private CellManager _cellManager;

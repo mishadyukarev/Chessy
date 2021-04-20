@@ -20,10 +20,10 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     private EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef;
     private EcsComponentRef<CellComponent.SupportVisionComponent>[,] _cellSupportVisionComponentRef;
     private EcsComponentRef<CellComponent.UnitComponent>[,] _cellUnitComponentRef;
-    private EcsComponentRef<CellComponent.BuildingComponent>[,] _cellBuildingComponentRef; 
+    private EcsComponentRef<CellComponent.BuildingComponent>[,] _cellBuildingComponentRef;
 
 
-    internal EcsComponentRef<S> GetCellComponents<S>(params int[] xy) where S : struct 
+    internal EcsComponentRef<S> GetCellComponents<S>(params int[] xy) where S : struct
         => _cellsEntity[xy[_startValues.X], xy[_startValues.Y]].Ref<S>();
 
     internal EcsComponentRef<CellComponent>[,] CellComponentRef => _cellComponentRef;
@@ -32,9 +32,9 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal EcsComponentRef<CellComponent.UnitComponent>[,] CellUnitComponentRef => _cellUnitComponentRef;
     internal EcsComponentRef<CellComponent.BuildingComponent>[,] CellBuildingComponentRef => _cellBuildingComponentRef;
 
-    internal EcsComponentRef<EconomyComponent> EconomyComponentRef 
+    internal EcsComponentRef<EconomyComponent> EconomyComponentRef
         => _economyEntity.Ref<EconomyComponent>();
-    internal EcsComponentRef<EconomyComponent.UnitsComponent> EconomyUnitsComponentRef 
+    internal EcsComponentRef<EconomyComponent.UnitsComponent> EconomyUnitsComponentRef
         => _economyEntity.Ref<EconomyComponent.UnitsComponent>();
     internal EcsComponentRef<EconomyComponent.BuildingsComponent> EconomyBuildingsComponentRef
         => _economyEntity.Ref<EconomyComponent.BuildingsComponent>();
@@ -107,8 +107,10 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             {
                 bool isStartMaster = false;
                 bool isStartOther = false;
-                /*if (y < 3 && x > 2 && x < 12) */isStartMaster = true;
-                /*if (y > 8 && x > 2 && x < 12) */isStartOther = true;
+                /*if (y < 3 && x > 2 && x < 12) */
+                isStartMaster = true;
+                /*if (y > 8 && x > 2 && x < 12) */
+                isStartOther = true;
 
                 CellComponent cellComponent = new CellComponent(isStartMaster, isStartOther, cellsGO[x, y]);
 

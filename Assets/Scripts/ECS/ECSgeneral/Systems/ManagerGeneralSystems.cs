@@ -8,10 +8,10 @@ public class SystemsGeneralManager : SystemsManager
     internal void CreateInitSystems(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
     {
         _updateSystems
-            .Add(new InputWindowsSystem(eCSmanager), nameof(InputWindowsSystem))
+            .Add(new InputSystem(eCSmanager), nameof(InputSystem))
             .Add(new SelectorSystem(eCSmanager, supportManager, photonManager), nameof(SelectorSystem))
             .Add(new SupportVisionSystem(eCSmanager, supportManager), nameof(SupportVisionSystem))
-            .Add(new UISystem(eCSmanager, supportManager,photonManager, startSpawnManager), nameof(UISystem));
+            .Add(new UISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(UISystem));
 
         _elseSystems
             .Add(new RaySystem(eCSmanager), nameof(RaySystem))

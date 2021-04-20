@@ -18,7 +18,7 @@ public abstract class CellReductionSystem : ReductionSystem
     protected int Ycount => _cellComponentRef.GetUpperBound(Y) + 1;
 
 
-    protected CellReductionSystem(ECSmanager eCSmanager, SupportManager supportManager) :base(supportManager)
+    protected CellReductionSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(supportManager)
     {
         _cellManager = supportManager.CellManager;
 

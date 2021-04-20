@@ -3,8 +3,8 @@ public enum SupportVisionTypes
 {
     None,
 
-    SelectorVision,
-    SpawnVision,
-    WayOfUnitVision,
-    EnemyVision
+    Selector,
+    Spawn,
+    WayOfUnit,
+    Enemy
 }

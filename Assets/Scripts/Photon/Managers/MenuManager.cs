@@ -8,7 +8,6 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     void Start()
     {
-
         PhotonNetwork.NickName = "Player " + Random.Range(1000, 9999);
         Log("Player's name is set to " + PhotonNetwork.NickName);
 
@@ -23,16 +22,6 @@ public class MenuManager : MonoBehaviourPunCallbacks
         Log("Connected to Master");
     }
 
-    public void CreateRoom()
-    {
-        PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions { MaxPlayers = 2,  });
-    }
-
-    public void JoinRoom()
-    {
-        PhotonNetwork.JoinRandomRoom();
-    }
-
     public override void OnJoinedRoom()
     {
         //base.OnJoinedRoom();
@@ -40,6 +29,18 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
         PhotonNetwork.LoadLevel("Chessi");
     }
+
+    public void CreateRoom()
+    {
+        PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions { MaxPlayers = 2, });
+    }
+
+    public void JoinRoom()
+    {
+        PhotonNetwork.JoinRandomRoom();
+    }
+
+
 
     private void Log(string message)
     {

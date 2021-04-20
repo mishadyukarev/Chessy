@@ -1,6 +1,4 @@
-﻿using Photon.Realtime;
-
-public struct SelectedUnitComponent
+﻿public struct SelectedUnitComponent
 {
     private UnitTypes _selectedUnitType;
 
