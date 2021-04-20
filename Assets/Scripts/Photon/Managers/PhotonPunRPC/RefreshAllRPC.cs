@@ -1,6 +1,7 @@
 ﻿using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
 using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ public partial class PhotonPunRPC : MonoBehaviour
                 listObjects.Add(CellUnitComponent(x, y).IsProtected);
                 listObjects.Add(CellUnitComponent(x, y).IsRelaxed);
 
+                listObjects.Add(CellEnvironmentComponent(x, y).HaveFood);
                 listObjects.Add(CellEnvironmentComponent(x, y).HaveTree);
                 listObjects.Add(CellEnvironmentComponent(x, y).HaveHill);
                 listObjects.Add(CellEnvironmentComponent(x, y).HaveMountain);
@@ -71,6 +73,7 @@ public partial class PhotonPunRPC : MonoBehaviour
                 bool isProtected = (bool)objects[i++];
                 bool isRelaxed = (bool)objects[i++];
 
+                bool haveFood = (bool)objects[i++];
                 bool haveTree = (bool)objects[i++];
                 bool haveHill = (bool)objects[i++];
                 bool haveMountain = (bool)objects[i++];
@@ -79,9 +82,12 @@ public partial class PhotonPunRPC : MonoBehaviour
 
 
 
-                var player = PhotonNetwork.PlayerList[actorNumber - 1];
+                Player player;
+                if (actorNumber == -1) player = default;
+                else player = PhotonNetwork.PlayerList[actorNumber - 1];
                 CellUnitComponent(x, y).SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed, player);
 
+                CellEnvironmentComponent(x, y).SetResetEnvironment(haveFood, EnvironmentTypes.Food);
                 CellEnvironmentComponent(x, y).SetResetEnvironment(haveTree, EnvironmentTypes.Tree);
                 CellEnvironmentComponent(x, y).SetResetEnvironment(haveHill, EnvironmentTypes.Hill);
                 CellEnvironmentComponent(x, y).SetResetEnvironment(haveMountain, EnvironmentTypes.Mountain);

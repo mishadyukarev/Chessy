@@ -26,8 +26,8 @@ MonoBehaviour:
   AmountHealthPawn: 100
   PowerDamagePawn: 50
   ProtectionPawn: 10
-  AmountHealthKing: 100
-  PowerDamageKing: 50
+  AmountHealthKing: 150
+  PowerDamageKing: 70
   ProtectionKing: 10
   ProtectionHill: 10
   ProtectionTree: 20

@@ -230,7 +230,7 @@ public struct CellComponent
             int amountSteps = default;
             bool isProtected = default;
             bool isRelaxed = default;
-            Player player = Instance.MasterClient;
+            Player player = default;
 
             SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed,  player);
         }

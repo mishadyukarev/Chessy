@@ -51,10 +51,9 @@ public class StartValuesConfig : ScriptableObject
     [SerializeField] internal int ProtectionPawn = 10;
 
     [Space(12)]
-    [SerializeField] internal int AmountHealthKing = 100;
-    [SerializeField] internal int PowerDamageKing = 50;
+    [SerializeField] internal int AmountHealthKing = 200;
+    [SerializeField] internal int PowerDamageKing = 70;
     [SerializeField] internal int ProtectionKing = 10;
-
 
     [Space(12)]
     [SerializeField] internal int ProtectionHill = 10;

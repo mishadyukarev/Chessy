@@ -24,6 +24,11 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
     private Button _requestDoneButton;
 
 
+    #region Ability zone
+
+    internal TextMeshProUGUI _hpCurrentUnitText;
+    internal TextMeshProUGUI _damageCurrentUnitText;
+    internal TextMeshProUGUI _stepsCurrentUnitText;
 
     private Button _buildingAbilityButton0;
     private Button _buildingAbilityButton1;
@@ -38,6 +43,7 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
     private Button _uniqueAbilityButton2;
     private Button _uniqueAbilityButton3;
 
+    #endregion
 
 
     private EcsComponentRef<ButtonComponent> _buttonComponentRef;
@@ -102,7 +108,11 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
         _requestDoneButton.onClick.AddListener(delegate { Doner(true, false); });
 
 
-        #region Abilities
+        #region Ability zone
+
+        _hpCurrentUnitText = startSpawnManager.HpCurrentUnitText;
+        _damageCurrentUnitText = startSpawnManager.DamageCurrentUnitText;
+        _stepsCurrentUnitText = startSpawnManager.StepsCurrentUnitText;
 
         _buildingAbilityButton0 = startSpawnManager.BuildingAbilityButton0;
         _buildingAbilityButton0.onClick.AddListener(delegate { Build(BuildingTypes.City); });
@@ -142,8 +152,11 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
         _goldAmountText.text = _economyComponentRef.Unref().Gold.ToString();
         if (_economyUnitsComponentRef.Unref().IsSettedKing) _button0.gameObject.SetActive(false);
 
-
         var xySelectedCell = _selectorComponetRef.Unref().XYselectedCell;
+
+        _hpCurrentUnitText.text = CellUnitComponent(xySelectedCell).AmountHealth.ToString();
+        _damageCurrentUnitText.text = CellUnitComponent(xySelectedCell).PowerDamage.ToString();
+        _stepsCurrentUnitText.text = CellUnitComponent(xySelectedCell).AmountSteps.ToString();
 
 
         if (CellUnitComponent(xySelectedCell).IsMine)
@@ -152,6 +165,7 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
             {
                 case UnitTypes.None:
 
+                    ActiveteSupportTextForAbilities(false);
                     _buildingAbilityButton0.gameObject.SetActive(false);
                     ActivateBuildingAbilities(false);
                     ActivateStandartAbilities(false);
@@ -160,6 +174,7 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
 
                 case UnitTypes.King:
 
+                    ActiveteSupportTextForAbilities(true);
                     _buildingAbilityButton0.gameObject.SetActive(false);
                     ActivateBuildingAbilities(false);
                     ActivateStandartAbilities(true);
@@ -169,6 +184,7 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
 
                 case UnitTypes.Pawn:
 
+                    ActiveteSupportTextForAbilities(true);
                     ActivateStandartAbilities(true);
                     ActivateUniqueAbilities(default, true);
 
@@ -198,6 +214,7 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
         }
         else
         {
+            ActiveteSupportTextForAbilities(false);
             _buildingAbilityButton0.gameObject.SetActive(false);
             ActivateBuildingAbilities(false);
             ActivateStandartAbilities(false);
@@ -230,6 +247,13 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
         }
     }
 
+    private void ActiveteSupportTextForAbilities(bool isActive)
+    {
+        _hpCurrentUnitText.gameObject.SetActive(isActive);
+        _damageCurrentUnitText.gameObject.SetActive(isActive);
+        _stepsCurrentUnitText.gameObject.SetActive(isActive);
+    }
+
     private void ActivateBuildingAbilities(bool isActive)
     {
         _buildingAbilityButton1.gameObject.SetActive(isActive);
@@ -244,28 +268,28 @@ internal class UISystem : CellReductionSystem, IEcsRunSystem
         _standartAbilityButton2.gameObject.SetActive(isActive);
     }
 
-    private void ActivateUniqueAbilities(UnitTypes unitType,bool isActive)
+    private void ActivateUniqueAbilities(UnitTypes unitType, bool isActive)
     {
-        switch (unitType)
-        {
-            case UnitTypes.None:
-                break;
+        //switch (unitType)
+        //{
+        //    case UnitTypes.None:
+        //        break;
 
-            case UnitTypes.King:
-
-
-
-                break;
-
-            case UnitTypes.Pawn:
+        //    case UnitTypes.King:
 
 
 
-                break;
+        //        break;
 
-            default:
-                break;
-        }
+        //    case UnitTypes.Pawn:
+
+
+
+        //        break;
+
+        //    default:
+        //        break;
+        //}
 
         _uniqueAbilityButton1.gameObject.SetActive(isActive);
         _uniqueAbilityButton2.gameObject.SetActive(isActive);

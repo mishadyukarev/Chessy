@@ -62,7 +62,11 @@ internal class StartSpawnManager
     #endregion
 
 
-    #region Buttons Ability
+    #region Ability Zone
+
+    internal TextMeshProUGUI HpCurrentUnitText;
+    internal TextMeshProUGUI DamageCurrentUnitText;
+    internal TextMeshProUGUI StepsCurrentUnitText;
 
     internal Button BuildingAbilityButton0;
 
@@ -116,7 +120,11 @@ internal class StartSpawnManager
 
 
 
-        #region Abilities
+        #region Ability zone
+
+        HpCurrentUnitText = GameObject.Find("HpCurrentUnitText").GetComponent<TextMeshProUGUI>();
+        DamageCurrentUnitText = GameObject.Find("DamageCurrentUnitText").GetComponent<TextMeshProUGUI>();
+        StepsCurrentUnitText = GameObject.Find("StepsCurrentUnitText").GetComponent<TextMeshProUGUI>();
 
         BuildingAbilityButton0 = GameObject.Find("BuildingAbilityButton0").GetComponent<Button>();
 
