@@ -16,7 +16,7 @@ public struct SetterUnitMasterComponent
 
     public SetterUnitMasterComponent(StartValuesConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
     {
-        _xyCellIN = new int[nameValueManager.XYforArray];
+        _xyCellIN = new int[nameValueManager.XY_FOR_ARRAY];
         _unitTypeIN = default;
         _playerIN = default;
 

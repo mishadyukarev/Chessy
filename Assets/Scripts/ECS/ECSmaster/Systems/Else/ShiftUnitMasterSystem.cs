@@ -6,8 +6,6 @@ using System.Linq;
 
 public class ShiftUnitMasterSystem : CellReductionSystem, IEcsRunSystem
 {
-    private StartValuesConfig _startValues;
-
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftComponentRef = default;
     private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
 
@@ -16,8 +14,6 @@ public class ShiftUnitMasterSystem : CellReductionSystem, IEcsRunSystem
     {
         _shiftComponentRef = eCSmanager.EntitiesMasterManager.ShiftUnitComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
-
-        _startValues = supportManager.StartValues;
     }
 
 
@@ -27,15 +23,15 @@ public class ShiftUnitMasterSystem : CellReductionSystem, IEcsRunSystem
 
         _shiftComponentRef.Unref().Unpack(out int[] xyPreviousCell, out int[] xySelectedCell, out Player fromPlayer);
 
-        _unitPathComponentRef.Unref().GetAvailableCellsForShift(xyPreviousCell, fromPlayer, out List<int[]> xyAvailableCellsForShift);
+        List<int[]> xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCellsForShift(xyPreviousCell, fromPlayer);
 
         if (CellUnitComponent(xyPreviousCell).IsHim(fromPlayer) && CellUnitComponent(xyPreviousCell).HaveAmountSteps)
         {
             if (_cellManager.TryFindCellInList(xySelectedCell, xyAvailableCellsForShift))
             {
-                CellUnitComponent(xyPreviousCell).TakeAmountSteps(_startValues.TakeAmountSteps);
+                CellUnitComponent(xyPreviousCell).AmountSteps -= _startValues.TAKE_AMOUNT_STEPS;
 
-                CellUnitComponent(xySelectedCell).SetResetUnit(CellUnitComponent(xyPreviousCell));
+                CellUnitComponent(xySelectedCell).SetUnit(CellUnitComponent(xyPreviousCell));
                 CellUnitComponent(xySelectedCell).IsProtected = false;
                 CellUnitComponent(xySelectedCell).IsRelaxed = false;
 

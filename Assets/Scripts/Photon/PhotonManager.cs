@@ -23,7 +23,7 @@ public class PhotonManager
             typeof(PhotonPunRPC)
         };
 
-        supportManager.BuilderManager.CreateGameObject(out GameObject networkGO, "Network", types, parentTransform);
+        var networkGO = supportManager.BuilderManager.CreateGameObject("Network", types, parentTransform);
 
         _photonView = networkGO.GetPhotonView();
         _photonManagerScene = networkGO.GetComponent<PhotonManagerScene>();
@@ -35,7 +35,7 @@ public class PhotonManager
         _photonView.FindObservables(true);
 
         if (Instance.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
-        else _photonView.ViewID = supportManager.StartValues.NumberPhotonView;
+        else _photonView.ViewID = supportManager.StartValuesConfig.NUMBER_PHOTON_VIEW;
     }
 
     public void InitAfterECS(ECSmanager eCSmanager)

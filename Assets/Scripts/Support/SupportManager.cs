@@ -7,20 +7,18 @@ public class SupportManager
     private BuilderManager _builderManager;
     private CellManager _cellManager;
     private ResourcesLoadManager _resourcesLoadManager;
-    private UnityEvents _eventDelegateManager;
-    private SoundManager _soundManager;
+    private UnityEvents _unityEvents;
     private NameManager _nameManager;
     private StartValuesConfig _startValues;
+
 
 
     public BuilderManager BuilderManager => _builderManager;
     public CellManager CellManager => _cellManager;
     public ResourcesLoadManager ResourcesLoadManager => _resourcesLoadManager;
-    public UnityEvents DelegateEventManager => _eventDelegateManager;
-    internal SoundManager SoundManager => _soundManager;
+    public UnityEvents UnityEvents => _unityEvents;
     internal NameManager NameManager => _nameManager;
-    internal StartValuesConfig StartValues => _startValues;
-
+    internal StartValuesConfig StartValuesConfig => _startValues;
 
 
     public SupportManager()
@@ -29,8 +27,7 @@ public class SupportManager
         _startValues = _resourcesLoadManager.StartValuesConfig;
         _builderManager = new BuilderManager();
         _cellManager = new CellManager(_startValues);
-        _eventDelegateManager = new UnityEvents(this);
-        _soundManager = new SoundManager(this);
+        _unityEvents = new UnityEvents(_builderManager);
         _nameManager = new NameManager();
     }
 }

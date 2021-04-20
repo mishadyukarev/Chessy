@@ -18,8 +18,8 @@ public partial class UnitPathSystem : CellReductionSystem, IEcsInitSystem, IEcsR
 
     public void Init()
     {
-        _xyCurrentCell = new int[_startValues.XYforArray];
-        _changeXY = new int[_startValues.XYforArray];
+        _xyCurrentCell = new int[_startValues.XY_FOR_ARRAY];
+        _changeXY = new int[_startValues.XY_FOR_ARRAY];
     }
 
     public void Run()
@@ -40,6 +40,7 @@ public partial class UnitPathSystem : CellReductionSystem, IEcsInitSystem, IEcsR
                         break;
 
                     case UnitTypes.King:
+                        RealizeKingPathForShift(xyStartCellIN, playerIN);
                         break;
 
                     case UnitTypes.Pawn:
@@ -61,6 +62,7 @@ public partial class UnitPathSystem : CellReductionSystem, IEcsInitSystem, IEcsR
                         break;
 
                     case UnitTypes.King:
+                        RealizeKingPathForAttack(xyStartCellIN, playerIN);
                         break;
 
                     case UnitTypes.Pawn:
@@ -78,6 +80,23 @@ public partial class UnitPathSystem : CellReductionSystem, IEcsInitSystem, IEcsR
         }
     }
 
+    private void RealizeKingPathForShift(int[] xyStartCellIN, Player playerIN)
+    {
+        var xyAvailableCellsForShift = new List<int[]>();
+
+        for (int i = 0; i < (int)ForUnitPathTypes.LeftDown + 1; i++)
+        {
+            GetCurrentCell(true, (ForUnitPathTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
+
+            if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
+            {
+                xyAvailableCellsForShift.Add(xyCurrentCellForShift);
+            }
+        }
+
+        _unitPathComponentRef.Unref().PackForShift(xyAvailableCellsForShift);
+    }
+
     private void RealizePawnPathForShift(int[] xyStartCellIN, Player playerIN)
     {
         var xyAvailableCellsForShift = new List<int[]>();
@@ -93,6 +112,29 @@ public partial class UnitPathSystem : CellReductionSystem, IEcsInitSystem, IEcsR
         }
 
         _unitPathComponentRef.Unref().PackForShift(xyAvailableCellsForShift);
+    }
+
+    private void RealizeKingPathForAttack(int[] xyStartCellIN, Player playerIN)
+    {
+        var xyAvailableCellsForAttack = new List<int[]>();
+
+        for (int i = 0; i < (int)ForUnitPathTypes.LeftDown + 1; i++)
+        {
+            GetCurrentCell(true, (ForUnitPathTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
+
+            if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
+            {
+                if (CellUnitComponent(xyCurrentCellForShift).HaveUnit)
+                {
+                    if (playerIN.ActorNumber != CellUnitComponent(xyCurrentCellForShift).ActorNumber)
+                    {
+                        xyAvailableCellsForAttack.Add(xyCurrentCellForShift);
+                    }
+                }
+            }
+        }
+
+        _unitPathComponentRef.Unref().PackForAttack(xyAvailableCellsForAttack);
     }
 
     private void RealizePawnPathForAttack(int[] xyStartCellIN, Player playerIN)

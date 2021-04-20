@@ -4,7 +4,7 @@ public sealed class SystemsMasterManager : SystemsManager
 {
     public SystemsMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    public void CreateSystems(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager)
+    public void CreateInitSystems(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager)
     {
         _elseSystems
             .Add(new RefresherMasterSystem(eCSmanager, supportManager), nameof(RefresherMasterSystem))
@@ -13,6 +13,8 @@ public sealed class SystemsMasterManager : SystemsManager
             .Add(new BuilderCellMasterSystem(eCSmanager, supportManager), nameof(BuilderCellMasterSystem))
             .Add(new AttackUnitMasterSystem(eCSmanager, supportManager), nameof(AttackUnitMasterSystem))
             .Add(new GetterUnitMasterSystem(eCSmanager, supportManager), nameof(GetterUnitMasterSystem));
+
+        InitAndProcessInjectsSystems();
     }
 
 

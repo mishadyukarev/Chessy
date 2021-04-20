@@ -30,24 +30,54 @@ internal struct EconomyMasterComponent
 
     internal struct UnitsMasterComponent
     {
+        private int _amountKingMaster;
+        private int _amountKingOther;
         private int _amountUnitPawnMaster;
         private int _amountUnitPawnOther;
+        private bool _isSettedKingMaster;
+        private bool _isSettedKingOther;
 
-        internal int AmountUnitPawnMaster => _amountUnitPawnMaster;
-        internal int AmountUnitPawnOther => _amountUnitPawnOther;
+        internal int AmountKingMaster
+        {
+            get { return _amountKingMaster; }
+            set { _amountKingMaster = value; }
+        }
+        internal int AmountKingOther
+        {
+            get { return _amountKingOther; }
+            set { _amountKingOther = value; }
+        }
+        internal int AmountUnitPawnMaster
+        {
+            get { return _amountUnitPawnMaster; }
+            set { _amountUnitPawnMaster = value; }
+        }
+        internal int AmountUnitPawnOther
+        { 
+            get { return _amountUnitPawnOther; }
+            set { _amountUnitPawnOther= value; }
+        }
+        internal bool IsSettedKingMaster
+        {
+            get { return _isSettedKingMaster; }
+            set { _isSettedKingMaster = value; }
+        }
+        internal bool IsSettedKingOther
+        {
+            get { return _isSettedKingOther; }
+            set { _isSettedKingOther = value; }
+        }
 
 
         internal UnitsMasterComponent(StartValuesConfig startValues)
         {
+            _amountKingMaster = startValues.AMOUNT_KING_MASTER;
+            _amountKingOther = startValues.AMOUNT_KING_OTHER;
             _amountUnitPawnMaster = startValues.AmountPawnMaster;
             _amountUnitPawnOther = startValues.AmountPawnOther;
+            _isSettedKingMaster = default;
+            _isSettedKingOther = default;
         }
-
-
-        internal void TakeAmountUnitPawnMaster(int takeAmount) => _amountUnitPawnMaster -= takeAmount;
-        internal void TakeAmountUnitPawnOther(int takeAmount) => _amountUnitPawnOther -= takeAmount;
-        internal void AddAmountUnitPawnMaster(int addAmount) => _amountUnitPawnMaster += addAmount;
-        internal void AddAmountUnitPawnOther(int addAmount) => _amountUnitPawnOther += addAmount;
     }
 
 
@@ -60,7 +90,10 @@ internal struct EconomyMasterComponent
         private int[] _xySettedCityOther;
 
         internal bool IsBuildedCityMaster
-        { get { return _isSettedCityMaster; } set { _isSettedCityMaster = value; } }
+        {
+            get { return _isSettedCityMaster; }
+            set { _isSettedCityMaster = value; }
+        }
         internal bool IsBuildedCityOther
         { get { return _isSettedCityOther; } set { _isSettedCityOther = value; } }
         internal int[] XYsettedCityMaster
@@ -72,8 +105,8 @@ internal struct EconomyMasterComponent
         {
             _isSettedCityMaster = default;
             _isSettedCityOther = default;
-            _xySettedCityMaster = new int[nameValueManager.XYforArray];
-            _xySettedCityOther = new int[nameValueManager.XYforArray];
+            _xySettedCityMaster = new int[nameValueManager.XY_FOR_ARRAY];
+            _xySettedCityOther = new int[nameValueManager.XY_FOR_ARRAY];
         }
     }
 }

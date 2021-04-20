@@ -15,7 +15,7 @@ public class CellManager
 
     internal int[] CopyXY(int[] inArray)
     {
-        int[] array = new int[_startValues.XYforArray];
+        int[] array = new int[_startValues.XY_FOR_ARRAY];
         Array.Copy(inArray, array, array.Length);
         return array;
     }
@@ -50,7 +50,7 @@ public class CellManager
 
         for (int i = 0; i < inList.Count; i++)
         {
-            var array = new int[_startValues.XYforArray];
+            var array = new int[_startValues.XY_FOR_ARRAY];
 
             var inArray = inList[i];
 
@@ -69,7 +69,7 @@ public class CellManager
 
         for (int i = 0; i < inList.Count; i++)
         {
-            var array = new int[_startValues.XYforArray];
+            var array = new int[_startValues.XY_FOR_ARRAY];
 
             var inArray = inList[i];
 

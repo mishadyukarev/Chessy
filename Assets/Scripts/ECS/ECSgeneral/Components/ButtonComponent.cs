@@ -9,5 +9,5 @@ public struct ButtonComponent
     internal bool IsDone { get { return _isDone; } set { _isDone = value; } }
 
     internal Action<bool, bool> DonerDelegate;
-    internal Action<bool, bool> Button1Delegate;
+    internal Action<UnitTypes, bool, bool> Button1Delegate;
 }

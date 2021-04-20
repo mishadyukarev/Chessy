@@ -9,6 +9,7 @@ public class ResourcesLoadManager
     private StartValuesConfig _startValues;
 
     public GameObject CellGO => _cellGO;
+    internal AudioClip AudioClip;
     public AudioSource AudioSource => _audioSource;
     internal Sprite WhiteCellSprite => _whiteCellSprite;
     internal Sprite BlackCellSprite => _blackCellSprite;
@@ -25,5 +26,7 @@ public class ResourcesLoadManager
         _blackCellSprite = Resources.Load<SpritesConfig>("Sprites").BlackSprite;
 
         _startValues = Resources.Load<StartValuesConfig>("StartValues");
+
+        AudioClip = Resources.Load<AudioClip>("Clip1");
     }
 }

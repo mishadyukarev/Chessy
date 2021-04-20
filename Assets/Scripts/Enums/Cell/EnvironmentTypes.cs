@@ -1,6 +1,8 @@
 ﻿public enum EnvironmentTypes
 {
-    Mountain,
+    Food,
     Tree,
-    Hill
+    Hill,
+
+    Mountain,
 }

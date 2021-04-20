@@ -14,18 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CellCountX: 15
   CellCountY: 12
-  PercentTree: 30
-  PercentHill: 10
+  PercentFood: 20
+  PercentTree: 15
+  PercentHill: 5
   PercentMountain: 2
   GoldMaster: 100
   GoldOther: 100
   GoldForBuyingPawn: 50
   AmountPawnMaster: 1
   AmountPawnOther: 3
-  AmountStepsPawn: 1
   AmountHealthPawn: 100
-  PawerDamagePawn: 50
+  PowerDamagePawn: 50
   ProtectionPawn: 10
+  AmountHealthKing: 150
+  PowerDamageKing: 70
+  ProtectionKing: 10
   ProtectionHill: 10
   ProtectionTree: 20
   ProtectionCity: 25

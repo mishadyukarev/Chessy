@@ -7,13 +7,13 @@ public sealed class Main : MonoBehaviour
 
     #region Variables
 
-    static private Main _instance;
+    private static Main _instance;
 
     private Camera _camera;
     private ECSmanager _eCSmanager;
     private PhotonManager _photonManager;
     private SupportManager _supportManager;
-    private GameObject _parentScriptsGO;
+    private StartSpawnManager _startSpawnManager;
 
     #endregion
 
@@ -22,9 +22,9 @@ public sealed class Main : MonoBehaviour
 
     static public Main Instance => _instance;
 
-    public bool IsMasterClient => PhotonNetwork.IsMasterClient;
-    public Player MasterClient => PhotonNetwork.MasterClient;
-    public Player LocalPlayer => PhotonNetwork.LocalPlayer;
+    internal bool IsMasterClient => PhotonNetwork.IsMasterClient;
+    internal Player MasterClient => PhotonNetwork.MasterClient;
+    internal Player LocalPlayer => PhotonNetwork.LocalPlayer;
 
     #endregion
 
@@ -39,13 +39,17 @@ public sealed class Main : MonoBehaviour
 
         _supportManager = new SupportManager();
 
-        _supportManager.BuilderManager.CreateGameObject(out _parentScriptsGO, "Scripts");
-        gameObject.transform.SetParent(_parentScriptsGO.transform);
 
-        _photonManager = new PhotonManager(_supportManager, _parentScriptsGO.transform);
-        _eCSmanager = new ECSmanager(_supportManager, _photonManager);
+        _startSpawnManager = new StartSpawnManager(_supportManager, out Transform parentTransformScrips);
+
+
+        _photonManager = new PhotonManager(_supportManager, parentTransformScrips);
+        _eCSmanager = new ECSmanager(_supportManager, _photonManager, _startSpawnManager);
 
         _photonManager.InitAfterECS(_eCSmanager);
+
+
+        gameObject.transform.SetParent(parentTransformScrips);
     }
 
 
