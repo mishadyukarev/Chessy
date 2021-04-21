@@ -41,8 +41,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     internal EcsComponentRef<RayComponent> RayComponentRef => _rayEntity.Ref<RayComponent>();
     internal EcsComponentRef<InputComponent> InputComponentRef => _inputEntity.Ref<InputComponent>();
-    internal EcsComponentRef<SupportVisionComponent> SupportVisionComponentRef => _supportVisionEntity.Ref<SupportVisionComponent>();
-    internal EcsComponentRef<UnitPathComponent> UnitPathComponentRef => _unitPathEntity.Ref<UnitPathComponent>();
+    internal EcsComponentRef<UnitPathsComponent> UnitPathComponentRef => _unitPathEntity.Ref<UnitPathsComponent>();
     internal EcsComponentRef<SelectedUnitComponent> SelectedUnitComponentRef => _selectedUnitEntity.Ref<SelectedUnitComponent>();
     internal EcsComponentRef<GetterCellComponent> GetterCellComponentRef => _getterCellEntity.Ref<GetterCellComponent>();
     internal EcsComponentRef<SelectorComponent> SelectorComponentRef => _selectorEntity.Ref<SelectorComponent>();
@@ -74,10 +73,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             .Replace(new SelectedUnitComponent());
 
         _unitPathEntity = _ecsWorld.NewEntity()
-            .Replace(new UnitPathComponent(systemsGeneralManager, _startValues, cellManager));
-
-        _supportVisionEntity = _ecsWorld.NewEntity()
-            .Replace(new SupportVisionComponent(systemsGeneralManager, _startValues, cellManager));
+            .Replace(new UnitPathsComponent(systemsGeneralManager, _startValues, cellManager));
 
         _rayEntity = _ecsWorld.NewEntity()
             .Replace(new RayComponent(systemsGeneralManager));

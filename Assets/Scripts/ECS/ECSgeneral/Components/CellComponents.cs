@@ -169,7 +169,6 @@ public struct CellComponent
             set { _amountHealth = value; }
         }
 
-
         private void SetColorUnit(in SpriteRenderer unitSpriteRender, in Player player)
         {
             if (player.IsMasterClient) unitSpriteRender.color = Color.blue;

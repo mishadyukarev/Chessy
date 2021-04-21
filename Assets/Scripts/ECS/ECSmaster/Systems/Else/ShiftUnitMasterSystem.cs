@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class ShiftUnitMasterSystem : CellReductionSystem, IEcsRunSystem
 {
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftComponentRef = default;
-    private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
+    private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
 
 
     internal ShiftUnitMasterSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)

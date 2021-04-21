@@ -4,7 +4,7 @@ using Photon.Realtime;
 public class AttackUnitMasterSystem : CellReductionSystem, IEcsRunSystem
 {
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
-    private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
+    private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
 
 
     internal AttackUnitMasterSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)

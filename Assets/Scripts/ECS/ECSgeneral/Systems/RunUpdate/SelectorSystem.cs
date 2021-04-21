@@ -29,8 +29,7 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsRunSystem
 
     private EcsComponentRef<RayComponent> _rayComponentRef = default;
     private EcsComponentRef<InputComponent> _inputComponentRef = default;
-    private EcsComponentRef<SupportVisionComponent> _supportVisionComponentRef = default;
-    private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
+    private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
     private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
     private EcsComponentRef<GetterCellComponent> _getterCellComponentRef = default;
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
@@ -62,7 +61,6 @@ public sealed class SelectorSystem : CellReductionSystem, IEcsRunSystem
 
         _rayComponentRef = eCSmanager.EntitiesGeneralManager.RayComponentRef;
         _inputComponentRef = eCSmanager.EntitiesGeneralManager.InputComponentRef;
-        _supportVisionComponentRef = eCSmanager.EntitiesGeneralManager.SupportVisionComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
         _selectedUnitComponentRef = eCSmanager.EntitiesGeneralManager.SelectedUnitComponentRef;
         _getterCellComponentRef = eCSmanager.EntitiesGeneralManager.GetterCellComponentRef;
