@@ -95,11 +95,16 @@ internal class StartSpawnManager
         parentTransformScrips = _parentScriptsGO.transform;
 
         SpawnCells(supportManager.ResourcesLoadManager, supportManager.StartValuesConfig);
+
+        GameObject.Instantiate(supportManager.ResourcesLoadManager.Canvas);
         SpawnUI();
     }
 
     private void SpawnUI()
     {
+
+
+
         #region UI
 
         GoldAmmountText = GameObject.Find("GoldAmmount").GetComponent<TextMeshProUGUI>();
