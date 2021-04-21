@@ -94,15 +94,18 @@ internal class StartSpawnManager
         _parentScriptsGO = supportManager.BuilderManager.CreateGameObject("Scripts");
         parentTransformScrips = _parentScriptsGO.transform;
 
+        GameObject.Instantiate(supportManager.ResourcesLoadManager.Camera);
+        GameObject.Instantiate(supportManager.ResourcesLoadManager.BackGroundCollider2D);
+
         SpawnCells(supportManager.ResourcesLoadManager, supportManager.StartValuesConfig);
 
-        GameObject.Instantiate(supportManager.ResourcesLoadManager.Canvas);
-        SpawnUI();
+        
+        SpawnUI(supportManager.ResourcesLoadManager);
     }
 
-    private void SpawnUI()
+    private void SpawnUI(ResourcesLoadManager resourcesLoadManager)
     {
-
+        GameObject.Instantiate(resourcesLoadManager.Canvas);
 
 
         #region UI
