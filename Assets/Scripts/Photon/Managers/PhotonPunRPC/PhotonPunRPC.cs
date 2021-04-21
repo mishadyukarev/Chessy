@@ -1,6 +1,7 @@
 ﻿using ExitGames.Client.Photon;
 using Leopotam.Ecs;
 using Photon.Pun;
+using Photon.Realtime;
 using System;
 using UnityEngine;
 using static Main;
@@ -9,6 +10,8 @@ public partial class PhotonPunRPC : MonoBehaviour
 {
     private PhotonView _photonView = default;
     private StartValuesConfig _startValues = default;
+    private CellManager _cellManager = default;
+    private SystemsMasterManager _systemsMasterManager = default;
 
     #region ComponetsRef
 
@@ -42,6 +45,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
     private EcsComponentRef<ButtonComponent> _buttonComponentRef = default;
     private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
+    private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
 
     #endregion
 
@@ -64,6 +68,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     {
         _photonView = photonManager.PhotonView;
         _startValues = supportManager.StartValuesConfig;
+        _cellManager = supportManager.CellManager;
 
         PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
     }
@@ -100,6 +105,10 @@ public partial class PhotonPunRPC : MonoBehaviour
         _buttonComponentRef = entitiesGeneralManager.ButtonComponentRef;
         _selectedUnitComponentRef = entitiesGeneralManager.SelectedUnitComponentRef;
         _economyUnitsComponentRef = entitiesGeneralManager.EconomyUnitsComponentRef;
+        _unitPathComponentRef = entitiesGeneralManager.UnitPathComponentRef;
+
+
+        _systemsMasterManager = eCSmanager.SystemsMasterManager;
 
         RefreshAll();
     }
@@ -114,10 +123,13 @@ public partial class PhotonPunRPC : MonoBehaviour
     {
         _photonView.RPC("DoneToGeneral", info.Sender, isDone);
 
-        if (_refresherMasterComponentRef.Unref().TryRefreshed(info.Sender, isDone))
+        if (info.Sender.IsMasterClient) _refresherMasterComponentRef.Unref().IsDoneMaster = isDone;
+        else { _refresherMasterComponentRef.Unref().IsDoneOther = isDone; }
+
+        if (_refresherMasterComponentRef.Unref().IsDoneMaster && _refresherMasterComponentRef.Unref().IsDoneOther)
         {
+            _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Else, nameof(RefresherMasterSystem));
             _photonView.RPC("DoneToGeneral", RpcTarget.All, false);
-            _refresherMasterComponentRef.Unref().ResetValues();
         }
 
         RefreshAll();
@@ -193,7 +205,8 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void AttackUnitMaster(int[] xyPreviousCell, int[] xySelectedCell, PhotonMessageInfo info)
     {
-        var attacked = _attackUnitMasterComponentRef.Unref().AttackUnit(xyPreviousCell, xySelectedCell, info.Sender);
+        var attacked = _attackUnitMasterComponentRef.Unref().TryAttackUnit(xyPreviousCell, xySelectedCell, info.Sender);
+        //var attacked = TryAttack(xyPreviousCell, xySelectedCell, info.Sender);
         _photonView.RPC("AttackUnitGeneral", info.Sender, attacked);
 
         RefreshAll();
@@ -203,6 +216,108 @@ public partial class PhotonPunRPC : MonoBehaviour
     private void AttackUnitGeneral(bool isAttacked)
     {
         if (isAttacked) _selectorComponentRef.Unref().AttackUnitDelegate();
+    }
+
+
+    private bool TryAttack(in int[] xyPreviousCellIN, in int[] xySelectedCellIN, in Player fromPlayerIN)
+    {
+        var xyAvailableCellsForAttackOUT = _unitPathComponentRef.Unref().GetAvailableCellsForAttack(xyPreviousCellIN, fromPlayerIN);
+
+        if (CellUnitComponent(xyPreviousCellIN).HaveAmountSteps
+            && CellUnitComponent(xyPreviousCellIN).IsHim(fromPlayerIN)
+            && _cellManager.TryFindCellInList(xySelectedCellIN, xyAvailableCellsForAttackOUT))
+        {
+            CellUnitComponent(xyPreviousCellIN).AmountSteps -= _startValues.AMOUNT_STEPS_PAWN;
+            CellUnitComponent(xyPreviousCellIN).IsProtected = false;
+            CellUnitComponent(xyPreviousCellIN).IsRelaxed = false;
+
+
+
+            int damageToSelelected = 0;
+
+            if (CellEnvironmentComponent(xySelectedCellIN).HaveHill) damageToSelelected -= _startValues.ProtectionHill;
+            if (CellEnvironmentComponent(xySelectedCellIN).HaveTree) damageToSelelected -= _startValues.ProtectionTree;
+
+
+            switch (CellBuildingComponent(xySelectedCellIN).BuildingType)
+            {
+                case BuildingTypes.None:
+                    break;
+
+                case BuildingTypes.City:
+                    damageToSelelected -= _startValues.ProtectionCity;
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (CellUnitComponent(xyPreviousCellIN).UnitType)
+            {
+                case UnitTypes.None:
+                    break;
+
+                case UnitTypes.King:
+
+                    damageToSelelected += _startValues.PowerDamageKing;
+
+                    break;
+
+                case UnitTypes.Pawn:
+
+                    damageToSelelected += _startValues.PowerDamagePawn;
+
+
+                    break;
+
+                default:
+                    break;
+            }
+
+            switch (CellUnitComponent(xySelectedCellIN).UnitType)
+            {
+                case UnitTypes.None:
+                    break;
+
+                case UnitTypes.King:
+
+                    if (CellUnitComponent(xySelectedCellIN).IsProtected) damageToSelelected -= _startValues.ProtectionKing;
+
+                    break;
+
+                case UnitTypes.Pawn:
+
+                    if (CellUnitComponent(xySelectedCellIN).IsProtected) damageToSelelected -= _startValues.ProtectionPawn;
+
+                    break;
+
+                default:
+                    break;
+            }
+
+
+            CellUnitComponent(xySelectedCellIN).AmountHealth -= damageToSelelected;
+            CellUnitComponent(xyPreviousCellIN).AmountHealth -= CellUnitComponent(xySelectedCellIN).PowerDamage;
+
+            if (CellUnitComponent(xyPreviousCellIN).AmountHealth <= _startValues.AMOUNT_FOR_DEATH)
+            {
+                CellUnitComponent(xyPreviousCellIN).ResetUnit();
+            }
+
+            if (CellUnitComponent(xySelectedCellIN).AmountHealth <= _startValues.AMOUNT_FOR_DEATH)
+            {
+                CellUnitComponent(xySelectedCellIN).ResetUnit();
+                CellUnitComponent(xySelectedCellIN).SetUnit(CellUnitComponent(xyPreviousCellIN));
+                CellUnitComponent(xyPreviousCellIN).ResetUnit();
+            }
+
+            return true;
+
+        }
+        else
+        {
+            return false;
+        }
     }
 
     #endregion

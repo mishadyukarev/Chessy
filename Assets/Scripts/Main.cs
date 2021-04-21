@@ -33,15 +33,14 @@ public sealed class Main : MonoBehaviour
     private void Start()
     {
         _instance = this;
-
-        _camera = Camera.main;
-        if (!IsMasterClient) _camera.transform.Rotate(0, 0, 180);
-
         _supportManager = new SupportManager();
 
 
         _startSpawnManager = new StartSpawnManager(_supportManager, out Transform parentTransformScrips);
 
+
+        _camera = Camera.main;
+        if (!IsMasterClient) _camera.transform.Rotate(0, 0, 180);
 
         _photonManager = new PhotonManager(_supportManager, parentTransformScrips);
         _eCSmanager = new ECSmanager(_supportManager, _photonManager, _startSpawnManager);
