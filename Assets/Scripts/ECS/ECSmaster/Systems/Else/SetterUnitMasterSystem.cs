@@ -4,7 +4,7 @@ using Photon.Realtime;
 public class SetterUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<SetterUnitMasterComponent> _setterUnitMasterComponentRef = default;
-    private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitMasterComponent = default;
+    private EcsComponentRef<EconomyMasterComponent.UnitMasterComponent> _economyUnitMasterComponent = default;
 
     internal SetterUnitMasterSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
     {

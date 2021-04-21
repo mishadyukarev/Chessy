@@ -15,13 +15,12 @@ public class EntitiesMasterManager : EntitiesManager
     public EcsComponentRef<ShiftUnitMasterComponent> ShiftUnitComponentRef => _shiftUnitEntity.Ref<ShiftUnitMasterComponent>();
     public EcsComponentRef<DonerComponent> RefresherMasterComponentRef => _refresherEntity.Ref<DonerComponent>();
     public EcsComponentRef<AttackUnitMasterComponent> AttackUnitMasterComponentRef => _attackUnitEntity.Ref<AttackUnitMasterComponent>();
-    internal EcsComponentRef<GetterUnitMasterComponent> GetterUnitMasterComponentRef => _getterUnitEntity.Ref<GetterUnitMasterComponent>();
     internal EcsComponentRef<BuilderCellMasterComponent> BuilderCellMasterComponentRef => _builderEntity.Ref<BuilderCellMasterComponent>();
 
     internal EcsComponentRef<EconomyMasterComponent> EconomyMasterComponentRef
         => _economyEntity.Ref<EconomyMasterComponent>();
-    internal EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> EconomyUnitsMasterComponentRef
-        => _economyEntity.Ref<EconomyMasterComponent.UnitsMasterComponent>();
+    internal EcsComponentRef<EconomyMasterComponent.UnitMasterComponent> EconomyUnitsMasterComponentRef
+        => _economyEntity.Ref<EconomyMasterComponent.UnitMasterComponent>();
     internal EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> EconomyBuildingsMasterComponentRef
         => _economyEntity.Ref<EconomyMasterComponent.BuildingsMasterComponent>();
 
@@ -45,12 +44,9 @@ public class EntitiesMasterManager : EntitiesManager
         _attackUnitEntity = _ecsWorld.NewEntity()
             .Replace(new AttackUnitMasterComponent(supportManager.StartValuesConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));
 
-        _getterUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager));
-
         _economyEntity = _ecsWorld.NewEntity()
             .Replace(new EconomyMasterComponent(supportManager.StartValuesConfig))
-            .Replace(new EconomyMasterComponent.UnitsMasterComponent(supportManager.StartValuesConfig))
+            .Replace(new EconomyMasterComponent.UnitMasterComponent(supportManager.StartValuesConfig))
             .Replace(new EconomyMasterComponent.BuildingsMasterComponent(supportManager.StartValuesConfig));
 
         _builderEntity = _ecsWorld.NewEntity()

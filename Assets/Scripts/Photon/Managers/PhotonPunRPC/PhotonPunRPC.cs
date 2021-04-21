@@ -1,7 +1,6 @@
 ﻿using ExitGames.Client.Photon;
 using Leopotam.Ecs;
 using Photon.Pun;
-using Photon.Realtime;
 using System;
 using UnityEngine;
 using static Main;
@@ -13,7 +12,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     private CellManager _cellManager = default;
     private SystemsMasterManager _systemsMasterManager = default;
 
-    private InventorSupportSystem _inventorSupportSystem = default;
+    private GetterUnitForMasterSystem _inventorSupportSystem = default;
 
     #region ComponetsRef
 
@@ -23,10 +22,9 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftUnitMasterComponentRef = default;
     private EcsComponentRef<DonerComponent> _refresherMasterComponentRef = default;
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
-    private EcsComponentRef<GetterUnitMasterComponent> _getterUnitMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent> _economyMasterComponentRef = default;
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
-    private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitsMasterComponentRef = default;
+    private EcsComponentRef<EconomyMasterComponent.UnitMasterComponent> _economyUnitsMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef = default;
 
     #endregion
@@ -85,12 +83,16 @@ public partial class PhotonPunRPC : MonoBehaviour
             _shiftUnitMasterComponentRef = entitiesMasterManager.ShiftUnitComponentRef;
             _refresherMasterComponentRef = entitiesMasterManager.RefresherMasterComponentRef;
             _attackUnitMasterComponentRef = entitiesMasterManager.AttackUnitMasterComponentRef;
-            _getterUnitMasterComponentRef = entitiesMasterManager.GetterUnitMasterComponentRef;
             _economyMasterComponentRef = entitiesMasterManager.EconomyMasterComponentRef;
             _builderCellMasterComponentRef = entitiesMasterManager.BuilderCellMasterComponentRef;
             _economyUnitsMasterComponentRef = entitiesMasterManager.EconomyUnitsMasterComponentRef;
             _economyBuildingsMasterComponentRef = entitiesMasterManager.EconomyBuildingsMasterComponentRef;
+
+
+            _systemsMasterManager = eCSmanager.SystemsMasterManager;
+            _inventorSupportSystem = eCSmanager.ForMasterSystemsManager.InventorForGeneralSystem;
         }
+
 
         var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
 
@@ -108,10 +110,6 @@ public partial class PhotonPunRPC : MonoBehaviour
         _selectedUnitComponentRef = entitiesGeneralManager.SelectedUnitComponentRef;
         _economyUnitsComponentRef = entitiesGeneralManager.EconomyUnitsComponentRef;
         _unitPathComponentRef = entitiesGeneralManager.UnitPathComponentRef;
-
-
-        _systemsMasterManager = eCSmanager.SystemsMasterManager;
-        _inventorSupportSystem = eCSmanager.SupportSystems.InventorSupportSystem;
 
         RefreshAll();
     }

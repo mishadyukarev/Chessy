@@ -5,7 +5,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
 
-    private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitsMasterComponentRef;
+    private EcsComponentRef<EconomyMasterComponent.UnitMasterComponent> _economyUnitsMasterComponentRef;
     private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef;
 
 

@@ -11,8 +11,7 @@ public sealed class SystemsMasterManager : SystemsManager
             .Add(new SetterUnitMasterSystem(eCSmanager, supportManager), nameof(SetterUnitMasterSystem))
             .Add(new ShiftUnitMasterSystem(eCSmanager, supportManager), nameof(ShiftUnitMasterSystem))
             .Add(new BuilderCellMasterSystem(eCSmanager, supportManager), nameof(BuilderCellMasterSystem))
-            .Add(new AttackUnitMasterSystem(eCSmanager, supportManager), nameof(AttackUnitMasterSystem))
-            .Add(new GetterUnitMasterSystem(eCSmanager, supportManager), nameof(GetterUnitMasterSystem));
+            .Add(new AttackUnitMasterSystem(eCSmanager, supportManager), nameof(AttackUnitMasterSystem));
 
         InitAndProcessInjectsSystems();
     }

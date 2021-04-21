@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-public abstract class CellReduction : ReductionSystem
+public abstract class CellReduction : StartValuesReduction
 {
     protected CellManager _cellManager = default;
 

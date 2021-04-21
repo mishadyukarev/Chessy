@@ -23,7 +23,7 @@ internal struct EconomyMasterComponent
     }
 
 
-    internal struct UnitsMasterComponent
+    internal struct UnitMasterComponent
     {
         private int _amountKingMaster;
         private int _amountKingOther;
@@ -32,7 +32,7 @@ internal struct EconomyMasterComponent
         private bool _isSettedKingMaster;
         private bool _isSettedKingOther;
 
-        internal UnitsMasterComponent(StartValuesConfig startValues)
+        internal UnitMasterComponent(StartValuesConfig startValues)
         {
             _amountKingMaster = startValues.AMOUNT_KING_MASTER;
             _amountKingOther = startValues.AMOUNT_KING_OTHER;

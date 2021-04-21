@@ -10,7 +10,6 @@ public abstract class SystemsManager
 
     protected EcsSystems _currentSystemsForInvoke;
 
-
     protected SystemsManager(EcsWorld ecsWorld)
     {
         _ecsWorld = ecsWorld;
@@ -18,6 +17,7 @@ public abstract class SystemsManager
         _updateSystems = new EcsSystems(ecsWorld);
         _elseSystems = new EcsSystems(ecsWorld);
     }
+
 
     internal void InitAndProcessInjectsSystems()
     {

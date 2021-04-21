@@ -59,7 +59,6 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         _startValues = supportManager.StartValuesConfig;
         var systemsGeneralManager = eCSmanager.SystemsGeneralManager;
         var cellManager = supportManager.CellManager;
-        var resourcesLoadManager = supportManager.ResourcesLoadManager;
         var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
 
 
@@ -111,14 +110,12 @@ public sealed class EntitiesGeneralManager : EntitiesManager
                 CellComponent cellComponent = new CellComponent(isStartMaster, isStartOther, cellsGO[x, y]);
 
 
-
                 CellComponent.EnvironmentComponent cellEnvironmentComponent
                     = new CellComponent.EnvironmentComponent(x, y, startSpawnManager);
 
 
                 CellComponent.SupportVisionComponent cellSupportVisionComponent
                     = new CellComponent.SupportVisionComponent(x, y, startSpawnManager);
-
 
 
                 CellComponent.UnitComponent cellUnitComponent = new CellComponent.UnitComponent
