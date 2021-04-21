@@ -95,11 +95,11 @@ internal class StartSpawnManager
         parentTransformScrips = _parentScriptsGO.transform;
 
         GameObject.Instantiate(supportManager.ResourcesLoadManager.Camera);
-        GameObject.Instantiate(supportManager.ResourcesLoadManager.BackGroundCollider2D);
 
-        SpawnCells(supportManager.ResourcesLoadManager, supportManager.StartValuesConfig);
+        GameObject.Instantiate(supportManager.ResourcesLoadManager.BackGroundCollider2D,
+            Instance.transform.position + new Vector3(0, 0, 1), Instance.transform.rotation);
 
-        
+        SpawnCells(supportManager.ResourcesLoadManager, supportManager.StartValuesConfig);       
         SpawnUI(supportManager.ResourcesLoadManager);
     }
 
@@ -182,7 +182,7 @@ internal class StartSpawnManager
 
 
         GameObject supportParent = new GameObject("Cells");
-        // Setting cells on the map
+
         for (int x = 0; x < startValues.CellCountX; x++)
         {
             for (int y = 0; y < startValues.CellCountY; y++)
