@@ -94,7 +94,8 @@ internal class StartSpawnManager
         _parentScriptsGO = supportManager.BuilderManager.CreateGameObject("Scripts");
         parentTransformScrips = _parentScriptsGO.transform;
 
-        GameObject.Instantiate(supportManager.ResourcesLoadManager.Camera);
+        GameObject.Instantiate(supportManager.ResourcesLoadManager.Camera,
+            Instance.transform.position + new Vector3(7, 5.5f, -1), Instance.transform.rotation);
 
         GameObject.Instantiate(supportManager.ResourcesLoadManager.BackGroundCollider2D,
             Instance.transform.position + new Vector3(0, 0, 1), Instance.transform.rotation);
