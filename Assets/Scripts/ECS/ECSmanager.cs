@@ -16,6 +16,8 @@ public sealed class ECSmanager
     private SystemsOtherManager _systemsOtherManager;
     private EntitiesOtherManager _entitiesOtherManager;
 
+    private SupportSystems _supportSystems;
+
 
     public EcsWorld EcsWorld => _ecsWorld;
 
@@ -27,6 +29,8 @@ public sealed class ECSmanager
 
     public EntitiesOtherManager EntitiesOtherManager => _entitiesOtherManager;
     public SystemsOtherManager SystemsOtherManager => _systemsOtherManager;
+
+    internal SupportSystems SupportSystems => _supportSystems;
 
 
 
@@ -56,6 +60,9 @@ public sealed class ECSmanager
             _entitiesOtherManager.CreateEntities();
             _systemsOtherManager.CreateInitSystems(this, supportManager, photonManager);
         }
+
+
+        _supportSystems = new SupportSystems(this, supportManager);
     }
 
     public void Run()

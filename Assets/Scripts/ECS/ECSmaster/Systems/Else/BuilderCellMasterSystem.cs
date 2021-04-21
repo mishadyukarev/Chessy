@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
 
-internal class BuilderCellMasterSystem : CellReductionSystem, IEcsRunSystem
+internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
 

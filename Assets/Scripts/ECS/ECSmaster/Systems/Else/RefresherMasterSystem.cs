@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-public class RefresherMasterSystem : CellReductionSystem, IEcsRunSystem
+public class RefresherMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<EconomyMasterComponent> _economyMasterComponent = default;
 

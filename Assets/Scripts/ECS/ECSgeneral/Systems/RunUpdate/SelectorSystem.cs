@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Main;
 
-public sealed class SelectorSystem : CellReductionSystem, IEcsRunSystem
+public sealed class SelectorSystem : CellReduction, IEcsRunSystem
 {
     #region Other classes and else
 

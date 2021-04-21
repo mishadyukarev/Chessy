@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-internal class UISystem : CellReductionSystem, IEcsRunSystem
+internal class UISystem : CellReduction, IEcsRunSystem
 {
     private PhotonManagerScene _photonManagerScene;
     private PhotonPunRPC _photonPunRPC;

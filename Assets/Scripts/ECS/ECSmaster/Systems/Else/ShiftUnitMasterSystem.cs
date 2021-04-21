@@ -3,7 +3,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 
 
-public class ShiftUnitMasterSystem : CellReductionSystem, IEcsRunSystem
+public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftComponentRef = default;
     private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;

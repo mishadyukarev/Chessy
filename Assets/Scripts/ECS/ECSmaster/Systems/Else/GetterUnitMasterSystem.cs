@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
 
-internal class GetterUnitMasterSystem : CellReductionSystem, IEcsRunSystem
+internal class GetterUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<GetterUnitMasterComponent> _getterUnitMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyCountUnitMasterComponent = default;

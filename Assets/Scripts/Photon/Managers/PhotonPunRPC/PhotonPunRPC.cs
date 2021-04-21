@@ -13,6 +13,8 @@ public partial class PhotonPunRPC : MonoBehaviour
     private CellManager _cellManager = default;
     private SystemsMasterManager _systemsMasterManager = default;
 
+    private InventorSupportSystem _inventorSupportSystem = default;
+
     #region ComponetsRef
 
     #region Master
@@ -109,6 +111,7 @@ public partial class PhotonPunRPC : MonoBehaviour
 
 
         _systemsMasterManager = eCSmanager.SystemsMasterManager;
+        _inventorSupportSystem = eCSmanager.SupportSystems.InventorSupportSystem;
 
         RefreshAll();
     }
@@ -147,7 +150,8 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void GetUnitToMaster(UnitTypes unitType, PhotonMessageInfo info)
     {
-        var isGetted = _getterUnitMasterComponentRef.Unref().TryGetUnit(unitType, info.Sender);
+        var isGetted = _inventorSupportSystem.TryGetUnit(unitType, info.Sender);
+
         _photonView.RPC("GetUnitToGeneral", info.Sender, unitType, isGetted);
 
         RefreshAll();
@@ -204,7 +208,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void AttackUnitMaster(int[] xyPreviousCell, int[] xySelectedCell, PhotonMessageInfo info)
     {
-        var xyAvailableCellsForAttackOUT = _unitPathComponentRef.Unref().GetAvailableCellsForAttack(xyPreviousCell, info.Sender);
+        var xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCellsForAttack(xyPreviousCell, info.Sender);
 
         bool isAttacked = false;
 
@@ -212,7 +216,7 @@ public partial class PhotonPunRPC : MonoBehaviour
         {
             if (CellUnitComponent(xyPreviousCell).IsHim(info.Sender))
             {
-                if (_cellManager.TryFindCellInList(xySelectedCell, xyAvailableCellsForAttackOUT))
+                if (_cellManager.TryFindCellInList(xySelectedCell, xyAvailableCellsForAttack))
                 {
                     _attackUnitMasterComponentRef.Unref().AttackUnit(xyPreviousCell, xySelectedCell);
                     isAttacked = true;

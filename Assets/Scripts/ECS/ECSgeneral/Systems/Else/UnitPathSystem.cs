@@ -98,7 +98,7 @@ public struct UnitPathsComponent
 
 
 
-public partial class UnitPathSystem : CellReductionSystem, IEcsInitSystem, IEcsRunSystem
+public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSystem
 {
     private int[] _xyCurrentCell = default;
     private int[] _changeXY = default;

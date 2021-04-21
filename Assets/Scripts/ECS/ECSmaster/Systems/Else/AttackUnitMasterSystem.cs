@@ -37,7 +37,7 @@ public struct AttackUnitMasterComponent
 
 
 
-public class AttackUnitMasterSystem : CellReductionSystem, IEcsRunSystem
+public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
     private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;

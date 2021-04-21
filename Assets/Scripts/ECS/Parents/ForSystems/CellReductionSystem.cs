@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-public abstract class CellReductionSystem : ReductionSystem
+public abstract class CellReduction : ReductionSystem
 {
     protected CellManager _cellManager = default;
 
@@ -18,7 +18,7 @@ public abstract class CellReductionSystem : ReductionSystem
     protected int Ycount => _cellComponentRef.GetUpperBound(Y) + 1;
 
 
-    protected CellReductionSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(supportManager)
+    protected CellReduction(ECSmanager eCSmanager, SupportManager supportManager) : base(supportManager)
     {
         _cellManager = supportManager.CellManager;
 

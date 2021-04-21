@@ -45,7 +45,7 @@ public struct GetterCellComponent
 
 
 
-public sealed class GetterCellSystem : CellReductionSystem, IEcsRunSystem
+public sealed class GetterCellSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<GetterCellComponent> _getterCellComponentRef = default;
 

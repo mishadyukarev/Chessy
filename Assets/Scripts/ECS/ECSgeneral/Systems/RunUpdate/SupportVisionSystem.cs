@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using static Main;
 
-internal class SupportVisionSystem : CellReductionSystem, IEcsRunSystem
+internal class SupportVisionSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
     private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponent = default;
