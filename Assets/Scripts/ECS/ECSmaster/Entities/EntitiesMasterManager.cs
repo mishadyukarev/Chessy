@@ -13,7 +13,7 @@ public class EntitiesMasterManager : EntitiesManager
 
     public EcsComponentRef<SetterUnitMasterComponent> SetterUnitMasterComponentRef => _setterUnitEntity.Ref<SetterUnitMasterComponent>();
     public EcsComponentRef<ShiftUnitMasterComponent> ShiftUnitComponentRef => _shiftUnitEntity.Ref<ShiftUnitMasterComponent>();
-    public EcsComponentRef<RefresherMasterComponent> RefresherMasterComponentRef => _refresherEntity.Ref<RefresherMasterComponent>();
+    public EcsComponentRef<DonerComponent> RefresherMasterComponentRef => _refresherEntity.Ref<DonerComponent>();
     public EcsComponentRef<AttackUnitMasterComponent> AttackUnitMasterComponentRef => _attackUnitEntity.Ref<AttackUnitMasterComponent>();
     internal EcsComponentRef<GetterUnitMasterComponent> GetterUnitMasterComponentRef => _getterUnitEntity.Ref<GetterUnitMasterComponent>();
     internal EcsComponentRef<BuilderCellMasterComponent> BuilderCellMasterComponentRef => _builderEntity.Ref<BuilderCellMasterComponent>();
@@ -40,7 +40,7 @@ public class EntitiesMasterManager : EntitiesManager
             .Replace(new ShiftUnitMasterComponent(supportManager.StartValuesConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));
 
         _refresherEntity = _ecsWorld.NewEntity()
-            .Replace(new RefresherMasterComponent(eCSmanager.SystemsMasterManager));
+            .Replace(new DonerComponent());
 
         _attackUnitEntity = _ecsWorld.NewEntity()
             .Replace(new AttackUnitMasterComponent(supportManager.StartValuesConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));

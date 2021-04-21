@@ -19,7 +19,7 @@ public partial class PhotonPunRPC : MonoBehaviour
 
     private EcsComponentRef<SetterUnitMasterComponent> _setterUnitMasterComponentRef = default;
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftUnitMasterComponentRef = default;
-    private EcsComponentRef<RefresherMasterComponent> _refresherMasterComponentRef = default;
+    private EcsComponentRef<DonerComponent> _refresherMasterComponentRef = default;
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
     private EcsComponentRef<GetterUnitMasterComponent> _getterUnitMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent> _economyMasterComponentRef = default;
@@ -140,7 +140,6 @@ public partial class PhotonPunRPC : MonoBehaviour
     #endregion
 
 
-
     #region GetUnit
 
     internal void GetUnit(UnitTypes unitTypes) => _photonView.RPC("GetUnitToMaster", RpcTarget.MasterClient, unitTypes);
@@ -205,9 +204,22 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void AttackUnitMaster(int[] xyPreviousCell, int[] xySelectedCell, PhotonMessageInfo info)
     {
-        var attacked = _attackUnitMasterComponentRef.Unref().TryAttackUnit(xyPreviousCell, xySelectedCell, info.Sender);
-        //var attacked = TryAttack(xyPreviousCell, xySelectedCell, info.Sender);
-        _photonView.RPC("AttackUnitGeneral", info.Sender, attacked);
+        var xyAvailableCellsForAttackOUT = _unitPathComponentRef.Unref().GetAvailableCellsForAttack(xyPreviousCell, info.Sender);
+
+        bool isAttacked = false;
+
+        if (CellUnitComponent(xyPreviousCell).HaveAmountSteps)
+        {
+            if (CellUnitComponent(xyPreviousCell).IsHim(info.Sender))
+            {
+                if (_cellManager.TryFindCellInList(xySelectedCell, xyAvailableCellsForAttackOUT))
+                {
+                    _attackUnitMasterComponentRef.Unref().AttackUnit(xyPreviousCell, xySelectedCell);
+                    isAttacked = true;
+                }
+            }
+        }
+        _photonView.RPC("AttackUnitGeneral", info.Sender, isAttacked);
 
         RefreshAll();
     }
@@ -216,108 +228,6 @@ public partial class PhotonPunRPC : MonoBehaviour
     private void AttackUnitGeneral(bool isAttacked)
     {
         if (isAttacked) _selectorComponentRef.Unref().AttackUnitDelegate();
-    }
-
-
-    private bool TryAttack(in int[] xyPreviousCellIN, in int[] xySelectedCellIN, in Player fromPlayerIN)
-    {
-        var xyAvailableCellsForAttackOUT = _unitPathComponentRef.Unref().GetAvailableCellsForAttack(xyPreviousCellIN, fromPlayerIN);
-
-        if (CellUnitComponent(xyPreviousCellIN).HaveAmountSteps
-            && CellUnitComponent(xyPreviousCellIN).IsHim(fromPlayerIN)
-            && _cellManager.TryFindCellInList(xySelectedCellIN, xyAvailableCellsForAttackOUT))
-        {
-            CellUnitComponent(xyPreviousCellIN).AmountSteps -= _startValues.AMOUNT_STEPS_PAWN;
-            CellUnitComponent(xyPreviousCellIN).IsProtected = false;
-            CellUnitComponent(xyPreviousCellIN).IsRelaxed = false;
-
-
-
-            int damageToSelelected = 0;
-
-            if (CellEnvironmentComponent(xySelectedCellIN).HaveHill) damageToSelelected -= _startValues.ProtectionHill;
-            if (CellEnvironmentComponent(xySelectedCellIN).HaveTree) damageToSelelected -= _startValues.ProtectionTree;
-
-
-            switch (CellBuildingComponent(xySelectedCellIN).BuildingType)
-            {
-                case BuildingTypes.None:
-                    break;
-
-                case BuildingTypes.City:
-                    damageToSelelected -= _startValues.ProtectionCity;
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (CellUnitComponent(xyPreviousCellIN).UnitType)
-            {
-                case UnitTypes.None:
-                    break;
-
-                case UnitTypes.King:
-
-                    damageToSelelected += _startValues.PowerDamageKing;
-
-                    break;
-
-                case UnitTypes.Pawn:
-
-                    damageToSelelected += _startValues.PowerDamagePawn;
-
-
-                    break;
-
-                default:
-                    break;
-            }
-
-            switch (CellUnitComponent(xySelectedCellIN).UnitType)
-            {
-                case UnitTypes.None:
-                    break;
-
-                case UnitTypes.King:
-
-                    if (CellUnitComponent(xySelectedCellIN).IsProtected) damageToSelelected -= _startValues.ProtectionKing;
-
-                    break;
-
-                case UnitTypes.Pawn:
-
-                    if (CellUnitComponent(xySelectedCellIN).IsProtected) damageToSelelected -= _startValues.ProtectionPawn;
-
-                    break;
-
-                default:
-                    break;
-            }
-
-
-            CellUnitComponent(xySelectedCellIN).AmountHealth -= damageToSelelected;
-            CellUnitComponent(xyPreviousCellIN).AmountHealth -= CellUnitComponent(xySelectedCellIN).PowerDamage;
-
-            if (CellUnitComponent(xyPreviousCellIN).AmountHealth <= _startValues.AMOUNT_FOR_DEATH)
-            {
-                CellUnitComponent(xyPreviousCellIN).ResetUnit();
-            }
-
-            if (CellUnitComponent(xySelectedCellIN).AmountHealth <= _startValues.AMOUNT_FOR_DEATH)
-            {
-                CellUnitComponent(xySelectedCellIN).ResetUnit();
-                CellUnitComponent(xySelectedCellIN).SetUnit(CellUnitComponent(xyPreviousCellIN));
-                CellUnitComponent(xyPreviousCellIN).ResetUnit();
-            }
-
-            return true;
-
-        }
-        else
-        {
-            return false;
-        }
     }
 
     #endregion
