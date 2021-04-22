@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using System;
 using UnityEngine;
-using static Main;
+using static MainGame;
 
 public class PhotonManager
 {

@@ -4,10 +4,10 @@ internal struct EconomyMasterComponent
     private int _goldMaster;
     private int _goldOther;
 
-    internal EconomyMasterComponent(StartValuesConfig startValues)
+    internal EconomyMasterComponent(StartValuesGameConfig startValues)
     {
-        _goldMaster = startValues.GoldMaster;
-        _goldOther = startValues.GoldOther;
+        _goldMaster = startValues.AMOUNT_GOLD_MASTER;
+        _goldOther = startValues.AMOUNT_GOLD_OTHER;
     }
 
 
@@ -32,12 +32,12 @@ internal struct EconomyMasterComponent
         private bool _isSettedKingMaster;
         private bool _isSettedKingOther;
 
-        internal UnitMasterComponent(StartValuesConfig startValues)
+        internal UnitMasterComponent(StartValuesGameConfig startValues)
         {
             _amountKingMaster = startValues.AMOUNT_KING_MASTER;
             _amountKingOther = startValues.AMOUNT_KING_OTHER;
-            _amountUnitPawnMaster = startValues.AmountPawnMaster;
-            _amountUnitPawnOther = startValues.AmountPawnOther;
+            _amountUnitPawnMaster = startValues.AMOUNT_PAWN_MASTER;
+            _amountUnitPawnOther = startValues.AMOUNT_PAWN_OTHER;
             _isSettedKingMaster = default;
             _isSettedKingOther = default;
         }
@@ -84,7 +84,7 @@ internal struct EconomyMasterComponent
         private int[] _xySettedCityMaster;
         private int[] _xySettedCityOther;
 
-        internal BuildingsMasterComponent(StartValuesConfig nameValueManager)
+        internal BuildingsMasterComponent(StartValuesGameConfig nameValueManager)
         {
             _isSettedCityMaster = default;
             _isSettedCityOther = default;

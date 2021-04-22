@@ -57,21 +57,21 @@ public class EntitiesMasterManager : EntitiesManager
             .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager));
 
 
-        for (int x = 0; x < supportManager.StartValuesConfig.CellCountX; x++)
+        for (int x = 0; x < supportManager.StartValuesConfig.CELL_COUNT_X; x++)
         {
-            for (int y = 0; y < supportManager.StartValuesConfig.CellCountY; y++)
+            for (int y = 0; y < supportManager.StartValuesConfig.CELL_COUNT_Y; y++)
             {
                 int random;
                 random = Random.Range(1, 100);
-                if (random <= supportManager.StartValuesConfig.PercentTree)
+                if (random <= supportManager.StartValuesConfig.PERCENT_TREE)
                     eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Tree);
 
                 random = Random.Range(1, 100);
-                if (random <= supportManager.StartValuesConfig.PercentHill)
+                if (random <= supportManager.StartValuesConfig.PERCENT_HILL)
                     eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Hill);
 
                 random = Random.Range(1, 100);
-                if (random <= supportManager.StartValuesConfig.PercentMountain)
+                if (random <= supportManager.StartValuesConfig.PERCENT_MOUNTAIN)
                     eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Mountain);
 
 
@@ -81,7 +81,7 @@ public class EntitiesMasterManager : EntitiesManager
                     && !eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().HaveTree)
                 {
                     random = Random.Range(1, 100);
-                    if (random <= supportManager.StartValuesConfig.PercentFood)
+                    if (random <= supportManager.StartValuesConfig.PERCENT_FOOD)
                         eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Food);
                 }
 

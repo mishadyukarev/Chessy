@@ -1,7 +1,7 @@
 ﻿
 public abstract class StartValuesReduction
 {
-    protected StartValuesConfig _startValues = default;
+    protected StartValuesGameConfig _startValues = default;
 
     protected StartValuesReduction(SupportManager supportManager)
     {

@@ -84,7 +84,7 @@ internal class GetterUnitMasterSystem : CellReduction, IEcsRunSystem
     {
         if (playerIN.IsMasterClient)
         {
-            if (_economyCountUnitMasterComponent.Unref().AmountKingMaster >= _startValues.TAKE_UNIT)
+            if (_economyCountUnitMasterComponent.Unref().AmountKingMaster >= _startValues.AMOUNT_FOR_TAKE_UNIT)
             {
                 _getterUnitMasterComponentRef.Unref().Pack(true);
                 //_economyCountUnitMasterComponent.Unref().AmountKingMaster -= _startValues.TakeUnit;
@@ -93,7 +93,7 @@ internal class GetterUnitMasterSystem : CellReduction, IEcsRunSystem
         }
         else
         {
-            if (_economyCountUnitMasterComponent.Unref().AmountKingOther >= _startValues.TAKE_UNIT)
+            if (_economyCountUnitMasterComponent.Unref().AmountKingOther >= _startValues.AMOUNT_FOR_TAKE_UNIT)
             {
                 _getterUnitMasterComponentRef.Unref().Pack(true);
                 //_economyCountUnitMasterComponent.Unref().AmountKingOther -= _startValues.TakeUnit;
@@ -106,7 +106,7 @@ internal class GetterUnitMasterSystem : CellReduction, IEcsRunSystem
     {
         if (playerIN.IsMasterClient)
         {
-            if (_economyCountUnitMasterComponent.Unref().AmountUnitPawnMaster >= _startValues.TAKE_UNIT)
+            if (_economyCountUnitMasterComponent.Unref().AmountUnitPawnMaster >= _startValues.AMOUNT_FOR_TAKE_UNIT)
             {
                 _getterUnitMasterComponentRef.Unref().Pack(true);
                 // _economyCountUnitMasterComponent.Unref().AmountUnitPawnMaster -= _startValues.TakeUnit;
@@ -115,7 +115,7 @@ internal class GetterUnitMasterSystem : CellReduction, IEcsRunSystem
         }
         else
         {
-            if (_economyCountUnitMasterComponent.Unref().AmountUnitPawnOther >= _startValues.TAKE_UNIT)
+            if (_economyCountUnitMasterComponent.Unref().AmountUnitPawnOther >= _startValues.AMOUNT_FOR_TAKE_UNIT)
             {
                 _getterUnitMasterComponentRef.Unref().Pack(true);
                 //_economyCountUnitMasterComponent.Unref().AmountUnitPawnOther -= _startValues.TakeUnit;

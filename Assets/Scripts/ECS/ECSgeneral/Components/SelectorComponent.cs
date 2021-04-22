@@ -43,7 +43,7 @@ public struct SelectorComponent
         set { if (_shiftUnitDelegate == default) _shiftUnitDelegate = value; }
     }
 
-    internal SelectorComponent(StartValuesConfig nameValueManager)
+    internal SelectorComponent(StartValuesGameConfig nameValueManager)
     {
         _xySelectedCell = new int[nameValueManager.XY_FOR_ARRAY];
         _xyPreviousCell = new int[nameValueManager.XY_FOR_ARRAY];

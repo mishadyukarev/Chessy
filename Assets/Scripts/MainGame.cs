@@ -1,14 +1,13 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
-public sealed class Main : MonoBehaviour
+public sealed class MainGame : MonoBehaviour
 {
 
     #region Variables
 
-    private static Main _instance;
+    private static MainGame _instance;
 
     private Camera _camera;
     private ECSmanager _eCSmanager;
@@ -21,13 +20,11 @@ public sealed class Main : MonoBehaviour
 
     #region Properties
 
-    static public Main Instance => _instance;
+    static public MainGame Instance => _instance;
 
     internal bool IsMasterClient => PhotonNetwork.IsMasterClient;
     internal Player MasterClient => PhotonNetwork.MasterClient;
     internal Player LocalPlayer => PhotonNetwork.LocalPlayer;
-
-    internal PhotonView PhotonView => _photonManager.PhotonView;
 
     #endregion
 

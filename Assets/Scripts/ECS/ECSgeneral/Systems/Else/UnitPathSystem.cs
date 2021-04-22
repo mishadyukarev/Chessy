@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public struct UnitPathsComponent
 {
-    private StartValuesConfig _nameValueManager;
+    private StartValuesGameConfig _nameValueManager;
     private CellManager _cellManager;
     private SystemsGeneralManager _systemsGeneralManager;
 
@@ -18,7 +18,7 @@ public struct UnitPathsComponent
 
 
 
-    public UnitPathsComponent(SystemsGeneralManager systemsGeneralManager, StartValuesConfig nameValueManager, CellManager cellManager)
+    public UnitPathsComponent(SystemsGeneralManager systemsGeneralManager, StartValuesGameConfig nameValueManager, CellManager cellManager)
     {
         _nameValueManager = nameValueManager;
         _systemsGeneralManager = systemsGeneralManager;

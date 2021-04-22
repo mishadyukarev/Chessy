@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static Main;
+using static MainGame;
 
 internal class StartSpawnManager
 {
@@ -156,37 +156,37 @@ internal class StartSpawnManager
 
     }
 
-    public void SpawnCells(ResourcesLoadManager resourcesLoadManager, StartValuesConfig startValues)
+    public void SpawnCells(ResourcesLoadManager resourcesLoadManager, StartValuesGameConfig startValues)
     {
         var cellGO = resourcesLoadManager.CellGO;
         var whiteCellSR = resourcesLoadManager.WhiteCellSprite;
         var blackCellSR = resourcesLoadManager.BlackCellSprite;
 
-        _cellsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
+        _cellsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
-        FoodsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
-        MountainsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
-        TreesGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
-        HillsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
+        FoodsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        MountainsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        TreesGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        HillsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
-        SelectorVisionsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
-        SpawnVisionsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
-        WayUnitVisionsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
-        EnemyVisionsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
+        SelectorVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        SpawnVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        WayUnitVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        EnemyVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
-        UnitPawnsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
-        UnitKingsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
-        UnitPawnsGOsr = new SpriteRenderer[startValues.CellCountX, startValues.CellCountY];
-        UnitKingsGOsr = new SpriteRenderer[startValues.CellCountX, startValues.CellCountY];
+        UnitPawnsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        UnitKingsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        UnitPawnsGOsr = new SpriteRenderer[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        UnitKingsGOsr = new SpriteRenderer[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
-        CampsGO = new GameObject[startValues.CellCountX, startValues.CellCountY];
+        CampsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
 
         GameObject supportParent = new GameObject("Cells");
 
-        for (int x = 0; x < startValues.CellCountX; x++)
+        for (int x = 0; x < startValues.CELL_COUNT_X; x++)
         {
-            for (int y = 0; y < startValues.CellCountY; y++)
+            for (int y = 0; y < startValues.CELL_COUNT_Y; y++)
             {
                 if (y % 2 == 0)
                 {

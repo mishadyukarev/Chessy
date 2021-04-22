@@ -5,7 +5,7 @@
     private ResourcesLoadManager _resourcesLoadManager;
     private UnityEvents _unityEvents;
     private NameManager _nameManager;
-    private StartValuesConfig _startValues;
+    private StartValuesGameConfig _startValues;
 
 
 
@@ -14,7 +14,7 @@
     public ResourcesLoadManager ResourcesLoadManager => _resourcesLoadManager;
     public UnityEvents UnityEvents => _unityEvents;
     internal NameManager NameManager => _nameManager;
-    internal StartValuesConfig StartValuesConfig => _startValues;
+    internal StartValuesGameConfig StartValuesConfig => _startValues;
 
 
     public SupportManager()

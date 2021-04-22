@@ -12,9 +12,9 @@ public partial class PhotonPunRPC : MonoBehaviour
     private void RefreshAllMaster()
     {
         List<object> listObjects = new List<object>();
-        for (int x = 0; x < _startValues.CellCountX; x++)
+        for (int x = 0; x < _startValues.CELL_COUNT_X; x++)
         {
-            for (int y = 0; y < _startValues.CellCountY; y++)
+            for (int y = 0; y < _startValues.CELL_COUNT_Y; y++)
             {
                 listObjects.Add(CellUnitComponent(x, y).UnitType);
                 listObjects.Add(CellUnitComponent(x, y).ActorNumber);
@@ -60,9 +60,9 @@ public partial class PhotonPunRPC : MonoBehaviour
     private void RefreshCellsGeneral(object[] objects)
     {
         int i = 0;
-        for (int x = 0; x < _startValues.CellCountX; x++)
+        for (int x = 0; x < _startValues.CELL_COUNT_X; x++)
         {
-            for (int y = 0; y < _startValues.CellCountY; y++)
+            for (int y = 0; y < _startValues.CELL_COUNT_Y; y++)
             {
                 UnitTypes unitType = (UnitTypes)objects[i++];
                 int actorNumber = (int)objects[i++];

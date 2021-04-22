@@ -5,9 +5,9 @@ using System.Linq;
 
 public class CellManager
 {
-    private StartValuesConfig _startValues;
+    private StartValuesGameConfig _startValues;
 
-    public CellManager(StartValuesConfig startValues)
+    public CellManager(StartValuesGameConfig startValues)
     {
         _startValues = startValues;
     }

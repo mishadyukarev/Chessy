@@ -12,7 +12,7 @@ public struct ShiftUnitMasterComponent
     private bool _isShiftedOUT;
 
 
-    public ShiftUnitMasterComponent(StartValuesConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
+    public ShiftUnitMasterComponent(StartValuesGameConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
     {
         _cellManager = cellManager;
         _systemsMasterManager = systemsMasterManager;

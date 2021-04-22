@@ -6,7 +6,7 @@ public class ResourcesLoadManager
     private AudioSource _audioSource;
     private Sprite _whiteCellSprite;
     private Sprite _blackCellSprite;
-    private StartValuesConfig _startValues;
+    private StartValuesGameConfig _startValues;
     private Canvas _canvas;
     private GameObject _backGroundCollider2D;
 
@@ -15,7 +15,7 @@ public class ResourcesLoadManager
     public AudioSource AudioSource => _audioSource;
     internal Sprite WhiteCellSprite => _whiteCellSprite;
     internal Sprite BlackCellSprite => _blackCellSprite;
-    internal StartValuesConfig StartValuesConfig => _startValues;
+    internal StartValuesGameConfig StartValuesConfig => _startValues;
     internal Canvas Canvas => _canvas;
     internal GameObject BackGroundCollider2D => _backGroundCollider2D;
     internal Camera Camera;
@@ -30,7 +30,7 @@ public class ResourcesLoadManager
         _whiteCellSprite = Resources.Load<SpritesConfig>("Sprites").WhiteSprite;
         _blackCellSprite = Resources.Load<SpritesConfig>("Sprites").BlackSprite;
 
-        _startValues = Resources.Load<StartValuesConfig>("StartValues");
+        _startValues = Resources.Load<StartValuesGameConfig>("StartValues");
 
         AudioClip = Resources.Load<AudioClip>("Clip1");
 

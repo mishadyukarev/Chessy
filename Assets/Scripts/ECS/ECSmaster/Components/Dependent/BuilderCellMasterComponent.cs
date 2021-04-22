@@ -11,7 +11,7 @@ internal struct BuilderCellMasterComponent
 
     private bool _isSettedOUT;
 
-    internal BuilderCellMasterComponent(StartValuesConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
+    internal BuilderCellMasterComponent(StartValuesGameConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
     {
         _cellManager = cellManager;
         _systemsMasterManager = systemsMasterManager;

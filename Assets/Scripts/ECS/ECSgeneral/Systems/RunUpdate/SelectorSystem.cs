@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using System.Collections.Generic;
 using UnityEngine;
-using static Main;
+using static MainGame;
 
 public sealed class SelectorSystem : CellReduction, IEcsRunSystem
 {
@@ -139,7 +139,7 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                 {
                                     if (CellUnitComponent(_xySelectedCell).IsMine)
                                     {
-                                        if (CellUnitComponent(_xySelectedCell).AmountSteps >= _startValues.TAKE_AMOUNT_STEPS)
+                                        if (CellUnitComponent(_xySelectedCell).AmountSteps >= _startValues.AMOUNT_FOR_TAKE_UNIT)
                                         {
                                             _xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCellsForShift(_xySelectedCell, Instance.LocalPlayer);
                                             _xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCellsForAttack(_xySelectedCell, Instance.LocalPlayer);

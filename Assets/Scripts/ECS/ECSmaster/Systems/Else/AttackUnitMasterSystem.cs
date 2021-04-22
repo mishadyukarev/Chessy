@@ -10,7 +10,7 @@ public struct AttackUnitMasterComponent
     private int[] _xyPreviousCellIN;
     private int[] _xySelectedCellIN;
 
-    public AttackUnitMasterComponent(StartValuesConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
+    public AttackUnitMasterComponent(StartValuesGameConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
     {
         _cellManager = cellManager;
         _systemsMasterManager = systemsMasterManager;
@@ -61,8 +61,8 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
 
         int damageToSelelected = 0;
 
-        if (CellEnvironmentComponent(xySelectedCellIN).HaveHill) damageToSelelected -= _startValues.ProtectionHill;
-        if (CellEnvironmentComponent(xySelectedCellIN).HaveTree) damageToSelelected -= _startValues.ProtectionTree;
+        if (CellEnvironmentComponent(xySelectedCellIN).HaveHill) damageToSelelected -= _startValues.PROTECTION_HILL;
+        if (CellEnvironmentComponent(xySelectedCellIN).HaveTree) damageToSelelected -= _startValues.PROTECTION_TREE;
 
 
         switch (CellBuildingComponent(xySelectedCellIN).BuildingType)
@@ -71,7 +71,7 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
                 break;
 
             case BuildingTypes.City:
-                damageToSelelected -= _startValues.ProtectionCity;
+                damageToSelelected -= _startValues.PROTECTION_CITY;
                 break;
 
             default:
@@ -85,13 +85,13 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
 
             case UnitTypes.King:
 
-                damageToSelelected += _startValues.PowerDamageKing;
+                damageToSelelected += _startValues.POWER_DAMAGE_KING;
 
                 break;
 
             case UnitTypes.Pawn:
 
-                damageToSelelected += _startValues.PowerDamagePawn;
+                damageToSelelected += _startValues.POWER_DAMAGE_PAWN;
 
 
                 break;
@@ -107,13 +107,13 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
 
             case UnitTypes.King:
 
-                if (CellUnitComponent(xySelectedCellIN).IsProtected) damageToSelelected -= _startValues.ProtectionKing;
+                if (CellUnitComponent(xySelectedCellIN).IsProtected) damageToSelelected -= _startValues.PROTECTION_KING;
 
                 break;
 
             case UnitTypes.Pawn:
 
-                if (CellUnitComponent(xySelectedCellIN).IsProtected) damageToSelelected -= _startValues.ProtectionPawn;
+                if (CellUnitComponent(xySelectedCellIN).IsProtected) damageToSelelected -= _startValues.PROTECTION_PAWN;
 
                 break;
 

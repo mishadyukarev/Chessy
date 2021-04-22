@@ -28,7 +28,7 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
         {
             if (_cellManager.TryFindCellInList(xySelectedCell, xyAvailableCellsForShift))
             {
-                CellUnitComponent(xyPreviousCell).AmountSteps -= _startValues.TAKE_AMOUNT_STEPS;
+                CellUnitComponent(xyPreviousCell).AmountSteps -= _startValues.AMOUNT_FOR_TAKE_UNIT;
 
                 CellUnitComponent(xySelectedCell).SetUnit(CellUnitComponent(xyPreviousCell));
                 CellUnitComponent(xySelectedCell).IsProtected = false;

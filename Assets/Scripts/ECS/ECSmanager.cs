@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Scripts.ECS.Entities;
-using static Main;
+using static MainGame;
 
 
 public sealed class ECSmanager

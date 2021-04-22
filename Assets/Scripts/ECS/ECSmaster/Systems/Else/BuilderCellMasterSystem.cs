@@ -29,7 +29,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
         if (!CellEnvironmentComponent(xyCellIN).HaveMountain && CellUnitComponent(xyCellIN).HaveAmountSteps)
         {
             CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN);
-            CellUnitComponent(xyCellIN).AmountSteps -= _startValues.TAKE_AMOUNT_STEPS;
+            CellUnitComponent(xyCellIN).AmountSteps -= _startValues.AMOUNT_FOR_TAKE_UNIT;
 
             isBuilded = true;
             _builderCellMasterComponentRef.Unref().Pack(isBuilded);

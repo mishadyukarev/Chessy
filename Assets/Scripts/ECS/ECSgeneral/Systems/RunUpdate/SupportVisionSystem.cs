@@ -1,5 +1,5 @@
 ﻿using Leopotam.Ecs;
-using static Main;
+using static MainGame;
 
 internal class SupportVisionSystem : CellReduction, IEcsRunSystem
 {

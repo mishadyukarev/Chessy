@@ -105,9 +105,9 @@ public struct CellComponent
         private GameObject _unitKingGO;
         private SpriteRenderer _unitPawnSpriteRender;
         private SpriteRenderer _unitKingSpriteRender;
-        private StartValuesConfig _startValues;
+        private StartValuesGameConfig _startValues;
 
-        internal UnitComponent(int x, int y, StartSpawnManager startSpawnManager, StartValuesConfig startValues)
+        internal UnitComponent(int x, int y, StartSpawnManager startSpawnManager, StartValuesGameConfig startValues)
         {
             _unitType = default;
             _amountSteps = default;
@@ -128,7 +128,7 @@ public struct CellComponent
 
         internal UnitTypes UnitType => _unitType;
         internal int PowerDamage => _powerDamage;
-        internal bool HaveAmountSteps => _amountSteps >= _startValues.TAKE_AMOUNT_STEPS;
+        internal bool HaveAmountSteps => _amountSteps >= _startValues.AMOUNT_FOR_TAKE_UNIT;
         internal int ActorNumber
         {
             get

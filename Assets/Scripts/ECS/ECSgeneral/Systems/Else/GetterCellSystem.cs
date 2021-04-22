@@ -11,7 +11,7 @@ public struct GetterCellComponent
 
     private SystemsGeneralManager _systemsGeneralManager;
 
-    public GetterCellComponent(StartValuesConfig nameValueManager, SystemsGeneralManager systemsGeneralManager)
+    public GetterCellComponent(StartValuesGameConfig nameValueManager, SystemsGeneralManager systemsGeneralManager)
     {
         _raycastHit2dIN = default;
         _xyCurrentCellOUT = new int[nameValueManager.XY_FOR_ARRAY];

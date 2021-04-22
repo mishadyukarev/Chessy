@@ -2,7 +2,7 @@
 
 public sealed class EntitiesGeneralManager : EntitiesManager
 {
-    private StartValuesConfig _startValues;
+    private StartValuesGameConfig _startValues;
 
     private EcsEntity[,] _cellsEntity;
     private EcsEntity _inputEntity;
@@ -95,10 +95,10 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         #region Cells
 
         var cellsGO = startSpawnManager.CellsGO;
-        entitiesGeneralManager.CreateCellArray(_startValues.CellCountX, _startValues.CellCountY);
-        for (int x = 0; x < _startValues.CellCountX; x++)
+        entitiesGeneralManager.CreateCellArray(_startValues.CELL_COUNT_X, _startValues.CELL_COUNT_Y);
+        for (int x = 0; x < _startValues.CELL_COUNT_X; x++)
         {
-            for (int y = 0; y < _startValues.CellCountY; y++)
+            for (int y = 0; y < _startValues.CELL_COUNT_Y; y++)
             {
                 bool isStartMaster = false;
                 bool isStartOther = false;
@@ -135,9 +135,9 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             }
         }
 
-        for (int x = 0; x < _startValues.CellCountX; x++)
+        for (int x = 0; x < _startValues.CELL_COUNT_X; x++)
         {
-            for (int y = 0; y < _startValues.CellCountY; y++)
+            for (int y = 0; y < _startValues.CELL_COUNT_Y; y++)
             {
                 entitiesGeneralManager.AddRefComponentsToCell(x, y);
             }

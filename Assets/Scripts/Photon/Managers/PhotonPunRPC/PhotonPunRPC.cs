@@ -3,12 +3,12 @@ using Leopotam.Ecs;
 using Photon.Pun;
 using System;
 using UnityEngine;
-using static Main;
+using static MainGame;
 
 public partial class PhotonPunRPC : MonoBehaviour
 {
     private PhotonView _photonView = default;
-    private StartValuesConfig _startValues = default;
+    private StartValuesGameConfig _startValues = default;
     private CellManager _cellManager = default;
     private SystemsMasterManager _systemsMasterManager = default;
 
@@ -270,7 +270,7 @@ public partial class PhotonPunRPC : MonoBehaviour
         {
             CellUnitComponent(xyCell).IsProtected = true;
             CellUnitComponent(xyCell).IsRelaxed = false;
-            CellUnitComponent(xyCell).AmountSteps -= _startValues.TAKE_AMOUNT_STEPS;
+            CellUnitComponent(xyCell).AmountSteps -= _startValues.AMOUNT_FOR_TAKE_UNIT;
         }
 
         RefreshAll();
@@ -290,7 +290,7 @@ public partial class PhotonPunRPC : MonoBehaviour
         {
             CellUnitComponent(xyCell).IsRelaxed = true;
             CellUnitComponent(xyCell).IsProtected = false;
-            CellUnitComponent(xyCell).AmountSteps -= _startValues.TAKE_AMOUNT_STEPS;
+            CellUnitComponent(xyCell).AmountSteps -= _startValues.AMOUNT_FOR_TAKE_UNIT;
         }
 
         RefreshAll();
@@ -323,17 +323,17 @@ public partial class PhotonPunRPC : MonoBehaviour
     {
         if (info.Sender.IsMasterClient)
         {
-            if (_economyMasterComponentRef.Unref().GoldMaster >= _startValues.GoldForBuyingPawn)
+            if (_economyMasterComponentRef.Unref().GoldMaster >= _startValues.GOLD_FOR_BUYING_PAWN)
             {
-                _economyMasterComponentRef.Unref().GoldMaster -= _startValues.GoldForBuyingPawn;
+                _economyMasterComponentRef.Unref().GoldMaster -= _startValues.GOLD_FOR_BUYING_PAWN;
                 _economyUnitsMasterComponentRef.Unref().AmountUnitPawnMaster += _startValues.AMOUNT_FOR_TAKE_UNIT;
             }
         }
         else
         {
-            if (_economyMasterComponentRef.Unref().GoldOther >= _startValues.GoldForBuyingPawn)
+            if (_economyMasterComponentRef.Unref().GoldOther >= _startValues.GOLD_FOR_BUYING_PAWN)
             {
-                _economyMasterComponentRef.Unref().GoldOther -= _startValues.GoldForBuyingPawn;
+                _economyMasterComponentRef.Unref().GoldOther -= _startValues.GOLD_FOR_BUYING_PAWN;
                 _economyUnitsMasterComponentRef.Unref().AmountUnitPawnOther += _startValues.AMOUNT_FOR_TAKE_UNIT;
             }
         }
