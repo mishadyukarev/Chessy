@@ -68,11 +68,11 @@ public sealed class ECSmanager
 
     public void OnDestroy()
     {
-        //_systemsGeneralManager.Destroy();
+        _systemsGeneralManager.Destroy();
 
-        //if (Instance.IsMasterClient)_systemsMasterManager.Destroy();
-        //else _systemsOtherManager.Destroy();
+        if (Instance.IsMasterClient) _systemsMasterManager.Destroy();
+        else _systemsOtherManager.Destroy();
 
-        //_ecsWorld.Destroy();
+        _ecsWorld.Destroy();
     }
 }

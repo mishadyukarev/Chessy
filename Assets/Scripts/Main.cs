@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public sealed class Main : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public sealed class Main : MonoBehaviour
     internal bool IsMasterClient => PhotonNetwork.IsMasterClient;
     internal Player MasterClient => PhotonNetwork.MasterClient;
     internal Player LocalPlayer => PhotonNetwork.LocalPlayer;
+
+    internal PhotonView PhotonView => _photonManager.PhotonView;
 
     #endregion
 
@@ -52,13 +55,10 @@ public sealed class Main : MonoBehaviour
     }
 
 
-    private void Update()
-    {
-        _eCSmanager.Run();
-    }
+    private void Update() => _eCSmanager.Run();
 
     private void OnDestroy()
     {
-        _eCSmanager.OnDestroy();
+        //_photonManager.PhotonManagerScene.LeaveRoom();
     }
 }

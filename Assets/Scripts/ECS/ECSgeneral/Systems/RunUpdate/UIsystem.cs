@@ -325,7 +325,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
     #endregion
 
 
-    private void Leave() => _photonManagerScene.Leave();
+    private void Leave() => _photonManagerScene.LeaveRoom();
 
     private void Doner(bool isRequest, bool isActive)
     {

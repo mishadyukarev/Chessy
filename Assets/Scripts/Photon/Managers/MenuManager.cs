@@ -18,15 +18,12 @@ public class MenuManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        //base.OnConnectedToMaster();
         Log("Connected to Master");
     }
 
     public override void OnJoinedRoom()
     {
-        //base.OnJoinedRoom();
         Log("Joined the room");
-
         PhotonNetwork.LoadLevel("Chessi");
     }
 
