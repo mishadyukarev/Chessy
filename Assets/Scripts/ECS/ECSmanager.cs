@@ -16,9 +16,6 @@ public sealed class ECSmanager
     private SystemsOtherManager _systemsOtherManager;
     private EntitiesOtherManager _entitiesOtherManager;
 
-    private ForGeneralSystemManager _forGeneralSystemManager;
-    private ForMasterSystemsManager _forMasterSystemsManager;
-
 
     public EcsWorld EcsWorld => _ecsWorld;
 
@@ -31,8 +28,6 @@ public sealed class ECSmanager
     public EntitiesOtherManager EntitiesOtherManager => _entitiesOtherManager;
     public SystemsOtherManager SystemsOtherManager => _systemsOtherManager;
 
-    internal ForGeneralSystemManager ForGeneralSystemManager => _forGeneralSystemManager;
-    internal ForMasterSystemsManager ForMasterSystemsManager => _forMasterSystemsManager;
 
 
     internal ECSmanager(SupportManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
@@ -44,7 +39,6 @@ public sealed class ECSmanager
         _entitiesGeneralManager.CreateEntities(this, supportManager, photonManager, startSpawnManager);
         _systemsGeneralManager.CreateInitSystems(this, supportManager, photonManager, startSpawnManager);
 
-        _forGeneralSystemManager = new ForGeneralSystemManager(this, supportManager);
 
         if (Instance.IsMasterClient)
         {
@@ -53,8 +47,6 @@ public sealed class ECSmanager
 
             _entitiesMasterManager.CreateEntities(this, supportManager);
             _systemsMasterManager.CreateInitSystems(this, supportManager, photonManager);
-
-            _forMasterSystemsManager = new ForMasterSystemsManager(this, supportManager);
         }
         else
         {

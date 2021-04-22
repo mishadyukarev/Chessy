@@ -16,6 +16,7 @@ public class EntitiesMasterManager : EntitiesManager
     public EcsComponentRef<DonerComponent> RefresherMasterComponentRef => _refresherEntity.Ref<DonerComponent>();
     public EcsComponentRef<AttackUnitMasterComponent> AttackUnitMasterComponentRef => _attackUnitEntity.Ref<AttackUnitMasterComponent>();
     internal EcsComponentRef<BuilderCellMasterComponent> BuilderCellMasterComponentRef => _builderEntity.Ref<BuilderCellMasterComponent>();
+    internal EcsComponentRef<GetterUnitMasterComponent> GetterUnitMasterComponentRef => _getterUnitEntity.Ref<GetterUnitMasterComponent>();
 
     internal EcsComponentRef<EconomyMasterComponent> EconomyMasterComponentRef
         => _economyEntity.Ref<EconomyMasterComponent>();
@@ -51,6 +52,9 @@ public class EntitiesMasterManager : EntitiesManager
 
         _builderEntity = _ecsWorld.NewEntity()
             .Replace(new BuilderCellMasterComponent(supportManager.StartValuesConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));
+
+        _getterUnitEntity = _ecsWorld.NewEntity()
+            .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager));
 
 
         for (int x = 0; x < supportManager.StartValuesConfig.CellCountX; x++)

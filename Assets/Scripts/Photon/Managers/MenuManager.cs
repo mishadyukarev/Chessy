@@ -30,6 +30,8 @@ public class MenuManager : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("Chessi");
     }
 
+    public void Quit() => Application.Quit();
+
     public void CreateRoom()
     {
         PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions { MaxPlayers = 2, });

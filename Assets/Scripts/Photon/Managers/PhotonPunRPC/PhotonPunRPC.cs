@@ -12,7 +12,6 @@ public partial class PhotonPunRPC : MonoBehaviour
     private CellManager _cellManager = default;
     private SystemsMasterManager _systemsMasterManager = default;
 
-    private GetterUnitForMasterSystem _inventorSupportSystem = default;
 
     #region ComponetsRef
 
@@ -26,6 +25,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.UnitMasterComponent> _economyUnitsMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef = default;
+    private EcsComponentRef<GetterUnitMasterComponent> _getterUnitMasterComponentRef = default;
 
     #endregion
 
@@ -87,10 +87,10 @@ public partial class PhotonPunRPC : MonoBehaviour
             _builderCellMasterComponentRef = entitiesMasterManager.BuilderCellMasterComponentRef;
             _economyUnitsMasterComponentRef = entitiesMasterManager.EconomyUnitsMasterComponentRef;
             _economyBuildingsMasterComponentRef = entitiesMasterManager.EconomyBuildingsMasterComponentRef;
+            _getterUnitMasterComponentRef = entitiesMasterManager.GetterUnitMasterComponentRef;
 
 
             _systemsMasterManager = eCSmanager.SystemsMasterManager;
-            _inventorSupportSystem = eCSmanager.ForMasterSystemsManager.InventorForGeneralSystem;
         }
 
 
@@ -148,7 +148,8 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void GetUnitToMaster(UnitTypes unitType, PhotonMessageInfo info)
     {
-        var isGetted = _inventorSupportSystem.TryGetUnit(unitType, info.Sender);
+        var isGetted = _getterUnitMasterComponentRef.Unref().TryGetUnit(unitType, info.Sender);
+        //_inventorSupportSystem.TryGetUnit(unitType, info.Sender);
 
         _photonView.RPC("GetUnitToGeneral", info.Sender, unitType, isGetted);
 
