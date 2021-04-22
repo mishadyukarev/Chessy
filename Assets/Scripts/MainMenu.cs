@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-internal class MainMenu : MonoBehaviour
+internal sealed class MainMenu : Main
 {
 
 }

@@ -49,7 +49,7 @@ internal class GetterUnitMasterSystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<GetterUnitMasterComponent> _getterUnitMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.UnitMasterComponent> _economyCountUnitMasterComponent = default;
 
-    internal GetterUnitMasterSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
+    internal GetterUnitMasterSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
     {
         _getterUnitMasterComponentRef = eCSmanager.EntitiesMasterManager.GetterUnitMasterComponentRef;
         _economyCountUnitMasterComponent = eCSmanager.EntitiesMasterManager.EconomyUnitsMasterComponentRef;

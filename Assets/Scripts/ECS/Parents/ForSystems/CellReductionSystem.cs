@@ -18,7 +18,7 @@ public abstract class CellReduction : StartValuesReduction
     protected int Ycount => _cellComponentRef.GetUpperBound(Y) + 1;
 
 
-    protected CellReduction(ECSmanager eCSmanager, SupportManager supportManager) : base(supportManager)
+    internal CellReduction(ECSmanager eCSmanager, SupportGameManager supportManager) : base(supportManager)
     {
         _cellManager = supportManager.CellManager;
 

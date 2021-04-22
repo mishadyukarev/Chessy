@@ -31,7 +31,7 @@ public class EntitiesMasterManager : EntitiesManager
 
     public EntitiesMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    public void CreateEntities(ECSmanager eCSmanager, SupportManager supportManager)
+    internal void CreateEntities(ECSmanager eCSmanager, SupportGameManager supportManager)
     {
         _setterUnitEntity = _ecsWorld.NewEntity().
             Replace(new SetterUnitMasterComponent(supportManager.StartValuesConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));

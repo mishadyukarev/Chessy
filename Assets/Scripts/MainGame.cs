@@ -1,18 +1,15 @@
-﻿using Photon.Pun;
-using Photon.Realtime;
-using UnityEngine;
+﻿using UnityEngine;
 
-public sealed class MainGame : MonoBehaviour
+internal sealed class MainGame : Main
 {
 
     #region Variables
 
-    private static MainGame _instance;
+    private static MainGame _instanceGame;
 
-    private Camera _camera;
-    private ECSmanager _eCSmanager;
     private PhotonManager _photonManager;
-    private SupportManager _supportManager;
+    private ECSmanager _eCSmanager;
+    private SupportGameManager _supportManager;
     private StartSpawnManager _startSpawnManager;
 
     #endregion
@@ -20,11 +17,7 @@ public sealed class MainGame : MonoBehaviour
 
     #region Properties
 
-    static public MainGame Instance => _instance;
-
-    internal bool IsMasterClient => PhotonNetwork.IsMasterClient;
-    internal Player MasterClient => PhotonNetwork.MasterClient;
-    internal Player LocalPlayer => PhotonNetwork.LocalPlayer;
+    public static MainGame InstanceGame => _instanceGame;
 
     #endregion
 
@@ -32,9 +25,8 @@ public sealed class MainGame : MonoBehaviour
 
     private void Start()
     {
-        _instance = this;
-        _supportManager = new SupportManager();
-
+        _instanceGame = this;
+        _supportManager = new SupportGameManager();
 
         _startSpawnManager = new StartSpawnManager(_supportManager, out Transform parentTransformScrips);
 

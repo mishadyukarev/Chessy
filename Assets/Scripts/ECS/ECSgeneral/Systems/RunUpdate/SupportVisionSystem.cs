@@ -8,7 +8,7 @@ internal class SupportVisionSystem : CellReduction, IEcsRunSystem
 
     private bool _isRepeated;
 
-    internal SupportVisionSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
+    internal SupportVisionSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
     {
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
         _selectedUnitComponent = eCSmanager.EntitiesGeneralManager.SelectedUnitComponentRef;
@@ -43,7 +43,7 @@ internal class SupportVisionSystem : CellReduction, IEcsRunSystem
                     {
                         if (!CellComponent(x, y).IsSelected && !CellUnitComponent(x, y).HaveUnit && !CellEnvironmentComponent(x, y).HaveMountain)
                         {
-                            if (Instance.IsMasterClient)
+                            if (InstanceGame.IsMasterClient)
                             {
                                 if (CellComponent(x, y).IsStartMaster)
                                 {

@@ -57,7 +57,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
 
 
-    internal UISystem(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager) : base(eCSmanager, supportManager)
+    internal UISystem(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager) : base(eCSmanager, supportManager)
     {
         _photonManagerScene = photonManager.PhotonManagerScene;
         _photonPunRPC = photonManager.PhotonPunRPC;

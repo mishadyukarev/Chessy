@@ -9,7 +9,7 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
 
 
-    internal ShiftUnitMasterSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
+    internal ShiftUnitMasterSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
     {
         _shiftComponentRef = eCSmanager.EntitiesMasterManager.ShiftUnitComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;

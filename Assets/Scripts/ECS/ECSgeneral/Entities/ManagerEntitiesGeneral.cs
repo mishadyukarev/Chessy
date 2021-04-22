@@ -54,7 +54,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     public EntitiesGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    internal void CreateEntities(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
+    internal void CreateEntities(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
     {
         _startValues = supportManager.StartValuesConfig;
         var systemsGeneralManager = eCSmanager.SystemsGeneralManager;

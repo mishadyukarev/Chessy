@@ -85,7 +85,7 @@ internal class StartSpawnManager
     #endregion
 
 
-    internal StartSpawnManager(SupportManager supportManager, out Transform parentTransformScrips)
+    internal StartSpawnManager(SupportGameManager supportManager, out Transform parentTransformScrips)
     {
         _audioSource = supportManager.BuilderManager.CreateGameObject
             ("AudioSource", new Type[] { typeof(AudioSource) }).GetComponent<AudioSource>();
@@ -95,10 +95,10 @@ internal class StartSpawnManager
         parentTransformScrips = _parentScriptsGO.transform;
 
         GameObject.Instantiate(supportManager.ResourcesLoadManager.Camera,
-            Instance.transform.position + new Vector3(7, 5.5f, -1), Instance.transform.rotation);
+            InstanceGame.transform.position + new Vector3(7, 5.5f, -1), InstanceGame.transform.rotation);
 
         GameObject.Instantiate(supportManager.ResourcesLoadManager.BackGroundCollider2D,
-            Instance.transform.position + new Vector3(0, 0, 1), Instance.transform.rotation);
+            InstanceGame.transform.position + new Vector3(0, 0, 1), InstanceGame.transform.rotation);
 
         SpawnCells(supportManager.ResourcesLoadManager, supportManager.StartValuesConfig);       
         SpawnUI(supportManager.ResourcesLoadManager);
@@ -239,7 +239,7 @@ internal class StartSpawnManager
 
     private GameObject CreatGameObject(GameObject go, Sprite sprite, int x, int y)
     {
-        var mainGO = Instance.gameObject;
+        var mainGO = InstanceGame.gameObject;
 
         var goo = GameObject.Instantiate(go, mainGO.transform.position + new Vector3(x, y, mainGO.transform.position.z), mainGO.transform.rotation);
 

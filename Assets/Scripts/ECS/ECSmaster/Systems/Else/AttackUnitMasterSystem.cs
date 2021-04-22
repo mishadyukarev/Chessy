@@ -43,7 +43,7 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
 
 
-    internal AttackUnitMasterSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
+    internal AttackUnitMasterSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
     {
         _attackUnitMasterComponentRef = eCSmanager.EntitiesMasterManager.AttackUnitMasterComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;

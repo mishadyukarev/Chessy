@@ -64,7 +64,7 @@ public partial class PhotonPunRPC : MonoBehaviour
 
 
 
-    internal void Constructor(SupportManager supportManager, PhotonManager photonManager)
+    internal void Constructor(SupportGameManager supportManager, PhotonManager photonManager)
     {
         _photonView = photonManager.PhotonView;
         _startValues = supportManager.StartValuesConfig;
@@ -75,7 +75,7 @@ public partial class PhotonPunRPC : MonoBehaviour
 
     internal void InitAfterECS(ECSmanager eCSmanager)
     {
-        if (Instance.IsMasterClient)
+        if (InstanceGame.IsMasterClient)
         {
             var entitiesMasterManager = eCSmanager.EntitiesMasterManager;
 

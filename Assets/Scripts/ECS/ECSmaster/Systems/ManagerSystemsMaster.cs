@@ -4,7 +4,7 @@ public sealed class SystemsMasterManager : SystemsManager
 {
     public SystemsMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    public void CreateInitSystems(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager)
+    internal void CreateInitSystems(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonManager photonManager)
     {
         _elseSystems
             .Add(new RefresherMasterSystem(eCSmanager, supportManager), nameof(RefresherMasterSystem))

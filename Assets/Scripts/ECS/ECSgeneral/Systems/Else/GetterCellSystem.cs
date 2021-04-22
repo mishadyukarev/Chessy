@@ -49,7 +49,7 @@ public sealed class GetterCellSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<GetterCellComponent> _getterCellComponentRef = default;
 
-    internal GetterCellSystem(ECSmanager eCSmanager, SupportManager supportManager) : base(eCSmanager, supportManager)
+    internal GetterCellSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
     {
         _getterCellComponentRef = eCSmanager.EntitiesGeneralManager.GetterCellComponentRef;
     }

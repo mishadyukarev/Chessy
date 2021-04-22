@@ -5,7 +5,7 @@ public class SystemsGeneralManager : SystemsManager
     internal SystemsGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
 
-    internal void CreateInitSystems(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
+    internal void CreateInitSystems(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
     {
         _updateSystems
             .Add(new InputSystem(eCSmanager), nameof(InputSystem))

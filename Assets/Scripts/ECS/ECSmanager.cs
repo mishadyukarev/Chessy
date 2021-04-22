@@ -30,7 +30,7 @@ public sealed class ECSmanager
 
 
 
-    internal ECSmanager(SupportManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
+    internal ECSmanager(SupportGameManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
     {
         _ecsWorld = new EcsWorld();
 
@@ -40,7 +40,7 @@ public sealed class ECSmanager
         _systemsGeneralManager.CreateInitSystems(this, supportManager, photonManager, startSpawnManager);
 
 
-        if (Instance.IsMasterClient)
+        if (InstanceGame.IsMasterClient)
         {
             _entitiesMasterManager = new EntitiesMasterManager(_ecsWorld);
             _systemsMasterManager = new SystemsMasterManager(_ecsWorld);
@@ -62,7 +62,7 @@ public sealed class ECSmanager
     {
         _systemsGeneralManager.RunUpdate();
 
-        if (Instance.IsMasterClient) _systemsMasterManager.RunUpdate();
+        if (InstanceGame.IsMasterClient) _systemsMasterManager.RunUpdate();
         else _systemsOtherManager.RunUpdate();
     }
 
@@ -70,7 +70,7 @@ public sealed class ECSmanager
     {
         _systemsGeneralManager.Destroy();
 
-        if (Instance.IsMasterClient) _systemsMasterManager.Destroy();
+        if (InstanceGame.IsMasterClient) _systemsMasterManager.Destroy();
         else _systemsOtherManager.Destroy();
 
         _ecsWorld.Destroy();

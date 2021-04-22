@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b38947ab82ca4a4a9b855cfb4b913d5, type: 3}
   m_Name: SoundConfig
   m_EditorClassIdentifier: 
-  AudioSource: {fileID: -8958197049491313901, guid: 5a42e641d3931a64dbafa5e3420774f9,
-    type: 3}
+  AudioClip: {fileID: 8300000, guid: ef245931af46d0e4fbaa7f3a8d55def7, type: 3}
