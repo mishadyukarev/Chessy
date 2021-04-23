@@ -45,7 +45,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
     #endregion
 
 
-    private EcsComponentRef<ButtonComponent> _buttonComponentRef;
+    private EcsComponentRef<UIComponent> _buttonComponentRef;
     private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef;
     private EcsComponentRef<SelectorComponent> _selectorComponentRef;
     private EcsComponentRef<SelectorComponent> _selectorComponetRef = default;

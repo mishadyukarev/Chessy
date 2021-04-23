@@ -1,6 +1,6 @@
 ﻿using System;
 
-public struct ButtonComponent
+public struct UIComponent
 {
     private bool _isDone;
 

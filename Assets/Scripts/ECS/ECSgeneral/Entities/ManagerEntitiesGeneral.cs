@@ -2,16 +2,10 @@
 
 public sealed class EntitiesGeneralManager : EntitiesManager
 {
-    private StartValuesGameConfig _startValues;
+    private StartValuesGameConfig _startValuesGameConfig;
 
     private EcsEntity[,] _cellsEntity;
-    private EcsEntity _inputEntity;
     private EcsEntity _selectedUnitEntity;
-    private EcsEntity _unitPathEntity;
-    private EcsEntity _rayEntity;
-    private EcsEntity _getterCellEntity;
-    private EcsEntity _selectorEntity;
-    private EcsEntity _buttonEntity;
     private EcsEntity _economyEntity;
     private EcsEntity _soundEntity;
 
@@ -22,14 +16,42 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     private EcsComponentRef<CellComponent.BuildingComponent>[,] _cellBuildingComponentRef;
 
 
+    #region Properies
+
     internal EcsComponentRef<S> GetCellComponents<S>(params int[] xy) where S : struct
-        => _cellsEntity[xy[_startValues.X], xy[_startValues.Y]].Ref<S>();
+        => _cellsEntity[xy[_startValuesGameConfig.X], xy[_startValuesGameConfig.Y]].Ref<S>();
+
+
+    #region Solo
+
+    internal EcsComponentRef<RayComponent> RayComponentRef => _soloEntity.Ref<RayComponent>();
+    internal EcsComponentRef<UnitPathsComponent> UnitPathComponentRef => _soloEntity.Ref<UnitPathsComponent>();
+    internal EcsComponentRef<GetterCellComponent> GetterCellComponentRef => _soloEntity.Ref<GetterCellComponent>();
+
+    #endregion
+
+
+    #region RunUpdate
+
+    internal EcsComponentRef<SelectorComponent> SelectorComponentRef => _runUpdateEntity.Ref<SelectorComponent>();
+    internal EcsComponentRef<UIComponent> ButtonComponentRef => _runUpdateEntity.Ref<UIComponent>();
+    internal EcsComponentRef<InputComponent> InputComponentRef => _runUpdateEntity.Ref<InputComponent>();
+
+    #endregion 
+
+
+    #region Cell
 
     internal EcsComponentRef<CellComponent>[,] CellComponentRef => _cellComponentRef;
     internal EcsComponentRef<CellComponent.EnvironmentComponent>[,] CellEnvironmentComponentRef => _cellEnvironmentComponentRef;
     internal EcsComponentRef<CellComponent.SupportVisionComponent>[,] CellSupportVisionComponentRef => _cellSupportVisionComponentRef;
     internal EcsComponentRef<CellComponent.UnitComponent>[,] CellUnitComponentRef => _cellUnitComponentRef;
     internal EcsComponentRef<CellComponent.BuildingComponent>[,] CellBuildingComponentRef => _cellBuildingComponentRef;
+
+    #endregion
+
+
+    #region Economy
 
     internal EcsComponentRef<EconomyComponent> EconomyComponentRef
         => _economyEntity.Ref<EconomyComponent>();
@@ -38,16 +60,17 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal EcsComponentRef<EconomyComponent.BuildingsComponent> EconomyBuildingsComponentRef
         => _economyEntity.Ref<EconomyComponent.BuildingsComponent>();
 
-    internal EcsComponentRef<RayComponent> RayComponentRef => _rayEntity.Ref<RayComponent>();
-    internal EcsComponentRef<InputComponent> InputComponentRef => _inputEntity.Ref<InputComponent>();
-    internal EcsComponentRef<UnitPathsComponent> UnitPathComponentRef => _unitPathEntity.Ref<UnitPathsComponent>();
+    #endregion
+
+
+    #region Else
+
     internal EcsComponentRef<SelectedUnitComponent> SelectedUnitComponentRef => _selectedUnitEntity.Ref<SelectedUnitComponent>();
-    internal EcsComponentRef<GetterCellComponent> GetterCellComponentRef => _getterCellEntity.Ref<GetterCellComponent>();
-    internal EcsComponentRef<SelectorComponent> SelectorComponentRef => _selectorEntity.Ref<SelectorComponent>();
-    internal EcsComponentRef<ButtonComponent> ButtonComponentRef => _buttonEntity.Ref<ButtonComponent>();
     internal EcsComponentRef<SoundComponent> SoundComponentRef => _soundEntity.Ref<SoundComponent>();
 
+    #endregion
 
+    #endregion
 
 
 
@@ -55,32 +78,24 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     internal void CreateEntities(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnManager)
     {
-        _startValues = supportManager.StartValuesGameConfig;
+        _startValuesGameConfig = supportManager.StartValuesGameConfig;
         var systemsGeneralManager = eCSmanager.SystemsGeneralManager;
         var cellManager = supportManager.CellManager;
         var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
 
+        _soloEntity = _ecsWorld.NewEntity()
+            .Replace(new UnitPathsComponent(systemsGeneralManager, _startValuesGameConfig, cellManager))
+            .Replace(new RayComponent(systemsGeneralManager))
+            .Replace(new GetterCellComponent(_startValuesGameConfig, systemsGeneralManager));
 
-        _buttonEntity = _ecsWorld.NewEntity()
-            .Replace(new ButtonComponent());
+        _runUpdateEntity = _ecsWorld.NewEntity()
+            .Replace(new UIComponent())
+            .Replace(new InputComponent())
+            .Replace(new SelectorComponent(supportManager.StartValuesGameConfig));
 
-        _inputEntity = _ecsWorld.NewEntity()
-            .Replace(new InputComponent());
 
         _selectedUnitEntity = _ecsWorld.NewEntity()
             .Replace(new SelectedUnitComponent());
-
-        _unitPathEntity = _ecsWorld.NewEntity()
-            .Replace(new UnitPathsComponent(systemsGeneralManager, _startValues, cellManager));
-
-        _rayEntity = _ecsWorld.NewEntity()
-            .Replace(new RayComponent(systemsGeneralManager));
-
-        _getterCellEntity = _ecsWorld.NewEntity()
-            .Replace(new GetterCellComponent(_startValues, systemsGeneralManager));
-
-        _selectorEntity = _ecsWorld.NewEntity()
-            .Replace(new SelectorComponent(supportManager.StartValuesGameConfig));
 
         _economyEntity = _ecsWorld.NewEntity()
             .Replace(new EconomyComponent())
@@ -94,10 +109,10 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         #region Cells
 
         var cellsGO = startSpawnManager.CellsGO;
-        entitiesGeneralManager.CreateCellArray(_startValues.CELL_COUNT_X, _startValues.CELL_COUNT_Y);
-        for (int x = 0; x < _startValues.CELL_COUNT_X; x++)
+        entitiesGeneralManager.CreateCellArray(_startValuesGameConfig.CELL_COUNT_X, _startValuesGameConfig.CELL_COUNT_Y);
+        for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
         {
-            for (int y = 0; y < _startValues.CELL_COUNT_Y; y++)
+            for (int y = 0; y < _startValuesGameConfig.CELL_COUNT_Y; y++)
             {
                 bool isStartMaster = false;
                 bool isStartOther = false;
@@ -118,7 +133,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
 
                 CellComponent.UnitComponent cellUnitComponent = new CellComponent.UnitComponent
-                    (x, y, startSpawnManager, _startValues);
+                    (x, y, startSpawnManager, _startValuesGameConfig);
 
 
                 CellComponent.BuildingComponent cellBuildingComponent = new CellComponent.BuildingComponent(x, y, startSpawnManager);
@@ -134,9 +149,9 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             }
         }
 
-        for (int x = 0; x < _startValues.CELL_COUNT_X; x++)
+        for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
         {
-            for (int y = 0; y < _startValues.CELL_COUNT_Y; y++)
+            for (int y = 0; y < _startValuesGameConfig.CELL_COUNT_Y; y++)
             {
                 entitiesGeneralManager.AddRefComponentsToCell(x, y);
             }

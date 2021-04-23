@@ -19,7 +19,7 @@ public partial class PhotonPunRPC : MonoBehaviour
 
     private EcsComponentRef<SetterUnitMasterComponent> _setterUnitMasterComponentRef = default;
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftUnitMasterComponentRef = default;
-    private EcsComponentRef<DonerComponent> _refresherMasterComponentRef = default;
+    private EcsComponentRef<DonerMasterComponent> _refresherMasterComponentRef = default;
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent> _economyMasterComponentRef = default;
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
@@ -43,7 +43,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<CellComponent.BuildingComponent>[,] _cellBuildingComponentRef = default;
 
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
-    private EcsComponentRef<ButtonComponent> _buttonComponentRef = default;
+    private EcsComponentRef<UIComponent> _buttonComponentRef = default;
     private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
     private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
 

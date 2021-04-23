@@ -33,7 +33,7 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
     private EcsComponentRef<GetterCellComponent> _getterCellComponentRef = default;
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
-    private EcsComponentRef<ButtonComponent> _buttonComponent = default;
+    private EcsComponentRef<UIComponent> _buttonComponent = default;
     private EcsComponentRef<SoundComponent> _soundComponentRef = default;
 
     #endregion

@@ -1,5 +1,5 @@
 ﻿
-public struct DonerComponent
+public struct DonerMasterComponent
 {
     private bool _isDoneMasterIN;
     private bool _isDoneOtherIN;

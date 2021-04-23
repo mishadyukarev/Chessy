@@ -3,22 +3,24 @@ using UnityEngine;
 
 public class EntitiesMasterManager : EntitiesManager
 {
-    private EcsEntity _setterUnitEntity;
-    private EcsEntity _shiftUnitEntity;
-    private EcsEntity _refresherEntity;
-    private EcsEntity _attackUnitEntity;
-    private EcsEntity _getterUnitEntity;
     private EcsEntity _economyEntity;
-    private EcsEntity _builderEntity;
 
-    //private EcsEntity _elseEntity;
 
-    public EcsComponentRef<SetterUnitMasterComponent> SetterUnitMasterComponentRef => _setterUnitEntity.Ref<SetterUnitMasterComponent>();
-    public EcsComponentRef<ShiftUnitMasterComponent> ShiftUnitComponentRef => _shiftUnitEntity.Ref<ShiftUnitMasterComponent>();
-    public EcsComponentRef<DonerComponent> RefresherMasterComponentRef => _refresherEntity.Ref<DonerComponent>();
-    public EcsComponentRef<AttackUnitMasterComponent> AttackUnitMasterComponentRef => _attackUnitEntity.Ref<AttackUnitMasterComponent>();
-    internal EcsComponentRef<BuilderCellMasterComponent> BuilderCellMasterComponentRef => _builderEntity.Ref<BuilderCellMasterComponent>();
-    internal EcsComponentRef<GetterUnitMasterComponent> GetterUnitMasterComponentRef => _getterUnitEntity.Ref<GetterUnitMasterComponent>();
+    #region Properties
+
+    #region Solo
+
+    public EcsComponentRef<SetterUnitMasterComponent> SetterUnitMasterComponentRef => _soloEntity.Ref<SetterUnitMasterComponent>();
+    public EcsComponentRef<ShiftUnitMasterComponent> ShiftUnitComponentRef => _soloEntity.Ref<ShiftUnitMasterComponent>();
+    public EcsComponentRef<DonerMasterComponent> RefresherMasterComponentRef => _soloEntity.Ref<DonerMasterComponent>();
+    public EcsComponentRef<AttackUnitMasterComponent> AttackUnitMasterComponentRef => _soloEntity.Ref<AttackUnitMasterComponent>();
+    internal EcsComponentRef<BuilderCellMasterComponent> BuilderCellMasterComponentRef => _soloEntity.Ref<BuilderCellMasterComponent>();
+    internal EcsComponentRef<GetterUnitMasterComponent> GetterUnitMasterComponentRef => _soloEntity.Ref<GetterUnitMasterComponent>();
+
+    #endregion
+
+
+    #region Solo
 
     internal EcsComponentRef<EconomyMasterComponent> EconomyMasterComponentRef
         => _economyEntity.Ref<EconomyMasterComponent>();
@@ -27,7 +29,9 @@ public class EntitiesMasterManager : EntitiesManager
     internal EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> EconomyBuildingsMasterComponentRef
         => _economyEntity.Ref<EconomyMasterComponent.BuildingsMasterComponent>();
 
+    #endregion
 
+    #endregion
 
 
 
@@ -35,29 +39,22 @@ public class EntitiesMasterManager : EntitiesManager
 
     internal void CreateEntities(ECSmanager eCSmanager, SupportGameManager supportManager)
     {
-        _setterUnitEntity = _ecsWorld.NewEntity().
-            Replace(new SetterUnitMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));
+        _soloEntity = _ecsWorld.NewEntity()
+            .Replace(new SetterUnitMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new ShiftUnitMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new DonerMasterComponent())
+            .Replace(new AttackUnitMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new BuilderCellMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager));
 
-        _shiftUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new ShiftUnitMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));
-
-        _refresherEntity = _ecsWorld.NewEntity()
-            .Replace(new DonerComponent());
-
-        _attackUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new AttackUnitMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));
 
         _economyEntity = _ecsWorld.NewEntity()
             .Replace(new EconomyMasterComponent(supportManager.StartValuesGameConfig))
             .Replace(new EconomyMasterComponent.UnitsMasterComponent(supportManager.StartValuesGameConfig))
             .Replace(new EconomyMasterComponent.BuildingsMasterComponent(supportManager.StartValuesGameConfig));
 
-        _builderEntity = _ecsWorld.NewEntity()
-            .Replace(new BuilderCellMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));
 
-        _getterUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager));
-
+        #region Cells
 
         for (int x = 0; x < supportManager.StartValuesGameConfig.CELL_COUNT_X; x++)
         {
@@ -89,5 +86,8 @@ public class EntitiesMasterManager : EntitiesManager
 
             }
         }
+
+        #endregion
+
     }
 }
