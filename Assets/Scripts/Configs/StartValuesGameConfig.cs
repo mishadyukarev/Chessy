@@ -3,6 +3,7 @@
 [CreateAssetMenu(menuName = "StartValues", fileName = "StartValues")]
 public class StartValuesGameConfig : ScriptableObject
 {
+    private readonly int MAX_PERCENT;
 
     #region ENVIRONMENT
 
@@ -34,7 +35,7 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_KING_OTHER = 1;
 
     internal readonly int AMOUNT_PAWN_MASTER = 1;
-    internal readonly int AMOUNT_PAWN_OTHER = 3;
+    internal readonly int AMOUNT_PAWN_OTHER = 1;
 
     internal readonly int AMOUNT_STEPS_KING = 1;
     internal readonly int AMOUNT_STEPS_PAWN = 1;
@@ -48,8 +49,18 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int POWER_DAMAGE_KING = 70;
     internal readonly int POWER_DAMAGE_PAWN = 50;
 
-    internal readonly int PROTECTION_KING = 10;
-    internal readonly int PROTECTION_PAWN = 10;
+    private readonly int PERCENT_FOR_HEALTH_KING = 20;
+    private readonly int PERCENT_FOR_HEALTH_PAWN = 20;
+
+    private readonly int PERCENT_FOR_PROTECTION_KING = 10;
+    private readonly int PERCENT_FOR_PROTECTION_PAWN = 10;
+
+    internal int HEALTH_FOR_ADDING_KING => AMOUNT_HEALTH_KING * MAX_PERCENT / PERCENT_FOR_HEALTH_KING;
+    internal int HEALTH_FOR_ADDING_PAWN => AMOUNT_HEALTH_PAWN * MAX_PERCENT / PERCENT_FOR_HEALTH_PAWN;
+
+    internal int PROTECTION_KING => POWER_DAMAGE_KING * MAX_PERCENT / PERCENT_FOR_PROTECTION_KING;
+    internal int PROTECTION_PAWN => POWER_DAMAGE_PAWN * MAX_PERCENT / PERCENT_FOR_PROTECTION_PAWN;
+
 
     #endregion
 
