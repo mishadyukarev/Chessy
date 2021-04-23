@@ -271,6 +271,20 @@ public partial class PhotonPunRPC : MonoBehaviour
             CellUnitComponent(xyCell).IsProtected = true;
             CellUnitComponent(xyCell).IsRelaxed = false;
             CellUnitComponent(xyCell).AmountSteps -= _startValues.AMOUNT_FOR_TAKE_UNIT;
+
+            switch (CellUnitComponent(xyCell).UnitType)
+            {
+                case UnitTypes.King:
+                    CellUnitComponent(xyCell).PowerDamage += _startValues.PROTECTION_KING;
+                    break;
+
+                case UnitTypes.Pawn:
+                    CellUnitComponent(xyCell).PowerDamage += _startValues.PROTECTION_PAWN;
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         RefreshAll();
@@ -344,6 +358,8 @@ public partial class PhotonPunRPC : MonoBehaviour
     #endregion
 
 
+    #region Serialize
+
     internal static object DeserializeVector2Int(byte[] data)
     {
         Vector2Int result = new Vector2Int();
@@ -364,4 +380,7 @@ public partial class PhotonPunRPC : MonoBehaviour
 
         return result;
     }
+
+    #endregion
+
 }

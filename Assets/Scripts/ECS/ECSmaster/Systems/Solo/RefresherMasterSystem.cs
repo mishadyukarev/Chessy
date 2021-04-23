@@ -17,6 +17,31 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
             for (int y = 0; y < Ycount; y++)
             {
                 CellUnitComponent(x, y).RefreshAmountSteps();
+
+                if (CellUnitComponent(x, y).IsRelaxed)
+                {
+                    switch (CellUnitComponent(x, y).UnitType)
+                    {
+                        case UnitTypes.King:
+                            AddHealth(_startValues.HEALTH_FOR_ADDING_KING);
+                            break;
+
+                        case UnitTypes.Pawn:
+                            AddHealth(_startValues.HEALTH_FOR_ADDING_PAWN);
+                            break;
+
+                        default:
+                            break;
+
+                            void AddHealth(int health)
+                            {
+                                CellUnitComponent(x, y).AmountHealth += health;
+                                if (CellUnitComponent(x, y).AmountHealth > health)
+                                    CellUnitComponent(x, y).AmountHealth = health;
+                            }
+                    }
+                }
+
             }
         }
         _economyMasterComponent.Unref().GoldMaster += 20;

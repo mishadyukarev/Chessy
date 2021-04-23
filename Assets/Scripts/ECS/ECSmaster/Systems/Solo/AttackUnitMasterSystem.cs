@@ -78,27 +78,7 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
                 break;
         }
 
-        switch (CellUnitComponent(xyPreviousCellIN).UnitType)
-        {
-            case UnitTypes.None:
-                break;
-
-            case UnitTypes.King:
-
-                damageToSelelected += _startValues.POWER_DAMAGE_KING;
-
-                break;
-
-            case UnitTypes.Pawn:
-
-                damageToSelelected += _startValues.POWER_DAMAGE_PAWN;
-
-
-                break;
-
-            default:
-                break;
-        }
+        damageToSelelected += CellUnitComponent(xyPreviousCellIN).PowerDamage;
 
         switch (CellUnitComponent(xySelectedCellIN).UnitType)
         {

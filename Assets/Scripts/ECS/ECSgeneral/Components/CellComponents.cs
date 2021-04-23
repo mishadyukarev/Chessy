@@ -127,7 +127,11 @@ public struct CellComponent
 
 
         internal UnitTypes UnitType => _unitType;
-        internal int PowerDamage => _powerDamage;
+        internal int PowerDamage
+        {
+            get { return _powerDamage; }
+            set { _powerDamage = value; }
+        }
         internal bool HaveAmountSteps => _amountSteps >= _startValues.AMOUNT_FOR_TAKE_UNIT;
         internal int ActorNumber
         {
