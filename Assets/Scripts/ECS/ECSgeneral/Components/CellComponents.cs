@@ -40,7 +40,7 @@ public struct CellComponent
         private GameObject _treeGO;
         private GameObject _hillGO;
 
-        internal EnvironmentComponent(int x, int y, StartSpawnManager startSpawnManager)
+        internal EnvironmentComponent(int x, int y, StartSpawnGameManager startSpawnManager)
         {
             _haveFood = default;
             _haveMountain = default;
@@ -107,7 +107,7 @@ public struct CellComponent
         private SpriteRenderer _unitKingSpriteRender;
         private StartValuesGameConfig _startValues;
 
-        internal UnitComponent(int x, int y, StartSpawnManager startSpawnManager, StartValuesGameConfig startValues)
+        internal UnitComponent(int x, int y, StartSpawnGameManager startSpawnManager, StartValuesGameConfig startValues)
         {
             _unitType = default;
             _amountSteps = default;
@@ -305,7 +305,7 @@ public struct CellComponent
         private BuildingTypes _buildingType;
         private GameObject _campGO;
 
-        internal BuildingComponent(int x, int y, StartSpawnManager startSpawnManager)
+        internal BuildingComponent(int x, int y, StartSpawnGameManager startSpawnManager)
         {
             _buildingType = default;
             _campGO = startSpawnManager.CampsGO[x, y];
@@ -349,7 +349,7 @@ public struct CellComponent
         private GameObject _wayUnitVisionGO;
         private GameObject _enemyVisionGO;
 
-        internal SupportVisionComponent(int x, int y, StartSpawnManager startSpawnManager)
+        internal SupportVisionComponent(int x, int y, StartSpawnGameManager startSpawnManager)
         {
             _selectorVisionGO = startSpawnManager.SelectorVisionsGO[x, y];
             _spawnVisionGO = startSpawnManager.SpawnVisionsGO[x, y];

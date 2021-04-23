@@ -23,7 +23,8 @@ internal struct EconomyMasterComponent
     }
 
 
-    internal struct UnitMasterComponent
+
+    internal struct UnitsMasterComponent
     {
         private int _amountKingMaster;
         private int _amountKingOther;
@@ -32,14 +33,14 @@ internal struct EconomyMasterComponent
         private bool _isSettedKingMaster;
         private bool _isSettedKingOther;
 
-        internal UnitMasterComponent(StartValuesGameConfig startValues)
+        internal UnitsMasterComponent(StartValuesGameConfig startValues)
         {
             _amountKingMaster = startValues.AMOUNT_KING_MASTER;
             _amountKingOther = startValues.AMOUNT_KING_OTHER;
             _amountUnitPawnMaster = startValues.AMOUNT_PAWN_MASTER;
             _amountUnitPawnOther = startValues.AMOUNT_PAWN_OTHER;
-            _isSettedKingMaster = default;
-            _isSettedKingOther = default;
+            _isSettedKingMaster = false;
+            _isSettedKingOther = false;
         }
 
 

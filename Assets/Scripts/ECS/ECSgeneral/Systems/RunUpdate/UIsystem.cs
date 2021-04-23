@@ -34,7 +34,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
     private Button _buildingAbilityButton1;
     private Button _buildingAbilityButton2;
     private Button _buildingAbilityButton3;
-    private Button _buildingAbilityButton4;
 
     private Button _standartAbilityButton1;
     private Button _standartAbilityButton2;
@@ -57,7 +56,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
 
 
-    internal UISystem(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager) : base(eCSmanager, supportManager)
+    internal UISystem(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnManager) : base(eCSmanager, supportManager)
     {
         _photonManagerScene = photonManager.PhotonManagerScene;
         _photonPunRPC = photonManager.PhotonPunRPC;
@@ -120,7 +119,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
         _buildingAbilityButton1 = startSpawnManager.BuildingAbilityButton1;
         _buildingAbilityButton2 = startSpawnManager.BuildingAbilityButton2;
         _buildingAbilityButton3 = startSpawnManager.BuildingAbilityButton3;
-        _buildingAbilityButton4 = startSpawnManager.BuildingAbilityButton4;
 
         _standartAbilityButton1 = startSpawnManager.StandartAbilityButton1;
         _standartAbilityButton1.onClick.AddListener(delegate { StandartAbilityButton1(); });
@@ -259,7 +257,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
         _buildingAbilityButton1.gameObject.SetActive(isActive);
         _buildingAbilityButton2.gameObject.SetActive(isActive);
         _buildingAbilityButton3.gameObject.SetActive(isActive);
-        _buildingAbilityButton4.gameObject.SetActive(isActive);
     }
 
     private void ActivateStandartAbilities(bool isActive)

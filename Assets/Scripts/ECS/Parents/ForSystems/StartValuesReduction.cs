@@ -5,6 +5,6 @@ public abstract class StartValuesReduction
 
     internal StartValuesReduction(SupportGameManager supportManager)
     {
-        _startValues = supportManager.StartValuesConfig;
+        _startValues = supportManager.StartValuesGameConfig;
     }
 }

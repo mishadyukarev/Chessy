@@ -1,15 +1,21 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class MenuManager : MonoBehaviourPunCallbacks
+internal class MenuManager : MonoBehaviourPunCallbacks
 {
-    public Text LogText;
+    private TextMeshProUGUI _logTex;
     private const int MAX_PLAYERS = 2;
 
-    public void Start()
+    internal void Init(StartSpawnMenuManager startSpawnMenuManager)
     {
+        _logTex = startSpawnMenuManager.LogText;
+        startSpawnMenuManager.CreateRoomButton.onClick.AddListener(CreateRoom);
+        startSpawnMenuManager.JoinRandomButton.onClick.AddListener(JoinRandomRoom);
+        startSpawnMenuManager.QuitButton.onClick.AddListener(Quit);
+
+
         PhotonNetwork.NickName = "Player " + Random.Range(1000, 9999);
         Log("Player's name is set to " + PhotonNetwork.NickName);
 
@@ -34,8 +40,8 @@ public class MenuManager : MonoBehaviourPunCallbacks
     private void Log(string message)
     {
         Debug.Log(message);
-        LogText.text += "\n";
-        LogText.text += message;
+        _logTex.text += "\n";
+        _logTex.text += message;
     }
 
     public void Quit() => Application.Quit();

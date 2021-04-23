@@ -7,10 +7,10 @@ internal sealed class MainGame : Main
 
     private static MainGame _instanceGame;
 
-    private PhotonManager _photonManager;
+    private PhotonGameManager _photonManager;
     private ECSmanager _eCSmanager;
-    private SupportGameManager _supportManager;
-    private StartSpawnManager _startSpawnManager;
+    private SupportGameManager _supportGameManager;
+    private StartSpawnGameManager _startSpawnManager;
 
     #endregion
 
@@ -22,20 +22,17 @@ internal sealed class MainGame : Main
     #endregion
 
 
-
     private void Start()
     {
         _instanceGame = this;
-        _supportManager = new SupportGameManager();
-
-        _startSpawnManager = new StartSpawnManager(_supportManager, out Transform parentTransformScrips);
+        _supportGameManager = new SupportGameManager();
 
 
-        _camera = Camera.main;
-        if (!IsMasterClient) _camera.transform.Rotate(0, 0, 180);
+        _startSpawnManager = new StartSpawnGameManager(_supportGameManager, out Transform parentTransformScrips);
 
-        _photonManager = new PhotonManager(_supportManager, parentTransformScrips);
-        _eCSmanager = new ECSmanager(_supportManager, _photonManager, _startSpawnManager);
+
+        _photonManager = new PhotonGameManager(_supportGameManager, parentTransformScrips);
+        _eCSmanager = new ECSmanager(_supportGameManager, _photonManager, _startSpawnManager);
 
         _photonManager.InitAfterECS(_eCSmanager);
 
@@ -46,8 +43,5 @@ internal sealed class MainGame : Main
 
     private void Update() => _eCSmanager.Run();
 
-    private void OnDestroy()
-    {
-        //_photonManager.PhotonManagerScene.LeaveRoom();
-    }
+    private void OnDestroy() { }
 }

@@ -30,7 +30,7 @@ public sealed class ECSmanager
 
 
 
-    internal ECSmanager(SupportGameManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
+    internal ECSmanager(SupportGameManager supportManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnManager)
     {
         _ecsWorld = new EcsWorld();
 

@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-
-internal class SupportMenuManager
+﻿internal class SupportMenuManager : SupportManager
 {
+    private ResourcesLoadMenuManager _resourcesLoadManager;
 
+    public ResourcesLoadMenuManager ResourcesLoadMenuManager => _resourcesLoadManager;
+
+
+    internal SupportMenuManager()
+    {
+        _resourcesLoadManager = new ResourcesLoadMenuManager();
+    }
 }

@@ -23,7 +23,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent> _economyMasterComponentRef = default;
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
-    private EcsComponentRef<EconomyMasterComponent.UnitMasterComponent> _economyUnitsMasterComponentRef = default;
+    private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitsMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef = default;
     private EcsComponentRef<GetterUnitMasterComponent> _getterUnitMasterComponentRef = default;
 
@@ -64,10 +64,10 @@ public partial class PhotonPunRPC : MonoBehaviour
 
 
 
-    internal void Constructor(SupportGameManager supportManager, PhotonManager photonManager)
+    internal void Constructor(SupportGameManager supportManager, PhotonGameManager photonManager)
     {
         _photonView = photonManager.PhotonView;
-        _startValues = supportManager.StartValuesConfig;
+        _startValues = supportManager.StartValuesGameConfig;
         _cellManager = supportManager.CellManager;
 
         PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);

@@ -8,7 +8,6 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     private EcsEntity _inputEntity;
     private EcsEntity _selectedUnitEntity;
     private EcsEntity _unitPathEntity;
-    private EcsEntity _supportVisionEntity;
     private EcsEntity _rayEntity;
     private EcsEntity _getterCellEntity;
     private EcsEntity _selectorEntity;
@@ -54,9 +53,9 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     public EntitiesGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    internal void CreateEntities(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
+    internal void CreateEntities(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnManager)
     {
-        _startValues = supportManager.StartValuesConfig;
+        _startValues = supportManager.StartValuesGameConfig;
         var systemsGeneralManager = eCSmanager.SystemsGeneralManager;
         var cellManager = supportManager.CellManager;
         var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
@@ -81,7 +80,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             .Replace(new GetterCellComponent(_startValues, systemsGeneralManager));
 
         _selectorEntity = _ecsWorld.NewEntity()
-            .Replace(new SelectorComponent(supportManager.StartValuesConfig));
+            .Replace(new SelectorComponent(supportManager.StartValuesGameConfig));
 
         _economyEntity = _ecsWorld.NewEntity()
             .Replace(new EconomyComponent())
@@ -102,9 +101,9 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             {
                 bool isStartMaster = false;
                 bool isStartOther = false;
-                /*if (y < 3 && x > 2 && x < 12) */
+                if (y < 3 && x > 2 && x < 12)
                 isStartMaster = true;
-                /*if (y > 8 && x > 2 && x < 12) */
+                if (y > 8 && x > 2 && x < 12)
                 isStartOther = true;
 
                 CellComponent cellComponent = new CellComponent(isStartMaster, isStartOther, cellsGO[x, y]);

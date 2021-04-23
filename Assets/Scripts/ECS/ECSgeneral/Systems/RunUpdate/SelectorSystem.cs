@@ -53,7 +53,7 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
     }
 
 
-    internal SelectorSystem(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonManager photonManager) : base(eCSmanager, supportManager)
+    internal SelectorSystem(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonGameManager photonManager) : base(eCSmanager, supportManager)
     {
         _photonPunRPC = photonManager.PhotonPunRPC;
         _nameManager = supportManager.NameManager;

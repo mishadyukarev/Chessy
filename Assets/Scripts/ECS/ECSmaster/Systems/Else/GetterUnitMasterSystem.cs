@@ -47,14 +47,14 @@ internal struct GetterUnitMasterComponent
 internal class GetterUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<GetterUnitMasterComponent> _getterUnitMasterComponentRef = default;
-    private EcsComponentRef<EconomyMasterComponent.UnitMasterComponent> _economyCountUnitMasterComponent = default;
+    private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyCountUnitMasterComponent = default;
 
     internal GetterUnitMasterSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
     {
         _getterUnitMasterComponentRef = eCSmanager.EntitiesMasterManager.GetterUnitMasterComponentRef;
         _economyCountUnitMasterComponent = eCSmanager.EntitiesMasterManager.EconomyUnitsMasterComponentRef;
 
-        _startValues = supportManager.StartValuesConfig;
+        _startValues = supportManager.StartValuesGameConfig;
     }
 
     public void Run()

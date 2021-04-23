@@ -1,9 +1,11 @@
-﻿using Photon.Pun;
+﻿using JetBrains.Annotations;
+using Photon.Pun;
 using System;
+using Unity.Mathematics;
 using UnityEngine;
 using static MainGame;
 
-public class PhotonManager
+public class PhotonGameManager
 {
     private PhotonView _photonView;
     private PhotonPunRPC _photonPunRPC;
@@ -14,7 +16,7 @@ public class PhotonManager
     public PhotonPunRPC PhotonPunRPC => _photonPunRPC;
 
 
-    internal PhotonManager(SupportGameManager supportManager, Transform parentTransform)
+    internal PhotonGameManager([NotNull]SupportGameManager supportManager, Transform parentTransform)
     {
         var types = new Type[]
         {
@@ -35,7 +37,7 @@ public class PhotonManager
         _photonView.FindObservables(true);
 
         if (InstanceGame.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
-        else _photonView.ViewID = supportManager.StartValuesConfig.NUMBER_PHOTON_VIEW;
+        else _photonView.ViewID = supportManager.StartValuesGameConfig.NUMBER_PHOTON_VIEW;
     }
 
     public void InitAfterECS(ECSmanager eCSmanager)

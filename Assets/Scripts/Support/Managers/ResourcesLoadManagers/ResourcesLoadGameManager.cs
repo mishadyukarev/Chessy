@@ -1,27 +1,24 @@
 ﻿using UnityEngine;
 
-public class ResourcesLoadManager
+internal class ResourcesLoadGameManager : ResourcesLoadManager
 {
     private GameObject _cellGO;
     private AudioClip _audioClip;
     private Sprite _whiteCellSprite;
     private Sprite _blackCellSprite;
     private StartValuesGameConfig _startValues;
-    private Canvas _canvas;
     private GameObject _backGroundCollider2D;
-    private Camera _camera;
+
 
     public GameObject CellGO => _cellGO;
     internal AudioClip AudioClip => _audioClip;
     internal Sprite WhiteCellSprite => _whiteCellSprite;
     internal Sprite BlackCellSprite => _blackCellSprite;
     internal StartValuesGameConfig StartValuesConfig => _startValues;
-    internal Canvas Canvas => _canvas;
     internal GameObject BackGroundCollider2D => _backGroundCollider2D;
-    internal Camera Camera => _camera;
 
 
-    public ResourcesLoadManager()
+    public ResourcesLoadGameManager()
     {
         _cellGO = Resources.Load<GameObject>("CellPrefab");
 
@@ -32,9 +29,8 @@ public class ResourcesLoadManager
 
         _audioClip = Resources.Load<SoundConfig>("SoundConfig").AudioClip;
 
-        _canvas = Resources.Load<Canvas>("Canvas");
+        _canvas = Resources.Load<Canvas>("CanvasGame");
 
         _backGroundCollider2D = Resources.Load<GameObject>("BackGround");
-        _camera = Resources.Load<Camera>("Camera");
     }
 }
