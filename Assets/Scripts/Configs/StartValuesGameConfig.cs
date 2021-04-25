@@ -47,8 +47,8 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_PAWN_OTHER = 1;
 
 
-    internal readonly int MAX_AMOUNT_STEPS_KING = 3;
-    internal readonly int MAX_AMOUNT_STEPS_PAWN = 3;
+    internal readonly int MAX_AMOUNT_STEPS_KING = 1;
+    internal readonly int MAX_AMOUNT_STEPS_PAWN = 2;
 
     internal readonly int AMOUNT_FOR_TAKE_UNIT = 1;
     internal readonly int MIN_AMOUNT_STEPS_FOR_UNIT = 1;

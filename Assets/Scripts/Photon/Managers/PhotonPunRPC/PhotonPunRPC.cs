@@ -29,6 +29,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<ProtecterUnitMasterComponent> _protecterUnitMasterComponentRef = default;
     private EcsComponentRef<RefresherMasterComponent> _refresherMasterComponentRef = default;
     private EcsComponentRef<ReadyMasterComponent> _readyMasterComponentRef = default;
+    private EcsComponentRef<TheEndGameMasterComponent> _theEndMasterComponentRef = default;
 
     #endregion
 
@@ -50,6 +51,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
     private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
     private EcsComponentRef<ReadyComponent> _readyComponentRef = default;
+    private EcsComponentRef<TheEndGameComponent> _theEndComponentRef = default;
 
     #endregion
 
@@ -95,6 +97,7 @@ public partial class PhotonPunRPC : MonoBehaviour
             _protecterUnitMasterComponentRef = entitiesMasterManager.ProtecterUnitMasterComponentRef;
             _refresherMasterComponentRef = entitiesMasterManager.RefresherMasterComponentRef;
             _readyMasterComponentRef = entitiesMasterManager.ReadyMasterComponentRef;
+            _theEndMasterComponentRef = entitiesMasterManager.TheEndGameMasterComponentRef;
 
 
            _systemsMasterManager = eCSmanager.SystemsMasterManager;
@@ -118,9 +121,33 @@ public partial class PhotonPunRPC : MonoBehaviour
         _economyUnitsComponentRef = entitiesGeneralManager.EconomyUnitsComponentRef;
         _unitPathComponentRef = entitiesGeneralManager.UnitPathComponentRef;
         _readyComponentRef = entitiesGeneralManager.ReadyComponentRef;
+        _theEndComponentRef = entitiesGeneralManager.TheEndGameComponentRef;
 
         RefreshAll();
     }
+
+
+    #region THE END OF GAME
+
+    internal void EndGame(int actorNumber) => _photonView.RPC("EndGameToMaster", RpcTarget.MasterClient, actorNumber);
+
+    [PunRPC]
+    private void EndGameToMaster(int actorNumber, PhotonMessageInfo info)
+    {
+        _photonView.RPC("EndGameToGeneral", RpcTarget.All, actorNumber);
+
+        RefreshAll();
+    }
+
+    [PunRPC]
+    private void EndGameToGeneral(int actorNumber)
+    {
+        _theEndComponentRef.Unref().IsEndGame = true;
+        _theEndComponentRef.Unref().PlayerWinner = PhotonNetwork.PlayerList[actorNumber - 1];
+    }
+
+    #endregion
+
 
     #region Ready
 
@@ -246,7 +273,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void AttackUnitMaster(int[] xyPreviousCell, int[] xySelectedCell, PhotonMessageInfo info)
     {
-        var xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCellsForAttack(xyPreviousCell, info.Sender);
+        var xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Attack,xyPreviousCell, info.Sender);
 
         bool isAttacked = false;
 

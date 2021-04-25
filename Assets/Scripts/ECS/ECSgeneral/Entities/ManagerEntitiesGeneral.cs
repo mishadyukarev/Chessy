@@ -14,6 +14,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     private EcsEntity _soundEntity;
     private EcsEntity _readyEntity;
     private EcsEntity _selectorUnitEntity;
+    private EcsEntity _theEndGameEntity;
 
     private EcsComponentRef<CellComponent>[,] _cellComponentRef;
     private EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef;
@@ -66,6 +67,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal EcsComponentRef<SoundComponent> SoundComponentRef => _soundEntity.Ref<SoundComponent>();
     internal EcsComponentRef<ReadyComponent> ReadyComponentRef => _readyEntity.Ref<ReadyComponent>();
     internal EcsComponentRef<SelectorUnitComponent> SelectorUnitComponent => _selectorUnitEntity.Ref<SelectorUnitComponent>();
+    internal EcsComponentRef<TheEndGameComponent> TheEndGameComponentRef => _theEndGameEntity.Ref<TheEndGameComponent>();
 
     #endregion
 
@@ -112,6 +114,9 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
         _selectorUnitEntity = _ecsWorld.NewEntity()
             .Replace(new SelectorUnitComponent());
+
+        _theEndGameEntity = _ecsWorld.NewEntity()
+            .Replace(new TheEndGameComponent());
 
 
         #region Cells

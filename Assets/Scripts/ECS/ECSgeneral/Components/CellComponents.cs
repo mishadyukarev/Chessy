@@ -217,6 +217,20 @@ public struct CellComponent
                 return false;
             }
         }
+        internal int MaxAmountSteps
+        {
+            get
+            {
+                switch (_unitType)
+                {
+                    case UnitTypes.King:
+                        return _startValues.MAX_AMOUNT_STEPS_KING;
+                    case UnitTypes.Pawn:
+                        return _startValues.MAX_AMOUNT_STEPS_PAWN;
+                }
+                return default;
+            }
+        }
         internal bool MinAmountSteps => _amountSteps >= _startValues.MIN_AMOUNT_STEPS_FOR_UNIT;
 
         internal int AmountHealth

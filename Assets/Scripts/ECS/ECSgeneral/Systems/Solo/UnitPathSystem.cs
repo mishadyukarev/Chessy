@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public struct UnitPathsComponent
 {
-    private StartValuesGameConfig _nameValueManager;
     private CellManager _cellManager;
     private SystemsGeneralManager _systemsGeneralManager;
 
@@ -13,14 +12,10 @@ public struct UnitPathsComponent
     private int[] _xyStartCellIN;
     private Player _playerIN;
 
-    private List<int[]> _xyAvailableCellsForShiftOUT;
-    private List<int[]> _xyAvailableCellsForAttackOUT;
-
-
+    private List<int[]> _xyAvailableCellsOUT;
 
     public UnitPathsComponent(SystemsGeneralManager systemsGeneralManager, StartValuesGameConfig nameValueManager, CellManager cellManager)
     {
-        _nameValueManager = nameValueManager;
         _systemsGeneralManager = systemsGeneralManager;
         _cellManager = cellManager;
 
@@ -29,71 +24,35 @@ public struct UnitPathsComponent
         _xyStartCellIN = new int[nameValueManager.XY_FOR_ARRAY];
         _playerIN = default;
 
-        _xyAvailableCellsForShiftOUT = new List<int[]>();
-        _xyAvailableCellsForAttackOUT = new List<int[]>();
+        _xyAvailableCellsOUT = new List<int[]>();
     }
 
 
 
-
-    internal void Unpack(out UnitPathTypes unitPathTypeIN) => unitPathTypeIN = _unitPathTypeIN;
-
-
-
-
-    internal List<int[]> GetAvailableCellsForShift(in int[] xyStartCellIN, in Player playerIN)
+    internal List<int[]> GetAvailableCells(UnitPathTypes unitPathType, in int[] xyStartCellIN, in Player playerIN)
     {
-        _xyAvailableCellsForShiftOUT.Clear();
+        _xyAvailableCellsOUT.Clear();
 
-        _unitPathTypeIN = UnitPathTypes.Shift;
+        _unitPathTypeIN = unitPathType;
         _cellManager.CopyXYinTo(xyStartCellIN, _xyStartCellIN);
         _playerIN = playerIN;
 
-        InvokeSystem();
+        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(UnitPathSystem));
 
-        return _cellManager.CopyListXY(_xyAvailableCellsForShiftOUT);
+        return _cellManager.CopyListXY(_xyAvailableCellsOUT);
     }
 
-    internal void UnpackForShift(out int[] xyStartCellIN, out Player playerIN)
+    internal void Unpack(out UnitPathTypes unitPathTypeIN, out int[] xyStartCellIN, out Player playerIN)
     {
+        unitPathTypeIN = _unitPathTypeIN;
         xyStartCellIN = _xyStartCellIN;
         playerIN = _playerIN;
     }
 
-    internal void PackForShift(in List<int[]> xyAvailableCellsForShiftOUT)
+    internal void Pack(in List<int[]> xyAvailableCellsOUT)
     {
-        _xyAvailableCellsForShiftOUT = xyAvailableCellsForShiftOUT;
+        _xyAvailableCellsOUT = xyAvailableCellsOUT;
     }
-
-
-
-
-    internal List<int[]> GetAvailableCellsForAttack(in int[] xyStartCellIN, in Player playerIN)
-    {
-        _xyAvailableCellsForAttackOUT.Clear();
-
-        _unitPathTypeIN = UnitPathTypes.Attack;
-        _cellManager.CopyXYinTo(xyStartCellIN, _xyStartCellIN);
-        _playerIN = playerIN;
-
-        InvokeSystem();
-
-        return _cellManager.CopyListXY(_xyAvailableCellsForAttackOUT);
-    }
-
-    internal void UnpackForAttack(out int[] xyStartCellIN, out Player playerIN)
-    {
-        xyStartCellIN = _xyStartCellIN;
-        playerIN = _playerIN;
-    }
-
-    internal void PackForAttack(in List<int[]> xyAvailableCellsForAttack)
-    {
-        _xyAvailableCellsForAttackOUT = xyAvailableCellsForAttack;
-    }
-
-
-    private void InvokeSystem() => _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(UnitPathSystem));
 }
 
 
@@ -120,16 +79,11 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
 
     public void Run()
     {
-        _unitPathComponentRef.Unref().Unpack(out UnitPathTypes unitPathTypeIN);
-
-        int[] xyStartCellIN;
-        Player playerIN;
+        _unitPathComponentRef.Unref().Unpack(out UnitPathTypes unitPathTypeIN, out int[] xyStartCellIN, out Player playerIN);
 
         switch (unitPathTypeIN)
         {
             case UnitPathTypes.Shift:
-
-                _unitPathComponentRef.Unref().UnpackForShift(out xyStartCellIN, out playerIN);
 
                 var xyAvailableCellsForShift = new List<int[]>();
 
@@ -147,13 +101,11 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
                     }
                 }
 
-                _unitPathComponentRef.Unref().PackForShift(xyAvailableCellsForShift);
+                _unitPathComponentRef.Unref().Pack(xyAvailableCellsForShift);
 
                 break;
 
             case UnitPathTypes.Attack:
-
-                _unitPathComponentRef.Unref().UnpackForAttack(out xyStartCellIN, out playerIN);
 
                 var xyAvailableCellsForAttack = new List<int[]>();
 
@@ -177,7 +129,7 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
                     }
                 }
 
-                _unitPathComponentRef.Unref().PackForAttack(xyAvailableCellsForAttack);
+                _unitPathComponentRef.Unref().Pack(xyAvailableCellsForAttack);
 
                 break;
 

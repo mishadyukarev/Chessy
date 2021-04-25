@@ -18,6 +18,7 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new SelectorUnitUISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(SelectorUnitUISystem))
             .Add(new StandartAbilityUISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(StandartAbilityUISystem))
             .Add(new ConditionUnitUISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(ConditionUnitUISystem))
+            .Add(new TheEndGameUISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(TheEndGameUISystem))
             .Add(new WarningUISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(WarningUISystem));
 
 

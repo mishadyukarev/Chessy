@@ -141,8 +141,8 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                     {
                                         if (CellUnitComponent(_xySelectedCell).AmountSteps >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                                         {
-                                            _xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCellsForShift(_xySelectedCell, InstanceGame.LocalPlayer);
-                                            _xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCellsForAttack(_xySelectedCell, InstanceGame.LocalPlayer);
+                                            _xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Shift,_xySelectedCell, InstanceGame.LocalPlayer);
+                                            _xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Attack, _xySelectedCell, InstanceGame.LocalPlayer);
 
                                             _canShiftUnit = true;
                                         }
@@ -169,8 +169,8 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                     {
                                         if (CellUnitComponent(_xySelectedCell).MinAmountSteps)
                                         {
-                                            _xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCellsForShift(_xySelectedCell, InstanceGame.LocalPlayer);
-                                            _xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCellsForAttack(_xySelectedCell, InstanceGame.LocalPlayer);
+                                            _xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Shift,_xySelectedCell, InstanceGame.LocalPlayer);
+                                            _xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Attack, _xySelectedCell, InstanceGame.LocalPlayer);
 
                                             _canShiftUnit = true;
                                         }

@@ -73,10 +73,10 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
 
         bool isBuilded;
 
-        if (!CellEnvironmentComponent(xyCellIN).HaveMountain && CellUnitComponent(xyCellIN).MinAmountSteps)
+        if (!CellEnvironmentComponent(xyCellIN).HaveMountain && CellUnitComponent(xyCellIN).HaveMaxSteps)
         {
             CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN);
-            CellUnitComponent(xyCellIN).AmountSteps -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+            CellUnitComponent(xyCellIN).AmountSteps -= CellUnitComponent(xyCellIN).MaxAmountSteps;
 
             isBuilded = true;
             _builderCellMasterComponentRef.Unref().Pack(isBuilded);

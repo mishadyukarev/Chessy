@@ -41,9 +41,13 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
     private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
 
+    private PhotonPunRPC _photonPunRPC = default;
 
-    internal AttackUnitMasterSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
+
+    internal AttackUnitMasterSystem(ECSmanager eCSmanager, SupportGameManager supportGameManager, PhotonGameManager photonGameManager) : base(eCSmanager, supportGameManager)
     {
+        _photonPunRPC = photonGameManager.PhotonPunRPC;
+
         _attackUnitMasterComponentRef = eCSmanager.EntitiesMasterManager.AttackUnitMasterComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
     }
@@ -75,6 +79,8 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
             CellUnitComponent(xyPreviousCellIN).AmountHealth -= damageToPrevious;
             CellUnitComponent(xySelectedCellIN).AmountHealth -= damageToSelelected;
 
+            var preNumber = CellUnitComponent(xyPreviousCellIN).ActorNumber;
+            var selNumber = CellUnitComponent(xySelectedCellIN).ActorNumber;
 
             if (CellUnitComponent(xyPreviousCellIN).AmountHealth <= _startValuesGameConfig.AMOUNT_FOR_DEATH)
             {
@@ -83,6 +89,8 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
 
             if (CellUnitComponent(xySelectedCellIN).AmountHealth <= _startValuesGameConfig.AMOUNT_FOR_DEATH)
             {
+                if (CellUnitComponent(xySelectedCellIN).UnitType == UnitTypes.King) _photonPunRPC.EndGame(preNumber);
+
                 CellUnitComponent(xySelectedCellIN).ResetUnit();
                 CellUnitComponent(xySelectedCellIN).SetUnit(CellUnitComponent(xyPreviousCellIN));
                 CellUnitComponent(xyPreviousCellIN).ResetUnit();

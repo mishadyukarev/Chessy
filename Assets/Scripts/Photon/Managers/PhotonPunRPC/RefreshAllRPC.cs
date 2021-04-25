@@ -42,7 +42,7 @@ public partial class PhotonPunRPC : MonoBehaviour
             _economyMasterComponentRef.Unref().GoldOther,
             _economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther,
             _economyBuildingsMasterComponentRef.Unref().XYsettedCityOther,
-                        _economyUnitsMasterComponentRef.Unref().IsSettedKingOther,
+            _economyUnitsMasterComponentRef.Unref().IsSettedKingOther,
         };
         _photonView.RPC("RefreshEconomyGeneral", RpcTarget.Others, objects);
 

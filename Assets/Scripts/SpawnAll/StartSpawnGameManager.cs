@@ -59,9 +59,6 @@ internal class StartSpawnGameManager : StartSpawnManager
     internal Button DoneButton;
 
 
-    #endregion
-
-
     #region Ability Zone
 
     internal TextMeshProUGUI HpCurrentUnitText;
@@ -92,6 +89,18 @@ internal class StartSpawnGameManager : StartSpawnManager
     internal Button ReadyButton;
 
     #endregion
+
+
+    #region TheEndGame Zone
+
+    internal RectTransform ParentTheEndGameZone;
+    internal TextMeshProUGUI TheEndGameText;
+
+    #endregion
+
+
+    #endregion
+
 
 
     internal StartSpawnGameManager(SupportGameManager supportManager, out Transform parentTransformScrips) : base(supportManager.ResourcesLoadGameManager)
@@ -164,8 +173,11 @@ internal class StartSpawnGameManager : StartSpawnManager
 
 
         ParentReadyZone = GameObject.Find("ReadyZone").GetComponent<RectTransform>();
-
         ReadyButton = GameObject.Find("ReadyButton").GetComponent<Button>();
+
+        ParentTheEndGameZone = GameObject.Find("TheEndGameZone").GetComponent<RectTransform>();
+        TheEndGameText = GameObject.Find("TheEndGameText").GetComponent<TextMeshProUGUI>();
+        ParentTheEndGameZone.gameObject.SetActive(false);
 
     }
 

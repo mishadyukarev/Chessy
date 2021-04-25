@@ -71,7 +71,7 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
 
         _shiftComponentRef.Unref().Unpack(out int[] xyPreviousCell, out int[] xySelectedCell, out Player fromPlayer);
 
-        List<int[]> xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCellsForShift(xyPreviousCell, fromPlayer);
+        List<int[]> xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Shift, xyPreviousCell, fromPlayer);
 
         if (CellUnitComponent(xyPreviousCell).IsHim(fromPlayer) && CellUnitComponent(xyPreviousCell).MinAmountSteps)
         {
