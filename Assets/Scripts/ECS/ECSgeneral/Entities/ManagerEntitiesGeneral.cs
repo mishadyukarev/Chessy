@@ -6,9 +6,14 @@ using static MainGame;
 public sealed class EntitiesGeneralManager : EntitiesManager
 {
     private EcsEntity[,] _cellsEntity;
+    private EcsEntity _selectorEntity;
+    private EcsEntity _donerEntity;
+    private EcsEntity _inputEntity;
     private EcsEntity _selectedUnitEntity;
     private EcsEntity _economyEntity;
     private EcsEntity _soundEntity;
+    private EcsEntity _readyEntity;
+    private EcsEntity _selectorUnitEntity;
 
     private EcsComponentRef<CellComponent>[,] _cellComponentRef;
     private EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef;
@@ -27,15 +32,6 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal EcsComponentRef<GetterCellComponent> GetterCellComponentRef => _soloEntity.Ref<GetterCellComponent>();
 
     #endregion
-
-
-    #region RunUpdate
-
-    internal EcsComponentRef<SelectorComponent> SelectorComponentRef => _runUpdateEntity.Ref<SelectorComponent>();
-    internal EcsComponentRef<UIComponent> ButtonComponentRef => _runUpdateEntity.Ref<UIComponent>();
-    internal EcsComponentRef<InputComponent> InputComponentRef => _runUpdateEntity.Ref<InputComponent>();
-
-    #endregion 
 
 
     #region Cell
@@ -63,8 +59,13 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     #region Else
 
+    internal EcsComponentRef<SelectorComponent> SelectorComponentRef => _selectorEntity.Ref<SelectorComponent>();
+    internal EcsComponentRef<DonerComponent> DonerComponentRef => _donerEntity.Ref<DonerComponent>();
+    internal EcsComponentRef<InputComponent> InputComponentRef => _inputEntity.Ref<InputComponent>();
     internal EcsComponentRef<SelectedUnitComponent> SelectedUnitComponentRef => _selectedUnitEntity.Ref<SelectedUnitComponent>();
     internal EcsComponentRef<SoundComponent> SoundComponentRef => _soundEntity.Ref<SoundComponent>();
+    internal EcsComponentRef<ReadyComponent> ReadyComponentRef => _readyEntity.Ref<ReadyComponent>();
+    internal EcsComponentRef<SelectorUnitComponent> SelectorUnitComponent => _selectorUnitEntity.Ref<SelectorUnitComponent>();
 
     #endregion
 
@@ -86,11 +87,14 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             .Replace(new RayComponent(systemsGeneralManager))
             .Replace(new GetterCellComponent(startValuesGameConfig, systemsGeneralManager));
 
-        _runUpdateEntity = _ecsWorld.NewEntity()
-            .Replace(new UIComponent())
-            .Replace(new InputComponent())
-            .Replace(new SelectorComponent(startValuesGameConfig));
+        _donerEntity = _ecsWorld.NewEntity()
+            .Replace(new DonerComponent());
 
+        _inputEntity = _ecsWorld.NewEntity()
+            .Replace(new InputComponent());
+
+        _selectorEntity = _ecsWorld.NewEntity()
+            .Replace(new SelectorComponent(startValuesGameConfig));
 
         _selectedUnitEntity = _ecsWorld.NewEntity()
             .Replace(new SelectedUnitComponent());
@@ -102,6 +106,12 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
         _soundEntity = _ecsWorld.NewEntity()
             .Replace(new SoundComponent());
+
+        _readyEntity = _ecsWorld.NewEntity()
+            .Replace(new ReadyComponent());
+
+        _selectorUnitEntity = _ecsWorld.NewEntity()
+            .Replace(new SelectorUnitComponent());
 
 
         #region Cells

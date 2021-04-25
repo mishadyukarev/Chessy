@@ -46,9 +46,10 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<CellComponent.BuildingComponent>[,] _cellBuildingComponentRef = default;
 
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
-    private EcsComponentRef<UIComponent> _buttonComponentRef = default;
+    private EcsComponentRef<DonerComponent> _buttonComponentRef = default;
     private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
     private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
+    private EcsComponentRef<ReadyComponent> _readyComponentRef = default;
 
     #endregion
 
@@ -112,10 +113,11 @@ public partial class PhotonPunRPC : MonoBehaviour
         _economyBuildingsComponentRef = entitiesGeneralManager.EconomyBuildingsComponentRef;
 
         _selectorComponentRef = entitiesGeneralManager.SelectorComponentRef;
-        _buttonComponentRef = entitiesGeneralManager.ButtonComponentRef;
+        _buttonComponentRef = entitiesGeneralManager.DonerComponentRef;
         _selectedUnitComponentRef = entitiesGeneralManager.SelectedUnitComponentRef;
         _economyUnitsComponentRef = entitiesGeneralManager.EconomyUnitsComponentRef;
         _unitPathComponentRef = entitiesGeneralManager.UnitPathComponentRef;
+        _readyComponentRef = entitiesGeneralManager.ReadyComponentRef;
 
         RefreshAll();
     }
@@ -131,12 +133,18 @@ public partial class PhotonPunRPC : MonoBehaviour
         else _readyMasterComponentRef.Unref().IsReadyOther = isReady;
 
         if (_readyMasterComponentRef.Unref().IsReadyMaster && _readyMasterComponentRef.Unref().IsReadyOther)
-            _photonView.RPC("ReadyToGeneral", RpcTarget.All, true);
+            _photonView.RPC("ReadyToGeneral", RpcTarget.All, true, true);
+        else _photonView.RPC("ReadyToGeneral", info.Sender, isReady, false);
 
         RefreshAll();
     }
 
-    [PunRPC] private void ReadyToGeneral(bool isStarted) => InstanceGame.IsStartedGame = isStarted;
+    [PunRPC]
+    private void ReadyToGeneral(bool isReady, bool isStarted)
+    {
+        _readyComponentRef.Unref().IsReady = isReady;
+        InstanceGame.IsStartedGame = isStarted;
+    }
 
 
     #endregion
@@ -149,17 +157,25 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void DoneToMaster(bool isDone, PhotonMessageInfo info)
     {
-        _photonView.RPC("DoneToGeneral", info.Sender, isDone);
-
-        if(_refresherMasterComponentRef.Unref().TryRefresh(isDone, info.Sender))
+        if (info.Sender.IsMasterClient && _economyUnitsMasterComponentRef.Unref().IsSettedKingMaster 
+            || !info.Sender.IsMasterClient && _economyUnitsMasterComponentRef.Unref().IsSettedKingOther)
         {
-            _photonView.RPC("DoneToGeneral", RpcTarget.All, false);
+            _photonView.RPC("DoneToGeneral", info.Sender, isDone);
+
+            if (_refresherMasterComponentRef.Unref().TryRefresh(isDone, info.Sender))
+            {
+                _photonView.RPC("DoneToGeneral", RpcTarget.All, false);
+            }
+
+            RefreshAll();
         }
-
-        RefreshAll();
+        else
+        {
+            _photonView.RPC("DoneToGeneral", info.Sender);
+        }
     }
-
-    [PunRPC] private void DoneToGeneral(bool isDone) => _buttonComponentRef.Unref().DonerDelegate(false, isDone);
+    [PunRPC] private void DoneToGeneral() => _buttonComponentRef.Unref().IsMistaked = true;
+    [PunRPC] private void DoneToGeneral(bool isDone) => _buttonComponentRef.Unref().IsDone = isDone;
 
     #endregion
 

@@ -17,12 +17,9 @@ internal class UISystem : CellReduction, IEcsRunSystem
     private Image _rightDownUnitImage;
     private Image _leftEconomyImage;
 
-    private Button _button0;
-    private Button _button1;
     private Button _buyPawnButton;
     private Button _improveCityButton;
     private Button _buttonLeave;
-    private Button _requestDoneButton;
 
 
     #region Ability zone
@@ -46,9 +43,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     #endregion
 
-
-    private EcsComponentRef<UIComponent> _buttonComponentRef;
-    private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef;
     private EcsComponentRef<SelectorComponent> _selectorComponentRef;
     private EcsComponentRef<SelectorComponent> _selectorComponetRef = default;
 
@@ -71,8 +65,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
         _economyUnitsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyUnitsComponentRef;
 
         _selectorComponetRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
-        _buttonComponentRef = eCSmanager.EntitiesGeneralManager.ButtonComponentRef;
-        _selectedUnitComponentRef = eCSmanager.EntitiesGeneralManager.SelectedUnitComponentRef;
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
 
         #endregion
@@ -95,18 +87,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
         _rightMiddleUnitImage.gameObject.SetActive(false);
 
         #endregion
-
-
-        _button0 = startSpawnManager.Button0;
-        _button0.onClick.AddListener(delegate { GetUnit(UnitTypes.King); });
-
-        _button1 = startSpawnManager.Button1;
-        _button1.onClick.AddListener(delegate { GetUnit(UnitTypes.Pawn); });
-
-
-        _buttonComponentRef.Unref().DonerDelegate = Doner;
-        _requestDoneButton = startSpawnManager.RequestDoneButton;
-        _requestDoneButton.onClick.AddListener(delegate { Doner(true, false); });
 
 
         #region Ability zone
@@ -158,13 +138,8 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     public void Run()
     {
-
-
-
-
-
         _goldAmountText.text = _economyComponentRef.Unref().Gold.ToString();
-        if (_economyUnitsComponentRef.Unref().IsSettedKing) _button0.gameObject.SetActive(false);
+
 
         var xySelectedCell = _selectorComponetRef.Unref().XYselectedCell;
 
@@ -316,7 +291,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
 
     #region Button Methods
-    private void GetUnit(UnitTypes unitType) => _photonPunRPC.GetUnit(unitType);
+
 
 
     #region Abilities
@@ -341,17 +316,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     private void Leave() => _photonManagerScene.LeaveRoom();
 
-    private void Doner(bool isRequest, bool isActive)
-    {
-        if (isRequest) _photonPunRPC.Done(!_buttonComponentRef.Unref().IsDone);
-        else
-        {
-            _buttonComponentRef.Unref().IsDone = isActive;
 
-            if (_buttonComponentRef.Unref().IsDone) _requestDoneButton.image.color = Color.red;
-            else _requestDoneButton.image.color = Color.white;
-        }
-    }
 
     #endregion
 }

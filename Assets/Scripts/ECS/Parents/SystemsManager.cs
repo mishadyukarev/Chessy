@@ -41,13 +41,27 @@ public abstract class SystemsManager
         if (numberOfNamedSystem != -1)
         {
             var ecsSystemsRunItem = currentSystems.GetRunSystems().Items[numberOfNamedSystem];
-            ecsSystemsRunItem.System.Run();
+            currentSystems.GetRunSystems().Items[numberOfNamedSystem].System.Run();
             return true;
         }
         else
         {
             Debug.Log("Не нашёл систему");
             return false;
+        }
+    }
+    protected void ActiveRunSystem(bool isActive,string namedSystem, EcsSystems currentSystems)
+    {
+        var numberOfNamedSystem = currentSystems.GetNamedRunSystem(namedSystem);
+
+        if (numberOfNamedSystem != -1)
+        {
+            var ecsSystemsRunItem = currentSystems.GetRunSystems().Items[numberOfNamedSystem];
+            currentSystems.GetRunSystems().Items[numberOfNamedSystem].Active = false;
+        }
+        else
+        {
+            Debug.Log("Не нашёл систему");
         }
     }
 }

@@ -56,7 +56,7 @@ internal class StartSpawnGameManager : StartSpawnManager
     internal Button ImproveCityButton;
 
     internal Button ButtonLeave;
-    internal Button RequestDoneButton;
+    internal Button DoneButton;
 
 
     #endregion
@@ -128,7 +128,7 @@ internal class StartSpawnGameManager : StartSpawnManager
 
         Button0 = GameObject.Find("Button0").GetComponent<Button>();
         Button1 = GameObject.Find("Button1").GetComponent<Button>();
-        RequestDoneButton = GameObject.Find("ButtonDone").GetComponent<Button>();
+        DoneButton = GameObject.Find("ButtonDone").GetComponent<Button>();
 
         ButtonLeave = GameObject.Find("ButtonLeave").GetComponent<Button>();
         BuyPawnButton = GameObject.Find("BuyPawnButton").GetComponent<Button>();

@@ -33,7 +33,7 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
     private EcsComponentRef<GetterCellComponent> _getterCellComponentRef = default;
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
-    private EcsComponentRef<UIComponent> _buttonComponent = default;
+    private EcsComponentRef<DonerComponent> _buttonComponent = default;
     private EcsComponentRef<SoundComponent> _soundComponentRef = default;
 
     #endregion
@@ -65,7 +65,7 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
         _selectedUnitComponentRef = eCSmanager.EntitiesGeneralManager.SelectedUnitComponentRef;
         _getterCellComponentRef = eCSmanager.EntitiesGeneralManager.GetterCellComponentRef;
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
-        _buttonComponent = eCSmanager.EntitiesGeneralManager.ButtonComponentRef;
+        _buttonComponent = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
         _soundComponentRef = eCSmanager.EntitiesGeneralManager.SoundComponentRef;
 
         _xyPreviousVisionCell = new int[XYforArray];

@@ -13,7 +13,10 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new SupportVisionSystem(eCSmanager, supportManager), nameof(SupportVisionSystem))
 
             .Add(new UISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(UISystem))
-            .Add(new ReadyUISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(ReadyUISystem));
+            .Add(new ReadyUISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(ReadyUISystem))
+            .Add(new DonerUISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(DonerUISystem))
+            .Add(new SelectorUnitUISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(SelectorUnitUISystem))
+            .Add(new WarningUISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(WarningUISystem));
 
 
         _elseSystems
@@ -38,5 +41,24 @@ public class SystemsGeneralManager : SystemsManager
         }
 
         return TryInvokeRunSystem(namedSystem, _currentSystemsForInvoke);
+    }
+
+    internal void ActiveRunSystem(bool isActive, SystemGeneralTypes systemGeneralType, string namedSystem)
+    {
+        switch (systemGeneralType)
+        {
+            case SystemGeneralTypes.Update:
+                _currentSystemsForInvoke = _updateSystems;
+                break;
+
+            case SystemGeneralTypes.Else:
+                _currentSystemsForInvoke = _elseSystems;
+                break;
+
+            default:
+                break;
+        }
+
+        ActiveRunSystem(isActive, namedSystem, _currentSystemsForInvoke);
     }
 }
