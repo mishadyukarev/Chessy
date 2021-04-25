@@ -57,6 +57,9 @@ public struct CellComponent
             _startValuesGameConfig = startValuesGameConfig;
         }
 
+
+        #region Properties
+
         internal int PowerProtection
         {
             get
@@ -69,10 +72,29 @@ public struct CellComponent
                 return powerProtection;
             }
         }
+
+        internal int NeedAmountSteps
+        {
+            get
+            {
+                int amountSteps = 0;
+
+                if (_haveTree) amountSteps += _startValuesGameConfig.NEED_AMOUNT_STEPS_TREE;
+                if (_haveHill) amountSteps += _startValuesGameConfig.NEED_AMOUNT_STEPS_HILL;
+
+                return amountSteps;
+            }
+        }
+
         internal bool HaveFood => _haveFood;
         internal bool HaveMountain => _haveMountain;
         internal bool HaveTree => _haveTree;
         internal bool HaveHill => _haveHill;
+
+        #endregion
+
+
+        #region Methods
 
         internal void SetResetEnvironment(bool isActive, EnvironmentTypes environmentType)
         {
@@ -103,6 +125,7 @@ public struct CellComponent
             }
         }
 
+        #endregion
     }
 
 
@@ -142,8 +165,11 @@ public struct CellComponent
 
         }
 
+        #region Properties
 
         internal UnitTypes UnitType => _unitType;
+        internal bool HaveUnit => UnitType != UnitTypes.None;
+
         internal int PowerDamage
         {
             get { return _powerDamage; }
@@ -171,6 +197,12 @@ public struct CellComponent
 
             }
         }
+
+        internal int AmountSteps
+        {
+            get { return _amountSteps; }
+            set { _amountSteps = value; }
+        }
         internal bool HaveMaxSteps
         {
             get
@@ -178,14 +210,32 @@ public struct CellComponent
                 switch (_unitType)
                 {
                     case UnitTypes.King:
-                        return _amountSteps == _startValues.AMOUNT_STEPS_KING;
+                        return _amountSteps == _startValues.MAX_AMOUNT_STEPS_KING;
                     case UnitTypes.Pawn:
-                        return _amountSteps == _startValues.AMOUNT_STEPS_PAWN;
+                        return _amountSteps == _startValues.MAX_AMOUNT_STEPS_PAWN;
                 }
                 return false;
             }
         }
-        internal bool HaveAmountSteps => _amountSteps >= _startValues.AMOUNT_FOR_TAKE_UNIT;
+        internal bool MinAmountSteps => _amountSteps >= _startValues.MIN_AMOUNT_STEPS_FOR_UNIT;
+
+        internal int AmountHealth
+        {
+            get { return _amountHealth; }
+            set { _amountHealth = value; }
+        }
+
+        internal bool IsProtected
+        {
+            get { return _isProtected; }
+            set { _isProtected = value; }
+        }
+        internal bool IsRelaxed
+        {
+            get { return _isRelaxed; }
+            set { _isRelaxed = value; }
+        }
+
         internal int ActorNumber
         {
             get
@@ -204,76 +254,37 @@ public struct CellComponent
                 else return false;
             }
         }
-        internal bool HaveUnit => UnitType != UnitTypes.None;
-        internal bool IsProtected
-        {
-            get { return _isProtected; }
-            set { _isProtected = value; }
-        }
-        internal bool IsRelaxed
-        {
-            get { return _isRelaxed; }
-            set { _isRelaxed = value; }
-        }
-        internal int AmountSteps
-        {
-            get { return _amountSteps; }
-            set { _amountSteps = value; }
-        }
-        internal int AmountHealth
-        {
-            get { return _amountHealth; }
-            set { _amountHealth = value; }
-        }
+
+        #endregion
+
+
+        #region Methods
 
         private void SetColorUnit(in SpriteRenderer unitSpriteRender, in Player player)
         {
             if (player.IsMasterClient) unitSpriteRender.color = Color.blue;
             else unitSpriteRender.color = Color.yellow;
         }
-        internal void RefreshAmountSteps(int amountSteps = -1)
+        internal void RefreshAmountSteps()
         {
-            if (amountSteps == -1)
+            switch (_unitType)
             {
-                switch (_unitType)
-                {
-                    case UnitTypes.None:
-                        break;
+                case UnitTypes.None:
+                    break;
 
-                    case UnitTypes.King:
-                        _amountSteps = _startValues.AMOUNT_STEPS_KING;
-                        break;
+                case UnitTypes.King:
+                    _amountSteps = _startValues.MAX_AMOUNT_STEPS_KING;
+                    break;
 
-                    case UnitTypes.Pawn:
-                        _amountSteps = _startValues.AMOUNT_STEPS_PAWN;
-                        break;
+                case UnitTypes.Pawn:
+                    _amountSteps = _startValues.MAX_AMOUNT_STEPS_PAWN;
+                    break;
 
-                    default:
-                        break;
-                }
+                default:
+                    break;
             }
-
-            else
-            {
-                switch (_unitType)
-                {
-                    case UnitTypes.None:
-                        break;
-
-                    case UnitTypes.King:
-                        _amountSteps = amountSteps;
-                        break;
-
-                    case UnitTypes.Pawn:
-                        _amountSteps = amountSteps;
-                        break;
-
-                    default:
-                        break;
-                }
-            }
-
         }
+
         internal void ResetUnit()
         {
             UnitTypes unitType = default;
@@ -310,13 +321,11 @@ public struct CellComponent
 
 
 
+            _unitPawnGO.SetActive(false);
+            _unitKingGO.SetActive(false);
+
             switch (_unitType)
             {
-                case UnitTypes.None:
-                    _unitPawnGO.SetActive(false);
-                    _unitKingGO.SetActive(false);
-                    break;
-
                 case UnitTypes.King:
                     _unitKingGO.SetActive(true);
                     SetColorUnit(_unitKingSpriteRender, _player);
@@ -326,11 +335,9 @@ public struct CellComponent
                     _unitPawnGO.SetActive(true);
                     SetColorUnit(_unitPawnSpriteRender, _player);
                     break;
-
-                default:
-                    break;
             }
         }
+
         internal void ActiveVisionCell(bool isActive, UnitTypes unitType, Player player)
         {
             switch (unitType)
@@ -352,7 +359,10 @@ public struct CellComponent
                     break;
             }
         }
+
         internal bool IsHim(Player player) => _player.ActorNumber == player.ActorNumber;
+
+        #endregion
     }
 
 
@@ -371,6 +381,7 @@ public struct CellComponent
             _startValuesGameConfig = startValuesGameConfig;
         }
 
+        #region Properties
 
         internal BuildingTypes BuildingType => _buildingType;
         internal bool HaveBuilding => _buildingType != BuildingTypes.None;
@@ -412,6 +423,8 @@ public struct CellComponent
             var buildingType = BuildingTypes.None;
             SetBuilding(buildingType);
         }
+
+        #endregion
     }
 
 
@@ -431,6 +444,7 @@ public struct CellComponent
             _enemyVisionGO = startSpawnManager.EnemyVisionsGO[x, y];
         }
 
+        #region Methods
 
         internal void ActiveVision(bool isActive, SupportVisionTypes supportVisionType)
         {
@@ -460,5 +474,6 @@ public struct CellComponent
             }
         }
 
+        #endregion
     }
 }

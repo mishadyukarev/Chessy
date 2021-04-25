@@ -130,130 +130,60 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
             case UnitPathTypes.Shift:
 
                 _unitPathComponentRef.Unref().UnpackForShift(out xyStartCellIN, out playerIN);
-                switch (CellUnitComponent(xyStartCellIN).UnitType)
+
+                var xyAvailableCellsForShift = new List<int[]>();
+
+                for (int i = 0; i < (int)ForUnitPathTypes.LeftDown + 1; i++)
                 {
-                    case UnitTypes.None:
-                        break;
+                    GetCurrentCell(true, (ForUnitPathTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
 
-                    case UnitTypes.King:
-                        RealizeKingPathForShift(xyStartCellIN, playerIN);
-                        break;
-
-                    case UnitTypes.Pawn:
-                        RealizePawnPathForShift(xyStartCellIN, playerIN);
-                        break;
-
-                    default:
-                        break;
+                    if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
+                    {
+                        if (CellUnitComponent(xyStartCellIN).AmountSteps >= CellEnvironmentComponent(xyCurrentCellForShift).NeedAmountSteps + _startValuesGameConfig.MIN_AMOUNT_STEPS_FOR_UNIT
+                            || CellUnitComponent(xyStartCellIN).HaveMaxSteps)
+                        {
+                            xyAvailableCellsForShift.Add(xyCurrentCellForShift);
+                        }
+                    }
                 }
+
+                _unitPathComponentRef.Unref().PackForShift(xyAvailableCellsForShift);
 
                 break;
 
             case UnitPathTypes.Attack:
 
                 _unitPathComponentRef.Unref().UnpackForAttack(out xyStartCellIN, out playerIN);
-                switch (CellUnitComponent(xyStartCellIN).UnitType)
+
+                var xyAvailableCellsForAttack = new List<int[]>();
+
+                for (int i = 0; i < (int)ForUnitPathTypes.LeftDown + 1; i++)
                 {
-                    case UnitTypes.None:
-                        break;
+                    GetCurrentCell(true, (ForUnitPathTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
 
-                    case UnitTypes.King:
-                        RealizeKingPathForAttack(xyStartCellIN, playerIN);
-                        break;
-
-                    case UnitTypes.Pawn:
-                        RealizePawnPathForAttack(xyStartCellIN, playerIN);
-                        break;
-
-                    default:
-                        break;
+                    if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
+                    {
+                        if (CellUnitComponent(xyCurrentCellForShift).HaveUnit)
+                        {
+                            if (CellUnitComponent(xyStartCellIN).AmountSteps >= CellEnvironmentComponent(xyCurrentCellForShift).NeedAmountSteps + _startValuesGameConfig.MIN_AMOUNT_STEPS_FOR_UNIT
+                                || CellUnitComponent(xyStartCellIN).HaveMaxSteps)
+                            {
+                                if (playerIN.ActorNumber != CellUnitComponent(xyCurrentCellForShift).ActorNumber)
+                                {
+                                    xyAvailableCellsForAttack.Add(xyCurrentCellForShift);
+                                }
+                            }
+                        }
+                    }
                 }
+
+                _unitPathComponentRef.Unref().PackForAttack(xyAvailableCellsForAttack);
 
                 break;
 
             default:
                 break;
         }
-    }
-
-    private void RealizeKingPathForShift(int[] xyStartCellIN, Player playerIN)
-    {
-        var xyAvailableCellsForShift = new List<int[]>();
-
-        for (int i = 0; i < (int)ForUnitPathTypes.LeftDown + 1; i++)
-        {
-            GetCurrentCell(true, (ForUnitPathTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
-
-            if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
-            {
-                xyAvailableCellsForShift.Add(xyCurrentCellForShift);
-            }
-        }
-
-        _unitPathComponentRef.Unref().PackForShift(xyAvailableCellsForShift);
-    }
-
-    private void RealizePawnPathForShift(int[] xyStartCellIN, Player playerIN)
-    {
-        var xyAvailableCellsForShift = new List<int[]>();
-
-        for (int i = 0; i < (int)ForUnitPathTypes.LeftDown + 1; i++)
-        {
-            GetCurrentCell(true, (ForUnitPathTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
-
-            if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
-            {
-                xyAvailableCellsForShift.Add(xyCurrentCellForShift);
-            }
-        }
-
-        _unitPathComponentRef.Unref().PackForShift(xyAvailableCellsForShift);
-    }
-
-    private void RealizeKingPathForAttack(int[] xyStartCellIN, Player playerIN)
-    {
-        var xyAvailableCellsForAttack = new List<int[]>();
-
-        for (int i = 0; i < (int)ForUnitPathTypes.LeftDown + 1; i++)
-        {
-            GetCurrentCell(true, (ForUnitPathTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
-
-            if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
-            {
-                if (CellUnitComponent(xyCurrentCellForShift).HaveUnit)
-                {
-                    if (playerIN.ActorNumber != CellUnitComponent(xyCurrentCellForShift).ActorNumber)
-                    {
-                        xyAvailableCellsForAttack.Add(xyCurrentCellForShift);
-                    }
-                }
-            }
-        }
-
-        _unitPathComponentRef.Unref().PackForAttack(xyAvailableCellsForAttack);
-    }
-
-    private void RealizePawnPathForAttack(int[] xyStartCellIN, Player playerIN)
-    {
-        var xyAvailableCellsForAttack = new List<int[]>();
-
-        for (int i = 0; i < (int)ForUnitPathTypes.LeftDown + 1; i++)
-        {
-            GetCurrentCell(true, (ForUnitPathTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
-
-            if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
-            {
-                if (CellUnitComponent(xyCurrentCellForShift).HaveUnit)
-                {
-                    if (playerIN.ActorNumber != CellUnitComponent(xyCurrentCellForShift).ActorNumber)
-                    {
-                        xyAvailableCellsForAttack.Add(xyCurrentCellForShift);
-                    }
-                }
-            }
-        }
-
-        _unitPathComponentRef.Unref().PackForAttack(xyAvailableCellsForAttack);
     }
 
     private void GetCurrentCell(bool isFromStart, ForUnitPathTypes unitPathType, int[] xyStartCell, out int[] xyCurrentCellForAll)

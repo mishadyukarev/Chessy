@@ -7,13 +7,16 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region ENVIRONMENT
 
-    internal readonly byte PERCENT_FOOD = 10;
-    internal readonly byte PERCENT_TREE = 20;
+    internal readonly byte PERCENT_FOOD = 15;
+    internal readonly byte PERCENT_TREE = 25;
     internal readonly byte PERCENT_HILL = 5;
     internal readonly byte PERCENT_MOUNTAIN = 2;
 
     internal readonly int PROTECTION_HILL = 10;
     internal readonly int PROTECTION_TREE = 20;
+
+    internal readonly int NEED_AMOUNT_STEPS_TREE = 1;
+    internal readonly int NEED_AMOUNT_STEPS_HILL = 2;
 
     #endregion
 
@@ -43,11 +46,12 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_PAWN_MASTER = 1;
     internal readonly int AMOUNT_PAWN_OTHER = 1;
 
-    internal readonly int AMOUNT_STEPS_KING = 1;
-    internal readonly int AMOUNT_STEPS_PAWN = 1;
+
+    internal readonly int MAX_AMOUNT_STEPS_KING = 3;
+    internal readonly int MAX_AMOUNT_STEPS_PAWN = 3;
 
     internal readonly int AMOUNT_FOR_TAKE_UNIT = 1;
-    internal readonly int AMOUNT_FOR_STEP_UNIT = 1;
+    internal readonly int MIN_AMOUNT_STEPS_FOR_UNIT = 1;
     internal readonly int AMOUNT_FOR_DEATH = 0;
 
     internal readonly int AMOUNT_HEALTH_KING = 200;
@@ -59,8 +63,8 @@ public class StartValuesGameConfig : ScriptableObject
     private readonly int PERCENT_FOR_HEALTH_KING = 20;
     private readonly int PERCENT_FOR_HEALTH_PAWN = 20;
 
-    private readonly int PERCENT_FOR_PROTECTION_KING = 10;
-    private readonly int PERCENT_FOR_PROTECTION_PAWN = 10;
+    private readonly int PERCENT_FOR_PROTECTION_KING = 50;
+    private readonly int PERCENT_FOR_PROTECTION_PAWN = 50;
 
     internal int HEALTH_FOR_ADDING_KING => AMOUNT_HEALTH_KING * PERCENT_FOR_HEALTH_KING / MAX_PERCENT;
     internal int HEALTH_FOR_ADDING_PAWN => AMOUNT_HEALTH_PAWN * PERCENT_FOR_HEALTH_PAWN / MAX_PERCENT;

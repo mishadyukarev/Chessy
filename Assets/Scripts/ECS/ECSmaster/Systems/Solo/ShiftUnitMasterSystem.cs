@@ -73,17 +73,20 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
 
         List<int[]> xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCellsForShift(xyPreviousCell, fromPlayer);
 
-        if (CellUnitComponent(xyPreviousCell).IsHim(fromPlayer) && CellUnitComponent(xyPreviousCell).HaveAmountSteps)
+        if (CellUnitComponent(xyPreviousCell).IsHim(fromPlayer) && CellUnitComponent(xyPreviousCell).MinAmountSteps)
         {
             if (_cellManager.TryFindCellInList(xySelectedCell, xyAvailableCellsForShift))
             {
-                CellUnitComponent(xyPreviousCell).AmountSteps -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
-
                 CellUnitComponent(xySelectedCell).SetUnit(CellUnitComponent(xyPreviousCell));
+                CellUnitComponent(xyPreviousCell).ResetUnit();
+
+
+                CellUnitComponent(xySelectedCell).AmountSteps
+                    -= CellEnvironmentComponent(xySelectedCell).NeedAmountSteps + _startValuesGameConfig.MIN_AMOUNT_STEPS_FOR_UNIT;
+                if (CellUnitComponent(xySelectedCell).AmountSteps < 0) CellUnitComponent(xySelectedCell).AmountSteps = 0;
+
                 CellUnitComponent(xySelectedCell).IsProtected = false;
                 CellUnitComponent(xySelectedCell).IsRelaxed = false;
-
-                CellUnitComponent(xyPreviousCell).ResetUnit();
             }
         }
     }

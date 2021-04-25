@@ -53,7 +53,7 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
         _attackUnitMasterComponentRef.Unref().Unpack(out int[] xyPreviousCellIN, out int[] xySelectedCellIN);
 
 
-        CellUnitComponent(xyPreviousCellIN).AmountSteps -= _startValuesGameConfig.AMOUNT_STEPS_PAWN;
+        CellUnitComponent(xyPreviousCellIN).AmountSteps -= _startValuesGameConfig.MAX_AMOUNT_STEPS_PAWN;
         CellUnitComponent(xyPreviousCellIN).IsProtected = false;
         CellUnitComponent(xyPreviousCellIN).IsRelaxed = false;
 

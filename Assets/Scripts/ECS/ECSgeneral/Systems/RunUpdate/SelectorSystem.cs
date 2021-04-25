@@ -167,7 +167,7 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                 {
                                     if (CellUnitComponent(_xySelectedCell).IsMine)
                                     {
-                                        if (CellUnitComponent(_xySelectedCell).HaveAmountSteps)
+                                        if (CellUnitComponent(_xySelectedCell).MinAmountSteps)
                                         {
                                             _xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCellsForShift(_xySelectedCell, InstanceGame.LocalPlayer);
                                             _xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCellsForAttack(_xySelectedCell, InstanceGame.LocalPlayer);
@@ -186,7 +186,7 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
                                     else
                                     {
-                                        if (CellUnitComponent(_xyPreviousCell).HaveAmountSteps)
+                                        if (CellUnitComponent(_xyPreviousCell).MinAmountSteps)
                                         {
                                             if (_cellManager.TryFindCellInList(_xySelectedCell, _xyAvailableCellsForAttack))
                                             {
@@ -206,7 +206,7 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                     {
                                         if (CellUnitComponent(_xyPreviousCell).IsMine)
                                         {
-                                            if (CellUnitComponent(_xyPreviousCell).HaveAmountSteps)
+                                            if (CellUnitComponent(_xyPreviousCell).MinAmountSteps)
                                             {
                                                 if (_cellManager.TryFindCellInList(_xySelectedCell, _xyAvailableCellsForShift))
                                                 {

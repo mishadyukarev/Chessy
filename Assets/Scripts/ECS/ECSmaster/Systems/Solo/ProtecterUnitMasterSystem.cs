@@ -61,11 +61,11 @@ internal class ProtecterUnitMasterSystem : CellReduction, IEcsRunSystem
     {
         _protecterUnitMasterComponentRef.Unref().Unpack(out int[] xyCellIN, out Player playerIN);
 
-        if (CellUnitComponent(xyCellIN).HaveAmountSteps)
+        if (CellUnitComponent(xyCellIN).HaveMaxSteps)
         {
             CellUnitComponent(xyCellIN).IsProtected = true;
             CellUnitComponent(xyCellIN).IsRelaxed = false;
-            CellUnitComponent(xyCellIN).AmountSteps -= _startValuesGameConfig.AMOUNT_FOR_STEP_UNIT;
+            CellUnitComponent(xyCellIN).AmountSteps = 0;
 
             _protecterUnitMasterComponentRef.Unref().Pack(true);
         }

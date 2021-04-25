@@ -4,6 +4,7 @@ internal class SelectorUnitUISystem : IEcsRunSystem
 {
     private EcsComponentRef<SelectorUnitComponent> _selectorUnitComponentRef = default;
     private EcsComponentRef<EconomyComponent.UnitsComponent> _economyUnitsComponentRef = default;
+    private EcsComponentRef<DonerComponent> _doneComponentRef = default;
     private PhotonPunRPC _photonPunRPC = default;
 
     internal SelectorUnitUISystem(ECSmanager eCSmanager, SupportGameManager supportGameManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnGameManager)
@@ -12,6 +13,7 @@ internal class SelectorUnitUISystem : IEcsRunSystem
 
         _selectorUnitComponentRef = eCSmanager.EntitiesGeneralManager.SelectorUnitComponent;
         _economyUnitsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyUnitsComponentRef;
+        _doneComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
 
 
         _selectorUnitComponentRef.Unref().Button0 = startSpawnGameManager.Button0;
@@ -26,5 +28,8 @@ internal class SelectorUnitUISystem : IEcsRunSystem
         if (_economyUnitsComponentRef.Unref().IsSettedKing) _selectorUnitComponentRef.Unref().Button0.gameObject.SetActive(false);
     }
 
-    private void GetUnit(UnitTypes unitType) => _photonPunRPC.GetUnit(unitType);
+    private void GetUnit(UnitTypes unitType)
+    {
+        if (!_doneComponentRef.Unref().IsDone) _photonPunRPC.GetUnit(unitType);
+    }
 }

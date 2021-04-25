@@ -47,6 +47,12 @@ internal sealed class MainGame : Main
 
 
         gameObject.transform.SetParent(parentTransformScrips);
+
+
+
+        ///
+        //_startSpawnManager.ParentReadyZone.gameObject.SetActive(false);
+        ///
     }
 
 

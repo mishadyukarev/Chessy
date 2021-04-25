@@ -1,6 +1,5 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
-using UnityEngine.UI;
 
 internal class WarningUISystem : IEcsRunSystem
 {

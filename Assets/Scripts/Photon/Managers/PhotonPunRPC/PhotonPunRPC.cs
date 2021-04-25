@@ -250,7 +250,7 @@ public partial class PhotonPunRPC : MonoBehaviour
 
         bool isAttacked = false;
 
-        if (CellUnitComponent(xyPreviousCell).HaveAmountSteps)
+        if (CellUnitComponent(xyPreviousCell).MinAmountSteps)
         {
             if (CellUnitComponent(xyPreviousCell).IsHim(info.Sender))
             {
@@ -319,7 +319,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void RelaxUnitMaster(int[] xyCell, PhotonMessageInfo info)
     {
-        if (CellUnitComponent(xyCell).HaveAmountSteps)
+        if (CellUnitComponent(xyCell).MinAmountSteps)
         {
             CellUnitComponent(xyCell).IsRelaxed = true;
             CellUnitComponent(xyCell).IsProtected = false;
