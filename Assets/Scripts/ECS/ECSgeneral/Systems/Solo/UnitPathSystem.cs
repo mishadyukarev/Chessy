@@ -114,8 +114,8 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
 
     public void Init()
     {
-        _xyCurrentCell = new int[_startValues.XY_FOR_ARRAY];
-        _changeXY = new int[_startValues.XY_FOR_ARRAY];
+        _xyCurrentCell = new int[_startValuesGameConfig.XY_FOR_ARRAY];
+        _changeXY = new int[_startValuesGameConfig.XY_FOR_ARRAY];
     }
 
     public void Run()

@@ -63,7 +63,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
         _economyUnitsMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyUnitsMasterComponentRef;
         _economyBuildingsMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyBuildingsMasterComponentRef;
 
-        _startValues = supportManager.StartValuesGameConfig;
+        _startValuesGameConfig = supportManager.StartValuesGameConfig;
     }
 
 
@@ -76,7 +76,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
         if (!CellEnvironmentComponent(xyCellIN).HaveMountain && CellUnitComponent(xyCellIN).HaveAmountSteps)
         {
             CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN);
-            CellUnitComponent(xyCellIN).AmountSteps -= _startValues.AMOUNT_FOR_TAKE_UNIT;
+            CellUnitComponent(xyCellIN).AmountSteps -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
             isBuilded = true;
             _builderCellMasterComponentRef.Unref().Pack(isBuilded);

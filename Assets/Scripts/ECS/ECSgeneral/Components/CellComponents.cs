@@ -40,7 +40,9 @@ public struct CellComponent
         private GameObject _treeGO;
         private GameObject _hillGO;
 
-        internal EnvironmentComponent(int x, int y, StartSpawnGameManager startSpawnManager)
+        private StartValuesGameConfig _startValuesGameConfig;
+
+        internal EnvironmentComponent(int x, int y, StartSpawnGameManager startSpawnManager, StartValuesGameConfig startValuesGameConfig)
         {
             _haveFood = default;
             _haveMountain = default;
@@ -51,9 +53,22 @@ public struct CellComponent
             _mountainGO = startSpawnManager.MountainsGO[x, y];
             _treeGO = startSpawnManager.TreesGO[x, y];
             _hillGO = startSpawnManager.HillsGO[x, y];
+
+            _startValuesGameConfig = startValuesGameConfig;
         }
 
+        internal int PowerProtection
+        {
+            get
+            {
+                int powerProtection = 0;
 
+                if (_haveTree) powerProtection += _startValuesGameConfig.PROTECTION_TREE;
+                if (_haveHill) powerProtection += _startValuesGameConfig.PROTECTION_HILL;
+
+                return powerProtection;
+            }
+        }
         internal bool HaveFood => _haveFood;
         internal bool HaveMountain => _haveMountain;
         internal bool HaveTree => _haveTree;
@@ -98,6 +113,7 @@ public struct CellComponent
         private int _amountSteps;
         private int _amountHealth;
         private int _powerDamage;
+        private int _powerProtection;
         private bool _isProtected;
         private bool _isRelaxed;
         private Player _player;
@@ -113,6 +129,7 @@ public struct CellComponent
             _amountSteps = default;
             _amountHealth = default;
             _powerDamage = default;
+            _powerProtection = default;
             _isProtected = default;
             _isRelaxed = default;
             _player = default;
@@ -131,6 +148,42 @@ public struct CellComponent
         {
             get { return _powerDamage; }
             set { _powerDamage = value; }
+        }
+        internal int PowerProtection
+        {
+            get
+            {
+                if (_isProtected)
+                {
+                    switch (_unitType)
+                    {
+                        case UnitTypes.King:
+                            return _startValues.PROTECTION_KING;
+
+                        case UnitTypes.Pawn:
+                            return _startValues.PROTECTION_PAWN;
+
+                        default:
+                            return default;
+                    }
+                }
+                else return default;
+
+            }
+        }
+        internal bool HaveMaxSteps
+        {
+            get
+            {
+                switch (_unitType)
+                {
+                    case UnitTypes.King:
+                        return _amountSteps == _startValues.AMOUNT_STEPS_KING;
+                    case UnitTypes.Pawn:
+                        return _amountSteps == _startValues.AMOUNT_STEPS_PAWN;
+                }
+                return false;
+            }
         }
         internal bool HaveAmountSteps => _amountSteps >= _startValues.AMOUNT_FOR_TAKE_UNIT;
         internal int ActorNumber
@@ -309,15 +362,32 @@ public struct CellComponent
         private BuildingTypes _buildingType;
         private GameObject _campGO;
 
-        internal BuildingComponent(int x, int y, StartSpawnGameManager startSpawnManager)
+        private StartValuesGameConfig _startValuesGameConfig;
+
+        internal BuildingComponent(int x, int y, StartSpawnGameManager startSpawnManager, StartValuesGameConfig startValuesGameConfig)
         {
             _buildingType = default;
             _campGO = startSpawnManager.CampsGO[x, y];
+            _startValuesGameConfig = startValuesGameConfig;
         }
 
 
         internal BuildingTypes BuildingType => _buildingType;
         internal bool HaveBuilding => _buildingType != BuildingTypes.None;
+        internal int PowerProtection
+        {
+            get
+            {
+                switch (_buildingType)
+                {
+                    case BuildingTypes.City:
+                        return _startValuesGameConfig.PROTECTION_CITY;
+
+                    default:
+                        return default;
+                }
+            }
+        }
 
         internal void SetBuilding(in BuildingTypes buildingType)
         {

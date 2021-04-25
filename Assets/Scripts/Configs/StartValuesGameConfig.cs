@@ -14,6 +14,12 @@ public class StartValuesGameConfig : ScriptableObject
 
     internal readonly int PROTECTION_HILL = 10;
     internal readonly int PROTECTION_TREE = 20;
+
+    #endregion
+
+
+    #region Buildings
+
     internal readonly int PROTECTION_CITY = 25;
 
     #endregion
@@ -41,6 +47,7 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_STEPS_PAWN = 1;
 
     internal readonly int AMOUNT_FOR_TAKE_UNIT = 1;
+    internal readonly int AMOUNT_FOR_STEP_UNIT = 1;
     internal readonly int AMOUNT_FOR_DEATH = 0;
 
     internal readonly int AMOUNT_HEALTH_KING = 200;

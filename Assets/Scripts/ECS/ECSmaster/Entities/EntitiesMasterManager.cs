@@ -12,10 +12,12 @@ public class EntitiesMasterManager : EntitiesManager
 
     public EcsComponentRef<SetterUnitMasterComponent> SetterUnitMasterComponentRef => _soloEntity.Ref<SetterUnitMasterComponent>();
     public EcsComponentRef<ShiftUnitMasterComponent> ShiftUnitComponentRef => _soloEntity.Ref<ShiftUnitMasterComponent>();
-    public EcsComponentRef<DonerMasterComponent> RefresherMasterComponentRef => _soloEntity.Ref<DonerMasterComponent>();
+    public EcsComponentRef<DonerMasterComponent> DonerMasterComponentRef => _soloEntity.Ref<DonerMasterComponent>();
     public EcsComponentRef<AttackUnitMasterComponent> AttackUnitMasterComponentRef => _soloEntity.Ref<AttackUnitMasterComponent>();
     internal EcsComponentRef<BuilderCellMasterComponent> BuilderCellMasterComponentRef => _soloEntity.Ref<BuilderCellMasterComponent>();
     internal EcsComponentRef<GetterUnitMasterComponent> GetterUnitMasterComponentRef => _soloEntity.Ref<GetterUnitMasterComponent>();
+    internal EcsComponentRef<ProtecterUnitMasterComponent> ProtecterUnitMasterComponentRef => _soloEntity.Ref<ProtecterUnitMasterComponent>();
+    internal EcsComponentRef<RefresherMasterComponent> RefresherMasterComponentRef => _soloEntity.Ref<RefresherMasterComponent>();
 
     #endregion
 
@@ -45,7 +47,9 @@ public class EntitiesMasterManager : EntitiesManager
             .Replace(new DonerMasterComponent())
             .Replace(new AttackUnitMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager))
             .Replace(new BuilderCellMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager))
-            .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager));
+            .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager))
+            .Replace(new ProtecterUnitMasterComponent(eCSmanager, supportManager))
+            .Replace(new RefresherMasterComponent(eCSmanager));
 
 
         _economyEntity = _ecsWorld.NewEntity()

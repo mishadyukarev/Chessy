@@ -1,10 +1,10 @@
 ﻿
 public abstract class StartValuesReduction
 {
-    protected StartValuesGameConfig _startValues = default;
+    protected StartValuesGameConfig _startValuesGameConfig = default;
 
     internal StartValuesReduction(SupportGameManager supportManager)
     {
-        _startValues = supportManager.StartValuesGameConfig;
+        _startValuesGameConfig = supportManager.StartValuesGameConfig;
     }
 }

@@ -66,6 +66,7 @@ internal class StartSpawnGameManager : StartSpawnManager
 
     internal TextMeshProUGUI HpCurrentUnitText;
     internal TextMeshProUGUI DamageCurrentUnitText;
+    internal TextMeshProUGUI ProtectionCurrentUnitText;
     internal TextMeshProUGUI StepsCurrentUnitText;
 
     internal Button BuildingAbilityButton0;
@@ -131,6 +132,7 @@ internal class StartSpawnGameManager : StartSpawnManager
 
         HpCurrentUnitText = GameObject.Find("HpCurrentUnitText").GetComponent<TextMeshProUGUI>();
         DamageCurrentUnitText = GameObject.Find("DamageCurrentUnitText").GetComponent<TextMeshProUGUI>();
+        ProtectionCurrentUnitText = GameObject.Find("ProtectionCurrentUnitText").GetComponent<TextMeshProUGUI>();
         StepsCurrentUnitText = GameObject.Find("StepsCurrentUnitText").GetComponent<TextMeshProUGUI>();
 
         BuildingAbilityButton0 = GameObject.Find("BuildingAbilityButton0").GetComponent<Button>();

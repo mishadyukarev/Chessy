@@ -19,13 +19,15 @@ public partial class PhotonPunRPC : MonoBehaviour
 
     private EcsComponentRef<SetterUnitMasterComponent> _setterUnitMasterComponentRef = default;
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftUnitMasterComponentRef = default;
-    private EcsComponentRef<DonerMasterComponent> _refresherMasterComponentRef = default;
+    private EcsComponentRef<DonerMasterComponent> _donerMasterComponentRef = default;
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent> _economyMasterComponentRef = default;
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitsMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef = default;
     private EcsComponentRef<GetterUnitMasterComponent> _getterUnitMasterComponentRef = default;
+    private EcsComponentRef<ProtecterUnitMasterComponent> _protecterUnitMasterComponentRef = default;
+    private EcsComponentRef<RefresherMasterComponent> _refresherMasterComponentRef = default;
 
     #endregion
 
@@ -81,16 +83,18 @@ public partial class PhotonPunRPC : MonoBehaviour
 
             _setterUnitMasterComponentRef = entitiesMasterManager.SetterUnitMasterComponentRef;
             _shiftUnitMasterComponentRef = entitiesMasterManager.ShiftUnitComponentRef;
-            _refresherMasterComponentRef = entitiesMasterManager.RefresherMasterComponentRef;
+            _donerMasterComponentRef = entitiesMasterManager.DonerMasterComponentRef;
             _attackUnitMasterComponentRef = entitiesMasterManager.AttackUnitMasterComponentRef;
             _economyMasterComponentRef = entitiesMasterManager.EconomyMasterComponentRef;
             _builderCellMasterComponentRef = entitiesMasterManager.BuilderCellMasterComponentRef;
             _economyUnitsMasterComponentRef = entitiesMasterManager.EconomyUnitsMasterComponentRef;
             _economyBuildingsMasterComponentRef = entitiesMasterManager.EconomyBuildingsMasterComponentRef;
             _getterUnitMasterComponentRef = entitiesMasterManager.GetterUnitMasterComponentRef;
+            _protecterUnitMasterComponentRef = entitiesMasterManager.ProtecterUnitMasterComponentRef;
+            _refresherMasterComponentRef = entitiesMasterManager.RefresherMasterComponentRef;
 
 
-            _systemsMasterManager = eCSmanager.SystemsMasterManager;
+           _systemsMasterManager = eCSmanager.SystemsMasterManager;
         }
 
 
@@ -124,12 +128,8 @@ public partial class PhotonPunRPC : MonoBehaviour
     {
         _photonView.RPC("DoneToGeneral", info.Sender, isDone);
 
-        if (info.Sender.IsMasterClient) _refresherMasterComponentRef.Unref().IsDoneMaster = isDone;
-        else { _refresherMasterComponentRef.Unref().IsDoneOther = isDone; }
-
-        if (_refresherMasterComponentRef.Unref().IsDoneMaster && _refresherMasterComponentRef.Unref().IsDoneOther)
+        if(_refresherMasterComponentRef.Unref().TryRefresh(isDone, info.Sender))
         {
-            _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Else, nameof(RefresherMasterSystem));
             _photonView.RPC("DoneToGeneral", RpcTarget.All, false);
         }
 
@@ -266,27 +266,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void ProtectUnitMaster(int[] xyCell, PhotonMessageInfo info)
     {
-        if (CellUnitComponent(xyCell).HaveAmountSteps)
-        {
-            CellUnitComponent(xyCell).IsProtected = true;
-            CellUnitComponent(xyCell).IsRelaxed = false;
-            CellUnitComponent(xyCell).AmountSteps -= _startValues.AMOUNT_FOR_TAKE_UNIT;
-
-            switch (CellUnitComponent(xyCell).UnitType)
-            {
-                case UnitTypes.King:
-                    CellUnitComponent(xyCell).PowerDamage += _startValues.PROTECTION_KING;
-                    break;
-
-                case UnitTypes.Pawn:
-                    CellUnitComponent(xyCell).PowerDamage += _startValues.PROTECTION_PAWN;
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
+        _protecterUnitMasterComponentRef.Unref().ProtectUnit(xyCell, info.Sender);
         RefreshAll();
     }
 

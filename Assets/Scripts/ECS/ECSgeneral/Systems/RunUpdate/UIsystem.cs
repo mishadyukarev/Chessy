@@ -26,9 +26,10 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     #region Ability zone
 
-    internal TextMeshProUGUI _hpCurrentUnitText;
-    internal TextMeshProUGUI _damageCurrentUnitText;
-    internal TextMeshProUGUI _stepsCurrentUnitText;
+    private TextMeshProUGUI _hpCurrentUnitText;
+    private TextMeshProUGUI _damageCurrentUnitText;
+    private TextMeshProUGUI _protectionCurrentUnitText;
+    private TextMeshProUGUI _stepsCurrentUnitText;
 
     private Button _buildingAbilityButton0;
     private Button _buildingAbilityButton1;
@@ -111,6 +112,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
         _hpCurrentUnitText = startSpawnManager.HpCurrentUnitText;
         _damageCurrentUnitText = startSpawnManager.DamageCurrentUnitText;
+        _protectionCurrentUnitText = startSpawnManager.ProtectionCurrentUnitText;
         _stepsCurrentUnitText = startSpawnManager.StepsCurrentUnitText;
 
         _buildingAbilityButton0 = startSpawnManager.BuildingAbilityButton0;
@@ -154,6 +156,11 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
         _hpCurrentUnitText.text = CellUnitComponent(xySelectedCell).AmountHealth.ToString();
         _damageCurrentUnitText.text = CellUnitComponent(xySelectedCell).PowerDamage.ToString();
+        _protectionCurrentUnitText.text
+            = (CellUnitComponent(xySelectedCell).PowerProtection
+            + CellEnvironmentComponent(xySelectedCell).PowerProtection
+            + CellBuildingComponent(xySelectedCell).PowerProtection)
+            .ToString();
         _stepsCurrentUnitText.text = CellUnitComponent(xySelectedCell).AmountSteps.ToString();
 
 
@@ -249,6 +256,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
     {
         _hpCurrentUnitText.gameObject.SetActive(isActive);
         _damageCurrentUnitText.gameObject.SetActive(isActive);
+        _protectionCurrentUnitText.gameObject.SetActive(isActive);
         _stepsCurrentUnitText.gameObject.SetActive(isActive);
     }
 

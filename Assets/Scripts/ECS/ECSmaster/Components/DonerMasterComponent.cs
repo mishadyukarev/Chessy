@@ -3,7 +3,6 @@ public struct DonerMasterComponent
 {
     private bool _isDoneMasterIN;
     private bool _isDoneOtherIN;
-    private bool _isRefreshedOUT;
 
     public bool IsDoneMaster
     {
@@ -14,10 +13,5 @@ public struct DonerMasterComponent
     {
         get { return _isDoneOtherIN; }
         set { _isDoneOtherIN = value; }
-    }
-    public bool IsRefreshed
-    {
-        get { return _isRefreshedOUT; }
-        set { _isRefreshedOUT = value; }
     }
 }

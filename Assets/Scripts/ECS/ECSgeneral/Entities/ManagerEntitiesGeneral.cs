@@ -126,10 +126,10 @@ public sealed class EntitiesGeneralManager : EntitiesManager
                 if (y > 8 && x > 2 && x < 12) isStartOther = true;
 
                 CellComponent cellComponent = new CellComponent(isStartMaster, isStartOther, cellsGO[x, y]);
-                CellComponent.EnvironmentComponent cellEnvironmentComponent= new CellComponent.EnvironmentComponent(x, y, startSpawnManager);
+                CellComponent.EnvironmentComponent cellEnvironmentComponent= new CellComponent.EnvironmentComponent(x, y, startSpawnManager, startValuesGameConfig);
                 CellComponent.SupportVisionComponent cellSupportVisionComponent= new CellComponent.SupportVisionComponent(x, y, startSpawnManager);
                 CellComponent.UnitComponent cellUnitComponent = new CellComponent.UnitComponent(x, y, startSpawnManager, startValuesGameConfig);
-                CellComponent.BuildingComponent cellBuildingComponent = new CellComponent.BuildingComponent(x, y, startSpawnManager);
+                CellComponent.BuildingComponent cellBuildingComponent = new CellComponent.BuildingComponent(x, y, startSpawnManager, startValuesGameConfig);
 
                 _cellsEntity[x, y] = _ecsWorld.NewEntity();
 

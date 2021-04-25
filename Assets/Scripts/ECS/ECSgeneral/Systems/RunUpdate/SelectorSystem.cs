@@ -139,7 +139,7 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                 {
                                     if (CellUnitComponent(_xySelectedCell).IsMine)
                                     {
-                                        if (CellUnitComponent(_xySelectedCell).AmountSteps >= _startValues.AMOUNT_FOR_TAKE_UNIT)
+                                        if (CellUnitComponent(_xySelectedCell).AmountSteps >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                                         {
                                             _xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCellsForShift(_xySelectedCell, InstanceGame.LocalPlayer);
                                             _xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCellsForAttack(_xySelectedCell, InstanceGame.LocalPlayer);
