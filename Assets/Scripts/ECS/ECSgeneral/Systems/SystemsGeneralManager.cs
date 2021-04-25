@@ -11,7 +11,10 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new InputSystem(eCSmanager), nameof(InputSystem))
             .Add(new SelectorSystem(eCSmanager, supportManager, photonManager), nameof(SelectorSystem))
             .Add(new SupportVisionSystem(eCSmanager, supportManager), nameof(SupportVisionSystem))
-            .Add(new UISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(UISystem));
+
+            .Add(new UISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(UISystem))
+            .Add(new ReadyUISystem(eCSmanager, supportManager, photonManager, startSpawnManager), nameof(ReadyUISystem));
+
 
         _elseSystems
             .Add(new RaySystem(eCSmanager), nameof(RaySystem))

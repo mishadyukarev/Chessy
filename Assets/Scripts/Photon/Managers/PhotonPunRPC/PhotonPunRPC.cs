@@ -28,6 +28,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<GetterUnitMasterComponent> _getterUnitMasterComponentRef = default;
     private EcsComponentRef<ProtecterUnitMasterComponent> _protecterUnitMasterComponentRef = default;
     private EcsComponentRef<RefresherMasterComponent> _refresherMasterComponentRef = default;
+    private EcsComponentRef<ReadyMasterComponent> _readyMasterComponentRef = default;
 
     #endregion
 
@@ -92,6 +93,7 @@ public partial class PhotonPunRPC : MonoBehaviour
             _getterUnitMasterComponentRef = entitiesMasterManager.GetterUnitMasterComponentRef;
             _protecterUnitMasterComponentRef = entitiesMasterManager.ProtecterUnitMasterComponentRef;
             _refresherMasterComponentRef = entitiesMasterManager.RefresherMasterComponentRef;
+            _readyMasterComponentRef = entitiesMasterManager.ReadyMasterComponentRef;
 
 
            _systemsMasterManager = eCSmanager.SystemsMasterManager;
@@ -117,6 +119,27 @@ public partial class PhotonPunRPC : MonoBehaviour
 
         RefreshAll();
     }
+
+    #region Ready
+
+    public void Ready(in bool isReady) => _photonView.RPC("ReadyToMaster", RpcTarget.MasterClient, isReady);
+
+    [PunRPC]
+    private void ReadyToMaster(bool isReady, PhotonMessageInfo info)
+    {
+        if (info.Sender.IsMasterClient) _readyMasterComponentRef.Unref().IsReadyMaster = isReady;
+        else _readyMasterComponentRef.Unref().IsReadyOther = isReady;
+
+        if (_readyMasterComponentRef.Unref().IsReadyMaster && _readyMasterComponentRef.Unref().IsReadyOther)
+            _photonView.RPC("ReadyToGeneral", RpcTarget.All, true);
+
+        RefreshAll();
+    }
+
+    [PunRPC] private void ReadyToGeneral(bool isStarted) => InstanceGame.IsStartedGame = isStarted;
+
+
+    #endregion
 
 
     #region Done

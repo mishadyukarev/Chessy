@@ -85,6 +85,15 @@ internal class StartSpawnGameManager : StartSpawnManager
     #endregion
 
 
+    #region Ready Zone
+
+    internal RectTransform ParentReadyZone;
+
+    internal Button ReadyButton;
+
+    #endregion
+
+
     internal StartSpawnGameManager(SupportGameManager supportManager, out Transform parentTransformScrips) : base(supportManager.ResourcesLoadGameManager)
     {
         _audioSource = supportManager.BuilderManager.CreateGameObject
@@ -152,6 +161,11 @@ internal class StartSpawnGameManager : StartSpawnManager
         AbilitiesImage = GameObject.Find("RightDownUnitImage").GetComponent<Image>();
 
         #endregion
+
+
+        ParentReadyZone = GameObject.Find("ReadyZone").GetComponent<RectTransform>();
+
+        ReadyButton = GameObject.Find("ReadyButton").GetComponent<Button>();
 
     }
 

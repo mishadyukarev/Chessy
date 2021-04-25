@@ -1,4 +1,7 @@
 ﻿using Leopotam.Ecs;
+using Photon.Realtime;
+using System.Collections.Generic;
+using static MainGame;
 
 public sealed class EntitiesGeneralManager : EntitiesManager
 {

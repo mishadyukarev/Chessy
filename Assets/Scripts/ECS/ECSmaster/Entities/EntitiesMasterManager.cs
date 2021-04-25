@@ -4,6 +4,7 @@ using UnityEngine;
 public class EntitiesMasterManager : EntitiesManager
 {
     private EcsEntity _economyEntity;
+    private EcsEntity _readyEntity;
 
 
     #region Properties
@@ -22,8 +23,6 @@ public class EntitiesMasterManager : EntitiesManager
     #endregion
 
 
-    #region Solo
-
     internal EcsComponentRef<EconomyMasterComponent> EconomyMasterComponentRef
         => _economyEntity.Ref<EconomyMasterComponent>();
     internal EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> EconomyUnitsMasterComponentRef
@@ -31,7 +30,7 @@ public class EntitiesMasterManager : EntitiesManager
     internal EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> EconomyBuildingsMasterComponentRef
         => _economyEntity.Ref<EconomyMasterComponent.BuildingsMasterComponent>();
 
-    #endregion
+    internal EcsComponentRef<ReadyMasterComponent> ReadyMasterComponentRef => _readyEntity.Ref<ReadyMasterComponent>();
 
     #endregion
 
@@ -56,6 +55,10 @@ public class EntitiesMasterManager : EntitiesManager
             .Replace(new EconomyMasterComponent(supportManager.StartValuesGameConfig))
             .Replace(new EconomyMasterComponent.UnitsMasterComponent(supportManager.StartValuesGameConfig))
             .Replace(new EconomyMasterComponent.BuildingsMasterComponent(supportManager.StartValuesGameConfig));
+
+
+        _readyEntity = _ecsWorld.NewEntity()
+            .Replace(new ReadyMasterComponent());
 
 
         #region Cells

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 internal sealed class MainGame : Main
 {
@@ -12,12 +13,20 @@ internal sealed class MainGame : Main
     private SupportGameManager _supportGameManager;
     private StartSpawnGameManager _startSpawnManager;
 
+    private bool _isStartedGame;
+
     #endregion
 
 
     #region Properties
 
     public static MainGame InstanceGame => _instanceGame;
+
+    internal bool IsStartedGame
+    {
+        get { return _isStartedGame; }
+        set { _isStartedGame = value; }
+    }
 
     #endregion
 
@@ -41,7 +50,10 @@ internal sealed class MainGame : Main
     }
 
 
-    private void Update() => _eCSmanager.Run();
+    private void Update()
+    {
+        _eCSmanager.Run();
+    }
 
     private void OnDestroy() { }
 }

@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static MainGame;
 
 internal class UISystem : CellReduction, IEcsRunSystem
 {
@@ -144,11 +145,24 @@ internal class UISystem : CellReduction, IEcsRunSystem
         _improveCityButton = startSpawnManager.ImproveCityButton;
         _improveCityButton.onClick.AddListener(delegate { ImproveCity(); });
 
+
+
+        #region Ready Zone
+
+
+
+        #endregion
+
     }
 
 
     public void Run()
     {
+
+
+
+
+
         _goldAmountText.text = _economyComponentRef.Unref().Gold.ToString();
         if (_economyUnitsComponentRef.Unref().IsSettedKing) _button0.gameObject.SetActive(false);
 
@@ -259,20 +273,17 @@ internal class UISystem : CellReduction, IEcsRunSystem
         _protectionCurrentUnitText.gameObject.SetActive(isActive);
         _stepsCurrentUnitText.gameObject.SetActive(isActive);
     }
-
     private void ActivateBuildingAbilities(bool isActive)
     {
         _buildingAbilityButton1.gameObject.SetActive(isActive);
         _buildingAbilityButton2.gameObject.SetActive(isActive);
         _buildingAbilityButton3.gameObject.SetActive(isActive);
     }
-
     private void ActivateStandartAbilities(bool isActive)
     {
         _standartAbilityButton1.gameObject.SetActive(isActive);
         _standartAbilityButton2.gameObject.SetActive(isActive);
     }
-
     private void ActivateUniqueAbilities(UnitTypes unitType, bool isActive)
     {
         //switch (unitType)
@@ -305,8 +316,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
 
     #region Button Methods
-
-
     private void GetUnit(UnitTypes unitType) => _photonPunRPC.GetUnit(unitType);
 
 

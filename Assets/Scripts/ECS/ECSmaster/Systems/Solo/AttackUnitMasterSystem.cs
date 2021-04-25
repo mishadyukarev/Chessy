@@ -57,12 +57,8 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
         CellUnitComponent(xyPreviousCellIN).IsProtected = false;
         CellUnitComponent(xyPreviousCellIN).IsRelaxed = false;
 
-        if (CellBuildingComponent(xySelectedCellIN).HaveBuilding)
-        {
 
-
-        }
-        else
+        if(CellUnitComponent(xySelectedCellIN).HaveUnit)
         {
             int damageToPrevious = 0;
             damageToPrevious += CellUnitComponent(xySelectedCellIN).PowerDamage;
@@ -71,6 +67,9 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
             damageToSelelected += CellUnitComponent(xyPreviousCellIN).PowerDamage;
             damageToSelelected -= CellUnitComponent(xySelectedCellIN).PowerProtection;
             damageToSelelected -= CellEnvironmentComponent(xySelectedCellIN).PowerProtection;
+            damageToSelelected -= CellBuildingComponent(xySelectedCellIN).PowerProtection;
+
+            if (damageToSelelected <= 0) damageToSelelected = 0;
 
 
             CellUnitComponent(xyPreviousCellIN).AmountHealth -= damageToPrevious;
@@ -88,6 +87,11 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
                 CellUnitComponent(xySelectedCellIN).SetUnit(CellUnitComponent(xyPreviousCellIN));
                 CellUnitComponent(xyPreviousCellIN).ResetUnit();
             }
+        }
+
+        else if (CellBuildingComponent(xySelectedCellIN).HaveBuilding)
+        {
+
         }
     }
 }
