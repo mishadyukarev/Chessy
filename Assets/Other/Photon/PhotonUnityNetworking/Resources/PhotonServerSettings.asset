@@ -39,6 +39,27 @@ MonoBehaviour:
   - ExecutePunRPC
   - Fire
   - RespawnSpaceship
+  - AttackUnitGeneral
+  - AttackUnitMaster
+  - BuildMaster
+  - BuyUnitMaster
+  - DoneToGeneral
+  - DoneToMaster
+  - EndGameToGeneral
+  - EndGameToMaster
+  - GetUnitToGeneral
+  - GetUnitToMaster
+  - ProtectUnitMaster
+  - ReadyToGeneral
+  - ReadyToMaster
+  - RefreshAllMaster
+  - RefreshCellsGeneral
+  - RefreshEconomyGeneral
+  - RelaxUnitMaster
+  - SetUnitToGeneral
+  - SetUnitToMaster
+  - ShiftUnitGeneral
+  - ShiftUnitMaster
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

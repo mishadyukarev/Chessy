@@ -57,11 +57,15 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftComponentRef = default;
     private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
 
+    private PhotonPunRPC _photonPunRPC = default;
 
-    internal ShiftUnitMasterSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
+
+    internal ShiftUnitMasterSystem(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonGameManager photonGameManager) : base(eCSmanager, supportManager)
     {
         _shiftComponentRef = eCSmanager.EntitiesMasterManager.ShiftUnitComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
+
+        _photonPunRPC = photonGameManager.PhotonPunRPC;
     }
 
 
@@ -77,7 +81,13 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
         {
             if (_cellManager.TryFindCellInList(xySelectedCell, xyAvailableCellsForShift))
             {
+                if (!CellBuildingComponent(xySelectedCell).IsHim(fromPlayer) && CellBuildingComponent(xySelectedCell).BuildingType == BuildingTypes.City)
+                {
+                    _photonPunRPC.EndGame(CellUnitComponent(xyPreviousCell).ActorNumber);
+                }
                 CellUnitComponent(xySelectedCell).SetUnit(CellUnitComponent(xyPreviousCell));
+
+
                 CellUnitComponent(xyPreviousCell).ResetUnit();
 
 

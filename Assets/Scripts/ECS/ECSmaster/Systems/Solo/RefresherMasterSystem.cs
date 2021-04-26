@@ -47,13 +47,17 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<RefresherMasterComponent> _refresherMasterComponent = default;
     private EcsComponentRef<DonerMasterComponent> _donerMasterComponentRef = default;
+
     private EcsComponentRef<EconomyMasterComponent> _economyMasterComponent = default;
+    private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef = default;
 
     internal RefresherMasterSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
     {
         _refresherMasterComponent = eCSmanager.EntitiesMasterManager.RefresherMasterComponentRef;
         _donerMasterComponentRef = eCSmanager.EntitiesMasterManager.DonerMasterComponentRef;
+
         _economyMasterComponent = eCSmanager.EntitiesMasterManager.EconomyMasterComponentRef;
+        _economyBuildingsMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyBuildingsMasterComponentRef;
     }
 
 
@@ -95,6 +99,9 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
 
                 }
             }
+
+           _economyMasterComponent.Unref().GoldMaster += _economyBuildingsMasterComponentRef.Unref().AmountFarmsMaster * 10;
+            _economyMasterComponent.Unref().GoldOther += _economyBuildingsMasterComponentRef.Unref().AmountFarmsOther * 10;
             _economyMasterComponent.Unref().GoldMaster += 20;
             _economyMasterComponent.Unref().GoldOther += 20;
 

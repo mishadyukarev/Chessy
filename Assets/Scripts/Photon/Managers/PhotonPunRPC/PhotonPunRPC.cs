@@ -10,7 +10,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     private PhotonView _photonView = default;
     private StartValuesGameConfig _startValues = default;
     private CellManager _cellManager = default;
-    private SystemsMasterManager _systemsMasterManager = default;
+    private SystemsGeneralManager _systemsGeneralManager = default;
 
 
     #region ComponetsRef
@@ -52,6 +52,8 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
     private EcsComponentRef<ReadyComponent> _readyComponentRef = default;
     private EcsComponentRef<TheEndGameComponent> _theEndComponentRef = default;
+    private EcsComponentRef<StartGameComponent> _startGameComponentRef = default;
+    private EcsComponentRef<AnimationAttackUnitComponent> _animationAttackUnitComponentRef = default;
 
     #endregion
 
@@ -98,9 +100,6 @@ public partial class PhotonPunRPC : MonoBehaviour
             _refresherMasterComponentRef = entitiesMasterManager.RefresherMasterComponentRef;
             _readyMasterComponentRef = entitiesMasterManager.ReadyMasterComponentRef;
             _theEndMasterComponentRef = entitiesMasterManager.TheEndGameMasterComponentRef;
-
-
-           _systemsMasterManager = eCSmanager.SystemsMasterManager;
         }
 
 
@@ -122,6 +121,11 @@ public partial class PhotonPunRPC : MonoBehaviour
         _unitPathComponentRef = entitiesGeneralManager.UnitPathComponentRef;
         _readyComponentRef = entitiesGeneralManager.ReadyComponentRef;
         _theEndComponentRef = entitiesGeneralManager.TheEndGameComponentRef;
+        _startGameComponentRef = eCSmanager.EntitiesGeneralManager.StartGameComponentRef;
+        _animationAttackUnitComponentRef = eCSmanager.EntitiesGeneralManager.AnimationAttackUnitComponentRef;
+
+        _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
+
 
         RefreshAll();
     }
@@ -129,12 +133,12 @@ public partial class PhotonPunRPC : MonoBehaviour
 
     #region THE END OF GAME
 
-    internal void EndGame(int actorNumber) => _photonView.RPC("EndGameToMaster", RpcTarget.MasterClient, actorNumber);
+    internal void EndGame(int actorNumberWinner) => _photonView.RPC("EndGameToMaster", RpcTarget.MasterClient, actorNumberWinner);
 
     [PunRPC]
-    private void EndGameToMaster(int actorNumber, PhotonMessageInfo info)
+    private void EndGameToMaster(int actorNumberWinner, PhotonMessageInfo info)
     {
-        _photonView.RPC("EndGameToGeneral", RpcTarget.All, actorNumber);
+        _photonView.RPC("EndGameToGeneral", RpcTarget.All, actorNumberWinner);
 
         RefreshAll();
     }
@@ -170,7 +174,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     private void ReadyToGeneral(bool isReady, bool isStarted)
     {
         _readyComponentRef.Unref().IsReady = isReady;
-        InstanceGame.IsStartedGame = isStarted;
+        _startGameComponentRef.Unref().IsStartedGame = isStarted;
     }
 
 
@@ -215,7 +219,6 @@ public partial class PhotonPunRPC : MonoBehaviour
     private void GetUnitToMaster(UnitTypes unitType, PhotonMessageInfo info)
     {
         var isGetted = _getterUnitMasterComponentRef.Unref().TryGetUnit(unitType, info.Sender);
-        //_inventorSupportSystem.TryGetUnit(unitType, info.Sender);
 
         _photonView.RPC("GetUnitToGeneral", info.Sender, unitType, isGetted);
 
@@ -273,22 +276,11 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void AttackUnitMaster(int[] xyPreviousCell, int[] xySelectedCell, PhotonMessageInfo info)
     {
-        var xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Attack,xyPreviousCell, info.Sender);
+        var isAttacked = _attackUnitMasterComponentRef.Unref()
+            .TryAttackUnit(xyPreviousCell, xySelectedCell, info.Sender, out bool isKilledAttacker, out bool isKilledDefender);
 
-        bool isAttacked = false;
-
-        if (CellUnitComponent(xyPreviousCell).MinAmountSteps)
-        {
-            if (CellUnitComponent(xyPreviousCell).IsHim(info.Sender))
-            {
-                if (_cellManager.TryFindCellInList(xySelectedCell, xyAvailableCellsForAttack))
-                {
-                    _attackUnitMasterComponentRef.Unref().AttackUnit(xyPreviousCell, xySelectedCell);
-                    isAttacked = true;
-                }
-            }
-        }
         _photonView.RPC("AttackUnitGeneral", info.Sender, isAttacked);
+        _photonView.RPC("AttackUnitGeneral", RpcTarget.All, xyPreviousCell, xySelectedCell, isKilledAttacker, isKilledDefender);
 
         RefreshAll();
     }
@@ -296,7 +288,21 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void AttackUnitGeneral(bool isAttacked)
     {
-        if (isAttacked) _selectorComponentRef.Unref().AttackUnitDelegate();
+        if (isAttacked)
+        {
+            _selectorComponentRef.Unref().AttackUnitDelegate();
+        }
+    }
+    [PunRPC]
+    private void AttackUnitGeneral(int[] xyPreviousCell, int[] xySelectedCell, bool isKilledAttacker, bool isKilledDefender)
+    {
+        if (!isKilledAttacker && !isKilledDefender)
+        {
+            _animationAttackUnitComponentRef.Unref().XYStartCell = xyPreviousCell;
+            _animationAttackUnitComponentRef.Unref().XYEndCell = xySelectedCell;
+
+            _systemsGeneralManager.ActiveRunSystem(true, SystemGeneralTypes.Update, nameof(AnimationAttackUnitSystem));
+        }
     }
 
     #endregion

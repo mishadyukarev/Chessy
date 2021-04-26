@@ -30,6 +30,7 @@ public partial class PhotonPunRPC : MonoBehaviour
                 listObjects.Add(CellEnvironmentComponent(x, y).HaveMountain);
 
                 listObjects.Add(CellBuildingComponent(x, y).BuildingType);
+                listObjects.Add(CellBuildingComponent(x, y).ActorNumber);
             }
         }
         object[] objects = new object[listObjects.Count];
@@ -78,7 +79,7 @@ public partial class PhotonPunRPC : MonoBehaviour
                 bool haveMountain = (bool)objects[i++];
 
                 BuildingTypes buildingType = (BuildingTypes)objects[i++];
-
+                int actorNumberBuilding = (int)objects[i++];
 
 
                 Player player;
@@ -91,7 +92,9 @@ public partial class PhotonPunRPC : MonoBehaviour
                 CellEnvironmentComponent(x, y).SetResetEnvironment(haveHill, EnvironmentTypes.Hill);
                 CellEnvironmentComponent(x, y).SetResetEnvironment(haveMountain, EnvironmentTypes.Mountain);
 
-                CellBuildingComponent(x, y).SetBuilding(buildingType);
+                if (actorNumberBuilding == -1) player = default;
+                else player = PhotonNetwork.PlayerList[actorNumberBuilding - 1];
+                CellBuildingComponent(x, y).SetBuilding(buildingType, player);
             }
         }
     }

@@ -34,6 +34,7 @@ internal class StartSpawnGameManager : StartSpawnManager
     internal GameObject[,] EnemyVisionsGO;
 
     internal GameObject[,] CampsGO;
+    internal GameObject[,] FarmsGO;
 
     #endregion
 
@@ -99,31 +100,41 @@ internal class StartSpawnGameManager : StartSpawnManager
     #endregion
 
 
+    #region Doner Zone
+
+    internal RawImage DonerRawImage;
+
+    #endregion
+
+
     #endregion
 
 
 
-    internal StartSpawnGameManager(SupportGameManager supportManager, out Transform parentTransformScrips) : base(supportManager.ResourcesLoadGameManager)
+    internal StartSpawnGameManager(SupportGameManager supportGameManager, out Transform parentTransformScrips) : base(supportGameManager.ResourcesLoadGameManager)
     {
-        _audioSource = supportManager.BuilderManager.CreateGameObject
+        _audioSource = supportGameManager.BuilderManager.CreateGameObject
             ("AudioSource", new Type[] { typeof(AudioSource) }).GetComponent<AudioSource>();
-        _audioSource.clip = supportManager.ResourcesLoadGameManager.AudioClip;
+        _audioSource.clip = supportGameManager.ResourcesLoadGameManager.AudioClip;
 
-        _parentScriptsGO = supportManager.BuilderManager.CreateGameObject("Scripts");
+        _parentScriptsGO = supportGameManager.BuilderManager.CreateGameObject("Scripts");
         parentTransformScrips = _parentScriptsGO.transform;
 
         _camera.gameObject.transform.position = InstanceGame.transform.position + new Vector3(7, 5.5f, -1);
         if (!InstanceGame.IsMasterClient) _camera.transform.Rotate(0, 0, 180);
 
-        GameObject.Instantiate(supportManager.ResourcesLoadGameManager.BackGroundCollider2D,
+        GameObject.Instantiate(supportGameManager.ResourcesLoadGameManager.BackGroundCollider2D,
             InstanceGame.transform.position + new Vector3(0, 0, 1), InstanceGame.transform.rotation);
 
-        SpawnCells(supportManager.ResourcesLoadGameManager, supportManager.StartValuesGameConfig);       
-        SpawnUI(supportManager.ResourcesLoadGameManager);
+        SpawnCells(supportGameManager.ResourcesLoadGameManager, supportGameManager.StartValuesGameConfig);       
+        SpawnUI(supportGameManager);
     }
 
-    private void SpawnUI(ResourcesLoadGameManager resourcesLoadManager)
+    private void SpawnUI(SupportGameManager supportGameManager)
     {
+        var resourcesLoadManager = supportGameManager.ResourcesLoadGameManager;
+
+
         GameObject.Instantiate(resourcesLoadManager.Canvas);
 
 
@@ -137,7 +148,6 @@ internal class StartSpawnGameManager : StartSpawnManager
 
         Button0 = GameObject.Find("Button0").GetComponent<Button>();
         Button1 = GameObject.Find("Button1").GetComponent<Button>();
-        DoneButton = GameObject.Find("ButtonDone").GetComponent<Button>();
 
         ButtonLeave = GameObject.Find("ButtonLeave").GetComponent<Button>();
         BuyPawnButton = GameObject.Find("BuyPawnButton").GetComponent<Button>();
@@ -175,10 +185,20 @@ internal class StartSpawnGameManager : StartSpawnManager
         ParentReadyZone = GameObject.Find("ReadyZone").GetComponent<RectTransform>();
         ReadyButton = GameObject.Find("ReadyButton").GetComponent<Button>();
 
+
         ParentTheEndGameZone = GameObject.Find("TheEndGameZone").GetComponent<RectTransform>();
         TheEndGameText = GameObject.Find("TheEndGameText").GetComponent<TextMeshProUGUI>();
         ParentTheEndGameZone.gameObject.SetActive(false);
 
+
+        DoneButton = GameObject.Find("ButtonDone").GetComponent<Button>();
+        DonerRawImage = GameObject.Find("DonerRawImage").GetComponent<RawImage>();
+
+
+        if (supportGameManager.StartValuesGameConfig.IsTest)
+        {
+            ParentReadyZone.gameObject.SetActive(false);
+        }
     }
 
     public void SpawnCells(ResourcesLoadGameManager resourcesLoadManager, StartValuesGameConfig startValues)
@@ -205,6 +225,7 @@ internal class StartSpawnGameManager : StartSpawnManager
         UnitKingsGOsr = new SpriteRenderer[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
         CampsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        FarmsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
 
         GameObject supportParent = new GameObject("Cells");
@@ -258,6 +279,7 @@ internal class StartSpawnGameManager : StartSpawnManager
                 UnitKingsGOsr[x, y] = UnitKingsGO[x, y].GetComponent<SpriteRenderer>();
 
                 CampsGO[x, y] = _cellsGO[x, y].transform.Find("CampP").gameObject;
+                FarmsGO[x, y] = _cellsGO[x, y].transform.Find("FarmP").gameObject;
             }
         }
     }

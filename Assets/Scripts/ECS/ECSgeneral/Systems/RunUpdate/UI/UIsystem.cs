@@ -37,8 +37,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     #endregion
 
-    private EcsComponentRef<SelectorComponent> _selectorComponentRef;
-    private EcsComponentRef<SelectorComponent> _selectorComponetRef = default;
+    private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
 
     private EcsComponentRef<EconomyComponent> _economyComponentRef = default;
     private EcsComponentRef<EconomyComponent.BuildingsComponent> _economyBuildingsComponentRef;
@@ -58,7 +57,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
         _economyBuildingsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyBuildingsComponentRef;
         _economyUnitsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyUnitsComponentRef;
 
-        _selectorComponetRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
 
         #endregion
@@ -125,7 +123,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
         _goldAmountText.text = _economyComponentRef.Unref().Gold.ToString();
 
 
-        var xySelectedCell = _selectorComponetRef.Unref().XYselectedCell;
+        var xySelectedCell = _selectorComponentRef.Unref().XYselectedCell;
 
 
         if (CellUnitComponent(xySelectedCell).IsMine)

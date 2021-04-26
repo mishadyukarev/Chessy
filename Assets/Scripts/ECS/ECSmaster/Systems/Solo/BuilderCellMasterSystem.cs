@@ -53,6 +53,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
 
     private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitsMasterComponentRef;
+    private EcsComponentRef<EconomyMasterComponent> _economyMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef;
 
 
@@ -60,6 +61,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
     {
         _builderCellMasterComponentRef = eCSmanager.EntitiesMasterManager.BuilderCellMasterComponentRef;
 
+        _economyMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyMasterComponentRef;
         _economyUnitsMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyUnitsMasterComponentRef;
         _economyBuildingsMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyBuildingsMasterComponentRef;
 
@@ -73,12 +75,70 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
 
         bool isBuilded;
 
-        if (!CellEnvironmentComponent(xyCellIN).HaveMountain && CellUnitComponent(xyCellIN).HaveMaxSteps)
+        if (!CellEnvironmentComponent(xyCellIN).HaveMountain && CellUnitComponent(xyCellIN).HaveMaxSteps && !CellBuildingComponent(xyCellIN).HaveBuilding)
         {
-            CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN);
-            CellUnitComponent(xyCellIN).AmountSteps -= CellUnitComponent(xyCellIN).MaxAmountSteps;
+            switch (buildingTypeIN)
+            {
+                case BuildingTypes.None:
+                    isBuilded = false;
+                    break;
 
-            isBuilded = true;
+                case BuildingTypes.City:
+
+                    CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
+                    isBuilded = true;
+                    CellUnitComponent(xyCellIN).AmountSteps -= CellUnitComponent(xyCellIN).MaxAmountSteps;
+
+                    break;
+
+                case BuildingTypes.Farm:
+
+                    if (CellEnvironmentComponent(xyCellIN).HaveFood)
+                    {
+                        if (playerIN.IsMasterClient)
+                        {
+                            if(_economyMasterComponentRef.Unref().GoldMaster >= 120)
+                            {
+                                _economyMasterComponentRef.Unref().GoldMaster -= 120;
+
+                                CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
+                                if (playerIN.IsMasterClient) _economyBuildingsMasterComponentRef.Unref().AmountFarmsMaster += 1; // !!!!!
+                                else _economyBuildingsMasterComponentRef.Unref().AmountFarmsOther += 1; // !!!!!
+
+                                CellUnitComponent(xyCellIN).AmountSteps -= CellUnitComponent(xyCellIN).MaxAmountSteps;
+                            }
+                        }
+                        else
+                        {
+                            if (_economyMasterComponentRef.Unref().GoldOther >= 120)
+                            {
+                                _economyMasterComponentRef.Unref().GoldOther -= 120;
+
+                                CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
+                                if (playerIN.IsMasterClient) _economyBuildingsMasterComponentRef.Unref().AmountFarmsMaster += 1; // !!!!!
+                                else _economyBuildingsMasterComponentRef.Unref().AmountFarmsOther += 1; // !!!!!
+
+                                CellUnitComponent(xyCellIN).AmountSteps -= CellUnitComponent(xyCellIN).MaxAmountSteps;
+                            }
+                        }
+
+                    }
+                    isBuilded = true;
+
+                    break;
+
+                case BuildingTypes.Woodcutter:
+                    isBuilded = true;
+                    break;
+
+                case BuildingTypes.Mine:
+                    isBuilded = true;
+                    break;
+
+                default:
+                    isBuilded = false;
+                    break;
+            }          
             _builderCellMasterComponentRef.Unref().Pack(isBuilded);
         }
         else
@@ -87,16 +147,18 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
             _builderCellMasterComponentRef.Unref().Pack(isBuilded);
         }
 
-
-        if (playerIN.IsMasterClient)
+        if (buildingTypeIN == BuildingTypes.City)
         {
-            _economyBuildingsMasterComponentRef.Unref().IsBuildedCityMaster = isBuilded;
-            _economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster = xyCellIN;
-        }
-        else
-        {
-            _economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther = isBuilded;
-            _economyBuildingsMasterComponentRef.Unref().XYsettedCityOther = xyCellIN;
+            if (playerIN.IsMasterClient)
+            {
+                _economyBuildingsMasterComponentRef.Unref().IsBuildedCityMaster = isBuilded;
+                _economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster = xyCellIN;
+            }
+            else
+            {
+                _economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther = isBuilded;
+                _economyBuildingsMasterComponentRef.Unref().XYsettedCityOther = xyCellIN;
+            }
         }
     }
 }

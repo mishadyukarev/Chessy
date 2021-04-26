@@ -84,6 +84,8 @@ internal struct EconomyMasterComponent
         private bool _isSettedCityOther;
         private int[] _xySettedCityMaster;
         private int[] _xySettedCityOther;
+        private int _amountFarmsMaster;
+        private int _amountFarmsOther;
 
         internal BuildingsMasterComponent(StartValuesGameConfig nameValueManager)
         {
@@ -91,6 +93,9 @@ internal struct EconomyMasterComponent
             _isSettedCityOther = default;
             _xySettedCityMaster = new int[nameValueManager.XY_FOR_ARRAY];
             _xySettedCityOther = new int[nameValueManager.XY_FOR_ARRAY];
+
+            _amountFarmsMaster = 0; // !!!!!!!!!!!!!!
+            _amountFarmsOther = 0; // !!!!!!!!!!!!!
         }
 
 
@@ -113,6 +118,17 @@ internal struct EconomyMasterComponent
         {
             get { return _xySettedCityOther; }
             set { _xySettedCityOther = value; }
+        }
+
+        internal int AmountFarmsMaster
+        {
+            get { return _amountFarmsMaster; }
+            set { _amountFarmsMaster = value; }
+        }
+        internal int AmountFarmsOther
+        {
+            get { return _amountFarmsOther; }
+            set { _amountFarmsOther = value; }
         }
     }
 }

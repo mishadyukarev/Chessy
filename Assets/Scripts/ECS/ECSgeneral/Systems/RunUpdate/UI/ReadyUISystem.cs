@@ -6,6 +6,7 @@ using static MainGame;
 internal class ReadyUISystem : IEcsRunSystem
 {
     private EcsComponentRef<ReadyComponent> _readyComponentRef = default;
+    private EcsComponentRef<StartGameComponent> _startGameComponentRef = default;
 
     private PhotonPunRPC _photonPunRPC = default;
     private SystemsGeneralManager _systemsGeneralManager;
@@ -23,6 +24,7 @@ internal class ReadyUISystem : IEcsRunSystem
         _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
 
         _readyComponentRef = eCSmanager.EntitiesGeneralManager.ReadyComponentRef;
+        _startGameComponentRef = eCSmanager.EntitiesGeneralManager.StartGameComponentRef;
 
         _parentReadyZone = startSpawnGameManager.ParentReadyZone;
         _readyButton = startSpawnGameManager.ReadyButton;
@@ -33,7 +35,7 @@ internal class ReadyUISystem : IEcsRunSystem
     {
         _isReady = _readyComponentRef.Unref().IsReady;
 
-        if (InstanceGame.IsStartedGame)
+        if (_startGameComponentRef.Unref().IsStartedGame)
         {
             _parentReadyZone.gameObject.SetActive(false);
             _systemsGeneralManager.ActiveRunSystem(false, SystemGeneralTypes.Update, this.ToString());

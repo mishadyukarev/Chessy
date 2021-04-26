@@ -3,4 +3,8 @@
     None,
 
     City,
+
+    Farm,
+    Woodcutter,
+    Mine,
 }

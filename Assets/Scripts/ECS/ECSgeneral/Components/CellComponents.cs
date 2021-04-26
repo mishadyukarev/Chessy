@@ -26,6 +26,7 @@ public struct CellComponent
         get { return _isSelected; }
         set { _isSelected = value; }
     }
+    internal Transform TransformCell => _cellGO.transform;
 
 
 
@@ -169,6 +170,24 @@ public struct CellComponent
 
         internal UnitTypes UnitType => _unitType;
         internal bool HaveUnit => UnitType != UnitTypes.None;
+
+        internal GameObject CurrentUnitGO
+        {
+            get
+            {
+                switch (_unitType)
+                {
+                    case UnitTypes.King:
+                        return _unitKingGO;
+
+                    case UnitTypes.Pawn:
+                        return _unitPawnGO;
+
+                    default:
+                        return default;
+                }
+            }
+        }
 
         internal int PowerDamage
         {
@@ -385,6 +404,8 @@ public struct CellComponent
     {
         private BuildingTypes _buildingType;
         private GameObject _campGO;
+        private GameObject _farmGO;
+        private Player _player;
 
         private StartValuesGameConfig _startValuesGameConfig;
 
@@ -392,7 +413,10 @@ public struct CellComponent
         {
             _buildingType = default;
             _campGO = startSpawnManager.CampsGO[x, y];
+            _farmGO = startSpawnManager.FarmsGO[x, y];
             _startValuesGameConfig = startValuesGameConfig;
+
+            _player = default;
         }
 
         #region Properties
@@ -414,31 +438,59 @@ public struct CellComponent
             }
         }
 
-        internal void SetBuilding(in BuildingTypes buildingType)
+        internal int ActorNumber
+        {
+            get
+            {
+                if (_player != default)
+                    return _player.ActorNumber;
+                else return -1;
+            }
+        }
+        internal bool IsMine
+        {
+            get
+            {
+                if (_player != default)
+                    return _player.IsLocal;
+                else return false;
+            }
+        }
+
+        #endregion
+
+
+        internal void SetBuilding(in BuildingTypes buildingType, Player player)
         {
             _buildingType = buildingType;
+            _player = player;
+
+
+            _campGO.SetActive(false);
+            _farmGO.SetActive(false);
 
             switch (buildingType)
             {
-                case BuildingTypes.None:
-                    _campGO.SetActive(false);
-                    break;
-
                 case BuildingTypes.City:
                     _campGO.SetActive(true);
                     break;
 
-                default:
+                case BuildingTypes.Farm:
+                    _farmGO.SetActive(true);
                     break;
             }
         }
         internal void ResetBuilding()
         {
             var buildingType = BuildingTypes.None;
-            SetBuilding(buildingType);
+            Player player = default;
+            SetBuilding(buildingType, player);
         }
-
-        #endregion
+        internal bool IsHim(Player player)
+        {
+            if (_player == default) return false;
+            return _player.ActorNumber == player.ActorNumber;
+        }
     }
 
 
@@ -457,6 +509,7 @@ public struct CellComponent
             _wayUnitVisionGO = startSpawnManager.WayUnitVisionsGO[x, y];
             _enemyVisionGO = startSpawnManager.EnemyVisionsGO[x, y];
         }
+
 
         #region Methods
 

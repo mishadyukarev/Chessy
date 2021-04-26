@@ -4,16 +4,16 @@ public sealed class SystemsMasterManager : SystemsManager
 {
     public SystemsMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    internal void CreateInitSystems(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonGameManager photonGameManager)
+    internal void CreateInitSystems(ECSmanager eCSmanager, SupportGameManager supportGameManager, PhotonGameManager photonGameManager)
     {
         _elseSystems
-            .Add(new RefresherMasterSystem(eCSmanager, supportManager), nameof(RefresherMasterSystem))
-            .Add(new SetterUnitMasterSystem(eCSmanager, supportManager), nameof(SetterUnitMasterSystem))
-            .Add(new ShiftUnitMasterSystem(eCSmanager, supportManager), nameof(ShiftUnitMasterSystem))
-            .Add(new BuilderCellMasterSystem(eCSmanager, supportManager), nameof(BuilderCellMasterSystem))
-            .Add(new AttackUnitMasterSystem(eCSmanager, supportManager, photonGameManager), nameof(AttackUnitMasterSystem))
-            .Add(new GetterUnitMasterSystem(eCSmanager, supportManager), nameof(GetterUnitMasterSystem))
-            .Add(new ProtecterUnitMasterSystem(eCSmanager, supportManager), nameof(ProtecterUnitMasterSystem));
+            .Add(new RefresherMasterSystem(eCSmanager, supportGameManager), nameof(RefresherMasterSystem))
+            .Add(new SetterUnitMasterSystem(eCSmanager, supportGameManager), nameof(SetterUnitMasterSystem))
+            .Add(new ShiftUnitMasterSystem(eCSmanager, supportGameManager, photonGameManager), nameof(ShiftUnitMasterSystem))
+            .Add(new BuilderCellMasterSystem(eCSmanager, supportGameManager), nameof(BuilderCellMasterSystem))
+            .Add(new AttackUnitMasterSystem(eCSmanager, supportGameManager, photonGameManager), nameof(AttackUnitMasterSystem))
+            .Add(new GetterUnitMasterSystem(eCSmanager, supportGameManager), nameof(GetterUnitMasterSystem))
+            .Add(new ProtecterUnitMasterSystem(eCSmanager, supportGameManager), nameof(ProtecterUnitMasterSystem));
 
         InitAndProcessInjectsSystems();
     }

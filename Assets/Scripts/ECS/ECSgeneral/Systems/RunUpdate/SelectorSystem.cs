@@ -22,6 +22,8 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
     private bool _canExecuteStartClick = true;
     private bool _isStartSelectedDirect = true;
 
+    private RaycastHit2D _raycastHit2D;
+
     #endregion
 
 
@@ -77,11 +79,14 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_rayComponentRef.Unref().TryGetRaycastHit2D(out RaycastHit2D raycastHit2D))
+        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(RaySystem));
+        _raycastHit2D = _rayComponentRef.Unref().RaycastHit2D;
+
+        if (_raycastHit2D)
         {
-            if (raycastHit2D.collider.gameObject.tag == _nameManager.TAG_CELL)
+            if (_raycastHit2D.collider.gameObject.tag == _nameManager.TAG_CELL)
             {
-                if (_getterCellComponentRef.Unref().TryGetXYCurrentCell(raycastHit2D, out var xyCurrentCell))
+                if (_getterCellComponentRef.Unref().TryGetXYCurrentCell(_raycastHit2D, out var xyCurrentCell))
                 {
                     if (_inputComponentRef.Unref().IsClick)
                     {
@@ -257,7 +262,7 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
                 }
             }
 
-            else if (raycastHit2D.collider.gameObject.tag == _nameManager.TAG_BACKGROUND)
+            else if (_raycastHit2D.collider.gameObject.tag == _nameManager.TAG_BACKGROUND)
             {
                 if (_inputComponentRef.Unref().IsClick)
                 {

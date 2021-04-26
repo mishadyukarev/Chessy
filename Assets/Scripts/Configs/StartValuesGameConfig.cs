@@ -3,7 +3,8 @@
 [CreateAssetMenu(menuName = "StartValues", fileName = "StartValues")]
 public class StartValuesGameConfig : ScriptableObject
 {
-    private readonly int MAX_PERCENT = 100;
+    internal readonly bool IsTest = false;
+
 
     #region ENVIRONMENT
 
@@ -92,4 +93,12 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int NUMBER_PHOTON_VIEW = 1001;
 
     #endregion
+
+
+    #region Else
+
+    private readonly int MAX_PERCENT = 100;
+
+    #endregion
+
 }

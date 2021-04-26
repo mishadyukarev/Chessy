@@ -6,6 +6,7 @@ public abstract class SystemsManager
     protected EcsWorld _ecsWorld;
 
     protected EcsSystems _updateSystems;
+    protected EcsSystems _timeUpdateSystems;
     protected EcsSystems _elseSystems;
 
     protected EcsSystems _currentSystemsForInvoke;
@@ -15,6 +16,7 @@ public abstract class SystemsManager
         _ecsWorld = ecsWorld;
 
         _updateSystems = new EcsSystems(ecsWorld);
+        _timeUpdateSystems = new EcsSystems(ecsWorld);
         _elseSystems = new EcsSystems(ecsWorld);
     }
 
@@ -22,9 +24,11 @@ public abstract class SystemsManager
     internal void InitAndProcessInjectsSystems()
     {
         _updateSystems.ProcessInjects();
+        _timeUpdateSystems.ProcessInjects();
         _elseSystems.ProcessInjects();
 
         _updateSystems.Init();
+        _timeUpdateSystems.ProcessInjects();
         _elseSystems.Init();
     }
 
@@ -50,14 +54,14 @@ public abstract class SystemsManager
             return false;
         }
     }
-    protected void ActiveRunSystem(bool isActive,string namedSystem, EcsSystems currentSystems)
+    protected void ActiveRunSystem(bool isActive, string namedSystem, EcsSystems currentSystems)
     {
         var numberOfNamedSystem = currentSystems.GetNamedRunSystem(namedSystem);
 
         if (numberOfNamedSystem != -1)
         {
             var ecsSystemsRunItem = currentSystems.GetRunSystems().Items[numberOfNamedSystem];
-            currentSystems.GetRunSystems().Items[numberOfNamedSystem].Active = false;
+            currentSystems.GetRunSystems().Items[numberOfNamedSystem].Active = isActive;
         }
         else
         {
