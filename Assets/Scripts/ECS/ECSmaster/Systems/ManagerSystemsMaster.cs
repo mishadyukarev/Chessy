@@ -4,16 +4,16 @@ public sealed class SystemsMasterManager : SystemsManager
 {
     public SystemsMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    internal void CreateInitSystems(ECSmanager eCSmanager, SupportGameManager supportGameManager, PhotonGameManager photonGameManager)
+    internal void CreateInitSystems(ECSmanager eCSmanager,  PhotonGameManager photonGameManager)
     {
         _elseSystems
-            .Add(new RefresherMasterSystem(eCSmanager, supportGameManager), nameof(RefresherMasterSystem))
-            .Add(new SetterUnitMasterSystem(eCSmanager, supportGameManager), nameof(SetterUnitMasterSystem))
-            .Add(new ShiftUnitMasterSystem(eCSmanager, supportGameManager, photonGameManager), nameof(ShiftUnitMasterSystem))
-            .Add(new BuilderCellMasterSystem(eCSmanager, supportGameManager), nameof(BuilderCellMasterSystem))
-            .Add(new AttackUnitMasterSystem(eCSmanager, supportGameManager, photonGameManager), nameof(AttackUnitMasterSystem))
-            .Add(new GetterUnitMasterSystem(eCSmanager, supportGameManager), nameof(GetterUnitMasterSystem))
-            .Add(new ProtecterUnitMasterSystem(eCSmanager, supportGameManager), nameof(ProtecterUnitMasterSystem));
+            .Add(new RefresherMasterSystem(eCSmanager), nameof(RefresherMasterSystem))
+            .Add(new SetterUnitMasterSystem(eCSmanager), nameof(SetterUnitMasterSystem))
+            .Add(new ShiftUnitMasterSystem(eCSmanager, photonGameManager), nameof(ShiftUnitMasterSystem))
+            .Add(new BuilderCellMasterSystem(eCSmanager), nameof(BuilderCellMasterSystem))
+            .Add(new AttackUnitMasterSystem(eCSmanager, photonGameManager), nameof(AttackUnitMasterSystem))
+            .Add(new GetterUnitMasterSystem(eCSmanager), nameof(GetterUnitMasterSystem))
+            .Add(new ProtecterUnitMasterSystem(eCSmanager), nameof(ProtecterUnitMasterSystem));
 
         InitAndProcessInjectsSystems();
     }

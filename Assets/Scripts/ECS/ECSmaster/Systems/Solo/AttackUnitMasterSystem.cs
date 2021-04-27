@@ -67,7 +67,7 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
     private PhotonPunRPC _photonPunRPC = default;
 
 
-    internal AttackUnitMasterSystem(ECSmanager eCSmanager, SupportGameManager supportGameManager, PhotonGameManager photonGameManager) : base(eCSmanager, supportGameManager)
+    internal AttackUnitMasterSystem(ECSmanager eCSmanager, PhotonGameManager photonGameManager) : base(eCSmanager)
     {
         _photonPunRPC = photonGameManager.PhotonPunRPC;
 

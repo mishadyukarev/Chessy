@@ -82,11 +82,11 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     public EntitiesGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    internal void CreateEntities(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnManager)
+    internal void CreateEntities(ECSmanager eCSmanager)
     {
-       var startValuesGameConfig = supportManager.StartValuesGameConfig;
+       var startValuesGameConfig = InstanceGame.StartValuesGameConfig;
         var systemsGeneralManager = eCSmanager.SystemsGeneralManager;
-        var cellManager = supportManager.CellManager;
+        var cellManager = InstanceGame.CellManager;
         var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
 
         _soloEntity = _ecsWorld.NewEntity()
@@ -135,7 +135,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
         #region Cells
 
-        var cellsGO = startSpawnManager.CellsGO;
+        var cellsGO = InstanceGame.StartSpawnGameManager.CellsGO;
 
         var xAmount = cellsGO.GetUpperBound(startValuesGameConfig.X) + 1;
         var yAmount = cellsGO.GetUpperBound(startValuesGameConfig.Y) + 1;
@@ -154,7 +154,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             {
                 bool isStartMaster = false;
                 bool isStartOther = false;
-                if (startValuesGameConfig.IsTest)
+                if (InstanceGame.IS_TEST)
                 {
                     isStartMaster = true;
                     isStartOther = true;
@@ -167,10 +167,10 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
 
                 CellComponent cellComponent = new CellComponent(isStartMaster, isStartOther, cellsGO[x, y]);
-                CellComponent.EnvironmentComponent cellEnvironmentComponent= new CellComponent.EnvironmentComponent(x, y, startSpawnManager, startValuesGameConfig);
-                CellComponent.SupportVisionComponent cellSupportVisionComponent= new CellComponent.SupportVisionComponent(x, y, startSpawnManager);
-                CellComponent.UnitComponent cellUnitComponent = new CellComponent.UnitComponent(x, y, startSpawnManager, startValuesGameConfig);
-                CellComponent.BuildingComponent cellBuildingComponent = new CellComponent.BuildingComponent(x, y, startSpawnManager, startValuesGameConfig);
+                CellComponent.EnvironmentComponent cellEnvironmentComponent= new CellComponent.EnvironmentComponent(x, y, InstanceGame.StartSpawnGameManager, startValuesGameConfig);
+                CellComponent.SupportVisionComponent cellSupportVisionComponent= new CellComponent.SupportVisionComponent(x, y, InstanceGame.StartSpawnGameManager);
+                CellComponent.UnitComponent cellUnitComponent = new CellComponent.UnitComponent(x, y, InstanceGame.StartSpawnGameManager, startValuesGameConfig);
+                CellComponent.BuildingComponent cellBuildingComponent = new CellComponent.BuildingComponent(x, y, InstanceGame.StartSpawnGameManager, startValuesGameConfig);
 
                 _cellsEntity[x, y] = _ecsWorld.NewEntity();
 

@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
+using static MainGame;
 
 
 internal struct GetterUnitMasterComponent
@@ -49,12 +50,12 @@ internal class GetterUnitMasterSystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<GetterUnitMasterComponent> _getterUnitMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyCountUnitMasterComponent = default;
 
-    internal GetterUnitMasterSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
+    internal GetterUnitMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _getterUnitMasterComponentRef = eCSmanager.EntitiesMasterManager.GetterUnitMasterComponentRef;
         _economyCountUnitMasterComponent = eCSmanager.EntitiesMasterManager.EconomyUnitsMasterComponentRef;
 
-        _startValuesGameConfig = supportManager.StartValuesGameConfig;
+        _startValuesGameConfig = InstanceGame.StartValuesGameConfig;
     }
 
     public void Run()

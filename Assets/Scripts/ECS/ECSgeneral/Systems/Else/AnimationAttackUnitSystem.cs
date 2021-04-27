@@ -18,7 +18,7 @@ internal class AnimationAttackUnitSystem : CellReduction, IEcsRunSystem
     private int[] _xyEndCell => _animationAttackUnitComponentRef.Unref().XYEndCell;
 
 
-    internal AnimationAttackUnitSystem(ECSmanager eCSmanager, SupportGameManager supportGameManager) : base(eCSmanager, supportGameManager)
+    internal AnimationAttackUnitSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
         _animationAttackUnitComponentRef = eCSmanager.EntitiesGeneralManager.AnimationAttackUnitComponentRef;

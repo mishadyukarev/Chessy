@@ -18,7 +18,7 @@ internal class ReadyUISystem : IEcsRunSystem
 
 
 
-    internal ReadyUISystem(ECSmanager eCSmanager, SupportGameManager supportGameManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnGameManager)
+    internal ReadyUISystem(ECSmanager eCSmanager, PhotonGameManager photonManager)
     {
         _photonPunRPC = photonManager.PhotonPunRPC;
         _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
@@ -26,8 +26,8 @@ internal class ReadyUISystem : IEcsRunSystem
         _readyComponentRef = eCSmanager.EntitiesGeneralManager.ReadyComponentRef;
         _startGameComponentRef = eCSmanager.EntitiesGeneralManager.StartGameComponentRef;
 
-        _parentReadyZone = startSpawnGameManager.ParentReadyZone;
-        _readyButton = startSpawnGameManager.ReadyButton;
+        _parentReadyZone = MainGame.InstanceGame.StartSpawnGameManager.ParentReadyZone;
+        _readyButton = MainGame.InstanceGame.StartSpawnGameManager.ReadyButton;
         _readyButton.onClick.AddListener(delegate { Ready(); });
     }
 

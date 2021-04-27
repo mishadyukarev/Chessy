@@ -60,7 +60,7 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
     private PhotonPunRPC _photonPunRPC = default;
 
 
-    internal ShiftUnitMasterSystem(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonGameManager photonGameManager) : base(eCSmanager, supportManager)
+    internal ShiftUnitMasterSystem(ECSmanager eCSmanager, PhotonGameManager photonGameManager) : base(eCSmanager)
     {
         _shiftComponentRef = eCSmanager.EntitiesMasterManager.ShiftUnitComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;

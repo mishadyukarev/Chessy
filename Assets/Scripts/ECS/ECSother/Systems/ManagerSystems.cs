@@ -5,7 +5,7 @@ public sealed class SystemsOtherManager : SystemsManager
     public SystemsOtherManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
 
-    internal void CreateInitSystems(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonGameManager photonManager)
+    internal void CreateInitSystems(ECSmanager eCSmanager, PhotonGameManager photonManager)
     {
         InitAndProcessInjectsSystems();
     }

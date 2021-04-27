@@ -5,30 +5,30 @@ public class SystemsGeneralManager : SystemsManager
     internal SystemsGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
 
-    internal void CreateInitSystems(ECSmanager eCSmanager, SupportGameManager supportGameManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnManager)
+    internal void CreateInitSystems(ECSmanager eCSmanager, PhotonGameManager photonManager)
     {
         _updateSystems
             .Add(new InputSystem(eCSmanager), nameof(InputSystem))
-            .Add(new SelectorSystem(eCSmanager, supportGameManager, photonManager), nameof(SelectorSystem))
-            .Add(new SupportVisionSystem(eCSmanager, supportGameManager), nameof(SupportVisionSystem))
-            .Add(new AnimationAttackUnitSystem(eCSmanager, supportGameManager), nameof(AnimationAttackUnitSystem))
+            .Add(new SelectorSystem(eCSmanager, photonManager), nameof(SelectorSystem))
+            .Add(new SupportVisionSystem(eCSmanager), nameof(SupportVisionSystem))
+            .Add(new AnimationAttackUnitSystem(eCSmanager), nameof(AnimationAttackUnitSystem))
 
-            .Add(new UISystem(eCSmanager, supportGameManager, photonManager, startSpawnManager), nameof(UISystem))
-            .Add(new ReadyUISystem(eCSmanager, supportGameManager, photonManager, startSpawnManager), nameof(ReadyUISystem))
-            .Add(new DonerUISystem(eCSmanager, supportGameManager, photonManager, startSpawnManager), nameof(DonerUISystem))
-            .Add(new SelectorUnitUISystem(eCSmanager, supportGameManager, photonManager, startSpawnManager), nameof(SelectorUnitUISystem))
-            .Add(new StandartAbilityUISystem(eCSmanager, supportGameManager, photonManager, startSpawnManager), nameof(StandartAbilityUISystem))
-            .Add(new ConditionUnitUISystem(eCSmanager, supportGameManager, photonManager, startSpawnManager), nameof(ConditionUnitUISystem))
-            .Add(new TheEndGameUISystem(eCSmanager, supportGameManager, photonManager, startSpawnManager), nameof(TheEndGameUISystem))
-            .Add(new BuildingUISystem(eCSmanager, photonManager, startSpawnManager), nameof(BuildingUISystem))
-            .Add(new WarningUISystem(eCSmanager, supportGameManager, photonManager, startSpawnManager), nameof(WarningUISystem));
+            .Add(new UISystem(eCSmanager, photonManager), nameof(UISystem))
+            .Add(new ReadyUISystem(eCSmanager, photonManager), nameof(ReadyUISystem))
+            .Add(new DonerUISystem(eCSmanager, photonManager), nameof(DonerUISystem))
+            .Add(new SelectorUnitUISystem(eCSmanager, photonManager), nameof(SelectorUnitUISystem))
+            .Add(new StandartAbilityUISystem(eCSmanager, photonManager), nameof(StandartAbilityUISystem))
+            .Add(new ConditionUnitUISystem(eCSmanager, photonManager), nameof(ConditionUnitUISystem))
+            .Add(new TheEndGameUISystem(eCSmanager), nameof(TheEndGameUISystem))
+            .Add(new BuildingUISystem(eCSmanager, photonManager), nameof(BuildingUISystem))
+            .Add(new WarningUISystem(eCSmanager), nameof(WarningUISystem));
 
 
         _elseSystems
             .Add(new RaySystem(eCSmanager), nameof(RaySystem))
-            .Add(new UnitPathSystem(eCSmanager, supportGameManager), nameof(UnitPathSystem))
-            .Add(new GetterCellSystem(eCSmanager, supportGameManager), nameof(GetterCellSystem))
-            .Add(new SoundSystem(eCSmanager, startSpawnManager), nameof(SoundSystem));
+            .Add(new UnitPathSystem(eCSmanager), nameof(UnitPathSystem))
+            .Add(new GetterCellSystem(eCSmanager), nameof(GetterCellSystem))
+            .Add(new SoundSystem(eCSmanager), nameof(SoundSystem));
 
         InitAndProcessInjectsSystems();
     }

@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static MainGame;
 
 public abstract class CellReduction : StartValuesReduction
 {
@@ -18,9 +19,9 @@ public abstract class CellReduction : StartValuesReduction
     protected int Ycount => _cellComponentRef.GetUpperBound(Y) + 1;
 
 
-    internal CellReduction(ECSmanager eCSmanager, SupportGameManager supportManager) : base(supportManager)
+    internal CellReduction(ECSmanager eCSmanager)
     {
-        _cellManager = supportManager.CellManager;
+        _cellManager = InstanceGame.CellManager;
 
         _cellComponentRef = eCSmanager.EntitiesGeneralManager.CellComponentRef;
         _cellEnvironmentComponentRef = eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef;

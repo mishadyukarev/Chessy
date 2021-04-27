@@ -45,7 +45,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
 
 
-    internal UISystem(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnManager) : base(eCSmanager, supportManager)
+    internal UISystem(ECSmanager eCSmanager, PhotonGameManager photonManager) : base(eCSmanager)
     {
         _photonManagerScene = photonManager.PhotonManagerScene;
         _photonPunRPC = photonManager.PhotonPunRPC;
@@ -64,17 +64,17 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
         #region Texts
 
-        _goldAmountText = startSpawnManager.GoldAmmountText;
+        _goldAmountText = MainGame.InstanceGame.StartSpawnGameManager.GoldAmmountText;
 
         #endregion
 
 
         #region Images
 
-        _rightUpUnitImage = startSpawnManager.RightUpUnitImage;
-        _rightMiddleUnitImage = startSpawnManager.RightMiddleUnitImage;
-        _rightDownUnitImage = startSpawnManager.AbilitiesImage;
-        _leftEconomyImage = startSpawnManager.LeftEconomyImage;
+        _rightUpUnitImage = MainGame.InstanceGame.StartSpawnGameManager.RightUpUnitImage;
+        _rightMiddleUnitImage = MainGame.InstanceGame.StartSpawnGameManager.RightMiddleUnitImage;
+        _rightDownUnitImage = MainGame.InstanceGame.StartSpawnGameManager.AbilitiesImage;
+        _leftEconomyImage = MainGame.InstanceGame.StartSpawnGameManager.LeftEconomyImage;
 
         _rightMiddleUnitImage.gameObject.SetActive(false);
 
@@ -83,28 +83,28 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
         #region Ability zone
 
-        _buildingAbilityButton0 = startSpawnManager.BuildingAbilityButton0;
+        _buildingAbilityButton0 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton0;
         _buildingAbilityButton0.onClick.AddListener(delegate { Build(BuildingTypes.City); });
 
-        _buildingAbilityButton1 = startSpawnManager.BuildingAbilityButton1;
-        _buildingAbilityButton2 = startSpawnManager.BuildingAbilityButton2;
-        _buildingAbilityButton3 = startSpawnManager.BuildingAbilityButton3;
+        _buildingAbilityButton1 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton1;
+        _buildingAbilityButton2 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton2;
+        _buildingAbilityButton3 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton3;
 
-        _uniqueAbilityButton1 = startSpawnManager.UniqueAbilityButton1;
-        _uniqueAbilityButton2 = startSpawnManager.UniqueAbilityButton2;
-        _uniqueAbilityButton3 = startSpawnManager.UniqueAbilityButton3;
+        _uniqueAbilityButton1 = MainGame.InstanceGame.StartSpawnGameManager.UniqueAbilityButton1;
+        _uniqueAbilityButton2 = MainGame.InstanceGame.StartSpawnGameManager.UniqueAbilityButton2;
+        _uniqueAbilityButton3 = MainGame.InstanceGame.StartSpawnGameManager.UniqueAbilityButton3;
 
 
         #endregion
 
 
-        _buttonLeave = startSpawnManager.ButtonLeave;
+        _buttonLeave = MainGame.InstanceGame.StartSpawnGameManager.ButtonLeave;
         _buttonLeave.onClick.AddListener(delegate { Leave(); });
 
-        _buyPawnButton = startSpawnManager.BuyPawnButton;
+        _buyPawnButton = MainGame.InstanceGame.StartSpawnGameManager.BuyPawnButton;
         _buyPawnButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Pawn); });
 
-        _improveCityButton = startSpawnManager.ImproveCityButton;
+        _improveCityButton = MainGame.InstanceGame.StartSpawnGameManager.ImproveCityButton;
         _improveCityButton.onClick.AddListener(delegate { ImproveCity(); });
 
 

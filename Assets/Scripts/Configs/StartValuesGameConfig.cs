@@ -3,8 +3,6 @@
 [CreateAssetMenu(menuName = "StartValues", fileName = "StartValues")]
 public class StartValuesGameConfig : ScriptableObject
 {
-    internal readonly bool IsTest = false;
-
 
     #region ENVIRONMENT
 
@@ -34,7 +32,14 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_GOLD_MASTER = 100;
     internal readonly int AMOUNT_GOLD_OTHER = 100;
 
+    internal readonly int AMOUNT_WOOD_MASTER = 50;
+    internal readonly int AMOUNT_WOOD_OTHER = 50;
+
+
+
     internal readonly int GOLD_FOR_BUYING_PAWN = 50;
+
+    internal readonly int WOOD_FOR_BUILDING_FARM = 50;
 
     #endregion
 

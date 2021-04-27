@@ -72,11 +72,11 @@ public partial class PhotonPunRPC : MonoBehaviour
 
 
 
-    internal void Constructor(SupportGameManager supportManager, PhotonGameManager photonManager)
+    internal void Constructor(PhotonGameManager photonManager)
     {
         _photonView = photonManager.PhotonView;
-        _startValues = supportManager.StartValuesGameConfig;
-        _cellManager = supportManager.CellManager;
+        _startValues = InstanceGame.StartValuesGameConfig;
+        _cellManager = InstanceGame.CellManager;
 
         PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
     }

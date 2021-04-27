@@ -10,12 +10,12 @@ internal class TheEndGameUISystem : IEcsRunSystem
     private TextMeshProUGUI _theEndGameText;
 
 
-    internal TheEndGameUISystem(ECSmanager eCSmanager, SupportGameManager supportGameManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnGameManager)
+    internal TheEndGameUISystem(ECSmanager eCSmanager)
     {
         _theEndGameComponentRef = eCSmanager.EntitiesGeneralManager.TheEndGameComponentRef;
 
-        _parentTheEndGameZone = startSpawnGameManager.ParentTheEndGameZone;
-        _theEndGameText = startSpawnGameManager.TheEndGameText;
+        _parentTheEndGameZone = MainGame.InstanceGame.StartSpawnGameManager.ParentTheEndGameZone;
+        _theEndGameText = MainGame.InstanceGame.StartSpawnGameManager.TheEndGameText;
     }
 
     public void Run()

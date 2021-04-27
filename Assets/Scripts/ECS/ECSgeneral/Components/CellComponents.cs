@@ -296,8 +296,9 @@ public struct CellComponent
         private void SetColorUnit(in SpriteRenderer unitSpriteRender, in Player player)
         {
             if (player.IsMasterClient) unitSpriteRender.color = Color.blue;
-            else unitSpriteRender.color = Color.yellow;
+            else unitSpriteRender.color = Color.red;
         }
+
         internal void RefreshAmountSteps()
         {
             switch (_unitType)
@@ -458,7 +459,11 @@ public struct CellComponent
         }
 
         #endregion
-
+        private void SetColorBuilding(in SpriteRenderer unitSpriteRender, in Player player)
+        {
+            if (player.IsMasterClient) unitSpriteRender.color = Color.blue;
+            else unitSpriteRender.color = Color.red;
+        }
 
         internal void SetBuilding(in BuildingTypes buildingType, Player player)
         {
@@ -473,10 +478,12 @@ public struct CellComponent
             {
                 case BuildingTypes.City:
                     _campGO.SetActive(true);
+                    SetColorBuilding(_campGO.GetComponent<SpriteRenderer>(), _player);
                     break;
 
                 case BuildingTypes.Farm:
                     _farmGO.SetActive(true);
+                    SetColorBuilding(_farmGO.GetComponent<SpriteRenderer>(), _player);
                     break;
             }
         }

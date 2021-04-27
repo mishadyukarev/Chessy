@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
+using static MainGame;
 
 public class EntitiesMasterManager : EntitiesManager
 {
@@ -40,23 +41,23 @@ public class EntitiesMasterManager : EntitiesManager
 
     public EntitiesMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    internal void CreateEntities(ECSmanager eCSmanager, SupportGameManager supportManager)
+    internal void CreateEntities(ECSmanager eCSmanager)
     {
         _soloEntity = _ecsWorld.NewEntity()
-            .Replace(new SetterUnitMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager))
-            .Replace(new ShiftUnitMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new SetterUnitMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new ShiftUnitMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.CellManager, eCSmanager.SystemsMasterManager))
             .Replace(new DonerMasterComponent())
-            .Replace(new AttackUnitMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager))
-            .Replace(new BuilderCellMasterComponent(supportManager.StartValuesGameConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new AttackUnitMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new BuilderCellMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.CellManager, eCSmanager.SystemsMasterManager))
             .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager))
-            .Replace(new ProtecterUnitMasterComponent(eCSmanager, supportManager))
+            .Replace(new ProtecterUnitMasterComponent(eCSmanager))
             .Replace(new RefresherMasterComponent(eCSmanager));
 
 
         _economyEntity = _ecsWorld.NewEntity()
-            .Replace(new EconomyMasterComponent(supportManager.StartValuesGameConfig))
-            .Replace(new EconomyMasterComponent.UnitsMasterComponent(supportManager.StartValuesGameConfig))
-            .Replace(new EconomyMasterComponent.BuildingsMasterComponent(supportManager.StartValuesGameConfig));
+            .Replace(new EconomyMasterComponent(InstanceGame.StartValuesGameConfig))
+            .Replace(new EconomyMasterComponent.UnitsMasterComponent(InstanceGame.StartValuesGameConfig))
+            .Replace(new EconomyMasterComponent.BuildingsMasterComponent(InstanceGame.StartValuesGameConfig));
 
 
         _readyEntity = _ecsWorld.NewEntity()
@@ -69,21 +70,21 @@ public class EntitiesMasterManager : EntitiesManager
 
         #region Cells
 
-        for (int x = 0; x < supportManager.StartValuesGameConfig.CELL_COUNT_X; x++)
+        for (int x = 0; x < InstanceGame.StartValuesGameConfig.CELL_COUNT_X; x++)
         {
-            for (int y = 0; y < supportManager.StartValuesGameConfig.CELL_COUNT_Y; y++)
+            for (int y = 0; y < InstanceGame.StartValuesGameConfig.CELL_COUNT_Y; y++)
             {
                 int random;
                 random = Random.Range(1, 100);
-                if (random <= supportManager.StartValuesGameConfig.PERCENT_TREE)
+                if (random <= InstanceGame.StartValuesGameConfig.PERCENT_TREE)
                     eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x,y].Unref().SetResetEnvironment(true, EnvironmentTypes.Tree);
 
                 random = Random.Range(1, 100);
-                if (random <= supportManager.StartValuesGameConfig.PERCENT_HILL)
+                if (random <= InstanceGame.StartValuesGameConfig.PERCENT_HILL)
                     eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().SetResetEnvironment(true, EnvironmentTypes.Hill);
 
                 random = Random.Range(1, 100);
-                if (random <= supportManager.StartValuesGameConfig.PERCENT_MOUNTAIN)
+                if (random <= InstanceGame.StartValuesGameConfig.PERCENT_MOUNTAIN)
                     eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().SetResetEnvironment(true, EnvironmentTypes.Mountain);
 
 
@@ -93,7 +94,7 @@ public class EntitiesMasterManager : EntitiesManager
                     && !eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().HaveTree)
                 {
                     random = Random.Range(1, 100);
-                    if (random <= supportManager.StartValuesGameConfig.PERCENT_FOOD)
+                    if (random <= InstanceGame.StartValuesGameConfig.PERCENT_FOOD)
                         eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().SetResetEnvironment(true, EnvironmentTypes.Food);
                 }
 

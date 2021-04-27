@@ -51,7 +51,7 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<EconomyMasterComponent> _economyMasterComponent = default;
     private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef = default;
 
-    internal RefresherMasterSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
+    internal RefresherMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _refresherMasterComponent = eCSmanager.EntitiesMasterManager.RefresherMasterComponentRef;
         _donerMasterComponentRef = eCSmanager.EntitiesMasterManager.DonerMasterComponentRef;

@@ -14,15 +14,15 @@ internal class StandartAbilityUISystem : CellReduction, IEcsRunSystem
 
     private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
 
-    internal StandartAbilityUISystem(ECSmanager eCSmanager, SupportGameManager supportGameManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnGameManager) : base(eCSmanager, supportGameManager)
+    internal StandartAbilityUISystem(ECSmanager eCSmanager, PhotonGameManager photonManager) : base(eCSmanager)
     {
         _photonPunRPC = photonManager.PhotonPunRPC;
 
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
 
-        _standartAbilityButton1 = startSpawnGameManager.StandartAbilityButton1;
+        _standartAbilityButton1 = MainGame.InstanceGame.StartSpawnGameManager.StandartAbilityButton1;
         _standartAbilityButton1.onClick.AddListener(delegate { StandartAbilityButton1(); });
-        _standartAbilityButton2 = startSpawnGameManager.StandartAbilityButton2;
+        _standartAbilityButton2 = MainGame.InstanceGame.StartSpawnGameManager.StandartAbilityButton2;
         _standartAbilityButton2.onClick.AddListener(delegate { StandartAbilityButton2(); });
     }
 

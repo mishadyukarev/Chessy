@@ -11,15 +11,15 @@ internal class DonerUISystem : IEcsRunSystem
 
     private bool _isDone => _donerComponentRef.Unref().IsDone;
 
-    internal DonerUISystem(ECSmanager eCSmanager, SupportGameManager supportGameManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnGameManager)
+    internal DonerUISystem(ECSmanager eCSmanager, PhotonGameManager photonManager)
     {
         _donerComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
         _photonPunRPC = photonManager.PhotonPunRPC;
 
-        _doneButton = startSpawnGameManager.DoneButton;
+        _doneButton = MainGame.InstanceGame.StartSpawnGameManager.DoneButton;
         _doneButton.onClick.AddListener(delegate { Done(); });
 
-        _donerRawImage = startSpawnGameManager.DonerRawImage;
+        _donerRawImage = MainGame.InstanceGame.StartSpawnGameManager.DonerRawImage;
     }
 
     public void Run()

@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
+using static MainGame;
 
 internal struct ProtecterUnitMasterComponent
 {
@@ -11,12 +12,12 @@ internal struct ProtecterUnitMasterComponent
 
     private bool _isProtectedOUT;
 
-    internal ProtecterUnitMasterComponent(ECSmanager eCSmanager, SupportGameManager supportGameManager)
+    internal ProtecterUnitMasterComponent(ECSmanager eCSmanager)
     {
-        _cellManager = supportGameManager.CellManager;
+        _cellManager = InstanceGame.CellManager;
         _systemsMasterManager = eCSmanager.SystemsMasterManager;
 
-        _xyCellIN = new int[supportGameManager.StartValuesGameConfig.XY_FOR_ARRAY];
+        _xyCellIN = new int[InstanceGame.StartValuesGameConfig.XY_FOR_ARRAY];
         _playerIN = default;
 
         _isProtectedOUT = default;
@@ -51,7 +52,7 @@ internal class ProtecterUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<ProtecterUnitMasterComponent> _protecterUnitMasterComponentRef = default;
 
-    internal ProtecterUnitMasterSystem(ECSmanager eCSmanager, SupportGameManager supportGameManager) : base(eCSmanager, supportGameManager)
+    internal ProtecterUnitMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _protecterUnitMasterComponentRef = eCSmanager.EntitiesMasterManager.ProtecterUnitMasterComponentRef;
     }

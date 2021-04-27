@@ -16,7 +16,7 @@ public class PhotonGameManager
     public PhotonPunRPC PhotonPunRPC => _photonPunRPC;
 
 
-    internal PhotonGameManager([NotNull]SupportGameManager supportManager, Transform parentTransform)
+    internal PhotonGameManager([NotNull]Transform parentTransform)
     {
         var types = new Type[]
         {
@@ -25,19 +25,19 @@ public class PhotonGameManager
             typeof(PhotonPunRPC)
         };
 
-        var networkGO = supportManager.BuilderManager.CreateGameObject("Network", types, parentTransform);
+        var networkGO = InstanceGame.BuilderManager.CreateGameObject("Network", types, parentTransform);
 
         _photonView = networkGO.GetPhotonView();
         _photonManagerScene = networkGO.GetComponent<PhotonManagerScene>();
         _photonPunRPC = networkGO.GetComponent<PhotonPunRPC>();
 
-        _photonPunRPC.Constructor(supportManager, this);
+        _photonPunRPC.Constructor(this);
 
 
         _photonView.FindObservables(true);
 
         if (InstanceGame.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
-        else _photonView.ViewID = supportManager.StartValuesGameConfig.NUMBER_PHOTON_VIEW;
+        else _photonView.ViewID = InstanceGame.StartValuesGameConfig.NUMBER_PHOTON_VIEW;
     }
 
     public void InitAfterECS(ECSmanager eCSmanager)

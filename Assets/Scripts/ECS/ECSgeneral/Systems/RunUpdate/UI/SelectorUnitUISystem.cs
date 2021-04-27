@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static MainGame;
 
 internal class SelectorUnitUISystem : IEcsRunSystem
 {
@@ -7,7 +8,7 @@ internal class SelectorUnitUISystem : IEcsRunSystem
     private EcsComponentRef<DonerComponent> _doneComponentRef = default;
     private PhotonPunRPC _photonPunRPC = default;
 
-    internal SelectorUnitUISystem(ECSmanager eCSmanager, SupportGameManager supportGameManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnGameManager)
+    internal SelectorUnitUISystem(ECSmanager eCSmanager, PhotonGameManager photonManager)
     {
         _photonPunRPC = photonManager.PhotonPunRPC;
 
@@ -16,10 +17,10 @@ internal class SelectorUnitUISystem : IEcsRunSystem
         _doneComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
 
 
-        _selectorUnitComponentRef.Unref().Button0 = startSpawnGameManager.Button0;
+        _selectorUnitComponentRef.Unref().Button0 = InstanceGame.StartSpawnGameManager.Button0;
         _selectorUnitComponentRef.Unref().Button0.onClick.AddListener(delegate { GetUnit(UnitTypes.King); });
 
-        _selectorUnitComponentRef.Unref().Button1 = startSpawnGameManager.Button1;
+        _selectorUnitComponentRef.Unref().Button1 = MainGame.InstanceGame.StartSpawnGameManager.Button1;
         _selectorUnitComponentRef.Unref().Button1.onClick.AddListener(delegate { GetUnit(UnitTypes.Pawn); });
     }
 

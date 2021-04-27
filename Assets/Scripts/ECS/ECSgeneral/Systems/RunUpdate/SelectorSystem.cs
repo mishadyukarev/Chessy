@@ -55,10 +55,10 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
     }
 
 
-    internal SelectorSystem(ECSmanager eCSmanager, SupportGameManager supportManager, PhotonGameManager photonManager) : base(eCSmanager, supportManager)
+    internal SelectorSystem(ECSmanager eCSmanager, PhotonGameManager photonManager) : base(eCSmanager)
     {
         _photonPunRPC = photonManager.PhotonPunRPC;
-        _nameManager = supportManager.NameManager;
+        _nameManager = InstanceGame.NameManager;
         _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
 
         _rayComponentRef = eCSmanager.EntitiesGeneralManager.RayComponentRef;

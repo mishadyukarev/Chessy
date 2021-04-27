@@ -65,7 +65,7 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
     private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef;
 
 
-    internal UnitPathSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
+    internal UnitPathSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
     }

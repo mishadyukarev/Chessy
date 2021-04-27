@@ -12,7 +12,6 @@ internal sealed class MainGame : Main
     private PhotonGameManager _photonManager;
     private ECSmanager _eCSmanager;
     private SupportGameManager _supportGameManager;
-    private StartSpawnGameManager _startSpawnManager;
 
     #endregion
 
@@ -21,21 +20,26 @@ internal sealed class MainGame : Main
 
     public static MainGame InstanceGame => _instanceGame;
 
+    internal readonly bool IS_TEST = true;
+
+    internal StartValuesGameConfig StartValuesGameConfig => _supportGameManager.StartValuesGameConfig;
+    internal StartSpawnGameManager StartSpawnGameManager => _supportGameManager.StartSpawnGameManager;
+    internal CellManager CellManager => _supportGameManager.CellManager;
+    internal BuilderManager BuilderManager => _supportGameManager.BuilderManager;
+    internal NameManager NameManager => _supportGameManager.NameManager;
+
     #endregion
+
 
 
     private void Start()
     {
         _instanceGame = this;
-        _supportGameManager = new SupportGameManager();
+        _supportGameManager = new SupportGameManager(out Transform parentTransformScrips);
 
 
-        _startSpawnManager = new StartSpawnGameManager(_supportGameManager, out Transform parentTransformScrips);
-
-
-        _photonManager = new PhotonGameManager(_supportGameManager, parentTransformScrips);
-        _eCSmanager = new ECSmanager(_supportGameManager, _photonManager, _startSpawnManager);
-
+        _photonManager = new PhotonGameManager(parentTransformScrips);
+        _eCSmanager = new ECSmanager(_photonManager);
         _photonManager.InitAfterECS(_eCSmanager);
 
 

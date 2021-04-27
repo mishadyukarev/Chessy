@@ -8,7 +8,7 @@ internal class SupportVisionSystem : CellReduction, IEcsRunSystem
 
     private bool _isRepeated;
 
-    internal SupportVisionSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
+    internal SupportVisionSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
         _selectedUnitComponent = eCSmanager.EntitiesGeneralManager.SelectedUnitComponentRef;

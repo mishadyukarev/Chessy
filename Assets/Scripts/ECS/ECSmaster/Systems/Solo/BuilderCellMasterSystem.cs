@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
+using static MainGame;
 
 internal struct BuilderCellMasterComponent
 {
@@ -57,7 +58,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef;
 
 
-    internal BuilderCellMasterSystem(ECSmanager eCSmanager, SupportGameManager supportManager) : base(eCSmanager, supportManager)
+    internal BuilderCellMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _builderCellMasterComponentRef = eCSmanager.EntitiesMasterManager.BuilderCellMasterComponentRef;
 
@@ -65,7 +66,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
         _economyUnitsMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyUnitsMasterComponentRef;
         _economyBuildingsMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyBuildingsMasterComponentRef;
 
-        _startValuesGameConfig = supportManager.StartValuesGameConfig;
+        _startValuesGameConfig = InstanceGame.StartValuesGameConfig;
     }
 
 

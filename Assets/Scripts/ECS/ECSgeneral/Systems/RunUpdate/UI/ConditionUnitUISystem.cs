@@ -17,7 +17,7 @@ internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
 
     private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
 
-    internal ConditionUnitUISystem(ECSmanager eCSmanager, SupportGameManager supportGameManager, PhotonGameManager photonManager, StartSpawnGameManager startSpawnGameManager) : base(eCSmanager, supportGameManager)
+    internal ConditionUnitUISystem(ECSmanager eCSmanager, PhotonGameManager photonManager) : base(eCSmanager)
     {
         _photonPunRPC = photonManager.PhotonPunRPC;
 
@@ -26,10 +26,10 @@ internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
         _economyUnitsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyUnitsComponentRef;
         _doneComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
 
-        _hpCurrentUnitText = startSpawnGameManager.HpCurrentUnitText;
-        _damageCurrentUnitText = startSpawnGameManager.DamageCurrentUnitText;
-        _protectionCurrentUnitText = startSpawnGameManager.ProtectionCurrentUnitText;
-        _stepsCurrentUnitText = startSpawnGameManager.StepsCurrentUnitText;
+        _hpCurrentUnitText = MainGame.InstanceGame.StartSpawnGameManager.HpCurrentUnitText;
+        _damageCurrentUnitText = MainGame.InstanceGame.StartSpawnGameManager.DamageCurrentUnitText;
+        _protectionCurrentUnitText = MainGame.InstanceGame.StartSpawnGameManager.ProtectionCurrentUnitText;
+        _stepsCurrentUnitText = MainGame.InstanceGame.StartSpawnGameManager.StepsCurrentUnitText;
     }
 
     public void Run()

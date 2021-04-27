@@ -111,31 +111,29 @@ internal class StartSpawnGameManager : StartSpawnManager
 
 
 
-    internal StartSpawnGameManager(SupportGameManager supportGameManager, out Transform parentTransformScrips) : base(supportGameManager.ResourcesLoadGameManager)
+    internal StartSpawnGameManager(ResourcesLoadGameManager resourcesLoadGameManager, BuilderManager builderManager, StartValuesGameConfig startValuesGameConfig, out Transform parentTransformScrips) : base(resourcesLoadGameManager)
     {
-        _audioSource = supportGameManager.BuilderManager.CreateGameObject
+        _audioSource = builderManager.CreateGameObject
             ("AudioSource", new Type[] { typeof(AudioSource) }).GetComponent<AudioSource>();
-        _audioSource.clip = supportGameManager.ResourcesLoadGameManager.AudioClip;
+        _audioSource.clip = resourcesLoadGameManager.AudioClip;
 
-        _parentScriptsGO = supportGameManager.BuilderManager.CreateGameObject("Scripts");
+        _parentScriptsGO = builderManager.CreateGameObject("Scripts");
         parentTransformScrips = _parentScriptsGO.transform;
 
         _camera.gameObject.transform.position = InstanceGame.transform.position + new Vector3(7, 5.5f, -1);
         if (!InstanceGame.IsMasterClient) _camera.transform.Rotate(0, 0, 180);
 
-        GameObject.Instantiate(supportGameManager.ResourcesLoadGameManager.BackGroundCollider2D,
+        GameObject.Instantiate(resourcesLoadGameManager.BackGroundCollider2D,
             InstanceGame.transform.position + new Vector3(0, 0, 1), InstanceGame.transform.rotation);
 
-        SpawnCells(supportGameManager.ResourcesLoadGameManager, supportGameManager.StartValuesGameConfig);       
-        SpawnUI(supportGameManager);
+        SpawnCells(resourcesLoadGameManager, startValuesGameConfig);       
+        SpawnUI(resourcesLoadGameManager, startValuesGameConfig);
     }
 
-    private void SpawnUI(SupportGameManager supportGameManager)
+    private void SpawnUI(ResourcesLoadGameManager resourcesLoadGameManager, StartValuesGameConfig startValuesGameConfig)
     {
-        var resourcesLoadManager = supportGameManager.ResourcesLoadGameManager;
 
-
-        GameObject.Instantiate(resourcesLoadManager.Canvas);
+        GameObject.Instantiate(resourcesLoadGameManager.Canvas);
 
 
         #region UI
@@ -195,7 +193,7 @@ internal class StartSpawnGameManager : StartSpawnManager
         DonerRawImage = GameObject.Find("DonerRawImage").GetComponent<RawImage>();
 
 
-        if (supportGameManager.StartValuesGameConfig.IsTest)
+        if (InstanceGame.IS_TEST)
         {
             ParentReadyZone.gameObject.SetActive(false);
         }
