@@ -52,10 +52,10 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     internal EcsComponentRef<EconomyComponent> EconomyComponentRef
         => _economyEntity.Ref<EconomyComponent>();
-    internal EcsComponentRef<EconomyComponent.UnitsComponent> EconomyUnitsComponentRef
-        => _economyEntity.Ref<EconomyComponent.UnitsComponent>();
-    internal EcsComponentRef<EconomyComponent.BuildingsComponent> EconomyBuildingsComponentRef
-        => _economyEntity.Ref<EconomyComponent.BuildingsComponent>();
+    internal EcsComponentRef<EconomyComponent.UnitComponent> EconomyUnitsComponentRef
+        => _economyEntity.Ref<EconomyComponent.UnitComponent>();
+    internal EcsComponentRef<EconomyComponent.BuildingComponent> EconomyBuildingsComponentRef
+        => _economyEntity.Ref<EconomyComponent.BuildingComponent>();
 
     #endregion
 
@@ -107,8 +107,8 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
         _economyEntity = _ecsWorld.NewEntity()
             .Replace(new EconomyComponent())
-            .Replace(new EconomyComponent.UnitsComponent())
-            .Replace(new EconomyComponent.BuildingsComponent());
+            .Replace(new EconomyComponent.UnitComponent())
+            .Replace(new EconomyComponent.BuildingComponent());
 
         _soundEntity = _ecsWorld.NewEntity()
             .Replace(new SoundComponent());

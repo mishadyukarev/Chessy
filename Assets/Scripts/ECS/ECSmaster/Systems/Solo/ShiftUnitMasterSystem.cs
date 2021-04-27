@@ -81,10 +81,6 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
         {
             if (_cellManager.TryFindCellInList(xySelectedCell, xyAvailableCellsForShift))
             {
-                if (!CellBuildingComponent(xySelectedCell).IsHim(fromPlayer) && CellBuildingComponent(xySelectedCell).BuildingType == BuildingTypes.City)
-                {
-                    _photonPunRPC.EndGame(CellUnitComponent(xyPreviousCell).ActorNumber);
-                }
                 CellUnitComponent(xySelectedCell).SetUnit(CellUnitComponent(xyPreviousCell));
 
 

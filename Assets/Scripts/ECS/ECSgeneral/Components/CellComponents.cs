@@ -404,8 +404,9 @@ public struct CellComponent
     public struct BuildingComponent
     {
         private BuildingTypes _buildingType;
-        private GameObject _campGO;
+        private GameObject _cityGO;
         private GameObject _farmGO;
+        private GameObject _woodcutterGO;
         private Player _player;
 
         private StartValuesGameConfig _startValuesGameConfig;
@@ -413,8 +414,10 @@ public struct CellComponent
         internal BuildingComponent(int x, int y, StartSpawnGameManager startSpawnManager, StartValuesGameConfig startValuesGameConfig)
         {
             _buildingType = default;
-            _campGO = startSpawnManager.CampsGO[x, y];
+            _cityGO = startSpawnManager.CampsGO[x, y];
             _farmGO = startSpawnManager.FarmsGO[x, y];
+            _woodcutterGO = startSpawnManager.WoodcuttersGO[x, y];
+
             _startValuesGameConfig = startValuesGameConfig;
 
             _player = default;
@@ -459,6 +462,8 @@ public struct CellComponent
         }
 
         #endregion
+
+
         private void SetColorBuilding(in SpriteRenderer unitSpriteRender, in Player player)
         {
             if (player.IsMasterClient) unitSpriteRender.color = Color.blue;
@@ -471,19 +476,24 @@ public struct CellComponent
             _player = player;
 
 
-            _campGO.SetActive(false);
+            _cityGO.SetActive(false);
             _farmGO.SetActive(false);
+            _woodcutterGO.SetActive(false);
 
             switch (buildingType)
             {
                 case BuildingTypes.City:
-                    _campGO.SetActive(true);
-                    SetColorBuilding(_campGO.GetComponent<SpriteRenderer>(), _player);
+                    _cityGO.SetActive(true);
+                    SetColorBuilding(_cityGO.GetComponent<SpriteRenderer>(), _player);
                     break;
 
                 case BuildingTypes.Farm:
                     _farmGO.SetActive(true);
                     SetColorBuilding(_farmGO.GetComponent<SpriteRenderer>(), _player);
+                    break;
+                case BuildingTypes.Woodcutter:
+                    _woodcutterGO.SetActive(true);
+                    SetColorBuilding(_woodcutterGO.GetComponent<SpriteRenderer>(), _player);
                     break;
             }
         }

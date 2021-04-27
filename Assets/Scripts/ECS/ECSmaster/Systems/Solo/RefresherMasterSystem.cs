@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
+using static MainGame;
 
 internal struct RefresherMasterComponent
 {
@@ -68,7 +69,7 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
         if (playerIN.IsMasterClient) _donerMasterComponentRef.Unref().IsDoneMaster = isDoneIN;
         else _donerMasterComponentRef.Unref().IsDoneOther = isDoneIN;
 
-        if (_donerMasterComponentRef.Unref().IsDoneMaster && _donerMasterComponentRef.Unref().IsDoneOther)
+        if (InstanceGame.IS_TEST || _donerMasterComponentRef.Unref().IsDoneMaster && _donerMasterComponentRef.Unref().IsDoneOther)
         {
             for (int x = 0; x < Xcount; x++)
             {
@@ -99,11 +100,43 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
 
                 }
             }
+            if (_economyBuildingsMasterComponentRef.Unref().IsBuildedCityMaster)
+            {
+                if (CellEnvironmentComponent(_economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster).HaveFood)
+                {
+                    _economyMasterComponent.Unref().FoodMaster += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
+                }
+                if (CellEnvironmentComponent(_economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster).HaveTree)
+                {
+                    _economyMasterComponent.Unref().WoodMaster += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
+                }
+                _economyMasterComponent.Unref().FoodMaster += InstanceGame.StartValuesGameConfig.ADDING_FOOD;
+                _economyMasterComponent.Unref().WoodMaster += InstanceGame.StartValuesGameConfig.ADDING_WOOD;
+            }
+            if (_economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther)
+            {
+                if (CellEnvironmentComponent(_economyBuildingsMasterComponentRef.Unref().XYsettedCityOther).HaveFood)
+                {
+                    _economyMasterComponent.Unref().FoodOther += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
+                }
+                if (CellEnvironmentComponent(_economyBuildingsMasterComponentRef.Unref().XYsettedCityOther).HaveTree)
+                {
+                    _economyMasterComponent.Unref().WoodOther += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
+                }
 
-           _economyMasterComponent.Unref().GoldMaster += _economyBuildingsMasterComponentRef.Unref().AmountFarmsMaster * 10;
-            _economyMasterComponent.Unref().GoldOther += _economyBuildingsMasterComponentRef.Unref().AmountFarmsOther * 10;
-            _economyMasterComponent.Unref().GoldMaster += 20;
-            _economyMasterComponent.Unref().GoldOther += 20;
+
+                _economyMasterComponent.Unref().FoodOther += InstanceGame.StartValuesGameConfig.ADDING_FOOD;
+                _economyMasterComponent.Unref().WoodOther += InstanceGame.StartValuesGameConfig.ADDING_WOOD;
+            }
+
+            _economyMasterComponent.Unref().FoodMaster += _economyBuildingsMasterComponentRef.Unref().AmountFarmMaster * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
+            _economyMasterComponent.Unref().FoodOther += _economyBuildingsMasterComponentRef.Unref().AmountFarmOther * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
+
+            _economyMasterComponent.Unref().WoodMaster += _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterMaster * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
+            _economyMasterComponent.Unref().WoodOther += _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterOther * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
+
+
+
 
             _donerMasterComponentRef.Unref().IsDoneMaster = false;
             _donerMasterComponentRef.Unref().IsDoneOther = false;

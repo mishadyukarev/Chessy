@@ -41,6 +41,10 @@ public partial class PhotonPunRPC : MonoBehaviour
         objects = new object[]
         {
             _economyMasterComponentRef.Unref().GoldOther,
+            _economyMasterComponentRef.Unref().FoodOther,
+            _economyMasterComponentRef.Unref().WoodOther,
+            _economyMasterComponentRef.Unref().OreOther,
+            _economyMasterComponentRef.Unref().IronOther,
             _economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther,
             _economyBuildingsMasterComponentRef.Unref().XYsettedCityOther,
             _economyUnitsMasterComponentRef.Unref().IsSettedKingOther,
@@ -50,6 +54,10 @@ public partial class PhotonPunRPC : MonoBehaviour
         objects = new object[]
         {
             _economyMasterComponentRef.Unref().GoldMaster,
+            _economyMasterComponentRef.Unref().FoodMaster,
+            _economyMasterComponentRef.Unref().WoodMaster,
+            _economyMasterComponentRef.Unref().OreMaster,
+            _economyMasterComponentRef.Unref().IronMaster,
             _economyBuildingsMasterComponentRef.Unref().IsBuildedCityMaster,
             _economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster,
             _economyUnitsMasterComponentRef.Unref().IsSettedKingMaster,
@@ -102,12 +110,25 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void RefreshEconomyGeneral(object[] objects)
     {
-        var gold = (int)objects[0];
-        var isSettedCity = (bool)objects[1];
-        int[] xySettedCity = (int[])objects[2];
-        bool isSettedKing = (bool)objects[3];
+        int i = 0;
+
+        var gold = (int)objects[i++];
+        var food = (int)objects[i++];
+        var wood = (int)objects[i++];
+        var ore = (int)objects[i++];
+        var iron = (int)objects[i++];
+
+        var isSettedCity = (bool)objects[i++];
+        int[] xySettedCity = (int[])objects[i++];
+        bool isSettedKing = (bool)objects[i++];
+
 
         _economyComponentRef.Unref().Gold = gold;
+        _economyComponentRef.Unref().Food = food;
+        _economyComponentRef.Unref().Wood = wood;
+        _economyComponentRef.Unref().Ore = ore;
+        _economyComponentRef.Unref().Iron = iron;
+
         _economyBuildingsComponentRef.Unref().IsSettedCity = isSettedCity;
         _economyBuildingsComponentRef.Unref().XYsettedCity = xySettedCity;
 

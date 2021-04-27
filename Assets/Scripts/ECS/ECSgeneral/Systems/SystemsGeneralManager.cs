@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using static MainGame;
 
 public class SystemsGeneralManager : SystemsManager
 {
@@ -21,6 +22,7 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new ConditionUnitUISystem(eCSmanager, photonManager), nameof(ConditionUnitUISystem))
             .Add(new TheEndGameUISystem(eCSmanager), nameof(TheEndGameUISystem))
             .Add(new BuildingUISystem(eCSmanager, photonManager), nameof(BuildingUISystem))
+            .Add(new EconomyUISystem(eCSmanager), nameof(EconomyUISystem))
             .Add(new WarningUISystem(eCSmanager), nameof(WarningUISystem));
 
 

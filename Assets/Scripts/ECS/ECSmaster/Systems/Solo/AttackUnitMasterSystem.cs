@@ -114,7 +114,6 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
                         if (CellUnitComponent(xySelectedCellIN).AmountHealth <= _startValuesGameConfig.AMOUNT_FOR_DEATH)
                         {
                             if (CellUnitComponent(xySelectedCellIN).UnitType == UnitTypes.King) _photonPunRPC.EndGame(CellUnitComponent(xyPreviousCellIN).ActorNumber);
-                            else if (CellBuildingComponent(xySelectedCellIN).BuildingType == BuildingTypes.City) _photonPunRPC.EndGame(CellUnitComponent(xyPreviousCellIN).ActorNumber);
 
                             CellUnitComponent(xySelectedCellIN).ResetUnit();
                             CellUnitComponent(xySelectedCellIN).SetUnit(CellUnitComponent(xyPreviousCellIN));

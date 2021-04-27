@@ -6,8 +6,8 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region ENVIRONMENT
 
-    internal readonly byte PERCENT_FOOD = 15;
-    internal readonly byte PERCENT_TREE = 25;
+    internal readonly byte PERCENT_FOOD = 25;
+    internal readonly byte PERCENT_TREE = 10;
     internal readonly byte PERCENT_HILL = 5;
     internal readonly byte PERCENT_MOUNTAIN = 2;
 
@@ -29,29 +29,54 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region ECONOMY
 
-    internal readonly int AMOUNT_GOLD_MASTER = 100;
-    internal readonly int AMOUNT_GOLD_OTHER = 100;
-
-    internal readonly int AMOUNT_WOOD_MASTER = 50;
-    internal readonly int AMOUNT_WOOD_OTHER = 50;
-
-
-
-    internal readonly int GOLD_FOR_BUYING_PAWN = 50;
-
-    internal readonly int WOOD_FOR_BUILDING_FARM = 50;
-
-    #endregion
-
-
-    #region UNITS
-
     internal readonly int AMOUNT_KING_MASTER = 1;
     internal readonly int AMOUNT_KING_OTHER = 1;
 
     internal readonly int AMOUNT_PAWN_MASTER = 1;
     internal readonly int AMOUNT_PAWN_OTHER = 1;
 
+    internal readonly int AMOUNT_GOLD_MASTER = 0;
+    internal readonly int AMOUNT_GOLD_OTHER = 0;
+
+    internal readonly int AMOUNT_FOOD_MASTER = 0;
+    internal readonly int AMOUNT_FOOD_OTHER = 0;
+
+    internal readonly int AMOUNT_WOOD_MASTER = 0;
+    internal readonly int AMOUNT_WOOD_OTHER = 0;
+
+    internal readonly int AMOUNT_ORE_MASTER = 0;
+    internal readonly int AMOUNT_ORE_OTHER = 0;
+
+    internal readonly int AMOUNT_IRON_MASTER = 0;
+    internal readonly int AMOUNT_IRON_OTHER = 0;
+
+
+    internal readonly int ADDING_FOOD = 5;
+    internal readonly int ADDING_WOOD = 5;
+
+
+
+    internal readonly int FOOD_FOR_BUYING_PAWN = 50;
+
+    internal readonly int GOLD_FOR_BUILDING_FARM = 0;
+    internal readonly int FOOD_FOR_BUILDING_FARM = 0;
+    internal readonly int WOOD_FOR_BUILDING_FARM = 50;
+    internal readonly int ORE_FOR_BUILDING_FARM = 0;
+    internal readonly int IRON_FOR_BUILDING_FARM = 0;
+
+    internal readonly int GOLD_FOR_BUILDING_WOODCUTTER = 0;
+    internal readonly int FOOD_FOR_BUILDING_WOODCUTTER = 0;
+    internal readonly int WOOD_FOR_BUILDING_WOODCUTTER = 50;
+    internal readonly int ORE_FOR_BUILDING_WOODCUTTER = 0;
+    internal readonly int IRON_FOR_BUILDING_WOODCUTTER = 0;
+
+    internal readonly int BENEFIT_FOOD_FARM = 5;
+    internal readonly int BENEFIT_WOOD_WOODCUTTER = 5;
+
+    #endregion
+
+
+    #region UNITS
 
     internal readonly int MAX_AMOUNT_STEPS_KING = 1;
     internal readonly int MAX_AMOUNT_STEPS_PAWN = 2;

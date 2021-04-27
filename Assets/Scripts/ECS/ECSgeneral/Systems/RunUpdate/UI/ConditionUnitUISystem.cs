@@ -5,7 +5,7 @@ internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
     private EcsComponentRef<SelectorUnitComponent> _selectorUnitComponentRef = default;
-    private EcsComponentRef<EconomyComponent.UnitsComponent> _economyUnitsComponentRef = default;
+    private EcsComponentRef<EconomyComponent.UnitComponent> _economyUnitsComponentRef = default;
     private EcsComponentRef<DonerComponent> _doneComponentRef = default;
 
     private PhotonPunRPC _photonPunRPC = default;

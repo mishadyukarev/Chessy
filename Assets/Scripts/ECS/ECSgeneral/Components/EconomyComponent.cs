@@ -1,15 +1,40 @@
 ﻿internal struct EconomyComponent
 {
     private int _gold;
+    private int _food;
+    private int _wood;
+    private int _ore;
+    private int _iron;
+
 
     internal int Gold
     {
         get { return _gold; }
         set { _gold = value; }
     }
+    internal int Food
+    {
+        get { return _food; }
+        set { _food = value; }
+    }
+    internal int Wood
+    {
+        get { return _wood; }
+        set { _wood = value; }
+    }
+    internal int Ore
+    {
+        get { return _ore; }
+        set { _ore = value; }
+    }
+    internal int Iron
+    {
+        get { return _iron; }
+        set { _iron = value; }
+    }
 
 
-    internal struct UnitsComponent
+    internal struct UnitComponent
     {
         private bool _isSettedKing;
 
@@ -21,7 +46,7 @@
     }
 
 
-    internal struct BuildingsComponent
+    internal struct BuildingComponent
     {
         private bool _isSettedCity;
         private int[] _xySettedCity;

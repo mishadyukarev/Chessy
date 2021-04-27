@@ -35,14 +35,26 @@ internal class StartSpawnGameManager : StartSpawnManager
 
     internal GameObject[,] CampsGO;
     internal GameObject[,] FarmsGO;
+    internal GameObject[,] WoodcuttersGO;
 
     #endregion
 
 
     #region Canvas
 
+    #region Economy
 
     internal TextMeshProUGUI GoldAmmountText;
+    internal TextMeshProUGUI FoodAmmountText;
+    internal TextMeshProUGUI WoodAmmountText;
+    internal TextMeshProUGUI OreAmmountText;
+    internal TextMeshProUGUI MetalAmmountText;
+
+    #endregion
+
+
+
+
     internal Image RightUpUnitImage;
     internal Image RightMiddleUnitImage;
     internal Image AbilitiesImage;
@@ -67,11 +79,15 @@ internal class StartSpawnGameManager : StartSpawnManager
     internal TextMeshProUGUI ProtectionCurrentUnitText;
     internal TextMeshProUGUI StepsCurrentUnitText;
 
+
     internal Button BuildingAbilityButton0;
 
     internal Button BuildingAbilityButton1;
     internal Button BuildingAbilityButton2;
     internal Button BuildingAbilityButton3;
+
+    internal Button BuildingAbilityButton4;
+
 
     internal Button UniqueAbilityButton1;
     internal Button UniqueAbilityButton2;
@@ -106,7 +122,6 @@ internal class StartSpawnGameManager : StartSpawnManager
 
     #endregion
 
-
     #endregion
 
 
@@ -136,9 +151,20 @@ internal class StartSpawnGameManager : StartSpawnManager
         GameObject.Instantiate(resourcesLoadGameManager.Canvas);
 
 
+        #region Economy Zone
+
+        GoldAmmountText = GameObject.Find("GoldAmount").GetComponent<TextMeshProUGUI>();
+        FoodAmmountText = GameObject.Find("FoodAmount").GetComponent<TextMeshProUGUI>();
+        WoodAmmountText = GameObject.Find("WoodAmount").GetComponent<TextMeshProUGUI>();
+        OreAmmountText = GameObject.Find("OreAmount").GetComponent<TextMeshProUGUI>();
+        MetalAmmountText = GameObject.Find("MetalAmount").GetComponent<TextMeshProUGUI>();
+
+        #endregion
+
+
         #region UI
 
-        GoldAmmountText = GameObject.Find("GoldAmmount").GetComponent<TextMeshProUGUI>();
+
         RightUpUnitImage = GameObject.Find("RightUpUnitImage").GetComponent<Image>();
         RightMiddleUnitImage = GameObject.Find("RightMiddleUnitImage").GetComponent<Image>();
 
@@ -161,11 +187,15 @@ internal class StartSpawnGameManager : StartSpawnManager
         ProtectionCurrentUnitText = GameObject.Find("ProtectionCurrentUnitText").GetComponent<TextMeshProUGUI>();
         StepsCurrentUnitText = GameObject.Find("StepsCurrentUnitText").GetComponent<TextMeshProUGUI>();
 
+
         BuildingAbilityButton0 = GameObject.Find("BuildingAbilityButton0").GetComponent<Button>();
 
         BuildingAbilityButton1 = GameObject.Find("BuildingAbilityButton1").GetComponent<Button>();
         BuildingAbilityButton2 = GameObject.Find("BuildingAbilityButton2").GetComponent<Button>();
         BuildingAbilityButton3 = GameObject.Find("BuildingAbilityButton3").GetComponent<Button>();
+
+        BuildingAbilityButton4 = GameObject.Find("BuildingAbilityButton4").GetComponent<Button>();
+
 
         StandartAbilityButton1 = GameObject.Find("StandartAbilityButton1").GetComponent<Button>();
         StandartAbilityButton2 = GameObject.Find("StandartAbilityButton2").GetComponent<Button>();
@@ -193,8 +223,10 @@ internal class StartSpawnGameManager : StartSpawnManager
         DonerRawImage = GameObject.Find("DonerRawImage").GetComponent<RawImage>();
 
 
+
         if (InstanceGame.IS_TEST)
         {
+
             ParentReadyZone.gameObject.SetActive(false);
         }
     }
@@ -224,6 +256,7 @@ internal class StartSpawnGameManager : StartSpawnManager
 
         CampsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
         FarmsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        WoodcuttersGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
 
         GameObject supportParent = new GameObject("Cells");
@@ -278,6 +311,7 @@ internal class StartSpawnGameManager : StartSpawnManager
 
                 CampsGO[x, y] = _cellsGO[x, y].transform.Find("CampP").gameObject;
                 FarmsGO[x, y] = _cellsGO[x, y].transform.Find("FarmP").gameObject;
+                WoodcuttersGO[x, y] = _cellsGO[x, y].transform.Find("WoodcutterP").gameObject;
             }
         }
     }

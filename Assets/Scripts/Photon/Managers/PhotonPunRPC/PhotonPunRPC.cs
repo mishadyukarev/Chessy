@@ -37,8 +37,8 @@ public partial class PhotonPunRPC : MonoBehaviour
     #region General
 
     private EcsComponentRef<EconomyComponent> _economyComponentRef = default;
-    private EcsComponentRef<EconomyComponent.BuildingsComponent> _economyBuildingsComponentRef = default;
-    private EcsComponentRef<EconomyComponent.UnitsComponent> _economyUnitsComponentRef = default;
+    private EcsComponentRef<EconomyComponent.BuildingComponent> _economyBuildingsComponentRef = default;
+    private EcsComponentRef<EconomyComponent.UnitComponent> _economyUnitsComponentRef = default;
 
     private EcsComponentRef<CellComponent>[,] _cellComponentRef = default;
     private EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef = default;
@@ -296,13 +296,13 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void AttackUnitGeneral(int[] xyPreviousCell, int[] xySelectedCell, bool isKilledAttacker, bool isKilledDefender)
     {
-        if (!isKilledAttacker && !isKilledDefender)
-        {
-            _animationAttackUnitComponentRef.Unref().XYStartCell = xyPreviousCell;
-            _animationAttackUnitComponentRef.Unref().XYEndCell = xySelectedCell;
+        //if (!isKilledAttacker && !isKilledDefender)
+        //{
+        //    _animationAttackUnitComponentRef.Unref().XYStartCell = xyPreviousCell;
+        //    _animationAttackUnitComponentRef.Unref().XYEndCell = xySelectedCell;
 
-            _systemsGeneralManager.ActiveRunSystem(true, SystemGeneralTypes.Update, nameof(AnimationAttackUnitSystem));
-        }
+        //    _systemsGeneralManager.ActiveRunSystem(true, SystemGeneralTypes.Update, nameof(AnimationAttackUnitSystem));
+        //}
     }
 
     #endregion
@@ -380,6 +380,91 @@ public partial class PhotonPunRPC : MonoBehaviour
     #endregion
 
 
+    #region Destroy
+
+    internal void Destroy(int[] xyCell) => _photonView.RPC("DestroyToMaster", RpcTarget.MasterClient, xyCell);
+
+    [PunRPC]
+    private void DestroyToMaster(int[] xyCell, PhotonMessageInfo info)
+    {
+        if (CellUnitComponent(xyCell).IsHim(info.Sender))
+        {
+            if (CellUnitComponent(xyCell).HaveMaxSteps)
+            {
+                if (info.Sender.IsMasterClient)
+                {
+                    switch (CellBuildingComponent(xyCell).BuildingType)
+                    {
+                        case BuildingTypes.City:
+
+                            EndGame(CellUnitComponent(xyCell).ActorNumber);
+
+                            break;
+
+
+                        case BuildingTypes.Farm:
+
+                            _economyBuildingsMasterComponentRef.Unref().AmountFarmMaster -= 1;
+                            CellUnitComponent(xyCell).AmountSteps = 0;
+                            CellBuildingComponent(xyCell).ResetBuilding();
+
+                            break;
+
+
+                        case BuildingTypes.Woodcutter:
+
+                            _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterMaster -= 1;
+                            CellUnitComponent(xyCell).AmountSteps = 0;
+                            CellBuildingComponent(xyCell).ResetBuilding();
+
+                            break;
+
+                        case BuildingTypes.Mine:
+                            break;
+
+                    }
+                }
+
+                else
+                {
+                    switch (CellBuildingComponent(xyCell).BuildingType)
+                    {
+                        case BuildingTypes.City:
+
+                            EndGame(CellUnitComponent(xyCell).ActorNumber);
+
+                            break;
+
+
+                        case BuildingTypes.Farm:
+
+                            _economyBuildingsMasterComponentRef.Unref().AmountFarmOther -= 1;
+                            CellUnitComponent(xyCell).AmountSteps = 0;
+                            CellBuildingComponent(xyCell).ResetBuilding();
+
+                            break;
+
+                        case BuildingTypes.Woodcutter:
+
+                            _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterOther -= 1; 
+                            CellUnitComponent(xyCell).AmountSteps = 0;
+                            CellBuildingComponent(xyCell).ResetBuilding();
+
+                            break;
+
+                        case BuildingTypes.Mine:
+                            break;
+                    }
+                }
+
+            }
+        }
+        RefreshAll();
+    }
+
+    #endregion
+
+
     #region BuyUnit
 
     internal void BuyUnit(in UnitTypes unitType) => _photonView.RPC("BuyUnitMaster", RpcTarget.MasterClient, unitType);
@@ -389,17 +474,17 @@ public partial class PhotonPunRPC : MonoBehaviour
     {
         if (info.Sender.IsMasterClient)
         {
-            if (_economyMasterComponentRef.Unref().GoldMaster >= _startValues.GOLD_FOR_BUYING_PAWN)
+            if (_economyMasterComponentRef.Unref().FoodMaster >= _startValues.FOOD_FOR_BUYING_PAWN)
             {
-                _economyMasterComponentRef.Unref().GoldMaster -= _startValues.GOLD_FOR_BUYING_PAWN;
+                _economyMasterComponentRef.Unref().FoodMaster -= _startValues.FOOD_FOR_BUYING_PAWN;
                 _economyUnitsMasterComponentRef.Unref().AmountUnitPawnMaster += _startValues.AMOUNT_FOR_TAKE_UNIT;
             }
         }
         else
         {
-            if (_economyMasterComponentRef.Unref().GoldOther >= _startValues.GOLD_FOR_BUYING_PAWN)
+            if (_economyMasterComponentRef.Unref().FoodOther >= _startValues.FOOD_FOR_BUYING_PAWN)
             {
-                _economyMasterComponentRef.Unref().GoldOther -= _startValues.GOLD_FOR_BUYING_PAWN;
+                _economyMasterComponentRef.Unref().FoodOther -= _startValues.FOOD_FOR_BUYING_PAWN;
                 _economyUnitsMasterComponentRef.Unref().AmountUnitPawnOther += _startValues.AMOUNT_FOR_TAKE_UNIT;
             }
         }

@@ -10,7 +10,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
     private PhotonPunRPC _photonPunRPC;
 
 
-    private TextMeshProUGUI _goldAmountText;
 
     private Image _rightUpUnitImage;
     private Image _rightMiddleUnitImage;
@@ -24,11 +23,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     #region Ability zone
 
-    private Button _buildingAbilityButton0;
-    private Button _buildingAbilityButton1;
-    private Button _buildingAbilityButton2;
-    private Button _buildingAbilityButton3;
-
 
 
     private Button _uniqueAbilityButton1;
@@ -39,9 +33,8 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
 
-    private EcsComponentRef<EconomyComponent> _economyComponentRef = default;
-    private EcsComponentRef<EconomyComponent.BuildingsComponent> _economyBuildingsComponentRef;
-    private EcsComponentRef<EconomyComponent.UnitsComponent> _economyUnitsComponentRef;
+    private EcsComponentRef<EconomyComponent.BuildingComponent> _economyBuildingsComponentRef;
+    private EcsComponentRef<EconomyComponent.UnitComponent> _economyUnitsComponentRef;
 
 
 
@@ -53,7 +46,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
         #region ComponetRefs
 
-        _economyComponentRef = eCSmanager.EntitiesGeneralManager.EconomyComponentRef;
         _economyBuildingsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyBuildingsComponentRef;
         _economyUnitsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyUnitsComponentRef;
 
@@ -64,7 +56,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
         #region Texts
 
-        _goldAmountText = MainGame.InstanceGame.StartSpawnGameManager.GoldAmmountText;
 
         #endregion
 
@@ -82,13 +73,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
 
         #region Ability zone
-
-        _buildingAbilityButton0 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton0;
-        _buildingAbilityButton0.onClick.AddListener(delegate { Build(BuildingTypes.City); });
-
-        _buildingAbilityButton1 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton1;
-        _buildingAbilityButton2 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton2;
-        _buildingAbilityButton3 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton3;
 
         _uniqueAbilityButton1 = MainGame.InstanceGame.StartSpawnGameManager.UniqueAbilityButton1;
         _uniqueAbilityButton2 = MainGame.InstanceGame.StartSpawnGameManager.UniqueAbilityButton2;
@@ -120,9 +104,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     public void Run()
     {
-        _goldAmountText.text = _economyComponentRef.Unref().Gold.ToString();
-
-
         var xySelectedCell = _selectorComponentRef.Unref().XYselectedCell;
 
 
@@ -132,15 +113,10 @@ internal class UISystem : CellReduction, IEcsRunSystem
             {
                 case UnitTypes.None:
 
-                    _buildingAbilityButton0.gameObject.SetActive(false);
-                    ActivateBuildingAbilities(false);
-
                     break;
 
                 case UnitTypes.King:
 
-                    _buildingAbilityButton0.gameObject.SetActive(false);
-                    ActivateBuildingAbilities(false);
                     ActivateUniqueAbilities(default, true);
 
                     break;
@@ -150,13 +126,11 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
                     if (_economyBuildingsComponentRef.Unref().IsSettedCity)
                     {
-                        _buildingAbilityButton0.gameObject.SetActive(false);
-                        ActivateBuildingAbilities(true);
+
                     }
                     else
                     {
-                        _buildingAbilityButton0.gameObject.SetActive(true);
-                        ActivateBuildingAbilities(false);
+
                     }
 
                     break;
@@ -167,8 +141,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
         }
         else
         {
-            _buildingAbilityButton0.gameObject.SetActive(false);
-            ActivateBuildingAbilities(false);
             ActivateUniqueAbilities(default, false);
             _rightDownUnitImage.gameObject.SetActive(false);
         }
@@ -196,13 +168,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
                     _improveCityButton.gameObject.SetActive(isActive);
                 }
         }
-    }
-
-    private void ActivateBuildingAbilities(bool isActive)
-    {
-        _buildingAbilityButton1.gameObject.SetActive(isActive);
-        _buildingAbilityButton2.gameObject.SetActive(isActive);
-        _buildingAbilityButton3.gameObject.SetActive(isActive);
     }
     private void ActivateUniqueAbilities(UnitTypes unitType, bool isActive)
     {

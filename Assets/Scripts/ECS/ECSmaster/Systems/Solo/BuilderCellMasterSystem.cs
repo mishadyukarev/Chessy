@@ -49,6 +49,9 @@ internal struct BuilderCellMasterComponent
         _isSettedOUT = isSetted;
     }
 }
+
+
+
 internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
@@ -98,26 +101,49 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
                     {
                         if (playerIN.IsMasterClient)
                         {
-                            if(_economyMasterComponentRef.Unref().GoldMaster >= 120)
+                            if(CanBuildFarm(playerIN, _economyMasterComponentRef))
                             {
-                                _economyMasterComponentRef.Unref().GoldMaster -= 120;
-
                                 CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
-                                if (playerIN.IsMasterClient) _economyBuildingsMasterComponentRef.Unref().AmountFarmsMaster += 1; // !!!!!
-                                else _economyBuildingsMasterComponentRef.Unref().AmountFarmsOther += 1; // !!!!!
+                                _economyBuildingsMasterComponentRef.Unref().AmountFarmMaster += 1; // !!!!!
+
+                                CellUnitComponent(xyCellIN).AmountSteps = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (CanBuildFarm(playerIN, _economyMasterComponentRef))
+                            {
+                                CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
+                                _economyBuildingsMasterComponentRef.Unref().AmountFarmOther += 1; // !!!!!
+
+                                CellUnitComponent(xyCellIN).AmountSteps = 0;
+                            }
+                        }
+                    }
+                    isBuilded = true;
+
+                    break;
+
+                case BuildingTypes.Woodcutter:
+
+                    if (CellEnvironmentComponent(xyCellIN).HaveTree)
+                    {
+                        if (playerIN.IsMasterClient)
+                        {
+                            if (CanBuildWoodcutter(playerIN, _economyMasterComponentRef))
+                            {
+                                CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
+                                _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterMaster += 1; // !!!!!
 
                                 CellUnitComponent(xyCellIN).AmountSteps -= CellUnitComponent(xyCellIN).MaxAmountSteps;
                             }
                         }
                         else
                         {
-                            if (_economyMasterComponentRef.Unref().GoldOther >= 120)
+                            if (CanBuildWoodcutter(playerIN, _economyMasterComponentRef))
                             {
-                                _economyMasterComponentRef.Unref().GoldOther -= 120;
-
                                 CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
-                                if (playerIN.IsMasterClient) _economyBuildingsMasterComponentRef.Unref().AmountFarmsMaster += 1; // !!!!!
-                                else _economyBuildingsMasterComponentRef.Unref().AmountFarmsOther += 1; // !!!!!
+                                _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterOther += 1; // !!!!!
 
                                 CellUnitComponent(xyCellIN).AmountSteps -= CellUnitComponent(xyCellIN).MaxAmountSteps;
                             }
@@ -126,10 +152,6 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
                     }
                     isBuilded = true;
 
-                    break;
-
-                case BuildingTypes.Woodcutter:
-                    isBuilded = true;
                     break;
 
                 case BuildingTypes.Mine:
@@ -160,6 +182,86 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
                 _economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther = isBuilded;
                 _economyBuildingsMasterComponentRef.Unref().XYsettedCityOther = xyCellIN;
             }
+        }
+    }
+
+    private bool CanBuildFarm(Player player, EcsComponentRef<EconomyMasterComponent> economyMasterComponentRef)
+    {
+        if (player.IsMasterClient)
+        {
+            if (economyMasterComponentRef.Unref().GoldMaster >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM
+                && economyMasterComponentRef.Unref().FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM
+                && economyMasterComponentRef.Unref().WoodMaster >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM
+                && economyMasterComponentRef.Unref().OreMaster >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM
+                && economyMasterComponentRef.Unref().IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM)
+            {
+                economyMasterComponentRef.Unref().GoldMaster -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
+                economyMasterComponentRef.Unref().FoodMaster -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
+                economyMasterComponentRef.Unref().WoodMaster -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
+                economyMasterComponentRef.Unref().OreMaster -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
+                economyMasterComponentRef.Unref().IronMaster -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
+
+                return true;
+            }
+            else return false;
+        }
+        else
+        {
+            if (economyMasterComponentRef.Unref().GoldOther >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM
+                && economyMasterComponentRef.Unref().FoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM
+                && economyMasterComponentRef.Unref().WoodOther >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM
+                && economyMasterComponentRef.Unref().OreOther >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM
+                && economyMasterComponentRef.Unref().IronOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM)
+            {
+                economyMasterComponentRef.Unref().GoldOther -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
+                economyMasterComponentRef.Unref().FoodOther -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
+                economyMasterComponentRef.Unref().WoodOther -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
+                economyMasterComponentRef.Unref().OreOther -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
+                economyMasterComponentRef.Unref().IronOther -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
+
+                return true;
+            }
+            else return false;
+        }
+    }
+
+    private bool CanBuildWoodcutter(Player player, EcsComponentRef<EconomyMasterComponent> economyMasterComponentRef)
+    {
+        if (player.IsMasterClient)
+        {
+            if (economyMasterComponentRef.Unref().GoldMaster >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER
+                && economyMasterComponentRef.Unref().FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER
+                && economyMasterComponentRef.Unref().WoodMaster >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER
+                && economyMasterComponentRef.Unref().OreMaster >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER
+                && economyMasterComponentRef.Unref().IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER)
+            {
+                economyMasterComponentRef.Unref().GoldMaster -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
+                economyMasterComponentRef.Unref().FoodMaster -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
+                economyMasterComponentRef.Unref().WoodMaster -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
+                economyMasterComponentRef.Unref().OreMaster -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
+                economyMasterComponentRef.Unref().IronMaster -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+
+                return true;
+            }
+            else return false;
+        }
+        else
+        {
+            if (economyMasterComponentRef.Unref().GoldOther >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER
+                && economyMasterComponentRef.Unref().FoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER
+                && economyMasterComponentRef.Unref().WoodOther >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER
+                && economyMasterComponentRef.Unref().OreOther >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER
+                && economyMasterComponentRef.Unref().IronOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER)
+            {
+                economyMasterComponentRef.Unref().GoldOther -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
+                economyMasterComponentRef.Unref().FoodOther -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
+                economyMasterComponentRef.Unref().WoodOther -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
+                economyMasterComponentRef.Unref().OreOther -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
+                economyMasterComponentRef.Unref().IronOther -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+
+                return true;
+            }
+            else return false;
         }
     }
 }
