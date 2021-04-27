@@ -32,6 +32,7 @@ internal class StartSpawnGameManager : StartSpawnManager
     internal GameObject[,] SpawnVisionsGO;
     internal GameObject[,] WayUnitVisionsGO;
     internal GameObject[,] EnemyVisionsGO;
+    internal GameObject[,] ZoneVisionGO;
 
     internal GameObject[,] CampsGO;
     internal GameObject[,] FarmsGO;
@@ -248,6 +249,7 @@ internal class StartSpawnGameManager : StartSpawnManager
         SpawnVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
         WayUnitVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
         EnemyVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        ZoneVisionGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
         UnitPawnsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
         UnitKingsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
@@ -303,6 +305,7 @@ internal class StartSpawnGameManager : StartSpawnManager
                 SpawnVisionsGO[x, y] = _cellsGO[x, y].transform.Find("AssignmentP").gameObject;
                 WayUnitVisionsGO[x, y] = _cellsGO[x, y].transform.Find("WayOfUnitVisionP").gameObject;
                 EnemyVisionsGO[x, y] = _cellsGO[x, y].transform.Find("EnemyVisionP").gameObject;
+                ZoneVisionGO[x, y] = _cellsGO[x, y].transform.Find("ZoneVisionP").gameObject;
 
                 UnitPawnsGO[x, y] = _cellsGO[x, y].transform.Find("UnitPawnP").gameObject;
                 UnitKingsGO[x, y] = _cellsGO[x, y].transform.Find("UnitKingP").gameObject;

@@ -23,6 +23,7 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new TheEndGameUISystem(eCSmanager), nameof(TheEndGameUISystem))
             .Add(new BuildingUISystem(eCSmanager, photonManager), nameof(BuildingUISystem))
             .Add(new EconomyUISystem(eCSmanager), nameof(EconomyUISystem))
+            .Add(new ZoneUISystem(eCSmanager), nameof(ZoneUISystem))
             .Add(new WarningUISystem(eCSmanager), nameof(WarningUISystem));
 
 
@@ -30,7 +31,8 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new RaySystem(eCSmanager), nameof(RaySystem))
             .Add(new UnitPathSystem(eCSmanager), nameof(UnitPathSystem))
             .Add(new GetterCellSystem(eCSmanager), nameof(GetterCellSystem))
-            .Add(new SoundSystem(eCSmanager), nameof(SoundSystem));
+            .Add(new SoundSystem(eCSmanager), nameof(SoundSystem))
+            .Add(new TransformerBetweenCellsSystem(eCSmanager), nameof(TransformerBetweenCellsSystem));
 
         InitAndProcessInjectsSystems();
     }

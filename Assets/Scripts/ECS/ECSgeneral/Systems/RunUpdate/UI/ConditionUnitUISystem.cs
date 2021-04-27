@@ -57,8 +57,8 @@ internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
             _damageCurrentUnitText.text = CellUnitComponent(_xySelectedCell).PowerDamage.ToString();
             _protectionCurrentUnitText.text
                 = (CellUnitComponent(_xySelectedCell).PowerProtection
-                + CellEnvironmentComponent(_xySelectedCell).PowerProtection
-                + CellBuildingComponent(_xySelectedCell).PowerProtection)
+                + CellEnvironmentComponent(_xySelectedCell).PowerProtection(CellUnitComponent(_xySelectedCell).UnitType)
+                + CellBuildingComponent(_xySelectedCell).PowerProtection(CellUnitComponent(_xySelectedCell).UnitType))
                 .ToString();
             _stepsCurrentUnitText.text = CellUnitComponent(_xySelectedCell).AmountSteps.ToString();
         }

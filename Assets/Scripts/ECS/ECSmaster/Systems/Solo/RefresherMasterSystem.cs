@@ -110,8 +110,8 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
                 {
                     _economyMasterComponent.Unref().WoodMaster += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
                 }
-                _economyMasterComponent.Unref().FoodMaster += InstanceGame.StartValuesGameConfig.ADDING_FOOD;
-                _economyMasterComponent.Unref().WoodMaster += InstanceGame.StartValuesGameConfig.ADDING_WOOD;
+                _economyMasterComponent.Unref().FoodMaster += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
+                _economyMasterComponent.Unref().WoodMaster += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
             }
             if (_economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther)
             {
@@ -125,8 +125,8 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
                 }
 
 
-                _economyMasterComponent.Unref().FoodOther += InstanceGame.StartValuesGameConfig.ADDING_FOOD;
-                _economyMasterComponent.Unref().WoodOther += InstanceGame.StartValuesGameConfig.ADDING_WOOD;
+                _economyMasterComponent.Unref().FoodOther += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
+                _economyMasterComponent.Unref().WoodOther += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
             }
 
             _economyMasterComponent.Unref().FoodMaster += _economyBuildingsMasterComponentRef.Unref().AmountFarmMaster * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;

@@ -1,5 +1,4 @@
-﻿
-public enum ForUnitPathTypes
+﻿internal enum TransformerBetweenCellsTypes
 {
     Around,
 

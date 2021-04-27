@@ -78,7 +78,12 @@ internal class BuildingUISystem : CellReduction, IEcsRunSystem
 
                         if (CellBuildingComponent(_xySelectedCell).HaveBuilding)
                         {
-                            if (!CellBuildingComponent(_xySelectedCell).IsMine)
+                            if (CellBuildingComponent(_xySelectedCell).IsMine)
+                            {
+                                if (CellBuildingComponent(_xySelectedCell).BuildingType != BuildingTypes.City)
+                                    _buildingAbilityButton4.gameObject.SetActive(true);
+                            }
+                            else
                             {
                                 _buildingAbilityButton4.gameObject.SetActive(true);
                             }

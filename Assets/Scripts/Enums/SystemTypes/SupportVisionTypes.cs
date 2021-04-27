@@ -6,5 +6,6 @@ public enum SupportVisionTypes
     Selector,
     Spawn,
     WayOfUnit,
-    Enemy
+    Enemy,
+    Zone
 }

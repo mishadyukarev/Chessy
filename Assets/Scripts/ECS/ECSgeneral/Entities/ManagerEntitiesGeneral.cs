@@ -18,6 +18,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     private EcsEntity _startGameEntity;
     private EcsEntity _rayEntity;
     private EcsEntity _animationAttackUnitEntity;
+    private EcsEntity _zoneEntity;
 
     private EcsComponentRef<CellComponent>[,] _cellComponentRef;
     private EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef;
@@ -73,6 +74,8 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal EcsComponentRef<StartGameComponent> StartGameComponentRef => _startGameEntity.Ref<StartGameComponent>();
     internal EcsComponentRef<RayComponent> RayComponentRef => _rayEntity.Ref<RayComponent>();
     internal EcsComponentRef<AnimationAttackUnitComponent> AnimationAttackUnitComponentRef => _animationAttackUnitEntity.Ref<AnimationAttackUnitComponent>();
+    internal EcsComponentRef<TransformerBetweenCellsComponent> TransformerBetweenCellsComponentRef => _soloEntity.Ref<TransformerBetweenCellsComponent>();
+    internal EcsComponentRef<ZoneComponent> ZoneComponentRef => _zoneEntity.Ref<ZoneComponent>();
 
     #endregion
 
@@ -91,7 +94,8 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
         _soloEntity = _ecsWorld.NewEntity()
             .Replace(new UnitPathsComponent(systemsGeneralManager, startValuesGameConfig, cellManager))
-            .Replace(new GetterCellComponent(startValuesGameConfig, systemsGeneralManager));
+            .Replace(new GetterCellComponent(startValuesGameConfig, systemsGeneralManager))
+            .Replace(new TransformerBetweenCellsComponent(eCSmanager));
 
         _donerEntity = _ecsWorld.NewEntity()
             .Replace(new DonerComponent());
@@ -131,6 +135,8 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         _animationAttackUnitEntity = _ecsWorld.NewEntity()
             .Replace(new AnimationAttackUnitComponent());
 
+        _zoneEntity = _ecsWorld.NewEntity()
+            .Replace(new ZoneComponent());
 
 
         #region Cells

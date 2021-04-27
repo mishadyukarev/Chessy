@@ -61,17 +61,28 @@ public struct CellComponent
 
         #region Properties
 
-        internal int PowerProtection
+        internal int PowerProtection(UnitTypes unitType)
         {
-            get
+            int powerProtection = 0;
+            switch (unitType)
             {
-                int powerProtection = 0;
+                case UnitTypes.King:
 
-                if (_haveTree) powerProtection += _startValuesGameConfig.PROTECTION_TREE;
-                if (_haveHill) powerProtection += _startValuesGameConfig.PROTECTION_HILL;
+                    if (_haveFood) powerProtection += _startValuesGameConfig.PROTECTION_FOOD_FOR_KING;
+                    if (_haveTree) powerProtection += _startValuesGameConfig.PROTECTION_TREE_FOR_KING;
+                    if (_haveHill) powerProtection += _startValuesGameConfig.PROTECTION_HILL_FOR_KING;
 
-                return powerProtection;
+                    break;
+
+                case UnitTypes.Pawn:
+
+                    if (_haveFood) powerProtection += _startValuesGameConfig.PROTECTION_FOOD_FOR_PAWN;
+                    if (_haveTree) powerProtection += _startValuesGameConfig.PROTECTION_TREE_FOR_PAWN;
+                    if (_haveHill) powerProtection += _startValuesGameConfig.PROTECTION_HILL_FOR_PAWN;
+
+                    break;
             }
+            return powerProtection;
         }
 
         internal int NeedAmountSteps
@@ -80,6 +91,7 @@ public struct CellComponent
             {
                 int amountSteps = 0;
 
+                if (_haveFood) amountSteps += _startValuesGameConfig.NEED_AMOUNT_STEPS_FOOD;
                 if (_haveTree) amountSteps += _startValuesGameConfig.NEED_AMOUNT_STEPS_TREE;
                 if (_haveHill) amountSteps += _startValuesGameConfig.NEED_AMOUNT_STEPS_HILL;
 
@@ -207,10 +219,8 @@ public struct CellComponent
 
                         case UnitTypes.Pawn:
                             return _startValues.PROTECTION_PAWN;
-
-                        default:
-                            return default;
                     }
+                    return default;
                 }
                 else return default;
 
@@ -427,19 +437,49 @@ public struct CellComponent
 
         internal BuildingTypes BuildingType => _buildingType;
         internal bool HaveBuilding => _buildingType != BuildingTypes.None;
-        internal int PowerProtection
+        internal int PowerProtection(UnitTypes unitType)
         {
-            get
+            switch (unitType)
             {
-                switch (_buildingType)
-                {
-                    case BuildingTypes.City:
-                        return _startValuesGameConfig.PROTECTION_CITY;
+                case UnitTypes.King:
 
-                    default:
-                        return default;
-                }
+                    switch (_buildingType)
+                    {
+                        case BuildingTypes.City:
+                            return _startValuesGameConfig.PROTECTION_CITY_KING;
+
+                        case BuildingTypes.Farm:
+                            return default;
+
+                        case BuildingTypes.Woodcutter:
+                            return default;
+
+                        case BuildingTypes.Mine:
+                            return default;
+                    }
+
+                    break;
+
+                case UnitTypes.Pawn:
+
+                    switch (_buildingType)
+                    {
+                        case BuildingTypes.City:
+                            return _startValuesGameConfig.PROTECTION_CITY_PAWN;
+
+                        case BuildingTypes.Farm:
+                            return default;
+
+                        case BuildingTypes.Woodcutter:
+                            return default;
+
+                        case BuildingTypes.Mine:
+                            return default;
+                    }
+
+                    break;
             }
+            return default;
         }
 
         internal int ActorNumber
@@ -514,24 +554,39 @@ public struct CellComponent
 
     public struct SupportVisionComponent
     {
+        private Player _player;
         private GameObject _selectorVisionGO;
         private GameObject _spawnVisionGO;
         private GameObject _wayUnitVisionGO;
         private GameObject _enemyVisionGO;
+        private GameObject _zoneVisionGO;
 
         internal SupportVisionComponent(int x, int y, StartSpawnGameManager startSpawnManager)
         {
+            _player = default;
+
             _selectorVisionGO = startSpawnManager.SelectorVisionsGO[x, y];
             _spawnVisionGO = startSpawnManager.SpawnVisionsGO[x, y];
             _wayUnitVisionGO = startSpawnManager.WayUnitVisionsGO[x, y];
             _enemyVisionGO = startSpawnManager.EnemyVisionsGO[x, y];
+            _zoneVisionGO = startSpawnManager.ZoneVisionGO[x, y];
         }
 
 
         #region Methods
 
-        internal void ActiveVision(bool isActive, SupportVisionTypes supportVisionType)
+        private void SetColorVision(in SpriteRenderer unitSpriteRender, in Player player)
         {
+            if (player.IsMasterClient) unitSpriteRender.color = Color.blue;
+            else unitSpriteRender.color = Color.red;
+
+            unitSpriteRender.color = new Color(0, 0, 1, 0.15f);
+        }
+
+        internal void ActiveVision(bool isActive, SupportVisionTypes supportVisionType, Player player = default)
+        {
+            _player = player;
+
             switch (supportVisionType)
             {
                 case SupportVisionTypes.None:
@@ -551,6 +606,11 @@ public struct CellComponent
 
                 case SupportVisionTypes.Enemy:
                     _enemyVisionGO.SetActive(isActive);
+                    break;
+
+                case SupportVisionTypes.Zone:
+                    _zoneVisionGO.SetActive(isActive);
+                    SetColorVision(_zoneVisionGO.GetComponent<SpriteRenderer>(), _player);
                     break;
 
                 default:

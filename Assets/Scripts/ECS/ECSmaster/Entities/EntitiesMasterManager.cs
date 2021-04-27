@@ -89,8 +89,7 @@ public class EntitiesMasterManager : EntitiesManager
 
 
 
-                if (!eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().HaveHill
-                    && !eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().HaveMountain
+                if (!eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().HaveMountain
                     && !eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().HaveTree)
                 {
                     random = Random.Range(1, 100);

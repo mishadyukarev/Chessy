@@ -99,8 +99,8 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
                         int damageToSelelected = 0;
                         damageToSelelected += CellUnitComponent(xyPreviousCellIN).PowerDamage;
                         damageToSelelected -= CellUnitComponent(xySelectedCellIN).PowerProtection;
-                        damageToSelelected -= CellEnvironmentComponent(xySelectedCellIN).PowerProtection;
-                        damageToSelelected -= CellBuildingComponent(xySelectedCellIN).PowerProtection;
+                        damageToSelelected -= CellEnvironmentComponent(xySelectedCellIN).PowerProtection(CellUnitComponent(xySelectedCellIN).UnitType);
+                        damageToSelelected -= CellBuildingComponent(xySelectedCellIN).PowerProtection(CellUnitComponent(xySelectedCellIN).UnitType);
 
                         if (damageToSelelected <= 0) damageToSelelected = 0;
 

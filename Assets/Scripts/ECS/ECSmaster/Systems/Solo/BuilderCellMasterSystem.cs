@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
+using System.Collections.Generic;
 using static MainGame;
 
 internal struct BuilderCellMasterComponent
@@ -55,15 +56,21 @@ internal struct BuilderCellMasterComponent
 internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
+    private EcsComponentRef<TransformerBetweenCellsComponent> _transformerBetweenCellsComponentRef = default;
+    private EcsComponentRef<ZoneComponent> _zoneComponentRef = default;
 
     private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitsMasterComponentRef;
     private EcsComponentRef<EconomyMasterComponent> _economyMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef;
 
 
+
+
     internal BuilderCellMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _builderCellMasterComponentRef = eCSmanager.EntitiesMasterManager.BuilderCellMasterComponentRef;
+        _transformerBetweenCellsComponentRef = eCSmanager.EntitiesGeneralManager.TransformerBetweenCellsComponentRef;
+        _zoneComponentRef = eCSmanager.EntitiesGeneralManager.ZoneComponentRef;
 
         _economyMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyMasterComponentRef;
         _economyUnitsMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyUnitsMasterComponentRef;
@@ -92,6 +99,14 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
                     CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
                     isBuilded = true;
                     CellUnitComponent(xyCellIN).AmountSteps -= CellUnitComponent(xyCellIN).MaxAmountSteps;
+
+                    if (playerIN.IsMasterClient)
+                    {
+                        _zoneComponentRef.Unref().XYMasterZone = _transformerBetweenCellsComponentRef.Unref().TryGetXYCurrentCells(false, xyCellIN);
+                    }
+                    else _zoneComponentRef.Unref().XYOtherZone = _transformerBetweenCellsComponentRef.Unref().TryGetXYCurrentCells(false, xyCellIN);
+
+
 
                     break;
 
