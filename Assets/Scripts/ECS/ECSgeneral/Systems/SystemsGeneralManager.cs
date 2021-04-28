@@ -3,6 +3,7 @@ using static MainGame;
 
 public class SystemsGeneralManager : SystemsManager
 {
+
     internal SystemsGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
 
@@ -11,8 +12,9 @@ public class SystemsGeneralManager : SystemsManager
         _updateSystems
             .Add(new InputSystem(eCSmanager), nameof(InputSystem))
             .Add(new SelectorSystem(eCSmanager, photonManager), nameof(SelectorSystem))
+            
+
             .Add(new SupportVisionSystem(eCSmanager), nameof(SupportVisionSystem))
-            .Add(new AnimationAttackUnitSystem(eCSmanager), nameof(AnimationAttackUnitSystem))
 
             .Add(new UISystem(eCSmanager, photonManager), nameof(UISystem))
             .Add(new ReadyUISystem(eCSmanager, photonManager), nameof(ReadyUISystem))
@@ -27,12 +29,14 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new WarningUISystem(eCSmanager), nameof(WarningUISystem));
 
 
-        _elseSystems
-            .Add(new RaySystem(eCSmanager), nameof(RaySystem))
+
+
+        _soloSystems
             .Add(new UnitPathSystem(eCSmanager), nameof(UnitPathSystem))
             .Add(new GetterCellSystem(eCSmanager), nameof(GetterCellSystem))
             .Add(new SoundSystem(eCSmanager), nameof(SoundSystem))
-            .Add(new TransformerBetweenCellsSystem(eCSmanager), nameof(TransformerBetweenCellsSystem));
+            .Add(new TransformerBetweenCellsSystem(eCSmanager), nameof(TransformerBetweenCellsSystem))
+            .Add(new RaySystem(eCSmanager), nameof(RaySystem));
 
         InitAndProcessInjectsSystems();
     }
@@ -41,8 +45,8 @@ public class SystemsGeneralManager : SystemsManager
     {
         switch (systemGeneralType)
         {
-            case SystemGeneralTypes.Else:
-                _currentSystemsForInvoke = _elseSystems;
+            case SystemGeneralTypes.Solo:
+                _currentSystemsForInvoke = _soloSystems;
                 break;
 
             default:
@@ -62,13 +66,6 @@ public class SystemsGeneralManager : SystemsManager
 
             case SystemGeneralTypes.TimeUpdate:
                 _currentSystemsForInvoke = _timeUpdateSystems;
-                break;
-
-            case SystemGeneralTypes.Else:
-                _currentSystemsForInvoke = _elseSystems;
-                break;
-
-            default:
                 break;
         }
 

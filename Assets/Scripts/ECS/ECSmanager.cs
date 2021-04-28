@@ -58,12 +58,19 @@ public sealed class ECSmanager
         }     
     }
 
-    public void Run()
+    public void Update()
     {
-        _systemsGeneralManager.RunUpdate();
+        _systemsGeneralManager.Update();
 
-        if (InstanceGame.IsMasterClient) _systemsMasterManager.RunUpdate();
-        else _systemsOtherManager.RunUpdate();
+        if (InstanceGame.IsMasterClient) _systemsMasterManager.Update();
+        else _systemsOtherManager.Update();
+    }
+    internal void FixedUpdate()
+    {
+        _systemsGeneralManager.FixedUpdate();
+
+        if (InstanceGame.IsMasterClient) _systemsMasterManager.FixedUpdate();
+        else _systemsOtherManager.FixedUpdate();
     }
 
     public void OnDestroy()

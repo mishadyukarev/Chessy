@@ -2,5 +2,5 @@
 {
     Update,
     TimeUpdate,
-    Else,
+    Solo,
 }

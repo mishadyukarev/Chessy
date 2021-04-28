@@ -6,7 +6,7 @@ public sealed class SystemsMasterManager : SystemsManager
 
     internal void CreateInitSystems(ECSmanager eCSmanager,  PhotonGameManager photonGameManager)
     {
-        _elseSystems
+        _soloSystems
             .Add(new RefresherMasterSystem(eCSmanager), nameof(RefresherMasterSystem))
             .Add(new SetterUnitMasterSystem(eCSmanager), nameof(SetterUnitMasterSystem))
             .Add(new ShiftUnitMasterSystem(eCSmanager, photonGameManager), nameof(ShiftUnitMasterSystem))
@@ -24,7 +24,7 @@ public sealed class SystemsMasterManager : SystemsManager
         switch (systemType)
         {
             case SystemMasterTypes.Else:
-                _currentSystemsForInvoke = _elseSystems;
+                _currentSystemsForInvoke = _soloSystems;
                 break;
 
             default:

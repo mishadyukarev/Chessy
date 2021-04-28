@@ -22,8 +22,6 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
     private bool _canExecuteStartClick = true;
     private bool _isStartSelectedDirect = true;
 
-    private RaycastHit2D _raycastHit2D;
-
     #endregion
 
 
@@ -40,9 +38,9 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
     #endregion
 
-
-    private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
     private int[] _xyPreviousCell => _selectorComponentRef.Unref().XYpreviousCell;
+    private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
+
     private List<int[]> _xyAvailableCellsForShift
     {
         get { return _selectorComponentRef.Unref().XYavailableCellsForShift; }
@@ -53,6 +51,8 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
         get { return _selectorComponentRef.Unref().XYavailableCellsForAttack; }
         set { _selectorComponentRef.Unref().XYavailableCellsForAttack = value; }
     }
+
+    private RaycastHit2D _raycastHit2D => _rayComponentRef.Unref().RaycastHit2D;
 
 
     internal SelectorSystem(ECSmanager eCSmanager, PhotonGameManager photonManager) : base(eCSmanager)
@@ -79,15 +79,18 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
     public void Run()
     {
-        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(RaySystem));
-        _raycastHit2D = _rayComponentRef.Unref().RaycastHit2D;
+        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Solo, nameof(RaySystem));
 
         if (_raycastHit2D)
         {
             if (_raycastHit2D.collider.gameObject.tag == _nameManager.TAG_CELL)
             {
-                if (_getterCellComponentRef.Unref().TryGetXYCurrentCell(_raycastHit2D, out var xyCurrentCell))
+                _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Solo, nameof(GetterCellSystem));
+
+                if (_selectorComponentRef.Unref().IsGettedCell)
                 {
+                    var xyCurrentCell = _selectorComponentRef.Unref().XYcurrentCell;
+
                     if (_inputComponentRef.Unref().IsClick)
                     {
                         if (_buttonComponent.Unref().IsDone)

@@ -4,8 +4,11 @@ using System.Collections.Generic;
 
 public struct SelectorComponent
 {
-    private int[] _xySelectedCell;
+    private int[] _xyCurrentCell;
     private int[] _xyPreviousCell;
+    private int[] _xySelectedCell;
+
+    private bool _isGettedCell;
 
     private Action _setterUnitDelegate;
     private Action _attackUnitDelegate;
@@ -16,6 +19,12 @@ public struct SelectorComponent
     internal List<int[]> XYavailableCellsForShift;
     internal List<int[]> XYavailableCellsForAttack;
 
+    internal int[] XYcurrentCell
+    {
+        get { return _xyCurrentCell; }
+        set { _xyCurrentCell = value; }
+    }
+
     internal int[] XYpreviousCell
     {
         get { return _xyPreviousCell; }
@@ -25,6 +34,13 @@ public struct SelectorComponent
     {
         get { return _xySelectedCell; }
         set { _xySelectedCell = value; }
+    }
+
+
+    internal bool IsGettedCell
+    {
+        get { return _isGettedCell; }
+        set { _isGettedCell = value; }
     }
 
     internal Action SetterUnitDelegate
@@ -45,8 +61,11 @@ public struct SelectorComponent
 
     internal SelectorComponent(StartValuesGameConfig nameValueManager)
     {
+        _xyCurrentCell = new int[nameValueManager.XY_FOR_ARRAY];
         _xySelectedCell = new int[nameValueManager.XY_FOR_ARRAY];
         _xyPreviousCell = new int[nameValueManager.XY_FOR_ARRAY];
+
+        _isGettedCell = default;
 
         _setterUnitDelegate = default;
         _attackUnitDelegate = default;

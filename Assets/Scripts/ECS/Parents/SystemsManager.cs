@@ -6,8 +6,9 @@ public abstract class SystemsManager
     protected EcsWorld _ecsWorld;
 
     protected EcsSystems _updateSystems;
+    protected EcsSystems _fixedUpdateSystems;
     protected EcsSystems _timeUpdateSystems;
-    protected EcsSystems _elseSystems;
+    protected EcsSystems _soloSystems;
 
     protected EcsSystems _currentSystemsForInvoke;
 
@@ -16,23 +17,28 @@ public abstract class SystemsManager
         _ecsWorld = ecsWorld;
 
         _updateSystems = new EcsSystems(ecsWorld);
+        _fixedUpdateSystems = new EcsSystems(ecsWorld);
+
         _timeUpdateSystems = new EcsSystems(ecsWorld);
-        _elseSystems = new EcsSystems(ecsWorld);
+        _soloSystems = new EcsSystems(ecsWorld);
     }
 
 
     internal void InitAndProcessInjectsSystems()
     {
         _updateSystems.ProcessInjects();
+        _fixedUpdateSystems.ProcessInjects();
         _timeUpdateSystems.ProcessInjects();
-        _elseSystems.ProcessInjects();
+        _soloSystems.ProcessInjects();
 
         _updateSystems.Init();
-        _timeUpdateSystems.ProcessInjects();
-        _elseSystems.Init();
+        _fixedUpdateSystems.Init();
+        _timeUpdateSystems.Init();
+        _soloSystems.Init();
     }
 
-    internal void RunUpdate() => _updateSystems.Run();
+    internal void Update() => _updateSystems.Run();
+    internal void FixedUpdate() => _fixedUpdateSystems.Run();
 
     internal void Destroy() => _updateSystems.Destroy();
 

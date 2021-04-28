@@ -25,7 +25,7 @@ public struct GetterCellComponent
     {
         _raycastHit2dIN = raycastHit2D;
 
-        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(GetterCellSystem));
+        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Solo, nameof(GetterCellSystem));
 
         xyCurrentCell = _xyCurrentCellOUT;
         return _isReceivedOUT;
@@ -48,33 +48,39 @@ public struct GetterCellComponent
 public sealed class GetterCellSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<GetterCellComponent> _getterCellComponentRef = default;
+    private EcsComponentRef<RayComponent> _rayComponentRef = default;
+    private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
 
     internal GetterCellSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _getterCellComponentRef = eCSmanager.EntitiesGeneralManager.GetterCellComponentRef;
+        _rayComponentRef = eCSmanager.EntitiesGeneralManager.RayComponentRef;
+        _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
     }
 
     public void Run()
     {
-        _getterCellComponentRef.Unref().Unpack(out RaycastHit2D raycastHit2dIN);
-
-        if (raycastHit2dIN != default)
+        if (_rayComponentRef.Unref().RaycastHit2D != default)
         {
             for (int x = 0; x < Xcount; x++)
             {
                 for (int y = 0; y < Ycount; y++)
                 {
                     int one = CellComponent(x, y).InstanceIDcell;
-                    int two = raycastHit2dIN.transform.gameObject.GetInstanceID();
+                    int two = _rayComponentRef.Unref().RaycastHit2D.transform.gameObject.GetInstanceID();
 
                     if (one == two)
                     {
-                        _getterCellComponentRef.Unref().Pack(new int[] { x, y }, true);
+                        _selectorComponentRef.Unref().XYcurrentCell = new int[] { x, y };
+                        _selectorComponentRef.Unref().IsGettedCell = true;
+                        //_getterCellComponentRef.Unref().Pack(new int[] { x, y }, true);
                         return;
                     }
                 }
             }
-            _getterCellComponentRef.Unref().Pack(new int[] { -1, -1 }, false);
+            _selectorComponentRef.Unref().XYcurrentCell = new int[] { -1, -1 };
+            _selectorComponentRef.Unref().IsGettedCell = false;
+            //_getterCellComponentRef.Unref().Pack(new int[] { -1, -1 }, false);
         }
     }
 }

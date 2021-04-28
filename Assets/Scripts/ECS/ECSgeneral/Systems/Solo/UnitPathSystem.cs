@@ -37,7 +37,7 @@ public struct UnitPathsComponent
         _cellManager.CopyXYinTo(xyStartCellIN, _xyStartCellIN);
         _playerIN = playerIN;
 
-        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(UnitPathSystem));
+        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Solo, nameof(UnitPathSystem));
 
         return _cellManager.CopyListXY(_xyAvailableCellsOUT);
     }

@@ -49,7 +49,12 @@ internal sealed class MainGame : Main
 
     private void Update()
     {
-        _eCSmanager.Run();
+        _eCSmanager.Update();
+    }
+
+    private void FixedUpdate()
+    {
+        _eCSmanager.FixedUpdate();
     }
 
     private void OnDestroy() { }

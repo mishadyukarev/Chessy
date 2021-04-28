@@ -40,7 +40,7 @@ internal struct TransformerBetweenCellsComponent
         _isFromStartIN = isFromStartIN;
         InstanceGame.CellManager.CopyXYinTo(xyStartCellIN, _xyStartCellIN);
 
-        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(TransformerBetweenCellsSystem));
+        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Solo, nameof(TransformerBetweenCellsSystem));
 
         return InstanceGame.CellManager.CopyXY(_xyCurrentCellOUT);
     }
@@ -57,7 +57,7 @@ internal struct TransformerBetweenCellsComponent
         _isFromStartIN = isFromStartIN;
         InstanceGame.CellManager.CopyXYinTo(xyStartCellIN, _xyStartCellIN);
 
-        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Else, nameof(TransformerBetweenCellsSystem));
+        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Solo, nameof(TransformerBetweenCellsSystem));
 
         return InstanceGame.CellManager.CopyListXY(_xyCurrentCellsOUT);
     }
