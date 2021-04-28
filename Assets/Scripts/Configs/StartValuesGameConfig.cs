@@ -32,11 +32,11 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_GOLD_MASTER = 0;
     internal readonly int AMOUNT_GOLD_OTHER = 0;
 
-    internal readonly int AMOUNT_FOOD_MASTER = 0;
-    internal readonly int AMOUNT_FOOD_OTHER = 0;
+    internal readonly int AMOUNT_FOOD_MASTER = 100;
+    internal readonly int AMOUNT_FOOD_OTHER = 100;
 
-    internal readonly int AMOUNT_WOOD_MASTER = 0;
-    internal readonly int AMOUNT_WOOD_OTHER = 0;
+    internal readonly int AMOUNT_WOOD_MASTER = 100;
+    internal readonly int AMOUNT_WOOD_OTHER = 100;
 
     internal readonly int AMOUNT_ORE_MASTER = 0;
     internal readonly int AMOUNT_ORE_OTHER = 0;
@@ -89,7 +89,7 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region Health
 
-    internal readonly int AMOUNT_HEALTH_KING = 200;
+    internal readonly int AMOUNT_HEALTH_KING = 300;
     internal readonly int AMOUNT_HEALTH_PAWN = 100;
 
 

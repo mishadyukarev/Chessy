@@ -11,7 +11,6 @@ public class PhotonGameManager
     private PhotonPunRPC _photonPunRPC;
     private PhotonManagerScene _photonManagerScene;
 
-    public PhotonView PhotonView => _photonView;
     public PhotonManagerScene PhotonManagerScene => _photonManagerScene;
     public PhotonPunRPC PhotonPunRPC => _photonPunRPC;
 
@@ -31,7 +30,7 @@ public class PhotonGameManager
         _photonManagerScene = networkGO.GetComponent<PhotonManagerScene>();
         _photonPunRPC = networkGO.GetComponent<PhotonPunRPC>();
 
-        _photonPunRPC.Constructor(this);
+        _photonPunRPC.Constructor(_photonView);
 
 
         _photonView.FindObservables(true);

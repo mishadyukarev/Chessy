@@ -7,8 +7,8 @@ public abstract class SystemsManager
 
     protected EcsSystems _updateSystems;
     protected EcsSystems _fixedUpdateSystems;
-    protected EcsSystems _timeUpdateSystems;
     protected EcsSystems _multipleSystems;
+    protected EcsSystems _soloSystems;
 
     protected EcsSystems _currentSystemsForInvoke;
 
@@ -18,9 +18,8 @@ public abstract class SystemsManager
 
         _updateSystems = new EcsSystems(ecsWorld);
         _fixedUpdateSystems = new EcsSystems(ecsWorld);
-
-        _timeUpdateSystems = new EcsSystems(ecsWorld);
         _multipleSystems = new EcsSystems(ecsWorld);
+        _soloSystems = new EcsSystems(ecsWorld);
     }
 
 
@@ -28,13 +27,13 @@ public abstract class SystemsManager
     {
         _updateSystems.ProcessInjects();
         _fixedUpdateSystems.ProcessInjects();
-        _timeUpdateSystems.ProcessInjects();
         _multipleSystems.ProcessInjects();
+        _soloSystems.ProcessInjects();
 
         _updateSystems.Init();
         _fixedUpdateSystems.Init();
-        _timeUpdateSystems.Init();
         _multipleSystems.Init();
+        _soloSystems.Init();
     }
 
     internal void Update() => _updateSystems.Run();

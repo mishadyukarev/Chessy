@@ -6,12 +6,12 @@ public sealed class SystemsMasterManager : SystemsManager
 
     internal void CreateInitSystems(ECSmanager eCSmanager,  PhotonGameManager photonGameManager)
     {
-        _updateSystems
-            .Add(new RefresherMasterSystem(eCSmanager), nameof(RefresherMasterSystem));
-
+        _soloSystems
+            .Add(new RefresherMasterSystem(eCSmanager), nameof(RefresherMasterSystem))
+            .Add(new VisibilityUnitsMasterSystem(eCSmanager), nameof(VisibilityUnitsMasterSystem));
 
         _multipleSystems
-            .Add(new RefresherMasterSystem(eCSmanager), nameof(RefresherMasterSystem))
+            
             .Add(new SetterUnitMasterSystem(eCSmanager), nameof(SetterUnitMasterSystem))
             .Add(new ShiftUnitMasterSystem(eCSmanager, photonGameManager), nameof(ShiftUnitMasterSystem))
             .Add(new BuilderCellMasterSystem(eCSmanager), nameof(BuilderCellMasterSystem))
@@ -34,6 +34,10 @@ public sealed class SystemsMasterManager : SystemsManager
         {
             case SystemMasterTypes.Multiple:
                 _currentSystemsForInvoke = _multipleSystems;
+                break;
+
+            case SystemMasterTypes.Solo:
+                _currentSystemsForInvoke = _soloSystems;
                 break;
 
             default:

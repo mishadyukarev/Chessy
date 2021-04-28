@@ -7,6 +7,7 @@ public class EntitiesMasterManager : EntitiesManager
     private EcsEntity _economyEntity;
     private EcsEntity _readyEntity;
     private EcsEntity _theEndGameEntity;
+    private EcsEntity _fromPlayerEntity;
 
 
     #region Properties
@@ -34,6 +35,7 @@ public class EntitiesMasterManager : EntitiesManager
 
     internal EcsComponentRef<ReadyMasterComponent> ReadyMasterComponentRef => _readyEntity.Ref<ReadyMasterComponent>();
     internal EcsComponentRef<TheEndGameMasterComponent> TheEndGameMasterComponentRef => _theEndGameEntity.Ref<TheEndGameMasterComponent>();
+    internal EcsComponentRef<FromInfoComponent> FromInfoComponentRef => _fromPlayerEntity.Ref<FromInfoComponent>();
 
     #endregion
 
@@ -51,7 +53,7 @@ public class EntitiesMasterManager : EntitiesManager
             .Replace(new BuilderCellMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.CellManager, eCSmanager.SystemsMasterManager))
             .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager))
             .Replace(new ProtecterUnitMasterComponent(eCSmanager))
-            .Replace(new RefresherMasterComponent(eCSmanager));
+            .Replace(new RefresherMasterComponent());
 
 
         _economyEntity = _ecsWorld.NewEntity()
@@ -66,6 +68,10 @@ public class EntitiesMasterManager : EntitiesManager
 
         _theEndGameEntity = _ecsWorld.NewEntity()
             .Replace(new TheEndGameMasterComponent());
+
+
+        _fromPlayerEntity = _ecsWorld.NewEntity()
+            .Replace(new FromInfoComponent());
 
 
         #region Cells

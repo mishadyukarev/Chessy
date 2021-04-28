@@ -1,16 +1,16 @@
 ﻿using ExitGames.Client.Photon;
 using Leopotam.Ecs;
 using Photon.Pun;
+using Photon.Realtime;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using static MainGame;
 
 public partial class PhotonPunRPC : MonoBehaviour
 {
     private PhotonView _photonView = default;
-    private StartValuesGameConfig _startValues = default;
-    private CellManager _cellManager = default;
-    private SystemsGeneralManager _systemsGeneralManager = default;
+    private SystemsMasterManager _systemsMasterManager = default;
 
 
     #region ComponetsRef
@@ -23,13 +23,14 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent> _economyMasterComponentRef = default;
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
-    private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitsMasterComponentRef = default;
+    private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef = default;
     private EcsComponentRef<GetterUnitMasterComponent> _getterUnitMasterComponentRef = default;
     private EcsComponentRef<ProtecterUnitMasterComponent> _protecterUnitMasterComponentRef = default;
     private EcsComponentRef<RefresherMasterComponent> _refresherMasterComponentRef = default;
     private EcsComponentRef<ReadyMasterComponent> _readyMasterComponentRef = default;
     private EcsComponentRef<TheEndGameMasterComponent> _theEndMasterComponentRef = default;
+    private EcsComponentRef<FromInfoComponent> _fromInfoComponentRef = default;
 
     #endregion
 
@@ -54,29 +55,32 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<TheEndGameComponent> _theEndComponentRef = default;
     private EcsComponentRef<StartGameComponent> _startGameComponentRef = default;
     private EcsComponentRef<AnimationAttackUnitComponent> _animationAttackUnitComponentRef = default;
+    private EcsComponentRef<TransformerBetweenCellsComponent> _transformerBetweenCellsComponentRef = default;
 
     #endregion
 
     #endregion
+
 
     private ref CellComponent CellComponent(params int[] xy)
-        => ref _cellComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
+        => ref _cellComponentRef[xy[_startValuesGameConfig.X], xy[_startValuesGameConfig.Y]].Unref();
     private ref CellComponent.UnitComponent CellUnitComponent(params int[] xy)
-        => ref _cellUnitComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
+        => ref _cellUnitComponentRef[xy[_startValuesGameConfig.X], xy[_startValuesGameConfig.Y]].Unref();
     private ref CellComponent.EnvironmentComponent CellEnvironmentComponent(params int[] xy)
-        => ref _cellEnvironmentComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
+        => ref _cellEnvironmentComponentRef[xy[_startValuesGameConfig.X], xy[_startValuesGameConfig.Y]].Unref();
     private ref CellComponent.SupportVisionComponent CellSupportVisionComponent(params int[] xy)
-        => ref _cellSupportVisionComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
+        => ref _cellSupportVisionComponentRef[xy[_startValuesGameConfig.X], xy[_startValuesGameConfig.Y]].Unref();
     private ref CellComponent.BuildingComponent CellBuildingComponent(params int[] xy)
-        => ref _cellBuildingComponentRef[xy[_startValues.X], xy[_startValues.Y]].Unref();
+        => ref _cellBuildingComponentRef[xy[_startValuesGameConfig.X], xy[_startValuesGameConfig.Y]].Unref();
+
+    private StartValuesGameConfig _startValuesGameConfig => InstanceGame.StartValuesGameConfig;
+    private CellManager _cellManager => InstanceGame.CellManager;
 
 
 
-    internal void Constructor(PhotonGameManager photonManager)
+    internal void Constructor(PhotonView photonView)
     {
-        _photonView = photonManager.PhotonView;
-        _startValues = InstanceGame.StartValuesGameConfig;
-        _cellManager = InstanceGame.CellManager;
+        _photonView = photonView;
 
         PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
     }
@@ -85,6 +89,9 @@ public partial class PhotonPunRPC : MonoBehaviour
     {
         if (InstanceGame.IsMasterClient)
         {
+            _systemsMasterManager = eCSmanager.SystemsMasterManager;
+
+
             var entitiesMasterManager = eCSmanager.EntitiesMasterManager;
 
             _setterUnitMasterComponentRef = entitiesMasterManager.SetterUnitMasterComponentRef;
@@ -93,13 +100,14 @@ public partial class PhotonPunRPC : MonoBehaviour
             _attackUnitMasterComponentRef = entitiesMasterManager.AttackUnitMasterComponentRef;
             _economyMasterComponentRef = entitiesMasterManager.EconomyMasterComponentRef;
             _builderCellMasterComponentRef = entitiesMasterManager.BuilderCellMasterComponentRef;
-            _economyUnitsMasterComponentRef = entitiesMasterManager.EconomyUnitsMasterComponentRef;
+            _economyUnitMasterComponentRef = entitiesMasterManager.EconomyUnitsMasterComponentRef;
             _economyBuildingsMasterComponentRef = entitiesMasterManager.EconomyBuildingsMasterComponentRef;
             _getterUnitMasterComponentRef = entitiesMasterManager.GetterUnitMasterComponentRef;
             _protecterUnitMasterComponentRef = entitiesMasterManager.ProtecterUnitMasterComponentRef;
             _refresherMasterComponentRef = entitiesMasterManager.RefresherMasterComponentRef;
             _readyMasterComponentRef = entitiesMasterManager.ReadyMasterComponentRef;
             _theEndMasterComponentRef = entitiesMasterManager.TheEndGameMasterComponentRef;
+            _fromInfoComponentRef = entitiesMasterManager.FromInfoComponentRef;
         }
 
 
@@ -123,8 +131,7 @@ public partial class PhotonPunRPC : MonoBehaviour
         _theEndComponentRef = entitiesGeneralManager.TheEndGameComponentRef;
         _startGameComponentRef = eCSmanager.EntitiesGeneralManager.StartGameComponentRef;
         _animationAttackUnitComponentRef = eCSmanager.EntitiesGeneralManager.AnimationAttackUnitComponentRef;
-
-        _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
+        _transformerBetweenCellsComponentRef = eCSmanager.EntitiesGeneralManager.TransformerBetweenCellsComponentRef;
 
 
         RefreshAll();
@@ -183,30 +190,41 @@ public partial class PhotonPunRPC : MonoBehaviour
 
     #region Done
 
-    public void Done(in bool isDone) => _photonView.RPC("DoneToMaster", RpcTarget.MasterClient, isDone);
+    internal void Done(in bool isDone) => _photonView.RPC(nameof(DoneToMaster), RpcTarget.MasterClient, isDone);
 
     [PunRPC]
     private void DoneToMaster(bool isDone, PhotonMessageInfo info)
     {
-        if (info.Sender.IsMasterClient && _economyUnitsMasterComponentRef.Unref().IsSettedKingMaster 
-            || !info.Sender.IsMasterClient && _economyUnitsMasterComponentRef.Unref().IsSettedKingOther)
+        if (info.Sender.IsMasterClient && _economyUnitMasterComponentRef.Unref().IsSettedKingMaster 
+            || !info.Sender.IsMasterClient && _economyUnitMasterComponentRef.Unref().IsSettedKingOther)
         {
-            _photonView.RPC("DoneToGeneral", info.Sender, isDone);
+            _photonView.RPC(nameof(DoneToGeneral), info.Sender, false, isDone);
 
-            if (_refresherMasterComponentRef.Unref().TryRefresh(isDone, info.Sender))
+            _fromInfoComponentRef.Unref().FromInfo = info;
+            _refresherMasterComponentRef.Unref().IsDone = isDone;
+            _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Solo, nameof(RefresherMasterSystem));
+
+            if (_refresherMasterComponentRef.Unref().IsRefreshed)
             {
-                _photonView.RPC("DoneToGeneral", RpcTarget.All, false);
+                _photonView.RPC(nameof(DoneToGeneral), RpcTarget.All, false, false);
+                RefreshAll();
             }
-
-            RefreshAll();
         }
         else
         {
-            _photonView.RPC("DoneToGeneral", info.Sender);
+            _photonView.RPC(nameof(DoneToGeneral), info.Sender, true, false);
         }
     }
-    [PunRPC] private void DoneToGeneral() => _buttonComponentRef.Unref().IsMistaked = true;
-    [PunRPC] private void DoneToGeneral(bool isDone) => _buttonComponentRef.Unref().IsDone = isDone;
+
+    [PunRPC]
+    private void DoneToGeneral(bool isMistaked, bool isDone)
+    {
+        if (isMistaked) _buttonComponentRef.Unref().IsMistaked = isMistaked;
+        else
+        {
+            _buttonComponentRef.Unref().IsDone = isDone;
+        }
+    }
 
     #endregion
 
@@ -249,8 +267,8 @@ public partial class PhotonPunRPC : MonoBehaviour
 
         if (unitType == UnitTypes.King)
         {
-            if (info.Sender.IsMasterClient) _economyUnitsMasterComponentRef.Unref().IsSettedKingMaster = isSetted;
-            else _economyUnitsMasterComponentRef.Unref().IsSettedKingOther = isSetted;
+            if (info.Sender.IsMasterClient) _economyUnitMasterComponentRef.Unref().IsSettedKingMaster = isSetted;
+            else _economyUnitMasterComponentRef.Unref().IsSettedKingOther = isSetted;
         }
 
 
@@ -356,7 +374,7 @@ public partial class PhotonPunRPC : MonoBehaviour
         {
             CellUnitComponent(xyCell).IsRelaxed = true;
             CellUnitComponent(xyCell).IsProtected = false;
-            CellUnitComponent(xyCell).AmountSteps -= _startValues.AMOUNT_FOR_TAKE_UNIT;
+            CellUnitComponent(xyCell).AmountSteps -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
         }
 
         RefreshAll();
@@ -382,10 +400,10 @@ public partial class PhotonPunRPC : MonoBehaviour
 
     #region Destroy
 
-    internal void Destroy(int[] xyCell) => _photonView.RPC("DestroyToMaster", RpcTarget.MasterClient, xyCell);
+    internal void DestroyBuilding(int[] xyCell) => _photonView.RPC(nameof(DestroyBuildingMaster), RpcTarget.MasterClient, xyCell);
 
     [PunRPC]
-    private void DestroyToMaster(int[] xyCell, PhotonMessageInfo info)
+    private void DestroyBuildingMaster(int[] xyCell, PhotonMessageInfo info)
     {
         if (CellUnitComponent(xyCell).IsHim(info.Sender))
         {
@@ -474,18 +492,18 @@ public partial class PhotonPunRPC : MonoBehaviour
     {
         if (info.Sender.IsMasterClient)
         {
-            if (_economyMasterComponentRef.Unref().FoodMaster >= _startValues.FOOD_FOR_BUYING_PAWN)
+            if (_economyMasterComponentRef.Unref().FoodMaster >= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN)
             {
-                _economyMasterComponentRef.Unref().FoodMaster -= _startValues.FOOD_FOR_BUYING_PAWN;
-                _economyUnitsMasterComponentRef.Unref().AmountUnitPawnMaster += _startValues.AMOUNT_FOR_TAKE_UNIT;
+                _economyMasterComponentRef.Unref().FoodMaster -= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+                _economyUnitMasterComponentRef.Unref().AmountUnitPawnMaster += _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
             }
         }
         else
         {
-            if (_economyMasterComponentRef.Unref().FoodOther >= _startValues.FOOD_FOR_BUYING_PAWN)
+            if (_economyMasterComponentRef.Unref().FoodOther >= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN)
             {
-                _economyMasterComponentRef.Unref().FoodOther -= _startValues.FOOD_FOR_BUYING_PAWN;
-                _economyUnitsMasterComponentRef.Unref().AmountUnitPawnOther += _startValues.AMOUNT_FOR_TAKE_UNIT;
+                _economyMasterComponentRef.Unref().FoodOther -= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+                _economyUnitMasterComponentRef.Unref().AmountUnitPawnOther += _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
             }
         }
 
@@ -493,6 +511,148 @@ public partial class PhotonPunRPC : MonoBehaviour
     }
 
     #endregion
+
+
+    #region Refresh
+
+    internal void RefreshAll() => _photonView.RPC(nameof(RefreshAllMaster), RpcTarget.MasterClient);
+
+    [PunRPC]
+    private void RefreshAllMaster()
+    {
+        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Solo, nameof(VisibilityUnitsMasterSystem));
+
+        List<object> listObjects = new List<object>();
+        for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
+        {
+            for (int y = 0; y < _startValuesGameConfig.CELL_COUNT_Y; y++)
+            {
+                listObjects.Add(CellUnitComponent(x, y).IsActiveUnitOther);
+                listObjects.Add(CellUnitComponent(x, y).UnitType);
+                listObjects.Add(CellUnitComponent(x, y).ActorNumber);
+                listObjects.Add(CellUnitComponent(x, y).AmountSteps);
+                listObjects.Add(CellUnitComponent(x, y).AmountHealth);
+                listObjects.Add(CellUnitComponent(x, y).PowerDamage);
+                listObjects.Add(CellUnitComponent(x, y).IsProtected);
+                listObjects.Add(CellUnitComponent(x, y).IsRelaxed);
+
+                listObjects.Add(CellEnvironmentComponent(x, y).HaveFood);
+                listObjects.Add(CellEnvironmentComponent(x, y).HaveTree);
+                listObjects.Add(CellEnvironmentComponent(x, y).HaveHill);
+                listObjects.Add(CellEnvironmentComponent(x, y).HaveMountain);
+
+                listObjects.Add(CellBuildingComponent(x, y).BuildingType);
+                listObjects.Add(CellBuildingComponent(x, y).ActorNumber);
+            }
+        }
+        object[] objects = new object[listObjects.Count];
+        for (int i = 0; i < objects.Length; i++) objects[i] = listObjects[i];
+
+        _photonView.RPC(nameof(RefreshCellsGeneral), RpcTarget.Others, objects);
+
+
+
+
+        objects = new object[]
+        {
+            _economyMasterComponentRef.Unref().GoldOther,
+            _economyMasterComponentRef.Unref().FoodOther,
+            _economyMasterComponentRef.Unref().WoodOther,
+            _economyMasterComponentRef.Unref().OreOther,
+            _economyMasterComponentRef.Unref().IronOther,
+            _economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther,
+            _economyBuildingsMasterComponentRef.Unref().XYsettedCityOther,
+            _economyUnitMasterComponentRef.Unref().IsSettedKingOther,
+        };
+        _photonView.RPC(nameof(RefreshEconomyGeneral), RpcTarget.Others, objects);
+
+        objects = new object[]
+        {
+            _economyMasterComponentRef.Unref().GoldMaster,
+            _economyMasterComponentRef.Unref().FoodMaster,
+            _economyMasterComponentRef.Unref().WoodMaster,
+            _economyMasterComponentRef.Unref().OreMaster,
+            _economyMasterComponentRef.Unref().IronMaster,
+            _economyBuildingsMasterComponentRef.Unref().IsBuildedCityMaster,
+            _economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster,
+            _economyUnitMasterComponentRef.Unref().IsSettedKingMaster,
+        };
+        _photonView.RPC(nameof(RefreshEconomyGeneral), RpcTarget.MasterClient, objects);
+    }
+
+    [PunRPC]
+    private void RefreshCellsGeneral(object[] objects)
+    {
+        int i = 0;
+        for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
+        {
+            for (int y = 0; y < _startValuesGameConfig.CELL_COUNT_Y; y++)
+            {
+                bool isActiveUnit = (bool)objects[i++];
+                UnitTypes unitType = (UnitTypes)objects[i++];
+                int actorNumber = (int)objects[i++];
+                int amountSteps = (int)objects[i++];
+                int amountHealth = (int)objects[i++];
+                int powerDamage = (int)objects[i++];
+                bool isProtected = (bool)objects[i++];
+                bool isRelaxed = (bool)objects[i++];
+
+                bool haveFood = (bool)objects[i++];
+                bool haveTree = (bool)objects[i++];
+                bool haveHill = (bool)objects[i++];
+                bool haveMountain = (bool)objects[i++];
+
+                BuildingTypes buildingType = (BuildingTypes)objects[i++];
+                int actorNumberBuilding = (int)objects[i++];
+
+
+                Player player;
+                if (actorNumber == -1) player = default;
+                else player = PhotonNetwork.PlayerList[actorNumber - 1];
+                CellUnitComponent(x, y).ActiveVisionCell(isActiveUnit, unitType);
+                CellUnitComponent(x, y).SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed, player);
+
+                CellEnvironmentComponent(x, y).SetResetEnvironment(haveFood, EnvironmentTypes.Food);
+                CellEnvironmentComponent(x, y).SetResetEnvironment(haveTree, EnvironmentTypes.Tree);
+                CellEnvironmentComponent(x, y).SetResetEnvironment(haveHill, EnvironmentTypes.Hill);
+                CellEnvironmentComponent(x, y).SetResetEnvironment(haveMountain, EnvironmentTypes.Mountain);
+
+                if (actorNumberBuilding == -1) player = default;
+                else player = PhotonNetwork.PlayerList[actorNumberBuilding - 1];
+                CellBuildingComponent(x, y).SetBuilding(buildingType, player);
+            }
+        }
+    }
+
+    [PunRPC]
+    private void RefreshEconomyGeneral(object[] objects)
+    {
+        int i = 0;
+
+        var gold = (int)objects[i++];
+        var food = (int)objects[i++];
+        var wood = (int)objects[i++];
+        var ore = (int)objects[i++];
+        var iron = (int)objects[i++];
+
+        var isSettedCity = (bool)objects[i++];
+        int[] xySettedCity = (int[])objects[i++];
+        bool isSettedKing = (bool)objects[i++];
+
+
+        _economyComponentRef.Unref().Gold = gold;
+        _economyComponentRef.Unref().Food = food;
+        _economyComponentRef.Unref().Wood = wood;
+        _economyComponentRef.Unref().Ore = ore;
+        _economyComponentRef.Unref().Iron = iron;
+
+        _economyBuildingsComponentRef.Unref().IsSettedCity = isSettedCity;
+        _economyBuildingsComponentRef.Unref().XYsettedCity = xySettedCity;
+
+        _economyUnitsComponentRef.Unref().IsSettedKing = isSettedKing;
+    }
+
+    #endregion Ref
 
 
     #region Serialize

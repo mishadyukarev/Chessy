@@ -1,46 +1,22 @@
 ﻿using Leopotam.Ecs;
+using Photon.Pun;
 using Photon.Realtime;
 using static MainGame;
 
 internal struct RefresherMasterComponent
 {
-    private bool _isDoneIN;
-    private Player _playerIN;
+    private bool _isDone;
+    private bool _isRefreshed;
 
-    private bool _isRefreshedOUT;
-
-    private SystemsMasterManager _systemsMasterManager;
-
-    public RefresherMasterComponent(ECSmanager eCSmanager)
+    internal bool IsDone
     {
-        _isDoneIN = default;
-        _playerIN = default;
-
-        _isRefreshedOUT = default;
-
-        _systemsMasterManager = eCSmanager.SystemsMasterManager;
+        get { return _isDone; }
+        set { _isDone = value; }
     }
-
-
-    public bool TryRefresh(bool isDoneIN, Player playerIN)
+    internal bool IsRefreshed
     {
-        _isDoneIN = isDoneIN;
-        _playerIN = playerIN;
-
-        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Multiple, nameof(RefresherMasterSystem));
-
-        return _isRefreshedOUT;
-    }
-
-    internal void Unpack(out bool isDoneIN, out Player playerIN)
-    {
-        isDoneIN = _isDoneIN;
-        playerIN = _playerIN;
-    }
-
-    internal void Pack(bool isRefreshedOUT)
-    {
-        _isRefreshedOUT = isRefreshedOUT;
+        get { return _isRefreshed; }
+        set { _isRefreshed = value; }
     }
 }
 
@@ -48,14 +24,24 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<RefresherMasterComponent> _refresherMasterComponent = default;
     private EcsComponentRef<DonerMasterComponent> _donerMasterComponentRef = default;
+    private EcsComponentRef<FromInfoComponent> _fromPlayerComponentRef = default;
 
     private EcsComponentRef<EconomyMasterComponent> _economyMasterComponent = default;
     private EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> _economyBuildingsMasterComponentRef = default;
+
+    private PhotonMessageInfo _fromInfo => _fromPlayerComponentRef.Unref().FromInfo;
+    private bool _isDone => _refresherMasterComponent.Unref().IsDone;
+    internal bool _isRefreshed
+    {
+        get { return _refresherMasterComponent.Unref().IsRefreshed; }
+        set { _refresherMasterComponent.Unref().IsRefreshed = value; }
+    }
 
     internal RefresherMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _refresherMasterComponent = eCSmanager.EntitiesMasterManager.RefresherMasterComponentRef;
         _donerMasterComponentRef = eCSmanager.EntitiesMasterManager.DonerMasterComponentRef;
+        _fromPlayerComponentRef = eCSmanager.EntitiesMasterManager.FromInfoComponentRef;
 
         _economyMasterComponent = eCSmanager.EntitiesMasterManager.EconomyMasterComponentRef;
         _economyBuildingsMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyBuildingsMasterComponentRef;
@@ -64,10 +50,8 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
 
     public void Run()
     {
-        _refresherMasterComponent.Unref().Unpack(out bool isDoneIN, out Player playerIN);
-
-        if (playerIN.IsMasterClient) _donerMasterComponentRef.Unref().IsDoneMaster = isDoneIN;
-        else _donerMasterComponentRef.Unref().IsDoneOther = isDoneIN;
+        if (_fromInfo.Sender.IsMasterClient) _donerMasterComponentRef.Unref().IsDoneMaster = _isDone;
+        else _donerMasterComponentRef.Unref().IsDoneOther = _isDone;
 
         if (InstanceGame.IS_TEST || _donerMasterComponentRef.Unref().IsDoneMaster && _donerMasterComponentRef.Unref().IsDoneOther)
         {
@@ -141,8 +125,8 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
             _donerMasterComponentRef.Unref().IsDoneMaster = false;
             _donerMasterComponentRef.Unref().IsDoneOther = false;
 
-            _refresherMasterComponent.Unref().Pack(true);
+            _isRefreshed = true;
         }
-        else _refresherMasterComponent.Unref().Pack(false);
+        else _isRefreshed = false;
     }
 }

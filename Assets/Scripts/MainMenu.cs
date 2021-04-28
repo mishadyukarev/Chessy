@@ -13,7 +13,6 @@ internal sealed class MainMenu : Main
     private void Start()
     {
         _instanceMenu = this;
-
         _supportMenuManager = new SupportMenuManager();
 
         _startSpawnMenuManager = new StartSpawnMenuManager(_supportMenuManager);

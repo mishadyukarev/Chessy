@@ -97,5 +97,5 @@ internal class BuildingUISystem : CellReduction, IEcsRunSystem
 
     private void Build(BuildingTypes buildingType) => _photonPunRPC.Build(_xySelectedCell, buildingType);
 
-    private void Destroy() => _photonPunRPC.Destroy(_xySelectedCell);
+    private void Destroy() => _photonPunRPC.DestroyBuilding(_xySelectedCell);
 }

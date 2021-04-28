@@ -145,6 +145,8 @@ public struct CellComponent
 
     public struct UnitComponent
     {
+        private bool _isActiveUnitMaster;
+        private bool _isActiveUnitOther;
         private UnitTypes _unitType;
         private int _amountSteps;
         private int _amountHealth;
@@ -161,6 +163,8 @@ public struct CellComponent
 
         internal UnitComponent(int x, int y, StartSpawnGameManager startSpawnManager, StartValuesGameConfig startValues)
         {
+            _isActiveUnitMaster = default;
+            _isActiveUnitOther = default;
             _unitType = default;
             _amountSteps = default;
             _amountHealth = default;
@@ -179,6 +183,17 @@ public struct CellComponent
         }
 
         #region Properties
+
+        internal bool IsActiveUnitMaster
+        {
+            get => _isActiveUnitMaster;
+            set => _isActiveUnitMaster = value;
+        }
+        internal bool IsActiveUnitOther
+        {
+            get => _isActiveUnitOther;
+            set => _isActiveUnitOther = value;
+        }
 
         internal UnitTypes UnitType => _unitType;
         internal bool HaveUnit => UnitType != UnitTypes.None;
@@ -353,7 +368,7 @@ public struct CellComponent
 
             SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed, player);
         }
-        internal void SetUnit(in UnitTypes unitType, in int amountHealth, in int powerDamage, in int amountSteps, in bool isProtected, in bool isRelaxed, in Player player)
+        internal void SetUnit( in UnitTypes unitType, in int amountHealth, in int powerDamage, in int amountSteps, in bool isProtected, in bool isRelaxed, in Player player)
         {
             _unitType = unitType;
             _amountSteps = amountSteps;
@@ -382,21 +397,18 @@ public struct CellComponent
             }
         }
 
-        internal void ActiveVisionCell(bool isActive, UnitTypes unitType, Player player)
+        internal void ActiveVisionCell(bool isActive, UnitTypes unitType, Player player = default)
         {
             switch (unitType)
             {
-                case UnitTypes.None:
-                    break;
-
                 case UnitTypes.King:
                     _unitKingGO.SetActive(isActive);
-                    SetColorUnit(_unitKingSpriteRender, player);
+                    if(player != default) SetColorUnit(_unitKingSpriteRender, player);
                     break;
 
                 case UnitTypes.Pawn:
                     _unitPawnGO.SetActive(isActive);
-                    SetColorUnit(_unitPawnSpriteRender, player);
+                    if (player != default) SetColorUnit(_unitPawnSpriteRender, player);
                     break;
 
                 default:
