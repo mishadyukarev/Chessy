@@ -29,7 +29,7 @@ internal struct ProtecterUnitMasterComponent
         _cellManager.CopyXYinTo(xyCellIN, _xyCellIN);
         _playerIN = playerIN;
 
-        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Else, nameof(ProtecterUnitMasterSystem));
+        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Multiple, nameof(ProtecterUnitMasterSystem));
 
         return _isProtectedOUT;
     }

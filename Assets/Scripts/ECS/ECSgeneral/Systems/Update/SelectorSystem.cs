@@ -79,13 +79,13 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
     public void Run()
     {
-        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Solo, nameof(RaySystem));
+        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.ForSelector, nameof(RaySystem));
 
         if (_raycastHit2D)
         {
             if (_raycastHit2D.collider.gameObject.tag == _nameManager.TAG_CELL)
             {
-                _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Solo, nameof(GetterCellSystem));
+                _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.ForSelector , nameof(GetterCellSystem));
 
                 if (_selectorComponentRef.Unref().IsGettedCell)
                 {

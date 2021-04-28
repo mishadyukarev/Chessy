@@ -27,7 +27,7 @@ internal struct RefresherMasterComponent
         _isDoneIN = isDoneIN;
         _playerIN = playerIN;
 
-        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Else, nameof(RefresherMasterSystem));
+        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Multiple, nameof(RefresherMasterSystem));
 
         return _isRefreshedOUT;
     }

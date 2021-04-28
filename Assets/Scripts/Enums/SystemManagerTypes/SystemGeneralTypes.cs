@@ -1,6 +1,7 @@
 ﻿internal enum SystemGeneralTypes
 {
     Update,
-    TimeUpdate,
-    Solo,
+    Multiple,
+
+    ForSelector,
 }

@@ -33,7 +33,7 @@ public struct ShiftUnitMasterComponent
         _cellManager.CopyXYinTo(xySelectedCell, _xySelectedCellIN);
         _playerIN = player;
 
-        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Else, nameof(ShiftUnitMasterSystem));
+        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Multiple, nameof(ShiftUnitMasterSystem));
 
         return _isShiftedOUT;
     }

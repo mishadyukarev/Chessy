@@ -29,7 +29,7 @@ internal class AnimationAttackUnitSystem : CellReduction, IEcsRunSystem
         if (_isInit)
         {
             _isInit = false;
-            _systemsGeneralManager.ActiveRunSystem(false, SystemGeneralTypes.Update, this.ToString());
+            //_systemsGeneralManager.ActiveRunSystem(false, SystemGeneralTypes.Update, this.ToString());
             return;
         }
 
@@ -59,7 +59,7 @@ internal class AnimationAttackUnitSystem : CellReduction, IEcsRunSystem
 
                 if (_distance <= 0.01f)
                 {
-                    _systemsGeneralManager.ActiveRunSystem(false, SystemGeneralTypes.Update, this.ToString());
+                    //_systemsGeneralManager.ActiveRunSystem(false, SystemGeneralTypes.Update, this.ToString());
                     _isOne = true;
                 }
             }

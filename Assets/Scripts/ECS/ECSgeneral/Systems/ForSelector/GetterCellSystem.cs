@@ -25,7 +25,7 @@ public struct GetterCellComponent
     {
         _raycastHit2dIN = raycastHit2D;
 
-        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Solo, nameof(GetterCellSystem));
+        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.Multiple, nameof(GetterCellSystem));
 
         xyCurrentCell = _xyCurrentCellOUT;
         return _isReceivedOUT;

@@ -20,7 +20,7 @@ public sealed class SystemsOtherManager : SystemsManager
                 break;
 
             case SystemOtherTypes.Else:
-                _currentSystemsForInvoke = _soloSystems;
+                _currentSystemsForInvoke = _multipleSystems;
                 break;
 
             default:

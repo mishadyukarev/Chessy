@@ -36,7 +36,7 @@ public struct SetterUnitMasterComponent
         _unitTypeIN = unitType;
         _playerIN = player;
 
-        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Else, nameof(SetterUnitMasterSystem));
+        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Multiple, nameof(SetterUnitMasterSystem));
 
         return _isSettedOUT;
     }

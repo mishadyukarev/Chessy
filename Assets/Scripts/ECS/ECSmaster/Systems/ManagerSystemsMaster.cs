@@ -6,7 +6,11 @@ public sealed class SystemsMasterManager : SystemsManager
 
     internal void CreateInitSystems(ECSmanager eCSmanager,  PhotonGameManager photonGameManager)
     {
-        _soloSystems
+        _updateSystems
+            .Add(new RefresherMasterSystem(eCSmanager), nameof(RefresherMasterSystem));
+
+
+        _multipleSystems
             .Add(new RefresherMasterSystem(eCSmanager), nameof(RefresherMasterSystem))
             .Add(new SetterUnitMasterSystem(eCSmanager), nameof(SetterUnitMasterSystem))
             .Add(new ShiftUnitMasterSystem(eCSmanager, photonGameManager), nameof(ShiftUnitMasterSystem))
@@ -18,13 +22,18 @@ public sealed class SystemsMasterManager : SystemsManager
         InitAndProcessInjectsSystems();
     }
 
+    internal override void InitAndProcessInjectsSystems()
+    {
+        base.InitAndProcessInjectsSystems();
+    }
+
 
     public bool InvokeRunSystem(SystemMasterTypes systemType, string namedSystem)
     {
         switch (systemType)
         {
-            case SystemMasterTypes.Else:
-                _currentSystemsForInvoke = _soloSystems;
+            case SystemMasterTypes.Multiple:
+                _currentSystemsForInvoke = _multipleSystems;
                 break;
 
             default:

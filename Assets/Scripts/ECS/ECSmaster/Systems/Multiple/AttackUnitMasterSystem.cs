@@ -35,7 +35,7 @@ public struct AttackUnitMasterComponent
         _cellManager.CopyXYinTo(xySelectedCellIN, _xySelectedCellIN);
         _playerIN = playerIN;
 
-        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Else, nameof(AttackUnitMasterSystem));
+        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Multiple, nameof(AttackUnitMasterSystem));
 
         isKilledAttacker = _isKilledAttacker;
         isKilledDefender = _isKilledDefender;

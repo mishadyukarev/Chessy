@@ -33,7 +33,7 @@ internal struct BuilderCellMasterComponent
         _buildingTypeIN = buildingTypeIN;
         _playerIN = playerIN;
 
-        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Else, nameof(BuilderCellMasterSystem));
+        _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Multiple, nameof(BuilderCellMasterSystem));
 
         return _isSettedOUT;
     }

@@ -3,18 +3,19 @@ using static MainGame;
 
 public class SystemsGeneralManager : SystemsManager
 {
-
-    internal SystemsGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
-
+    private EcsSystems _forSelectorSystem = default;
+    internal SystemsGeneralManager(EcsWorld ecsWorld) : base(ecsWorld)
+    {
+        _forSelectorSystem = new EcsSystems(_ecsWorld);
+    }
 
     internal void CreateInitSystems(ECSmanager eCSmanager, PhotonGameManager photonManager)
     {
         _updateSystems
             .Add(new InputSystem(eCSmanager), nameof(InputSystem))
             .Add(new SelectorSystem(eCSmanager, photonManager), nameof(SelectorSystem))
-            
-
             .Add(new SupportVisionSystem(eCSmanager), nameof(SupportVisionSystem))
+            .Add(new SoundSystem(eCSmanager), nameof(SoundSystem))
 
             .Add(new UISystem(eCSmanager, photonManager), nameof(UISystem))
             .Add(new ReadyUISystem(eCSmanager, photonManager), nameof(ReadyUISystem))
@@ -29,24 +30,38 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new WarningUISystem(eCSmanager), nameof(WarningUISystem));
 
 
-
-
-        _soloSystems
-            .Add(new UnitPathSystem(eCSmanager), nameof(UnitPathSystem))
+        _forSelectorSystem
             .Add(new GetterCellSystem(eCSmanager), nameof(GetterCellSystem))
-            .Add(new SoundSystem(eCSmanager), nameof(SoundSystem))
-            .Add(new TransformerBetweenCellsSystem(eCSmanager), nameof(TransformerBetweenCellsSystem))
             .Add(new RaySystem(eCSmanager), nameof(RaySystem));
 
-        InitAndProcessInjectsSystems();
+
+
+        _multipleSystems
+            .Add(new UnitPathSystem(eCSmanager), nameof(UnitPathSystem))
+            .Add(new TransformerBetweenCellsSystem(eCSmanager), nameof(TransformerBetweenCellsSystem));
+
+        this.InitAndProcessInjectsSystems();
+    }
+
+    internal override void InitAndProcessInjectsSystems()
+    {
+        base.InitAndProcessInjectsSystems();
+
+        _forSelectorSystem.ProcessInjects();
+
+        _forSelectorSystem.Init();
     }
 
     internal bool InvokeRunSystem(SystemGeneralTypes systemGeneralType, string namedSystem)
     {
         switch (systemGeneralType)
         {
-            case SystemGeneralTypes.Solo:
-                _currentSystemsForInvoke = _soloSystems;
+            case SystemGeneralTypes.Multiple:
+                _currentSystemsForInvoke = _multipleSystems;
+                break;
+
+            case SystemGeneralTypes.ForSelector:
+                _currentSystemsForInvoke = _forSelectorSystem;
                 break;
 
             default:
@@ -62,10 +77,6 @@ public class SystemsGeneralManager : SystemsManager
         {
             case SystemGeneralTypes.Update:
                 _currentSystemsForInvoke = _updateSystems;
-                break;
-
-            case SystemGeneralTypes.TimeUpdate:
-                _currentSystemsForInvoke = _timeUpdateSystems;
                 break;
         }
 
