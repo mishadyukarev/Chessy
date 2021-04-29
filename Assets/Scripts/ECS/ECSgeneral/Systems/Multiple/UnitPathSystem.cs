@@ -87,9 +87,9 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
 
                 var xyAvailableCellsForShift = new List<int[]>();
 
-                for (int i = 0; i < (int)ForUnitPathTypes.LeftDown + 1; i++)
+                for (int i = 0; i < (int)DirectTypes.LeftDown + 1; i++)
                 {
-                    GetCurrentCell(true, (ForUnitPathTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
+                    GetCurrentCell(true, (DirectTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
 
                     if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
                     {
@@ -109,9 +109,9 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
 
                 var xyAvailableCellsForAttack = new List<int[]>();
 
-                for (int i = 0; i < (int)ForUnitPathTypes.LeftDown + 1; i++)
+                for (int i = 0; i < (int)DirectTypes.LeftDown + 1; i++)
                 {
-                    GetCurrentCell(true, (ForUnitPathTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
+                    GetCurrentCell(true, (DirectTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
 
                     if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
                     {
@@ -138,49 +138,49 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
         }
     }
 
-    private void GetCurrentCell(bool isFromStart, ForUnitPathTypes unitPathType, int[] xyStartCell, out int[] xyCurrentCellForAll)
+    private void GetCurrentCell(bool isFromStart, DirectTypes unitPathType, int[] xyStartCell, out int[] xyCurrentCellForAll)
     {
         xyCurrentCellForAll = _cellManager.CopyXY(_xyCurrentCell);
         var changeXY = _changeXY;
 
         switch (unitPathType)
         {
-            case ForUnitPathTypes.Right:
+            case DirectTypes.Right:
                 changeXY[X] = 1;
                 changeXY[Y] = 0;
                 break;
 
-            case ForUnitPathTypes.Left:
+            case DirectTypes.Left:
                 changeXY[X] = -1;
                 changeXY[Y] = 0;
                 break;
 
-            case ForUnitPathTypes.Up:
+            case DirectTypes.Up:
                 changeXY[X] = 0;
                 changeXY[Y] = 1;
                 break;
 
-            case ForUnitPathTypes.Down:
+            case DirectTypes.Down:
                 changeXY[X] = 0;
                 changeXY[Y] = -1;
                 break;
 
-            case ForUnitPathTypes.RightUp:
+            case DirectTypes.RightUp:
                 changeXY[X] = 1;
                 changeXY[Y] = 1;
                 break;
 
-            case ForUnitPathTypes.LeftUp:
+            case DirectTypes.LeftUp:
                 changeXY[X] = -1;
                 changeXY[Y] = 1;
                 break;
 
-            case ForUnitPathTypes.RightDown:
+            case DirectTypes.RightDown:
                 changeXY[X] = 1;
                 changeXY[Y] = -1;
                 break;
 
-            case ForUnitPathTypes.LeftDown:
+            case DirectTypes.LeftDown:
                 changeXY[X] = -1;
                 changeXY[Y] = -1;
                 break;

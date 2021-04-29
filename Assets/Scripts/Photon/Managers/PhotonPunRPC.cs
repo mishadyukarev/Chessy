@@ -55,7 +55,6 @@ public partial class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<TheEndGameComponent> _theEndComponentRef = default;
     private EcsComponentRef<StartGameComponent> _startGameComponentRef = default;
     private EcsComponentRef<AnimationAttackUnitComponent> _animationAttackUnitComponentRef = default;
-    private EcsComponentRef<TransformerBetweenCellsComponent> _transformerBetweenCellsComponentRef = default;
 
     #endregion
 
@@ -74,7 +73,7 @@ public partial class PhotonPunRPC : MonoBehaviour
         => ref _cellBuildingComponentRef[xy[_startValuesGameConfig.X], xy[_startValuesGameConfig.Y]].Unref();
 
     private StartValuesGameConfig _startValuesGameConfig => InstanceGame.StartValuesGameConfig;
-    private CellManager _cellManager => InstanceGame.CellManager;
+    private CellManager _cellManager => InstanceGame.SupportGameManager.CellManager;
 
 
 
@@ -131,7 +130,6 @@ public partial class PhotonPunRPC : MonoBehaviour
         _theEndComponentRef = entitiesGeneralManager.TheEndGameComponentRef;
         _startGameComponentRef = eCSmanager.EntitiesGeneralManager.StartGameComponentRef;
         _animationAttackUnitComponentRef = eCSmanager.EntitiesGeneralManager.AnimationAttackUnitComponentRef;
-        _transformerBetweenCellsComponentRef = eCSmanager.EntitiesGeneralManager.TransformerBetweenCellsComponentRef;
 
 
         RefreshAll();
@@ -195,7 +193,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void DoneToMaster(bool isDone, PhotonMessageInfo info)
     {
-        if (info.Sender.IsMasterClient && _economyUnitMasterComponentRef.Unref().IsSettedKingMaster 
+        if (info.Sender.IsMasterClient && _economyUnitMasterComponentRef.Unref().IsSettedKingMaster
             || !info.Sender.IsMasterClient && _economyUnitMasterComponentRef.Unref().IsSettedKingOther)
         {
             _photonView.RPC(nameof(DoneToGeneral), info.Sender, false, isDone);
@@ -356,7 +354,24 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void ProtectUnitMaster(int[] xyCell, PhotonMessageInfo info)
     {
-        _protecterUnitMasterComponentRef.Unref().ProtectUnit(xyCell, info.Sender);
+        if (CellUnitComponent(xyCell).HaveMaxSteps)
+        {
+            CellUnitComponent(xyCell).IsProtected = true;
+            CellUnitComponent(xyCell).IsRelaxed = false;
+            CellUnitComponent(xyCell).AmountSteps = 0;
+
+            switch (CellUnitComponent(xyCell).UnitType)
+            {
+                case UnitTypes.King:
+                    CellUnitComponent(xyCell).PowerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_KING;
+                    break;
+
+                case UnitTypes.Pawn:
+                    CellUnitComponent(xyCell).PowerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_PAWN;
+                    break;
+            }
+        }
+
         RefreshAll();
     }
 
@@ -370,11 +385,22 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void RelaxUnitMaster(int[] xyCell, PhotonMessageInfo info)
     {
-        if (CellUnitComponent(xyCell).MinAmountSteps)
+        if (CellUnitComponent(xyCell).HaveMaxSteps)
         {
             CellUnitComponent(xyCell).IsRelaxed = true;
             CellUnitComponent(xyCell).IsProtected = false;
             CellUnitComponent(xyCell).AmountSteps -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+
+            switch (CellUnitComponent(xyCell).UnitType)
+            { 
+                case UnitTypes.King:
+                    CellUnitComponent(xyCell).PowerProtection -= InstanceGame.StartValuesGameConfig.PROTECTION_KING;
+                    break;
+
+                case UnitTypes.Pawn:
+                    CellUnitComponent(xyCell).PowerProtection -= InstanceGame.StartValuesGameConfig.PROTECTION_PAWN;
+                    break;
+            }
         }
 
         RefreshAll();
@@ -464,7 +490,7 @@ public partial class PhotonPunRPC : MonoBehaviour
 
                         case BuildingTypes.Woodcutter:
 
-                            _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterOther -= 1; 
+                            _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterOther -= 1;
                             CellUnitComponent(xyCell).AmountSteps = 0;
                             CellBuildingComponent(xyCell).ResetBuilding();
 
@@ -522,6 +548,17 @@ public partial class PhotonPunRPC : MonoBehaviour
     {
         _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Solo, nameof(VisibilityUnitsMasterSystem));
 
+        for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
+        {
+            for (int y = 0; y < _startValuesGameConfig.CELL_COUNT_Y; y++)
+            {
+                CellUnitComponent(x, y).ActiveVisionCell(CellUnitComponent(x, y).IsActiveUnitMaster, CellUnitComponent(x, y).UnitType);
+            }
+        }
+
+
+        #region Sending
+
         List<object> listObjects = new List<object>();
         for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
         {
@@ -578,6 +615,9 @@ public partial class PhotonPunRPC : MonoBehaviour
             _economyUnitMasterComponentRef.Unref().IsSettedKingMaster,
         };
         _photonView.RPC(nameof(RefreshEconomyGeneral), RpcTarget.MasterClient, objects);
+
+        #endregion
+
     }
 
     [PunRPC]
@@ -609,8 +649,8 @@ public partial class PhotonPunRPC : MonoBehaviour
                 Player player;
                 if (actorNumber == -1) player = default;
                 else player = PhotonNetwork.PlayerList[actorNumber - 1];
-                CellUnitComponent(x, y).ActiveVisionCell(isActiveUnit, unitType);
                 CellUnitComponent(x, y).SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed, player);
+                CellUnitComponent(x, y).ActiveVisionCell(isActiveUnit, unitType);
 
                 CellEnvironmentComponent(x, y).SetResetEnvironment(haveFood, EnvironmentTypes.Food);
                 CellEnvironmentComponent(x, y).SetResetEnvironment(haveTree, EnvironmentTypes.Tree);

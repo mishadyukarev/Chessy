@@ -5,7 +5,6 @@ using static MainGame;
 
 public class CellManager
 {
-
     internal int[] CopyXY(int[] inArray)
     {
         int[] array = new int[InstanceGame.StartValuesGameConfig.XY_FOR_ARRAY];

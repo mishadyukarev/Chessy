@@ -12,7 +12,7 @@ public class InputSystem : IEcsRunSystem
 
     public void Run()
     {
-        if (Input.GetMouseButtonDown(0)) _inputComponentRef.Unref().IsClick =true;
+        if (Input.GetMouseButtonDown(0)) _inputComponentRef.Unref().IsClick = true;
         else _inputComponentRef.Unref().IsClick = false;
     }
 }

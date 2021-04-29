@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-internal abstract class StartSpawnManager
+internal abstract class StartSpawn
 {
     protected Camera _camera;
     protected Canvas _canvas;
 
-    internal StartSpawnManager(ResourcesLoadManager resourcesLoadManager)
+    internal StartSpawn(ResourcesLoad resourcesLoadManager)
     {
         _camera = GameObject.Instantiate(resourcesLoadManager.Camera);
     }

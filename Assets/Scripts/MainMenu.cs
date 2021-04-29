@@ -1,10 +1,8 @@
-﻿using UnityEngine;
-
-internal sealed class MainMenu : Main
+﻿internal sealed class MainMenu : Main
 {
     private static MainMenu _instanceMenu;
     private SupportMenuManager _supportMenuManager;
-    private StartSpawnMenuManager _startSpawnMenuManager;
+    private StartSpawnMenu _startSpawnMenuManager;
     private MenuManager _menuManager;
 
     internal static MainMenu InstanceGame => _instanceMenu;
@@ -15,9 +13,11 @@ internal sealed class MainMenu : Main
         _instanceMenu = this;
         _supportMenuManager = new SupportMenuManager();
 
-        _startSpawnMenuManager = new StartSpawnMenuManager(_supportMenuManager);
+        _unityEvents = new UnityEvents(_supportMenuManager.Builder);
 
-        var go = _supportMenuManager.BuilderManager.CreateGameObject(nameof(MenuManager), new System.Type[] { typeof(MenuManager) });
+        _startSpawnMenuManager = new StartSpawnMenu(_supportMenuManager);
+
+        var go = _supportMenuManager.Builder.CreateGameObject(nameof(MenuManager), new System.Type[] { typeof(MenuManager) });
         _menuManager = go.GetComponent<MenuManager>();
         _menuManager.Init(_startSpawnMenuManager);
     }

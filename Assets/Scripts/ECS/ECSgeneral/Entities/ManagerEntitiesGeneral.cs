@@ -1,6 +1,4 @@
 ﻿using Leopotam.Ecs;
-using Photon.Realtime;
-using System.Collections.Generic;
 using static MainGame;
 
 public sealed class EntitiesGeneralManager : EntitiesManager
@@ -74,7 +72,6 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal EcsComponentRef<StartGameComponent> StartGameComponentRef => _startGameEntity.Ref<StartGameComponent>();
     internal EcsComponentRef<RayComponent> RayComponentRef => _rayEntity.Ref<RayComponent>();
     internal EcsComponentRef<AnimationAttackUnitComponent> AnimationAttackUnitComponentRef => _animationAttackUnitEntity.Ref<AnimationAttackUnitComponent>();
-    internal EcsComponentRef<TransformerBetweenCellsComponent> TransformerBetweenCellsComponentRef => _soloEntity.Ref<TransformerBetweenCellsComponent>();
     internal EcsComponentRef<ZoneComponent> ZoneComponentRef => _zoneEntity.Ref<ZoneComponent>();
 
     #endregion
@@ -87,15 +84,14 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     internal void CreateEntities(ECSmanager eCSmanager)
     {
-       var startValuesGameConfig = InstanceGame.StartValuesGameConfig;
+        var startValuesGameConfig = InstanceGame.StartValuesGameConfig;
         var systemsGeneralManager = eCSmanager.SystemsGeneralManager;
-        var cellManager = InstanceGame.CellManager;
+        var cellManager = InstanceGame.SupportGameManager.CellManager;
         var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
 
         _soloEntity = _ecsWorld.NewEntity()
             .Replace(new UnitPathsComponent(systemsGeneralManager, startValuesGameConfig, cellManager))
-            .Replace(new GetterCellComponent(startValuesGameConfig, systemsGeneralManager))
-            .Replace(new TransformerBetweenCellsComponent(eCSmanager));
+            .Replace(new GetterCellComponent(startValuesGameConfig, systemsGeneralManager));
 
         _donerEntity = _ecsWorld.NewEntity()
             .Replace(new DonerComponent());
@@ -173,8 +169,8 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
 
                 CellComponent cellComponent = new CellComponent(isStartMaster, isStartOther, cellsGO[x, y]);
-                CellComponent.EnvironmentComponent cellEnvironmentComponent= new CellComponent.EnvironmentComponent(x, y, InstanceGame.StartSpawnGameManager, startValuesGameConfig);
-                CellComponent.SupportVisionComponent cellSupportVisionComponent= new CellComponent.SupportVisionComponent(x, y, InstanceGame.StartSpawnGameManager);
+                CellComponent.EnvironmentComponent cellEnvironmentComponent = new CellComponent.EnvironmentComponent(x, y, InstanceGame.StartSpawnGameManager, startValuesGameConfig);
+                CellComponent.SupportVisionComponent cellSupportVisionComponent = new CellComponent.SupportVisionComponent(x, y, InstanceGame.StartSpawnGameManager);
                 CellComponent.UnitComponent cellUnitComponent = new CellComponent.UnitComponent(x, y, InstanceGame.StartSpawnGameManager, startValuesGameConfig);
                 CellComponent.BuildingComponent cellBuildingComponent = new CellComponent.BuildingComponent(x, y, InstanceGame.StartSpawnGameManager, startValuesGameConfig);
 

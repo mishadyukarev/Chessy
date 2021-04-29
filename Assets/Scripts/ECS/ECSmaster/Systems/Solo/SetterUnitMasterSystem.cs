@@ -114,7 +114,7 @@ public class SetterUnitMasterSystem : CellReduction, IEcsRunSystem
                     _setterUnitMasterComponentRef.Unref().SetValues(true);
                 }
                 else _setterUnitMasterComponentRef.Unref().SetValues(false);
-            }        
+            }
         }
     }
 
@@ -140,7 +140,7 @@ public class SetterUnitMasterSystem : CellReduction, IEcsRunSystem
                     _setterUnitMasterComponentRef.Unref().SetValues(true);
                 }
                 else _setterUnitMasterComponentRef.Unref().SetValues(false);
-            }    
+            }
         }
     }
 }

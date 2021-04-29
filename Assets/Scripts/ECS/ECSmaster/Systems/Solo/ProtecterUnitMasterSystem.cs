@@ -14,7 +14,7 @@ internal struct ProtecterUnitMasterComponent
 
     internal ProtecterUnitMasterComponent(ECSmanager eCSmanager)
     {
-        _cellManager = InstanceGame.CellManager;
+        _cellManager = InstanceGame.SupportGameManager.CellManager;
         _systemsMasterManager = eCSmanager.SystemsMasterManager;
 
         _xyCellIN = new int[InstanceGame.StartValuesGameConfig.XY_FOR_ARRAY];

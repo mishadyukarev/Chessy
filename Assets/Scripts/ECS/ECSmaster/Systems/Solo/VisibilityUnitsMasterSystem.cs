@@ -1,10 +1,10 @@
 ﻿using Leopotam.Ecs;
+using System.Collections.Generic;
 using static MainGame;
 
 
 internal class VisibilityUnitsMasterSystem : CellReduction, IEcsRunSystem
 {
-
     internal VisibilityUnitsMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
 
@@ -13,9 +13,6 @@ internal class VisibilityUnitsMasterSystem : CellReduction, IEcsRunSystem
 
     public void Run()
     {
-
-
-
         for (int x = 0; x < Xcount; x++)
         {
             for (int y = 0; y < Ycount; y++)
@@ -24,22 +21,38 @@ internal class VisibilityUnitsMasterSystem : CellReduction, IEcsRunSystem
                 CellUnitComponent(x, y).IsActiveUnitOther = true;
 
 
-
-
                 if (CellUnitComponent(x, y).HaveUnit)
                 {
-                    if(CellUnitComponent(x, y).IsHim(InstanceGame.MasterClient))
+                    if (CellUnitComponent(x, y).IsHim(InstanceGame.MasterClient))
                     {
                         if (CellEnvironmentComponent(x, y).HaveTree)
                         {
-                            CellUnitComponent(x, y).IsActiveUnitOther = false;
+                            List<int[]> list = InstanceGame.SupportGameManager.FinderWay.TryGetXYAround(new int[] { x, y });
+
+                            foreach (var item in list)
+                            {
+                                //if (CellUnitComponent(item).IsHim(InstanceGame.MasterClient))
+                                //{
+                                //    CellUnitComponent(x, y).IsActiveUnitOther = false;
+                                //    break;
+                                //}
+                            }
                         }
                     }
                     else
                     {
                         if (CellEnvironmentComponent(x, y).HaveTree)
                         {
-                            CellUnitComponent(x, y).IsActiveUnitMaster = false;
+                            List<int[]> list = InstanceGame.SupportGameManager.FinderWay.TryGetXYAround(new int[] { x, y });
+
+                            foreach (var item in list)
+                            {
+                                //if (CellUnitComponent(item).IsHim(InstanceGame.MasterClient))
+                                //{
+                                //    CellUnitComponent(x, y).IsActiveUnitMaster = false;
+                                //    break;
+                                //}
+                            }
                         }
                     }
                 }

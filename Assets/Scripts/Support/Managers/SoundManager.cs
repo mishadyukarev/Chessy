@@ -8,7 +8,7 @@ internal class SoundManager
 
     internal Action MistakeSoundDelegate;
 
-    internal SoundManager(StartSpawnGameManager startSpawnManager)
+    internal SoundManager(StartSpawnGame startSpawnManager)
     {
         _audioSource = startSpawnManager.AudioSource;
         MistakeSoundDelegate = MistakeSound;

@@ -1,5 +1,4 @@
 ﻿using Leopotam.Ecs;
-using static MainGame;
 
 public class SystemsGeneralManager : SystemsManager
 {
@@ -37,8 +36,7 @@ public class SystemsGeneralManager : SystemsManager
 
 
         _multipleSystems
-            .Add(new UnitPathSystem(eCSmanager), nameof(UnitPathSystem))
-            .Add(new TransformerBetweenCellsSystem(eCSmanager), nameof(TransformerBetweenCellsSystem));
+            .Add(new UnitPathSystem(eCSmanager), nameof(UnitPathSystem));
 
         this.InitAndProcessInjectsSystems();
     }

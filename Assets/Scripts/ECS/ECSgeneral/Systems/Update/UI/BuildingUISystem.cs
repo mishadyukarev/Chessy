@@ -1,5 +1,4 @@
 ﻿using Leopotam.Ecs;
-using System;
 using UnityEngine.UI;
 
 internal class BuildingUISystem : CellReduction, IEcsRunSystem
@@ -71,7 +70,7 @@ internal class BuildingUISystem : CellReduction, IEcsRunSystem
 
                     case UnitTypes.Pawn:
 
-                        if(!_economyBuildingsComponentRef.Unref().IsSettedCity)_buildingAbilityButton0.gameObject.SetActive(true);
+                        if (!_economyBuildingsComponentRef.Unref().IsSettedCity) _buildingAbilityButton0.gameObject.SetActive(true);
                         _buildingAbilityButton1.gameObject.SetActive(true);
                         _buildingAbilityButton2.gameObject.SetActive(true);
                         _buildingAbilityButton3.gameObject.SetActive(true);
@@ -90,7 +89,7 @@ internal class BuildingUISystem : CellReduction, IEcsRunSystem
                         }
 
                         break;
-                }  
+                }
             }
         }
     }

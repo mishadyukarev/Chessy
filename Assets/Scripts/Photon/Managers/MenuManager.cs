@@ -8,7 +8,7 @@ internal class MenuManager : MonoBehaviourPunCallbacks
     private TextMeshProUGUI _logTex;
     private const int MAX_PLAYERS = 2;
 
-    internal void Init(StartSpawnMenuManager startSpawnMenuManager)
+    internal void Init(StartSpawnMenu startSpawnMenuManager)
     {
         _logTex = startSpawnMenuManager.LogText;
         startSpawnMenuManager.CreateRoomButton.onClick.AddListener(CreateRoom);

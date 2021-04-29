@@ -21,7 +21,7 @@ public abstract class CellReduction : StartValuesReduction
 
     internal CellReduction(ECSmanager eCSmanager)
     {
-        _cellManager = InstanceGame.CellManager;
+        _cellManager = InstanceGame.SupportGameManager.CellManager;
 
         _cellComponentRef = eCSmanager.EntitiesGeneralManager.CellComponentRef;
         _cellEnvironmentComponentRef = eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef;

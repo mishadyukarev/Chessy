@@ -1,8 +1,6 @@
 ﻿
-public enum ForUnitPathTypes
+public enum DirectTypes
 {
-    Around,
-
     Right,
     Left,
     Up,

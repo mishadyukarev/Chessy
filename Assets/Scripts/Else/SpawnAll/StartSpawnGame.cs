@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static MainGame;
 
-internal class StartSpawnGameManager : StartSpawnManager
+internal class StartSpawnGame : StartSpawn
 {
     private GameObject _parentScriptsGO;
     private AudioSource _audioSource;
@@ -52,8 +52,6 @@ internal class StartSpawnGameManager : StartSpawnManager
     internal TextMeshProUGUI MetalAmmountText;
 
     #endregion
-
-
 
 
     internal Image RightUpUnitImage;
@@ -127,8 +125,13 @@ internal class StartSpawnGameManager : StartSpawnManager
 
 
 
-    internal StartSpawnGameManager(ResourcesLoadGameManager resourcesLoadGameManager, BuilderManager builderManager, StartValuesGameConfig startValuesGameConfig, out Transform parentTransformScrips) : base(resourcesLoadGameManager)
+    internal StartSpawnGame(SupportGameManager supportGameManager, out Transform parentTransformScrips) : base(supportGameManager.ResourcesLoadGameManager)
     {
+        var builderManager = supportGameManager.Builder;
+        var resourcesLoadGameManager = supportGameManager.ResourcesLoadGameManager;
+        var startValuesGameConfig = InstanceGame.StartValuesGameConfig;
+
+
         _audioSource = builderManager.CreateGameObject
             ("AudioSource", new Type[] { typeof(AudioSource) }).GetComponent<AudioSource>();
         _audioSource.clip = resourcesLoadGameManager.AudioClip;
@@ -142,11 +145,11 @@ internal class StartSpawnGameManager : StartSpawnManager
         GameObject.Instantiate(resourcesLoadGameManager.BackGroundCollider2D,
             InstanceGame.transform.position + new Vector3(0, 0, 1), InstanceGame.transform.rotation);
 
-        SpawnCells(resourcesLoadGameManager, startValuesGameConfig);       
+        SpawnCells(resourcesLoadGameManager, startValuesGameConfig);
         SpawnUI(resourcesLoadGameManager, startValuesGameConfig);
     }
 
-    private void SpawnUI(ResourcesLoadGameManager resourcesLoadGameManager, StartValuesGameConfig startValuesGameConfig)
+    private void SpawnUI(ResourcesLoadGame resourcesLoadGameManager, StartValuesGameConfig startValuesGameConfig)
     {
 
         GameObject.Instantiate(resourcesLoadGameManager.Canvas);
@@ -232,7 +235,7 @@ internal class StartSpawnGameManager : StartSpawnManager
         }
     }
 
-    public void SpawnCells(ResourcesLoadGameManager resourcesLoadManager, StartValuesGameConfig startValues)
+    public void SpawnCells(ResourcesLoadGame resourcesLoadManager, StartValuesGameConfig startValues)
     {
         var cellGO = resourcesLoadManager.CellGO;
         var whiteCellSR = resourcesLoadManager.WhiteCellSprite;

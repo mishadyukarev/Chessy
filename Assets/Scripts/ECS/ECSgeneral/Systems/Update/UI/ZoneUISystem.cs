@@ -7,7 +7,7 @@ internal class ZoneUISystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<ZoneComponent> _zoneComponentRef = default;
     private PhotonPunRPC _photonPunRPC = default;
 
-    
+
     internal ZoneUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _zoneComponentRef = eCSmanager.EntitiesGeneralManager.ZoneComponentRef;

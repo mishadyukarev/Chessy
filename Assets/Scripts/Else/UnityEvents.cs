@@ -6,7 +6,7 @@ public class UnityEvents
     private EventSystem _eventSystem;
     private StandaloneInputModule _standaloneInputModule;
 
-    public UnityEvents(BuilderManager builderManager)
+    public UnityEvents(Builder builderManager)
     {
         var types = new Type[]
         {

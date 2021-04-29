@@ -1,7 +1,6 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.UI;
-using static MainGame;
 
 internal class ReadyUISystem : IEcsRunSystem
 {

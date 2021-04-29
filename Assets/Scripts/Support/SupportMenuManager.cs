@@ -1,12 +1,6 @@
 ﻿internal class SupportMenuManager : SupportManager
 {
-    private ResourcesLoadMenuManager _resourcesLoadManager;
+    private ResourcesLoadMenu _resourcesLoadManager = new ResourcesLoadMenu();
 
-    public ResourcesLoadMenuManager ResourcesLoadMenuManager => _resourcesLoadManager;
-
-
-    internal SupportMenuManager()
-    {
-        _resourcesLoadManager = new ResourcesLoadMenuManager();
-    }
+    public ResourcesLoadMenu ResourcesLoadMenuManager => _resourcesLoadManager;
 }

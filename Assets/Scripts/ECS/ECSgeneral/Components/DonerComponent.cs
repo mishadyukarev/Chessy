@@ -1,6 +1,4 @@
-﻿using System;
-
-public struct DonerComponent
+﻿public struct DonerComponent
 {
     private bool _isDone;
     private bool _isMistaked;

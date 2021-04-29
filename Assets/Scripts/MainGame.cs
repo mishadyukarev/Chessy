@@ -9,10 +9,14 @@ internal sealed class MainGame : Main
 
     private static MainGame _instanceGame;
 
-    private Transform _parentTransformScrips;
+    private SupportGameManager _supportGameManager;
+
+    private StartValuesGameConfig _startValuesGameConfig;
+    private StartSpawnGame _startSpawnGameManager;
     private PhotonGameManager _photonManager;
     private ECSmanager _eCSmanager;
-    private SupportGameManager _supportGameManager;
+
+    private Transform _parentTransformScrips;
 
     #endregion
 
@@ -21,11 +25,9 @@ internal sealed class MainGame : Main
 
     public static MainGame InstanceGame => _instanceGame;
 
-    internal StartValuesGameConfig StartValuesGameConfig => _supportGameManager.StartValuesGameConfig;
-    internal StartSpawnGameManager StartSpawnGameManager => _supportGameManager.StartSpawnGameManager;
-    internal CellManager CellManager => _supportGameManager.CellManager;
-    internal BuilderManager BuilderManager => _supportGameManager.BuilderManager;
-    internal NameManager NameManager => _supportGameManager.NameManager;
+    internal SupportGameManager SupportGameManager => _supportGameManager;
+    internal StartValuesGameConfig StartValuesGameConfig => _startValuesGameConfig;
+    internal StartSpawnGame StartSpawnGameManager => _startSpawnGameManager;
 
     #endregion
 
@@ -33,7 +35,11 @@ internal sealed class MainGame : Main
     private void Awake()
     {
         _instanceGame = this;
-        _supportGameManager = new SupportGameManager(out _parentTransformScrips);
+        _supportGameManager = new SupportGameManager();
+
+        _startValuesGameConfig = _supportGameManager.ResourcesLoadGameManager.StartValuesConfig;
+        _startSpawnGameManager = new StartSpawnGame(_supportGameManager, out _parentTransformScrips);
+        _unityEvents = new UnityEvents(_supportGameManager.Builder);
         gameObject.transform.SetParent(_parentTransformScrips);
     }
 
@@ -48,11 +54,6 @@ internal sealed class MainGame : Main
     private void Update()
     {
         _eCSmanager.Update();
-    }
-
-    private void FixedUpdate()
-    {
-        _eCSmanager.FixedUpdate();
     }
 
     private void OnDestroy() { }

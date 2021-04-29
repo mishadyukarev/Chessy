@@ -43,7 +43,7 @@ public struct CellComponent
 
         private StartValuesGameConfig _startValuesGameConfig;
 
-        internal EnvironmentComponent(int x, int y, StartSpawnGameManager startSpawnManager, StartValuesGameConfig startValuesGameConfig)
+        internal EnvironmentComponent(int x, int y, StartSpawnGame startSpawnManager, StartValuesGameConfig startValuesGameConfig)
         {
             _haveFood = default;
             _haveMountain = default;
@@ -161,7 +161,7 @@ public struct CellComponent
         private SpriteRenderer _unitKingSpriteRender;
         private StartValuesGameConfig _startValues;
 
-        internal UnitComponent(int x, int y, StartSpawnGameManager startSpawnManager, StartValuesGameConfig startValues)
+        internal UnitComponent(int x, int y, StartSpawnGame startSpawnManager, StartValuesGameConfig startValues)
         {
             _isActiveUnitMaster = default;
             _isActiveUnitOther = default;
@@ -223,23 +223,8 @@ public struct CellComponent
         }
         internal int PowerProtection
         {
-            get
-            {
-                if (_isProtected)
-                {
-                    switch (_unitType)
-                    {
-                        case UnitTypes.King:
-                            return _startValues.PROTECTION_KING;
-
-                        case UnitTypes.Pawn:
-                            return _startValues.PROTECTION_PAWN;
-                    }
-                    return default;
-                }
-                else return default;
-
-            }
+            get { return _powerProtection; }
+            set { _powerProtection = value; }
         }
 
         internal int AmountSteps
@@ -318,11 +303,7 @@ public struct CellComponent
 
         #region Methods
 
-        private void SetColorUnit(in SpriteRenderer unitSpriteRender, in Player player)
-        {
-            if (player.IsMasterClient) unitSpriteRender.color = Color.blue;
-            else unitSpriteRender.color = Color.red;
-        }
+
 
         internal void RefreshAmountSteps()
         {
@@ -368,7 +349,7 @@ public struct CellComponent
 
             SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed, player);
         }
-        internal void SetUnit( in UnitTypes unitType, in int amountHealth, in int powerDamage, in int amountSteps, in bool isProtected, in bool isRelaxed, in Player player)
+        internal void SetUnit(in UnitTypes unitType, in int amountHealth, in int powerDamage, in int amountSteps, in bool isProtected, in bool isRelaxed, in Player player)
         {
             _unitType = unitType;
             _amountSteps = amountSteps;
@@ -403,7 +384,7 @@ public struct CellComponent
             {
                 case UnitTypes.King:
                     _unitKingGO.SetActive(isActive);
-                    if(player != default) SetColorUnit(_unitKingSpriteRender, player);
+                    if (player != default) SetColorUnit(_unitKingSpriteRender, player);
                     break;
 
                 case UnitTypes.Pawn:
@@ -416,7 +397,17 @@ public struct CellComponent
             }
         }
 
-        internal bool IsHim(Player player) => _player.ActorNumber == player.ActorNumber;
+        private void SetColorUnit(in SpriteRenderer unitSpriteRender, in Player player)
+        {
+            if (player.IsMasterClient) unitSpriteRender.color = Color.blue;
+            else unitSpriteRender.color = Color.red;
+        }
+
+        internal bool IsHim(Player player)
+        {
+            if (_player == default) return false;
+            return _player.ActorNumber == player.ActorNumber;
+        }
 
         #endregion
     }
@@ -433,7 +424,7 @@ public struct CellComponent
 
         private StartValuesGameConfig _startValuesGameConfig;
 
-        internal BuildingComponent(int x, int y, StartSpawnGameManager startSpawnManager, StartValuesGameConfig startValuesGameConfig)
+        internal BuildingComponent(int x, int y, StartSpawnGame startSpawnManager, StartValuesGameConfig startValuesGameConfig)
         {
             _buildingType = default;
             _cityGO = startSpawnManager.CampsGO[x, y];
@@ -573,7 +564,7 @@ public struct CellComponent
         private GameObject _enemyVisionGO;
         private GameObject _zoneVisionGO;
 
-        internal SupportVisionComponent(int x, int y, StartSpawnGameManager startSpawnManager)
+        internal SupportVisionComponent(int x, int y, StartSpawnGame startSpawnManager)
         {
             _player = default;
 

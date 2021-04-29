@@ -1,8 +1,5 @@
 ﻿using Leopotam.Ecs;
-using TMPro;
-using UnityEngine;
 using UnityEngine.UI;
-using static MainGame;
 
 internal class UISystem : CellReduction, IEcsRunSystem
 {

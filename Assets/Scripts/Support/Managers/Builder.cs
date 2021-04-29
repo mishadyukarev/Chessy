@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class BuilderManager
+public class Builder
 {
     public GameObject CreateGameObject(string name, Type[] types = default, Transform parent = default)
     {

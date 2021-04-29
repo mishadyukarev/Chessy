@@ -55,7 +55,7 @@ public sealed class ECSmanager
 
             _entitiesOtherManager.CreateEntities();
             _systemsOtherManager.CreateInitSystems(this, photonManager);
-        }     
+        }
     }
 
     public void Update()

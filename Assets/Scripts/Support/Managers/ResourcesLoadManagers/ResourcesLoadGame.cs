@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-internal class ResourcesLoadGameManager : ResourcesLoadManager
+internal class ResourcesLoadGame : ResourcesLoad
 {
     private GameObject _cellGO;
     private AudioClip _audioClip;
@@ -18,7 +18,7 @@ internal class ResourcesLoadGameManager : ResourcesLoadManager
     internal GameObject BackGroundCollider2D => _backGroundCollider2D;
 
 
-    public ResourcesLoadGameManager()
+    public ResourcesLoadGame()
     {
         _cellGO = Resources.Load<GameObject>("CellPrefab");
 

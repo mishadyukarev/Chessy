@@ -1,6 +1,5 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
-using System.Collections.Generic;
 using static MainGame;
 
 internal struct BuilderCellMasterComponent
@@ -56,7 +55,6 @@ internal struct BuilderCellMasterComponent
 internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<BuilderCellMasterComponent> _builderCellMasterComponentRef = default;
-    private EcsComponentRef<TransformerBetweenCellsComponent> _transformerBetweenCellsComponentRef = default;
     private EcsComponentRef<ZoneComponent> _zoneComponentRef = default;
 
     private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitsMasterComponentRef;
@@ -69,7 +67,6 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
     internal BuilderCellMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _builderCellMasterComponentRef = eCSmanager.EntitiesMasterManager.BuilderCellMasterComponentRef;
-        _transformerBetweenCellsComponentRef = eCSmanager.EntitiesGeneralManager.TransformerBetweenCellsComponentRef;
         _zoneComponentRef = eCSmanager.EntitiesGeneralManager.ZoneComponentRef;
 
         _economyMasterComponentRef = eCSmanager.EntitiesMasterManager.EconomyMasterComponentRef;
@@ -102,9 +99,9 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
 
                     if (playerIN.IsMasterClient)
                     {
-                        _zoneComponentRef.Unref().XYMasterZone = _transformerBetweenCellsComponentRef.Unref().TryGetXYCurrentCells(false, xyCellIN);
+                        _zoneComponentRef.Unref().XYMasterZone = InstanceGame.SupportGameManager.FinderWay.TryGetXYAround(xyCellIN);
                     }
-                    else _zoneComponentRef.Unref().XYOtherZone = _transformerBetweenCellsComponentRef.Unref().TryGetXYCurrentCells(false, xyCellIN);
+                    else _zoneComponentRef.Unref().XYOtherZone = InstanceGame.SupportGameManager.FinderWay.TryGetXYAround(xyCellIN);
 
 
 
@@ -116,7 +113,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
                     {
                         if (playerIN.IsMasterClient)
                         {
-                            if(CanBuildFarm(playerIN, _economyMasterComponentRef))
+                            if (CanBuildFarm(playerIN, _economyMasterComponentRef))
                             {
                                 CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
                                 _economyBuildingsMasterComponentRef.Unref().AmountFarmMaster += 1; // !!!!!
@@ -176,7 +173,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
                 default:
                     isBuilded = false;
                     break;
-            }          
+            }
             _builderCellMasterComponentRef.Unref().Pack(isBuilded);
         }
         else

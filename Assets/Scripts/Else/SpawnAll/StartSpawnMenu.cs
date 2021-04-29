@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-internal class StartSpawnMenuManager : StartSpawnManager
+internal class StartSpawnMenu : StartSpawn
 {
     internal TextMeshProUGUI LogText;
 
@@ -11,7 +11,7 @@ internal class StartSpawnMenuManager : StartSpawnManager
     internal Button QuitButton;
 
 
-    internal StartSpawnMenuManager(SupportMenuManager supportMenuManager) : base(supportMenuManager.ResourcesLoadMenuManager)
+    internal StartSpawnMenu(SupportMenuManager supportMenuManager) : base(supportMenuManager.ResourcesLoadMenuManager)
     {
         _canvas = GameObject.Instantiate(supportMenuManager.ResourcesLoadMenuManager.Canvas);
 
