@@ -6,5 +6,5 @@
 
     public CellManager CellManager => _cellManager;
     public ResourcesLoadGame ResourcesLoadGameManager => _resourcesLoadManager;
-    internal CellFinderWay FinderWay => _finderWay;
+    internal CellFinderWay CellFinderWay => _finderWay;
 }

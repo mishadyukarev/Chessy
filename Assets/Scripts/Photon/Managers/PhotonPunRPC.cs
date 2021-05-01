@@ -50,7 +50,7 @@ internal class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
     private EcsComponentRef<DonerComponent> _buttonComponentRef = default;
     private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
-    private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
+    private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
     private EcsComponentRef<ReadyComponent> _readyComponentRef = default;
     private EcsComponentRef<TheEndGameComponent> _theEndComponentRef = default;
     private EcsComponentRef<StartGameComponent> _startGameComponentRef = default;

@@ -4,7 +4,7 @@ using UnityEngine;
 
 internal abstract class Main : MonoBehaviour
 {
-    internal readonly bool IS_TEST = false;
+    internal readonly bool IS_TEST = true;
 
     protected UnityEvents _unityEvents;
 

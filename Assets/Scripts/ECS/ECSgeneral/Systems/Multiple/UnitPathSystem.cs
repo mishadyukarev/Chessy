@@ -1,9 +1,10 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
 using System.Collections.Generic;
+using static MainGame;
 
 
-public struct UnitPathsComponent
+public struct UnitPathComponent
 {
     private CellManager _cellManager;
     private SystemsGeneralManager _systemsGeneralManager;
@@ -14,7 +15,7 @@ public struct UnitPathsComponent
 
     private List<int[]> _xyAvailableCellsOUT;
 
-    public UnitPathsComponent(SystemsGeneralManager systemsGeneralManager, StartValuesGameConfig nameValueManager, CellManager cellManager)
+    public UnitPathComponent(SystemsGeneralManager systemsGeneralManager, StartValuesGameConfig nameValueManager, CellManager cellManager)
     {
         _systemsGeneralManager = systemsGeneralManager;
         _cellManager = cellManager;
@@ -57,13 +58,9 @@ public struct UnitPathsComponent
 
 
 
-public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSystem
+public partial class UnitPathSystem : CellReduction, IEcsRunSystem
 {
-    private int[] _xyCurrentCell = default;
-    private int[] _changeXY = default;
-
-    private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef;
-
+    private EcsComponentRef<UnitPathComponent> _unitPathComponentRef;
 
     internal UnitPathSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
@@ -71,36 +68,30 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
     }
 
 
-    public void Init()
-    {
-        _xyCurrentCell = new int[_startValuesGameConfig.XY_FOR_ARRAY];
-        _changeXY = new int[_startValuesGameConfig.XY_FOR_ARRAY];
-    }
-
     public void Run()
     {
         _unitPathComponentRef.Unref().Unpack(out UnitPathTypes unitPathTypeIN, out int[] xyStartCellIN, out Player playerIN);
+
+
+        var listAvailable = InstanceGame.SupportGameManager.CellFinderWay.TryGetXYAround(xyStartCellIN);
 
         switch (unitPathTypeIN)
         {
             case UnitPathTypes.Shift:
 
                 var xyAvailableCellsForShift = new List<int[]>();
-
-                for (int i = 0; i < (int)DirectTypes.LeftDown + 1; i++)
+   
+                foreach (var xy in listAvailable)
                 {
-                    GetCurrentCell(true, (DirectTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
-
-                    if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
+                    if (!CellEnvironmentComponent(xy).HaveMountain)
                     {
-                        if (CellUnitComponent(xyStartCellIN).AmountSteps >= CellUnitComponent(xyCurrentCellForShift).NeedAmountSteps(CellEnvironmentComponent(xyCurrentCellForShift).ListEnvironmentTypes)
+                        if (CellUnitComponent(xyStartCellIN).AmountSteps >= CellUnitComponent(xy).NeedAmountSteps(CellEnvironmentComponent(xy).ListEnvironmentTypes)
                             || CellUnitComponent(xyStartCellIN).HaveMaxSteps)
                         {
-                            xyAvailableCellsForShift.Add(xyCurrentCellForShift);
+                            xyAvailableCellsForShift.Add(xy);
                         }
                     }
                 }
-
                 _unitPathComponentRef.Unref().Pack(xyAvailableCellsForShift);
 
                 break;
@@ -109,96 +100,27 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
 
                 var xyAvailableCellsForAttack = new List<int[]>();
 
-                for (int i = 0; i < (int)DirectTypes.LeftDown + 1; i++)
+                foreach (var xy in listAvailable)
                 {
-                    GetCurrentCell(true, (DirectTypes)i, xyStartCellIN, out var xyCurrentCellForShift);
-
-                    if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
+                    if (!CellEnvironmentComponent(xy).HaveMountain)
                     {
-                        if (CellUnitComponent(xyCurrentCellForShift).HaveUnit)
+                        if (CellUnitComponent(xy).HaveUnit)
                         {
                             if (CellUnitComponent(xyStartCellIN).AmountSteps >= CellUnitComponent(xyStartCellIN).NeedAmountSteps(CellEnvironmentComponent(xyStartCellIN).ListEnvironmentTypes)
                                 || CellUnitComponent(xyStartCellIN).HaveMaxSteps)
                             {
-                                if (playerIN.ActorNumber != CellUnitComponent(xyCurrentCellForShift).ActorNumber)
+                                if (playerIN.ActorNumber != CellUnitComponent(xy).ActorNumber)
                                 {
-                                    xyAvailableCellsForAttack.Add(xyCurrentCellForShift);
+                                    xyAvailableCellsForAttack.Add(xy);
                                 }
                             }
                         }
                     }
+
+                    _unitPathComponentRef.Unref().Pack(xyAvailableCellsForAttack);
                 }
 
-                _unitPathComponentRef.Unref().Pack(xyAvailableCellsForAttack);
-
-                break;
-
-            default:
                 break;
         }
     }
-
-    private void GetCurrentCell(bool isFromStart, DirectTypes unitPathType, int[] xyStartCell, out int[] xyCurrentCellForAll)
-    {
-        xyCurrentCellForAll = _cellManager.CopyXY(_xyCurrentCell);
-        var changeXY = _changeXY;
-
-        switch (unitPathType)
-        {
-            case DirectTypes.Right:
-                changeXY[X] = 1;
-                changeXY[Y] = 0;
-                break;
-
-            case DirectTypes.Left:
-                changeXY[X] = -1;
-                changeXY[Y] = 0;
-                break;
-
-            case DirectTypes.Up:
-                changeXY[X] = 0;
-                changeXY[Y] = 1;
-                break;
-
-            case DirectTypes.Down:
-                changeXY[X] = 0;
-                changeXY[Y] = -1;
-                break;
-
-            case DirectTypes.RightUp:
-                changeXY[X] = 1;
-                changeXY[Y] = 1;
-                break;
-
-            case DirectTypes.LeftUp:
-                changeXY[X] = -1;
-                changeXY[Y] = 1;
-                break;
-
-            case DirectTypes.RightDown:
-                changeXY[X] = 1;
-                changeXY[Y] = -1;
-                break;
-
-            case DirectTypes.LeftDown:
-                changeXY[X] = -1;
-                changeXY[Y] = -1;
-                break;
-
-            default:
-                break;
-        }
-
-        if (isFromStart)
-        {
-            xyCurrentCellForAll[X] = xyStartCell[X] + changeXY[X];
-            xyCurrentCellForAll[Y] = xyStartCell[Y] + changeXY[Y];
-        }
-        else
-        {
-            xyCurrentCellForAll[X] += changeXY[X];
-            xyCurrentCellForAll[Y] += changeXY[Y];
-        }
-    }
-
 }

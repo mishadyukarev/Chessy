@@ -56,7 +56,7 @@ public struct ShiftUnitMasterComponent
 public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftComponentRef = default;
-    private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
+    private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
 
     private PhotonPunRPC _photonPunRPC = default;
 

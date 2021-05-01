@@ -29,9 +29,8 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
     private EcsComponentRef<RayComponent> _rayComponentRef = default;
     private EcsComponentRef<InputComponent> _inputComponentRef = default;
-    private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
+    private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
     private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
-    private EcsComponentRef<GetterCellComponent> _getterCellComponentRef = default;
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
     private EcsComponentRef<DonerComponent> _buttonComponent = default;
     private EcsComponentRef<SoundComponent> _soundComponentRef = default;
@@ -65,7 +64,6 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
         _inputComponentRef = eCSmanager.EntitiesGeneralManager.InputComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
         _selectedUnitComponentRef = eCSmanager.EntitiesGeneralManager.SelectedUnitComponentRef;
-        _getterCellComponentRef = eCSmanager.EntitiesGeneralManager.GetterCellComponentRef;
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
         _buttonComponent = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
         _soundComponentRef = eCSmanager.EntitiesGeneralManager.SoundComponentRef;

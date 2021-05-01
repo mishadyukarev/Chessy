@@ -30,8 +30,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     #region Solo
 
-    internal EcsComponentRef<UnitPathsComponent> UnitPathComponentRef => _soloEntity.Ref<UnitPathsComponent>();
-    internal EcsComponentRef<GetterCellComponent> GetterCellComponentRef => _soloEntity.Ref<GetterCellComponent>();
+    internal EcsComponentRef<UnitPathComponent> UnitPathComponentRef => _soloEntity.Ref<UnitPathComponent>();
 
     #endregion
 
@@ -90,8 +89,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
 
         _soloEntity = _ecsWorld.NewEntity()
-            .Replace(new UnitPathsComponent(systemsGeneralManager, startValuesGameConfig, cellManager))
-            .Replace(new GetterCellComponent(startValuesGameConfig, systemsGeneralManager));
+            .Replace(new UnitPathComponent(systemsGeneralManager, startValuesGameConfig, cellManager));
 
         _donerEntity = _ecsWorld.NewEntity()
             .Replace(new DonerComponent());

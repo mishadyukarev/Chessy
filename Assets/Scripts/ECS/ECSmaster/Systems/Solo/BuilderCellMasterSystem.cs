@@ -99,9 +99,9 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
 
                     if (playerIN.IsMasterClient)
                     {
-                        _zoneComponentRef.Unref().XYMasterZone = InstanceGame.SupportGameManager.FinderWay.TryGetXYAround(xyCellIN);
+                        _zoneComponentRef.Unref().XYMasterZone = InstanceGame.SupportGameManager.CellFinderWay.TryGetXYAround(xyCellIN);
                     }
-                    else _zoneComponentRef.Unref().XYOtherZone = InstanceGame.SupportGameManager.FinderWay.TryGetXYAround(xyCellIN);
+                    else _zoneComponentRef.Unref().XYOtherZone = InstanceGame.SupportGameManager.CellFinderWay.TryGetXYAround(xyCellIN);
 
 
 

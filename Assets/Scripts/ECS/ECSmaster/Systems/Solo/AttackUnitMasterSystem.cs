@@ -63,7 +63,7 @@ public struct AttackUnitMasterComponent
 public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
-    private EcsComponentRef<UnitPathsComponent> _unitPathComponentRef = default;
+    private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
 
     private PhotonPunRPC _photonPunRPC = default;
 

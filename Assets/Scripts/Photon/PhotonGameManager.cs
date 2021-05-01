@@ -37,9 +37,4 @@ public class PhotonGameManager
         if (InstanceGame.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
         else _photonView.ViewID = InstanceGame.StartValuesGameConfig.NUMBER_PHOTON_VIEW;
     }
-
-    public void InitAfterECS(ECSmanager eCSmanager)
-    {
-        _photonPunRPC.InitAfterECS(eCSmanager);
-    }
 }

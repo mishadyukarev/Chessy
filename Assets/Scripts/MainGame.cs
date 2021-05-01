@@ -10,7 +10,7 @@ internal sealed class MainGame : Main
     private SupportGameManager _supportGameManager;
 
     private StartValuesGameConfig _startValuesGameConfig;
-    private StartSpawnGame _startSpawnGameManager;
+    private StartSpawnGame _startSpawnGame;
     private PhotonGameManager _photonGameManager;
     private ECSmanager _eCSmanager;
 
@@ -25,7 +25,7 @@ internal sealed class MainGame : Main
 
     internal SupportGameManager SupportGameManager => _supportGameManager;
     internal StartValuesGameConfig StartValuesGameConfig => _startValuesGameConfig;
-    internal StartSpawnGame StartSpawnGameManager => _startSpawnGameManager;
+    internal StartSpawnGame StartSpawnGameManager => _startSpawnGame;
     internal PhotonGameManager PhotonGameManager => _photonGameManager;
 
     #endregion
@@ -37,7 +37,7 @@ internal sealed class MainGame : Main
         _supportGameManager = new SupportGameManager();
 
         _startValuesGameConfig = _supportGameManager.ResourcesLoadGameManager.StartValuesConfig;
-        _startSpawnGameManager = new StartSpawnGame(_supportGameManager, out _parentTransformScrips);
+        _startSpawnGame = new StartSpawnGame(_supportGameManager, out _parentTransformScrips);
 
         _unityEvents = new UnityEvents(_supportGameManager.Builder);
         gameObject.transform.SetParent(_parentTransformScrips);
@@ -48,7 +48,7 @@ internal sealed class MainGame : Main
     private void Start()
     {
         _eCSmanager = new ECSmanager();
-        _photonGameManager.InitAfterECS(_eCSmanager);
+        _photonGameManager.PhotonPunRPC.InitAfterECS(_eCSmanager);
     }
 
 

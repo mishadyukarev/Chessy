@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Photon.Realtime;
+using System.Collections.Generic;
 
 internal class CellFinderWay
 {
@@ -19,6 +20,7 @@ internal class CellFinderWay
 
         return xyAvailableCells;
     }
+
 
     internal int[] GetXYCell(int[] xyStartCell, DirectTypes directType)
     {
