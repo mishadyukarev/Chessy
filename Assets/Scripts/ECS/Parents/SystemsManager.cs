@@ -6,31 +6,40 @@ public abstract class SystemsManager
     protected EcsWorld _ecsWorld;
 
     protected EcsSystems _updateSystems;
-    protected EcsSystems _elseSystems;
+    protected EcsSystems _fixedUpdateSystems;
+    protected EcsSystems _multipleSystems;
+    protected EcsSystems _soloSystems;
 
     protected EcsSystems _currentSystemsForInvoke;
-
 
     protected SystemsManager(EcsWorld ecsWorld)
     {
         _ecsWorld = ecsWorld;
 
         _updateSystems = new EcsSystems(ecsWorld);
-        _elseSystems = new EcsSystems(ecsWorld);
+        _fixedUpdateSystems = new EcsSystems(ecsWorld);
+        _multipleSystems = new EcsSystems(ecsWorld);
+        _soloSystems = new EcsSystems(ecsWorld);
     }
 
-    internal void InitAndProcessInjectsSystems()
+
+    internal virtual void InitAndProcessInjectsSystems()
     {
         _updateSystems.ProcessInjects();
-        _elseSystems.ProcessInjects();
+        _fixedUpdateSystems.ProcessInjects();
+        _multipleSystems.ProcessInjects();
+        _soloSystems.ProcessInjects();
 
         _updateSystems.Init();
-        _elseSystems.Init();
+        _fixedUpdateSystems.Init();
+        _multipleSystems.Init();
+        _soloSystems.Init();
     }
 
-    internal void RunUpdate() => _updateSystems.Run();
+    internal void Update() => _updateSystems.Run();
+    internal void FixedUpdate() => _fixedUpdateSystems.Run();
 
-    internal void Destroy() =>_updateSystems.Destroy();
+    internal void Destroy() => _updateSystems.Destroy();
 
 
 
@@ -41,13 +50,27 @@ public abstract class SystemsManager
         if (numberOfNamedSystem != -1)
         {
             var ecsSystemsRunItem = currentSystems.GetRunSystems().Items[numberOfNamedSystem];
-            ecsSystemsRunItem.System.Run();
+            currentSystems.GetRunSystems().Items[numberOfNamedSystem].System.Run();
             return true;
         }
         else
         {
             Debug.Log("Не нашёл систему");
             return false;
+        }
+    }
+    protected void ActiveRunSystem(bool isActive, string namedSystem, EcsSystems currentSystems)
+    {
+        var numberOfNamedSystem = currentSystems.GetNamedRunSystem(namedSystem);
+
+        if (numberOfNamedSystem != -1)
+        {
+            var ecsSystemsRunItem = currentSystems.GetRunSystems().Items[numberOfNamedSystem];
+            currentSystems.GetRunSystems().Items[numberOfNamedSystem].Active = isActive;
+        }
+        else
+        {
+            Debug.Log("Не нашёл систему");
         }
     }
 }

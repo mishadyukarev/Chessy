@@ -2,5 +2,6 @@
 public enum SystemMasterTypes
 {
     Update,
-    Else,
+    Multiple,
+    Solo,
 }

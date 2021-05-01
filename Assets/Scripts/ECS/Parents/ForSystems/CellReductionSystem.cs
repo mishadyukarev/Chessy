@@ -1,6 +1,7 @@
 ﻿using Leopotam.Ecs;
+using static MainGame;
 
-public abstract class CellReductionSystem : ReductionSystem
+public abstract class CellReduction : StartValuesReduction
 {
     protected CellManager _cellManager = default;
 
@@ -10,17 +11,17 @@ public abstract class CellReductionSystem : ReductionSystem
     protected EcsComponentRef<CellComponent.UnitComponent>[,] _cellUnitComponentRef;
     protected EcsComponentRef<CellComponent.BuildingComponent>[,] _cellBuildingComponentRef;
 
-    protected int X => _startValues.X;
-    protected int Y => _startValues.Y;
-    protected int XYforArray => _startValues.XY_FOR_ARRAY;
+    protected int X => _startValuesGameConfig.X;
+    protected int Y => _startValuesGameConfig.Y;
+    protected int XYforArray => _startValuesGameConfig.XY_FOR_ARRAY;
 
     protected int Xcount => _cellComponentRef.GetUpperBound(X) + 1;
     protected int Ycount => _cellComponentRef.GetUpperBound(Y) + 1;
 
 
-    protected CellReductionSystem(ECSmanager eCSmanager, SupportManager supportManager) :base(supportManager)
+    internal CellReduction(ECSmanager eCSmanager)
     {
-        _cellManager = supportManager.CellManager;
+        _cellManager = InstanceGame.SupportGameManager.CellManager;
 
         _cellComponentRef = eCSmanager.EntitiesGeneralManager.CellComponentRef;
         _cellEnvironmentComponentRef = eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef;

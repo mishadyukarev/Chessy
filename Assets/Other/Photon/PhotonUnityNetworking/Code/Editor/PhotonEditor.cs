@@ -12,7 +12,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 using UnityEditor;
 using UnityEditor.Callbacks;
@@ -145,7 +144,7 @@ namespace Photon.Pun
         private static double lastWarning = 0;
         private static bool postInspectorUpdate;
 
-        
+
 
         [MenuItem("Window/Photon Unity Networking/PUN Wizard &p", false, 0)]
         protected static void MenuItemOpenWizard()
@@ -182,20 +181,20 @@ namespace Photon.Pun
             //Debug.Log("OnDelayCall()");// DEBUG
 
             postInspectorUpdate = true;
-   
+
             EditorApplication.playModeStateChanged += PlayModeStateChanged;
 
             CompilationPipeline.assemblyCompilationStarted -= OnCompileStarted;
             CompilationPipeline.assemblyCompilationStarted += OnCompileStarted;
 
 
-            #if (UNITY_2018 || UNITY_2018_1_OR_NEWER)
+#if (UNITY_2018 || UNITY_2018_1_OR_NEWER)
             EditorApplication.projectChanged -= OnProjectChanged;
             EditorApplication.projectChanged += OnProjectChanged;
-            #else
+#else
             EditorApplication.projectWindowChanged -= OnProjectChanged;
             EditorApplication.projectWindowChanged += OnProjectChanged;
-            #endif
+#endif
 
             OnProjectChanged(); // call this initially from here, as the project change events happened earlier (on start of the Editor)
         }
@@ -208,9 +207,9 @@ namespace Photon.Pun
 
             // Prevent issues with Unity Cloud Builds where ServerSettings are not found.
             // Also, within the context of a Unity Cloud Build, ServerSettings is already present anyway.
-            #if UNITY_CLOUD_BUILD
+#if UNITY_CLOUD_BUILD
             return;
-            #endif
+#endif
 
             if (PhotonNetwork.PhotonServerSettings == null)
             {
@@ -279,7 +278,7 @@ namespace Photon.Pun
         }
 
         protected void Awake()
-        {  
+        {
             // check if some appid is set. if so, we can avoid registration calls.
             if (PhotonNetwork.PhotonServerSettings != null && PhotonNetwork.PhotonServerSettings.AppSettings != null && !string.IsNullOrEmpty(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime))
             {
@@ -387,7 +386,7 @@ namespace Photon.Pun
                 {
                     // input should be a mail address
                     this.useMail = true;
-                    
+
                     // check if the current input equals earlier input, which is known to be registered already
                     this.minimumInput = !this.mailOrAppId.Equals(this.emailSentToAccount) || !this.emailSentToAccountIsRegistered;
                 }
@@ -611,7 +610,7 @@ namespace Photon.Pun
                     return;
                 }
             }
-            
+
             this.emailSentToAccount = email;
             this.emailSentToAccountIsRegistered = false;
 
@@ -633,13 +632,13 @@ namespace Photon.Pun
 
             if (res.ReturnCode == AccountServiceReturnCodes.Success)
             {
-                string key = ((int) ServiceTypes.Pun).ToString();
+                string key = ((int)ServiceTypes.Pun).ToString();
                 string appId;
                 if (res.ApplicationIds.TryGetValue(key, out appId))
                 {
                     this.mailOrAppId = appId;
                     PhotonNetwork.PhotonServerSettings.UseCloud(this.mailOrAppId, null);
-                    key = ((int) ServiceTypes.Chat).ToString();
+                    key = ((int)ServiceTypes.Chat).ToString();
                     if (res.ApplicationIds.TryGetValue(key, out appId))
                     {
                         PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat = appId;
@@ -648,7 +647,7 @@ namespace Photon.Pun
                     {
                         Debug.LogWarning("Registration successful but no Chat AppId returned");
                     }
-                    key = ((int) ServiceTypes.Voice).ToString();
+                    key = ((int)ServiceTypes.Voice).ToString();
                     if (res.ApplicationIds.TryGetValue(key, out appId))
                     {
                         PhotonNetwork.PhotonServerSettings.AppSettings.AppIdVoice = appId;
@@ -724,7 +723,7 @@ namespace Photon.Pun
             List<string> allRpcs = new List<string>();
 
 
-            #if UNITY_2019_2_OR_NEWER
+#if UNITY_2019_2_OR_NEWER
 
             // we can make use of the new TypeCache to find methods with PunRPC attribute
             var extractedMethods = TypeCache.GetMethodsWithAttribute<PunRPC>();
@@ -737,7 +736,7 @@ namespace Photon.Pun
                 }
             }
 
-            #else
+#else
 
             System.Reflection.Assembly[] assemblies = System.AppDomain.CurrentDomain.GetAssemblies().Where(a => !(a.ManifestModule is System.Reflection.Emit.ModuleBuilder)).ToArray();
 
@@ -757,7 +756,7 @@ namespace Photon.Pun
                 additionalRpcs.AddRange(additional);
             }
 
-            #endif
+#endif
 
 
             if (additionalRpcs.Count <= 0)

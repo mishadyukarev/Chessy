@@ -5,7 +5,7 @@ public sealed class SystemsOtherManager : SystemsManager
     public SystemsOtherManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
 
-    internal void CreateInitSystems(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager)
+    internal void CreateInitSystems(ECSmanager eCSmanager)
     {
         InitAndProcessInjectsSystems();
     }
@@ -20,7 +20,7 @@ public sealed class SystemsOtherManager : SystemsManager
                 break;
 
             case SystemOtherTypes.Else:
-                _currentSystemsForInvoke = _elseSystems;
+                _currentSystemsForInvoke = _multipleSystems;
                 break;
 
             default:

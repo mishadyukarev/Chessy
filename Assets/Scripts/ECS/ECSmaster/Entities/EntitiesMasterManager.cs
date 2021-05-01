@@ -1,91 +1,112 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
+using static MainGame;
 
 public class EntitiesMasterManager : EntitiesManager
 {
-    private EcsEntity _setterUnitEntity;
-    private EcsEntity _shiftUnitEntity;
-    private EcsEntity _refresherEntity;
-    private EcsEntity _attackUnitEntity;
-    private EcsEntity _getterUnitEntity;
     private EcsEntity _economyEntity;
-    private EcsEntity _builderEntity;
+    private EcsEntity _readyEntity;
+    private EcsEntity _theEndGameEntity;
+    private EcsEntity _fromPlayerEntity;
 
-    public EcsComponentRef<SetterUnitMasterComponent> SetterUnitMasterComponentRef => _setterUnitEntity.Ref<SetterUnitMasterComponent>();
-    public EcsComponentRef<ShiftUnitMasterComponent> ShiftUnitComponentRef => _shiftUnitEntity.Ref<ShiftUnitMasterComponent>();
-    public EcsComponentRef<RefresherMasterComponent> RefresherMasterComponentRef => _refresherEntity.Ref<RefresherMasterComponent>();
-    public EcsComponentRef<AttackUnitMasterComponent> AttackUnitMasterComponentRef => _attackUnitEntity.Ref<AttackUnitMasterComponent>();
-    internal EcsComponentRef<GetterUnitMasterComponent> GetterUnitMasterComponentRef => _getterUnitEntity.Ref<GetterUnitMasterComponent>();
-    internal EcsComponentRef<BuilderCellMasterComponent> BuilderCellMasterComponentRef => _builderEntity.Ref<BuilderCellMasterComponent>();
+
+    #region Properties
+
+    #region Solo
+
+    public EcsComponentRef<SetterUnitMasterComponent> SetterUnitMasterComponentRef => _soloEntity.Ref<SetterUnitMasterComponent>();
+    public EcsComponentRef<ShiftUnitMasterComponent> ShiftUnitComponentRef => _soloEntity.Ref<ShiftUnitMasterComponent>();
+    public EcsComponentRef<DonerMasterComponent> DonerMasterComponentRef => _soloEntity.Ref<DonerMasterComponent>();
+    public EcsComponentRef<AttackUnitMasterComponent> AttackUnitMasterComponentRef => _soloEntity.Ref<AttackUnitMasterComponent>();
+    internal EcsComponentRef<BuilderCellMasterComponent> BuilderCellMasterComponentRef => _soloEntity.Ref<BuilderCellMasterComponent>();
+    internal EcsComponentRef<GetterUnitMasterComponent> GetterUnitMasterComponentRef => _soloEntity.Ref<GetterUnitMasterComponent>();
+    internal EcsComponentRef<ProtecterUnitMasterComponent> ProtecterUnitMasterComponentRef => _soloEntity.Ref<ProtecterUnitMasterComponent>();
+    internal EcsComponentRef<RefresherMasterComponent> RefresherMasterComponentRef => _soloEntity.Ref<RefresherMasterComponent>();
+
+    #endregion
+
 
     internal EcsComponentRef<EconomyMasterComponent> EconomyMasterComponentRef
         => _economyEntity.Ref<EconomyMasterComponent>();
-    internal EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> EconomyUnitsMasterComponentRef 
+    internal EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> EconomyUnitsMasterComponentRef
         => _economyEntity.Ref<EconomyMasterComponent.UnitsMasterComponent>();
-    internal EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> EconomyBuildingsMasterComponentRef 
+    internal EcsComponentRef<EconomyMasterComponent.BuildingsMasterComponent> EconomyBuildingsMasterComponentRef
         => _economyEntity.Ref<EconomyMasterComponent.BuildingsMasterComponent>();
 
+    internal EcsComponentRef<ReadyMasterComponent> ReadyMasterComponentRef => _readyEntity.Ref<ReadyMasterComponent>();
+    internal EcsComponentRef<TheEndGameMasterComponent> TheEndGameMasterComponentRef => _theEndGameEntity.Ref<TheEndGameMasterComponent>();
+    internal EcsComponentRef<FromInfoComponent> FromInfoComponentRef => _fromPlayerEntity.Ref<FromInfoComponent>();
 
+    #endregion
 
 
 
     public EntitiesMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    public void CreateEntities(ECSmanager eCSmanager, SupportManager supportManager)
+    internal void CreateEntities(ECSmanager eCSmanager)
     {
-        _setterUnitEntity = _ecsWorld.NewEntity().
-            Replace(new SetterUnitMasterComponent(supportManager.StartValuesConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));
+        _soloEntity = _ecsWorld.NewEntity()
+            .Replace(new SetterUnitMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.SupportGameManager.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new ShiftUnitMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.SupportGameManager.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new DonerMasterComponent())
+            .Replace(new AttackUnitMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.SupportGameManager.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new BuilderCellMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.SupportGameManager.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager))
+            .Replace(new ProtecterUnitMasterComponent(eCSmanager))
+            .Replace(new RefresherMasterComponent());
 
-        _shiftUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new ShiftUnitMasterComponent(supportManager.StartValuesConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));
-
-        _refresherEntity = _ecsWorld.NewEntity()
-            .Replace(new RefresherMasterComponent(eCSmanager.SystemsMasterManager));
-
-        _attackUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new AttackUnitMasterComponent(supportManager.StartValuesConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));
-
-        _getterUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager));
 
         _economyEntity = _ecsWorld.NewEntity()
-            .Replace(new EconomyMasterComponent(supportManager.StartValuesConfig))
-            .Replace(new EconomyMasterComponent.UnitsMasterComponent(supportManager.StartValuesConfig))
-            .Replace(new EconomyMasterComponent.BuildingsMasterComponent(supportManager.StartValuesConfig));
-
-        _builderEntity = _ecsWorld.NewEntity()
-            .Replace(new BuilderCellMasterComponent(supportManager.StartValuesConfig, supportManager.CellManager, eCSmanager.SystemsMasterManager));
+            .Replace(new EconomyMasterComponent(InstanceGame.StartValuesGameConfig))
+            .Replace(new EconomyMasterComponent.UnitsMasterComponent(InstanceGame.StartValuesGameConfig))
+            .Replace(new EconomyMasterComponent.BuildingsMasterComponent(InstanceGame.StartValuesGameConfig));
 
 
-        for (int x = 0; x < supportManager.StartValuesConfig.CellCountX; x++)
+        _readyEntity = _ecsWorld.NewEntity()
+            .Replace(new ReadyMasterComponent());
+
+
+        _theEndGameEntity = _ecsWorld.NewEntity()
+            .Replace(new TheEndGameMasterComponent());
+
+
+        _fromPlayerEntity = _ecsWorld.NewEntity()
+            .Replace(new FromInfoComponent());
+
+
+        #region Cells
+
+        for (int x = 0; x < InstanceGame.StartValuesGameConfig.CELL_COUNT_X; x++)
         {
-            for (int y = 0; y < supportManager.StartValuesConfig.CellCountY; y++)
+            for (int y = 0; y < InstanceGame.StartValuesGameConfig.CELL_COUNT_Y; y++)
             {
                 int random;
                 random = Random.Range(1, 100);
-                if (random <= supportManager.StartValuesConfig.PercentTree) 
-                    eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Tree);
+                if (random <= InstanceGame.StartValuesGameConfig.PERCENT_TREE)
+                    eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().SetResetEnvironment(true, EnvironmentTypes.Tree);
 
                 random = Random.Range(1, 100);
-                if (random <= supportManager.StartValuesConfig.PercentHill) 
-                    eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Hill);
+                if (random <= InstanceGame.StartValuesGameConfig.PERCENT_HILL)
+                    eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().SetResetEnvironment(true, EnvironmentTypes.Hill);
 
                 random = Random.Range(1, 100);
-                if (random <= supportManager.StartValuesConfig.PercentMountain) 
-                    eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Mountain);
+                if (random <= InstanceGame.StartValuesGameConfig.PERCENT_MOUNTAIN)
+                    eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().SetResetEnvironment(true, EnvironmentTypes.Mountain);
 
 
 
-                if(!eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().HaveHill
-                    && !eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().HaveMountain
-                    && !eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().HaveTree)
+                if (!eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().HaveMountain
+                    && !eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().HaveTree)
                 {
                     random = Random.Range(1, 100);
-                    if (random <= supportManager.StartValuesConfig.PercentFood)
-                        eCSmanager.EntitiesGeneralManager.GetCellComponents<CellComponent.EnvironmentComponent>(x, y).Unref().SetResetEnvironment(true, EnvironmentTypes.Food);
+                    if (random <= InstanceGame.StartValuesGameConfig.PERCENT_FOOD)
+                        eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().SetResetEnvironment(true, EnvironmentTypes.Food);
                 }
-                
+
             }
         }
+
+        #endregion
+
     }
 }

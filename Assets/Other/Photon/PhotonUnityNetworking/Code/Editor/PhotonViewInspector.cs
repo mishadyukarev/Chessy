@@ -8,11 +8,10 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
+using Photon.Realtime;
 using System;
 using UnityEditor;
 using UnityEngine;
-
-using Photon.Realtime;
 
 namespace Photon.Pun
 {
@@ -89,7 +88,7 @@ namespace Photon.Pun
                 Player ctrlr = this.m_Target.Controller;
                 EditorGUILayout.LabelField("Controller:", (ctrlr != null ? ("[" + ctrlr.ActorNumber + "] '" + ctrlr.NickName + "' " + (ctrlr.IsMasterClient ? " (master)" : "")) : "[0] <null>"));
                 EditorGUILayout.LabelField("Owner:", (owner != null ? ("[" + owner.ActorNumber + "] '" + owner.NickName + "' " + (owner.IsMasterClient ? " (master)" : "")) : "[0] <null>"));
-                EditorGUILayout.LabelField("Creator:", (cretr != null ? ("[" +cretrId + "] '" + cretr.NickName + "' " + (cretr.IsMasterClient ? " (master)" : "")) : "[0] <null>"));
+                EditorGUILayout.LabelField("Creator:", (cretr != null ? ("[" + cretrId + "] '" + cretr.NickName + "' " + (cretr.IsMasterClient ? " (master)" : "")) : "[0] <null>"));
 
             }
 
@@ -114,7 +113,7 @@ namespace Photon.Pun
                 this.m_Target.OwnershipTransfer = own;
             }
 
-            
+
             GUILayout.Space(5);
 
             // Observables section
@@ -136,7 +135,7 @@ namespace Photon.Pun
                             break;
                         }
                 }
-             }
+            }
 
 
             PhotonView.ObservableSearch autoFindObservables = (PhotonView.ObservableSearch)EditorGUILayout.EnumPopup(observableSearchGuiContent, m_Target.observableSearch);

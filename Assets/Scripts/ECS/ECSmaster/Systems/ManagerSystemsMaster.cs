@@ -4,17 +4,27 @@ public sealed class SystemsMasterManager : SystemsManager
 {
     public SystemsMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    public void CreateInitSystems(ECSmanager eCSmanager, SupportManager supportManager, PhotonManager photonManager)
+    internal void CreateInitSystems(ECSmanager eCSmanager)
     {
-        _elseSystems
-            .Add(new RefresherMasterSystem(eCSmanager, supportManager), nameof(RefresherMasterSystem))
-            .Add(new SetterUnitMasterSystem(eCSmanager, supportManager), nameof(SetterUnitMasterSystem))
-            .Add(new ShiftUnitMasterSystem(eCSmanager, supportManager), nameof(ShiftUnitMasterSystem))
-            .Add(new BuilderCellMasterSystem(eCSmanager, supportManager), nameof(BuilderCellMasterSystem))
-            .Add(new AttackUnitMasterSystem(eCSmanager, supportManager), nameof(AttackUnitMasterSystem))
-            .Add(new GetterUnitMasterSystem(eCSmanager, supportManager), nameof(GetterUnitMasterSystem));
+        _soloSystems
+            .Add(new RefresherMasterSystem(eCSmanager), nameof(RefresherMasterSystem))
+            .Add(new VisibilityUnitsMasterSystem(eCSmanager), nameof(VisibilityUnitsMasterSystem));
+
+        _multipleSystems
+
+            .Add(new SetterUnitMasterSystem(eCSmanager), nameof(SetterUnitMasterSystem))
+            .Add(new ShiftUnitMasterSystem(eCSmanager), nameof(ShiftUnitMasterSystem))
+            .Add(new BuilderCellMasterSystem(eCSmanager), nameof(BuilderCellMasterSystem))
+            .Add(new AttackUnitMasterSystem(eCSmanager), nameof(AttackUnitMasterSystem))
+            .Add(new GetterUnitMasterSystem(eCSmanager), nameof(GetterUnitMasterSystem))
+            .Add(new ProtecterUnitMasterSystem(eCSmanager), nameof(ProtecterUnitMasterSystem));
 
         InitAndProcessInjectsSystems();
+    }
+
+    internal override void InitAndProcessInjectsSystems()
+    {
+        base.InitAndProcessInjectsSystems();
     }
 
 
@@ -22,8 +32,12 @@ public sealed class SystemsMasterManager : SystemsManager
     {
         switch (systemType)
         {
-            case SystemMasterTypes.Else:
-                _currentSystemsForInvoke = _elseSystems;
+            case SystemMasterTypes.Multiple:
+                _currentSystemsForInvoke = _multipleSystems;
+                break;
+
+            case SystemMasterTypes.Solo:
+                _currentSystemsForInvoke = _soloSystems;
                 break;
 
             default:

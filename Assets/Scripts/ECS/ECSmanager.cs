@@ -1,7 +1,6 @@
 ﻿using Leopotam.Ecs;
-using Photon.Pun;
 using Scripts.ECS.Entities;
-using static Main;
+using static MainGame;
 
 
 public sealed class ECSmanager
@@ -31,23 +30,23 @@ public sealed class ECSmanager
 
 
 
-    internal ECSmanager(SupportManager supportManager, PhotonManager photonManager, StartSpawnManager startSpawnManager)
+    internal ECSmanager()
     {
         _ecsWorld = new EcsWorld();
 
         _entitiesGeneralManager = new EntitiesGeneralManager(_ecsWorld);
         _systemsGeneralManager = new SystemsGeneralManager(_ecsWorld);
+        _entitiesGeneralManager.CreateEntities(this);
+        _systemsGeneralManager.CreateInitSystems(this);
 
-        _entitiesGeneralManager.CreateEntities(this, supportManager, photonManager, startSpawnManager);
-        _systemsGeneralManager.CreateInitSystems(this, supportManager, photonManager, startSpawnManager);
 
-        if (Instance.IsMasterClient)
+        if (InstanceGame.IsMasterClient)
         {
             _entitiesMasterManager = new EntitiesMasterManager(_ecsWorld);
             _systemsMasterManager = new SystemsMasterManager(_ecsWorld);
 
-            _entitiesMasterManager.CreateEntities(this, supportManager);
-            _systemsMasterManager.CreateInitSystems(this, supportManager, photonManager);
+            _entitiesMasterManager.CreateEntities(this);
+            _systemsMasterManager.CreateInitSystems(this);
         }
         else
         {
@@ -55,25 +54,32 @@ public sealed class ECSmanager
             _systemsOtherManager = new SystemsOtherManager(_ecsWorld);
 
             _entitiesOtherManager.CreateEntities();
-            _systemsOtherManager.CreateInitSystems(this, supportManager, photonManager);
+            _systemsOtherManager.CreateInitSystems(this);
         }
     }
 
-    public void Run()
+    public void Update()
     {
-        _systemsGeneralManager.RunUpdate();
+        _systemsGeneralManager.Update();
 
-        if (Instance.IsMasterClient) _systemsMasterManager.RunUpdate();
-        else _systemsOtherManager.RunUpdate();
+        if (InstanceGame.IsMasterClient) _systemsMasterManager.Update();
+        else _systemsOtherManager.Update();
+    }
+    internal void FixedUpdate()
+    {
+        _systemsGeneralManager.FixedUpdate();
+
+        if (InstanceGame.IsMasterClient) _systemsMasterManager.FixedUpdate();
+        else _systemsOtherManager.FixedUpdate();
     }
 
     public void OnDestroy()
     {
-        //_systemsGeneralManager.Destroy();
+        _systemsGeneralManager.Destroy();
 
-        //if (Instance.IsMasterClient)_systemsMasterManager.Destroy();
-        //else _systemsOtherManager.Destroy();
+        if (InstanceGame.IsMasterClient) _systemsMasterManager.Destroy();
+        else _systemsOtherManager.Destroy();
 
-        //_ecsWorld.Destroy();
+        _ecsWorld.Destroy();
     }
 }

@@ -1,13 +1,20 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class MenuManager : MonoBehaviourPunCallbacks
+internal class MenuManager : MonoBehaviourPunCallbacks
 {
-    public Text LogText;
+    private TextMeshProUGUI _logTex;
+    private const int MAX_PLAYERS = 2;
 
-    void Start()
+    internal void Init(StartSpawnMenu startSpawnMenuManager)
     {
+        _logTex = startSpawnMenuManager.LogText;
+        startSpawnMenuManager.CreateRoomButton.onClick.AddListener(CreateRoom);
+        startSpawnMenuManager.JoinRandomButton.onClick.AddListener(JoinRandomRoom);
+        startSpawnMenuManager.QuitButton.onClick.AddListener(Quit);
+
 
         PhotonNetwork.NickName = "Player " + Random.Range(1000, 9999);
         Log("Player's name is set to " + PhotonNetwork.NickName);
@@ -17,34 +24,47 @@ public class MenuManager : MonoBehaviourPunCallbacks
         PhotonNetwork.ConnectUsingSettings();
     }
 
-    public override void OnConnectedToMaster()
-    {
-        //base.OnConnectedToMaster();
-        Log("Connected to Master");
-    }
 
     public void CreateRoom()
     {
-        PhotonNetwork.CreateRoom(null, new Photon.Realtime.RoomOptions { MaxPlayers = 2,  });
+        RoomOptions roomOptions = new RoomOptions();
+        roomOptions.MaxPlayers = MAX_PLAYERS;
+        PhotonNetwork.CreateRoom(null, roomOptions, null);
     }
 
-    public void JoinRoom()
+    public void JoinRandomRoom()
     {
         PhotonNetwork.JoinRandomRoom();
-    }
-
-    public override void OnJoinedRoom()
-    {
-        //base.OnJoinedRoom();
-        Log("Joined the room");
-
-        PhotonNetwork.LoadLevel("Chessi");
     }
 
     private void Log(string message)
     {
         Debug.Log(message);
-        LogText.text += "\n";
-        LogText.text += message;
+        _logTex.text += "\n";
+        _logTex.text += message;
     }
+
+    public void Quit() => Application.Quit();
+
+
+
+
+
+
+
+    public override void OnJoinRandomFailed(short returnCode, string message)
+    {
+        Debug.Log("There isn't rooms");
+    }
+
+    public override void OnJoinedRoom()
+    {
+        PhotonNetwork.LoadLevel("Chessi");
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        Log("Connected to Master");
+    }
+
 }
