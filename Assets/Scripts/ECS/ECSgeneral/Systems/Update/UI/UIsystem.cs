@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine.UI;
+using static MainGame;
 
 internal class UISystem : CellReduction, IEcsRunSystem
 {
@@ -33,12 +34,13 @@ internal class UISystem : CellReduction, IEcsRunSystem
     private EcsComponentRef<EconomyComponent.BuildingComponent> _economyBuildingsComponentRef;
     private EcsComponentRef<EconomyComponent.UnitComponent> _economyUnitsComponentRef;
 
+    private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
 
 
-    internal UISystem(ECSmanager eCSmanager, PhotonGameManager photonManager) : base(eCSmanager)
+    internal UISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonManagerScene = photonManager.PhotonManagerScene;
-        _photonPunRPC = photonManager.PhotonPunRPC;
+        _photonManagerScene = InstanceGame.PhotonGameManager.PhotonManagerScene;
+        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
 
         #region ComponetRefs
@@ -207,7 +209,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
 
 
-    private void UniqueAbilityButton1() => _photonPunRPC.RelaxUnit(_selectorComponentRef.Unref().XYselectedCell);
+    //private void UniqueAbilityButton1() => _photonPunRPC.RelaxUnit(CellUnitComponent(_xySelectedCell).IsProtected _selectorComponentRef.Unref().XYselectedCell);
 
     #endregion
 

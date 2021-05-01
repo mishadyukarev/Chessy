@@ -58,7 +58,19 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
             {
                 for (int y = 0; y < Ycount; y++)
                 {
-                    CellUnitComponent(x, y).RefreshAmountSteps();
+                    switch (CellUnitComponent(x, y).UnitType)
+                    {
+                        case UnitTypes.King:
+                            CellUnitComponent(x, y).AmountSteps = InstanceGame.StartValuesGameConfig.MAX_AMOUNT_STEPS_KING;
+                            break;
+
+                        case UnitTypes.Pawn:
+                            CellUnitComponent(x, y).AmountSteps = InstanceGame.StartValuesGameConfig.MAX_AMOUNT_STEPS_PAWN;
+                            break;
+
+                        default:
+                            break;
+                    }
 
                     if (CellUnitComponent(x, y).IsRelaxed)
                     {

@@ -12,9 +12,9 @@
 
 #if UNITY_EDITOR
 using System;
-using UnityEngine;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using UnityEngine;
 
 namespace Photon.Pun
 {
@@ -39,7 +39,7 @@ namespace Photon.Pun
         /// third parties custom context, if null, defaults to DefaultContext property value
         /// </summary>
         public string CustomContext = null;
-        
+
         /// <summary>
         /// third parties custom token. If null, defaults to DefaultToken property value
         /// </summary>
@@ -137,7 +137,7 @@ namespace Photon.Pun
             string emailEscaped = UnityEngine.Networking.UnityWebRequest.EscapeURL(email);
             string st = UnityEngine.Networking.UnityWebRequest.EscapeURL(serviceTypes);
             string uv = UnityEngine.Networking.UnityWebRequest.EscapeURL(Application.unityVersion);
-            string serviceUrl = string.Format(ServiceUrl, string.IsNullOrEmpty(CustomContext) ? DefaultContext : CustomContext );
+            string serviceUrl = string.Format(ServiceUrl, string.IsNullOrEmpty(CustomContext) ? DefaultContext : CustomContext);
 
             return string.Format("{0}?email={1}&st={2}&uv={3}", serviceUrl, emailEscaped, st, uv);
         }
@@ -199,7 +199,7 @@ namespace Photon.Pun
                 int appType = (int)appTypes[i];
                 serviceTypes = string.Format("{0},{1}", serviceTypes, appType);
             }
-            
+
             return serviceTypes;
         }
 
@@ -225,7 +225,7 @@ namespace Photon.Pun
         public string Message;
         public Dictionary<string, string> ApplicationIds; // Unity's JsonUtility does not support deserializing Dictionary
     }
-    
+
 
     public class AccountServiceReturnCodes
     {

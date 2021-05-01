@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
+using static MainGame;
 
 public struct AttackUnitMasterComponent
 {
@@ -67,9 +68,9 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
     private PhotonPunRPC _photonPunRPC = default;
 
 
-    internal AttackUnitMasterSystem(ECSmanager eCSmanager, PhotonGameManager photonGameManager) : base(eCSmanager)
+    internal AttackUnitMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = photonGameManager.PhotonPunRPC;
+        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
         _attackUnitMasterComponentRef = eCSmanager.EntitiesMasterManager.AttackUnitMasterComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
@@ -83,7 +84,7 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
 
         if (CellUnitComponent(xyPreviousCellIN).MinAmountSteps)
         {
-            if (CellUnitComponent(xyPreviousCellIN).IsHim(playerIN))
+            if (CellUnitComponent(xyPreviousCellIN).IsHisUnit(playerIN))
             {
                 if (_cellManager.TryFindCellInList(xySelectedCellIN, xyAvailableCellsForAttack))
                 {
@@ -98,9 +99,8 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
 
                         int damageToSelelected = 0;
                         damageToSelelected += CellUnitComponent(xyPreviousCellIN).PowerDamage;
-                        damageToSelelected -= CellUnitComponent(xySelectedCellIN).PowerProtection;
-                        damageToSelelected -= CellEnvironmentComponent(xySelectedCellIN).PowerProtection(CellUnitComponent(xySelectedCellIN).UnitType);
-                        damageToSelelected -= CellBuildingComponent(xySelectedCellIN).PowerProtection(CellUnitComponent(xySelectedCellIN).UnitType);
+                        damageToSelelected -= CellUnitComponent(xySelectedCellIN).PowerProtection
+                            (CellEnvironmentComponent(xySelectedCellIN).ListEnvironmentTypes, CellBuildingComponent(xySelectedCellIN).BuildingType);
 
                         if (damageToSelelected <= 0) damageToSelelected = 0;
 

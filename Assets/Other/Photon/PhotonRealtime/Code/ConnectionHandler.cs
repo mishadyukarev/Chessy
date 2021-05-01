@@ -19,16 +19,16 @@ namespace Photon.Realtime
     using System;
     using SupportClass = ExitGames.Client.Photon.SupportClass;
 
-    #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
     using UnityEngine;
-    #endif
+#endif
 
 
-    #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
     public class ConnectionHandler : MonoBehaviour
-    #else
+#else
     public class ConnectionHandler
-    #endif
+#endif
     {
         /// <summary>
         /// Photon client to log information and statistics from.
@@ -54,9 +54,9 @@ namespace Photon.Realtime
         }
 
 
-        #if SUPPORTED_UNITY
+#if SUPPORTED_UNITY
 
-        #if UNITY_2019_4_OR_NEWER
+#if UNITY_2019_4_OR_NEWER
 
         /// <summary>
         /// Resets statics for Domain Reload
@@ -67,7 +67,7 @@ namespace Photon.Realtime
             AppQuits = false;
         }
 
-        #endif
+#endif
 
         /// <summary>Keeps the ConnectionHandler, even if a new scene gets loaded.</summary>
         public bool ApplyDontDestroyOnLoad = true;
@@ -109,28 +109,28 @@ namespace Photon.Realtime
             }
         }
 
-        #endif
+#endif
 
 
         public void StartFallbackSendAckThread()
         {
-            #if !UNITY_WEBGL
+#if !UNITY_WEBGL
             if (this.FallbackThreadRunning)
             {
                 return;
             }
 
-            #if UNITY_SWITCH
+#if UNITY_SWITCH
             this.fallbackThreadId = SupportClass.StartBackgroundCalls(this.RealtimeFallbackThread, 50);  // as workaround, we don't name the Thread.
-            #else
+#else
             this.fallbackThreadId = SupportClass.StartBackgroundCalls(this.RealtimeFallbackThread, 50, "RealtimeFallbackThread");
-            #endif
-            #endif
+#endif
+#endif
         }
 
         public void StopFallbackSendAckThread()
         {
-            #if !UNITY_WEBGL
+#if !UNITY_WEBGL
             if (!this.FallbackThreadRunning)
             {
                 return;
@@ -138,7 +138,7 @@ namespace Photon.Realtime
 
             SupportClass.StopBackgroundCalls(this.fallbackThreadId);
             this.fallbackThreadId = 255;
-            #endif
+#endif
         }
 
 

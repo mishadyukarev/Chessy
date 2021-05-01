@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-internal sealed class SupportGameManager : SupportManager
+﻿internal sealed class SupportGameManager : SupportManager
 {
     private CellManager _cellManager = new CellManager();
     private ResourcesLoadGame _resourcesLoadManager = new ResourcesLoadGame();

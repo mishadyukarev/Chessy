@@ -8,15 +8,11 @@
 // <author>developer@exitgames.com</author>
 // ----------------------------------------------------------------------------
 
+using ExitGames.Client.Photon;
+using Photon.Pun;
 using System;
 using UnityEditor;
 using UnityEngine;
-
-using Photon.Pun;
-
-using ExitGames.Client.Photon;
-using System.Collections.Generic;
-using System.Reflection;
 
 [CustomEditor(typeof(ServerSettings))]
 public class ServerSettingsInspector : Editor
@@ -123,7 +119,7 @@ public class ServerSettingsInspector : Editor
 
         if (!string.IsNullOrEmpty(PhotonNetwork.BestRegionSummaryInPreferences))
         {
-            this.regionsPrefsList = PhotonNetwork.BestRegionSummaryInPreferences.Split(new[] {';'}, StringSplitOptions.RemoveEmptyEntries);
+            this.regionsPrefsList = PhotonNetwork.BestRegionSummaryInPreferences.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries);
             if (this.regionsPrefsList.Length < 2)
             {
                 this.prefLabel = notAvailableLabel;

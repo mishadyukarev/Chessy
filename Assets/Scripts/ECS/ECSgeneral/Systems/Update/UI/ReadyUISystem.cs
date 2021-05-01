@@ -1,6 +1,7 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.UI;
+using static MainGame;
 
 internal class ReadyUISystem : IEcsRunSystem
 {
@@ -17,9 +18,9 @@ internal class ReadyUISystem : IEcsRunSystem
 
 
 
-    internal ReadyUISystem(ECSmanager eCSmanager, PhotonGameManager photonManager)
+    internal ReadyUISystem(ECSmanager eCSmanager)
     {
-        _photonPunRPC = photonManager.PhotonPunRPC;
+        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
         _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
 
         _readyComponentRef = eCSmanager.EntitiesGeneralManager.ReadyComponentRef;

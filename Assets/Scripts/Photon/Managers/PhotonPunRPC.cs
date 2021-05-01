@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static MainGame;
 
-public partial class PhotonPunRPC : MonoBehaviour
+internal class PhotonPunRPC : MonoBehaviour
 {
     private PhotonView _photonView = default;
     private SystemsMasterManager _systemsMasterManager = default;
@@ -71,6 +71,7 @@ public partial class PhotonPunRPC : MonoBehaviour
         => ref _cellSupportVisionComponentRef[xy[_startValuesGameConfig.X], xy[_startValuesGameConfig.Y]].Unref();
     private ref CellComponent.BuildingComponent CellBuildingComponent(params int[] xy)
         => ref _cellBuildingComponentRef[xy[_startValuesGameConfig.X], xy[_startValuesGameConfig.Y]].Unref();
+
 
     private StartValuesGameConfig _startValuesGameConfig => InstanceGame.StartValuesGameConfig;
     private CellManager _cellManager => InstanceGame.SupportGameManager.CellManager;
@@ -347,28 +348,36 @@ public partial class PhotonPunRPC : MonoBehaviour
     #endregion
 
 
-    #region ProtectUnit
+    #region Protect
 
-    public void ProtectUnit(in int[] xyCell) => _photonView.RPC("ProtectUnitMaster", RpcTarget.MasterClient, xyCell);
+    public void ProtectUnitToMaster(bool isActive, in int[] xyCell)
+        => _photonView.RPC(nameof(ProtectUnitMaster), RpcTarget.MasterClient, isActive, xyCell);
 
     [PunRPC]
-    private void ProtectUnitMaster(int[] xyCell, PhotonMessageInfo info)
+    private void ProtectUnitMaster(bool isActive, int[] xyCell, PhotonMessageInfo info)
     {
-        if (CellUnitComponent(xyCell).HaveMaxSteps)
+        if (isActive)
         {
-            CellUnitComponent(xyCell).IsProtected = true;
-            CellUnitComponent(xyCell).IsRelaxed = false;
-            CellUnitComponent(xyCell).AmountSteps = 0;
-
-            switch (CellUnitComponent(xyCell).UnitType)
+            if (!CellUnitComponent(xyCell).IsProtected)
             {
-                case UnitTypes.King:
-                    CellUnitComponent(xyCell).PowerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_KING;
-                    break;
+                if (CellUnitComponent(xyCell).HaveMaxSteps)
+                {
+                    CellUnitComponent(xyCell).IsProtected = true;
+                    CellUnitComponent(xyCell).IsRelaxed = false;
+                    CellUnitComponent(xyCell).AmountSteps = 0;
+                }
+            }
+        }
 
-                case UnitTypes.Pawn:
-                    CellUnitComponent(xyCell).PowerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_PAWN;
-                    break;
+        else
+        {
+            if (CellUnitComponent(xyCell).IsProtected)
+            {
+                if (CellUnitComponent(xyCell).HaveMaxSteps)
+                {
+                    CellUnitComponent(xyCell).IsProtected = false;
+                    CellUnitComponent(xyCell).AmountSteps = 0;
+                }
             }
         }
 
@@ -378,31 +387,37 @@ public partial class PhotonPunRPC : MonoBehaviour
     #endregion
 
 
-    #region RelaxUnit
+    #region Relax
 
-    public void RelaxUnit(in int[] xyCell) => _photonView.RPC("RelaxUnitMaster", RpcTarget.MasterClient, xyCell);
+    public void RelaxUnitToMaster(bool isActive, in int[] xyCell) => _photonView.RPC(nameof(RelaxUnitMaster), RpcTarget.MasterClient, isActive, xyCell);
 
     [PunRPC]
-    private void RelaxUnitMaster(int[] xyCell, PhotonMessageInfo info)
+    private void RelaxUnitMaster(bool isActive, int[] xyCell, PhotonMessageInfo info)
     {
-        if (CellUnitComponent(xyCell).HaveMaxSteps)
+        if (isActive)
         {
-            CellUnitComponent(xyCell).IsRelaxed = true;
-            CellUnitComponent(xyCell).IsProtected = false;
-            CellUnitComponent(xyCell).AmountSteps -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
-
-            switch (CellUnitComponent(xyCell).UnitType)
-            { 
-                case UnitTypes.King:
-                    CellUnitComponent(xyCell).PowerProtection -= InstanceGame.StartValuesGameConfig.PROTECTION_KING;
-                    break;
-
-                case UnitTypes.Pawn:
-                    CellUnitComponent(xyCell).PowerProtection -= InstanceGame.StartValuesGameConfig.PROTECTION_PAWN;
-                    break;
+            if (!CellUnitComponent(xyCell).IsRelaxed)
+            {
+                if (CellUnitComponent(xyCell).HaveMaxSteps)
+                {
+                    CellUnitComponent(xyCell).IsRelaxed = true;
+                    CellUnitComponent(xyCell).IsProtected = false;
+                    CellUnitComponent(xyCell).AmountSteps = 0;
+                }
             }
         }
 
+        else
+        {
+            if (CellUnitComponent(xyCell).IsRelaxed)
+            {
+                if (CellUnitComponent(xyCell).HaveMaxSteps)
+                {
+                    CellUnitComponent(xyCell).IsRelaxed = false;
+                    CellUnitComponent(xyCell).AmountSteps = 0;
+                }
+            }
+        }
         RefreshAll();
     }
 
@@ -431,7 +446,7 @@ public partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void DestroyBuildingMaster(int[] xyCell, PhotonMessageInfo info)
     {
-        if (CellUnitComponent(xyCell).IsHim(info.Sender))
+        if (CellUnitComponent(xyCell).IsHisUnit(info.Sender))
         {
             if (CellUnitComponent(xyCell).HaveMaxSteps)
             {
@@ -547,14 +562,6 @@ public partial class PhotonPunRPC : MonoBehaviour
     private void RefreshAllMaster()
     {
         _systemsMasterManager.InvokeRunSystem(SystemMasterTypes.Solo, nameof(VisibilityUnitsMasterSystem));
-
-        for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
-        {
-            for (int y = 0; y < _startValuesGameConfig.CELL_COUNT_Y; y++)
-            {
-                CellUnitComponent(x, y).ActiveVisionCell(CellUnitComponent(x, y).IsActiveUnitMaster, CellUnitComponent(x, y).UnitType);
-            }
-        }
 
 
         #region Sending

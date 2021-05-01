@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using TMPro;
+using static MainGame;
 
 internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
 {
@@ -17,9 +18,9 @@ internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
 
     private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
 
-    internal ConditionUnitUISystem(ECSmanager eCSmanager, PhotonGameManager photonManager) : base(eCSmanager)
+    internal ConditionUnitUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = photonManager.PhotonPunRPC;
+        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
         _selectorUnitComponentRef = eCSmanager.EntitiesGeneralManager.SelectorUnitComponent;
@@ -55,11 +56,7 @@ internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
         {
             _hpCurrentUnitText.text = CellUnitComponent(_xySelectedCell).AmountHealth.ToString();
             _damageCurrentUnitText.text = CellUnitComponent(_xySelectedCell).PowerDamage.ToString();
-            _protectionCurrentUnitText.text
-                = (CellUnitComponent(_xySelectedCell).PowerProtection
-                + CellEnvironmentComponent(_xySelectedCell).PowerProtection(CellUnitComponent(_xySelectedCell).UnitType)
-                + CellBuildingComponent(_xySelectedCell).PowerProtection(CellUnitComponent(_xySelectedCell).UnitType))
-                .ToString();
+            _protectionCurrentUnitText.text = (CellUnitComponent(_xySelectedCell).PowerProtection(CellEnvironmentComponent(_xySelectedCell).ListEnvironmentTypes, CellBuildingComponent(_xySelectedCell).BuildingType)).ToString();
             _stepsCurrentUnitText.text = CellUnitComponent(_xySelectedCell).AmountSteps.ToString();
         }
     }

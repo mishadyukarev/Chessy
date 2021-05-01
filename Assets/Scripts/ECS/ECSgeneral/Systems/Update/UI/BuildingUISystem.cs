@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine.UI;
+using static MainGame;
 
 internal class BuildingUISystem : CellReduction, IEcsRunSystem
 {
@@ -15,9 +16,9 @@ internal class BuildingUISystem : CellReduction, IEcsRunSystem
 
     private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
 
-    internal BuildingUISystem(ECSmanager eCSmanager, PhotonGameManager photonGameManager) : base(eCSmanager)
+    internal BuildingUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = photonGameManager.PhotonPunRPC;
+        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
         _economyBuildingsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyBuildingsComponentRef;

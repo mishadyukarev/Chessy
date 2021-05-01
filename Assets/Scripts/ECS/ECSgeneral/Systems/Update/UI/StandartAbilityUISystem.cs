@@ -2,6 +2,7 @@
 using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.UI;
+using static MainGame;
 
 internal class StandartAbilityUISystem : CellReduction, IEcsRunSystem
 {
@@ -14,9 +15,9 @@ internal class StandartAbilityUISystem : CellReduction, IEcsRunSystem
 
     private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
 
-    internal StandartAbilityUISystem(ECSmanager eCSmanager, PhotonGameManager photonManager) : base(eCSmanager)
+    internal StandartAbilityUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = photonManager.PhotonPunRPC;
+        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
 
@@ -70,6 +71,6 @@ internal class StandartAbilityUISystem : CellReduction, IEcsRunSystem
     }
 
 
-    private void StandartAbilityButton1() => _photonPunRPC.ProtectUnit(_selectorComponentRef.Unref().XYselectedCell);
-    private void StandartAbilityButton2() => _photonPunRPC.RelaxUnit(_selectorComponentRef.Unref().XYselectedCell);
+    private void StandartAbilityButton1() => _photonPunRPC.ProtectUnitToMaster(!CellUnitComponent(_xySelectedCell).IsProtected, _xySelectedCell);
+    private void StandartAbilityButton2() => _photonPunRPC.RelaxUnitToMaster(!CellUnitComponent(_xySelectedCell).IsRelaxed, _xySelectedCell);
 }

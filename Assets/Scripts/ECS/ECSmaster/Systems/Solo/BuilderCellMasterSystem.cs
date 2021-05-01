@@ -95,7 +95,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
 
                     CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
                     isBuilded = true;
-                    CellUnitComponent(xyCellIN).AmountSteps -= CellUnitComponent(xyCellIN).MaxAmountSteps;
+                    CellUnitComponent(xyCellIN).AmountSteps = 0;
 
                     if (playerIN.IsMasterClient)
                     {
@@ -147,7 +147,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
                                 CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
                                 _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterMaster += 1; // !!!!!
 
-                                CellUnitComponent(xyCellIN).AmountSteps -= CellUnitComponent(xyCellIN).MaxAmountSteps;
+                                CellUnitComponent(xyCellIN).AmountSteps = 0;
                             }
                         }
                         else
@@ -157,7 +157,7 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
                                 CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
                                 _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterOther += 1; // !!!!!
 
-                                CellUnitComponent(xyCellIN).AmountSteps -= CellUnitComponent(xyCellIN).MaxAmountSteps;
+                                CellUnitComponent(xyCellIN).AmountSteps = 0;
                             }
                         }
 

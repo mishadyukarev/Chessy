@@ -8,22 +8,22 @@ public class SystemsGeneralManager : SystemsManager
         _forSelectorSystem = new EcsSystems(_ecsWorld);
     }
 
-    internal void CreateInitSystems(ECSmanager eCSmanager, PhotonGameManager photonManager)
+    internal void CreateInitSystems(ECSmanager eCSmanager)
     {
         _updateSystems
             .Add(new InputSystem(eCSmanager), nameof(InputSystem))
-            .Add(new SelectorSystem(eCSmanager, photonManager), nameof(SelectorSystem))
+            .Add(new SelectorSystem(eCSmanager), nameof(SelectorSystem))
             .Add(new SupportVisionSystem(eCSmanager), nameof(SupportVisionSystem))
             .Add(new SoundSystem(eCSmanager), nameof(SoundSystem))
 
-            .Add(new UISystem(eCSmanager, photonManager), nameof(UISystem))
-            .Add(new ReadyUISystem(eCSmanager, photonManager), nameof(ReadyUISystem))
-            .Add(new DonerUISystem(eCSmanager, photonManager), nameof(DonerUISystem))
-            .Add(new SelectorUnitUISystem(eCSmanager, photonManager), nameof(SelectorUnitUISystem))
-            .Add(new StandartAbilityUISystem(eCSmanager, photonManager), nameof(StandartAbilityUISystem))
-            .Add(new ConditionUnitUISystem(eCSmanager, photonManager), nameof(ConditionUnitUISystem))
+            .Add(new UISystem(eCSmanager), nameof(UISystem))
+            .Add(new ReadyUISystem(eCSmanager), nameof(ReadyUISystem))
+            .Add(new DonerUISystem(eCSmanager), nameof(DonerUISystem))
+            .Add(new SelectorUnitUISystem(eCSmanager), nameof(SelectorUnitUISystem))
+            .Add(new StandartAbilityUISystem(eCSmanager), nameof(StandartAbilityUISystem))
+            .Add(new ConditionUnitUISystem(eCSmanager), nameof(ConditionUnitUISystem))
             .Add(new TheEndGameUISystem(eCSmanager), nameof(TheEndGameUISystem))
-            .Add(new BuildingUISystem(eCSmanager, photonManager), nameof(BuildingUISystem))
+            .Add(new BuildingUISystem(eCSmanager), nameof(BuildingUISystem))
             .Add(new EconomyUISystem(eCSmanager), nameof(EconomyUISystem))
             .Add(new ZoneUISystem(eCSmanager), nameof(ZoneUISystem))
             .Add(new WarningUISystem(eCSmanager), nameof(WarningUISystem));

@@ -154,29 +154,16 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         {
             for (int y = 0; y < yAmount; y++)
             {
-                bool isStartMaster = false;
-                bool isStartOther = false;
-                if (InstanceGame.IS_TEST)
-                {
-                    isStartMaster = true;
-                    isStartOther = true;
-                }
-                else
-                {
-                    if (y < 3 && x > 2 && x < 12) isStartMaster = true;
-                    if (y > 8 && x > 2 && x < 12) isStartOther = true;
-                }
-
-
-                CellComponent cellComponent = new CellComponent(isStartMaster, isStartOther, cellsGO[x, y]);
-                CellComponent.EnvironmentComponent cellEnvironmentComponent = new CellComponent.EnvironmentComponent(x, y, InstanceGame.StartSpawnGameManager, startValuesGameConfig);
-                CellComponent.SupportVisionComponent cellSupportVisionComponent = new CellComponent.SupportVisionComponent(x, y, InstanceGame.StartSpawnGameManager);
-                CellComponent.UnitComponent cellUnitComponent = new CellComponent.UnitComponent(x, y, InstanceGame.StartSpawnGameManager, startValuesGameConfig);
-                CellComponent.BuildingComponent cellBuildingComponent = new CellComponent.BuildingComponent(x, y, InstanceGame.StartSpawnGameManager, startValuesGameConfig);
+                CellComponent cellComponent = new CellComponent(x, y);
+                CellComponent.EnvironmentComponent cellEnvironmentComponent = new CellComponent.EnvironmentComponent(x, y);
+                CellComponent.SupportVisionComponent cellSupportVisionComponent = new CellComponent.SupportVisionComponent(x, y);
+                CellComponent.UnitComponent cellUnitComponent = new CellComponent.UnitComponent(x, y);
+                CellComponent.BuildingComponent cellBuildingComponent = new CellComponent.BuildingComponent(x, y);
 
                 _cellsEntity[x, y] = _ecsWorld.NewEntity();
 
-                _cellsEntity[x, y].Replace(cellComponent)
+                _cellsEntity[x, y]
+                    .Replace(cellComponent)
                     .Replace(cellEnvironmentComponent)
                     .Replace(cellSupportVisionComponent)
                     .Replace(cellUnitComponent)

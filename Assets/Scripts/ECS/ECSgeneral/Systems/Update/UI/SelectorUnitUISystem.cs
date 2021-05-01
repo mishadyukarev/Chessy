@@ -8,9 +8,9 @@ internal class SelectorUnitUISystem : IEcsRunSystem
     private EcsComponentRef<DonerComponent> _doneComponentRef = default;
     private PhotonPunRPC _photonPunRPC = default;
 
-    internal SelectorUnitUISystem(ECSmanager eCSmanager, PhotonGameManager photonManager)
+    internal SelectorUnitUISystem(ECSmanager eCSmanager)
     {
-        _photonPunRPC = photonManager.PhotonPunRPC;
+        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
         _selectorUnitComponentRef = eCSmanager.EntitiesGeneralManager.SelectorUnitComponent;
         _economyUnitsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyUnitsComponentRef;

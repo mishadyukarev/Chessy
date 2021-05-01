@@ -1,6 +1,7 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.UI;
+using static MainGame;
 
 internal class DonerUISystem : IEcsRunSystem
 {
@@ -11,10 +12,10 @@ internal class DonerUISystem : IEcsRunSystem
 
     private bool _isDone => _donerComponentRef.Unref().IsDone;
 
-    internal DonerUISystem(ECSmanager eCSmanager, PhotonGameManager photonManager)
+    internal DonerUISystem(ECSmanager eCSmanager)
     {
         _donerComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
-        _photonPunRPC = photonManager.PhotonPunRPC;
+        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
         _doneButton = MainGame.InstanceGame.StartSpawnGameManager.DoneButton;
         _doneButton.onClick.AddListener(delegate { Done(); });

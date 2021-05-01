@@ -11,16 +11,14 @@
 
 namespace Photon.Pun
 {
-    using System;
-    using System.Linq;
-    using UnityEngine;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Reflection;
-
     using ExitGames.Client.Photon;
     using Photon.Realtime;
-
+    using System;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Reflection;
+    using UnityEngine;
     using Hashtable = ExitGames.Client.Photon.Hashtable;
     using SupportClassPun = ExitGames.Client.Photon.SupportClass;
 

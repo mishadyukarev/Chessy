@@ -282,7 +282,7 @@ namespace Photon.Pun
         {
             get { return this.IsRoomView; }
         }
-        
+
         /// <summary>True if the PhotonView was loaded with the scene (game object) or instantiated with InstantiateRoomObject.</summary>
         /// <remarks>
         /// Room objects are not owned by a particular player but belong to the scene. Thus they don't get destroyed when their

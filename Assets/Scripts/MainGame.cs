@@ -5,15 +5,13 @@ internal sealed class MainGame : Main
 
     #region Variables
 
-    internal readonly bool IS_TEST = true;
-
     private static MainGame _instanceGame;
 
     private SupportGameManager _supportGameManager;
 
     private StartValuesGameConfig _startValuesGameConfig;
     private StartSpawnGame _startSpawnGameManager;
-    private PhotonGameManager _photonManager;
+    private PhotonGameManager _photonGameManager;
     private ECSmanager _eCSmanager;
 
     private Transform _parentTransformScrips;
@@ -28,6 +26,7 @@ internal sealed class MainGame : Main
     internal SupportGameManager SupportGameManager => _supportGameManager;
     internal StartValuesGameConfig StartValuesGameConfig => _startValuesGameConfig;
     internal StartSpawnGame StartSpawnGameManager => _startSpawnGameManager;
+    internal PhotonGameManager PhotonGameManager => _photonGameManager;
 
     #endregion
 
@@ -39,15 +38,17 @@ internal sealed class MainGame : Main
 
         _startValuesGameConfig = _supportGameManager.ResourcesLoadGameManager.StartValuesConfig;
         _startSpawnGameManager = new StartSpawnGame(_supportGameManager, out _parentTransformScrips);
+
         _unityEvents = new UnityEvents(_supportGameManager.Builder);
         gameObject.transform.SetParent(_parentTransformScrips);
+
+        _photonGameManager = new PhotonGameManager(_parentTransformScrips);
     }
 
     private void Start()
     {
-        _photonManager = new PhotonGameManager(_parentTransformScrips);
-        _eCSmanager = new ECSmanager(_photonManager);
-        _photonManager.InitAfterECS(_eCSmanager);
+        _eCSmanager = new ECSmanager();
+        _photonGameManager.InitAfterECS(_eCSmanager);
     }
 
 

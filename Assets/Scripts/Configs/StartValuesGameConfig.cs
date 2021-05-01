@@ -32,8 +32,8 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_GOLD_MASTER = 0;
     internal readonly int AMOUNT_GOLD_OTHER = 0;
 
-    internal readonly int AMOUNT_FOOD_MASTER = 100;
-    internal readonly int AMOUNT_FOOD_OTHER = 100;
+    internal readonly int AMOUNT_FOOD_MASTER = 200;
+    internal readonly int AMOUNT_FOOD_OTHER = 200;
 
     internal readonly int AMOUNT_WOOD_MASTER = 100;
     internal readonly int AMOUNT_WOOD_OTHER = 100;
@@ -93,8 +93,8 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_HEALTH_PAWN = 100;
 
 
-    private readonly float PERCENT_FOR_HEALTH_KING = 0.25f;
-    private readonly float PERCENT_FOR_HEALTH_PAWN = 0.25f;
+    private readonly float PERCENT_FOR_HEALTH_KING = 0.15f;
+    private readonly float PERCENT_FOR_HEALTH_PAWN = 0.15f;
 
     internal int HEALTH_FOR_ADDING_KING => (int)(AMOUNT_HEALTH_KING * PERCENT_FOR_HEALTH_KING);
     internal int HEALTH_FOR_ADDING_PAWN => (int)(AMOUNT_HEALTH_PAWN * PERCENT_FOR_HEALTH_PAWN);
@@ -125,14 +125,14 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region Environment
 
-    private readonly float PERCENT_PROTECTION_FOOD_FOR_KING = -0.03f;
-    private readonly float PERCENT_PROTECTION_FOOD_FOR_PAWN = -0.03f;
+    private readonly float PERCENT_PROTECTION_FOOD_FOR_KING = -0.1f;
+    private readonly float PERCENT_PROTECTION_FOOD_FOR_PAWN = -0.1f;
 
-    private readonly float PERCENT_PROTECTION_TREE_FOR_KING = 0.05f;
-    private readonly float PERCENT_PROTECTION_TREE_FOR_PAWN = 0.05f;
+    private readonly float PERCENT_PROTECTION_TREE_FOR_KING = 0.1f;
+    private readonly float PERCENT_PROTECTION_TREE_FOR_PAWN = 0.1f;
 
-    private readonly float PERCENT_PROTECTION_HILL_FOR_KING = 0.1f;
-    private readonly float PERCENT_PROTECTION_HILL_FOR_PAWN = 0.1f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_KING = 0.15f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_PAWN = 0.15f;
 
 
     internal int PROTECTION_FOOD_FOR_KING => (int)(POWER_DAMAGE_KING * PERCENT_PROTECTION_FOOD_FOR_KING);

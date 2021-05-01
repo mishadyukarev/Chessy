@@ -10,8 +10,8 @@ public class PhotonGameManager
     private PhotonPunRPC _photonPunRPC;
     private PhotonManagerScene _photonManagerScene;
 
-    public PhotonManagerScene PhotonManagerScene => _photonManagerScene;
-    public PhotonPunRPC PhotonPunRPC => _photonPunRPC;
+    internal PhotonManagerScene PhotonManagerScene => _photonManagerScene;
+    internal PhotonPunRPC PhotonPunRPC => _photonPunRPC;
 
 
     internal PhotonGameManager([NotNull]Transform parentTransform)

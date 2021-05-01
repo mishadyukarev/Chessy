@@ -4,8 +4,9 @@ using UnityEngine;
 
 internal abstract class Main : MonoBehaviour
 {
-    protected UnityEvents _unityEvents;
+    internal readonly bool IS_TEST = false;
 
+    protected UnityEvents _unityEvents;
 
 
     internal bool IsMasterClient => PhotonNetwork.IsMasterClient;

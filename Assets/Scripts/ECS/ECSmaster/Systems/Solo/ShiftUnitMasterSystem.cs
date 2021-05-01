@@ -1,6 +1,7 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
 using System.Collections.Generic;
+using static MainGame;
 
 public struct ShiftUnitMasterComponent
 {
@@ -60,12 +61,12 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
     private PhotonPunRPC _photonPunRPC = default;
 
 
-    internal ShiftUnitMasterSystem(ECSmanager eCSmanager, PhotonGameManager photonGameManager) : base(eCSmanager)
+    internal ShiftUnitMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _shiftComponentRef = eCSmanager.EntitiesMasterManager.ShiftUnitComponentRef;
         _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
 
-        _photonPunRPC = photonGameManager.PhotonPunRPC;
+        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
     }
 
 
@@ -77,7 +78,7 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
 
         List<int[]> xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Shift, xyPreviousCell, fromPlayer);
 
-        if (CellUnitComponent(xyPreviousCell).IsHim(fromPlayer) && CellUnitComponent(xyPreviousCell).MinAmountSteps)
+        if (CellUnitComponent(xyPreviousCell).IsHisUnit(fromPlayer) && CellUnitComponent(xyPreviousCell).MinAmountSteps)
         {
             if (_cellManager.TryFindCellInList(xySelectedCell, xyAvailableCellsForShift))
             {
@@ -88,7 +89,7 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
 
 
                 CellUnitComponent(xySelectedCell).AmountSteps
-                    -= CellEnvironmentComponent(xySelectedCell).NeedAmountSteps + _startValuesGameConfig.MIN_AMOUNT_STEPS_FOR_UNIT;
+                    -= CellUnitComponent(xySelectedCell).NeedAmountSteps(CellEnvironmentComponent(xySelectedCell).ListEnvironmentTypes);
                 if (CellUnitComponent(xySelectedCell).AmountSteps < 0) CellUnitComponent(xySelectedCell).AmountSteps = 0;
 
                 CellUnitComponent(xySelectedCell).IsProtected = false;

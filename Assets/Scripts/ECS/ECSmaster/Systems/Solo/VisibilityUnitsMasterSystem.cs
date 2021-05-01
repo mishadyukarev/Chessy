@@ -5,11 +5,7 @@ using static MainGame;
 
 internal class VisibilityUnitsMasterSystem : CellReduction, IEcsRunSystem
 {
-    internal VisibilityUnitsMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
-    {
-
-    }
-
+    internal VisibilityUnitsMasterSystem(ECSmanager eCSmanager) : base(eCSmanager){}
 
     public void Run()
     {
@@ -21,21 +17,26 @@ internal class VisibilityUnitsMasterSystem : CellReduction, IEcsRunSystem
                 CellUnitComponent(x, y).IsActiveUnitOther = true;
 
 
+
                 if (CellUnitComponent(x, y).HaveUnit)
                 {
-                    if (CellUnitComponent(x, y).IsHim(InstanceGame.MasterClient))
+                    if (CellUnitComponent(x, y).IsHisUnit(InstanceGame.MasterClient))
                     {
                         if (CellEnvironmentComponent(x, y).HaveTree)
                         {
-                            List<int[]> list = InstanceGame.SupportGameManager.FinderWay.TryGetXYAround(new int[] { x, y });
+                            CellUnitComponent(x, y).IsActiveUnitOther = false;
 
-                            foreach (var item in list)
+                            List<int[]> list = InstanceGame.SupportGameManager.FinderWay.TryGetXYAround(new int[] { x, y });
+                            foreach (var xy in list)
                             {
-                                //if (CellUnitComponent(item).IsHim(InstanceGame.MasterClient))
-                                //{
-                                //    CellUnitComponent(x, y).IsActiveUnitOther = false;
-                                //    break;
-                                //}
+                                if (CellUnitComponent(xy).HaveUnit)
+                                {
+                                    if (!CellUnitComponent(xy).IsHisUnit(InstanceGame.MasterClient))
+                                    {
+                                        CellUnitComponent(x, y).IsActiveUnitOther = true;
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
@@ -43,19 +44,26 @@ internal class VisibilityUnitsMasterSystem : CellReduction, IEcsRunSystem
                     {
                         if (CellEnvironmentComponent(x, y).HaveTree)
                         {
-                            List<int[]> list = InstanceGame.SupportGameManager.FinderWay.TryGetXYAround(new int[] { x, y });
+                            CellUnitComponent(x, y).IsActiveUnitMaster = false;
 
-                            foreach (var item in list)
+                            List<int[]> list = InstanceGame.SupportGameManager.FinderWay.TryGetXYAround(new int[] { x, y });
+                            foreach (var xy in list)
                             {
-                                //if (CellUnitComponent(item).IsHim(InstanceGame.MasterClient))
-                                //{
-                                //    CellUnitComponent(x, y).IsActiveUnitMaster = false;
-                                //    break;
-                                //}
+                                if (CellUnitComponent(xy).HaveUnit)
+                                {
+                                    if (CellUnitComponent(xy).IsHisUnit(InstanceGame.MasterClient))
+                                    {
+                                        CellUnitComponent(x, y).IsActiveUnitMaster = true;
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
                 }
+
+
+                CellUnitComponent(x, y).ActiveVisionCell(CellUnitComponent(x, y).IsActiveUnitMaster, CellUnitComponent(x, y).UnitType);
             }
         }
     }

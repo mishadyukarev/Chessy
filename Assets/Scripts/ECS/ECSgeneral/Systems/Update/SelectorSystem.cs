@@ -55,9 +55,9 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
     private RaycastHit2D _raycastHit2D => _rayComponentRef.Unref().RaycastHit2D;
 
 
-    internal SelectorSystem(ECSmanager eCSmanager, PhotonGameManager photonManager) : base(eCSmanager)
+    internal SelectorSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = photonManager.PhotonPunRPC;
+        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
         _nameManager = InstanceGame.SupportGameManager.Names;
         _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
 

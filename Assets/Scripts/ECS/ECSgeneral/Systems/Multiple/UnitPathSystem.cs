@@ -93,7 +93,7 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
 
                     if (!CellEnvironmentComponent(xyCurrentCellForShift).HaveMountain)
                     {
-                        if (CellUnitComponent(xyStartCellIN).AmountSteps >= CellEnvironmentComponent(xyCurrentCellForShift).NeedAmountSteps + _startValuesGameConfig.MIN_AMOUNT_STEPS_FOR_UNIT
+                        if (CellUnitComponent(xyStartCellIN).AmountSteps >= CellUnitComponent(xyCurrentCellForShift).NeedAmountSteps(CellEnvironmentComponent(xyCurrentCellForShift).ListEnvironmentTypes)
                             || CellUnitComponent(xyStartCellIN).HaveMaxSteps)
                         {
                             xyAvailableCellsForShift.Add(xyCurrentCellForShift);
@@ -117,7 +117,7 @@ public partial class UnitPathSystem : CellReduction, IEcsInitSystem, IEcsRunSyst
                     {
                         if (CellUnitComponent(xyCurrentCellForShift).HaveUnit)
                         {
-                            if (CellUnitComponent(xyStartCellIN).AmountSteps >= CellEnvironmentComponent(xyCurrentCellForShift).NeedAmountSteps + _startValuesGameConfig.MIN_AMOUNT_STEPS_FOR_UNIT
+                            if (CellUnitComponent(xyStartCellIN).AmountSteps >= CellUnitComponent(xyStartCellIN).NeedAmountSteps(CellEnvironmentComponent(xyStartCellIN).ListEnvironmentTypes)
                                 || CellUnitComponent(xyStartCellIN).HaveMaxSteps)
                             {
                                 if (playerIN.ActorNumber != CellUnitComponent(xyCurrentCellForShift).ActorNumber)

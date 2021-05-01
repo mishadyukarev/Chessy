@@ -1,20 +1,34 @@
 ﻿using Photon.Realtime;
+using System.Collections.Generic;
 using UnityEngine;
+using static MainGame;
 
 public struct CellComponent
 {
+    private int[] _xy;
     private bool _isStartMaster;
     private bool _isStartOther;
     private bool _isSelected;
     private GameObject _cellGO;
 
-    internal CellComponent(bool isStartMaster, bool isStartOther, GameObject cellGO)
+    internal CellComponent(int x, int y)
     {
-        _isStartMaster = isStartMaster;
-        _isStartOther = isStartOther;
+        _xy = new int[] { x, y };
+
+        if (InstanceGame.IS_TEST)
+        {
+            _isStartMaster = true;
+            _isStartOther = true;
+        }
+        else
+        {
+            _isStartMaster = y < 3 && x > 2 && x < 12;
+            _isStartOther = y > 8 && x > 2 && x < 12;
+        }
+
         _isSelected = default;
 
-        _cellGO = cellGO;
+        _cellGO = InstanceGame.StartSpawnGameManager.CellsGO[x, y];
     }
 
 
@@ -26,12 +40,12 @@ public struct CellComponent
         get { return _isSelected; }
         set { _isSelected = value; }
     }
-    internal Transform TransformCell => _cellGO.transform;
 
 
 
     public struct EnvironmentComponent
     {
+        private int[] _xy;
         private bool _haveFood;
         private bool _haveMountain;
         private bool _haveTree;
@@ -40,63 +54,27 @@ public struct CellComponent
         private GameObject _mountainGO;
         private GameObject _treeGO;
         private GameObject _hillGO;
+        private List<EnvironmentTypes> _listEnvironmentTypes;
 
-        private StartValuesGameConfig _startValuesGameConfig;
-
-        internal EnvironmentComponent(int x, int y, StartSpawnGame startSpawnManager, StartValuesGameConfig startValuesGameConfig)
+        internal EnvironmentComponent(int x, int y)
         {
+            _xy = new int[] { x, y };
+
             _haveFood = default;
             _haveMountain = default;
             _haveTree = default;
             _haveHill = default;
 
-            _foodGO = startSpawnManager.FoodsGO[x, y];
-            _mountainGO = startSpawnManager.MountainsGO[x, y];
-            _treeGO = startSpawnManager.TreesGO[x, y];
-            _hillGO = startSpawnManager.HillsGO[x, y];
+            _foodGO = InstanceGame.StartSpawnGameManager.FoodsGO[x, y];
+            _mountainGO = InstanceGame.StartSpawnGameManager.MountainsGO[x, y];
+            _treeGO = InstanceGame.StartSpawnGameManager.TreesGO[x, y];
+            _hillGO = InstanceGame.StartSpawnGameManager.HillsGO[x, y];
 
-            _startValuesGameConfig = startValuesGameConfig;
-        }
-
-
-        #region Properties
-
-        internal int PowerProtection(UnitTypes unitType)
-        {
-            int powerProtection = 0;
-            switch (unitType)
-            {
-                case UnitTypes.King:
-
-                    if (_haveFood) powerProtection += _startValuesGameConfig.PROTECTION_FOOD_FOR_KING;
-                    if (_haveTree) powerProtection += _startValuesGameConfig.PROTECTION_TREE_FOR_KING;
-                    if (_haveHill) powerProtection += _startValuesGameConfig.PROTECTION_HILL_FOR_KING;
-
-                    break;
-
-                case UnitTypes.Pawn:
-
-                    if (_haveFood) powerProtection += _startValuesGameConfig.PROTECTION_FOOD_FOR_PAWN;
-                    if (_haveTree) powerProtection += _startValuesGameConfig.PROTECTION_TREE_FOR_PAWN;
-                    if (_haveHill) powerProtection += _startValuesGameConfig.PROTECTION_HILL_FOR_PAWN;
-
-                    break;
-            }
-            return powerProtection;
-        }
-
-        internal int NeedAmountSteps
-        {
-            get
-            {
-                int amountSteps = 0;
-
-                if (_haveFood) amountSteps += _startValuesGameConfig.NEED_AMOUNT_STEPS_FOOD;
-                if (_haveTree) amountSteps += _startValuesGameConfig.NEED_AMOUNT_STEPS_TREE;
-                if (_haveHill) amountSteps += _startValuesGameConfig.NEED_AMOUNT_STEPS_HILL;
-
-                return amountSteps;
-            }
+            _listEnvironmentTypes = new List<EnvironmentTypes>();
+            _listEnvironmentTypes.Add(default);
+            _listEnvironmentTypes.Add(default);
+            _listEnvironmentTypes.Add(default);
+            _listEnvironmentTypes.Add(default);
         }
 
         internal bool HaveFood => _haveFood;
@@ -104,10 +82,19 @@ public struct CellComponent
         internal bool HaveTree => _haveTree;
         internal bool HaveHill => _haveHill;
 
-        #endregion
+        internal List<EnvironmentTypes> ListEnvironmentTypes
+        {
+            get
+            {
+                List<EnvironmentTypes> listEnvironmentTypes = new List<EnvironmentTypes>();
 
+                if (_haveFood) listEnvironmentTypes.Add(EnvironmentTypes.Food);
+                if (_haveTree) listEnvironmentTypes.Add(EnvironmentTypes.Tree);
+                if (_haveHill) listEnvironmentTypes.Add(EnvironmentTypes.Hill);
 
-        #region Methods
+                return listEnvironmentTypes;
+            }
+        }
 
         internal void SetResetEnvironment(bool isActive, EnvironmentTypes environmentType)
         {
@@ -137,14 +124,13 @@ public struct CellComponent
                     break;
             }
         }
-
-        #endregion
     }
 
 
 
     public struct UnitComponent
     {
+        private int[] _xy;
         private bool _isActiveUnitMaster;
         private bool _isActiveUnitOther;
         private UnitTypes _unitType;
@@ -159,10 +145,11 @@ public struct CellComponent
         private GameObject _unitKingGO;
         private SpriteRenderer _unitPawnSpriteRender;
         private SpriteRenderer _unitKingSpriteRender;
-        private StartValuesGameConfig _startValues;
 
-        internal UnitComponent(int x, int y, StartSpawnGame startSpawnManager, StartValuesGameConfig startValues)
+        internal UnitComponent(int x, int y)
         {
+            _xy = new int[] { x, y };
+
             _isActiveUnitMaster = default;
             _isActiveUnitOther = default;
             _unitType = default;
@@ -173,16 +160,25 @@ public struct CellComponent
             _isProtected = default;
             _isRelaxed = default;
             _player = default;
-            _startValues = startValues;
 
-            _unitPawnGO = startSpawnManager.UnitPawnsGO[x, y];
-            _unitKingGO = startSpawnManager.UnitKingsGO[x, y];
-            _unitPawnSpriteRender = startSpawnManager.UnitPawnsGOsr[x, y];
-            _unitKingSpriteRender = startSpawnManager.UnitKingsGOsr[x, y];
-
+            _unitPawnGO = InstanceGame.StartSpawnGameManager.UnitPawnsGO[x, y];
+            _unitKingGO = InstanceGame.StartSpawnGameManager.UnitKingsGO[x, y];
+            _unitPawnSpriteRender = InstanceGame.StartSpawnGameManager.UnitPawnsGOsr[x, y];
+            _unitKingSpriteRender = InstanceGame.StartSpawnGameManager.UnitKingsGOsr[x, y];
         }
 
+
         #region Properties
+
+        #region Base
+
+        internal UnitTypes UnitType => _unitType;
+        internal bool HaveUnit => UnitType != UnitTypes.None;
+
+        #endregion
+
+
+        #region Activity
 
         internal bool IsActiveUnitMaster
         {
@@ -195,89 +191,10 @@ public struct CellComponent
             set => _isActiveUnitOther = value;
         }
 
-        internal UnitTypes UnitType => _unitType;
-        internal bool HaveUnit => UnitType != UnitTypes.None;
+        #endregion
 
-        internal GameObject CurrentUnitGO
-        {
-            get
-            {
-                switch (_unitType)
-                {
-                    case UnitTypes.King:
-                        return _unitKingGO;
 
-                    case UnitTypes.Pawn:
-                        return _unitPawnGO;
-
-                    default:
-                        return default;
-                }
-            }
-        }
-
-        internal int PowerDamage
-        {
-            get { return _powerDamage; }
-            set { _powerDamage = value; }
-        }
-        internal int PowerProtection
-        {
-            get { return _powerProtection; }
-            set { _powerProtection = value; }
-        }
-
-        internal int AmountSteps
-        {
-            get { return _amountSteps; }
-            set { _amountSteps = value; }
-        }
-        internal bool HaveMaxSteps
-        {
-            get
-            {
-                switch (_unitType)
-                {
-                    case UnitTypes.King:
-                        return _amountSteps == _startValues.MAX_AMOUNT_STEPS_KING;
-                    case UnitTypes.Pawn:
-                        return _amountSteps == _startValues.MAX_AMOUNT_STEPS_PAWN;
-                }
-                return false;
-            }
-        }
-        internal int MaxAmountSteps
-        {
-            get
-            {
-                switch (_unitType)
-                {
-                    case UnitTypes.King:
-                        return _startValues.MAX_AMOUNT_STEPS_KING;
-                    case UnitTypes.Pawn:
-                        return _startValues.MAX_AMOUNT_STEPS_PAWN;
-                }
-                return default;
-            }
-        }
-        internal bool MinAmountSteps => _amountSteps >= _startValues.MIN_AMOUNT_STEPS_FOR_UNIT;
-
-        internal int AmountHealth
-        {
-            get { return _amountHealth; }
-            set { _amountHealth = value; }
-        }
-
-        internal bool IsProtected
-        {
-            get { return _isProtected; }
-            set { _isProtected = value; }
-        }
-        internal bool IsRelaxed
-        {
-            get { return _isRelaxed; }
-            set { _isRelaxed = value; }
-        }
+        #region Player
 
         internal int ActorNumber
         {
@@ -301,29 +218,217 @@ public struct CellComponent
         #endregion
 
 
-        #region Methods
+        #region Health
 
-
-
-        internal void RefreshAmountSteps()
+        internal int AmountHealth
         {
-            switch (_unitType)
+            get { return _amountHealth; }
+            set { _amountHealth = value; }
+        }
+
+        #endregion
+
+
+        #region Damage
+
+        internal int PowerDamage
+        {
+            get { return _powerDamage; }
+            set { _powerDamage = value; }
+        }
+
+        #endregion
+
+
+        #region Protection
+
+        internal int PowerProtection(List<EnvironmentTypes> listEnvironmentTypes, BuildingTypes buildingType)
+        {
+            int powerProtection = 0;
+
+            if (_isProtected)
             {
-                case UnitTypes.None:
+                switch (_unitType)
+                {
+                    case UnitTypes.King:
+                        powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_KING;
+                        break;
+
+                    case UnitTypes.Pawn:
+                        powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_PAWN;
+                        break;
+                }
+            }
+
+            else if (_isRelaxed)
+            {
+                switch (_unitType)
+                {
+                    case UnitTypes.King:
+                        powerProtection -= InstanceGame.StartValuesGameConfig.PROTECTION_KING;
+                        break;
+
+                    case UnitTypes.Pawn:
+                        powerProtection -= InstanceGame.StartValuesGameConfig.PROTECTION_PAWN;
+                        break;
+                }
+            }
+
+            foreach (var item in listEnvironmentTypes)
+            {
+                switch (_unitType)
+                {
+                    case UnitTypes.King:
+
+                        switch (item)
+                        {
+                            case EnvironmentTypes.Food:
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_FOOD_FOR_KING;
+                                break;
+
+                            case EnvironmentTypes.Tree:
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_TREE_FOR_KING;
+                                break;
+
+                            case EnvironmentTypes.Hill:
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_TREE_FOR_KING;
+                                break;
+                        }
+
+                        break;
+
+                    case UnitTypes.Pawn:
+
+                        switch (item)
+                        {
+                            case EnvironmentTypes.Food:
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_FOOD_FOR_PAWN;
+                                break;
+
+                            case EnvironmentTypes.Tree:
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_TREE_FOR_PAWN;
+                                break;
+
+                            case EnvironmentTypes.Hill:
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_HILL_FOR_PAWN;
+                                break;
+                        }
+
+                        break;
+                }
+
+            }
+
+            switch (buildingType)
+            {
+                case BuildingTypes.City:
+
+                    switch (_unitType)
+                    {
+                        case UnitTypes.King:
+                            powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_CITY_KING;
+                            break;
+
+                        case UnitTypes.Pawn:
+                            powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_CITY_PAWN;
+                            break;
+                    }
+
                     break;
 
-                case UnitTypes.King:
-                    _amountSteps = _startValues.MAX_AMOUNT_STEPS_KING;
+                case BuildingTypes.Farm:
                     break;
 
-                case UnitTypes.Pawn:
-                    _amountSteps = _startValues.MAX_AMOUNT_STEPS_PAWN;
+                case BuildingTypes.Woodcutter:
                     break;
 
-                default:
+                case BuildingTypes.Mine:
                     break;
             }
+
+            return powerProtection;
         }
+
+        #endregion
+
+
+        #region Steps
+
+        internal int AmountSteps
+        {
+            get { return _amountSteps; }
+            set { _amountSteps = value; }
+        }
+        internal bool HaveMaxSteps
+        {
+            get
+            {
+                switch (_unitType)
+                {
+                    case UnitTypes.King:
+                        return _amountSteps == InstanceGame.StartValuesGameConfig.MAX_AMOUNT_STEPS_KING;
+                    case UnitTypes.Pawn:
+                        return _amountSteps == InstanceGame.StartValuesGameConfig.MAX_AMOUNT_STEPS_PAWN;
+                }
+                return false;
+            }
+        }
+        internal bool MinAmountSteps => _amountSteps >= InstanceGame.StartValuesGameConfig.MIN_AMOUNT_STEPS_FOR_UNIT;
+
+        internal int NeedAmountSteps(List<EnvironmentTypes> listEnvironmentTypes)
+        {
+            int amountSteps = 1;
+
+            foreach (var item in listEnvironmentTypes)
+            {
+                switch (item)
+                {
+                    case EnvironmentTypes.Food:
+                        amountSteps += InstanceGame.StartValuesGameConfig.NEED_AMOUNT_STEPS_FOOD;
+                        break;
+
+                    case EnvironmentTypes.Tree:
+                        amountSteps += InstanceGame.StartValuesGameConfig.NEED_AMOUNT_STEPS_TREE;
+                        break;
+
+                    case EnvironmentTypes.Hill:
+                        amountSteps += InstanceGame.StartValuesGameConfig.NEED_AMOUNT_STEPS_HILL;
+                        break;
+                }
+            }
+
+            return amountSteps;
+        }
+
+        #endregion
+
+
+        #region Condition
+
+        internal bool IsRelaxed
+        {
+            get { return _isRelaxed; }
+            set { _isRelaxed = value; }
+        }
+        internal bool IsProtected
+        {
+            get { return _isProtected; }
+            set { _isProtected = value; }
+        }
+
+        #endregion
+
+        #endregion
+
+
+        #region Methods
+
+        private void SetColorUnit(in SpriteRenderer unitSpriteRender, in Player player)
+        {
+            if (player.IsMasterClient) unitSpriteRender.color = Color.blue;
+            else unitSpriteRender.color = Color.red;
+        }
+
 
         internal void ResetUnit()
         {
@@ -377,7 +482,6 @@ public struct CellComponent
                     break;
             }
         }
-
         internal void ActiveVisionCell(bool isActive, UnitTypes unitType, Player player = default)
         {
             switch (unitType)
@@ -396,14 +500,7 @@ public struct CellComponent
                     break;
             }
         }
-
-        private void SetColorUnit(in SpriteRenderer unitSpriteRender, in Player player)
-        {
-            if (player.IsMasterClient) unitSpriteRender.color = Color.blue;
-            else unitSpriteRender.color = Color.red;
-        }
-
-        internal bool IsHim(Player player)
+        internal bool IsHisUnit(Player player)
         {
             if (_player == default) return false;
             return _player.ActorNumber == player.ActorNumber;
@@ -416,74 +513,31 @@ public struct CellComponent
 
     public struct BuildingComponent
     {
+        private int[] _xy;
         private BuildingTypes _buildingType;
         private GameObject _cityGO;
         private GameObject _farmGO;
         private GameObject _woodcutterGO;
         private Player _player;
 
-        private StartValuesGameConfig _startValuesGameConfig;
-
-        internal BuildingComponent(int x, int y, StartSpawnGame startSpawnManager, StartValuesGameConfig startValuesGameConfig)
+        internal BuildingComponent(int x, int y)
         {
-            _buildingType = default;
-            _cityGO = startSpawnManager.CampsGO[x, y];
-            _farmGO = startSpawnManager.FarmsGO[x, y];
-            _woodcutterGO = startSpawnManager.WoodcuttersGO[x, y];
+            _xy = new int[] { x, y };
 
-            _startValuesGameConfig = startValuesGameConfig;
+            _buildingType = default;
+            _cityGO = InstanceGame.StartSpawnGameManager.CampsGO[x, y];
+            _farmGO = InstanceGame.StartSpawnGameManager.FarmsGO[x, y];
+            _woodcutterGO = InstanceGame.StartSpawnGameManager.WoodcuttersGO[x, y];
 
             _player = default;
         }
 
         #region Properties
 
+        private StartValuesGameConfig StartValuesGameConfig => InstanceGame.StartValuesGameConfig;
+
         internal BuildingTypes BuildingType => _buildingType;
         internal bool HaveBuilding => _buildingType != BuildingTypes.None;
-        internal int PowerProtection(UnitTypes unitType)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.King:
-
-                    switch (_buildingType)
-                    {
-                        case BuildingTypes.City:
-                            return _startValuesGameConfig.PROTECTION_CITY_KING;
-
-                        case BuildingTypes.Farm:
-                            return default;
-
-                        case BuildingTypes.Woodcutter:
-                            return default;
-
-                        case BuildingTypes.Mine:
-                            return default;
-                    }
-
-                    break;
-
-                case UnitTypes.Pawn:
-
-                    switch (_buildingType)
-                    {
-                        case BuildingTypes.City:
-                            return _startValuesGameConfig.PROTECTION_CITY_PAWN;
-
-                        case BuildingTypes.Farm:
-                            return default;
-
-                        case BuildingTypes.Woodcutter:
-                            return default;
-
-                        case BuildingTypes.Mine:
-                            return default;
-                    }
-
-                    break;
-            }
-            return default;
-        }
 
         internal int ActorNumber
         {
@@ -564,15 +618,15 @@ public struct CellComponent
         private GameObject _enemyVisionGO;
         private GameObject _zoneVisionGO;
 
-        internal SupportVisionComponent(int x, int y, StartSpawnGame startSpawnManager)
+        internal SupportVisionComponent(int x, int y)
         {
             _player = default;
 
-            _selectorVisionGO = startSpawnManager.SelectorVisionsGO[x, y];
-            _spawnVisionGO = startSpawnManager.SpawnVisionsGO[x, y];
-            _wayUnitVisionGO = startSpawnManager.WayUnitVisionsGO[x, y];
-            _enemyVisionGO = startSpawnManager.EnemyVisionsGO[x, y];
-            _zoneVisionGO = startSpawnManager.ZoneVisionGO[x, y];
+            _selectorVisionGO = InstanceGame.StartSpawnGameManager.SelectorVisionsGO[x, y];
+            _spawnVisionGO = InstanceGame.StartSpawnGameManager.SpawnVisionsGO[x, y];
+            _wayUnitVisionGO = InstanceGame.StartSpawnGameManager.WayUnitVisionsGO[x, y];
+            _enemyVisionGO = InstanceGame.StartSpawnGameManager.EnemyVisionsGO[x, y];
+            _zoneVisionGO = InstanceGame.StartSpawnGameManager.ZoneVisionGO[x, y];
         }
 
 
