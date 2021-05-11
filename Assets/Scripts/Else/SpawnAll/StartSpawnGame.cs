@@ -6,150 +6,26 @@ using static MainGame;
 
 internal class StartSpawnGame : StartSpawn
 {
-    private GameObject _parentScriptsGO;
-    private AudioSource _audioSource;
-    private GameObject[,] _cellsGO;
-
-    internal GameObject ParentScriptsGO => _parentScriptsGO;
-    internal AudioSource AudioSource => _audioSource;
 
 
-    #region Cell
-
-    internal GameObject[,] CellsGO => _cellsGO;
-
-    internal GameObject[,] UnitPawnsGO;
-    internal GameObject[,] UnitKingsGO;
-    internal SpriteRenderer[,] UnitPawnsGOsr;
-    internal SpriteRenderer[,] UnitKingsGOsr;
-
-    internal GameObject[,] FoodsGO;
-    internal GameObject[,] MountainsGO;
-    internal GameObject[,] TreesGO;
-    internal GameObject[,] HillsGO;
-
-    internal GameObject[,] SelectorVisionsGO;
-    internal GameObject[,] SpawnVisionsGO;
-    internal GameObject[,] WayUnitVisionsGO;
-    internal GameObject[,] EnemyVisionsGO;
-    internal GameObject[,] ZoneVisionGO;
-
-    internal GameObject[,] CampsGO;
-    internal GameObject[,] FarmsGO;
-    internal GameObject[,] WoodcuttersGO;
-
-    #endregion
-
-
-    #region Canvas
-
-    #region Economy
-
-    internal TextMeshProUGUI GoldAmmountText;
-    internal TextMeshProUGUI FoodAmmountText;
-    internal TextMeshProUGUI WoodAmmountText;
-    internal TextMeshProUGUI OreAmmountText;
-    internal TextMeshProUGUI MetalAmmountText;
-
-    #endregion
-
-
-    internal Image RightUpUnitImage;
-    internal Image RightMiddleUnitImage;
-    internal Image AbilitiesImage;
-    internal Image LeftEconomyImage;
-
-
-
-    internal Button Button0;
-    internal Button Button1;
-
-    internal Button BuyPawnButton;
-    internal Button ImproveCityButton;
-
-    internal Button ButtonLeave;
-    internal Button DoneButton;
-
-
-    #region Ability Zone
-
-    internal TextMeshProUGUI HpCurrentUnitText;
-    internal TextMeshProUGUI DamageCurrentUnitText;
-    internal TextMeshProUGUI ProtectionCurrentUnitText;
-    internal TextMeshProUGUI StepsCurrentUnitText;
-
-
-    internal Button BuildingAbilityButton0;
-
-    internal Button BuildingAbilityButton1;
-    internal Button BuildingAbilityButton2;
-    internal Button BuildingAbilityButton3;
-
-    internal Button BuildingAbilityButton4;
-
-
-    internal Button UniqueAbilityButton1;
-    internal Button UniqueAbilityButton2;
-    internal Button UniqueAbilityButton3;
-
-    internal Button StandartAbilityButton1;
-    internal Button StandartAbilityButton2;
-
-    #endregion
-
-
-    #region Ready Zone
-
-    internal RectTransform ParentReadyZone;
-
-    internal Button ReadyButton;
-
-    #endregion
-
-
-    #region TheEndGame Zone
-
-    internal RectTransform ParentTheEndGameZone;
-    internal TextMeshProUGUI TheEndGameText;
-
-    #endregion
-
-
-    #region Doner Zone
-
-    internal RawImage DonerRawImage;
-
-    #endregion
-
-    #endregion
-
-
-
-    internal StartSpawnGame(SupportGameManager supportGameManager, out Transform parentTransformScrips) : base(supportGameManager.ResourcesLoadGameManager)
+    internal StartSpawnGame(GameObjectPool gameObjectPool, ResourcesLoadGame resourcesLoadGame, Builder builder) : base(resourcesLoadGame)
     {
-        var builderManager = supportGameManager.Builder;
-        var resourcesLoadGameManager = supportGameManager.ResourcesLoadGameManager;
-        var startValuesGameConfig = InstanceGame.StartValuesGameConfig;
+        gameObjectPool.ParentScriptsGO = builder.CreateGameObject("Scripts");
 
-
-        _audioSource = builderManager.CreateGameObject
-            ("AudioSource", new Type[] { typeof(AudioSource) }).GetComponent<AudioSource>();
-        _audioSource.clip = resourcesLoadGameManager.AudioClip;
-
-        _parentScriptsGO = builderManager.CreateGameObject("Scripts");
-        parentTransformScrips = _parentScriptsGO.transform;
+        gameObjectPool.AudioSourceGO = builder.CreateGameObject("AudioSource", new Type[] { typeof(AudioSource) });
+        gameObjectPool.AudioSourceGO.GetComponent<AudioSource>().clip = resourcesLoadGame.SoundConfig.AudioClip;
 
         _camera.gameObject.transform.position = InstanceGame.transform.position + new Vector3(7, 5.5f, -1);
         if (!InstanceGame.IsMasterClient) _camera.transform.Rotate(0, 0, 180);
 
-        GameObject.Instantiate(resourcesLoadGameManager.BackGroundCollider2D,
+        GameObject.Instantiate(resourcesLoadGame.PrefabConfig.BackGroundCollider2D,
             InstanceGame.transform.position + new Vector3(0, 0, 1), InstanceGame.transform.rotation);
 
-        SpawnCells(resourcesLoadGameManager, startValuesGameConfig);
-        SpawnUI(resourcesLoadGameManager, startValuesGameConfig);
+        SpawnCells(gameObjectPool, resourcesLoadGame, InstanceGame.StartValuesGameConfig);
+        SpawnUI(gameObjectPool, resourcesLoadGame, InstanceGame.StartValuesGameConfig);
     }
 
-    private void SpawnUI(ResourcesLoadGame resourcesLoadGameManager, StartValuesGameConfig startValuesGameConfig)
+    private void SpawnUI(GameObjectPool gameObjectPool, ResourcesLoadGame resourcesLoadGameManager, StartValuesGameConfig startValuesGameConfig)
     {
 
         GameObject.Instantiate(resourcesLoadGameManager.Canvas);
@@ -157,11 +33,11 @@ internal class StartSpawnGame : StartSpawn
 
         #region Economy Zone
 
-        GoldAmmountText = GameObject.Find("GoldAmount").GetComponent<TextMeshProUGUI>();
-        FoodAmmountText = GameObject.Find("FoodAmount").GetComponent<TextMeshProUGUI>();
-        WoodAmmountText = GameObject.Find("WoodAmount").GetComponent<TextMeshProUGUI>();
-        OreAmmountText = GameObject.Find("OreAmount").GetComponent<TextMeshProUGUI>();
-        MetalAmmountText = GameObject.Find("MetalAmount").GetComponent<TextMeshProUGUI>();
+        gameObjectPool.GoldAmmountText = GameObject.Find("GoldAmount").GetComponent<TextMeshProUGUI>();
+        gameObjectPool.FoodAmmountText = GameObject.Find("FoodAmount").GetComponent<TextMeshProUGUI>();
+        gameObjectPool.WoodAmmountText = GameObject.Find("WoodAmount").GetComponent<TextMeshProUGUI>();
+        gameObjectPool.OreAmmountText = GameObject.Find("OreAmount").GetComponent<TextMeshProUGUI>();
+        gameObjectPool.MetalAmmountText = GameObject.Find("MetalAmount").GetComponent<TextMeshProUGUI>();
 
         #endregion
 
@@ -169,99 +45,96 @@ internal class StartSpawnGame : StartSpawn
         #region UI
 
 
-        RightUpUnitImage = GameObject.Find("RightUpUnitImage").GetComponent<Image>();
-        RightMiddleUnitImage = GameObject.Find("RightMiddleUnitImage").GetComponent<Image>();
+        gameObjectPool.RightUpUnitImage = GameObject.Find("RightUpUnitImage").GetComponent<Image>();
+        gameObjectPool.RightMiddleUnitImage = GameObject.Find("RightMiddleUnitImage").GetComponent<Image>();
 
-        LeftEconomyImage = GameObject.Find("LeftEconomy").GetComponent<Image>();
+        gameObjectPool.LeftEconomyImage = GameObject.Find("LeftEconomy").GetComponent<Image>();
 
-        Button0 = GameObject.Find("Button0").GetComponent<Button>();
-        Button1 = GameObject.Find("Button1").GetComponent<Button>();
+        gameObjectPool.Button0 = GameObject.Find("Button0").GetComponent<Button>();
+        gameObjectPool.Button1 = GameObject.Find("Button1").GetComponent<Button>();
 
-        ButtonLeave = GameObject.Find("ButtonLeave").GetComponent<Button>();
-        BuyPawnButton = GameObject.Find("BuyPawnButton").GetComponent<Button>();
-        ImproveCityButton = GameObject.Find("ImproveCityButton").GetComponent<Button>();
+        gameObjectPool.ButtonLeave = GameObject.Find("ButtonLeave").GetComponent<Button>();
+        gameObjectPool.BuyPawnButton = GameObject.Find("BuyPawnButton").GetComponent<Button>();
+        gameObjectPool.ImproveCityButton = GameObject.Find("ImproveCityButton").GetComponent<Button>();
 
         #endregion
 
 
         #region Ability zone
 
-        HpCurrentUnitText = GameObject.Find("HpCurrentUnitText").GetComponent<TextMeshProUGUI>();
-        DamageCurrentUnitText = GameObject.Find("DamageCurrentUnitText").GetComponent<TextMeshProUGUI>();
-        ProtectionCurrentUnitText = GameObject.Find("ProtectionCurrentUnitText").GetComponent<TextMeshProUGUI>();
-        StepsCurrentUnitText = GameObject.Find("StepsCurrentUnitText").GetComponent<TextMeshProUGUI>();
+        gameObjectPool.HpCurrentUnitText = GameObject.Find("HpCurrentUnitText").GetComponent<TextMeshProUGUI>();
+        gameObjectPool.DamageCurrentUnitText = GameObject.Find("DamageCurrentUnitText").GetComponent<TextMeshProUGUI>();
+        gameObjectPool.ProtectionCurrentUnitText = GameObject.Find("ProtectionCurrentUnitText").GetComponent<TextMeshProUGUI>();
+        gameObjectPool.StepsCurrentUnitText = GameObject.Find("StepsCurrentUnitText").GetComponent<TextMeshProUGUI>();
 
 
-        BuildingAbilityButton0 = GameObject.Find("BuildingAbilityButton0").GetComponent<Button>();
+        gameObjectPool.BuildingAbilityButton0 = GameObject.Find("BuildingAbilityButton0").GetComponent<Button>();
 
-        BuildingAbilityButton1 = GameObject.Find("BuildingAbilityButton1").GetComponent<Button>();
-        BuildingAbilityButton2 = GameObject.Find("BuildingAbilityButton2").GetComponent<Button>();
-        BuildingAbilityButton3 = GameObject.Find("BuildingAbilityButton3").GetComponent<Button>();
+        gameObjectPool.BuildingAbilityButton1 = GameObject.Find("BuildingAbilityButton1").GetComponent<Button>();
+        gameObjectPool.BuildingAbilityButton2 = GameObject.Find("BuildingAbilityButton2").GetComponent<Button>();
+        gameObjectPool.BuildingAbilityButton3 = GameObject.Find("BuildingAbilityButton3").GetComponent<Button>();
 
-        BuildingAbilityButton4 = GameObject.Find("BuildingAbilityButton4").GetComponent<Button>();
-
-
-        StandartAbilityButton1 = GameObject.Find("StandartAbilityButton1").GetComponent<Button>();
-        StandartAbilityButton2 = GameObject.Find("StandartAbilityButton2").GetComponent<Button>();
-
-        UniqueAbilityButton1 = GameObject.Find("UniqueAbilityButton1").GetComponent<Button>();
-        UniqueAbilityButton2 = GameObject.Find("UniqueAbilityButton2").GetComponent<Button>();
-        UniqueAbilityButton3 = GameObject.Find("UniqueAbilityButton3").GetComponent<Button>();
+        gameObjectPool.BuildingAbilityButton4 = GameObject.Find("BuildingAbilityButton4").GetComponent<Button>();
 
 
-        AbilitiesImage = GameObject.Find("RightDownUnitImage").GetComponent<Image>();
+        gameObjectPool.StandartAbilityButton1 = GameObject.Find("StandartAbilityButton1").GetComponent<Button>();
+        gameObjectPool.StandartAbilityButton2 = GameObject.Find("StandartAbilityButton2").GetComponent<Button>();
+
+        gameObjectPool.UniqueAbilityButton1 = GameObject.Find("UniqueAbilityButton1").GetComponent<Button>();
+        gameObjectPool.UniqueAbilityButton2 = GameObject.Find("UniqueAbilityButton2").GetComponent<Button>();
+        gameObjectPool.UniqueAbilityButton3 = GameObject.Find("UniqueAbilityButton3").GetComponent<Button>();
+
+
+        gameObjectPool.AbilitiesImage = GameObject.Find("RightDownUnitImage").GetComponent<Image>();
 
         #endregion
 
 
-        ParentReadyZone = GameObject.Find("ReadyZone").GetComponent<RectTransform>();
-        ReadyButton = GameObject.Find("ReadyButton").GetComponent<Button>();
+        gameObjectPool.ParentReadyZone = GameObject.Find("ReadyZone").GetComponent<RectTransform>();
+        gameObjectPool.ReadyButton = GameObject.Find("ReadyButton").GetComponent<Button>();
 
 
-        ParentTheEndGameZone = GameObject.Find("TheEndGameZone").GetComponent<RectTransform>();
-        TheEndGameText = GameObject.Find("TheEndGameText").GetComponent<TextMeshProUGUI>();
-        ParentTheEndGameZone.gameObject.SetActive(false);
+        gameObjectPool.ParentTheEndGameZone = GameObject.Find("TheEndGameZone").GetComponent<RectTransform>();
+        gameObjectPool.TheEndGameText = GameObject.Find("TheEndGameText").GetComponent<TextMeshProUGUI>();
+        gameObjectPool.ParentTheEndGameZone.gameObject.SetActive(false);
 
 
-        DoneButton = GameObject.Find("ButtonDone").GetComponent<Button>();
-        DonerRawImage = GameObject.Find("DonerRawImage").GetComponent<RawImage>();
+        gameObjectPool.DoneButton = GameObject.Find("ButtonDone").GetComponent<Button>();
+        gameObjectPool.DonerRawImage = GameObject.Find("DonerRawImage").GetComponent<RawImage>();
 
 
 
-        if (InstanceGame.IS_TEST)
+        if (InstanceGame.StartValuesGameConfig.IS_TEST)
         {
-
-            ParentReadyZone.gameObject.SetActive(false);
+            gameObjectPool.ParentReadyZone.gameObject.SetActive(false);
         }
     }
 
-    public void SpawnCells(ResourcesLoadGame resourcesLoadManager, StartValuesGameConfig startValues)
+    public void SpawnCells(GameObjectPool gameObjectPool, ResourcesLoadGame resourcesLoadManager, StartValuesGameConfig startValues)
     {
-        var cellGO = resourcesLoadManager.CellGO;
-        var whiteCellSR = resourcesLoadManager.WhiteCellSprite;
-        var blackCellSR = resourcesLoadManager.BlackCellSprite;
+        var cellGO = resourcesLoadManager.PrefabConfig.CellGO;
+        var whiteCellSR = resourcesLoadManager.SpritesConfig.WhiteSprite;
+        var blackCellSR = resourcesLoadManager.SpritesConfig.BlackSprite;
 
-        _cellsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.CellsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
-        FoodsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
-        MountainsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
-        TreesGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
-        HillsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.FoodsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.MountainsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.TreesGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.HillsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
-        SelectorVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
-        SpawnVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
-        WayUnitVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
-        EnemyVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
-        ZoneVisionGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.SelectorVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.SpawnVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.WayUnitVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.EnemyVisionsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.ZoneVisionGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
-        UnitPawnsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
-        UnitKingsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
-        UnitPawnsGOsr = new SpriteRenderer[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
-        UnitKingsGOsr = new SpriteRenderer[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.UnitPawnsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.UnitKingsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
-        CampsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
-        FarmsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
-        WoodcuttersGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.CampsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.FarmsGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.WoodcuttersGO = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
 
         GameObject supportParent = new GameObject("Cells");
@@ -274,50 +147,48 @@ internal class StartSpawnGame : StartSpawn
                 {
                     if (x % 2 == 0)
                     {
-                        _cellsGO[x, y] = CreatGameObject(cellGO, blackCellSR, x, y);
-                        SetActive(_cellsGO[x, y], x, y);
+                        gameObjectPool.CellsGO[x, y] = CreatGameObject(cellGO, blackCellSR, x, y);
+                        SetActive(gameObjectPool.CellsGO[x, y], x, y);
                     }
                     if (x % 2 != 0)
                     {
-                        _cellsGO[x, y] = CreatGameObject(cellGO, whiteCellSR, x, y);
-                        SetActive(_cellsGO[x, y], x, y);
+                        gameObjectPool.CellsGO[x, y] = CreatGameObject(cellGO, whiteCellSR, x, y);
+                        SetActive(gameObjectPool.CellsGO[x, y], x, y);
                     }
                 }
                 if (y % 2 != 0)
                 {
                     if (x % 2 != 0)
                     {
-                        _cellsGO[x, y] = CreatGameObject(cellGO, blackCellSR, x, y);
-                        SetActive(_cellsGO[x, y], x, y);
+                        gameObjectPool.CellsGO[x, y] = CreatGameObject(cellGO, blackCellSR, x, y);
+                        SetActive(gameObjectPool.CellsGO[x, y], x, y);
                     }
                     if (x % 2 == 0)
                     {
-                        _cellsGO[x, y] = CreatGameObject(cellGO, whiteCellSR, x, y);
-                        SetActive(_cellsGO[x, y], x, y);
+                        gameObjectPool.CellsGO[x, y] = CreatGameObject(cellGO, whiteCellSR, x, y);
+                        SetActive(gameObjectPool.CellsGO[x, y], x, y);
                     }
                 }
 
-                _cellsGO[x, y].transform.SetParent(supportParent.transform);
+                gameObjectPool.CellsGO[x, y].transform.SetParent(supportParent.transform);
 
-                FoodsGO[x, y] = _cellsGO[x, y].transform.Find("FoodP").gameObject;
-                MountainsGO[x, y] = _cellsGO[x, y].transform.Find("MountainP").gameObject;
-                TreesGO[x, y] = _cellsGO[x, y].transform.Find("TreeP").gameObject;
-                HillsGO[x, y] = _cellsGO[x, y].transform.Find("HillP").gameObject;
+                gameObjectPool.FoodsGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("FoodP").gameObject;
+                gameObjectPool.MountainsGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("MountainP").gameObject;
+                gameObjectPool.TreesGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("TreeP").gameObject;
+                gameObjectPool.HillsGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("HillP").gameObject;
 
-                SelectorVisionsGO[x, y] = _cellsGO[x, y].transform.Find("SelectorP").gameObject;
-                SpawnVisionsGO[x, y] = _cellsGO[x, y].transform.Find("AssignmentP").gameObject;
-                WayUnitVisionsGO[x, y] = _cellsGO[x, y].transform.Find("WayOfUnitVisionP").gameObject;
-                EnemyVisionsGO[x, y] = _cellsGO[x, y].transform.Find("EnemyVisionP").gameObject;
-                ZoneVisionGO[x, y] = _cellsGO[x, y].transform.Find("ZoneVisionP").gameObject;
+                gameObjectPool.SelectorVisionsGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("SelectorP").gameObject;
+                gameObjectPool.SpawnVisionsGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("AssignmentP").gameObject;
+                gameObjectPool.WayUnitVisionsGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("WayOfUnitVisionP").gameObject;
+                gameObjectPool.EnemyVisionsGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("EnemyVisionP").gameObject;
+                gameObjectPool.ZoneVisionGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("ZoneVisionP").gameObject;
 
-                UnitPawnsGO[x, y] = _cellsGO[x, y].transform.Find("UnitPawnP").gameObject;
-                UnitKingsGO[x, y] = _cellsGO[x, y].transform.Find("UnitKingP").gameObject;
-                UnitPawnsGOsr[x, y] = UnitPawnsGO[x, y].GetComponent<SpriteRenderer>();
-                UnitKingsGOsr[x, y] = UnitKingsGO[x, y].GetComponent<SpriteRenderer>();
+                gameObjectPool.UnitPawnsGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("UnitPawnP").gameObject;
+                gameObjectPool.UnitKingsGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("UnitKingP").gameObject;
 
-                CampsGO[x, y] = _cellsGO[x, y].transform.Find("CampP").gameObject;
-                FarmsGO[x, y] = _cellsGO[x, y].transform.Find("FarmP").gameObject;
-                WoodcuttersGO[x, y] = _cellsGO[x, y].transform.Find("WoodcutterP").gameObject;
+                gameObjectPool.CampsGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("CampP").gameObject;
+                gameObjectPool.FarmsGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("FarmP").gameObject;
+                gameObjectPool.WoodcuttersGO[x, y] = gameObjectPool.CellsGO[x, y].transform.Find("WoodcutterP").gameObject;
             }
         }
     }

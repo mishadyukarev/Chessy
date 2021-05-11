@@ -33,11 +33,6 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new GetterCellSystem(eCSmanager), nameof(GetterCellSystem))
             .Add(new RaySystem(eCSmanager), nameof(RaySystem));
 
-
-
-        _multipleSystems
-            .Add(new UnitPathSystem(eCSmanager), nameof(UnitPathSystem));
-
         this.InitAndProcessInjectsSystems();
     }
 

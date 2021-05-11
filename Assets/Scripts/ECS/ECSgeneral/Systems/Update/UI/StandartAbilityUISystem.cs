@@ -21,9 +21,9 @@ internal class StandartAbilityUISystem : CellReduction, IEcsRunSystem
 
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
 
-        _standartAbilityButton1 = MainGame.InstanceGame.StartSpawnGameManager.StandartAbilityButton1;
+        _standartAbilityButton1 = MainGame.InstanceGame.GameObjectPool.StandartAbilityButton1;
         _standartAbilityButton1.onClick.AddListener(delegate { StandartAbilityButton1(); });
-        _standartAbilityButton2 = MainGame.InstanceGame.StartSpawnGameManager.StandartAbilityButton2;
+        _standartAbilityButton2 = MainGame.InstanceGame.GameObjectPool.StandartAbilityButton2;
         _standartAbilityButton2.onClick.AddListener(delegate { StandartAbilityButton2(); });
     }
 

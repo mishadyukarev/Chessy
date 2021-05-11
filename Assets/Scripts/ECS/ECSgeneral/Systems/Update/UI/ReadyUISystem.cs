@@ -26,8 +26,8 @@ internal class ReadyUISystem : IEcsRunSystem
         _readyComponentRef = eCSmanager.EntitiesGeneralManager.ReadyComponentRef;
         _startGameComponentRef = eCSmanager.EntitiesGeneralManager.StartGameComponentRef;
 
-        _parentReadyZone = MainGame.InstanceGame.StartSpawnGameManager.ParentReadyZone;
-        _readyButton = MainGame.InstanceGame.StartSpawnGameManager.ReadyButton;
+        _parentReadyZone = MainGame.InstanceGame.GameObjectPool.ParentReadyZone;
+        _readyButton = MainGame.InstanceGame.GameObjectPool.ReadyButton;
         _readyButton.onClick.AddListener(delegate { Ready(); });
     }
 

@@ -4,7 +4,7 @@ using static MainGame;
 
 internal struct ProtecterUnitMasterComponent
 {
-    private CellManager _cellManager;
+    private CellBaseOperations _cellManager;
     private SystemsMasterManager _systemsMasterManager;
 
     private int[] _xyCellIN;
@@ -14,7 +14,7 @@ internal struct ProtecterUnitMasterComponent
 
     internal ProtecterUnitMasterComponent(ECSmanager eCSmanager)
     {
-        _cellManager = InstanceGame.SupportGameManager.CellManager;
+        _cellManager = InstanceGame.CellManager.CellBaseOperations;
         _systemsMasterManager = eCSmanager.SystemsMasterManager;
 
         _xyCellIN = new int[InstanceGame.StartValuesGameConfig.XY_FOR_ARRAY];

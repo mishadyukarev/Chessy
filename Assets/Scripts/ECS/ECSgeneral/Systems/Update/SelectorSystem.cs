@@ -29,7 +29,6 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
     private EcsComponentRef<RayComponent> _rayComponentRef = default;
     private EcsComponentRef<InputComponent> _inputComponentRef = default;
-    private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
     private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
     private EcsComponentRef<DonerComponent> _buttonComponent = default;
@@ -57,12 +56,11 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
     internal SelectorSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
-        _nameManager = InstanceGame.SupportGameManager.Names;
+        _nameManager = InstanceGame.Names;
         _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
 
         _rayComponentRef = eCSmanager.EntitiesGeneralManager.RayComponentRef;
         _inputComponentRef = eCSmanager.EntitiesGeneralManager.InputComponentRef;
-        _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
         _selectedUnitComponentRef = eCSmanager.EntitiesGeneralManager.SelectedUnitComponentRef;
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
         _buttonComponent = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
@@ -147,8 +145,8 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                     {
                                         if (CellUnitComponent(_xySelectedCell).AmountSteps >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                                         {
-                                            _xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Shift, _xySelectedCell, InstanceGame.LocalPlayer);
-                                            _xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Attack, _xySelectedCell, InstanceGame.LocalPlayer);
+                                            _xyAvailableCellsForShift = InstanceGame.CellManager.CellFinderWay.GetCellsForShift(_xySelectedCell);
+                                            _xyAvailableCellsForAttack = InstanceGame.CellManager.CellFinderWay.GetCellsForAttack(_xySelectedCell, InstanceGame.LocalPlayer);
 
                                             _canShiftUnit = true;
                                         }
@@ -175,8 +173,8 @@ public sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                     {
                                         if (CellUnitComponent(_xySelectedCell).MinAmountSteps)
                                         {
-                                            _xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Shift, _xySelectedCell, InstanceGame.LocalPlayer);
-                                            _xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Attack, _xySelectedCell, InstanceGame.LocalPlayer);
+                                            _xyAvailableCellsForShift = InstanceGame.CellManager.CellFinderWay.GetCellsForShift(_xySelectedCell);
+                                            _xyAvailableCellsForAttack = InstanceGame.CellManager.CellFinderWay.GetCellsForAttack(_xySelectedCell, InstanceGame.LocalPlayer);
 
                                             _canShiftUnit = true;
                                         }

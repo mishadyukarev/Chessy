@@ -15,11 +15,11 @@ internal class EconomyUISystem : IEcsRunSystem
     {
         _economyComponentRef = eCSmanager.EntitiesGeneralManager.EconomyComponentRef;
 
-        _goldAmountText = MainGame.InstanceGame.StartSpawnGameManager.GoldAmmountText;
-        _foodAmountText = MainGame.InstanceGame.StartSpawnGameManager.FoodAmmountText;
-        _woodAmountText = MainGame.InstanceGame.StartSpawnGameManager.WoodAmmountText;
-        _oreAmountText = MainGame.InstanceGame.StartSpawnGameManager.OreAmmountText;
-        _ironAmountText = MainGame.InstanceGame.StartSpawnGameManager.MetalAmmountText;
+        _goldAmountText = MainGame.InstanceGame.GameObjectPool.GoldAmmountText;
+        _foodAmountText = MainGame.InstanceGame.GameObjectPool.FoodAmmountText;
+        _woodAmountText = MainGame.InstanceGame.GameObjectPool.WoodAmmountText;
+        _oreAmountText = MainGame.InstanceGame.GameObjectPool.OreAmmountText;
+        _ironAmountText = MainGame.InstanceGame.GameObjectPool.MetalAmmountText;
     }
 
     public void Run()

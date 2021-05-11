@@ -61,10 +61,10 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
         #region Images
 
-        _rightUpUnitImage = MainGame.InstanceGame.StartSpawnGameManager.RightUpUnitImage;
-        _rightMiddleUnitImage = MainGame.InstanceGame.StartSpawnGameManager.RightMiddleUnitImage;
-        _rightDownUnitImage = MainGame.InstanceGame.StartSpawnGameManager.AbilitiesImage;
-        _leftEconomyImage = MainGame.InstanceGame.StartSpawnGameManager.LeftEconomyImage;
+        _rightUpUnitImage = MainGame.InstanceGame.GameObjectPool.RightUpUnitImage;
+        _rightMiddleUnitImage = MainGame.InstanceGame.GameObjectPool.RightMiddleUnitImage;
+        _rightDownUnitImage = MainGame.InstanceGame.GameObjectPool.AbilitiesImage;
+        _leftEconomyImage = MainGame.InstanceGame.GameObjectPool.LeftEconomyImage;
 
         _rightMiddleUnitImage.gameObject.SetActive(false);
 
@@ -73,21 +73,21 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
         #region Ability zone
 
-        _uniqueAbilityButton1 = MainGame.InstanceGame.StartSpawnGameManager.UniqueAbilityButton1;
-        _uniqueAbilityButton2 = MainGame.InstanceGame.StartSpawnGameManager.UniqueAbilityButton2;
-        _uniqueAbilityButton3 = MainGame.InstanceGame.StartSpawnGameManager.UniqueAbilityButton3;
+        _uniqueAbilityButton1 = MainGame.InstanceGame.GameObjectPool.UniqueAbilityButton1;
+        _uniqueAbilityButton2 = MainGame.InstanceGame.GameObjectPool.UniqueAbilityButton2;
+        _uniqueAbilityButton3 = MainGame.InstanceGame.GameObjectPool.UniqueAbilityButton3;
 
 
         #endregion
 
 
-        _buttonLeave = MainGame.InstanceGame.StartSpawnGameManager.ButtonLeave;
+        _buttonLeave = MainGame.InstanceGame.GameObjectPool.ButtonLeave;
         _buttonLeave.onClick.AddListener(delegate { Leave(); });
 
-        _buyPawnButton = MainGame.InstanceGame.StartSpawnGameManager.BuyPawnButton;
+        _buyPawnButton = MainGame.InstanceGame.GameObjectPool.BuyPawnButton;
         _buyPawnButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Pawn); });
 
-        _improveCityButton = MainGame.InstanceGame.StartSpawnGameManager.ImproveCityButton;
+        _improveCityButton = MainGame.InstanceGame.GameObjectPool.ImproveCityButton;
         _improveCityButton.onClick.AddListener(delegate { ImproveCity(); });
 
 

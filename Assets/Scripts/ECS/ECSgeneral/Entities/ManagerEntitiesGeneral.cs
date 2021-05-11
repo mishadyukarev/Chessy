@@ -17,6 +17,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     private EcsEntity _rayEntity;
     private EcsEntity _animationAttackUnitEntity;
     private EcsEntity _zoneEntity;
+    private EcsEntity _whoDoEntity;
 
     private EcsComponentRef<CellComponent>[,] _cellComponentRef;
     private EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef;
@@ -26,13 +27,6 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
 
     #region Properies
-
-
-    #region Solo
-
-    internal EcsComponentRef<UnitPathComponent> UnitPathComponentRef => _soloEntity.Ref<UnitPathComponent>();
-
-    #endregion
 
 
     #region Cell
@@ -85,11 +79,8 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     {
         var startValuesGameConfig = InstanceGame.StartValuesGameConfig;
         var systemsGeneralManager = eCSmanager.SystemsGeneralManager;
-        var cellManager = InstanceGame.SupportGameManager.CellManager;
+        var cellManager = InstanceGame.CellManager;
         var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
-
-        _soloEntity = _ecsWorld.NewEntity()
-            .Replace(new UnitPathComponent(systemsGeneralManager, startValuesGameConfig, cellManager));
 
         _donerEntity = _ecsWorld.NewEntity()
             .Replace(new DonerComponent());
@@ -135,7 +126,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
         #region Cells
 
-        var cellsGO = InstanceGame.StartSpawnGameManager.CellsGO;
+        var cellsGO = InstanceGame.GameObjectPool.CellsGO;
 
         var xAmount = cellsGO.GetUpperBound(startValuesGameConfig.X) + 1;
         var yAmount = cellsGO.GetUpperBound(startValuesGameConfig.Y) + 1;

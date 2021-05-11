@@ -3,6 +3,8 @@
 [CreateAssetMenu(menuName = "StartValues", fileName = "StartValues")]
 public class StartValuesGameConfig : ScriptableObject
 {
+    [SerializeField] internal bool IS_TEST;
+
 
     #region PERCENT ENVIRONMENT
 

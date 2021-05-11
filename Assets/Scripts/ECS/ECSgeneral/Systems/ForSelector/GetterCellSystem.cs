@@ -1,5 +1,4 @@
 ﻿using Leopotam.Ecs;
-using UnityEngine;
 
 public sealed class GetterCellSystem : CellReduction, IEcsRunSystem
 {
@@ -27,14 +26,12 @@ public sealed class GetterCellSystem : CellReduction, IEcsRunSystem
                     {
                         _selectorComponentRef.Unref().XYcurrentCell = new int[] { x, y };
                         _selectorComponentRef.Unref().IsGettedCell = true;
-                        //_getterCellComponentRef.Unref().Pack(new int[] { x, y }, true);
                         return;
                     }
                 }
             }
             _selectorComponentRef.Unref().XYcurrentCell = new int[] { -1, -1 };
             _selectorComponentRef.Unref().IsGettedCell = false;
-            //_getterCellComponentRef.Unref().Pack(new int[] { -1, -1 }, false);
         }
     }
 }

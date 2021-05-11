@@ -11,9 +11,9 @@ internal class StartSpawnMenu : StartSpawn
     internal Button QuitButton;
 
 
-    internal StartSpawnMenu(SupportMenuManager supportMenuManager) : base(supportMenuManager.ResourcesLoadMenuManager)
+    internal StartSpawnMenu(ResourcesLoadMenu resourcesLoadMenu) : base(resourcesLoadMenu)
     {
-        _canvas = GameObject.Instantiate(supportMenuManager.ResourcesLoadMenuManager.Canvas);
+        _canvas = GameObject.Instantiate(resourcesLoadMenu.Canvas);
 
         LogText = GameObject.Find("LogText").GetComponent<TextMeshProUGUI>();
         CreateRoomButton = GameObject.Find("CreateRoomButton").GetComponent<Button>();

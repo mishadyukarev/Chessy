@@ -26,7 +26,7 @@ internal class VisibilityUnitsMasterSystem : CellReduction, IEcsRunSystem
                         {
                             CellUnitComponent(x, y).IsActiveUnitOther = false;
 
-                            List<int[]> list = InstanceGame.SupportGameManager.CellFinderWay.TryGetXYAround(new int[] { x, y });
+                            List<int[]> list = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(new int[] { x, y });
                             foreach (var xy in list)
                             {
                                 if (CellUnitComponent(xy).HaveUnit)
@@ -46,7 +46,7 @@ internal class VisibilityUnitsMasterSystem : CellReduction, IEcsRunSystem
                         {
                             CellUnitComponent(x, y).IsActiveUnitMaster = false;
 
-                            List<int[]> list = InstanceGame.SupportGameManager.CellFinderWay.TryGetXYAround(new int[] { x, y });
+                            List<int[]> list = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(new int[] { x, y });
                             foreach (var xy in list)
                             {
                                 if (CellUnitComponent(xy).HaveUnit)

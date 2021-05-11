@@ -5,7 +5,7 @@ using static MainGame;
 
 public struct ShiftUnitMasterComponent
 {
-    private CellManager _cellManager;
+    private CellBaseOperations _cellManager;
     private SystemsMasterManager _systemsMasterManager;
 
     private int[] _xyPreviousCellIN;
@@ -15,7 +15,7 @@ public struct ShiftUnitMasterComponent
     private bool _isShiftedOUT;
 
 
-    public ShiftUnitMasterComponent(StartValuesGameConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
+    public ShiftUnitMasterComponent(StartValuesGameConfig nameValueManager, CellBaseOperations cellManager, SystemsMasterManager systemsMasterManager)
     {
         _cellManager = cellManager;
         _systemsMasterManager = systemsMasterManager;
@@ -56,7 +56,6 @@ public struct ShiftUnitMasterComponent
 public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftComponentRef = default;
-    private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
 
     private PhotonPunRPC _photonPunRPC = default;
 
@@ -64,7 +63,6 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
     internal ShiftUnitMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _shiftComponentRef = eCSmanager.EntitiesMasterManager.ShiftUnitComponentRef;
-        _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
 
         _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
     }
@@ -76,7 +74,7 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
 
         _shiftComponentRef.Unref().Unpack(out int[] xyPreviousCell, out int[] xySelectedCell, out Player fromPlayer);
 
-        List<int[]> xyAvailableCellsForShift = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Shift, xyPreviousCell, fromPlayer);
+        List<int[]> xyAvailableCellsForShift = InstanceGame.CellManager.CellFinderWay.GetCellsForShift(xyPreviousCell);
 
         if (CellUnitComponent(xyPreviousCell).IsHisUnit(fromPlayer) && CellUnitComponent(xyPreviousCell).MinAmountSteps)
         {

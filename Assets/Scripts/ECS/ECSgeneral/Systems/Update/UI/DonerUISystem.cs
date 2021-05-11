@@ -17,10 +17,10 @@ internal class DonerUISystem : IEcsRunSystem
         _donerComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
         _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
-        _doneButton = MainGame.InstanceGame.StartSpawnGameManager.DoneButton;
+        _doneButton = MainGame.InstanceGame.GameObjectPool.DoneButton;
         _doneButton.onClick.AddListener(delegate { Done(); });
 
-        _donerRawImage = MainGame.InstanceGame.StartSpawnGameManager.DonerRawImage;
+        _donerRawImage = MainGame.InstanceGame.GameObjectPool.DonerRawImage;
     }
 
     public void Run()

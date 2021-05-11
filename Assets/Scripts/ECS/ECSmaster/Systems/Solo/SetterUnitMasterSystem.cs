@@ -12,11 +12,11 @@ public struct SetterUnitMasterComponent
     private bool _isSettedOUT;
 
     private StartValuesGameConfig _nameValueManager;
-    private CellManager _cellManager;
+    private CellBaseOperations _cellManager;
     private SystemsMasterManager _systemsMasterManager;
 
 
-    public SetterUnitMasterComponent(StartValuesGameConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
+    public SetterUnitMasterComponent(StartValuesGameConfig nameValueManager, CellBaseOperations cellManager, SystemsMasterManager systemsMasterManager)
     {
         _xyCellIN = new int[nameValueManager.XY_FOR_ARRAY];
         _unitTypeIN = default;

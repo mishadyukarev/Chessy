@@ -14,8 +14,8 @@ internal class TheEndGameUISystem : IEcsRunSystem
     {
         _theEndGameComponentRef = eCSmanager.EntitiesGeneralManager.TheEndGameComponentRef;
 
-        _parentTheEndGameZone = MainGame.InstanceGame.StartSpawnGameManager.ParentTheEndGameZone;
-        _theEndGameText = MainGame.InstanceGame.StartSpawnGameManager.TheEndGameText;
+        _parentTheEndGameZone = MainGame.InstanceGame.GameObjectPool.ParentTheEndGameZone;
+        _theEndGameText = MainGame.InstanceGame.GameObjectPool.TheEndGameText;
     }
 
     public void Run()

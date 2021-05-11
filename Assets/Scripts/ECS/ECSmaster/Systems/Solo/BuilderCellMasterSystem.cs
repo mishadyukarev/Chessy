@@ -4,7 +4,7 @@ using static MainGame;
 
 internal struct BuilderCellMasterComponent
 {
-    private CellManager _cellManager;
+    private CellBaseOperations _cellManager;
     private SystemsMasterManager _systemsMasterManager;
 
     private int[] _xyCellIN;
@@ -13,7 +13,7 @@ internal struct BuilderCellMasterComponent
 
     private bool _isSettedOUT;
 
-    internal BuilderCellMasterComponent(StartValuesGameConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
+    internal BuilderCellMasterComponent(StartValuesGameConfig nameValueManager, CellBaseOperations cellManager, SystemsMasterManager systemsMasterManager)
     {
         _cellManager = cellManager;
         _systemsMasterManager = systemsMasterManager;
@@ -99,9 +99,9 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
 
                     if (playerIN.IsMasterClient)
                     {
-                        _zoneComponentRef.Unref().XYMasterZone = InstanceGame.SupportGameManager.CellFinderWay.TryGetXYAround(xyCellIN);
+                        _zoneComponentRef.Unref().XYMasterZone = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(xyCellIN);
                     }
-                    else _zoneComponentRef.Unref().XYOtherZone = InstanceGame.SupportGameManager.CellFinderWay.TryGetXYAround(xyCellIN);
+                    else _zoneComponentRef.Unref().XYOtherZone = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(xyCellIN);
 
 
 

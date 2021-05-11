@@ -4,7 +4,7 @@ using static MainGame;
 
 public struct AttackUnitMasterComponent
 {
-    private CellManager _cellManager;
+    private CellBaseOperations _cellManager;
     private SystemsMasterManager _systemsMasterManager;
 
     private int[] _xyPreviousCellIN;
@@ -15,7 +15,7 @@ public struct AttackUnitMasterComponent
     private bool _isKilledAttacker;
     private bool _isKilledDefender;
 
-    public AttackUnitMasterComponent(StartValuesGameConfig nameValueManager, CellManager cellManager, SystemsMasterManager systemsMasterManager)
+    public AttackUnitMasterComponent(StartValuesGameConfig nameValueManager, CellBaseOperations cellManager, SystemsMasterManager systemsMasterManager)
     {
         _cellManager = cellManager;
         _systemsMasterManager = systemsMasterManager;
@@ -63,7 +63,6 @@ public struct AttackUnitMasterComponent
 public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
-    private EcsComponentRef<UnitPathComponent> _unitPathComponentRef = default;
 
     private PhotonPunRPC _photonPunRPC = default;
 
@@ -73,14 +72,13 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
         _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
         _attackUnitMasterComponentRef = eCSmanager.EntitiesMasterManager.AttackUnitMasterComponentRef;
-        _unitPathComponentRef = eCSmanager.EntitiesGeneralManager.UnitPathComponentRef;
     }
 
     public void Run()
     {
         _attackUnitMasterComponentRef.Unref().Unpack(out int[] xyPreviousCellIN, out int[] xySelectedCellIN, out Player playerIN);
 
-        var xyAvailableCellsForAttack = _unitPathComponentRef.Unref().GetAvailableCells(UnitPathTypes.Attack, xyPreviousCellIN, playerIN);
+        var xyAvailableCellsForAttack = InstanceGame.CellManager.CellFinderWay.GetCellsForAttack(xyPreviousCellIN, playerIN);
 
         if (CellUnitComponent(xyPreviousCellIN).MinAmountSteps)
         {
@@ -111,6 +109,12 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
                         bool isKilledAttacked = false;
                         bool isKilledDefender = false;
 
+                        if (CellUnitComponent(xyPreviousCellIN).AmountHealth <= _startValuesGameConfig.AMOUNT_FOR_DEATH)
+                        {
+                            CellUnitComponent(xyPreviousCellIN).ResetUnit();
+                            isKilledAttacked = true;
+                        }
+
                         if (CellUnitComponent(xySelectedCellIN).AmountHealth <= _startValuesGameConfig.AMOUNT_FOR_DEATH)
                         {
                             if (CellUnitComponent(xySelectedCellIN).UnitType == UnitTypes.King) _photonPunRPC.EndGame(CellUnitComponent(xyPreviousCellIN).ActorNumber);
@@ -119,13 +123,6 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
                             CellUnitComponent(xySelectedCellIN).SetUnit(CellUnitComponent(xyPreviousCellIN));
                             CellUnitComponent(xyPreviousCellIN).ResetUnit();
                             isKilledDefender = true;
-
-
-                            if (CellUnitComponent(xySelectedCellIN).AmountHealth <= _startValuesGameConfig.AMOUNT_FOR_DEATH)
-                            {
-                                CellUnitComponent(xySelectedCellIN).ResetUnit();
-                                isKilledAttacked = true;
-                            }
                         }
 
 

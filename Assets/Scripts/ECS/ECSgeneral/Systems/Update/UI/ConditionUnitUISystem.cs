@@ -27,10 +27,10 @@ internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
         _economyUnitsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyUnitsComponentRef;
         _doneComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
 
-        _hpCurrentUnitText = MainGame.InstanceGame.StartSpawnGameManager.HpCurrentUnitText;
-        _damageCurrentUnitText = MainGame.InstanceGame.StartSpawnGameManager.DamageCurrentUnitText;
-        _protectionCurrentUnitText = MainGame.InstanceGame.StartSpawnGameManager.ProtectionCurrentUnitText;
-        _stepsCurrentUnitText = MainGame.InstanceGame.StartSpawnGameManager.StepsCurrentUnitText;
+        _hpCurrentUnitText = MainGame.InstanceGame.GameObjectPool.HpCurrentUnitText;
+        _damageCurrentUnitText = MainGame.InstanceGame.GameObjectPool.DamageCurrentUnitText;
+        _protectionCurrentUnitText = MainGame.InstanceGame.GameObjectPool.ProtectionCurrentUnitText;
+        _stepsCurrentUnitText = MainGame.InstanceGame.GameObjectPool.StepsCurrentUnitText;
     }
 
     public void Run()

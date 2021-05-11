@@ -17,10 +17,10 @@ internal class SelectorUnitUISystem : IEcsRunSystem
         _doneComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
 
 
-        _selectorUnitComponentRef.Unref().Button0 = InstanceGame.StartSpawnGameManager.Button0;
+        _selectorUnitComponentRef.Unref().Button0 = InstanceGame.GameObjectPool.Button0;
         _selectorUnitComponentRef.Unref().Button0.onClick.AddListener(delegate { GetUnit(UnitTypes.King); });
 
-        _selectorUnitComponentRef.Unref().Button1 = MainGame.InstanceGame.StartSpawnGameManager.Button1;
+        _selectorUnitComponentRef.Unref().Button1 = MainGame.InstanceGame.GameObjectPool.Button1;
         _selectorUnitComponentRef.Unref().Button1.onClick.AddListener(delegate { GetUnit(UnitTypes.Pawn); });
     }
 

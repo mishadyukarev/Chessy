@@ -52,7 +52,7 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
         if (_fromInfo.Sender.IsMasterClient) _donerMasterComponentRef.Unref().IsDoneMaster = _isDone;
         else _donerMasterComponentRef.Unref().IsDoneOther = _isDone;
 
-        if (InstanceGame.IS_TEST || _donerMasterComponentRef.Unref().IsDoneMaster && _donerMasterComponentRef.Unref().IsDoneOther)
+        if (InstanceGame.StartValuesGameConfig.IS_TEST || _donerMasterComponentRef.Unref().IsDoneMaster && _donerMasterComponentRef.Unref().IsDoneOther)
         {
             for (int x = 0; x < Xcount; x++)
             {

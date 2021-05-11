@@ -3,7 +3,7 @@ using static MainGame;
 
 public abstract class CellReduction : StartValuesReduction
 {
-    protected CellManager _cellManager = default;
+    protected CellBaseOperations _cellManager = default;
 
     protected EcsComponentRef<CellComponent>[,] _cellComponentRef;
     protected EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef;
@@ -21,7 +21,7 @@ public abstract class CellReduction : StartValuesReduction
 
     internal CellReduction(ECSmanager eCSmanager)
     {
-        _cellManager = InstanceGame.SupportGameManager.CellManager;
+        _cellManager = InstanceGame.CellManager.CellBaseOperations;
 
         _cellComponentRef = eCSmanager.EntitiesGeneralManager.CellComponentRef;
         _cellEnvironmentComponentRef = eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef;

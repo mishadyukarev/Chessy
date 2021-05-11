@@ -15,7 +15,7 @@ public struct CellComponent
     {
         _xy = new int[] { x, y };
 
-        if (InstanceGame.IS_TEST)
+        if (InstanceGame.StartValuesGameConfig.IS_TEST)
         {
             _isStartMaster = true;
             _isStartOther = true;
@@ -28,7 +28,7 @@ public struct CellComponent
 
         _isSelected = default;
 
-        _cellGO = InstanceGame.StartSpawnGameManager.CellsGO[x, y];
+        _cellGO = InstanceGame.GameObjectPool.CellsGO[x, y];
     }
 
 
@@ -65,10 +65,10 @@ public struct CellComponent
             _haveTree = default;
             _haveHill = default;
 
-            _foodGO = InstanceGame.StartSpawnGameManager.FoodsGO[x, y];
-            _mountainGO = InstanceGame.StartSpawnGameManager.MountainsGO[x, y];
-            _treeGO = InstanceGame.StartSpawnGameManager.TreesGO[x, y];
-            _hillGO = InstanceGame.StartSpawnGameManager.HillsGO[x, y];
+            _foodGO = InstanceGame.GameObjectPool.FoodsGO[x, y];
+            _mountainGO = InstanceGame.GameObjectPool.MountainsGO[x, y];
+            _treeGO = InstanceGame.GameObjectPool.TreesGO[x, y];
+            _hillGO = InstanceGame.GameObjectPool.HillsGO[x, y];
 
             _listEnvironmentTypes = new List<EnvironmentTypes>();
             _listEnvironmentTypes.Add(default);
@@ -131,6 +131,8 @@ public struct CellComponent
     public struct UnitComponent
     {
         private int[] _xy;
+        private bool _canShift;
+        private bool _canAttack;
         private bool _isActiveUnitMaster;
         private bool _isActiveUnitOther;
         private UnitTypes _unitType;
@@ -150,6 +152,9 @@ public struct CellComponent
         {
             _xy = new int[] { x, y };
 
+            _canShift = default;
+            _canAttack = default;
+
             _isActiveUnitMaster = default;
             _isActiveUnitOther = default;
             _unitType = default;
@@ -161,10 +166,10 @@ public struct CellComponent
             _isRelaxed = default;
             _player = default;
 
-            _unitPawnGO = InstanceGame.StartSpawnGameManager.UnitPawnsGO[x, y];
-            _unitKingGO = InstanceGame.StartSpawnGameManager.UnitKingsGO[x, y];
-            _unitPawnSpriteRender = InstanceGame.StartSpawnGameManager.UnitPawnsGOsr[x, y];
-            _unitKingSpriteRender = InstanceGame.StartSpawnGameManager.UnitKingsGOsr[x, y];
+            _unitPawnGO = InstanceGame.GameObjectPool.UnitPawnsGO[x, y];
+            _unitKingGO = InstanceGame.GameObjectPool.UnitKingsGO[x, y];
+            _unitPawnSpriteRender = InstanceGame.GameObjectPool.UnitPawnsGO[x, y].GetComponent<SpriteRenderer>();
+            _unitKingSpriteRender = InstanceGame.GameObjectPool.UnitKingsGO[x, y].GetComponent<SpriteRenderer>();
         }
 
 
@@ -418,6 +423,22 @@ public struct CellComponent
 
         #endregion
 
+
+        #region Way
+
+        internal bool CanShift
+        {
+            get { return _canShift; }
+            set { _canShift = value; }
+        }
+        internal bool CanAttack
+        {
+            get { return _canAttack; }
+            set { _canAttack = value; }
+        }
+
+        #endregion
+
         #endregion
 
 
@@ -525,9 +546,9 @@ public struct CellComponent
             _xy = new int[] { x, y };
 
             _buildingType = default;
-            _cityGO = InstanceGame.StartSpawnGameManager.CampsGO[x, y];
-            _farmGO = InstanceGame.StartSpawnGameManager.FarmsGO[x, y];
-            _woodcutterGO = InstanceGame.StartSpawnGameManager.WoodcuttersGO[x, y];
+            _cityGO = InstanceGame.GameObjectPool.CampsGO[x, y];
+            _farmGO = InstanceGame.GameObjectPool.FarmsGO[x, y];
+            _woodcutterGO = InstanceGame.GameObjectPool.WoodcuttersGO[x, y];
 
             _player = default;
         }
@@ -622,11 +643,11 @@ public struct CellComponent
         {
             _player = default;
 
-            _selectorVisionGO = InstanceGame.StartSpawnGameManager.SelectorVisionsGO[x, y];
-            _spawnVisionGO = InstanceGame.StartSpawnGameManager.SpawnVisionsGO[x, y];
-            _wayUnitVisionGO = InstanceGame.StartSpawnGameManager.WayUnitVisionsGO[x, y];
-            _enemyVisionGO = InstanceGame.StartSpawnGameManager.EnemyVisionsGO[x, y];
-            _zoneVisionGO = InstanceGame.StartSpawnGameManager.ZoneVisionGO[x, y];
+            _selectorVisionGO = InstanceGame.GameObjectPool.SelectorVisionsGO[x, y];
+            _spawnVisionGO = InstanceGame.GameObjectPool.SpawnVisionsGO[x, y];
+            _wayUnitVisionGO = InstanceGame.GameObjectPool.WayUnitVisionsGO[x, y];
+            _enemyVisionGO = InstanceGame.GameObjectPool.EnemyVisionsGO[x, y];
+            _zoneVisionGO = InstanceGame.GameObjectPool.ZoneVisionGO[x, y];
         }
 
 

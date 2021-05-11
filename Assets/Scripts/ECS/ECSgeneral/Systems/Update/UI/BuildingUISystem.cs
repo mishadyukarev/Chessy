@@ -23,19 +23,19 @@ internal class BuildingUISystem : CellReduction, IEcsRunSystem
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
         _economyBuildingsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyBuildingsComponentRef;
 
-        _buildingAbilityButton0 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton0;
+        _buildingAbilityButton0 = InstanceGame.GameObjectPool.BuildingAbilityButton0;
         _buildingAbilityButton0.onClick.AddListener(delegate { Build(BuildingTypes.City); });
 
-        _buildingAbilityButton1 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton1;
+        _buildingAbilityButton1 = InstanceGame.GameObjectPool.BuildingAbilityButton1;
         _buildingAbilityButton1.onClick.AddListener(delegate { Build(BuildingTypes.Farm); });
 
-        _buildingAbilityButton2 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton2;
+        _buildingAbilityButton2 = InstanceGame.GameObjectPool.BuildingAbilityButton2;
         _buildingAbilityButton2.onClick.AddListener(delegate { Build(BuildingTypes.Woodcutter); });
 
-        _buildingAbilityButton3 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton3;
+        _buildingAbilityButton3 = InstanceGame.GameObjectPool.BuildingAbilityButton3;
         //_buildingAbilityButton2.onClick.AddListener(delegate { Build(BuildingTypes.Woodcutter); });
 
-        _buildingAbilityButton4 = MainGame.InstanceGame.StartSpawnGameManager.BuildingAbilityButton4;
+        _buildingAbilityButton4 = InstanceGame.GameObjectPool.BuildingAbilityButton4;
         _buildingAbilityButton4.onClick.AddListener(delegate { Destroy(); });
     }
 

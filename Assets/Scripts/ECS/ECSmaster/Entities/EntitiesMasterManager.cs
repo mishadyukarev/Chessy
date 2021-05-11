@@ -46,11 +46,11 @@ public class EntitiesMasterManager : EntitiesManager
     internal void CreateEntities(ECSmanager eCSmanager)
     {
         _soloEntity = _ecsWorld.NewEntity()
-            .Replace(new SetterUnitMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.SupportGameManager.CellManager, eCSmanager.SystemsMasterManager))
-            .Replace(new ShiftUnitMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.SupportGameManager.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new SetterUnitMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.CellManager.CellBaseOperations, eCSmanager.SystemsMasterManager))
+            .Replace(new ShiftUnitMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.CellManager.CellBaseOperations, eCSmanager.SystemsMasterManager))
             .Replace(new DonerMasterComponent())
-            .Replace(new AttackUnitMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.SupportGameManager.CellManager, eCSmanager.SystemsMasterManager))
-            .Replace(new BuilderCellMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.SupportGameManager.CellManager, eCSmanager.SystemsMasterManager))
+            .Replace(new AttackUnitMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.CellManager.CellBaseOperations, eCSmanager.SystemsMasterManager))
+            .Replace(new BuilderCellMasterComponent(InstanceGame.StartValuesGameConfig, InstanceGame.CellManager.CellBaseOperations, eCSmanager.SystemsMasterManager))
             .Replace(new GetterUnitMasterComponent(eCSmanager.SystemsMasterManager))
             .Replace(new ProtecterUnitMasterComponent(eCSmanager))
             .Replace(new RefresherMasterComponent());
