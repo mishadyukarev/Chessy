@@ -60,7 +60,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal EcsComponentRef<SelectedUnitComponent> SelectedUnitComponentRef => _selectedUnitEntity.Ref<SelectedUnitComponent>();
     internal EcsComponentRef<SoundComponent> SoundComponentRef => _soundEntity.Ref<SoundComponent>();
     internal EcsComponentRef<ReadyComponent> ReadyComponentRef => _readyEntity.Ref<ReadyComponent>();
-    internal EcsComponentRef<SelectorUnitComponent> SelectorUnitComponent => _selectorUnitEntity.Ref<SelectorUnitComponent>();
+    internal EcsComponentRef<TakerUnitUnitComponent> SelectorUnitComponent => _selectorUnitEntity.Ref<TakerUnitUnitComponent>();
     internal EcsComponentRef<TheEndGameComponent> TheEndGameComponentRef => _theEndGameEntity.Ref<TheEndGameComponent>();
     internal EcsComponentRef<StartGameComponent> StartGameComponentRef => _startGameEntity.Ref<StartGameComponent>();
     internal EcsComponentRef<RayComponent> RayComponentRef => _rayEntity.Ref<RayComponent>();
@@ -106,7 +106,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             .Replace(new ReadyComponent());
 
         _selectorUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new SelectorUnitComponent());
+            .Replace(new TakerUnitUnitComponent());
 
         _theEndGameEntity = _ecsWorld.NewEntity()
             .Replace(new TheEndGameComponent());

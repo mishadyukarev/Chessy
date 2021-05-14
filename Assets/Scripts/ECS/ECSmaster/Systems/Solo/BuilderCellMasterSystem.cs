@@ -167,7 +167,33 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
                     break;
 
                 case BuildingTypes.Mine:
+
+                    if (CellEnvironmentComponent(xyCellIN).HaveHill)
+                    {
+                        if (playerIN.IsMasterClient)
+                        {
+                            if (CanBuildMine(playerIN, _economyMasterComponentRef))
+                            {
+                                CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
+                                _economyBuildingsMasterComponentRef.Unref().AmountMineMaster += 1; // !!!!!
+
+                                CellUnitComponent(xyCellIN).AmountSteps = 0;
+                            }
+                        }
+                        else
+                        {
+                            if (CanBuildMine(playerIN, _economyMasterComponentRef))
+                            {
+                                CellBuildingComponent(xyCellIN).SetBuilding(buildingTypeIN, playerIN);
+                                _economyBuildingsMasterComponentRef.Unref().AmountMineOther += 1; // !!!!!
+
+                                CellUnitComponent(xyCellIN).AmountSteps = 0;
+                            }
+                        }
+
+                    }
                     isBuilded = true;
+
                     break;
 
                 default:
@@ -270,6 +296,46 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
                 economyMasterComponentRef.Unref().WoodOther -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
                 economyMasterComponentRef.Unref().OreOther -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
                 economyMasterComponentRef.Unref().IronOther -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+
+                return true;
+            }
+            else return false;
+        }
+    }
+
+    private bool CanBuildMine(Player player, EcsComponentRef<EconomyMasterComponent> economyMasterComponentRef)
+    {
+        if (player.IsMasterClient)
+        {
+            if (economyMasterComponentRef.Unref().GoldMaster >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE
+                && economyMasterComponentRef.Unref().FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE
+                && economyMasterComponentRef.Unref().WoodMaster >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE
+                && economyMasterComponentRef.Unref().OreMaster >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE
+                && economyMasterComponentRef.Unref().IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE)
+            {
+                economyMasterComponentRef.Unref().GoldMaster -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
+                economyMasterComponentRef.Unref().FoodMaster -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
+                economyMasterComponentRef.Unref().WoodMaster -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
+                economyMasterComponentRef.Unref().OreMaster -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
+                economyMasterComponentRef.Unref().IronMaster -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
+
+                return true;
+            }
+            else return false;
+        }
+        else
+        {
+            if (economyMasterComponentRef.Unref().GoldOther >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE
+                && economyMasterComponentRef.Unref().FoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE
+                && economyMasterComponentRef.Unref().WoodOther >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE
+                && economyMasterComponentRef.Unref().OreOther >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE
+                && economyMasterComponentRef.Unref().IronOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE)
+            {
+                economyMasterComponentRef.Unref().GoldOther -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
+                economyMasterComponentRef.Unref().FoodOther -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
+                economyMasterComponentRef.Unref().WoodOther -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
+                economyMasterComponentRef.Unref().OreOther -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
+                economyMasterComponentRef.Unref().IronOther -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
 
                 return true;
             }

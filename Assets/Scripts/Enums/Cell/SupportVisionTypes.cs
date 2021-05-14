@@ -6,6 +6,7 @@ public enum SupportVisionTypes
     Selector,
     Spawn,
     WayOfUnit,
-    Enemy,
+    SimpleAttack,
+    UniqueAttack,
     Zone
 }

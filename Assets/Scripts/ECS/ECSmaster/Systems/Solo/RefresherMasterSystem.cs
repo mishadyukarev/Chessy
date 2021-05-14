@@ -2,24 +2,7 @@
 using Photon.Pun;
 using static MainGame;
 
-internal struct RefresherMasterComponent
-{
-    private bool _isDone;
-    private bool _isRefreshed;
-
-    internal bool IsDone
-    {
-        get { return _isDone; }
-        set { _isDone = value; }
-    }
-    internal bool IsRefreshed
-    {
-        get { return _isRefreshed; }
-        set { _isRefreshed = value; }
-    }
-}
-
-public class RefresherMasterSystem : CellReduction, IEcsRunSystem
+internal class RefresherMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<RefresherMasterComponent> _refresherMasterComponent = default;
     private EcsComponentRef<DonerMasterComponent> _donerMasterComponentRef = default;
@@ -58,19 +41,7 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
             {
                 for (int y = 0; y < Ycount; y++)
                 {
-                    switch (CellUnitComponent(x, y).UnitType)
-                    {
-                        case UnitTypes.King:
-                            CellUnitComponent(x, y).AmountSteps = InstanceGame.StartValuesGameConfig.MAX_AMOUNT_STEPS_KING;
-                            break;
-
-                        case UnitTypes.Pawn:
-                            CellUnitComponent(x, y).AmountSteps = InstanceGame.StartValuesGameConfig.MAX_AMOUNT_STEPS_PAWN;
-                            break;
-
-                        default:
-                            break;
-                    }
+                    CellUnitComponent(x, y).RefreshAmountSteps();
 
                     if (CellUnitComponent(x, y).IsRelaxed)
                     {
@@ -95,6 +66,8 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
 
                 }
             }
+
+
             if (_economyBuildingsMasterComponentRef.Unref().IsBuildedCityMaster)
             {
                 if (CellEnvironmentComponent(_economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster).HaveFood)
@@ -108,6 +81,7 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
                 _economyMasterComponent.Unref().FoodMaster += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
                 _economyMasterComponent.Unref().WoodMaster += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
             }
+
             if (_economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther)
             {
                 if (CellEnvironmentComponent(_economyBuildingsMasterComponentRef.Unref().XYsettedCityOther).HaveFood)
@@ -130,6 +104,8 @@ public class RefresherMasterSystem : CellReduction, IEcsRunSystem
             _economyMasterComponent.Unref().WoodMaster += _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterMaster * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
             _economyMasterComponent.Unref().WoodOther += _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterOther * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
 
+            _economyMasterComponent.Unref().OreMaster += _economyBuildingsMasterComponentRef.Unref().AmountMineMaster * InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
+            _economyMasterComponent.Unref().OreOther += _economyBuildingsMasterComponentRef.Unref().AmountMineOther * InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
 
 
 

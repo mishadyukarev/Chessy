@@ -53,7 +53,7 @@ public struct ShiftUnitMasterComponent
 }
 
 
-public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
+internal class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<ShiftUnitMasterComponent> _shiftComponentRef = default;
 
@@ -78,7 +78,7 @@ public class ShiftUnitMasterSystem : CellReduction, IEcsRunSystem
 
         if (CellUnitComponent(xyPreviousCell).IsHisUnit(fromPlayer) && CellUnitComponent(xyPreviousCell).MinAmountSteps)
         {
-            if (_cellManager.TryFindCellInList(xySelectedCell, xyAvailableCellsForShift))
+            if (_cellBaseOperations.TryFindCellInList(xySelectedCell, xyAvailableCellsForShift))
             {
                 CellUnitComponent(xySelectedCell).SetUnit(CellUnitComponent(xyPreviousCell));
 

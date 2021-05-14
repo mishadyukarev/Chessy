@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-public sealed class GetterCellSystem : CellReduction, IEcsRunSystem
+internal sealed class GetterCellSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<RayComponent> _rayComponentRef = default;
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;

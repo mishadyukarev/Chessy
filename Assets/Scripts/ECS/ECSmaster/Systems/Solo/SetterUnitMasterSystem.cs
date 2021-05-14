@@ -55,7 +55,7 @@ public struct SetterUnitMasterComponent
 }
 
 
-public class SetterUnitMasterSystem : CellReduction, IEcsRunSystem
+internal class SetterUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<SetterUnitMasterComponent> _setterUnitMasterComponentRef = default;
     private EcsComponentRef<EconomyMasterComponent.UnitsMasterComponent> _economyUnitMasterComponent = default;
@@ -73,73 +73,118 @@ public class SetterUnitMasterSystem : CellReduction, IEcsRunSystem
     {
         _setterUnitMasterComponentRef.Unref().GetValues(out int[] xyCell, out UnitTypes unitType, out Player player);
 
-        switch (unitType)
-        {
-            case UnitTypes.None:
-                break;
 
-            case UnitTypes.King:
-                ExecuteSetUnitKing(xyCell, player);
-                break;
-
-            case UnitTypes.Pawn:
-                ExecuteSetUnitPawn(xyCell, player);
-                break;
-
-            default:
-                break;
-        }
-    }
-
-    private void ExecuteSetUnitPawn(int[] xyCell, Player player)
-    {
         if (!CellEnvironmentComponent(xyCell).HaveMountain && !CellUnitComponent(xyCell).HaveUnit)
         {
-            if (player.IsMasterClient)
+            switch (unitType)
             {
-                if (CellComponent(xyCell).IsStartMaster)
-                {
-                    CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, _startValuesGameConfig.AMOUNT_HEALTH_PAWN, _startValuesGameConfig.POWER_DAMAGE_PAWN, _startValuesGameConfig.MAX_AMOUNT_STEPS_PAWN, false, false, player);
-                    _economyUnitMasterComponent.Unref().AmountUnitPawnMaster -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
-                    _setterUnitMasterComponentRef.Unref().SetValues(true);
-                }
-            }
+                case UnitTypes.None:
+                    break;
 
-            else
-            {
-                if (CellComponent(xyCell).IsStartOther)
-                {
-                    CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, _startValuesGameConfig.AMOUNT_HEALTH_PAWN, _startValuesGameConfig.POWER_DAMAGE_PAWN, _startValuesGameConfig.MAX_AMOUNT_STEPS_PAWN, false, false, player);
-                    _economyUnitMasterComponent.Unref().AmountUnitPawnOther -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
-                    _setterUnitMasterComponentRef.Unref().SetValues(true);
-                }
-                else _setterUnitMasterComponentRef.Unref().SetValues(false);
-            }
-        }
-    }
 
-    private void ExecuteSetUnitKing(int[] xyCell, Player player)
-    {
-        if (!CellEnvironmentComponent(xyCell).HaveMountain && !CellUnitComponent(xyCell).HaveUnit)
-        {
-            if (player.IsMasterClient)
-            {
-                if (CellComponent(xyCell).IsStartMaster)
-                {
-                    CellUnitComponent(xyCell).SetUnit(UnitTypes.King, _startValuesGameConfig.AMOUNT_HEALTH_KING, _startValuesGameConfig.POWER_DAMAGE_KING, _startValuesGameConfig.MAX_AMOUNT_STEPS_KING, false, false, player);
-                    _economyUnitMasterComponent.Unref().AmountKingMaster -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
-                    _setterUnitMasterComponentRef.Unref().SetValues(true);
-                }
-            }
-            else
-            {
-                if (CellComponent(xyCell).IsStartOther)
-                {
-                    CellUnitComponent(xyCell).SetUnit(UnitTypes.King, _startValuesGameConfig.AMOUNT_HEALTH_KING, _startValuesGameConfig.POWER_DAMAGE_KING, _startValuesGameConfig.MAX_AMOUNT_STEPS_KING, false, false, player);
-                    _economyUnitMasterComponent.Unref().AmountKingOther -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
-                    _setterUnitMasterComponentRef.Unref().SetValues(true);
-                }
-                else _setterUnitMasterComponentRef.Unref().SetValues(false);
+                case UnitTypes.King:
+
+                    if (player.IsMasterClient)
+                    {
+                        if (CellComponent(xyCell).IsStartMaster)
+                        {
+                            CellUnitComponent(xyCell).SetUnit(UnitTypes.King, _startValuesGameConfig.AMOUNT_HEALTH_KING, _startValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, player);
+                            _economyUnitMasterComponent.Unref().AmountKingMaster -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _setterUnitMasterComponentRef.Unref().SetValues(true);
+                        }
+                    }
+                    else
+                    {
+                        if (CellComponent(xyCell).IsStartOther)
+                        {
+                            CellUnitComponent(xyCell).SetUnit(UnitTypes.King, _startValuesGameConfig.AMOUNT_HEALTH_KING, _startValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, player);
+                            _economyUnitMasterComponent.Unref().AmountKingOther -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _setterUnitMasterComponentRef.Unref().SetValues(true);
+                        }
+                        else _setterUnitMasterComponentRef.Unref().SetValues(false);
+                    }
+
+                    break;
+
+
+                case UnitTypes.Pawn:
+
+                    if (player.IsMasterClient)
+                    {
+                        if (CellComponent(xyCell).IsStartMaster)
+                        {
+                            CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, _startValuesGameConfig.AMOUNT_HEALTH_PAWN, _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, player);
+                            _economyUnitMasterComponent.Unref().AmountUnitPawnMaster -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _setterUnitMasterComponentRef.Unref().SetValues(true);
+                        }
+                    }
+
+                    else
+                    {
+                        if (CellComponent(xyCell).IsStartOther)
+                        {
+                            CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, _startValuesGameConfig.AMOUNT_HEALTH_PAWN, _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, player);
+                            _economyUnitMasterComponent.Unref().AmountUnitPawnOther -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _setterUnitMasterComponentRef.Unref().SetValues(true);
+                        }
+                        else _setterUnitMasterComponentRef.Unref().SetValues(false);
+                    }
+
+                    break;
+
+
+                case UnitTypes.Rook:
+
+                    if (player.IsMasterClient)
+                    {
+                        if (CellComponent(xyCell).IsStartMaster)
+                        {
+                            CellUnitComponent(xyCell).SetUnit(UnitTypes.Rook, _startValuesGameConfig.AMOUNT_HEALTH_ROOK, _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, player);
+                            _economyUnitMasterComponent.Unref().AmountRookMaster -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _setterUnitMasterComponentRef.Unref().SetValues(true);
+                        }
+                    }
+                    else
+                    {
+                        if (CellComponent(xyCell).IsStartOther)
+                        {
+                            CellUnitComponent(xyCell).SetUnit(UnitTypes.Rook, _startValuesGameConfig.AMOUNT_HEALTH_ROOK, _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, player);
+                            _economyUnitMasterComponent.Unref().AmountRookOther -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _setterUnitMasterComponentRef.Unref().SetValues(true);
+                        }
+                        else _setterUnitMasterComponentRef.Unref().SetValues(false);
+                    }
+
+                    break;
+
+
+                case UnitTypes.Bishop:
+
+                    if (player.IsMasterClient)
+                    {
+                        if (CellComponent(xyCell).IsStartMaster)
+                        {
+                            CellUnitComponent(xyCell).SetUnit(UnitTypes.Bishop, _startValuesGameConfig.AMOUNT_HEALTH_BISHOP, _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, player);
+                            _economyUnitMasterComponent.Unref().AmountBishopMaster -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _setterUnitMasterComponentRef.Unref().SetValues(true);
+                        }
+                    }
+                    else
+                    {
+                        if (CellComponent(xyCell).IsStartOther)
+                        {
+                            CellUnitComponent(xyCell).SetUnit(UnitTypes.Bishop, _startValuesGameConfig.AMOUNT_HEALTH_BISHOP, _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, player);
+                            _economyUnitMasterComponent.Unref().AmountBishopOther -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _setterUnitMasterComponentRef.Unref().SetValues(true);
+                        }
+                        else _setterUnitMasterComponentRef.Unref().SetValues(false);
+                    }
+
+                    break;
+
+
+                default:
+                    break;
             }
         }
     }

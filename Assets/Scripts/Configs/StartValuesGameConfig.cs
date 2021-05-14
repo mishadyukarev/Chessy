@@ -3,7 +3,7 @@
 [CreateAssetMenu(menuName = "StartValues", fileName = "StartValues")]
 public class StartValuesGameConfig : ScriptableObject
 {
-    [SerializeField] internal bool IS_TEST;
+    [SerializeField] internal bool IS_TEST = true;
 
 
     #region PERCENT ENVIRONMENT
@@ -25,6 +25,13 @@ public class StartValuesGameConfig : ScriptableObject
 
     internal readonly int AMOUNT_PAWN_MASTER = 1;
     internal readonly int AMOUNT_PAWN_OTHER = 1;
+
+    internal readonly int AMOUNT_ROOK_MASTER = 1;
+    internal readonly int AMOUNT_ROOK_OTHER = 1;
+
+    internal readonly int AMOUNT_BISHOP_MASTER = 1;
+    internal readonly int AMOUNT_BISHOP_OTHER = 1;
+
 
     #endregion
 
@@ -53,6 +60,16 @@ public class StartValuesGameConfig : ScriptableObject
 
     internal readonly int FOOD_FOR_BUYING_PAWN = 50;
 
+    internal readonly int ORE_FOR_MELTING_ORE = 5;
+    internal readonly int WOOD_FOR_MELTING_ORE = 50;
+
+    internal readonly int IRON_FOR_BUYING_ROOK = 1;
+    internal readonly int FOOD_FOR_BUYING_ROOK = 50;
+
+    internal readonly int IRON_FOR_BUYING_BISHOP = 1;
+    internal readonly int FOOD_FOR_BUYING_BISHOP = 50;
+
+
     #region Building
 
     internal readonly int GOLD_FOR_BUILDING_FARM = 0;
@@ -67,6 +84,12 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int ORE_FOR_BUILDING_WOODCUTTER = 0;
     internal readonly int IRON_FOR_BUILDING_WOODCUTTER = 0;
 
+    internal readonly int GOLD_FOR_BUILDING_MINE = 0;
+    internal readonly int FOOD_FOR_BUILDING_MINE = 0;
+    internal readonly int WOOD_FOR_BUILDING_MINE = 150;
+    internal readonly int ORE_FOR_BUILDING_MINE = 0;
+    internal readonly int IRON_FOR_BUILDING_MINE = 0;
+
     #endregion
 
     #endregion
@@ -76,6 +99,7 @@ public class StartValuesGameConfig : ScriptableObject
 
     internal readonly int BENEFIT_FOOD_FARM = 5;
     internal readonly int BENEFIT_WOOD_WOODCUTTER = 2;
+    internal readonly int BENEFIT_ORE_MINE = 1;
 
     internal readonly int BENEFIT_FOOD_CITY = 10;
     internal readonly int BENEFIT_WOOD_CITY = 5;
@@ -93,6 +117,8 @@ public class StartValuesGameConfig : ScriptableObject
 
     internal readonly int AMOUNT_HEALTH_KING = 300;
     internal readonly int AMOUNT_HEALTH_PAWN = 100;
+    internal readonly int AMOUNT_HEALTH_ROOK = 100;
+    internal readonly int AMOUNT_HEALTH_BISHOP = 100;
 
 
     private readonly float PERCENT_FOR_HEALTH_KING = 0.15f;
@@ -106,8 +132,15 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region Damage
 
-    internal readonly int POWER_DAMAGE_KING = 70;
-    internal readonly int POWER_DAMAGE_PAWN = 50;
+    internal readonly int SIMPLE_POWER_DAMAGE_KING = 70;
+    internal readonly int SIMPLE_POWER_DAMAGE_PAWN = 50;
+    internal readonly int SIMPLE_POWER_DAMAGE_ROOK = 50;
+    internal readonly int SIMPLE_POWER_DAMAGE_BISHOP = 50;
+
+    internal int UNIQIE_POWER_DAMAGE_KING => SIMPLE_POWER_DAMAGE_KING / 3;
+    internal int UNIQIE_POWER_DAMAGE_PAWN => SIMPLE_POWER_DAMAGE_PAWN / 3;
+    internal int UNIQIE_POWER_DAMAGE_ROOK => SIMPLE_POWER_DAMAGE_ROOK / 3;
+    internal int UNIQIE_POWER_DAMAGE_BISHOP => SIMPLE_POWER_DAMAGE_BISHOP / 3;
 
     #endregion
 
@@ -118,9 +151,13 @@ public class StartValuesGameConfig : ScriptableObject
 
     private readonly float PERCENT_PROTECTION_CITY_FOR_KING = 0.15f;
     private readonly float PERCENT_PROTECTION_CITY_FOR_PAWN = 0.15f;
+    private readonly float PERCENT_PROTECTION_CITY_FOR_ROOK = 0.15f;
+    private readonly float PERCENT_PROTECTION_CITY_FOR_BISHOP = 0.15f;
 
-    internal int PROTECTION_CITY_KING => (int)(POWER_DAMAGE_KING * PERCENT_PROTECTION_CITY_FOR_KING);
-    internal int PROTECTION_CITY_PAWN => (int)(POWER_DAMAGE_PAWN * PERCENT_PROTECTION_CITY_FOR_PAWN);
+    internal int PROTECTION_CITY_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_PROTECTION_CITY_FOR_KING);
+    internal int PROTECTION_CITY_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_PROTECTION_CITY_FOR_PAWN);
+    internal int PROTECTION_CITY_ROOK => (int)(SIMPLE_POWER_DAMAGE_ROOK * PERCENT_PROTECTION_CITY_FOR_ROOK);
+    internal int PROTECTION_CITY_BISHOP => (int)(SIMPLE_POWER_DAMAGE_BISHOP * PERCENT_PROTECTION_CITY_FOR_BISHOP);
 
     #endregion
 
@@ -129,22 +166,34 @@ public class StartValuesGameConfig : ScriptableObject
 
     private readonly float PERCENT_PROTECTION_FOOD_FOR_KING = -0.1f;
     private readonly float PERCENT_PROTECTION_FOOD_FOR_PAWN = -0.1f;
+    private readonly float PERCENT_PROTECTION_FOOD_FOR_ROOK = -0.1f;
+    private readonly float PERCENT_PROTECTION_FOOD_FOR_BISHOP = -0.1f;
 
     private readonly float PERCENT_PROTECTION_TREE_FOR_KING = 0.1f;
     private readonly float PERCENT_PROTECTION_TREE_FOR_PAWN = 0.1f;
+    private readonly float PERCENT_PROTECTION_TREE_FOR_ROOK = 0.1f;
+    private readonly float PERCENT_PROTECTION_TREE_FOR_BISHOP = 0.1f;
 
     private readonly float PERCENT_PROTECTION_HILL_FOR_KING = 0.15f;
     private readonly float PERCENT_PROTECTION_HILL_FOR_PAWN = 0.15f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_ROOK = 0.15f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_BISHOP = 0.15f;
 
 
-    internal int PROTECTION_FOOD_FOR_KING => (int)(POWER_DAMAGE_KING * PERCENT_PROTECTION_FOOD_FOR_KING);
-    internal int PROTECTION_FOOD_FOR_PAWN => (int)(POWER_DAMAGE_KING * PERCENT_PROTECTION_FOOD_FOR_PAWN);
+    internal int PROTECTION_FOOD_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_PROTECTION_FOOD_FOR_KING);
+    internal int PROTECTION_FOOD_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_PROTECTION_FOOD_FOR_PAWN);
+    internal int PROTECTION_FOOD_FOR_ROOK => (int)(SIMPLE_POWER_DAMAGE_ROOK * PERCENT_PROTECTION_FOOD_FOR_ROOK);
+    internal int PROTECTION_FOOD_FOR_BISHOP => (int)(SIMPLE_POWER_DAMAGE_BISHOP * PERCENT_PROTECTION_FOOD_FOR_BISHOP);
 
-    internal int PROTECTION_HILL_FOR_KING => (int)(POWER_DAMAGE_KING * PERCENT_PROTECTION_HILL_FOR_KING);
-    internal int PROTECTION_HILL_FOR_PAWN => (int)(POWER_DAMAGE_KING * PERCENT_PROTECTION_HILL_FOR_PAWN);
+    internal int PROTECTION_HILL_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_PROTECTION_HILL_FOR_KING);
+    internal int PROTECTION_HILL_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_PROTECTION_HILL_FOR_PAWN);
+    internal int PROTECTION_HILL_FOR_ROOK => (int)(SIMPLE_POWER_DAMAGE_ROOK * PERCENT_PROTECTION_HILL_FOR_ROOK);
+    internal int PROTECTION_HILL_FOR_BISHOP => (int)(SIMPLE_POWER_DAMAGE_BISHOP * PERCENT_PROTECTION_HILL_FOR_BISHOP);
 
-    internal int PROTECTION_TREE_FOR_KING => (int)(POWER_DAMAGE_KING * PERCENT_PROTECTION_TREE_FOR_KING);
-    internal int PROTECTION_TREE_FOR_PAWN => (int)(POWER_DAMAGE_KING * PERCENT_PROTECTION_TREE_FOR_PAWN);
+    internal int PROTECTION_TREE_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_PROTECTION_TREE_FOR_KING);
+    internal int PROTECTION_TREE_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_PROTECTION_TREE_FOR_PAWN);
+    internal int PROTECTION_TREE_FOR_ROOK => (int)(SIMPLE_POWER_DAMAGE_ROOK * PERCENT_PROTECTION_TREE_FOR_ROOK);
+    internal int PROTECTION_TREE_FOR_BISHOP => (int)(SIMPLE_POWER_DAMAGE_BISHOP * PERCENT_PROTECTION_TREE_FOR_BISHOP);
 
     #endregion
 
@@ -153,9 +202,13 @@ public class StartValuesGameConfig : ScriptableObject
 
     private readonly float PERCENT_FOR_PROTECTION_KING = 0.15f;
     private readonly float PERCENT_FOR_PROTECTION_PAWN = 0.15f;
+    private readonly float PERCENT_FOR_PROTECTION_ROOK = 0.15f;
+    private readonly float PERCENT_FOR_PROTECTION_BISHOP = 0.15f;
 
-    internal int PROTECTION_KING => (int)(POWER_DAMAGE_KING * PERCENT_FOR_PROTECTION_KING);
-    internal int PROTECTION_PAWN => (int)(POWER_DAMAGE_PAWN * PERCENT_FOR_PROTECTION_PAWN);
+    internal int PROTECTION_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_FOR_PROTECTION_KING);
+    internal int PROTECTION_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_FOR_PROTECTION_PAWN);
+    internal int PROTECTION_ROOK => (int)(SIMPLE_POWER_DAMAGE_ROOK * PERCENT_FOR_PROTECTION_ROOK);
+    internal int PROTECTION_BISHOP => (int)(SIMPLE_POWER_DAMAGE_BISHOP * PERCENT_FOR_PROTECTION_BISHOP);
 
     #endregion
 
@@ -165,11 +218,13 @@ public class StartValuesGameConfig : ScriptableObject
     #region Step
 
     internal readonly int NEED_AMOUNT_STEPS_FOOD = 0;
-    internal readonly int NEED_AMOUNT_STEPS_TREE = 1;
+    internal readonly int NEED_AMOUNT_STEPS_TREE = 2;
     internal readonly int NEED_AMOUNT_STEPS_HILL = 2;
 
-    internal readonly int MAX_AMOUNT_STEPS_KING = 1;
-    internal readonly int MAX_AMOUNT_STEPS_PAWN = 2;
+    internal readonly int STANDART_AMOUNT_STEPS_KING = 1;
+    internal readonly int STANDART_AMOUNT_STEPS_PAWN = 1;
+    internal readonly int STANDART_AMOUNT_STEPS_ROOK = 1;
+    internal readonly int STANDART_AMOUNT_STEPS_BISHOP = 1;
 
     #endregion
 

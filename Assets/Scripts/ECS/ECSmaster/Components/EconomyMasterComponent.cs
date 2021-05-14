@@ -90,53 +90,38 @@ internal struct EconomyMasterComponent
 
     internal struct UnitsMasterComponent
     {
-        private int _amountKingMaster;
-        private int _amountKingOther;
-        private int _amountUnitPawnMaster;
-        private int _amountUnitPawnOther;
-        private bool _isSettedKingMaster;
-        private bool _isSettedKingOther;
+        internal int AmountKingMaster;
+        internal int AmountKingOther;
+
+        internal bool IsSettedKingMaster;
+        internal bool IsSettedKingOther;
+
+        internal int AmountUnitPawnMaster;
+        internal int AmountUnitPawnOther;
+
+        internal int AmountRookMaster;
+        internal int AmountRookOther;
+
+        internal int AmountBishopMaster;
+        internal int AmountBishopOther;
+
 
         internal UnitsMasterComponent(StartValuesGameConfig startValues)
         {
-            _amountKingMaster = startValues.AMOUNT_KING_MASTER;
-            _amountKingOther = startValues.AMOUNT_KING_OTHER;
-            _amountUnitPawnMaster = startValues.AMOUNT_PAWN_MASTER;
-            _amountUnitPawnOther = startValues.AMOUNT_PAWN_OTHER;
-            _isSettedKingMaster = false;
-            _isSettedKingOther = false;
-        }
+            AmountKingMaster = startValues.AMOUNT_KING_MASTER;
+            AmountKingOther = startValues.AMOUNT_KING_OTHER;
 
+            AmountUnitPawnMaster = startValues.AMOUNT_PAWN_MASTER;
+            AmountUnitPawnOther = startValues.AMOUNT_PAWN_OTHER;
 
-        internal int AmountKingMaster
-        {
-            get { return _amountKingMaster; }
-            set { _amountKingMaster = value; }
-        }
-        internal int AmountKingOther
-        {
-            get { return _amountKingOther; }
-            set { _amountKingOther = value; }
-        }
-        internal int AmountUnitPawnMaster
-        {
-            get { return _amountUnitPawnMaster; }
-            set { _amountUnitPawnMaster = value; }
-        }
-        internal int AmountUnitPawnOther
-        {
-            get { return _amountUnitPawnOther; }
-            set { _amountUnitPawnOther = value; }
-        }
-        internal bool IsSettedKingMaster
-        {
-            get { return _isSettedKingMaster; }
-            set { _isSettedKingMaster = value; }
-        }
-        internal bool IsSettedKingOther
-        {
-            get { return _isSettedKingOther; }
-            set { _isSettedKingOther = value; }
+            AmountRookMaster = startValues.AMOUNT_ROOK_MASTER;
+            AmountRookOther = startValues.AMOUNT_ROOK_OTHER;
+
+            AmountBishopMaster = startValues.AMOUNT_BISHOP_MASTER;
+            AmountBishopOther = startValues.AMOUNT_BISHOP_OTHER;
+
+            IsSettedKingMaster = false;
+            IsSettedKingOther = false;
         }
     }
 
@@ -152,6 +137,8 @@ internal struct EconomyMasterComponent
         private int _amountFarmsOther;
         private int _amountWoodcutterMaster;
         private int _amountWoodcutterOther;
+        private int _amountMineMaster;
+        private int _amountMineOther;
 
         internal BuildingsMasterComponent(StartValuesGameConfig nameValueManager)
         {
@@ -165,6 +152,9 @@ internal struct EconomyMasterComponent
 
             _amountWoodcutterMaster = 0;
             _amountWoodcutterOther = 0;
+
+            _amountMineMaster = 0;
+            _amountMineOther = 0;
         }
 
 
@@ -207,8 +197,19 @@ internal struct EconomyMasterComponent
         }
         internal int AmountWoodcutterOther
         {
-            get { return _amountWoodcutterOther; }
-            set { _amountWoodcutterOther = value; }
+            get => _amountWoodcutterOther;
+            set => _amountWoodcutterOther = value;
+        }
+
+        internal int AmountMineMaster
+        {
+            get { return _amountMineMaster; }
+            set { _amountMineMaster = value; }
+        }
+        internal int AmountMineOther
+        {
+            get => _amountMineOther;
+            set => _amountMineOther = value;
         }
     }
 }

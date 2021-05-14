@@ -1,8 +1,5 @@
-﻿using UnityEngine;
-
-internal sealed class MainGame : Main
+﻿internal sealed class MainGame : Main
 {
-
     #region Variables
 
     private static MainGame _instanceGame;
@@ -16,6 +13,7 @@ internal sealed class MainGame : Main
     private StartSpawnGame _startSpawnGame;
     private PhotonGameManager _photonGameManager;
     private ECSmanager _eCSmanager;
+    private UnityEvents _unityEvents = default;
 
     #endregion
 
@@ -38,6 +36,8 @@ internal sealed class MainGame : Main
 
     private void Start()
     {
+        #region For ECS
+
         _instanceGame = this;
 
         _builder = new Builder();
@@ -47,17 +47,18 @@ internal sealed class MainGame : Main
         _gameObjectPool = new GameObjectPool();
 
 
-       _startSpawnGame = new StartSpawnGame(_gameObjectPool, _resourcesLoadManager, _builder);
+
+        _startSpawnGame = new StartSpawnGame(_gameObjectPool, _resourcesLoadManager, _builder);
 
         _unityEvents = new UnityEvents(_builder);
         gameObject.transform.SetParent(_gameObjectPool.ParentScriptsGO.transform);
 
         _photonGameManager = new PhotonGameManager(_gameObjectPool.ParentScriptsGO.transform);
 
+        #endregion
 
-        _eCSmanager = new ECSmanager();
-        _photonGameManager.PhotonPunRPC.InitAfterECS(_eCSmanager);
-        _cellManager.CellFinderWay.InitAfterECS(_eCSmanager);
+
+        _eCSmanager = new ECSmanager(_photonGameManager, _cellManager);
     }
 
 

@@ -28,7 +28,7 @@ public sealed class ECSmanager
 
 
 
-    internal ECSmanager()
+    internal ECSmanager(PhotonGameManager photonGameManager, CellManager cellManager)
     {
         _ecsWorld = new EcsWorld();
 
@@ -55,6 +55,11 @@ public sealed class ECSmanager
             _entitiesOtherManager.CreateEntities();
             _systemsOtherManager.CreateInitSystems(this);
         }
+
+
+
+        photonGameManager.PhotonPunRPC.InitAfterECS(this);
+        cellManager.CellFinderWay.InitAfterECS(this);
     }
 
     public void Update()

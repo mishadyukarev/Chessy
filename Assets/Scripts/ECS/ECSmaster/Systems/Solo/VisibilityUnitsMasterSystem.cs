@@ -5,7 +5,7 @@ using static MainGame;
 
 internal class VisibilityUnitsMasterSystem : CellReduction, IEcsRunSystem
 {
-    internal VisibilityUnitsMasterSystem(ECSmanager eCSmanager) : base(eCSmanager){}
+    internal VisibilityUnitsMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
     public void Run()
     {

@@ -65,10 +65,10 @@ public struct CellComponent
             _haveTree = default;
             _haveHill = default;
 
-            _foodGO = InstanceGame.GameObjectPool.FoodsGO[x, y];
-            _mountainGO = InstanceGame.GameObjectPool.MountainsGO[x, y];
-            _treeGO = InstanceGame.GameObjectPool.TreesGO[x, y];
-            _hillGO = InstanceGame.GameObjectPool.HillsGO[x, y];
+            _foodGO = InstanceGame.GameObjectPool.CellEnvironmentFoodGOs[x, y];
+            _mountainGO = InstanceGame.GameObjectPool.CellEnvironmentMountainGOs[x, y];
+            _treeGO = InstanceGame.GameObjectPool.CellEnvironmentTreeGOs[x, y];
+            _hillGO = InstanceGame.GameObjectPool.CellEnvironmentHillGOs[x, y];
 
             _listEnvironmentTypes = new List<EnvironmentTypes>();
             _listEnvironmentTypes.Add(default);
@@ -138,13 +138,13 @@ public struct CellComponent
         private UnitTypes _unitType;
         private int _amountSteps;
         private int _amountHealth;
-        private int _powerDamage;
-        private int _powerProtection;
         private bool _isProtected;
         private bool _isRelaxed;
         private Player _player;
-        private GameObject _unitPawnGO;
-        private GameObject _unitKingGO;
+        private GameObject _pawnGO;
+        private GameObject _kingGO;
+        private GameObject _rookGO;
+        private GameObject _bishopGO;
         private SpriteRenderer _unitPawnSpriteRender;
         private SpriteRenderer _unitKingSpriteRender;
 
@@ -160,16 +160,17 @@ public struct CellComponent
             _unitType = default;
             _amountSteps = default;
             _amountHealth = default;
-            _powerDamage = default;
-            _powerProtection = default;
             _isProtected = default;
             _isRelaxed = default;
             _player = default;
 
-            _unitPawnGO = InstanceGame.GameObjectPool.UnitPawnsGO[x, y];
-            _unitKingGO = InstanceGame.GameObjectPool.UnitKingsGO[x, y];
-            _unitPawnSpriteRender = InstanceGame.GameObjectPool.UnitPawnsGO[x, y].GetComponent<SpriteRenderer>();
-            _unitKingSpriteRender = InstanceGame.GameObjectPool.UnitKingsGO[x, y].GetComponent<SpriteRenderer>();
+            _pawnGO = InstanceGame.GameObjectPool.CellUnitPawnGOs[x, y];
+            _kingGO = InstanceGame.GameObjectPool.CellUnitKingGOs[x, y];
+            _rookGO = InstanceGame.GameObjectPool.CellUnitRookGOs[x, y];
+            _bishopGO = InstanceGame.GameObjectPool.CellUnitBishopGOs[x, y];
+
+            _unitPawnSpriteRender = InstanceGame.GameObjectPool.CellUnitPawnGOs[x, y].GetComponent<SpriteRenderer>();
+            _unitKingSpriteRender = InstanceGame.GameObjectPool.CellUnitKingGOs[x, y].GetComponent<SpriteRenderer>();
         }
 
 
@@ -236,10 +237,58 @@ public struct CellComponent
 
         #region Damage
 
-        internal int PowerDamage
+        internal int SimplePowerDamage
         {
-            get { return _powerDamage; }
-            set { _powerDamage = value; }
+            get
+            {
+                switch (_unitType)
+                {
+                    case UnitTypes.None:
+                        return default;
+
+                    case UnitTypes.King:
+                        return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_KING;
+
+                    case UnitTypes.Pawn:
+                        return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN;
+
+                    case UnitTypes.Rook:
+                        return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_ROOK;
+
+                    case UnitTypes.Bishop :
+                        return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_BISHOP;
+
+                    default:
+                        return default;
+                }
+            }
+        }
+
+        internal int UniquePowerDamage
+        {
+            get
+            {
+                switch (_unitType)
+                {
+                    case UnitTypes.None:
+                        return default;
+
+                    case UnitTypes.King:
+                        return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_KING;
+
+                    case UnitTypes.Pawn:
+                        return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_PAWN;
+
+                    case UnitTypes.Rook:
+                        return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_ROOK;
+
+                    case UnitTypes.Bishop:
+                        return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_BISHOP;
+
+                    default:
+                        return default;
+                }
+            }
         }
 
         #endregion
@@ -262,6 +311,14 @@ public struct CellComponent
                     case UnitTypes.Pawn:
                         powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_PAWN;
                         break;
+
+                    case UnitTypes.Rook:
+                        powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_ROOK;
+                        break;
+
+                    case UnitTypes.Bishop:
+                        powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_BISHOP;
+                        break;
                 }
             }
 
@@ -275,6 +332,14 @@ public struct CellComponent
 
                     case UnitTypes.Pawn:
                         powerProtection -= InstanceGame.StartValuesGameConfig.PROTECTION_PAWN;
+                        break;
+
+                    case UnitTypes.Rook:
+                        powerProtection -= InstanceGame.StartValuesGameConfig.PROTECTION_ROOK;
+                        break;
+
+                    case UnitTypes.Bishop:
+                        powerProtection -= InstanceGame.StartValuesGameConfig.PROTECTION_BISHOP;
                         break;
                 }
             }
@@ -302,6 +367,7 @@ public struct CellComponent
 
                         break;
 
+
                     case UnitTypes.Pawn:
 
                         switch (item)
@@ -316,6 +382,46 @@ public struct CellComponent
 
                             case EnvironmentTypes.Hill:
                                 powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_HILL_FOR_PAWN;
+                                break;
+                        }
+
+                        break;
+
+
+                    case UnitTypes.Rook:
+
+                        switch (item)
+                        {
+                            case EnvironmentTypes.Food:
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_FOOD_FOR_ROOK;
+                                break;
+
+                            case EnvironmentTypes.Tree:
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_TREE_FOR_ROOK;
+                                break;
+
+                            case EnvironmentTypes.Hill:
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_HILL_FOR_ROOK;
+                                break;
+                        }
+
+                        break;
+
+
+                    case UnitTypes.Bishop:
+
+                        switch (item)
+                        {
+                            case EnvironmentTypes.Food:
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_FOOD_FOR_BISHOP;
+                                break;
+
+                            case EnvironmentTypes.Tree:
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_TREE_FOR_BISHOP;
+                                break;
+
+                            case EnvironmentTypes.Hill:
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_HILL_FOR_BISHOP;
                                 break;
                         }
 
@@ -336,6 +442,14 @@ public struct CellComponent
 
                         case UnitTypes.Pawn:
                             powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_CITY_PAWN;
+                            break;
+
+                        case UnitTypes.Rook:
+                            powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_CITY_ROOK;
+                            break;
+
+                        case UnitTypes.Bishop:
+                            powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_CITY_BISHOP;
                             break;
                     }
 
@@ -371,9 +485,13 @@ public struct CellComponent
                 switch (_unitType)
                 {
                     case UnitTypes.King:
-                        return _amountSteps == InstanceGame.StartValuesGameConfig.MAX_AMOUNT_STEPS_KING;
+                        return _amountSteps == InstanceGame.StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING;
                     case UnitTypes.Pawn:
-                        return _amountSteps == InstanceGame.StartValuesGameConfig.MAX_AMOUNT_STEPS_PAWN;
+                        return _amountSteps == InstanceGame.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
+                    case UnitTypes.Rook:
+                        return _amountSteps == InstanceGame.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
+                    case UnitTypes.Bishop:
+                        return _amountSteps == InstanceGame.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
                 }
                 return false;
             }
@@ -405,6 +523,31 @@ public struct CellComponent
             return amountSteps;
         }
 
+        internal void RefreshAmountSteps()
+        {
+            switch (_unitType)
+            {
+                case UnitTypes.King:
+                    _amountSteps = InstanceGame.StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING;
+                    break;
+
+                case UnitTypes.Pawn:
+                    _amountSteps = InstanceGame.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
+                    break;
+
+                case UnitTypes.Rook:
+                    _amountSteps = InstanceGame.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
+                    break;
+
+                case UnitTypes.Bishop:
+                    _amountSteps = InstanceGame.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         #endregion
 
 
@@ -423,26 +566,10 @@ public struct CellComponent
 
         #endregion
 
-
-        #region Way
-
-        internal bool CanShift
-        {
-            get { return _canShift; }
-            set { _canShift = value; }
-        }
-        internal bool CanAttack
-        {
-            get { return _canAttack; }
-            set { _canAttack = value; }
-        }
-
-        #endregion
-
         #endregion
 
 
-        #region Methods
+        #region Else
 
         private void SetColorUnit(in SpriteRenderer unitSpriteRender, in Player player)
         {
@@ -455,51 +582,60 @@ public struct CellComponent
         {
             UnitTypes unitType = default;
             int amountHealth = default;
-            int powerDamage = default;
             int amountSteps = default;
             bool isProtected = default;
             bool isRelaxed = default;
             Player player = default;
 
-            SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed, player);
+            SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player);
         }
         internal void SetUnit(in UnitComponent cellUnitComponent)
         {
             var unitType = cellUnitComponent._unitType;
             var amountHealth = cellUnitComponent._amountHealth;
-            var powerDamage = cellUnitComponent._powerDamage;
             var amountSteps = cellUnitComponent._amountSteps;
             var isProtected = cellUnitComponent._isProtected;
             var isRelaxed = cellUnitComponent._isRelaxed;
             var player = cellUnitComponent._player;
 
-            SetUnit(unitType, amountHealth, powerDamage, amountSteps, isProtected, isRelaxed, player);
+            SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player);
         }
-        internal void SetUnit(in UnitTypes unitType, in int amountHealth, in int powerDamage, in int amountSteps, in bool isProtected, in bool isRelaxed, in Player player)
+        internal void SetUnit(in UnitTypes unitType, in int amountHealth, in int amountSteps, in bool isProtected, in bool isRelaxed, in Player player)
         {
             _unitType = unitType;
             _amountSteps = amountSteps;
             _amountHealth = amountHealth;
-            _powerDamage = powerDamage;
             _isProtected = isProtected;
             _isRelaxed = isRelaxed;
             _player = player;
 
 
 
-            _unitPawnGO.SetActive(false);
-            _unitKingGO.SetActive(false);
+            _pawnGO.SetActive(false);
+            _kingGO.SetActive(false);
+            _rookGO.SetActive(false);
+            _bishopGO.SetActive(false);
 
             switch (_unitType)
             {
                 case UnitTypes.King:
-                    _unitKingGO.SetActive(true);
+                    _kingGO.SetActive(true);
                     SetColorUnit(_unitKingSpriteRender, _player);
                     break;
 
                 case UnitTypes.Pawn:
-                    _unitPawnGO.SetActive(true);
+                    _pawnGO.SetActive(true);
                     SetColorUnit(_unitPawnSpriteRender, _player);
+                    break;
+
+                case UnitTypes.Rook:
+                    _rookGO.SetActive(true);
+                    SetColorUnit(_rookGO.GetComponent<SpriteRenderer>(), _player);
+                    break;
+
+                case UnitTypes.Bishop:
+                    _bishopGO.SetActive(true);
+                    SetColorUnit(_bishopGO.GetComponent<SpriteRenderer>(), _player);
                     break;
             }
         }
@@ -508,13 +644,23 @@ public struct CellComponent
             switch (unitType)
             {
                 case UnitTypes.King:
-                    _unitKingGO.SetActive(isActive);
+                    _kingGO.SetActive(isActive);
                     if (player != default) SetColorUnit(_unitKingSpriteRender, player);
                     break;
 
                 case UnitTypes.Pawn:
-                    _unitPawnGO.SetActive(isActive);
+                    _pawnGO.SetActive(isActive);
                     if (player != default) SetColorUnit(_unitPawnSpriteRender, player);
+                    break;
+
+                case UnitTypes.Rook:
+                    _rookGO.SetActive(isActive);
+                    if (player != default) SetColorUnit(_rookGO.GetComponent<SpriteRenderer>(), player);
+                    break;
+
+                case UnitTypes.Bishop:
+                    _bishopGO.SetActive(isActive);
+                    if (player != default) SetColorUnit(_bishopGO.GetComponent<SpriteRenderer>(), player);
                     break;
 
                 default:
@@ -539,6 +685,7 @@ public struct CellComponent
         private GameObject _cityGO;
         private GameObject _farmGO;
         private GameObject _woodcutterGO;
+        private GameObject _mineGO;
         private Player _player;
 
         internal BuildingComponent(int x, int y)
@@ -546,16 +693,15 @@ public struct CellComponent
             _xy = new int[] { x, y };
 
             _buildingType = default;
-            _cityGO = InstanceGame.GameObjectPool.CampsGO[x, y];
-            _farmGO = InstanceGame.GameObjectPool.FarmsGO[x, y];
-            _woodcutterGO = InstanceGame.GameObjectPool.WoodcuttersGO[x, y];
+            _cityGO = InstanceGame.GameObjectPool.CellBuildingCityGOs[x, y];
+            _farmGO = InstanceGame.GameObjectPool.CellBuildingFarmGOs[x, y];
+            _woodcutterGO = InstanceGame.GameObjectPool.CellBuildingWoodcutterGOs[x, y];
+            _mineGO = InstanceGame.GameObjectPool.CellBuildingMineGOs[x, y];
 
             _player = default;
         }
 
         #region Properties
-
-        private StartValuesGameConfig StartValuesGameConfig => InstanceGame.StartValuesGameConfig;
 
         internal BuildingTypes BuildingType => _buildingType;
         internal bool HaveBuilding => _buildingType != BuildingTypes.None;
@@ -597,6 +743,7 @@ public struct CellComponent
             _cityGO.SetActive(false);
             _farmGO.SetActive(false);
             _woodcutterGO.SetActive(false);
+            _mineGO.SetActive(false);
 
             switch (buildingType)
             {
@@ -609,9 +756,15 @@ public struct CellComponent
                     _farmGO.SetActive(true);
                     SetColorBuilding(_farmGO.GetComponent<SpriteRenderer>(), _player);
                     break;
+
                 case BuildingTypes.Woodcutter:
                     _woodcutterGO.SetActive(true);
                     SetColorBuilding(_woodcutterGO.GetComponent<SpriteRenderer>(), _player);
+                    break;
+
+                case BuildingTypes.Mine:
+                    _mineGO.SetActive(true);
+                    SetColorBuilding(_mineGO.GetComponent<SpriteRenderer>(), _player);
                     break;
             }
         }
@@ -633,21 +786,23 @@ public struct CellComponent
     public struct SupportVisionComponent
     {
         private Player _player;
-        private GameObject _selectorVisionGO;
-        private GameObject _spawnVisionGO;
-        private GameObject _wayUnitVisionGO;
-        private GameObject _enemyVisionGO;
-        private GameObject _zoneVisionGO;
+        private GameObject _selectorGO;
+        private GameObject _spawnGO;
+        private GameObject _wayUnitGO;
+        private GameObject _enemyGO;
+        private GameObject _uniqueAttackGO;
+        private GameObject _zoneGO;
 
         internal SupportVisionComponent(int x, int y)
         {
             _player = default;
 
-            _selectorVisionGO = InstanceGame.GameObjectPool.SelectorVisionsGO[x, y];
-            _spawnVisionGO = InstanceGame.GameObjectPool.SpawnVisionsGO[x, y];
-            _wayUnitVisionGO = InstanceGame.GameObjectPool.WayUnitVisionsGO[x, y];
-            _enemyVisionGO = InstanceGame.GameObjectPool.EnemyVisionsGO[x, y];
-            _zoneVisionGO = InstanceGame.GameObjectPool.ZoneVisionGO[x, y];
+            _selectorGO = InstanceGame.GameObjectPool.CellSupportVisionSelectorGOs[x, y];
+            _spawnGO = InstanceGame.GameObjectPool.CellSupportVisionSpawnGOs[x, y];
+            _wayUnitGO = InstanceGame.GameObjectPool.CellSupportVisionWayUnitGOs[x, y];
+            _enemyGO = InstanceGame.GameObjectPool.CellSupportVisionEnemyGOs[x, y];
+            _uniqueAttackGO = InstanceGame.GameObjectPool.CellSupportVisionUniqueAttackGOs[x, y];
+            _zoneGO = InstanceGame.GameObjectPool.CellSupportVisionZoneGOs[x, y];
         }
 
 
@@ -671,24 +826,28 @@ public struct CellComponent
                     break;
 
                 case SupportVisionTypes.Selector:
-                    _selectorVisionGO.SetActive(isActive);
+                    _selectorGO.SetActive(isActive);
                     break;
 
                 case SupportVisionTypes.Spawn:
-                    _spawnVisionGO.SetActive(isActive);
+                    _spawnGO.SetActive(isActive);
                     break;
 
                 case SupportVisionTypes.WayOfUnit:
-                    _wayUnitVisionGO.SetActive(isActive);
+                    _wayUnitGO.SetActive(isActive);
                     break;
 
-                case SupportVisionTypes.Enemy:
-                    _enemyVisionGO.SetActive(isActive);
+                case SupportVisionTypes.SimpleAttack:
+                    _enemyGO.SetActive(isActive);
+                    break;
+
+                case SupportVisionTypes.UniqueAttack:
+                    _uniqueAttackGO.SetActive(isActive);
                     break;
 
                 case SupportVisionTypes.Zone:
-                    _zoneVisionGO.SetActive(isActive);
-                    SetColorVision(_zoneVisionGO.GetComponent<SpriteRenderer>(), _player);
+                    _zoneGO.SetActive(isActive);
+                    SetColorVision(_zoneGO.GetComponent<SpriteRenderer>(), _player);
                     break;
 
                 default:

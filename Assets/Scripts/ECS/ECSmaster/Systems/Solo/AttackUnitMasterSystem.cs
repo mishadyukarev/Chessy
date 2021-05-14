@@ -60,7 +60,7 @@ public struct AttackUnitMasterComponent
 
 
 
-public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
+internal class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<AttackUnitMasterComponent> _attackUnitMasterComponentRef = default;
 
@@ -78,29 +78,38 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
     {
         _attackUnitMasterComponentRef.Unref().Unpack(out int[] xyPreviousCellIN, out int[] xySelectedCellIN, out Player playerIN);
 
-        var xyAvailableCellsForAttack = InstanceGame.CellManager.CellFinderWay.GetCellsForAttack(xyPreviousCellIN, playerIN);
+        InstanceGame.CellManager.CellFinderWay.GetCellsForAttack(xyPreviousCellIN, playerIN, out var availableCellsSimpleAttack, out var availableCellsUniqueAttack);
 
         if (CellUnitComponent(xyPreviousCellIN).MinAmountSteps)
         {
             if (CellUnitComponent(xyPreviousCellIN).IsHisUnit(playerIN))
             {
-                if (_cellManager.TryFindCellInList(xySelectedCellIN, xyAvailableCellsForAttack))
+                if (CellUnitComponent(xySelectedCellIN).HaveUnit)
                 {
-                    if (CellUnitComponent(xySelectedCellIN).HaveUnit)
+                    var isFindedSimple = _cellBaseOperations.TryFindCellInList(xySelectedCellIN, availableCellsSimpleAttack);
+                    var isFindedUnique = _cellBaseOperations.TryFindCellInList(xySelectedCellIN, availableCellsUniqueAttack);
+
+                    if (isFindedSimple || isFindedUnique)
                     {
-                        CellUnitComponent(xyPreviousCellIN).AmountSteps -= _startValuesGameConfig.MAX_AMOUNT_STEPS_PAWN;
+                        CellUnitComponent(xyPreviousCellIN).AmountSteps = 0;
                         CellUnitComponent(xyPreviousCellIN).IsProtected = false;
                         CellUnitComponent(xyPreviousCellIN).IsRelaxed = false;
 
                         int damageToPrevious = 0;
-                        damageToPrevious += CellUnitComponent(xySelectedCellIN).PowerDamage;
+
+                        if (CellUnitComponent(xyPreviousCellIN).UnitType != UnitTypes.Rook && CellUnitComponent(xyPreviousCellIN).UnitType != UnitTypes.Bishop)
+                            damageToPrevious += CellUnitComponent(xySelectedCellIN).SimplePowerDamage;
+
+
 
                         int damageToSelelected = 0;
-                        damageToSelelected += CellUnitComponent(xyPreviousCellIN).PowerDamage;
+
+                        damageToSelelected += CellUnitComponent(xyPreviousCellIN).SimplePowerDamage;
+                        if (isFindedUnique) damageToSelelected += CellUnitComponent(xyPreviousCellIN).UniquePowerDamage;
                         damageToSelelected -= CellUnitComponent(xySelectedCellIN).PowerProtection
                             (CellEnvironmentComponent(xySelectedCellIN).ListEnvironmentTypes, CellBuildingComponent(xySelectedCellIN).BuildingType);
 
-                        if (damageToSelelected <= 0) damageToSelelected = 0;
+                        if (damageToSelelected < 0) damageToSelelected = 0;
 
 
                         CellUnitComponent(xyPreviousCellIN).AmountHealth -= damageToPrevious;
@@ -120,11 +129,13 @@ public class AttackUnitMasterSystem : CellReduction, IEcsRunSystem
                             if (CellUnitComponent(xySelectedCellIN).UnitType == UnitTypes.King) _photonPunRPC.EndGame(CellUnitComponent(xyPreviousCellIN).ActorNumber);
 
                             CellUnitComponent(xySelectedCellIN).ResetUnit();
-                            CellUnitComponent(xySelectedCellIN).SetUnit(CellUnitComponent(xyPreviousCellIN));
-                            CellUnitComponent(xyPreviousCellIN).ResetUnit();
+                            if (CellUnitComponent(xyPreviousCellIN).UnitType != UnitTypes.Rook && CellUnitComponent(xyPreviousCellIN).UnitType != UnitTypes.Bishop)
+                            {
+                                CellUnitComponent(xySelectedCellIN).SetUnit(CellUnitComponent(xyPreviousCellIN));
+                                CellUnitComponent(xyPreviousCellIN).ResetUnit();
+                            }
                             isKilledDefender = true;
                         }
-
 
                         _attackUnitMasterComponentRef.Unref().Pack(true, isKilledAttacked, isKilledDefender);
                     }

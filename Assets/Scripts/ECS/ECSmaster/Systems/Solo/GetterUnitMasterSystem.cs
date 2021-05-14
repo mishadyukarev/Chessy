@@ -88,7 +88,6 @@ internal class GetterUnitMasterSystem : CellReduction, IEcsRunSystem
             if (_economyCountUnitMasterComponent.Unref().AmountKingMaster >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
             {
                 _getterUnitMasterComponentRef.Unref().Pack(true);
-                //_economyCountUnitMasterComponent.Unref().AmountKingMaster -= _startValues.TakeUnit;
             }
             else _getterUnitMasterComponentRef.Unref().Pack(false);
         }
@@ -97,7 +96,6 @@ internal class GetterUnitMasterSystem : CellReduction, IEcsRunSystem
             if (_economyCountUnitMasterComponent.Unref().AmountKingOther >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
             {
                 _getterUnitMasterComponentRef.Unref().Pack(true);
-                //_economyCountUnitMasterComponent.Unref().AmountKingOther -= _startValues.TakeUnit;
             }
             else _getterUnitMasterComponentRef.Unref().Pack(false);
         }
@@ -110,7 +108,6 @@ internal class GetterUnitMasterSystem : CellReduction, IEcsRunSystem
             if (_economyCountUnitMasterComponent.Unref().AmountUnitPawnMaster >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
             {
                 _getterUnitMasterComponentRef.Unref().Pack(true);
-                // _economyCountUnitMasterComponent.Unref().AmountUnitPawnMaster -= _startValues.TakeUnit;
             }
             else _getterUnitMasterComponentRef.Unref().Pack(false);
         }
@@ -119,7 +116,6 @@ internal class GetterUnitMasterSystem : CellReduction, IEcsRunSystem
             if (_economyCountUnitMasterComponent.Unref().AmountUnitPawnOther >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
             {
                 _getterUnitMasterComponentRef.Unref().Pack(true);
-                //_economyCountUnitMasterComponent.Unref().AmountUnitPawnOther -= _startValues.TakeUnit;
             }
             else _getterUnitMasterComponentRef.Unref().Pack(false);
         }

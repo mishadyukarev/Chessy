@@ -16,8 +16,9 @@ public struct SelectorComponent
 
 
 
-    internal List<int[]> XYavailableCellsForShift;
-    internal List<int[]> XYavailableCellsForAttack;
+    internal List<int[]> AvailableCellsForShift;
+    internal List<int[]> AvailableCellsSimpleAttack;
+    internal List<int[]> AvailableCellsUniqueAttack;
 
     internal int[] XYcurrentCell
     {
@@ -71,7 +72,8 @@ public struct SelectorComponent
         _attackUnitDelegate = default;
         _shiftUnitDelegate = default;
 
-        XYavailableCellsForAttack = new List<int[]>();
-        XYavailableCellsForShift = new List<int[]>();
+        AvailableCellsForShift = new List<int[]>();
+        AvailableCellsSimpleAttack = new List<int[]>();
+        AvailableCellsUniqueAttack = new List<int[]>();
     }
 }
