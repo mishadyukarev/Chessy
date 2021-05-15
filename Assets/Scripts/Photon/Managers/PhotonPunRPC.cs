@@ -551,7 +551,7 @@ internal class PhotonPunRPC : MonoBehaviour
 
                         case BuildingTypes.Mine:
 
-                            _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterMaster -= 1;
+                            _economyBuildingsMasterComponentRef.Unref().AmountMineMaster -= 1;
                             CellUnitComponent(xyCell).AmountSteps = 0;
                             CellBuildingComponent(xyCell).ResetBuilding();
 

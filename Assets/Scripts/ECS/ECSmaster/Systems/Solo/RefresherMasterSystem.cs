@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
+using UnityEngine;
 using static MainGame;
 
 internal class RefresherMasterSystem : CellReduction, IEcsRunSystem
@@ -67,17 +68,17 @@ internal class RefresherMasterSystem : CellReduction, IEcsRunSystem
                 }
             }
 
-
             if (_economyBuildingsMasterComponentRef.Unref().IsBuildedCityMaster)
             {
                 if (CellEnvironmentComponent(_economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster).HaveFood)
-                {
                     _economyMasterComponent.Unref().FoodMaster += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
-                }
+
                 if (CellEnvironmentComponent(_economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster).HaveTree)
-                {
                     _economyMasterComponent.Unref().WoodMaster += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
-                }
+
+                if (CellEnvironmentComponent(_economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster).HaveHill)
+                    _economyMasterComponent.Unref().OreMaster += InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
+
                 _economyMasterComponent.Unref().FoodMaster += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
                 _economyMasterComponent.Unref().WoodMaster += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
             }
@@ -98,6 +99,8 @@ internal class RefresherMasterSystem : CellReduction, IEcsRunSystem
                 _economyMasterComponent.Unref().WoodOther += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
             }
 
+
+
             _economyMasterComponent.Unref().FoodMaster += _economyBuildingsMasterComponentRef.Unref().AmountFarmMaster * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
             _economyMasterComponent.Unref().FoodOther += _economyBuildingsMasterComponentRef.Unref().AmountFarmOther * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
 
@@ -113,6 +116,8 @@ internal class RefresherMasterSystem : CellReduction, IEcsRunSystem
             _donerMasterComponentRef.Unref().IsDoneOther = false;
 
             _isRefreshed = true;
+
+
         }
         else _isRefreshed = false;
     }

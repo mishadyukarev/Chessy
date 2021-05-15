@@ -99,11 +99,18 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
 
                     if (playerIN.IsMasterClient)
                     {
+                        _economyBuildingsMasterComponentRef.Unref().IsBuildedCityMaster = isBuilded;
+                        _cellBaseOperations.CopyXYinTo(xyCellIN, _economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster);
+
                         _zoneComponentRef.Unref().XYMasterZone = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(xyCellIN);
                     }
-                    else _zoneComponentRef.Unref().XYOtherZone = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(xyCellIN);
+                    else
+                    {
+                        _economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther = isBuilded;
+                        _cellBaseOperations.CopyXYinTo(xyCellIN, _economyBuildingsMasterComponentRef.Unref().XYsettedCityOther);
 
-
+                        _zoneComponentRef.Unref().XYOtherZone = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(xyCellIN);
+                    }
 
                     break;
 
@@ -206,20 +213,6 @@ internal class BuilderCellMasterSystem : CellReduction, IEcsRunSystem
         {
             isBuilded = false;
             _builderCellMasterComponentRef.Unref().Pack(isBuilded);
-        }
-
-        if (buildingTypeIN == BuildingTypes.City)
-        {
-            if (playerIN.IsMasterClient)
-            {
-                _economyBuildingsMasterComponentRef.Unref().IsBuildedCityMaster = isBuilded;
-                _economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster = xyCellIN;
-            }
-            else
-            {
-                _economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther = isBuilded;
-                _economyBuildingsMasterComponentRef.Unref().XYsettedCityOther = xyCellIN;
-            }
         }
     }
 

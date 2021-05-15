@@ -8,10 +8,10 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region PERCENT ENVIRONMENT
 
-    internal readonly byte PERCENT_FOOD = 25;
-    internal readonly byte PERCENT_TREE = 10;
-    internal readonly byte PERCENT_HILL = 10;
-    internal readonly byte PERCENT_MOUNTAIN = 2;
+    internal readonly byte PERCENT_FOOD = 20;
+    internal readonly byte PERCENT_TREE = 20;
+    internal readonly byte PERCENT_HILL = 5;
+    internal readonly byte PERCENT_MOUNTAIN = 5;
 
     #endregion
 
@@ -26,11 +26,11 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_PAWN_MASTER = 1;
     internal readonly int AMOUNT_PAWN_OTHER = 1;
 
-    internal readonly int AMOUNT_ROOK_MASTER = 1;
-    internal readonly int AMOUNT_ROOK_OTHER = 1;
+    internal readonly int AMOUNT_ROOK_MASTER = 0;
+    internal readonly int AMOUNT_ROOK_OTHER = 0;
 
-    internal readonly int AMOUNT_BISHOP_MASTER = 1;
-    internal readonly int AMOUNT_BISHOP_OTHER = 1;
+    internal readonly int AMOUNT_BISHOP_MASTER = 0;
+    internal readonly int AMOUNT_BISHOP_OTHER = 0;
 
 
     #endregion
@@ -41,54 +41,54 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_GOLD_MASTER = 0;
     internal readonly int AMOUNT_GOLD_OTHER = 0;
 
-    internal readonly int AMOUNT_FOOD_MASTER = 200;
-    internal readonly int AMOUNT_FOOD_OTHER = 200;
+    internal readonly int AMOUNT_FOOD_MASTER = 10;
+    internal readonly int AMOUNT_FOOD_OTHER = 10;
 
-    internal readonly int AMOUNT_WOOD_MASTER = 100;
-    internal readonly int AMOUNT_WOOD_OTHER = 100;
+    internal readonly int AMOUNT_WOOD_MASTER = 10;
+    internal readonly int AMOUNT_WOOD_OTHER = 10;
 
-    internal readonly int AMOUNT_ORE_MASTER = 0;
-    internal readonly int AMOUNT_ORE_OTHER = 0;
+    internal readonly int AMOUNT_ORE_MASTER = 10;
+    internal readonly int AMOUNT_ORE_OTHER = 10;
 
-    internal readonly int AMOUNT_IRON_MASTER = 0;
-    internal readonly int AMOUNT_IRON_OTHER = 0;
+    internal readonly int AMOUNT_IRON_MASTER = 1;
+    internal readonly int AMOUNT_IRON_OTHER = 1;
 
     #endregion
 
 
     #region Costs
 
-    internal readonly int FOOD_FOR_BUYING_PAWN = 50;
+    internal readonly int FOOD_FOR_BUYING_PAWN = 10;
 
-    internal readonly int ORE_FOR_MELTING_ORE = 5;
-    internal readonly int WOOD_FOR_MELTING_ORE = 50;
+    internal readonly int ORE_FOR_MELTING_ORE = 10;
+    internal readonly int WOOD_FOR_MELTING_ORE = 20;
 
     internal readonly int IRON_FOR_BUYING_ROOK = 1;
-    internal readonly int FOOD_FOR_BUYING_ROOK = 50;
+    internal readonly int FOOD_FOR_BUYING_ROOK = 10;
 
     internal readonly int IRON_FOR_BUYING_BISHOP = 1;
-    internal readonly int FOOD_FOR_BUYING_BISHOP = 50;
+    internal readonly int FOOD_FOR_BUYING_BISHOP = 10;
 
 
     #region Building
 
-    internal readonly int GOLD_FOR_BUILDING_FARM = 0;
     internal readonly int FOOD_FOR_BUILDING_FARM = 0;
-    internal readonly int WOOD_FOR_BUILDING_FARM = 50;
+    internal readonly int WOOD_FOR_BUILDING_FARM = 10;
     internal readonly int ORE_FOR_BUILDING_FARM = 0;
     internal readonly int IRON_FOR_BUILDING_FARM = 0;
+    internal readonly int GOLD_FOR_BUILDING_FARM = 0;
 
-    internal readonly int GOLD_FOR_BUILDING_WOODCUTTER = 0;
     internal readonly int FOOD_FOR_BUILDING_WOODCUTTER = 0;
-    internal readonly int WOOD_FOR_BUILDING_WOODCUTTER = 50;
+    internal readonly int WOOD_FOR_BUILDING_WOODCUTTER = 10;
     internal readonly int ORE_FOR_BUILDING_WOODCUTTER = 0;
     internal readonly int IRON_FOR_BUILDING_WOODCUTTER = 0;
+    internal readonly int GOLD_FOR_BUILDING_WOODCUTTER = 0;
 
-    internal readonly int GOLD_FOR_BUILDING_MINE = 0;
     internal readonly int FOOD_FOR_BUILDING_MINE = 0;
-    internal readonly int WOOD_FOR_BUILDING_MINE = 150;
+    internal readonly int WOOD_FOR_BUILDING_MINE = 15;
     internal readonly int ORE_FOR_BUILDING_MINE = 0;
     internal readonly int IRON_FOR_BUILDING_MINE = 0;
+    internal readonly int GOLD_FOR_BUILDING_MINE = 0;
 
     #endregion
 
@@ -97,12 +97,12 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region Benefit
 
-    internal readonly int BENEFIT_FOOD_FARM = 5;
-    internal readonly int BENEFIT_WOOD_WOODCUTTER = 2;
+    internal readonly int BENEFIT_FOOD_FARM = 1;
+    internal readonly int BENEFIT_WOOD_WOODCUTTER = 1;
     internal readonly int BENEFIT_ORE_MINE = 1;
 
-    internal readonly int BENEFIT_FOOD_CITY = 10;
-    internal readonly int BENEFIT_WOOD_CITY = 5;
+    internal readonly int BENEFIT_FOOD_CITY = 1;
+    internal readonly int BENEFIT_WOOD_CITY = 1;
 
     #endregion
 
@@ -134,8 +134,8 @@ public class StartValuesGameConfig : ScriptableObject
 
     internal readonly int SIMPLE_POWER_DAMAGE_KING = 70;
     internal readonly int SIMPLE_POWER_DAMAGE_PAWN = 50;
-    internal readonly int SIMPLE_POWER_DAMAGE_ROOK = 50;
-    internal readonly int SIMPLE_POWER_DAMAGE_BISHOP = 50;
+    internal readonly int SIMPLE_POWER_DAMAGE_ROOK = 25;
+    internal readonly int SIMPLE_POWER_DAMAGE_BISHOP = 25;
 
     internal int UNIQIE_POWER_DAMAGE_KING => SIMPLE_POWER_DAMAGE_KING / 3;
     internal int UNIQIE_POWER_DAMAGE_PAWN => SIMPLE_POWER_DAMAGE_PAWN / 3;

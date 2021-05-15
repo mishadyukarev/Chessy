@@ -1,7 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
 using System.Collections.Generic;
-using UnityEngine;
 using static MainGame;
 
 internal class CellFinderWay
@@ -92,7 +91,7 @@ internal class CellFinderWay
                     case UnitTypes.Rook:
                         if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Up || directType1 == DirectTypes.Down)
                         {
-                            availableCellsUniqueAttack.Add(xy1);                           
+                            availableCellsUniqueAttack.Add(xy1);
                         }
                         else availableCellsSimpleAttack.Add(xy1);
                         break;
@@ -115,28 +114,56 @@ internal class CellFinderWay
             }
 
 
-            //switch (CellUnitComponent(xyStartCell).UnitType)
-            //{
-            //    case UnitTypes.Rook:
+            switch (CellUnitComponent(xyStartCell).UnitType)
+            {
+                case UnitTypes.Rook:
 
-            //        break;
+                    if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Down || directType1 == DirectTypes.Up)
+                    {
+                        var xy2 = GetXYCell(xy1, directType1);
+                        if (!CellEnvironmentComponent(xy2).HaveMountain && CellUnitComponent(xy2).HaveUnit && !CellUnitComponent(xy2).IsHisUnit(player))
+                        {
+                            availableCellsUniqueAttack.Add(xy2);
+                        }
+                    }
 
-            //    case UnitTypes.Bishop:
+                    if (directType1 == DirectTypes.LeftDown || directType1 == DirectTypes.LeftUp || directType1 == DirectTypes.RightDown || directType1 == DirectTypes.RightUp)
+                    {
+                        var xy2 = GetXYCell(xy1, directType1);
+                        if (!CellEnvironmentComponent(xy2).HaveMountain && CellUnitComponent(xy2).HaveUnit && !CellUnitComponent(xy2).IsHisUnit(player))
+                        {
+                            availableCellsSimpleAttack.Add(xy2);
+                        }
+                    }
 
-            //        if (directType1 == DirectTypes.LeftDown || directType1 == DirectTypes.LeftUp || directType1 == DirectTypes.RightDown || directType1 == DirectTypes.RightUp)
-            //        {
-            //            var xy2 = GetXYCell(xy1, directType1);
-            //            if (!CellEnvironmentComponent(xy2).HaveMountain && CellUnitComponent(xy2).HaveUnit && !CellUnitComponent(xy2).IsHisUnit(player))
-            //            {
-            //                availableCellsUniqueAttack.Add(xy2);
-            //            }
-            //        }
+                    break;
 
-            //        break;
 
-            //    default:
-            //        break;
-            //}
+                case UnitTypes.Bishop:
+
+                    if (directType1 == DirectTypes.LeftDown || directType1 == DirectTypes.LeftUp || directType1 == DirectTypes.RightDown || directType1 == DirectTypes.RightUp)
+                    {
+                        var xy2 = GetXYCell(xy1, directType1);
+                        if (!CellEnvironmentComponent(xy2).HaveMountain && CellUnitComponent(xy2).HaveUnit && !CellUnitComponent(xy2).IsHisUnit(player))
+                        {
+                            availableCellsUniqueAttack.Add(xy2);
+                        }
+                    }
+
+                    if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Down || directType1 == DirectTypes.Up)
+                    {
+                        var xy2 = GetXYCell(xy1, directType1);
+                        if (!CellEnvironmentComponent(xy2).HaveMountain && CellUnitComponent(xy2).HaveUnit && !CellUnitComponent(xy2).IsHisUnit(player))
+                        {
+                            availableCellsSimpleAttack.Add(xy2);
+                        }
+                    }
+
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 
