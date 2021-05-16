@@ -93,6 +93,8 @@ internal class RefresherMasterSystem : CellReduction, IEcsRunSystem
                 {
                     _economyMasterComponent.Unref().WoodOther += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
                 }
+                if (CellEnvironmentComponent(_economyBuildingsMasterComponentRef.Unref().XYsettedCityOther).HaveHill)
+                    _economyMasterComponent.Unref().OreOther += InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
 
 
                 _economyMasterComponent.Unref().FoodOther += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
@@ -115,9 +117,10 @@ internal class RefresherMasterSystem : CellReduction, IEcsRunSystem
             _donerMasterComponentRef.Unref().IsDoneMaster = false;
             _donerMasterComponentRef.Unref().IsDoneOther = false;
 
+
+            _refresherMasterComponent.Unref().NumberMotion += 1;
+
             _isRefreshed = true;
-
-
         }
         else _isRefreshed = false;
     }

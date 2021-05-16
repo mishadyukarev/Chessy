@@ -3,5 +3,6 @@
 
 internal struct SoundComponent
 {
-    internal Action MistakeSoundDelegate;
+    internal Action MistakeSoundAction;
+    internal Action AttackSoundAction;
 }

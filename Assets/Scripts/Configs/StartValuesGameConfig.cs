@@ -41,14 +41,14 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_GOLD_MASTER = 0;
     internal readonly int AMOUNT_GOLD_OTHER = 0;
 
-    internal readonly int AMOUNT_FOOD_MASTER = 10;
-    internal readonly int AMOUNT_FOOD_OTHER = 10;
+    internal readonly int AMOUNT_FOOD_MASTER = 20;
+    internal readonly int AMOUNT_FOOD_OTHER = 20;
 
-    internal readonly int AMOUNT_WOOD_MASTER = 10;
-    internal readonly int AMOUNT_WOOD_OTHER = 10;
+    internal readonly int AMOUNT_WOOD_MASTER = 20;
+    internal readonly int AMOUNT_WOOD_OTHER = 20;
 
-    internal readonly int AMOUNT_ORE_MASTER = 10;
-    internal readonly int AMOUNT_ORE_OTHER = 10;
+    internal readonly int AMOUNT_ORE_MASTER = 0;
+    internal readonly int AMOUNT_ORE_OTHER = 0;
 
     internal readonly int AMOUNT_IRON_MASTER = 1;
     internal readonly int AMOUNT_IRON_OTHER = 1;
@@ -58,16 +58,29 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region Costs
 
-    internal readonly int FOOD_FOR_BUYING_PAWN = 10;
+    #region Unit
 
-    internal readonly int ORE_FOR_MELTING_ORE = 10;
-    internal readonly int WOOD_FOR_MELTING_ORE = 20;
+
+
+    #endregion
+    internal readonly int FOOD_FOR_BUYING_PAWN = 5;
+    internal readonly int WOOD_FOR_BUYING_PAWN = 0;
+    internal readonly int ORE_FOR_BUYING_PAWN = 0;
+    internal readonly int IRON_FOR_BUYING_PAWN = 0;
+    internal readonly int GOLD_FOR_BUYING_PAWN = 0;
+
+    internal readonly int FOOD_FOR_MELTING_ORE = 0;
+    internal readonly int WOOD_FOR_MELTING_ORE = 10;
+    internal readonly int ORE_FOR_MELTING_ORE = 5;
+    internal readonly int IRON_FOR_MELTING_ORE = 0;
+    internal readonly int GOLD_FOR_MELTING_ORE = 0;
+
 
     internal readonly int IRON_FOR_BUYING_ROOK = 1;
-    internal readonly int FOOD_FOR_BUYING_ROOK = 10;
+    internal readonly int FOOD_FOR_BUYING_ROOK = 5;
 
     internal readonly int IRON_FOR_BUYING_BISHOP = 1;
-    internal readonly int FOOD_FOR_BUYING_BISHOP = 10;
+    internal readonly int FOOD_FOR_BUYING_BISHOP = 5;
 
 
     #region Building
@@ -174,10 +187,10 @@ public class StartValuesGameConfig : ScriptableObject
     private readonly float PERCENT_PROTECTION_TREE_FOR_ROOK = 0.1f;
     private readonly float PERCENT_PROTECTION_TREE_FOR_BISHOP = 0.1f;
 
-    private readonly float PERCENT_PROTECTION_HILL_FOR_KING = 0.15f;
-    private readonly float PERCENT_PROTECTION_HILL_FOR_PAWN = 0.15f;
-    private readonly float PERCENT_PROTECTION_HILL_FOR_ROOK = 0.15f;
-    private readonly float PERCENT_PROTECTION_HILL_FOR_BISHOP = 0.15f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_KING = 0.10f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_PAWN = 0.10f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_ROOK = 0.10f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_BISHOP = 0.10f;
 
 
     internal int PROTECTION_FOOD_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_PROTECTION_FOOD_FOR_KING);
@@ -200,10 +213,10 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region Click
 
-    private readonly float PERCENT_FOR_PROTECTION_KING = 0.15f;
-    private readonly float PERCENT_FOR_PROTECTION_PAWN = 0.15f;
-    private readonly float PERCENT_FOR_PROTECTION_ROOK = 0.15f;
-    private readonly float PERCENT_FOR_PROTECTION_BISHOP = 0.15f;
+    private readonly float PERCENT_FOR_PROTECTION_KING = 0.3f;
+    private readonly float PERCENT_FOR_PROTECTION_PAWN = 0.3f;
+    private readonly float PERCENT_FOR_PROTECTION_ROOK = 0.3f;
+    private readonly float PERCENT_FOR_PROTECTION_BISHOP = 0.3f;
 
     internal int PROTECTION_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_FOR_PROTECTION_KING);
     internal int PROTECTION_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_FOR_PROTECTION_PAWN);
@@ -222,9 +235,9 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int NEED_AMOUNT_STEPS_HILL = 2;
 
     internal readonly int STANDART_AMOUNT_STEPS_KING = 1;
-    internal readonly int STANDART_AMOUNT_STEPS_PAWN = 1;
-    internal readonly int STANDART_AMOUNT_STEPS_ROOK = 1;
-    internal readonly int STANDART_AMOUNT_STEPS_BISHOP = 1;
+    internal readonly int STANDART_AMOUNT_STEPS_PAWN = 2;
+    internal readonly int STANDART_AMOUNT_STEPS_ROOK = 2;
+    internal readonly int STANDART_AMOUNT_STEPS_BISHOP = 2;
 
     #endregion
 

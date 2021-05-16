@@ -3,7 +3,8 @@ using UnityEngine;
 
 internal class SoundSystem : IEcsRunSystem
 {
-    private AudioSource _audioSource;
+    private AudioSource _mistakeAudioSource;
+    private AudioSource _attackAudioSource;
 
     private EcsComponentRef<SoundComponent> _soundComponentRef = default;
 
@@ -11,9 +12,12 @@ internal class SoundSystem : IEcsRunSystem
     internal SoundSystem(ECSmanager eCSmanager)
     {
         _soundComponentRef = eCSmanager.EntitiesGeneralManager.SoundComponentRef;
-        _audioSource = MainGame.InstanceGame.GameObjectPool.AudioSourceGO.GetComponent<AudioSource>();
 
-        _soundComponentRef.Unref().MistakeSoundDelegate = MistakeSound;
+        _mistakeAudioSource = MainGame.InstanceGame.GameObjectPool.AudioSourceGO.GetComponent<AudioSource>();
+        _attackAudioSource = MainGame.InstanceGame.GameObjectPool.AttackAudioSource;
+
+        _soundComponentRef.Unref().MistakeSoundAction = MistakeSound;
+        _soundComponentRef.Unref().AttackSoundAction = AttackSound;
     }
 
     public void Run()
@@ -21,5 +25,6 @@ internal class SoundSystem : IEcsRunSystem
 
     }
 
-    private void MistakeSound() => _audioSource.Play();
+    private void MistakeSound() => _mistakeAudioSource.Play();
+    private void AttackSound() => _attackAudioSource.Play();
 }

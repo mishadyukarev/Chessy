@@ -58,7 +58,7 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
         _xyPreviousVisionCell = new int[XYforArray];
 
         _selectorComponentRef.Unref().SetterUnitDelegate = IsSetted;
-        _selectorComponentRef.Unref().AttackUnitDelegate = IsAttacked;
+        _selectorComponentRef.Unref().AttackUnitAction = IsAttacked;
         _selectorComponentRef.Unref().ShiftUnitDelegate = SetIsShifted;
     }
 
@@ -115,10 +115,10 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                     else if (CellComponent(xyCurrentCell).IsStartOther)
                                         _photonPunRPC.SetUnit(xyCurrentCell, _selectedUnitComponentRef.Unref().SelectedUnitType);
 
-                                    else _soundComponentRef.Unref().MistakeSoundDelegate();
+                                    else _soundComponentRef.Unref().MistakeSoundAction();
                                 }
 
-                                else _soundComponentRef.Unref().MistakeSoundDelegate();
+                                else _soundComponentRef.Unref().MistakeSoundAction();
                             }
 
                             else if (_canExecuteStartClick)

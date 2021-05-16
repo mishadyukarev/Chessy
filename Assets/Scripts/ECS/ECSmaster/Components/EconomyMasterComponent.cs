@@ -1,4 +1,6 @@
 ﻿
+using Photon.Realtime;
+
 internal struct EconomyMasterComponent
 {
     private int _goldMaster;

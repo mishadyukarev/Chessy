@@ -66,7 +66,7 @@ internal class CityUISystem : CellReduction, IEcsRunSystem
     }
 
 
-    private void BuyUnit(UnitTypes unitType) => _photonPunRPC.BuyUnit(unitType);
+    private void BuyUnit(UnitTypes unitType) => _photonPunRPC.CreateUnit(unitType);
 
     private void ImproveCity() { }
 

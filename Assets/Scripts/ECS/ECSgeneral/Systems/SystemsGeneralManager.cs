@@ -27,7 +27,8 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new EconomyUISystem(eCSmanager), nameof(EconomyUISystem))
             .Add(new ZoneUISystem(eCSmanager), nameof(ZoneUISystem))
             .Add(new WarningUISystem(eCSmanager), nameof(WarningUISystem))
-            .Add(new CityUISystem(eCSmanager), nameof(CityUISystem));
+            .Add(new CityUISystem(eCSmanager), nameof(CityUISystem))
+            .Add(new RefreshUISystem(eCSmanager), nameof(RefreshUISystem));
 
 
         _forSelectorSystem

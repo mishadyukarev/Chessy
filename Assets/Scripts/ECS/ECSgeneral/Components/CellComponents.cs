@@ -54,7 +54,6 @@ public struct CellComponent
         private GameObject _mountainGO;
         private GameObject _treeGO;
         private GameObject _hillGO;
-        private List<EnvironmentTypes> _listEnvironmentTypes;
 
         internal EnvironmentComponent(int x, int y)
         {
@@ -69,12 +68,6 @@ public struct CellComponent
             _mountainGO = InstanceGame.GameObjectPool.CellEnvironmentMountainGOs[x, y];
             _treeGO = InstanceGame.GameObjectPool.CellEnvironmentTreeGOs[x, y];
             _hillGO = InstanceGame.GameObjectPool.CellEnvironmentHillGOs[x, y];
-
-            _listEnvironmentTypes = new List<EnvironmentTypes>();
-            _listEnvironmentTypes.Add(default);
-            _listEnvironmentTypes.Add(default);
-            _listEnvironmentTypes.Add(default);
-            _listEnvironmentTypes.Add(default);
         }
 
         internal bool HaveFood => _haveFood;

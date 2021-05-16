@@ -19,7 +19,7 @@ internal class EconomyUISystem : IEcsRunSystem
         _foodAmountText = MainGame.InstanceGame.GameObjectPool.FoodAmmountText;
         _woodAmountText = MainGame.InstanceGame.GameObjectPool.WoodAmmountText;
         _oreAmountText = MainGame.InstanceGame.GameObjectPool.OreAmmountText;
-        _ironAmountText = MainGame.InstanceGame.GameObjectPool.MetalAmmountText;
+        _ironAmountText = MainGame.InstanceGame.GameObjectPool.IronAmmountText;
     }
 
     public void Run()

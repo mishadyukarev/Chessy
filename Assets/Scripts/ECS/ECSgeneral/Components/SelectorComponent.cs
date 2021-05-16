@@ -49,7 +49,7 @@ public struct SelectorComponent
         get { return _setterUnitDelegate; }
         set { if (_setterUnitDelegate == default) _setterUnitDelegate = value; }
     }
-    internal Action AttackUnitDelegate
+    internal Action AttackUnitAction
     {
         get { return _attackUnitDelegate; }
         set { if (_attackUnitDelegate == default) _attackUnitDelegate = value; }

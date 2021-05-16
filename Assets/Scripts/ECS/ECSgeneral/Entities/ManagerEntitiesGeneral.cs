@@ -18,6 +18,9 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     private EcsEntity _animationAttackUnitEntity;
     private EcsEntity _zoneEntity;
     private EcsEntity _whoDoEntity;
+    private EcsEntity _refreshEntity;
+    private EcsEntity _infoMotionEntity;
+    private EcsEntity _elseEntity;
 
     private EcsComponentRef<CellComponent>[,] _cellComponentRef;
     private EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef;
@@ -66,6 +69,9 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal EcsComponentRef<RayComponent> RayComponentRef => _rayEntity.Ref<RayComponent>();
     internal EcsComponentRef<AnimationAttackUnitComponent> AnimationAttackUnitComponentRef => _animationAttackUnitEntity.Ref<AnimationAttackUnitComponent>();
     internal EcsComponentRef<ZoneComponent> ZoneComponentRef => _zoneEntity.Ref<ZoneComponent>();
+    internal EcsComponentRef<InfoRefreshComponent> RefreshComponentRef => _refreshEntity.Ref<InfoRefreshComponent>();
+    internal EcsComponentRef<InfoMotionComponent> InfoMotionComponentRef => _infoMotionEntity.Ref<InfoMotionComponent>();
+    internal EcsComponentRef<EconomyUIComponent> EconomyUIComponentRef => _elseEntity.Ref<EconomyUIComponent>();
 
     #endregion
 
@@ -122,6 +128,15 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
         _zoneEntity = _ecsWorld.NewEntity()
             .Replace(new ZoneComponent());
+
+        _refreshEntity = _ecsWorld.NewEntity()
+            .Replace(new InfoRefreshComponent());
+
+        _infoMotionEntity = _ecsWorld.NewEntity()
+            .Replace(new InfoMotionComponent());
+
+        _elseEntity = _ecsWorld.NewEntity()
+            .Replace(new EconomyUIComponent(InstanceGame.GameObjectPool));
 
 
         #region Cells

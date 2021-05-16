@@ -13,7 +13,10 @@ internal class StartSpawnGame : StartSpawn
         gameObjectPool.ParentScriptsGO = builder.CreateGameObject("Scripts");
 
         gameObjectPool.AudioSourceGO = builder.CreateGameObject("AudioSource", new Type[] { typeof(AudioSource) });
-        gameObjectPool.AudioSourceGO.GetComponent<AudioSource>().clip = resourcesLoadGame.SoundConfig.AudioClip;
+        gameObjectPool.AudioSourceGO.GetComponent<AudioSource>().clip = resourcesLoadGame.SoundConfig.MistakeAudioClip;
+
+        gameObjectPool.AttackAudioSource = builder.CreateGameObject("AttackAudioSource", new Type[] { typeof(AudioSource) }).GetComponent<AudioSource>();
+        gameObjectPool.AttackAudioSource.clip = resourcesLoadGame.SoundConfig.AttackAudioClip;
 
         _camera.gameObject.transform.position = InstanceGame.transform.position + new Vector3(7, 5.5f, -1);
         if (!InstanceGame.IsMasterClient) _camera.transform.Rotate(0, 0, 180);
@@ -103,11 +106,9 @@ internal class StartSpawnGame : StartSpawn
         gameObjectPool.FoodAmmountText = GameObject.Find("FoodAmount").GetComponent<TextMeshProUGUI>();
         gameObjectPool.WoodAmmountText = GameObject.Find("WoodAmount").GetComponent<TextMeshProUGUI>();
         gameObjectPool.OreAmmountText = GameObject.Find("OreAmount").GetComponent<TextMeshProUGUI>();
-        gameObjectPool.MetalAmmountText = GameObject.Find("MetalAmount").GetComponent<TextMeshProUGUI>();
+        gameObjectPool.IronAmmountText = GameObject.Find("MetalAmount").GetComponent<TextMeshProUGUI>();
 
         gameObjectPool.ButtonLeave = GameObject.Find("ButtonLeave").GetComponent<Button>();
-
-        #endregion
 
         #endregion
 
@@ -127,6 +128,28 @@ internal class StartSpawnGame : StartSpawn
         gameObjectPool.ParentTheEndGameZone.gameObject.SetActive(false);
 
         #endregion
+
+
+        #region RefreshZone
+
+        gameObjectPool.InGameRefreshZoneGO = GameObject.Find("RefreshZone");
+        gameObjectPool.InGameRefreshZoneRefreshImage = GameObject.Find("RefreshImage1").GetComponent<Image>();
+        gameObjectPool.InGameRefreshZoneRefreshText = GameObject.Find("RefreshText").GetComponent<TextMeshProUGUI>();
+
+        gameObjectPool.InGameRefreshZoneGO.SetActive(false);
+
+        #endregion
+
+        #endregion
+
+
+
+
+
+
+
+
+
 
 
 

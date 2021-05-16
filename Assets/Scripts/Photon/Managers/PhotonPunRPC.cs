@@ -10,6 +10,7 @@ using static MainGame;
 internal class PhotonPunRPC : MonoBehaviour
 {
     private PhotonView _photonView = default;
+    private SystemsGeneralManager _systemGeneralManager = default;
     private SystemsMasterManager _systemsMasterManager = default;
 
 
@@ -53,6 +54,10 @@ internal class PhotonPunRPC : MonoBehaviour
     private EcsComponentRef<TheEndGameComponent> _theEndComponentRef = default;
     private EcsComponentRef<StartGameComponent> _startGameComponentRef = default;
     private EcsComponentRef<AnimationAttackUnitComponent> _animationAttackUnitComponentRef = default;
+    private EcsComponentRef<InfoRefreshComponent> _infoRefreshComponentRef = default;
+    private EcsComponentRef<InfoMotionComponent> _infoMotionComponentRef = default;
+    private EcsComponentRef<SoundComponent> _soundComponentRef = default;
+    private EcsComponentRef<EconomyUIComponent> _economyUIComponentRef;
 
     #endregion
 
@@ -108,6 +113,9 @@ internal class PhotonPunRPC : MonoBehaviour
         }
 
 
+        _systemGeneralManager = eCSmanager.SystemsGeneralManager;
+
+
         var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
 
         _cellComponentRef = entitiesGeneralManager.CellComponentRef;
@@ -125,12 +133,36 @@ internal class PhotonPunRPC : MonoBehaviour
         _economyUnitsComponentRef = entitiesGeneralManager.EconomyUnitsComponentRef;
         _readyComponentRef = entitiesGeneralManager.ReadyComponentRef;
         _theEndComponentRef = entitiesGeneralManager.TheEndGameComponentRef;
-        _startGameComponentRef = eCSmanager.EntitiesGeneralManager.StartGameComponentRef;
-        _animationAttackUnitComponentRef = eCSmanager.EntitiesGeneralManager.AnimationAttackUnitComponentRef;
+        _startGameComponentRef = entitiesGeneralManager.StartGameComponentRef;
+        _animationAttackUnitComponentRef = entitiesGeneralManager.AnimationAttackUnitComponentRef;
+        _infoRefreshComponentRef = entitiesGeneralManager.RefreshComponentRef;
+        _infoMotionComponentRef = entitiesGeneralManager.InfoMotionComponentRef;
+        _soundComponentRef = entitiesGeneralManager.SoundComponentRef;
+        _economyUIComponentRef = entitiesGeneralManager.EconomyUIComponentRef;
+
 
 
         RefreshAll();
     }
+
+    #region Mistake
+
+    private void Mistake(Player player, bool haveFood, bool haveWood, bool haveOre, bool haveIron, bool haveGold)
+    {
+        _photonView.RPC(nameof(MistakeGeneral), player, !haveFood, !haveWood, !haveOre, !haveIron, !haveGold);
+    }
+
+    [PunRPC]
+    private void MistakeGeneral(bool needFood, bool needWood, bool needOre, bool needIron, bool needGold)
+    {
+        _economyUIComponentRef.Unref().NeedFood = needFood;
+        _economyUIComponentRef.Unref().NeedWood = needWood;
+        _economyUIComponentRef.Unref().NeedOre = needOre;
+        _economyUIComponentRef.Unref().NeedIron = needIron;
+        _economyUIComponentRef.Unref().NeedGold = needGold;
+    }
+
+    #endregion
 
 
     #region THE END OF GAME
@@ -185,15 +217,15 @@ internal class PhotonPunRPC : MonoBehaviour
 
     #region Done
 
-    internal void Done(in bool isDone) => _photonView.RPC(nameof(DoneToMaster), RpcTarget.MasterClient, isDone);
+    internal void Done(in bool isDone) => _photonView.RPC(nameof(DoneMaster), RpcTarget.MasterClient, isDone);
 
     [PunRPC]
-    private void DoneToMaster(bool isDone, PhotonMessageInfo info)
+    private void DoneMaster(bool isDone, PhotonMessageInfo info)
     {
         if (info.Sender.IsMasterClient && _economyUnitMasterComponentRef.Unref().IsSettedKingMaster
             || !info.Sender.IsMasterClient && _economyUnitMasterComponentRef.Unref().IsSettedKingOther)
         {
-            _photonView.RPC(nameof(DoneToGeneral), info.Sender, false, isDone);
+            _photonView.RPC(nameof(DoneGeneral), info.Sender, false, isDone, default);
 
             _fromInfoComponentRef.Unref().FromInfo = info;
             _refresherMasterComponentRef.Unref().IsDone = isDone;
@@ -201,23 +233,30 @@ internal class PhotonPunRPC : MonoBehaviour
 
             if (_refresherMasterComponentRef.Unref().IsRefreshed)
             {
-                _photonView.RPC(nameof(DoneToGeneral), RpcTarget.All, false, false);
+                
+                _photonView.RPC(nameof(DoneGeneral), RpcTarget.All, false, false, _refresherMasterComponentRef.Unref().NumberMotion);
                 RefreshAll();
             }
         }
         else
         {
-            _photonView.RPC(nameof(DoneToGeneral), info.Sender, true, false);
+            _photonView.RPC(nameof(DoneGeneral), info.Sender, true, false, default);
         }
     }
 
     [PunRPC]
-    private void DoneToGeneral(bool isMistaked, bool isDone)
+    private void DoneGeneral(bool isMistaked, bool isDone, int numberMotion)
     {
         if (isMistaked) _buttonComponentRef.Unref().IsMistaked = isMistaked;
         else
         {
             _buttonComponentRef.Unref().IsDone = isDone;
+        }
+
+        if (!isMistaked && !isDone)
+        {
+            _infoMotionComponentRef.Unref().NumberMotion = numberMotion;
+            _infoRefreshComponentRef.Unref().IsRefreshed = true;
         }
     }
 
@@ -358,8 +397,7 @@ internal class PhotonPunRPC : MonoBehaviour
 
     #region AttackUnit
 
-    internal void AttackUnit(int[] xyPreviousCell, int[] xySelectedCell)
-        => _photonView.RPC("AttackUnitMaster", RpcTarget.MasterClient, xyPreviousCell, xySelectedCell);
+    internal void AttackUnit(int[] xyPreviousCell, int[] xySelectedCell) => _photonView.RPC(nameof(AttackUnitMaster), RpcTarget.MasterClient, xyPreviousCell, xySelectedCell);
 
     [PunRPC]
     private void AttackUnitMaster(int[] xyPreviousCell, int[] xySelectedCell, PhotonMessageInfo info)
@@ -367,8 +405,8 @@ internal class PhotonPunRPC : MonoBehaviour
         var isAttacked = _attackUnitMasterComponentRef.Unref()
             .TryAttackUnit(xyPreviousCell, xySelectedCell, info.Sender, out bool isKilledAttacker, out bool isKilledDefender);
 
-        _photonView.RPC("AttackUnitGeneral", info.Sender, isAttacked);
-        _photonView.RPC("AttackUnitGeneral", RpcTarget.All, xyPreviousCell, xySelectedCell, isKilledAttacker, isKilledDefender);
+        _photonView.RPC(nameof(AttackUnitGeneral), info.Sender, isAttacked);
+        if(isAttacked) _photonView.RPC(nameof(AttackUnitGeneral), RpcTarget.All);
 
         RefreshAll();
     }
@@ -378,20 +416,12 @@ internal class PhotonPunRPC : MonoBehaviour
     {
         if (isAttacked)
         {
-            _selectorComponentRef.Unref().AttackUnitDelegate();
+            _selectorComponentRef.Unref().AttackUnitAction();
         }
     }
-    [PunRPC]
-    private void AttackUnitGeneral(int[] xyPreviousCell, int[] xySelectedCell, bool isKilledAttacker, bool isKilledDefender)
-    {
-        //if (!isKilledAttacker && !isKilledDefender)
-        //{
-        //    _animationAttackUnitComponentRef.Unref().XYStartCell = xyPreviousCell;
-        //    _animationAttackUnitComponentRef.Unref().XYEndCell = xySelectedCell;
 
-        //    _systemsGeneralManager.ActiveRunSystem(true, SystemGeneralTypes.Update, nameof(AnimationAttackUnitSystem));
-        //}
-    }
+    [PunRPC]
+    private void AttackUnitGeneral() => _soundComponentRef.Unref().AttackSoundAction();
 
     #endregion
 
@@ -502,7 +532,222 @@ internal class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void BuildMaster(int[] xyCell, BuildingTypes buildingType, PhotonMessageInfo info)
     {
-        _builderCellMasterComponentRef.Unref().Build(xyCell, buildingType, info.Sender);
+        bool haveFood = true;
+        bool haveWood = true;
+        bool haveOre = true;
+        bool haveIron = true;
+        bool haveGold = true;
+
+        bool isBuilded;
+
+        if (!CellEnvironmentComponent(xyCell).HaveMountain && CellUnitComponent(xyCell).HaveMaxSteps && !CellBuildingComponent(xyCell).HaveBuilding)
+        {
+            switch (buildingType)
+            {
+                case BuildingTypes.None:
+                    isBuilded = false;
+                    break;
+
+                case BuildingTypes.City:
+
+                    CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                    isBuilded = true;
+                    CellUnitComponent(xyCell).AmountSteps = 0;
+
+                    if (info.Sender.IsMasterClient)
+                    {
+                        _economyBuildingsMasterComponentRef.Unref().IsBuildedCityMaster = isBuilded;
+                        InstanceGame.CellManager.CellBaseOperations.CopyXYinTo(xyCell, _economyBuildingsMasterComponentRef.Unref().XYsettedCityMaster);
+
+                        //_zoneComponentRef.Unref().XYMasterZone = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(xyCellIN);
+                    }
+                    else
+                    {
+                        _economyBuildingsMasterComponentRef.Unref().IsBuildedCityOther = isBuilded;
+                        InstanceGame.CellManager.CellBaseOperations.CopyXYinTo(xyCell, _economyBuildingsMasterComponentRef.Unref().XYsettedCityOther);
+
+                        //_zoneComponentRef.Unref().XYOtherZone = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(xyCellIN);
+                    }
+
+                    break;
+
+                case BuildingTypes.Farm:
+
+                    if (CellEnvironmentComponent(xyCell).HaveFood)
+                    {
+                        if (info.Sender.IsMasterClient)
+                        {
+                            haveFood = _economyMasterComponentRef.Unref().FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
+                            haveWood = _economyMasterComponentRef.Unref().WoodMaster >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
+                            haveOre = _economyMasterComponentRef.Unref().OreMaster >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
+                            haveIron = _economyMasterComponentRef.Unref().IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
+                            haveGold = _economyMasterComponentRef.Unref().GoldMaster >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
+
+                            if (haveFood && haveWood && haveOre && haveIron && haveGold)
+                            {
+                                _economyMasterComponentRef.Unref().GoldMaster -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
+                                _economyMasterComponentRef.Unref().FoodMaster -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
+                                _economyMasterComponentRef.Unref().WoodMaster -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
+                                _economyMasterComponentRef.Unref().OreMaster -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
+                                _economyMasterComponentRef.Unref().IronMaster -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
+
+
+                                CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                                _economyBuildingsMasterComponentRef.Unref().AmountFarmMaster += 1; // !!!!!
+
+                                CellUnitComponent(xyCell).AmountSteps = 0;
+                            }
+                        }
+                        else
+                        {
+                            haveFood = _economyMasterComponentRef.Unref().FoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
+                            haveWood = _economyMasterComponentRef.Unref().WoodOther >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
+                            haveOre = _economyMasterComponentRef.Unref().OreOther >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
+                            haveIron = _economyMasterComponentRef.Unref().IronOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
+                            haveGold = _economyMasterComponentRef.Unref().GoldOther >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
+
+                            if (haveFood && haveWood && haveOre && haveIron && haveGold)
+                            {
+                                _economyMasterComponentRef.Unref().GoldOther -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
+                                _economyMasterComponentRef.Unref().FoodOther -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
+                                _economyMasterComponentRef.Unref().WoodOther -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
+                                _economyMasterComponentRef.Unref().OreOther -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
+                                _economyMasterComponentRef.Unref().IronOther -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
+
+                                CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                                _economyBuildingsMasterComponentRef.Unref().AmountFarmOther += 1; // !!!!!
+
+                                CellUnitComponent(xyCell).AmountSteps = 0;
+                            }
+                        }
+                    }
+                    isBuilded = true;
+
+                    break;
+
+                case BuildingTypes.Woodcutter:
+
+                    if (CellEnvironmentComponent(xyCell).HaveTree)
+                    {
+                        if (info.Sender.IsMasterClient)
+                        {
+                            haveFood = _economyMasterComponentRef.Unref().FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
+                            haveWood = _economyMasterComponentRef.Unref().WoodMaster >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
+                            haveOre = _economyMasterComponentRef.Unref().OreMaster >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
+                            haveIron = _economyMasterComponentRef.Unref().IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+                            haveGold = _economyMasterComponentRef.Unref().GoldMaster >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
+
+                            if (haveFood && haveWood && haveOre && haveIron && haveGold)
+                            {
+                                _economyMasterComponentRef.Unref().GoldMaster -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
+                                _economyMasterComponentRef.Unref().FoodMaster -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
+                                _economyMasterComponentRef.Unref().WoodMaster -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
+                                _economyMasterComponentRef.Unref().OreMaster -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
+                                _economyMasterComponentRef.Unref().IronMaster -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+
+                                CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                                _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterMaster += 1; // !!!!!
+
+                                CellUnitComponent(xyCell).AmountSteps = 0;
+                            }
+                        }
+                        else
+                        {
+                            haveFood = _economyMasterComponentRef.Unref().FoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
+                            haveWood = _economyMasterComponentRef.Unref().WoodOther >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
+                            haveOre = _economyMasterComponentRef.Unref().OreOther >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
+                            haveIron = _economyMasterComponentRef.Unref().IronOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+                            haveGold = _economyMasterComponentRef.Unref().GoldOther >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
+
+                            if (haveFood && haveWood && haveOre && haveIron && haveGold)
+                            {
+                                _economyMasterComponentRef.Unref().GoldOther -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
+                                _economyMasterComponentRef.Unref().FoodOther -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
+                                _economyMasterComponentRef.Unref().WoodOther -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
+                                _economyMasterComponentRef.Unref().OreOther -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
+                                _economyMasterComponentRef.Unref().IronOther -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+
+
+                                CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                                _economyBuildingsMasterComponentRef.Unref().AmountWoodcutterOther += 1; // !!!!!
+
+                                CellUnitComponent(xyCell).AmountSteps = 0;
+                            }
+                        }
+
+                    }
+                    isBuilded = true;
+
+                    break;
+
+                case BuildingTypes.Mine:
+
+                    if (CellEnvironmentComponent(xyCell).HaveHill)
+                    {
+                        if (info.Sender.IsMasterClient)
+                        {
+                            haveFood = _economyMasterComponentRef.Unref().FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
+                            haveWood = _economyMasterComponentRef.Unref().WoodMaster >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
+                            haveOre = _economyMasterComponentRef.Unref().OreMaster >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
+                            haveIron = _economyMasterComponentRef.Unref().IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
+                            haveGold = _economyMasterComponentRef.Unref().GoldMaster >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
+
+
+                            if (haveFood && haveWood && haveOre && haveIron && haveGold)
+                            {
+                                _economyMasterComponentRef.Unref().GoldMaster -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
+                                _economyMasterComponentRef.Unref().FoodMaster -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
+                                _economyMasterComponentRef.Unref().WoodMaster -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
+                                _economyMasterComponentRef.Unref().OreMaster -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
+                                _economyMasterComponentRef.Unref().IronMaster -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
+
+
+                                CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                                _economyBuildingsMasterComponentRef.Unref().AmountMineMaster += 1; // !!!!!
+
+                                CellUnitComponent(xyCell).AmountSteps = 0;
+                            }
+                        }
+                        else
+                        {
+                            haveFood = _economyMasterComponentRef.Unref().FoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
+                            haveWood = _economyMasterComponentRef.Unref().WoodOther >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
+                            haveOre = _economyMasterComponentRef.Unref().OreOther >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
+                            haveIron = _economyMasterComponentRef.Unref().IronOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
+                            haveGold = _economyMasterComponentRef.Unref().GoldOther >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
+
+                            if (haveFood && haveWood && haveOre && haveIron && haveGold)
+                            {
+                                _economyMasterComponentRef.Unref().GoldOther -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
+                                _economyMasterComponentRef.Unref().FoodOther -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
+                                _economyMasterComponentRef.Unref().WoodOther -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
+                                _economyMasterComponentRef.Unref().OreOther -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
+                                _economyMasterComponentRef.Unref().IronOther -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
+
+
+                                CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                                _economyBuildingsMasterComponentRef.Unref().AmountMineOther += 1; // !!!!!
+
+                                CellUnitComponent(xyCell).AmountSteps = 0;
+                            }
+                        }
+
+                    }
+                    isBuilded = true;
+
+                    break;
+
+                default:
+                    isBuilded = false;
+                    break;
+            }
+        }
+        else
+        {
+            isBuilded = false;
+        }
+
+        Mistake(info.Sender, haveFood, haveWood, haveOre, haveIron, haveGold);
 
         RefreshAll();
     }
@@ -602,11 +847,17 @@ internal class PhotonPunRPC : MonoBehaviour
 
     #region BuyUnit
 
-    internal void BuyUnit(in UnitTypes unitType) => _photonView.RPC("BuyUnitMaster", RpcTarget.MasterClient, unitType);
+    internal void CreateUnit(in UnitTypes unitType) => _photonView.RPC(nameof(CreateUnitMaster), RpcTarget.MasterClient, unitType);
 
     [PunRPC]
-    private void BuyUnitMaster(UnitTypes unitType, PhotonMessageInfo info)
+    private void CreateUnitMaster(UnitTypes unitType, PhotonMessageInfo info)
     {
+        bool haveFood = true;
+        bool haveWood = true;
+        bool haveOre = true;
+        bool haveIron = true;
+        bool haveGold = true;
+
         switch (unitType)
         {
             case UnitTypes.None:
@@ -619,7 +870,9 @@ internal class PhotonPunRPC : MonoBehaviour
 
                 if (info.Sender.IsMasterClient)
                 {
-                    if (_economyMasterComponentRef.Unref().FoodMaster >= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN)
+                    haveFood = _economyMasterComponentRef.Unref().FoodMaster >= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+
+                    if (haveFood)
                     {
                         _economyMasterComponentRef.Unref().FoodMaster -= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN;
                         _economyUnitMasterComponentRef.Unref().AmountUnitPawnMaster += _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
@@ -627,7 +880,9 @@ internal class PhotonPunRPC : MonoBehaviour
                 }
                 else
                 {
-                    if (_economyMasterComponentRef.Unref().FoodOther >= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN)
+                    haveFood = _economyMasterComponentRef.Unref().FoodOther >= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+
+                    if (haveFood)
                     {
                         _economyMasterComponentRef.Unref().FoodOther -= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN;
                         _economyUnitMasterComponentRef.Unref().AmountUnitPawnOther += _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
@@ -640,25 +895,28 @@ internal class PhotonPunRPC : MonoBehaviour
 
                 if (info.Sender.IsMasterClient)
                 {
-                    if (_economyMasterComponentRef.Unref().IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUYING_ROOK
-                        && _economyMasterComponentRef.Unref().FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUYING_ROOK)
+                    haveFood = _economyMasterComponentRef.Unref().FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
+                    haveIron = _economyMasterComponentRef.Unref().IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
+
+                    if (haveFood && haveIron)
                     {
                         _economyMasterComponentRef.Unref().IronMaster -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
                         _economyMasterComponentRef.Unref().FoodMaster -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
 
                         _economyUnitMasterComponentRef.Unref().AmountRookMaster += 1;
-                    }
+                    }                 
                 }
                 else
                 {
-                    if (_economyMasterComponentRef.Unref().OreOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUYING_ROOK
-                        && _economyMasterComponentRef.Unref().WoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUYING_ROOK)
+                    haveFood = _economyMasterComponentRef.Unref().FoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
+                    haveIron = _economyMasterComponentRef.Unref().IronOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
+
+                    if (haveFood && haveIron)
                     {
                         _economyMasterComponentRef.Unref().IronOther -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
                         _economyMasterComponentRef.Unref().FoodOther -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
 
                         _economyUnitMasterComponentRef.Unref().AmountRookOther += 1;
-
                     }
                 }
 
@@ -669,8 +927,10 @@ internal class PhotonPunRPC : MonoBehaviour
 
                 if (info.Sender.IsMasterClient)
                 {
-                    if (_economyMasterComponentRef.Unref().IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUYING_BISHOP
-                        && _economyMasterComponentRef.Unref().FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP)
+                    haveFood = _economyMasterComponentRef.Unref().FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
+                    haveIron = _economyMasterComponentRef.Unref().IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
+
+                    if (haveFood && haveIron)
                     {
                         _economyMasterComponentRef.Unref().IronMaster -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
                         _economyMasterComponentRef.Unref().FoodMaster -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
@@ -680,14 +940,15 @@ internal class PhotonPunRPC : MonoBehaviour
                 }
                 else
                 {
-                    if (_economyMasterComponentRef.Unref().OreOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUYING_BISHOP
-                        && _economyMasterComponentRef.Unref().WoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP)
+                    haveFood = _economyMasterComponentRef.Unref().FoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
+                    haveIron = _economyMasterComponentRef.Unref().IronOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
+
+                    if (haveFood && haveIron)
                     {
                         _economyMasterComponentRef.Unref().IronOther -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
                         _economyMasterComponentRef.Unref().FoodOther -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
 
                         _economyUnitMasterComponentRef.Unref().AmountBishopOther += 1;
-
                     }
                 }
 
@@ -697,6 +958,8 @@ internal class PhotonPunRPC : MonoBehaviour
             default:
                 break;
         }
+
+        Mistake(info.Sender, haveFood, haveWood, haveOre, haveIron, haveGold);
 
         RefreshAll();
     }
@@ -711,10 +974,18 @@ internal class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void MeltOreMaster(PhotonMessageInfo info)
     {
+        bool haveFood = true;
+        bool haveWood = true;
+        bool haveOre = true;
+        bool haveIron = true;
+        bool haveGold = true;
+
         if (info.Sender.IsMasterClient)
         {
-            if (_economyMasterComponentRef.Unref().OreMaster >= InstanceGame.StartValuesGameConfig.ORE_FOR_MELTING_ORE
-                && _economyMasterComponentRef.Unref().WoodMaster >= InstanceGame.StartValuesGameConfig.WOOD_FOR_MELTING_ORE)
+            haveWood = _economyMasterComponentRef.Unref().WoodMaster >= InstanceGame.StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
+            haveOre = _economyMasterComponentRef.Unref().OreMaster >= InstanceGame.StartValuesGameConfig.ORE_FOR_MELTING_ORE;
+
+            if (haveWood && haveOre)
             {
                 _economyMasterComponentRef.Unref().OreMaster -= InstanceGame.StartValuesGameConfig.ORE_FOR_MELTING_ORE;
                 _economyMasterComponentRef.Unref().WoodMaster -= InstanceGame.StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
@@ -724,8 +995,10 @@ internal class PhotonPunRPC : MonoBehaviour
         }
         else
         {
-            if (_economyMasterComponentRef.Unref().OreOther >= InstanceGame.StartValuesGameConfig.ORE_FOR_MELTING_ORE 
-                && _economyMasterComponentRef.Unref().WoodOther >= InstanceGame.StartValuesGameConfig.WOOD_FOR_MELTING_ORE)
+            haveWood = _economyMasterComponentRef.Unref().WoodOther >= InstanceGame.StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
+            haveOre = _economyMasterComponentRef.Unref().OreOther >= InstanceGame.StartValuesGameConfig.ORE_FOR_MELTING_ORE;
+
+            if (haveWood && haveOre)
             {
                 _economyMasterComponentRef.Unref().OreOther -= InstanceGame.StartValuesGameConfig.ORE_FOR_MELTING_ORE;
                 _economyMasterComponentRef.Unref().WoodOther -= InstanceGame.StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
@@ -733,6 +1006,8 @@ internal class PhotonPunRPC : MonoBehaviour
                 _economyMasterComponentRef.Unref().IronOther += 1;
             }
         }
+
+        _photonView.RPC(nameof(MistakeGeneral), info.Sender, !haveFood, !haveWood, !haveOre, !haveIron, !haveGold);
 
         RefreshAll();
     }

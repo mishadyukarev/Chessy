@@ -9,6 +9,7 @@ internal class GameObjectPool
     internal GameObject ParentScriptsGO;
 
     internal GameObject AudioSourceGO;
+    internal AudioSource AttackAudioSource;
 
 
     #region Cell
@@ -112,7 +113,7 @@ internal class GameObjectPool
     internal TextMeshProUGUI FoodAmmountText;
     internal TextMeshProUGUI WoodAmmountText;
     internal TextMeshProUGUI OreAmmountText;
-    internal TextMeshProUGUI MetalAmmountText;
+    internal TextMeshProUGUI IronAmmountText;
 
     internal Button ButtonLeave;
 
@@ -132,6 +133,16 @@ internal class GameObjectPool
 
     internal RectTransform ParentTheEndGameZone;
     internal TextMeshProUGUI TheEndGameText;
+
+    #endregion
+
+
+    #region RefreshZone
+
+    internal GameObject InGameRefreshZoneGO;
+
+    internal TextMeshProUGUI InGameRefreshZoneRefreshText;
+    internal Image InGameRefreshZoneRefreshImage;
 
     #endregion
 

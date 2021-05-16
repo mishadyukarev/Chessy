@@ -50,11 +50,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
         #endregion
 
 
-        #region Texts
-
-
-        #endregion
-
 
         #region Images
 
@@ -79,13 +74,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
         _buttonLeave = MainGame.InstanceGame.GameObjectPool.ButtonLeave;
         _buttonLeave.onClick.AddListener(delegate { Leave(); });
-
-
-        #region Ready Zone
-
-
-
-        #endregion
 
     }
 
@@ -112,15 +100,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
                 case UnitTypes.Pawn:
                     ActivateUniqueAbilities(default, true);
 
-                    if (_economyBuildingsComponentRef.Unref().IsSettedCity)
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
-
                     break;
 
                 default:
@@ -130,7 +109,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
         else
         {
             ActivateUniqueAbilities(default, false);
-            _rightDownUnitImage.gameObject.SetActive(false);
+            //_rightDownUnitImage.gameObject.SetActive(false);
         }
 
 
@@ -157,54 +136,10 @@ internal class UISystem : CellReduction, IEcsRunSystem
     }
     private void ActivateUniqueAbilities(UnitTypes unitType, bool isActive)
     {
-        //switch (unitType)
-        //{
-        //    case UnitTypes.None:
-        //        break;
-
-        //    case UnitTypes.King:
-
-
-
-        //        break;
-
-        //    case UnitTypes.Pawn:
-
-
-
-        //        break;
-
-        //    default:
-        //        break;
-        //}
-
         _uniqueAbilityButton1.gameObject.SetActive(isActive);
         _uniqueAbilityButton2.gameObject.SetActive(isActive);
         _uniqueAbilityButton3.gameObject.SetActive(isActive);
 
     }
-
-
-
-    #region Button Methods
-
-
-
-    #region Abilities
-
-    private void Build(BuildingTypes buildingType) => _photonPunRPC.Build(_selectorComponentRef.Unref().XYselectedCell, buildingType);
-
-
-
-    //private void UniqueAbilityButton1() => _photonPunRPC.RelaxUnit(CellUnitComponent(_xySelectedCell).IsProtected _selectorComponentRef.Unref().XYselectedCell);
-
-    #endregion
-
-
-
     private void Leave() => _photonManagerScene.LeaveRoom();
-
-
-
-    #endregion
 }
