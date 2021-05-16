@@ -48,12 +48,15 @@ internal class GameObjectPool
 
     internal Image LeftImage;
 
-    internal Button LeftImproveCityButton;
     internal Button LeftMeltButton;
 
-    internal Button GameLeftBuyPawnButton;
-    internal Button GameLeftBuyRookButton;
-    internal Button GameLeftBuyBishopButton;
+    internal Button InGameLeftUpgadePawnButton;
+    internal Button InGameLeftUpgadeRookButton;
+    internal Button InGameLeftUpgadeBishopButton;
+
+    internal Button InGameLeftBuyPawnButton;
+    internal Button InGameLeftBuyRookButton;
+    internal Button InGameLeftBuyBishopButton;
 
     #endregion
 

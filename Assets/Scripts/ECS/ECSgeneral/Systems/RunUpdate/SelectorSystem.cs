@@ -64,13 +64,13 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
     public void Run()
     {
-        _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.ForSelector, nameof(RaySystem));
+        _systemsGeneralManager.TryInvokeRunSystem(nameof(RaySystem), _systemsGeneralManager.ForSelectorSystem);
 
         if (_raycastHit2D)
         {
             if (_raycastHit2D.collider.gameObject.tag == _nameManager.TAG_CELL)
             {
-                _systemsGeneralManager.InvokeRunSystem(SystemGeneralTypes.ForSelector, nameof(GetterCellSystem));
+                _systemsGeneralManager.TryInvokeRunSystem(nameof(GetterCellSystem), _systemsGeneralManager.ForSelectorSystem);
 
                 if (_selectorComponentRef.Unref().IsGettedCell)
                 {
@@ -78,7 +78,7 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
                     if (_inputComponentRef.Unref().IsClick)
                     {
-                        if (_buttonComponent.Unref().IsDone)
+                        if (_buttonComponent.Unref().IsCurrentDone)
                         {
                             if (_canExecuteStartClick)
                             {
@@ -208,7 +208,7 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                             {
                                                 if (_cellBaseOperations.TryFindCellInList(_xySelectedCell, _selectorComponentRef.Unref().AvailableCellsForShift))
                                                 {
-                                                    _photonPunRPC.ShiftUnit(_xyPreviousCell, _xySelectedCell);
+                                                    _photonPunRPC.ShiftUnitToMaster(_xyPreviousCell, _xySelectedCell);
                                                 }
                                             }
                                         }

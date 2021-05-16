@@ -10,7 +10,7 @@ internal class DonerUISystem : IEcsRunSystem
     private Button _doneButton;
     private RawImage _donerRawImage = default;
 
-    private bool _isDone => _donerComponentRef.Unref().IsDone;
+    private bool _isDone => _donerComponentRef.Unref().IsCurrentDone;
 
     internal DonerUISystem(ECSmanager eCSmanager)
     {
@@ -37,5 +37,5 @@ internal class DonerUISystem : IEcsRunSystem
         }
     }
 
-    private void Done() => _photonPunRPC.Done(!_isDone);
+    private void Done() => _photonPunRPC.DoneToMaster(!_isDone);
 }

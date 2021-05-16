@@ -5,7 +5,8 @@ using static MainGame;
 internal class BuildingUISystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
-    private EcsComponentRef<EconomyComponent.BuildingComponent> _economyBuildingsComponentRef = default;
+
+    internal ref BuildingsInfoComponent BuildingInfoComponent => ref _entitiesGeneralManager.EconomyEntity.Get<BuildingsInfoComponent>();
 
     private PhotonPunRPC _photonPunRPC;
     private Button _buildingAbilityButton0;
@@ -21,7 +22,6 @@ internal class BuildingUISystem : CellReduction, IEcsRunSystem
         _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
-        _economyBuildingsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyBuildingsComponentRef;
 
         _buildingAbilityButton0 = InstanceGame.GameObjectPool.BuildingAbilityButton0;
         _buildingAbilityButton0.onClick.AddListener(delegate { Build(BuildingTypes.City); });
@@ -71,7 +71,7 @@ internal class BuildingUISystem : CellReduction, IEcsRunSystem
 
                     case UnitTypes.Pawn:
 
-                        if (!_economyBuildingsComponentRef.Unref().IsSettedCity) _buildingAbilityButton0.gameObject.SetActive(true);
+                        if (!BuildingInfoComponent.IsBuildedCityMaster) _buildingAbilityButton0.gameObject.SetActive(true);
                         _buildingAbilityButton1.gameObject.SetActive(true);
                         _buildingAbilityButton2.gameObject.SetActive(true);
                         _buildingAbilityButton3.gameObject.SetActive(true);

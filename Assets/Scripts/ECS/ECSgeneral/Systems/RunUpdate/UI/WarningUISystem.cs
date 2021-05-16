@@ -1,56 +1,55 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 
-internal class WarningUISystem : IEcsRunSystem
+internal class WarningUISystem : SystemReduction, IEcsRunSystem
 {
     private EcsComponentRef<DonerComponent> _donerComponentRef = default;
     private EcsComponentRef<TakerUnitUnitComponent> _selectorUnitComponent = default;
-    private EcsComponentRef<EconomyUIComponent> _economyUIComponentRef = default;
+    private ref EconomyUIComponent EconomyUIComponent => ref _entitiesGeneralManager.EconomyUIComponent;
 
     private float _timer;
 
-    internal WarningUISystem(ECSmanager eCSmanager)
+    internal WarningUISystem(ECSmanager eCSmanager) :base(eCSmanager)
     {
         _donerComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
         _selectorUnitComponent = eCSmanager.EntitiesGeneralManager.SelectorUnitComponent;
-        _economyUIComponentRef = eCSmanager.EntitiesGeneralManager.EconomyUIComponentRef;
     }
 
     public void Run()
     {
-        if (_donerComponentRef.Unref().IsMistaked)
+        if (_donerComponentRef.Unref().NeedSetKing)
         {
             _selectorUnitComponent.Unref().GameDownTakeUnit0.image.color = Color.red;
         }
 
-        if (_economyUIComponentRef.Unref().NeedFood
-            || _economyUIComponentRef.Unref().NeedWood
-            || _economyUIComponentRef.Unref().NeedOre
-            || _economyUIComponentRef.Unref().NeedIron
-            || _economyUIComponentRef.Unref().NeedGold)
+        if (EconomyUIComponent.NeedFood
+            || EconomyUIComponent.NeedWood
+            || EconomyUIComponent.NeedOre
+            || EconomyUIComponent.NeedIron
+            || EconomyUIComponent.NeedGold)
         {
 
             _timer += Time.deltaTime;
 
-            if (_economyUIComponentRef.Unref().NeedFood) _economyUIComponentRef.Unref().FoodText.color = Color.red;
-            if (_economyUIComponentRef.Unref().NeedWood) _economyUIComponentRef.Unref().WoodText.color = Color.red;
-            if (_economyUIComponentRef.Unref().NeedOre) _economyUIComponentRef.Unref().OreText.color = Color.red;
-            if (_economyUIComponentRef.Unref().NeedIron) _economyUIComponentRef.Unref().IronText.color = Color.red;
-            if (_economyUIComponentRef.Unref().NeedGold) _economyUIComponentRef.Unref().GoldText.color = Color.red;
+            if (EconomyUIComponent.NeedFood) EconomyUIComponent.FoodText.color = Color.red;
+            if (EconomyUIComponent.NeedWood) EconomyUIComponent.WoodText.color = Color.red;
+            if (EconomyUIComponent.NeedOre) EconomyUIComponent.OreText.color = Color.red;
+            if (EconomyUIComponent.NeedIron) EconomyUIComponent.IronText.color = Color.red;
+            if (EconomyUIComponent.NeedGold) EconomyUIComponent.GoldText.color = Color.red;
 
             if (_timer >= 2)
             {
-                _economyUIComponentRef.Unref().NeedFood = false;
-                _economyUIComponentRef.Unref().NeedWood = false;
-                _economyUIComponentRef.Unref().NeedOre = false;
-                _economyUIComponentRef.Unref().NeedIron = false;
-                _economyUIComponentRef.Unref().NeedGold = false;
+                EconomyUIComponent.NeedFood = false;
+                EconomyUIComponent.NeedWood = false;
+                EconomyUIComponent.NeedOre = false;
+                EconomyUIComponent.NeedIron = false;
+                EconomyUIComponent.NeedGold = false;
 
-                _economyUIComponentRef.Unref().FoodText.color = Color.white;
-                _economyUIComponentRef.Unref().WoodText.color = Color.white;
-                _economyUIComponentRef.Unref().OreText.color = Color.white;
-                _economyUIComponentRef.Unref().IronText.color = Color.white;
-                _economyUIComponentRef.Unref().GoldText.color = Color.white;
+                EconomyUIComponent.FoodText.color = Color.white;
+                EconomyUIComponent.WoodText.color = Color.white;
+                EconomyUIComponent.OreText.color = Color.white;
+                EconomyUIComponent.IronText.color = Color.white;
+                EconomyUIComponent.GoldText.color = Color.white;
 
                 _timer = 0;
             }

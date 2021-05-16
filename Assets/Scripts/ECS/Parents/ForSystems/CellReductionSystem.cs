@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using static MainGame;
 
-internal abstract class CellReduction : StartValuesReduction
+internal abstract class CellReduction : SystemReduction
 {
     protected CellBaseOperations _cellBaseOperations = default;
     protected CellFinderWay _cellFinderWay = default;
@@ -20,7 +20,7 @@ internal abstract class CellReduction : StartValuesReduction
     protected int Ycount => _cellComponentRef.GetUpperBound(Y) + 1;
 
 
-    internal CellReduction(ECSmanager eCSmanager)
+    internal CellReduction(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _cellBaseOperations = InstanceGame.CellManager.CellBaseOperations;
         _cellFinderWay = InstanceGame.CellManager.CellFinderWay;

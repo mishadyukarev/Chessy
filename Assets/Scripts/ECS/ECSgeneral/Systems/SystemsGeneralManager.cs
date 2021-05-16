@@ -2,15 +2,15 @@
 
 public class SystemsGeneralManager : SystemsManager
 {
-    private EcsSystems _forSelectorSystem = default;
+    internal EcsSystems ForSelectorSystem = default;
     internal SystemsGeneralManager(EcsWorld ecsWorld) : base(ecsWorld)
     {
-        _forSelectorSystem = new EcsSystems(_ecsWorld);
+        ForSelectorSystem = new EcsSystems(_ecsWorld);
     }
 
     internal void CreateInitSystems(ECSmanager eCSmanager)
     {
-        _updateSystems
+        UpdateRunSystems
             .Add(new InputSystem(eCSmanager), nameof(InputSystem))
             .Add(new SelectorSystem(eCSmanager), nameof(SelectorSystem))
             .Add(new SupportVisionSystem(eCSmanager), nameof(SupportVisionSystem))
@@ -31,7 +31,7 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new RefreshUISystem(eCSmanager), nameof(RefreshUISystem));
 
 
-        _forSelectorSystem
+        ForSelectorSystem
             .Add(new GetterCellSystem(eCSmanager), nameof(GetterCellSystem))
             .Add(new RaySystem(eCSmanager), nameof(RaySystem));
 
@@ -42,39 +42,9 @@ public class SystemsGeneralManager : SystemsManager
     {
         base.InitAndProcessInjectsSystems();
 
-        _forSelectorSystem.ProcessInjects();
+        ForSelectorSystem.ProcessInjects();
 
-        _forSelectorSystem.Init();
+        ForSelectorSystem.Init();
     }
 
-    internal bool InvokeRunSystem(SystemGeneralTypes systemGeneralType, string namedSystem)
-    {
-        switch (systemGeneralType)
-        {
-            case SystemGeneralTypes.Multiple:
-                _currentSystemsForInvoke = _multipleSystems;
-                break;
-
-            case SystemGeneralTypes.ForSelector:
-                _currentSystemsForInvoke = _forSelectorSystem;
-                break;
-
-            default:
-                return false;
-        }
-
-        return TryInvokeRunSystem(namedSystem, _currentSystemsForInvoke);
-    }
-
-    internal void ActiveRunSystem(bool isActive, SystemGeneralTypes systemGeneralType, string namedSystem)
-    {
-        switch (systemGeneralType)
-        {
-            case SystemGeneralTypes.Update:
-                _currentSystemsForInvoke = _updateSystems;
-                break;
-        }
-
-        ActiveRunSystem(isActive, namedSystem, _currentSystemsForInvoke);
-    }
 }

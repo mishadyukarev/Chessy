@@ -58,7 +58,10 @@
         #endregion
 
 
-        _eCSmanager = new ECSmanager(_photonGameManager, _cellManager);
+        _eCSmanager = new ECSmanager();
+
+        _photonGameManager.PhotonPunRPC.InitAfterECS(_eCSmanager);
+        _cellManager.CellFinderWay.InitAfterECS(_eCSmanager);
     }
 
 

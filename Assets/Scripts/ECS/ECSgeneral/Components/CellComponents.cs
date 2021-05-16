@@ -138,8 +138,16 @@ public struct CellComponent
         private GameObject _kingGO;
         private GameObject _rookGO;
         private GameObject _bishopGO;
-        private SpriteRenderer _unitPawnSpriteRender;
-        private SpriteRenderer _unitKingSpriteRender;
+        private SpriteRenderer _pawnSR;
+        private SpriteRenderer _kingSR;
+
+        internal int AmountUpgradePawnMaster;
+        internal int AmountUpgradeRookMaster;
+        internal int AmountUpgradeBishopMaster;
+
+        internal int AmountUpgradePawnOther;
+        internal int AmountUpgradeRookOther;
+        internal int AmountUpgradeBishopOther;
 
         internal UnitComponent(int x, int y)
         {
@@ -157,13 +165,21 @@ public struct CellComponent
             _isRelaxed = default;
             _player = default;
 
+            AmountUpgradePawnMaster = default;
+            AmountUpgradeRookMaster = default;
+            AmountUpgradeBishopMaster = default;
+
+            AmountUpgradePawnOther = default;
+            AmountUpgradeRookOther = default;
+            AmountUpgradeBishopOther = default;
+
             _pawnGO = InstanceGame.GameObjectPool.CellUnitPawnGOs[x, y];
             _kingGO = InstanceGame.GameObjectPool.CellUnitKingGOs[x, y];
             _rookGO = InstanceGame.GameObjectPool.CellUnitRookGOs[x, y];
             _bishopGO = InstanceGame.GameObjectPool.CellUnitBishopGOs[x, y];
 
-            _unitPawnSpriteRender = InstanceGame.GameObjectPool.CellUnitPawnGOs[x, y].GetComponent<SpriteRenderer>();
-            _unitKingSpriteRender = InstanceGame.GameObjectPool.CellUnitKingGOs[x, y].GetComponent<SpriteRenderer>();
+            _pawnSR = InstanceGame.GameObjectPool.CellUnitPawnGOs[x, y].GetComponent<SpriteRenderer>();
+            _kingSR = InstanceGame.GameObjectPool.CellUnitKingGOs[x, y].GetComponent<SpriteRenderer>();
         }
 
 
@@ -225,6 +241,36 @@ public struct CellComponent
             set { _amountHealth = value; }
         }
 
+        internal int MaxAmountHealth
+        {
+            get
+            {
+                switch (_unitType)
+                {
+                    case UnitTypes.None:
+                        return default;
+
+                    case UnitTypes.King:
+                        return InstanceGame.StartValuesGameConfig.AMOUNT_HEALTH_KING;
+
+                    case UnitTypes.Pawn:
+                        if(_player.IsMasterClient) return InstanceGame.StartValuesGameConfig.AMOUNT_HEALTH_PAWN + AmountUpgradePawnMaster * InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
+                        else return InstanceGame.StartValuesGameConfig.AMOUNT_HEALTH_PAWN + AmountUpgradePawnOther * InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
+
+                    case UnitTypes.Rook:
+                        if (_player.IsMasterClient) return InstanceGame.StartValuesGameConfig.AMOUNT_HEALTH_ROOK + AmountUpgradeRookMaster * InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
+                        else return InstanceGame.StartValuesGameConfig.AMOUNT_HEALTH_ROOK + AmountUpgradeRookOther * InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
+
+                    case UnitTypes.Bishop:
+                        if (_player.IsMasterClient) return InstanceGame.StartValuesGameConfig.AMOUNT_HEALTH_BISHOP + AmountUpgradeBishopMaster * InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
+                        else return InstanceGame.StartValuesGameConfig.AMOUNT_HEALTH_BISHOP + AmountUpgradeBishopOther * InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
+
+                    default:
+                        return default;
+                }
+            }
+        }
+
         #endregion
 
 
@@ -243,13 +289,16 @@ public struct CellComponent
                         return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_KING;
 
                     case UnitTypes.Pawn:
-                        return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN;
+                        if (_player.IsMasterClient) return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN + AmountUpgradePawnMaster * InstanceGame.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_PAWN;
+                        else return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN + AmountUpgradePawnOther * InstanceGame.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_PAWN;
 
                     case UnitTypes.Rook:
-                        return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_ROOK;
+                        if (_player.IsMasterClient) return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_ROOK + AmountUpgradeRookMaster * InstanceGame.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_ROOK;
+                        else return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_ROOK + AmountUpgradeRookOther * InstanceGame.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_ROOK;
 
                     case UnitTypes.Bishop :
-                        return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_BISHOP;
+                        if (_player.IsMasterClient) return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_BISHOP + AmountUpgradeBishopMaster * InstanceGame.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_BISHOP;
+                        else return InstanceGame.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_BISHOP + AmountUpgradeBishopOther * InstanceGame.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_BISHOP;
 
                     default:
                         return default;
@@ -270,13 +319,17 @@ public struct CellComponent
                         return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_KING;
 
                     case UnitTypes.Pawn:
-                        return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_PAWN;
+                        if (_player.IsMasterClient) return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_PAWN + AmountUpgradePawnMaster * InstanceGame.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_PAWN;
+                        else return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_PAWN + AmountUpgradePawnOther * InstanceGame.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_PAWN;
 
                     case UnitTypes.Rook:
-                        return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_ROOK;
+                        if (_player.IsMasterClient) return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_ROOK + AmountUpgradeRookMaster * InstanceGame.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_ROOK;
+                        else return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_ROOK + AmountUpgradeRookOther * InstanceGame.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_ROOK;
 
                     case UnitTypes.Bishop:
-                        return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_BISHOP;
+                        if (_player.IsMasterClient) return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_BISHOP + AmountUpgradeBishopMaster * InstanceGame.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_BISHOP;
+                        else return InstanceGame.StartValuesGameConfig.UNIQIE_POWER_DAMAGE_BISHOP + AmountUpgradeBishopOther * InstanceGame.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_BISHOP;
+
 
                     default:
                         return default;
@@ -354,7 +407,7 @@ public struct CellComponent
                                 break;
 
                             case EnvironmentTypes.Hill:
-                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_TREE_FOR_KING;
+                                powerProtection += InstanceGame.StartValuesGameConfig.PROTECTION_HILL_FOR_KING;
                                 break;
                         }
 
@@ -570,7 +623,6 @@ public struct CellComponent
             else unitSpriteRender.color = Color.red;
         }
 
-
         internal void ResetUnit()
         {
             UnitTypes unitType = default;
@@ -582,6 +634,7 @@ public struct CellComponent
 
             SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player);
         }
+
         internal void SetUnit(in UnitComponent cellUnitComponent)
         {
             var unitType = cellUnitComponent._unitType;
@@ -593,6 +646,7 @@ public struct CellComponent
 
             SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player);
         }
+
         internal void SetUnit(in UnitTypes unitType, in int amountHealth, in int amountSteps, in bool isProtected, in bool isRelaxed, in Player player)
         {
             _unitType = unitType;
@@ -613,12 +667,12 @@ public struct CellComponent
             {
                 case UnitTypes.King:
                     _kingGO.SetActive(true);
-                    SetColorUnit(_unitKingSpriteRender, _player);
+                    SetColorUnit(_kingSR, _player);
                     break;
 
                 case UnitTypes.Pawn:
                     _pawnGO.SetActive(true);
-                    SetColorUnit(_unitPawnSpriteRender, _player);
+                    SetColorUnit(_pawnSR, _player);
                     break;
 
                 case UnitTypes.Rook:
@@ -638,12 +692,12 @@ public struct CellComponent
             {
                 case UnitTypes.King:
                     _kingGO.SetActive(isActive);
-                    if (player != default) SetColorUnit(_unitKingSpriteRender, player);
+                    if (player != default) SetColorUnit(_kingSR, player);
                     break;
 
                 case UnitTypes.Pawn:
                     _pawnGO.SetActive(isActive);
-                    if (player != default) SetColorUnit(_unitPawnSpriteRender, player);
+                    if (player != default) SetColorUnit(_pawnSR, player);
                     break;
 
                 case UnitTypes.Rook:

@@ -32,7 +32,6 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_BISHOP_MASTER = 0;
     internal readonly int AMOUNT_BISHOP_OTHER = 0;
 
-
     #endregion
 
 
@@ -41,46 +40,79 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_GOLD_MASTER = 0;
     internal readonly int AMOUNT_GOLD_OTHER = 0;
 
-    internal readonly int AMOUNT_FOOD_MASTER = 20;
-    internal readonly int AMOUNT_FOOD_OTHER = 20;
+    internal readonly int AMOUNT_FOOD_MASTER = 40;
+    internal readonly int AMOUNT_FOOD_OTHER = 40;
 
-    internal readonly int AMOUNT_WOOD_MASTER = 20;
-    internal readonly int AMOUNT_WOOD_OTHER = 20;
+    internal readonly int AMOUNT_WOOD_MASTER = 40;
+    internal readonly int AMOUNT_WOOD_OTHER = 40;
 
     internal readonly int AMOUNT_ORE_MASTER = 0;
     internal readonly int AMOUNT_ORE_OTHER = 0;
 
-    internal readonly int AMOUNT_IRON_MASTER = 1;
-    internal readonly int AMOUNT_IRON_OTHER = 1;
+    internal readonly int AMOUNT_IRON_MASTER = 0;
+    internal readonly int AMOUNT_IRON_OTHER = 0;
 
     #endregion
 
 
     #region Costs
 
-    #region Unit
+    #region Create Unit
 
-
-
-    #endregion
     internal readonly int FOOD_FOR_BUYING_PAWN = 5;
     internal readonly int WOOD_FOR_BUYING_PAWN = 0;
     internal readonly int ORE_FOR_BUYING_PAWN = 0;
     internal readonly int IRON_FOR_BUYING_PAWN = 0;
     internal readonly int GOLD_FOR_BUYING_PAWN = 0;
 
-    internal readonly int FOOD_FOR_MELTING_ORE = 0;
+    internal readonly int FOOD_FOR_BUYING_ROOK = 5;
+    internal readonly int WOOD_FOR_BUYING_ROOK = 10;
+    internal readonly int ORE_FOR_BUYING_ROOK = 0;
+    internal readonly int IRON_FOR_BUYING_ROOK = 0;
+    internal readonly int GOLD_FOR_BUYING_ROOK = 0;
+
+    internal readonly int FOOD_FOR_BUYING_BISHOP = 5;
+    internal readonly int WOOD_FOR_BUYING_BISHOP = 10;
+    internal readonly int ORE_FOR_BUYING_BISHOP = 0;
+    internal readonly int IRON_FOR_BUYING_BISHOP = 0;
+    internal readonly int GOLD_FOR_BUYING_BISHOP = 0;
+
+
+    #endregion
+
+
+    #region Upgrade
+
+    internal readonly int FOOD_FOR_UPGRADE_PAWN = 0;
+    internal readonly int WOOD_FOR_UPGRADE_PAWN = 0;
+    internal readonly int ORE_FOR_UPGRADE_PAWN = 0;
+    internal readonly int IRON_FOR_UPGRADE_PAWN = 1;
+    internal readonly int GOLD_FOR_UPGRADE_PAWN = 0;
+
+    internal readonly int FOOD_FOR_UPGRADE_ROOK = 0;
+    internal readonly int WOOD_FOR_UPGRADE_ROOK = 0;
+    internal readonly int ORE_FOR_UPGRADE_ROOK = 0;
+    internal readonly int IRON_FOR_UPGRADE_ROOK = 1;
+    internal readonly int GOLD_FOR_UPGRADE_ROOK = 0;
+
+    internal readonly int FOOD_FOR_UPGRADE_BISHOP = 0;
+    internal readonly int WOOD_FOR_UPGRADE_BISHOP = 0;
+    internal readonly int ORE_FOR_UPGRADE_BISHOP = 0;
+    internal readonly int IRON_FOR_UPGRADE_BISHOP = 1;
+    internal readonly int GOLD_FOR_UPGRADE_BISHOP = 0;
+
+    #endregion
+
+
+    #region Melting
+
+    internal readonly int FOOD_FOR_MELTING_ORE = 10;
     internal readonly int WOOD_FOR_MELTING_ORE = 10;
-    internal readonly int ORE_FOR_MELTING_ORE = 5;
+    internal readonly int ORE_FOR_MELTING_ORE = 10;
     internal readonly int IRON_FOR_MELTING_ORE = 0;
     internal readonly int GOLD_FOR_MELTING_ORE = 0;
 
-
-    internal readonly int IRON_FOR_BUYING_ROOK = 1;
-    internal readonly int FOOD_FOR_BUYING_ROOK = 5;
-
-    internal readonly int IRON_FOR_BUYING_BISHOP = 1;
-    internal readonly int FOOD_FOR_BUYING_BISHOP = 5;
+    #endregion
 
 
     #region Building
@@ -136,9 +168,24 @@ public class StartValuesGameConfig : ScriptableObject
 
     private readonly float PERCENT_FOR_HEALTH_KING = 0.15f;
     private readonly float PERCENT_FOR_HEALTH_PAWN = 0.15f;
+    private readonly float PERCENT_FOR_HEALTH_ROOK = 0.15f;
+    private readonly float PERCENT_FOR_HEALTH_BISHOP = 0.15f;
 
     internal int HEALTH_FOR_ADDING_KING => (int)(AMOUNT_HEALTH_KING * PERCENT_FOR_HEALTH_KING);
     internal int HEALTH_FOR_ADDING_PAWN => (int)(AMOUNT_HEALTH_PAWN * PERCENT_FOR_HEALTH_PAWN);
+    internal int HEALTH_FOR_ADDING_ROOK => (int)(AMOUNT_HEALTH_KING * PERCENT_FOR_HEALTH_ROOK);
+    internal int HEALTH_FOR_ADDING_BISHOP => (int)(AMOUNT_HEALTH_PAWN * PERCENT_FOR_HEALTH_BISHOP);
+
+
+    private readonly float PERCENT_UPGRADE_HEALTH_KING = 0.15f;
+    private readonly float PERCENT_UPGRADE_HEALTH_PAWN = 0.15f;
+    private readonly float PERCENT_UPGRADE_HEALTH_ROOK = 0.15f;
+    private readonly float PERCENT_UPGRADE_HEALTH_BISHOP = 0.15f;
+
+    internal int HEALTH_UPGRADE_ADDING_KING => (int)(AMOUNT_HEALTH_KING * PERCENT_UPGRADE_HEALTH_KING);
+    internal int HEALTH_UPGRADE_ADDING_PAWN => (int)(AMOUNT_HEALTH_PAWN * PERCENT_UPGRADE_HEALTH_PAWN);
+    internal int HEALTH_UPGRADE_ADDING_ROOK => (int)(AMOUNT_HEALTH_ROOK * PERCENT_UPGRADE_HEALTH_ROOK);
+    internal int HEALTH_UPGRADE_ADDING_BISHOP => (int)(AMOUNT_HEALTH_BISHOP * PERCENT_UPGRADE_HEALTH_BISHOP);
 
     #endregion
 
@@ -154,6 +201,17 @@ public class StartValuesGameConfig : ScriptableObject
     internal int UNIQIE_POWER_DAMAGE_PAWN => SIMPLE_POWER_DAMAGE_PAWN / 3;
     internal int UNIQIE_POWER_DAMAGE_ROOK => SIMPLE_POWER_DAMAGE_ROOK / 3;
     internal int UNIQIE_POWER_DAMAGE_BISHOP => SIMPLE_POWER_DAMAGE_BISHOP / 3;
+
+
+    private readonly float PERCENT_UPGRADE_DAMAGE_KING = 0.15f;
+    private readonly float PERCENT_UPGRADE_DAMAGE_PAWN = 0.15f;
+    private readonly float PERCENT_UPGRADE_DAMAGE_ROOK = 0.15f;
+    private readonly float PERCENT_UPGRADE_DAMAGE_BISHOP = 0.15f;
+
+    internal int DAMAGE_UPGRADE_ADDING_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_UPGRADE_DAMAGE_KING);
+    internal int DAMAGE_UPGRADE_ADDING_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_UPGRADE_DAMAGE_PAWN);
+    internal int DAMAGE_UPGRADE_ADDING_ROOK => (int)(SIMPLE_POWER_DAMAGE_ROOK * PERCENT_UPGRADE_DAMAGE_ROOK);
+    internal int DAMAGE_UPGRADE_ADDING_BISHOP => (int)(SIMPLE_POWER_DAMAGE_BISHOP * PERCENT_UPGRADE_DAMAGE_BISHOP);
 
     #endregion
 
@@ -182,15 +240,15 @@ public class StartValuesGameConfig : ScriptableObject
     private readonly float PERCENT_PROTECTION_FOOD_FOR_ROOK = -0.1f;
     private readonly float PERCENT_PROTECTION_FOOD_FOR_BISHOP = -0.1f;
 
-    private readonly float PERCENT_PROTECTION_TREE_FOR_KING = 0.1f;
-    private readonly float PERCENT_PROTECTION_TREE_FOR_PAWN = 0.1f;
-    private readonly float PERCENT_PROTECTION_TREE_FOR_ROOK = 0.1f;
-    private readonly float PERCENT_PROTECTION_TREE_FOR_BISHOP = 0.1f;
+    private readonly float PERCENT_PROTECTION_TREE_FOR_KING = 0.15f;
+    private readonly float PERCENT_PROTECTION_TREE_FOR_PAWN = 0.15f;
+    private readonly float PERCENT_PROTECTION_TREE_FOR_ROOK = 0.15f;
+    private readonly float PERCENT_PROTECTION_TREE_FOR_BISHOP = 0.15f;
 
-    private readonly float PERCENT_PROTECTION_HILL_FOR_KING = 0.10f;
-    private readonly float PERCENT_PROTECTION_HILL_FOR_PAWN = 0.10f;
-    private readonly float PERCENT_PROTECTION_HILL_FOR_ROOK = 0.10f;
-    private readonly float PERCENT_PROTECTION_HILL_FOR_BISHOP = 0.10f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_KING = 0.15f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_PAWN = 0.15f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_ROOK = 0.15f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_BISHOP = 0.15f;
 
 
     internal int PROTECTION_FOOD_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_PROTECTION_FOOD_FOR_KING);

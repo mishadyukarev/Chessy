@@ -8,8 +8,11 @@ internal class CityUISystem : CellReduction, IEcsRunSystem
 
     private Image _leftImage;
 
-    private Button _improveCityButton;
     private Button _meltOreButton;
+
+    private Button _inGameLeftUpgradePawnButton;
+    private Button _inGameLeftUpgradeRookButton;
+    private Button _inGameLeftUpgradeBishopButton;
 
     private Button _buyPawnButton;
     private Button _gameLeftBuyRookButton;
@@ -27,19 +30,24 @@ internal class CityUISystem : CellReduction, IEcsRunSystem
 
         _leftImage = InstanceGame.GameObjectPool.LeftImage;
 
+        _inGameLeftUpgradePawnButton = InstanceGame.GameObjectPool.InGameLeftUpgadePawnButton;
+        _inGameLeftUpgradePawnButton.onClick.AddListener(delegate { UpgradeUnit(UnitTypes.Pawn); });
 
-        _buyPawnButton = InstanceGame.GameObjectPool.GameLeftBuyPawnButton;
+        _inGameLeftUpgradeRookButton = InstanceGame.GameObjectPool.InGameLeftUpgadeRookButton;
+        _inGameLeftUpgradeRookButton.onClick.AddListener(delegate { UpgradeUnit(UnitTypes.Rook); });
+
+        _inGameLeftUpgradeBishopButton = InstanceGame.GameObjectPool.InGameLeftUpgadeBishopButton;
+        _inGameLeftUpgradeBishopButton.onClick.AddListener(delegate { UpgradeUnit(UnitTypes.Bishop); });
+
+
+        _buyPawnButton = InstanceGame.GameObjectPool.InGameLeftBuyPawnButton;
         _buyPawnButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Pawn); });
 
-        _gameLeftBuyRookButton = InstanceGame.GameObjectPool.GameLeftBuyRookButton;
+        _gameLeftBuyRookButton = InstanceGame.GameObjectPool.InGameLeftBuyRookButton;
         _gameLeftBuyRookButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Rook); });
 
-        _gameLeftBuyBishopButton = InstanceGame.GameObjectPool.GameLeftBuyBishopButton;
+        _gameLeftBuyBishopButton = InstanceGame.GameObjectPool.InGameLeftBuyBishopButton;
         _gameLeftBuyBishopButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Bishop); });
-
-
-        _improveCityButton = InstanceGame.GameObjectPool.LeftImproveCityButton;
-        _improveCityButton.onClick.AddListener(delegate { ImproveCity(); });
 
         _meltOreButton = InstanceGame.GameObjectPool.LeftMeltButton;
         _meltOreButton.onClick.AddListener(delegate { MeltOre(); });
@@ -68,7 +76,7 @@ internal class CityUISystem : CellReduction, IEcsRunSystem
 
     private void BuyUnit(UnitTypes unitType) => _photonPunRPC.CreateUnit(unitType);
 
-    private void ImproveCity() { }
+    private void UpgradeUnit(UnitTypes unitType) => _photonPunRPC.UpgradeUnitToMaster(unitType);
 
     private void MeltOre() => _photonPunRPC.MeltOre();
 }

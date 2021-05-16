@@ -5,11 +5,6 @@ using static MainGame;
 internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
 {
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
-    private EcsComponentRef<TakerUnitUnitComponent> _selectorUnitComponentRef = default;
-    private EcsComponentRef<EconomyComponent.UnitComponent> _economyUnitsComponentRef = default;
-    private EcsComponentRef<DonerComponent> _doneComponentRef = default;
-
-    private PhotonPunRPC _photonPunRPC = default;
 
     private TextMeshProUGUI _hpCurrentUnitText;
     private TextMeshProUGUI _damageCurrentUnitText;
@@ -20,17 +15,12 @@ internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
 
     internal ConditionUnitUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
-
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
-        _selectorUnitComponentRef = eCSmanager.EntitiesGeneralManager.SelectorUnitComponent;
-        _economyUnitsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyUnitsComponentRef;
-        _doneComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
 
-        _hpCurrentUnitText = MainGame.InstanceGame.GameObjectPool.HpCurrentUnitText;
-        _damageCurrentUnitText = MainGame.InstanceGame.GameObjectPool.DamageCurrentUnitText;
-        _protectionCurrentUnitText = MainGame.InstanceGame.GameObjectPool.ProtectionCurrentUnitText;
-        _stepsCurrentUnitText = MainGame.InstanceGame.GameObjectPool.StepsCurrentUnitText;
+        _hpCurrentUnitText = InstanceGame.GameObjectPool.HpCurrentUnitText;
+        _damageCurrentUnitText = InstanceGame.GameObjectPool.DamageCurrentUnitText;
+        _protectionCurrentUnitText = InstanceGame.GameObjectPool.ProtectionCurrentUnitText;
+        _stepsCurrentUnitText = InstanceGame.GameObjectPool.StepsCurrentUnitText;
     }
 
     public void Run()

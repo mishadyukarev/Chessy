@@ -11,7 +11,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     private Image _rightUpUnitImage;
     private Image _rightMiddleUnitImage;
-    private Image _rightDownUnitImage;
     private Image _leftEconomyImage;
 
     private Button _buttonLeave;
@@ -28,8 +27,8 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
 
-    private EcsComponentRef<EconomyComponent.BuildingComponent> _economyBuildingsComponentRef;
-    private EcsComponentRef<EconomyComponent.UnitComponent> _economyUnitsComponentRef;
+    internal ref BuildingsInfoComponent BuildingsInfoComponent => ref _entitiesGeneralManager.EconomyEntity.Get<BuildingsInfoComponent>();
+    internal ref UnitsInfoComponent UnitsInfoComponent => ref _entitiesGeneralManager.EconomyEntity.Get<UnitsInfoComponent>();
 
     private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
 
@@ -42,9 +41,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
         #region ComponetRefs
 
-        _economyBuildingsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyBuildingsComponentRef;
-        _economyUnitsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyUnitsComponentRef;
-
         _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
 
         #endregion
@@ -55,7 +51,6 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
         _rightUpUnitImage = MainGame.InstanceGame.GameObjectPool.RightUpImage;
         _rightMiddleUnitImage = MainGame.InstanceGame.GameObjectPool.RightMiddleImage;
-        _rightDownUnitImage = MainGame.InstanceGame.GameObjectPool.RightDownImage;
         _leftEconomyImage = MainGame.InstanceGame.GameObjectPool.LeftImage;
 
         _rightMiddleUnitImage.gameObject.SetActive(false);
@@ -80,12 +75,9 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     public void Run()
     {
-        var xySelectedCell = _selectorComponentRef.Unref().XYselectedCell;
-
-
-        if (CellUnitComponent(xySelectedCell).IsMine)
+        if (CellUnitComponent(_xySelectedCell).IsMine)
         {
-            switch (CellUnitComponent(xySelectedCell).UnitType)
+            switch (CellUnitComponent(_xySelectedCell).UnitType)
             {
                 case UnitTypes.None:
 
@@ -109,13 +101,12 @@ internal class UISystem : CellReduction, IEcsRunSystem
         else
         {
             ActivateUniqueAbilities(default, false);
-            //_rightDownUnitImage.gameObject.SetActive(false);
         }
 
 
 
 
-        switch (CellBuildingComponent(xySelectedCell).BuildingType)
+        switch (CellBuildingComponent(_xySelectedCell).BuildingType)
         {
             case BuildingTypes.None:
                 ActiveLeftEconomy(false);

@@ -6,18 +6,9 @@ public sealed class SystemsMasterManager : SystemsManager
 
     internal void CreateInitSystems(ECSmanager eCSmanager)
     {
-        _soloSystems
-            .Add(new RefresherMasterSystem(eCSmanager), nameof(RefresherMasterSystem))
+        SoloSystems
+            .Add(new RefreshMasterSystem(eCSmanager), nameof(RefreshMasterSystem))
             .Add(new VisibilityUnitsMasterSystem(eCSmanager), nameof(VisibilityUnitsMasterSystem));
-
-        _multipleSystems
-
-            .Add(new SetterUnitMasterSystem(eCSmanager), nameof(SetterUnitMasterSystem))
-            .Add(new ShiftUnitMasterSystem(eCSmanager), nameof(ShiftUnitMasterSystem))
-            .Add(new BuilderCellMasterSystem(eCSmanager), nameof(BuilderCellMasterSystem))
-            .Add(new AttackUnitMasterSystem(eCSmanager), nameof(AttackUnitMasterSystem))
-            .Add(new GetterUnitMasterSystem(eCSmanager), nameof(GetterUnitMasterSystem))
-            .Add(new ProtecterUnitMasterSystem(eCSmanager), nameof(ProtecterUnitMasterSystem));
 
         InitAndProcessInjectsSystems();
     }
@@ -25,25 +16,5 @@ public sealed class SystemsMasterManager : SystemsManager
     internal override void InitAndProcessInjectsSystems()
     {
         base.InitAndProcessInjectsSystems();
-    }
-
-
-    public bool InvokeRunSystem(SystemMasterTypes systemType, string namedSystem)
-    {
-        switch (systemType)
-        {
-            case SystemMasterTypes.Multiple:
-                _currentSystemsForInvoke = _multipleSystems;
-                break;
-
-            case SystemMasterTypes.Solo:
-                _currentSystemsForInvoke = _soloSystems;
-                break;
-
-            default:
-                return false;
-        }
-
-        return TryInvokeRunSystem(namedSystem, _currentSystemsForInvoke);
     }
 }

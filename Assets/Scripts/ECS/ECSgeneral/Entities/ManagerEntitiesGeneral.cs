@@ -17,10 +17,11 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     private EcsEntity _rayEntity;
     private EcsEntity _animationAttackUnitEntity;
     private EcsEntity _zoneEntity;
-    private EcsEntity _whoDoEntity;
     private EcsEntity _refreshEntity;
     private EcsEntity _infoMotionEntity;
     private EcsEntity _elseEntity;
+
+    internal ref EcsEntity EconomyEntity => ref _economyEntity;
 
     private EcsComponentRef<CellComponent>[,] _cellComponentRef;
     private EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef;
@@ -31,7 +32,6 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     #region Properies
 
-
     #region Cell
 
     internal EcsComponentRef<CellComponent>[,] CellComponentRef => _cellComponentRef;
@@ -39,18 +39,6 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal EcsComponentRef<CellComponent.SupportVisionComponent>[,] CellSupportVisionComponentRef => _cellSupportVisionComponentRef;
     internal EcsComponentRef<CellComponent.UnitComponent>[,] CellUnitComponentRef => _cellUnitComponentRef;
     internal EcsComponentRef<CellComponent.BuildingComponent>[,] CellBuildingComponentRef => _cellBuildingComponentRef;
-
-    #endregion
-
-
-    #region Economy
-
-    internal EcsComponentRef<EconomyComponent> EconomyComponentRef
-        => _economyEntity.Ref<EconomyComponent>();
-    internal EcsComponentRef<EconomyComponent.UnitComponent> EconomyUnitsComponentRef
-        => _economyEntity.Ref<EconomyComponent.UnitComponent>();
-    internal EcsComponentRef<EconomyComponent.BuildingComponent> EconomyBuildingsComponentRef
-        => _economyEntity.Ref<EconomyComponent.BuildingComponent>();
 
     #endregion
 
@@ -71,7 +59,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal EcsComponentRef<ZoneComponent> ZoneComponentRef => _zoneEntity.Ref<ZoneComponent>();
     internal EcsComponentRef<InfoRefreshComponent> RefreshComponentRef => _refreshEntity.Ref<InfoRefreshComponent>();
     internal EcsComponentRef<InfoMotionComponent> InfoMotionComponentRef => _infoMotionEntity.Ref<InfoMotionComponent>();
-    internal EcsComponentRef<EconomyUIComponent> EconomyUIComponentRef => _elseEntity.Ref<EconomyUIComponent>();
+    internal ref EconomyUIComponent EconomyUIComponent => ref _elseEntity.Get<EconomyUIComponent>();
 
     #endregion
 
@@ -81,12 +69,15 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     public EntitiesGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    internal void CreateEntities(ECSmanager eCSmanager)
+    internal void CreateEntities()
     {
         var startValuesGameConfig = InstanceGame.StartValuesGameConfig;
-        var systemsGeneralManager = eCSmanager.SystemsGeneralManager;
-        var cellManager = InstanceGame.CellManager;
-        var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
+
+        _economyEntity = _ecsWorld.NewEntity()
+            .Replace(new EconomyComponent(startValuesGameConfig))
+            .Replace(new UnitsInfoComponent(startValuesGameConfig))
+            .Replace(new BuildingsInfoComponent(startValuesGameConfig));
+
 
         _donerEntity = _ecsWorld.NewEntity()
             .Replace(new DonerComponent());
@@ -100,10 +91,6 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         _selectedUnitEntity = _ecsWorld.NewEntity()
             .Replace(new SelectedUnitComponent());
 
-        _economyEntity = _ecsWorld.NewEntity()
-            .Replace(new EconomyComponent())
-            .Replace(new EconomyComponent.UnitComponent())
-            .Replace(new EconomyComponent.BuildingComponent());
 
         _soundEntity = _ecsWorld.NewEntity()
             .Replace(new SoundComponent());
@@ -137,7 +124,6 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
         _elseEntity = _ecsWorld.NewEntity()
             .Replace(new EconomyUIComponent(InstanceGame.GameObjectPool));
-
 
         #region Cells
 

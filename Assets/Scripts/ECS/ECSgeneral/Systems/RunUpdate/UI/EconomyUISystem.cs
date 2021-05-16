@@ -1,9 +1,9 @@
 ﻿using Leopotam.Ecs;
 using TMPro;
 
-internal class EconomyUISystem : IEcsRunSystem
+internal class EconomyUISystem : SystemReduction, IEcsRunSystem
 {
-    private EcsComponentRef<EconomyComponent> _economyComponentRef = default;
+    private ref EconomyComponent EconomyComponent => ref _entitiesGeneralManager.EconomyEntity.Get<EconomyComponent>();
 
     private TextMeshProUGUI _goldAmountText;
     private TextMeshProUGUI _foodAmountText;
@@ -11,10 +11,8 @@ internal class EconomyUISystem : IEcsRunSystem
     private TextMeshProUGUI _oreAmountText;
     private TextMeshProUGUI _ironAmountText;
 
-    internal EconomyUISystem(ECSmanager eCSmanager)
+    internal EconomyUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _economyComponentRef = eCSmanager.EntitiesGeneralManager.EconomyComponentRef;
-
         _goldAmountText = MainGame.InstanceGame.GameObjectPool.GoldAmmountText;
         _foodAmountText = MainGame.InstanceGame.GameObjectPool.FoodAmmountText;
         _woodAmountText = MainGame.InstanceGame.GameObjectPool.WoodAmmountText;
@@ -24,10 +22,10 @@ internal class EconomyUISystem : IEcsRunSystem
 
     public void Run()
     {
-        _goldAmountText.text = _economyComponentRef.Unref().Gold.ToString();
-        _foodAmountText.text = _economyComponentRef.Unref().Food.ToString();
-        _woodAmountText.text = _economyComponentRef.Unref().Wood.ToString();
-        _oreAmountText.text = _economyComponentRef.Unref().Ore.ToString();
-        _ironAmountText.text = _economyComponentRef.Unref().Iron.ToString();
+        _foodAmountText.text = EconomyComponent.CurrentFood.ToString();
+        _woodAmountText.text = EconomyComponent.CurrentWood.ToString();
+        _oreAmountText.text = EconomyComponent.CurrentOre.ToString();
+        _ironAmountText.text = EconomyComponent.CurrentIron.ToString();
+        _goldAmountText.text = EconomyComponent.CurrentGold.ToString();
     }
 }

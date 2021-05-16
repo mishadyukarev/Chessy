@@ -2,23 +2,25 @@
 using UnityEngine.UI;
 using static MainGame;
 
-internal class TakerUnitUISystem : IEcsRunSystem
+internal class TakerUnitUISystem : SystemReduction, IEcsRunSystem
 {
     private EcsComponentRef<TakerUnitUnitComponent> _selectorUnitComponentRef = default;
-    private EcsComponentRef<EconomyComponent.UnitComponent> _economyUnitsComponentRef = default;
     private EcsComponentRef<DonerComponent> _doneComponentRef = default;
+
+
+    private ref UnitsInfoComponent UnitsInfoComponent => ref _entitiesGeneralManager.EconomyEntity.Get<UnitsInfoComponent>();
+
     private PhotonPunRPC _photonPunRPC = default;
 
     internal Button _gameDownTakeUnit1;
     internal Button _gameDownTakeUnit2;
     internal Button _gameDownTakeUnit3;
 
-    internal TakerUnitUISystem(ECSmanager eCSmanager)
+    internal TakerUnitUISystem(ECSmanager eCSmanager): base(eCSmanager)
     {
         _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
         _selectorUnitComponentRef = eCSmanager.EntitiesGeneralManager.SelectorUnitComponent;
-        _economyUnitsComponentRef = eCSmanager.EntitiesGeneralManager.EconomyUnitsComponentRef;
         _doneComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
 
 
@@ -37,11 +39,11 @@ internal class TakerUnitUISystem : IEcsRunSystem
 
     public void Run()
     {
-        if (_economyUnitsComponentRef.Unref().IsSettedKing) _selectorUnitComponentRef.Unref().GameDownTakeUnit0.gameObject.SetActive(false);
+        if (UnitsInfoComponent.IsSettedCurrentKing) _selectorUnitComponentRef.Unref().GameDownTakeUnit0.gameObject.SetActive(false);
     }
 
     private void GetUnit(UnitTypes unitType)
     {
-        if (!_doneComponentRef.Unref().IsDone) _photonPunRPC.GetUnit(unitType);
+        if (!_doneComponentRef.Unref().IsCurrentDone) _photonPunRPC.GetUnit(unitType);
     }
 }

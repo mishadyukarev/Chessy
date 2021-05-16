@@ -39,12 +39,16 @@ internal class StartSpawnGame : StartSpawn
         #region Left
 
         gameObjectPool.LeftImage = GameObject.Find("LeftImage").GetComponent<Image>();
-        gameObjectPool.LeftImproveCityButton = GameObject.Find("ImproveCityButton").GetComponent<Button>();
+
         gameObjectPool.LeftMeltButton = GameObject.Find("MeltOreButton").GetComponent<Button>();
 
-        gameObjectPool.GameLeftBuyPawnButton = GameObject.Find("BuyPawnButton").GetComponent<Button>();
-        gameObjectPool.GameLeftBuyRookButton = GameObject.Find("BuyRookButton").GetComponent<Button>();
-        gameObjectPool.GameLeftBuyBishopButton = GameObject.Find("BuyBishopButton").GetComponent<Button>();
+        gameObjectPool.InGameLeftUpgadePawnButton = GameObject.Find("UpgradePawnButton").GetComponent<Button>();
+        gameObjectPool.InGameLeftUpgadeRookButton = GameObject.Find("UpgradeRookButton").GetComponent<Button>();
+        gameObjectPool.InGameLeftUpgadeBishopButton = GameObject.Find("UpgradeBishopButton").GetComponent<Button>();
+
+        gameObjectPool.InGameLeftBuyPawnButton = GameObject.Find("BuyPawnButton").GetComponent<Button>();
+        gameObjectPool.InGameLeftBuyRookButton = GameObject.Find("BuyRookButton").GetComponent<Button>();
+        gameObjectPool.InGameLeftBuyBishopButton = GameObject.Find("BuyBishopButton").GetComponent<Button>();
 
         #endregion
 
@@ -141,16 +145,6 @@ internal class StartSpawnGame : StartSpawn
         #endregion
 
         #endregion
-
-
-
-
-
-
-
-
-
-
 
 
         if (InstanceGame.StartValuesGameConfig.IS_TEST)
