@@ -2,18 +2,12 @@
 using UnityEngine;
 using static MainGame;
 
-internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
+internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
 {
-    #region Other classes and else
-
     private PhotonPunRPC _photonPunRPC = default;
     private Names _nameManager;
     private SystemsGeneralManager _systemsGeneralManager;
 
-    #endregion
-
-
-    #region Variables for this system
 
     private int[] _xyPreviousVisionCell = default;
 
@@ -21,25 +15,14 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
     private bool _canExecuteStartClick = true;
     private bool _isStartSelectedDirect = true;
 
-    #endregion
 
 
-    #region ComponentsRef
-
-    private EcsComponentRef<RayComponent> _rayComponentRef = default;
-    private EcsComponentRef<InputComponent> _inputComponentRef = default;
-    private EcsComponentRef<SelectedUnitComponent> _selectedUnitComponentRef = default;
-    private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
-    private EcsComponentRef<DonerComponent> _buttonComponent = default;
     private EcsComponentRef<SoundComponent> _soundComponentRef = default;
 
-    #endregion
 
-    private int[] _xyPreviousCell => _selectorComponentRef.Unref().XYpreviousCell;
-    private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
+    private int[] _xyPreviousCell => _eGM.SelectorComponentSelectorEnt.XYpreviousCell;
+    private int[] _xySelectedCell => _eGM.SelectorComponentSelectorEnt.XYselectedCell;
 
-
-    private RaycastHit2D _raycastHit2D => _rayComponentRef.Unref().RaycastHit2D;
 
 
     internal SelectorSystem(ECSmanager eCSmanager) : base(eCSmanager)
@@ -48,37 +31,32 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
         _nameManager = InstanceGame.Names;
         _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
 
-        _rayComponentRef = eCSmanager.EntitiesGeneralManager.RayComponentRef;
-        _inputComponentRef = eCSmanager.EntitiesGeneralManager.InputComponentRef;
-        _selectedUnitComponentRef = eCSmanager.EntitiesGeneralManager.SelectedUnitComponentRef;
-        _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
-        _buttonComponent = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
         _soundComponentRef = eCSmanager.EntitiesGeneralManager.SoundComponentRef;
 
-        _xyPreviousVisionCell = new int[XYforArray];
+        _xyPreviousVisionCell = new int[_eGM.XYForArray];
 
-        _selectorComponentRef.Unref().SetterUnitDelegate = IsSetted;
-        _selectorComponentRef.Unref().AttackUnitAction = IsAttacked;
-        _selectorComponentRef.Unref().ShiftUnitDelegate = SetIsShifted;
+        _eGM.SelectorComponentSelectorEnt.SetterUnitDelegate = IsSetted;
+        _eGM.SelectorComponentSelectorEnt.AttackUnitAction = IsAttacked;
+        _eGM.SelectorComponentSelectorEnt.ShiftUnitDelegate = SetIsShifted;
     }
 
     public void Run()
     {
         _systemsGeneralManager.TryInvokeRunSystem(nameof(RaySystem), _systemsGeneralManager.ForSelectorSystem);
 
-        if (_raycastHit2D)
+        if (_eGM.RayComponentSelectorEnt.RaycastHit2D)
         {
-            if (_raycastHit2D.collider.gameObject.tag == _nameManager.TAG_CELL)
+            if (_eGM.RayComponentSelectorEnt.RaycastHit2D.collider.gameObject.tag == _nameManager.TAG_CELL)
             {
                 _systemsGeneralManager.TryInvokeRunSystem(nameof(GetterCellSystem), _systemsGeneralManager.ForSelectorSystem);
 
-                if (_selectorComponentRef.Unref().IsGettedCell)
+                if (_eGM.SelectorComponentSelectorEnt.IsGettedCell)
                 {
-                    var xyCurrentCell = _selectorComponentRef.Unref().XYcurrentCell;
+                    var xyCurrentCell = _eGM.SelectorComponentSelectorEnt.XYcurrentCell;
 
-                    if (_inputComponentRef.Unref().IsClick)
+                    if (_eGM.InputEntityMouseClickComponent.IsClick)
                     {
-                        if (_buttonComponent.Unref().IsCurrentDone)
+                        if (_eGM.DonerComponent.IsCurrentDone)
                         {
                             if (_canExecuteStartClick)
                             {
@@ -105,15 +83,15 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
                         else
                         {
-                            if (_selectedUnitComponentRef.Unref().IsSelectedUnit)
+                            if (_eGM.SelectedUnitComponentSelectorEnt.IsSelectedUnit)
                             {
-                                if (!CellEnvironmentComponent(xyCurrentCell).HaveMountain && !CellUnitComponent(xyCurrentCell).HaveUnit)
+                                if (!_eGM.CellEnvironmentComponent(xyCurrentCell).HaveMountain && !_eGM.CellUnitComponent(xyCurrentCell).HaveUnit)
                                 {
-                                    if (InstanceGame.IsMasterClient && CellComponent(xyCurrentCell).IsStartMaster)
-                                        _photonPunRPC.SetUnit(xyCurrentCell, _selectedUnitComponentRef.Unref().SelectedUnitType);
+                                    if (InstanceGame.IsMasterClient && _eGM.CellComponent(xyCurrentCell).IsStartMaster)
+                                        _photonPunRPC.SetUnit(xyCurrentCell, _eGM.SelectedUnitComponentSelectorEnt.SelectedUnitType);
 
-                                    else if (CellComponent(xyCurrentCell).IsStartOther)
-                                        _photonPunRPC.SetUnit(xyCurrentCell, _selectedUnitComponentRef.Unref().SelectedUnitType);
+                                    else if (_eGM.CellComponent(xyCurrentCell).IsStartOther)
+                                        _photonPunRPC.SetUnit(xyCurrentCell, _eGM.SelectedUnitComponentSelectorEnt.SelectedUnitType);
 
                                     else _soundComponentRef.Unref().MistakeSoundAction();
                                 }
@@ -128,14 +106,14 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                 if (!_cellBaseOperations.CompareXY(_xyPreviousCell, _xySelectedCell))
                                     ActivateSelector(true, _xyPreviousCell, _xySelectedCell);
 
-                                if (CellUnitComponent(_xySelectedCell).HaveUnit)
+                                if (_eGM.CellUnitComponent(_xySelectedCell).HaveUnit)
                                 {
-                                    if (CellUnitComponent(_xySelectedCell).IsMine)
+                                    if (_eGM.CellUnitComponent(_xySelectedCell).IsMine)
                                     {
-                                        if (CellUnitComponent(_xySelectedCell).AmountSteps >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                                        if (_eGM.CellUnitComponent(_xySelectedCell).AmountSteps >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                                         {
-                                            _selectorComponentRef.Unref().AvailableCellsForShift = _cellFinderWay.GetCellsForShift(_xySelectedCell);
-                                            _cellFinderWay.GetCellsForAttack(_xySelectedCell, InstanceGame.LocalPlayer, out _selectorComponentRef.Unref().AvailableCellsSimpleAttack, out _selectorComponentRef.Unref().AvailableCellsUniqueAttack);
+                                            _eGM.SelectorComponentSelectorEnt.AvailableCellsForShift = _cellFinderWay.GetCellsForShift(_xySelectedCell);
+                                            _cellFinderWay.GetCellsForAttack(_xySelectedCell, InstanceGame.LocalPlayer, out _eGM.SelectorComponentSelectorEnt.AvailableCellsSimpleAttack, out _eGM.SelectorComponentSelectorEnt.AvailableCellsUniqueAttack);
 
                                             _canShiftUnit = true;
                                         }
@@ -156,15 +134,15 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                 ActivateSelector(true, _xyPreviousCell, _xySelectedCell);
 
 
-                                if (CellUnitComponent(_xySelectedCell).HaveUnit)
+                                if (_eGM.CellUnitComponent(_xySelectedCell).HaveUnit)
                                 {
-                                    if (CellUnitComponent(_xySelectedCell).IsMine)
+                                    if (_eGM.CellUnitComponent(_xySelectedCell).IsMine)
                                     {
-                                        if (CellUnitComponent(_xySelectedCell).MinAmountSteps)
+                                        if (_eGM.CellUnitComponent(_xySelectedCell).MinAmountSteps)
                                         {
-                                            _selectorComponentRef.Unref().AvailableCellsForShift = _cellFinderWay.GetCellsForShift(_xySelectedCell);
+                                            _eGM.SelectorComponentSelectorEnt.AvailableCellsForShift = _cellFinderWay.GetCellsForShift(_xySelectedCell);
                                             _cellFinderWay.GetCellsForAttack
-                                                (_xySelectedCell, InstanceGame.LocalPlayer, out _selectorComponentRef.Unref().AvailableCellsSimpleAttack, out _selectorComponentRef.Unref().AvailableCellsUniqueAttack);
+                                                (_xySelectedCell, InstanceGame.LocalPlayer, out _eGM.SelectorComponentSelectorEnt.AvailableCellsSimpleAttack, out _eGM.SelectorComponentSelectorEnt.AvailableCellsUniqueAttack);
 
                                             _canShiftUnit = true;
                                         }
@@ -179,16 +157,16 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
                                     else
                                     {
-                                        if (CellUnitComponent(_xyPreviousCell).MinAmountSteps)
+                                        if (_eGM.CellUnitComponent(_xyPreviousCell).MinAmountSteps)
                                         {
-                                            if (_cellBaseOperations.TryFindCellInList(_xySelectedCell, _selectorComponentRef.Unref().AvailableCellsSimpleAttack))
+                                            if (_cellBaseOperations.TryFindCellInList(_xySelectedCell, _eGM.SelectorComponentSelectorEnt.AvailableCellsSimpleAttack))
                                             {
                                                 _photonPunRPC.AttackUnit(_xyPreviousCell, _xySelectedCell);
 
                                                 //ClearAvailableCells();
                                             }
 
-                                            else if(_cellBaseOperations.TryFindCellInList(_xySelectedCell, _selectorComponentRef.Unref().AvailableCellsUniqueAttack))
+                                            else if(_cellBaseOperations.TryFindCellInList(_xySelectedCell, _eGM.SelectorComponentSelectorEnt.AvailableCellsUniqueAttack))
                                             {
                                                 _photonPunRPC.AttackUnit(_xyPreviousCell, _xySelectedCell);
 
@@ -202,11 +180,11 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
                                 {
                                     if (_canShiftUnit)
                                     {
-                                        if (CellUnitComponent(_xyPreviousCell).IsMine)
+                                        if (_eGM.CellUnitComponent(_xyPreviousCell).IsMine)
                                         {
-                                            if (CellUnitComponent(_xyPreviousCell).MinAmountSteps)
+                                            if (_eGM.CellUnitComponent(_xyPreviousCell).MinAmountSteps)
                                             {
-                                                if (_cellBaseOperations.TryFindCellInList(_xySelectedCell, _selectorComponentRef.Unref().AvailableCellsForShift))
+                                                if (_cellBaseOperations.TryFindCellInList(_xySelectedCell, _eGM.SelectorComponentSelectorEnt.AvailableCellsForShift))
                                                 {
                                                     _photonPunRPC.ShiftUnitToMaster(_xyPreviousCell, _xySelectedCell);
                                                 }
@@ -227,24 +205,24 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
                     else
                     {
-                        if (_selectedUnitComponentRef.Unref().IsSelectedUnit)
+                        if (_eGM.SelectedUnitComponentSelectorEnt.IsSelectedUnit)
                         {
-                            if (!CellUnitComponent(xyCurrentCell).HaveUnit)
+                            if (!_eGM.CellUnitComponent(xyCurrentCell).HaveUnit)
                             {
                                 if (_isStartSelectedDirect)
                                 {
-                                    if (!CellUnitComponent(xyCurrentCell).HaveUnit)
-                                        CellUnitComponent(xyCurrentCell).ActiveVisionCell(true, _selectedUnitComponentRef.Unref().SelectedUnitType, InstanceGame.LocalPlayer);
+                                    if (!_eGM.CellUnitComponent(xyCurrentCell).HaveUnit)
+                                        _eGM.CellUnitComponent(xyCurrentCell).ActiveVisionCell(true, _eGM.SelectedUnitComponentSelectorEnt.SelectedUnitType, InstanceGame.LocalPlayer);
 
                                     _cellBaseOperations.CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
                                     _isStartSelectedDirect = false;
                                 }
                                 else
                                 {
-                                    if (!CellUnitComponent(_xyPreviousVisionCell).HaveUnit)
-                                        CellUnitComponent(_xyPreviousVisionCell).ActiveVisionCell(false, _selectedUnitComponentRef.Unref().SelectedUnitType, InstanceGame.LocalPlayer);
+                                    if (!_eGM.CellUnitComponent(_xyPreviousVisionCell).HaveUnit)
+                                        _eGM.CellUnitComponent(_xyPreviousVisionCell).ActiveVisionCell(false, _eGM.SelectedUnitComponentSelectorEnt.SelectedUnitType, InstanceGame.LocalPlayer);
 
-                                    CellUnitComponent(xyCurrentCell).ActiveVisionCell(true, _selectedUnitComponentRef.Unref().SelectedUnitType, InstanceGame.LocalPlayer);
+                                    _eGM.CellUnitComponent(xyCurrentCell).ActiveVisionCell(true, _eGM.SelectedUnitComponentSelectorEnt.SelectedUnitType, InstanceGame.LocalPlayer);
                                     _cellBaseOperations.CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
                                 }
 
@@ -254,9 +232,9 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
                 }
             }
 
-            else if (_raycastHit2D.collider.gameObject.tag == _nameManager.TAG_BACKGROUND)
+            else if (_eGM.RayComponentSelectorEnt.RaycastHit2D.collider.gameObject.tag == _nameManager.TAG_BACKGROUND)
             {
-                if (_inputComponentRef.Unref().IsClick)
+                if (_eGM.InputEntityMouseClickComponent.IsClick)
                 {
                     _canShiftUnit = false;
                     _canExecuteStartClick = true;
@@ -265,8 +243,8 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
                     ClearAvailableCells();
 
-                    CellUnitComponent(_xyPreviousVisionCell).ActiveVisionCell(false, _selectedUnitComponentRef.Unref().SelectedUnitType, InstanceGame.LocalPlayer);
-                    _selectedUnitComponentRef.Unref().SelectedUnitType = default;
+                    _eGM.CellUnitComponent(_xyPreviousVisionCell).ActiveVisionCell(false, _eGM.SelectedUnitComponentSelectorEnt.SelectedUnitType, InstanceGame.LocalPlayer);
+                    _eGM.SelectedUnitComponentSelectorEnt.SelectedUnitType = default;
 
                     _cellBaseOperations.CleanXY(_xyPreviousCell);
                 }
@@ -279,15 +257,15 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
     private void ActivateSelector(in bool isActive, in int[] xyPreviousCell, in int[] xySelectedCell)
     {
-        CellComponent(xyPreviousCell).IsSelected = false;
-        CellComponent(xySelectedCell).IsSelected = isActive;
+        _eGM.CellComponent(xyPreviousCell).IsSelected = false;
+        _eGM.CellComponent(xySelectedCell).IsSelected = isActive;
     }
 
     private void ClearAvailableCells()
     {
-        _selectorComponentRef.Unref().AvailableCellsForShift.Clear();
-        _selectorComponentRef.Unref().AvailableCellsSimpleAttack.Clear();
-        _selectorComponentRef.Unref().AvailableCellsUniqueAttack.Clear();
+        _eGM.SelectorComponentSelectorEnt.AvailableCellsForShift.Clear();
+        _eGM.SelectorComponentSelectorEnt.AvailableCellsSimpleAttack.Clear();
+        _eGM.SelectorComponentSelectorEnt.AvailableCellsUniqueAttack.Clear();
     }
 
 
@@ -295,15 +273,15 @@ internal sealed class SelectorSystem : CellReduction, IEcsRunSystem
 
     private void IsSetted()
     {
-        _selectedUnitComponentRef.Unref().SelectedUnitType = default;
+        _eGM.SelectedUnitComponentSelectorEnt.SelectedUnitType = default;
         _isStartSelectedDirect = true;
     }
 
     private void IsAttacked()
     {
-        _selectorComponentRef.Unref().AvailableCellsForShift.Clear();
-        _selectorComponentRef.Unref().AvailableCellsSimpleAttack.Clear();
-        _selectorComponentRef.Unref().AvailableCellsUniqueAttack.Clear();
+        _eGM.SelectorComponentSelectorEnt.AvailableCellsForShift.Clear();
+        _eGM.SelectorComponentSelectorEnt.AvailableCellsSimpleAttack.Clear();
+        _eGM.SelectorComponentSelectorEnt.AvailableCellsUniqueAttack.Clear();
     }
 
     private void SetIsShifted()

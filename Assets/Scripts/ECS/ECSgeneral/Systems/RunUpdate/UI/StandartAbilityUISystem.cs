@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static MainGame;
 
-internal class StandartAbilityUISystem : CellReduction, IEcsRunSystem
+internal class StandartAbilityUISystem : CellGeneralReduction, IEcsRunSystem
 {
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
 
@@ -13,13 +13,11 @@ internal class StandartAbilityUISystem : CellReduction, IEcsRunSystem
     private Button _standartAbilityButton1;
     private Button _standartAbilityButton2;
 
-    private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorComponentSelectorEnt.XYselectedCell;
 
     internal StandartAbilityUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
-
-        _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
 
         _standartAbilityButton1 = MainGame.InstanceGame.GameObjectPool.StandartAbilityButton1;
         _standartAbilityButton1.onClick.AddListener(delegate { StandartAbilityButton1(); });
@@ -29,9 +27,9 @@ internal class StandartAbilityUISystem : CellReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (CellUnitComponent(_xySelectedCell).IsMine)
+        if (_eGM.CellUnitComponent(_xySelectedCell).IsMine)
         {
-            switch (CellUnitComponent(_xySelectedCell).UnitType)
+            switch (_eGM.CellUnitComponent(_xySelectedCell).UnitType)
             {
                 case UnitTypes.None:
                     ActiveStandartAbilities(false);
@@ -69,16 +67,16 @@ internal class StandartAbilityUISystem : CellReduction, IEcsRunSystem
 
             if (isActive)
             {
-                if (CellUnitComponent(_xySelectedCell).IsProtected) _standartAbilityButton1.image.color = Color.yellow;
+                if (_eGM.CellUnitComponent(_xySelectedCell).IsProtected) _standartAbilityButton1.image.color = Color.yellow;
                 else _standartAbilityButton1.image.color = Color.white;
 
-                if (CellUnitComponent(_xySelectedCell).IsRelaxed) _standartAbilityButton2.image.color = Color.green;
+                if (_eGM.CellUnitComponent(_xySelectedCell).IsRelaxed) _standartAbilityButton2.image.color = Color.green;
                 else _standartAbilityButton2.image.color = Color.white;
             }
         }
     }
 
 
-    private void StandartAbilityButton1() => _photonPunRPC.ProtectUnitToMaster(!CellUnitComponent(_xySelectedCell).IsProtected, _xySelectedCell);
-    private void StandartAbilityButton2() => _photonPunRPC.RelaxUnitToMaster(!CellUnitComponent(_xySelectedCell).IsRelaxed, _xySelectedCell);
+    private void StandartAbilityButton1() => _photonPunRPC.ProtectUnitToMaster(!_eGM.CellUnitComponent(_xySelectedCell).IsProtected, _xySelectedCell);
+    private void StandartAbilityButton2() => _photonPunRPC.RelaxUnitToMaster(!_eGM.CellUnitComponent(_xySelectedCell).IsRelaxed, _xySelectedCell);
 }

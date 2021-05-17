@@ -38,7 +38,7 @@ internal class ReadyUISystem : IEcsRunSystem
         if (_startGameComponentRef.Unref().IsStartedGame)
         {
             _parentReadyZone.gameObject.SetActive(false);
-            _systemsGeneralManager.TryActiveRunSystem(false,  this.ToString(), _systemsGeneralManager.UpdateRunSystems);
+            _systemsGeneralManager.TryActiveRunSystem(false,  this.ToString(), _systemsGeneralManager.RunUpdateSystems);
         }
 
         if (_isReady) _readyButton.image.color = Color.red;

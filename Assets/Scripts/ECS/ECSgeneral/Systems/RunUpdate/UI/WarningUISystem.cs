@@ -1,23 +1,21 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 
-internal class WarningUISystem : SystemReduction, IEcsRunSystem
+internal class WarningUISystem : SystemGeneralReduction, IEcsRunSystem
 {
-    private EcsComponentRef<DonerComponent> _donerComponentRef = default;
     private EcsComponentRef<TakerUnitUnitComponent> _selectorUnitComponent = default;
-    private ref EconomyUIComponent EconomyUIComponent => ref _entitiesGeneralManager.EconomyUIComponent;
+    private ref EconomyUIComponent EconomyUIComponent => ref _eGM.EconomyUIComponent;
 
     private float _timer;
 
     internal WarningUISystem(ECSmanager eCSmanager) :base(eCSmanager)
     {
-        _donerComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
         _selectorUnitComponent = eCSmanager.EntitiesGeneralManager.SelectorUnitComponent;
     }
 
     public void Run()
     {
-        if (_donerComponentRef.Unref().NeedSetKing)
+        if (_eGM.DonerComponent.NeedSetKing)
         {
             _selectorUnitComponent.Unref().GameDownTakeUnit0.image.color = Color.red;
         }

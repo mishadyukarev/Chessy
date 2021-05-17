@@ -5,22 +5,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using static MainGame;
 
-internal class RefreshUISystem : IEcsRunSystem
+internal class RefreshUISystem : SystemGeneralReduction, IEcsRunSystem
 {
-    private EcsComponentRef<InfoRefreshComponent> _refreshComponentRef;
-    private EcsComponentRef<InfoMotionComponent> _infoMotionComponentRef;
-
     private GameObject _inGameRefreshZoneGO;
     private Image _inGameRefreshZoneRefreshImage;
     private TextMeshProUGUI _inGameRefreshZoneRefreshText;
 
     private float _timer;
 
-    internal RefreshUISystem(ECSmanager eCSmanager)
+    internal RefreshUISystem(ECSmanager eCSmanager) :base(eCSmanager)
     {
-        _refreshComponentRef = eCSmanager.EntitiesGeneralManager.RefreshComponentRef;
-        _infoMotionComponentRef = eCSmanager.EntitiesGeneralManager.InfoMotionComponentRef;
-
         _inGameRefreshZoneGO = InstanceGame.GameObjectPool.InGameRefreshZoneGO;
         _inGameRefreshZoneRefreshImage = InstanceGame.GameObjectPool.InGameRefreshZoneRefreshImage;
         _inGameRefreshZoneRefreshText = InstanceGame.GameObjectPool.InGameRefreshZoneRefreshText;
@@ -28,9 +22,9 @@ internal class RefreshUISystem : IEcsRunSystem
 
     public void Run()
     {
-        if (_refreshComponentRef.Unref().IsRefreshed)
+        if (_eGM.RefreshComponent.IsRefreshed)
         {
-            _inGameRefreshZoneRefreshText.text = "Motion: " + _infoMotionComponentRef.Unref().NumberMotion;
+            _inGameRefreshZoneRefreshText.text = "Motion: " + _eGM.RefreshComponent.NumberMotion;
             _inGameRefreshZoneGO.SetActive(true);
 
             _timer += Time.deltaTime;
@@ -38,7 +32,7 @@ internal class RefreshUISystem : IEcsRunSystem
             if(_timer >= 1)
             {
                 _inGameRefreshZoneGO.SetActive(false);
-                _refreshComponentRef.Unref().IsRefreshed = false;
+                _eGM.RefreshComponent.IsRefreshed = false;
                 _timer = 0;
             }          
         }

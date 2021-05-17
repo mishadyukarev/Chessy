@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using System.Collections.Generic;
 
-internal class ZoneUISystem : CellReduction, IEcsRunSystem
+internal class ZoneUISystem : CellGeneralReduction, IEcsRunSystem
 {
     private EcsComponentRef<ZoneComponent> _zoneComponentRef = default;
     private PhotonPunRPC _photonPunRPC = default;

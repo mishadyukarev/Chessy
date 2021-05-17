@@ -36,32 +36,36 @@
 
     private void Start()
     {
-        #region For ECS
+        #region Casting
 
         _instanceGame = this;
 
         _builder = new Builder();
         _names = new Names();
         _resourcesLoadManager = new ResourcesLoadGame();
-        _cellManager = new CellManager();
         _gameObjectPool = new GameObjectPool();
 
 
-
-        _startSpawnGame = new StartSpawnGame(_gameObjectPool, _resourcesLoadManager, _builder);
+        _startSpawnGame = new StartSpawnGame(this);
 
         _unityEvents = new UnityEvents(_builder);
         gameObject.transform.SetParent(_gameObjectPool.ParentScriptsGO.transform);
+
+        _cellManager = new CellManager(_resourcesLoadManager.StartValuesConfig);
 
         _photonGameManager = new PhotonGameManager(_gameObjectPool.ParentScriptsGO.transform);
 
         #endregion
 
 
+        #region Static
+
         _eCSmanager = new ECSmanager();
 
         _photonGameManager.PhotonPunRPC.InitAfterECS(_eCSmanager);
         _cellManager.CellFinderWay.InitAfterECS(_eCSmanager);
+
+        #endregion
     }
 
 

@@ -3,18 +3,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using static MainGame;
 
-internal class DonerUISystem : IEcsRunSystem
+internal class DonerUISystem : SystemGeneralReduction, IEcsRunSystem
 {
-    private EcsComponentRef<DonerComponent> _donerComponentRef = default;
     private PhotonPunRPC _photonPunRPC = default;
     private Button _doneButton;
     private RawImage _donerRawImage = default;
 
-    private bool _isDone => _donerComponentRef.Unref().IsCurrentDone;
+    private bool _isDone => _eGM.DonerComponent.IsCurrentDone;
 
-    internal DonerUISystem(ECSmanager eCSmanager)
+    internal DonerUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _donerComponentRef = eCSmanager.EntitiesGeneralManager.DonerComponentRef;
         _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
         _doneButton = MainGame.InstanceGame.GameObjectPool.DoneButton;

@@ -6,9 +6,13 @@ public sealed class SystemsMasterManager : SystemsManager
 
     internal void CreateInitSystems(ECSmanager eCSmanager)
     {
+        RunUpdateSystems
+            .Add(new EconomyMasterSystem(eCSmanager), nameof(EconomyMasterSystem));
+
         SoloSystems
             .Add(new RefreshMasterSystem(eCSmanager), nameof(RefreshMasterSystem))
             .Add(new VisibilityUnitsMasterSystem(eCSmanager), nameof(VisibilityUnitsMasterSystem));
+            
 
         InitAndProcessInjectsSystems();
     }

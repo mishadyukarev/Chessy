@@ -2,12 +2,8 @@
 using UnityEngine.UI;
 using static MainGame;
 
-internal class BuildingUISystem : CellReduction, IEcsRunSystem
+internal class BuildingUISystem : CellGeneralReduction, IEcsRunSystem
 {
-    private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
-
-    internal ref BuildingsInfoComponent BuildingInfoComponent => ref _entitiesGeneralManager.EconomyEntity.Get<BuildingsInfoComponent>();
-
     private PhotonPunRPC _photonPunRPC;
     private Button _buildingAbilityButton0;
     private Button _buildingAbilityButton1;
@@ -15,13 +11,12 @@ internal class BuildingUISystem : CellReduction, IEcsRunSystem
     private Button _buildingAbilityButton3;
     private Button _buildingAbilityButton4;
 
-    private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorComponentSelectorEnt.XYselectedCell;
 
     internal BuildingUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
-        _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
 
         _buildingAbilityButton0 = InstanceGame.GameObjectPool.BuildingAbilityButton0;
         _buildingAbilityButton0.onClick.AddListener(delegate { Build(BuildingTypes.City); });
@@ -50,17 +45,17 @@ internal class BuildingUISystem : CellReduction, IEcsRunSystem
 
 
 
-        if (CellUnitComponent(_xySelectedCell).HaveUnit)
+        if (_eGM.CellUnitComponent(_xySelectedCell).HaveUnit)
         {
-            if (CellUnitComponent(_xySelectedCell).IsMine)
+            if (_eGM.CellUnitComponent(_xySelectedCell).IsMine)
             {
-                switch (CellUnitComponent(_xySelectedCell).UnitType)
+                switch (_eGM.CellUnitComponent(_xySelectedCell).UnitType)
                 {
                     case UnitTypes.King:
 
-                        if (CellBuildingComponent(_xySelectedCell).HaveBuilding)
+                        if (_eGM.CellBuildingComponent(_xySelectedCell).HaveBuilding)
                         {
-                            if (!CellBuildingComponent(_xySelectedCell).IsMine)
+                            if (!_eGM.CellBuildingComponent(_xySelectedCell).IsMine)
                             {
                                 _buildingAbilityButton4.gameObject.SetActive(true);
                             }
@@ -71,16 +66,16 @@ internal class BuildingUISystem : CellReduction, IEcsRunSystem
 
                     case UnitTypes.Pawn:
 
-                        if (!BuildingInfoComponent.IsBuildedCityMaster) _buildingAbilityButton0.gameObject.SetActive(true);
+                        if (!_eGM.BuildingsInfoComponent.IsBuildedCityMaster) _buildingAbilityButton0.gameObject.SetActive(true);
                         _buildingAbilityButton1.gameObject.SetActive(true);
                         _buildingAbilityButton2.gameObject.SetActive(true);
                         _buildingAbilityButton3.gameObject.SetActive(true);
 
-                        if (CellBuildingComponent(_xySelectedCell).HaveBuilding)
+                        if (_eGM.CellBuildingComponent(_xySelectedCell).HaveBuilding)
                         {
-                            if (CellBuildingComponent(_xySelectedCell).IsMine)
+                            if (_eGM.CellBuildingComponent(_xySelectedCell).IsMine)
                             {
-                                if (CellBuildingComponent(_xySelectedCell).BuildingType != BuildingTypes.City)
+                                if (_eGM.CellBuildingComponent(_xySelectedCell).BuildingType != BuildingTypes.City)
                                     _buildingAbilityButton4.gameObject.SetActive(true);
                             }
                             else

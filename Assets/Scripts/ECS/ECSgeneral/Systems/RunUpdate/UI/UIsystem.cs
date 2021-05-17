@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using static MainGame;
 
-internal class UISystem : CellReduction, IEcsRunSystem
+internal class UISystem : CellGeneralReduction, IEcsRunSystem
 {
     private PhotonManagerScene _photonManagerScene;
     private PhotonPunRPC _photonPunRPC;
@@ -25,25 +25,13 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     #endregion
 
-    private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
-
-    internal ref BuildingsInfoComponent BuildingsInfoComponent => ref _entitiesGeneralManager.EconomyEntity.Get<BuildingsInfoComponent>();
-    internal ref UnitsInfoComponent UnitsInfoComponent => ref _entitiesGeneralManager.EconomyEntity.Get<UnitsInfoComponent>();
-
-    private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorComponentSelectorEnt.XYselectedCell;
 
 
     internal UISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _photonManagerScene = InstanceGame.PhotonGameManager.PhotonManagerScene;
         _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
-
-
-        #region ComponetRefs
-
-        _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
-
-        #endregion
 
 
 
@@ -75,9 +63,9 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (CellUnitComponent(_xySelectedCell).IsMine)
+        if (_eGM.CellUnitComponent(_xySelectedCell).IsMine)
         {
-            switch (CellUnitComponent(_xySelectedCell).UnitType)
+            switch (_eGM.CellUnitComponent(_xySelectedCell).UnitType)
             {
                 case UnitTypes.None:
 
@@ -106,7 +94,7 @@ internal class UISystem : CellReduction, IEcsRunSystem
 
 
 
-        switch (CellBuildingComponent(_xySelectedCell).BuildingType)
+        switch (_eGM.CellBuildingComponent(_xySelectedCell).BuildingType)
         {
             case BuildingTypes.None:
                 ActiveLeftEconomy(false);

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using static MainGame;
 
-internal class CityUISystem : CellReduction, IEcsRunSystem
+internal class CityUISystem : CellGeneralReduction, IEcsRunSystem
 {
     private PhotonPunRPC _photonPunRPC;
 
@@ -18,15 +18,12 @@ internal class CityUISystem : CellReduction, IEcsRunSystem
     private Button _gameLeftBuyRookButton;
     private Button _gameLeftBuyBishopButton;
 
-    private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
-
-    private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorComponentSelectorEnt.XYselectedCell;
 
 
     internal CityUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
-        _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
 
         _leftImage = InstanceGame.GameObjectPool.LeftImage;
 
@@ -58,9 +55,9 @@ internal class CityUISystem : CellReduction, IEcsRunSystem
     public void Run()
     {
         
-        if (CellBuildingComponent(_xySelectedCell).BuildingType == BuildingTypes.City)
+        if (_eGM.CellBuildingComponent(_xySelectedCell).BuildingType == BuildingTypes.City)
         {
-            if (CellBuildingComponent(_xySelectedCell).IsMine)
+            if (_eGM.CellBuildingComponent(_xySelectedCell).IsMine)
             {
                 _leftImage.gameObject.SetActive(true);
             }

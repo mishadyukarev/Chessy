@@ -30,40 +30,40 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                 if (info.Sender.IsMasterClient)
                 {
-                    haveFood = EconomyComponent.FoodMaster >= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN;
-                    haveWood = EconomyComponent.WoodMaster >= _startValuesGameConfig.WOOD_FOR_BUYING_PAWN;
-                    haveOre = EconomyComponent.OreMaster >= _startValuesGameConfig.ORE_FOR_BUYING_PAWN;
-                    haveIron = EconomyComponent.IronMaster >= _startValuesGameConfig.IRON_FOR_BUYING_PAWN;
-                    haveGold = EconomyComponent.GoldMaster >= _startValuesGameConfig.GOLD_FOR_BUYING_PAWN;
+                    haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+                    haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_PAWN;
+                    haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_PAWN;
+                    haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_BUYING_PAWN;
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        EconomyComponent.FoodMaster -= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN;
-                        EconomyComponent.WoodMaster -= _startValuesGameConfig.WOOD_FOR_BUYING_PAWN;
-                        EconomyComponent.OreMaster -= _startValuesGameConfig.ORE_FOR_BUYING_PAWN;
-                        EconomyComponent.IronMaster -= _startValuesGameConfig.IRON_FOR_BUYING_PAWN;
-                        EconomyComponent.GoldMaster -= _startValuesGameConfig.GOLD_FOR_BUYING_PAWN;
+                        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+                        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_PAWN;
+                        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_PAWN;
+                        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_BUYING_PAWN;
 
-                        UnitsInfoComponent.AmountUnitPawnMaster += _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                        _eGM.UnitsInfoComponent.AmountUnitPawnMaster += StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                     }
                 }
                 else
                 {
-                    haveFood = EconomyComponent.FoodOther >= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN;
-                    haveWood = EconomyComponent.WoodOther >= _startValuesGameConfig.WOOD_FOR_BUYING_PAWN;
-                    haveOre = EconomyComponent.OreOther >= _startValuesGameConfig.ORE_FOR_BUYING_PAWN;
-                    haveIron = EconomyComponent.IronOther >= _startValuesGameConfig.IRON_FOR_BUYING_PAWN;
-                    haveGold = EconomyComponent.GoldOther >= _startValuesGameConfig.GOLD_FOR_BUYING_PAWN;
+                    haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+                    haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_PAWN;
+                    haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_PAWN;
+                    haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_BUYING_PAWN;
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        EconomyComponent.FoodOther -= _startValuesGameConfig.FOOD_FOR_BUYING_PAWN;
-                        EconomyComponent.WoodOther -= _startValuesGameConfig.WOOD_FOR_BUYING_PAWN;
-                        EconomyComponent.OreOther -= _startValuesGameConfig.ORE_FOR_BUYING_PAWN;
-                        EconomyComponent.IronOther -= _startValuesGameConfig.IRON_FOR_BUYING_PAWN;
-                        EconomyComponent.GoldOther -= _startValuesGameConfig.GOLD_FOR_BUYING_PAWN;
+                        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+                        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_PAWN;
+                        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_PAWN;
+                        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_PAWN;
 
-                        UnitsInfoComponent.AmountUnitPawnOther += _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                        _eGM.UnitsInfoComponent.AmountUnitPawnOther += StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                     }
                 }
 
@@ -73,40 +73,40 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                 if (info.Sender.IsMasterClient)
                 {
-                    haveFood = EconomyComponent.FoodMaster >= _startValuesGameConfig.FOOD_FOR_BUYING_ROOK;
-                    haveWood = EconomyComponent.WoodMaster >= _startValuesGameConfig.WOOD_FOR_BUYING_ROOK;
-                    haveOre = EconomyComponent.OreMaster >= _startValuesGameConfig.ORE_FOR_BUYING_ROOK;
-                    haveIron = EconomyComponent.IronMaster >= _startValuesGameConfig.IRON_FOR_BUYING_ROOK;
-                    haveGold = EconomyComponent.GoldMaster >= _startValuesGameConfig.GOLD_FOR_BUYING_ROOK;
+                    haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
+                    haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_ROOK;
+                    haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_ROOK;
+                    haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_BUYING_ROOK;
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        EconomyComponent.FoodMaster -= _startValuesGameConfig.FOOD_FOR_BUYING_ROOK;
-                        EconomyComponent.WoodMaster -= _startValuesGameConfig.WOOD_FOR_BUYING_ROOK;
-                        EconomyComponent.OreMaster -= _startValuesGameConfig.ORE_FOR_BUYING_ROOK;
-                        EconomyComponent.IronMaster -= _startValuesGameConfig.IRON_FOR_BUYING_ROOK;
-                        EconomyComponent.GoldMaster -= _startValuesGameConfig.GOLD_FOR_BUYING_ROOK;
+                        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
+                        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_ROOK;
+                        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_ROOK;
+                        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_BUYING_ROOK;
 
-                        UnitsInfoComponent.AmountRookMaster += 1;
+                        _eGM.UnitsInfoComponent.AmountRookMaster += 1;
                     }
                 }
                 else
                 {
-                    haveFood = EconomyComponent.FoodOther >= _startValuesGameConfig.FOOD_FOR_BUYING_ROOK;
-                    haveWood = EconomyComponent.WoodOther >= _startValuesGameConfig.WOOD_FOR_BUYING_ROOK;
-                    haveOre = EconomyComponent.OreOther >= _startValuesGameConfig.ORE_FOR_BUYING_ROOK;
-                    haveIron = EconomyComponent.IronOther >= _startValuesGameConfig.IRON_FOR_BUYING_ROOK;
-                    haveGold = EconomyComponent.GoldOther >= _startValuesGameConfig.GOLD_FOR_BUYING_ROOK;
+                    haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
+                    haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_ROOK;
+                    haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_ROOK;
+                    haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_BUYING_ROOK;
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        EconomyComponent.FoodOther -= _startValuesGameConfig.FOOD_FOR_BUYING_ROOK;
-                        EconomyComponent.WoodOther -= _startValuesGameConfig.WOOD_FOR_BUYING_ROOK;
-                        EconomyComponent.OreOther -= _startValuesGameConfig.ORE_FOR_BUYING_ROOK;
-                        EconomyComponent.IronOther -= _startValuesGameConfig.IRON_FOR_BUYING_ROOK;
-                        EconomyComponent.GoldOther -= _startValuesGameConfig.GOLD_FOR_BUYING_ROOK;
+                        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
+                        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_ROOK;
+                        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_ROOK;
+                        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_ROOK;
 
-                        UnitsInfoComponent.AmountRookOther += 1;
+                        _eGM.UnitsInfoComponent.AmountRookOther += 1;
                     }
                 }
 
@@ -117,40 +117,40 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                 if (info.Sender.IsMasterClient)
                 {
-                    haveFood = EconomyComponent.FoodMaster >= _startValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
-                    haveWood = EconomyComponent.WoodMaster >= _startValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
-                    haveOre = EconomyComponent.OreMaster >= _startValuesGameConfig.ORE_FOR_BUYING_BISHOP;
-                    haveIron = EconomyComponent.IronMaster >= _startValuesGameConfig.IRON_FOR_BUYING_BISHOP;
-                    haveGold = EconomyComponent.GoldMaster >= _startValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
+                    haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
+                    haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
+                    haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_BISHOP;
+                    haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        EconomyComponent.FoodMaster -= _startValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
-                        EconomyComponent.WoodMaster -= _startValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
-                        EconomyComponent.OreMaster -= _startValuesGameConfig.ORE_FOR_BUYING_BISHOP;
-                        EconomyComponent.IronMaster -= _startValuesGameConfig.IRON_FOR_BUYING_BISHOP;
-                        EconomyComponent.GoldMaster -= _startValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
+                        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
+                        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
+                        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_BISHOP;
+                        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
 
-                        UnitsInfoComponent.AmountBishopMaster += 1;
+                        _eGM.UnitsInfoComponent.AmountBishopMaster += 1;
                     }
                 }
                 else
                 {
-                    haveFood = EconomyComponent.FoodOther >= _startValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
-                    haveWood = EconomyComponent.WoodOther >= _startValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
-                    haveOre = EconomyComponent.OreOther >= _startValuesGameConfig.ORE_FOR_BUYING_BISHOP;
-                    haveIron = EconomyComponent.IronOther >= _startValuesGameConfig.IRON_FOR_BUYING_BISHOP;
-                    haveGold = EconomyComponent.GoldOther >= _startValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
+                    haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
+                    haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
+                    haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_BISHOP;
+                    haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        EconomyComponent.FoodOther -= _startValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
-                        EconomyComponent.WoodOther -= _startValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
-                        EconomyComponent.OreOther -= _startValuesGameConfig.ORE_FOR_BUYING_BISHOP;
-                        EconomyComponent.IronOther -= _startValuesGameConfig.IRON_FOR_BUYING_BISHOP;
-                        EconomyComponent.GoldOther -= _startValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
+                        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
+                        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
+                        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_BISHOP;
+                        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
 
-                        UnitsInfoComponent.AmountBishopOther += 1;
+                        _eGM.UnitsInfoComponent.AmountBishopOther += 1;
                     }
                 }
 
@@ -194,54 +194,54 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                 if (info.Sender.IsMasterClient)
                 {
-                    haveFood = EconomyComponent.FoodMaster >= _startValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
-                    haveWood = EconomyComponent.WoodMaster >= _startValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
-                    haveOre = EconomyComponent.OreMaster >= _startValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
-                    haveIron = EconomyComponent.IronMaster >= _startValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
-                    haveGold = EconomyComponent.GoldMaster >= _startValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
+                    haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
+                    haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
+                    haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
+                    haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
 
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        EconomyComponent.FoodMaster -= _startValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
-                        EconomyComponent.WoodMaster -= _startValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
-                        EconomyComponent.OreMaster -= _startValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
-                        EconomyComponent.IronMaster -= _startValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
-                        EconomyComponent.GoldMaster -= _startValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
+                        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
+                        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
+                        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
+                        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
 
-                        for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
-                            for (int y = 0; y < _startValuesGameConfig.CELL_COUNT_Y; y++)
+                        for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
+                            for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                CellUnitComponent(x, y).AmountUpgradePawnMaster += 1;
-                                if (CellUnitComponent(x, y).UnitType == UnitTypes.Pawn && CellUnitComponent(x, y).IsHisUnit(info.Sender)) CellUnitComponent(x, y).AmountHealth += InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
+                                _eGM.CellUnitComponent(x, y).AmountUpgradePawnMaster += 1;
+                                if (_eGM.CellUnitComponent(x, y).UnitType == UnitTypes.Pawn && _eGM.CellUnitComponent(x, y).IsHisUnit(info.Sender)) _eGM.CellUnitComponent(x, y).AmountHealth += InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
                             }
 
                     }
                 }
                 else
                 {
-                    haveFood = EconomyComponent.FoodOther >= _startValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
-                    haveWood = EconomyComponent.WoodOther >= _startValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
-                    haveOre = EconomyComponent.OreOther >= _startValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
-                    haveIron = EconomyComponent.IronOther >= _startValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
-                    haveGold = EconomyComponent.GoldOther >= _startValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
+                    haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
+                    haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
+                    haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
+                    haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
 
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        EconomyComponent.FoodOther -= _startValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
-                        EconomyComponent.WoodOther -= _startValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
-                        EconomyComponent.OreOther -= _startValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
-                        EconomyComponent.IronOther -= _startValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
-                        EconomyComponent.GoldOther -= _startValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
+                        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
+                        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
+                        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
+                        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
 
-                        for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
-                            for (int y = 0; y < _startValuesGameConfig.CELL_COUNT_Y; y++)
+                        for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
+                            for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                CellUnitComponent(x, y).AmountUpgradePawnOther += 1;
-                                if (CellUnitComponent(x, y).UnitType == UnitTypes.Pawn && CellUnitComponent(x, y).IsHisUnit(info.Sender))
+                                _eGM.CellUnitComponent(x, y).AmountUpgradePawnOther += 1;
+                                if (_eGM.CellUnitComponent(x, y).UnitType == UnitTypes.Pawn && _eGM.CellUnitComponent(x, y).IsHisUnit(info.Sender))
                                 {
-                                    CellUnitComponent(x, y).AmountHealth += InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
+                                    _eGM.CellUnitComponent(x, y).AmountHealth += InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
                                 }
                             }
 
@@ -255,52 +255,52 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                 if (info.Sender.IsMasterClient)
                 {
-                    haveFood = EconomyComponent.FoodMaster >= _startValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
-                    haveWood = EconomyComponent.WoodMaster >= _startValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
-                    haveOre = EconomyComponent.OreMaster >= _startValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
-                    haveIron = EconomyComponent.IronMaster >= _startValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
-                    haveGold = EconomyComponent.GoldMaster >= _startValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
+                    haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
+                    haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
+                    haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
+                    haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
 
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        EconomyComponent.FoodMaster -= _startValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
-                        EconomyComponent.WoodMaster -= _startValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
-                        EconomyComponent.OreMaster -= _startValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
-                        EconomyComponent.IronMaster -= _startValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
-                        EconomyComponent.GoldMaster -= _startValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
+                        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
+                        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
+                        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
+                        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
 
-                        for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
-                            for (int y = 0; y < _startValuesGameConfig.CELL_COUNT_Y; y++)
+                        for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
+                            for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                CellUnitComponent(x, y).AmountUpgradeRookMaster += 1;
-                                if (CellUnitComponent(x, y).UnitType == UnitTypes.Rook && CellUnitComponent(x, y).IsHisUnit(info.Sender)) CellUnitComponent(x, y).AmountHealth += InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
+                                _eGM.CellUnitComponent(x, y).AmountUpgradeRookMaster += 1;
+                                if (_eGM.CellUnitComponent(x, y).UnitType == UnitTypes.Rook && _eGM.CellUnitComponent(x, y).IsHisUnit(info.Sender)) _eGM.CellUnitComponent(x, y).AmountHealth += InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
                             }
 
                     }
                 }
                 else
                 {
-                    haveFood = EconomyComponent.FoodOther >= _startValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
-                    haveWood = EconomyComponent.WoodOther >= _startValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
-                    haveOre = EconomyComponent.OreOther >= _startValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
-                    haveIron = EconomyComponent.IronOther >= _startValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
-                    haveGold = EconomyComponent.GoldOther >= _startValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
+                    haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
+                    haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
+                    haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
+                    haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
 
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        EconomyComponent.FoodOther -= _startValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
-                        EconomyComponent.WoodOther -= _startValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
-                        EconomyComponent.OreOther -= _startValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
-                        EconomyComponent.IronOther -= _startValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
-                        EconomyComponent.GoldOther -= _startValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
+                        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
+                        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
+                        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
+                        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
 
-                        for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
-                            for (int y = 0; y < _startValuesGameConfig.CELL_COUNT_Y; y++)
+                        for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
+                            for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                CellUnitComponent(x, y).AmountUpgradeRookOther += 1;
-                                if (CellUnitComponent(x, y).UnitType == UnitTypes.Rook && CellUnitComponent(x, y).IsHisUnit(info.Sender)) CellUnitComponent(x, y).AmountHealth += InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
+                                _eGM.CellUnitComponent(x, y).AmountUpgradeRookOther += 1;
+                                if (_eGM.CellUnitComponent(x, y).UnitType == UnitTypes.Rook && _eGM.CellUnitComponent(x, y).IsHisUnit(info.Sender)) _eGM.CellUnitComponent(x, y).AmountHealth += InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
                             }
 
                     }
@@ -313,52 +313,52 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                 if (info.Sender.IsMasterClient)
                 {
-                    haveFood = EconomyComponent.FoodMaster >= _startValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
-                    haveWood = EconomyComponent.WoodMaster >= _startValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
-                    haveOre = EconomyComponent.OreMaster >= _startValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
-                    haveIron = EconomyComponent.IronMaster >= _startValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
-                    haveGold = EconomyComponent.GoldMaster >= _startValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
+                    haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
+                    haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
+                    haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
+                    haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
 
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        EconomyComponent.FoodMaster -= _startValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
-                        EconomyComponent.WoodMaster -= _startValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
-                        EconomyComponent.OreMaster -= _startValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
-                        EconomyComponent.IronMaster -= _startValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
-                        EconomyComponent.GoldMaster -= _startValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
+                        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
+                        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
+                        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
+                        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
 
-                        for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
-                            for (int y = 0; y < _startValuesGameConfig.CELL_COUNT_Y; y++)
+                        for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
+                            for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                CellUnitComponent(x, y).AmountUpgradeBishopMaster += 1;
-                                if (CellUnitComponent(x, y).UnitType == UnitTypes.Bishop && CellUnitComponent(x, y).IsHisUnit(info.Sender)) CellUnitComponent(x, y).AmountHealth += InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
+                                _eGM.CellUnitComponent(x, y).AmountUpgradeBishopMaster += 1;
+                                if (_eGM.CellUnitComponent(x, y).UnitType == UnitTypes.Bishop && _eGM.CellUnitComponent(x, y).IsHisUnit(info.Sender)) _eGM.CellUnitComponent(x, y).AmountHealth += InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
                             }
 
                     }
                 }
                 else
                 {
-                    haveFood = EconomyComponent.FoodOther >= _startValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
-                    haveWood = EconomyComponent.WoodOther >= _startValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
-                    haveOre = EconomyComponent.OreOther >= _startValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
-                    haveIron = EconomyComponent.IronOther >= _startValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
-                    haveGold = EconomyComponent.GoldOther >= _startValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
+                    haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
+                    haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
+                    haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
+                    haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
 
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        EconomyComponent.FoodOther -= _startValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
-                        EconomyComponent.WoodOther -= _startValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
-                        EconomyComponent.OreOther -= _startValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
-                        EconomyComponent.IronOther -= _startValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
-                        EconomyComponent.GoldOther -= _startValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
+                        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
+                        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
+                        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
+                        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
 
-                        for (int x = 0; x < _startValuesGameConfig.CELL_COUNT_X; x++)
-                            for (int y = 0; y < _startValuesGameConfig.CELL_COUNT_Y; y++)
+                        for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
+                            for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                CellUnitComponent(x, y).AmountUpgradeBishopOther += 1;
-                                if (CellUnitComponent(x, y).UnitType == UnitTypes.Bishop && CellUnitComponent(x, y).IsHisUnit(info.Sender)) CellUnitComponent(x, y).AmountHealth += InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
+                                _eGM.CellUnitComponent(x, y).AmountUpgradeBishopOther += 1;
+                                if (_eGM.CellUnitComponent(x, y).UnitType == UnitTypes.Bishop && _eGM.CellUnitComponent(x, y).IsHisUnit(info.Sender)) _eGM.CellUnitComponent(x, y).AmountHealth += InstanceGame.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
                             }
 
                     }
@@ -393,40 +393,40 @@ internal partial class PhotonPunRPC //EconomyRPC
 
         if (info.Sender.IsMasterClient)
         {
-            haveFood = EconomyComponent.FoodMaster >= _startValuesGameConfig.FOOD_FOR_MELTING_ORE;
-            haveWood = EconomyComponent.WoodMaster >= _startValuesGameConfig.WOOD_FOR_MELTING_ORE;
-            haveOre = EconomyComponent.OreMaster >= _startValuesGameConfig.ORE_FOR_MELTING_ORE;
-            haveIron = EconomyComponent.IronMaster >= _startValuesGameConfig.IRON_FOR_MELTING_ORE;
-            haveGold = EconomyComponent.GoldMaster >= _startValuesGameConfig.GOLD_FOR_MELTING_ORE;
+            haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_MELTING_ORE;
+            haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
+            haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_MELTING_ORE;
+            haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_MELTING_ORE;
+            haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
 
             if (haveFood && haveWood && haveOre && haveIron && haveGold)
             {
-                EconomyComponent.FoodMaster -= _startValuesGameConfig.FOOD_FOR_MELTING_ORE;
-                EconomyComponent.WoodMaster -= _startValuesGameConfig.WOOD_FOR_MELTING_ORE;
-                EconomyComponent.OreMaster -= _startValuesGameConfig.ORE_FOR_MELTING_ORE;
-                EconomyComponent.IronMaster -= _startValuesGameConfig.IRON_FOR_MELTING_ORE;
-                EconomyComponent.GoldMaster -= _startValuesGameConfig.GOLD_FOR_MELTING_ORE;
+                _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_MELTING_ORE;
+                _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
+                _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_MELTING_ORE;
+                _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_MELTING_ORE;
+                _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
 
-                EconomyComponent.IronMaster += 1;
+                _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] += 1;
             }
         }
         else
         {
-            haveFood = EconomyComponent.FoodOther >= _startValuesGameConfig.FOOD_FOR_MELTING_ORE;
-            haveWood = EconomyComponent.WoodOther >= _startValuesGameConfig.WOOD_FOR_MELTING_ORE;
-            haveOre = EconomyComponent.OreOther >= _startValuesGameConfig.ORE_FOR_MELTING_ORE;
-            haveIron = EconomyComponent.IronOther >= _startValuesGameConfig.IRON_FOR_MELTING_ORE;
-            haveGold = EconomyComponent.GoldOther >= _startValuesGameConfig.GOLD_FOR_MELTING_ORE;
+            haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_MELTING_ORE;
+            haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
+            haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_MELTING_ORE;
+            haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_MELTING_ORE;
+            haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
 
             if (haveFood && haveWood && haveOre && haveIron && haveGold)
             {
-                EconomyComponent.FoodOther -= _startValuesGameConfig.FOOD_FOR_MELTING_ORE;
-                EconomyComponent.WoodOther -= _startValuesGameConfig.WOOD_FOR_MELTING_ORE;
-                EconomyComponent.OreOther -= _startValuesGameConfig.ORE_FOR_MELTING_ORE;
-                EconomyComponent.IronOther -= _startValuesGameConfig.IRON_FOR_MELTING_ORE;
-                EconomyComponent.GoldOther -= _startValuesGameConfig.GOLD_FOR_MELTING_ORE;
+                _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_MELTING_ORE;
+                _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
+                _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_MELTING_ORE;
+                _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_MELTING_ORE;
+                _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
 
-                EconomyComponent.IronOther += 1;
+                _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] += 1;
             }
         }
 
@@ -456,9 +456,9 @@ internal partial class PhotonPunRPC //EconomyRPC
             case UnitTypes.King:
 
                 if (info.Sender.IsMasterClient)
-                    isGetted = UnitsInfoComponent.AmountKingMaster >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                    isGetted = _eGM.UnitsInfoComponent.AmountKingMaster >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
-                else isGetted = UnitsInfoComponent.AmountKingOther >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                else isGetted = _eGM.UnitsInfoComponent.AmountKingOther >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
                 break;
 
@@ -467,7 +467,7 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                 if (info.Sender.IsMasterClient)
                 {
-                    if (UnitsInfoComponent.AmountUnitPawnMaster >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                    if (_eGM.UnitsInfoComponent.AmountUnitPawnMaster >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                     {
                         isGetted = true;
                     }
@@ -475,7 +475,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                 }
                 else
                 {
-                    if (UnitsInfoComponent.AmountUnitPawnOther >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                    if (_eGM.UnitsInfoComponent.AmountUnitPawnOther >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                     {
                         isGetted = true;
                     }
@@ -489,7 +489,7 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                 if (info.Sender.IsMasterClient)
                 {
-                    if (UnitsInfoComponent.AmountRookMaster >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                    if (_eGM.UnitsInfoComponent.AmountRookMaster >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                     {
                         isGetted = true;
                     }
@@ -497,7 +497,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                 }
                 else
                 {
-                    if (UnitsInfoComponent.AmountRookOther >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                    if (_eGM.UnitsInfoComponent.AmountRookOther >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                     {
                         isGetted = true;
                     }
@@ -510,9 +510,9 @@ internal partial class PhotonPunRPC //EconomyRPC
             case UnitTypes.Bishop:
 
                 if (info.Sender.IsMasterClient)
-                    isGetted = UnitsInfoComponent.AmountBishopMaster >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                    isGetted = _eGM.UnitsInfoComponent.AmountBishopMaster >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
-                else isGetted = UnitsInfoComponent.AmountBishopOther >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                else isGetted = _eGM.UnitsInfoComponent.AmountBishopOther >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
                 break;
 
@@ -532,7 +532,7 @@ internal partial class PhotonPunRPC //EconomyRPC
     {
         if (isGetted)
         {
-            _selectedUnitComponentRef.Unref().SelectedUnitType = unitType;
+            _eGM.SelectedUnitComponentSelectorEnt.SelectedUnitType = unitType;
         }
     }
 
@@ -549,7 +549,7 @@ internal partial class PhotonPunRPC //EconomyRPC
     {
         bool isSetted = false;
 
-        if (!CellEnvironmentComponent(xyCell).HaveMountain && !CellUnitComponent(xyCell).HaveUnit)
+        if (!_eGM.CellEnvironmentComponent(xyCell).HaveMountain && !_eGM.CellUnitComponent(xyCell).HaveUnit)
         {
             switch (unitType)
             {
@@ -561,22 +561,22 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                     if (info.Sender.IsMasterClient)
                     {
-                        if (CellComponent(xyCell).IsStartMaster)
+                        if (_eGM.CellComponent(xyCell).IsStartMaster)
                         {
-                            CellUnitComponent(xyCell).SetUnit(UnitTypes.King, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, info.Sender);
-                            CellUnitComponent(xyCell).AmountHealth = CellUnitComponent(xyCell).MaxAmountHealth;
-                            UnitsInfoComponent.AmountKingMaster -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.King, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, info.Sender);
+                            _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
+                            _eGM.UnitsInfoComponent.AmountKingMaster -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
                     }
                     else
                     {
-                        if (CellComponent(xyCell).IsStartOther)
+                        if (_eGM.CellComponent(xyCell).IsStartOther)
                         {
-                            CellUnitComponent(xyCell).SetUnit(UnitTypes.King, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, info.Sender);
-                            CellUnitComponent(xyCell).AmountHealth = CellUnitComponent(xyCell).MaxAmountHealth;
-                            UnitsInfoComponent.AmountKingOther -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.King, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, info.Sender);
+                            _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
+                            _eGM.UnitsInfoComponent.AmountKingOther -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
@@ -589,11 +589,11 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                     if (info.Sender.IsMasterClient)
                     {
-                        if (CellComponent(xyCell).IsStartMaster)
+                        if (_eGM.CellComponent(xyCell).IsStartMaster)
                         {
-                            CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, info.Sender);
-                            CellUnitComponent(xyCell).AmountHealth = CellUnitComponent(xyCell).MaxAmountHealth;
-                            UnitsInfoComponent.AmountUnitPawnMaster -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, info.Sender);
+                            _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
+                            _eGM.UnitsInfoComponent.AmountUnitPawnMaster -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
@@ -601,11 +601,11 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                     else
                     {
-                        if (CellComponent(xyCell).IsStartOther)
+                        if (_eGM.CellComponent(xyCell).IsStartOther)
                         {
-                            CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, info.Sender);
-                            CellUnitComponent(xyCell).AmountHealth = CellUnitComponent(xyCell).MaxAmountHealth;
-                            UnitsInfoComponent.AmountUnitPawnOther -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, info.Sender);
+                            _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
+                            _eGM.UnitsInfoComponent.AmountUnitPawnOther -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
@@ -618,22 +618,22 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                     if (info.Sender.IsMasterClient)
                     {
-                        if (CellComponent(xyCell).IsStartMaster)
+                        if (_eGM.CellComponent(xyCell).IsStartMaster)
                         {
-                            CellUnitComponent(xyCell).SetUnit(UnitTypes.Rook, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, info.Sender);
-                            CellUnitComponent(xyCell).AmountHealth = CellUnitComponent(xyCell).MaxAmountHealth;
-                            UnitsInfoComponent.AmountRookMaster -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.Rook, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, info.Sender);
+                            _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
+                            _eGM.UnitsInfoComponent.AmountRookMaster -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
                     }
                     else
                     {
-                        if (CellComponent(xyCell).IsStartOther)
+                        if (_eGM.CellComponent(xyCell).IsStartOther)
                         {
-                            CellUnitComponent(xyCell).SetUnit(UnitTypes.Rook, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, info.Sender);
-                            CellUnitComponent(xyCell).AmountHealth = CellUnitComponent(xyCell).MaxAmountHealth;
-                            UnitsInfoComponent.AmountRookOther -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.Rook, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, info.Sender);
+                            _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
+                            _eGM.UnitsInfoComponent.AmountRookOther -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
@@ -646,22 +646,22 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                     if (info.Sender.IsMasterClient)
                     {
-                        if (CellComponent(xyCell).IsStartMaster)
+                        if (_eGM.CellComponent(xyCell).IsStartMaster)
                         {
-                            CellUnitComponent(xyCell).SetUnit(UnitTypes.Bishop, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, info.Sender);
-                            CellUnitComponent(xyCell).AmountHealth = CellUnitComponent(xyCell).MaxAmountHealth;
-                            UnitsInfoComponent.AmountBishopMaster -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.Bishop, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, info.Sender);
+                            _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
+                            _eGM.UnitsInfoComponent.AmountBishopMaster -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
                     }
                     else
                     {
-                        if (CellComponent(xyCell).IsStartOther)
+                        if (_eGM.CellComponent(xyCell).IsStartOther)
                         {
-                            CellUnitComponent(xyCell).SetUnit(UnitTypes.Bishop, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, info.Sender);
-                            CellUnitComponent(xyCell).AmountHealth = CellUnitComponent(xyCell).MaxAmountHealth;
-                            UnitsInfoComponent.AmountBishopOther -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.Bishop, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, info.Sender);
+                            _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
+                            _eGM.UnitsInfoComponent.AmountBishopOther -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
@@ -677,8 +677,8 @@ internal partial class PhotonPunRPC //EconomyRPC
 
         if (unitType == UnitTypes.King)
         {
-            if (info.Sender.IsMasterClient) UnitsInfoComponent.IsSettedKingMaster = isSetted;
-            else UnitsInfoComponent.IsSettedKingOther = isSetted;
+            if (info.Sender.IsMasterClient) _eGM.UnitsInfoComponent.IsSettedKingMaster = isSetted;
+            else _eGM.UnitsInfoComponent.IsSettedKingOther = isSetted;
         }
 
 
@@ -690,7 +690,7 @@ internal partial class PhotonPunRPC //EconomyRPC
     [PunRPC]
     private void SetUnitToGeneral(bool isSetted)
     {
-        if (isSetted) _selectorComponentRef.Unref().SetterUnitDelegate();
+        if (isSetted) _eGM.SelectorComponentSelectorEnt.SetterUnitDelegate();
     }
 
     #endregion

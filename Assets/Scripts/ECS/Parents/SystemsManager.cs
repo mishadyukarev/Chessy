@@ -5,7 +5,7 @@ public abstract class SystemsManager
 {
     protected EcsWorld _ecsWorld;
 
-    internal EcsSystems UpdateRunSystems;
+    internal EcsSystems RunUpdateSystems;
     internal EcsSystems FixedUpdateSystems;
     internal EcsSystems SoloSystems;
 
@@ -15,7 +15,7 @@ public abstract class SystemsManager
     {
         _ecsWorld = ecsWorld;
 
-        UpdateRunSystems = new EcsSystems(ecsWorld);
+        RunUpdateSystems = new EcsSystems(ecsWorld);
         FixedUpdateSystems = new EcsSystems(ecsWorld);
         SoloSystems = new EcsSystems(ecsWorld);
     }
@@ -23,19 +23,19 @@ public abstract class SystemsManager
 
     internal virtual void InitAndProcessInjectsSystems()
     {
-        UpdateRunSystems.ProcessInjects();
+        RunUpdateSystems.ProcessInjects();
         FixedUpdateSystems.ProcessInjects();
         SoloSystems.ProcessInjects();
 
-        UpdateRunSystems.Init();
+        RunUpdateSystems.Init();
         FixedUpdateSystems.Init();
         SoloSystems.Init();
     }
 
-    internal void Update() => UpdateRunSystems.Run();
+    internal void Update() => RunUpdateSystems.Run();
     internal void FixedUpdate() => FixedUpdateSystems.Run();
 
-    internal void Destroy() => UpdateRunSystems.Destroy();
+    internal void Destroy() => RunUpdateSystems.Destroy();
 
 
 

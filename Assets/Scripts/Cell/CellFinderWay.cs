@@ -1,37 +1,26 @@
 ﻿using Leopotam.Ecs;
 using Photon.Realtime;
 using System.Collections.Generic;
-using static MainGame;
 
 internal class CellFinderWay
 {
-    private EcsComponentRef<CellComponent>[,] _cellComponentRef = default;
-    private EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef = default;
-    private EcsComponentRef<CellComponent.SupportVisionComponent>[,] _cellSupportVisionComponentRef = default;
-    private EcsComponentRef<CellComponent.UnitComponent>[,] _cellUnitComponentRef = default;
-    private EcsComponentRef<CellComponent.BuildingComponent>[,] _cellBuildingComponentRef = default;
+    private EntitiesGeneralManager _eGM;
+    private CellBaseOperations _cellBaseOperations;
+    private StartValuesGameConfig _startValuesGameConfig;
 
-    private ref CellComponent CellComponent(params int[] xy)
-        => ref _cellComponentRef[xy[InstanceGame.StartValuesGameConfig.X], xy[InstanceGame.StartValuesGameConfig.Y]].Unref();
-    private ref CellComponent.UnitComponent CellUnitComponent(params int[] xy)
-        => ref _cellUnitComponentRef[xy[InstanceGame.StartValuesGameConfig.X], xy[InstanceGame.StartValuesGameConfig.Y]].Unref();
-    private ref CellComponent.EnvironmentComponent CellEnvironmentComponent(params int[] xy)
-        => ref _cellEnvironmentComponentRef[xy[InstanceGame.StartValuesGameConfig.X], xy[InstanceGame.StartValuesGameConfig.Y]].Unref();
-    private ref CellComponent.SupportVisionComponent CellSupportVisionComponent(params int[] xy)
-        => ref _cellSupportVisionComponentRef[xy[InstanceGame.StartValuesGameConfig.X], xy[InstanceGame.StartValuesGameConfig.Y]].Unref();
-    private ref CellComponent.BuildingComponent CellBuildingComponent(params int[] xy)
-        => ref _cellBuildingComponentRef[xy[InstanceGame.StartValuesGameConfig.X], xy[InstanceGame.StartValuesGameConfig.Y]].Unref();
+    private int XYForArray => _startValuesGameConfig.XY_FOR_ARRAY;
+
+
+    internal CellFinderWay(StartValuesGameConfig startValuesGameConfig, CellBaseOperations cellBaseOperations)
+    {
+        _startValuesGameConfig = startValuesGameConfig;
+        _cellBaseOperations = cellBaseOperations;
+    }
 
 
     internal void InitAfterECS(ECSmanager eCSmanager)
     {
-        var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
-
-        _cellComponentRef = entitiesGeneralManager.CellComponentRef;
-        _cellUnitComponentRef = entitiesGeneralManager.CellUnitComponentRef;
-        _cellEnvironmentComponentRef = entitiesGeneralManager.CellEnvironmentComponentRef;
-        _cellSupportVisionComponentRef = entitiesGeneralManager.CellSupportVisionComponentRef;
-        _cellBuildingComponentRef = entitiesGeneralManager.CellBuildingComponentRef;
+        _eGM = eCSmanager.EntitiesGeneralManager;
     }
 
 
@@ -43,10 +32,10 @@ internal class CellFinderWay
 
         foreach (var xy in listAvailable)
         {
-            if (!CellEnvironmentComponent(xy).HaveMountain && !CellUnitComponent(xy).HaveUnit)
+            if (!_eGM.CellEnvironmentComponent(xy).HaveMountain && !_eGM.CellUnitComponent(xy).HaveUnit)
             {
-                if (CellUnitComponent(xyStartCell).AmountSteps >= CellUnitComponent(xy).NeedAmountSteps(CellEnvironmentComponent(xy).ListEnvironmentTypes)
-                    || CellUnitComponent(xyStartCell).HaveMaxSteps)
+                if (_eGM.CellUnitComponent(xyStartCell).AmountSteps >= _eGM.CellUnitComponent(xy).NeedAmountSteps(_eGM.CellEnvironmentComponent(xy).ListEnvironmentTypes)
+                    || _eGM.CellUnitComponent(xyStartCell).HaveMaxSteps)
                 {
                     xyAvailableCellsForShift.Add(xy);
                 }
@@ -64,9 +53,9 @@ internal class CellFinderWay
         {
             var xy1 = GetXYCell(xyStartCell, directType1);
 
-            if (!CellEnvironmentComponent(xy1).HaveMountain && CellUnitComponent(xy1).HaveUnit && !CellUnitComponent(xy1).IsHisUnit(player))
+            if (!_eGM.CellEnvironmentComponent(xy1).HaveMountain && _eGM.CellUnitComponent(xy1).HaveUnit && !_eGM.CellUnitComponent(xy1).IsHisUnit(player))
             {
-                switch (CellUnitComponent(xyStartCell).UnitType)
+                switch (_eGM.CellUnitComponent(xyStartCell).UnitType)
                 {
                     case UnitTypes.None:
                         break;
@@ -114,14 +103,14 @@ internal class CellFinderWay
             }
 
 
-            switch (CellUnitComponent(xyStartCell).UnitType)
+            switch (_eGM.CellUnitComponent(xyStartCell).UnitType)
             {
                 case UnitTypes.Rook:
 
                     if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Down || directType1 == DirectTypes.Up)
                     {
                         var xy2 = GetXYCell(xy1, directType1);
-                        if (!CellEnvironmentComponent(xy2).HaveMountain && CellUnitComponent(xy2).HaveUnit && !CellUnitComponent(xy2).IsHisUnit(player))
+                        if (!_eGM.CellEnvironmentComponent(xy2).HaveMountain && _eGM.CellUnitComponent(xy2).HaveUnit && !_eGM.CellUnitComponent(xy2).IsHisUnit(player))
                         {
                             availableCellsUniqueAttack.Add(xy2);
                         }
@@ -130,7 +119,7 @@ internal class CellFinderWay
                     if (directType1 == DirectTypes.LeftDown || directType1 == DirectTypes.LeftUp || directType1 == DirectTypes.RightDown || directType1 == DirectTypes.RightUp)
                     {
                         var xy2 = GetXYCell(xy1, directType1);
-                        if (!CellEnvironmentComponent(xy2).HaveMountain && CellUnitComponent(xy2).HaveUnit && !CellUnitComponent(xy2).IsHisUnit(player))
+                        if (!_eGM.CellEnvironmentComponent(xy2).HaveMountain && _eGM.CellUnitComponent(xy2).HaveUnit && !_eGM.CellUnitComponent(xy2).IsHisUnit(player))
                         {
                             availableCellsSimpleAttack.Add(xy2);
                         }
@@ -144,7 +133,7 @@ internal class CellFinderWay
                     if (directType1 == DirectTypes.LeftDown || directType1 == DirectTypes.LeftUp || directType1 == DirectTypes.RightDown || directType1 == DirectTypes.RightUp)
                     {
                         var xy2 = GetXYCell(xy1, directType1);
-                        if (!CellEnvironmentComponent(xy2).HaveMountain && CellUnitComponent(xy2).HaveUnit && !CellUnitComponent(xy2).IsHisUnit(player))
+                        if (!_eGM.CellEnvironmentComponent(xy2).HaveMountain && _eGM.CellUnitComponent(xy2).HaveUnit && !_eGM.CellUnitComponent(xy2).IsHisUnit(player))
                         {
                             availableCellsUniqueAttack.Add(xy2);
                         }
@@ -153,7 +142,7 @@ internal class CellFinderWay
                     if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Down || directType1 == DirectTypes.Up)
                     {
                         var xy2 = GetXYCell(xy1, directType1);
-                        if (!CellEnvironmentComponent(xy2).HaveMountain && CellUnitComponent(xy2).HaveUnit && !CellUnitComponent(xy2).IsHisUnit(player))
+                        if (!_eGM.CellEnvironmentComponent(xy2).HaveMountain && _eGM.CellUnitComponent(xy2).HaveUnit && !_eGM.CellUnitComponent(xy2).IsHisUnit(player))
                         {
                             availableCellsSimpleAttack.Add(xy2);
                         }
@@ -170,7 +159,7 @@ internal class CellFinderWay
     internal List<int[]> TryGetXYAround(int[] xyStartCell)
     {
         var xyAvailableCells = new List<int[]>();
-        var xyResultCell = new int[InstanceGame.StartValuesGameConfig.XY_FOR_ARRAY];
+        var xyResultCell = new int[XYForArray];
 
         for (int i = 0; i < (int)DirectTypes.LeftDown + 1; i++)
         {
@@ -179,7 +168,7 @@ internal class CellFinderWay
             xyResultCell[0] = xyStartCell[0] + xyDirectCell[0];
             xyResultCell[1] = xyStartCell[1] + xyDirectCell[1];
 
-            xyAvailableCells.Add(InstanceGame.CellManager.CellBaseOperations.CopyXY(xyResultCell));
+            xyAvailableCells.Add(_cellBaseOperations.CopyXY(xyResultCell));
         }
 
         return xyAvailableCells;
@@ -188,7 +177,7 @@ internal class CellFinderWay
 
     internal int[] GetXYCell(int[] xyStartCell, DirectTypes directType)
     {
-        var xyResultCell = new int[InstanceGame.StartValuesGameConfig.XY_FOR_ARRAY];
+        var xyResultCell = new int[XYForArray];
 
         var xyDirectCell = GetXYDirect(directType);
 
@@ -200,7 +189,7 @@ internal class CellFinderWay
 
     internal int[] GetXYDirect(DirectTypes direct)
     {
-        var xyDirectCell = new int[MainGame.InstanceGame.StartValuesGameConfig.XY_FOR_ARRAY];
+        var xyDirectCell = new int[XYForArray];
 
         switch (direct)
         {

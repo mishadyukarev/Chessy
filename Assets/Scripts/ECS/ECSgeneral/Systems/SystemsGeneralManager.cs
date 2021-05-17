@@ -10,7 +10,7 @@ public class SystemsGeneralManager : SystemsManager
 
     internal void CreateInitSystems(ECSmanager eCSmanager)
     {
-        UpdateRunSystems
+        RunUpdateSystems
             .Add(new InputSystem(eCSmanager), nameof(InputSystem))
             .Add(new SelectorSystem(eCSmanager), nameof(SelectorSystem))
             .Add(new SupportVisionSystem(eCSmanager), nameof(SupportVisionSystem))
@@ -24,7 +24,7 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new ConditionUnitUISystem(eCSmanager), nameof(ConditionUnitUISystem))
             .Add(new TheEndGameUISystem(eCSmanager), nameof(TheEndGameUISystem))
             .Add(new BuildingUISystem(eCSmanager), nameof(BuildingUISystem))
-            .Add(new EconomyUISystem(eCSmanager), nameof(EconomyUISystem))
+            .Add(new EconomySystem(eCSmanager), nameof(EconomySystem))
             .Add(new ZoneUISystem(eCSmanager), nameof(ZoneUISystem))
             .Add(new WarningUISystem(eCSmanager), nameof(WarningUISystem))
             .Add(new CityUISystem(eCSmanager), nameof(CityUISystem))

@@ -1,4 +1,3 @@
-﻿internal struct InfoMotionComponent
-{
-    internal int NumberMotion;
-}
+﻿//internal struct InfoMotionComponent
+//{
+//}

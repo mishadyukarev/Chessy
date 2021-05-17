@@ -1,67 +1,170 @@
 ﻿using Leopotam.Ecs;
+using System.Collections.Generic;
 using static MainGame;
 
 public sealed class EntitiesGeneralManager : EntitiesManager
 {
-    private EcsEntity[,] _cellsEntity;
-    private EcsEntity _selectorEntity;
-    private EcsEntity _donerEntity;
-    private EcsEntity _inputEntity;
-    private EcsEntity _selectedUnitEntity;
-    private EcsEntity _economyEntity;
+    private StartValuesGameConfig StartValuesGameConfig => InstanceGame.StartValuesGameConfig;
+
+
+
     private EcsEntity _soundEntity;
     private EcsEntity _readyEntity;
     private EcsEntity _selectorUnitEntity;
     private EcsEntity _theEndGameEntity;
     private EcsEntity _startGameEntity;
-    private EcsEntity _rayEntity;
     private EcsEntity _animationAttackUnitEntity;
     private EcsEntity _zoneEntity;
-    private EcsEntity _refreshEntity;
-    private EcsEntity _infoMotionEntity;
-    private EcsEntity _elseEntity;
-
-    internal ref EcsEntity EconomyEntity => ref _economyEntity;
-
-    private EcsComponentRef<CellComponent>[,] _cellComponentRef;
-    private EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef;
-    private EcsComponentRef<CellComponent.SupportVisionComponent>[,] _cellSupportVisionComponentRef;
-    private EcsComponentRef<CellComponent.UnitComponent>[,] _cellUnitComponentRef;
-    private EcsComponentRef<CellComponent.BuildingComponent>[,] _cellBuildingComponentRef;
 
 
-    #region Properies
 
-    #region Cell
 
-    internal EcsComponentRef<CellComponent>[,] CellComponentRef => _cellComponentRef;
-    internal EcsComponentRef<CellComponent.EnvironmentComponent>[,] CellEnvironmentComponentRef => _cellEnvironmentComponentRef;
-    internal EcsComponentRef<CellComponent.SupportVisionComponent>[,] CellSupportVisionComponentRef => _cellSupportVisionComponentRef;
-    internal EcsComponentRef<CellComponent.UnitComponent>[,] CellUnitComponentRef => _cellUnitComponentRef;
-    internal EcsComponentRef<CellComponent.BuildingComponent>[,] CellBuildingComponentRef => _cellBuildingComponentRef;
+
+    #region CellEntity
+
+    private EcsEntity[,] _cellsEntity;
+
+    internal ref CellComponent CellComponent(params int[] xy) => ref _cellsEntity[xy[X], xy[Y]].Get<CellComponent>();
+    internal ref  CellComponent.EnvironmentComponent CellEnvironmentComponent(params int[] xy) => ref _cellsEntity[xy[X], xy[Y]].Get<CellComponent.EnvironmentComponent>();
+    internal ref CellComponent.SupportVisionComponent CellSupportVisionComponent(params int[] xy) => ref _cellsEntity[xy[X], xy[Y]].Get<CellComponent.SupportVisionComponent>();
+    internal ref CellComponent.UnitComponent CellUnitComponent(params int[] xy) => ref _cellsEntity[xy[X], xy[Y]].Get<CellComponent.UnitComponent>();
+    internal ref CellComponent.BuildingComponent CellBuildingComponent(params int[] xy) => ref _cellsEntity[xy[X], xy[Y]].Get<CellComponent.BuildingComponent>();
+
+
+    internal int Xcount => _cellsEntity.GetUpperBound(X) + 1;
+    internal int Ycount => _cellsEntity.GetUpperBound(Y) + 1;
+
+    internal int XYForArray = InstanceGame.StartValuesGameConfig.XY_FOR_ARRAY;
+
+    internal int X = InstanceGame.StartValuesGameConfig.X;
+    internal int Y = InstanceGame.StartValuesGameConfig.Y;
 
     #endregion
 
 
-    #region Else
+    #region SelectorEntity
 
-    internal EcsComponentRef<SelectorComponent> SelectorComponentRef => _selectorEntity.Ref<SelectorComponent>();
-    internal EcsComponentRef<DonerComponent> DonerComponentRef => _donerEntity.Ref<DonerComponent>();
-    internal EcsComponentRef<InputComponent> InputComponentRef => _inputEntity.Ref<InputComponent>();
-    internal EcsComponentRef<SelectedUnitComponent> SelectedUnitComponentRef => _selectedUnitEntity.Ref<SelectedUnitComponent>();
+    private EcsEntity _selectorEntity;
+
+    internal ref SelectorComponent SelectorComponentSelectorEnt => ref _selectorEntity.Get<SelectorComponent>();
+    internal ref SelectedUnitComponent SelectedUnitComponentSelectorEnt => ref _selectorEntity.Get<SelectedUnitComponent>();
+    internal ref RayComponent RayComponentSelectorEnt => ref _selectorEntity.Get<RayComponent>();
+
+    #endregion
+
+
+    #region RefreshEntity
+
+    private EcsEntity _refreshEntity;
+
+    internal ref RefreshComponent RefreshComponent => ref _refreshEntity.Get<RefreshComponent>();
+    internal ref DonerComponent DonerComponent => ref  _refreshEntity.Get<DonerComponent>();
+
+    #endregion
+
+
+    #region EconomyEntity
+
+    private EcsEntity _economyEntity;
+
+    internal ref UnitsInfoComponent UnitsInfoComponent => ref _economyEntity.Get<UnitsInfoComponent>();
+    internal ref BuildingsInfoComponent BuildingsInfoComponent => ref _economyEntity.Get<BuildingsInfoComponent>();
+    internal ref EconomyUIComponent EconomyUIComponent => ref _economyEntity.Get<EconomyUIComponent>();
+
+
+    #endregion
+
+
+    #region Economy
+
+    #region FoodEntity
+
+    internal EcsEntity FoodEntity;
+
+    internal ref AmountDictionaryComponent FoodEntityAmountDictionaryComponent => ref FoodEntity.Get<AmountDictionaryComponent>();
+    internal ref ImageComponent FoodEntityImageComponent => ref FoodEntity.Get<ImageComponent>();
+    internal ref TextMeshProGUIComponent FoodEntityTextMeshProGUIComponent => ref FoodEntity.Get<TextMeshProGUIComponent>();
+
+    #endregion
+
+
+    #region WoodEntity
+
+    internal EcsEntity WoodEntity;
+
+    internal ref AmountDictionaryComponent WoodEntityAmountDictionaryComponent => ref WoodEntity.Get<AmountDictionaryComponent>();
+    internal ref ImageComponent WoodEntityImageComponent => ref WoodEntity.Get<ImageComponent>();
+    internal ref TextMeshProGUIComponent WoodEntityTextMeshProGUIComponent => ref WoodEntity.Get<TextMeshProGUIComponent>();
+
+    #endregion
+
+
+    #region OreEntity
+
+    internal EcsEntity OreEntity;
+
+    internal ref AmountDictionaryComponent OreEntityAmountDictionaryComponent => ref OreEntity.Get<AmountDictionaryComponent>();
+    internal ref ImageComponent OreEntityImageComponent => ref OreEntity.Get<ImageComponent>();
+    internal ref TextMeshProGUIComponent OreEntityTextMeshProGUIComponent => ref OreEntity.Get<TextMeshProGUIComponent>();
+
+    #endregion
+
+
+    #region IronEntity
+
+    internal EcsEntity IronEntity;
+
+    internal ref AmountDictionaryComponent IronEntityAmountDictionaryComponent => ref IronEntity.Get<AmountDictionaryComponent>();
+    internal ref ImageComponent IronEntityImageComponent => ref IronEntity.Get<ImageComponent>();
+    internal ref TextMeshProGUIComponent IronEntityTextMeshProGUIComponent => ref IronEntity.Get<TextMeshProGUIComponent>();
+
+    #endregion
+
+
+    #region GoldEntity
+
+    internal EcsEntity GoldEntity;
+
+    internal ref AmountDictionaryComponent GoldEntityAmountDictionaryComponent => ref GoldEntity.Get<AmountDictionaryComponent>();
+    internal ref ImageComponent GoldEntityImageComponent => ref GoldEntity.Get<ImageComponent>();
+    internal ref TextMeshProGUIComponent GoldEntityTextMeshProGUIComponent => ref GoldEntity.Get<TextMeshProGUIComponent>();
+
+    #endregion
+
+    #endregion
+
+
+    #region InputEntity
+
+    private EcsEntity _inputEntity;
+
+    internal ref MouseClickComponent InputEntityMouseClickComponent => ref _inputEntity.Get<MouseClickComponent>();
+
+    #endregion
+
+
+    #region InfoEntity
+
+    private EcsEntity _infoEntity;
+
+    //internal ref UnitsInfoComponent UnitsInfoComponent => ref _infoEntity.Get<UnitsInfoComponent>();
+
+    #endregion
+
+
+    #region Else Entity
+
+    private EcsEntity _elseEntity;
+
     internal EcsComponentRef<SoundComponent> SoundComponentRef => _soundEntity.Ref<SoundComponent>();
     internal EcsComponentRef<ReadyComponent> ReadyComponentRef => _readyEntity.Ref<ReadyComponent>();
     internal EcsComponentRef<TakerUnitUnitComponent> SelectorUnitComponent => _selectorUnitEntity.Ref<TakerUnitUnitComponent>();
     internal EcsComponentRef<TheEndGameComponent> TheEndGameComponentRef => _theEndGameEntity.Ref<TheEndGameComponent>();
     internal EcsComponentRef<StartGameComponent> StartGameComponentRef => _startGameEntity.Ref<StartGameComponent>();
-    internal EcsComponentRef<RayComponent> RayComponentRef => _rayEntity.Ref<RayComponent>();
+
     internal EcsComponentRef<AnimationAttackUnitComponent> AnimationAttackUnitComponentRef => _animationAttackUnitEntity.Ref<AnimationAttackUnitComponent>();
     internal EcsComponentRef<ZoneComponent> ZoneComponentRef => _zoneEntity.Ref<ZoneComponent>();
-    internal EcsComponentRef<InfoRefreshComponent> RefreshComponentRef => _refreshEntity.Ref<InfoRefreshComponent>();
-    internal EcsComponentRef<InfoMotionComponent> InfoMotionComponentRef => _infoMotionEntity.Ref<InfoMotionComponent>();
-    internal ref EconomyUIComponent EconomyUIComponent => ref _elseEntity.Get<EconomyUIComponent>();
 
-    #endregion
 
     #endregion
 
@@ -71,100 +174,113 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     internal void CreateEntities()
     {
-        var startValuesGameConfig = InstanceGame.StartValuesGameConfig;
 
-        _economyEntity = _ecsWorld.NewEntity()
-            .Replace(new EconomyComponent(startValuesGameConfig))
-            .Replace(new UnitsInfoComponent(startValuesGameConfig))
-            .Replace(new BuildingsInfoComponent(startValuesGameConfig));
+        #region EconomyEntities
+
+        FoodEntity = GameWorld.NewEntity();
+        WoodEntity = GameWorld.NewEntity();
+        OreEntity = GameWorld.NewEntity();
+        IronEntity = GameWorld.NewEntity();
+        GoldEntity = GameWorld.NewEntity();
+
+        FoodEntityTextMeshProGUIComponent.TextMeshProUGUI = InstanceGame.GameObjectPool.FoodAmmountText;
+        WoodEntityTextMeshProGUIComponent.TextMeshProUGUI = InstanceGame.GameObjectPool.WoodAmmountText;
+        OreEntityTextMeshProGUIComponent.TextMeshProUGUI = InstanceGame.GameObjectPool.OreAmmountText;
+        IronEntityTextMeshProGUIComponent.TextMeshProUGUI = InstanceGame.GameObjectPool.IronAmmountText;
+        GoldEntityTextMeshProGUIComponent.TextMeshProUGUI = InstanceGame.GameObjectPool.GoldAmmountText;
+
+        FoodEntityAmountDictionaryComponent.AmountDictionary = new Dictionary<bool, int>();
+        WoodEntityAmountDictionaryComponent.AmountDictionary = new Dictionary<bool, int>();
+        OreEntityAmountDictionaryComponent.AmountDictionary = new Dictionary<bool, int>();
+        IronEntityAmountDictionaryComponent.AmountDictionary = new Dictionary<bool, int>();
+        GoldEntityAmountDictionaryComponent.AmountDictionary = new Dictionary<bool, int>();
+
+        FoodEntityAmountDictionaryComponent.AmountDictionary.Add(true, default);
+        FoodEntityAmountDictionaryComponent.AmountDictionary.Add(false, default);
+
+        WoodEntityAmountDictionaryComponent.AmountDictionary.Add(true, default);
+        WoodEntityAmountDictionaryComponent.AmountDictionary.Add(false, default);
+
+        OreEntityAmountDictionaryComponent.AmountDictionary.Add(true, default);
+        OreEntityAmountDictionaryComponent.AmountDictionary.Add(false, default);
+
+        IronEntityAmountDictionaryComponent.AmountDictionary.Add(true, default);
+        IronEntityAmountDictionaryComponent.AmountDictionary.Add(false, default);
+
+        GoldEntityAmountDictionaryComponent.AmountDictionary.Add(true, default);
+        GoldEntityAmountDictionaryComponent.AmountDictionary.Add(false, default);
+
+        #endregion
 
 
-        _donerEntity = _ecsWorld.NewEntity()
-            .Replace(new DonerComponent());
-
-        _inputEntity = _ecsWorld.NewEntity()
-            .Replace(new InputComponent());
-
-        _selectorEntity = _ecsWorld.NewEntity()
-            .Replace(new SelectorComponent(startValuesGameConfig));
-
-        _selectedUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new SelectedUnitComponent());
+        _infoEntity = GameWorld.NewEntity()
+            .Replace(new UnitsInfoComponent(StartValuesGameConfig))
+            .Replace(new BuildingsInfoComponent(StartValuesGameConfig));
 
 
-        _soundEntity = _ecsWorld.NewEntity()
-            .Replace(new SoundComponent());
 
-        _readyEntity = _ecsWorld.NewEntity()
-            .Replace(new ReadyComponent());
+        _economyEntity = GameWorld.NewEntity()
+            .Replace(new UnitsInfoComponent(StartValuesGameConfig))
+            .Replace(new BuildingsInfoComponent(StartValuesGameConfig))
+            .Replace(new EconomyUIComponent(InstanceGame.GameObjectPool));
 
-        _selectorUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new TakerUnitUnitComponent());
-
-        _theEndGameEntity = _ecsWorld.NewEntity()
-            .Replace(new TheEndGameComponent());
-
-        _startGameEntity = _ecsWorld.NewEntity()
-            .Replace(new StartGameComponent());
-
-        _rayEntity = _ecsWorld.NewEntity()
+        _selectorEntity = GameWorld.NewEntity()
+            .Replace(new SelectorComponent(StartValuesGameConfig))
+            .Replace(new SelectedUnitComponent())
             .Replace(new RayComponent());
 
-        _animationAttackUnitEntity = _ecsWorld.NewEntity()
+        _refreshEntity = GameWorld.NewEntity()
+            .Replace(new RefreshComponent())
+            .Replace(new DonerComponent());
+
+
+
+
+
+
+        _inputEntity = GameWorld.NewEntity()
+            .Replace(new MouseClickComponent());
+
+
+
+        _soundEntity = GameWorld.NewEntity()
+            .Replace(new SoundComponent());
+
+        _readyEntity = GameWorld.NewEntity()
+            .Replace(new ReadyComponent());
+
+        _selectorUnitEntity = GameWorld.NewEntity()
+            .Replace(new TakerUnitUnitComponent());
+
+        _theEndGameEntity = GameWorld.NewEntity()
+            .Replace(new TheEndGameComponent());
+
+        _startGameEntity = GameWorld.NewEntity()
+            .Replace(new StartGameComponent());
+
+        _animationAttackUnitEntity = GameWorld.NewEntity()
             .Replace(new AnimationAttackUnitComponent());
 
-        _zoneEntity = _ecsWorld.NewEntity()
+        _zoneEntity = GameWorld.NewEntity()
             .Replace(new ZoneComponent());
 
-        _refreshEntity = _ecsWorld.NewEntity()
-            .Replace(new InfoRefreshComponent());
-
-        _infoMotionEntity = _ecsWorld.NewEntity()
-            .Replace(new InfoMotionComponent());
-
-        _elseEntity = _ecsWorld.NewEntity()
-            .Replace(new EconomyUIComponent(InstanceGame.GameObjectPool));
 
         #region Cells
 
-        var cellsGO = InstanceGame.GameObjectPool.CellsGO;
+        _cellsEntity = new EcsEntity[ StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
 
-        var xAmount = cellsGO.GetUpperBound(startValuesGameConfig.X) + 1;
-        var yAmount = cellsGO.GetUpperBound(startValuesGameConfig.Y) + 1;
-
-        _cellsEntity = new EcsEntity[xAmount, yAmount];
-
-        _cellComponentRef = new EcsComponentRef<CellComponent>[xAmount, yAmount];
-        _cellEnvironmentComponentRef = new EcsComponentRef<CellComponent.EnvironmentComponent>[xAmount, yAmount];
-        _cellSupportVisionComponentRef = new EcsComponentRef<CellComponent.SupportVisionComponent>[xAmount, yAmount];
-        _cellUnitComponentRef = new EcsComponentRef<CellComponent.UnitComponent>[xAmount, yAmount];
-        _cellBuildingComponentRef = new EcsComponentRef<CellComponent.BuildingComponent>[xAmount, yAmount];
-
-        for (int x = 0; x < xAmount; x++)
+        for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
         {
-            for (int y = 0; y < yAmount; y++)
+            for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
             {
-                CellComponent cellComponent = new CellComponent(x, y);
-                CellComponent.EnvironmentComponent cellEnvironmentComponent = new CellComponent.EnvironmentComponent(x, y);
-                CellComponent.SupportVisionComponent cellSupportVisionComponent = new CellComponent.SupportVisionComponent(x, y);
-                CellComponent.UnitComponent cellUnitComponent = new CellComponent.UnitComponent(x, y);
-                CellComponent.BuildingComponent cellBuildingComponent = new CellComponent.BuildingComponent(x, y);
-
-                _cellsEntity[x, y] = _ecsWorld.NewEntity();
+                _cellsEntity[x, y] = GameWorld.NewEntity();
 
                 _cellsEntity[x, y]
-                    .Replace(cellComponent)
-                    .Replace(cellEnvironmentComponent)
-                    .Replace(cellSupportVisionComponent)
-                    .Replace(cellUnitComponent)
-                    .Replace(cellBuildingComponent);
-
-
-                _cellComponentRef[x, y] = _cellsEntity[x, y].Ref<CellComponent>();
-                _cellEnvironmentComponentRef[x, y] = _cellsEntity[x, y].Ref<CellComponent.EnvironmentComponent>();
-                _cellSupportVisionComponentRef[x, y] = _cellsEntity[x, y].Ref<CellComponent.SupportVisionComponent>();
-                _cellUnitComponentRef[x, y] = _cellsEntity[x, y].Ref<CellComponent.UnitComponent>();
-                _cellBuildingComponentRef[x, y] = _cellsEntity[x, y].Ref<CellComponent.BuildingComponent>();
+                    .Replace(new CellComponent(x, y))
+                    .Replace(new CellComponent.EnvironmentComponent(x, y))
+                    .Replace(new CellComponent.SupportVisionComponent(x, y))
+                    .Replace(new CellComponent.UnitComponent(x, y))
+                    .Replace(new CellComponent.BuildingComponent(x, y));
             }
         }
 

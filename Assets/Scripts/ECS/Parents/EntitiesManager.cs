@@ -2,8 +2,8 @@
 
 public abstract class EntitiesManager
 {
-    protected EcsWorld _ecsWorld;
+    internal EcsWorld GameWorld;
     protected EcsEntity _elseEntity;
 
-    protected EntitiesManager(EcsWorld ecsWorld) => _ecsWorld = ecsWorld;
+    protected EntitiesManager(EcsWorld ecsWorld) => GameWorld = ecsWorld;
 }

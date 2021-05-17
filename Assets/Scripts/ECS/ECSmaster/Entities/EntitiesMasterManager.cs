@@ -19,7 +19,7 @@ public class EntitiesMasterManager : EntitiesManager
 
     internal void CreateEntities(ECSmanager eCSmanager)
     {
-        _elseEntity = _ecsWorld.NewEntity()
+        _elseEntity = GameWorld.NewEntity()
             .Replace(new MotionComponent())
             .Replace(new ReadyMasterComponent())
             .Replace(new FromInfoComponent());
@@ -33,24 +33,24 @@ public class EntitiesMasterManager : EntitiesManager
                 int random;
                 random = Random.Range(1, 100);
                 if (random <= InstanceGame.StartValuesGameConfig.PERCENT_TREE)
-                    eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().SetResetEnvironment(true, EnvironmentTypes.Tree);
+                    eCSmanager.EntitiesGeneralManager.CellEnvironmentComponent(x, y).SetResetEnvironment(true, EnvironmentTypes.Tree);
 
                 random = Random.Range(1, 100);
                 if (random <= InstanceGame.StartValuesGameConfig.PERCENT_HILL)
-                    eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().SetResetEnvironment(true, EnvironmentTypes.Hill);
+                    eCSmanager.EntitiesGeneralManager.CellEnvironmentComponent(x, y).SetResetEnvironment(true, EnvironmentTypes.Hill);
 
                 random = Random.Range(1, 100);
                 if (random <= InstanceGame.StartValuesGameConfig.PERCENT_MOUNTAIN)
-                    eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().SetResetEnvironment(true, EnvironmentTypes.Mountain);
+                    eCSmanager.EntitiesGeneralManager.CellEnvironmentComponent(x, y).SetResetEnvironment(true, EnvironmentTypes.Mountain);
 
 
 
-                if (!eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().HaveMountain
-                    && !eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().HaveTree)
+                if (!eCSmanager.EntitiesGeneralManager.CellEnvironmentComponent(x, y).HaveMountain
+                    && !eCSmanager.EntitiesGeneralManager.CellEnvironmentComponent(x, y).HaveTree)
                 {
                     random = Random.Range(1, 100);
                     if (random <= InstanceGame.StartValuesGameConfig.PERCENT_FOOD)
-                        eCSmanager.EntitiesGeneralManager.CellEnvironmentComponentRef[x, y].Unref().SetResetEnvironment(true, EnvironmentTypes.Food);
+                        eCSmanager.EntitiesGeneralManager.CellEnvironmentComponent(x, y).SetResetEnvironment(true, EnvironmentTypes.Food);
                 }
 
             }

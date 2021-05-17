@@ -1,18 +1,13 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 
-public class InputSystem : IEcsRunSystem
+public class InputSystem : SystemGeneralReduction, IEcsRunSystem
 {
-    private EcsComponentRef<InputComponent> _inputComponentRef = default;
-
-    internal InputSystem(ECSmanager eCSmanager)
-    {
-        _inputComponentRef = eCSmanager.EntitiesGeneralManager.InputComponentRef;
-    }
+    internal InputSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
     public void Run()
     {
-        if (Input.GetMouseButtonDown(0)) _inputComponentRef.Unref().IsClick = true;
-        else _inputComponentRef.Unref().IsClick = false;
+        if (Input.GetMouseButtonDown(0)) _eGM.InputEntityMouseClickComponent.IsClick = true;
+        else _eGM.InputEntityMouseClickComponent.IsClick = false;
     }
 }

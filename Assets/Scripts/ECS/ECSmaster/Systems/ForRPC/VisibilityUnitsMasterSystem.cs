@@ -3,37 +3,37 @@ using System.Collections.Generic;
 using static MainGame;
 
 
-internal class VisibilityUnitsMasterSystem : CellReduction, IEcsRunSystem
+internal class VisibilityUnitsMasterSystem : CellGeneralReduction, IEcsRunSystem
 {
     internal VisibilityUnitsMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
     public void Run()
     {
-        for (int x = 0; x < Xcount; x++)
+        for (int x = 0; x < _eGM.Xcount; x++)
         {
-            for (int y = 0; y < Ycount; y++)
+            for (int y = 0; y < _eGM.Ycount; y++)
             {
-                CellUnitComponent(x, y).IsActiveUnitMaster = true;
-                CellUnitComponent(x, y).IsActiveUnitOther = true;
+                _eGM.CellUnitComponent(x, y).IsActiveUnitMaster = true;
+                _eGM.CellUnitComponent(x, y).IsActiveUnitOther = true;
 
 
 
-                if (CellUnitComponent(x, y).HaveUnit)
+                if (_eGM.CellUnitComponent(x, y).HaveUnit)
                 {
-                    if (CellUnitComponent(x, y).IsHisUnit(InstanceGame.MasterClient))
+                    if (_eGM.CellUnitComponent(x, y).IsHisUnit(InstanceGame.MasterClient))
                     {
-                        if (CellEnvironmentComponent(x, y).HaveTree)
+                        if (_eGM.CellEnvironmentComponent(x, y).HaveTree)
                         {
-                            CellUnitComponent(x, y).IsActiveUnitOther = false;
+                            _eGM.CellUnitComponent(x, y).IsActiveUnitOther = false;
 
                             List<int[]> list = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(new int[] { x, y });
                             foreach (var xy in list)
                             {
-                                if (CellUnitComponent(xy).HaveUnit)
+                                if (_eGM.CellUnitComponent(xy).HaveUnit)
                                 {
-                                    if (!CellUnitComponent(xy).IsHisUnit(InstanceGame.MasterClient))
+                                    if (!_eGM.CellUnitComponent(xy).IsHisUnit(InstanceGame.MasterClient))
                                     {
-                                        CellUnitComponent(x, y).IsActiveUnitOther = true;
+                                        _eGM.CellUnitComponent(x, y).IsActiveUnitOther = true;
                                         break;
                                     }
                                 }
@@ -42,18 +42,18 @@ internal class VisibilityUnitsMasterSystem : CellReduction, IEcsRunSystem
                     }
                     else
                     {
-                        if (CellEnvironmentComponent(x, y).HaveTree)
+                        if (_eGM.CellEnvironmentComponent(x, y).HaveTree)
                         {
-                            CellUnitComponent(x, y).IsActiveUnitMaster = false;
+                            _eGM.CellUnitComponent(x, y).IsActiveUnitMaster = false;
 
                             List<int[]> list = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(new int[] { x, y });
                             foreach (var xy in list)
                             {
-                                if (CellUnitComponent(xy).HaveUnit)
+                                if (_eGM.CellUnitComponent(xy).HaveUnit)
                                 {
-                                    if (CellUnitComponent(xy).IsHisUnit(InstanceGame.MasterClient))
+                                    if (_eGM.CellUnitComponent(xy).IsHisUnit(InstanceGame.MasterClient))
                                     {
-                                        CellUnitComponent(x, y).IsActiveUnitMaster = true;
+                                        _eGM.CellUnitComponent(x, y).IsActiveUnitMaster = true;
                                         break;
                                     }
                                 }
@@ -63,7 +63,7 @@ internal class VisibilityUnitsMasterSystem : CellReduction, IEcsRunSystem
                 }
 
 
-                CellUnitComponent(x, y).ActiveVisionCell(CellUnitComponent(x, y).IsActiveUnitMaster, CellUnitComponent(x, y).UnitType);
+                _eGM.CellUnitComponent(x, y).ActiveVisionCell(_eGM.CellUnitComponent(x, y).IsActiveUnitMaster, _eGM.CellUnitComponent(x, y).UnitType);
             }
         }
     }

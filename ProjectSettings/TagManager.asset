@@ -58,9 +58,9 @@ TagManager:
   - name: SupportVision
     uniqueID: 3935270689
     locked: 0
-  - name: Units
-    uniqueID: 3112104483
-    locked: 0
   - name: Effects
     uniqueID: 2994770637
+    locked: 0
+  - name: Units
+    uniqueID: 3112104483
     locked: 0

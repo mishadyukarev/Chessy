@@ -38,6 +38,8 @@ internal class GameObjectPool
     internal GameObject[,] CellBuildingWoodcutterGOs;
     internal GameObject[,] CellBuildingMineGOs;
 
+    internal GameObject[,] CellEffectFireGOs;
+
     #endregion
 
 

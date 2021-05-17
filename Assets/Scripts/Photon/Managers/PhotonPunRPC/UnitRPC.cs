@@ -19,59 +19,59 @@ internal partial class PhotonPunRPC
 
         InstanceGame.CellManager.CellFinderWay.GetCellsForAttack(xyPreviousCell, info.Sender, out var availableCellsSimpleAttack, out var availableCellsUniqueAttack);
 
-        if (CellUnitComponent(xyPreviousCell).MinAmountSteps)
+        if (_eGM.CellUnitComponent(xyPreviousCell).MinAmountSteps)
         {
-            if (CellUnitComponent(xyPreviousCell).IsHisUnit(info.Sender))
+            if (_eGM.CellUnitComponent(xyPreviousCell).IsHisUnit(info.Sender))
             {
-                if (CellUnitComponent(xySelectedCell).HaveUnit)
+                if (_eGM.CellUnitComponent(xySelectedCell).HaveUnit)
                 {
                     var isFindedSimple = InstanceGame.CellManager.CellBaseOperations.TryFindCellInList(xySelectedCell, availableCellsSimpleAttack);
                     var isFindedUnique = InstanceGame.CellManager.CellBaseOperations.TryFindCellInList(xySelectedCell, availableCellsUniqueAttack);
 
                     if (isFindedSimple || isFindedUnique)
                     {
-                        CellUnitComponent(xyPreviousCell).AmountSteps = 0;
-                        CellUnitComponent(xyPreviousCell).IsProtected = false;
-                        CellUnitComponent(xyPreviousCell).IsRelaxed = false;
+                        _eGM.CellUnitComponent(xyPreviousCell).AmountSteps = 0;
+                        _eGM.CellUnitComponent(xyPreviousCell).IsProtected = false;
+                        _eGM.CellUnitComponent(xyPreviousCell).IsRelaxed = false;
 
                         int damageToPrevious = 0;
 
-                        if (CellUnitComponent(xyPreviousCell).UnitType != UnitTypes.Rook && CellUnitComponent(xyPreviousCell).UnitType != UnitTypes.Bishop)
-                            damageToPrevious += CellUnitComponent(xySelectedCell).SimplePowerDamage;
+                        if (_eGM.CellUnitComponent(xyPreviousCell).UnitType != UnitTypes.Rook && _eGM.CellUnitComponent(xyPreviousCell).UnitType != UnitTypes.Bishop)
+                            damageToPrevious += _eGM.CellUnitComponent(xySelectedCell).SimplePowerDamage;
 
 
 
                         int damageToSelelected = 0;
 
-                        damageToSelelected += CellUnitComponent(xyPreviousCell).SimplePowerDamage;
-                        if (isFindedUnique) damageToSelelected += CellUnitComponent(xyPreviousCell).UniquePowerDamage;
-                        damageToSelelected -= CellUnitComponent(xySelectedCell).PowerProtection
-                            (CellEnvironmentComponent(xySelectedCell).ListEnvironmentTypes, CellBuildingComponent(xySelectedCell).BuildingType);
+                        damageToSelelected += _eGM.CellUnitComponent(xyPreviousCell).SimplePowerDamage;
+                        if (isFindedUnique) damageToSelelected += _eGM.CellUnitComponent(xyPreviousCell).UniquePowerDamage;
+                        damageToSelelected -= _eGM.CellUnitComponent(xySelectedCell).PowerProtection
+                            (_eGM.CellEnvironmentComponent(xySelectedCell).ListEnvironmentTypes, _eGM.CellBuildingComponent(xySelectedCell).BuildingType);
 
                         if (damageToSelelected < 0) damageToSelelected = 0;
 
 
-                        CellUnitComponent(xyPreviousCell).AmountHealth -= damageToPrevious;
-                        CellUnitComponent(xySelectedCell).AmountHealth -= damageToSelelected;
+                        _eGM.CellUnitComponent(xyPreviousCell).AmountHealth -= damageToPrevious;
+                        _eGM.CellUnitComponent(xySelectedCell).AmountHealth -= damageToSelelected;
 
                         bool isKilledAttacked = false;
                         bool isKilledDefender = false;
 
-                        if (CellUnitComponent(xyPreviousCell).AmountHealth <= _startValuesGameConfig.AMOUNT_FOR_DEATH)
+                        if (_eGM.CellUnitComponent(xyPreviousCell).AmountHealth <= StartValuesGameConfig.AMOUNT_FOR_DEATH)
                         {
-                            CellUnitComponent(xyPreviousCell).ResetUnit();
+                            _eGM.CellUnitComponent(xyPreviousCell).ResetUnit();
                             isKilledAttacked = true;
                         }
 
-                        if (CellUnitComponent(xySelectedCell).AmountHealth <= _startValuesGameConfig.AMOUNT_FOR_DEATH)
+                        if (_eGM.CellUnitComponent(xySelectedCell).AmountHealth <= StartValuesGameConfig.AMOUNT_FOR_DEATH)
                         {
-                            if (CellUnitComponent(xySelectedCell).UnitType == UnitTypes.King) EndGame(CellUnitComponent(xyPreviousCell).ActorNumber);
+                            if (_eGM.CellUnitComponent(xySelectedCell).UnitType == UnitTypes.King) EndGame(_eGM.CellUnitComponent(xyPreviousCell).ActorNumber);
 
-                            CellUnitComponent(xySelectedCell).ResetUnit();
-                            if (CellUnitComponent(xyPreviousCell).UnitType != UnitTypes.Rook && CellUnitComponent(xyPreviousCell).UnitType != UnitTypes.Bishop)
+                            _eGM.CellUnitComponent(xySelectedCell).ResetUnit();
+                            if (_eGM.CellUnitComponent(xyPreviousCell).UnitType != UnitTypes.Rook && _eGM.CellUnitComponent(xyPreviousCell).UnitType != UnitTypes.Bishop)
                             {
-                                CellUnitComponent(xySelectedCell).SetUnit(CellUnitComponent(xyPreviousCell));
-                                CellUnitComponent(xyPreviousCell).ResetUnit();
+                                _eGM.CellUnitComponent(xySelectedCell).SetUnit(_eGM.CellUnitComponent(xyPreviousCell));
+                                _eGM.CellUnitComponent(xyPreviousCell).ResetUnit();
                             }
                             isKilledDefender = true;
                         }
@@ -93,7 +93,7 @@ internal partial class PhotonPunRPC
     {
         if (isAttacked)
         {
-            _selectorComponentRef.Unref().AttackUnitAction();
+            _eGM.SelectorComponentSelectorEnt.AttackUnitAction();
         }
     }
 
@@ -113,22 +113,22 @@ internal partial class PhotonPunRPC
     {
         List<int[]> xyAvailableCellsForShift = InstanceGame.CellManager.CellFinderWay.GetCellsForShift(xyPreviousCell);
 
-        if (CellUnitComponent(xyPreviousCell).IsHisUnit(info.Sender) && CellUnitComponent(xyPreviousCell).MinAmountSteps)
+        if (_eGM.CellUnitComponent(xyPreviousCell).IsHisUnit(info.Sender) && _eGM.CellUnitComponent(xyPreviousCell).MinAmountSteps)
         {
             if (InstanceGame.CellManager.CellBaseOperations.TryFindCellInList(xySelectedCell, xyAvailableCellsForShift))
             {
-                CellUnitComponent(xySelectedCell).SetUnit(CellUnitComponent(xyPreviousCell));
+                _eGM.CellUnitComponent(xySelectedCell).SetUnit(_eGM.CellUnitComponent(xyPreviousCell));
 
 
-                CellUnitComponent(xyPreviousCell).ResetUnit();
+                _eGM.CellUnitComponent(xyPreviousCell).ResetUnit();
 
 
-                CellUnitComponent(xySelectedCell).AmountSteps
-                    -= CellUnitComponent(xySelectedCell).NeedAmountSteps(CellEnvironmentComponent(xySelectedCell).ListEnvironmentTypes);
-                if (CellUnitComponent(xySelectedCell).AmountSteps < 0) CellUnitComponent(xySelectedCell).AmountSteps = 0;
+                _eGM.CellUnitComponent(xySelectedCell).AmountSteps
+                    -= _eGM.CellUnitComponent(xySelectedCell).NeedAmountSteps(_eGM.CellEnvironmentComponent(xySelectedCell).ListEnvironmentTypes);
+                if (_eGM.CellUnitComponent(xySelectedCell).AmountSteps < 0) _eGM.CellUnitComponent(xySelectedCell).AmountSteps = 0;
 
-                CellUnitComponent(xySelectedCell).IsProtected = false;
-                CellUnitComponent(xySelectedCell).IsRelaxed = false;
+                _eGM.CellUnitComponent(xySelectedCell).IsProtected = false;
+                _eGM.CellUnitComponent(xySelectedCell).IsRelaxed = false;
             }
         }
 
@@ -148,25 +148,25 @@ internal partial class PhotonPunRPC
     {
         if (isActive)
         {
-            if (!CellUnitComponent(xyCell).IsProtected)
+            if (!_eGM.CellUnitComponent(xyCell).IsProtected)
             {
-                if (CellUnitComponent(xyCell).HaveMaxSteps)
+                if (_eGM.CellUnitComponent(xyCell).HaveMaxSteps)
                 {
-                    CellUnitComponent(xyCell).IsProtected = true;
-                    CellUnitComponent(xyCell).IsRelaxed = false;
-                    CellUnitComponent(xyCell).AmountSteps = 0;
+                    _eGM.CellUnitComponent(xyCell).IsProtected = true;
+                    _eGM.CellUnitComponent(xyCell).IsRelaxed = false;
+                    _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                 }
             }
         }
 
         else
         {
-            if (CellUnitComponent(xyCell).IsProtected)
+            if (_eGM.CellUnitComponent(xyCell).IsProtected)
             {
-                if (CellUnitComponent(xyCell).HaveMaxSteps)
+                if (_eGM.CellUnitComponent(xyCell).HaveMaxSteps)
                 {
-                    CellUnitComponent(xyCell).IsProtected = false;
-                    CellUnitComponent(xyCell).AmountSteps = 0;
+                    _eGM.CellUnitComponent(xyCell).IsProtected = false;
+                    _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                 }
             }
         }
@@ -186,25 +186,25 @@ internal partial class PhotonPunRPC
     {
         if (isActive)
         {
-            if (!CellUnitComponent(xyCell).IsRelaxed)
+            if (!_eGM.CellUnitComponent(xyCell).IsRelaxed)
             {
-                if (CellUnitComponent(xyCell).HaveMaxSteps)
+                if (_eGM.CellUnitComponent(xyCell).HaveMaxSteps)
                 {
-                    CellUnitComponent(xyCell).IsRelaxed = true;
-                    CellUnitComponent(xyCell).IsProtected = false;
-                    CellUnitComponent(xyCell).AmountSteps = 0;
+                    _eGM.CellUnitComponent(xyCell).IsRelaxed = true;
+                    _eGM.CellUnitComponent(xyCell).IsProtected = false;
+                    _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                 }
             }
         }
 
         else
         {
-            if (CellUnitComponent(xyCell).IsRelaxed)
+            if (_eGM.CellUnitComponent(xyCell).IsRelaxed)
             {
-                if (CellUnitComponent(xyCell).HaveMaxSteps)
+                if (_eGM.CellUnitComponent(xyCell).HaveMaxSteps)
                 {
-                    CellUnitComponent(xyCell).IsRelaxed = false;
-                    CellUnitComponent(xyCell).AmountSteps = 0;
+                    _eGM.CellUnitComponent(xyCell).IsRelaxed = false;
+                    _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                 }
             }
         }
@@ -229,7 +229,7 @@ internal partial class PhotonPunRPC
 
         bool isBuilded;
 
-        if (!CellEnvironmentComponent(xyCell).HaveMountain && CellUnitComponent(xyCell).HaveMaxSteps && !CellBuildingComponent(xyCell).HaveBuilding)
+        if (!_eGM.CellEnvironmentComponent(xyCell).HaveMountain && _eGM.CellUnitComponent(xyCell).HaveMaxSteps && !_eGM.CellBuildingComponent(xyCell).HaveBuilding)
         {
             switch (buildingType)
             {
@@ -239,78 +239,78 @@ internal partial class PhotonPunRPC
 
                 case BuildingTypes.City:
 
-                    CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                    _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
                     isBuilded = true;
-                    CellUnitComponent(xyCell).AmountSteps = 0;
+                    _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
 
                     if (info.Sender.IsMasterClient)
                     {
-                        BuildingsInfoComponent.IsBuildedCityMaster = isBuilded;
-                        InstanceGame.CellManager.CellBaseOperations.CopyXYinTo(xyCell, BuildingsInfoComponent.XYsettedCityMaster);
+                        _eGM.BuildingsInfoComponent.IsBuildedCityMaster = isBuilded;
+                        InstanceGame.CellManager.CellBaseOperations.CopyXYinTo(xyCell, _eGM.BuildingsInfoComponent.XYsettedCityMaster);
 
                         //_zoneComponentRef.Unref().XYMasterZone = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(xyCellIN);
                     }
                     else
                     {
-                        BuildingsInfoComponent.IsBuildedCityOther = isBuilded;
-                        InstanceGame.CellManager.CellBaseOperations.CopyXYinTo(xyCell, BuildingsInfoComponent.XYsettedCityOther);
+                        _eGM.BuildingsInfoComponent.IsBuildedCityOther = isBuilded;
+                        InstanceGame.CellManager.CellBaseOperations.CopyXYinTo(xyCell, _eGM.BuildingsInfoComponent.XYsettedCityOther);
 
                         //_zoneComponentRef.Unref().XYOtherZone = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(xyCellIN);
                     }
 
-                    if (CellEnvironmentComponent(xyCell).HaveTree) CellEnvironmentComponent(xyCell).SetResetEnvironment(false, EnvironmentTypes.Tree);
-                    if (CellEnvironmentComponent(xyCell).HaveFood) CellEnvironmentComponent(xyCell).SetResetEnvironment(false, EnvironmentTypes.Food);
+                    if (_eGM.CellEnvironmentComponent(xyCell).HaveTree) _eGM.CellEnvironmentComponent(xyCell).SetResetEnvironment(false, EnvironmentTypes.Tree);
+                    if (_eGM.CellEnvironmentComponent(xyCell).HaveFood) _eGM.CellEnvironmentComponent(xyCell).SetResetEnvironment(false, EnvironmentTypes.Food);
 
                     break;
 
 
                 case BuildingTypes.Farm:
 
-                    if (CellEnvironmentComponent(xyCell).HaveFood)
+                    if (_eGM.CellEnvironmentComponent(xyCell).HaveFood)
                     {
                         if (info.Sender.IsMasterClient)
                         {
-                            haveFood = EconomyComponent.FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
-                            haveWood = EconomyComponent.WoodMaster >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
-                            haveOre = EconomyComponent.OreMaster >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
-                            haveIron = EconomyComponent.IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
-                            haveGold = EconomyComponent.GoldMaster >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
+                            haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
+                            haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
+                            haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
+                            haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
+                            haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
 
                             if (haveFood && haveWood && haveOre && haveIron && haveGold)
                             {
-                                EconomyComponent.GoldMaster -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
-                                EconomyComponent.FoodMaster -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
-                                EconomyComponent.WoodMaster -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
-                                EconomyComponent.OreMaster -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
-                                EconomyComponent.IronMaster -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
+                                _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
+                                _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
+                                _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
+                                _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
+                                _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
 
 
-                                CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
-                                BuildingsInfoComponent.AmountFarmMaster += 1; // !!!!!
+                                _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                                _eGM.BuildingsInfoComponent.AmountFarmMaster += 1; // !!!!!
 
-                                CellUnitComponent(xyCell).AmountSteps = 0;
+                                _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             }
                         }
                         else
                         {
-                            haveFood = EconomyComponent.FoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
-                            haveWood = EconomyComponent.WoodOther >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
-                            haveOre = EconomyComponent.OreOther >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
-                            haveIron = EconomyComponent.IronOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
-                            haveGold = EconomyComponent.GoldOther >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
+                            haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
+                            haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
+                            haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
+                            haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
+                            haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
 
                             if (haveFood && haveWood && haveOre && haveIron && haveGold)
                             {
-                                EconomyComponent.GoldOther -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
-                                EconomyComponent.FoodOther -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
-                                EconomyComponent.WoodOther -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
-                                EconomyComponent.OreOther -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
-                                EconomyComponent.IronOther -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
+                                _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
+                                _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
+                                _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
+                                _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
+                                _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
 
-                                CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
-                                BuildingsInfoComponent.AmountFarmOther += 1; // !!!!!
+                                _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                                _eGM.BuildingsInfoComponent.AmountFarmOther += 1; // !!!!!
 
-                                CellUnitComponent(xyCell).AmountSteps = 0;
+                                _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             }
                         }
                     }
@@ -320,51 +320,52 @@ internal partial class PhotonPunRPC
 
                 case BuildingTypes.Woodcutter:
 
-                    if (CellEnvironmentComponent(xyCell).HaveTree)
+                    if (_eGM.CellEnvironmentComponent(xyCell).HaveTree)
                     {
                         if (info.Sender.IsMasterClient)
                         {
-                            haveFood = EconomyComponent.FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
-                            haveWood = EconomyComponent.WoodMaster >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
-                            haveOre = EconomyComponent.OreMaster >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
-                            haveIron = EconomyComponent.IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
-                            haveGold = EconomyComponent.GoldMaster >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
+                            haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
+                            haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
+                            haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
+                            haveIron = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+                            haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
 
                             if (haveFood && haveWood && haveOre && haveIron && haveGold)
                             {
-                                EconomyComponent.GoldMaster -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
-                                EconomyComponent.FoodMaster -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
-                                EconomyComponent.WoodMaster -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
-                                EconomyComponent.OreMaster -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
-                                EconomyComponent.IronMaster -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
 
-                                CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
-                                BuildingsInfoComponent.AmountWoodcutterMaster += 1; // !!!!!
+                                _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
+                                _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
+                                _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
+                                _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+                                _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
 
-                                CellUnitComponent(xyCell).AmountSteps = 0;
+                                _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                                _eGM.BuildingsInfoComponent.AmountWoodcutterMaster += 1; // !!!!!
+
+                                _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             }
                         }
                         else
                         {
-                            haveFood = EconomyComponent.FoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
-                            haveWood = EconomyComponent.WoodOther >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
-                            haveOre = EconomyComponent.OreOther >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
-                            haveIron = EconomyComponent.IronOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
-                            haveGold = EconomyComponent.GoldOther >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
+                            haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
+                            haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
+                            haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
+                            haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+                            haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
 
                             if (haveFood && haveWood && haveOre && haveIron && haveGold)
-                            {
-                                EconomyComponent.GoldOther -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
-                                EconomyComponent.FoodOther -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
-                                EconomyComponent.WoodOther -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
-                                EconomyComponent.OreOther -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
-                                EconomyComponent.IronOther -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+                            {                              
+                                _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
+                                _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
+                                _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
+                                _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+                                _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
 
 
-                                CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
-                                BuildingsInfoComponent.AmountWoodcutterOther += 1; // !!!!!
+                                _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                                _eGM.BuildingsInfoComponent.AmountWoodcutterOther += 1; // !!!!!
 
-                                CellUnitComponent(xyCell).AmountSteps = 0;
+                                _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             }
                         }
 
@@ -375,53 +376,53 @@ internal partial class PhotonPunRPC
 
                 case BuildingTypes.Mine:
 
-                    if (CellEnvironmentComponent(xyCell).HaveHill)
+                    if (_eGM.CellEnvironmentComponent(xyCell).HaveHill)
                     {
                         if (info.Sender.IsMasterClient)
                         {
-                            haveFood = EconomyComponent.FoodMaster >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
-                            haveWood = EconomyComponent.WoodMaster >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
-                            haveOre = EconomyComponent.OreMaster >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
-                            haveIron = EconomyComponent.IronMaster >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
-                            haveGold = EconomyComponent.GoldMaster >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
+                            haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
+                            haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
+                            haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
+                            haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
+                            haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
 
 
                             if (haveFood && haveWood && haveOre && haveIron && haveGold)
                             {
-                                EconomyComponent.GoldMaster -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
-                                EconomyComponent.FoodMaster -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
-                                EconomyComponent.WoodMaster -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
-                                EconomyComponent.OreMaster -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
-                                EconomyComponent.IronMaster -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
+                                _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
+                                _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
+                                _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
+                                _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
+                                _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
 
 
-                                CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
-                                BuildingsInfoComponent.AmountMineMaster += 1; // !!!!!
+                                _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                                _eGM.BuildingsInfoComponent.AmountMineMaster += 1; // !!!!!
 
-                                CellUnitComponent(xyCell).AmountSteps = 0;
+                                _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             }
                         }
                         else
                         {
-                            haveFood = EconomyComponent.FoodOther >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
-                            haveWood = EconomyComponent.WoodOther >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
-                            haveOre = EconomyComponent.OreOther >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
-                            haveIron = EconomyComponent.IronOther >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
-                            haveGold = EconomyComponent.GoldOther >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
+                            haveFood = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
+                            haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
+                            haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
+                            haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
+                            haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
 
                             if (haveFood && haveWood && haveOre && haveIron && haveGold)
                             {
-                                EconomyComponent.GoldOther -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
-                                EconomyComponent.FoodOther -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
-                                EconomyComponent.WoodOther -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
-                                EconomyComponent.OreOther -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
-                                EconomyComponent.IronOther -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
+                                _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
+                                _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
+                                _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
+                                _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
+                                _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
 
 
-                                CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
-                                BuildingsInfoComponent.AmountMineOther += 1; // !!!!!
+                                _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
+                                _eGM.BuildingsInfoComponent.AmountMineOther += 1; // !!!!!
 
-                                CellUnitComponent(xyCell).AmountSteps = 0;
+                                _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             }
                         }
 
@@ -448,6 +449,38 @@ internal partial class PhotonPunRPC
     #endregion
 
 
+    #region Unique Abilities Pawn
+
+    public void UniqueAbilityPawnToMaster(int[] xy, UniqueAbilitiesPawnTypes uniqueAbilitiesPawnType) 
+        => _photonView.RPC(nameof(UniqueAbilityPawnMaster), RpcTarget.MasterClient,xy, uniqueAbilitiesPawnType);
+
+    [PunRPC]
+    private void UniqueAbilityPawnMaster(int[] xy, UniqueAbilitiesPawnTypes uniqueAbilitiesPawnType, PhotonMessageInfo info)
+    {
+        switch (uniqueAbilitiesPawnType)
+        {
+            case UniqueAbilitiesPawnTypes.AbilityOne:
+
+
+
+                break;
+
+            case UniqueAbilitiesPawnTypes.AbilityTwo:
+                break;
+
+            case UniqueAbilitiesPawnTypes.AbilityThree:
+                break;
+
+            default:
+                break;
+        }
+
+        RefreshAllToMaster();
+    }
+
+    #endregion
+
+
     #region Destroy
 
     internal void DestroyBuilding(int[] xyCell) => _photonView.RPC(nameof(DestroyBuildingMaster), RpcTarget.MasterClient, xyCell);
@@ -455,43 +488,43 @@ internal partial class PhotonPunRPC
     [PunRPC]
     private void DestroyBuildingMaster(int[] xyCell, PhotonMessageInfo info)
     {
-        if (CellUnitComponent(xyCell).IsHisUnit(info.Sender))
+        if (_eGM.CellUnitComponent(xyCell).IsHisUnit(info.Sender))
         {
-            if (CellUnitComponent(xyCell).HaveMaxSteps)
+            if (_eGM.CellUnitComponent(xyCell).HaveMaxSteps)
             {
                 if (info.Sender.IsMasterClient)
                 {
-                    switch (CellBuildingComponent(xyCell).BuildingType)
+                    switch (_eGM.CellBuildingComponent(xyCell).BuildingType)
                     {
                         case BuildingTypes.City:
 
-                            EndGame(CellUnitComponent(xyCell).ActorNumber);
+                            EndGame(_eGM.CellUnitComponent(xyCell).ActorNumber);
 
                             break;
 
 
                         case BuildingTypes.Farm:
 
-                            BuildingsInfoComponent.AmountFarmMaster -= 1;
-                            CellUnitComponent(xyCell).AmountSteps = 0;
-                            CellBuildingComponent(xyCell).ResetBuilding();
+                            _eGM.BuildingsInfoComponent.AmountFarmMaster -= 1;
+                            _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
+                            _eGM.CellBuildingComponent(xyCell).ResetBuilding();
 
                             break;
 
 
                         case BuildingTypes.Woodcutter:
 
-                            BuildingsInfoComponent.AmountWoodcutterMaster -= 1;
-                            CellUnitComponent(xyCell).AmountSteps = 0;
-                            CellBuildingComponent(xyCell).ResetBuilding();
+                            _eGM.BuildingsInfoComponent.AmountWoodcutterMaster -= 1;
+                            _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
+                            _eGM.CellBuildingComponent(xyCell).ResetBuilding();
 
                             break;
 
                         case BuildingTypes.Mine:
 
-                            BuildingsInfoComponent.AmountMineMaster -= 1;
-                            CellUnitComponent(xyCell).AmountSteps = 0;
-                            CellBuildingComponent(xyCell).ResetBuilding();
+                            _eGM.BuildingsInfoComponent.AmountMineMaster -= 1;
+                            _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
+                            _eGM.CellBuildingComponent(xyCell).ResetBuilding();
 
                             break;
 
@@ -500,28 +533,28 @@ internal partial class PhotonPunRPC
 
                 else
                 {
-                    switch (CellBuildingComponent(xyCell).BuildingType)
+                    switch (_eGM.CellBuildingComponent(xyCell).BuildingType)
                     {
                         case BuildingTypes.City:
 
-                            EndGame(CellUnitComponent(xyCell).ActorNumber);
+                            EndGame(_eGM.CellUnitComponent(xyCell).ActorNumber);
 
                             break;
 
 
                         case BuildingTypes.Farm:
 
-                            BuildingsInfoComponent.AmountFarmOther -= 1;
-                            CellUnitComponent(xyCell).AmountSteps = 0;
-                            CellBuildingComponent(xyCell).ResetBuilding();
+                            _eGM.BuildingsInfoComponent.AmountFarmOther -= 1;
+                            _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
+                            _eGM.CellBuildingComponent(xyCell).ResetBuilding();
 
                             break;
 
                         case BuildingTypes.Woodcutter:
 
-                            BuildingsInfoComponent.AmountWoodcutterOther -= 1;
-                            CellUnitComponent(xyCell).AmountSteps = 0;
-                            CellBuildingComponent(xyCell).ResetBuilding();
+                            _eGM.BuildingsInfoComponent.AmountWoodcutterOther -= 1;
+                            _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
+                            _eGM.CellBuildingComponent(xyCell).ResetBuilding();
 
                             break;
 

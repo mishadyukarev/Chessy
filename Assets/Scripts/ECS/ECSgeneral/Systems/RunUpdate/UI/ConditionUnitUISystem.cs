@@ -2,7 +2,7 @@
 using TMPro;
 using static MainGame;
 
-internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
+internal class ConditionUnitUISystem : CellGeneralReduction, IEcsRunSystem
 {
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
 
@@ -11,12 +11,10 @@ internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
     private TextMeshProUGUI _protectionCurrentUnitText;
     private TextMeshProUGUI _stepsCurrentUnitText;
 
-    private int[] _xySelectedCell => _selectorComponentRef.Unref().XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorComponentSelectorEnt.XYselectedCell;
 
     internal ConditionUnitUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _selectorComponentRef = eCSmanager.EntitiesGeneralManager.SelectorComponentRef;
-
         _hpCurrentUnitText = InstanceGame.GameObjectPool.HpCurrentUnitText;
         _damageCurrentUnitText = InstanceGame.GameObjectPool.DamageCurrentUnitText;
         _protectionCurrentUnitText = InstanceGame.GameObjectPool.ProtectionCurrentUnitText;
@@ -25,7 +23,7 @@ internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (CellUnitComponent(_xySelectedCell).HaveUnit && CellUnitComponent(_xySelectedCell).IsMine)
+        if (_eGM.CellUnitComponent(_xySelectedCell).HaveUnit && _eGM.CellUnitComponent(_xySelectedCell).IsMine)
         {
             ActiveteSupportTextForAbilities(true);
         }
@@ -44,10 +42,10 @@ internal class ConditionUnitUISystem : CellReduction, IEcsRunSystem
 
         if (isActive)
         {
-            _hpCurrentUnitText.text = CellUnitComponent(_xySelectedCell).AmountHealth.ToString();
-            _damageCurrentUnitText.text = CellUnitComponent(_xySelectedCell).SimplePowerDamage.ToString();
-            _protectionCurrentUnitText.text = (CellUnitComponent(_xySelectedCell).PowerProtection(CellEnvironmentComponent(_xySelectedCell).ListEnvironmentTypes, CellBuildingComponent(_xySelectedCell).BuildingType)).ToString();
-            _stepsCurrentUnitText.text = CellUnitComponent(_xySelectedCell).AmountSteps.ToString();
+            _hpCurrentUnitText.text = _eGM.CellUnitComponent(_xySelectedCell).AmountHealth.ToString();
+            _damageCurrentUnitText.text = _eGM.CellUnitComponent(_xySelectedCell).SimplePowerDamage.ToString();
+            _protectionCurrentUnitText.text = (_eGM.CellUnitComponent(_xySelectedCell).PowerProtection(_eGM.CellEnvironmentComponent(_xySelectedCell).ListEnvironmentTypes, _eGM.CellBuildingComponent(_xySelectedCell).BuildingType)).ToString();
+            _stepsCurrentUnitText.text = _eGM.CellUnitComponent(_xySelectedCell).AmountSteps.ToString();
         }
     }
 }

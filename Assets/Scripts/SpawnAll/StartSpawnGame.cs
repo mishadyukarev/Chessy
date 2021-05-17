@@ -2,30 +2,27 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static MainGame;
 
 internal class StartSpawnGame : StartSpawn
 {
-
-
-    internal StartSpawnGame(GameObjectPool gameObjectPool, ResourcesLoadGame resourcesLoadGame, Builder builder) : base(resourcesLoadGame)
+    internal StartSpawnGame(MainGame mainGame) : base(mainGame.ResourcesLoadGameManager)
     {
-        gameObjectPool.ParentScriptsGO = builder.CreateGameObject("Scripts");
+        mainGame.GameObjectPool.ParentScriptsGO = mainGame.Builder.CreateGameObject("Scripts");
 
-        gameObjectPool.AudioSourceGO = builder.CreateGameObject("AudioSource", new Type[] { typeof(AudioSource) });
-        gameObjectPool.AudioSourceGO.GetComponent<AudioSource>().clip = resourcesLoadGame.SoundConfig.MistakeAudioClip;
+        mainGame.GameObjectPool.AudioSourceGO = mainGame.Builder.CreateGameObject("AudioSource", new Type[] { typeof(AudioSource) });
+        mainGame.GameObjectPool.AudioSourceGO.GetComponent<AudioSource>().clip = mainGame.ResourcesLoadGameManager.SoundConfig.MistakeAudioClip;
 
-        gameObjectPool.AttackAudioSource = builder.CreateGameObject("AttackAudioSource", new Type[] { typeof(AudioSource) }).GetComponent<AudioSource>();
-        gameObjectPool.AttackAudioSource.clip = resourcesLoadGame.SoundConfig.AttackAudioClip;
+        mainGame.GameObjectPool.AttackAudioSource = mainGame.Builder.CreateGameObject("AttackAudioSource", new Type[] { typeof(AudioSource) }).GetComponent<AudioSource>();
+        mainGame.GameObjectPool.AttackAudioSource.clip = mainGame.ResourcesLoadGameManager.SoundConfig.AttackAudioClip;
 
-        _camera.gameObject.transform.position = InstanceGame.transform.position + new Vector3(7, 5.5f, -1);
-        if (!InstanceGame.IsMasterClient) _camera.transform.Rotate(0, 0, 180);
+        _camera.gameObject.transform.position = mainGame.transform.position + new Vector3(7, 5.5f, -1);
+        if (!mainGame.IsMasterClient) _camera.transform.Rotate(0, 0, 180);
 
-        GameObject.Instantiate(resourcesLoadGame.PrefabConfig.BackGroundCollider2D,
-            InstanceGame.transform.position + new Vector3(0, 0, 1), InstanceGame.transform.rotation);
+        GameObject.Instantiate(mainGame.ResourcesLoadGameManager.PrefabConfig.BackGroundCollider2D,
+            mainGame.transform.position + new Vector3(0, 0, 1), mainGame.transform.transform.rotation);
 
-        SpawnCells(gameObjectPool, resourcesLoadGame, InstanceGame.StartValuesGameConfig);
-        SpawnUI(gameObjectPool, resourcesLoadGame, InstanceGame.StartValuesGameConfig);
+        SpawnCells(mainGame.GameObjectPool, mainGame.ResourcesLoadGameManager, mainGame.StartValuesGameConfig, mainGame.gameObject);
+        SpawnUI(mainGame.GameObjectPool, mainGame.ResourcesLoadGameManager, mainGame.StartValuesGameConfig);
     }
 
     private void SpawnUI(GameObjectPool gameObjectPool, ResourcesLoadGame resourcesLoadGameManager, StartValuesGameConfig startValuesGameConfig)
@@ -147,13 +144,13 @@ internal class StartSpawnGame : StartSpawn
         #endregion
 
 
-        if (InstanceGame.StartValuesGameConfig.IS_TEST)
+        if (startValuesGameConfig.IS_TEST)
         {
             gameObjectPool.ParentReadyZone.gameObject.SetActive(false);
         }
     }
 
-    public void SpawnCells(GameObjectPool gameObjectPool, ResourcesLoadGame resourcesLoadManager, StartValuesGameConfig startValues)
+    public void SpawnCells(GameObjectPool gameObjectPool, ResourcesLoadGame resourcesLoadManager, StartValuesGameConfig startValues, GameObject mainGameGO)
     {
         var cellGO = resourcesLoadManager.PrefabConfig.CellGO;
         var whiteCellSR = resourcesLoadManager.SpritesConfig.WhiteSprite;
@@ -183,6 +180,8 @@ internal class StartSpawnGame : StartSpawn
         gameObjectPool.CellBuildingWoodcutterGOs = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
         gameObjectPool.CellBuildingMineGOs = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
+        gameObjectPool.CellEffectFireGOs = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+
 
         GameObject supportParent = new GameObject("Cells");
 
@@ -194,12 +193,12 @@ internal class StartSpawnGame : StartSpawn
                 {
                     if (x % 2 == 0)
                     {
-                        gameObjectPool.CellsGO[x, y] = CreatGameObject(cellGO, blackCellSR, x, y);
+                        gameObjectPool.CellsGO[x, y] = CreatGameObject(cellGO, blackCellSR, x, y, mainGameGO);
                         SetActive(gameObjectPool.CellsGO[x, y], x, y);
                     }
                     if (x % 2 != 0)
                     {
-                        gameObjectPool.CellsGO[x, y] = CreatGameObject(cellGO, whiteCellSR, x, y);
+                        gameObjectPool.CellsGO[x, y] = CreatGameObject(cellGO, whiteCellSR, x, y, mainGameGO);
                         SetActive(gameObjectPool.CellsGO[x, y], x, y);
                     }
                 }
@@ -207,12 +206,12 @@ internal class StartSpawnGame : StartSpawn
                 {
                     if (x % 2 != 0)
                     {
-                        gameObjectPool.CellsGO[x, y] = CreatGameObject(cellGO, blackCellSR, x, y);
+                        gameObjectPool.CellsGO[x, y] = CreatGameObject(cellGO, blackCellSR, x, y, mainGameGO);
                         SetActive(gameObjectPool.CellsGO[x, y], x, y);
                     }
                     if (x % 2 == 0)
                     {
-                        gameObjectPool.CellsGO[x, y] = CreatGameObject(cellGO, whiteCellSR, x, y);
+                        gameObjectPool.CellsGO[x, y] = CreatGameObject(cellGO, whiteCellSR, x, y, mainGameGO);
                         SetActive(gameObjectPool.CellsGO[x, y], x, y);
                     }
                 }
@@ -257,15 +256,18 @@ internal class StartSpawnGame : StartSpawn
                 gameObjectPool.CellBuildingFarmGOs[x, y] = parentGO.transform.Find("Farm").gameObject;
                 gameObjectPool.CellBuildingWoodcutterGOs[x, y] = parentGO.transform.Find("Woodcutter").gameObject;
                 gameObjectPool.CellBuildingMineGOs[x, y] = parentGO.transform.Find("Mine").gameObject;
+
+
+                parentGO = gameObjectPool.CellsGO[x, y].transform.Find("Effects").gameObject;
+
+                gameObjectPool.CellEffectFireGOs[x,y] = parentGO.transform.Find("Fire").gameObject;
             }
         }
     }
 
-    private GameObject CreatGameObject(GameObject go, Sprite sprite, int x, int y)
+    private GameObject CreatGameObject(GameObject go, Sprite sprite, int x, int y, GameObject mainGameGO)
     {
-        var mainGO = InstanceGame.gameObject;
-
-        var goo = GameObject.Instantiate(go, mainGO.transform.position + new Vector3(x, y, mainGO.transform.position.z), mainGO.transform.rotation);
+        var goo = GameObject.Instantiate(go, mainGameGO.transform.position + new Vector3(x, y, mainGameGO.transform.position.z), mainGameGO.transform.rotation);
 
         var SR = goo.GetComponent<SpriteRenderer>();
         SR.sprite = sprite;
