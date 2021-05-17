@@ -5,10 +5,9 @@ public abstract class SystemsManager
 {
     protected EcsWorld _ecsWorld;
 
-    protected EcsSystems _updateSystems;
-    protected EcsSystems _fixedUpdateSystems;
-    protected EcsSystems _multipleSystems;
-    protected EcsSystems _soloSystems;
+    internal EcsSystems UpdateRunSystems;
+    internal EcsSystems FixedUpdateSystems;
+    internal EcsSystems SoloSystems;
 
     protected EcsSystems _currentSystemsForInvoke;
 
@@ -16,40 +15,36 @@ public abstract class SystemsManager
     {
         _ecsWorld = ecsWorld;
 
-        _updateSystems = new EcsSystems(ecsWorld);
-        _fixedUpdateSystems = new EcsSystems(ecsWorld);
-        _multipleSystems = new EcsSystems(ecsWorld);
-        _soloSystems = new EcsSystems(ecsWorld);
+        UpdateRunSystems = new EcsSystems(ecsWorld);
+        FixedUpdateSystems = new EcsSystems(ecsWorld);
+        SoloSystems = new EcsSystems(ecsWorld);
     }
 
 
     internal virtual void InitAndProcessInjectsSystems()
     {
-        _updateSystems.ProcessInjects();
-        _fixedUpdateSystems.ProcessInjects();
-        _multipleSystems.ProcessInjects();
-        _soloSystems.ProcessInjects();
+        UpdateRunSystems.ProcessInjects();
+        FixedUpdateSystems.ProcessInjects();
+        SoloSystems.ProcessInjects();
 
-        _updateSystems.Init();
-        _fixedUpdateSystems.Init();
-        _multipleSystems.Init();
-        _soloSystems.Init();
+        UpdateRunSystems.Init();
+        FixedUpdateSystems.Init();
+        SoloSystems.Init();
     }
 
-    internal void Update() => _updateSystems.Run();
-    internal void FixedUpdate() => _fixedUpdateSystems.Run();
+    internal void Update() => UpdateRunSystems.Run();
+    internal void FixedUpdate() => FixedUpdateSystems.Run();
 
-    internal void Destroy() => _updateSystems.Destroy();
+    internal void Destroy() => UpdateRunSystems.Destroy();
 
 
 
-    protected bool TryInvokeRunSystem(string namedSystem, EcsSystems currentSystems)
+    internal bool TryInvokeRunSystem(string namedSystem, EcsSystems currentSystems)
     {
         var numberOfNamedSystem = currentSystems.GetNamedRunSystem(namedSystem);
 
         if (numberOfNamedSystem != -1)
         {
-            var ecsSystemsRunItem = currentSystems.GetRunSystems().Items[numberOfNamedSystem];
             currentSystems.GetRunSystems().Items[numberOfNamedSystem].System.Run();
             return true;
         }
@@ -59,18 +54,19 @@ public abstract class SystemsManager
             return false;
         }
     }
-    protected void ActiveRunSystem(bool isActive, string namedSystem, EcsSystems currentSystems)
+    internal bool TryActiveRunSystem(bool isActive, string namedSystem, EcsSystems currentSystems)
     {
         var numberOfNamedSystem = currentSystems.GetNamedRunSystem(namedSystem);
 
         if (numberOfNamedSystem != -1)
         {
-            var ecsSystemsRunItem = currentSystems.GetRunSystems().Items[numberOfNamedSystem];
             currentSystems.GetRunSystems().Items[numberOfNamedSystem].Active = isActive;
+            return true;
         }
         else
         {
             Debug.Log("Не нашёл систему");
+            return false;
         }
     }
 }

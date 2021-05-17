@@ -1,66 +1,109 @@
-﻿internal struct EconomyComponent
+﻿using static MainGame;
+
+internal struct EconomyComponent
 {
-    private int _gold;
-    private int _food;
-    private int _wood;
-    private int _ore;
-    private int _iron;
+    internal int FoodMaster;
+    internal int FoodOther;
+
+    internal int WoodMaster;
+    internal int WoodOther;
+
+    internal int OreMaster;
+    internal int OreOther;
+
+    internal int IronMaster;
+    internal int IronOther;
+
+    internal int GoldMaster;
+    internal int GoldOther;
 
 
-    internal int Gold
+    internal EconomyComponent(StartValuesGameConfig startValuesGameConfig)
     {
-        get { return _gold; }
-        set { _gold = value; }
-    }
-    internal int Food
-    {
-        get { return _food; }
-        set { _food = value; }
-    }
-    internal int Wood
-    {
-        get { return _wood; }
-        set { _wood = value; }
-    }
-    internal int Ore
-    {
-        get { return _ore; }
-        set { _ore = value; }
-    }
-    internal int Iron
-    {
-        get { return _iron; }
-        set { _iron = value; }
+        GoldMaster = startValuesGameConfig.AMOUNT_GOLD_MASTER;
+        GoldOther = startValuesGameConfig.AMOUNT_GOLD_OTHER;
+
+        FoodMaster = startValuesGameConfig.AMOUNT_FOOD_MASTER;
+        FoodOther = startValuesGameConfig.AMOUNT_FOOD_OTHER;
+
+        WoodMaster = startValuesGameConfig.AMOUNT_WOOD_MASTER;
+        WoodOther = startValuesGameConfig.AMOUNT_WOOD_OTHER;
+
+        OreMaster = startValuesGameConfig.AMOUNT_ORE_MASTER;
+        OreOther = startValuesGameConfig.AMOUNT_ORE_OTHER;
+
+        IronMaster = startValuesGameConfig.AMOUNT_IRON_MASTER;
+        IronOther = startValuesGameConfig.AMOUNT_IRON_OTHER;
     }
 
-
-    internal struct UnitComponent
+    internal int CurrentFood
     {
-        private bool _isSettedKing;
-
-        internal bool IsSettedKing
+        get
         {
-            get { return _isSettedKing; }
-            set { _isSettedKing = value; }
+            if (InstanceGame.IsMasterClient) return FoodMaster;
+            else return FoodOther;
+        }
+        set
+        {
+            if (InstanceGame.IsMasterClient) FoodMaster = value;
+            else FoodOther = value;
         }
     }
 
-
-    internal struct BuildingComponent
+    internal int CurrentWood
     {
-        private bool _isSettedCity;
-        private int[] _xySettedCity;
-
-
-        internal bool IsSettedCity
+        get
         {
-            get { return _isSettedCity; }
-            set { _isSettedCity = value; }
+            if (InstanceGame.IsMasterClient) return WoodMaster;
+            else return WoodOther;
         }
-        internal int[] XYsettedCity
+        set
         {
-            get { return _xySettedCity; }
-            set { _xySettedCity = value; }
+            if (InstanceGame.IsMasterClient) WoodMaster = value;
+            else WoodOther = value;
+        }
+    }
+
+    internal int CurrentOre
+    {
+        get
+        {
+            if (InstanceGame.IsMasterClient) return OreMaster;
+            else return OreOther;
+        }
+        set
+        {
+            if (InstanceGame.IsMasterClient) OreMaster = value;
+            else OreOther = value;
+        }
+    }
+
+    internal int CurrentIron
+    {
+        get
+        {
+            if (InstanceGame.IsMasterClient) return IronMaster;
+            else return IronOther;
+        }
+        set
+        {
+            if (InstanceGame.IsMasterClient) IronMaster = value;
+            else IronOther = value;
+        }
+    }
+
+    internal int CurrentGold
+    {
+        get
+        {
+            if (InstanceGame.IsMasterClient) return GoldMaster;
+            else return GoldOther;
+        }
+        set
+        {
+            if (InstanceGame.IsMasterClient) GoldMaster = value;
+            else GoldOther = value;
         }
     }
 }
+

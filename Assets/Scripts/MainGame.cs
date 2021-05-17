@@ -1,20 +1,19 @@
-﻿using UnityEngine;
-
-internal sealed class MainGame : Main
+﻿internal sealed class MainGame : Main
 {
-
     #region Variables
 
     private static MainGame _instanceGame;
 
-    private SupportGameManager _supportGameManager;
-
+    private ResourcesLoadGame _resourcesLoadManager;
+    private Builder _builder;
+    private Names _names;
+    private CellManager _cellManager;
     private StartValuesGameConfig _startValuesGameConfig;
-    private StartSpawnGame _startSpawnGameManager;
+    private GameObjectPool _gameObjectPool;
+    private StartSpawnGame _startSpawnGame;
     private PhotonGameManager _photonGameManager;
     private ECSmanager _eCSmanager;
-
-    private Transform _parentTransformScrips;
+    private UnityEvents _unityEvents = default;
 
     #endregion
 
@@ -23,32 +22,46 @@ internal sealed class MainGame : Main
 
     public static MainGame InstanceGame => _instanceGame;
 
-    internal SupportGameManager SupportGameManager => _supportGameManager;
-    internal StartValuesGameConfig StartValuesGameConfig => _startValuesGameConfig;
-    internal StartSpawnGame StartSpawnGameManager => _startSpawnGameManager;
+    public ResourcesLoadGame ResourcesLoadGameManager => _resourcesLoadManager;
+    internal Builder Builder => _builder;
+    internal Names Names => _names;
+    internal CellManager CellManager => _cellManager;
+    internal GameObjectPool GameObjectPool => _gameObjectPool;
+    internal StartValuesGameConfig StartValuesGameConfig => _resourcesLoadManager.StartValuesConfig;
     internal PhotonGameManager PhotonGameManager => _photonGameManager;
 
     #endregion
 
 
-    private void Awake()
-    {
-        _instanceGame = this;
-        _supportGameManager = new SupportGameManager();
-
-        _startValuesGameConfig = _supportGameManager.ResourcesLoadGameManager.StartValuesConfig;
-        _startSpawnGameManager = new StartSpawnGame(_supportGameManager, out _parentTransformScrips);
-
-        _unityEvents = new UnityEvents(_supportGameManager.Builder);
-        gameObject.transform.SetParent(_parentTransformScrips);
-
-        _photonGameManager = new PhotonGameManager(_parentTransformScrips);
-    }
 
     private void Start()
     {
+        #region For ECS
+
+        _instanceGame = this;
+
+        _builder = new Builder();
+        _names = new Names();
+        _resourcesLoadManager = new ResourcesLoadGame();
+        _cellManager = new CellManager();
+        _gameObjectPool = new GameObjectPool();
+
+
+
+        _startSpawnGame = new StartSpawnGame(_gameObjectPool, _resourcesLoadManager, _builder);
+
+        _unityEvents = new UnityEvents(_builder);
+        gameObject.transform.SetParent(_gameObjectPool.ParentScriptsGO.transform);
+
+        _photonGameManager = new PhotonGameManager(_gameObjectPool.ParentScriptsGO.transform);
+
+        #endregion
+
+
         _eCSmanager = new ECSmanager();
-        _photonGameManager.InitAfterECS(_eCSmanager);
+
+        _photonGameManager.PhotonPunRPC.InitAfterECS(_eCSmanager);
+        _cellManager.CellFinderWay.InitAfterECS(_eCSmanager);
     }
 
 

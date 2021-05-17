@@ -1,16 +1,23 @@
-﻿public struct DonerComponent
-{
-    private bool _isDone;
-    private bool _isMistaked;
+﻿using static MainGame;
 
-    internal bool IsDone
+public struct DonerComponent
+{
+    public bool IsDoneMaster;
+    public bool IsDoneOther;
+
+    internal bool NeedSetKing;
+
+    internal bool IsCurrentDone
     {
-        get { return _isDone; }
-        set { _isDone = value; }
-    }
-    internal bool IsMistaked
-    {
-        get { return _isMistaked; }
-        set { _isMistaked = value; }
+        get
+        {
+            if (InstanceGame.IsMasterClient) return IsDoneMaster;
+            else return IsDoneOther;
+        }
+        set
+        {
+            if (InstanceGame.IsMasterClient) IsDoneMaster = value;
+            else IsDoneOther = value;
+        }
     }
 }

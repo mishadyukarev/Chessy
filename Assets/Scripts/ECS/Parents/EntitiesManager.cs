@@ -3,10 +3,7 @@
 public abstract class EntitiesManager
 {
     protected EcsWorld _ecsWorld;
-    protected EcsEntity _soloEntity;
+    protected EcsEntity _elseEntity;
 
-    protected EntitiesManager(EcsWorld ecsWorld)
-    {
-        _ecsWorld = ecsWorld;
-    }
+    protected EntitiesManager(EcsWorld ecsWorld) => _ecsWorld = ecsWorld;
 }

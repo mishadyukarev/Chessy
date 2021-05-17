@@ -3,5 +3,7 @@ public enum UnitTypes
 {
     None,
     King,
-    Pawn
+    Pawn,
+    Rook,
+    Bishop,
 }

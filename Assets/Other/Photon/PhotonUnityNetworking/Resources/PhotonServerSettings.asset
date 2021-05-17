@@ -60,6 +60,14 @@ MonoBehaviour:
   - SetUnitToMaster
   - ShiftUnitGeneral
   - ShiftUnitMaster
+  - CreateUnitMaster
+  - DestroyBuildingMaster
+  - DoneGeneral
+  - DoneMaster
+  - GetUnitGeneral
+  - GetUnitMaster
+  - MeltOreMaster
+  - MistakeGeneral
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

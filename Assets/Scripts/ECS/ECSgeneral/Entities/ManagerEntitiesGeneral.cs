@@ -17,6 +17,11 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     private EcsEntity _rayEntity;
     private EcsEntity _animationAttackUnitEntity;
     private EcsEntity _zoneEntity;
+    private EcsEntity _refreshEntity;
+    private EcsEntity _infoMotionEntity;
+    private EcsEntity _elseEntity;
+
+    internal ref EcsEntity EconomyEntity => ref _economyEntity;
 
     private EcsComponentRef<CellComponent>[,] _cellComponentRef;
     private EcsComponentRef<CellComponent.EnvironmentComponent>[,] _cellEnvironmentComponentRef;
@@ -26,15 +31,6 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
 
     #region Properies
-
-
-    #region Solo
-
-    internal EcsComponentRef<UnitPathsComponent> UnitPathComponentRef => _soloEntity.Ref<UnitPathsComponent>();
-    internal EcsComponentRef<GetterCellComponent> GetterCellComponentRef => _soloEntity.Ref<GetterCellComponent>();
-
-    #endregion
-
 
     #region Cell
 
@@ -47,18 +43,6 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     #endregion
 
 
-    #region Economy
-
-    internal EcsComponentRef<EconomyComponent> EconomyComponentRef
-        => _economyEntity.Ref<EconomyComponent>();
-    internal EcsComponentRef<EconomyComponent.UnitComponent> EconomyUnitsComponentRef
-        => _economyEntity.Ref<EconomyComponent.UnitComponent>();
-    internal EcsComponentRef<EconomyComponent.BuildingComponent> EconomyBuildingsComponentRef
-        => _economyEntity.Ref<EconomyComponent.BuildingComponent>();
-
-    #endregion
-
-
     #region Else
 
     internal EcsComponentRef<SelectorComponent> SelectorComponentRef => _selectorEntity.Ref<SelectorComponent>();
@@ -67,12 +51,15 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal EcsComponentRef<SelectedUnitComponent> SelectedUnitComponentRef => _selectedUnitEntity.Ref<SelectedUnitComponent>();
     internal EcsComponentRef<SoundComponent> SoundComponentRef => _soundEntity.Ref<SoundComponent>();
     internal EcsComponentRef<ReadyComponent> ReadyComponentRef => _readyEntity.Ref<ReadyComponent>();
-    internal EcsComponentRef<SelectorUnitComponent> SelectorUnitComponent => _selectorUnitEntity.Ref<SelectorUnitComponent>();
+    internal EcsComponentRef<TakerUnitUnitComponent> SelectorUnitComponent => _selectorUnitEntity.Ref<TakerUnitUnitComponent>();
     internal EcsComponentRef<TheEndGameComponent> TheEndGameComponentRef => _theEndGameEntity.Ref<TheEndGameComponent>();
     internal EcsComponentRef<StartGameComponent> StartGameComponentRef => _startGameEntity.Ref<StartGameComponent>();
     internal EcsComponentRef<RayComponent> RayComponentRef => _rayEntity.Ref<RayComponent>();
     internal EcsComponentRef<AnimationAttackUnitComponent> AnimationAttackUnitComponentRef => _animationAttackUnitEntity.Ref<AnimationAttackUnitComponent>();
     internal EcsComponentRef<ZoneComponent> ZoneComponentRef => _zoneEntity.Ref<ZoneComponent>();
+    internal EcsComponentRef<InfoRefreshComponent> RefreshComponentRef => _refreshEntity.Ref<InfoRefreshComponent>();
+    internal EcsComponentRef<InfoMotionComponent> InfoMotionComponentRef => _infoMotionEntity.Ref<InfoMotionComponent>();
+    internal ref EconomyUIComponent EconomyUIComponent => ref _elseEntity.Get<EconomyUIComponent>();
 
     #endregion
 
@@ -82,16 +69,15 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     public EntitiesGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-    internal void CreateEntities(ECSmanager eCSmanager)
+    internal void CreateEntities()
     {
         var startValuesGameConfig = InstanceGame.StartValuesGameConfig;
-        var systemsGeneralManager = eCSmanager.SystemsGeneralManager;
-        var cellManager = InstanceGame.SupportGameManager.CellManager;
-        var entitiesGeneralManager = eCSmanager.EntitiesGeneralManager;
 
-        _soloEntity = _ecsWorld.NewEntity()
-            .Replace(new UnitPathsComponent(systemsGeneralManager, startValuesGameConfig, cellManager))
-            .Replace(new GetterCellComponent(startValuesGameConfig, systemsGeneralManager));
+        _economyEntity = _ecsWorld.NewEntity()
+            .Replace(new EconomyComponent(startValuesGameConfig))
+            .Replace(new UnitsInfoComponent(startValuesGameConfig))
+            .Replace(new BuildingsInfoComponent(startValuesGameConfig));
+
 
         _donerEntity = _ecsWorld.NewEntity()
             .Replace(new DonerComponent());
@@ -105,10 +91,6 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         _selectedUnitEntity = _ecsWorld.NewEntity()
             .Replace(new SelectedUnitComponent());
 
-        _economyEntity = _ecsWorld.NewEntity()
-            .Replace(new EconomyComponent())
-            .Replace(new EconomyComponent.UnitComponent())
-            .Replace(new EconomyComponent.BuildingComponent());
 
         _soundEntity = _ecsWorld.NewEntity()
             .Replace(new SoundComponent());
@@ -117,7 +99,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
             .Replace(new ReadyComponent());
 
         _selectorUnitEntity = _ecsWorld.NewEntity()
-            .Replace(new SelectorUnitComponent());
+            .Replace(new TakerUnitUnitComponent());
 
         _theEndGameEntity = _ecsWorld.NewEntity()
             .Replace(new TheEndGameComponent());
@@ -134,10 +116,18 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         _zoneEntity = _ecsWorld.NewEntity()
             .Replace(new ZoneComponent());
 
+        _refreshEntity = _ecsWorld.NewEntity()
+            .Replace(new InfoRefreshComponent());
+
+        _infoMotionEntity = _ecsWorld.NewEntity()
+            .Replace(new InfoMotionComponent());
+
+        _elseEntity = _ecsWorld.NewEntity()
+            .Replace(new EconomyUIComponent(InstanceGame.GameObjectPool));
 
         #region Cells
 
-        var cellsGO = InstanceGame.StartSpawnGameManager.CellsGO;
+        var cellsGO = InstanceGame.GameObjectPool.CellsGO;
 
         var xAmount = cellsGO.GetUpperBound(startValuesGameConfig.X) + 1;
         var yAmount = cellsGO.GetUpperBound(startValuesGameConfig.Y) + 1;

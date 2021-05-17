@@ -17,8 +17,6 @@ public sealed class ECSmanager
     private EntitiesOtherManager _entitiesOtherManager;
 
 
-    public EcsWorld EcsWorld => _ecsWorld;
-
     public EntitiesGeneralManager EntitiesGeneralManager => _entitiesGeneralManager;
     public SystemsGeneralManager SystemsGeneralManager => _systemsGeneralManager;
 
@@ -36,7 +34,8 @@ public sealed class ECSmanager
 
         _entitiesGeneralManager = new EntitiesGeneralManager(_ecsWorld);
         _systemsGeneralManager = new SystemsGeneralManager(_ecsWorld);
-        _entitiesGeneralManager.CreateEntities(this);
+
+        _entitiesGeneralManager.CreateEntities();
         _systemsGeneralManager.CreateInitSystems(this);
 
 
