@@ -18,15 +18,15 @@ public class SystemsGeneralManager : SystemsManager
 
             .Add(new UISystem(eCSmanager), nameof(UISystem))
             .Add(new ReadyUISystem(eCSmanager), nameof(ReadyUISystem))
-            .Add(new DonerUISystem(eCSmanager), nameof(DonerUISystem))
-            .Add(new TakerUnitUISystem(eCSmanager), nameof(TakerUnitUISystem))
+            .Add(new DonerSystem(eCSmanager), nameof(DonerSystem))
+            .Add(new TakerUnitsSystem(eCSmanager), nameof(TakerUnitsSystem))
             .Add(new StandartAbilityUISystem(eCSmanager), nameof(StandartAbilityUISystem))
             .Add(new ConditionUnitUISystem(eCSmanager), nameof(ConditionUnitUISystem))
             .Add(new TheEndGameUISystem(eCSmanager), nameof(TheEndGameUISystem))
             .Add(new BuildingUISystem(eCSmanager), nameof(BuildingUISystem))
             .Add(new EconomySystem(eCSmanager), nameof(EconomySystem))
             .Add(new ZoneUISystem(eCSmanager), nameof(ZoneUISystem))
-            .Add(new WarningUISystem(eCSmanager), nameof(WarningUISystem))
+            .Add(new MistakeSystem(eCSmanager), nameof(MistakeSystem))
             .Add(new CityUISystem(eCSmanager), nameof(CityUISystem))
             .Add(new RefreshUISystem(eCSmanager), nameof(RefreshUISystem));
 

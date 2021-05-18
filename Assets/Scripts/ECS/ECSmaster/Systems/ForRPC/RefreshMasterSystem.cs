@@ -49,13 +49,13 @@ internal class RefreshMasterSystem : CellGeneralReduction, IEcsRunSystem
             }
         }
 
-        if (_eGM.BuildingsInfoComponent.IsBuildedCityMaster)
+        if (_eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[true])
         {
             _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[true] += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
             _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[true] += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
         }
 
-        if (_eGM.BuildingsInfoComponent.IsBuildedCityOther)
+        if (_eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[true])
         {
             _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[false] += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
             _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[false] += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
@@ -63,19 +63,19 @@ internal class RefreshMasterSystem : CellGeneralReduction, IEcsRunSystem
 
 
 
-        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[true] += _eGM.BuildingsInfoComponent.AmountFarmMaster * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
-        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[false] += _eGM.BuildingsInfoComponent.AmountFarmOther * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
+        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[true] += _eGM.InfoEntityBuildingsInfoComponent.AmountFarmDictionary[true] * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
+        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[false] += _eGM.InfoEntityBuildingsInfoComponent.AmountFarmDictionary[false] * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
 
-        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[true] += _eGM.BuildingsInfoComponent.AmountWoodcutterMaster * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
-        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[false] += _eGM.BuildingsInfoComponent.AmountWoodcutterOther * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
+        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[true] += _eGM.InfoEntityBuildingsInfoComponent.AmountWoodcutterDictionary[true] * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
+        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[false] += _eGM.InfoEntityBuildingsInfoComponent.AmountWoodcutterDictionary[false] * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
 
-        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[true] += _eGM.BuildingsInfoComponent.AmountMineMaster * InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
-        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[false] += _eGM.BuildingsInfoComponent.AmountMineOther * InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
+        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[true] += _eGM.InfoEntityBuildingsInfoComponent.AmountMineDictionary[true] * InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
+        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[false] += _eGM.InfoEntityBuildingsInfoComponent.AmountMineDictionary[false] * InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
 
 
 
-        _eGM.DonerComponent.IsDoneMaster = false;
-        _eGM.DonerComponent.IsDoneOther = false;
+        _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[true] = false;
+        _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[false] = false;
 
 
         _eGM.RefreshComponent.NumberMotion += 1;

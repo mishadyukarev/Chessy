@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Photon.Pun;
 using static MainGame;
 
 internal partial class PhotonPunRPC //EconomyRPC
@@ -34,7 +33,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                     haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_PAWN;
                     haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_PAWN;
                     haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
-                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_BUYING_PAWN;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_BUYING_PAWN;
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
@@ -42,9 +41,9 @@ internal partial class PhotonPunRPC //EconomyRPC
                         _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_PAWN;
                         _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_PAWN;
                         _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
-                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_BUYING_PAWN;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_PAWN;
 
-                        _eGM.UnitsInfoComponent.AmountUnitPawnMaster += StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                        _eGM.InfoEntityUnitsInfoComponent.AmountPawnDictionary[info.Sender.IsMasterClient] += StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                     }
                 }
                 else
@@ -63,7 +62,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
                         _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_PAWN;
 
-                        _eGM.UnitsInfoComponent.AmountUnitPawnOther += StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                        _eGM.InfoEntityUnitsInfoComponent.AmountPawnDictionary[info.Sender.IsMasterClient] += StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                     }
                 }
 
@@ -77,7 +76,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                     haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_ROOK;
                     haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_ROOK;
                     haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
-                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_BUYING_ROOK;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_BUYING_ROOK;
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
@@ -85,9 +84,9 @@ internal partial class PhotonPunRPC //EconomyRPC
                         _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_ROOK;
                         _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_ROOK;
                         _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
-                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_BUYING_ROOK;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_ROOK;
 
-                        _eGM.UnitsInfoComponent.AmountRookMaster += 1;
+                        _eGM.InfoEntityUnitsInfoComponent.AmountRookDictionary[info.Sender.IsMasterClient] += 1;
                     }
                 }
                 else
@@ -106,7 +105,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
                         _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_ROOK;
 
-                        _eGM.UnitsInfoComponent.AmountRookOther += 1;
+                        _eGM.InfoEntityUnitsInfoComponent.AmountRookDictionary[info.Sender.IsMasterClient] += 1;
                     }
                 }
 
@@ -121,7 +120,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                     haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
                     haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_BISHOP;
                     haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
-                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
@@ -129,9 +128,9 @@ internal partial class PhotonPunRPC //EconomyRPC
                         _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
                         _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_BISHOP;
                         _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
-                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
 
-                        _eGM.UnitsInfoComponent.AmountBishopMaster += 1;
+                        _eGM.InfoEntityUnitsInfoComponent.AmountBishopDictionary[info.Sender.IsMasterClient] += 1;
                     }
                 }
                 else
@@ -150,7 +149,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
                         _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
 
-                        _eGM.UnitsInfoComponent.AmountBishopOther += 1;
+                        _eGM.InfoEntityUnitsInfoComponent.AmountBishopDictionary[info.Sender.IsMasterClient] += 1;
                     }
                 }
 
@@ -174,7 +173,7 @@ internal partial class PhotonPunRPC //EconomyRPC
     internal void UpgradeUnitToMaster(UnitTypes unitType) => _photonView.RPC(nameof(UpgradeUnitMaster), RpcTarget.MasterClient, unitType);
 
     [PunRPC]
-    private void UpgradeUnitMaster(UnitTypes unitType,PhotonMessageInfo info)
+    private void UpgradeUnitMaster(UnitTypes unitType, PhotonMessageInfo info)
     {
         bool haveFood = true;
         bool haveWood = true;
@@ -198,7 +197,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                     haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
                     haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
                     haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
-                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
 
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
@@ -207,7 +206,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
                         _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
                         _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
-                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
 
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
@@ -259,7 +258,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                     haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
                     haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
                     haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
-                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
 
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
@@ -268,7 +267,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
                         _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
                         _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
-                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
 
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
@@ -317,7 +316,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                     haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
                     haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
                     haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
-                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
+                    haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
 
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
@@ -326,7 +325,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
                         _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
                         _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
-                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
+                        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
 
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
@@ -397,7 +396,7 @@ internal partial class PhotonPunRPC //EconomyRPC
             haveWood = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
             haveOre = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_MELTING_ORE;
             haveIron = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_MELTING_ORE;
-            haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]>= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
+            haveGold = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
 
             if (haveFood && haveWood && haveOre && haveIron && haveGold)
             {
@@ -405,7 +404,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                 _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
                 _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_MELTING_ORE;
                 _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_MELTING_ORE;
-                _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient]-= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
+                _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
 
                 _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] += 1;
             }
@@ -456,9 +455,9 @@ internal partial class PhotonPunRPC //EconomyRPC
             case UnitTypes.King:
 
                 if (info.Sender.IsMasterClient)
-                    isGetted = _eGM.UnitsInfoComponent.AmountKingMaster >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                    isGetted = _eGM.InfoEntityUnitsInfoComponent.AmountKingDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
-                else isGetted = _eGM.UnitsInfoComponent.AmountKingOther >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                else isGetted = _eGM.InfoEntityUnitsInfoComponent.AmountKingDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
                 break;
 
@@ -467,7 +466,7 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                 if (info.Sender.IsMasterClient)
                 {
-                    if (_eGM.UnitsInfoComponent.AmountUnitPawnMaster >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                    if (_eGM.InfoEntityUnitsInfoComponent.AmountPawnDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                     {
                         isGetted = true;
                     }
@@ -475,7 +474,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                 }
                 else
                 {
-                    if (_eGM.UnitsInfoComponent.AmountUnitPawnOther >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                    if (_eGM.InfoEntityUnitsInfoComponent.AmountPawnDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                     {
                         isGetted = true;
                     }
@@ -489,7 +488,7 @@ internal partial class PhotonPunRPC //EconomyRPC
 
                 if (info.Sender.IsMasterClient)
                 {
-                    if (_eGM.UnitsInfoComponent.AmountRookMaster >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                    if (_eGM.InfoEntityUnitsInfoComponent.AmountRookDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                     {
                         isGetted = true;
                     }
@@ -497,7 +496,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                 }
                 else
                 {
-                    if (_eGM.UnitsInfoComponent.AmountRookOther >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                    if (_eGM.InfoEntityUnitsInfoComponent.AmountRookDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                     {
                         isGetted = true;
                     }
@@ -510,9 +509,9 @@ internal partial class PhotonPunRPC //EconomyRPC
             case UnitTypes.Bishop:
 
                 if (info.Sender.IsMasterClient)
-                    isGetted = _eGM.UnitsInfoComponent.AmountBishopMaster >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                    isGetted = _eGM.InfoEntityUnitsInfoComponent.AmountBishopDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
-                else isGetted = _eGM.UnitsInfoComponent.AmountBishopOther >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                else isGetted = _eGM.InfoEntityUnitsInfoComponent.AmountBishopDictionary[info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
                 break;
 
@@ -542,7 +541,7 @@ internal partial class PhotonPunRPC //EconomyRPC
     #region SetUnit
 
     internal void SetUnit(in int[] xyCell, UnitTypes unitType)
-        => _photonView.RPC("SetUnitToMaster", RpcTarget.MasterClient, xyCell, unitType);
+        => _photonView.RPC(nameof(SetUnitToMaster), RpcTarget.MasterClient, xyCell, unitType);
 
     [PunRPC]
     private void SetUnitToMaster(int[] xyCell, UnitTypes unitType, PhotonMessageInfo info)
@@ -565,7 +564,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         {
                             _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.King, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, info.Sender);
                             _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
-                            _eGM.UnitsInfoComponent.AmountKingMaster -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.InfoEntityUnitsInfoComponent.AmountKingDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
@@ -576,11 +575,13 @@ internal partial class PhotonPunRPC //EconomyRPC
                         {
                             _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.King, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, info.Sender);
                             _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
-                            _eGM.UnitsInfoComponent.AmountKingOther -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.InfoEntityUnitsInfoComponent.AmountKingDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
                     }
+
+                    _eGM.InfoEntityUnitsInfoComponent.IsSettedKingDictionary[info.Sender.IsMasterClient] = isSetted;
 
                     break;
 
@@ -593,7 +594,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         {
                             _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, info.Sender);
                             _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
-                            _eGM.UnitsInfoComponent.AmountUnitPawnMaster -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.InfoEntityUnitsInfoComponent.AmountPawnDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
@@ -605,7 +606,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         {
                             _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.Pawn, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, info.Sender);
                             _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
-                            _eGM.UnitsInfoComponent.AmountUnitPawnOther -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.InfoEntityUnitsInfoComponent.AmountPawnDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
@@ -622,7 +623,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         {
                             _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.Rook, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, info.Sender);
                             _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
-                            _eGM.UnitsInfoComponent.AmountRookMaster -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.InfoEntityUnitsInfoComponent.AmountRookDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
@@ -633,7 +634,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         {
                             _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.Rook, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, info.Sender);
                             _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
-                            _eGM.UnitsInfoComponent.AmountRookOther -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.InfoEntityUnitsInfoComponent.AmountRookDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
@@ -650,7 +651,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         {
                             _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.Bishop, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, info.Sender);
                             _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
-                            _eGM.UnitsInfoComponent.AmountBishopMaster -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.InfoEntityUnitsInfoComponent.AmountBishopDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
@@ -661,7 +662,7 @@ internal partial class PhotonPunRPC //EconomyRPC
                         {
                             _eGM.CellUnitComponent(xyCell).SetUnit(UnitTypes.Bishop, default, StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, info.Sender);
                             _eGM.CellUnitComponent(xyCell).AmountHealth = _eGM.CellUnitComponent(xyCell).MaxAmountHealth;
-                            _eGM.UnitsInfoComponent.AmountBishopOther -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                            _eGM.InfoEntityUnitsInfoComponent.AmountBishopDictionary[info.Sender.IsMasterClient] -= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
                         else isSetted = false;
@@ -675,14 +676,7 @@ internal partial class PhotonPunRPC //EconomyRPC
             }
         }
 
-        if (unitType == UnitTypes.King)
-        {
-            if (info.Sender.IsMasterClient) _eGM.UnitsInfoComponent.IsSettedKingMaster = isSetted;
-            else _eGM.UnitsInfoComponent.IsSettedKingOther = isSetted;
-        }
-
-
-        _photonView.RPC("SetUnitToGeneral", info.Sender, isSetted);
+        _photonView.RPC(nameof(SetUnitToGeneral), info.Sender, isSetted);
 
         RefreshAllToMaster();
     }

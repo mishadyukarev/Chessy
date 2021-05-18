@@ -90,13 +90,12 @@ internal class StartSpawnGame : StartSpawn
 
         #region Down
 
-        gameObjectPool.GameDownTakeUnit0Button = GameObject.Find("TakeUnit0Button").GetComponent<Button>();
-        gameObjectPool.GameDownTakeUnit1Button = GameObject.Find("TakeUnit1Button").GetComponent<Button>();
-        gameObjectPool.GameDownTakeUnit2Button = GameObject.Find("TakeUnit2Button").GetComponent<Button>();
-        gameObjectPool.GameDownTakeUnit3Button = GameObject.Find("TakeUnit3Button").GetComponent<Button>();
+        gameObjectPool.GameDownTakerKingButton = GameObject.Find("TakeUnit0Button").GetComponent<Button>();
+        gameObjectPool.GameDownTakerPawnButton = GameObject.Find("TakeUnit1Button").GetComponent<Button>();
+        gameObjectPool.GameDownTakerRookButton = GameObject.Find("TakeUnit2Button").GetComponent<Button>();
+        gameObjectPool.GameDownTakerBishopButton = GameObject.Find("TakeUnit3Button").GetComponent<Button>();
 
         gameObjectPool.DoneButton = GameObject.Find("ButtonDone").GetComponent<Button>();
-        gameObjectPool.DonerRawImage = GameObject.Find("DonerRawImage").GetComponent<RawImage>();
 
         #endregion
 

@@ -100,14 +100,12 @@ internal class GameObjectPool
 
     #region Down
 
-    internal Button GameDownTakeUnit0Button;
-    internal Button GameDownTakeUnit1Button;
-    internal Button GameDownTakeUnit2Button;
-    internal Button GameDownTakeUnit3Button;
+    internal Button GameDownTakerKingButton;
+    internal Button GameDownTakerPawnButton;
+    internal Button GameDownTakerRookButton;
+    internal Button GameDownTakerBishopButton;
 
     internal Button DoneButton;
-
-    internal RawImage DonerRawImage;
 
     #endregion
 

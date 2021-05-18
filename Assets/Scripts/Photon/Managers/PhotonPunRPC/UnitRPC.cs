@@ -243,17 +243,16 @@ internal partial class PhotonPunRPC
                     isBuilded = true;
                     _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
 
+                    _eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[info.Sender.IsMasterClient] = isBuilded;
                     if (info.Sender.IsMasterClient)
                     {
-                        _eGM.BuildingsInfoComponent.IsBuildedCityMaster = isBuilded;
-                        InstanceGame.CellManager.CellBaseOperations.CopyXYinTo(xyCell, _eGM.BuildingsInfoComponent.XYsettedCityMaster);
+                        InstanceGame.CellManager.CellBaseOperations.CopyXYinTo(xyCell, _eGM.InfoEntityBuildingsInfoComponent.XYsettedCityDictionary[info.Sender.IsMasterClient]);
 
                         //_zoneComponentRef.Unref().XYMasterZone = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(xyCellIN);
                     }
                     else
                     {
-                        _eGM.BuildingsInfoComponent.IsBuildedCityOther = isBuilded;
-                        InstanceGame.CellManager.CellBaseOperations.CopyXYinTo(xyCell, _eGM.BuildingsInfoComponent.XYsettedCityOther);
+                        InstanceGame.CellManager.CellBaseOperations.CopyXYinTo(xyCell, _eGM.InfoEntityBuildingsInfoComponent.XYsettedCityDictionary[info.Sender.IsMasterClient]);
 
                         //_zoneComponentRef.Unref().XYOtherZone = InstanceGame.CellManager.CellFinderWay.TryGetXYAround(xyCellIN);
                     }
@@ -286,7 +285,7 @@ internal partial class PhotonPunRPC
 
 
                                 _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
-                                _eGM.BuildingsInfoComponent.AmountFarmMaster += 1; // !!!!!
+                                _eGM.InfoEntityBuildingsInfoComponent.AmountFarmDictionary[info.Sender.IsMasterClient] += 1; // !!!!!
 
                                 _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             }
@@ -308,7 +307,7 @@ internal partial class PhotonPunRPC
                                 _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
 
                                 _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
-                                _eGM.BuildingsInfoComponent.AmountFarmOther += 1; // !!!!!
+                                _eGM.InfoEntityBuildingsInfoComponent.AmountFarmDictionary[info.Sender.IsMasterClient] += 1; // !!!!!
 
                                 _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             }
@@ -340,7 +339,7 @@ internal partial class PhotonPunRPC
                                 _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[info.Sender.IsMasterClient] -= InstanceGame.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
 
                                 _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
-                                _eGM.BuildingsInfoComponent.AmountWoodcutterMaster += 1; // !!!!!
+                                _eGM.InfoEntityBuildingsInfoComponent.AmountWoodcutterDictionary[info.Sender.IsMasterClient] += 1; // !!!!!
 
                                 _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             }
@@ -363,7 +362,7 @@ internal partial class PhotonPunRPC
 
 
                                 _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
-                                _eGM.BuildingsInfoComponent.AmountWoodcutterOther += 1; // !!!!!
+                                _eGM.InfoEntityBuildingsInfoComponent.AmountWoodcutterDictionary[info.Sender.IsMasterClient] += 1; // !!!!!
 
                                 _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             }
@@ -397,7 +396,7 @@ internal partial class PhotonPunRPC
 
 
                                 _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
-                                _eGM.BuildingsInfoComponent.AmountMineMaster += 1; // !!!!!
+                                _eGM.InfoEntityBuildingsInfoComponent.AmountMineDictionary[info.Sender.IsMasterClient] += 1; // !!!!!
 
                                 _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             }
@@ -420,7 +419,7 @@ internal partial class PhotonPunRPC
 
 
                                 _eGM.CellBuildingComponent(xyCell).SetBuilding(buildingType, info.Sender);
-                                _eGM.BuildingsInfoComponent.AmountMineOther += 1; // !!!!!
+                                _eGM.InfoEntityBuildingsInfoComponent.AmountMineDictionary[info.Sender.IsMasterClient] += 1; // !!!!!
 
                                 _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             }
@@ -505,7 +504,7 @@ internal partial class PhotonPunRPC
 
                         case BuildingTypes.Farm:
 
-                            _eGM.BuildingsInfoComponent.AmountFarmMaster -= 1;
+                            _eGM.InfoEntityBuildingsInfoComponent.AmountFarmDictionary[info.Sender.IsMasterClient] -= 1;
                             _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             _eGM.CellBuildingComponent(xyCell).ResetBuilding();
 
@@ -514,7 +513,7 @@ internal partial class PhotonPunRPC
 
                         case BuildingTypes.Woodcutter:
 
-                            _eGM.BuildingsInfoComponent.AmountWoodcutterMaster -= 1;
+                            _eGM.InfoEntityBuildingsInfoComponent.AmountWoodcutterDictionary[info.Sender.IsMasterClient] -= 1;
                             _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             _eGM.CellBuildingComponent(xyCell).ResetBuilding();
 
@@ -522,7 +521,7 @@ internal partial class PhotonPunRPC
 
                         case BuildingTypes.Mine:
 
-                            _eGM.BuildingsInfoComponent.AmountMineMaster -= 1;
+                            _eGM.InfoEntityBuildingsInfoComponent.AmountMineDictionary[info.Sender.IsMasterClient] -= 1;
                             _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             _eGM.CellBuildingComponent(xyCell).ResetBuilding();
 
@@ -544,7 +543,7 @@ internal partial class PhotonPunRPC
 
                         case BuildingTypes.Farm:
 
-                            _eGM.BuildingsInfoComponent.AmountFarmOther -= 1;
+                            _eGM.InfoEntityBuildingsInfoComponent.AmountFarmDictionary[info.Sender.IsMasterClient] -= 1;
                             _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             _eGM.CellBuildingComponent(xyCell).ResetBuilding();
 
@@ -552,7 +551,7 @@ internal partial class PhotonPunRPC
 
                         case BuildingTypes.Woodcutter:
 
-                            _eGM.BuildingsInfoComponent.AmountWoodcutterOther -= 1;
+                            _eGM.InfoEntityBuildingsInfoComponent.AmountWoodcutterDictionary[info.Sender.IsMasterClient] -= 1;
                             _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
                             _eGM.CellBuildingComponent(xyCell).ResetBuilding();
 

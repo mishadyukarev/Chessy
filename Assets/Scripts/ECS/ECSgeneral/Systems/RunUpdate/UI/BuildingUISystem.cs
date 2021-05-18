@@ -66,7 +66,7 @@ internal class BuildingUISystem : CellGeneralReduction, IEcsRunSystem
 
                     case UnitTypes.Pawn:
 
-                        if (!_eGM.BuildingsInfoComponent.IsBuildedCityMaster) _buildingAbilityButton0.gameObject.SetActive(true);
+                        if (!_eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[true]) _buildingAbilityButton0.gameObject.SetActive(true);
                         _buildingAbilityButton1.gameObject.SetActive(true);
                         _buildingAbilityButton2.gameObject.SetActive(true);
                         _buildingAbilityButton3.gameObject.SetActive(true);

@@ -4,73 +4,33 @@ using System.Collections.Generic;
 
 public struct SelectorComponent
 {
-    private int[] _xyCurrentCell;
-    private int[] _xyPreviousCell;
-    private int[] _xySelectedCell;
-
-    private bool _isGettedCell;
-
-    private Action _setterUnitDelegate;
-    private Action _attackUnitDelegate;
-    private Action _shiftUnitDelegate;
-
-
-
     internal List<int[]> AvailableCellsForShift;
     internal List<int[]> AvailableCellsSimpleAttack;
     internal List<int[]> AvailableCellsUniqueAttack;
 
-    internal int[] XYcurrentCell
-    {
-        get { return _xyCurrentCell; }
-        set { _xyCurrentCell = value; }
-    }
+    internal int[] XYcurrentCell;
 
-    internal int[] XYpreviousCell
-    {
-        get { return _xyPreviousCell; }
-        set { _xyPreviousCell = value; }
-    }
-    internal int[] XYselectedCell
-    {
-        get { return _xySelectedCell; }
-        set { _xySelectedCell = value; }
-    }
+    internal int[] XYpreviousCell;
+    internal int[] XYselectedCell;
 
 
-    internal bool IsGettedCell
-    {
-        get { return _isGettedCell; }
-        set { _isGettedCell = value; }
-    }
+    internal bool IsGettedCell;
 
-    internal Action SetterUnitDelegate
-    {
-        get { return _setterUnitDelegate; }
-        set { if (_setterUnitDelegate == default) _setterUnitDelegate = value; }
-    }
-    internal Action AttackUnitAction
-    {
-        get { return _attackUnitDelegate; }
-        set { if (_attackUnitDelegate == default) _attackUnitDelegate = value; }
-    }
-    internal Action ShiftUnitDelegate
-    {
-        get { return _shiftUnitDelegate; }
-        set { if (_shiftUnitDelegate == default) _shiftUnitDelegate = value; }
-    }
+    internal Action SetterUnitDelegate;
+    internal Action AttackUnitAction;
+    internal Action ShiftUnitDelegate;
 
     internal SelectorComponent(StartValuesGameConfig nameValueManager)
     {
-        _xyCurrentCell = new int[nameValueManager.XY_FOR_ARRAY];
-        _xySelectedCell = new int[nameValueManager.XY_FOR_ARRAY];
-        _xyPreviousCell = new int[nameValueManager.XY_FOR_ARRAY];
+        XYcurrentCell = new int[nameValueManager.XY_FOR_ARRAY];
+        XYselectedCell = new int[nameValueManager.XY_FOR_ARRAY];
+        XYpreviousCell = new int[nameValueManager.XY_FOR_ARRAY];
 
-        _isGettedCell = default;
+        IsGettedCell = default;
 
-        _setterUnitDelegate = default;
-        _attackUnitDelegate = default;
-        _shiftUnitDelegate = default;
+        SetterUnitDelegate = default;
+        AttackUnitAction = default;
+        ShiftUnitDelegate = default;
 
         AvailableCellsForShift = new List<int[]>();
         AvailableCellsSimpleAttack = new List<int[]>();

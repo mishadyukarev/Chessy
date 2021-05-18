@@ -1,5 +1,4 @@
 ﻿using Leopotam.Ecs;
-using UnityEngine;
 using static MainGame;
 
 internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
@@ -56,7 +55,7 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
 
                     if (_eGM.InputEntityMouseClickComponent.IsClick)
                     {
-                        if (_eGM.DonerComponent.IsCurrentDone)
+                        if (_eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[InstanceGame.IsMasterClient])
                         {
                             if (_canExecuteStartClick)
                             {
