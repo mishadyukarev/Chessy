@@ -17,7 +17,7 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new SoundSystem(eCSmanager), nameof(SoundSystem))
 
             .Add(new UISystem(eCSmanager), nameof(UISystem))
-            .Add(new ReadyUISystem(eCSmanager), nameof(ReadyUISystem))
+            .Add(new ReadySystem(eCSmanager), nameof(ReadySystem))
             .Add(new DonerSystem(eCSmanager), nameof(DonerSystem))
             .Add(new TakerUnitsSystem(eCSmanager), nameof(TakerUnitsSystem))
             .Add(new StandartAbilityUISystem(eCSmanager), nameof(StandartAbilityUISystem))

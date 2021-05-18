@@ -14,7 +14,7 @@ internal class TakerUnitsSystem : RPCGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_eGM.InfoEntityUnitsInfoComponent.IsSettedKingDictionary[InstanceGame.IsMasterClient]) 
+        if (_eGM.InfoEntityUnitsInfoComponent.IsSettedKingDict[InstanceGame.IsMasterClient]) 
             _eGM.TakerKingEntityButtonComponent.Button.gameObject.SetActive(false);
     }
 

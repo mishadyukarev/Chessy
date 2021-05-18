@@ -11,7 +11,7 @@ internal class ConditionUnitUISystem : CellGeneralReduction, IEcsRunSystem
     private TextMeshProUGUI _protectionCurrentUnitText;
     private TextMeshProUGUI _stepsCurrentUnitText;
 
-    private int[] _xySelectedCell => _eGM.SelectorComponentSelectorEnt.XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorESelectorC.XYselectedCell;
 
     internal ConditionUnitUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {

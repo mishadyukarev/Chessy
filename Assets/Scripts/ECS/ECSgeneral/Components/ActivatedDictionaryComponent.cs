@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-internal struct IsActivatedDictionaryComponent
+internal struct ActivatedDictionaryComponent
 {
     internal Dictionary<bool, bool> IsActivatedDictionary;
 }

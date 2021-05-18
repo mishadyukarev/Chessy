@@ -22,9 +22,9 @@ internal class RefreshUISystem : SystemGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_eGM.RefreshComponent.IsRefreshed)
+        if (_eGM.UpdatorEntityActiveComponent.IsActive)
         {
-            _inGameRefreshZoneRefreshText.text = "Motion: " + _eGM.RefreshComponent.NumberMotion;
+            _inGameRefreshZoneRefreshText.text = "Motion: " + _eGM.UpdatorEntityAmountComponent.Amount;
             _inGameRefreshZoneGO.SetActive(true);
 
             _timer += Time.deltaTime;
@@ -32,7 +32,7 @@ internal class RefreshUISystem : SystemGeneralReduction, IEcsRunSystem
             if(_timer >= 1)
             {
                 _inGameRefreshZoneGO.SetActive(false);
-                _eGM.RefreshComponent.IsRefreshed = false;
+                _eGM.UpdatorEntityActiveComponent.IsActive = false;
                 _timer = 0;
             }          
         }

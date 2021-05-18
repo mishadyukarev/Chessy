@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public struct RayComponent
+public struct RaycastHit2DComponent
 {
     internal RaycastHit2D RaycastHit2D;
 }

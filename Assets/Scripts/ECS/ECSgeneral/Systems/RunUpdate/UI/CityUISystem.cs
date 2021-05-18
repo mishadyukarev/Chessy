@@ -18,7 +18,7 @@ internal class CityUISystem : CellGeneralReduction, IEcsRunSystem
     private Button _gameLeftBuyRookButton;
     private Button _gameLeftBuyBishopButton;
 
-    private int[] _xySelectedCell => _eGM.SelectorComponentSelectorEnt.XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorESelectorC.XYselectedCell;
 
 
     internal CityUISystem(ECSmanager eCSmanager) : base(eCSmanager)

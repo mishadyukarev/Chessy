@@ -6,7 +6,7 @@ internal struct BuildingsInfoComponent
     internal Dictionary<bool, bool> IsBuildedCityDictionary;
     internal Dictionary<bool, int[]> XYsettedCityDictionary;
 
-    internal Dictionary<bool, int> AmountFarmDictionary;
-    internal Dictionary<bool, int> AmountWoodcutterDictionary;
-    internal Dictionary<bool, int> AmountMineDictionary;
+    internal Dictionary<bool, int> AmountFarmDict;
+    internal Dictionary<bool, int> AmountWoodcutterDict;
+    internal Dictionary<bool, int> AmountMineDict;
 }

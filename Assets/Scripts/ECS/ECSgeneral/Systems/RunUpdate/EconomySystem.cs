@@ -9,10 +9,10 @@ internal class EconomySystem : SystemGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        _eGM.FoodEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient].ToString();
-        _eGM.WoodEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient].ToString();
-        _eGM.OreEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient].ToString();
-        _eGM.IronEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient].ToString();
-        _eGM.GoldEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient].ToString();
+        _eGM.FoodEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.FoodEAmountDictC.AmountDict[InstanceGame.IsMasterClient].ToString();
+        _eGM.WoodEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.WoodEAmountDictC.AmountDict[InstanceGame.IsMasterClient].ToString();
+        _eGM.OreEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.OreEAmountDictC.AmountDict[InstanceGame.IsMasterClient].ToString();
+        _eGM.IronEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.IronEAmountDictC.AmountDict[InstanceGame.IsMasterClient].ToString();
+        _eGM.GoldEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.GoldEAmountDictC.AmountDict[InstanceGame.IsMasterClient].ToString();
     }
 }

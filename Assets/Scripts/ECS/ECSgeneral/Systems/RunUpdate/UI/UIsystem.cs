@@ -25,7 +25,7 @@ internal class UISystem : CellGeneralReduction, IEcsRunSystem
 
     #endregion
 
-    private int[] _xySelectedCell => _eGM.SelectorComponentSelectorEnt.XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorESelectorC.XYselectedCell;
 
 
     internal UISystem(ECSmanager eCSmanager) : base(eCSmanager)

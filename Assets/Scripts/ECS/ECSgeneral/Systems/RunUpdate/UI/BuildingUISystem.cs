@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Photon.Pun;
 using UnityEngine.UI;
 using static MainGame;
 
@@ -11,7 +12,7 @@ internal class BuildingUISystem : CellGeneralReduction, IEcsRunSystem
     private Button _buildingAbilityButton3;
     private Button _buildingAbilityButton4;
 
-    private int[] _xySelectedCell => _eGM.SelectorComponentSelectorEnt.XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorESelectorC.XYselectedCell;
 
     internal BuildingUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
@@ -66,7 +67,7 @@ internal class BuildingUISystem : CellGeneralReduction, IEcsRunSystem
 
                     case UnitTypes.Pawn:
 
-                        if (!_eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[true]) _buildingAbilityButton0.gameObject.SetActive(true);
+                        if (!_eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[true]) _buildingAbilityButton0.gameObject.SetActive(true);
                         _buildingAbilityButton1.gameObject.SetActive(true);
                         _buildingAbilityButton2.gameObject.SetActive(true);
                         _buildingAbilityButton3.gameObject.SetActive(true);
@@ -90,7 +91,7 @@ internal class BuildingUISystem : CellGeneralReduction, IEcsRunSystem
         }
     }
 
-    private void Build(BuildingTypes buildingType) => _photonPunRPC.Build(_xySelectedCell, buildingType);
+    private void Build(BuildingTypes buildingType) => _photonPunRPC.BuildToMaster(_xySelectedCell, buildingType);
 
-    private void Destroy() => _photonPunRPC.DestroyBuilding(_xySelectedCell);
+    private void Destroy() => _photonPunRPC.DestroyBuildingToMaster(_xySelectedCell);
 }

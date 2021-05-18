@@ -1,9 +1,9 @@
 ﻿using Leopotam.Ecs;
 using static MainGame;
 
-internal class RefreshMasterSystem : CellGeneralReduction, IEcsRunSystem
+internal class UpdateMotionMasterSystem : CellGeneralReduction, IEcsRunSystem
 {
-    internal RefreshMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
+    internal UpdateMotionMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
     public void Run()
     {
@@ -49,28 +49,28 @@ internal class RefreshMasterSystem : CellGeneralReduction, IEcsRunSystem
             }
         }
 
-        if (_eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[true])
+        if (_eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[true])
         {
-            _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[true] += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
-            _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[true] += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
+            _eGM.FoodEAmountDictC.AmountDict[true] += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
+            _eGM.WoodEAmountDictC.AmountDict[true] += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
         }
 
-        if (_eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[true])
+        if (_eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[true])
         {
-            _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[false] += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
-            _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[false] += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
+            _eGM.FoodEAmountDictC.AmountDict[false] += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
+            _eGM.WoodEAmountDictC.AmountDict[false] += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
         }
 
 
 
-        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[true] += _eGM.InfoEntityBuildingsInfoComponent.AmountFarmDictionary[true] * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
-        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[false] += _eGM.InfoEntityBuildingsInfoComponent.AmountFarmDictionary[false] * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
+        _eGM.FoodEAmountDictC.AmountDict[true] += _eGM.InfoEntBuildingsInfoCom.AmountFarmDict[true] * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
+        _eGM.FoodEAmountDictC.AmountDict[false] += _eGM.InfoEntBuildingsInfoCom.AmountFarmDict[false] * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
 
-        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[true] += _eGM.InfoEntityBuildingsInfoComponent.AmountWoodcutterDictionary[true] * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
-        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[false] += _eGM.InfoEntityBuildingsInfoComponent.AmountWoodcutterDictionary[false] * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
+        _eGM.WoodEAmountDictC.AmountDict[true] += _eGM.InfoEntBuildingsInfoCom.AmountWoodcutterDict[true] * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
+        _eGM.WoodEAmountDictC.AmountDict[false] += _eGM.InfoEntBuildingsInfoCom.AmountWoodcutterDict[false] * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
 
-        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[true] += _eGM.InfoEntityBuildingsInfoComponent.AmountMineDictionary[true] * InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
-        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[false] += _eGM.InfoEntityBuildingsInfoComponent.AmountMineDictionary[false] * InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
+        _eGM.OreEAmountDictC.AmountDict[true] += _eGM.InfoEntBuildingsInfoCom.AmountMineDict[true] * InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
+        _eGM.OreEAmountDictC.AmountDict[false] += _eGM.InfoEntBuildingsInfoCom.AmountMineDict[false] * InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
 
 
 
@@ -78,7 +78,7 @@ internal class RefreshMasterSystem : CellGeneralReduction, IEcsRunSystem
         _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[false] = false;
 
 
-        _eGM.RefreshComponent.NumberMotion += 1;
+        _eGM.UpdatorEntityAmountComponent.Amount += 1;
 
     }
 }

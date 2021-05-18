@@ -13,7 +13,7 @@ internal class StandartAbilityUISystem : CellGeneralReduction, IEcsRunSystem
     private Button _standartAbilityButton1;
     private Button _standartAbilityButton2;
 
-    private int[] _xySelectedCell => _eGM.SelectorComponentSelectorEnt.XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorESelectorC.XYselectedCell;
 
     internal StandartAbilityUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {

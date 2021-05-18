@@ -17,14 +17,14 @@ internal sealed class GetterCellSystem : CellGeneralReduction, IEcsRunSystem
 
                     if (one == two)
                     {
-                        _eGM.SelectorComponentSelectorEnt.XYcurrentCell = new int[] { x, y };
-                        _eGM.SelectorComponentSelectorEnt.IsGettedCell = true;
+                        _eGM.SelectorESelectorC.XYcurrentCell = new int[] { x, y };
+                        _eGM.SelectorESelectorC.IsGettedCell = true;
                         return;
                     }
                 }
             }
-            _eGM.SelectorComponentSelectorEnt.XYcurrentCell = new int[] { -1, -1 };
-            _eGM.SelectorComponentSelectorEnt.IsGettedCell = false;
+            _eGM.SelectorESelectorC.XYcurrentCell = new int[] { -1, -1 };
+            _eGM.SelectorESelectorC.IsGettedCell = false;
         }
     }
 }

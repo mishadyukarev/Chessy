@@ -10,8 +10,11 @@ public sealed class SystemsMasterManager : SystemsManager
             .Add(new EconomyMasterSystem(eCSmanager), nameof(EconomyMasterSystem));
 
         SoloSystems
-            .Add(new RefreshMasterSystem(eCSmanager), nameof(RefreshMasterSystem))
-            .Add(new VisibilityUnitsMasterSystem(eCSmanager), nameof(VisibilityUnitsMasterSystem));
+            .Add(new UpdateMotionMasterSystem(eCSmanager), nameof(UpdateMotionMasterSystem))
+            .Add(new VisibilityUnitsMasterSystem(eCSmanager), nameof(VisibilityUnitsMasterSystem))
+            .Add(new BuilderMasterSystem(eCSmanager), nameof(BuilderMasterSystem))
+            .Add(new DestroyMasterSystem(eCSmanager), nameof(DestroyMasterSystem))
+            .Add(new AttackUnitMasterSystem(eCSmanager), nameof(AttackUnitMasterSystem));
             
 
         InitAndProcessInjectsSystems();

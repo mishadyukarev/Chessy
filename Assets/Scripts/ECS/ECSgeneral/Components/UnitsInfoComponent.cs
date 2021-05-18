@@ -3,10 +3,10 @@ using static MainGame;
 
 internal struct UnitsInfoComponent
 {
-    internal Dictionary<bool, bool> IsSettedKingDictionary;
+    internal Dictionary<bool, bool> IsSettedKingDict;
 
-    internal Dictionary<bool, int> AmountKingDictionary;
-    internal Dictionary<bool, int> AmountPawnDictionary;
-    internal Dictionary<bool, int> AmountRookDictionary;
-    internal Dictionary<bool, int> AmountBishopDictionary;
+    internal Dictionary<bool, int> AmountKingDict;
+    internal Dictionary<bool, int> AmountPawnDict;
+    internal Dictionary<bool, int> AmountRookDict;
+    internal Dictionary<bool, int> AmountBishopDict;
 }

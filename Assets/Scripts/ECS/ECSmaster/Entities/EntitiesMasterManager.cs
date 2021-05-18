@@ -4,15 +4,10 @@ using static MainGame;
 
 public class EntitiesMasterManager : EntitiesManager
 {
-
-    #region Properties
-
-    internal EcsComponentRef<MotionComponent> RefresherMasterComponentRef => _elseEntity.Ref<MotionComponent>();
-    internal EcsComponentRef<ReadyMasterComponent> ReadyMasterComponentRef => _elseEntity.Ref<ReadyMasterComponent>();
-    internal EcsComponentRef<FromInfoComponent> FromInfoComponentRef => _elseEntity.Ref<FromInfoComponent>();
-
-    #endregion
-
+    private EcsEntity _masterRPCEntity;
+    internal ref BuildingTypeComponent MasterRPCEntBuildingTypeCom => ref _masterRPCEntity.Get<BuildingTypeComponent>();
+    internal ref XyCellComponent MasterRPCEntXyCellCom => ref _masterRPCEntity.Get<XyCellComponent>();
+    internal ref XySelPreComponent MasterRPCEntXySelPreCom => ref _masterRPCEntity.Get<XySelPreComponent>();
 
 
     public EntitiesMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }
@@ -20,11 +15,6 @@ public class EntitiesMasterManager : EntitiesManager
     internal void CreateEntities(ECSmanager eCSmanager)
     {
         var eGM = eCSmanager.EntitiesGeneralManager;
-
-        _elseEntity = GameWorld.NewEntity()
-            .Replace(new MotionComponent())
-            .Replace(new ReadyMasterComponent())
-            .Replace(new FromInfoComponent());
 
         #region Cells
 
@@ -63,51 +53,66 @@ public class EntitiesMasterManager : EntitiesManager
 
         #region Economy
 
-        eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[true] = InstanceGame.StartValuesGameConfig.AMOUNT_FOOD_MASTER;
-        eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[true] = InstanceGame.StartValuesGameConfig.AMOUNT_WOOD_MASTER;
-        eGM.OreEntityAmountDictionaryComponent.AmountDictionary[true] = InstanceGame.StartValuesGameConfig.AMOUNT_ORE_MASTER;
-        eGM.IronEntityAmountDictionaryComponent.AmountDictionary[true] = InstanceGame.StartValuesGameConfig.AMOUNT_IRON_MASTER;
-        eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[true] = InstanceGame.StartValuesGameConfig.AMOUNT_GOLD_MASTER;
+        eGM.FoodEAmountDictC.AmountDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_FOOD_MASTER;
+        eGM.WoodEAmountDictC.AmountDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_WOOD_MASTER;
+        eGM.OreEAmountDictC.AmountDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_ORE_MASTER;
+        eGM.IronEAmountDictC.AmountDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_IRON_MASTER;
+        eGM.GoldEAmountDictC.AmountDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_GOLD_MASTER;
 
-        eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[false] = InstanceGame.StartValuesGameConfig.AMOUNT_FOOD_OTHER;
-        eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[false] = InstanceGame.StartValuesGameConfig.AMOUNT_WOOD_OTHER;
-        eGM.OreEntityAmountDictionaryComponent.AmountDictionary[false] = InstanceGame.StartValuesGameConfig.AMOUNT_ORE_OTHER;
-        eGM.IronEntityAmountDictionaryComponent.AmountDictionary[false] = InstanceGame.StartValuesGameConfig.AMOUNT_IRON_OTHER;
-        eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[false] = InstanceGame.StartValuesGameConfig.AMOUNT_GOLD_OTHER;
+        eGM.FoodEAmountDictC.AmountDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_FOOD_OTHER;
+        eGM.WoodEAmountDictC.AmountDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_WOOD_OTHER;
+        eGM.OreEAmountDictC.AmountDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_ORE_OTHER;
+        eGM.IronEAmountDictC.AmountDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_IRON_OTHER;
+        eGM.GoldEAmountDictC.AmountDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_GOLD_OTHER;
 
         #endregion
 
 
         #region Info
 
-        eGM.InfoEntityUnitsInfoComponent.IsSettedKingDictionary[true] = false;
-        eGM.InfoEntityUnitsInfoComponent.IsSettedKingDictionary[false] = false;
+        eGM.InfoEntityUnitsInfoComponent.IsSettedKingDict[true] = false;
+        eGM.InfoEntityUnitsInfoComponent.IsSettedKingDict[false] = false;
 
-        eGM.InfoEntityUnitsInfoComponent.AmountKingDictionary[true] = InstanceGame.StartValuesGameConfig.AMOUNT_KING_MASTER;
-        eGM .InfoEntityUnitsInfoComponent.AmountKingDictionary[false] = InstanceGame.StartValuesGameConfig.AMOUNT_KING_OTHER;
+        eGM.InfoEntityUnitsInfoComponent.AmountKingDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_KING_MASTER;
+        eGM .InfoEntityUnitsInfoComponent.AmountKingDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_KING_OTHER;
 
-        eGM .InfoEntityUnitsInfoComponent.AmountPawnDictionary[true] = InstanceGame.StartValuesGameConfig.AMOUNT_PAWN_MASTER;
-        eGM .InfoEntityUnitsInfoComponent.AmountPawnDictionary[false] = InstanceGame.StartValuesGameConfig.AMOUNT_PAWN_OTHER;
+        eGM .InfoEntityUnitsInfoComponent.AmountPawnDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_PAWN_MASTER;
+        eGM .InfoEntityUnitsInfoComponent.AmountPawnDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_PAWN_OTHER;
 
-        eGM .InfoEntityUnitsInfoComponent.AmountRookDictionary[true] = InstanceGame.StartValuesGameConfig.AMOUNT_ROOK_MASTER;
-        eGM .InfoEntityUnitsInfoComponent.AmountRookDictionary[false] = InstanceGame.StartValuesGameConfig.AMOUNT_ROOK_OTHER;
+        eGM .InfoEntityUnitsInfoComponent.AmountRookDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_ROOK_MASTER;
+        eGM .InfoEntityUnitsInfoComponent.AmountRookDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_ROOK_OTHER;
 
-        eGM .InfoEntityUnitsInfoComponent.AmountBishopDictionary[true] = InstanceGame.StartValuesGameConfig.AMOUNT_BISHOP_MASTER;
-        eGM .InfoEntityUnitsInfoComponent.AmountBishopDictionary[false] = InstanceGame.StartValuesGameConfig.AMOUNT_BISHOP_OTHER;
+        eGM .InfoEntityUnitsInfoComponent.AmountBishopDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_BISHOP_MASTER;
+        eGM .InfoEntityUnitsInfoComponent.AmountBishopDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_BISHOP_OTHER;
 
 
-        eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[true] = false;
-        eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[false] = false;
+        eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[true] = false;
+        eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[false] = false;
 
-        eGM.InfoEntityBuildingsInfoComponent.AmountFarmDictionary[true] = default;
-        eGM.InfoEntityBuildingsInfoComponent.AmountFarmDictionary[false] = default;
+        eGM.InfoEntBuildingsInfoCom.AmountFarmDict[true] = default;
+        eGM.InfoEntBuildingsInfoCom.AmountFarmDict[false] = default;
 
-        eGM.InfoEntityBuildingsInfoComponent.AmountWoodcutterDictionary[true] = default;
-        eGM.InfoEntityBuildingsInfoComponent.AmountWoodcutterDictionary[false] = default;
+        eGM.InfoEntBuildingsInfoCom.AmountWoodcutterDict[true] = default;
+        eGM.InfoEntBuildingsInfoCom.AmountWoodcutterDict[false] = default;
 
-        eGM.InfoEntityBuildingsInfoComponent.AmountMineDictionary[true] = default;
-        eGM.InfoEntityBuildingsInfoComponent.AmountMineDictionary[false] = default;
+        eGM.InfoEntBuildingsInfoCom.AmountMineDict[true] = default;
+        eGM.InfoEntBuildingsInfoCom.AmountMineDict[false] = default;
 
         #endregion
+
+
+        #region BuilderEntity
+
+        _masterRPCEntity = GameWorld.NewEntity();
+
+        MasterRPCEntBuildingTypeCom.BuildingType = default;
+
+        MasterRPCEntXyCellCom.XyCell = new int[StartValuesGameConfig.XY_FOR_ARRAY];
+
+        MasterRPCEntXySelPreCom.XySelected = new int[StartValuesGameConfig.XY_FOR_ARRAY];
+        MasterRPCEntXySelPreCom.XyPrevious = new int[StartValuesGameConfig.XY_FOR_ARRAY];
+
+        #endregion
+
     }
 }

@@ -13,19 +13,19 @@ internal class SupportVisionSystem : CellGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        _eGM.CellSupportVisionComponent(_eGM.SelectorComponentSelectorEnt.XYpreviousCell).ActiveVision(false, SupportVisionTypes.Selector);
+        _eGM.CellSupportVisionComponent(_eGM.SelectorESelectorC.XYpreviousCell).ActiveVision(false, SupportVisionTypes.Selector);
 
-        if (_eGM.CellComponent(_eGM.SelectorComponentSelectorEnt.XYselectedCell).IsSelected)
+        if (_eGM.CellComponent(_eGM.SelectorESelectorC.XYselectedCell).IsSelected)
         {
-            _eGM.CellSupportVisionComponent(_eGM.SelectorComponentSelectorEnt.XYselectedCell).ActiveVision(true, SupportVisionTypes.Selector);
+            _eGM.CellSupportVisionComponent(_eGM.SelectorESelectorC.XYselectedCell).ActiveVision(true, SupportVisionTypes.Selector);
         }
         else
         {
-            _eGM.CellSupportVisionComponent(_eGM.SelectorComponentSelectorEnt.XYselectedCell).ActiveVision(false, SupportVisionTypes.Selector);
+            _eGM.CellSupportVisionComponent(_eGM.SelectorESelectorC.XYselectedCell).ActiveVision(false, SupportVisionTypes.Selector);
         }
 
 
-        var isSelectedUnit = _eGM.SelectedUnitComponentSelectorEnt.IsSelectedUnit;
+        var isSelectedUnit = _eGM.SelectedUnitEUnitTypeC.HaveUnit;
 
         if (_isRepeated != isSelectedUnit)
         {
@@ -77,15 +77,15 @@ internal class SupportVisionSystem : CellGeneralReduction, IEcsRunSystem
             }
         }
 
-        foreach (var xy in _eGM.SelectorComponentSelectorEnt.AvailableCellsForShift)
+        foreach (var xy in _eGM.SelectorESelectorC.AvailableCellsForShift)
         {
             _eGM.CellSupportVisionComponent(xy).ActiveVision(true, SupportVisionTypes.WayOfUnit);
         }
-        foreach (var xy in _eGM.SelectorComponentSelectorEnt.AvailableCellsSimpleAttack)
+        foreach (var xy in _eGM.SelectorESelectorC.AvailableCellsSimpleAttack)
         {
             _eGM.CellSupportVisionComponent(xy).ActiveVision(true, SupportVisionTypes.SimpleAttack);
         }
-        foreach (var xy in _eGM.SelectorComponentSelectorEnt.AvailableCellsUniqueAttack)
+        foreach (var xy in _eGM.SelectorESelectorC.AvailableCellsUniqueAttack)
         {
             _eGM.CellSupportVisionComponent(xy).ActiveVision(true, SupportVisionTypes.UniqueAttack);
         }

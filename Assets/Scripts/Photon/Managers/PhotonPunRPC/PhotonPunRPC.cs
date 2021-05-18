@@ -9,9 +9,8 @@ using static MainGame;
 
 internal partial class PhotonPunRPC : MonoBehaviour
 {
-    private PhotonView _photonView = default;
-
     private EntitiesGeneralManager _eGM = default;
+    private EntitiesMasterManager _eMM = default;
 
     private SystemsGeneralManager _sGM = default;
     private SystemsMasterManager _sMM = default;
@@ -19,17 +18,8 @@ internal partial class PhotonPunRPC : MonoBehaviour
 
     #region ComponetsRef
 
-    #region Master
-
-    private EcsComponentRef<ReadyMasterComponent> _readyMasterComponentRef = default;
-    private EcsComponentRef<FromInfoComponent> _fromInfoComponentRef = default;
-
-    #endregion
-
-
     #region General
 
-    private EcsComponentRef<ReadyComponent> _readyComponentRef = default;
     private EcsComponentRef<TheEndGameComponent> _theEndComponentRef = default;
     private EcsComponentRef<StartGameComponent> _startGameComponentRef = default;
     private EcsComponentRef<AnimationAttackUnitComponent> _animationAttackUnitComponentRef = default;
@@ -41,13 +31,14 @@ internal partial class PhotonPunRPC : MonoBehaviour
 
 
     private StartValuesGameConfig StartValuesGameConfig => InstanceGame.StartValuesGameConfig;
-    private CellBaseOperations CellManager => InstanceGame.CellManager.CellBaseOperations;
+    private CellManager CellManager => InstanceGame.CellManager;
 
-
+    internal PhotonView PhotonView = default;
+    internal string NameRPC => nameof(RPC); 
 
     internal void Constructor(PhotonView photonView)
     {
-        _photonView = photonView;
+        PhotonView = photonView;
 
         PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
     }
@@ -57,19 +48,16 @@ internal partial class PhotonPunRPC : MonoBehaviour
         if (InstanceGame.IsMasterClient)
         {
             _sMM = eCSmanager.SystemsMasterManager;
+            _eMM = eCSmanager.EntitiesMasterManager;
 
 
-            var entitiesMasterManager = eCSmanager.EntitiesMasterManager;
-
-            _readyMasterComponentRef = entitiesMasterManager.ReadyMasterComponentRef;
-            _fromInfoComponentRef = entitiesMasterManager.FromInfoComponentRef;
+             var entitiesMasterManager = eCSmanager.EntitiesMasterManager;
         }
 
         _eGM = eCSmanager.EntitiesGeneralManager;
         _sGM = eCSmanager.SystemsGeneralManager;
 
 
-        _readyComponentRef = _eGM.ReadyComponentRef;
         _theEndComponentRef = _eGM.TheEndGameComponentRef;
         _startGameComponentRef = _eGM.StartGameComponentRef;
         _animationAttackUnitComponentRef = _eGM.AnimationAttackUnitComponentRef;
@@ -83,8 +71,8 @@ internal partial class PhotonPunRPC : MonoBehaviour
 
     #region Mistake
 
-    private void MistakeEconomy(Player player, bool haveFood, bool haveWood, bool haveOre, bool haveIron, bool haveGold)
-        => _photonView.RPC(nameof(MistakeEconomyGeneral), player, haveFood, haveWood, haveOre, haveIron, haveGold);
+    internal void MistakeEconomy(Player player, bool haveFood, bool haveWood, bool haveOre, bool haveIron, bool haveGold)
+        => PhotonView.RPC(nameof(MistakeEconomyGeneral), player, haveFood, haveWood, haveOre, haveIron, haveGold);
 
     [PunRPC]
     private void MistakeEconomyGeneral(bool haveFood, bool haveWood, bool haveOre, bool haveIron, bool haveGold)
@@ -100,7 +88,7 @@ internal partial class PhotonPunRPC : MonoBehaviour
     }
 
 
-    private void MistakeUnitToGeneral(Player player) => _photonView.RPC(nameof(MistakeUnitGeneral), player);
+    private void MistakeUnitToGeneral(Player player) => PhotonView.RPC(nameof(MistakeUnitGeneral), player);
     [PunRPC]
     private void MistakeUnitGeneral()
     {
@@ -113,12 +101,12 @@ internal partial class PhotonPunRPC : MonoBehaviour
 
     #region THE END OF GAME
 
-    internal void EndGame(int actorNumberWinner) => _photonView.RPC("EndGameToMaster", RpcTarget.MasterClient, actorNumberWinner);
+    internal void EndGame(int actorNumberWinner) => PhotonView.RPC("EndGameToMaster", RpcTarget.MasterClient, actorNumberWinner);
 
     [PunRPC]
     private void EndGameToMaster(int actorNumberWinner, PhotonMessageInfo info)
     {
-        _photonView.RPC("EndGameToGeneral", RpcTarget.All, actorNumberWinner);
+        PhotonView.RPC("EndGameToGeneral", RpcTarget.All, actorNumberWinner);
 
         RefreshAllToMaster();
     }
@@ -135,25 +123,26 @@ internal partial class PhotonPunRPC : MonoBehaviour
 
     #region Ready
 
-    public void Ready(in bool isReady) => _photonView.RPC("ReadyToMaster", RpcTarget.MasterClient, isReady);
+    public void ReadyToMaster(in bool isReady) => PhotonView.RPC(nameof(ReadyToMaster), RpcTarget.MasterClient, isReady);
 
     [PunRPC]
-    private void ReadyToMaster(bool isReady, PhotonMessageInfo info)
+    private void ReadyMaster(bool isReady, PhotonMessageInfo info)
     {
-        if (info.Sender.IsMasterClient) _readyMasterComponentRef.Unref().IsReadyMaster = isReady;
-        else _readyMasterComponentRef.Unref().IsReadyOther = isReady;
+       _eGM.ReadyEntityIsActivatedDictionaryComponent.IsActivatedDictionary[info.Sender.IsMasterClient] = isReady;
 
-        if (_readyMasterComponentRef.Unref().IsReadyMaster && _readyMasterComponentRef.Unref().IsReadyOther)
-            _photonView.RPC("ReadyToGeneral", RpcTarget.All, true, true);
-        else _photonView.RPC("ReadyToGeneral", info.Sender, isReady, false);
+        if (_eGM.ReadyEntityIsActivatedDictionaryComponent.IsActivatedDictionary[true]
+            && _eGM.ReadyEntityIsActivatedDictionaryComponent.IsActivatedDictionary[false])
+            PhotonView.RPC(nameof(ReadyGeneral), RpcTarget.All, true, true);
+
+        else PhotonView.RPC(nameof(ReadyGeneral), info.Sender, isReady, false);
 
         RefreshAllToMaster();
     }
 
     [PunRPC]
-    private void ReadyToGeneral(bool isReady, bool isStarted)
+    private void ReadyGeneral(bool isReady, bool isStarted)
     {
-        _readyComponentRef.Unref().IsReady = isReady;
+        _eGM.ReadyEntityIsActivatedDictionaryComponent.IsActivatedDictionary[InstanceGame.IsMasterClient] = isReady;
         _startGameComponentRef.Unref().IsStartedGame = isStarted;
     }
 
@@ -163,14 +152,14 @@ internal partial class PhotonPunRPC : MonoBehaviour
 
     #region Done
 
-    internal void DoneToMaster(bool isDone) => _photonView.RPC(nameof(DoneMaster), RpcTarget.MasterClient, isDone);
+    internal void DoneToMaster(bool isDone) => PhotonView.RPC(nameof(DoneMaster), RpcTarget.MasterClient, isDone);
 
     [PunRPC]
     private void DoneMaster(bool isDone, PhotonMessageInfo info)
     {
-        if (_eGM.InfoEntityUnitsInfoComponent.IsSettedKingDictionary[info.Sender.IsMasterClient])
+        if (_eGM.InfoEntityUnitsInfoComponent.IsSettedKingDict[info.Sender.IsMasterClient])
         {
-            _photonView.RPC(nameof(DoneGeneralOne), info.Sender, isDone);
+            PhotonView.RPC(nameof(DoneGeneralOne), info.Sender, isDone);
 
 
             _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[info.Sender.IsMasterClient] = isDone;
@@ -181,10 +170,10 @@ internal partial class PhotonPunRPC : MonoBehaviour
 
             if (isRefreshed)
             {
-                _sMM.TryInvokeRunSystem(nameof(RefreshMasterSystem), _sMM.SoloSystems);
+                _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.SoloSystems);
 
-                _photonView.RPC(nameof(DoneGeneralOne), RpcTarget.All, false);
-                _photonView.RPC(nameof(DoneGeneralTwo), RpcTarget.All, _eGM.RefreshComponent.NumberMotion);
+                PhotonView.RPC(nameof(DoneGeneralOne), RpcTarget.All, false);
+                PhotonView.RPC(nameof(DoneGeneralTwo), RpcTarget.All, _eGM.UpdatorEntityAmountComponent.Amount);
             }
         }
         else
@@ -202,8 +191,8 @@ internal partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void DoneGeneralTwo(int numberMotion)
     {
-        _eGM.RefreshComponent.NumberMotion = numberMotion;
-        _eGM.RefreshComponent.IsRefreshed = true;
+        _eGM.UpdatorEntityAmountComponent.Amount = numberMotion;
+        _eGM.UpdatorEntityActiveComponent.IsActive = true;
     }
 
     #endregion
@@ -213,8 +202,8 @@ internal partial class PhotonPunRPC : MonoBehaviour
 
     internal void RefreshAllToMaster()
     {
-        _photonView.RPC(nameof(RefreshCellsMaster), RpcTarget.MasterClient);
-        _photonView.RPC(nameof(RefreshEconomyMaster), RpcTarget.MasterClient);
+        PhotonView.RPC(nameof(RefreshCellsMaster), RpcTarget.MasterClient);
+        PhotonView.RPC(nameof(RefreshEconomyMaster), RpcTarget.MasterClient);
     }
 
     [PunRPC]
@@ -256,34 +245,34 @@ internal partial class PhotonPunRPC : MonoBehaviour
         object[] objects = new object[listObjects.Count];
         for (int i = 0; i < objects.Length; i++) objects[i] = listObjects[i];
 
-        _photonView.RPC(nameof(RefreshCellsGeneral), RpcTarget.Others, objects);
+        PhotonView.RPC(nameof(RefreshCellsGeneral), RpcTarget.Others, objects);
 
 
         objects = new object[]
         {
-            _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[false],
-            _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[false],
-            _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[false],
-            _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[false],
-            _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[false],
-            _eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[false],
-            _eGM.InfoEntityBuildingsInfoComponent.XYsettedCityDictionary[false],
-            _eGM.InfoEntityUnitsInfoComponent.IsSettedKingDictionary[false],
+            _eGM.GoldEAmountDictC.AmountDict[false],
+            _eGM.FoodEAmountDictC.AmountDict[false],
+            _eGM.WoodEAmountDictC.AmountDict[false],
+            _eGM.OreEAmountDictC.AmountDict[false],
+            _eGM.IronEAmountDictC.AmountDict[false],
+            _eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[false],
+            _eGM.InfoEntBuildingsInfoCom.XYsettedCityDictionary[false],
+            _eGM.InfoEntityUnitsInfoComponent.IsSettedKingDict[false],
         };
-        _photonView.RPC(nameof(RefreshEconomyGeneral), RpcTarget.Others, objects);
+        PhotonView.RPC(nameof(RefreshEconomyGeneral), RpcTarget.Others, objects);
 
         objects = new object[]
 {
-            _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[true],
-            _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[true],
-            _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[true],
-            _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[true],
-            _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[true],
-            _eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[true],
-            _eGM.InfoEntityBuildingsInfoComponent.XYsettedCityDictionary[true],
-            _eGM.InfoEntityUnitsInfoComponent.IsSettedKingDictionary[true],
+            _eGM.IronEAmountDictC.AmountDict[true],
+            _eGM.FoodEAmountDictC.AmountDict[true],
+            _eGM.WoodEAmountDictC.AmountDict[true],
+            _eGM.OreEAmountDictC.AmountDict[true],
+            _eGM.IronEAmountDictC.AmountDict[true],
+            _eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[true],
+            _eGM.InfoEntBuildingsInfoCom.XYsettedCityDictionary[true],
+            _eGM.InfoEntityUnitsInfoComponent.IsSettedKingDict[true],
 };
-        _photonView.RPC(nameof(RefreshEconomyGeneral), RpcTarget.MasterClient, objects);
+        PhotonView.RPC(nameof(RefreshEconomyGeneral), RpcTarget.MasterClient, objects);
 
         #endregion
 
@@ -294,16 +283,16 @@ internal partial class PhotonPunRPC : MonoBehaviour
     {
         var objects = new object[]
         {
-            _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[false],
-            _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[false],
-            _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[false],
-            _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[false],
-            _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[false],
-            _eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[false],
-            _eGM.InfoEntityBuildingsInfoComponent.XYsettedCityDictionary[false],
-            _eGM.InfoEntityUnitsInfoComponent.IsSettedKingDictionary[false],
+            _eGM.GoldEAmountDictC.AmountDict[false],
+            _eGM.FoodEAmountDictC.AmountDict[false],
+            _eGM.WoodEAmountDictC.AmountDict[false],
+            _eGM.OreEAmountDictC.AmountDict[false],
+            _eGM.IronEAmountDictC.AmountDict[false],
+            _eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[false],
+            _eGM.InfoEntBuildingsInfoCom.XYsettedCityDictionary[false],
+            _eGM.InfoEntityUnitsInfoComponent.IsSettedKingDict[false],
         };
-        _photonView.RPC(nameof(RefreshEconomyGeneral), RpcTarget.Others, objects);
+        PhotonView.RPC(nameof(RefreshEconomyGeneral), RpcTarget.Others, objects);
     }
 
     [PunRPC]
@@ -374,16 +363,16 @@ internal partial class PhotonPunRPC : MonoBehaviour
         bool isSettedKing = (bool)objects[i++];
 
 
-        _eGM.FoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] = food;
-        _eGM.WoodEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] = wood;
-        _eGM.OreEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] = ore;
-        _eGM.IronEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] = iron;
-        _eGM.GoldEntityAmountDictionaryComponent.AmountDictionary[InstanceGame.IsMasterClient] = gold;
+        _eGM.FoodEAmountDictC.AmountDict[InstanceGame.IsMasterClient] = food;
+        _eGM.WoodEAmountDictC.AmountDict[InstanceGame.IsMasterClient] = wood;
+        _eGM.OreEAmountDictC.AmountDict[InstanceGame.IsMasterClient] = ore;
+        _eGM.IronEAmountDictC.AmountDict[InstanceGame.IsMasterClient] = iron;
+        _eGM.GoldEAmountDictC.AmountDict[InstanceGame.IsMasterClient] = gold;
 
-        _eGM.InfoEntityBuildingsInfoComponent.IsBuildedCityDictionary[InstanceGame.IsMasterClient] = isSettedCity;
-        _eGM.InfoEntityBuildingsInfoComponent.XYsettedCityDictionary[InstanceGame.IsMasterClient] = xySettedCity;
+        _eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[InstanceGame.IsMasterClient] = isSettedCity;
+        _eGM.InfoEntBuildingsInfoCom.XYsettedCityDictionary[InstanceGame.IsMasterClient] = xySettedCity;
 
-        _eGM.InfoEntityUnitsInfoComponent.IsSettedKingDictionary[InstanceGame.IsMasterClient] = isSettedKing;
+        _eGM.InfoEntityUnitsInfoComponent.IsSettedKingDict[InstanceGame.IsMasterClient] = isSettedKing;
     }
 
     #endregion Ref
