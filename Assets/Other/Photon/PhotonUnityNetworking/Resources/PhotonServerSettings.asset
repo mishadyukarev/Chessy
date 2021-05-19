@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotonServerSettings
   m_EditorClassIdentifier: 
   AppSettings:
-    AppIdRealtime: 9d4d2421-5c0b-4f41-afdb-2abeb9b55bc0
+    AppIdRealtime: f2ff8add-1063-408f-a62c-4d57ff18a72d
     AppIdChat: 
     AppIdVoice: 
     AppVersion: 
@@ -69,5 +69,5 @@ MonoBehaviour:
   - MeltOreMaster
   - MistakeGeneral
   DisableAutoOpenWizard: 1
-  ShowSettings: 0
+  ShowSettings: 1
   DevRegionSetOnce: 1

@@ -25,7 +25,7 @@ internal class DestroyMasterSystem : SystemMasterReduction, IEcsRunSystem
                     {
                         case BuildingTypes.City:
 
-                            _photonPunRPC.EndGame(_eGM.CellUnitComponent(xyCell).ActorNumber);
+                            _photonPunRPC.EndGameToMaster(_eGM.CellUnitComponent(xyCell).ActorNumber);
 
                             break;
 
@@ -64,7 +64,7 @@ internal class DestroyMasterSystem : SystemMasterReduction, IEcsRunSystem
                     {
                         case BuildingTypes.City:
 
-                            _photonPunRPC.EndGame(_eGM.CellUnitComponent(xyCell).ActorNumber);
+                            _photonPunRPC.EndGameToMaster(_eGM.CellUnitComponent(xyCell).ActorNumber);
 
                             break;
 

@@ -14,8 +14,18 @@ public sealed class SystemsMasterManager : SystemsManager
             .Add(new VisibilityUnitsMasterSystem(eCSmanager), nameof(VisibilityUnitsMasterSystem))
             .Add(new BuilderMasterSystem(eCSmanager), nameof(BuilderMasterSystem))
             .Add(new DestroyMasterSystem(eCSmanager), nameof(DestroyMasterSystem))
-            .Add(new AttackUnitMasterSystem(eCSmanager), nameof(AttackUnitMasterSystem));
-            
+            .Add(new ShiftUnitMasterSystem(eCSmanager), nameof(ShiftUnitMasterSystem))
+            .Add(new AttackUnitMasterSystem(eCSmanager), nameof(AttackUnitMasterSystem))
+            .Add(new RelaxMasterSystem(eCSmanager), nameof(RelaxMasterSystem))
+            .Add(new ProtectMasterSystem(eCSmanager), nameof(ProtectMasterSystem))
+            .Add(new ReadyMasterSystem(eCSmanager), nameof(ReadyMasterSystem))
+            .Add(new DonerMasterSystem(eCSmanager), nameof(DonerMasterSystem))
+            .Add(new CreatorUnitMasterSystem(eCSmanager), nameof(CreatorUnitMasterSystem))
+            .Add(new UpgradeUnitMasterSystem(eCSmanager), nameof(UpgradeUnitMasterSystem))
+            .Add(new GetterUnitMasterSystem(eCSmanager), nameof(GetterUnitMasterSystem))
+            .Add(new MeltOreMasterSystem(eCSmanager), nameof(MeltOreMasterSystem))
+            .Add(new SetterUnitMasterSystem(eCSmanager), nameof(SetterUnitMasterSystem));
+
 
         InitAndProcessInjectsSystems();
     }

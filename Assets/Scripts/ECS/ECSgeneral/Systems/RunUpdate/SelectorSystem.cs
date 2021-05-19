@@ -88,10 +88,10 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
                                 if (!_eGM.CellEnvironmentComponent(xyCurrentCell).HaveMountain && !_eGM.CellUnitComponent(xyCurrentCell).HaveUnit)
                                 {
                                     if (InstanceGame.IsMasterClient && _eGM.CellComponent(xyCurrentCell).IsStartMaster)
-                                        _photonPunRPC.SetUnit(xyCurrentCell, _eGM.SelectedUnitEUnitTypeC.UnitType);
+                                        _photonPunRPC.SetUniToMaster(xyCurrentCell, _eGM.SelectedUnitEUnitTypeC.UnitType);
 
                                     else if (_eGM.CellComponent(xyCurrentCell).IsStartOther)
-                                        _photonPunRPC.SetUnit(xyCurrentCell, _eGM.SelectedUnitEUnitTypeC.UnitType);
+                                        _photonPunRPC.SetUniToMaster(xyCurrentCell, _eGM.SelectedUnitEUnitTypeC.UnitType);
 
                                     else _soundComponentRef.Unref().MistakeSoundAction();
                                 }

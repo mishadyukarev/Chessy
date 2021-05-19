@@ -133,7 +133,7 @@ internal class AttackUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                 if (_eGM.CellUnitComponent(XySelectedCell).AmountHealth <= StartValuesGameConfig.AMOUNT_FOR_DEATH)
                 {
                     if (_eGM.CellUnitComponent(XySelectedCell).UnitType == UnitTypes.King)
-                        _photonPunRPC.EndGame(_eGM.CellUnitComponent(XyPreviousCell).ActorNumber);
+                        _photonPunRPC.EndGameToMaster(_eGM.CellUnitComponent(XyPreviousCell).ActorNumber);
 
                     _eGM.CellUnitComponent(XySelectedCell).ResetUnit();
                     if (_eGM.CellUnitComponent(XyPreviousCell).UnitType != UnitTypes.Rook && _eGM.CellUnitComponent(XyPreviousCell).UnitType != UnitTypes.Bishop)

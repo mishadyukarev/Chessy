@@ -8,6 +8,7 @@ public class EntitiesMasterManager : EntitiesManager
     internal ref BuildingTypeComponent MasterRPCEntBuildingTypeCom => ref _masterRPCEntity.Get<BuildingTypeComponent>();
     internal ref XyCellComponent MasterRPCEntXyCellCom => ref _masterRPCEntity.Get<XyCellComponent>();
     internal ref XySelPreComponent MasterRPCEntXySelPreCom => ref _masterRPCEntity.Get<XySelPreComponent>();
+    internal ref UnitTypeComponent MasterRPCEntUnitTypeCom => ref _masterRPCEntity.Get<UnitTypeComponent>();
 
 
     public EntitiesMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }

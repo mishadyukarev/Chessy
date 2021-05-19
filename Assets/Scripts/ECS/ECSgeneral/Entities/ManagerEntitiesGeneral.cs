@@ -245,6 +245,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     private EcsEntity _generalRPCEntity;
     internal ref FromInfoComponent GeneralRPCEntFromInfoCom => ref _generalRPCEntity.Get<FromInfoComponent>();
+    internal ref ActiveComponent GeneralRPCEntActiveComponent => ref _generalRPCEntity.Get<ActiveComponent>();
 
 
     public EntitiesGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
@@ -414,7 +415,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         _updatorEntity = GameWorld.NewEntity();
 
         UpdatorEntityAmountComponent.Amount = default;
-        UpdatorEntityActiveComponent.IsActive = default;
+        UpdatorEntityActiveComponent.IsActived = default;
 
         #endregion
 

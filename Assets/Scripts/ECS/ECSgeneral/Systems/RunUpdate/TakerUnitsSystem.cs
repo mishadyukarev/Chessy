@@ -20,6 +20,6 @@ internal class TakerUnitsSystem : RPCGeneralReduction, IEcsRunSystem
 
     private void GetUnit(UnitTypes unitType)
     {
-        if (!_eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[InstanceGame.IsMasterClient]) _photonPunRPC.GetUnit(unitType);
+        if (!_eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[InstanceGame.IsMasterClient]) _photonPunRPC.GetUnitToMaster(unitType);
     }
 }

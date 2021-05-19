@@ -16,7 +16,7 @@ internal class MenuManager : MonoBehaviourPunCallbacks
         startSpawnMenuManager.QuitButton.onClick.AddListener(Quit);
 
 
-        PhotonNetwork.NickName = "Player " + Random.Range(1000, 9999);
+        PhotonNetwork.NickName = "Player " + Random.Range(10000, 100000);
         Log("Player's name is set to " + PhotonNetwork.NickName);
 
         PhotonNetwork.AutomaticallySyncScene = true;

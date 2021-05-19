@@ -150,7 +150,7 @@ internal class BuilderMasterSystem : SystemMasterReduction, IEcsRunSystem
                 }
             }
 
-            _photonPunRPC.MistakeEconomy(Info.Sender, haveFood, haveWood, haveOre, haveIron, haveGold);
+            _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haveFood, haveWood, haveOre, haveIron, haveGold);
         }
     }
 }

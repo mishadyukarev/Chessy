@@ -71,9 +71,9 @@ internal class CityUISystem : CellGeneralReduction, IEcsRunSystem
     }
 
 
-    private void BuyUnit(UnitTypes unitType) => _photonPunRPC.CreateUnit(unitType);
+    private void BuyUnit(UnitTypes unitType) => _photonPunRPC.CreateUnitToMaster(unitType);
 
     private void UpgradeUnit(UnitTypes unitType) => _photonPunRPC.UpgradeUnitToMaster(unitType);
 
-    private void MeltOre() => _photonPunRPC.MeltOre();
+    private void MeltOre() => _photonPunRPC.MeltOreToMaster();
 }
