@@ -1,23 +1,19 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 
-internal class SoundSystem : IEcsRunSystem
+internal class SoundSystem : SystemGeneralReduction, IEcsRunSystem
 {
     private AudioSource _mistakeAudioSource;
     private AudioSource _attackAudioSource;
 
-    private EcsComponentRef<SoundComponent> _soundComponentRef = default;
 
-
-    internal SoundSystem(ECSmanager eCSmanager)
+    internal SoundSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _soundComponentRef = eCSmanager.EntitiesGeneralManager.SoundComponentRef;
-
         _mistakeAudioSource = MainGame.InstanceGame.GameObjectPool.AudioSourceGO.GetComponent<AudioSource>();
         _attackAudioSource = MainGame.InstanceGame.GameObjectPool.AttackAudioSource;
 
-        _soundComponentRef.Unref().MistakeSoundAction = MistakeSound;
-        _soundComponentRef.Unref().AttackSoundAction = AttackSound;
+        _eGM.SoundEntSoundCom.MistakeSoundAction = MistakeSound;
+        _eGM.SoundEntSoundCom.AttackSoundAction = AttackSound;
     }
 
     public void Run()

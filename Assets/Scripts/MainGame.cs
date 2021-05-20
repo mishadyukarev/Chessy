@@ -7,8 +7,7 @@
     private ResourcesLoadGame _resourcesLoadManager;
     private Builder _builder;
     private Names _names;
-    private CellManager _cellManager;
-    private StartValuesGameConfig _startValuesGameConfig;
+    private CellBaseOperations _cellBaseOperations;
     private GameObjectPool _gameObjectPool;
     private StartSpawnGame _startSpawnGame;
     private PhotonGameManager _photonGameManager;
@@ -25,9 +24,9 @@
     public ResourcesLoadGame ResourcesLoadGameManager => _resourcesLoadManager;
     internal Builder Builder => _builder;
     internal Names Names => _names;
-    internal CellManager CellManager => _cellManager;
+    internal CellBaseOperations CellBaseOperations => _cellBaseOperations;
     internal GameObjectPool GameObjectPool => _gameObjectPool;
-    internal StartValuesGameConfig StartValuesGameConfig => _resourcesLoadManager.StartValuesConfig;
+    internal StartValuesGameConfig StartValuesGameConfig => _resourcesLoadManager.StartValuesGameConfig;
     internal PhotonGameManager PhotonGameManager => _photonGameManager;
 
     #endregion
@@ -36,6 +35,10 @@
 
     private void Start()
     {
+
+
+
+
         #region Casting
 
         _instanceGame = this;
@@ -51,7 +54,7 @@
         _unityEvents = new UnityEvents(_builder);
         gameObject.transform.SetParent(_gameObjectPool.ParentScriptsGO.transform);
 
-        _cellManager = new CellManager(_resourcesLoadManager.StartValuesConfig);
+        _cellBaseOperations = new CellBaseOperations(_resourcesLoadManager.StartValuesGameConfig);
 
         _photonGameManager = new PhotonGameManager(_gameObjectPool.ParentScriptsGO.transform);
 
@@ -61,9 +64,7 @@
         #region Static
 
         _eCSmanager = new ECSmanager();
-
         _photonGameManager.PhotonPunRPC.InitAfterECS(_eCSmanager);
-        _cellManager.CellFinderWay.InitAfterECS(_eCSmanager);
 
         #endregion
     }
@@ -71,7 +72,8 @@
 
     private void Update()
     {
-        _eCSmanager.Update();
+        _eCSmanager.OwnUpdate();
+        _photonGameManager.GameSceneManager.OwnUpdate();
     }
 
     private void OnDestroy() { }

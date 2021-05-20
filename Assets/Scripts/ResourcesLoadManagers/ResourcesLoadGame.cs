@@ -11,7 +11,7 @@ internal class ResourcesLoadGame : ResourcesLoad
     internal PrefabConfig PrefabConfig => _prefabConfig;
     internal SoundConfig SoundConfig => _soundConfig;
     internal SpritesConfig SpritesConfig => _spritesConfig;
-    internal StartValuesGameConfig StartValuesConfig => _startValuesConfig;
+    internal StartValuesGameConfig StartValuesGameConfig => _startValuesConfig;
 
 
     public ResourcesLoadGame()

@@ -43,11 +43,13 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
                         _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
 
+                        _eGM.InfoEnt_UpgradeCom.AmountUpgradePawnDict[Info.Sender.IsMasterClient] += 1;
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                _eGM.CellUnitComponent(x, y).AmountUpgradePawnMaster += 1;
-                                if (_eGM.CellUnitComponent(x, y).UnitType == UnitTypes.Pawn && _eGM.CellUnitComponent(x, y).IsHisUnit(Info.Sender)) _eGM.CellUnitComponent(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
+                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Pawn 
+                                    && _eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Info.Sender)) 
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
                             }
 
                     }
@@ -69,13 +71,13 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
                         _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
 
+                        _eGM.InfoEnt_UpgradeCom.AmountUpgradePawnDict[Info.Sender.IsMasterClient] += 1;
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                _eGM.CellUnitComponent(x, y).AmountUpgradePawnOther += 1;
-                                if (_eGM.CellUnitComponent(x, y).UnitType == UnitTypes.Pawn && _eGM.CellUnitComponent(x, y).IsHisUnit(Info.Sender))
+                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Pawn && _eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Info.Sender))
                                 {
-                                    _eGM.CellUnitComponent(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
                                 }
                             }
 
@@ -104,11 +106,13 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
                         _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
 
+                        _eGM.InfoEnt_UpgradeCom.AmountUpgradeRookDict[Info.Sender.IsMasterClient] += 1;
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                _eGM.CellUnitComponent(x, y).AmountUpgradeRookMaster += 1;
-                                if (_eGM.CellUnitComponent(x, y).UnitType == UnitTypes.Rook && _eGM.CellUnitComponent(x, y).IsHisUnit(Info.Sender)) _eGM.CellUnitComponent(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
+                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Rook 
+                                    && _eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Info.Sender))
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
                             }
 
                     }
@@ -130,11 +134,13 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
                         _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
 
+                        _eGM.InfoEnt_UpgradeCom.AmountUpgradeRookDict[Info.Sender.IsMasterClient] += 1;
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                _eGM.CellUnitComponent(x, y).AmountUpgradeRookOther += 1;
-                                if (_eGM.CellUnitComponent(x, y).UnitType == UnitTypes.Rook && _eGM.CellUnitComponent(x, y).IsHisUnit(Info.Sender)) _eGM.CellUnitComponent(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
+                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Rook 
+                                    && _eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Info.Sender)) 
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
                             }
 
                     }
@@ -162,11 +168,11 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
                         _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
 
+                        _eGM.InfoEnt_UpgradeCom.AmountUpgradeBishopDict[Info.Sender.IsMasterClient] += 1;
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                _eGM.CellUnitComponent(x, y).AmountUpgradeBishopMaster += 1;
-                                if (_eGM.CellUnitComponent(x, y).UnitType == UnitTypes.Bishop && _eGM.CellUnitComponent(x, y).IsHisUnit(Info.Sender)) _eGM.CellUnitComponent(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
+                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Bishop && _eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Info.Sender)) _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
                             }
 
                     }
@@ -188,11 +194,13 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
                         _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
 
+                        _eGM.InfoEnt_UpgradeCom.AmountUpgradeBishopDict[Info.Sender.IsMasterClient] += 1;
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                _eGM.CellUnitComponent(x, y).AmountUpgradeBishopOther += 1;
-                                if (_eGM.CellUnitComponent(x, y).UnitType == UnitTypes.Bishop && _eGM.CellUnitComponent(x, y).IsHisUnit(Info.Sender)) _eGM.CellUnitComponent(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
+                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Bishop 
+                                    && _eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Info.Sender)) 
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
                             }
 
                     }

@@ -259,7 +259,7 @@ internal class StartSpawnGame : StartSpawn
 
                 parentGO = gameObjectPool.CellsGO[x, y].transform.Find("Effects").gameObject;
 
-                gameObjectPool.CellEffectFireGOs[x,y] = parentGO.transform.Find("Fire").gameObject;
+                gameObjectPool.CellEffectFireGOs[x, y] = parentGO.transform.Find("Fire").gameObject;
             }
         }
     }

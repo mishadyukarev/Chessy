@@ -5,14 +5,6 @@ using static MainGame;
 
 public sealed class EntitiesGeneralManager : EntitiesManager
 {
-    private EcsEntity _soundEntity;
-
-    private EcsEntity _theEndGameEntity;
-    private EcsEntity _startGameEntity;
-    private EcsEntity _animationAttackUnitEntity;
-    private EcsEntity _zoneEntity;
-
-
     #region Economy
 
     #region FoodEntity
@@ -79,9 +71,9 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     #region InputEntity
 
-    private EcsEntity _inputEntity;
+    private EcsEntity _inputEnt;
 
-    internal ref MouseClickComponent InputEntityMouseClickComponent => ref _inputEntity.Get<MouseClickComponent>();
+    internal ref MouseClickComponent InputEntityMouseClickComponent => ref _inputEnt.Get<MouseClickComponent>();
 
     #endregion
 
@@ -160,8 +152,9 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     private EcsEntity _infoEntity;
 
-    internal ref UnitsInfoComponent InfoEntityUnitsInfoComponent => ref _infoEntity.Get<UnitsInfoComponent>();
-    internal ref BuildingsInfoComponent InfoEntBuildingsInfoCom => ref _infoEntity.Get<BuildingsInfoComponent>();
+    internal ref UnitsInfoComponent InfoEnt_UnitsInfoCom => ref _infoEntity.Get<UnitsInfoComponent>();
+    internal ref BuildingsInfoComponent InfoEnt_BuildingsInfoCom => ref _infoEntity.Get<BuildingsInfoComponent>();
+    internal ref UpgradeComponent InfoEnt_UpgradeCom => ref _infoEntity.Get<UpgradeComponent>();
 
     #endregion
 
@@ -176,28 +169,71 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     #endregion
 
 
-    #region ReadyEntity
+    #region RPCEntity
 
-    private EcsEntity _readyEntity;
-
-    internal ref ActivatedDictionaryComponent ReadyEntityIsActivatedDictionaryComponent => ref _readyEntity.Get<ActivatedDictionaryComponent>();
+    private EcsEntity _generalRPCEntity;
+    internal ref FromInfoComponent GeneralRPCEntFromInfoCom => ref _generalRPCEntity.Get<FromInfoComponent>();
+    internal ref ActiveComponent GeneralRPCEntActiveComponent => ref _generalRPCEntity.Get<ActiveComponent>();
 
     #endregion
 
 
-    #region CellEntity
+    #region ReadyEntity
 
-    private EcsEntity[,] _cellsEntity;
+    private EcsEntity _readyEntity;
 
-    internal ref CellComponent CellComponent(params int[] xy) => ref _cellsEntity[xy[X], xy[Y]].Get<CellComponent>();
-    internal ref CellComponent.EnvironmentComponent CellEnvironmentComponent(params int[] xy) => ref _cellsEntity[xy[X], xy[Y]].Get<CellComponent.EnvironmentComponent>();
-    internal ref CellComponent.SupportVisionComponent CellSupportVisionComponent(params int[] xy) => ref _cellsEntity[xy[X], xy[Y]].Get<CellComponent.SupportVisionComponent>();
-    internal ref CellComponent.UnitComponent CellUnitComponent(params int[] xy) => ref _cellsEntity[xy[X], xy[Y]].Get<CellComponent.UnitComponent>();
-    internal ref CellComponent.BuildingComponent CellBuildingComponent(params int[] xy) => ref _cellsEntity[xy[X], xy[Y]].Get<CellComponent.BuildingComponent>();
+    internal ref ActivatedDictionaryComponent ReadyEntIsActivatedDictCom => ref _readyEntity.Get<ActivatedDictionaryComponent>();
+    internal ref StartGameComponent ReadyEntStartGameCom => ref _readyEntity.Get<StartGameComponent>();
+
+    #endregion
 
 
-    internal int Xcount => _cellsEntity.GetUpperBound(X) + 1;
-    internal int Ycount => _cellsEntity.GetUpperBound(Y) + 1;
+    #region CellEnts
+
+    private EcsEntity[,] _cellEnts;
+    internal ref CellComponent CellEnt_CellCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellComponent>();
+
+
+
+    #region CellUnitEnts
+
+    private EcsEntity[,] _cellUnitEnts;
+    internal ref CellUnitComponent CellUnitEnt_CellUnitCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<CellUnitComponent>();
+    internal ref OwnerComponent CellUnitEnt_OwnerCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<OwnerComponent>();
+    internal ref UnitTypeComponent CellUnitEnt_UnitTypeCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<UnitTypeComponent>();
+
+    #endregion
+
+
+    #region CellBuildingEnts
+
+    private EcsEntity[,] _cellBuildingEnts;
+
+    internal ref CellBuildingComponent CellBuildingEnt_CellBuildingCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellBuildingComponent>();
+    internal ref OwnerComponent CellBuildingEnt_OwnerCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerComponent>();
+    internal ref BuildingTypeComponent CellBuildingEnt_BuildingTypeCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<BuildingTypeComponent>();
+
+    #endregion
+
+
+    #region CellEnvironmentEnts
+
+    private EcsEntity[,] _cellEnvironmentEnts;
+    internal ref CellEnvironmentComponent CellEnvEnt_CellEnvironmentCom(params int[] xy) => ref _cellEnvironmentEnts[xy[X], xy[Y]].Get<CellEnvironmentComponent>();
+
+    #endregion
+
+
+    #region CellSupportVisionEnts
+
+    private EcsEntity[,] _cellSupportVisionEnts;
+    internal ref CellSupportVisionComponent CellSupVisEntCellSupportVisionCom(params int[] xy) => ref _cellSupportVisionEnts[xy[X], xy[Y]].Get<CellSupportVisionComponent>();
+
+    #endregion
+
+
+    internal int Xamount => _cellEnts.GetUpperBound(X) + 1;
+    internal int Yamount => _cellEnts.GetUpperBound(Y) + 1;
 
     internal int XYForArray = InstanceGame.StartValuesGameConfig.XY_FOR_ARRAY;
 
@@ -211,7 +247,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     private EcsEntity _selectedUnitEntity;
 
-    internal ref UnitTypeComponent SelectedUnitEUnitTypeC => ref _selectedUnitEntity.Get<UnitTypeComponent>();
+    internal ref UnitTypeComponent SelectedUnitEntUnitTypeCom => ref _selectedUnitEntity.Get<UnitTypeComponent>();
 
     #endregion
 
@@ -226,26 +262,37 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     #endregion
 
 
+    #region SoundEntity
 
-    #region Else Entity
-
-    private EcsEntity _elseEntity;
-
-    internal EcsComponentRef<SoundComponent> SoundComponentRef => _soundEntity.Ref<SoundComponent>();
-
-    internal EcsComponentRef<TheEndGameComponent> TheEndGameComponentRef => _theEndGameEntity.Ref<TheEndGameComponent>();
-    internal EcsComponentRef<StartGameComponent> StartGameComponentRef => _startGameEntity.Ref<StartGameComponent>();
-
-    internal EcsComponentRef<AnimationAttackUnitComponent> AnimationAttackUnitComponentRef => _animationAttackUnitEntity.Ref<AnimationAttackUnitComponent>();
-    internal EcsComponentRef<ZoneComponent> ZoneComponentRef => _zoneEntity.Ref<ZoneComponent>();
-
+    private EcsEntity _soundEnt;
+    internal ref SoundComponent SoundEntSoundCom => ref _soundEnt.Get<SoundComponent>();
 
     #endregion
 
 
-    private EcsEntity _generalRPCEntity;
-    internal ref FromInfoComponent GeneralRPCEntFromInfoCom => ref _generalRPCEntity.Get<FromInfoComponent>();
-    internal ref ActiveComponent GeneralRPCEntActiveComponent => ref _generalRPCEntity.Get<ActiveComponent>();
+    #region EndGameEntity
+
+    private EcsEntity _endGameEnt;
+    internal ref EndGameComponent EndGameEntEndGameCom => ref _endGameEnt.Get<EndGameComponent>();
+
+    #endregion
+
+
+    #region ZoneEntity
+
+    private EcsEntity _zoneEnt;
+    internal ref ZoneComponent ZoneComponentRef => ref _zoneEnt.Get<ZoneComponent>();
+
+    #endregion
+
+
+    #region AnimationEntity
+
+    private EcsEntity _animationEnt;
+    internal ref AnimationAttackUnitComponent AnimationAttackUnitComponentRef => ref _animationEnt.Get<AnimationAttackUnitComponent>();
+
+    #endregion
+
 
 
     public EntitiesGeneralManager(EcsWorld ecsWorld) : base(ecsWorld) { }
@@ -349,52 +396,56 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
         _infoEntity = GameWorld.NewEntity();
 
-        InfoEntityUnitsInfoComponent.IsSettedKingDict = new Dictionary<bool, bool>();
-        InfoEntityUnitsInfoComponent.AmountKingDict = new Dictionary<bool, int>();
-        InfoEntityUnitsInfoComponent.AmountPawnDict = new Dictionary<bool, int>();
-        InfoEntityUnitsInfoComponent.AmountRookDict = new Dictionary<bool, int>();
-        InfoEntityUnitsInfoComponent.AmountBishopDict = new Dictionary<bool, int>();
+        InfoEnt_UnitsInfoCom.IsSettedKingDict = new Dictionary<bool, bool>();
+        InfoEnt_UnitsInfoCom.AmountKingDict = new Dictionary<bool, int>();
+        InfoEnt_UnitsInfoCom.AmountPawnDict = new Dictionary<bool, int>();
+        InfoEnt_UnitsInfoCom.AmountRookDict = new Dictionary<bool, int>();
+        InfoEnt_UnitsInfoCom.AmountBishopDict = new Dictionary<bool, int>();
 
-        InfoEntityUnitsInfoComponent.IsSettedKingDict.Add(true, default);
-        InfoEntityUnitsInfoComponent.IsSettedKingDict.Add(false, default);
+        InfoEnt_UnitsInfoCom.IsSettedKingDict.Add(true, default);
+        InfoEnt_UnitsInfoCom.IsSettedKingDict.Add(false, default);
 
-        InfoEntityUnitsInfoComponent.AmountKingDict.Add(true, default);
-        InfoEntityUnitsInfoComponent.AmountKingDict.Add(false, default);
+        InfoEnt_UnitsInfoCom.AmountKingDict.Add(true, default);
+        InfoEnt_UnitsInfoCom.AmountKingDict.Add(false, default);
 
-        InfoEntityUnitsInfoComponent.AmountPawnDict.Add(true, default);
-        InfoEntityUnitsInfoComponent.AmountPawnDict.Add(false, default);
+        InfoEnt_UnitsInfoCom.AmountPawnDict.Add(true, default);
+        InfoEnt_UnitsInfoCom.AmountPawnDict.Add(false, default);
 
-        InfoEntityUnitsInfoComponent.AmountRookDict.Add(true, default);
-        InfoEntityUnitsInfoComponent.AmountRookDict.Add(false, default);
+        InfoEnt_UnitsInfoCom.AmountRookDict.Add(true, default);
+        InfoEnt_UnitsInfoCom.AmountRookDict.Add(false, default);
 
-        InfoEntityUnitsInfoComponent.AmountBishopDict.Add(true, default);
-        InfoEntityUnitsInfoComponent.AmountBishopDict.Add(false, default);
+        InfoEnt_UnitsInfoCom.AmountBishopDict.Add(true, default);
+        InfoEnt_UnitsInfoCom.AmountBishopDict.Add(false, default);
 
 
 
-        InfoEntBuildingsInfoCom.IsBuildedCityDictionary = new Dictionary<bool, bool>();
-        InfoEntBuildingsInfoCom.XYsettedCityDictionary = new Dictionary<bool, int[]>();
-        InfoEntBuildingsInfoCom.AmountFarmDict = new Dictionary<bool, int>();
-        InfoEntBuildingsInfoCom.AmountWoodcutterDict = new Dictionary<bool, int>();
-        InfoEntBuildingsInfoCom.AmountMineDict = new Dictionary<bool, int>();
+        InfoEnt_BuildingsInfoCom.AmountFarmDict = new Dictionary<bool, int>();
+        InfoEnt_BuildingsInfoCom.AmountWoodcutterDict = new Dictionary<bool, int>();
+        InfoEnt_BuildingsInfoCom.AmountMineDict = new Dictionary<bool, int>();
 
-        InfoEntBuildingsInfoCom.IsBuildedCityDictionary.Add(true, default);
-        InfoEntBuildingsInfoCom.IsBuildedCityDictionary.Add(false, default);
+        InfoEnt_BuildingsInfoCom.AmountFarmDict.Add(true, default);
+        InfoEnt_BuildingsInfoCom.AmountFarmDict.Add(false, default);
 
-        InfoEntBuildingsInfoCom.XYsettedCityDictionary.Add(true, default);
-        InfoEntBuildingsInfoCom.XYsettedCityDictionary.Add(false, default);
+        InfoEnt_BuildingsInfoCom.AmountWoodcutterDict.Add(true, default);
+        InfoEnt_BuildingsInfoCom.AmountWoodcutterDict.Add(false, default);
 
-        InfoEntBuildingsInfoCom.AmountFarmDict.Add(true, default);
-        InfoEntBuildingsInfoCom.AmountFarmDict.Add(false, default);
+        InfoEnt_BuildingsInfoCom.AmountMineDict.Add(true, default);
+        InfoEnt_BuildingsInfoCom.AmountMineDict.Add(false, default);
 
-        InfoEntBuildingsInfoCom.AmountWoodcutterDict.Add(true, default);
-        InfoEntBuildingsInfoCom.AmountWoodcutterDict.Add(false, default);
 
-        InfoEntBuildingsInfoCom.AmountMineDict.Add(true, default);
-        InfoEntBuildingsInfoCom.AmountMineDict.Add(false, default);
 
-        InfoEntBuildingsInfoCom.XYsettedCityDictionary[true] = new int[StartValuesGameConfig.XY_FOR_ARRAY];
-        InfoEntBuildingsInfoCom.XYsettedCityDictionary[false] = new int[StartValuesGameConfig.XY_FOR_ARRAY];
+        InfoEnt_UpgradeCom.AmountUpgradePawnDict = new Dictionary<bool, int>();
+        InfoEnt_UpgradeCom.AmountUpgradeRookDict = new Dictionary<bool, int>();
+        InfoEnt_UpgradeCom.AmountUpgradeBishopDict = new Dictionary<bool, int>();
+
+        InfoEnt_UpgradeCom.AmountUpgradePawnDict.Add(true, default);
+        InfoEnt_UpgradeCom.AmountUpgradePawnDict.Add(false, default);
+
+        InfoEnt_UpgradeCom.AmountUpgradeRookDict.Add(true, default);
+        InfoEnt_UpgradeCom.AmountUpgradeRookDict.Add(false, default);
+
+        InfoEnt_UpgradeCom.AmountUpgradeBishopDict.Add(true, default);
+        InfoEnt_UpgradeCom.AmountUpgradeBishopDict.Add(false, default);
 
         #endregion
 
@@ -403,9 +454,9 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
         _readyEntity = GameWorld.NewEntity();
 
-        ReadyEntityIsActivatedDictionaryComponent.IsActivatedDictionary = new Dictionary<bool, bool>();
-        ReadyEntityIsActivatedDictionaryComponent.IsActivatedDictionary.Add(true, default);
-        ReadyEntityIsActivatedDictionaryComponent.IsActivatedDictionary.Add(false, default);
+        ReadyEntIsActivatedDictCom.IsActivatedDictionary = new Dictionary<bool, bool>();
+        ReadyEntIsActivatedDictCom.IsActivatedDictionary.Add(true, default);
+        ReadyEntIsActivatedDictCom.IsActivatedDictionary.Add(false, default);
 
         #endregion
 
@@ -423,7 +474,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         #region SelectedUnitEntity
 
         _selectedUnitEntity = GameWorld.NewEntity();
-        SelectedUnitEUnitTypeC.UnitType = UnitTypes.None;
+        SelectedUnitEntUnitTypeCom.UnitType = UnitTypes.None;
 
         #endregion
 
@@ -446,43 +497,48 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
 
 
-        _inputEntity = GameWorld.NewEntity()
+        _inputEnt = GameWorld.NewEntity()
             .Replace(new MouseClickComponent());
 
 
 
-        _soundEntity = GameWorld.NewEntity()
+        _soundEnt = GameWorld.NewEntity()
             .Replace(new SoundComponent());
 
-        _theEndGameEntity = GameWorld.NewEntity()
-            .Replace(new TheEndGameComponent());
+        _endGameEnt = GameWorld.NewEntity()
+            .Replace(new EndGameComponent());
 
-        _startGameEntity = GameWorld.NewEntity()
-            .Replace(new StartGameComponent());
 
-        _animationAttackUnitEntity = GameWorld.NewEntity()
+        _animationEnt = GameWorld.NewEntity()
             .Replace(new AnimationAttackUnitComponent());
 
-        _zoneEntity = GameWorld.NewEntity()
+        _zoneEnt = GameWorld.NewEntity()
             .Replace(new ZoneComponent());
 
 
         #region Cells
 
-        _cellsEntity = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
+        _cellEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
+        _cellSupportVisionEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
+        _cellEnvironmentEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
+        _cellBuildingEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
+        _cellUnitEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
 
         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
         {
             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
             {
-                _cellsEntity[x, y] = GameWorld.NewEntity();
+                _cellEnts[x, y] = GameWorld.NewEntity();
+                _cellSupportVisionEnts[x, y] = GameWorld.NewEntity();
+                _cellEnvironmentEnts[x, y] = GameWorld.NewEntity();
+                _cellBuildingEnts[x, y] = GameWorld.NewEntity();
+                _cellUnitEnts[x, y] = GameWorld.NewEntity();
 
-                _cellsEntity[x, y]
-                    .Replace(new CellComponent(x, y))
-                    .Replace(new CellComponent.EnvironmentComponent(x, y))
-                    .Replace(new CellComponent.SupportVisionComponent(x, y))
-                    .Replace(new CellComponent.UnitComponent(x, y))
-                    .Replace(new CellComponent.BuildingComponent(x, y));
+                _cellEnts[x, y].Replace(new CellComponent(this, StartValuesGameConfig, x, y));
+                _cellUnitEnts[x, y].Replace(new CellUnitComponent(this, x, y));
+                _cellBuildingEnts[x, y].Replace(new CellBuildingComponent(this, InstanceGame.GameObjectPool, x, y));
+                _cellEnvironmentEnts[x, y].Replace(new CellEnvironmentComponent(this, InstanceGame.GameObjectPool, x, y));
+                _cellSupportVisionEnts[x, y].Replace(new CellSupportVisionComponent(this, InstanceGame.GameObjectPool, x, y));
             }
         }
 

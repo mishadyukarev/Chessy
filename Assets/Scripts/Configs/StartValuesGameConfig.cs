@@ -3,8 +3,8 @@
 [CreateAssetMenu(menuName = "StartValues", fileName = "StartValues")]
 public class StartValuesGameConfig : ScriptableObject
 {
-    [SerializeField] internal bool IS_TEST = true;
-
+    [SerializeField] private bool _isTest;
+    internal bool IS_TEST => _isTest;
 
     #region PERCENT ENVIRONMENT
 
@@ -167,9 +167,9 @@ public class StartValuesGameConfig : ScriptableObject
 
 
     private readonly float PERCENT_FOR_HEALTH_KING = 0.15f;
-    private readonly float PERCENT_FOR_HEALTH_PAWN = 0.15f;
-    private readonly float PERCENT_FOR_HEALTH_ROOK = 0.15f;
-    private readonly float PERCENT_FOR_HEALTH_BISHOP = 0.15f;
+    private readonly float PERCENT_FOR_HEALTH_PAWN = 0.2f;
+    private readonly float PERCENT_FOR_HEALTH_ROOK = 0.2f;
+    private readonly float PERCENT_FOR_HEALTH_BISHOP = 0.2f;
 
     internal int HEALTH_FOR_ADDING_KING => (int)(AMOUNT_HEALTH_KING * PERCENT_FOR_HEALTH_KING);
     internal int HEALTH_FOR_ADDING_PAWN => (int)(AMOUNT_HEALTH_PAWN * PERCENT_FOR_HEALTH_PAWN);
@@ -177,10 +177,10 @@ public class StartValuesGameConfig : ScriptableObject
     internal int HEALTH_FOR_ADDING_BISHOP => (int)(AMOUNT_HEALTH_PAWN * PERCENT_FOR_HEALTH_BISHOP);
 
 
-    private readonly float PERCENT_UPGRADE_HEALTH_KING = 0.15f;
-    private readonly float PERCENT_UPGRADE_HEALTH_PAWN = 0.15f;
-    private readonly float PERCENT_UPGRADE_HEALTH_ROOK = 0.15f;
-    private readonly float PERCENT_UPGRADE_HEALTH_BISHOP = 0.15f;
+    private readonly float PERCENT_UPGRADE_HEALTH_KING = 0.10f;
+    private readonly float PERCENT_UPGRADE_HEALTH_PAWN = 0.10f;
+    private readonly float PERCENT_UPGRADE_HEALTH_ROOK = 0.10f;
+    private readonly float PERCENT_UPGRADE_HEALTH_BISHOP = 0.10f;
 
     internal int HEALTH_UPGRADE_ADDING_KING => (int)(AMOUNT_HEALTH_KING * PERCENT_UPGRADE_HEALTH_KING);
     internal int HEALTH_UPGRADE_ADDING_PAWN => (int)(AMOUNT_HEALTH_PAWN * PERCENT_UPGRADE_HEALTH_PAWN);
@@ -197,16 +197,15 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int SIMPLE_POWER_DAMAGE_ROOK = 25;
     internal readonly int SIMPLE_POWER_DAMAGE_BISHOP = 25;
 
-    internal int UNIQIE_POWER_DAMAGE_KING => SIMPLE_POWER_DAMAGE_KING / 3;
-    internal int UNIQIE_POWER_DAMAGE_PAWN => SIMPLE_POWER_DAMAGE_PAWN / 3;
-    internal int UNIQIE_POWER_DAMAGE_ROOK => SIMPLE_POWER_DAMAGE_ROOK / 3;
-    internal int UNIQIE_POWER_DAMAGE_BISHOP => SIMPLE_POWER_DAMAGE_BISHOP / 3;
-
-
     private readonly float PERCENT_UPGRADE_DAMAGE_KING = 0.15f;
     private readonly float PERCENT_UPGRADE_DAMAGE_PAWN = 0.15f;
     private readonly float PERCENT_UPGRADE_DAMAGE_ROOK = 0.15f;
     private readonly float PERCENT_UPGRADE_DAMAGE_BISHOP = 0.15f;
+
+    internal readonly float RATION_UNIQUE_POWER_DAMAGE_KING = 0.25f;
+    internal readonly float RATION_UNIQUE_POWER_DAMAGE_PAWN = 0.25f;
+    internal readonly float RATION_UNIQUE_POWER_DAMAGE_ROOK = 0.25f;
+    internal readonly float RATION_UNIQUE_POWER_DAMAGE_BISHOP = 0.25f;
 
     internal int DAMAGE_UPGRADE_ADDING_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_UPGRADE_DAMAGE_KING);
     internal int DAMAGE_UPGRADE_ADDING_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_UPGRADE_DAMAGE_PAWN);

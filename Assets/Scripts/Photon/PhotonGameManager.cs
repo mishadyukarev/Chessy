@@ -4,13 +4,13 @@ using System;
 using UnityEngine;
 using static MainGame;
 
-public class PhotonGameManager
+internal class PhotonGameManager
 {
     private PhotonView _photonView;
     private PhotonPunRPC _photonPunRPC;
-    private PhotonManagerScene _photonManagerScene;
+    private GameSceneManager _gameSceneManager;
 
-    internal PhotonManagerScene PhotonManagerScene => _photonManagerScene;
+    internal GameSceneManager GameSceneManager => _gameSceneManager;
     internal PhotonPunRPC PhotonPunRPC => _photonPunRPC;
 
 
@@ -19,14 +19,14 @@ public class PhotonGameManager
         var types = new Type[]
         {
             typeof(PhotonView),
-            typeof(PhotonManagerScene),
+            typeof(GameSceneManager),
             typeof(PhotonPunRPC)
         };
 
         var networkGO = InstanceGame.Builder.CreateGameObject("Network", types, parentTransform);
 
         _photonView = networkGO.GetPhotonView();
-        _photonManagerScene = networkGO.GetComponent<PhotonManagerScene>();
+        _gameSceneManager = networkGO.GetComponent<GameSceneManager>();
         _photonPunRPC = networkGO.GetComponent<PhotonPunRPC>();
 
         _photonPunRPC.Constructor(_photonView);

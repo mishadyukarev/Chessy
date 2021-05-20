@@ -17,7 +17,7 @@ internal class BuilderMasterSystem : SystemMasterReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_eGM.CellUnitComponent(XyCell).HaveMaxSteps && !_eGM.CellBuildingComponent(XyCell).HaveBuilding)
+        if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps && !_eGM.CellBuildingEnt_BuildingTypeCom(XyCell).HaveBuilding)
         {
             var isMasterInfo = Info.Sender.IsMasterClient;
 
@@ -52,22 +52,18 @@ internal class BuilderMasterSystem : SystemMasterReduction, IEcsRunSystem
 
                 case BuildingTypes.City:
 
-                    _eGM.CellBuildingComponent(XyCell).SetBuilding(BuildingType, Info.Sender);
-                    _eGM.CellUnitComponent(XyCell).AmountSteps = 0;
+                    _eGM.CellBuildingEnt_CellBuildingCom(XyCell).SetBuilding(BuildingType, Info.Sender);
+                    _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
 
-                    _eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[isMasterInfo] = true;
-                    InstanceGame.CellManager.CellBaseOperations
-                        .CopyXYinTo(XyCell, _eGM.InfoEntBuildingsInfoCom.XYsettedCityDictionary[isMasterInfo]);
-
-                    if (_eGM.CellEnvironmentComponent(XyCell).HaveTree) _eGM.CellEnvironmentComponent(XyCell).SetResetEnvironment(false, EnvironmentTypes.Tree);
-                    if (_eGM.CellEnvironmentComponent(XyCell).HaveFood) _eGM.CellEnvironmentComponent(XyCell).SetResetEnvironment(false, EnvironmentTypes.Food);
+                    if (_eGM.CellEnvEnt_CellEnvironmentCom(XyCell).HaveTree) _eGM.CellEnvEnt_CellEnvironmentCom(XyCell).SetResetEnvironment(false, EnvironmentTypes.Tree);
+                    if (_eGM.CellEnvEnt_CellEnvironmentCom(XyCell).HaveFood) _eGM.CellEnvEnt_CellEnvironmentCom(XyCell).SetResetEnvironment(false, EnvironmentTypes.Food);
 
                     break;
 
 
                 case BuildingTypes.Farm:
 
-                    canSet = _eGM.CellEnvironmentComponent(XyCell).HaveFood;
+                    canSet = _eGM.CellEnvEnt_CellEnvironmentCom(XyCell).HaveFood;
 
                     if (canSet)
                     {
@@ -77,7 +73,7 @@ internal class BuilderMasterSystem : SystemMasterReduction, IEcsRunSystem
                         minusIron = StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
                         minusGold = StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
 
-                        currentBuildingsDict = _eGM.InfoEntBuildingsInfoCom.AmountFarmDict;
+                        currentBuildingsDict = _eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict;
                     }
 
                     break;
@@ -85,7 +81,7 @@ internal class BuilderMasterSystem : SystemMasterReduction, IEcsRunSystem
 
                 case BuildingTypes.Woodcutter:
 
-                    canSet = _eGM.CellEnvironmentComponent(XyCell).HaveTree;
+                    canSet = _eGM.CellEnvEnt_CellEnvironmentCom(XyCell).HaveTree;
 
                     if (canSet)
                     {
@@ -95,7 +91,7 @@ internal class BuilderMasterSystem : SystemMasterReduction, IEcsRunSystem
                         minusIron = StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
                         minusGold = StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
 
-                        currentBuildingsDict = _eGM.InfoEntBuildingsInfoCom.AmountWoodcutterDict;
+                        currentBuildingsDict = _eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict;
                     }
 
                     break;
@@ -103,7 +99,7 @@ internal class BuilderMasterSystem : SystemMasterReduction, IEcsRunSystem
 
                 case BuildingTypes.Mine:
 
-                    canSet = _eGM.CellEnvironmentComponent(XyCell).HaveHill;
+                    canSet = _eGM.CellEnvEnt_CellEnvironmentCom(XyCell).HaveHill;
 
                     if (canSet)
                     {
@@ -113,7 +109,7 @@ internal class BuilderMasterSystem : SystemMasterReduction, IEcsRunSystem
                         minusIron = StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
                         minusGold = StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
 
-                        currentBuildingsDict = _eGM.InfoEntBuildingsInfoCom.AmountMineDict;
+                        currentBuildingsDict = _eGM.InfoEnt_BuildingsInfoCom.AmountMineDict;
                     }
 
                     break;
@@ -142,10 +138,10 @@ internal class BuilderMasterSystem : SystemMasterReduction, IEcsRunSystem
                         goldAmountDict[isMasterInfo] -= minusGold;
 
 
-                        _eGM.CellBuildingComponent(XyCell).SetBuilding(BuildingType, Info.Sender);
+                        _eGM.CellBuildingEnt_CellBuildingCom(XyCell).SetBuilding(BuildingType, Info.Sender);
                         currentBuildingsDict[isMasterInfo] += 1; // !!!!!
 
-                        _eGM.CellUnitComponent(XyCell).AmountSteps = 0;
+                        _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
                     }
                 }
             }

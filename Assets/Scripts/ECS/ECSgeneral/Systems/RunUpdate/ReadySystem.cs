@@ -5,22 +5,18 @@ using static MainGame;
 
 internal class ReadySystem : RPCGeneralReduction, IEcsRunSystem
 {
-    private EcsComponentRef<StartGameComponent> _startGameComponentRef = default;
-
     private SystemsGeneralManager _systemsGeneralManager;
 
     private RectTransform _parentReadyZone;
     private Button _readyButton;
 
-    private bool _isCurrentReady => _eGM.ReadyEntityIsActivatedDictionaryComponent.IsActivatedDictionary[InstanceGame.IsMasterClient];
+    private bool _isCurrentReady => _eGM.ReadyEntIsActivatedDictCom.IsActivatedDictionary[InstanceGame.IsMasterClient];
 
 
 
     internal ReadySystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
-
-        _startGameComponentRef = eCSmanager.EntitiesGeneralManager.StartGameComponentRef;
 
         _parentReadyZone = InstanceGame.GameObjectPool.ParentReadyZone;
         _readyButton = InstanceGame.GameObjectPool.ReadyButton;
@@ -29,10 +25,10 @@ internal class ReadySystem : RPCGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_startGameComponentRef.Unref().IsStartedGame)
+        if (_eGM.ReadyEntStartGameCom.IsStartedGame)
         {
             _parentReadyZone.gameObject.SetActive(false);
-            _systemsGeneralManager.TryActiveRunSystem(false,  this.ToString(), _systemsGeneralManager.RunUpdateSystems);
+            _systemsGeneralManager.TryActiveRunSystem(false, this.ToString(), _systemsGeneralManager.RunUpdateSystems);
         }
 
         if (_isCurrentReady) _readyButton.image.color = Color.red;

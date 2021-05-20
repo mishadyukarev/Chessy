@@ -1,29 +1,26 @@
 ﻿using Leopotam.Ecs;
 using TMPro;
 using UnityEngine;
+using static MainGame;
 
-internal class TheEndGameUISystem : IEcsRunSystem
+internal class TheEndGameUISystem : SystemGeneralReduction, IEcsRunSystem
 {
-    private EcsComponentRef<TheEndGameComponent> _theEndGameComponentRef = default;
-
     private RectTransform _parentTheEndGameZone;
     private TextMeshProUGUI _theEndGameText;
 
 
-    internal TheEndGameUISystem(ECSmanager eCSmanager)
+    internal TheEndGameUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _theEndGameComponentRef = eCSmanager.EntitiesGeneralManager.TheEndGameComponentRef;
-
-        _parentTheEndGameZone = MainGame.InstanceGame.GameObjectPool.ParentTheEndGameZone;
-        _theEndGameText = MainGame.InstanceGame.GameObjectPool.TheEndGameText;
+        _parentTheEndGameZone = InstanceGame.GameObjectPool.ParentTheEndGameZone;
+        _theEndGameText = InstanceGame.GameObjectPool.TheEndGameText;
     }
 
     public void Run()
     {
-        if (_theEndGameComponentRef.Unref().IsEndGame)
+        if (_eGM.EndGameEntEndGameCom.IsEndGame)
         {
             _parentTheEndGameZone.gameObject.SetActive(true);
-            if (_theEndGameComponentRef.Unref().PlayerWinner.IsLocal) _theEndGameText.text = "You're WINNER!";
+            if (_eGM.EndGameEntEndGameCom.PlayerWinner.IsLocal) _theEndGameText.text = "You're WINNER!";
             else _theEndGameText.text = "You're loser :(";
         }
     }

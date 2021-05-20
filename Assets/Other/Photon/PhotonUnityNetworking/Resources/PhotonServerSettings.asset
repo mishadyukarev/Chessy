@@ -28,7 +28,7 @@ MonoBehaviour:
     EnableLobbyStatistics: 0
     NetworkLogging: 1
   DevRegion: ru
-  PunLogging: 0
+  PunLogging: 2
   EnableSupportLogger: 0
   RunInBackground: 1
   StartInOfflineMode: 0
@@ -36,38 +36,13 @@ MonoBehaviour:
   - ClickRpc
   - DestroyRpc
   - DestroySpaceship
-  - ExecutePunRPC
   - Fire
-  - RespawnSpaceship
-  - AttackUnitGeneral
-  - AttackUnitMaster
-  - BuildMaster
-  - BuyUnitMaster
-  - DoneToGeneral
-  - DoneToMaster
-  - EndGameToGeneral
-  - EndGameToMaster
-  - GetUnitToGeneral
-  - GetUnitToMaster
-  - ProtectUnitMaster
-  - ReadyToGeneral
-  - ReadyToMaster
-  - RefreshAllMaster
   - RefreshCellsGeneral
+  - RefreshCellsMaster
   - RefreshEconomyGeneral
-  - RelaxUnitMaster
-  - SetUnitToGeneral
-  - SetUnitToMaster
-  - ShiftUnitGeneral
-  - ShiftUnitMaster
-  - CreateUnitMaster
-  - DestroyBuildingMaster
-  - DoneGeneral
-  - DoneMaster
-  - GetUnitGeneral
-  - GetUnitMaster
-  - MeltOreMaster
-  - MistakeGeneral
+  - RefreshEconomyMaster
+  - RespawnSpaceship
+  - RPC
   DisableAutoOpenWizard: 1
-  ShowSettings: 1
+  ShowSettings: 0
   DevRegionSetOnce: 1

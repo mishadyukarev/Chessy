@@ -1,5 +1,4 @@
 ﻿using Leopotam.Ecs;
-using static MainGame;
 
 internal class EconomyMasterSystem : SystemMasterReduction, IEcsRunSystem
 {

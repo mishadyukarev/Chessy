@@ -1,5 +1,4 @@
 ﻿using Leopotam.Ecs;
-using Photon.Pun;
 using UnityEngine.UI;
 using static MainGame;
 
@@ -46,17 +45,17 @@ internal class BuildingUISystem : CellGeneralReduction, IEcsRunSystem
 
 
 
-        if (_eGM.CellUnitComponent(_xySelectedCell).HaveUnit)
+        if (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).HaveUnit)
         {
-            if (_eGM.CellUnitComponent(_xySelectedCell).IsMine)
+            if (_eGM.CellUnitEnt_OwnerCom(_xySelectedCell).IsMine)
             {
-                switch (_eGM.CellUnitComponent(_xySelectedCell).UnitType)
+                switch (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).UnitType)
                 {
                     case UnitTypes.King:
 
-                        if (_eGM.CellBuildingComponent(_xySelectedCell).HaveBuilding)
+                        if (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).HaveBuilding)
                         {
-                            if (!_eGM.CellBuildingComponent(_xySelectedCell).IsMine)
+                            if (!_eGM.CellBuildingEnt_OwnerCom(_xySelectedCell).Owner.IsLocal)
                             {
                                 _buildingAbilityButton4.gameObject.SetActive(true);
                             }
@@ -67,16 +66,32 @@ internal class BuildingUISystem : CellGeneralReduction, IEcsRunSystem
 
                     case UnitTypes.Pawn:
 
-                        if (!_eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[InstanceGame.IsMasterClient]) _buildingAbilityButton0.gameObject.SetActive(true);
+                        var haveCity = false;
+                        for (int x = 0; x < _eGM.Xamount; x++)
+                        {
+                            for (int y = 0; y < _eGM.Yamount; y++)
+                            {
+                                if (_eGM.CellBuildingEnt_BuildingTypeCom(x, y).BuildingType == BuildingTypes.City)
+                                {
+                                    if (_eGM.CellBuildingEnt_OwnerCom(x, y).Owner.IsLocal)
+                                    {
+                                        haveCity = true;
+                                    }
+                                }
+                            }
+                        }
+                        if (!haveCity) _buildingAbilityButton0.gameObject.SetActive(true);
+
+
                         _buildingAbilityButton1.gameObject.SetActive(true);
                         _buildingAbilityButton2.gameObject.SetActive(true);
                         _buildingAbilityButton3.gameObject.SetActive(true);
 
-                        if (_eGM.CellBuildingComponent(_xySelectedCell).HaveBuilding)
+                        if (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).HaveBuilding)
                         {
-                            if (_eGM.CellBuildingComponent(_xySelectedCell).IsMine)
+                            if (_eGM.CellBuildingEnt_OwnerCom(_xySelectedCell).Owner.IsLocal)
                             {
-                                if (_eGM.CellBuildingComponent(_xySelectedCell).BuildingType != BuildingTypes.City)
+                                if (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).BuildingType != BuildingTypes.City)
                                     _buildingAbilityButton4.gameObject.SetActive(true);
                             }
                             else

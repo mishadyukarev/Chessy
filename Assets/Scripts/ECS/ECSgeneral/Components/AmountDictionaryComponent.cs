@@ -1,5 +1,4 @@
-﻿using Photon.Realtime;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 internal struct AmountDictionaryComponent
 {

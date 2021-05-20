@@ -1,18 +1,12 @@
 ﻿using Leopotam.Ecs;
-using System.Collections.Generic;
 
 internal class ZoneUISystem : CellGeneralReduction, IEcsRunSystem
 {
-    private EcsComponentRef<ZoneComponent> _zoneComponentRef = default;
     private PhotonPunRPC _photonPunRPC = default;
-
 
     internal ZoneUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _zoneComponentRef = eCSmanager.EntitiesGeneralManager.ZoneComponentRef;
 
-        _zoneComponentRef.Unref().XYMasterZone = new List<int[]>();
-        _zoneComponentRef.Unref().XYOtherZone = new List<int[]>();
     }
 
     public void Run()

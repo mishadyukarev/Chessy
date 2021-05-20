@@ -4,7 +4,7 @@ using static MainGame;
 
 internal class UISystem : CellGeneralReduction, IEcsRunSystem
 {
-    private PhotonManagerScene _photonManagerScene;
+    private GameSceneManager _photonManagerScene;
     private PhotonPunRPC _photonPunRPC;
 
 
@@ -30,7 +30,7 @@ internal class UISystem : CellGeneralReduction, IEcsRunSystem
 
     internal UISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonManagerScene = InstanceGame.PhotonGameManager.PhotonManagerScene;
+        _photonManagerScene = InstanceGame.PhotonGameManager.GameSceneManager;
         _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
 
 
@@ -63,9 +63,9 @@ internal class UISystem : CellGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_eGM.CellUnitComponent(_xySelectedCell).IsMine)
+        if (_eGM.CellUnitEnt_OwnerCom(_xySelectedCell).IsMine)
         {
-            switch (_eGM.CellUnitComponent(_xySelectedCell).UnitType)
+            switch (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).UnitType)
             {
                 case UnitTypes.None:
 
@@ -94,7 +94,7 @@ internal class UISystem : CellGeneralReduction, IEcsRunSystem
 
 
 
-        switch (_eGM.CellBuildingComponent(_xySelectedCell).BuildingType)
+        switch (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).BuildingType)
         {
             case BuildingTypes.None:
                 ActiveLeftEconomy(false);

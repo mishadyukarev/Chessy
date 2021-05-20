@@ -26,7 +26,7 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new BuildingUISystem(eCSmanager), nameof(BuildingUISystem))
             .Add(new EconomySystem(eCSmanager), nameof(EconomySystem))
             .Add(new ZoneUISystem(eCSmanager), nameof(ZoneUISystem))
-            .Add(new MistakeSystem(eCSmanager), nameof(MistakeSystem))
+            .Add(new MistakeUpdateSystem(eCSmanager), nameof(MistakeUpdateSystem))
             .Add(new CityUISystem(eCSmanager), nameof(CityUISystem))
             .Add(new RefreshUISystem(eCSmanager), nameof(RefreshUISystem));
 
@@ -34,6 +34,10 @@ public class SystemsGeneralManager : SystemsManager
         ForSelectorSystem
             .Add(new GetterCellSystem(eCSmanager), nameof(GetterCellSystem))
             .Add(new RaySystem(eCSmanager), nameof(RaySystem));
+
+
+        SoloSystems
+            .Add(new MistakeUpdateSystem(eCSmanager), nameof(MistakeUpdateSystem));
 
         this.InitAndProcessInjectsSystems();
     }

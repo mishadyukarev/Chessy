@@ -1,8 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using static MainGame;
 
 internal class ShiftUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
@@ -16,24 +14,24 @@ internal class ShiftUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
     public void Run()
     {
-        List<int[]> xyAvailableCellsForShift = InstanceGame.CellManager.CellFinderWay.GetCellsForShift(XyPreviousCell);
+        List<int[]> xyAvailableCellsForShift = _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).GetCellsForShift();
 
-        if (_eGM.CellUnitComponent(XyPreviousCell).IsHisUnit(Info.Sender) && _eGM.CellUnitComponent(XyPreviousCell).MinAmountSteps)
+        if (_eGM.CellUnitEnt_OwnerCom(XyPreviousCell).IsHim(Info.Sender) && _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).MinAmountSteps)
         {
-            if (InstanceGame.CellManager.CellBaseOperations.TryFindCellInList(XySelectedCell, xyAvailableCellsForShift))
+            if (InstanceGame.CellBaseOperations.TryFindCellInList(XySelectedCell, xyAvailableCellsForShift))
             {
-                _eGM.CellUnitComponent(XySelectedCell).SetUnit(_eGM.CellUnitComponent(XyPreviousCell));
+                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).SetUnit(XyPreviousCell);
 
 
-                _eGM.CellUnitComponent(XyPreviousCell).ResetUnit();
+                _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).ResetUnit();
 
 
-                _eGM.CellUnitComponent(XySelectedCell).AmountSteps
-                    -= _eGM.CellUnitComponent(XySelectedCell).NeedAmountSteps(_eGM.CellEnvironmentComponent(XySelectedCell).ListEnvironmentTypes);
-                if (_eGM.CellUnitComponent(XySelectedCell).AmountSteps < 0) _eGM.CellUnitComponent(XySelectedCell).AmountSteps = 0;
+                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps
+                    -= _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).NeedAmountSteps;
+                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps < 0) _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps = 0;
 
-                _eGM.CellUnitComponent(XySelectedCell).IsProtected = false;
-                _eGM.CellUnitComponent(XySelectedCell).IsRelaxed = false;
+                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsProtected = false;
+                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsRelaxed = false;
             }
         }
     }

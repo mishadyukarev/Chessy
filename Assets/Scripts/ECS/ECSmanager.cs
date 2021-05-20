@@ -57,7 +57,7 @@ public sealed class ECSmanager
         }
     }
 
-    public void Update()
+    public void OwnUpdate()
     {
         _systemsGeneralManager.Update();
 

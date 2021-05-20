@@ -54,10 +54,10 @@ internal class CityUISystem : CellGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        
-        if (_eGM.CellBuildingComponent(_xySelectedCell).BuildingType == BuildingTypes.City)
+
+        if (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).BuildingType == BuildingTypes.City)
         {
-            if (_eGM.CellBuildingComponent(_xySelectedCell).IsMine)
+            if (_eGM.CellBuildingEnt_OwnerCom(_xySelectedCell).Owner.IsLocal)
             {
                 _leftImage.gameObject.SetActive(true);
             }

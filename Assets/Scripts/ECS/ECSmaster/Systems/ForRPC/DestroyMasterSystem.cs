@@ -15,81 +15,45 @@ internal class DestroyMasterSystem : SystemMasterReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_eGM.CellUnitComponent(xyCell).IsHisUnit(info.Sender))
+        if (_eGM.CellUnitEnt_OwnerCom(xyCell).IsHim(info.Sender))
         {
-            if (_eGM.CellUnitComponent(xyCell).HaveMaxSteps)
+            if (_eGM.CellUnitEnt_CellUnitCom(xyCell).HaveMaxSteps)
             {
-                if (info.Sender.IsMasterClient)
+                switch (_eGM.CellBuildingEnt_BuildingTypeCom(xyCell).BuildingType)
                 {
-                    switch (_eGM.CellBuildingComponent(xyCell).BuildingType)
-                    {
-                        case BuildingTypes.City:
+                    case BuildingTypes.City:
 
-                            _photonPunRPC.EndGameToMaster(_eGM.CellUnitComponent(xyCell).ActorNumber);
+                        _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_OwnerCom(xyCell).ActorNumber);
 
-                            break;
+                        break;
 
 
-                        case BuildingTypes.Farm:
+                    case BuildingTypes.Farm:
 
-                            _eGM.InfoEntBuildingsInfoCom.AmountFarmDict[info.Sender.IsMasterClient] -= 1;
-                            _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
-                            _eGM.CellBuildingComponent(xyCell).ResetBuilding();
+                        _eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[_eGM.CellBuildingEnt_OwnerCom(xyCell).Owner.IsMasterClient] -= 1;
+                        _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
+                        _eGM.CellBuildingEnt_CellBuildingCom(xyCell).ResetBuilding();
 
-                            break;
+                        break;
 
 
-                        case BuildingTypes.Woodcutter:
+                    case BuildingTypes.Woodcutter:
 
-                            _eGM.InfoEntBuildingsInfoCom.AmountWoodcutterDict[info.Sender.IsMasterClient] -= 1;
-                            _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
-                            _eGM.CellBuildingComponent(xyCell).ResetBuilding();
+                        _eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[_eGM.CellBuildingEnt_OwnerCom(xyCell).Owner.IsMasterClient] -= 1;
+                        _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
+                        _eGM.CellBuildingEnt_CellBuildingCom(xyCell).ResetBuilding();
 
-                            break;
+                        break;
 
-                        case BuildingTypes.Mine:
+                    case BuildingTypes.Mine:
 
-                            _eGM.InfoEntBuildingsInfoCom.AmountMineDict[info.Sender.IsMasterClient] -= 1;
-                            _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
-                            _eGM.CellBuildingComponent(xyCell).ResetBuilding();
+                        _eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[_eGM.CellBuildingEnt_OwnerCom(xyCell).Owner.IsMasterClient] -= 1;
+                        _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
+                        _eGM.CellBuildingEnt_CellBuildingCom(xyCell).ResetBuilding();
 
-                            break;
+                        break;
 
-                    }
                 }
-
-                else
-                {
-                    switch (_eGM.CellBuildingComponent(xyCell).BuildingType)
-                    {
-                        case BuildingTypes.City:
-
-                            _photonPunRPC.EndGameToMaster(_eGM.CellUnitComponent(xyCell).ActorNumber);
-
-                            break;
-
-
-                        case BuildingTypes.Farm:
-
-                            _eGM.InfoEntBuildingsInfoCom.AmountFarmDict[info.Sender.IsMasterClient] -= 1;
-                            _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
-                            _eGM.CellBuildingComponent(xyCell).ResetBuilding();
-
-                            break;
-
-                        case BuildingTypes.Woodcutter:
-
-                            _eGM.InfoEntBuildingsInfoCom.AmountWoodcutterDict[info.Sender.IsMasterClient] -= 1;
-                            _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
-                            _eGM.CellBuildingComponent(xyCell).ResetBuilding();
-
-                            break;
-
-                        case BuildingTypes.Mine:
-                            break;
-                    }
-                }
-
             }
         }
     }

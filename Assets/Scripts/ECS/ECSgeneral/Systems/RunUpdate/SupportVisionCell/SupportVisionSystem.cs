@@ -13,53 +13,53 @@ internal class SupportVisionSystem : CellGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        _eGM.CellSupportVisionComponent(_eGM.SelectorESelectorC.XYpreviousCell).ActiveVision(false, SupportVisionTypes.Selector);
+        _eGM.CellSupVisEntCellSupportVisionCom(_eGM.SelectorESelectorC.XYpreviousCell).ActiveVision(false, SupportVisionTypes.Selector);
 
-        if (_eGM.CellComponent(_eGM.SelectorESelectorC.XYselectedCell).IsSelected)
+        if (_eGM.CellEnt_CellCom(_eGM.SelectorESelectorC.XYselectedCell).IsSelected)
         {
-            _eGM.CellSupportVisionComponent(_eGM.SelectorESelectorC.XYselectedCell).ActiveVision(true, SupportVisionTypes.Selector);
+            _eGM.CellSupVisEntCellSupportVisionCom(_eGM.SelectorESelectorC.XYselectedCell).ActiveVision(true, SupportVisionTypes.Selector);
         }
         else
         {
-            _eGM.CellSupportVisionComponent(_eGM.SelectorESelectorC.XYselectedCell).ActiveVision(false, SupportVisionTypes.Selector);
+            _eGM.CellSupVisEntCellSupportVisionCom(_eGM.SelectorESelectorC.XYselectedCell).ActiveVision(false, SupportVisionTypes.Selector);
         }
 
 
-        var isSelectedUnit = _eGM.SelectedUnitEUnitTypeC.HaveUnit;
+        var isSelectedUnit = _eGM.SelectedUnitEntUnitTypeCom.HaveUnit;
 
         if (_isRepeated != isSelectedUnit)
         {
             _isRepeated = isSelectedUnit;
 
-            for (int x = 0; x < _eGM.Xcount; x++)
+            for (int x = 0; x < _eGM.Xamount; x++)
             {
-                for (int y = 0; y < _eGM.Ycount; y++)
+                for (int y = 0; y < _eGM.Yamount; y++)
                 {
                     if (isSelectedUnit)
                     {
-                        if (!_eGM.CellComponent(x, y).IsSelected && !_eGM.CellUnitComponent(x, y).HaveUnit && !_eGM.CellEnvironmentComponent(x, y).HaveMountain)
+                        if (!_eGM.CellEnt_CellCom(x, y).IsSelected && !_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit && !_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveMountain)
                         {
                             if (InstanceGame.IsMasterClient)
                             {
-                                if (_eGM.CellComponent(x, y).IsStartMaster)
+                                if (_eGM.CellEnt_CellCom(x, y).IsStartMaster)
                                 {
-                                    _eGM.CellSupportVisionComponent(x, y).ActiveVision(true, SupportVisionTypes.Spawn);
+                                    _eGM.CellSupVisEntCellSupportVisionCom(x, y).ActiveVision(true, SupportVisionTypes.Spawn);
                                 }
                             }
 
                             else
                             {
-                                if (_eGM.CellComponent(x, y).IsStartOther)
+                                if (_eGM.CellEnt_CellCom(x, y).IsStartOther)
                                 {
-                                    _eGM.CellSupportVisionComponent(x, y).ActiveVision(true, SupportVisionTypes.Spawn);
+                                    _eGM.CellSupVisEntCellSupportVisionCom(x, y).ActiveVision(true, SupportVisionTypes.Spawn);
                                 }
                             }
                         }
                     }
 
-                    else if (!_eGM.CellComponent(x, y).IsSelected)
+                    else if (!_eGM.CellEnt_CellCom(x, y).IsSelected)
                     {
-                        _eGM.CellSupportVisionComponent(x, y).ActiveVision(false, SupportVisionTypes.Spawn);
+                        _eGM.CellSupVisEntCellSupportVisionCom(x, y).ActiveVision(false, SupportVisionTypes.Spawn);
                     }
                 }
 
@@ -67,27 +67,27 @@ internal class SupportVisionSystem : CellGeneralReduction, IEcsRunSystem
         }
 
 
-        for (int x = 0; x < _eGM.Xcount; x++)
+        for (int x = 0; x < _eGM.Xamount; x++)
         {
-            for (int y = 0; y < _eGM.Ycount; y++)
+            for (int y = 0; y < _eGM.Yamount; y++)
             {
-                _eGM.CellSupportVisionComponent(x, y).ActiveVision(false, SupportVisionTypes.WayOfUnit);
-                _eGM.CellSupportVisionComponent(x, y).ActiveVision(false, SupportVisionTypes.SimpleAttack);
-                _eGM.CellSupportVisionComponent(x, y).ActiveVision(false, SupportVisionTypes.UniqueAttack);
+                _eGM.CellSupVisEntCellSupportVisionCom(x, y).ActiveVision(false, SupportVisionTypes.WayOfUnit);
+                _eGM.CellSupVisEntCellSupportVisionCom(x, y).ActiveVision(false, SupportVisionTypes.SimpleAttack);
+                _eGM.CellSupVisEntCellSupportVisionCom(x, y).ActiveVision(false, SupportVisionTypes.UniqueAttack);
             }
         }
 
         foreach (var xy in _eGM.SelectorESelectorC.AvailableCellsForShift)
         {
-            _eGM.CellSupportVisionComponent(xy).ActiveVision(true, SupportVisionTypes.WayOfUnit);
+            _eGM.CellSupVisEntCellSupportVisionCom(xy).ActiveVision(true, SupportVisionTypes.WayOfUnit);
         }
         foreach (var xy in _eGM.SelectorESelectorC.AvailableCellsSimpleAttack)
         {
-            _eGM.CellSupportVisionComponent(xy).ActiveVision(true, SupportVisionTypes.SimpleAttack);
+            _eGM.CellSupVisEntCellSupportVisionCom(xy).ActiveVision(true, SupportVisionTypes.SimpleAttack);
         }
         foreach (var xy in _eGM.SelectorESelectorC.AvailableCellsUniqueAttack)
         {
-            _eGM.CellSupportVisionComponent(xy).ActiveVision(true, SupportVisionTypes.UniqueAttack);
+            _eGM.CellSupVisEntCellSupportVisionCom(xy).ActiveVision(true, SupportVisionTypes.UniqueAttack);
         }
     }
 }

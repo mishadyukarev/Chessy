@@ -7,7 +7,7 @@ public class RaySystem : SystemGeneralReduction, IEcsRunSystem
     private Ray _ray;
     private RaycastHit2D _raycastHit2D;
 
-    internal RaySystem(ECSmanager eCSmanager) :base(eCSmanager){}
+    internal RaySystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
 
     public void Run()

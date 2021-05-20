@@ -1,7 +1,7 @@
 ﻿using Photon.Realtime;
 
 
-internal struct TheEndGameComponent
+internal struct EndGameComponent
 {
     internal bool IsEndGame;
 

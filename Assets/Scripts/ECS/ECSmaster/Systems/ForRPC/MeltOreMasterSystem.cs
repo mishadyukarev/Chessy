@@ -1,6 +1,5 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using static MainGame;
 
 internal class MeltOreMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 {

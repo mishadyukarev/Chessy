@@ -27,9 +27,9 @@ internal class StandartAbilityUISystem : CellGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_eGM.CellUnitComponent(_xySelectedCell).IsMine)
+        if (_eGM.CellUnitEnt_OwnerCom(_xySelectedCell).IsMine)
         {
-            switch (_eGM.CellUnitComponent(_xySelectedCell).UnitType)
+            switch (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).UnitType)
             {
                 case UnitTypes.None:
                     ActiveStandartAbilities(false);
@@ -67,16 +67,16 @@ internal class StandartAbilityUISystem : CellGeneralReduction, IEcsRunSystem
 
             if (isActive)
             {
-                if (_eGM.CellUnitComponent(_xySelectedCell).IsProtected) _standartAbilityButton1.image.color = Color.yellow;
+                if (_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).IsProtected) _standartAbilityButton1.image.color = Color.yellow;
                 else _standartAbilityButton1.image.color = Color.white;
 
-                if (_eGM.CellUnitComponent(_xySelectedCell).IsRelaxed) _standartAbilityButton2.image.color = Color.green;
+                if (_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).IsRelaxed) _standartAbilityButton2.image.color = Color.green;
                 else _standartAbilityButton2.image.color = Color.white;
             }
         }
     }
 
 
-    private void StandartAbilityButton1() => _photonPunRPC.ProtectUnitToMaster(!_eGM.CellUnitComponent(_xySelectedCell).IsProtected, _xySelectedCell);
-    private void StandartAbilityButton2() => _photonPunRPC.RelaxUnitToMaster(!_eGM.CellUnitComponent(_xySelectedCell).IsRelaxed, _xySelectedCell);
+    private void StandartAbilityButton1() => _photonPunRPC.ProtectUnitToMaster(!_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).IsProtected, _xySelectedCell);
+    private void StandartAbilityButton2() => _photonPunRPC.RelaxUnitToMaster(!_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).IsRelaxed, _xySelectedCell);
 }

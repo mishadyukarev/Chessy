@@ -13,7 +13,7 @@ internal class RefreshUISystem : SystemGeneralReduction, IEcsRunSystem
 
     private float _timer;
 
-    internal RefreshUISystem(ECSmanager eCSmanager) :base(eCSmanager)
+    internal RefreshUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _inGameRefreshZoneGO = InstanceGame.GameObjectPool.InGameRefreshZoneGO;
         _inGameRefreshZoneRefreshImage = InstanceGame.GameObjectPool.InGameRefreshZoneRefreshImage;
@@ -29,12 +29,12 @@ internal class RefreshUISystem : SystemGeneralReduction, IEcsRunSystem
 
             _timer += Time.deltaTime;
 
-            if(_timer >= 1)
+            if (_timer >= 1)
             {
                 _inGameRefreshZoneGO.SetActive(false);
                 _eGM.UpdatorEntityActiveComponent.IsActived = false;
                 _timer = 0;
-            }          
+            }
         }
     }
 }

@@ -26,24 +26,24 @@ public class EntitiesMasterManager : EntitiesManager
                 int random;
                 random = Random.Range(1, 100);
                 if (random <= InstanceGame.StartValuesGameConfig.PERCENT_TREE)
-                    eCSmanager.EntitiesGeneralManager.CellEnvironmentComponent(x, y).SetResetEnvironment(true, EnvironmentTypes.Tree);
+                    eCSmanager.EntitiesGeneralManager.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Tree);
 
                 random = Random.Range(1, 100);
                 if (random <= InstanceGame.StartValuesGameConfig.PERCENT_HILL)
-                    eCSmanager.EntitiesGeneralManager.CellEnvironmentComponent(x, y).SetResetEnvironment(true, EnvironmentTypes.Hill);
+                    eCSmanager.EntitiesGeneralManager.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Hill);
 
                 random = Random.Range(1, 100);
                 if (random <= InstanceGame.StartValuesGameConfig.PERCENT_MOUNTAIN)
-                    eCSmanager.EntitiesGeneralManager.CellEnvironmentComponent(x, y).SetResetEnvironment(true, EnvironmentTypes.Mountain);
+                    eCSmanager.EntitiesGeneralManager.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Mountain);
 
 
 
-                if (!eCSmanager.EntitiesGeneralManager.CellEnvironmentComponent(x, y).HaveMountain
-                    && !eCSmanager.EntitiesGeneralManager.CellEnvironmentComponent(x, y).HaveTree)
+                if (!eCSmanager.EntitiesGeneralManager.CellEnvEnt_CellEnvironmentCom(x, y).HaveMountain
+                    && !eCSmanager.EntitiesGeneralManager.CellEnvEnt_CellEnvironmentCom(x, y).HaveTree)
                 {
                     random = Random.Range(1, 100);
                     if (random <= InstanceGame.StartValuesGameConfig.PERCENT_FOOD)
-                        eCSmanager.EntitiesGeneralManager.CellEnvironmentComponent(x, y).SetResetEnvironment(true, EnvironmentTypes.Food);
+                        eCSmanager.EntitiesGeneralManager.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Food);
                 }
 
             }
@@ -71,33 +71,29 @@ public class EntitiesMasterManager : EntitiesManager
 
         #region Info
 
-        eGM.InfoEntityUnitsInfoComponent.IsSettedKingDict[true] = false;
-        eGM.InfoEntityUnitsInfoComponent.IsSettedKingDict[false] = false;
+        eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[true] = false;
+        eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[false] = false;
 
-        eGM.InfoEntityUnitsInfoComponent.AmountKingDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_KING_MASTER;
-        eGM .InfoEntityUnitsInfoComponent.AmountKingDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_KING_OTHER;
+        eGM.InfoEnt_UnitsInfoCom.AmountKingDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_KING_MASTER;
+        eGM.InfoEnt_UnitsInfoCom.AmountKingDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_KING_OTHER;
 
-        eGM .InfoEntityUnitsInfoComponent.AmountPawnDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_PAWN_MASTER;
-        eGM .InfoEntityUnitsInfoComponent.AmountPawnDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_PAWN_OTHER;
+        eGM.InfoEnt_UnitsInfoCom.AmountPawnDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_PAWN_MASTER;
+        eGM.InfoEnt_UnitsInfoCom.AmountPawnDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_PAWN_OTHER;
 
-        eGM .InfoEntityUnitsInfoComponent.AmountRookDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_ROOK_MASTER;
-        eGM .InfoEntityUnitsInfoComponent.AmountRookDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_ROOK_OTHER;
+        eGM.InfoEnt_UnitsInfoCom.AmountRookDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_ROOK_MASTER;
+        eGM.InfoEnt_UnitsInfoCom.AmountRookDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_ROOK_OTHER;
 
-        eGM .InfoEntityUnitsInfoComponent.AmountBishopDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_BISHOP_MASTER;
-        eGM .InfoEntityUnitsInfoComponent.AmountBishopDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_BISHOP_OTHER;
+        eGM.InfoEnt_UnitsInfoCom.AmountBishopDict[true] = InstanceGame.StartValuesGameConfig.AMOUNT_BISHOP_MASTER;
+        eGM.InfoEnt_UnitsInfoCom.AmountBishopDict[false] = InstanceGame.StartValuesGameConfig.AMOUNT_BISHOP_OTHER;
 
+        eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[true] = default;
+        eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[false] = default;
 
-        eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[true] = false;
-        eGM.InfoEntBuildingsInfoCom.IsBuildedCityDictionary[false] = false;
+        eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[true] = default;
+        eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[false] = default;
 
-        eGM.InfoEntBuildingsInfoCom.AmountFarmDict[true] = default;
-        eGM.InfoEntBuildingsInfoCom.AmountFarmDict[false] = default;
-
-        eGM.InfoEntBuildingsInfoCom.AmountWoodcutterDict[true] = default;
-        eGM.InfoEntBuildingsInfoCom.AmountWoodcutterDict[false] = default;
-
-        eGM.InfoEntBuildingsInfoCom.AmountMineDict[true] = default;
-        eGM.InfoEntBuildingsInfoCom.AmountMineDict[false] = default;
+        eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[true] = default;
+        eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[false] = default;
 
         #endregion
 

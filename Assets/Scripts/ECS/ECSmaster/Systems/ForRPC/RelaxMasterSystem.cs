@@ -12,25 +12,25 @@ internal class RelaxMasterSystem : SystemMasterReduction, IEcsRunSystem
     {
         if (isActive)
         {
-            if (!_eGM.CellUnitComponent(xyCell).IsRelaxed)
+            if (!_eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed)
             {
-                if (_eGM.CellUnitComponent(xyCell).HaveMaxSteps)
+                if (_eGM.CellUnitEnt_CellUnitCom(xyCell).HaveMaxSteps)
                 {
-                    _eGM.CellUnitComponent(xyCell).IsRelaxed = true;
-                    _eGM.CellUnitComponent(xyCell).IsProtected = false;
-                    _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
+                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed = true;
+                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = false;
+                    _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
                 }
             }
         }
 
         else
         {
-            if (_eGM.CellUnitComponent(xyCell).IsRelaxed)
+            if (_eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed)
             {
-                if (_eGM.CellUnitComponent(xyCell).HaveMaxSteps)
+                if (_eGM.CellUnitEnt_CellUnitCom(xyCell).HaveMaxSteps)
                 {
-                    _eGM.CellUnitComponent(xyCell).IsRelaxed = false;
-                    _eGM.CellUnitComponent(xyCell).AmountSteps = 0;
+                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed = false;
+                    _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
                 }
             }
         }

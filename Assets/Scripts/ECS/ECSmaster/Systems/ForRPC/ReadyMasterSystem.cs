@@ -13,10 +13,10 @@ internal class ReadyMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
     public void Run()
     {
-        _eGM.ReadyEntityIsActivatedDictionaryComponent.IsActivatedDictionary[Info.Sender.IsMasterClient] = isReady;
+        _eGM.ReadyEntIsActivatedDictCom.IsActivatedDictionary[Info.Sender.IsMasterClient] = isReady;
 
-        if (_eGM.ReadyEntityIsActivatedDictionaryComponent.IsActivatedDictionary[true]
-            && _eGM.ReadyEntityIsActivatedDictionaryComponent.IsActivatedDictionary[false])
+        if (_eGM.ReadyEntIsActivatedDictCom.IsActivatedDictionary[true]
+            && _eGM.ReadyEntIsActivatedDictCom.IsActivatedDictionary[false])
             _photonPunRPC.ReadyToGeneral(RpcTarget.All, true, true);
 
         else _photonPunRPC.ReadyToGeneral(Info.Sender, isReady, false);

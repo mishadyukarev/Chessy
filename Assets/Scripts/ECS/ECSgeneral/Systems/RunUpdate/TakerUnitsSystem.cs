@@ -1,10 +1,9 @@
 ﻿using Leopotam.Ecs;
-using UnityEngine.UI;
 using static MainGame;
 
 internal class TakerUnitsSystem : RPCGeneralReduction, IEcsRunSystem
 {
-    internal TakerUnitsSystem(ECSmanager eCSmanager): base(eCSmanager)
+    internal TakerUnitsSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _eGM.TakerKingEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(_eGM.TakerKingEntityUnitTypeComponent.UnitType); });
         _eGM.TakerPawnEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(_eGM.TakerPawnEntityUnitTypeComponent.UnitType); });
@@ -14,7 +13,7 @@ internal class TakerUnitsSystem : RPCGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_eGM.InfoEntityUnitsInfoComponent.IsSettedKingDict[InstanceGame.IsMasterClient]) 
+        if (_eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[InstanceGame.IsMasterClient])
             _eGM.TakerKingEntityButtonComponent.Button.gameObject.SetActive(false);
     }
 

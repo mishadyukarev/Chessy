@@ -1,14 +1,14 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 
-internal class MistakeSystem : SystemGeneralReduction, IEcsRunSystem
+internal class MistakeUpdateSystem : SystemGeneralReduction, IEcsRunSystem
 {
     private const float TIMER_MISTAKE = 1;
 
     private float _timer;
     private bool _isStartedMistake;
 
-    internal MistakeSystem(ECSmanager eCSmanager) : base(eCSmanager)
+    internal MistakeUpdateSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _eGM.DonerEntityMistakeComponent.MistakeAction = MistakeDone;
 

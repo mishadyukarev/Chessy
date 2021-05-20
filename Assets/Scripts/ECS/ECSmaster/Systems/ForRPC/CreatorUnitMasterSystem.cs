@@ -42,7 +42,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
                         _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_PAWN;
 
-                        _eGM.InfoEntityUnitsInfoComponent.AmountPawnDict[Info.Sender.IsMasterClient] += StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                        _eGM.InfoEnt_UnitsInfoCom.AmountPawnDict[Info.Sender.IsMasterClient] += StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                     }
                 }
                 else
@@ -61,7 +61,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
                         _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_PAWN;
 
-                        _eGM.InfoEntityUnitsInfoComponent.AmountPawnDict[Info.Sender.IsMasterClient] += StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                        _eGM.InfoEnt_UnitsInfoCom.AmountPawnDict[Info.Sender.IsMasterClient] += StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                     }
                 }
 
@@ -85,7 +85,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
                         _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_ROOK;
 
-                        _eGM.InfoEntityUnitsInfoComponent.AmountRookDict[Info.Sender.IsMasterClient] += 1;
+                        _eGM.InfoEnt_UnitsInfoCom.AmountRookDict[Info.Sender.IsMasterClient] += 1;
                     }
                 }
                 else
@@ -104,7 +104,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
                         _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_ROOK;
 
-                        _eGM.InfoEntityUnitsInfoComponent.AmountRookDict[Info.Sender.IsMasterClient] += 1;
+                        _eGM.InfoEnt_UnitsInfoCom.AmountRookDict[Info.Sender.IsMasterClient] += 1;
                     }
                 }
 
@@ -129,7 +129,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
                         _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
 
-                        _eGM.InfoEntityUnitsInfoComponent.AmountBishopDict[Info.Sender.IsMasterClient] += 1;
+                        _eGM.InfoEnt_UnitsInfoCom.AmountBishopDict[Info.Sender.IsMasterClient] += 1;
                     }
                 }
                 else
@@ -148,7 +148,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
                         _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
 
-                        _eGM.InfoEntityUnitsInfoComponent.AmountBishopDict[Info.Sender.IsMasterClient] += 1;
+                        _eGM.InfoEnt_UnitsInfoCom.AmountBishopDict[Info.Sender.IsMasterClient] += 1;
                     }
                 }
 

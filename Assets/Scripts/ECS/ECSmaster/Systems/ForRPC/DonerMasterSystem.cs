@@ -15,7 +15,7 @@ internal class DonerMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_eGM.InfoEntityUnitsInfoComponent.IsSettedKingDict[info.Sender.IsMasterClient])
+        if (_eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[info.Sender.IsMasterClient])
         {
             _photonPunRPC.DoneToGeneral(info.Sender, false, isDone, _eGM.UpdatorEntityAmountComponent.Amount);
 

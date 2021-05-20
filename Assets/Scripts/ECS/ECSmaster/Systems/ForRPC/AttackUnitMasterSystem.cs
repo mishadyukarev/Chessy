@@ -14,140 +14,101 @@ internal class AttackUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_eGM.CellUnitComponent(XyPreviousCell).MinAmountSteps && _eGM.CellUnitComponent(XyPreviousCell).IsHisUnit(Info.Sender)
-            && _eGM.CellUnitComponent(XySelectedCell).HaveUnit)
+
+        bool isMeleeAttack = false;
+
+        switch (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType)
         {
+            case UnitTypes.None:
+                break;
 
-            bool isMeleeAttack = false;
+            case UnitTypes.King:
+                isMeleeAttack = true;
+                break;
 
-            switch (_eGM.CellUnitComponent(XyPreviousCell).UnitType)
-            {
-                case UnitTypes.None:
-                    break;
+            case UnitTypes.Pawn:
+                isMeleeAttack = true;
+                break;
 
-                case UnitTypes.King:
-                    isMeleeAttack = true;
-                    break;
+            case UnitTypes.Rook:
+                isMeleeAttack = false;
+                break;
 
-                case UnitTypes.Pawn:
-                    isMeleeAttack = true;
-                    break;
+            case UnitTypes.Bishop:
+                isMeleeAttack = false;
+                break;
 
-                case UnitTypes.Rook:
-                    isMeleeAttack = false;
-                    break;
+            default:
+                break;
+        }
 
-                case UnitTypes.Bishop:
-                    isMeleeAttack = false;
-                    break;
+        _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).GetCellsForAttack(Info.Sender,
+            out var availableCellsSimpleAttack, out var availableCellsUniqueAttack);
 
-                default:
-                    break;
-            }
-
-
-            InstanceGame.CellManager.CellFinderWay.GetCellsForAttack(XyPreviousCell, Info.Sender,
-                out var availableCellsSimpleAttack, out var availableCellsUniqueAttack);
+        var isFindedSimple = InstanceGame.CellBaseOperations.TryFindCellInList(XySelectedCell, availableCellsSimpleAttack);
+        var isFindedUnique = InstanceGame.CellBaseOperations.TryFindCellInList(XySelectedCell, availableCellsUniqueAttack);
 
 
-            var isFindedSimple = InstanceGame.CellManager.CellBaseOperations.TryFindCellInList(XySelectedCell, availableCellsSimpleAttack);
-            var isFindedUnique = InstanceGame.CellManager.CellBaseOperations.TryFindCellInList(XySelectedCell, availableCellsUniqueAttack);
+        if (isFindedSimple || isFindedUnique)
+        {
+            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).AmountSteps = 0;
+            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).IsProtected = false;
+            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).IsRelaxed = false;
+
+            int damageToPrevious = 0;
+            int damageToSelelected = 0;
+
+
+            damageToSelelected += _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).SimplePowerDamage;
+            damageToSelelected -= _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).PowerProtection;
 
 
             if (isMeleeAttack)
             {
-                if (isFindedSimple)
-                {
-
-                }
+                damageToPrevious += _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).SimplePowerDamage;
 
                 if (isFindedUnique)
                 {
-
+                    damageToSelelected += _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).UniquePowerDamage;
                 }
             }
 
             else
             {
-                if (isFindedSimple)
-                {
-
-                }
-
                 if (isFindedUnique)
                 {
-
+                    damageToSelelected += _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).UniquePowerDamage;
                 }
             }
 
+            if (damageToSelelected < 0) damageToSelelected = 0;
 
-            if (isFindedSimple || isFindedUnique)
+            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).AmountHealth -= damageToPrevious;
+            _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountHealth -= damageToSelelected;
+
+
+            if (_eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).AmountHealth <= StartValuesGameConfig.AMOUNT_FOR_DEATH)
             {
-                _eGM.CellUnitComponent(XyPreviousCell).AmountSteps = 0;
-                _eGM.CellUnitComponent(XyPreviousCell).IsProtected = false;
-                _eGM.CellUnitComponent(XyPreviousCell).IsRelaxed = false;
-
-                int damageToPrevious = 0;
-                int damageToSelelected = 0;
-
-                switch (_eGM.CellUnitComponent(XyPreviousCell).UnitType)
-                {
-                    case UnitTypes.None:
-                        break;
-
-                    case UnitTypes.King:
-                        damageToPrevious += _eGM.CellUnitComponent(XySelectedCell).SimplePowerDamage;
-                        break;
-
-                    case UnitTypes.Pawn:
-                        damageToPrevious += _eGM.CellUnitComponent(XySelectedCell).SimplePowerDamage;
-                        break;
-
-                    case UnitTypes.Rook:
-                        break;
-
-                    case UnitTypes.Bishop:
-                        break;
-
-                    default:
-                        break;
-                }
-
-
-                damageToSelelected += _eGM.CellUnitComponent(XyPreviousCell).SimplePowerDamage;
-                if (isFindedUnique) damageToSelelected += _eGM.CellUnitComponent(XyPreviousCell).UniquePowerDamage;
-                damageToSelelected -= _eGM.CellUnitComponent(XySelectedCell).PowerProtection
-                    (_eGM.CellEnvironmentComponent(XySelectedCell).ListEnvironmentTypes, _eGM.CellBuildingComponent(XySelectedCell).BuildingType);
-
-                if (damageToSelelected < 0) damageToSelelected = 0;
-
-
-                _eGM.CellUnitComponent(XyPreviousCell).AmountHealth -= damageToPrevious;
-                _eGM.CellUnitComponent(XySelectedCell).AmountHealth -= damageToSelelected;
-
-                if (_eGM.CellUnitComponent(XyPreviousCell).AmountHealth <= StartValuesGameConfig.AMOUNT_FOR_DEATH)
-                {
-                    _eGM.CellUnitComponent(XyPreviousCell).ResetUnit();
-                }
-
-                if (_eGM.CellUnitComponent(XySelectedCell).AmountHealth <= StartValuesGameConfig.AMOUNT_FOR_DEATH)
-                {
-                    if (_eGM.CellUnitComponent(XySelectedCell).UnitType == UnitTypes.King)
-                        _photonPunRPC.EndGameToMaster(_eGM.CellUnitComponent(XyPreviousCell).ActorNumber);
-
-                    _eGM.CellUnitComponent(XySelectedCell).ResetUnit();
-                    if (_eGM.CellUnitComponent(XyPreviousCell).UnitType != UnitTypes.Rook && _eGM.CellUnitComponent(XyPreviousCell).UnitType != UnitTypes.Bishop)
-                    {
-                        _eGM.CellUnitComponent(XySelectedCell).SetUnit(_eGM.CellUnitComponent(XyPreviousCell));
-                        _eGM.CellUnitComponent(XyPreviousCell).ResetUnit();
-                    }
-                }
-
-                _isAttacked = true;
+                _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).ResetUnit();
             }
-            else _isAttacked = false;
+
+            if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountHealth <= StartValuesGameConfig.AMOUNT_FOR_DEATH)
+            {
+                if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType == UnitTypes.King)
+                    _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_OwnerCom(XyPreviousCell).ActorNumber);
+
+                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).ResetUnit();
+                if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Rook && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Bishop)
+                {
+                    _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).SetUnit(XyPreviousCell);
+                    _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).ResetUnit();
+                }
+            }
+
+            _isAttacked = true;
         }
         else _isAttacked = false;
+
 
         _photonPunRPC.AttackUnitToGeneral(Info.Sender, _isAttacked, _isAttacked);
         _photonPunRPC.AttackUnitToGeneral(RpcTarget.All, false, _isAttacked);

@@ -3,7 +3,7 @@
     private static MainMenu _instanceMenu;
     private ResourcesLoadMenu _resourcesLoadManager;
     private StartSpawnMenu _startSpawnMenuManager;
-    private MenuManager _menuManager;
+    private MenuSceneManager _menuSceneManager;
     private Builder _builder;
     private Names _names;
 
@@ -24,8 +24,8 @@
 
         _startSpawnMenuManager = new StartSpawnMenu(_resourcesLoadManager);
 
-        var go = _builder.CreateGameObject(nameof(MenuManager), new System.Type[] { typeof(MenuManager) });
-        _menuManager = go.GetComponent<MenuManager>();
-        _menuManager.Init(_startSpawnMenuManager);
+        var go = _builder.CreateGameObject(nameof(MenuSceneManager), new System.Type[] { typeof(MenuSceneManager) });
+        _menuSceneManager = go.GetComponent<MenuSceneManager>();
+        _menuSceneManager.InitMenu(_startSpawnMenuManager);
     }
 }

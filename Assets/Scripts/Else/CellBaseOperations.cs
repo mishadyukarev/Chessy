@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using static MainGame;
 
 public class CellBaseOperations
 {
@@ -39,7 +38,7 @@ public class CellBaseOperations
 
     internal bool CompareXY(in int[] xyLeft, in int[] xyRight)
     {
-        if (xyLeft[X] == xyRight[X] 
+        if (xyLeft[X] == xyRight[X]
             && xyLeft[Y] == xyRight[Y])
         {
             return true;
