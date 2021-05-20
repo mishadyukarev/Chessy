@@ -235,10 +235,10 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     internal int Xamount => _cellEnts.GetUpperBound(X) + 1;
     internal int Yamount => _cellEnts.GetUpperBound(Y) + 1;
 
-    internal int XYForArray = InstanceGame.StartValuesGameConfig.XY_FOR_ARRAY;
+    internal int XYForArray = Instance.StartValuesGameConfig.XY_FOR_ARRAY;
 
-    internal int X = InstanceGame.StartValuesGameConfig.X;
-    internal int Y = InstanceGame.StartValuesGameConfig.Y;
+    internal int X = Instance.StartValuesGameConfig.X;
+    internal int Y = Instance.StartValuesGameConfig.Y;
 
     #endregion
 
@@ -308,11 +308,11 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         IronEntity = GameWorld.NewEntity();
         GoldEntity = GameWorld.NewEntity();
 
-        FoodEntityTextMeshProGUIComponent.TextMeshProUGUI = InstanceGame.GameObjectPool.FoodAmmountText;
-        WoodEntityTextMeshProGUIComponent.TextMeshProUGUI = InstanceGame.GameObjectPool.WoodAmmountText;
-        OreEntityTextMeshProGUIComponent.TextMeshProUGUI = InstanceGame.GameObjectPool.OreAmmountText;
-        IronEntityTextMeshProGUIComponent.TextMeshProUGUI = InstanceGame.GameObjectPool.IronAmmountText;
-        GoldEntityTextMeshProGUIComponent.TextMeshProUGUI = InstanceGame.GameObjectPool.GoldAmmountText;
+        FoodEntityTextMeshProGUIComponent.TextMeshProUGUI = Instance.GameObjectPool.FoodAmmountText;
+        WoodEntityTextMeshProGUIComponent.TextMeshProUGUI = Instance.GameObjectPool.WoodAmmountText;
+        OreEntityTextMeshProGUIComponent.TextMeshProUGUI = Instance.GameObjectPool.OreAmmountText;
+        IronEntityTextMeshProGUIComponent.TextMeshProUGUI = Instance.GameObjectPool.IronAmmountText;
+        GoldEntityTextMeshProGUIComponent.TextMeshProUGUI = Instance.GameObjectPool.GoldAmmountText;
 
         FoodEAmountDictC.AmountDict = new Dictionary<bool, int>();
         WoodEAmountDictC.AmountDict = new Dictionary<bool, int>();
@@ -343,25 +343,25 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         _takerKingEntity = GameWorld.NewEntity();
 
         TakerKingEntityUnitTypeComponent.UnitType = UnitTypes.King;
-        TakerKingEntityButtonComponent.Button = InstanceGame.GameObjectPool.GameDownTakerKingButton;
+        TakerKingEntityButtonComponent.Button = Instance.GameObjectPool.GameDownTakerKingButton;
 
 
         _takerPawnEntity = GameWorld.NewEntity();
 
         TakerPawnEntityUnitTypeComponent.UnitType = UnitTypes.Pawn;
-        TakerPawnEntityButtonComponent.Button = InstanceGame.GameObjectPool.GameDownTakerPawnButton;
+        TakerPawnEntityButtonComponent.Button = Instance.GameObjectPool.GameDownTakerPawnButton;
 
 
         _takerRookEntity = GameWorld.NewEntity();
 
         TakerRookEntityUnitTypeComponent.UnitType = UnitTypes.Rook;
-        TakerRookEntityButtonComponent.Button = InstanceGame.GameObjectPool.GameDownTakerRookButton;
+        TakerRookEntityButtonComponent.Button = Instance.GameObjectPool.GameDownTakerRookButton;
 
 
         _takerBishopEntity = GameWorld.NewEntity();
 
         TakerBishopEntityUnitTypeComponent.UnitType = UnitTypes.Bishop;
-        TakerBishopEntityButtonComponent.Button = InstanceGame.GameObjectPool.GameDownTakerBishopButton;
+        TakerBishopEntityButtonComponent.Button = Instance.GameObjectPool.GameDownTakerBishopButton;
 
         #endregion
 
@@ -370,7 +370,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
         _donerEntity = GameWorld.NewEntity();
 
-        DonerEntityButtonComponent.Button = InstanceGame.GameObjectPool.DoneButton;
+        DonerEntityButtonComponent.Button = Instance.GameObjectPool.DoneButton;
 
         DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary = new Dictionary<bool, bool>();
         DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary.Add(true, default);
@@ -536,9 +536,9 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
                 _cellEnts[x, y].Replace(new CellComponent(this, StartValuesGameConfig, x, y));
                 _cellUnitEnts[x, y].Replace(new CellUnitComponent(this, x, y));
-                _cellBuildingEnts[x, y].Replace(new CellBuildingComponent(this, InstanceGame.GameObjectPool, x, y));
-                _cellEnvironmentEnts[x, y].Replace(new CellEnvironmentComponent(this, InstanceGame.GameObjectPool, x, y));
-                _cellSupportVisionEnts[x, y].Replace(new CellSupportVisionComponent(this, InstanceGame.GameObjectPool, x, y));
+                _cellBuildingEnts[x, y].Replace(new CellBuildingComponent(this, Instance.GameObjectPool, x, y));
+                _cellEnvironmentEnts[x, y].Replace(new CellEnvironmentComponent(this, Instance.GameObjectPool, x, y));
+                _cellSupportVisionEnts[x, y].Replace(new CellSupportVisionComponent(this, Instance.GameObjectPool, x, y));
             }
         }
 

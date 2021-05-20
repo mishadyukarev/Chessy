@@ -45,8 +45,8 @@ internal class AttackUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
         _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).GetCellsForAttack(Info.Sender,
             out var availableCellsSimpleAttack, out var availableCellsUniqueAttack);
 
-        var isFindedSimple = InstanceGame.CellBaseOperations.TryFindCellInList(XySelectedCell, availableCellsSimpleAttack);
-        var isFindedUnique = InstanceGame.CellBaseOperations.TryFindCellInList(XySelectedCell, availableCellsUniqueAttack);
+        var isFindedSimple = Instance.CellBaseOperations.TryFindCellInList(XySelectedCell, availableCellsSimpleAttack);
+        var isFindedUnique = Instance.CellBaseOperations.TryFindCellInList(XySelectedCell, availableCellsUniqueAttack);
 
 
         if (isFindedSimple || isFindedUnique)

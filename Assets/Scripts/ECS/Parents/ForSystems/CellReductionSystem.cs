@@ -6,6 +6,6 @@ internal abstract class CellGeneralReduction : SystemGeneralReduction
 
     internal CellGeneralReduction(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _cellBaseOperations = InstanceGame.CellBaseOperations;
+        _cellBaseOperations = Instance.CellBaseOperations;
     }
 }

@@ -23,30 +23,30 @@ internal class CityUISystem : CellGeneralReduction, IEcsRunSystem
 
     internal CityUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
+        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
 
-        _leftImage = InstanceGame.GameObjectPool.LeftImage;
+        _leftImage = Instance.GameObjectPool.LeftImage;
 
-        _inGameLeftUpgradePawnButton = InstanceGame.GameObjectPool.InGameLeftUpgadePawnButton;
+        _inGameLeftUpgradePawnButton = Instance.GameObjectPool.InGameLeftUpgadePawnButton;
         _inGameLeftUpgradePawnButton.onClick.AddListener(delegate { UpgradeUnit(UnitTypes.Pawn); });
 
-        _inGameLeftUpgradeRookButton = InstanceGame.GameObjectPool.InGameLeftUpgadeRookButton;
+        _inGameLeftUpgradeRookButton = Instance.GameObjectPool.InGameLeftUpgadeRookButton;
         _inGameLeftUpgradeRookButton.onClick.AddListener(delegate { UpgradeUnit(UnitTypes.Rook); });
 
-        _inGameLeftUpgradeBishopButton = InstanceGame.GameObjectPool.InGameLeftUpgadeBishopButton;
+        _inGameLeftUpgradeBishopButton = Instance.GameObjectPool.InGameLeftUpgadeBishopButton;
         _inGameLeftUpgradeBishopButton.onClick.AddListener(delegate { UpgradeUnit(UnitTypes.Bishop); });
 
 
-        _buyPawnButton = InstanceGame.GameObjectPool.InGameLeftBuyPawnButton;
+        _buyPawnButton = Instance.GameObjectPool.InGameLeftBuyPawnButton;
         _buyPawnButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Pawn); });
 
-        _gameLeftBuyRookButton = InstanceGame.GameObjectPool.InGameLeftBuyRookButton;
+        _gameLeftBuyRookButton = Instance.GameObjectPool.InGameLeftBuyRookButton;
         _gameLeftBuyRookButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Rook); });
 
-        _gameLeftBuyBishopButton = InstanceGame.GameObjectPool.InGameLeftBuyBishopButton;
+        _gameLeftBuyBishopButton = Instance.GameObjectPool.InGameLeftBuyBishopButton;
         _gameLeftBuyBishopButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Bishop); });
 
-        _meltOreButton = InstanceGame.GameObjectPool.LeftMeltButton;
+        _meltOreButton = Instance.GameObjectPool.LeftMeltButton;
         _meltOreButton.onClick.AddListener(delegate { MeltOre(); });
 
 

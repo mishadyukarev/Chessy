@@ -15,22 +15,22 @@ internal class BuildingUISystem : CellGeneralReduction, IEcsRunSystem
 
     internal BuildingUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
+        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
 
 
-        _buildingAbilityButton0 = InstanceGame.GameObjectPool.BuildingAbilityButton0;
+        _buildingAbilityButton0 = Instance.GameObjectPool.BuildingAbilityButton0;
         _buildingAbilityButton0.onClick.AddListener(delegate { Build(BuildingTypes.City); });
 
-        _buildingAbilityButton1 = InstanceGame.GameObjectPool.BuildingAbilityButton1;
+        _buildingAbilityButton1 = Instance.GameObjectPool.BuildingAbilityButton1;
         _buildingAbilityButton1.onClick.AddListener(delegate { Build(BuildingTypes.Farm); });
 
-        _buildingAbilityButton2 = InstanceGame.GameObjectPool.BuildingAbilityButton2;
+        _buildingAbilityButton2 = Instance.GameObjectPool.BuildingAbilityButton2;
         _buildingAbilityButton2.onClick.AddListener(delegate { Build(BuildingTypes.Woodcutter); });
 
-        _buildingAbilityButton3 = InstanceGame.GameObjectPool.BuildingAbilityButton3;
+        _buildingAbilityButton3 = Instance.GameObjectPool.BuildingAbilityButton3;
         _buildingAbilityButton3.onClick.AddListener(delegate { Build(BuildingTypes.Mine); });
 
-        _buildingAbilityButton4 = InstanceGame.GameObjectPool.BuildingAbilityButton4;
+        _buildingAbilityButton4 = Instance.GameObjectPool.BuildingAbilityButton4;
         _buildingAbilityButton4.onClick.AddListener(delegate { Destroy(); });
     }
 

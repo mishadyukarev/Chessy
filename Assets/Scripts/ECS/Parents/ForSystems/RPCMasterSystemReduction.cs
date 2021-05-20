@@ -5,6 +5,6 @@ internal abstract class RPCMasterSystemReduction : SystemMasterReduction
 
     internal RPCMasterSystemReduction(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
+        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
     }
 }

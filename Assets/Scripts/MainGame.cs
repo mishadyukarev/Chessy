@@ -1,8 +1,12 @@
-﻿internal sealed class MainGame : Main
+﻿using Photon.Pun;
+using Photon.Realtime;
+using UnityEngine;
+
+internal sealed class MainGame : MonoBehaviour
 {
     #region Variables
 
-    private static MainGame _instanceGame;
+    private static MainGame _instance;
 
     private ResourcesLoadGame _resourcesLoadManager;
     private Builder _builder;
@@ -19,7 +23,7 @@
 
     #region Properties
 
-    public static MainGame InstanceGame => _instanceGame;
+    public static MainGame Instance => _instance;
 
     public ResourcesLoadGame ResourcesLoadGameManager => _resourcesLoadManager;
     internal Builder Builder => _builder;
@@ -29,19 +33,19 @@
     internal StartValuesGameConfig StartValuesGameConfig => _resourcesLoadManager.StartValuesGameConfig;
     internal PhotonGameManager PhotonGameManager => _photonGameManager;
 
+    internal bool IsMasterClient => PhotonNetwork.IsMasterClient;
+    internal Player MasterClient => PhotonNetwork.MasterClient;
+    internal Player LocalPlayer => PhotonNetwork.LocalPlayer;
+
     #endregion
 
 
 
     private void Start()
     {
-
-
-
-
         #region Casting
 
-        _instanceGame = this;
+        _instance = this;
 
         _builder = new Builder();
         _names = new Names();

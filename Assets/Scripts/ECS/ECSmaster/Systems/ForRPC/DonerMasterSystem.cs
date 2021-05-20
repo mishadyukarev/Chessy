@@ -21,7 +21,7 @@ internal class DonerMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
             _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[info.Sender.IsMasterClient] = isDone;
 
-            bool isRefreshed = InstanceGame.StartValuesGameConfig.IS_TEST
+            bool isRefreshed = Instance.StartValuesGameConfig.IS_TEST
                 || _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[true]
                 && _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[false];
 

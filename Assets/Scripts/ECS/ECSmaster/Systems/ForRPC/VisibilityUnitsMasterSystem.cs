@@ -20,7 +20,7 @@ internal class VisibilityUnitsMasterSystem : CellGeneralReduction, IEcsRunSystem
 
                 if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
                 {
-                    if (_eGM.CellUnitEnt_OwnerCom(x, y).IsHim(InstanceGame.MasterClient))
+                    if (_eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Instance.MasterClient))
                     {
                         if (_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveTree)
                         {
@@ -31,7 +31,7 @@ internal class VisibilityUnitsMasterSystem : CellGeneralReduction, IEcsRunSystem
                             {
                                 if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveUnit)
                                 {
-                                    if (!_eGM.CellUnitEnt_OwnerCom(xy).IsHim(InstanceGame.MasterClient))
+                                    if (!_eGM.CellUnitEnt_OwnerCom(xy).IsHim(Instance.MasterClient))
                                     {
                                         _eGM.CellUnitEnt_CellUnitCom(x, y).IsActiveUnitOther = true;
                                         break;
@@ -51,7 +51,7 @@ internal class VisibilityUnitsMasterSystem : CellGeneralReduction, IEcsRunSystem
                             {
                                 if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveUnit)
                                 {
-                                    if (_eGM.CellUnitEnt_OwnerCom(xy).IsHim(InstanceGame.MasterClient))
+                                    if (_eGM.CellUnitEnt_OwnerCom(xy).IsHim(Instance.MasterClient))
                                     {
                                         _eGM.CellUnitEnt_CellUnitCom(x, y).IsActiveUnitMaster = true;
                                         break;

@@ -10,7 +10,7 @@ internal class DestroyMasterSystem : SystemMasterReduction, IEcsRunSystem
 
     internal DestroyMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
+        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
     }
 
     public void Run()

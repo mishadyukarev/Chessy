@@ -39,7 +39,7 @@ public sealed class ECSmanager
         _systemsGeneralManager.CreateInitSystems(this);
 
 
-        if (InstanceGame.IsMasterClient)
+        if (Instance.IsMasterClient)
         {
             _entitiesMasterManager = new EntitiesMasterManager(_ecsWorld);
             _systemsMasterManager = new SystemsMasterManager(_ecsWorld);
@@ -61,14 +61,14 @@ public sealed class ECSmanager
     {
         _systemsGeneralManager.Update();
 
-        if (InstanceGame.IsMasterClient) _systemsMasterManager.Update();
+        if (Instance.IsMasterClient) _systemsMasterManager.Update();
         else _systemsOtherManager.Update();
     }
     internal void FixedUpdate()
     {
         _systemsGeneralManager.FixedUpdate();
 
-        if (InstanceGame.IsMasterClient) _systemsMasterManager.FixedUpdate();
+        if (Instance.IsMasterClient) _systemsMasterManager.FixedUpdate();
         else _systemsOtherManager.FixedUpdate();
     }
 
@@ -76,7 +76,7 @@ public sealed class ECSmanager
     {
         _systemsGeneralManager.Destroy();
 
-        if (InstanceGame.IsMasterClient) _systemsMasterManager.Destroy();
+        if (Instance.IsMasterClient) _systemsMasterManager.Destroy();
         else _systemsOtherManager.Destroy();
 
         _ecsWorld.Destroy();

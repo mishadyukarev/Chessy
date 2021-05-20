@@ -17,11 +17,11 @@ internal class StandartAbilityUISystem : CellGeneralReduction, IEcsRunSystem
 
     internal StandartAbilityUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
+        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
 
-        _standartAbilityButton1 = MainGame.InstanceGame.GameObjectPool.StandartAbilityButton1;
+        _standartAbilityButton1 = MainGame.Instance.GameObjectPool.StandartAbilityButton1;
         _standartAbilityButton1.onClick.AddListener(delegate { StandartAbilityButton1(); });
-        _standartAbilityButton2 = MainGame.InstanceGame.GameObjectPool.StandartAbilityButton2;
+        _standartAbilityButton2 = MainGame.Instance.GameObjectPool.StandartAbilityButton2;
         _standartAbilityButton2.onClick.AddListener(delegate { StandartAbilityButton2(); });
     }
 

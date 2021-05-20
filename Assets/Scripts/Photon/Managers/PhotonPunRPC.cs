@@ -16,7 +16,7 @@ internal partial class PhotonPunRPC : MonoBehaviour
 
     private PhotonView _photonView;
 
-    private StartValuesGameConfig StartValuesGameConfig => InstanceGame.StartValuesGameConfig;
+    private StartValuesGameConfig StartValuesGameConfig => Instance.StartValuesGameConfig;
     private string NameRPC => nameof(RPC);
 
 
@@ -29,7 +29,7 @@ internal partial class PhotonPunRPC : MonoBehaviour
 
     internal void InitAfterECS(ECSmanager eCSmanager)
     {
-        if (InstanceGame.IsMasterClient)
+        if (Instance.IsMasterClient)
         {
             _sMM = eCSmanager.SystemsMasterManager;
             _eMM = eCSmanager.EntitiesMasterManager;
@@ -111,38 +111,38 @@ internal partial class PhotonPunRPC : MonoBehaviour
                     break;
 
                 case RpcTypes.Build:
-                    InstanceGame.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXyCellCom.XyCell);
+                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXyCellCom.XyCell);
                     //CellManager.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXyCellCom.XyCell);
                     _eMM.MasterRPCEntBuildingTypeCom.BuildingType = (BuildingTypes)objects[1];
                     _sMM.TryInvokeRunSystem(nameof(BuilderMasterSystem), _sMM.SoloSystems);
                     break;
 
                 case RpcTypes.Destroy:
-                    InstanceGame.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXyCellCom.XyCell);
+                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXyCellCom.XyCell);
                     _sMM.TryInvokeRunSystem(nameof(DestroyMasterSystem), _sMM.SoloSystems);
                     break;
 
                 case RpcTypes.Shift:
-                    InstanceGame.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXySelPreCom.XyPrevious);
-                    InstanceGame.CellBaseOperations.CopyXYinTo((int[])objects[1], _eMM.MasterRPCEntXySelPreCom.XySelected);
+                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXySelPreCom.XyPrevious);
+                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[1], _eMM.MasterRPCEntXySelPreCom.XySelected);
                     _sMM.TryInvokeRunSystem(nameof(ShiftUnitMasterSystem), _sMM.SoloSystems);
                     break;
 
                 case RpcTypes.Attack:
-                    InstanceGame.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXySelPreCom.XyPrevious);
-                    InstanceGame.CellBaseOperations.CopyXYinTo((int[])objects[1], _eMM.MasterRPCEntXySelPreCom.XySelected);
+                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXySelPreCom.XyPrevious);
+                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[1], _eMM.MasterRPCEntXySelPreCom.XySelected);
                     _sMM.TryInvokeRunSystem(nameof(AttackUnitMasterSystem), _sMM.SoloSystems);
                     break;
 
                 case RpcTypes.Protect:
                     _eGM.GeneralRPCEntActiveComponent.IsActived = (bool)objects[0];
-                    InstanceGame.CellBaseOperations.CopyXYinTo((int[])objects[1], _eMM.MasterRPCEntXyCellCom.XyCell);
+                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[1], _eMM.MasterRPCEntXyCellCom.XyCell);
                     _sMM.TryInvokeRunSystem(nameof(ProtectMasterSystem), _sMM.SoloSystems);
                     break;
 
                 case RpcTypes.Relax:
                     _eGM.GeneralRPCEntActiveComponent.IsActived = (bool)objects[0];
-                    InstanceGame.CellBaseOperations.CopyXYinTo((int[])objects[1], _eMM.MasterRPCEntXyCellCom.XyCell);
+                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[1], _eMM.MasterRPCEntXyCellCom.XyCell);
                     _sMM.TryInvokeRunSystem(nameof(RelaxMasterSystem), _sMM.SoloSystems);
                     break;
 
@@ -166,7 +166,7 @@ internal partial class PhotonPunRPC : MonoBehaviour
                     break;
 
                 case RpcTypes.SetUnit:
-                    InstanceGame.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXyCellCom.XyCell);
+                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXyCellCom.XyCell);
                     _eMM.MasterRPCEntUnitTypeCom.UnitType = (UnitTypes)objects[1];
                     _sMM.TryInvokeRunSystem(nameof(SetterUnitMasterSystem), _sMM.SoloSystems);
                     break;
@@ -186,13 +186,13 @@ internal partial class PhotonPunRPC : MonoBehaviour
                 case RpcTypes.Ready:
                     bool isReady = (bool)objects[0];
                     bool isStarted = (bool)objects[1];
-                    _eGM.ReadyEntIsActivatedDictCom.IsActivatedDictionary[InstanceGame.IsMasterClient] = isReady;
+                    _eGM.ReadyEntIsActivatedDictCom.IsActivatedDictionary[Instance.IsMasterClient] = isReady;
                     _eGM.ReadyEntStartGameCom.IsStartedGame = isStarted;
                     break;
 
                 case RpcTypes.Done:
                     _eGM.UpdatorEntityActiveComponent.IsActived = (bool)objects[0];
-                    _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[InstanceGame.IsMasterClient] = (bool)objects[1];
+                    _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[Instance.IsMasterClient] = (bool)objects[1];
                     _eGM.UpdatorEntityAmountComponent.Amount = (int)objects[2];
                     break;
 
@@ -401,9 +401,9 @@ internal partial class PhotonPunRPC : MonoBehaviour
     {
         int i = 0;
 
-        _eGM.InfoEnt_UpgradeCom.AmountUpgradePawnDict[InstanceGame.IsMasterClient] = (int)objects[i++];
-        _eGM.InfoEnt_UpgradeCom.AmountUpgradeRookDict[InstanceGame.IsMasterClient] = (int)objects[i++];
-        _eGM.InfoEnt_UpgradeCom.AmountUpgradeBishopDict[InstanceGame.IsMasterClient] = (int)objects[i++];
+        _eGM.InfoEnt_UpgradeCom.AmountUpgradePawnDict[Instance.IsMasterClient] = (int)objects[i++];
+        _eGM.InfoEnt_UpgradeCom.AmountUpgradeRookDict[Instance.IsMasterClient] = (int)objects[i++];
+        _eGM.InfoEnt_UpgradeCom.AmountUpgradeBishopDict[Instance.IsMasterClient] = (int)objects[i++];
 
         var gold = (int)objects[i++];
         var food = (int)objects[i++];
@@ -414,13 +414,13 @@ internal partial class PhotonPunRPC : MonoBehaviour
         bool isSettedKing = (bool)objects[i++];
 
 
-        _eGM.FoodEAmountDictC.AmountDict[InstanceGame.IsMasterClient] = food;
-        _eGM.WoodEAmountDictC.AmountDict[InstanceGame.IsMasterClient] = wood;
-        _eGM.OreEAmountDictC.AmountDict[InstanceGame.IsMasterClient] = ore;
-        _eGM.IronEAmountDictC.AmountDict[InstanceGame.IsMasterClient] = iron;
-        _eGM.GoldEAmountDictC.AmountDict[InstanceGame.IsMasterClient] = gold;
+        _eGM.FoodEAmountDictC.AmountDict[Instance.IsMasterClient] = food;
+        _eGM.WoodEAmountDictC.AmountDict[Instance.IsMasterClient] = wood;
+        _eGM.OreEAmountDictC.AmountDict[Instance.IsMasterClient] = ore;
+        _eGM.IronEAmountDictC.AmountDict[Instance.IsMasterClient] = iron;
+        _eGM.GoldEAmountDictC.AmountDict[Instance.IsMasterClient] = gold;
 
-        _eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[InstanceGame.IsMasterClient] = isSettedKing;
+        _eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[Instance.IsMasterClient] = isSettedKing;
     }
 
     #endregion Ref

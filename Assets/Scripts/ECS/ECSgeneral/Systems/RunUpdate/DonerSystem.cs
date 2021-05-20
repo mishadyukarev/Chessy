@@ -5,7 +5,7 @@ using static MainGame;
 
 internal class DonerSystem : RPCGeneralReduction, IEcsRunSystem
 {
-    private bool IsCurrentDone => _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[InstanceGame.IsMasterClient];
+    private bool IsCurrentDone => _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[Instance.IsMasterClient];
     private Button CurrentButton => _eGM.DonerEntityButtonComponent.Button;
 
     internal DonerSystem(ECSmanager eCSmanager) : base(eCSmanager)

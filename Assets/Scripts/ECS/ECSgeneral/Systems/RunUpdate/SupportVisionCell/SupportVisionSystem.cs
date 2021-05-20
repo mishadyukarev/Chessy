@@ -39,7 +39,7 @@ internal class SupportVisionSystem : CellGeneralReduction, IEcsRunSystem
                     {
                         if (!_eGM.CellEnt_CellCom(x, y).IsSelected && !_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit && !_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveMountain)
                         {
-                            if (InstanceGame.IsMasterClient)
+                            if (Instance.IsMasterClient)
                             {
                                 if (_eGM.CellEnt_CellCom(x, y).IsStartMaster)
                                 {

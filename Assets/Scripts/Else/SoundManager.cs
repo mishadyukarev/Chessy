@@ -11,7 +11,7 @@ internal class SoundManager
 
     internal SoundManager()
     {
-        _audioSource = InstanceGame.GameObjectPool.AudioSourceGO.GetComponent<AudioSource>();
+        _audioSource = Instance.GameObjectPool.AudioSourceGO.GetComponent<AudioSource>();
         MistakeSoundDelegate = MistakeSound;
     }
 

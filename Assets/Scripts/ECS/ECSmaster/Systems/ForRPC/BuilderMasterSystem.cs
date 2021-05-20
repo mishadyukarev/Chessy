@@ -12,7 +12,7 @@ internal class BuilderMasterSystem : SystemMasterReduction, IEcsRunSystem
 
     internal BuilderMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
+        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
     }
 
     public void Run()

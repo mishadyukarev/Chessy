@@ -23,7 +23,7 @@ internal class PhotonGameManager
             typeof(PhotonPunRPC)
         };
 
-        var networkGO = InstanceGame.Builder.CreateGameObject("Network", types, parentTransform);
+        var networkGO = Instance.Builder.CreateGameObject("Network", types, parentTransform);
 
         _photonView = networkGO.GetPhotonView();
         _gameSceneManager = networkGO.GetComponent<GameSceneManager>();
@@ -34,7 +34,7 @@ internal class PhotonGameManager
 
         _photonView.FindObservables(true);
 
-        if (InstanceGame.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
-        else _photonView.ViewID = InstanceGame.StartValuesGameConfig.NUMBER_PHOTON_VIEW;
+        if (Instance.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
+        else _photonView.ViewID = Instance.StartValuesGameConfig.NUMBER_PHOTON_VIEW;
     }
 }

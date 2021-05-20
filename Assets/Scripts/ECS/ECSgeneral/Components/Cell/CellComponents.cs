@@ -43,6 +43,6 @@ public struct CellComponent
 
         IsSelected = default;
 
-        _cellGO = InstanceGame.GameObjectPool.CellsGO[_xy[_eGM.X], _xy[_eGM.Y]];
+        _cellGO = Instance.GameObjectPool.CellsGO[_xy[_eGM.X], _xy[_eGM.Y]];
     }
 }

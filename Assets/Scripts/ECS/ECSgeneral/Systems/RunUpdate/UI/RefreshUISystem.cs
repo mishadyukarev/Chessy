@@ -15,9 +15,9 @@ internal class RefreshUISystem : SystemGeneralReduction, IEcsRunSystem
 
     internal RefreshUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _inGameRefreshZoneGO = InstanceGame.GameObjectPool.InGameRefreshZoneGO;
-        _inGameRefreshZoneRefreshImage = InstanceGame.GameObjectPool.InGameRefreshZoneRefreshImage;
-        _inGameRefreshZoneRefreshText = InstanceGame.GameObjectPool.InGameRefreshZoneRefreshText;
+        _inGameRefreshZoneGO = Instance.GameObjectPool.InGameRefreshZoneGO;
+        _inGameRefreshZoneRefreshImage = Instance.GameObjectPool.InGameRefreshZoneRefreshImage;
+        _inGameRefreshZoneRefreshText = Instance.GameObjectPool.InGameRefreshZoneRefreshText;
     }
 
     public void Run()

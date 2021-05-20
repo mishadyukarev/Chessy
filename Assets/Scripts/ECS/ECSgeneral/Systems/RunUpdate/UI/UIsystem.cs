@@ -30,16 +30,16 @@ internal class UISystem : CellGeneralReduction, IEcsRunSystem
 
     internal UISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonManagerScene = InstanceGame.PhotonGameManager.GameSceneManager;
-        _photonPunRPC = InstanceGame.PhotonGameManager.PhotonPunRPC;
+        _photonManagerScene = Instance.PhotonGameManager.GameSceneManager;
+        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
 
 
 
         #region Images
 
-        _rightUpUnitImage = MainGame.InstanceGame.GameObjectPool.RightUpImage;
-        _rightMiddleUnitImage = MainGame.InstanceGame.GameObjectPool.RightMiddleImage;
-        _leftEconomyImage = MainGame.InstanceGame.GameObjectPool.LeftImage;
+        _rightUpUnitImage = MainGame.Instance.GameObjectPool.RightUpImage;
+        _rightMiddleUnitImage = MainGame.Instance.GameObjectPool.RightMiddleImage;
+        _leftEconomyImage = MainGame.Instance.GameObjectPool.LeftImage;
 
         _rightMiddleUnitImage.gameObject.SetActive(false);
 
@@ -48,14 +48,14 @@ internal class UISystem : CellGeneralReduction, IEcsRunSystem
 
         #region Ability zone
 
-        _uniqueAbilityButton1 = MainGame.InstanceGame.GameObjectPool.UniqueAbilityButton1;
-        _uniqueAbilityButton2 = MainGame.InstanceGame.GameObjectPool.UniqueAbilityButton2;
-        _uniqueAbilityButton3 = MainGame.InstanceGame.GameObjectPool.UniqueAbilityButton3;
+        _uniqueAbilityButton1 = MainGame.Instance.GameObjectPool.UniqueAbilityButton1;
+        _uniqueAbilityButton2 = MainGame.Instance.GameObjectPool.UniqueAbilityButton2;
+        _uniqueAbilityButton3 = MainGame.Instance.GameObjectPool.UniqueAbilityButton3;
 
 
         #endregion
 
-        _buttonLeave = MainGame.InstanceGame.GameObjectPool.ButtonLeave;
+        _buttonLeave = MainGame.Instance.GameObjectPool.ButtonLeave;
         _buttonLeave.onClick.AddListener(delegate { Leave(); });
 
     }

@@ -1,5 +1,9 @@
-﻿internal sealed class MainMenu : Main
+﻿using UnityEngine;
+
+internal sealed class MainMenu : MonoBehaviour
 {
+    private UnityEvents _unityEvents;
+
     private static MainMenu _instanceMenu;
     private ResourcesLoadMenu _resourcesLoadManager;
     private StartSpawnMenu _startSpawnMenuManager;

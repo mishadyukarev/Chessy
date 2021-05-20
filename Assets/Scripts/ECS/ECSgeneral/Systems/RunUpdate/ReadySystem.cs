@@ -10,7 +10,7 @@ internal class ReadySystem : RPCGeneralReduction, IEcsRunSystem
     private RectTransform _parentReadyZone;
     private Button _readyButton;
 
-    private bool _isCurrentReady => _eGM.ReadyEntIsActivatedDictCom.IsActivatedDictionary[InstanceGame.IsMasterClient];
+    private bool _isCurrentReady => _eGM.ReadyEntIsActivatedDictCom.IsActivatedDictionary[Instance.IsMasterClient];
 
 
 
@@ -18,8 +18,8 @@ internal class ReadySystem : RPCGeneralReduction, IEcsRunSystem
     {
         _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
 
-        _parentReadyZone = InstanceGame.GameObjectPool.ParentReadyZone;
-        _readyButton = InstanceGame.GameObjectPool.ReadyButton;
+        _parentReadyZone = Instance.GameObjectPool.ParentReadyZone;
+        _readyButton = Instance.GameObjectPool.ReadyButton;
         _readyButton.onClick.AddListener(delegate { Ready(); });
     }
 

@@ -9,8 +9,8 @@ internal class SoundSystem : SystemGeneralReduction, IEcsRunSystem
 
     internal SoundSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _mistakeAudioSource = MainGame.InstanceGame.GameObjectPool.AudioSourceGO.GetComponent<AudioSource>();
-        _attackAudioSource = MainGame.InstanceGame.GameObjectPool.AttackAudioSource;
+        _mistakeAudioSource = MainGame.Instance.GameObjectPool.AudioSourceGO.GetComponent<AudioSource>();
+        _attackAudioSource = MainGame.Instance.GameObjectPool.AttackAudioSource;
 
         _eGM.SoundEntSoundCom.MistakeSoundAction = MistakeSound;
         _eGM.SoundEntSoundCom.AttackSoundAction = AttackSound;

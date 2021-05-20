@@ -13,12 +13,12 @@ internal class TakerUnitsSystem : RPCGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[InstanceGame.IsMasterClient])
+        if (_eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[Instance.IsMasterClient])
             _eGM.TakerKingEntityButtonComponent.Button.gameObject.SetActive(false);
     }
 
     private void GetUnit(UnitTypes unitType)
     {
-        if (!_eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[InstanceGame.IsMasterClient]) _photonPunRPC.GetUnitToMaster(unitType);
+        if (!_eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[Instance.IsMasterClient]) _photonPunRPC.GetUnitToMaster(unitType);
     }
 }

@@ -48,15 +48,15 @@ internal class UpdateMotionMasterSystem : CellGeneralReduction, IEcsRunSystem
 
                 if (_eGM.CellBuildingEnt_BuildingTypeCom(x, y).BuildingType == BuildingTypes.City)
                 {
-                    if (_eGM.CellBuildingEnt_OwnerCom(x, y).IsHim(InstanceGame.MasterClient))
+                    if (_eGM.CellBuildingEnt_OwnerCom(x, y).IsHim(Instance.MasterClient))
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[true] += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
-                        _eGM.WoodEAmountDictC.AmountDict[true] += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
+                        _eGM.FoodEAmountDictC.AmountDict[true] += Instance.StartValuesGameConfig.BENEFIT_FOOD_CITY;
+                        _eGM.WoodEAmountDictC.AmountDict[true] += Instance.StartValuesGameConfig.BENEFIT_WOOD_CITY;
                     }
                     else
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[false] += InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_CITY;
-                        _eGM.WoodEAmountDictC.AmountDict[false] += InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_CITY;
+                        _eGM.FoodEAmountDictC.AmountDict[false] += Instance.StartValuesGameConfig.BENEFIT_FOOD_CITY;
+                        _eGM.WoodEAmountDictC.AmountDict[false] += Instance.StartValuesGameConfig.BENEFIT_WOOD_CITY;
                     }
                 }
             }
@@ -64,14 +64,14 @@ internal class UpdateMotionMasterSystem : CellGeneralReduction, IEcsRunSystem
 
 
 
-        _eGM.FoodEAmountDictC.AmountDict[true] += _eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[true] * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
-        _eGM.FoodEAmountDictC.AmountDict[false] += _eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[false] * InstanceGame.StartValuesGameConfig.BENEFIT_FOOD_FARM;
+        _eGM.FoodEAmountDictC.AmountDict[true] += _eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[true] * Instance.StartValuesGameConfig.BENEFIT_FOOD_FARM;
+        _eGM.FoodEAmountDictC.AmountDict[false] += _eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[false] * Instance.StartValuesGameConfig.BENEFIT_FOOD_FARM;
 
-        _eGM.WoodEAmountDictC.AmountDict[true] += _eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[true] * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
-        _eGM.WoodEAmountDictC.AmountDict[false] += _eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[false] * InstanceGame.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
+        _eGM.WoodEAmountDictC.AmountDict[true] += _eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[true] * Instance.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
+        _eGM.WoodEAmountDictC.AmountDict[false] += _eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[false] * Instance.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER;
 
-        _eGM.OreEAmountDictC.AmountDict[true] += _eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[true] * InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
-        _eGM.OreEAmountDictC.AmountDict[false] += _eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[false] * InstanceGame.StartValuesGameConfig.BENEFIT_ORE_MINE;
+        _eGM.OreEAmountDictC.AmountDict[true] += _eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[true] * Instance.StartValuesGameConfig.BENEFIT_ORE_MINE;
+        _eGM.OreEAmountDictC.AmountDict[false] += _eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[false] * Instance.StartValuesGameConfig.BENEFIT_ORE_MINE;
 
 
 
