@@ -76,7 +76,8 @@ internal class StartSpawnGame : StartSpawn
         gameObjectPool.StandartAbilityButton1 = GameObject.Find("StandartAbilityButton1").GetComponent<Button>();
         gameObjectPool.StandartAbilityButton2 = GameObject.Find("StandartAbilityButton2").GetComponent<Button>();
 
-        gameObjectPool.UniqueAbilityButton1 = GameObject.Find("UniqueAbilityButton1").GetComponent<Button>();
+        gameObjectPool.UniqueFirstAbilityButton = GameObject.Find("UniqueAbilityButton1").GetComponent<Button>();
+        gameObjectPool.UniqueFirstAbilityText = gameObjectPool.UniqueFirstAbilityButton.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
         gameObjectPool.UniqueAbilityButton2 = GameObject.Find("UniqueAbilityButton2").GetComponent<Button>();
         gameObjectPool.UniqueAbilityButton3 = GameObject.Find("UniqueAbilityButton3").GetComponent<Button>();
 

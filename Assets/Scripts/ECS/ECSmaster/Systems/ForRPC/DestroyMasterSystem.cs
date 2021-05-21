@@ -5,8 +5,8 @@ using static MainGame;
 internal class DestroyMasterSystem : SystemMasterReduction, IEcsRunSystem
 {
     private PhotonPunRPC _photonPunRPC;
-    private int[] xyCell => _eMM.MasterRPCEntXyCellCom.XyCell;
-    private PhotonMessageInfo info => _eGM.GeneralRPCEntFromInfoCom.FromInfo;
+    private int[] xyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
+    private PhotonMessageInfo info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
     internal DestroyMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {

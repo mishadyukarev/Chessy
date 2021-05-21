@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 
-public class InputSystem : SystemGeneralReduction, IEcsRunSystem
+internal class InputSystem : SystemGeneralReduction, IEcsRunSystem
 {
     internal InputSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 

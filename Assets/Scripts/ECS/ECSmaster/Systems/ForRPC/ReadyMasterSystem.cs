@@ -3,8 +3,8 @@ using Photon.Pun;
 
 internal class ReadyMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 {
-    internal bool isReady => _eGM.GeneralRPCEntActiveComponent.IsActived;
-    internal PhotonMessageInfo Info => _eGM.GeneralRPCEntFromInfoCom.FromInfo;
+    internal bool isReady => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
+    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
     internal ReadyMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {

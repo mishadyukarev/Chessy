@@ -4,9 +4,9 @@ using static MainGame;
 
 internal class AttackUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 {
-    internal int[] XyPreviousCell => _eMM.MasterRPCEntXySelPreCom.XyPrevious;
-    internal int[] XySelectedCell => _eMM.MasterRPCEntXySelPreCom.XySelected;
-    internal PhotonMessageInfo Info => _eGM.GeneralRPCEntFromInfoCom.FromInfo;
+    internal int[] XyPreviousCell => _eMM.RPCMasterEnt_RPCMasterCom.XyPrevious;
+    internal int[] XySelectedCell => _eMM.RPCMasterEnt_RPCMasterCom.XySelected;
+    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
     private bool _isAttacked;
 
@@ -45,8 +45,8 @@ internal class AttackUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
         _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).GetCellsForAttack(Info.Sender,
             out var availableCellsSimpleAttack, out var availableCellsUniqueAttack);
 
-        var isFindedSimple = Instance.CellBaseOperations.TryFindCellInList(XySelectedCell, availableCellsSimpleAttack);
-        var isFindedUnique = Instance.CellBaseOperations.TryFindCellInList(XySelectedCell, availableCellsUniqueAttack);
+        var isFindedSimple = _eGM.CellBaseOperEnt_CellBaseOperCom.TryFindCellInList(XySelectedCell, availableCellsSimpleAttack);
+        var isFindedUnique = _eGM.CellBaseOperEnt_CellBaseOperCom.TryFindCellInList(XySelectedCell, availableCellsUniqueAttack);
 
 
         if (isFindedSimple || isFindedUnique)

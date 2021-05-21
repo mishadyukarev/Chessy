@@ -1,15 +1,19 @@
 ﻿using Leopotam.Ecs;
 
-public sealed class SystemsMasterManager : SystemsManager
+internal sealed class SystemsMasterManager : SystemsManager
 {
-    public SystemsMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }
+    internal EcsSystems RPCSystems;
+    internal SystemsMasterManager(EcsWorld ecsWorld) : base(ecsWorld)
+    {
+        RPCSystems = new EcsSystems(ecsWorld);
+    }
 
     internal void CreateInitSystems(ECSmanager eCSmanager)
     {
         RunUpdateSystems
             .Add(new EconomyMasterSystem(eCSmanager), nameof(EconomyMasterSystem));
 
-        SoloSystems
+        RPCSystems
             .Add(new UpdateMotionMasterSystem(eCSmanager), nameof(UpdateMotionMasterSystem))
             .Add(new VisibilityUnitsMasterSystem(eCSmanager), nameof(VisibilityUnitsMasterSystem))
             .Add(new BuilderMasterSystem(eCSmanager), nameof(BuilderMasterSystem))
@@ -24,7 +28,8 @@ public sealed class SystemsMasterManager : SystemsManager
             .Add(new UpgradeUnitMasterSystem(eCSmanager), nameof(UpgradeUnitMasterSystem))
             .Add(new GetterUnitMasterSystem(eCSmanager), nameof(GetterUnitMasterSystem))
             .Add(new MeltOreMasterSystem(eCSmanager), nameof(MeltOreMasterSystem))
-            .Add(new SetterUnitMasterSystem(eCSmanager), nameof(SetterUnitMasterSystem));
+            .Add(new SetterUnitMasterSystem(eCSmanager), nameof(SetterUnitMasterSystem))
+            .Add(new UniquePawnAbilityMasterSystem(eCSmanager), nameof(UniquePawnAbilityMasterSystem));
 
 
         InitAndProcessInjectsSystems();
@@ -33,5 +38,9 @@ public sealed class SystemsMasterManager : SystemsManager
     internal override void InitAndProcessInjectsSystems()
     {
         base.InitAndProcessInjectsSystems();
+
+        RPCSystems.ProcessInjects();
+
+        RPCSystems.Init();
     }
 }

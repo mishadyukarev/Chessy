@@ -4,8 +4,8 @@ using Photon.Pun;
 
 internal class GetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 {
-    internal UnitTypes UnitType => _eMM.MasterRPCEntUnitTypeCom.UnitType;
-    internal PhotonMessageInfo Info => _eGM.GeneralRPCEntFromInfoCom.FromInfo;
+    internal UnitTypes UnitType => _eMM.RPCMasterEnt_RPCMasterCom.UnitType;
+    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
     internal GetterUnitMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {

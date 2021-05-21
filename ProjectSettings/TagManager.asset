@@ -55,11 +55,11 @@ TagManager:
   - name: Buildings
     uniqueID: 2015217643
     locked: 0
-  - name: SupportVision
-    uniqueID: 3935270689
-    locked: 0
   - name: Effects
     uniqueID: 2994770637
+    locked: 0
+  - name: SupportVision
+    uniqueID: 3935270689
     locked: 0
   - name: Units
     uniqueID: 3112104483

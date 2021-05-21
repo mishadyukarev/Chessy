@@ -1,45 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-public class CellBaseOperations
+
+internal struct CellBaseOperationsComponent
 {
-    private StartValuesGameConfig _startValuesGameConfig;
+    private EntitiesGeneralManager _eGM;
 
-    private int X => _startValuesGameConfig.X;
-    private int Y => _startValuesGameConfig.Y;
-    private int XYForArray => _startValuesGameConfig.XY_FOR_ARRAY;
-
-    internal CellBaseOperations(StartValuesGameConfig startValuesGameConfig)
+    internal CellBaseOperationsComponent(EntitiesGeneralManager eGM)
     {
-        _startValuesGameConfig = startValuesGameConfig;
+        _eGM = eGM;
     }
 
     internal int[] CopyXY(int[] inArray)
     {
-        int[] array = new int[XYForArray];
+        int[] array = new int[_eGM.XYForArray];
         Array.Copy(inArray, array, array.Length);
         return array;
     }
 
     internal void CopyXYinTo(in int[] InXYCell, int[] ToXYCell)
     {
-        ToXYCell[X] = InXYCell[X];
-        ToXYCell[Y] = InXYCell[Y];
+        ToXYCell[_eGM.X] = InXYCell[_eGM.X];
+        ToXYCell[_eGM.Y] = InXYCell[_eGM.Y];
     }
 
 
     internal void CleanXY(int[] xy)
     {
-        xy[X] = default;
-        xy[Y] = default;
+        xy[_eGM.X] = default;
+        xy[_eGM.Y] = default;
     }
 
 
     internal bool CompareXY(in int[] xyLeft, in int[] xyRight)
     {
-        if (xyLeft[X] == xyRight[X]
-            && xyLeft[Y] == xyRight[Y])
+        if (xyLeft[_eGM.X] == xyRight[_eGM.X]
+            && xyLeft[_eGM.Y] == xyRight[_eGM.Y])
         {
             return true;
         }
@@ -53,12 +52,12 @@ public class CellBaseOperations
 
         for (int i = 0; i < inList.Count; i++)
         {
-            var array = new int[XYForArray];
+            var array = new int[_eGM.XYForArray];
 
             var inArray = inList[i];
 
-            array[X] = inArray[X];
-            array[Y] = inArray[Y];
+            array[_eGM.X] = inArray[_eGM.X];
+            array[_eGM.Y] = inArray[_eGM.Y];
 
             toList.Add(array);
         }
@@ -72,12 +71,12 @@ public class CellBaseOperations
 
         for (int i = 0; i < inList.Count; i++)
         {
-            var array = new int[XYForArray];
+            var array = new int[_eGM.XYForArray];
 
             var inArray = inList[i];
 
-            array[X] = inArray[X];
-            array[Y] = inArray[Y];
+            array[_eGM.X] = inArray[_eGM.X];
+            array[_eGM.Y] = inArray[_eGM.Y];
 
             toList.Add(array);
         }
@@ -85,6 +84,15 @@ public class CellBaseOperations
 
     internal bool TryFindCellInList(int[] xyCell, in List<int[]> list)
     {
-        return (from xy in list where CompareXY(xy, xyCell) select xy).Count() != 0;
+        foreach (var xy in list)
+        {
+            if(CompareXY(xy, xyCell))
+            {
+                return true;
+            }
+        }
+        return false;
+
+        //return (from xy in list where  select xy).Count() != 0;
     }
 }

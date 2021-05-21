@@ -3,8 +3,8 @@
 
 internal class RelaxMasterSystem : SystemMasterReduction, IEcsRunSystem
 {
-    internal bool isActive => _eGM.GeneralRPCEntActiveComponent.IsActived;
-    internal int[] xyCell => _eMM.MasterRPCEntXyCellCom.XyCell;
+    internal bool isActive => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
+    internal int[] xyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
 
     internal RelaxMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 

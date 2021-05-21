@@ -1,12 +1,14 @@
 ﻿using Leopotam.Ecs;
 using static MainGame;
 
-internal class UpdateMotionMasterSystem : CellGeneralReduction, IEcsRunSystem
+internal class UpdateMotionMasterSystem : SystemGeneralReduction, IEcsRunSystem
 {
     internal UpdateMotionMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
     public void Run()
     {
+
+
         for (int x = 0; x < _eGM.Xamount; x++)
         {
             for (int y = 0; y < _eGM.Yamount; y++)
@@ -59,6 +61,37 @@ internal class UpdateMotionMasterSystem : CellGeneralReduction, IEcsRunSystem
                         _eGM.WoodEAmountDictC.AmountDict[false] += Instance.StartValuesGameConfig.BENEFIT_WOOD_CITY;
                     }
                 }
+
+                if (_eGM.CellEffectEnt_CellEffectCom(x, y).HaveFire)
+                {
+                    _eGM.CellEffectEnt_CellEffectCom(x, y).TimeFire += 1;
+
+                    if (_eGM.CellEffectEnt_CellEffectCom(x, y).TimeFire >= 2)
+                    {
+                        _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth -= 40;
+                        if (!_eGM.CellUnitEnt_CellUnitCom(x, y).HaveHealth)
+                        {
+                            _eGM.CellUnitEnt_CellUnitCom(x, y).ResetUnit();
+                        }
+                        if(_eGM.CellEffectEnt_CellEffectCom(x, y).TimeFire >= 5)
+                        {
+                            _eGM.CellBuildingEnt_CellBuildingCom(x, y).ResetBuilding();
+                            _eGM.CellEffectEnt_CellEffectCom(x, y).SetEffect(false, EffectTypes.Fire);
+
+                            _eGM.CellEffectEnt_CellEffectCom(x, y).IsFired = true;
+
+                            var aroundXYList = _eGM.CellUnitEnt_CellUnitCom(x, y).TryGetXYAround();
+                            foreach (var xy in aroundXYList)
+                            {
+                                if (_eGM.CellEnvEnt_CellEnvironmentCom(xy).HaveFood || _eGM.CellEnvEnt_CellEnvironmentCom(xy).HaveTree)
+                                {
+                                    if (!_eGM.CellEffectEnt_CellEffectCom(xy).IsFired)
+                                        _eGM.CellEffectEnt_CellEffectCom(xy).SetEffect(true, EffectTypes.Fire);
+                                }
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -79,7 +112,24 @@ internal class UpdateMotionMasterSystem : CellGeneralReduction, IEcsRunSystem
         _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[false] = false;
 
 
-        _eGM.UpdatorEntityAmountComponent.Amount += 1;
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        _eGM.UpdatorEntityAmountComponent.Amount += 1;
     }
 }

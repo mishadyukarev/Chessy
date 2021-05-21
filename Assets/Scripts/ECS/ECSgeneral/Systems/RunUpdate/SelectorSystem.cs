@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using static MainGame;
 
-internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
+internal sealed class SelectorSystem : SystemGeneralReduction, IEcsRunSystem
 {
     private PhotonPunRPC _photonPunRPC = default;
     private Names _nameManager;
@@ -16,8 +16,8 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
 
 
 
-    private int[] _xyPreviousCell => _eGM.SelectorESelectorC.XYpreviousCell;
-    private int[] _xySelectedCell => _eGM.SelectorESelectorC.XYselectedCell;
+    private int[] _xyPreviousCell => _eGM.SelectorEntSelectorCom.XYpreviousCell;
+    private int[] _xySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
 
 
 
@@ -29,24 +29,24 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
 
         _xyPreviousVisionCell = new int[_eGM.XYForArray];
 
-        _eGM.SelectorESelectorC.SetterUnitDelegate = IsSetted;
-        _eGM.SelectorESelectorC.AttackUnitAction = IsAttacked;
-        _eGM.SelectorESelectorC.ShiftUnitDelegate = SetIsShifted;
+        _eGM.SelectorEntSelectorCom.SetterUnitDelegate = IsSetted;
+        _eGM.SelectorEntSelectorCom.AttackUnitAction = IsAttacked;
+        _eGM.SelectorEntSelectorCom.ShiftUnitDelegate = SetIsShifted;
     }
 
     public void Run()
     {
-        _systemsGeneralManager.TryInvokeRunSystem(nameof(RaySystem), _systemsGeneralManager.ForSelectorSystem);
+        _systemsGeneralManager.TryInvokeRunSystem(nameof(RaySystem), _systemsGeneralManager.ForSelectorRunUpdateSystem);
 
         if (_eGM.RayComponentSelectorEnt.RaycastHit2D)
         {
             if (_eGM.RayComponentSelectorEnt.RaycastHit2D.collider.gameObject.tag == _nameManager.TAG_CELL)
             {
-                _systemsGeneralManager.TryInvokeRunSystem(nameof(GetterCellSystem), _systemsGeneralManager.ForSelectorSystem);
+                _systemsGeneralManager.TryInvokeRunSystem(nameof(GetterCellSystem), _systemsGeneralManager.ForSelectorRunUpdateSystem);
 
-                if (_eGM.SelectorESelectorC.IsGettedCell)
+                if (_eGM.SelectorEntSelectorCom.IsGettedCell)
                 {
-                    var xyCurrentCell = _eGM.SelectorESelectorC.XYcurrentCell;
+                    var xyCurrentCell = _eGM.SelectorEntSelectorCom.XYcurrentCell;
 
                     if (_eGM.InputEntityMouseClickComponent.IsClick)
                     {
@@ -54,23 +54,23 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
                         {
                             if (_canExecuteStartClick)
                             {
-                                _cellBaseOperations.CopyXYinTo(xyCurrentCell,_xySelectedCell);
+                                _eGM.CellBaseOperEnt_CellBaseOperCom.CopyXYinTo(xyCurrentCell,_xySelectedCell);
 
-                                if (!_cellBaseOperations.CompareXY(_xyPreviousCell, _xySelectedCell))
+                                if (!_eGM.CellBaseOperEnt_CellBaseOperCom.CompareXY(_xyPreviousCell, _xySelectedCell))
                                     ActivateSelector(true, _xyPreviousCell, _xySelectedCell);
 
-                                _cellBaseOperations.CopyXYinTo(_xySelectedCell, _xyPreviousCell);
+                                _eGM.CellBaseOperEnt_CellBaseOperCom.CopyXYinTo(_xySelectedCell, _xyPreviousCell);
                                 _canExecuteStartClick = false;
 
                             }
 
                             else
                             {
-                                if (!_cellBaseOperations.CompareXY(_xySelectedCell, xyCurrentCell))
-                                    _cellBaseOperations.CopyXYinTo(_xySelectedCell, _xyPreviousCell);
+                                if (!_eGM.CellBaseOperEnt_CellBaseOperCom.CompareXY(_xySelectedCell, xyCurrentCell))
+                                    _eGM.CellBaseOperEnt_CellBaseOperCom.CopyXYinTo(_xySelectedCell, _xyPreviousCell);
 
 
-                                _cellBaseOperations.CopyXYinTo(xyCurrentCell, _xySelectedCell);
+                                _eGM.CellBaseOperEnt_CellBaseOperCom.CopyXYinTo(xyCurrentCell, _xySelectedCell);
                                 ActivateSelector(true, _xyPreviousCell, _xySelectedCell);
                             }
                         }
@@ -95,9 +95,9 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
 
                             else if (_canExecuteStartClick)
                             {
-                                _cellBaseOperations.CopyXYinTo(xyCurrentCell, _xySelectedCell);
+                                _eGM.CellBaseOperEnt_CellBaseOperCom.CopyXYinTo(xyCurrentCell, _xySelectedCell);
 
-                                if (!_cellBaseOperations.CompareXY(_xyPreviousCell, _xySelectedCell))
+                                if (!_eGM.CellBaseOperEnt_CellBaseOperCom.CompareXY(_xyPreviousCell, _xySelectedCell))
                                     ActivateSelector(true, _xyPreviousCell, _xySelectedCell);
 
                                 if (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).HaveUnit)
@@ -106,25 +106,25 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
                                     {
                                         if (_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).AmountSteps >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                                         {
-                                            _eGM.SelectorESelectorC.AvailableCellsForShift = _eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).GetCellsForShift();
-                                            _eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).GetCellsForAttack(Instance.LocalPlayer, out _eGM.SelectorESelectorC.AvailableCellsSimpleAttack, out _eGM.SelectorESelectorC.AvailableCellsUniqueAttack);
+                                            _eGM.SelectorEntSelectorCom.AvailableCellsForShift = _eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).GetCellsForShift();
+                                            _eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).GetCellsForAttack(Instance.LocalPlayer, out _eGM.SelectorEntSelectorCom.AvailableCellsSimpleAttack, out _eGM.SelectorEntSelectorCom.AvailableCellsUniqueAttack);
 
                                             _canShiftUnit = true;
                                         }
                                     }
                                 }
 
-                                _cellBaseOperations.CopyXYinTo(_xySelectedCell, _xyPreviousCell);
+                                _eGM.CellBaseOperEnt_CellBaseOperCom.CopyXYinTo(_xySelectedCell, _xyPreviousCell);
                                 _canExecuteStartClick = false;
                             }
 
                             else
                             {
-                                if (!_cellBaseOperations.CompareXY(_xySelectedCell, xyCurrentCell))
-                                    _cellBaseOperations.CopyXYinTo(_xySelectedCell, _xyPreviousCell);
+                                if (!_eGM.CellBaseOperEnt_CellBaseOperCom.CompareXY(_xySelectedCell, xyCurrentCell))
+                                    _eGM.CellBaseOperEnt_CellBaseOperCom.CopyXYinTo(_xySelectedCell, _xyPreviousCell);
 
 
-                                _cellBaseOperations.CopyXYinTo(xyCurrentCell, _xySelectedCell);
+                                _eGM.CellBaseOperEnt_CellBaseOperCom.CopyXYinTo(xyCurrentCell, _xySelectedCell);
                                 ActivateSelector(true, _xyPreviousCell, _xySelectedCell);
 
 
@@ -134,9 +134,9 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
                                     {
                                         if (_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).MinAmountSteps)
                                         {
-                                            _eGM.SelectorESelectorC.AvailableCellsForShift = _eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).GetCellsForShift();
+                                            _eGM.SelectorEntSelectorCom.AvailableCellsForShift = _eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).GetCellsForShift();
                                             _eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).GetCellsForAttack
-                                                (Instance.LocalPlayer, out _eGM.SelectorESelectorC.AvailableCellsSimpleAttack, out _eGM.SelectorESelectorC.AvailableCellsUniqueAttack);
+                                                (Instance.LocalPlayer, out _eGM.SelectorEntSelectorCom.AvailableCellsSimpleAttack, out _eGM.SelectorEntSelectorCom.AvailableCellsUniqueAttack);
 
                                             _canShiftUnit = true;
                                         }
@@ -153,12 +153,12 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
                                     {
                                         if (_eGM.CellUnitEnt_CellUnitCom(_xyPreviousCell).MinAmountSteps)
                                         {
-                                            if (Instance.CellBaseOperations.TryFindCellInList(_xySelectedCell, _eGM.SelectorESelectorC.AvailableCellsSimpleAttack))
+                                            if (_eGM.CellBaseOperEnt_CellBaseOperCom.TryFindCellInList(_xySelectedCell, _eGM.SelectorEntSelectorCom.AvailableCellsSimpleAttack))
                                             {
                                                 _photonPunRPC.AttackUnitToMaster(_xyPreviousCell, _xySelectedCell);
                                             }
 
-                                            else if (Instance.CellBaseOperations.TryFindCellInList(_xySelectedCell, _eGM.SelectorESelectorC.AvailableCellsUniqueAttack))
+                                            else if (_eGM.CellBaseOperEnt_CellBaseOperCom.TryFindCellInList(_xySelectedCell, _eGM.SelectorEntSelectorCom.AvailableCellsUniqueAttack))
                                             {
                                                 _photonPunRPC.AttackUnitToMaster(_xyPreviousCell, _xySelectedCell);
                                             }
@@ -174,7 +174,7 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
                                         {
                                             if (_eGM.CellUnitEnt_CellUnitCom(_xyPreviousCell).MinAmountSteps)
                                             {
-                                                if (Instance.CellBaseOperations.TryFindCellInList(_xySelectedCell, _eGM.SelectorESelectorC.AvailableCellsForShift))
+                                                if (_eGM.CellBaseOperEnt_CellBaseOperCom.TryFindCellInList(_xySelectedCell, _eGM.SelectorEntSelectorCom.AvailableCellsForShift))
                                                 {
                                                     _photonPunRPC.ShiftUnitToMaster(_xyPreviousCell, _xySelectedCell);
                                                 }
@@ -204,7 +204,7 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
                                     if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit)
                                         _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).ActiveVisionCell(true, _eGM.SelectedUnitEntUnitTypeCom.UnitType, Instance.LocalPlayer);
 
-                                    _cellBaseOperations.CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
+                                    _eGM.CellBaseOperEnt_CellBaseOperCom.CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
                                     _isStartSelectedDirect = false;
                                 }
                                 else
@@ -213,7 +213,7 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
                                         _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).ActiveVisionCell(false, _eGM.SelectedUnitEntUnitTypeCom.UnitType, Instance.LocalPlayer);
 
                                     _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).ActiveVisionCell(true, _eGM.SelectedUnitEntUnitTypeCom.UnitType, Instance.LocalPlayer);
-                                    _cellBaseOperations.CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
+                                    _eGM.CellBaseOperEnt_CellBaseOperCom.CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
                                 }
 
                             }
@@ -236,7 +236,7 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
                     _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).ActiveVisionCell(false, _eGM.SelectedUnitEntUnitTypeCom.UnitType, Instance.LocalPlayer);
                     _eGM.SelectedUnitEntUnitTypeCom.UnitType = default;
 
-                    _cellBaseOperations.CleanXY(_xyPreviousCell);
+                    _eGM.CellBaseOperEnt_CellBaseOperCom.CleanXY(_xyPreviousCell);
                 }
             }
         }
@@ -253,9 +253,9 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
 
     private void ClearAvailableCells()
     {
-        _eGM.SelectorESelectorC.AvailableCellsForShift.Clear();
-        _eGM.SelectorESelectorC.AvailableCellsSimpleAttack.Clear();
-        _eGM.SelectorESelectorC.AvailableCellsUniqueAttack.Clear();
+        _eGM.SelectorEntSelectorCom.AvailableCellsForShift.Clear();
+        _eGM.SelectorEntSelectorCom.AvailableCellsSimpleAttack.Clear();
+        _eGM.SelectorEntSelectorCom.AvailableCellsUniqueAttack.Clear();
     }
 
 
@@ -269,9 +269,9 @@ internal sealed class SelectorSystem : CellGeneralReduction, IEcsRunSystem
 
     private void IsAttacked()
     {
-        _eGM.SelectorESelectorC.AvailableCellsForShift.Clear();
-        _eGM.SelectorESelectorC.AvailableCellsSimpleAttack.Clear();
-        _eGM.SelectorESelectorC.AvailableCellsUniqueAttack.Clear();
+        _eGM.SelectorEntSelectorCom.AvailableCellsForShift.Clear();
+        _eGM.SelectorEntSelectorCom.AvailableCellsSimpleAttack.Clear();
+        _eGM.SelectorEntSelectorCom.AvailableCellsUniqueAttack.Clear();
     }
 
     private void SetIsShifted()

@@ -17,4 +17,5 @@
     MeltOre,
     GetUnit,
     SetUnit,
+    UniquePawnAbility
 }

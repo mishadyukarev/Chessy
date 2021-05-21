@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using static MainGame;
 
-internal class SupportVisionSystem : CellGeneralReduction, IEcsRunSystem
+internal class SupportVisionSystem : SystemGeneralReduction, IEcsRunSystem
 {
     private bool _isRepeated;
 
@@ -13,15 +13,15 @@ internal class SupportVisionSystem : CellGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        _eGM.CellSupVisEntCellSupportVisionCom(_eGM.SelectorESelectorC.XYpreviousCell).ActiveVision(false, SupportVisionTypes.Selector);
+        _eGM.CellSupVisEntCellSupportVisionCom(_eGM.SelectorEntSelectorCom.XYpreviousCell).ActiveVision(false, SupportVisionTypes.Selector);
 
-        if (_eGM.CellEnt_CellCom(_eGM.SelectorESelectorC.XYselectedCell).IsSelected)
+        if (_eGM.CellEnt_CellCom(_eGM.SelectorEntSelectorCom.XYselectedCell).IsSelected)
         {
-            _eGM.CellSupVisEntCellSupportVisionCom(_eGM.SelectorESelectorC.XYselectedCell).ActiveVision(true, SupportVisionTypes.Selector);
+            _eGM.CellSupVisEntCellSupportVisionCom(_eGM.SelectorEntSelectorCom.XYselectedCell).ActiveVision(true, SupportVisionTypes.Selector);
         }
         else
         {
-            _eGM.CellSupVisEntCellSupportVisionCom(_eGM.SelectorESelectorC.XYselectedCell).ActiveVision(false, SupportVisionTypes.Selector);
+            _eGM.CellSupVisEntCellSupportVisionCom(_eGM.SelectorEntSelectorCom.XYselectedCell).ActiveVision(false, SupportVisionTypes.Selector);
         }
 
 
@@ -77,15 +77,15 @@ internal class SupportVisionSystem : CellGeneralReduction, IEcsRunSystem
             }
         }
 
-        foreach (var xy in _eGM.SelectorESelectorC.AvailableCellsForShift)
+        foreach (var xy in _eGM.SelectorEntSelectorCom.AvailableCellsForShift)
         {
             _eGM.CellSupVisEntCellSupportVisionCom(xy).ActiveVision(true, SupportVisionTypes.WayOfUnit);
         }
-        foreach (var xy in _eGM.SelectorESelectorC.AvailableCellsSimpleAttack)
+        foreach (var xy in _eGM.SelectorEntSelectorCom.AvailableCellsSimpleAttack)
         {
             _eGM.CellSupVisEntCellSupportVisionCom(xy).ActiveVision(true, SupportVisionTypes.SimpleAttack);
         }
-        foreach (var xy in _eGM.SelectorESelectorC.AvailableCellsUniqueAttack)
+        foreach (var xy in _eGM.SelectorEntSelectorCom.AvailableCellsUniqueAttack)
         {
             _eGM.CellSupVisEntCellSupportVisionCom(xy).ActiveVision(true, SupportVisionTypes.UniqueAttack);
         }

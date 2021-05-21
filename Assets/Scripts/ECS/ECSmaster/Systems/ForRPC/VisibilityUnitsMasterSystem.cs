@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using static MainGame;
 
 
-internal class VisibilityUnitsMasterSystem : CellGeneralReduction, IEcsRunSystem
+internal class VisibilityUnitsMasterSystem : SystemGeneralReduction, IEcsRunSystem
 {
     internal VisibilityUnitsMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 

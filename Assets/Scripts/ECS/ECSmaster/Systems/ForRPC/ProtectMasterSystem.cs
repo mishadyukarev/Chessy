@@ -2,8 +2,8 @@
 
 internal class ProtectMasterSystem : SystemMasterReduction, IEcsRunSystem
 {
-    private int[] xyCell => _eMM.MasterRPCEntXyCellCom.XyCell;
-    internal bool isActive => _eGM.GeneralRPCEntActiveComponent.IsActived;
+    private int[] xyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
+    internal bool isActive => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
 
     internal ProtectMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 

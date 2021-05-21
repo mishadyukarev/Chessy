@@ -1,14 +1,12 @@
 ﻿using Leopotam.Ecs;
 
-namespace Scripts.ECS.Entities
+
+internal class EntitiesOtherManager : EntitiesManager
 {
-    public class EntitiesOtherManager : EntitiesManager
+    internal EntitiesOtherManager(EcsWorld ecsWorld) : base(ecsWorld) { }
+
+    public void CreateEntities()
     {
-        public EntitiesOtherManager(EcsWorld ecsWorld) : base(ecsWorld) { }
 
-        public void CreateEntities()
-        {
-
-        }
     }
 }

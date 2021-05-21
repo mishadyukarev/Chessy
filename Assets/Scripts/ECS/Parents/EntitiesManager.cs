@@ -1,8 +1,9 @@
 ﻿using Leopotam.Ecs;
 using static MainGame;
 
-public abstract class EntitiesManager
+internal abstract class EntitiesManager
 {
+    protected GameObjectPool GameObjectPool => Instance.GameObjectPool;
     protected StartValuesGameConfig StartValuesGameConfig => Instance.StartValuesGameConfig;
 
     internal EcsWorld GameWorld;

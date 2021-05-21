@@ -1,9 +1,9 @@
 ﻿using Leopotam.Ecs;
 using static MainGame;
 
-internal class EconomySystem : SystemGeneralReduction, IEcsRunSystem
+internal class EconomyUISystem : SystemGeneralReduction, IEcsRunSystem
 {
-    internal EconomySystem(ECSmanager eCSmanager) : base(eCSmanager) { }
+    internal EconomyUISystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
     public void Run()
     {

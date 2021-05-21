@@ -4,21 +4,15 @@ using UnityEngine;
 using UnityEngine.UI;
 using static MainGame;
 
-internal class StandartAbilityUISystem : CellGeneralReduction, IEcsRunSystem
+internal class StandartAbilityUISystem : RPCGeneralReduction, IEcsRunSystem
 {
-    private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
-
-    private PhotonPunRPC _photonPunRPC = default;
-
     private Button _standartAbilityButton1;
     private Button _standartAbilityButton2;
 
-    private int[] _xySelectedCell => _eGM.SelectorESelectorC.XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
 
     internal StandartAbilityUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
-
         _standartAbilityButton1 = MainGame.Instance.GameObjectPool.StandartAbilityButton1;
         _standartAbilityButton1.onClick.AddListener(delegate { StandartAbilityButton1(); });
         _standartAbilityButton2 = MainGame.Instance.GameObjectPool.StandartAbilityButton2;

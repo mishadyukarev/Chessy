@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using static MainGame;
 
-internal class BuildingUISystem : CellGeneralReduction, IEcsRunSystem
+internal class BuildingUISystem : SystemGeneralReduction, IEcsRunSystem
 {
     private PhotonPunRPC _photonPunRPC;
     private Button _buildingAbilityButton0;
@@ -11,7 +11,7 @@ internal class BuildingUISystem : CellGeneralReduction, IEcsRunSystem
     private Button _buildingAbilityButton3;
     private Button _buildingAbilityButton4;
 
-    private int[] _xySelectedCell => _eGM.SelectorESelectorC.XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
 
     internal BuildingUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {

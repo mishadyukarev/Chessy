@@ -10,7 +10,6 @@ public struct CellUnitComponent
     private int[] _xy;
     private bool _canShift;
     private bool _canAttack;
-    private int _amountSteps;
     private GameObject _pawnGO;
     private GameObject _kingGO;
     private GameObject _rookGO;
@@ -25,6 +24,10 @@ public struct CellUnitComponent
     internal bool IsRelaxed;
 
     internal int AmountHealth;
+
+    internal int AmountSteps;
+
+    internal bool HaveHealth => AmountHealth > 0;
 
 
     internal CellUnitComponent(EntitiesGeneralManager eGM, params int[] xy)
@@ -42,7 +45,7 @@ public struct CellUnitComponent
 
         IsActiveUnitMaster = default;
         IsActiveUnitOther = default;
-        _amountSteps = default;
+        AmountSteps = default;
         AmountHealth = default;
         IsProtected = default;
         IsRelaxed = default;
@@ -56,10 +59,6 @@ public struct CellUnitComponent
         _kingSR = Instance.GameObjectPool.CellUnitKingGOs[_xy[_eGM.X], _xy[_eGM.Y]].GetComponent<SpriteRenderer>();
     }
 
-
-    #region Properties
-
-    #region Health
 
     internal int MaxAmountHealth
     {
@@ -88,11 +87,6 @@ public struct CellUnitComponent
         }
     }
 
-    #endregion
-
-
-    #region Damage
-
     internal int SimplePowerDamage
     {
         get
@@ -119,7 +113,6 @@ public struct CellUnitComponent
             }
         }
     }
-
     internal int UniquePowerDamage
     {
         get
@@ -147,11 +140,6 @@ public struct CellUnitComponent
             }
         }
     }
-
-    #endregion
-
-
-    #region Protection
 
     internal int PowerProtection
     {
@@ -328,16 +316,6 @@ public struct CellUnitComponent
         }
     }
 
-    #endregion
-
-
-    #region Steps
-
-    internal int AmountSteps
-    {
-        get { return _amountSteps; }
-        set { _amountSteps = value; }
-    }
     internal bool HaveMaxSteps
     {
         get
@@ -345,19 +323,18 @@ public struct CellUnitComponent
             switch (_eGM.CellUnitEnt_UnitTypeCom(_xy).UnitType)
             {
                 case UnitTypes.King:
-                    return _amountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING;
+                    return AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING;
                 case UnitTypes.Pawn:
-                    return _amountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
+                    return AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
                 case UnitTypes.Rook:
-                    return _amountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
+                    return AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
                 case UnitTypes.Bishop:
-                    return _amountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
+                    return AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
             }
             return false;
         }
     }
-    internal bool MinAmountSteps => _amountSteps >= Instance.StartValuesGameConfig.MIN_AMOUNT_STEPS_FOR_UNIT;
-
+    internal bool MinAmountSteps => AmountSteps >= Instance.StartValuesGameConfig.MIN_AMOUNT_STEPS_FOR_UNIT;
     internal int NeedAmountSteps
     {
         get
@@ -385,25 +362,24 @@ public struct CellUnitComponent
             return amountSteps;
         }
     }
-
     internal void RefreshAmountSteps()
     {
         switch (_eGM.CellUnitEnt_UnitTypeCom(_xy).UnitType)
         {
             case UnitTypes.King:
-                _amountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING;
+                AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING;
                 break;
 
             case UnitTypes.Pawn:
-                _amountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
+                AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
                 break;
 
             case UnitTypes.Rook:
-                _amountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
+                AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
                 break;
 
             case UnitTypes.Bishop:
-                _amountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
+                AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
                 break;
 
             default:
@@ -411,9 +387,6 @@ public struct CellUnitComponent
         }
     }
 
-    #endregion
-
-    #endregion
 
 
     #region Else
@@ -451,7 +424,7 @@ public struct CellUnitComponent
     internal void SetUnit(in UnitTypes unitType, in int amountHealth, in int amountSteps, in bool isProtected, in bool isRelaxed, in Player player)
     {
         _eGM.CellUnitEnt_UnitTypeCom(_xy).UnitType = unitType;
-        _amountSteps = amountSteps;
+        AmountSteps = amountSteps;
         AmountHealth = amountHealth;
         IsProtected = isProtected;
         IsRelaxed = isRelaxed;
@@ -782,8 +755,12 @@ public struct CellUnitComponent
 
     }
 
-    internal List<int[]> TryGetXYAround(int[] xyStartCell)
+    internal List<int[]> TryGetXYAround(int[] xyStartCell = default)
     {
+        int[] xy;
+        if(xyStartCell == default) xy = _xy;
+        else xy = xyStartCell;
+
         var xyAvailableCells = new List<int[]>();
         var xyResultCell = new int[_eGM.XYForArray];
 
@@ -791,31 +768,17 @@ public struct CellUnitComponent
         {
             var xyDirectCell = GetXYDirect((DirectTypes)i);
 
-            xyResultCell[0] = xyStartCell[0] + xyDirectCell[0];
-            xyResultCell[1] = xyStartCell[1] + xyDirectCell[1];
+            xyResultCell[0] = xy[0] + xyDirectCell[0];
+            xyResultCell[1] = xy[1] + xyDirectCell[1];
 
-            xyAvailableCells.Add(Instance.CellBaseOperations.CopyXY(xyResultCell));
+            if (_eGM.CellEnt_CellCom(xyResultCell).CellGO.activeSelf)
+            {
+                xyAvailableCells.Add(_eGM.CellBaseOperEnt_CellBaseOperCom.CopyXY(xyResultCell));
+            }
         }
 
         return xyAvailableCells;
-    }
 
-    internal List<int[]> TryGetXYAround()
-    {
-        var xyAvailableCells = new List<int[]>();
-        var xyResultCell = new int[_eGM.XYForArray];
-
-        for (int i = 0; i < (int)DirectTypes.LeftDown + 1; i++)
-        {
-            var xyDirectCell = GetXYDirect((DirectTypes)i);
-
-            xyResultCell[0] = _xy[0] + xyDirectCell[0];
-            xyResultCell[1] = _xy[1] + xyDirectCell[1];
-
-            xyAvailableCells.Add(Instance.CellBaseOperations.CopyXY(xyResultCell));
-        }
-
-        return xyAvailableCells;
     }
 
 

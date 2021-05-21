@@ -3,12 +3,11 @@ using Photon.Pun;
 using System.Collections.Generic;
 using static MainGame;
 
-internal class BuilderMasterSystem : SystemMasterReduction, IEcsRunSystem
+internal class BuilderMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 {
-    private PhotonPunRPC _photonPunRPC;
-    private int[] XyCell => _eMM.MasterRPCEntXyCellCom.XyCell;
-    private PhotonMessageInfo Info => _eGM.GeneralRPCEntFromInfoCom.FromInfo;
-    private BuildingTypes BuildingType => _eMM.MasterRPCEntBuildingTypeCom.BuildingType;
+    private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
+    private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+    private BuildingTypes BuildingType => _eMM.RPCMasterEnt_RPCMasterCom.BuildingType;
 
     internal BuilderMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {

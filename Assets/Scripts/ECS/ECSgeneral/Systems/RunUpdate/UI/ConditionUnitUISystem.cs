@@ -2,7 +2,7 @@
 using TMPro;
 using static MainGame;
 
-internal class ConditionUnitUISystem : CellGeneralReduction, IEcsRunSystem
+internal class ConditionUnitUISystem : SystemGeneralReduction, IEcsRunSystem
 {
     private EcsComponentRef<SelectorComponent> _selectorComponentRef = default;
 
@@ -11,7 +11,7 @@ internal class ConditionUnitUISystem : CellGeneralReduction, IEcsRunSystem
     private TextMeshProUGUI _protectionCurrentUnitText;
     private TextMeshProUGUI _stepsCurrentUnitText;
 
-    private int[] _xySelectedCell => _eGM.SelectorESelectorC.XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
 
     internal ConditionUnitUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {

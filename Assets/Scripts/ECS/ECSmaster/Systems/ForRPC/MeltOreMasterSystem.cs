@@ -3,7 +3,7 @@ using Photon.Pun;
 
 internal class MeltOreMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 {
-    internal PhotonMessageInfo Info => _eGM.GeneralRPCEntFromInfoCom.FromInfo;
+    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
     internal MeltOreMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 

@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 
-public class RaySystem : SystemGeneralReduction, IEcsRunSystem
+internal class RaySystem : SystemGeneralReduction, IEcsRunSystem
 {
     private const float RAY_DISTANCE = 100;
     private Ray _ray;

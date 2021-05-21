@@ -1,9 +1,10 @@
 ﻿using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
 using System.Collections.Generic;
+using TMPro;
 using static MainGame;
 
-public sealed class EntitiesGeneralManager : EntitiesManager
+internal sealed class EntitiesGeneralManager : EntitiesManager
 {
     #region Economy
 
@@ -171,9 +172,8 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     #region RPCEntity
 
-    private EcsEntity _generalRPCEntity;
-    internal ref FromInfoComponent GeneralRPCEntFromInfoCom => ref _generalRPCEntity.Get<FromInfoComponent>();
-    internal ref ActiveComponent GeneralRPCEntActiveComponent => ref _generalRPCEntity.Get<ActiveComponent>();
+    private EcsEntity _rPCGeneralEntity;
+    internal ref RpcComponent RpcGeneralEnt_FromInfoCom => ref _rPCGeneralEntity.Get<RpcComponent>();
 
     #endregion
 
@@ -193,6 +193,8 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     private EcsEntity[,] _cellEnts;
     internal ref CellComponent CellEnt_CellCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellComponent>();
 
+    private EcsEntity _cellBaseOperationsEnt;
+    internal ref CellBaseOperationsComponent CellBaseOperEnt_CellBaseOperCom => ref _cellBaseOperationsEnt.Get<CellBaseOperationsComponent>();
 
 
     #region CellUnitEnts
@@ -232,13 +234,21 @@ public sealed class EntitiesGeneralManager : EntitiesManager
     #endregion
 
 
+    #region CellEffectEnts
+
+    private EcsEntity[,] _cellEffectEnts;
+    internal ref CellEffectComponent CellEffectEnt_CellEffectCom(params int[] xy) => ref _cellEffectEnts[xy[X], xy[Y]].Get<CellEffectComponent>();
+
+    #endregion
+
+
     internal int Xamount => _cellEnts.GetUpperBound(X) + 1;
     internal int Yamount => _cellEnts.GetUpperBound(Y) + 1;
 
-    internal int XYForArray = Instance.StartValuesGameConfig.XY_FOR_ARRAY;
+    internal int XYForArray => Instance.StartValuesGameConfig.XY_FOR_ARRAY;
 
-    internal int X = Instance.StartValuesGameConfig.X;
-    internal int Y = Instance.StartValuesGameConfig.Y;
+    internal int X => Instance.StartValuesGameConfig.X;
+    internal int Y => Instance.StartValuesGameConfig.Y;
 
     #endregion
 
@@ -256,7 +266,7 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     private EcsEntity _selectorEntity;
 
-    internal ref SelectorComponent SelectorESelectorC => ref _selectorEntity.Get<SelectorComponent>();
+    internal ref SelectorComponent SelectorEntSelectorCom => ref _selectorEntity.Get<SelectorComponent>();
     internal ref RaycastHit2DComponent RayComponentSelectorEnt => ref _selectorEntity.Get<RaycastHit2DComponent>();
 
     #endregion
@@ -290,6 +300,19 @@ public sealed class EntitiesGeneralManager : EntitiesManager
 
     private EcsEntity _animationEnt;
     internal ref AnimationAttackUnitComponent AnimationAttackUnitComponentRef => ref _animationEnt.Get<AnimationAttackUnitComponent>();
+
+    #endregion
+
+
+    #region Ability
+
+    #region UniqueAbilityOneEnt
+
+    private EcsEntity _uniqueFirstAbilityEnt;
+    internal ref ButtonComponent UniqueFirstAbilityEnt_ButtonCom => ref _uniqueFirstAbilityEnt.Get<ButtonComponent>();
+    internal ref TextMeshProGUIComponent UniqueFirstAbilityEnt_TextMeshProGUICom => ref _uniqueFirstAbilityEnt.Get<TextMeshProGUIComponent>();
+
+    #endregion
 
     #endregion
 
@@ -488,9 +511,18 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         #endregion
 
 
-        _generalRPCEntity = GameWorld.NewEntity();
+        #region Ability
 
-        GeneralRPCEntFromInfoCom.FromInfo = default;
+        _uniqueFirstAbilityEnt = GameWorld.NewEntity();
+
+        UniqueFirstAbilityEnt_ButtonCom.Button = Instance.GameObjectPool.UniqueFirstAbilityButton;
+        UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI = GameObjectPool.UniqueFirstAbilityText;
+        #endregion
+
+
+       _rPCGeneralEntity = GameWorld.NewEntity();
+
+        RpcGeneralEnt_FromInfoCom.FromInfo = default;
 
 
 
@@ -523,6 +555,10 @@ public sealed class EntitiesGeneralManager : EntitiesManager
         _cellEnvironmentEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
         _cellBuildingEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
         _cellUnitEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
+        _cellEffectEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
+
+        _cellBaseOperationsEnt = GameWorld.NewEntity();
+        _cellBaseOperationsEnt.Replace(new CellBaseOperationsComponent(this));
 
         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
         {
@@ -533,12 +569,14 @@ public sealed class EntitiesGeneralManager : EntitiesManager
                 _cellEnvironmentEnts[x, y] = GameWorld.NewEntity();
                 _cellBuildingEnts[x, y] = GameWorld.NewEntity();
                 _cellUnitEnts[x, y] = GameWorld.NewEntity();
+                _cellEffectEnts[x, y] = GameWorld.NewEntity();
 
                 _cellEnts[x, y].Replace(new CellComponent(this, StartValuesGameConfig, x, y));
                 _cellUnitEnts[x, y].Replace(new CellUnitComponent(this, x, y));
-                _cellBuildingEnts[x, y].Replace(new CellBuildingComponent(this, Instance.GameObjectPool, x, y));
-                _cellEnvironmentEnts[x, y].Replace(new CellEnvironmentComponent(this, Instance.GameObjectPool, x, y));
-                _cellSupportVisionEnts[x, y].Replace(new CellSupportVisionComponent(this, Instance.GameObjectPool, x, y));
+                _cellBuildingEnts[x, y].Replace(new CellBuildingComponent(this, GameObjectPool, x, y));
+                _cellEnvironmentEnts[x, y].Replace(new CellEnvironmentComponent(this, GameObjectPool, x, y));
+                _cellSupportVisionEnts[x, y].Replace(new CellSupportVisionComponent(this, GameObjectPool, x, y));
+                _cellEffectEnts[x, y].Replace(new CellEffectComponent(this, GameObjectPool, x, y));
             }
         }
 

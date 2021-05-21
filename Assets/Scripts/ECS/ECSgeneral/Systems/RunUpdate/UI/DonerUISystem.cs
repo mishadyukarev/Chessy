@@ -3,12 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using static MainGame;
 
-internal class DonerSystem : RPCGeneralReduction, IEcsRunSystem
+internal class DonerUISystem : RPCGeneralReduction, IEcsRunSystem
 {
     private bool IsCurrentDone => _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[Instance.IsMasterClient];
     private Button CurrentButton => _eGM.DonerEntityButtonComponent.Button;
 
-    internal DonerSystem(ECSmanager eCSmanager) : base(eCSmanager)
+    internal DonerUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         CurrentButton.onClick.AddListener(delegate { Done(); });
     }

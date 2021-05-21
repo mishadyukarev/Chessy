@@ -5,8 +5,8 @@ using static MainGame;
 internal class DonerMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 {
     private SystemsMasterManager _sMM;
-    internal bool isDone => _eGM.GeneralRPCEntActiveComponent.IsActived;
-    internal PhotonMessageInfo info => _eGM.GeneralRPCEntFromInfoCom.FromInfo;
+    internal bool isDone => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
+    internal PhotonMessageInfo info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
     internal DonerMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
@@ -27,7 +27,7 @@ internal class DonerMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
             if (isRefreshed)
             {
-                _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.SoloSystems);
+                _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RPCSystems);
 
                 _photonPunRPC.DoneToGeneral(RpcTarget.All, true, false, _eGM.UpdatorEntityAmountComponent.Amount);
             }

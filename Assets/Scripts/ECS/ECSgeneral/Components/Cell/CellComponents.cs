@@ -22,6 +22,8 @@ public struct CellComponent
     internal bool IsStartOther => _isStartOther;
     internal int InstanceIDcellGO => _cellGO.GetInstanceID();
 
+    internal GameObject CellGO => _cellGO;
+
 
 
     internal CellComponent(EntitiesGeneralManager eGM, StartValuesGameConfig startValuesGameConfig, params int[] xy)

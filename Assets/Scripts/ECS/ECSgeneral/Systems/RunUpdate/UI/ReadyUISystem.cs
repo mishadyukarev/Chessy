@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static MainGame;
 
-internal class ReadySystem : RPCGeneralReduction, IEcsRunSystem
+internal class ReadyUISystem : RPCGeneralReduction, IEcsRunSystem
 {
     private SystemsGeneralManager _systemsGeneralManager;
 
@@ -14,7 +14,7 @@ internal class ReadySystem : RPCGeneralReduction, IEcsRunSystem
 
 
 
-    internal ReadySystem(ECSmanager eCSmanager) : base(eCSmanager)
+    internal ReadyUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
 

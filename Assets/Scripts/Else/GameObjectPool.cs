@@ -86,7 +86,8 @@ internal class GameObjectPool
     internal Button BuildingAbilityButton4;
 
 
-    internal Button UniqueAbilityButton1;
+    internal Button UniqueFirstAbilityButton;
+    internal TextMeshProUGUI UniqueFirstAbilityText;
     internal Button UniqueAbilityButton2;
     internal Button UniqueAbilityButton3;
 

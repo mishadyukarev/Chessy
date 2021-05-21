@@ -7,9 +7,6 @@ public abstract class SystemsManager
 
     internal EcsSystems RunUpdateSystems;
     internal EcsSystems FixedUpdateSystems;
-    internal EcsSystems SoloSystems;
-
-    protected EcsSystems _currentSystemsForInvoke;
 
     protected SystemsManager(EcsWorld ecsWorld)
     {
@@ -17,7 +14,6 @@ public abstract class SystemsManager
 
         RunUpdateSystems = new EcsSystems(ecsWorld);
         FixedUpdateSystems = new EcsSystems(ecsWorld);
-        SoloSystems = new EcsSystems(ecsWorld);
     }
 
 
@@ -25,11 +21,9 @@ public abstract class SystemsManager
     {
         RunUpdateSystems.ProcessInjects();
         FixedUpdateSystems.ProcessInjects();
-        SoloSystems.ProcessInjects();
 
         RunUpdateSystems.Init();
         FixedUpdateSystems.Init();
-        SoloSystems.Init();
     }
 
     internal void Update() => RunUpdateSystems.Run();

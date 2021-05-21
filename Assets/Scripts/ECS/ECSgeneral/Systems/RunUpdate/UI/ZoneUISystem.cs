@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-internal class ZoneUISystem : CellGeneralReduction, IEcsRunSystem
+internal class ZoneUISystem : SystemGeneralReduction, IEcsRunSystem
 {
     private PhotonPunRPC _photonPunRPC = default;
 

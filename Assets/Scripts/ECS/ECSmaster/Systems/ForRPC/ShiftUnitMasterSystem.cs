@@ -5,9 +5,9 @@ using static MainGame;
 
 internal class ShiftUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 {
-    internal int[] XyPreviousCell => _eMM.MasterRPCEntXySelPreCom.XyPrevious;
-    internal int[] XySelectedCell => _eMM.MasterRPCEntXySelPreCom.XySelected;
-    internal PhotonMessageInfo Info => _eGM.GeneralRPCEntFromInfoCom.FromInfo;
+    internal int[] XyPreviousCell => _eMM.RPCMasterEnt_RPCMasterCom.XyPrevious;
+    internal int[] XySelectedCell => _eMM.RPCMasterEnt_RPCMasterCom.XySelected;
+    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
 
     internal ShiftUnitMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
@@ -18,7 +18,7 @@ internal class ShiftUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
         if (_eGM.CellUnitEnt_OwnerCom(XyPreviousCell).IsHim(Info.Sender) && _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).MinAmountSteps)
         {
-            if (Instance.CellBaseOperations.TryFindCellInList(XySelectedCell, xyAvailableCellsForShift))
+            if (_eGM.CellBaseOperEnt_CellBaseOperCom.TryFindCellInList(XySelectedCell, xyAvailableCellsForShift))
             {
                 _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).SetUnit(XyPreviousCell);
 

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using static MainGame;
 
-internal class UISystem : CellGeneralReduction, IEcsRunSystem
+internal class UISystem : SystemGeneralReduction, IEcsRunSystem
 {
     private GameSceneManager _photonManagerScene;
     private PhotonPunRPC _photonPunRPC;
@@ -25,7 +25,7 @@ internal class UISystem : CellGeneralReduction, IEcsRunSystem
 
     #endregion
 
-    private int[] _xySelectedCell => _eGM.SelectorESelectorC.XYselectedCell;
+    private int[] _xySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
 
 
     internal UISystem(ECSmanager eCSmanager) : base(eCSmanager)
@@ -48,7 +48,7 @@ internal class UISystem : CellGeneralReduction, IEcsRunSystem
 
         #region Ability zone
 
-        _uniqueAbilityButton1 = MainGame.Instance.GameObjectPool.UniqueAbilityButton1;
+        _uniqueAbilityButton1 = MainGame.Instance.GameObjectPool.UniqueFirstAbilityButton;
         _uniqueAbilityButton2 = MainGame.Instance.GameObjectPool.UniqueAbilityButton2;
         _uniqueAbilityButton3 = MainGame.Instance.GameObjectPool.UniqueAbilityButton3;
 

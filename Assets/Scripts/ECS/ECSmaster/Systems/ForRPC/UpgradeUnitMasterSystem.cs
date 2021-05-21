@@ -3,8 +3,8 @@ using Photon.Pun;
 
 internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 {
-    internal UnitTypes UnitType => _eMM.MasterRPCEntUnitTypeCom.UnitType;
-    internal PhotonMessageInfo Info => _eGM.GeneralRPCEntFromInfoCom.FromInfo;
+    internal UnitTypes UnitType => _eMM.RPCMasterEnt_RPCMasterCom.UnitType;
+    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
     internal UpgradeUnitMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 

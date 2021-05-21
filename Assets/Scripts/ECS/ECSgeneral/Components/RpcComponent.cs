@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 
-internal struct FromInfoComponent
+internal struct RpcComponent
 {
     internal PhotonMessageInfo FromInfo;
+    internal bool IsActived;
 }

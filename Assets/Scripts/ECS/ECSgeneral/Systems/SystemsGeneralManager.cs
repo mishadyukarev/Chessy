@@ -2,10 +2,10 @@
 
 public class SystemsGeneralManager : SystemsManager
 {
-    internal EcsSystems ForSelectorSystem = default;
+    internal EcsSystems ForSelectorRunUpdateSystem = default;
     internal SystemsGeneralManager(EcsWorld ecsWorld) : base(ecsWorld)
     {
-        ForSelectorSystem = new EcsSystems(_ecsWorld);
+        ForSelectorRunUpdateSystem = new EcsSystems(_ecsWorld);
     }
 
     internal void CreateInitSystems(ECSmanager eCSmanager)
@@ -17,27 +17,24 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new SoundSystem(eCSmanager), nameof(SoundSystem))
 
             .Add(new UISystem(eCSmanager), nameof(UISystem))
-            .Add(new ReadySystem(eCSmanager), nameof(ReadySystem))
-            .Add(new DonerSystem(eCSmanager), nameof(DonerSystem))
-            .Add(new TakerUnitsSystem(eCSmanager), nameof(TakerUnitsSystem))
+            .Add(new ReadyUISystem(eCSmanager), nameof(ReadyUISystem))
+            .Add(new DonerUISystem(eCSmanager), nameof(DonerUISystem))
+            .Add(new TakerUnitsUISystem(eCSmanager), nameof(TakerUnitsUISystem))
             .Add(new StandartAbilityUISystem(eCSmanager), nameof(StandartAbilityUISystem))
             .Add(new ConditionUnitUISystem(eCSmanager), nameof(ConditionUnitUISystem))
             .Add(new TheEndGameUISystem(eCSmanager), nameof(TheEndGameUISystem))
             .Add(new BuildingUISystem(eCSmanager), nameof(BuildingUISystem))
-            .Add(new EconomySystem(eCSmanager), nameof(EconomySystem))
+            .Add(new EconomyUISystem(eCSmanager), nameof(EconomyUISystem))
             .Add(new ZoneUISystem(eCSmanager), nameof(ZoneUISystem))
-            .Add(new MistakeUpdateSystem(eCSmanager), nameof(MistakeUpdateSystem))
+            .Add(new MistakeUISystem(eCSmanager), nameof(MistakeUISystem))
             .Add(new CityUISystem(eCSmanager), nameof(CityUISystem))
-            .Add(new RefreshUISystem(eCSmanager), nameof(RefreshUISystem));
+            .Add(new RefreshUISystem(eCSmanager), nameof(RefreshUISystem))
+            .Add(new UniqueAbilitiesUISystem(eCSmanager), nameof(UniqueAbilitiesUISystem));
 
 
-        ForSelectorSystem
+        ForSelectorRunUpdateSystem
             .Add(new GetterCellSystem(eCSmanager), nameof(GetterCellSystem))
             .Add(new RaySystem(eCSmanager), nameof(RaySystem));
-
-
-        SoloSystems
-            .Add(new MistakeUpdateSystem(eCSmanager), nameof(MistakeUpdateSystem));
 
         this.InitAndProcessInjectsSystems();
     }
@@ -46,9 +43,9 @@ public class SystemsGeneralManager : SystemsManager
     {
         base.InitAndProcessInjectsSystems();
 
-        ForSelectorSystem.ProcessInjects();
+        ForSelectorRunUpdateSystem.ProcessInjects();
 
-        ForSelectorSystem.Init();
+        ForSelectorRunUpdateSystem.Init();
     }
 
 }

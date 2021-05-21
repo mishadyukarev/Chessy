@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-internal sealed class GetterCellSystem : CellGeneralReduction, IEcsRunSystem
+internal sealed class GetterCellSystem : SystemGeneralReduction, IEcsRunSystem
 {
     internal GetterCellSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
@@ -17,14 +17,14 @@ internal sealed class GetterCellSystem : CellGeneralReduction, IEcsRunSystem
 
                     if (one == two)
                     {
-                        _eGM.SelectorESelectorC.XYcurrentCell = new int[] { x, y };
-                        _eGM.SelectorESelectorC.IsGettedCell = true;
+                        _eGM.SelectorEntSelectorCom.XYcurrentCell = new int[] { x, y };
+                        _eGM.SelectorEntSelectorCom.IsGettedCell = true;
                         return;
                     }
                 }
             }
-            _eGM.SelectorESelectorC.XYcurrentCell = new int[] { -1, -1 };
-            _eGM.SelectorESelectorC.IsGettedCell = false;
+            _eGM.SelectorEntSelectorCom.XYcurrentCell = new int[] { -1, -1 };
+            _eGM.SelectorEntSelectorCom.IsGettedCell = false;
         }
     }
 }

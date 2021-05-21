@@ -20,7 +20,7 @@ internal sealed class MenuSceneManager : SceneManager
         Log("Player's name is set to " + PhotonNetwork.NickName);
 
         //PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.GameVersion = "1";
+        PhotonNetwork.GameVersion = "1.1";
         PhotonNetwork.ConnectUsingSettings();
     }
 

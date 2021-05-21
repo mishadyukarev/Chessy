@@ -69,7 +69,7 @@ internal partial class PhotonPunRPC : MonoBehaviour
     internal void MistakeEconomyToGeneral(Player playerTo, bool haveFood, bool haveWood, bool haveOre, bool haveIron, bool haveGold) => _photonView.RPC(NameRPC, playerTo, false, RpcTypes.Mistake, new object[] { MistakeTypes.EconomyType, haveFood, haveWood, haveOre, haveIron, haveGold });
     internal void MistakeUnitToGeneral(Player playerTo) => _photonView.RPC(NameRPC, playerTo, false, RpcTypes.Mistake, new object[] { MistakeTypes.UnitType });
 
-    ///public void UniqueAbilityPawnToMaster(int[] xy, UniqueAbilitiesPawnTypes uniqueAbilitiesPawnType) => PhotonView.RPC(NameRPC, RpcTarget.MasterClient, true, xy, uniqueAbilitiesPawnType);
+    public void UniqueAbilityPawnToMaster(int[] xy, UniqueAbilitiesPawnTypes uniqueAbilitiesPawnType) => _photonView.RPC(NameRPC, RpcTarget.MasterClient, true, RpcTypes.UniquePawnAbility, new object[] { xy, uniqueAbilitiesPawnType });
 
     internal void CreateUnitToMaster(UnitTypes unitType) => _photonView.RPC(NameRPC, RpcTarget.MasterClient, true, RpcTypes.CreateUnit, new object[] { unitType });
     internal void UpgradeUnitToMaster(UnitTypes unitType) => _photonView.RPC(NameRPC, RpcTarget.MasterClient, true, RpcTypes.UpgradeUnit, new object[] { unitType });
@@ -87,7 +87,7 @@ internal partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void RPC(bool isToMaster, RpcTypes rPCType, object[] objects, PhotonMessageInfo info)
     {
-        _eGM.GeneralRPCEntFromInfoCom.FromInfo = info;
+        _eGM.RpcGeneralEnt_FromInfoCom.FromInfo = info;
 
         if (isToMaster)
         {
@@ -97,13 +97,13 @@ internal partial class PhotonPunRPC : MonoBehaviour
                     break;
 
                 case RpcTypes.Ready:
-                    _eGM.GeneralRPCEntActiveComponent.IsActived = (bool)objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(ReadyMasterSystem), _sMM.SoloSystems);
+                    _eGM.RpcGeneralEnt_FromInfoCom.IsActived = (bool)objects[0];
+                    _sMM.TryInvokeRunSystem(nameof(ReadyMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Done:
-                    _eGM.GeneralRPCEntActiveComponent.IsActived = (bool)objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(DonerMasterSystem), _sMM.SoloSystems);
+                    _eGM.RpcGeneralEnt_FromInfoCom.IsActived = (bool)objects[0];
+                    _sMM.TryInvokeRunSystem(nameof(DonerMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.EndGame:
@@ -111,64 +111,69 @@ internal partial class PhotonPunRPC : MonoBehaviour
                     break;
 
                 case RpcTypes.Build:
-                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXyCellCom.XyCell);
-                    //CellManager.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXyCellCom.XyCell);
-                    _eMM.MasterRPCEntBuildingTypeCom.BuildingType = (BuildingTypes)objects[1];
-                    _sMM.TryInvokeRunSystem(nameof(BuilderMasterSystem), _sMM.SoloSystems);
+                    _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[0];
+                    _eMM.RPCMasterEnt_RPCMasterCom.BuildingType = (BuildingTypes)objects[1];
+                    _sMM.TryInvokeRunSystem(nameof(BuilderMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Destroy:
-                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXyCellCom.XyCell);
-                    _sMM.TryInvokeRunSystem(nameof(DestroyMasterSystem), _sMM.SoloSystems);
+                    _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[0];
+                    _sMM.TryInvokeRunSystem(nameof(DestroyMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Shift:
-                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXySelPreCom.XyPrevious);
-                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[1], _eMM.MasterRPCEntXySelPreCom.XySelected);
-                    _sMM.TryInvokeRunSystem(nameof(ShiftUnitMasterSystem), _sMM.SoloSystems);
+                    _eMM.RPCMasterEnt_RPCMasterCom.XyPrevious = (int[])objects[0];
+                    _eMM.RPCMasterEnt_RPCMasterCom.XySelected = (int[])objects[1];
+                    _sMM.TryInvokeRunSystem(nameof(ShiftUnitMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Attack:
-                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXySelPreCom.XyPrevious);
-                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[1], _eMM.MasterRPCEntXySelPreCom.XySelected);
-                    _sMM.TryInvokeRunSystem(nameof(AttackUnitMasterSystem), _sMM.SoloSystems);
+                    _eMM.RPCMasterEnt_RPCMasterCom.XyPrevious = (int[])objects[0];
+                    _eMM.RPCMasterEnt_RPCMasterCom.XySelected = (int[])objects[1];
+                    _sMM.TryInvokeRunSystem(nameof(AttackUnitMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Protect:
-                    _eGM.GeneralRPCEntActiveComponent.IsActived = (bool)objects[0];
-                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[1], _eMM.MasterRPCEntXyCellCom.XyCell);
-                    _sMM.TryInvokeRunSystem(nameof(ProtectMasterSystem), _sMM.SoloSystems);
+                    _eGM.RpcGeneralEnt_FromInfoCom.IsActived = (bool)objects[0];
+                    _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[1];
+                    _sMM.TryInvokeRunSystem(nameof(ProtectMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Relax:
-                    _eGM.GeneralRPCEntActiveComponent.IsActived = (bool)objects[0];
-                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[1], _eMM.MasterRPCEntXyCellCom.XyCell);
-                    _sMM.TryInvokeRunSystem(nameof(RelaxMasterSystem), _sMM.SoloSystems);
+                    _eGM.RpcGeneralEnt_FromInfoCom.IsActived = (bool)objects[0];
+                    _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[1];
+                    _sMM.TryInvokeRunSystem(nameof(RelaxMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.CreateUnit:
-                    _eMM.MasterRPCEntUnitTypeCom.UnitType = (UnitTypes)objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(CreatorUnitMasterSystem), _sMM.SoloSystems);
+                    _eMM.RPCMasterEnt_RPCMasterCom.UnitType = (UnitTypes)objects[0];
+                    _sMM.TryInvokeRunSystem(nameof(CreatorUnitMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.UpgradeUnit:
-                    _eMM.MasterRPCEntUnitTypeCom.UnitType = (UnitTypes)objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(UpgradeUnitMasterSystem), _sMM.SoloSystems);
+                    _eMM.RPCMasterEnt_RPCMasterCom.UnitType = (UnitTypes)objects[0];
+                    _sMM.TryInvokeRunSystem(nameof(UpgradeUnitMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.MeltOre:
-                    _sMM.TryInvokeRunSystem(nameof(MeltOreMasterSystem), _sMM.SoloSystems);
+                    _sMM.TryInvokeRunSystem(nameof(MeltOreMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.GetUnit:
-                    _eMM.MasterRPCEntUnitTypeCom.UnitType = (UnitTypes)objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(GetterUnitMasterSystem), _sMM.SoloSystems);
+                    _eMM.RPCMasterEnt_RPCMasterCom.UnitType = (UnitTypes)objects[0];
+                    _sMM.TryInvokeRunSystem(nameof(GetterUnitMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.SetUnit:
-                    Instance.CellBaseOperations.CopyXYinTo((int[])objects[0], _eMM.MasterRPCEntXyCellCom.XyCell);
-                    _eMM.MasterRPCEntUnitTypeCom.UnitType = (UnitTypes)objects[1];
-                    _sMM.TryInvokeRunSystem(nameof(SetterUnitMasterSystem), _sMM.SoloSystems);
+                    _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[0];
+                    _eMM.RPCMasterEnt_RPCMasterCom.UnitType = (UnitTypes)objects[1];
+                    _sMM.TryInvokeRunSystem(nameof(SetterUnitMasterSystem), _sMM.RPCSystems);
+                    break;
+
+                case RpcTypes.UniquePawnAbility:
+                    _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[0];
+                    _eMM.RPCMasterEnt_RPCMasterCom.UniqueAbilitiesPawnType = (UniqueAbilitiesPawnTypes)objects[1];
+                    _sMM.TryInvokeRunSystem(nameof(UniquePawnAbilityMasterSystem), _sMM.RPCSystems);
                     break;
 
                 default:
@@ -202,7 +207,7 @@ internal partial class PhotonPunRPC : MonoBehaviour
                     break;
 
                 case RpcTypes.Attack:
-                    if ((bool)objects[0]) _eGM.SelectorESelectorC.AttackUnitAction();
+                    if ((bool)objects[0]) _eGM.SelectorEntSelectorCom.AttackUnitAction();
                     if ((bool)objects[1]) _eGM.SoundEntSoundCom.AttackSoundAction();
                     break;
 
@@ -242,7 +247,7 @@ internal partial class PhotonPunRPC : MonoBehaviour
                     break;
 
                 case RpcTypes.SetUnit:
-                    if ((bool)objects[0]) _eGM.SelectorESelectorC.SetterUnitDelegate();
+                    if ((bool)objects[0]) _eGM.SelectorEntSelectorCom.SetterUnitDelegate();
                     break;
 
                 default:
@@ -266,7 +271,7 @@ internal partial class PhotonPunRPC : MonoBehaviour
     [PunRPC]
     private void RefreshCellsMaster()
     {
-        _sMM.TryInvokeRunSystem(nameof(VisibilityUnitsMasterSystem), _sMM.SoloSystems);
+        _sMM.TryInvokeRunSystem(nameof(VisibilityUnitsMasterSystem), _sMM.RPCSystems);
 
         #region Sending
 
@@ -290,6 +295,8 @@ internal partial class PhotonPunRPC : MonoBehaviour
 
                 listObjects.Add(_eGM.CellBuildingEnt_BuildingTypeCom(x, y).BuildingType);
                 listObjects.Add(_eGM.CellBuildingEnt_OwnerCom(x, y).ActorNumber);
+
+                listObjects.Add(_eGM.CellEffectEnt_CellEffectCom(x, y).HaveFire);
             }
         }
         object[] objects = new object[listObjects.Count];
@@ -372,10 +379,10 @@ internal partial class PhotonPunRPC : MonoBehaviour
                 _eGM.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment((bool)objects[i++], EnvironmentTypes.Hill);
                 _eGM.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment((bool)objects[i++], EnvironmentTypes.Mountain);
 
-
-
                 BuildingTypes buildingType = (BuildingTypes)objects[i++];
                 int actorNumberBuilding = (int)objects[i++];
+
+                bool haveFire = (bool)objects[i++];
 
 
                 Player player;
@@ -383,15 +390,14 @@ internal partial class PhotonPunRPC : MonoBehaviour
                 else player = PhotonNetwork.PlayerList[actorNumber - 1];
 
 
-
                 _eGM.CellUnitEnt_CellUnitCom(x, y).SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player);
                 _eGM.CellUnitEnt_CellUnitCom(x, y).ActiveVisionCell(isActiveUnit, unitType);
-
-
 
                 if (actorNumberBuilding == -1) player = default;
                 else player = PhotonNetwork.PlayerList[actorNumberBuilding - 1];
                 _eGM.CellBuildingEnt_CellBuildingCom(x, y).SetBuilding(buildingType, player);
+
+                _eGM.CellEffectEnt_CellEffectCom(x, y).SetEffect(haveFire, EffectTypes.Fire);
             }
         }
     }

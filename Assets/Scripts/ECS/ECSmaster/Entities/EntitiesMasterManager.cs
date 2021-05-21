@@ -2,13 +2,10 @@
 using UnityEngine;
 using static MainGame;
 
-public class EntitiesMasterManager : EntitiesManager
+internal class EntitiesMasterManager : EntitiesManager
 {
     private EcsEntity _masterRPCEntity;
-    internal ref BuildingTypeComponent MasterRPCEntBuildingTypeCom => ref _masterRPCEntity.Get<BuildingTypeComponent>();
-    internal ref XyCellComponent MasterRPCEntXyCellCom => ref _masterRPCEntity.Get<XyCellComponent>();
-    internal ref XySelPreComponent MasterRPCEntXySelPreCom => ref _masterRPCEntity.Get<XySelPreComponent>();
-    internal ref UnitTypeComponent MasterRPCEntUnitTypeCom => ref _masterRPCEntity.Get<UnitTypeComponent>();
+    internal ref RPCMasterComponent RPCMasterEnt_RPCMasterCom => ref _masterRPCEntity.Get<RPCMasterComponent>();
 
 
     public EntitiesMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }
@@ -102,12 +99,7 @@ public class EntitiesMasterManager : EntitiesManager
 
         _masterRPCEntity = GameWorld.NewEntity();
 
-        MasterRPCEntBuildingTypeCom.BuildingType = default;
-
-        MasterRPCEntXyCellCom.XyCell = new int[StartValuesGameConfig.XY_FOR_ARRAY];
-
-        MasterRPCEntXySelPreCom.XySelected = new int[StartValuesGameConfig.XY_FOR_ARRAY];
-        MasterRPCEntXySelPreCom.XyPrevious = new int[StartValuesGameConfig.XY_FOR_ARRAY];
+        _masterRPCEntity.Replace(new RPCMasterComponent());
 
         #endregion
 

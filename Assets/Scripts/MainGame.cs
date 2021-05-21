@@ -11,7 +11,6 @@ internal sealed class MainGame : MonoBehaviour
     private ResourcesLoadGame _resourcesLoadManager;
     private Builder _builder;
     private Names _names;
-    private CellBaseOperations _cellBaseOperations;
     private GameObjectPool _gameObjectPool;
     private StartSpawnGame _startSpawnGame;
     private PhotonGameManager _photonGameManager;
@@ -28,7 +27,6 @@ internal sealed class MainGame : MonoBehaviour
     public ResourcesLoadGame ResourcesLoadGameManager => _resourcesLoadManager;
     internal Builder Builder => _builder;
     internal Names Names => _names;
-    internal CellBaseOperations CellBaseOperations => _cellBaseOperations;
     internal GameObjectPool GameObjectPool => _gameObjectPool;
     internal StartValuesGameConfig StartValuesGameConfig => _resourcesLoadManager.StartValuesGameConfig;
     internal PhotonGameManager PhotonGameManager => _photonGameManager;
@@ -57,8 +55,6 @@ internal sealed class MainGame : MonoBehaviour
 
         _unityEvents = new UnityEvents(_builder);
         gameObject.transform.SetParent(_gameObjectPool.ParentScriptsGO.transform);
-
-        _cellBaseOperations = new CellBaseOperations(_resourcesLoadManager.StartValuesGameConfig);
 
         _photonGameManager = new PhotonGameManager(_gameObjectPool.ParentScriptsGO.transform);
 

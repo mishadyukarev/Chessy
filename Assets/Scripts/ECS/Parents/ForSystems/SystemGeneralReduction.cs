@@ -1,13 +1,15 @@
 ﻿using static MainGame;
 
-public abstract class SystemGeneralReduction
+internal abstract class SystemGeneralReduction
 {
     protected EntitiesGeneralManager _eGM;
+    protected SystemsGeneralManager _sGM;
 
     protected StartValuesGameConfig StartValuesGameConfig = Instance.StartValuesGameConfig;
 
     internal SystemGeneralReduction(ECSmanager eCSmanager)
     {
         _eGM = eCSmanager.EntitiesGeneralManager;
+        _sGM = eCSmanager.SystemsGeneralManager;
     }
 }

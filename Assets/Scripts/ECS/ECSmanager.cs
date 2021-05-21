@@ -1,5 +1,4 @@
 ﻿using Leopotam.Ecs;
-using Scripts.ECS.Entities;
 using static MainGame;
 
 
@@ -17,13 +16,13 @@ public sealed class ECSmanager
     private EntitiesOtherManager _entitiesOtherManager;
 
 
-    public EntitiesGeneralManager EntitiesGeneralManager => _entitiesGeneralManager;
+    internal EntitiesGeneralManager EntitiesGeneralManager => _entitiesGeneralManager;
     public SystemsGeneralManager SystemsGeneralManager => _systemsGeneralManager;
 
-    public EntitiesMasterManager EntitiesMasterManager => _entitiesMasterManager;
-    public SystemsMasterManager SystemsMasterManager => _systemsMasterManager;
+    internal EntitiesMasterManager EntitiesMasterManager => _entitiesMasterManager;
+    internal SystemsMasterManager SystemsMasterManager => _systemsMasterManager;
 
-    public EntitiesOtherManager EntitiesOtherManager => _entitiesOtherManager;
+    internal EntitiesOtherManager EntitiesOtherManager => _entitiesOtherManager;
     public SystemsOtherManager SystemsOtherManager => _systemsOtherManager;
 
 
