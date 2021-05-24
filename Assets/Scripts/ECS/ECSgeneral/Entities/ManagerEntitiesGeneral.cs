@@ -1,71 +1,119 @@
 ﻿using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
 using System.Collections.Generic;
-using TMPro;
 using static MainGame;
 
 internal sealed class EntitiesGeneralManager : EntitiesManager
 {
-    #region Economy
+    private EcsEntity[,] _cellEnts;
+    private EcsEntity[,] _cellUnitEnts;
+    private EcsEntity[,] _cellBuildingEnts;
+    private EcsEntity[,] _cellEnvironmentEnts;
+    private EcsEntity[,] _cellSupportVisionEnts;
+    private EcsEntity[,] _cellEffectEnts;
+    private EcsEntity _cellBaseOperationsEnt;
 
-    #region FoodEntity
+    internal ref CellComponent CellEnt_CellCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellComponent>();
 
-    internal EcsEntity FoodEntity;
+    internal ref CellUnitComponent CellUnitEnt_CellUnitCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<CellUnitComponent>();
+    internal ref OwnerComponent CellUnitEnt_OwnerCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<OwnerComponent>();
+    internal ref UnitTypeComponent CellUnitEnt_UnitTypeCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<UnitTypeComponent>();
 
-    internal ref AmountDictionaryComponent FoodEAmountDictC => ref FoodEntity.Get<AmountDictionaryComponent>();
-    internal ref ImageComponent FoodEntityImageComponent => ref FoodEntity.Get<ImageComponent>();
-    internal ref TextMeshProGUIComponent FoodEntityTextMeshProGUIComponent => ref FoodEntity.Get<TextMeshProGUIComponent>();
-    internal ref MistakeComponent FoodEntityMistakeComponent => ref FoodEntity.Get<MistakeComponent>();
+    internal ref CellBuildingComponent CellBuildingEnt_CellBuildingCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellBuildingComponent>();
+    internal ref OwnerComponent CellBuildingEnt_OwnerCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerComponent>();
+    internal ref BuildingTypeComponent CellBuildingEnt_BuildingTypeCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<BuildingTypeComponent>();
+
+    internal ref CellEnvironmentComponent CellEnvEnt_CellEnvironmentCom(params int[] xy) => ref _cellEnvironmentEnts[xy[X], xy[Y]].Get<CellEnvironmentComponent>();
+
+    internal ref CellSupportVisionComponent CellSupVisEnt_CellSupportVisionCom(params int[] xy) => ref _cellSupportVisionEnts[xy[X], xy[Y]].Get<CellSupportVisionComponent>();
+
+    internal ref CellEffectComponent CellEffectEnt_CellEffectCom(params int[] xy) => ref _cellEffectEnts[xy[X], xy[Y]].Get<CellEffectComponent>();
+
+    internal ref CellBaseOperationsComponent CellBaseOperEnt_CellBaseOperCom => ref _cellBaseOperationsEnt.Get<CellBaseOperationsComponent>();
+
+    internal int Xamount => _cellEnts.GetUpperBound(X) + 1;
+    internal int Yamount => _cellEnts.GetUpperBound(Y) + 1;
+
+    internal int XYForArray => Instance.StartValuesGameConfig.XY_FOR_ARRAY;
+
+    internal int X => Instance.StartValuesGameConfig.X;
+    internal int Y => Instance.StartValuesGameConfig.Y;
+
+
+
+
+
+    #region Up
+
+    private EcsEntity _foodEntity;
+    private EcsEntity _woodEntity;
+    private EcsEntity _oreEntity;
+    private EcsEntity _ironEntity;
+    private EcsEntity _goldEntity;
+
+
+    internal ref AmountDictionaryComponent FoodEnt_AmountDictCom => ref _foodEntity.Get<AmountDictionaryComponent>();
+    internal ref ImageComponent FoodEntityImageComponent => ref _foodEntity.Get<ImageComponent>();
+    internal ref TextMeshProGUIComponent FoodEntityTextMeshProGUIComponent => ref _foodEntity.Get<TextMeshProGUIComponent>();
+    internal ref MistakeComponent FoodEntityMistakeComponent => ref _foodEntity.Get<MistakeComponent>();
+
+    internal ref AmountDictionaryComponent WoodEAmountDictC => ref _woodEntity.Get<AmountDictionaryComponent>();
+    internal ref ImageComponent WoodEntityImageComponent => ref _woodEntity.Get<ImageComponent>();
+    internal ref TextMeshProGUIComponent WoodEntityTextMeshProGUIComponent => ref _woodEntity.Get<TextMeshProGUIComponent>();
+    internal ref MistakeComponent WoodEntityMistakeComponent => ref _woodEntity.Get<MistakeComponent>();
+
+    internal ref AmountDictionaryComponent OreEAmountDictC => ref _oreEntity.Get<AmountDictionaryComponent>();
+    internal ref ImageComponent OreEntityImageComponent => ref _oreEntity.Get<ImageComponent>();
+    internal ref TextMeshProGUIComponent OreEntityTextMeshProGUIComponent => ref _oreEntity.Get<TextMeshProGUIComponent>();
+    internal ref MistakeComponent OreEntityMistakeComponent => ref _oreEntity.Get<MistakeComponent>();
+
+    internal ref AmountDictionaryComponent IronEAmountDictC => ref _ironEntity.Get<AmountDictionaryComponent>();
+    internal ref ImageComponent IronEntityImageComponent => ref _ironEntity.Get<ImageComponent>();
+    internal ref TextMeshProGUIComponent IronEntityTextMeshProGUIComponent => ref _ironEntity.Get<TextMeshProGUIComponent>();
+    internal ref MistakeComponent IronEntityMistakeComponent => ref _ironEntity.Get<MistakeComponent>();
+
+    internal ref AmountDictionaryComponent GoldEAmountDictC => ref _goldEntity.Get<AmountDictionaryComponent>();
+    internal ref ImageComponent GoldEntityImageComponent => ref _goldEntity.Get<ImageComponent>();
+    internal ref TextMeshProGUIComponent GoldEntityTextMeshProGUIComponent => ref _goldEntity.Get<TextMeshProGUIComponent>();
+    internal ref MistakeComponent GoldEntityMistakeComponent => ref _goldEntity.Get<MistakeComponent>();
 
     #endregion
 
 
-    #region WoodEntity
+    #region Down
 
-    internal EcsEntity WoodEntity;
+    private EcsEntity _donerEntity;
+    private EcsEntity _truceEntity;
 
-    internal ref AmountDictionaryComponent WoodEAmountDictC => ref WoodEntity.Get<AmountDictionaryComponent>();
-    internal ref ImageComponent WoodEntityImageComponent => ref WoodEntity.Get<ImageComponent>();
-    internal ref TextMeshProGUIComponent WoodEntityTextMeshProGUIComponent => ref WoodEntity.Get<TextMeshProGUIComponent>();
-    internal ref MistakeComponent WoodEntityMistakeComponent => ref WoodEntity.Get<MistakeComponent>();
-
-    #endregion
-
-
-    #region OreEntity
-
-    internal EcsEntity OreEntity;
-
-    internal ref AmountDictionaryComponent OreEAmountDictC => ref OreEntity.Get<AmountDictionaryComponent>();
-    internal ref ImageComponent OreEntityImageComponent => ref OreEntity.Get<ImageComponent>();
-    internal ref TextMeshProGUIComponent OreEntityTextMeshProGUIComponent => ref OreEntity.Get<TextMeshProGUIComponent>();
-    internal ref MistakeComponent OreEntityMistakeComponent => ref OreEntity.Get<MistakeComponent>();
-
-    #endregion
+    private EcsEntity _takerKingEntity;
+    private EcsEntity _takerPawnEntity;
+    private EcsEntity _takerRookEntity;
+    private EcsEntity _takerBishopEntity;
 
 
-    #region IronEntity
+    internal ref ButtonComponent DonerEntityButtonComponent => ref _donerEntity.Get<ButtonComponent>();
+    internal ref TextMeshProGUIComponent DonerEntityTextMeshProGUIComponent => ref _donerEntity.Get<TextMeshProGUIComponent>();
+    internal ref ActivatedDictionaryComponent DonerEntityIsActivatedDictionaryComponent => ref _donerEntity.Get<ActivatedDictionaryComponent>();
+    internal ref MistakeComponent DonerEntityMistakeComponent => ref _donerEntity.Get<MistakeComponent>();
 
-    internal EcsEntity IronEntity;
+    internal ref ButtonComponent TruceEnt_ButtonCom => ref _truceEntity.Get<ButtonComponent>();
+    internal ref ActivatedDictionaryComponent TruceEnt_ActivatedDictCom => ref _truceEntity.Get<ActivatedDictionaryComponent>();
 
-    internal ref AmountDictionaryComponent IronEAmountDictC => ref IronEntity.Get<AmountDictionaryComponent>();
-    internal ref ImageComponent IronEntityImageComponent => ref IronEntity.Get<ImageComponent>();
-    internal ref TextMeshProGUIComponent IronEntityTextMeshProGUIComponent => ref IronEntity.Get<TextMeshProGUIComponent>();
-    internal ref MistakeComponent IronEntityMistakeComponent => ref IronEntity.Get<MistakeComponent>();
+    internal ref UnitTypeComponent TakerKingEntityUnitTypeComponent => ref _takerKingEntity.Get<UnitTypeComponent>();
+    internal ref ButtonComponent TakerKingEntityButtonComponent => ref _takerKingEntity.Get<ButtonComponent>();
+    internal ref TextMeshProGUIComponent TakerKingEntityTextMeshProGUIComponent => ref _takerKingEntity.Get<TextMeshProGUIComponent>();
 
-    #endregion
+    internal ref UnitTypeComponent TakerPawnEntityUnitTypeComponent => ref _takerPawnEntity.Get<UnitTypeComponent>();
+    internal ref ButtonComponent TakerPawnEntityButtonComponent => ref _takerPawnEntity.Get<ButtonComponent>();
+    internal ref TextMeshProGUIComponent TakerPawnEntityTextMeshProGUIComponent => ref _takerPawnEntity.Get<TextMeshProGUIComponent>();
 
+    internal ref UnitTypeComponent TakerRookEntityUnitTypeComponent => ref _takerRookEntity.Get<UnitTypeComponent>();
+    internal ref ButtonComponent TakerRookEntityButtonComponent => ref _takerRookEntity.Get<ButtonComponent>();
+    internal ref TextMeshProGUIComponent TakerRookEntityTextMeshProGUIComponent => ref _takerRookEntity.Get<TextMeshProGUIComponent>();
 
-    #region GoldEntity
-
-    internal EcsEntity GoldEntity;
-
-    internal ref AmountDictionaryComponent GoldEAmountDictC => ref GoldEntity.Get<AmountDictionaryComponent>();
-    internal ref ImageComponent GoldEntityImageComponent => ref GoldEntity.Get<ImageComponent>();
-    internal ref TextMeshProGUIComponent GoldEntityTextMeshProGUIComponent => ref GoldEntity.Get<TextMeshProGUIComponent>();
-    internal ref MistakeComponent GoldEntityMistakeComponent => ref GoldEntity.Get<MistakeComponent>();
-
-    #endregion
+    internal ref UnitTypeComponent TakerBishopEntityUnitTypeComponent => ref _takerBishopEntity.Get<UnitTypeComponent>();
+    internal ref ButtonComponent TakerBishopEntityButtonComponent => ref _takerBishopEntity.Get<ButtonComponent>();
+    internal ref TextMeshProGUIComponent TakerBishopEntityTextMeshProGUIComponent => ref _takerBishopEntity.Get<TextMeshProGUIComponent>();
 
     #endregion
 
@@ -79,77 +127,7 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
     #endregion
 
 
-    #region TakerUnits
-
-    #region TakerKingEntity
-
-    private EcsEntity _takerKingEntity;
-
-    internal ref UnitTypeComponent TakerKingEntityUnitTypeComponent => ref _takerKingEntity.Get<UnitTypeComponent>();
-    internal ref ButtonComponent TakerKingEntityButtonComponent => ref _takerKingEntity.Get<ButtonComponent>();
-    internal ref TextMeshProGUIComponent TakerKingEntityTextMeshProGUIComponent => ref _takerKingEntity.Get<TextMeshProGUIComponent>();
-
-    #endregion
-
-
-    #region TakerPawnEntity
-
-    private EcsEntity _takerPawnEntity;
-
-    internal ref UnitTypeComponent TakerPawnEntityUnitTypeComponent => ref _takerPawnEntity.Get<UnitTypeComponent>();
-    internal ref ButtonComponent TakerPawnEntityButtonComponent => ref _takerPawnEntity.Get<ButtonComponent>();
-    internal ref TextMeshProGUIComponent TakerPawnEntityTextMeshProGUIComponent => ref _takerPawnEntity.Get<TextMeshProGUIComponent>();
-
-    #endregion
-
-
-    #region TakerRookEntity
-
-    private EcsEntity _takerRookEntity;
-
-    internal ref UnitTypeComponent TakerRookEntityUnitTypeComponent => ref _takerRookEntity.Get<UnitTypeComponent>();
-    internal ref ButtonComponent TakerRookEntityButtonComponent => ref _takerRookEntity.Get<ButtonComponent>();
-    internal ref TextMeshProGUIComponent TakerRookEntityTextMeshProGUIComponent => ref _takerRookEntity.Get<TextMeshProGUIComponent>();
-
-    #endregion
-
-
-    #region TakerBishopEntity
-
-    private EcsEntity _takerBishopEntity;
-
-    internal ref UnitTypeComponent TakerBishopEntityUnitTypeComponent => ref _takerBishopEntity.Get<UnitTypeComponent>();
-    internal ref ButtonComponent TakerBishopEntityButtonComponent => ref _takerBishopEntity.Get<ButtonComponent>();
-    internal ref TextMeshProGUIComponent TakerBishopEntityTextMeshProGUIComponent => ref _takerBishopEntity.Get<TextMeshProGUIComponent>();
-
-    #endregion
-
-    #endregion
-
-
-    #region DonerEntity
-
-    private EcsEntity _donerEntity;
-
-    internal ref ButtonComponent DonerEntityButtonComponent => ref _donerEntity.Get<ButtonComponent>();
-    internal ref TextMeshProGUIComponent DonerEntityTextMeshProGUIComponent => ref _donerEntity.Get<TextMeshProGUIComponent>();
-    internal ref ActivatedDictionaryComponent DonerEntityIsActivatedDictionaryComponent => ref _donerEntity.Get<ActivatedDictionaryComponent>();
-    internal ref MistakeComponent DonerEntityMistakeComponent => ref _donerEntity.Get<MistakeComponent>();
-
-    #endregion
-
-
     #region Info
-
-    #region InfoKingEntity
-
-    //private EcsEntity _kingInfoEntity;
-
-    //internal ref AmountDictionaryComponent KingInfoEntityAmountDictionaryComponent => ref _kingInfoEntity.Get<AmountDictionaryComponent>();
-    //internal ref ActivatedDictionaryComponent KingInfoEntityActivatedDictionaryComponent => ref _kingInfoEntity.Get<ActivatedDictionaryComponent>();
-
-    #endregion
-
 
     private EcsEntity _infoEntity;
 
@@ -184,71 +162,6 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
 
     internal ref ActivatedDictionaryComponent ReadyEntIsActivatedDictCom => ref _readyEntity.Get<ActivatedDictionaryComponent>();
     internal ref StartGameComponent ReadyEntStartGameCom => ref _readyEntity.Get<StartGameComponent>();
-
-    #endregion
-
-
-    #region CellEnts
-
-    private EcsEntity[,] _cellEnts;
-    internal ref CellComponent CellEnt_CellCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellComponent>();
-
-    private EcsEntity _cellBaseOperationsEnt;
-    internal ref CellBaseOperationsComponent CellBaseOperEnt_CellBaseOperCom => ref _cellBaseOperationsEnt.Get<CellBaseOperationsComponent>();
-
-
-    #region CellUnitEnts
-
-    private EcsEntity[,] _cellUnitEnts;
-    internal ref CellUnitComponent CellUnitEnt_CellUnitCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<CellUnitComponent>();
-    internal ref OwnerComponent CellUnitEnt_OwnerCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<OwnerComponent>();
-    internal ref UnitTypeComponent CellUnitEnt_UnitTypeCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<UnitTypeComponent>();
-
-    #endregion
-
-
-    #region CellBuildingEnts
-
-    private EcsEntity[,] _cellBuildingEnts;
-
-    internal ref CellBuildingComponent CellBuildingEnt_CellBuildingCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellBuildingComponent>();
-    internal ref OwnerComponent CellBuildingEnt_OwnerCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerComponent>();
-    internal ref BuildingTypeComponent CellBuildingEnt_BuildingTypeCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<BuildingTypeComponent>();
-
-    #endregion
-
-
-    #region CellEnvironmentEnts
-
-    private EcsEntity[,] _cellEnvironmentEnts;
-    internal ref CellEnvironmentComponent CellEnvEnt_CellEnvironmentCom(params int[] xy) => ref _cellEnvironmentEnts[xy[X], xy[Y]].Get<CellEnvironmentComponent>();
-
-    #endregion
-
-
-    #region CellSupportVisionEnts
-
-    private EcsEntity[,] _cellSupportVisionEnts;
-    internal ref CellSupportVisionComponent CellSupVisEntCellSupportVisionCom(params int[] xy) => ref _cellSupportVisionEnts[xy[X], xy[Y]].Get<CellSupportVisionComponent>();
-
-    #endregion
-
-
-    #region CellEffectEnts
-
-    private EcsEntity[,] _cellEffectEnts;
-    internal ref CellEffectComponent CellEffectEnt_CellEffectCom(params int[] xy) => ref _cellEffectEnts[xy[X], xy[Y]].Get<CellEffectComponent>();
-
-    #endregion
-
-
-    internal int Xamount => _cellEnts.GetUpperBound(X) + 1;
-    internal int Yamount => _cellEnts.GetUpperBound(Y) + 1;
-
-    internal int XYForArray => Instance.StartValuesGameConfig.XY_FOR_ARRAY;
-
-    internal int X => Instance.StartValuesGameConfig.X;
-    internal int Y => Instance.StartValuesGameConfig.Y;
 
     #endregion
 
@@ -309,8 +222,26 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
     #region UniqueAbilityOneEnt
 
     private EcsEntity _uniqueFirstAbilityEnt;
-    internal ref ButtonComponent UniqueFirstAbilityEnt_ButtonCom => ref _uniqueFirstAbilityEnt.Get<ButtonComponent>();
+    internal ref ButtonComponent Unique1AbilityEnt_ButtonCom => ref _uniqueFirstAbilityEnt.Get<ButtonComponent>();
     internal ref TextMeshProGUIComponent UniqueFirstAbilityEnt_TextMeshProGUICom => ref _uniqueFirstAbilityEnt.Get<TextMeshProGUIComponent>();
+
+    #endregion
+
+
+    #region UniqueAbilityTwoEnt
+
+    private EcsEntity _uniqueSecondAbilityEnt;
+    internal ref ButtonComponent Unique2AbilityEnt_ButtonCom => ref _uniqueSecondAbilityEnt.Get<ButtonComponent>();
+    internal ref TextMeshProGUIComponent Unique2AbilityEnt_TextMeshProGUICom => ref _uniqueSecondAbilityEnt.Get<TextMeshProGUIComponent>();
+
+    #endregion
+
+
+    #region UniqueAbilityThreeEnt
+
+    private EcsEntity _uniqueThirdAbilityEnt;
+    internal ref ButtonComponent Unique3AbilityEnt_ButtonCom => ref _uniqueThirdAbilityEnt.Get<ButtonComponent>();
+    internal ref TextMeshProGUIComponent Unique3AbilityEnt_TextMeshProGUICom => ref _uniqueThirdAbilityEnt.Get<TextMeshProGUIComponent>();
 
     #endregion
 
@@ -325,11 +256,11 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
 
         #region Economy
 
-        FoodEntity = GameWorld.NewEntity();
-        WoodEntity = GameWorld.NewEntity();
-        OreEntity = GameWorld.NewEntity();
-        IronEntity = GameWorld.NewEntity();
-        GoldEntity = GameWorld.NewEntity();
+        _foodEntity = GameWorld.NewEntity();
+        _woodEntity = GameWorld.NewEntity();
+        _oreEntity = GameWorld.NewEntity();
+        _ironEntity = GameWorld.NewEntity();
+        _goldEntity = GameWorld.NewEntity();
 
         FoodEntityTextMeshProGUIComponent.TextMeshProUGUI = Instance.GameObjectPool.FoodAmmountText;
         WoodEntityTextMeshProGUIComponent.TextMeshProUGUI = Instance.GameObjectPool.WoodAmmountText;
@@ -337,14 +268,14 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
         IronEntityTextMeshProGUIComponent.TextMeshProUGUI = Instance.GameObjectPool.IronAmmountText;
         GoldEntityTextMeshProGUIComponent.TextMeshProUGUI = Instance.GameObjectPool.GoldAmmountText;
 
-        FoodEAmountDictC.AmountDict = new Dictionary<bool, int>();
+        FoodEnt_AmountDictCom.AmountDict = new Dictionary<bool, int>();
         WoodEAmountDictC.AmountDict = new Dictionary<bool, int>();
         OreEAmountDictC.AmountDict = new Dictionary<bool, int>();
         IronEAmountDictC.AmountDict = new Dictionary<bool, int>();
         GoldEAmountDictC.AmountDict = new Dictionary<bool, int>();
 
-        FoodEAmountDictC.AmountDict.Add(true, default);
-        FoodEAmountDictC.AmountDict.Add(false, default);
+        FoodEnt_AmountDictCom.AmountDict.Add(true, default);
+        FoodEnt_AmountDictCom.AmountDict.Add(false, default);
 
         WoodEAmountDictC.AmountDict.Add(true, default);
         WoodEAmountDictC.AmountDict.Add(false, default);
@@ -393,11 +324,20 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
 
         _donerEntity = GameWorld.NewEntity();
 
-        DonerEntityButtonComponent.Button = Instance.GameObjectPool.DoneButton;
+        DonerEntityButtonComponent.Button = GameObjectPool.DoneButton;
 
         DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary = new Dictionary<bool, bool>();
         DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary.Add(true, default);
         DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary.Add(false, default);
+
+
+        _truceEntity = GameWorld.NewEntity();
+
+        TruceEnt_ButtonCom.Button = GameObjectPool.TruceButton;
+
+        TruceEnt_ActivatedDictCom.IsActivatedDictionary = new Dictionary<bool, bool>();
+        TruceEnt_ActivatedDictCom.IsActivatedDictionary.Add(true, default);
+        TruceEnt_ActivatedDictCom.IsActivatedDictionary.Add(false, default);
 
         #endregion
 
@@ -461,6 +401,11 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
         InfoEnt_UpgradeCom.AmountUpgradeRookDict = new Dictionary<bool, int>();
         InfoEnt_UpgradeCom.AmountUpgradeBishopDict = new Dictionary<bool, int>();
 
+        InfoEnt_UpgradeCom.AmountUpgradeFarmDict = new Dictionary<bool, int>();
+        InfoEnt_UpgradeCom.AmountUpgradeWoodcutterDict = new Dictionary<bool, int>();
+        InfoEnt_UpgradeCom.AmountUpgradeMineDict = new Dictionary<bool, int>();
+
+
         InfoEnt_UpgradeCom.AmountUpgradePawnDict.Add(true, default);
         InfoEnt_UpgradeCom.AmountUpgradePawnDict.Add(false, default);
 
@@ -469,6 +414,16 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
 
         InfoEnt_UpgradeCom.AmountUpgradeBishopDict.Add(true, default);
         InfoEnt_UpgradeCom.AmountUpgradeBishopDict.Add(false, default);
+
+
+        InfoEnt_UpgradeCom.AmountUpgradeFarmDict.Add(true, default);
+        InfoEnt_UpgradeCom.AmountUpgradeFarmDict.Add(false, default);
+
+        InfoEnt_UpgradeCom.AmountUpgradeWoodcutterDict.Add(true, default);
+        InfoEnt_UpgradeCom.AmountUpgradeWoodcutterDict.Add(false, default);
+
+        InfoEnt_UpgradeCom.AmountUpgradeMineDict.Add(true, default);
+        InfoEnt_UpgradeCom.AmountUpgradeMineDict.Add(false, default);
 
         #endregion
 
@@ -515,12 +470,26 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
 
         _uniqueFirstAbilityEnt = GameWorld.NewEntity();
 
-        UniqueFirstAbilityEnt_ButtonCom.Button = Instance.GameObjectPool.UniqueFirstAbilityButton;
+        Unique1AbilityEnt_ButtonCom.Button = Instance.GameObjectPool.UniqueFirstAbilityButton;
         UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI = GameObjectPool.UniqueFirstAbilityText;
+
+
+        _uniqueSecondAbilityEnt = GameWorld.NewEntity();
+
+        Unique2AbilityEnt_ButtonCom.Button = Instance.GameObjectPool.UniqueSecondAbilityButton;
+        Unique2AbilityEnt_TextMeshProGUICom.TextMeshProUGUI = Instance.GameObjectPool.UniqueSecondAbilityText;
+
+
+        _uniqueThirdAbilityEnt = GameWorld.NewEntity();
+
+        Unique3AbilityEnt_ButtonCom.Button = Instance.GameObjectPool.UniqueThirdAbilityButton;
+        Unique3AbilityEnt_TextMeshProGUICom.TextMeshProUGUI = Instance.GameObjectPool.UniqueThirdAbilityText;
+
+
         #endregion
 
 
-       _rPCGeneralEntity = GameWorld.NewEntity();
+        _rPCGeneralEntity = GameWorld.NewEntity();
 
         RpcGeneralEnt_FromInfoCom.FromInfo = default;
 

@@ -28,8 +28,9 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new ZoneUISystem(eCSmanager), nameof(ZoneUISystem))
             .Add(new MistakeUISystem(eCSmanager), nameof(MistakeUISystem))
             .Add(new CityUISystem(eCSmanager), nameof(CityUISystem))
-            .Add(new RefreshUISystem(eCSmanager), nameof(RefreshUISystem))
-            .Add(new UniqueAbilitiesUISystem(eCSmanager), nameof(UniqueAbilitiesUISystem));
+            .Add(new UpdatedUISystem(eCSmanager), nameof(UpdatedUISystem))
+            .Add(new UniqueAbilitiesUISystem(eCSmanager), nameof(UniqueAbilitiesUISystem))
+            .Add(new TruceUISystem(eCSmanager), nameof(TruceUISystem));
 
 
         ForSelectorRunUpdateSystem

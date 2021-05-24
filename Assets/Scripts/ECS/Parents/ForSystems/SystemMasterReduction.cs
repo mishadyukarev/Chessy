@@ -3,7 +3,7 @@
     protected EntitiesMasterManager _eMM;
     protected SystemsMasterManager _sMM;
 
-    internal SystemMasterReduction(ECSmanager eCSmanager) : base(eCSmanager)
+    protected SystemMasterReduction(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _eMM = eCSmanager.EntitiesMasterManager;
         _sMM = eCSmanager.SystemsMasterManager;

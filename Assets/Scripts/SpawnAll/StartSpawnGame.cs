@@ -47,13 +47,17 @@ internal class StartSpawnGame : StartSpawn
         gameObjectPool.InGameLeftBuyRookButton = GameObject.Find("BuyRookButton").GetComponent<Button>();
         gameObjectPool.InGameLeftBuyBishopButton = GameObject.Find("BuyBishopButton").GetComponent<Button>();
 
+        gameObjectPool.LeftUpgradeFarmButton = GameObject.Find("UpgradeFarmButton").GetComponent<Button>();
+        gameObjectPool.LeftUpgradeWoodcutterButton = GameObject.Find("UpgradeWoodcutterButton").GetComponent<Button>();
+        gameObjectPool.LeftUpgradeMineButton = GameObject.Find("UpgradeMineButton").GetComponent<Button>();
+
         #endregion
 
 
         #region Right
 
-        gameObjectPool.RightUpImage = GameObject.Find("RightUpUnitImage").GetComponent<Image>();
-        gameObjectPool.RightMiddleImage = GameObject.Find("RightMiddleUnitImage").GetComponent<Image>();
+        //gameObjectPool.RightUpImage = GameObject.Find("RightUpUnitImage").GetComponent<Image>();
+        //gameObjectPool.RightMiddleImage = GameObject.Find("RightMiddleUnitImage").GetComponent<Image>();
 
 
         #region Down
@@ -78,11 +82,13 @@ internal class StartSpawnGame : StartSpawn
 
         gameObjectPool.UniqueFirstAbilityButton = GameObject.Find("UniqueAbilityButton1").GetComponent<Button>();
         gameObjectPool.UniqueFirstAbilityText = gameObjectPool.UniqueFirstAbilityButton.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
-        gameObjectPool.UniqueAbilityButton2 = GameObject.Find("UniqueAbilityButton2").GetComponent<Button>();
-        gameObjectPool.UniqueAbilityButton3 = GameObject.Find("UniqueAbilityButton3").GetComponent<Button>();
+        gameObjectPool.UniqueSecondAbilityButton = GameObject.Find("UniqueAbilityButton2").GetComponent<Button>();
+        gameObjectPool.UniqueSecondAbilityText = gameObjectPool.UniqueSecondAbilityButton.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+        gameObjectPool.UniqueThirdAbilityButton = GameObject.Find("UniqueAbilityButton3").GetComponent<Button>();
+        gameObjectPool.UniqueThirdAbilityText = gameObjectPool.UniqueThirdAbilityButton.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
 
 
-        gameObjectPool.RightDownImage = GameObject.Find("RightDownUnitImage").GetComponent<Image>();
+        gameObjectPool.RightImage = GameObject.Find("RightDownUnitImage").GetComponent<Image>();
 
         #endregion
 
@@ -97,6 +103,8 @@ internal class StartSpawnGame : StartSpawn
         gameObjectPool.GameDownTakerBishopButton = GameObject.Find("TakeUnit3Button").GetComponent<Button>();
 
         gameObjectPool.DoneButton = GameObject.Find("ButtonDone").GetComponent<Button>();
+
+        gameObjectPool.TruceButton = GameObject.Find("TruceButton").GetComponent<Button>();
 
         #endregion
 

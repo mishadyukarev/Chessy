@@ -4,8 +4,8 @@ using UnityEngine;
 public struct CellBuildingComponent
 {
     private EntitiesGeneralManager _eGM;
-
     private int[] _xy;
+
     private GameObject _cityGO;
     private GameObject _farmGO;
     private GameObject _woodcutterGO;

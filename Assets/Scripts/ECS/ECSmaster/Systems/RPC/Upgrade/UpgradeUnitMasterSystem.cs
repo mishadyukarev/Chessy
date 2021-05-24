@@ -8,8 +8,10 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
     internal UpgradeUnitMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
-    public void Run()
+    public override  void Run()
     {
+        base.Run();
+
         bool haveFood = true;
         bool haveWood = true;
         bool haveOre = true;
@@ -28,7 +30,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                 if (Info.Sender.IsMasterClient)
                 {
-                    haveFood = _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
+                    haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
                     haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
                     haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
                     haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
@@ -37,7 +39,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
+                        _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
                         _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
                         _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
@@ -56,7 +58,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                 }
                 else
                 {
-                    haveFood = _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
+                    haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
                     haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
                     haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
                     haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
@@ -65,7 +67,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
+                        _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
                         _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
                         _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
@@ -91,7 +93,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                 if (Info.Sender.IsMasterClient)
                 {
-                    haveFood = _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
+                    haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
                     haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
                     haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
                     haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
@@ -100,7 +102,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
+                        _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
                         _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
                         _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
@@ -119,7 +121,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                 }
                 else
                 {
-                    haveFood = _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
+                    haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
                     haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
                     haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
                     haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
@@ -128,7 +130,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
+                        _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
                         _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
                         _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
@@ -153,7 +155,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                 if (Info.Sender.IsMasterClient)
                 {
-                    haveFood = _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
+                    haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
                     haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
                     haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
                     haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
@@ -162,7 +164,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
+                        _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
                         _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
                         _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
@@ -179,7 +181,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                 }
                 else
                 {
-                    haveFood = _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
+                    haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
                     haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
                     haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
                     haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
@@ -188,7 +190,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
+                        _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
                         _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
                         _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;

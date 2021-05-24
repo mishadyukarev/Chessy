@@ -9,10 +9,7 @@ internal class BuilderMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
     private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
     private BuildingTypes BuildingType => _eMM.RPCMasterEnt_RPCMasterCom.BuildingType;
 
-    internal BuilderMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
-    {
-        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
-    }
+    internal BuilderMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
     public void Run()
     {
@@ -30,7 +27,7 @@ internal class BuilderMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
             Dictionary<bool, int> currentBuildingsDict = new Dictionary<bool, int>();
 
-            var foodAmountDict = _eGM.FoodEAmountDictC.AmountDict;
+            var foodAmountDict = _eGM.FoodEnt_AmountDictCom.AmountDict;
             var woodAmountDict = _eGM.WoodEAmountDictC.AmountDict;
             var oreAmountDict = _eGM.OreEAmountDictC.AmountDict;
             var ironAmountDict = _eGM.IronEAmountDictC.AmountDict;

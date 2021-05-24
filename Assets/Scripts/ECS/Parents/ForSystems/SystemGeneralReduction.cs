@@ -1,15 +1,21 @@
-﻿using static MainGame;
+﻿using Leopotam.Ecs;
+using static MainGame;
 
-internal abstract class SystemGeneralReduction
+internal abstract class SystemGeneralReduction : IEcsRunSystem
 {
     protected EntitiesGeneralManager _eGM;
     protected SystemsGeneralManager _sGM;
 
     protected StartValuesGameConfig StartValuesGameConfig = Instance.StartValuesGameConfig;
 
-    internal SystemGeneralReduction(ECSmanager eCSmanager)
+    protected SystemGeneralReduction(ECSmanager eCSmanager)
     {
         _eGM = eCSmanager.EntitiesGeneralManager;
         _sGM = eCSmanager.SystemsGeneralManager;
+    }
+
+    public virtual void Run()
+    {
+        
     }
 }

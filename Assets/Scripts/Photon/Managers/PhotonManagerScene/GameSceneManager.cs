@@ -14,9 +14,8 @@ internal class GameSceneManager : SceneManager
             if (_exitedPlayer.IsInactive)
             {
                 _timer += Time.deltaTime;
-                if (_timer >= 10)
+                if (_timer >= 120)
                 {
-                    LoadScene(0);
                     LeaveRoom();
                 }
             }
@@ -44,19 +43,16 @@ internal class GameSceneManager : SceneManager
     {
         base.OnMasterClientSwitched(newMasterClient);
 
-        LoadScene(0);
-        LeaveRoom();
+        _exitedPlayer = newMasterClient;
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
-        //Debug.LogFormat($"Player {0} entered room", newPlayer.NickName);
+
     }
 
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
-        //Debug.LogFormat($"Player {0} left room", otherPlayer.NickName);
-
         _exitedPlayer = otherPlayer;
     }
 }

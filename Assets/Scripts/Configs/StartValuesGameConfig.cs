@@ -9,7 +9,7 @@ public class StartValuesGameConfig : ScriptableObject
     #region PERCENT ENVIRONMENT
 
     internal readonly byte PERCENT_FOOD = 20;
-    internal readonly byte PERCENT_TREE = 20;
+    internal readonly byte PERCENT_TREE = 30;
     internal readonly byte PERCENT_HILL = 5;
     internal readonly byte PERCENT_MOUNTAIN = 5;
 
@@ -40,11 +40,11 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_GOLD_MASTER = 0;
     internal readonly int AMOUNT_GOLD_OTHER = 0;
 
-    internal readonly int AMOUNT_FOOD_MASTER = 40;
-    internal readonly int AMOUNT_FOOD_OTHER = 40;
+    internal readonly int AMOUNT_FOOD_MASTER = 60;
+    internal readonly int AMOUNT_FOOD_OTHER = 60;
 
-    internal readonly int AMOUNT_WOOD_MASTER = 40;
-    internal readonly int AMOUNT_WOOD_OTHER = 40;
+    internal readonly int AMOUNT_WOOD_MASTER = 60;
+    internal readonly int AMOUNT_WOOD_OTHER = 60;
 
     internal readonly int AMOUNT_ORE_MASTER = 0;
     internal readonly int AMOUNT_ORE_OTHER = 0;
@@ -270,15 +270,10 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region Click
 
-    private readonly float PERCENT_FOR_PROTECTION_KING = 0.3f;
-    private readonly float PERCENT_FOR_PROTECTION_PAWN = 0.3f;
-    private readonly float PERCENT_FOR_PROTECTION_ROOK = 0.3f;
-    private readonly float PERCENT_FOR_PROTECTION_BISHOP = 0.3f;
-
-    internal int PROTECTION_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_FOR_PROTECTION_KING);
-    internal int PROTECTION_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_FOR_PROTECTION_PAWN);
-    internal int PROTECTION_ROOK => (int)(SIMPLE_POWER_DAMAGE_ROOK * PERCENT_FOR_PROTECTION_ROOK);
-    internal int PROTECTION_BISHOP => (int)(SIMPLE_POWER_DAMAGE_BISHOP * PERCENT_FOR_PROTECTION_BISHOP);
+    internal readonly float PERCENT_FOR_PROTECTION_KING = 0.3f;
+    internal readonly float PERCENT_FOR_PROTECTION_PAWN = 0.3f;
+    internal readonly float PERCENT_FOR_PROTECTION_ROOK = 0.3f;
+    internal readonly float PERCENT_FOR_PROTECTION_BISHOP = 0.3f;
 
     #endregion
 

@@ -2,19 +2,17 @@
 using Photon.Pun;
 using static MainGame;
 
-internal class DonerMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
+internal class DonerMasterSystem : RPCMasterSystemReduction
 {
-    private SystemsMasterManager _sMM;
     internal bool isDone => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
     internal PhotonMessageInfo info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
-    internal DonerMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
-    {
-        _sMM = eCSmanager.SystemsMasterManager;
-    }
+    internal DonerMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
-    public void Run()
+    public override void Run()
     {
+        base.Run();
+
         if (_eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[info.Sender.IsMasterClient])
         {
             _photonPunRPC.DoneToGeneral(info.Sender, false, isDone, _eGM.UpdatorEntityAmountComponent.Amount);

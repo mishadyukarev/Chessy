@@ -7,14 +7,17 @@ internal class VisibilityUnitsMasterSystem : SystemGeneralReduction, IEcsRunSyst
 {
     internal VisibilityUnitsMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
-    public void Run()
+    public override void Run()
     {
+        base.Run();
+
+
         for (int x = 0; x < _eGM.Xamount; x++)
         {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                _eGM.CellUnitEnt_CellUnitCom(x, y).IsActiveUnitMaster = true;
-                _eGM.CellUnitEnt_CellUnitCom(x, y).IsActiveUnitOther = true;
+                _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(true, true);
+                _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(false, true);
 
 
 
@@ -24,7 +27,7 @@ internal class VisibilityUnitsMasterSystem : SystemGeneralReduction, IEcsRunSyst
                     {
                         if (_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveTree)
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).IsActiveUnitOther = false;
+                            _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(false, false);
 
                             List<int[]> list = _eGM.CellUnitEnt_CellUnitCom(x, y).TryGetXYAround();
                             foreach (var xy in list)
@@ -33,7 +36,7 @@ internal class VisibilityUnitsMasterSystem : SystemGeneralReduction, IEcsRunSyst
                                 {
                                     if (!_eGM.CellUnitEnt_OwnerCom(xy).IsHim(Instance.MasterClient))
                                     {
-                                        _eGM.CellUnitEnt_CellUnitCom(x, y).IsActiveUnitOther = true;
+                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(false, true);
                                         break;
                                     }
                                 }
@@ -44,7 +47,7 @@ internal class VisibilityUnitsMasterSystem : SystemGeneralReduction, IEcsRunSyst
                     {
                         if (_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveTree)
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).IsActiveUnitMaster = false;
+                            _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(true, false);
 
                             List<int[]> list = _eGM.CellUnitEnt_CellUnitCom(x, y).TryGetXYAround();
                             foreach (var xy in list)
@@ -53,7 +56,7 @@ internal class VisibilityUnitsMasterSystem : SystemGeneralReduction, IEcsRunSyst
                                 {
                                     if (_eGM.CellUnitEnt_OwnerCom(xy).IsHim(Instance.MasterClient))
                                     {
-                                        _eGM.CellUnitEnt_CellUnitCom(x, y).IsActiveUnitMaster = true;
+                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(true, true);
                                         break;
                                     }
                                 }
@@ -63,7 +66,7 @@ internal class VisibilityUnitsMasterSystem : SystemGeneralReduction, IEcsRunSyst
                 }
 
 
-                _eGM.CellUnitEnt_CellUnitCom(x, y).ActiveVisionCell(_eGM.CellUnitEnt_CellUnitCom(x, y).IsActiveUnitMaster, _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
+                _eGM.CellUnitEnt_CellUnitCom(x, y).ActiveVisionCell(_eGM.CellUnitEnt_CellUnitCom(x, y).GetActiveUnit(Instance.IsMasterClient), _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
             }
         }
     }

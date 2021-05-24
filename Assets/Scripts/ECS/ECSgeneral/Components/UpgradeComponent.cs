@@ -6,13 +6,7 @@ internal struct UpgradeComponent
     internal Dictionary<bool, int> AmountUpgradeRookDict;
     internal Dictionary<bool, int> AmountUpgradeBishopDict;
 
-
-
-    //internal int AmountUpgradePawnMaster;
-    //internal int AmountUpgradeRookMaster;
-    //internal int AmountUpgradeBishopMaster;
-
-    //internal int AmountUpgradePawnOther;
-    //internal int AmountUpgradeRookOther;
-    //internal int AmountUpgradeBishopOther;
+    internal Dictionary<bool, int> AmountUpgradeFarmDict;
+    internal Dictionary<bool, int> AmountUpgradeWoodcutterDict;
+    internal Dictionary<bool, int> AmountUpgradeMineDict;
 }

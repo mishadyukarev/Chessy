@@ -1,11 +1,8 @@
-﻿using Leopotam.Ecs;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using static MainGame;
 
-internal class CityUISystem : SystemGeneralReduction, IEcsRunSystem
+internal class CityUISystem : RPCGeneralReduction
 {
-    private PhotonPunRPC _photonPunRPC;
-
     private Image _leftImage;
 
     private Button _meltOreButton;
@@ -18,13 +15,15 @@ internal class CityUISystem : SystemGeneralReduction, IEcsRunSystem
     private Button _gameLeftBuyRookButton;
     private Button _gameLeftBuyBishopButton;
 
+    private Button _inGameLeftUpgradeFarmButton;
+    private Button _inGameLeftUpgradeWoodcutter;
+    private Button _inGameLeftUpgradeMine;
+
     private int[] _xySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
 
 
     internal CityUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
-
         _leftImage = Instance.GameObjectPool.LeftImage;
 
         _inGameLeftUpgradePawnButton = Instance.GameObjectPool.InGameLeftUpgadePawnButton;
@@ -50,10 +49,17 @@ internal class CityUISystem : SystemGeneralReduction, IEcsRunSystem
         _meltOreButton.onClick.AddListener(delegate { MeltOre(); });
 
 
+        _inGameLeftUpgradeFarmButton = Instance.GameObjectPool.LeftUpgradeFarmButton;
+        _inGameLeftUpgradeFarmButton.onClick.AddListener(delegate { UpgradeBuilding(BuildingTypes.Farm); });
+        _inGameLeftUpgradeWoodcutter = Instance.GameObjectPool.LeftUpgradeWoodcutterButton;
+        _inGameLeftUpgradeWoodcutter.onClick.AddListener(delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
+        _inGameLeftUpgradeMine = Instance.GameObjectPool.LeftUpgradeMineButton;
+        _inGameLeftUpgradeMine.onClick.AddListener(delegate { UpgradeBuilding(BuildingTypes.Mine); });
     }
 
-    public void Run()
+    public override void Run()
     {
+        base.Run();
 
         if (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).BuildingType == BuildingTypes.City)
         {
@@ -74,6 +80,7 @@ internal class CityUISystem : SystemGeneralReduction, IEcsRunSystem
     private void BuyUnit(UnitTypes unitType) => _photonPunRPC.CreateUnitToMaster(unitType);
 
     private void UpgradeUnit(UnitTypes unitType) => _photonPunRPC.UpgradeUnitToMaster(unitType);
+    private void UpgradeBuilding(BuildingTypes buildingType) => _photonPunRPC.UpgradeBuildingToMaster(buildingType);
 
     private void MeltOre() => _photonPunRPC.MeltOreToMaster();
 }

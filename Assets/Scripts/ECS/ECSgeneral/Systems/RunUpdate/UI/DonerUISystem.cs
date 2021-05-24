@@ -13,8 +13,10 @@ internal class DonerUISystem : RPCGeneralReduction, IEcsRunSystem
         CurrentButton.onClick.AddListener(delegate { Done(); });
     }
 
-    public void Run()
+    public override void Run()
     {
+        base.Run();
+
         if (IsCurrentDone) CurrentButton.image.color = Color.red;
         else CurrentButton.image.color = Color.white;
     }

@@ -29,7 +29,11 @@ internal sealed class SystemsMasterManager : SystemsManager
             .Add(new GetterUnitMasterSystem(eCSmanager), nameof(GetterUnitMasterSystem))
             .Add(new MeltOreMasterSystem(eCSmanager), nameof(MeltOreMasterSystem))
             .Add(new SetterUnitMasterSystem(eCSmanager), nameof(SetterUnitMasterSystem))
-            .Add(new UniquePawnAbilityMasterSystem(eCSmanager), nameof(UniquePawnAbilityMasterSystem));
+            .Add(new UniquePawnAbilityMasterSystem(eCSmanager), nameof(UniquePawnAbilityMasterSystem))
+            .Add(new FireUpdatorMasterSystem(eCSmanager), nameof(FireUpdatorMasterSystem))
+            .Add(new UpgradeBuildingMasterSystem(eCSmanager), nameof(UpgradeBuildingMasterSystem))
+            .Add(new EconomyUpdatorMasterSystem(eCSmanager), nameof(EconomyUpdatorMasterSystem))
+            .Add(new EnvironmentUpdatorMasterSystem(eCSmanager), nameof(EnvironmentUpdatorMasterSystem));
 
 
         InitAndProcessInjectsSystems();

@@ -37,11 +37,11 @@ internal class UISystem : SystemGeneralReduction, IEcsRunSystem
 
         #region Images
 
-        _rightUpUnitImage = MainGame.Instance.GameObjectPool.RightUpImage;
-        _rightMiddleUnitImage = MainGame.Instance.GameObjectPool.RightMiddleImage;
+        //_rightUpUnitImage = MainGame.Instance.GameObjectPool.RightUpImage;
+        //_rightMiddleUnitImage = MainGame.Instance.GameObjectPool.RightMiddleImage;
         _leftEconomyImage = MainGame.Instance.GameObjectPool.LeftImage;
 
-        _rightMiddleUnitImage.gameObject.SetActive(false);
+        //_rightMiddleUnitImage.gameObject.SetActive(false);
 
         #endregion
 
@@ -49,8 +49,8 @@ internal class UISystem : SystemGeneralReduction, IEcsRunSystem
         #region Ability zone
 
         _uniqueAbilityButton1 = MainGame.Instance.GameObjectPool.UniqueFirstAbilityButton;
-        _uniqueAbilityButton2 = MainGame.Instance.GameObjectPool.UniqueAbilityButton2;
-        _uniqueAbilityButton3 = MainGame.Instance.GameObjectPool.UniqueAbilityButton3;
+        _uniqueAbilityButton2 = MainGame.Instance.GameObjectPool.UniqueSecondAbilityButton;
+        _uniqueAbilityButton3 = MainGame.Instance.GameObjectPool.UniqueThirdAbilityButton;
 
 
         #endregion
@@ -89,6 +89,16 @@ internal class UISystem : SystemGeneralReduction, IEcsRunSystem
         else
         {
             ActivateUniqueAbilities(default, false);
+        }
+
+        Instance.GameObjectPool.RightImage.gameObject.SetActive(false);
+
+        if (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).HaveUnit)
+        {
+            if (_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).GetActiveUnit(Instance.IsMasterClient))
+            {
+                Instance.GameObjectPool.RightImage.gameObject.SetActive(true);
+            }
         }
 
 

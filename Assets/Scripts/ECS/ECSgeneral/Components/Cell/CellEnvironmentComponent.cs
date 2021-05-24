@@ -4,8 +4,8 @@ using UnityEngine;
 public struct CellEnvironmentComponent
 {
     private EntitiesGeneralManager _eGM;
-
     private int[] _xy;
+
     private bool _haveFood;
     private bool _haveMountain;
     private bool _haveTree;
@@ -14,24 +14,7 @@ public struct CellEnvironmentComponent
     private GameObject _mountainGO;
     private GameObject _treeGO;
     private GameObject _hillGO;
-
-    internal CellEnvironmentComponent(EntitiesGeneralManager eGM, GameObjectPool gameObjectPool, params int[] xy)
-    {
-        _eGM = eGM;
-
-
-        _xy = xy;
-
-        _haveFood = false;
-        _haveMountain = false;
-        _haveTree = false;
-        _haveHill = false;
-
-        _foodGO = gameObjectPool.CellEnvironmentFoodGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _mountainGO = gameObjectPool.CellEnvironmentMountainGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _treeGO = gameObjectPool.CellEnvironmentTreeGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _hillGO = gameObjectPool.CellEnvironmentHillGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-    }
+    internal int AmountTrees;
 
     internal bool HaveFood => _haveFood;
     internal bool HaveMountain => _haveMountain;
@@ -52,6 +35,27 @@ public struct CellEnvironmentComponent
         }
     }
 
+
+
+    internal CellEnvironmentComponent(EntitiesGeneralManager eGM, GameObjectPool gameObjectPool, params int[] xy)
+    {
+        _eGM = eGM;
+        _xy = xy;
+
+        AmountTrees = default;
+
+        _haveFood = false;
+        _haveMountain = false;
+        _haveTree = false;
+        _haveHill = false;
+
+        _foodGO = gameObjectPool.CellEnvironmentFoodGOs[_xy[_eGM.X], _xy[_eGM.Y]];
+        _mountainGO = gameObjectPool.CellEnvironmentMountainGOs[_xy[_eGM.X], _xy[_eGM.Y]];
+        _treeGO = gameObjectPool.CellEnvironmentTreeGOs[_xy[_eGM.X], _xy[_eGM.Y]];
+        _hillGO = gameObjectPool.CellEnvironmentHillGOs[_xy[_eGM.X], _xy[_eGM.Y]];
+    }
+
+
     internal void SetResetEnvironment(bool isActive, EnvironmentTypes environmentType)
     {
         switch (environmentType)
@@ -64,6 +68,7 @@ public struct CellEnvironmentComponent
             case EnvironmentTypes.Tree:
                 _haveTree = isActive;
                 _treeGO.SetActive(isActive);
+                AmountTrees = Random.Range(30, 50);
                 break;
 
             case EnvironmentTypes.Hill:

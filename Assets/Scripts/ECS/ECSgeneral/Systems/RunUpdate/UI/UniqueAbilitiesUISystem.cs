@@ -1,42 +1,68 @@
 ﻿using Leopotam.Ecs;
 
-internal class UniqueAbilitiesUISystem : RPCGeneralReduction, IEcsRunSystem
+internal sealed class UniqueAbilitiesUISystem : RPCGeneralReduction
 {
     private int[] XySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
 
-    internal UniqueAbilitiesUISystem(ECSmanager eCSmanager) : base(eCSmanager)
+    internal UniqueAbilitiesUISystem(ECSmanager eCSmanager) : base(eCSmanager) { }
+
+    public override void Run()
     {
+        base.Run();
 
-    }
 
-    public void Run()
-    {
-        _eGM.UniqueFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
+        _eGM.Unique1AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
+        _eGM.Unique2AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
+        _eGM.Unique3AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
 
-        switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
+        if (_eGM.CellUnitEnt_OwnerCom(XySelectedCell).IsMine)
         {
-            case UnitTypes.None:
-                break;
 
-            case UnitTypes.King:
-                break;
+            switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
+            {
+                case UnitTypes.None:
+                    break;
 
-            case UnitTypes.Pawn:
-                _eGM.UniqueFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
-                _eGM.UniqueFirstAbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
-                _eGM.UniqueFirstAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityOne); });
-                _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Fire something";
+                case UnitTypes.King:
+                    break;
 
-                break;
+                case UnitTypes.Pawn:
+                    _eGM.Unique1AbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
+                    _eGM.Unique1AbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
+                    _eGM.Unique1AbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityOne); });
 
-            case UnitTypes.Rook:
-                break;
+                    if (_eGM.CellEffectEnt_CellEffectCom(XySelectedCell).HaveFire)
+                    {
+                        _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Put Out FIRE";
+                    }
+                    else
+                    {
 
-            case UnitTypes.Bishop:
-                break;
+                        _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Fire forest";
+                    }
 
-            default:
-                break;
+
+                    _eGM.Unique2AbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
+                    _eGM.Unique2AbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
+                    _eGM.Unique2AbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityTwo); });
+                    _eGM.Unique2AbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Fertilize Field";
+
+                    _eGM.Unique3AbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
+                    _eGM.Unique3AbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
+                    _eGM.Unique3AbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityThree); });
+                    _eGM.Unique3AbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Seed Forest";
+                    break;
+
+                case UnitTypes.Rook:
+                    break;
+
+                case UnitTypes.Bishop:
+                    break;
+
+                default:
+                    break;
+            }
+
         }
     }
 

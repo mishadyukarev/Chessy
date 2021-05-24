@@ -60,16 +60,17 @@ internal class GameObjectPool
     internal Button InGameLeftBuyRookButton;
     internal Button InGameLeftBuyBishopButton;
 
+    internal Button LeftUpgradeFarmButton;
+    internal Button LeftUpgradeWoodcutterButton;
+    internal Button LeftUpgradeMineButton;
+
     #endregion
 
 
     #region Right
 
-    internal Image RightUpImage;
-    internal Image RightMiddleImage;
-    internal Image RightDownImage;
+    internal Image RightImage;
 
-    #region Down
 
     internal TextMeshProUGUI HpCurrentUnitText;
     internal TextMeshProUGUI DamageCurrentUnitText;
@@ -88,13 +89,15 @@ internal class GameObjectPool
 
     internal Button UniqueFirstAbilityButton;
     internal TextMeshProUGUI UniqueFirstAbilityText;
-    internal Button UniqueAbilityButton2;
-    internal Button UniqueAbilityButton3;
+
+    internal Button UniqueSecondAbilityButton;
+    internal TextMeshProUGUI UniqueSecondAbilityText;
+
+    internal Button UniqueThirdAbilityButton;
+    internal TextMeshProUGUI UniqueThirdAbilityText;
 
     internal Button StandartAbilityButton1;
     internal Button StandartAbilityButton2;
-
-    #endregion
 
     #endregion
 
@@ -107,6 +110,8 @@ internal class GameObjectPool
     internal Button GameDownTakerBishopButton;
 
     internal Button DoneButton;
+
+    internal Button TruceButton;
 
     #endregion
 

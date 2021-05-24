@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static MainGame;
 
-internal class RefreshUISystem : SystemGeneralReduction, IEcsRunSystem
+internal class UpdatedUISystem : SystemGeneralReduction, IEcsRunSystem
 {
     private GameObject _inGameRefreshZoneGO;
     private Image _inGameRefreshZoneRefreshImage;
@@ -13,7 +13,7 @@ internal class RefreshUISystem : SystemGeneralReduction, IEcsRunSystem
 
     private float _timer;
 
-    internal RefreshUISystem(ECSmanager eCSmanager) : base(eCSmanager)
+    internal UpdatedUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
         _inGameRefreshZoneGO = Instance.GameObjectPool.InGameRefreshZoneGO;
         _inGameRefreshZoneRefreshImage = Instance.GameObjectPool.InGameRefreshZoneRefreshImage;

@@ -7,7 +7,7 @@ internal class EconomyUISystem : SystemGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        _eGM.FoodEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.FoodEAmountDictC.AmountDict[Instance.IsMasterClient].ToString();
+        _eGM.FoodEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.FoodEnt_AmountDictCom.AmountDict[Instance.IsMasterClient].ToString();
         _eGM.WoodEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.WoodEAmountDictC.AmountDict[Instance.IsMasterClient].ToString();
         _eGM.OreEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.OreEAmountDictC.AmountDict[Instance.IsMasterClient].ToString();
         _eGM.IronEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.IronEAmountDictC.AmountDict[Instance.IsMasterClient].ToString();

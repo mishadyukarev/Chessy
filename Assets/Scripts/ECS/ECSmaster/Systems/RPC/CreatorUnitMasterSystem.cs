@@ -28,7 +28,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                 if (Info.Sender.IsMasterClient)
                 {
-                    haveFood = _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+                    haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
                     haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_PAWN;
                     haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_PAWN;
                     haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
@@ -36,7 +36,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+                        _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
                         _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_PAWN;
                         _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_PAWN;
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
@@ -47,7 +47,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                 }
                 else
                 {
-                    haveFood = _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+                    haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
                     haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_PAWN;
                     haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_PAWN;
                     haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
@@ -55,7 +55,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+                        _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
                         _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_PAWN;
                         _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_PAWN;
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
@@ -71,7 +71,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                 if (Info.Sender.IsMasterClient)
                 {
-                    haveFood = _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
+                    haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
                     haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_ROOK;
                     haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_ROOK;
                     haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
@@ -79,7 +79,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
+                        _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
                         _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_ROOK;
                         _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_ROOK;
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
@@ -90,7 +90,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                 }
                 else
                 {
-                    haveFood = _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
+                    haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
                     haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_ROOK;
                     haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_ROOK;
                     haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
@@ -98,7 +98,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
+                        _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
                         _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_ROOK;
                         _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_ROOK;
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
@@ -115,7 +115,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                 if (Info.Sender.IsMasterClient)
                 {
-                    haveFood = _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
+                    haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
                     haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
                     haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_BISHOP;
                     haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
@@ -123,7 +123,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
+                        _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
                         _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
                         _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_BISHOP;
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
@@ -134,7 +134,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                 }
                 else
                 {
-                    haveFood = _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
+                    haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
                     haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
                     haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_BUYING_BISHOP;
                     haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
@@ -142,7 +142,7 @@ internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                     if (haveFood && haveWood && haveOre && haveIron && haveGold)
                     {
-                        _eGM.FoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
+                        _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
                         _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
                         _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_BUYING_BISHOP;
                         _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
