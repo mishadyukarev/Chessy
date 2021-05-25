@@ -14,24 +14,24 @@ internal class ShiftUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
     public void Run()
     {
-        List<int[]> xyAvailableCellsForShift = _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).GetCellsForShift();
+        List<int[]> xyAvailableCellsForShift = _eGM.CellEnt_CellUnitCom(XyPreviousCell).GetCellsForShift();
 
-        if (_eGM.CellUnitEnt_OwnerCom(XyPreviousCell).IsHim(Info.Sender) && _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).MinAmountSteps)
+        if (_eGM.CellEnt_CellUnitCom(XyPreviousCell).IsHim(Info.Sender) && _eGM.CellEnt_CellUnitCom(XyPreviousCell).MinAmountSteps)
         {
             if (_eGM.CellBaseOperEnt_CellBaseOperCom.TryFindCellInList(XySelectedCell, xyAvailableCellsForShift))
             {
-                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).SetUnit(XyPreviousCell);
+                _eGM.CellEnt_CellUnitCom(XySelectedCell).SetUnit(XyPreviousCell);
 
 
-                _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).ResetUnit();
+                _eGM.CellEnt_CellUnitCom(XyPreviousCell).ResetUnit();
 
 
-                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps
-                    -= _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).NeedAmountSteps;
-                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps < 0) _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps = 0;
+                _eGM.CellEnt_CellUnitCom(XySelectedCell).AmountSteps
+                    -= _eGM.CellEnt_CellUnitCom(XySelectedCell).NeedAmountSteps;
+                if (_eGM.CellEnt_CellUnitCom(XySelectedCell).AmountSteps < 0) _eGM.CellEnt_CellUnitCom(XySelectedCell).AmountSteps = 0;
 
-                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsProtected = false;
-                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsRelaxed = false;
+                _eGM.CellEnt_CellUnitCom(XySelectedCell).IsProtected = false;
+                _eGM.CellEnt_CellUnitCom(XySelectedCell).IsRelaxed = false;
             }
         }
     }

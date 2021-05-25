@@ -16,27 +16,27 @@ internal class VisibilityUnitsMasterSystem : SystemGeneralReduction, IEcsRunSyst
         {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(true, true);
-                _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(false, true);
+                _eGM.CellEnt_CellUnitCom(x, y).SetActiveUnit(true, true);
+                _eGM.CellEnt_CellUnitCom(x, y).SetActiveUnit(false, true);
 
 
 
-                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
+                if (_eGM.CellEnt_CellUnitCom(x, y).HaveUnit)
                 {
-                    if (_eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Instance.MasterClient))
+                    if (_eGM.CellEnt_CellUnitCom(x, y).IsHim(Instance.MasterClient))
                     {
-                        if (_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveTree)
+                        if (_eGM.CellEnt_CellEnvCom(x, y).HaveAdultTree)
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(false, false);
+                            _eGM.CellEnt_CellUnitCom(x, y).SetActiveUnit(false, false);
 
-                            List<int[]> list = _eGM.CellUnitEnt_CellUnitCom(x, y).TryGetXYAround();
+                            List<int[]> list = _eGM.CellEnt_CellUnitCom(x, y).TryGetXYAround();
                             foreach (var xy in list)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveUnit)
+                                if (_eGM.CellEnt_CellUnitCom(xy).HaveUnit)
                                 {
-                                    if (!_eGM.CellUnitEnt_OwnerCom(xy).IsHim(Instance.MasterClient))
+                                    if (!_eGM.CellEnt_CellUnitCom(xy).IsHim(Instance.MasterClient))
                                     {
-                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(false, true);
+                                        _eGM.CellEnt_CellUnitCom(x, y).SetActiveUnit(false, true);
                                         break;
                                     }
                                 }
@@ -45,18 +45,18 @@ internal class VisibilityUnitsMasterSystem : SystemGeneralReduction, IEcsRunSyst
                     }
                     else
                     {
-                        if (_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveTree)
+                        if (_eGM.CellEnt_CellEnvCom(x, y).HaveAdultTree)
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(true, false);
+                            _eGM.CellEnt_CellUnitCom(x, y).SetActiveUnit(true, false);
 
-                            List<int[]> list = _eGM.CellUnitEnt_CellUnitCom(x, y).TryGetXYAround();
+                            List<int[]> list = _eGM.CellEnt_CellUnitCom(x, y).TryGetXYAround();
                             foreach (var xy in list)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveUnit)
+                                if (_eGM.CellEnt_CellUnitCom(xy).HaveUnit)
                                 {
-                                    if (_eGM.CellUnitEnt_OwnerCom(xy).IsHim(Instance.MasterClient))
+                                    if (_eGM.CellEnt_CellUnitCom(xy).IsHim(Instance.MasterClient))
                                     {
-                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(true, true);
+                                        _eGM.CellEnt_CellUnitCom(x, y).SetActiveUnit(true, true);
                                         break;
                                     }
                                 }
@@ -66,7 +66,7 @@ internal class VisibilityUnitsMasterSystem : SystemGeneralReduction, IEcsRunSyst
                 }
 
 
-                _eGM.CellUnitEnt_CellUnitCom(x, y).ActiveVisionCell(_eGM.CellUnitEnt_CellUnitCom(x, y).GetActiveUnit(Instance.IsMasterClient), _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
+                _eGM.CellEnt_CellUnitCom(x, y).ActiveVisionCell(_eGM.CellEnt_CellUnitCom(x, y).GetActiveUnit(Instance.IsMasterClient), _eGM.CellEnt_CellUnitCom(x, y).UnitType);
             }
         }
     }

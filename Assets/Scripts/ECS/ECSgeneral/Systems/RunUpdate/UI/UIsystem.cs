@@ -63,9 +63,9 @@ internal class UISystem : SystemGeneralReduction, IEcsRunSystem
 
     public void Run()
     {
-        if (_eGM.CellUnitEnt_OwnerCom(_xySelectedCell).IsMine)
+        if (_eGM.CellEnt_CellUnitCom(_xySelectedCell).IsMine)
         {
-            switch (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).UnitType)
+            switch (_eGM.CellEnt_CellUnitCom(_xySelectedCell).UnitType)
             {
                 case UnitTypes.None:
 
@@ -93,9 +93,9 @@ internal class UISystem : SystemGeneralReduction, IEcsRunSystem
 
         Instance.GameObjectPool.RightImage.gameObject.SetActive(false);
 
-        if (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).HaveUnit)
+        if (_eGM.CellEnt_CellUnitCom(_xySelectedCell).HaveUnit)
         {
-            if (_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).GetActiveUnit(Instance.IsMasterClient))
+            if (_eGM.CellEnt_CellUnitCom(_xySelectedCell).GetActiveUnit(Instance.IsMasterClient))
             {
                 Instance.GameObjectPool.RightImage.gameObject.SetActive(true);
             }
@@ -104,7 +104,7 @@ internal class UISystem : SystemGeneralReduction, IEcsRunSystem
 
 
 
-        switch (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).BuildingType)
+        switch (_eGM.CellEnt_CellBuildingCom(_xySelectedCell).BuildingType)
         {
             case BuildingTypes.None:
                 ActiveLeftEconomy(false);

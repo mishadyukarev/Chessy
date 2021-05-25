@@ -33,7 +33,8 @@ internal sealed class SystemsMasterManager : SystemsManager
             .Add(new FireUpdatorMasterSystem(eCSmanager), nameof(FireUpdatorMasterSystem))
             .Add(new UpgradeBuildingMasterSystem(eCSmanager), nameof(UpgradeBuildingMasterSystem))
             .Add(new EconomyUpdatorMasterSystem(eCSmanager), nameof(EconomyUpdatorMasterSystem))
-            .Add(new EnvironmentUpdatorMasterSystem(eCSmanager), nameof(EnvironmentUpdatorMasterSystem));
+            .Add(new EnvironmentUpdatorMasterSystem(eCSmanager), nameof(EnvironmentUpdatorMasterSystem))
+            .Add(new TruceMasterSystem(eCSmanager), nameof(TruceMasterSystem));
 
 
         InitAndProcessInjectsSystems();

@@ -45,17 +45,17 @@ internal class BuildingUISystem : SystemGeneralReduction, IEcsRunSystem
 
 
 
-        if (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).HaveUnit)
+        if (_eGM.CellEnt_CellUnitCom(_xySelectedCell).HaveUnit)
         {
-            if (_eGM.CellUnitEnt_OwnerCom(_xySelectedCell).IsMine)
+            if (_eGM.CellEnt_CellUnitCom(_xySelectedCell).IsMine)
             {
-                switch (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).UnitType)
+                switch (_eGM.CellEnt_CellUnitCom(_xySelectedCell).UnitType)
                 {
                     case UnitTypes.King:
 
-                        if (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).HaveBuilding)
+                        if (_eGM.CellEnt_CellBuildingCom(_xySelectedCell).HaveBuilding)
                         {
-                            if (!_eGM.CellBuildingEnt_OwnerCom(_xySelectedCell).Owner.IsLocal)
+                            if (!_eGM.CellEnt_CellBuildingCom(_xySelectedCell).Owner.IsLocal)
                             {
                                 _buildingAbilityButton4.gameObject.SetActive(true);
                             }
@@ -71,9 +71,9 @@ internal class BuildingUISystem : SystemGeneralReduction, IEcsRunSystem
                         {
                             for (int y = 0; y < _eGM.Yamount; y++)
                             {
-                                if (_eGM.CellBuildingEnt_BuildingTypeCom(x, y).BuildingType == BuildingTypes.City)
+                                if (_eGM.CellEnt_CellBuildingCom(x, y).BuildingType == BuildingTypes.City)
                                 {
-                                    if (_eGM.CellBuildingEnt_OwnerCom(x, y).Owner.IsLocal)
+                                    if (_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsLocal)
                                     {
                                         haveCity = true;
                                     }
@@ -87,11 +87,11 @@ internal class BuildingUISystem : SystemGeneralReduction, IEcsRunSystem
                         _buildingAbilityButton2.gameObject.SetActive(true);
                         _buildingAbilityButton3.gameObject.SetActive(true);
 
-                        if (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).HaveBuilding)
+                        if (_eGM.CellEnt_CellBuildingCom(_xySelectedCell).HaveBuilding)
                         {
-                            if (_eGM.CellBuildingEnt_OwnerCom(_xySelectedCell).Owner.IsLocal)
+                            if (_eGM.CellEnt_CellBuildingCom(_xySelectedCell).Owner.IsLocal)
                             {
-                                if (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).BuildingType != BuildingTypes.City)
+                                if (_eGM.CellEnt_CellBuildingCom(_xySelectedCell).BuildingType != BuildingTypes.City)
                                     _buildingAbilityButton4.gameObject.SetActive(true);
                             }
                             else

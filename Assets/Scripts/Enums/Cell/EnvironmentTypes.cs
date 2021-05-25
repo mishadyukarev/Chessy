@@ -2,9 +2,9 @@
 {
     None,
 
-    Food,
-    Tree,
+    Fertilizer,
+    AdultForest,
+    YoungForest,
     Hill,
-
     Mountain,
 }

@@ -18,34 +18,34 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
         {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                _eGM.CellUnitEnt_CellUnitCom(x, y).RefreshAmountSteps();
+                _eGM.CellEnt_CellUnitCom(x, y).RefreshAmountSteps();
 
-                if (_eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed)
+                if (_eGM.CellEnt_CellUnitCom(x, y).IsRelaxed)
                 {
-                    switch (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType)
+                    switch (_eGM.CellEnt_CellUnitCom(x, y).UnitType)
                     {
                         case UnitTypes.King:
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_FOR_ADDING_KING;
-                            if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > StartValuesGameConfig.AMOUNT_HEALTH_KING)
-                                _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth = StartValuesGameConfig.AMOUNT_HEALTH_KING;
+                            _eGM.CellEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_FOR_ADDING_KING;
+                            if (_eGM.CellEnt_CellUnitCom(x, y).AmountHealth > StartValuesGameConfig.AMOUNT_HEALTH_KING)
+                                _eGM.CellEnt_CellUnitCom(x, y).AmountHealth = StartValuesGameConfig.AMOUNT_HEALTH_KING;
                             break;
 
                         case UnitTypes.Pawn:
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_FOR_ADDING_PAWN;
-                            if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > _eGM.CellUnitEnt_CellUnitCom(x, y).MaxAmountHealth)
-                                _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth = _eGM.CellUnitEnt_CellUnitCom(x, y).MaxAmountHealth;
+                            _eGM.CellEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_FOR_ADDING_PAWN;
+                            if (_eGM.CellEnt_CellUnitCom(x, y).AmountHealth > _eGM.CellEnt_CellUnitCom(x, y).MaxAmountHealth)
+                                _eGM.CellEnt_CellUnitCom(x, y).AmountHealth = _eGM.CellEnt_CellUnitCom(x, y).MaxAmountHealth;
                             break;
 
                         case UnitTypes.Rook:
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_FOR_ADDING_ROOK;
-                            if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > _eGM.CellUnitEnt_CellUnitCom(x, y).MaxAmountHealth)
-                                _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth = _eGM.CellUnitEnt_CellUnitCom(x, y).MaxAmountHealth;
+                            _eGM.CellEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_FOR_ADDING_ROOK;
+                            if (_eGM.CellEnt_CellUnitCom(x, y).AmountHealth > _eGM.CellEnt_CellUnitCom(x, y).MaxAmountHealth)
+                                _eGM.CellEnt_CellUnitCom(x, y).AmountHealth = _eGM.CellEnt_CellUnitCom(x, y).MaxAmountHealth;
                             break;
 
                         case UnitTypes.Bishop:
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_FOR_ADDING_BISHOP;
-                            if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > _eGM.CellUnitEnt_CellUnitCom(x, y).MaxAmountHealth)
-                                _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth = _eGM.CellUnitEnt_CellUnitCom(x, y).MaxAmountHealth;
+                            _eGM.CellEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_FOR_ADDING_BISHOP;
+                            if (_eGM.CellEnt_CellUnitCom(x, y).AmountHealth > _eGM.CellEnt_CellUnitCom(x, y).MaxAmountHealth)
+                                _eGM.CellEnt_CellUnitCom(x, y).AmountHealth = _eGM.CellEnt_CellUnitCom(x, y).MaxAmountHealth;
                             break;
 
                         default:

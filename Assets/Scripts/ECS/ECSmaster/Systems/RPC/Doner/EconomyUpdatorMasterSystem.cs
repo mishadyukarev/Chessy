@@ -13,9 +13,9 @@ internal sealed class EconomyUpdatorMasterSystem : SystemMasterReduction
         {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                if (_eGM.CellBuildingEnt_BuildingTypeCom(x, y).BuildingType == BuildingTypes.City)
+                if (_eGM.CellEnt_CellBuildingCom(x, y).BuildingType == BuildingTypes.City)
                 {
-                    if (_eGM.CellBuildingEnt_OwnerCom(x, y).IsHim(Instance.MasterClient))
+                    if (_eGM.CellEnt_CellBuildingCom(x, y).IsHim(Instance.MasterClient))
                     {
                         _eGM.FoodEnt_AmountDictCom.AmountDict[true] += Instance.StartValuesGameConfig.BENEFIT_FOOD_CITY;
                         _eGM.WoodEAmountDictC.AmountDict[true] += Instance.StartValuesGameConfig.BENEFIT_WOOD_CITY;
@@ -25,21 +25,7 @@ internal sealed class EconomyUpdatorMasterSystem : SystemMasterReduction
                         _eGM.FoodEnt_AmountDictCom.AmountDict[false] += Instance.StartValuesGameConfig.BENEFIT_FOOD_CITY;
                         _eGM.WoodEAmountDictC.AmountDict[false] += Instance.StartValuesGameConfig.BENEFIT_WOOD_CITY;
                     }
-                }
-
-                if (_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveTree)
-                {
-                    if (_eGM.CellBuildingEnt_BuildingTypeCom(x, y).BuildingType == BuildingTypes.Woodcutter)
-                    {
-                        _eGM.CellEnvEnt_CellEnvironmentCom(x, y).AmountTrees -= (int)(Instance.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER + (0.25f * _eGM.InfoEnt_UpgradeCom.AmountUpgradeWoodcutterDict[_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient]));
-                        if (_eGM.CellEnvEnt_CellEnvironmentCom(x, y).AmountTrees <= 0)
-                        {
-                            _eGM.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(false, EnvironmentTypes.Tree);
-                            _eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient] -= 1;
-                            _eGM.CellBuildingEnt_CellBuildingCom(x, y).ResetBuilding();
-                        }
-                    }
-                }
+                }              
             }
         }
 

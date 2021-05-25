@@ -15,10 +15,10 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralReduction
         _eGM.Unique2AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
         _eGM.Unique3AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
 
-        if (_eGM.CellUnitEnt_OwnerCom(XySelectedCell).IsMine)
+        if (_eGM.CellEnt_CellUnitCom(XySelectedCell).IsMine)
         {
 
-            switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
+            switch (_eGM.CellEnt_CellUnitCom(XySelectedCell).UnitType)
             {
                 case UnitTypes.None:
                     break;
@@ -31,7 +31,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralReduction
                     _eGM.Unique1AbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
                     _eGM.Unique1AbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityOne); });
 
-                    if (_eGM.CellEffectEnt_CellEffectCom(XySelectedCell).HaveFire)
+                    if (_eGM.CellEnt_CellEffectCom(XySelectedCell).HaveFire)
                     {
                         _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Put Out FIRE";
                     }

@@ -11,25 +11,25 @@ internal class ProtectMasterSystem : SystemMasterReduction, IEcsRunSystem
     {
         if (isActive)
         {
-            if (!_eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected)
+            if (!_eGM.CellEnt_CellUnitCom(xyCell).IsProtected)
             {
-                if (_eGM.CellUnitEnt_CellUnitCom(xyCell).HaveMaxSteps)
+                if (_eGM.CellEnt_CellUnitCom(xyCell).HaveMaxSteps)
                 {
-                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = true;
-                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed = false;
-                    _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
+                    _eGM.CellEnt_CellUnitCom(xyCell).IsProtected = true;
+                    _eGM.CellEnt_CellUnitCom(xyCell).IsRelaxed = false;
+                    _eGM.CellEnt_CellUnitCom(xyCell).AmountSteps = 0;
                 }
             }
         }
 
         else
         {
-            if (_eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected)
+            if (_eGM.CellEnt_CellUnitCom(xyCell).IsProtected)
             {
-                if (_eGM.CellUnitEnt_CellUnitCom(xyCell).HaveMaxSteps)
+                if (_eGM.CellEnt_CellUnitCom(xyCell).HaveMaxSteps)
                 {
-                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = false;
-                    _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
+                    _eGM.CellEnt_CellUnitCom(xyCell).IsProtected = false;
+                    _eGM.CellEnt_CellUnitCom(xyCell).AmountSteps = 0;
                 }
             }
         }

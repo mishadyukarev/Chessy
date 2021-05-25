@@ -1,7 +1,6 @@
-﻿using Leopotam.Ecs;
-using static MainGame;
+﻿using static MainGame;
 
-internal class TakerUnitsUISystem : RPCGeneralReduction, IEcsRunSystem
+internal sealed class TakerUnitsUISystem : RPCGeneralReduction
 {
     internal TakerUnitsUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
@@ -11,10 +10,13 @@ internal class TakerUnitsUISystem : RPCGeneralReduction, IEcsRunSystem
         _eGM.TakerBishopEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(_eGM.TakerBishopEntityUnitTypeComponent.UnitType); });
     }
 
-    public void Run()
+    public override void Run()
     {
+        base.Run();
+
         if (_eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[Instance.IsMasterClient])
             _eGM.TakerKingEntityButtonComponent.Button.gameObject.SetActive(false);
+        else _eGM.TakerKingEntityButtonComponent.Button.gameObject.SetActive(true);
     }
 
     private void GetUnit(UnitTypes unitType)

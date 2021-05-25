@@ -169,6 +169,7 @@ internal class StartSpawnGame : StartSpawn
         gameObjectPool.CellEnvironmentFoodGOs = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
         gameObjectPool.CellEnvironmentMountainGOs = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
         gameObjectPool.CellEnvironmentTreeGOs = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
+        gameObjectPool.CellEnvironmentYoungTreeGOs = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
         gameObjectPool.CellEnvironmentHillGOs = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
 
         gameObjectPool.CellSupportVisionSelectorGOs = new GameObject[startValues.CELL_COUNT_X, startValues.CELL_COUNT_Y];
@@ -235,6 +236,7 @@ internal class StartSpawnGame : StartSpawn
                 gameObjectPool.CellEnvironmentFoodGOs[x, y] = parentGO.transform.Find("Food").gameObject;
                 gameObjectPool.CellEnvironmentMountainGOs[x, y] = parentGO.transform.Find("Mountain").gameObject;
                 gameObjectPool.CellEnvironmentTreeGOs[x, y] = parentGO.transform.Find("Tree").gameObject;
+                gameObjectPool.CellEnvironmentYoungTreeGOs[x, y] = parentGO.transform.Find("YoungTree").gameObject;
                 gameObjectPool.CellEnvironmentHillGOs[x, y] = parentGO.transform.Find("Hill").gameObject;
 
 

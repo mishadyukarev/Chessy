@@ -24,7 +24,7 @@ internal class ConditionUnitUISystem : SystemGeneralReduction, IEcsRunSystem
     public void Run()
     {
 
-        if (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).HaveUnit/* && _eGM.CellUnitComponent(_xySelectedCell).IsMine*/)
+        if (_eGM.CellEnt_CellUnitCom(_xySelectedCell).HaveUnit/* && _eGM.CellUnitComponent(_xySelectedCell).IsMine*/)
         {
             ActiveteSupportTextForAbilities(true);
         }
@@ -43,10 +43,10 @@ internal class ConditionUnitUISystem : SystemGeneralReduction, IEcsRunSystem
 
         if (isActive)
         {
-            _hpCurrentUnitText.text = _eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).AmountHealth.ToString();
-            _damageCurrentUnitText.text = _eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).SimplePowerDamage.ToString();
-            _protectionCurrentUnitText.text = (_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).PowerProtection.ToString());
-            _stepsCurrentUnitText.text = _eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).AmountSteps.ToString();
+            _hpCurrentUnitText.text = _eGM.CellEnt_CellUnitCom(_xySelectedCell).AmountHealth.ToString();
+            _damageCurrentUnitText.text = _eGM.CellEnt_CellUnitCom(_xySelectedCell).SimplePowerDamage.ToString();
+            _protectionCurrentUnitText.text = (_eGM.CellEnt_CellUnitCom(_xySelectedCell).PowerProtection.ToString());
+            _stepsCurrentUnitText.text = _eGM.CellEnt_CellUnitCom(_xySelectedCell).AmountSteps.ToString();
         }
     }
 }

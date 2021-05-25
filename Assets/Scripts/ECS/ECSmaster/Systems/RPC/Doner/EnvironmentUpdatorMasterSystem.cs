@@ -23,21 +23,38 @@ internal class EnvironmentUpdatorMasterSystem : SystemGeneralReduction
             {
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
-                    if (!_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveTree && _eGM.CellEnt_CellCom(x, y).CellGO.activeSelf)
+                    if (!_eGM.CellEnt_CellEnvCom(x, y).HaveAdultTree)
                     {
-                        if (_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveFood)
+                        if(_eGM.CellEnt_CellCom(x, y).IsActiveSelf)
                         {
-                            random = Random.Range(0, 100);
-                            if (random <= 50)
+                            if (_eGM.CellEnt_CellEnvCom(x, y).HaveFood)
                             {
-                                if (_eGM.CellBuildingEnt_BuildingTypeCom(x, y).BuildingType == BuildingTypes.Farm)
+                                random = Random.Range(0, 100);
+                                if (random <= 50)
                                 {
-                                    _eGM.CellBuildingEnt_CellBuildingCom(x, y).ResetBuilding();
-                                }
-                                _eGM.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(false, EnvironmentTypes.Food);
+                                    if (_eGM.CellEnt_CellBuildingCom(x, y).BuildingType == BuildingTypes.Farm)
+                                    {
+                                        _eGM.CellEnt_CellBuildingCom(x, y).ResetBuilding();
+                                    }
+                                    _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(false, EnvironmentTypes.Fertilizer);
 
-                                isDeleted = true;
-                                break;
+                                    isDeleted = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    else
+                    {
+                        if (_eGM.CellEnt_CellBuildingCom(x, y).BuildingType == BuildingTypes.Woodcutter)
+                        {
+                            _eGM.CellEnt_CellEnvCom(x, y).AmountResourcesForest -= (int)(Instance.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER + (0.25f * _eGM.InfoEnt_UpgradeCom.AmountUpgradeWoodcutterDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterClient]));
+                            if (_eGM.CellEnt_CellEnvCom(x, y).AmountResourcesForest <= 0)
+                            {
+                                _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(false, EnvironmentTypes.AdultForest);
+                                _eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterClient] -= 1;
+                                _eGM.CellEnt_CellBuildingCom(x, y).ResetBuilding();
                             }
                         }
                     }

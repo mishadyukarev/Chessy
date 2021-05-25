@@ -112,20 +112,9 @@ internal partial class PhotonPunRPC : MonoBehaviour
                     break;
 
                 case RpcTypes.Truce:
+                    _eGM.RpcGeneralEnt_FromInfoCom.IsActived = (bool)objects[0];
+                    _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RPCSystems);
 
-                    TruceToGeneral(info.Sender, false, (bool)objects[0], _eGM.UpdatorEntityAmountComponent.Amount);
-
-                    _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[info.Sender.IsMasterClient] = (bool)objects[0];
-
-                    bool isTruce = Instance.StartValuesGameConfig.IS_TEST ||
-                    _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[true]
-                        && _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[false];
-
-                    if (isTruce)
-                    {
-                        _eGM.UpdatorEntityAmountComponent.Amount += UnityEngine.Random.Range(4500, 5500);
-                        TruceToGeneral(RpcTarget.All, true, false, _eGM.UpdatorEntityAmountComponent.Amount);
-                    }
                     break;
 
                 case RpcTypes.EndGame:
@@ -309,23 +298,25 @@ internal partial class PhotonPunRPC : MonoBehaviour
         {
             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
             {
-                listObjects.Add(_eGM.CellUnitEnt_CellUnitCom(x, y).GetActiveUnit(false));
-                listObjects.Add(_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
-                listObjects.Add(_eGM.CellUnitEnt_OwnerCom(x, y).ActorNumber);
-                listObjects.Add(_eGM.CellUnitEnt_CellUnitCom(x, y).AmountSteps);
-                listObjects.Add(_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth);
-                listObjects.Add(_eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected);
-                listObjects.Add(_eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed);
+                listObjects.Add(_eGM.CellEnt_CellUnitCom(x, y).GetActiveUnit(false));
+                listObjects.Add(_eGM.CellEnt_CellUnitCom(x, y).UnitType);
+                listObjects.Add(_eGM.CellEnt_CellUnitCom(x, y).ActorNumber);
+                listObjects.Add(_eGM.CellEnt_CellUnitCom(x, y).AmountSteps);
+                listObjects.Add(_eGM.CellEnt_CellUnitCom(x, y).AmountHealth);
+                listObjects.Add(_eGM.CellEnt_CellUnitCom(x, y).IsProtected);
+                listObjects.Add(_eGM.CellEnt_CellUnitCom(x, y).IsRelaxed);
 
-                listObjects.Add(_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveFood);
-                listObjects.Add(_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveTree);
-                listObjects.Add(_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveHill);
-                listObjects.Add(_eGM.CellEnvEnt_CellEnvironmentCom(x, y).HaveMountain);
+                listObjects.Add(_eGM.CellEnt_CellEnvCom(x, y).AmountResourcesForest);
+                listObjects.Add(_eGM.CellEnt_CellEnvCom(x, y).HaveFood);
+                listObjects.Add(_eGM.CellEnt_CellEnvCom(x, y).HaveAdultTree);
+                listObjects.Add(_eGM.CellEnt_CellEnvCom(x, y).HaveYoungTree);
+                listObjects.Add(_eGM.CellEnt_CellEnvCom(x, y).HaveHill);
+                listObjects.Add(_eGM.CellEnt_CellEnvCom(x, y).HaveMountain);
 
-                listObjects.Add(_eGM.CellBuildingEnt_BuildingTypeCom(x, y).BuildingType);
-                listObjects.Add(_eGM.CellBuildingEnt_OwnerCom(x, y).ActorNumber);
+                listObjects.Add(_eGM.CellEnt_CellBuildingCom(x, y).BuildingType);
+                listObjects.Add(_eGM.CellEnt_CellBuildingCom(x, y).ActorNumber);
 
-                listObjects.Add(_eGM.CellEffectEnt_CellEffectCom(x, y).HaveFire);
+                listObjects.Add(_eGM.CellEnt_CellEffectCom(x, y).HaveFire);
             }
         }
         object[] objects = new object[listObjects.Count];
@@ -392,8 +383,10 @@ internal partial class PhotonPunRPC : MonoBehaviour
                 bool isProtected = (bool)objects[i++];
                 bool isRelaxed = (bool)objects[i++];
 
+                int amountResourcesForest = (int)objects[i++];
                 bool haveFood = (bool)objects[i++];
                 bool haveTree = (bool)objects[i++];
+                bool haveYoungTree = (bool)objects[i++];
                 bool haveHill = (bool)objects[i++];
                 bool haveMountain = (bool)objects[i++];
 
@@ -409,21 +402,24 @@ internal partial class PhotonPunRPC : MonoBehaviour
                 if (actorNumber == -1) player = default;
                 else player = PhotonNetwork.PlayerList[actorNumber - 1];
 
-                _eGM.CellUnitEnt_CellUnitCom(x, y).SetActiveUnit(Instance.IsMasterClient, isActiveUnit);
-                _eGM.CellUnitEnt_CellUnitCom(x, y).SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player);
-                _eGM.CellUnitEnt_CellUnitCom(x, y).ActiveVisionCell(isActiveUnit, unitType);
+                _eGM.CellEnt_CellUnitCom(x, y).SetActiveUnit(Instance.IsMasterClient, isActiveUnit);
+                _eGM.CellEnt_CellUnitCom(x, y).SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player);
+                _eGM.CellEnt_CellUnitCom(x, y).ActiveVisionCell(isActiveUnit, unitType);
+
+                _eGM.CellEnt_CellEnvCom(x, y).AmountResourcesForest = amountResourcesForest;
+                _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(haveFood, EnvironmentTypes.Fertilizer);
+                _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(haveTree, EnvironmentTypes.AdultForest);
+                _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(haveYoungTree, EnvironmentTypes.YoungForest);
+                _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(haveHill, EnvironmentTypes.Hill);
+                _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(haveMountain, EnvironmentTypes.Mountain);
 
 
-                _eGM.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(haveFood, EnvironmentTypes.Food);
-                _eGM.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(haveTree, EnvironmentTypes.Tree);
-                _eGM.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(haveHill, EnvironmentTypes.Hill);
-                _eGM.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(haveMountain, EnvironmentTypes.Mountain);
 
                 if (actorNumberBuilding == -1) player = default;
                 else player = PhotonNetwork.PlayerList[actorNumberBuilding - 1];
-                _eGM.CellBuildingEnt_CellBuildingCom(x, y).SetBuilding(buildingType, player);
+                _eGM.CellEnt_CellBuildingCom(x, y).SetBuilding(buildingType, player);
 
-                _eGM.CellEffectEnt_CellEffectCom(x, y).SetEffect(haveFire, EffectTypes.Fire);
+                _eGM.CellEnt_CellEffectCom(x, y).SetEffect(haveFire, EffectTypes.Fire);
             }
         }
     }

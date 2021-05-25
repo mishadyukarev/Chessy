@@ -49,9 +49,9 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Pawn 
-                                    && _eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Info.Sender)) 
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
+                                if (_eGM.CellEnt_CellUnitCom(x, y).UnitType == UnitTypes.Pawn 
+                                    && _eGM.CellEnt_CellUnitCom(x, y).IsHim(Info.Sender)) 
+                                    _eGM.CellEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
                             }
 
                     }
@@ -77,9 +77,9 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Pawn && _eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Info.Sender))
+                                if (_eGM.CellEnt_CellUnitCom(x, y).UnitType == UnitTypes.Pawn && _eGM.CellEnt_CellUnitCom(x, y).IsHim(Info.Sender))
                                 {
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
+                                    _eGM.CellEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
                                 }
                             }
 
@@ -112,9 +112,9 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Rook 
-                                    && _eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Info.Sender))
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
+                                if (_eGM.CellEnt_CellUnitCom(x, y).UnitType == UnitTypes.Rook 
+                                    && _eGM.CellEnt_CellUnitCom(x, y).IsHim(Info.Sender))
+                                    _eGM.CellEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
                             }
 
                     }
@@ -140,9 +140,9 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Rook 
-                                    && _eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Info.Sender)) 
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
+                                if (_eGM.CellEnt_CellUnitCom(x, y).UnitType == UnitTypes.Rook 
+                                    && _eGM.CellEnt_CellUnitCom(x, y).IsHim(Info.Sender)) 
+                                    _eGM.CellEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
                             }
 
                     }
@@ -174,7 +174,7 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Bishop && _eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Info.Sender)) _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
+                                if (_eGM.CellEnt_CellUnitCom(x, y).UnitType == UnitTypes.Bishop && _eGM.CellEnt_CellUnitCom(x, y).IsHim(Info.Sender)) _eGM.CellEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
                             }
 
                     }
@@ -200,9 +200,9 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                         for (int x = 0; x < StartValuesGameConfig.CELL_COUNT_X; x++)
                             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Bishop 
-                                    && _eGM.CellUnitEnt_OwnerCom(x, y).IsHim(Info.Sender)) 
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
+                                if (_eGM.CellEnt_CellUnitCom(x, y).UnitType == UnitTypes.Bishop 
+                                    && _eGM.CellEnt_CellUnitCom(x, y).IsHim(Info.Sender)) 
+                                    _eGM.CellEnt_CellUnitCom(x, y).AmountHealth += StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
                             }
 
                     }

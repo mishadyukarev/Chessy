@@ -1,35 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
+﻿using UnityEngine;
 using static MainGame;
-using Photon.Realtime;
 
-public struct CellComponent
+internal struct CellComponent
 {
-    private EntitiesGeneralManager _eGM;
-
     private int[] _xy;
     private bool _isStartMaster;
     private bool _isStartOther;
     private GameObject _cellGO;
 
-    private int _x => _eGM.X;
-    private int _y => _eGM.X;
-
     internal bool IsSelected;
     internal bool IsStartMaster => _isStartMaster;
     internal bool IsStartOther => _isStartOther;
-    internal int InstanceIDcellGO => _cellGO.GetInstanceID();
-
-    internal GameObject CellGO => _cellGO;
-
+    internal int InstanceID => _cellGO.GetInstanceID();
+    internal bool IsActiveSelf => _cellGO.activeSelf;
 
 
-    internal CellComponent(EntitiesGeneralManager eGM, StartValuesGameConfig startValuesGameConfig, params int[] xy)
+    internal CellComponent(StartValuesGameConfig startValuesGameConfig, params int[] xy)
     {
-        _eGM = eGM;
-
         _xy = xy;
 
         if (startValuesGameConfig.IS_TEST)
@@ -39,12 +26,12 @@ public struct CellComponent
         }
         else
         {
-            _isStartMaster = _xy[_eGM.Y] < 3 && _xy[_eGM.X] > 2 && _xy[_eGM.X] < 12;
-            _isStartOther = _xy[_eGM.Y] > 8 && _xy[_eGM.X] > 2 && _xy[_eGM.X] < 12;
+            _isStartMaster = _xy[startValuesGameConfig.Y] < 3 && _xy[startValuesGameConfig.X] > 2 && _xy[startValuesGameConfig.X] < 12;
+            _isStartOther = _xy[startValuesGameConfig.Y] > 8 && _xy[startValuesGameConfig.X] > 2 && _xy[startValuesGameConfig.X] < 12;
         }
 
-        IsSelected = default;
+        IsSelected = false;
 
-        _cellGO = Instance.GameObjectPool.CellsGO[_xy[_eGM.X], _xy[_eGM.Y]];
+        _cellGO = Instance.GameObjectPool.CellsGO[_xy[startValuesGameConfig.X], _xy[startValuesGameConfig.Y]];
     }
 }

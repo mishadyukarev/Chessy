@@ -17,7 +17,7 @@ internal class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps && _eGM.CellBuildingEnt_BuildingTypeCom(XyCell).BuildingType != BuildingTypes.City)
+        if (_eGM.CellEnt_CellUnitCom(XyCell).HaveMaxSteps && _eGM.CellEnt_CellBuildingCom(XyCell).BuildingType != BuildingTypes.City)
         {
             bool haveFood = true;
             bool haveWood = true;
@@ -40,12 +40,46 @@ internal class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
             switch (UniqueAbilitiesPawnType)
             {
                 case UniqueAbilitiesPawnTypes.AbilityOne:
-                    if (_eGM.CellEffectEnt_CellEffectCom(XyCell).HaveFire)
+                    if (_eGM.CellEnt_CellEffectCom(XyCell).HaveFire)
                     {
-                        _eGM.CellEffectEnt_CellEffectCom(XyCell).SetEffect(false, EffectTypes.Fire);
-                        _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
+                        _eGM.CellEnt_CellEffectCom(XyCell).SetEffect(false, EffectTypes.Fire);
+                        _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps = 0;
                     }
-                    else if (_eGM.CellEnvEnt_CellEnvironmentCom(XyCell).HaveTree)
+                    else if (_eGM.CellEnt_CellEnvCom(XyCell).HaveAdultTree)
+                    {
+                        minusFood = 0;
+                        minusWood = 5;
+                        minusOre = 0;
+                        minusIron = 0;
+                        minusGold = 0;
+
+                        haveFood = foodAmountDict[Info.Sender.IsMasterClient] >= minusFood;
+                        haveWood = woodAmountDict[Info.Sender.IsMasterClient] >= minusWood;
+                        haveOre = oreAmountDict[Info.Sender.IsMasterClient] >= minusOre;
+                        haveIron = ironAmountDict[Info.Sender.IsMasterClient] >= minusIron;
+                        haveGold = goldAmountDict[Info.Sender.IsMasterClient] >= minusGold;
+
+                        if (haveFood && haveWood && haveOre && haveIron && haveGold)
+                        {
+                            foodAmountDict[Info.Sender.IsMasterClient] -= minusFood;
+                            woodAmountDict[Info.Sender.IsMasterClient] -= minusWood;
+                            oreAmountDict[Info.Sender.IsMasterClient] -= minusOre;
+                            ironAmountDict[Info.Sender.IsMasterClient] -= minusIron;
+                            goldAmountDict[Info.Sender.IsMasterClient] -= minusGold;
+
+                            _eGM.CellEnt_CellEffectCom(XyCell).SetEffect(true, EffectTypes.Fire);
+                            _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps = 0;
+                        }
+                        else
+                        {
+                            _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haveFood, haveWood, haveOre, haveIron, haveGold);
+                        }
+                    }
+                    break;
+
+                case UniqueAbilitiesPawnTypes.AbilityTwo:
+
+                    if (!_eGM.CellEnt_CellEnvCom(XyCell).HaveFood && !_eGM.CellEnt_CellEnvCom(XyCell).HaveAdultTree)
                     {
                         minusFood = 0;
                         minusWood = 10;
@@ -58,6 +92,7 @@ internal class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                         haveOre = oreAmountDict[Info.Sender.IsMasterClient] >= minusOre;
                         haveIron = ironAmountDict[Info.Sender.IsMasterClient] >= minusIron;
                         haveGold = goldAmountDict[Info.Sender.IsMasterClient] >= minusGold;
+                        _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps = 0;
 
                         if (haveFood && haveWood && haveOre && haveIron && haveGold)
                         {
@@ -67,41 +102,7 @@ internal class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                             ironAmountDict[Info.Sender.IsMasterClient] -= minusIron;
                             goldAmountDict[Info.Sender.IsMasterClient] -= minusGold;
 
-                            _eGM.CellEffectEnt_CellEffectCom(XyCell).SetEffect(true, EffectTypes.Fire);
-                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
-                        }
-                        else
-                        {
-                            _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haveFood, haveWood, haveOre, haveIron, haveGold);
-                        }
-                    }
-                    break;
-
-                case UniqueAbilitiesPawnTypes.AbilityTwo:
-
-                    if (!_eGM.CellEnvEnt_CellEnvironmentCom(XyCell).HaveFood && !_eGM.CellEnvEnt_CellEnvironmentCom(XyCell).HaveTree)
-                    {
-                        minusFood = 10;
-                        minusWood = 0;
-                        minusOre = 0;
-                        minusIron = 0;
-                        minusGold = 0;
-
-                        haveFood = foodAmountDict[Info.Sender.IsMasterClient] >= minusFood;
-                        haveWood = woodAmountDict[Info.Sender.IsMasterClient] >= minusWood;
-                        haveOre = oreAmountDict[Info.Sender.IsMasterClient] >= minusOre;
-                        haveIron = ironAmountDict[Info.Sender.IsMasterClient] >= minusIron;
-                        haveGold = goldAmountDict[Info.Sender.IsMasterClient] >= minusGold;
-
-                        if (haveFood && haveWood && haveOre && haveIron && haveGold)
-                        {
-                            foodAmountDict[Info.Sender.IsMasterClient] -= minusFood;
-                            woodAmountDict[Info.Sender.IsMasterClient] -= minusWood;
-                            oreAmountDict[Info.Sender.IsMasterClient] -= minusOre;
-                            ironAmountDict[Info.Sender.IsMasterClient] -= minusIron;
-                            goldAmountDict[Info.Sender.IsMasterClient] -= minusGold;
-
-                            _eGM.CellEnvEnt_CellEnvironmentCom(XyCell).SetResetEnvironment(true, EnvironmentTypes.Food);
+                            _eGM.CellEnt_CellEnvCom(XyCell).SetResetEnvironment(true, EnvironmentTypes.Fertilizer);
                         }
                         else
                         {
@@ -111,7 +112,7 @@ internal class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                     break;
 
                 case UniqueAbilitiesPawnTypes.AbilityThree:
-                    if (!_eGM.CellEnvEnt_CellEnvironmentCom(XyCell).HaveFood && !_eGM.CellEnvEnt_CellEnvironmentCom(XyCell).HaveTree)
+                    if (!_eGM.CellEnt_CellEnvCom(XyCell).HaveFood && !_eGM.CellEnt_CellEnvCom(XyCell).HaveAdultTree)
                     {
                         minusFood = 10;
                         minusWood = 0;
@@ -132,8 +133,9 @@ internal class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                             oreAmountDict[Info.Sender.IsMasterClient] -= minusOre;
                             ironAmountDict[Info.Sender.IsMasterClient] -= minusIron;
                             goldAmountDict[Info.Sender.IsMasterClient] -= minusGold;
+                            _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps = 0;
 
-                            _eGM.CellEnvEnt_CellEnvironmentCom(XyCell).SetResetEnvironment(true, EnvironmentTypes.Tree);
+                            _eGM.CellEnt_CellEnvCom(XyCell).SetResetEnvironment(true, EnvironmentTypes.YoungForest);
                         }
                         else
                         {

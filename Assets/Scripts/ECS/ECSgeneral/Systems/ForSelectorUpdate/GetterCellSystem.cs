@@ -12,7 +12,7 @@ internal sealed class GetterCellSystem : SystemGeneralReduction, IEcsRunSystem
             {
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
-                    int one = _eGM.CellEnt_CellCom(x, y).InstanceIDcellGO;
+                    int one = _eGM.CellEnt_CellCom(x, y).InstanceID;
                     int two = _eGM.RayComponentSelectorEnt.RaycastHit2D.transform.gameObject.GetInstanceID();
 
                     if (one == two)

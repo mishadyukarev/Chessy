@@ -24,6 +24,7 @@ internal class GameObjectPool
     internal GameObject[,] CellEnvironmentFoodGOs;
     internal GameObject[,] CellEnvironmentMountainGOs;
     internal GameObject[,] CellEnvironmentTreeGOs;
+    internal GameObject[,] CellEnvironmentYoungTreeGOs;
     internal GameObject[,] CellEnvironmentHillGOs;
 
     internal GameObject[,] CellSupportVisionSelectorGOs;

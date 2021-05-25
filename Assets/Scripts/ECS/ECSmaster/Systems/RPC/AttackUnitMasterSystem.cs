@@ -1,8 +1,6 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
-using static MainGame;
+﻿using Photon.Pun;
 
-internal class AttackUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
+internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 {
     internal int[] XyPreviousCell => _eMM.RPCMasterEnt_RPCMasterCom.XyPrevious;
     internal int[] XySelectedCell => _eMM.RPCMasterEnt_RPCMasterCom.XySelected;
@@ -12,37 +10,11 @@ internal class AttackUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
     internal AttackUnitMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
-    public void Run()
+    public override void Run()
     {
+        base.Run();
 
-        bool isMeleeAttack = false;
-
-        switch (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType)
-        {
-            case UnitTypes.None:
-                break;
-
-            case UnitTypes.King:
-                isMeleeAttack = true;
-                break;
-
-            case UnitTypes.Pawn:
-                isMeleeAttack = true;
-                break;
-
-            case UnitTypes.Rook:
-                isMeleeAttack = false;
-                break;
-
-            case UnitTypes.Bishop:
-                isMeleeAttack = false;
-                break;
-
-            default:
-                break;
-        }
-
-        _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).GetCellsForAttack(Info.Sender,
+        _eGM.CellEnt_CellUnitCom(XyPreviousCell).GetCellsForAttack(Info.Sender,
             out var availableCellsSimpleAttack, out var availableCellsUniqueAttack);
 
         var isFindedSimple = _eGM.CellBaseOperEnt_CellBaseOperCom.TryFindCellInList(XySelectedCell, availableCellsSimpleAttack);
@@ -51,25 +23,25 @@ internal class AttackUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
         if (isFindedSimple || isFindedUnique)
         {
-            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).AmountSteps = 0;
-            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).IsProtected = false;
-            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).IsRelaxed = false;
+            _eGM.CellEnt_CellUnitCom(XyPreviousCell).AmountSteps = 0;
+            _eGM.CellEnt_CellUnitCom(XyPreviousCell).IsProtected = false;
+            _eGM.CellEnt_CellUnitCom(XyPreviousCell).IsRelaxed = false;
 
             int damageToPrevious = 0;
             int damageToSelelected = 0;
 
 
-            damageToSelelected += _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).SimplePowerDamage;
-            damageToSelelected -= _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).PowerProtection;
+            damageToSelelected += _eGM.CellEnt_CellUnitCom(XyPreviousCell).SimplePowerDamage;
+            damageToSelelected -= _eGM.CellEnt_CellUnitCom(XySelectedCell).PowerProtection;
 
 
-            if (isMeleeAttack)
+            if (_eGM.CellEnt_CellUnitCom(XyPreviousCell).IsMelee)
             {
-                damageToPrevious += _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).SimplePowerDamage;
+                damageToPrevious += _eGM.CellEnt_CellUnitCom(XySelectedCell).SimplePowerDamage;
 
                 if (isFindedUnique)
                 {
-                    damageToSelelected += _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).UniquePowerDamage;
+                    damageToSelelected += _eGM.CellEnt_CellUnitCom(XyPreviousCell).UniquePowerDamage;
                 }
             }
 
@@ -77,31 +49,34 @@ internal class AttackUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
             {
                 if (isFindedUnique)
                 {
-                    damageToSelelected += _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).UniquePowerDamage;
+                    damageToSelelected += _eGM.CellEnt_CellUnitCom(XyPreviousCell).UniquePowerDamage;
                 }
             }
 
             if (damageToSelelected < 0) damageToSelelected = 0;
 
-            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).AmountHealth -= damageToPrevious;
-            _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountHealth -= damageToSelelected;
+            _eGM.CellEnt_CellUnitCom(XyPreviousCell).AmountHealth -= damageToPrevious;
+            _eGM.CellEnt_CellUnitCom(XySelectedCell).AmountHealth -= damageToSelelected;
 
 
-            if (_eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).AmountHealth <= StartValuesGameConfig.AMOUNT_FOR_DEATH)
+            if (!_eGM.CellEnt_CellUnitCom(XyPreviousCell).HaveHealth)
             {
-                _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).ResetUnit();
+                if (_eGM.CellEnt_CellUnitCom(XyPreviousCell).UnitType == UnitTypes.King)
+                    _photonPunRPC.EndGameToMaster(_eGM.CellEnt_CellUnitCom(XySelectedCell).ActorNumber);
+
+                _eGM.CellEnt_CellUnitCom(XyPreviousCell).ResetUnit();
             }
 
-            if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountHealth <= StartValuesGameConfig.AMOUNT_FOR_DEATH)
+            if (!_eGM.CellEnt_CellUnitCom(XySelectedCell).HaveHealth)
             {
-                if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType == UnitTypes.King)
-                    _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_OwnerCom(XyPreviousCell).ActorNumber);
+                if (_eGM.CellEnt_CellUnitCom(XySelectedCell).UnitType == UnitTypes.King)
+                    _photonPunRPC.EndGameToMaster(_eGM.CellEnt_CellUnitCom(XyPreviousCell).ActorNumber);
 
-                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).ResetUnit();
-                if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Rook && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Bishop)
+                _eGM.CellEnt_CellUnitCom(XySelectedCell).ResetUnit();
+                if (_eGM.CellEnt_CellUnitCom(XyPreviousCell).UnitType != UnitTypes.Rook && _eGM.CellEnt_CellUnitCom(XyPreviousCell).UnitType != UnitTypes.Bishop)
                 {
-                    _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).SetUnit(XyPreviousCell);
-                    _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).ResetUnit();
+                    _eGM.CellEnt_CellUnitCom(XySelectedCell).SetUnit(XyPreviousCell);
+                    _eGM.CellEnt_CellUnitCom(XyPreviousCell).ResetUnit();
                 }
             }
 

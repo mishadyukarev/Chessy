@@ -24,24 +24,28 @@ internal class EntitiesMasterManager : EntitiesManager
 
                 random = Random.Range(1, 100);
                 if (random <= Instance.StartValuesGameConfig.PERCENT_MOUNTAIN)
-                    eCSmanager.EntitiesGeneralManager.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Mountain);
+                    eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Mountain);
 
-                if(!eCSmanager.EntitiesGeneralManager.CellEnvEnt_CellEnvironmentCom(x, y).HaveMountain)
+                if(!eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).HaveMountain)
                 {
                     random = Random.Range(1, 100);
                     if (random <= Instance.StartValuesGameConfig.PERCENT_TREE)
-                        eCSmanager.EntitiesGeneralManager.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Tree);
+                    {
+                        eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).SetResetEnvironment(true, EnvironmentTypes.AdultForest);
+                        eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).SetDefaultAmountResources(EnvironmentTypes.AdultForest);
+                    }
+                        
 
                     random = Random.Range(1, 100);
                     if (random <= Instance.StartValuesGameConfig.PERCENT_HILL)
-                        eCSmanager.EntitiesGeneralManager.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Hill);
+                        eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Hill);
 
 
-                    if (!eCSmanager.EntitiesGeneralManager.CellEnvEnt_CellEnvironmentCom(x, y).HaveTree)
+                    if (!eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).HaveAdultTree)
                     {
                         random = Random.Range(1, 100);
                         if (random <= Instance.StartValuesGameConfig.PERCENT_FOOD)
-                            eCSmanager.EntitiesGeneralManager.CellEnvEnt_CellEnvironmentCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Food);
+                            eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Fertilizer);
                     }
                 }
             }

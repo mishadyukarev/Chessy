@@ -61,9 +61,9 @@ internal class CityUISystem : RPCGeneralReduction
     {
         base.Run();
 
-        if (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).BuildingType == BuildingTypes.City)
+        if (_eGM.CellEnt_CellBuildingCom(_xySelectedCell).BuildingType == BuildingTypes.City)
         {
-            if (_eGM.CellBuildingEnt_OwnerCom(_xySelectedCell).Owner.IsLocal)
+            if (_eGM.CellEnt_CellBuildingCom(_xySelectedCell).Owner.IsLocal)
             {
                 _leftImage.gameObject.SetActive(true);
             }

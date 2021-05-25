@@ -6,29 +6,14 @@ using static MainGame;
 internal sealed class EntitiesGeneralManager : EntitiesManager
 {
     private EcsEntity[,] _cellEnts;
-    private EcsEntity[,] _cellUnitEnts;
-    private EcsEntity[,] _cellBuildingEnts;
-    private EcsEntity[,] _cellEnvironmentEnts;
-    private EcsEntity[,] _cellSupportVisionEnts;
-    private EcsEntity[,] _cellEffectEnts;
     private EcsEntity _cellBaseOperationsEnt;
 
     internal ref CellComponent CellEnt_CellCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellComponent>();
-
-    internal ref CellUnitComponent CellUnitEnt_CellUnitCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<CellUnitComponent>();
-    internal ref OwnerComponent CellUnitEnt_OwnerCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<OwnerComponent>();
-    internal ref UnitTypeComponent CellUnitEnt_UnitTypeCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<UnitTypeComponent>();
-
-    internal ref CellBuildingComponent CellBuildingEnt_CellBuildingCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellBuildingComponent>();
-    internal ref OwnerComponent CellBuildingEnt_OwnerCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerComponent>();
-    internal ref BuildingTypeComponent CellBuildingEnt_BuildingTypeCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<BuildingTypeComponent>();
-
-    internal ref CellEnvironmentComponent CellEnvEnt_CellEnvironmentCom(params int[] xy) => ref _cellEnvironmentEnts[xy[X], xy[Y]].Get<CellEnvironmentComponent>();
-
-    internal ref CellSupportVisionComponent CellSupVisEnt_CellSupportVisionCom(params int[] xy) => ref _cellSupportVisionEnts[xy[X], xy[Y]].Get<CellSupportVisionComponent>();
-
-    internal ref CellEffectComponent CellEffectEnt_CellEffectCom(params int[] xy) => ref _cellEffectEnts[xy[X], xy[Y]].Get<CellEffectComponent>();
-
+    internal ref CellUnitComponent CellEnt_CellUnitCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellUnitComponent>();
+    internal ref CellEnvironmentComponent CellEnt_CellEnvCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellEnvironmentComponent>();
+    internal ref CellEffectComponent CellEnt_CellEffectCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellEffectComponent>();
+    internal ref CellBuildingComponent CellEnt_CellBuildingCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellBuildingComponent>();
+    internal ref CellSupportVisionComponent CellEnt_CellSupVisCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellSupportVisionComponent>();
     internal ref CellBaseOperationsComponent CellBaseOperEnt_CellBaseOperCom => ref _cellBaseOperationsEnt.Get<CellBaseOperationsComponent>();
 
     internal int Xamount => _cellEnts.GetUpperBound(X) + 1;
@@ -520,11 +505,6 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
         #region Cells
 
         _cellEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
-        _cellSupportVisionEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
-        _cellEnvironmentEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
-        _cellBuildingEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
-        _cellUnitEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
-        _cellEffectEnts = new EcsEntity[StartValuesGameConfig.CELL_COUNT_X, StartValuesGameConfig.CELL_COUNT_Y];
 
         _cellBaseOperationsEnt = GameWorld.NewEntity();
         _cellBaseOperationsEnt.Replace(new CellBaseOperationsComponent(this));
@@ -534,18 +514,13 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
             for (int y = 0; y < StartValuesGameConfig.CELL_COUNT_Y; y++)
             {
                 _cellEnts[x, y] = GameWorld.NewEntity();
-                _cellSupportVisionEnts[x, y] = GameWorld.NewEntity();
-                _cellEnvironmentEnts[x, y] = GameWorld.NewEntity();
-                _cellBuildingEnts[x, y] = GameWorld.NewEntity();
-                _cellUnitEnts[x, y] = GameWorld.NewEntity();
-                _cellEffectEnts[x, y] = GameWorld.NewEntity();
 
-                _cellEnts[x, y].Replace(new CellComponent(this, StartValuesGameConfig, x, y));
-                _cellUnitEnts[x, y].Replace(new CellUnitComponent(this, x, y));
-                _cellBuildingEnts[x, y].Replace(new CellBuildingComponent(this, GameObjectPool, x, y));
-                _cellEnvironmentEnts[x, y].Replace(new CellEnvironmentComponent(this, GameObjectPool, x, y));
-                _cellSupportVisionEnts[x, y].Replace(new CellSupportVisionComponent(this, GameObjectPool, x, y));
-                _cellEffectEnts[x, y].Replace(new CellEffectComponent(this, GameObjectPool, x, y));
+                _cellEnts[x, y].Replace(new CellComponent(StartValuesGameConfig, x, y));
+                _cellEnts[x, y].Replace(new CellUnitComponent(this, x, y));
+                _cellEnts[x, y].Replace(new CellBuildingComponent(this, GameObjectPool, x, y));
+                _cellEnts[x, y].Replace(new CellEnvironmentComponent(this, GameObjectPool, x, y));
+                _cellEnts[x, y].Replace(new CellSupportVisionComponent(this, GameObjectPool, x, y));
+                _cellEnts[x, y].Replace(new CellEffectComponent(this, GameObjectPool, x, y));
             }
         }
 
