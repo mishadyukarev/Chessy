@@ -40,11 +40,11 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int AMOUNT_GOLD_MASTER = 0;
     internal readonly int AMOUNT_GOLD_OTHER = 0;
 
-    internal readonly int AMOUNT_FOOD_MASTER = 60;
-    internal readonly int AMOUNT_FOOD_OTHER = 60;
+    internal readonly int AMOUNT_FOOD_MASTER = 30;
+    internal readonly int AMOUNT_FOOD_OTHER = 30;
 
-    internal readonly int AMOUNT_WOOD_MASTER = 60;
-    internal readonly int AMOUNT_WOOD_OTHER = 60;
+    internal readonly int AMOUNT_WOOD_MASTER = 30;
+    internal readonly int AMOUNT_WOOD_OTHER = 30;
 
     internal readonly int AMOUNT_ORE_MASTER = 0;
     internal readonly int AMOUNT_ORE_OTHER = 0;
@@ -66,13 +66,13 @@ public class StartValuesGameConfig : ScriptableObject
     internal readonly int GOLD_FOR_BUYING_PAWN = 0;
 
     internal readonly int FOOD_FOR_BUYING_ROOK = 5;
-    internal readonly int WOOD_FOR_BUYING_ROOK = 10;
+    internal readonly int WOOD_FOR_BUYING_ROOK = 5;
     internal readonly int ORE_FOR_BUYING_ROOK = 0;
     internal readonly int IRON_FOR_BUYING_ROOK = 0;
     internal readonly int GOLD_FOR_BUYING_ROOK = 0;
 
     internal readonly int FOOD_FOR_BUYING_BISHOP = 5;
-    internal readonly int WOOD_FOR_BUYING_BISHOP = 10;
+    internal readonly int WOOD_FOR_BUYING_BISHOP = 5;
     internal readonly int ORE_FOR_BUYING_BISHOP = 0;
     internal readonly int IRON_FOR_BUYING_BISHOP = 0;
     internal readonly int GOLD_FOR_BUYING_BISHOP = 0;
@@ -118,13 +118,13 @@ public class StartValuesGameConfig : ScriptableObject
     #region Building
 
     internal readonly int FOOD_FOR_BUILDING_FARM = 0;
-    internal readonly int WOOD_FOR_BUILDING_FARM = 10;
+    internal readonly int WOOD_FOR_BUILDING_FARM = 5;
     internal readonly int ORE_FOR_BUILDING_FARM = 0;
     internal readonly int IRON_FOR_BUILDING_FARM = 0;
     internal readonly int GOLD_FOR_BUILDING_FARM = 0;
 
     internal readonly int FOOD_FOR_BUILDING_WOODCUTTER = 0;
-    internal readonly int WOOD_FOR_BUILDING_WOODCUTTER = 10;
+    internal readonly int WOOD_FOR_BUILDING_WOODCUTTER = 5;
     internal readonly int ORE_FOR_BUILDING_WOODCUTTER = 0;
     internal readonly int IRON_FOR_BUILDING_WOODCUTTER = 0;
     internal readonly int GOLD_FOR_BUILDING_WOODCUTTER = 0;

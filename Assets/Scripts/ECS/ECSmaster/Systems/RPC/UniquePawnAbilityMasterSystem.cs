@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
-using System.Collections.Generic;
+﻿using Photon.Pun;
 
 internal class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
 {
@@ -79,10 +77,10 @@ internal class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
 
                 case UniqueAbilitiesPawnTypes.AbilityTwo:
 
-                    if (!_eGM.CellEnt_CellEnvCom(XyCell).HaveFood && !_eGM.CellEnt_CellEnvCom(XyCell).HaveAdultTree)
+                    if (!_eGM.CellEnt_CellEnvCom(XyCell).HaveFertilizer && !_eGM.CellEnt_CellEnvCom(XyCell).HaveAdultTree)
                     {
                         minusFood = 0;
-                        minusWood = 10;
+                        minusWood = 5;
                         minusOre = 0;
                         minusIron = 0;
                         minusGold = 0;
@@ -112,9 +110,9 @@ internal class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                     break;
 
                 case UniqueAbilitiesPawnTypes.AbilityThree:
-                    if (!_eGM.CellEnt_CellEnvCom(XyCell).HaveFood && !_eGM.CellEnt_CellEnvCom(XyCell).HaveAdultTree)
+                    if (!_eGM.CellEnt_CellEnvCom(XyCell).HaveFertilizer && !_eGM.CellEnt_CellEnvCom(XyCell).HaveAdultTree)
                     {
-                        minusFood = 10;
+                        minusFood = 5;
                         minusWood = 0;
                         minusOre = 0;
                         minusIron = 0;

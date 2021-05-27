@@ -625,7 +625,7 @@ public struct CellUnitComponent
 
                 if (!_eGM.CellEnt_CellEnvCom(xy1).HaveMountain)
                 {
-                    if (_eGM.CellEnt_CellUnitCom(xy1).NeedAmountSteps >= AmountSteps)
+                    if (_eGM.CellEnt_CellUnitCom(xy1).NeedAmountSteps <= AmountSteps || _eGM.CellEnt_CellUnitCom(_xy).HaveMaxSteps)
                     {
                         if (_eGM.CellEnt_CellUnitCom(xy1).HaveUnit && !_eGM.CellEnt_CellUnitCom(xy1).IsHim(playerFrom))
                         {

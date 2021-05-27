@@ -307,7 +307,7 @@ internal partial class PhotonPunRPC : MonoBehaviour
                 listObjects.Add(_eGM.CellEnt_CellUnitCom(x, y).IsRelaxed);
 
                 listObjects.Add(_eGM.CellEnt_CellEnvCom(x, y).AmountResourcesForest);
-                listObjects.Add(_eGM.CellEnt_CellEnvCom(x, y).HaveFood);
+                listObjects.Add(_eGM.CellEnt_CellEnvCom(x, y).HaveFertilizer);
                 listObjects.Add(_eGM.CellEnt_CellEnvCom(x, y).HaveAdultTree);
                 listObjects.Add(_eGM.CellEnt_CellEnvCom(x, y).HaveYoungTree);
                 listObjects.Add(_eGM.CellEnt_CellEnvCom(x, y).HaveHill);

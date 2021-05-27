@@ -6,20 +6,20 @@ public struct CellEnvironmentComponent
     private EntitiesGeneralManager _eGM;
     private int[] _xy;
 
-    private bool _haveFood;
+    private bool _haveFertilizer;
     private bool _haveMountain;
     private bool _haveAdultForest;
     private bool _haveYoungForest;
     private bool _haveHill;
     private GameObject _youngTreeGO;
-    private GameObject _foodGO;
+    private GameObject _fertilizerGO;
     private GameObject _mountainGO;
     private GameObject _treeGO;
     private GameObject _hillGO;
 
     internal int AmountResourcesForest;
 
-    internal bool HaveFood => _haveFood;
+    internal bool HaveFertilizer => _haveFertilizer;
     internal bool HaveMountain => _haveMountain;
     internal bool HaveAdultTree => _haveAdultForest;
     internal bool HaveYoungTree => _haveYoungForest;
@@ -31,7 +31,7 @@ public struct CellEnvironmentComponent
         {
             List<EnvironmentTypes> listEnvironmentTypes = new List<EnvironmentTypes>();
 
-            if (_haveFood) listEnvironmentTypes.Add(EnvironmentTypes.Fertilizer);
+            if (_haveFertilizer) listEnvironmentTypes.Add(EnvironmentTypes.Fertilizer);
             if (_haveAdultForest) listEnvironmentTypes.Add(EnvironmentTypes.AdultForest);
             if (_haveYoungForest) listEnvironmentTypes.Add(EnvironmentTypes.YoungForest);
             if (_haveHill) listEnvironmentTypes.Add(EnvironmentTypes.Hill);
@@ -49,13 +49,13 @@ public struct CellEnvironmentComponent
         AmountResourcesForest = default;
 
         _haveYoungForest = false;
-        _haveFood = false;
+        _haveFertilizer = false;
         _haveMountain = false;
         _haveAdultForest = false;
         _haveHill = false;
 
         
-        _foodGO = gameObjectPool.CellEnvironmentFoodGOs[_xy[_eGM.X], _xy[_eGM.Y]];
+        _fertilizerGO = gameObjectPool.CellEnvironmentFoodGOs[_xy[_eGM.X], _xy[_eGM.Y]];
         _mountainGO = gameObjectPool.CellEnvironmentMountainGOs[_xy[_eGM.X], _xy[_eGM.Y]];
         _treeGO = gameObjectPool.CellEnvironmentTreeGOs[_xy[_eGM.X], _xy[_eGM.Y]];
         _youngTreeGO = gameObjectPool.CellEnvironmentYoungTreeGOs[_xy[_eGM.X], _xy[_eGM.Y]];
@@ -88,8 +88,8 @@ public struct CellEnvironmentComponent
                 break;
 
             case EnvironmentTypes.Fertilizer:
-                _haveFood = isActive;
-                _foodGO.SetActive(isActive);
+                _haveFertilizer = isActive;
+                _fertilizerGO.SetActive(isActive);
                 break;
 
             default:
@@ -105,7 +105,7 @@ public struct CellEnvironmentComponent
                 break;
 
             case EnvironmentTypes.AdultForest:
-                AmountResourcesForest = Random.Range(30, 50);
+                AmountResourcesForest = Random.Range(20, 25);
                 break;
 
             case EnvironmentTypes.YoungForest:

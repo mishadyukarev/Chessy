@@ -52,6 +52,7 @@ internal class FireUpdatorMasterSystem : SystemMasterReduction, IEcsRunSystem
                             _eGM.CellEnt_CellBuildingCom(x, y).ResetBuilding();
                             _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(false, EnvironmentTypes.Fertilizer);
                             _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(false, EnvironmentTypes.AdultForest);
+                            _eGM.CellEnt_CellEnvCom(x, y).AmountResourcesForest = 0;
 
                             _eGM.CellEnt_CellEffectCom(x, y).SetEffect(false, EffectTypes.Fire);
 
@@ -64,6 +65,8 @@ internal class FireUpdatorMasterSystem : SystemMasterReduction, IEcsRunSystem
                                     _eGM.CellEnt_CellEffectCom(xy).SetEffect(true, EffectTypes.Fire);
                                 }
                             }
+
+                            _eGM.CellEnt_CellEffectCom(x, y).TimeFire = 0;
                         }
                     }
                 }

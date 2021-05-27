@@ -55,14 +55,14 @@ internal class BuilderMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                     _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps = 0;
 
                     if (_eGM.CellEnt_CellEnvCom(XyCell).HaveAdultTree) _eGM.CellEnt_CellEnvCom(XyCell).SetResetEnvironment(false, EnvironmentTypes.AdultForest);
-                    if (_eGM.CellEnt_CellEnvCom(XyCell).HaveFood) _eGM.CellEnt_CellEnvCom(XyCell).SetResetEnvironment(false, EnvironmentTypes.Fertilizer);
+                    if (_eGM.CellEnt_CellEnvCom(XyCell).HaveFertilizer) _eGM.CellEnt_CellEnvCom(XyCell).SetResetEnvironment(false, EnvironmentTypes.Fertilizer);
 
                     break;
 
 
                 case BuildingTypes.Farm:
 
-                    canSet = _eGM.CellEnt_CellEnvCom(XyCell).HaveFood;
+                    canSet = _eGM.CellEnt_CellEnvCom(XyCell).HaveFertilizer;
 
                     if (canSet)
                     {

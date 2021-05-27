@@ -19,9 +19,6 @@ public struct CellBuildingComponent
     {
         _eGM = eGM;
 
-        _eGM.CellEnt_CellBuildingCom(xy);
-        _eGM.CellEnt_CellBuildingCom(xy);
-
         BuildingType = default;
         Owner = default;
         _xy = xy;
@@ -40,8 +37,8 @@ public struct CellBuildingComponent
 
     internal void SetBuilding(BuildingTypes buildingType, Player player)
     {
-        _eGM.CellEnt_CellBuildingCom(_xy).BuildingType = buildingType;
-        _eGM.CellEnt_CellBuildingCom(_xy).Owner = player;
+        BuildingType = buildingType;
+        Owner = player;
 
         _cityGO.SetActive(false);
         _farmGO.SetActive(false);
