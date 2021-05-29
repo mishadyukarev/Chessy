@@ -15,7 +15,7 @@ internal class SupportVisionSystem : SystemGeneralReduction, IEcsRunSystem
     {
         _eGM.CellEnt_CellSupVisCom(_eGM.SelectorEntSelectorCom.XYpreviousCell).ActiveVision(false, SupportVisionTypes.Selector);
 
-        if (_eGM.CellEnt_CellCom(_eGM.SelectorEntSelectorCom.XYselectedCell).IsSelected)
+        if (_eGM.CellEnt_CellBaseCom(_eGM.SelectorEntSelectorCom.XYselectedCell).IsSelected)
         {
             _eGM.CellEnt_CellSupVisCom(_eGM.SelectorEntSelectorCom.XYselectedCell).ActiveVision(true, SupportVisionTypes.Selector);
         }
@@ -37,11 +37,11 @@ internal class SupportVisionSystem : SystemGeneralReduction, IEcsRunSystem
                 {
                     if (isSelectedUnit)
                     {
-                        if (!_eGM.CellEnt_CellCom(x, y).IsSelected && !_eGM.CellEnt_CellUnitCom(x, y).HaveUnit && !_eGM.CellEnt_CellEnvCom(x, y).HaveMountain)
+                        if (!_eGM.CellEnt_CellBaseCom(x, y).IsSelected && !_eGM.CellEnt_CellUnitCom(x, y).HaveUnit && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveMountain)
                         {
                             if (Instance.IsMasterClient)
                             {
-                                if (_eGM.CellEnt_CellCom(x, y).IsStartMaster)
+                                if (_eGM.CellEnt_CellBaseCom(x, y).IsStarted(true))
                                 {
                                     _eGM.CellEnt_CellSupVisCom(x, y).ActiveVision(true, SupportVisionTypes.Spawn);
                                 }
@@ -49,7 +49,7 @@ internal class SupportVisionSystem : SystemGeneralReduction, IEcsRunSystem
 
                             else
                             {
-                                if (_eGM.CellEnt_CellCom(x, y).IsStartOther)
+                                if (_eGM.CellEnt_CellBaseCom(x, y).IsStarted(false))
                                 {
                                     _eGM.CellEnt_CellSupVisCom(x, y).ActiveVision(true, SupportVisionTypes.Spawn);
                                 }
@@ -57,7 +57,7 @@ internal class SupportVisionSystem : SystemGeneralReduction, IEcsRunSystem
                         }
                     }
 
-                    else if (!_eGM.CellEnt_CellCom(x, y).IsSelected)
+                    else if (!_eGM.CellEnt_CellBaseCom(x, y).IsSelected)
                     {
                         _eGM.CellEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Spawn);
                     }

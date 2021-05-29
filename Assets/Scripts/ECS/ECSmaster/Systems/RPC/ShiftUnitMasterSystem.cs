@@ -16,7 +16,7 @@ internal class ShiftUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
     {
         List<int[]> xyAvailableCellsForShift = _eGM.CellEnt_CellUnitCom(XyPreviousCell).GetCellsForShift();
 
-        if (_eGM.CellEnt_CellUnitCom(XyPreviousCell).IsHim(Info.Sender) && _eGM.CellEnt_CellUnitCom(XyPreviousCell).MinAmountSteps)
+        if (_eGM.CellEnt_CellUnitCom(XyPreviousCell).IsHim(Info.Sender) && _eGM.CellEnt_CellUnitCom(XyPreviousCell).HaveMinAmountSteps)
         {
             if (_eGM.CellBaseOperEnt_CellBaseOperCom.TryFindCellInList(XySelectedCell, xyAvailableCellsForShift))
             {

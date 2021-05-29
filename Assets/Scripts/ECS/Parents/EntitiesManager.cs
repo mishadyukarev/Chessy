@@ -3,7 +3,7 @@ using static MainGame;
 
 internal abstract class EntitiesManager
 {
-    protected GameObjectPool GameObjectPool => Instance.GameObjectPool;
+    protected ObjectPool ObjectPool => Instance.ObjectPool;
     protected StartValuesGameConfig StartValuesGameConfig => Instance.StartValuesGameConfig;
 
     internal EcsWorld GameWorld;

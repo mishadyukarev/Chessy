@@ -2,50 +2,47 @@
 using UnityEngine;
 using static MainGame;
 
-internal class EntitiesMasterManager : EntitiesManager
+internal sealed class EntitiesMasterManager : EntitiesManager
 {
     private EcsEntity _masterRPCEntity;
     internal ref RPCMasterComponent RPCMasterEnt_RPCMasterCom => ref _masterRPCEntity.Get<RPCMasterComponent>();
 
 
-    public EntitiesMasterManager(EcsWorld ecsWorld) : base(ecsWorld) { }
-
-    internal void CreateEntities(ECSmanager eCSmanager)
+    internal EntitiesMasterManager(EcsWorld ecsWorld, ECSmanager eCSmanager) : base(ecsWorld)
     {
         var eGM = eCSmanager.EntitiesGeneralManager;
 
         #region Cells
 
-        for (int x = 0; x < Instance.StartValuesGameConfig.CELL_COUNT_X; x++)
+        for (int x = 0; x < eGM.Xamount; x++)
         {
-            for (int y = 0; y < Instance.StartValuesGameConfig.CELL_COUNT_Y; y++)
+            for (int y = 0; y < eGM.Yamount; y++)
             {
                 int random;
 
                 random = Random.Range(1, 100);
                 if (random <= Instance.StartValuesGameConfig.PERCENT_MOUNTAIN)
-                    eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Mountain);
+                    eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Mountain);
 
-                if(!eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).HaveMountain)
+                if (!eGM.CellEnvEnt_CellEnvCom(x, y).HaveMountain)
                 {
                     random = Random.Range(1, 100);
                     if (random <= Instance.StartValuesGameConfig.PERCENT_TREE)
                     {
-                        eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).SetResetEnvironment(true, EnvironmentTypes.AdultForest);
-                        eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).SetDefaultAmountResources(EnvironmentTypes.AdultForest);
+                        eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.AdultForest);
                     }
-                        
+
 
                     random = Random.Range(1, 100);
                     if (random <= Instance.StartValuesGameConfig.PERCENT_HILL)
-                        eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Hill);
+                        eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Hill);
 
 
-                    if (!eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).HaveAdultTree)
+                    if (!eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree)
                     {
                         random = Random.Range(1, 100);
                         if (random <= Instance.StartValuesGameConfig.PERCENT_FOOD)
-                            eCSmanager.EntitiesGeneralManager.CellEnt_CellEnvCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Fertilizer);
+                            eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Fertilizer);
                     }
                 }
             }
@@ -107,6 +104,5 @@ internal class EntitiesMasterManager : EntitiesManager
         _masterRPCEntity.Replace(new RPCMasterComponent());
 
         #endregion
-
     }
 }

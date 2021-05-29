@@ -2,7 +2,7 @@
 using UnityEngine;
 using static MainGame;
 
-internal class TruceMasterSystem : RPCMasterSystemReduction
+internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 {
     private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
@@ -16,13 +16,16 @@ internal class TruceMasterSystem : RPCMasterSystemReduction
 
         _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[Info.Sender.IsMasterClient] = _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
 
+
         bool isTruce = Instance.StartValuesGameConfig.IS_TEST ||
         _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[true]
             && _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[false];
 
+
+
         if (isTruce)
         {
-            _eGM.UpdatorEntityAmountComponent.Amount += UnityEngine.Random.Range(4500, 5500);
+            _eGM.UpdatorEntityAmountComponent.Amount += Random.Range(4500, 5500);
             _photonPunRPC.TruceToGeneral(RpcTarget.All, true, false, _eGM.UpdatorEntityAmountComponent.Amount);
 
             int random;
@@ -63,83 +66,75 @@ internal class TruceMasterSystem : RPCMasterSystemReduction
 
                     }
 
-                    if (_eGM.CellEnt_CellBuildingCom(x, y).HaveBuilding)
+                    if (_eGM.CellBuildingEnt_BuildingTypeCom(x, y).HaveBuilding)
                     {
-                        switch (_eGM.CellEnt_CellBuildingCom(x, y).BuildingType)
+                        switch (_eGM.CellBuildingEnt_BuildingTypeCom(x, y).BuildingType)
                         {
                             case BuildingTypes.None:
                                 break;
 
                             case BuildingTypes.City:
+                                _cellWorker.ResetBuilding(x, y);
                                 break;
 
                             case BuildingTypes.Farm:
-                                _eGM.FoodEnt_AmountDictCom.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
-                                _eGM.WoodEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
-                                _eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
-                                _eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
-                                _eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
-
-                                _eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterClient] -= 1;
-                                _eGM.CellEnt_CellBuildingCom(x, y).ResetBuilding();
+                                //_eGM.FoodEnt_AmountDictCom.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.FOOD_FOR_BUILDING_FARM;
+                                //_eGM.WoodEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.WOOD_FOR_BUILDING_FARM;
+                                //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_FARM;
+                                //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_FARM;
+                                //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_FARM;
+                                _cellWorker.ResetBuilding(x, y);
                                 break;
 
                             case BuildingTypes.Woodcutter:
-                                _eGM.FoodEnt_AmountDictCom.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
-                                _eGM.WoodEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
-                                _eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
-                                _eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
-                                _eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
-
-                                _eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterClient] -= 1;
-                                _eGM.CellEnt_CellBuildingCom(x, y).ResetBuilding();
+                                //_eGM.FoodEnt_AmountDictCom.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
+                                //_eGM.WoodEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
+                                //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
+                                //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
+                                //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
+                                _cellWorker.ResetBuilding(x, y);
                                 break;
 
                             case BuildingTypes.Mine:
-                                _eGM.FoodEnt_AmountDictCom.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
-                                _eGM.WoodEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
-                                _eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
-                                _eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
-                                _eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).Owner.IsMasterClient] += StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
-
-                                _eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterClient] -= 1;
-                                _eGM.CellEnt_CellBuildingCom(x, y).ResetBuilding();
+                                //_eGM.FoodEnt_AmountDictCom.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.FOOD_FOR_BUILDING_MINE;
+                                //_eGM.WoodEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.WOOD_FOR_BUILDING_MINE;
+                                //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_MINE;
+                                //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_MINE;
+                                //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_MINE;
+                                _cellWorker.ResetBuilding(x, y);
                                 break;
 
                             default:
                                 break;
                         }
-
                     }
 
-                    if (!_eGM.CellEnt_CellEnvCom(x, y).HaveFertilizer
-                        && !_eGM.CellEnt_CellEnvCom(x, y).HaveMountain && !_eGM.CellEnt_CellEnvCom(x, y).HaveAdultTree
-                             && _eGM.CellEnt_CellBuildingCom(x, y).BuildingType != BuildingTypes.City)
+                    if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer
+                        && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveMountain && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree
+                             && _eGM.CellBuildingEnt_BuildingTypeCom(x, y).BuildingType != BuildingTypes.City)
                     {
                         random = Random.Range(0, 100);
 
                         if (random <= 5)
                         {
-                            _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Fertilizer);
+                            _eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Fertilizer);
                         }
                     }
 
-                    if (_eGM.CellEnt_CellEnvCom(x, y).HaveYoungTree)
+                    if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveYoungTree)
                     {
-                        _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(false, EnvironmentTypes.YoungForest);
-                        _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(true, EnvironmentTypes.AdultForest);
-                        _eGM.CellEnt_CellEnvCom(x, y).SetDefaultAmountResources(EnvironmentTypes.AdultForest);
+                        _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.YoungForest);
+                        _eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.AdultForest);
                     }
 
-                    if (!_eGM.CellEnt_CellEnvCom(x, y).HaveFertilizer && !_eGM.CellEnt_CellEnvCom(x, y).HaveMountain
-                         && !_eGM.CellEnt_CellEnvCom(x, y).HaveAdultTree && _eGM.CellEnt_CellBuildingCom(x,y).BuildingType != BuildingTypes.City)
+                    if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveMountain
+                         && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree && _eGM.CellBuildingEnt_BuildingTypeCom(x,y).BuildingType != BuildingTypes.City)
                     {
                         random = Random.Range(0, 100);
 
                         if (random <= 5)
                         {
-                            _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(true, EnvironmentTypes.AdultForest);
-                            _eGM.CellEnt_CellEnvCom(x, y).SetDefaultAmountResources(EnvironmentTypes.AdultForest);
+                            _eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.AdultForest);
                         }
                     }
                 }

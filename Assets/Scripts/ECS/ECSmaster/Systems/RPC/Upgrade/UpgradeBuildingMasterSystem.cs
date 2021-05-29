@@ -51,7 +51,7 @@ internal class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
                 minusIron = 0;
                 minusGold = 1;
 
-                currentUpgradeBuildingsDict = _eGM.InfoEnt_UpgradeCom.AmountUpgradeFarmDict;
+                currentUpgradeBuildingsDict = _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeFarmDict;
                 break;
 
             case BuildingTypes.Woodcutter:
@@ -61,7 +61,7 @@ internal class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
                 minusIron = 0;
                 minusGold = 1;
 
-                currentUpgradeBuildingsDict = _eGM.InfoEnt_UpgradeCom.AmountUpgradeWoodcutterDict;
+                currentUpgradeBuildingsDict = _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeWoodcutterDict;
                 break;
 
             case BuildingTypes.Mine:
@@ -71,7 +71,7 @@ internal class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
                 minusIron = 0;
                 minusGold = 1;
 
-                currentUpgradeBuildingsDict = _eGM.InfoEnt_UpgradeCom.AmountUpgradeMineDict;
+                currentUpgradeBuildingsDict = _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeMineDict;
                 break;
 
             default:

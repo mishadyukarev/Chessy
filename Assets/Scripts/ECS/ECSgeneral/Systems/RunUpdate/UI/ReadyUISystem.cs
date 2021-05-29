@@ -18,8 +18,8 @@ internal class ReadyUISystem : RPCGeneralReduction, IEcsRunSystem
     {
         _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
 
-        _parentReadyZone = Instance.GameObjectPool.ParentReadyZone;
-        _readyButton = Instance.GameObjectPool.ReadyButton;
+        _parentReadyZone = Instance.ObjectPool.ParentReadyZone;
+        _readyButton = Instance.ObjectPool.ReadyButton;
         _readyButton.onClick.AddListener(delegate { Ready(); });
     }
 

@@ -20,19 +20,19 @@ internal class MeltOreMasterSystem : RPCMasterSystemReduction
 
         if (Info.Sender.IsMasterClient)
         {
-            haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_MELTING_ORE;
-            haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
-            haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_MELTING_ORE;
-            haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_MELTING_ORE;
-            haveGold = _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
+            haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.FOOD_FOR_MELTING_ORE;
+            haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.WOOD_FOR_MELTING_ORE;
+            haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.ORE_FOR_MELTING_ORE;
+            haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.IRON_FOR_MELTING_ORE;
+            haveGold = _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.GOLD_FOR_MELTING_ORE;
 
             if (haveFood && haveWood && haveOre && haveIron && haveGold)
             {
-                _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_MELTING_ORE;
-                _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
-                _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_MELTING_ORE;
-                _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_MELTING_ORE;
-                _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
+                _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.FOOD_FOR_MELTING_ORE;
+                _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.WOOD_FOR_MELTING_ORE;
+                _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.ORE_FOR_MELTING_ORE;
+                _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.IRON_FOR_MELTING_ORE;
+                _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.GOLD_FOR_MELTING_ORE;
 
                 _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] += 1;
                 _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] += 1;
@@ -40,19 +40,19 @@ internal class MeltOreMasterSystem : RPCMasterSystemReduction
         }
         else
         {
-            haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.FOOD_FOR_MELTING_ORE;
-            haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
-            haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.ORE_FOR_MELTING_ORE;
-            haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.IRON_FOR_MELTING_ORE;
-            haveGold = _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
+            haveFood = _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.FOOD_FOR_MELTING_ORE;
+            haveWood = _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.WOOD_FOR_MELTING_ORE;
+            haveOre = _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.ORE_FOR_MELTING_ORE;
+            haveIron = _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.IRON_FOR_MELTING_ORE;
+            haveGold = _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.GOLD_FOR_MELTING_ORE;
 
             if (haveFood && haveWood && haveOre && haveIron && haveGold)
             {
-                _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.FOOD_FOR_MELTING_ORE;
-                _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
-                _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.ORE_FOR_MELTING_ORE;
-                _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.IRON_FOR_MELTING_ORE;
-                _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
+                _eGM.FoodEnt_AmountDictCom.AmountDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.FOOD_FOR_MELTING_ORE;
+                _eGM.WoodEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.WOOD_FOR_MELTING_ORE;
+                _eGM.OreEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.ORE_FOR_MELTING_ORE;
+                _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.IRON_FOR_MELTING_ORE;
+                _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.GOLD_FOR_MELTING_ORE;
 
                 _eGM.IronEAmountDictC.AmountDict[Info.Sender.IsMasterClient] += 1;
                 _eGM.GoldEAmountDictC.AmountDict[Info.Sender.IsMasterClient] += 1;

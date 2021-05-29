@@ -25,9 +25,9 @@ internal class GetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
             case UnitTypes.King:
 
                 if (Info.Sender.IsMasterClient)
-                    isGetted = _eGM.InfoEnt_UnitsInfoCom.AmountKingDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                    isGetted = _eGM.InfoEnt_UnitsInfoCom.AmountKingDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
-                else isGetted = _eGM.InfoEnt_UnitsInfoCom.AmountKingDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                else isGetted = _eGM.InfoEnt_UnitsInfoCom.AmountKingDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
                 break;
 
@@ -36,7 +36,7 @@ internal class GetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                 if (Info.Sender.IsMasterClient)
                 {
-                    if (_eGM.InfoEnt_UnitsInfoCom.AmountPawnDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                    if (_eGM.InfoEnt_UnitsInfoCom.AmountPawnDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                     {
                         isGetted = true;
                     }
@@ -44,7 +44,7 @@ internal class GetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                 }
                 else
                 {
-                    if (_eGM.InfoEnt_UnitsInfoCom.AmountPawnDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                    if (_eGM.InfoEnt_UnitsInfoCom.AmountPawnDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                     {
                         isGetted = true;
                     }
@@ -58,7 +58,7 @@ internal class GetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 
                 if (Info.Sender.IsMasterClient)
                 {
-                    if (_eGM.InfoEnt_UnitsInfoCom.AmountRookDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                    if (_eGM.InfoEnt_UnitsInfoCom.AmountRookDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                     {
                         isGetted = true;
                     }
@@ -66,7 +66,7 @@ internal class GetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                 }
                 else
                 {
-                    if (_eGM.InfoEnt_UnitsInfoCom.AmountRookDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
+                    if (_eGM.InfoEnt_UnitsInfoCom.AmountRookDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT)
                     {
                         isGetted = true;
                     }
@@ -79,9 +79,9 @@ internal class GetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
             case UnitTypes.Bishop:
 
                 if (Info.Sender.IsMasterClient)
-                    isGetted = _eGM.InfoEnt_UnitsInfoCom.AmountBishopDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                    isGetted = _eGM.InfoEnt_UnitsInfoCom.AmountBishopDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
-                else isGetted = _eGM.InfoEnt_UnitsInfoCom.AmountBishopDict[Info.Sender.IsMasterClient] >= StartValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
+                else isGetted = _eGM.InfoEnt_UnitsInfoCom.AmountBishopDict[Info.Sender.IsMasterClient] >= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
 
                 break;
 

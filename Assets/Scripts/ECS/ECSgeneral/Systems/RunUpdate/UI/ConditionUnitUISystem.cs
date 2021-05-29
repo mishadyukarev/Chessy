@@ -15,10 +15,10 @@ internal class ConditionUnitUISystem : SystemGeneralReduction, IEcsRunSystem
 
     internal ConditionUnitUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _hpCurrentUnitText = Instance.GameObjectPool.HpCurrentUnitText;
-        _damageCurrentUnitText = Instance.GameObjectPool.DamageCurrentUnitText;
-        _protectionCurrentUnitText = Instance.GameObjectPool.ProtectionCurrentUnitText;
-        _stepsCurrentUnitText = Instance.GameObjectPool.StepsCurrentUnitText;
+        _hpCurrentUnitText = Instance.ObjectPool.HpCurrentUnitText;
+        _damageCurrentUnitText = Instance.ObjectPool.DamageCurrentUnitText;
+        _protectionCurrentUnitText = Instance.ObjectPool.ProtectionCurrentUnitText;
+        _stepsCurrentUnitText = Instance.ObjectPool.StepsCurrentUnitText;
     }
 
     public void Run()

@@ -1,115 +1,92 @@
 ﻿using Photon.Realtime;
 using UnityEngine;
+using System;
 
-public struct CellBuildingComponent
+internal struct CellBuildingComponent
 {
-    private EntitiesGeneralManager _eGM;
-    private int[] _xy;
-
-    internal BuildingTypes BuildingType;
-
-    internal bool HaveBuilding => BuildingType != BuildingTypes.None;
-    internal Player Owner;
     private GameObject _cityGO;
     private GameObject _farmGO;
     private GameObject _woodcutterGO;
     private GameObject _mineGO;
+    private SpriteRenderer _citySR;
+    private SpriteRenderer _farmSR;
+    private SpriteRenderer _woodcutterSR;
+    private SpriteRenderer _mineSR;
 
-    internal CellBuildingComponent(EntitiesGeneralManager eGM, GameObjectPool gameObjectPool,  params int[] xy)
+    internal CellBuildingComponent(ObjectPool gameObjectPool, int x, int y)
     {
-        _eGM = eGM;
+        _cityGO = gameObjectPool.CellBuildingCityGOs[x, y];
+        _farmGO = gameObjectPool.CellBuildingFarmGOs[x, y];
+        _woodcutterGO = gameObjectPool.CellBuildingWoodcutterGOs[x, y];
+        _mineGO = gameObjectPool.CellBuildingMineGOs[x, y];
 
-        BuildingType = default;
-        Owner = default;
-        _xy = xy;
-        _cityGO = gameObjectPool.CellBuildingCityGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _farmGO = gameObjectPool.CellBuildingFarmGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _woodcutterGO = gameObjectPool.CellBuildingWoodcutterGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _mineGO = gameObjectPool.CellBuildingMineGOs[_xy[_eGM.X], _xy[_eGM.Y]];
+        _citySR = _cityGO.GetComponent<SpriteRenderer>();
+        _farmSR = _farmGO.GetComponent<SpriteRenderer>();
+        _woodcutterSR = _woodcutterGO.GetComponent<SpriteRenderer>();
+        _mineSR = _mineGO.GetComponent<SpriteRenderer>();
     }
 
 
-    private void SetColorBuilding(in SpriteRenderer unitSpriteRender, in Player player)
+    internal void SetColorBuilding(BuildingTypes buildingType, Player owner)
     {
-        if (player.IsMasterClient) unitSpriteRender.color = Color.blue;
-        else unitSpriteRender.color = Color.red;
-    }
-
-    internal void SetBuilding(BuildingTypes buildingType, Player player)
-    {
-        BuildingType = buildingType;
-        Owner = player;
-
-        _cityGO.SetActive(false);
-        _farmGO.SetActive(false);
-        _woodcutterGO.SetActive(false);
-        _mineGO.SetActive(false);
+        SpriteRenderer spriteRender;
 
         switch (buildingType)
         {
+            case BuildingTypes.None:
+                throw new Exception();
+
             case BuildingTypes.City:
-                _cityGO.SetActive(true);
-                SetColorBuilding(_cityGO.GetComponent<SpriteRenderer>(), player);
+                spriteRender = _citySR;
                 break;
 
             case BuildingTypes.Farm:
-                _farmGO.SetActive(true);
-                SetColorBuilding(_farmGO.GetComponent<SpriteRenderer>(), player);
+                spriteRender = _farmSR;
                 break;
 
             case BuildingTypes.Woodcutter:
-                _woodcutterGO.SetActive(true);
-                SetColorBuilding(_woodcutterGO.GetComponent<SpriteRenderer>(), player);
+                spriteRender = _woodcutterSR;
                 break;
 
             case BuildingTypes.Mine:
-                _mineGO.SetActive(true);
-                SetColorBuilding(_mineGO.GetComponent<SpriteRenderer>(), player);
+                spriteRender = _mineSR;
                 break;
+
+            default:
+                throw new Exception();
         }
-    }
-    internal void ResetBuilding()
-    {
-        var buildingType = BuildingTypes.None;
-        Player player = default;
-        SetBuilding(buildingType, player);
+
+        if (owner.IsMasterClient) spriteRender.color = Color.blue;
+        else spriteRender.color = Color.red;
     }
 
-
-
-    private bool _haveOwner => Owner != default;
-
-    internal int ActorNumber
+    internal void SetEnabledSR(bool isActive, BuildingTypes buildingType)
     {
-        get
+        switch (buildingType)
         {
-            if (_haveOwner) return Owner.ActorNumber;
-            else return -1;
+            case BuildingTypes.None:
+                throw new Exception();
+
+            case BuildingTypes.City:
+                _citySR.enabled = isActive;
+                break;
+
+            case BuildingTypes.Farm:
+                _farmSR.enabled = isActive;
+                break;
+
+            case BuildingTypes.Woodcutter:
+                _woodcutterSR.enabled = isActive;
+                break;
+
+            case BuildingTypes.Mine:
+                _mineSR.enabled = isActive;
+                break;
+
+            default:
+                throw new Exception();
         }
     }
 
-    internal bool IsMine
-    {
-        get
-        {
-            if (_haveOwner) return Owner.IsLocal;
-            else return default;
-        }
-    }
 
-    internal bool IsMasterClient
-    {
-        get
-        {
-            if (_haveOwner) return Owner.IsMasterClient;
-            else return default;
-        }
-    }
-
-
-    internal bool IsHim(Player player)
-    {
-        if (player == default) return default;
-        return player.ActorNumber == Owner.ActorNumber;
-    }
 }

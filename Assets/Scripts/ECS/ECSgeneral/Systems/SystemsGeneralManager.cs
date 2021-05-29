@@ -15,6 +15,7 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new SelectorSystem(eCSmanager), nameof(SelectorSystem))
             .Add(new SupportVisionSystem(eCSmanager), nameof(SupportVisionSystem))
             .Add(new SoundSystem(eCSmanager), nameof(SoundSystem))
+            .Add(new AnimationAttackUnitSystem(eCSmanager), nameof(AnimationAttackUnitSystem))
 
             .Add(new UISystem(eCSmanager), nameof(UISystem))
             .Add(new ReadyUISystem(eCSmanager), nameof(ReadyUISystem))

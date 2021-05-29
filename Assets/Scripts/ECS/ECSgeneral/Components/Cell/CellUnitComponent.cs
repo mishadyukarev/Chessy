@@ -1,19 +1,16 @@
 ﻿using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 using static MainGame;
 
-public struct CellUnitComponent
+internal struct CellUnitComponent
 {
-    private EntitiesGeneralManager _eGM;
     private int[] _xy;
+    private EntitiesGeneralManager _eGM;
 
     private UnitTypes _unitType;
     private Player _owner;
-    private bool _isActiveUnitMaster;
-    private bool _isActiveUnitOther;
-    private bool _canShift;
-    private bool _canAttack;
     private GameObject _pawnGO;
     private GameObject _kingGO;
     private GameObject _rookGO;
@@ -22,17 +19,70 @@ public struct CellUnitComponent
     private SpriteRenderer _kingSR;
     private SpriteRenderer _rookSR;
     private SpriteRenderer _bishopSR;
+    private StartValuesGameConfig _startValuesGameConfig;
 
 
     internal UnitTypes UnitType => _unitType;
     internal bool HaveUnit => UnitType != UnitTypes.None;
-    internal Player Owner => _owner;
+    internal bool HaveOwner => _owner != default;
+    internal bool HaveUnitAndOwner => HaveUnit && HaveOwner;
+    internal int ActorNumberOwner => _owner.ActorNumber;
+    internal bool IsMine
+    {
+        get
+        {
+            if (HaveUnit) return _owner.IsLocal;
+            else return default;
+        }
+    }
+    internal bool IsMasterClient
+    {
+        get
+        {
+            if (HaveUnit) return _owner.IsMasterClient;
+            else return default;
+        }
+    }
+    internal bool IsHim(Player player)
+    {
+        if (player == default) return default;
+        return player.ActorNumber == _owner.ActorNumber;
+    }
+
+    internal Transform CurrentUnitTransform
+    {
+        get
+        {
+            switch (_unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    return _kingGO.transform;
+
+                case UnitTypes.Pawn:
+                    return _pawnGO.transform;
+
+                case UnitTypes.Rook:
+                    return _rookGO.transform;
+
+                case UnitTypes.Bishop:
+                    return _bishopGO.transform;
+
+                default:
+                    throw new Exception();
+            }
+        }
+    }
+
+    internal Dictionary<bool, bool> IsActivatedUnitDict;
 
     internal bool IsMelee
     {
         get
         {
-            switch (UnitType)
+            switch (_unitType)
             {
                 case UnitTypes.None:
                     return false;
@@ -59,9 +109,6 @@ public struct CellUnitComponent
     internal bool IsRelaxed;
 
     internal int AmountHealth;
-
-    internal int AmountSteps;
-
     internal bool HaveHealth => AmountHealth > 0;
     internal int MaxAmountHealth
     {
@@ -73,16 +120,16 @@ public struct CellUnitComponent
                     return default;
 
                 case UnitTypes.King:
-                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_KING;
+                    return _startValuesGameConfig.AMOUNT_HEALTH_KING;
 
                 case UnitTypes.Pawn:
-                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_PAWN + _eGM.InfoEnt_UpgradeCom.AmountUpgradePawnDict[IsMasterClient] * Instance.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
+                    return _startValuesGameConfig.AMOUNT_HEALTH_PAWN + _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradePawnDict[IsMasterClient] * _startValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
 
                 case UnitTypes.Rook:
-                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_ROOK + _eGM.InfoEnt_UpgradeCom.AmountUpgradeRookDict[IsMasterClient] * Instance.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
+                    return _startValuesGameConfig.AMOUNT_HEALTH_ROOK + _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeRookDict[IsMasterClient] * _startValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
 
                 case UnitTypes.Bishop:
-                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_BISHOP + _eGM.InfoEnt_UpgradeCom.AmountUpgradeBishopDict[IsMasterClient] * Instance.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
+                    return _startValuesGameConfig.AMOUNT_HEALTH_BISHOP + _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeBishopDict[IsMasterClient] * _startValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
 
                 default:
                     return default;
@@ -100,16 +147,16 @@ public struct CellUnitComponent
                     return default;
 
                 case UnitTypes.King:
-                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_KING;
+                    return _startValuesGameConfig.SIMPLE_POWER_DAMAGE_KING;
 
                 case UnitTypes.Pawn:
-                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN + _eGM.InfoEnt_UpgradeCom.AmountUpgradePawnDict[IsMasterClient] * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_PAWN;
+                    return _startValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN + _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradePawnDict[IsMasterClient] * _startValuesGameConfig.DAMAGE_UPGRADE_ADDING_PAWN;
 
                 case UnitTypes.Rook:
-                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_ROOK + _eGM.InfoEnt_UpgradeCom.AmountUpgradeRookDict[IsMasterClient] * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_ROOK;
+                    return _startValuesGameConfig.SIMPLE_POWER_DAMAGE_ROOK + _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeRookDict[IsMasterClient] * _startValuesGameConfig.DAMAGE_UPGRADE_ADDING_ROOK;
 
                 case UnitTypes.Bishop:
-                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_BISHOP + _eGM.InfoEnt_UpgradeCom.AmountUpgradeBishopDict[IsMasterClient] * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_BISHOP;
+                    return _startValuesGameConfig.SIMPLE_POWER_DAMAGE_BISHOP + _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeBishopDict[IsMasterClient] * _startValuesGameConfig.DAMAGE_UPGRADE_ADDING_BISHOP;
 
                 default:
                     return default;
@@ -129,13 +176,13 @@ public struct CellUnitComponent
                     return SimplePowerDamage;
 
                 case UnitTypes.Pawn:
-                    return (int)(SimplePowerDamage * Instance.StartValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_PAWN);
+                    return (int)(SimplePowerDamage * _startValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_PAWN);
 
                 case UnitTypes.Rook:
-                    return (int)(SimplePowerDamage * Instance.StartValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_ROOK);
+                    return (int)(SimplePowerDamage * _startValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_ROOK);
 
                 case UnitTypes.Bishop:
-                    return (int)(SimplePowerDamage * Instance.StartValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_BISHOP);
+                    return (int)(SimplePowerDamage * _startValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_BISHOP);
 
 
                 default:
@@ -143,7 +190,6 @@ public struct CellUnitComponent
             }
         }
     }
-
     internal int PowerProtection
     {
         get
@@ -155,19 +201,19 @@ public struct CellUnitComponent
                 switch (UnitType)
                 {
                     case UnitTypes.King:
-                        powerProtection += (int)(SimplePowerDamage * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_KING);
+                        powerProtection += (int)(SimplePowerDamage * _startValuesGameConfig.PERCENT_FOR_PROTECTION_KING);
                         break;
 
                     case UnitTypes.Pawn:
-                        powerProtection += (int)(SimplePowerDamage * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_PAWN);
+                        powerProtection += (int)(SimplePowerDamage * _startValuesGameConfig.PERCENT_FOR_PROTECTION_PAWN);
                         break;
 
                     case UnitTypes.Rook:
-                        powerProtection += (int)(SimplePowerDamage * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_ROOK);
+                        powerProtection += (int)(SimplePowerDamage * _startValuesGameConfig.PERCENT_FOR_PROTECTION_ROOK);
                         break;
 
                     case UnitTypes.Bishop:
-                        powerProtection += (int)(SimplePowerDamage * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_BISHOP);
+                        powerProtection += (int)(SimplePowerDamage * _startValuesGameConfig.PERCENT_FOR_PROTECTION_BISHOP);
                         break;
                 }
             }
@@ -177,24 +223,24 @@ public struct CellUnitComponent
                 switch (UnitType)
                 {
                     case UnitTypes.King:
-                        powerProtection -= (int)(SimplePowerDamage * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_KING);
+                        powerProtection -= (int)(SimplePowerDamage * _startValuesGameConfig.PERCENT_FOR_PROTECTION_KING);
                         break;
 
                     case UnitTypes.Pawn:
-                        powerProtection -= (int)(SimplePowerDamage * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_PAWN);
+                        powerProtection -= (int)(SimplePowerDamage * _startValuesGameConfig.PERCENT_FOR_PROTECTION_PAWN);
                         break;
 
                     case UnitTypes.Rook:
-                        powerProtection -= (int)(SimplePowerDamage * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_ROOK);
+                        powerProtection -= (int)(SimplePowerDamage * _startValuesGameConfig.PERCENT_FOR_PROTECTION_ROOK);
                         break;
 
                     case UnitTypes.Bishop:
-                        powerProtection -= (int)(SimplePowerDamage * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_BISHOP);
+                        powerProtection -= (int)(SimplePowerDamage * _startValuesGameConfig.PERCENT_FOR_PROTECTION_BISHOP);
                         break;
                 }
             }
 
-            foreach (var item in _eGM.CellEnt_CellEnvCom(_xy).ListEnvironmentTypes)
+            foreach (var item in _eGM.CellEnvEnt_CellEnvCom(_xy).ListEnvironmentTypes)
             {
                 switch (UnitType)
                 {
@@ -203,15 +249,15 @@ public struct CellUnitComponent
                         switch (item)
                         {
                             case EnvironmentTypes.Fertilizer:
-                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_FOOD_FOR_KING;
+                                powerProtection += _startValuesGameConfig.PROTECTION_FOOD_FOR_KING;
                                 break;
 
                             case EnvironmentTypes.AdultForest:
-                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_TREE_FOR_KING;
+                                powerProtection += _startValuesGameConfig.PROTECTION_TREE_FOR_KING;
                                 break;
 
                             case EnvironmentTypes.Hill:
-                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_HILL_FOR_KING;
+                                powerProtection += _startValuesGameConfig.PROTECTION_HILL_FOR_KING;
                                 break;
                         }
 
@@ -223,15 +269,15 @@ public struct CellUnitComponent
                         switch (item)
                         {
                             case EnvironmentTypes.Fertilizer:
-                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_FOOD_FOR_PAWN;
+                                powerProtection += _startValuesGameConfig.PROTECTION_FOOD_FOR_PAWN;
                                 break;
 
                             case EnvironmentTypes.AdultForest:
-                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_TREE_FOR_PAWN;
+                                powerProtection += _startValuesGameConfig.PROTECTION_TREE_FOR_PAWN;
                                 break;
 
                             case EnvironmentTypes.Hill:
-                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_HILL_FOR_PAWN;
+                                powerProtection += _startValuesGameConfig.PROTECTION_HILL_FOR_PAWN;
                                 break;
                         }
 
@@ -243,15 +289,15 @@ public struct CellUnitComponent
                         switch (item)
                         {
                             case EnvironmentTypes.Fertilizer:
-                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_FOOD_FOR_ROOK;
+                                powerProtection += _startValuesGameConfig.PROTECTION_FOOD_FOR_ROOK;
                                 break;
 
                             case EnvironmentTypes.AdultForest:
-                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_TREE_FOR_ROOK;
+                                powerProtection += _startValuesGameConfig.PROTECTION_TREE_FOR_ROOK;
                                 break;
 
                             case EnvironmentTypes.Hill:
-                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_HILL_FOR_ROOK;
+                                powerProtection += _startValuesGameConfig.PROTECTION_HILL_FOR_ROOK;
                                 break;
                         }
 
@@ -263,15 +309,15 @@ public struct CellUnitComponent
                         switch (item)
                         {
                             case EnvironmentTypes.Fertilizer:
-                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_FOOD_FOR_BISHOP;
+                                powerProtection += _startValuesGameConfig.PROTECTION_FOOD_FOR_BISHOP;
                                 break;
 
                             case EnvironmentTypes.AdultForest:
-                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_TREE_FOR_BISHOP;
+                                powerProtection += _startValuesGameConfig.PROTECTION_TREE_FOR_BISHOP;
                                 break;
 
                             case EnvironmentTypes.Hill:
-                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_HILL_FOR_BISHOP;
+                                powerProtection += _startValuesGameConfig.PROTECTION_HILL_FOR_BISHOP;
                                 break;
                         }
 
@@ -280,26 +326,26 @@ public struct CellUnitComponent
 
             }
 
-            switch (_eGM.CellEnt_CellBuildingCom(_xy).BuildingType)
+            switch (_eGM.CellBuildingEnt_BuildingTypeCom(_xy).BuildingType)
             {
                 case BuildingTypes.City:
 
                     switch (UnitType)
                     {
                         case UnitTypes.King:
-                            powerProtection += Instance.StartValuesGameConfig.PROTECTION_CITY_KING;
+                            powerProtection += _startValuesGameConfig.PROTECTION_CITY_KING;
                             break;
 
                         case UnitTypes.Pawn:
-                            powerProtection += Instance.StartValuesGameConfig.PROTECTION_CITY_PAWN;
+                            powerProtection += _startValuesGameConfig.PROTECTION_CITY_PAWN;
                             break;
 
                         case UnitTypes.Rook:
-                            powerProtection += Instance.StartValuesGameConfig.PROTECTION_CITY_ROOK;
+                            powerProtection += _startValuesGameConfig.PROTECTION_CITY_ROOK;
                             break;
 
                         case UnitTypes.Bishop:
-                            powerProtection += Instance.StartValuesGameConfig.PROTECTION_CITY_BISHOP;
+                            powerProtection += _startValuesGameConfig.PROTECTION_CITY_BISHOP;
                             break;
                     }
 
@@ -321,6 +367,7 @@ public struct CellUnitComponent
         }
     }
 
+    internal int AmountSteps;
     internal bool HaveMaxSteps
     {
         get
@@ -328,30 +375,30 @@ public struct CellUnitComponent
             switch (_unitType)
             {
                 case UnitTypes.King:
-                    return AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING;
+                    return AmountSteps == _startValuesGameConfig.STANDART_AMOUNT_STEPS_KING;
                 case UnitTypes.Pawn:
-                    return AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
+                    return AmountSteps == _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
                 case UnitTypes.Rook:
-                    return AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
+                    return AmountSteps == _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
                 case UnitTypes.Bishop:
-                    return AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
+                    return AmountSteps == _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
             }
             return false;
         }
     }
-    internal bool MinAmountSteps => AmountSteps >= Instance.StartValuesGameConfig.MIN_AMOUNT_STEPS_FOR_UNIT;
+    internal bool HaveMinAmountSteps => AmountSteps >= _startValuesGameConfig.MIN_AMOUNT_STEPS_FOR_UNIT;
     internal int NeedAmountSteps
     {
         get
         {
             int amountSteps = 1;
 
-            foreach (var item in _eGM.CellEnt_CellEnvCom(_xy).ListEnvironmentTypes)
+            foreach (var item in _eGM.CellEnvEnt_CellEnvCom(_xy).ListEnvironmentTypes)
             {
                 switch (item)
                 {
                     case EnvironmentTypes.Fertilizer:
-                        amountSteps += Instance.StartValuesGameConfig.NEED_AMOUNT_STEPS_FOOD;
+                        amountSteps += _startValuesGameConfig.NEED_AMOUNT_STEPS_FOOD;
                         break;
 
                     case EnvironmentTypes.YoungForest:
@@ -359,11 +406,11 @@ public struct CellUnitComponent
                         break;
 
                     case EnvironmentTypes.AdultForest:
-                        amountSteps += Instance.StartValuesGameConfig.NEED_AMOUNT_STEPS_TREE;
+                        amountSteps += _startValuesGameConfig.NEED_AMOUNT_STEPS_TREE;
                         break;
 
                     case EnvironmentTypes.Hill:
-                        amountSteps += Instance.StartValuesGameConfig.NEED_AMOUNT_STEPS_HILL;
+                        amountSteps += _startValuesGameConfig.NEED_AMOUNT_STEPS_HILL;
                         break;
                 }
             }
@@ -372,81 +419,58 @@ public struct CellUnitComponent
         }
     }
 
-    internal CellUnitComponent(EntitiesGeneralManager eGM, params int[] xy)
+
+    internal CellUnitComponent(EntitiesGeneralManager eGM, StartValuesGameConfig startValuesGameConfig, ObjectPool gameObjectPool, int x, int y)
     {
         _eGM = eGM;
-        _xy = xy;
+        _xy = new int[] { x, y};
 
         _unitType = default;
         _owner = default;
-        _canShift = default;
-        _canAttack = default;
 
-        _isActiveUnitMaster = default;
-        _isActiveUnitOther = default;
+        IsActivatedUnitDict = new Dictionary<bool, bool>();
         AmountSteps = default;
         AmountHealth = default;
         IsProtected = default;
         IsRelaxed = default;
 
-        _pawnGO = Instance.GameObjectPool.CellUnitPawnGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _kingGO = Instance.GameObjectPool.CellUnitKingGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _rookGO = Instance.GameObjectPool.CellUnitRookGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _bishopGO = Instance.GameObjectPool.CellUnitBishopGOs[_xy[_eGM.X], _xy[_eGM.Y]];
+        _pawnGO = gameObjectPool.CellUnitPawnGOs[x, y];
+        _kingGO = gameObjectPool.CellUnitKingGOs[x, y];
+        _rookGO = gameObjectPool.CellUnitRookGOs[x, y];
+        _bishopGO = gameObjectPool.CellUnitBishopGOs[x, y];
 
-        _pawnSR = _pawnGO.GetComponent<SpriteRenderer>();
-        _kingSR = _kingGO.GetComponent<SpriteRenderer>();
-        _rookSR = _rookGO.GetComponent<SpriteRenderer>();
-        _bishopSR = _bishopGO.GetComponent<SpriteRenderer>();
+        _kingSR = gameObjectPool.CellUnitKingSRs[x, y];
+        _pawnSR = gameObjectPool.CellUnitPawnSRs[x, y];
+        _rookSR = gameObjectPool.CellUnitRookSRs[x, y];
+        _bishopSR = gameObjectPool.CellUnitBishopSRs[x, y];
+
+        _startValuesGameConfig = startValuesGameConfig;
     }
-
-
 
     internal void RefreshAmountSteps()
     {
         switch (UnitType)
         {
             case UnitTypes.King:
-                AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING;
+                AmountSteps = _startValuesGameConfig.STANDART_AMOUNT_STEPS_KING;
                 break;
 
             case UnitTypes.Pawn:
-                AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
+                AmountSteps = _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
                 break;
 
             case UnitTypes.Rook:
-                AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
+                AmountSteps = _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
                 break;
 
             case UnitTypes.Bishop:
-                AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
+                AmountSteps = _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
                 break;
 
             default:
                 break;
         }
     }
-
-    internal void SetActiveUnit(bool isMaster, bool isActive)
-    {
-        if (isMaster) _isActiveUnitMaster = isActive;
-        else _isActiveUnitOther = isActive;
-    }
-    internal bool GetActiveUnit(bool isMaster)
-    {
-        if (isMaster)
-        {
-            return _isActiveUnitMaster;
-        }
-        else
-        {
-            return _isActiveUnitOther;
-        }
-    }
-
-
-
-    #region Else
 
     private void SetColorUnit(in SpriteRenderer unitSpriteRender, in Player player)
     {
@@ -465,7 +489,6 @@ public struct CellUnitComponent
 
         SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player);
     }
-
     internal void SetUnit(int[] xyFromUnitTo)
     {
         var unitType = _eGM.CellEnt_CellUnitCom(xyFromUnitTo).UnitType;
@@ -477,8 +500,7 @@ public struct CellUnitComponent
 
         SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player);
     }
-
-    internal void SetUnit(in UnitTypes unitType, in int amountHealth, in int amountSteps, in bool isProtected, in bool isRelaxed, in Player player)
+    internal void SetUnit(UnitTypes unitType, int amountHealth, int amountSteps, bool isProtected, bool isRelaxed, Player player)
     {
         _unitType = unitType;
         AmountSteps = amountSteps;
@@ -488,31 +510,32 @@ public struct CellUnitComponent
         _owner = player;
 
 
-
-        _pawnGO.SetActive(false);
-        _kingGO.SetActive(false);
-        _rookGO.SetActive(false);
-        _bishopGO.SetActive(false);
-
         switch (UnitType)
         {
+            case UnitTypes.None:
+                _pawnSR.enabled = false; 
+                _kingSR.enabled = false;
+                _rookSR.enabled = false;
+                _bishopSR.enabled = false;
+                break;
+
             case UnitTypes.King:
-                _kingGO.SetActive(true);
+                _kingSR.enabled = true;
                 SetColorUnit(_kingSR, _owner);
                 break;
 
             case UnitTypes.Pawn:
-                _pawnGO.SetActive(true);
+                _pawnSR.enabled = true;
                 SetColorUnit(_pawnSR, _owner);
                 break;
 
             case UnitTypes.Rook:
-                _rookGO.SetActive(true);
+                _rookSR.enabled = true;
                 SetColorUnit(_rookSR, _owner);
                 break;
 
             case UnitTypes.Bishop:
-                _bishopGO.SetActive(true);
+                _bishopSR.enabled = true;
                 SetColorUnit(_bishopSR, _owner);
                 break;
         }
@@ -523,22 +546,22 @@ public struct CellUnitComponent
         switch (unitType)
         {
             case UnitTypes.King:
-                _kingGO.SetActive(isActive);
+                _kingSR.enabled = isActive;
                 if (player != default) SetColorUnit(_kingSR, player);
                 break;
 
             case UnitTypes.Pawn:
-                _pawnGO.SetActive(isActive);
+                _pawnSR.enabled = isActive;
                 if (player != default) SetColorUnit(_pawnSR, player);
                 break;
 
             case UnitTypes.Rook:
-                _rookGO.SetActive(isActive);
+                _rookSR.enabled = isActive;
                 if (player != default) SetColorUnit(_rookSR, player);
                 break;
 
             case UnitTypes.Bishop:
-                _bishopGO.SetActive(isActive);
+                _bishopSR.enabled = isActive;
                 if (player != default) SetColorUnit(_bishopSR, player);
                 break;
 
@@ -546,49 +569,6 @@ public struct CellUnitComponent
                 break;
         }
     }
-
-    #endregion
-
-
-    #region Owner
-
-    internal int ActorNumber
-    {
-        get
-        {
-            if (HaveUnit) return _owner.ActorNumber;
-            else return -1;
-        }
-    }
-
-    internal bool IsMine
-    {
-        get
-        {
-            if (HaveUnit) return _owner.IsLocal;
-            else return default;
-        }
-    }
-
-    internal bool IsMasterClient
-    {
-        get
-        {
-            if (HaveUnit) return _owner.IsMasterClient;
-            else return default;
-        }
-    }
-
-
-    internal bool IsHim(Player player)
-    {
-        if (player == default) return default;
-        return player.ActorNumber == _owner.ActorNumber;
-    }
-
-    #endregion
-
-
 
 
 
@@ -600,7 +580,7 @@ public struct CellUnitComponent
 
         foreach (var xy in listAvailable)
         {
-            if (!_eGM.CellEnt_CellEnvCom(xy).HaveMountain && !_eGM.CellEnt_CellUnitCom(xy).HaveUnit)
+            if (!_eGM.CellEnvEnt_CellEnvCom(xy).HaveMountain && !_eGM.CellEnt_CellUnitCom(xy).HaveUnit)
             {
                 if (AmountSteps >= _eGM.CellEnt_CellUnitCom(xy).NeedAmountSteps || HaveMaxSteps)
                 {
@@ -623,7 +603,7 @@ public struct CellUnitComponent
                 var xy1 = GetXYCell(_xy, directType1);
 
 
-                if (!_eGM.CellEnt_CellEnvCom(xy1).HaveMountain)
+                if (!_eGM.CellEnvEnt_CellEnvCom(xy1).HaveMountain)
                 {
                     if (_eGM.CellEnt_CellUnitCom(xy1).NeedAmountSteps <= AmountSteps || _eGM.CellEnt_CellUnitCom(_xy).HaveMaxSteps)
                     {
@@ -659,11 +639,11 @@ public struct CellUnitComponent
             {
                 var xy1 = GetXYCell(_xy, directType1);
 
-                if (_eGM.CellEnt_CellCom(xy1).IsActiveSelf)
+                if (_eGM.CellEnt_CellBaseCom(xy1).IsActiveSelfGO)
                 {
-                    if (MinAmountSteps)
+                    if (HaveMinAmountSteps)
                     {
-                        if (!_eGM.CellEnt_CellEnvCom(xy1).HaveMountain)
+                        if (!_eGM.CellEnvEnt_CellEnvCom(xy1).HaveMountain)
                         {
                             if (_eGM.CellEnt_CellUnitCom(xy1).HaveUnit && !_eGM.CellEnt_CellUnitCom(xy1).IsHim(playerFrom))
                             {
@@ -691,13 +671,13 @@ public struct CellUnitComponent
 
                     var xy2 = GetXYCell(xy1, directType1);
 
-                    if (_eGM.CellEnt_CellUnitCom(xy2).GetActiveUnit(Instance.IsMasterClient))
+                    if (_eGM.CellEnt_CellUnitCom(xy2).IsActivatedUnitDict[Instance.IsMasterClient])
                     {
                         if (UnitType == UnitTypes.Rook)
                         {
                             if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Down || directType1 == DirectTypes.Up)
                             {
-                                if (!_eGM.CellEnt_CellEnvCom(xy2).HaveMountain && _eGM.CellEnt_CellUnitCom(xy2).HaveUnit && !_eGM.CellEnt_CellUnitCom(xy2).IsHim(playerFrom))
+                                if (!_eGM.CellEnvEnt_CellEnvCom(xy2).HaveMountain && _eGM.CellEnt_CellUnitCom(xy2).HaveUnit && !_eGM.CellEnt_CellUnitCom(xy2).IsHim(playerFrom))
                                 {
                                     availableCellsUniqueAttack.Add(xy2);
                                 }
@@ -705,7 +685,7 @@ public struct CellUnitComponent
 
                             if (directType1 == DirectTypes.LeftDown || directType1 == DirectTypes.LeftUp || directType1 == DirectTypes.RightDown || directType1 == DirectTypes.RightUp)
                             {
-                                if (!_eGM.CellEnt_CellEnvCom(xy2).HaveMountain && _eGM.CellEnt_CellUnitCom(xy2).HaveUnit && !_eGM.CellEnt_CellUnitCom(xy2).IsHim(playerFrom))
+                                if (!_eGM.CellEnvEnt_CellEnvCom(xy2).HaveMountain && _eGM.CellEnt_CellUnitCom(xy2).HaveUnit && !_eGM.CellEnt_CellUnitCom(xy2).IsHim(playerFrom))
                                 {
                                     availableCellsSimpleAttack.Add(xy2);
                                 }
@@ -717,7 +697,7 @@ public struct CellUnitComponent
                         {
                             if (directType1 == DirectTypes.LeftDown || directType1 == DirectTypes.LeftUp || directType1 == DirectTypes.RightDown || directType1 == DirectTypes.RightUp)
                             {
-                                if (!_eGM.CellEnt_CellEnvCom(xy2).HaveMountain && _eGM.CellEnt_CellUnitCom(xy2).HaveUnit && !_eGM.CellEnt_CellUnitCom(xy2).IsHim(playerFrom))
+                                if (!_eGM.CellEnvEnt_CellEnvCom(xy2).HaveMountain && _eGM.CellEnt_CellUnitCom(xy2).HaveUnit && !_eGM.CellEnt_CellUnitCom(xy2).IsHim(playerFrom))
                                 {
                                     availableCellsUniqueAttack.Add(xy2);
                                 }
@@ -725,7 +705,7 @@ public struct CellUnitComponent
 
                             if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Down || directType1 == DirectTypes.Up)
                             {
-                                if (!_eGM.CellEnt_CellEnvCom(xy2).HaveMountain && _eGM.CellEnt_CellUnitCom(xy2).HaveUnit && !_eGM.CellEnt_CellUnitCom(xy2).IsHim(playerFrom))
+                                if (!_eGM.CellEnvEnt_CellEnvCom(xy2).HaveMountain && _eGM.CellEnt_CellUnitCom(xy2).HaveUnit && !_eGM.CellEnt_CellUnitCom(xy2).IsHim(playerFrom))
                                 {
                                     availableCellsSimpleAttack.Add(xy2);
                                 }
@@ -753,7 +733,7 @@ public struct CellUnitComponent
             xyResultCell[0] = xy[0] + xyDirectCell[0];
             xyResultCell[1] = xy[1] + xyDirectCell[1];
 
-            if (_eGM.CellEnt_CellCom(xyResultCell).IsActiveSelf)
+            if (_eGM.CellEnt_CellBaseCom(xyResultCell).IsActiveSelfGO)
             {
                 xyAvailableCells.Add(_eGM.CellBaseOperEnt_CellBaseOperCom.CopyXY(xyResultCell));
             }

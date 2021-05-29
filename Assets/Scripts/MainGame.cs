@@ -11,11 +11,12 @@ internal sealed class MainGame : MonoBehaviour
     private ResourcesLoadGame _resourcesLoadManager;
     private Builder _builder;
     private Names _names;
-    private GameObjectPool _gameObjectPool;
+    private ObjectPool _gameObjectPool;
     private StartSpawnGame _startSpawnGame;
     private PhotonGameManager _photonGameManager;
     private ECSmanager _eCSmanager;
-    private UnityEvents _unityEvents = default;
+    private UnityEvents _unityEvents;
+    private CellWorker _cellWorker;
 
     #endregion
 
@@ -27,9 +28,10 @@ internal sealed class MainGame : MonoBehaviour
     public ResourcesLoadGame ResourcesLoadGameManager => _resourcesLoadManager;
     internal Builder Builder => _builder;
     internal Names Names => _names;
-    internal GameObjectPool GameObjectPool => _gameObjectPool;
+    internal ObjectPool ObjectPool => _gameObjectPool;
     internal StartValuesGameConfig StartValuesGameConfig => _resourcesLoadManager.StartValuesGameConfig;
     internal PhotonGameManager PhotonGameManager => _photonGameManager;
+    internal CellWorker CellWorker => _cellWorker;
 
     internal bool IsMasterClient => PhotonNetwork.IsMasterClient;
     internal Player MasterClient => PhotonNetwork.MasterClient;
@@ -48,7 +50,7 @@ internal sealed class MainGame : MonoBehaviour
         _builder = new Builder();
         _names = new Names();
         _resourcesLoadManager = new ResourcesLoadGame();
-        _gameObjectPool = new GameObjectPool();
+        _gameObjectPool = new ObjectPool();
 
 
         _startSpawnGame = new StartSpawnGame(this);
@@ -58,12 +60,15 @@ internal sealed class MainGame : MonoBehaviour
 
         _photonGameManager = new PhotonGameManager(_gameObjectPool.ParentScriptsGO.transform);
 
+        _cellWorker = new CellWorker();
+
         #endregion
 
 
         #region Static
 
         _eCSmanager = new ECSmanager();
+        _cellWorker.InitAfterECS(_eCSmanager.EntitiesGeneralManager);
         _photonGameManager.PhotonPunRPC.InitAfterECS(_eCSmanager);
 
         #endregion

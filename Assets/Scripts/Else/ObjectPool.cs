@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-internal class GameObjectPool
+internal class ObjectPool
 {
     #region Variables
 
@@ -16,10 +16,15 @@ internal class GameObjectPool
 
     internal GameObject[,] CellsGO;
 
-    internal GameObject[,] CellUnitPawnGOs;
     internal GameObject[,] CellUnitKingGOs;
+    internal GameObject[,] CellUnitPawnGOs;
     internal GameObject[,] CellUnitRookGOs;
     internal GameObject[,] CellUnitBishopGOs;
+
+    internal SpriteRenderer[,] CellUnitPawnSRs;
+    internal SpriteRenderer[,] CellUnitKingSRs;
+    internal SpriteRenderer[,] CellUnitRookSRs;
+    internal SpriteRenderer[,] CellUnitBishopSRs;
 
     internal GameObject[,] CellEnvironmentFoodGOs;
     internal GameObject[,] CellEnvironmentMountainGOs;

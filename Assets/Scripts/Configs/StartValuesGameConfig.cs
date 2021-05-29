@@ -8,9 +8,9 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region PERCENT ENVIRONMENT
 
-    internal readonly byte PERCENT_FOOD = 20;
+    internal readonly byte PERCENT_FOOD = 30;
     internal readonly byte PERCENT_TREE = 30;
-    internal readonly byte PERCENT_HILL = 5;
+    internal readonly byte PERCENT_HILL = 10;
     internal readonly byte PERCENT_MOUNTAIN = 5;
 
     #endregion
@@ -106,9 +106,9 @@ public class StartValuesGameConfig : ScriptableObject
 
     #region Melting
 
-    internal readonly int FOOD_FOR_MELTING_ORE = 10;
-    internal readonly int WOOD_FOR_MELTING_ORE = 10;
-    internal readonly int ORE_FOR_MELTING_ORE = 10;
+    internal readonly int FOOD_FOR_MELTING_ORE = 0;
+    internal readonly int WOOD_FOR_MELTING_ORE = 5;
+    internal readonly int ORE_FOR_MELTING_ORE = 5;
     internal readonly int IRON_FOR_MELTING_ORE = 0;
     internal readonly int GOLD_FOR_MELTING_ORE = 0;
 

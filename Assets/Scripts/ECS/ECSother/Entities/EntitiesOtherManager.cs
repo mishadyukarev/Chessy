@@ -3,9 +3,7 @@
 
 internal class EntitiesOtherManager : EntitiesManager
 {
-    internal EntitiesOtherManager(EcsWorld ecsWorld) : base(ecsWorld) { }
-
-    public void CreateEntities()
+    internal EntitiesOtherManager(EcsWorld ecsWorld) : base(ecsWorld)
     {
 
     }

@@ -62,7 +62,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
             if (!_eGM.CellEnt_CellUnitCom(XyPreviousCell).HaveHealth)
             {
                 if (_eGM.CellEnt_CellUnitCom(XyPreviousCell).UnitType == UnitTypes.King)
-                    _photonPunRPC.EndGameToMaster(_eGM.CellEnt_CellUnitCom(XySelectedCell).ActorNumber);
+                    _photonPunRPC.EndGameToMaster(_eGM.CellEnt_CellUnitCom(XySelectedCell).ActorNumberOwner);
 
                 _eGM.CellEnt_CellUnitCom(XyPreviousCell).ResetUnit();
             }
@@ -70,7 +70,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
             if (!_eGM.CellEnt_CellUnitCom(XySelectedCell).HaveHealth)
             {
                 if (_eGM.CellEnt_CellUnitCom(XySelectedCell).UnitType == UnitTypes.King)
-                    _photonPunRPC.EndGameToMaster(_eGM.CellEnt_CellUnitCom(XyPreviousCell).ActorNumber);
+                    _photonPunRPC.EndGameToMaster(_eGM.CellEnt_CellUnitCom(XyPreviousCell).ActorNumberOwner);
 
                 _eGM.CellEnt_CellUnitCom(XySelectedCell).ResetUnit();
                 if (_eGM.CellEnt_CellUnitCom(XyPreviousCell).UnitType != UnitTypes.Rook && _eGM.CellEnt_CellUnitCom(XyPreviousCell).UnitType != UnitTypes.Bishop)
@@ -86,6 +86,6 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
 
         _photonPunRPC.AttackUnitToGeneral(Info.Sender, _isAttacked, _isAttacked);
-        _photonPunRPC.AttackUnitToGeneral(RpcTarget.All, false, _isAttacked);
+        _photonPunRPC.AttackUnitToGeneral(RpcTarget.All, false, _isAttacked, XyPreviousCell, XySelectedCell);
     }
 }

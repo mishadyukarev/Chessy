@@ -33,25 +33,19 @@ public sealed class ECSmanager
 
         _entitiesGeneralManager = new EntitiesGeneralManager(_ecsWorld);
         _systemsGeneralManager = new SystemsGeneralManager(_ecsWorld);
-
-        _entitiesGeneralManager.CreateEntities();
         _systemsGeneralManager.CreateInitSystems(this);
 
 
         if (Instance.IsMasterClient)
         {
-            _entitiesMasterManager = new EntitiesMasterManager(_ecsWorld);
+            _entitiesMasterManager = new EntitiesMasterManager(_ecsWorld, this);
             _systemsMasterManager = new SystemsMasterManager(_ecsWorld);
-
-            _entitiesMasterManager.CreateEntities(this);
             _systemsMasterManager.CreateInitSystems(this);
         }
         else
         {
             _entitiesOtherManager = new EntitiesOtherManager(_ecsWorld);
             _systemsOtherManager = new SystemsOtherManager(_ecsWorld);
-
-            _entitiesOtherManager.CreateEntities();
             _systemsOtherManager.CreateInitSystems(this);
         }
     }

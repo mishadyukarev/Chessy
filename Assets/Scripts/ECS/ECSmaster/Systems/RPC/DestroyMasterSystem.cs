@@ -5,7 +5,7 @@ using static MainGame;
 internal class DestroyMasterSystem : SystemMasterReduction, IEcsRunSystem
 {
     private PhotonPunRPC _photonPunRPC;
-    private int[] xyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
+    private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
     private PhotonMessageInfo info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
     internal DestroyMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
@@ -17,45 +17,16 @@ internal class DestroyMasterSystem : SystemMasterReduction, IEcsRunSystem
     {
         base.Run();
 
-        if (_eGM.CellEnt_CellUnitCom(xyCell).IsHim(info.Sender))
+        if (_eGM.CellEnt_CellUnitCom(XyCell).IsHim(info.Sender))
         {
-            if (_eGM.CellEnt_CellUnitCom(xyCell).HaveMaxSteps)
+            if (_eGM.CellEnt_CellUnitCom(XyCell).HaveMaxSteps)
             {
-                switch (_eGM.CellEnt_CellBuildingCom(xyCell).BuildingType)
+                if(_eGM.CellBuildingEnt_BuildingTypeCom(XyCell).BuildingType == BuildingTypes.City)
                 {
-                    case BuildingTypes.City:
-
-                        _photonPunRPC.EndGameToMaster(_eGM.CellEnt_CellUnitCom(xyCell).ActorNumber);
-
-                        break;
-
-
-                    case BuildingTypes.Farm:
-
-                        _eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[_eGM.CellEnt_CellBuildingCom(xyCell).Owner.IsMasterClient] -= 1;
-                        _eGM.CellEnt_CellUnitCom(xyCell).AmountSteps = 0;
-                        _eGM.CellEnt_CellBuildingCom(xyCell).ResetBuilding();
-
-                        break;
-
-
-                    case BuildingTypes.Woodcutter:
-
-                        _eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[_eGM.CellEnt_CellBuildingCom(xyCell).Owner.IsMasterClient] -= 1;
-                        _eGM.CellEnt_CellUnitCom(xyCell).AmountSteps = 0;
-                        _eGM.CellEnt_CellBuildingCom(xyCell).ResetBuilding();
-
-                        break;
-
-                    case BuildingTypes.Mine:
-
-                        _eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[_eGM.CellEnt_CellBuildingCom(xyCell).Owner.IsMasterClient] -= 1;
-                        _eGM.CellEnt_CellUnitCom(xyCell).AmountSteps = 0;
-                        _eGM.CellEnt_CellBuildingCom(xyCell).ResetBuilding();
-
-                        break;
-
+                    _photonPunRPC.EndGameToMaster(_eGM.CellEnt_CellUnitCom(XyCell).ActorNumberOwner);
                 }
+                _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps = 0;
+                _cellWorker.ResetBuilding(XyCell);
             }
         }
     }

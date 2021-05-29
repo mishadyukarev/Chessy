@@ -1,68 +1,62 @@
-﻿//using Leopotam.Ecs;
-//using UnityEngine;
+﻿using UnityEngine;
 
-//internal class AnimationAttackUnitSystem : CellReduction, IEcsRunSystem
-//{
-//    private EcsComponentRef<AnimationAttackUnitComponent> _animationAttackUnitComponentRef = default;
+internal sealed class AnimationAttackUnitSystem : SystemGeneralReduction
+{
+    private bool _isInit = true;
+    private bool _isOne = true;
+    private Vector3 _direction;
+    private Vector3 _heading;
+    private float _speedAnimation = 3f;
+    private float _distance;
 
-//    private SystemsGeneralManager _systemsGeneralManager = default;
-
-//    private bool _isInit = true;
-//    private bool _isOne = true;
-//    private Vector3 _direction;
-//    private Vector3 _heading;
-//    private float _speedAnimation = 3f;
-//    private float _distance;
-
-//    private int[] _xyStartCell => _animationAttackUnitComponentRef.Unref().XYStartCell;
-//    private int[] _xyEndCell => _animationAttackUnitComponentRef.Unref().XYEndCell;
+    private int[] XyStartCell => _eGM.AnimationAttackUnitComponent.XyStartCell;
+    private int[] XyEndCell => _eGM.AnimationAttackUnitComponent.XyEndCell;
 
 
-//    internal AnimationAttackUnitSystem(ECSmanager eCSmanager) : base(eCSmanager)
-//    {
-//        _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
-//        _animationAttackUnitComponentRef = eCSmanager.EntitiesGeneralManager.AnimationAttackUnitComponentRef;
-//    }
+    internal AnimationAttackUnitSystem(ECSmanager eCSmanager) : base(eCSmanager)
+    {
 
-//    public void Run()
-//    {
-//        if (_isInit)
-//        {
-//            _isInit = false;
-//            //_systemsGeneralManager.ActiveRunSystem(false, SystemGeneralTypes.Update, this.ToString());
-//            return;
-//        }
+    }
 
-//        if (CellUnitComponent(_xyEndCell).CurrentUnitGO.activeSelf && CellUnitComponent(_xyStartCell).CurrentUnitGO.activeSelf)
-//        {
-//            if (_isOne)
-//            {
-//                _heading = CellUnitComponent(_xyEndCell).CurrentUnitGO.transform.position - CellUnitComponent(_xyStartCell).CurrentUnitGO.transform.position;
-//                _distance = _heading.magnitude;
-//                _direction = _heading / _distance;
+    public override void Run()
+    {
+        base.Run();
 
-//                CellUnitComponent(_xyStartCell).CurrentUnitGO.transform.Translate(_direction * Time.deltaTime * _speedAnimation);
+        if (_isInit)
+        {
+            _isInit = false;
+            _sGM.TryActiveRunSystem(false, this.ToString(), _sGM.RunUpdateSystems);
+            return;
+        }
 
-//                if (_distance <= 0.1f)
-//                {
-//                    _isOne = false;
-//                }
+        if (_isOne)
+        {
+            _heading = _eGM.CellEnt_CellUnitCom(XyEndCell).CurrentUnitTransform.position - _eGM.CellEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.position;
+            _distance = _heading.magnitude;
+            _direction = _heading / _distance;
 
-//            }
-//            else
-//            {
-//                _heading = CellComponent(_xyStartCell).TransformCell.position - CellUnitComponent(_xyStartCell).CurrentUnitGO.transform.position;
-//                _distance = _heading.magnitude;
-//                _direction = _heading / _distance;
+            _eGM.CellEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.Translate(_direction * Time.deltaTime * _speedAnimation);
 
-//                CellUnitComponent(_xyStartCell).CurrentUnitGO.transform.Translate(_direction * Time.deltaTime * _speedAnimation);
+            if (_distance <= 0.1f)
+            {
+                _isOne = false;
+            }
 
-//                if (_distance <= 0.01f)
-//                {
-//                    //_systemsGeneralManager.ActiveRunSystem(false, SystemGeneralTypes.Update, this.ToString());
-//                    _isOne = true;
-//                }
-//            }
-//        }
-//    }
-//}
+        }
+        else
+        {
+            _heading = _eGM.CellEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.position - _eGM.CellEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.position;
+            _distance = _heading.magnitude;
+            _direction = _heading / _distance;
+
+            _eGM.CellEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.Translate(_direction * Time.deltaTime * _speedAnimation);
+
+            if (_distance <= 0.01f)
+            {
+                _sGM.TryActiveRunSystem(false, this.ToString(), _sGM.RunUpdateSystems);
+                _isOne = true;
+            }
+        }
+
+    }
+}

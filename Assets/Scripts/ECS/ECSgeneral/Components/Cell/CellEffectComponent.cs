@@ -2,36 +2,29 @@
 
 internal struct CellEffectComponent
 {
-    private EntitiesGeneralManager _eGM;
-    private int[] _xy;
-    private bool _isActiveFire;
+    private bool _haveFire;
     private GameObject _fireGO;
 
     internal int TimeFire;
-    internal bool HaveFire => _isActiveFire;
+    internal bool HaveFire => _haveFire;
 
 
 
-    internal CellEffectComponent(EntitiesGeneralManager eGM,GameObjectPool gameObjectPool, params int[] xy)
+    internal CellEffectComponent(ObjectPool gameObjectPool, int x, int y)
     {
-        _eGM = eGM;
-        _xy = xy;
-
-        _isActiveFire = default;
-        _fireGO = gameObjectPool.CellEffectFireGOs[_xy[_eGM.X], _xy[_eGM.Y]];
+        _haveFire = default;
+        _fireGO = gameObjectPool.CellEffectFireGOs[x, y];
         TimeFire = default;
     }
 
-    internal void SetEffect(bool isActive, EffectTypes effectType)
+    internal void SetResetEffect(bool isActive, EffectTypes effectType)
     {
-        _fireGO.SetActive(false);
-
         switch (effectType)
         {
             case EffectTypes.Fire:
-                _isActiveFire = isActive;
+                _haveFire = isActive;
                 _fireGO.SetActive(isActive);
-                TimeFire = 0;
+                if(!isActive) TimeFire = 0;
                 break;
 
             default:

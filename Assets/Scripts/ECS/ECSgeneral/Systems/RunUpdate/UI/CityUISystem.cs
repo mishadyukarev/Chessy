@@ -24,36 +24,36 @@ internal class CityUISystem : RPCGeneralReduction
 
     internal CityUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _leftImage = Instance.GameObjectPool.LeftImage;
+        _leftImage = Instance.ObjectPool.LeftImage;
 
-        _inGameLeftUpgradePawnButton = Instance.GameObjectPool.InGameLeftUpgadePawnButton;
+        _inGameLeftUpgradePawnButton = Instance.ObjectPool.InGameLeftUpgadePawnButton;
         _inGameLeftUpgradePawnButton.onClick.AddListener(delegate { UpgradeUnit(UnitTypes.Pawn); });
 
-        _inGameLeftUpgradeRookButton = Instance.GameObjectPool.InGameLeftUpgadeRookButton;
+        _inGameLeftUpgradeRookButton = Instance.ObjectPool.InGameLeftUpgadeRookButton;
         _inGameLeftUpgradeRookButton.onClick.AddListener(delegate { UpgradeUnit(UnitTypes.Rook); });
 
-        _inGameLeftUpgradeBishopButton = Instance.GameObjectPool.InGameLeftUpgadeBishopButton;
+        _inGameLeftUpgradeBishopButton = Instance.ObjectPool.InGameLeftUpgadeBishopButton;
         _inGameLeftUpgradeBishopButton.onClick.AddListener(delegate { UpgradeUnit(UnitTypes.Bishop); });
 
 
-        _buyPawnButton = Instance.GameObjectPool.InGameLeftBuyPawnButton;
+        _buyPawnButton = Instance.ObjectPool.InGameLeftBuyPawnButton;
         _buyPawnButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Pawn); });
 
-        _gameLeftBuyRookButton = Instance.GameObjectPool.InGameLeftBuyRookButton;
+        _gameLeftBuyRookButton = Instance.ObjectPool.InGameLeftBuyRookButton;
         _gameLeftBuyRookButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Rook); });
 
-        _gameLeftBuyBishopButton = Instance.GameObjectPool.InGameLeftBuyBishopButton;
+        _gameLeftBuyBishopButton = Instance.ObjectPool.InGameLeftBuyBishopButton;
         _gameLeftBuyBishopButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Bishop); });
 
-        _meltOreButton = Instance.GameObjectPool.LeftMeltButton;
+        _meltOreButton = Instance.ObjectPool.LeftMeltButton;
         _meltOreButton.onClick.AddListener(delegate { MeltOre(); });
 
 
-        _inGameLeftUpgradeFarmButton = Instance.GameObjectPool.LeftUpgradeFarmButton;
+        _inGameLeftUpgradeFarmButton = Instance.ObjectPool.LeftUpgradeFarmButton;
         _inGameLeftUpgradeFarmButton.onClick.AddListener(delegate { UpgradeBuilding(BuildingTypes.Farm); });
-        _inGameLeftUpgradeWoodcutter = Instance.GameObjectPool.LeftUpgradeWoodcutterButton;
+        _inGameLeftUpgradeWoodcutter = Instance.ObjectPool.LeftUpgradeWoodcutterButton;
         _inGameLeftUpgradeWoodcutter.onClick.AddListener(delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
-        _inGameLeftUpgradeMine = Instance.GameObjectPool.LeftUpgradeMineButton;
+        _inGameLeftUpgradeMine = Instance.ObjectPool.LeftUpgradeMineButton;
         _inGameLeftUpgradeMine.onClick.AddListener(delegate { UpgradeBuilding(BuildingTypes.Mine); });
     }
 
@@ -61,9 +61,9 @@ internal class CityUISystem : RPCGeneralReduction
     {
         base.Run();
 
-        if (_eGM.CellEnt_CellBuildingCom(_xySelectedCell).BuildingType == BuildingTypes.City)
+        if (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).BuildingType == BuildingTypes.City)
         {
-            if (_eGM.CellEnt_CellBuildingCom(_xySelectedCell).Owner.IsLocal)
+            if (_eGM.CellBuildingEnt_OwnerCom(_xySelectedCell).IsMine)
             {
                 _leftImage.gameObject.SetActive(true);
             }

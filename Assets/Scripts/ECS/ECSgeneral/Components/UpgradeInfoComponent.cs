@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-internal struct UpgradeComponent
+internal struct UpgradeInfoComponent
 {
     internal Dictionary<bool, int> AmountUpgradePawnDict;
     internal Dictionary<bool, int> AmountUpgradeRookDict;

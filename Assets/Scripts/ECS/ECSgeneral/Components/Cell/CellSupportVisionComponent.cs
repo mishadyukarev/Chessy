@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
 
-public struct CellSupportVisionComponent
+internal struct CellSupportVisionComponent
 {
-    private EntitiesGeneralManager _eGM;
-
-    private int[] _xy;
     private GameObject _selectorGO;
     private GameObject _spawnGO;
     private GameObject _wayUnitGO;
@@ -12,19 +9,14 @@ public struct CellSupportVisionComponent
     private GameObject _uniqueAttackGO;
     private GameObject _zoneGO;
 
-    internal CellSupportVisionComponent( EntitiesGeneralManager eGM, GameObjectPool gameObjectPool, params int[] xy)
+    internal CellSupportVisionComponent(ObjectPool gameObjectPool, int x, int y)
     {
-        _eGM = eGM;
-
-
-        _xy = xy;
-
-        _selectorGO = gameObjectPool.CellSupportVisionSelectorGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _spawnGO = gameObjectPool.CellSupportVisionSpawnGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _wayUnitGO = gameObjectPool.CellSupportVisionWayUnitGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _enemyGO = gameObjectPool.CellSupportVisionEnemyGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _uniqueAttackGO = gameObjectPool.CellSupportVisionUniqueAttackGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _zoneGO = gameObjectPool.CellSupportVisionZoneGOs[_xy[_eGM.X], _xy[_eGM.Y]];
+        _selectorGO = gameObjectPool.CellSupportVisionSelectorGOs[x, y];
+        _spawnGO = gameObjectPool.CellSupportVisionSpawnGOs[x, y];
+        _wayUnitGO = gameObjectPool.CellSupportVisionWayUnitGOs[x, y];
+        _enemyGO = gameObjectPool.CellSupportVisionEnemyGOs[x, y];
+        _uniqueAttackGO = gameObjectPool.CellSupportVisionUniqueAttackGOs[x, y];
+        _zoneGO = gameObjectPool.CellSupportVisionZoneGOs[x, y];
     }
 
 
@@ -56,8 +48,6 @@ public struct CellSupportVisionComponent
                 break;
 
             case SupportVisionTypes.Zone:
-                //_zoneGO.SetActive(isActive);
-                //SetColorVision(_zoneGO.GetComponent<SpriteRenderer>(), _player);
                 break;
 
             default:

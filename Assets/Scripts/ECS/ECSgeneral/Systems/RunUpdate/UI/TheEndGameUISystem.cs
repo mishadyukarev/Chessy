@@ -11,8 +11,8 @@ internal class TheEndGameUISystem : SystemGeneralReduction, IEcsRunSystem
 
     internal TheEndGameUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _parentTheEndGameZone = Instance.GameObjectPool.ParentTheEndGameZone;
-        _theEndGameText = Instance.GameObjectPool.TheEndGameText;
+        _parentTheEndGameZone = Instance.ObjectPool.ParentTheEndGameZone;
+        _theEndGameText = Instance.ObjectPool.TheEndGameText;
     }
 
     public void Run()

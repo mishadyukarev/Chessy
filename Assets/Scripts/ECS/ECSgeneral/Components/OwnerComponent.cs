@@ -1,41 +1,23 @@
 ﻿using Photon.Realtime;
+using System;
 
 internal struct OwnerComponent
 {
-    internal Player Owner;
-    private bool _haveOwner => Owner != default;
+    private Player _owner;
 
-    internal int ActorNumber
-    {
-        get
-        {
-            if (_haveOwner) return Owner.ActorNumber;
-            else return -1;
-        }
-    }
+    internal bool HaveOwner => _owner != default;
 
-    internal bool IsMine
-    {
-        get
-        {
-            if (_haveOwner) return Owner.IsLocal;
-            else return default;
-        }
-    }
+    internal int ActorNumber => _owner.ActorNumber;
 
-    internal bool IsMasterClient
-    {
-        get
-        {
-            if (_haveOwner) return Owner.IsMasterClient;
-            else return default;
-        }
-    }
+    internal bool IsMine => _owner.IsLocal;
 
+    internal bool IsMasterClient => _owner.IsMasterClient;
 
     internal bool IsHim(Player player)
     {
-        if (player == default) return default;
-        return player.ActorNumber == Owner.ActorNumber;
+        if (player == default) throw new Exception();
+        return player.ActorNumber == _owner.ActorNumber;
     }
+
+    internal void SetOwner(Player owner) => _owner = owner;
 }

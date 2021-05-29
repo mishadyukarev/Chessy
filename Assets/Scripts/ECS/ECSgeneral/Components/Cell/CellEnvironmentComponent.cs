@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public struct CellEnvironmentComponent
+internal struct CellEnvironmentComponent
 {
     private EntitiesGeneralManager _eGM;
-    private int[] _xy;
 
     private bool _haveFertilizer;
     private bool _haveMountain;
@@ -17,7 +16,10 @@ public struct CellEnvironmentComponent
     private GameObject _treeGO;
     private GameObject _hillGO;
 
-    internal int AmountResourcesForest;
+    internal int AmountFertilizer;
+    internal int AmountForest;
+    internal bool HaveFertilizerResources => AmountFertilizer <= 0;
+    internal bool HaveForestResources => AmountForest <= 0;
 
     internal bool HaveFertilizer => _haveFertilizer;
     internal bool HaveMountain => _haveMountain;
@@ -41,80 +43,133 @@ public struct CellEnvironmentComponent
     }
 
 
-    internal CellEnvironmentComponent(EntitiesGeneralManager eGM, GameObjectPool gameObjectPool, params int[] xy)
+    internal CellEnvironmentComponent(EntitiesGeneralManager eGM, ObjectPool gameObjectPool, int x, int y)
     {
         _eGM = eGM;
-        _xy = xy;
 
-        AmountResourcesForest = default;
+        AmountFertilizer = default;
+        AmountForest = default;
 
-        _haveYoungForest = false;
         _haveFertilizer = false;
-        _haveMountain = false;
+        _haveYoungForest = false;
         _haveAdultForest = false;
+        _haveMountain = false;
         _haveHill = false;
-
         
-        _fertilizerGO = gameObjectPool.CellEnvironmentFoodGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _mountainGO = gameObjectPool.CellEnvironmentMountainGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _treeGO = gameObjectPool.CellEnvironmentTreeGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _youngTreeGO = gameObjectPool.CellEnvironmentYoungTreeGOs[_xy[_eGM.X], _xy[_eGM.Y]];
-        _hillGO = gameObjectPool.CellEnvironmentHillGOs[_xy[_eGM.X], _xy[_eGM.Y]];
+        _fertilizerGO = gameObjectPool.CellEnvironmentFoodGOs[x, y];
+        _mountainGO = gameObjectPool.CellEnvironmentMountainGOs[x, y];
+        _treeGO = gameObjectPool.CellEnvironmentTreeGOs[x, y];
+        _youngTreeGO = gameObjectPool.CellEnvironmentYoungTreeGOs[x, y];
+        _hillGO = gameObjectPool.CellEnvironmentHillGOs[x, y];
     }
 
-
-    internal void SetResetEnvironment(bool isActive, EnvironmentTypes environmentType)
+    internal void SetNewEnvironment(EnvironmentTypes environmentType)
     {
         switch (environmentType)
         {
+            case EnvironmentTypes.None:
+                break;
+
             case EnvironmentTypes.Mountain:
-                _haveMountain = isActive;
-                _mountainGO.SetActive(isActive);
+                _haveMountain = true;
+                _mountainGO.SetActive(true);
                 break;
 
             case EnvironmentTypes.AdultForest:
-                _haveAdultForest = isActive;
-                _treeGO.SetActive(isActive);
+                _haveAdultForest = true;
+                _treeGO.SetActive(true);
+                AmountForest = Random.Range(15, 20);
                 break;
 
             case EnvironmentTypes.YoungForest:
-                _haveYoungForest = isActive;
-                _youngTreeGO.SetActive(isActive);
+                _haveYoungForest = true;
+                _youngTreeGO.SetActive(true);
                 break;
 
             case EnvironmentTypes.Hill:
-                _haveHill = isActive;
-                _hillGO.SetActive(isActive);
+                _haveHill = true;
+                _hillGO.SetActive(true);
                 break;
 
             case EnvironmentTypes.Fertilizer:
-                _haveFertilizer = isActive;
-                _fertilizerGO.SetActive(isActive);
+                _haveFertilizer = true;
+                _fertilizerGO.SetActive(true);
+                AmountFertilizer = Random.Range(15, 20);
                 break;
 
             default:
                 break;
         }
     }
-
-    internal void SetDefaultAmountResources(EnvironmentTypes environmentType)
+    internal void SetEnvironment(EnvironmentTypes environmentType, int amountEnvironmet)
     {
         switch (environmentType)
         {
+            case EnvironmentTypes.None:
+                break;
+
             case EnvironmentTypes.Mountain:
+                _haveMountain = true;
+                _mountainGO.SetActive(true);
                 break;
 
             case EnvironmentTypes.AdultForest:
-                AmountResourcesForest = Random.Range(20, 25);
+                _haveAdultForest = true;
+                _treeGO.SetActive(true);
+                AmountForest = amountEnvironmet;
                 break;
 
             case EnvironmentTypes.YoungForest:
+                _haveYoungForest = true;
+                _youngTreeGO.SetActive(true);
                 break;
 
             case EnvironmentTypes.Hill:
+                _haveHill = true;
+                _hillGO.SetActive(true);
                 break;
 
             case EnvironmentTypes.Fertilizer:
+                _haveFertilizer = true;
+                _fertilizerGO.SetActive(true);
+                break;
+
+            default:
+                break;
+        }
+    }
+    internal void ResetEnvironment(EnvironmentTypes environmentType)
+    {
+        switch (environmentType)
+        {
+            case EnvironmentTypes.None:
+                break;
+
+            case EnvironmentTypes.Mountain:
+                _haveMountain = false;
+                _mountainGO.SetActive(false);
+                break;
+
+            case EnvironmentTypes.AdultForest:
+                _haveAdultForest = false;
+                _treeGO.SetActive(false);
+                AmountForest = 0;
+                break;
+
+            case EnvironmentTypes.YoungForest:
+                _haveYoungForest = false;
+                _youngTreeGO.SetActive(false);
+                break;
+
+            case EnvironmentTypes.Hill:
+                _haveHill = false;
+                _hillGO.SetActive(false);
+                break;
+
+            case EnvironmentTypes.Fertilizer:
+                _haveFertilizer = false;
+                _fertilizerGO.SetActive(false);
+                AmountFertilizer = 0;
                 break;
 
             default:

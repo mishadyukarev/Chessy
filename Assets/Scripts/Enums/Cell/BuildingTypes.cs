@@ -1,9 +1,8 @@
-﻿public enum BuildingTypes
+﻿internal enum BuildingTypes
 {
     None,
 
     City,
-
     Farm,
     Woodcutter,
     Mine,

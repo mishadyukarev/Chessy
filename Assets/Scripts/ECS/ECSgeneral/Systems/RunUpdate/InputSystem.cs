@@ -1,12 +1,13 @@
-﻿using Leopotam.Ecs;
-using UnityEngine;
+﻿using UnityEngine;
 
-internal class InputSystem : SystemGeneralReduction, IEcsRunSystem
+internal sealed class InputSystem : SystemGeneralReduction
 {
     internal InputSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
-    public void Run()
+    public override void Run()
     {
+        base.Run();
+
         if (Input.GetMouseButtonDown(0)) _eGM.InputEntityMouseClickComponent.IsClick = true;
         else _eGM.InputEntityMouseClickComponent.IsClick = false;
     }

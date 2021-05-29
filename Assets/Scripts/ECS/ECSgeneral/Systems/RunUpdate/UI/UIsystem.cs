@@ -39,7 +39,7 @@ internal class UISystem : SystemGeneralReduction, IEcsRunSystem
 
         //_rightUpUnitImage = MainGame.Instance.GameObjectPool.RightUpImage;
         //_rightMiddleUnitImage = MainGame.Instance.GameObjectPool.RightMiddleImage;
-        _leftEconomyImage = MainGame.Instance.GameObjectPool.LeftImage;
+        _leftEconomyImage = MainGame.Instance.ObjectPool.LeftImage;
 
         //_rightMiddleUnitImage.gameObject.SetActive(false);
 
@@ -48,14 +48,14 @@ internal class UISystem : SystemGeneralReduction, IEcsRunSystem
 
         #region Ability zone
 
-        _uniqueAbilityButton1 = MainGame.Instance.GameObjectPool.UniqueFirstAbilityButton;
-        _uniqueAbilityButton2 = MainGame.Instance.GameObjectPool.UniqueSecondAbilityButton;
-        _uniqueAbilityButton3 = MainGame.Instance.GameObjectPool.UniqueThirdAbilityButton;
+        _uniqueAbilityButton1 = MainGame.Instance.ObjectPool.UniqueFirstAbilityButton;
+        _uniqueAbilityButton2 = MainGame.Instance.ObjectPool.UniqueSecondAbilityButton;
+        _uniqueAbilityButton3 = MainGame.Instance.ObjectPool.UniqueThirdAbilityButton;
 
 
         #endregion
 
-        _buttonLeave = MainGame.Instance.GameObjectPool.ButtonLeave;
+        _buttonLeave = MainGame.Instance.ObjectPool.ButtonLeave;
         _buttonLeave.onClick.AddListener(delegate { Leave(); });
 
     }
@@ -91,20 +91,20 @@ internal class UISystem : SystemGeneralReduction, IEcsRunSystem
             ActivateUniqueAbilities(default, false);
         }
 
-        Instance.GameObjectPool.RightImage.gameObject.SetActive(false);
+        Instance.ObjectPool.RightImage.gameObject.SetActive(false);
 
         if (_eGM.CellEnt_CellUnitCom(_xySelectedCell).HaveUnit)
         {
-            if (_eGM.CellEnt_CellUnitCom(_xySelectedCell).GetActiveUnit(Instance.IsMasterClient))
+            if (_eGM.CellEnt_CellUnitCom(_xySelectedCell).IsActivatedUnitDict[Instance.IsMasterClient])
             {
-                Instance.GameObjectPool.RightImage.gameObject.SetActive(true);
+                Instance.ObjectPool.RightImage.gameObject.SetActive(true);
             }
         }
 
 
 
 
-        switch (_eGM.CellEnt_CellBuildingCom(_xySelectedCell).BuildingType)
+        switch (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).BuildingType)
         {
             case BuildingTypes.None:
                 ActiveLeftEconomy(false);

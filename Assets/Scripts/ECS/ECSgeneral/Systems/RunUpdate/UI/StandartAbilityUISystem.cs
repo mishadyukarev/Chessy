@@ -13,9 +13,9 @@ internal class StandartAbilityUISystem : RPCGeneralReduction, IEcsRunSystem
 
     internal StandartAbilityUISystem(ECSmanager eCSmanager) : base(eCSmanager)
     {
-        _standartAbilityButton1 = MainGame.Instance.GameObjectPool.StandartAbilityButton1;
+        _standartAbilityButton1 = MainGame.Instance.ObjectPool.StandartAbilityButton1;
         _standartAbilityButton1.onClick.AddListener(delegate { StandartAbilityButton1(); });
-        _standartAbilityButton2 = MainGame.Instance.GameObjectPool.StandartAbilityButton2;
+        _standartAbilityButton2 = MainGame.Instance.ObjectPool.StandartAbilityButton2;
         _standartAbilityButton2.onClick.AddListener(delegate { StandartAbilityButton2(); });
     }
 
