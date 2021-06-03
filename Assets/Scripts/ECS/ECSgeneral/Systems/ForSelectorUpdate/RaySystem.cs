@@ -14,12 +14,12 @@ internal sealed class RaySystem : SystemGeneralReduction
         base.Run();
 
         _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        _eGM.RayComponentSelectorEnt.RaycastHit2D = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
+        _eGM.SelectorEnt_RayCom.RaycastHit2D = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
 
 
 
 #if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
-        _eGM.RayComponentSelectorEnt.IsUI = EventSystem.current.IsPointerOverGameObject();
+        _eGM.SelectorEnt_RayCom.IsUI = EventSystem.current.IsPointerOverGameObject();
 #endif
 
 #if UNITY_ANDROID

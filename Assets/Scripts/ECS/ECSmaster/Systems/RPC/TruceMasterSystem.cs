@@ -10,7 +10,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        _photonPunRPC.TruceToGeneral(Info.Sender, false, _eGM.RpcGeneralEnt_FromInfoCom.IsActived, _eGM.UpdatorEntityAmountComponent.AmountMotions);
+        _photonPunRPC.TruceToGeneral(Info.Sender, false, _eGM.RpcGeneralEnt_FromInfoCom.IsActived, _eGM.InfoEnt_UpdatorCom.AmountMotions);
 
         _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[Info.Sender.IsMasterClient] = _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
 
@@ -23,8 +23,8 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 
         if (isTruce)
         {
-            _eGM.UpdatorEntityAmountComponent.AmountMotions += Random.Range(4500, 5500);
-            _photonPunRPC.TruceToGeneral(RpcTarget.All, true, false, _eGM.UpdatorEntityAmountComponent.AmountMotions);
+            _eGM.InfoEnt_UpdatorCom.AmountMotions += Random.Range(4500, 5500);
+            _photonPunRPC.TruceToGeneral(RpcTarget.All, true, false, _eGM.InfoEnt_UpdatorCom.AmountMotions);
 
             int random;
 
@@ -142,11 +142,11 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
             _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[true] = false;
             _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[false] = false;
 
-            _eGM.FoodEnt_AmountDictCom.AmountDict[true] += 10;
-            _eGM.FoodEnt_AmountDictCom.AmountDict[false] += 10;
+            _eGM.EconomyEnt_EconomyCom.AddFood(true, 10);
+            _eGM.EconomyEnt_EconomyCom.AddFood(false, 10);
 
-            _eGM.WoodEAmountDictC.AmountDict[true] += 10;
-            _eGM.WoodEAmountDictC.AmountDict[false] += 10;
+            _eGM.EconomyEnt_EconomyCom.AddWood(true, 10);
+            _eGM.EconomyEnt_EconomyCom.AddWood(false, 10);
         }
     }
 }

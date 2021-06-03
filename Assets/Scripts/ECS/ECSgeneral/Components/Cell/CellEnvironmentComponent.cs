@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-internal struct CellEnvironmentComponent
+internal struct CellEnvironmentComponent : IDisposable
 {
     internal bool _haveFertilizer;
     internal bool _haveMountain;
@@ -51,34 +52,6 @@ internal struct CellEnvironmentComponent
         }
     }
 
-
-    internal CellEnvironmentComponent(ObjectPoolGame gameObjectPool, int x, int y)
-    {
-        AmountFertilizerResources = default;
-        AmountForestResources = default;
-        AmountOreResources = default;
-
-        MineStep = default;
-
-        _haveFertilizer = false;
-        _haveYoungTree = false;
-        _haveAdultTree = false;
-        _haveMountain = false;
-        _haveHill = false;
-
-        _fertilizerGO = gameObjectPool.CellEnvironmentFoodGOs[x, y];
-        _mountainGO = gameObjectPool.CellEnvironmentMountainGOs[x, y];
-        _adultTreeGO = gameObjectPool.CellEnvironmentForestGOs[x, y];
-        _youngTreeGO = gameObjectPool.CellEnvironmentYoungForestGOs[x, y];
-        _hillGO = gameObjectPool.CellEnvironmentHillGOs[x, y];
-
-        _fertilizerSR = _fertilizerGO.GetComponent<SpriteRenderer>();
-        _mountainSR = _mountainGO.GetComponent<SpriteRenderer>();
-        _adultTreeSR = _adultTreeGO.GetComponent<SpriteRenderer>();
-        _youngTreeSR = _youngTreeGO.GetComponent<SpriteRenderer>();
-        _hillSR = _hillGO.GetComponent<SpriteRenderer>();
-    }
-
     internal void SetNewEnvironment(EnvironmentTypes environmentType, params int[] xy)
     {
         switch (environmentType)
@@ -94,7 +67,7 @@ internal struct CellEnvironmentComponent
             case EnvironmentTypes.AdultForest:
                 _haveAdultTree = true;
                 _adultTreeGO.SetActive(true);
-                AmountForestResources = Random.Range(15, 20);
+                AmountForestResources = UnityEngine.Random.Range(15, 20);
                 break;
 
             case EnvironmentTypes.YoungForest:
@@ -105,13 +78,13 @@ internal struct CellEnvironmentComponent
             case EnvironmentTypes.Hill:
                 _haveHill = true;
                 _hillGO.SetActive(true);
-                AmountOreResources = Random.Range(50, 60);
+                AmountOreResources = UnityEngine.Random.Range(50, 60);
                 break;
 
             case EnvironmentTypes.Fertilizer:
                 _haveFertilizer = true;
                 _fertilizerGO.SetActive(true);
-                AmountFertilizerResources = Random.Range(15, 20);
+                AmountFertilizerResources = UnityEngine.Random.Range(15, 20);
                 break;
 
             default:
@@ -194,5 +167,60 @@ internal struct CellEnvironmentComponent
             default:
                 break;
         }
+    }
+
+
+    internal void Fill(ObjectPoolGame gameObjectPool, int x, int y)
+    {
+        AmountFertilizerResources = default;
+        AmountForestResources = default;
+        AmountOreResources = default;
+
+        MineStep = default;
+
+        _haveFertilizer = false;
+        _haveYoungTree = false;
+        _haveAdultTree = false;
+        _haveMountain = false;
+        _haveHill = false;
+
+        _fertilizerGO = gameObjectPool.CellEnvironmentFoodGOs[x, y];
+        _mountainGO = gameObjectPool.CellEnvironmentMountainGOs[x, y];
+        _adultTreeGO = gameObjectPool.CellEnvironmentForestGOs[x, y];
+        _youngTreeGO = gameObjectPool.CellEnvironmentYoungForestGOs[x, y];
+        _hillGO = gameObjectPool.CellEnvironmentHillGOs[x, y];
+
+        _fertilizerSR = _fertilizerGO.GetComponent<SpriteRenderer>();
+        _mountainSR = _mountainGO.GetComponent<SpriteRenderer>();
+        _adultTreeSR = _adultTreeGO.GetComponent<SpriteRenderer>();
+        _youngTreeSR = _youngTreeGO.GetComponent<SpriteRenderer>();
+        _hillSR = _hillGO.GetComponent<SpriteRenderer>();
+    }
+
+    public void Dispose()
+    {
+        AmountFertilizerResources = default;
+        AmountForestResources = default;
+        AmountOreResources = default;
+
+        MineStep = default;
+
+        _haveFertilizer = false;
+        _haveYoungTree = false;
+        _haveAdultTree = false;
+        _haveMountain = false;
+        _haveHill = false;
+
+        _fertilizerGO = default;
+        _mountainGO = default;
+        _adultTreeGO = default;
+        _youngTreeGO = default;
+        _hillGO = default;
+
+        _fertilizerSR = default;
+        _mountainSR = default;
+        _adultTreeSR = default;
+        _youngTreeSR = default;
+        _hillSR = default;
     }
 }

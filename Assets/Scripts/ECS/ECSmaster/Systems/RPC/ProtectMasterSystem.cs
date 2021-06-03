@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-
-internal sealed class ProtectMasterSystem : SystemMasterReduction
+﻿internal sealed class ProtectMasterSystem : SystemMasterReduction
 {
     private int[] xyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
     internal bool isActive => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;

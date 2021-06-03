@@ -35,11 +35,11 @@ internal sealed class FertilizeUpdatorMasterSystem : SystemGeneralReduction
 
                                 if (_eGM.CellBuildingEnt_BuildingTypeCom(x, y).BuildingType == BuildingTypes.Farm)
                                 {
-                                    _eGM.FoodEnt_AmountDictCom.AmountDict[_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient] += _startValuesGameConfig.FOOD_FOR_BUILDING_FARM;
-                                    _eGM.WoodEAmountDictC.AmountDict[_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient] += _startValuesGameConfig.WOOD_FOR_BUILDING_FARM;
-                                    _eGM.OreEAmountDictC.AmountDict[_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient] += _startValuesGameConfig.ORE_FOR_BUILDING_FARM;
-                                    _eGM.IronEAmountDictC.AmountDict[_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient] += _startValuesGameConfig.IRON_FOR_BUILDING_FARM;
-                                    _eGM.GoldEAmountDictC.AmountDict[_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient] += _startValuesGameConfig.GOLD_FOR_BUILDING_FARM;
+                                    _eGM.EconomyEnt_EconomyCom.AddFood(_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient, _startValuesGameConfig.FOOD_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddWood(_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient, _startValuesGameConfig.WOOD_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddOre(_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient, _startValuesGameConfig.ORE_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddIron(_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient, _startValuesGameConfig.IRON_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddGold(_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient, _startValuesGameConfig.GOLD_FOR_BUILDING_FARM);
 
                                     _cM.CellBuildingWorker.ResetBuilding(x, y);
                                 }

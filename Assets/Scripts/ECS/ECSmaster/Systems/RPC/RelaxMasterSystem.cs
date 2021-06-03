@@ -1,7 +1,4 @@
-﻿using Leopotam.Ecs;
-
-
-internal sealed class RelaxMasterSystem : SystemMasterReduction
+﻿internal sealed class RelaxMasterSystem : SystemMasterReduction
 {
     internal bool isActive => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
     internal int[] xyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;

@@ -1,7 +1,7 @@
 ﻿using Photon.Realtime;
 using System;
 
-internal struct OwnerComponent
+internal struct OwnerComponent : IDisposable
 {
     private Player _owner;
 
@@ -21,4 +21,9 @@ internal struct OwnerComponent
     }
 
     internal void SetOwner(Player owner) => _owner = owner;
+
+    public void Dispose()
+    {
+        _owner = default;
+    }
 }

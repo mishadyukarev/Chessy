@@ -1,6 +1,10 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 
 internal sealed class Main : MonoBehaviour
 {
@@ -10,23 +14,24 @@ internal sealed class Main : MonoBehaviour
     [SerializeField] private TestTypes _testType;
     [SerializeField] private SceneTypes _sceneType;
 
+    private List<IDisposable> _menuDisposables;
+    private List<IDisposable> _gameDisposables;
+    private bool _isStart = true;
     private Camera _camera;
     private static Main _instance;
     private Builder _builder;
     private Names _names;
-
     private ResourcesLoad _resourcesLoad;
-    private ObjectPoolGame _objectPoolGame;
-    private ObjectPoolMenu _objectPoolMenu;
-
     private Canvas _canvas;
-    private CanvasGameManager _canvasGameManager;
-    private CanvasMenuManager _canvasMenuManager;
-
     private PhotonManager _photonManager;
     private ECSmanagerGame _eCSmanagerGame;
     private UnityEvents _unityEvents;
     private CellManager _cellManager;
+    protected EconomyManager _economyManager;
+    private ObjectPoolGame _objectPoolGame;
+    private ObjectPoolMenu _objectPoolMenu;
+    private CanvasGameManager _canvasGameManager;
+    private CanvasMenuManager _canvasMenuManager;
 
     #endregion
 
@@ -43,9 +48,12 @@ internal sealed class Main : MonoBehaviour
     internal Player MasterClient => PhotonNetwork.MasterClient;
     internal Player LocalPlayer => PhotonNetwork.LocalPlayer;
 
+    internal List<IDisposable> MenuDisposables => _menuDisposables;
+    internal List<IDisposable> GameDisposables => _gameDisposables;
     internal StartValuesGameConfig StartValuesGameConfig => _resourcesLoad.StartValuesGameConfig;
     internal Names Names => _names;
     internal CellManager CellManager => _cellManager;
+    internal EconomyManager EconomyManager => _economyManager;
     internal ECSmanagerGame ECSmanagerGame => _eCSmanagerGame;
     internal CanvasGameManager CanvasGameManager => _canvasGameManager;
     internal ObjectPoolGame ObjectPoolGame => _objectPoolGame;
@@ -75,14 +83,19 @@ internal sealed class Main : MonoBehaviour
         _photonManager = new PhotonManager(gameObject, _canvasMenuManager);
 
         _cellManager = new CellManager();
+        _economyManager = new EconomyManager();
 
         _objectPoolMenu = new ObjectPoolMenu();
         _objectPoolGame = new ObjectPoolGame();
 
+        _menuDisposables = new List<IDisposable>();
+        _gameDisposables = new List<IDisposable>();
+
         _eCSmanagerGame = new ECSmanagerGame(_canvasGameManager, _resourcesLoad.StartValuesGameConfig, _cellManager, _names);
-        _eCSmanagerGame.InitSystems();
+        _eCSmanagerGame.InitAndProcessInjectsSystems();
         _cellManager.InitAfterECS(_eCSmanagerGame);
-        _photonManager.PhotonPunRPC.InitAfterECS(_eCSmanagerGame, _cellManager);
+        _economyManager.InitAfterECS(_eCSmanagerGame);
+        _photonManager.PhotonPunRPC.InitAfterECS(_eCSmanagerGame, _cellManager, _economyManager);
 
         ToggleScene(_sceneType);
     }
@@ -104,9 +117,6 @@ internal sealed class Main : MonoBehaviour
         }
     }
 
-    private void OnDestroy() { }
-
-
     internal void ToggleScene(SceneTypes sceneType)
     {
         _sceneType = sceneType;
@@ -114,16 +124,18 @@ internal sealed class Main : MonoBehaviour
         switch (_sceneType)
         {
             case SceneTypes.Menu:
-                _objectPoolGame.Dispose();
+                if (_isStart) _isStart = false;
+                else foreach (var disposed in _gameDisposables) disposed.Dispose();
+
                 _objectPoolMenu.Spawn(_resourcesLoad, _builder);
                 _canvasMenuManager.Active(true);
                 _canvasGameManager.Active(false);
-                _eCSmanagerGame.Dispose();
                 break;
 
 
             case SceneTypes.Game:
-                _objectPoolMenu.Dispose();
+                foreach (var disposed in _menuDisposables) disposed.Dispose();
+
                 _objectPoolGame.Spawn(_resourcesLoad, _builder);
                 _canvasMenuManager.Active(false);
                 _canvasGameManager.Active(true);

@@ -1,7 +1,7 @@
 ﻿using UnityEngine.UI;
 using static Main;
 
-internal class UISystem : RPCGeneralReduction
+internal class UISystem : RPCGeneralSystemReduction
 {
     private SceneManager _photonManagerScene;
 

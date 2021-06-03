@@ -103,19 +103,19 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 
 
 
-        _eGM.FoodEnt_AmountDictCom.AmountDict[true] += (int)(_eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[true] * (Instance.StartValuesGameConfig.BENEFIT_FOOD_FARM + (0.25f * _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeFarmDict[true])));
-        _eGM.FoodEnt_AmountDictCom.AmountDict[false] += (int)(_eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[false] * (Instance.StartValuesGameConfig.BENEFIT_FOOD_FARM + (0.25f * _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeFarmDict[false])));
+        _eGM.EconomyEnt_EconomyCom.AddFood(true, (int)(_eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[true] * (Instance.StartValuesGameConfig.BENEFIT_FOOD_FARM + (0.25f * _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeFarmDict[true]))));
+        _eGM.EconomyEnt_EconomyCom.AddFood(false, (int)(_eGM.InfoEnt_BuildingsInfoCom.AmountFarmDict[false] * (Instance.StartValuesGameConfig.BENEFIT_FOOD_FARM + (0.25f * _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeFarmDict[false]))));
 
-        _eGM.WoodEAmountDictC.AmountDict[true] += (int)(_eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[true] * (Instance.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER + (0.25f * _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeWoodcutterDict[true])));
-        _eGM.WoodEAmountDictC.AmountDict[false] += (int)(_eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[false] * (Instance.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER + (0.25f * _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeWoodcutterDict[false])));
+        _eGM.EconomyEnt_EconomyCom.AddWood(true, (int)(_eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[true] * (Instance.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER + (0.25f * _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeWoodcutterDict[true]))));
+        _eGM.EconomyEnt_EconomyCom.AddWood(false, (int)(_eGM.InfoEnt_BuildingsInfoCom.AmountWoodcutterDict[false] * (Instance.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER + (0.25f * _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeWoodcutterDict[false]))));
 
-        _eGM.OreEAmountDictC.AmountDict[true] += (int)(_eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[true] * (Instance.StartValuesGameConfig.BENEFIT_ORE_MINE + (0.25f * _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeMineDict[true])));
-        _eGM.OreEAmountDictC.AmountDict[false] += (int)(_eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[false] * (Instance.StartValuesGameConfig.BENEFIT_ORE_MINE + (0.25f * _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeMineDict[false])));
+        _eGM.EconomyEnt_EconomyCom.AddOre(true, (int)(_eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[true] * (Instance.StartValuesGameConfig.BENEFIT_ORE_MINE + (0.25f * _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeMineDict[true]))));
+        _eGM.EconomyEnt_EconomyCom.AddOre(false, (int)(_eGM.InfoEnt_BuildingsInfoCom.AmountMineDict[false] * (Instance.StartValuesGameConfig.BENEFIT_ORE_MINE + (0.25f * _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeMineDict[false]))));
 
 
         _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[true] = false;
         _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[false] = false;
 
-        _eGM.UpdatorEntityAmountComponent.AmountMotions += 1;
+        _eGM.InfoEnt_UpdatorCom.AmountMotions += 1;
     }
 }

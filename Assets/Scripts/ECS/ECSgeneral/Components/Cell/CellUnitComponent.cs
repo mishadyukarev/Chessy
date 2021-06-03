@@ -1,8 +1,9 @@
 ﻿using Photon.Realtime;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-internal struct CellUnitComponent
+internal struct CellUnitComponent : IDisposable
 {
     private GameObject _pawnGO;
     private GameObject _kingGO;
@@ -22,7 +23,7 @@ internal struct CellUnitComponent
     internal bool HaveMinAmountSteps => AmountSteps >= 1;
 
 
-    internal CellUnitComponent(ObjectPoolGame gameObjectPool, int x, int y)
+    internal CellUnitComponent(List<IDisposable> disposables)
     {
         IsActivatedUnitDict = new Dictionary<bool, bool>();
         AmountSteps = default;
@@ -30,15 +31,17 @@ internal struct CellUnitComponent
         IsProtected = default;
         IsRelaxed = default;
 
-        _pawnGO = gameObjectPool.CellUnitPawnGOs[x, y];
-        _kingGO = gameObjectPool.CellUnitKingGOs[x, y];
-        _rookGO = gameObjectPool.CellUnitRookGOs[x, y];
-        _bishopGO = gameObjectPool.CellUnitBishopGOs[x, y];
+        _pawnGO = default;
+        _kingGO = default;
+        _rookGO = default;
+        _bishopGO = default;
 
-        _kingSR = gameObjectPool.CellUnitKingSRs[x, y];
-        _pawnSR = gameObjectPool.CellUnitPawnSRs[x, y];
-        _rookSR = gameObjectPool.CellUnitRookSRs[x, y];
-        _bishopSR = gameObjectPool.CellUnitBishopSRs[x, y];
+        _kingSR = default;
+        _pawnSR = default;
+        _rookSR = default;
+        _bishopSR = default;
+
+        disposables.Add(this);
     }
 
     internal void EnableSR(bool isActive, UnitTypes unitType, Player player = default)
@@ -81,6 +84,40 @@ internal struct CellUnitComponent
             if (player.IsMasterClient) sR.color = Color.blue;
             else sR.color = Color.red;
         }
+    }
+
+    internal void Fill(ObjectPoolGame gameObjectPool, int x, int y)
+    {
+        _pawnGO = gameObjectPool.CellUnitPawnGOs[x, y];
+        _kingGO = gameObjectPool.CellUnitKingGOs[x, y];
+        _rookGO = gameObjectPool.CellUnitRookGOs[x, y];
+        _bishopGO = gameObjectPool.CellUnitBishopGOs[x, y];
+
+        _kingSR = gameObjectPool.CellUnitKingSRs[x, y];
+        _pawnSR = gameObjectPool.CellUnitPawnSRs[x, y];
+        _rookSR = gameObjectPool.CellUnitRookSRs[x, y];
+        _bishopSR = gameObjectPool.CellUnitBishopSRs[x, y];
+
+    }
+    public void Dispose()
+    {
+        _pawnGO = default;
+        _kingGO = default;
+        _rookGO = default;
+        _bishopGO = default;
+
+        _pawnSR = default;
+        _kingSR = default;
+        _rookSR = default;
+        _bishopGO = default;
+
+        IsActivatedUnitDict[true] = default;
+        IsActivatedUnitDict[false] = default;
+
+        IsProtected = default;
+        IsRelaxed = default;
+        AmountHealth = default;
+        AmountSteps = default;
     }
 }
 

@@ -14,7 +14,7 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new InputSystem(), nameof(InputSystem))
             .Add(new SelectorSystem(), nameof(SelectorSystem))
             .Add(new SupportVisionSystem(), nameof(SupportVisionSystem))
-            .Add(new SoundSystem(), nameof(SoundSystem))
+            .Add(new SoundEventsSystem(), nameof(SoundEventsSystem))
 
             .Add(new UISystem(), nameof(UISystem))
             .Add(new ReadyUISystem(), nameof(ReadyUISystem))
@@ -25,11 +25,10 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new TheEndGameUISystem(), nameof(TheEndGameUISystem))
             .Add(new BuildingUISystem(), nameof(BuildingUISystem))
             .Add(new EconomyUISystem(), nameof(EconomyUISystem))
-            .Add(new ZoneUISystem(), nameof(ZoneUISystem))
             .Add(new MistakeUISystem(), nameof(MistakeUISystem))
             .Add(new CityUISystem(), nameof(CityUISystem))
             .Add(new UpdatedUISystem(), nameof(UpdatedUISystem))
-            .Add(new UniqueAbilitiesUISystem(), nameof(UniqueAbilitiesUISystem))
+            .Add(new UniqueAbilitiesEventsSystem(), nameof(UniqueAbilitiesEventsSystem))
             .Add(new TruceUISystem(), nameof(TruceUISystem))
             .Add(new EnvironmentUISystem(), nameof(EnvironmentUISystem));
 

@@ -22,9 +22,9 @@ internal sealed class UpdatedUISystem : SystemGeneralReduction
     {
         base.Run();
 
-        if (_eGM.UpdatorEntityAmountComponent.IsUpdated)
+        if (_eGM.InfoEnt_UpdatorCom.IsUpdated)
         {
-            _inGameRefreshZoneRefreshText.text = "Motion: " + _eGM.UpdatorEntityAmountComponent.AmountMotions;
+            _inGameRefreshZoneRefreshText.text = "Motion: " + _eGM.InfoEnt_UpdatorCom.AmountMotions;
             _inGameRefreshZoneGO.SetActive(true);
 
             _timer += Time.deltaTime;
@@ -32,7 +32,7 @@ internal sealed class UpdatedUISystem : SystemGeneralReduction
             if (_timer >= 1)
             {
                 _inGameRefreshZoneGO.SetActive(false);
-                _eGM.UpdatorEntityAmountComponent.IsUpdated = false;
+                _eGM.InfoEnt_UpdatorCom.IsUpdated = false;
                 _timer = 0;
             }
         }

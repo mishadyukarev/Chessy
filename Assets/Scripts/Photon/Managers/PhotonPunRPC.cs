@@ -17,6 +17,7 @@ internal sealed class PhotonPunRPC : MonoBehaviour
     private SystemsMasterManager _sMM;
 
     private CellManager _cM;
+    private EconomyManager _eM;
 
     private string MasterRPCName => nameof(MasterRPC);
     private string GeneralRPCName => nameof(GeneralRPC);
@@ -30,7 +31,7 @@ internal sealed class PhotonPunRPC : MonoBehaviour
         PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
     }
 
-    internal void InitAfterECS(ECSmanagerGame eCSmanager, CellManager cellManager)
+    internal void InitAfterECS(ECSmanagerGame eCSmanager, CellManager cellManager, EconomyManager economyManager)
     {
         _sMM = eCSmanager.SystemsMasterManager;
         _eMM = eCSmanager.EntitiesMasterManager;
@@ -39,6 +40,7 @@ internal sealed class PhotonPunRPC : MonoBehaviour
         _sGM = eCSmanager.SystemsGeneralManager;
 
         _cM = cellManager;
+        _eM = economyManager;
 
         RefreshAllToMaster();
     }
@@ -72,7 +74,7 @@ internal sealed class PhotonPunRPC : MonoBehaviour
     internal void EndGameToMaster(int actorNumberWinner) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.EndGame, new object[] { actorNumberWinner });
     internal void EndGameToGeneral(RpcTarget rpcTarget, int actorNumberWinner) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.EndGame, new object[] { actorNumberWinner });
 
-    internal void MistakeEconomyToGeneral(Player playerTo, bool haveFood, bool haveWood, bool haveOre, bool haveIron, bool haveGold) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Mistake, new object[] { MistakeTypes.EconomyType, haveFood, haveWood, haveOre, haveIron, haveGold });
+    internal void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Mistake, new object[] { MistakeTypes.EconomyType, haves });
     internal void MistakeUnitToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Mistake, new object[] { MistakeTypes.UnitType });
 
     public void UniqueAbilityPawnToMaster(int[] xy, UniqueAbilitiesPawnTypes uniqueAbilitiesPawnType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.UniquePawnAbility, new object[] { xy, uniqueAbilitiesPawnType });
@@ -217,15 +219,15 @@ internal sealed class PhotonPunRPC : MonoBehaviour
                 break;
 
             case RpcTypes.Done:
-                _eGM.UpdatorEntityAmountComponent.IsUpdated = (bool)objects[0];
+                _eGM.InfoEnt_UpdatorCom.IsUpdated = (bool)objects[0];
                 _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[Instance.IsMasterClient] = (bool)objects[1];
-                _eGM.UpdatorEntityAmountComponent.AmountMotions = (int)objects[2];
+                _eGM.InfoEnt_UpdatorCom.AmountMotions = (int)objects[2];
                 break;
 
             case RpcTypes.Truce:
-                _eGM.UpdatorEntityAmountComponent.IsUpdated = (bool)objects[_i++];
+                _eGM.InfoEnt_UpdatorCom.IsUpdated = (bool)objects[_i++];
                 _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[Instance.IsMasterClient] = (bool)objects[_i++];
-                _eGM.UpdatorEntityAmountComponent.AmountMotions = (int)objects[_i++];
+                _eGM.InfoEnt_UpdatorCom.AmountMotions = (int)objects[_i++];
                 break;
 
             case RpcTypes.EndGame:
@@ -243,17 +245,18 @@ internal sealed class PhotonPunRPC : MonoBehaviour
                 switch ((MistakeTypes)objects[0])
                 {
                     case MistakeTypes.EconomyType:
-                        var haveFood = (bool)objects[1];
-                        var haveWood = (bool)objects[2];
-                        var haveOre = (bool)objects[3];
-                        var haveIron = (bool)objects[4];
-                        var haveGold = (bool)objects[5];
+                        var haves = (bool[])objects[1];
+                        var haveFood = haves[0];
+                        var haveWood = haves[1];
+                        var haveOre = haves[2];
+                        var haveIron = haves[3];
+                        var haveGold = haves[4];
 
-                        if (!haveFood) _eGM.FoodEntityMistakeComponent.MistakeAction();
-                        if (!haveWood) _eGM.WoodEntityMistakeComponent.MistakeAction();
-                        if (!haveOre) _eGM.OreEntityMistakeComponent.MistakeAction();
-                        if (!haveIron) _eGM.IronEntityMistakeComponent.MistakeAction();
-                        if (!haveGold) _eGM.GoldEntityMistakeComponent.MistakeAction();
+                        if (!haveFood) _eGM.MistakeEnt_MistakeEconomyCom.FoodMistake();
+                        if (!haveWood) _eGM.MistakeEnt_MistakeEconomyCom.WoodMistake();
+                        if (!haveOre) _eGM.MistakeEnt_MistakeEconomyCom.OreMistake();
+                        if (!haveIron) _eGM.MistakeEnt_MistakeEconomyCom.IronMistake();
+                        if (!haveGold) _eGM.MistakeEnt_MistakeEconomyCom.GoldMistake();
 
                         if (!haveFood || !haveWood || !haveOre || !haveIron || !haveGold)
                             _eGM.SoundEntSoundCom.MistakeSoundAction.Invoke();
@@ -270,7 +273,7 @@ internal sealed class PhotonPunRPC : MonoBehaviour
                 break;
 
             case RpcTypes.GetUnit:
-                if ((bool)objects[0]) _eGM.SelectedUnitEntUnitTypeCom.UnitType = (UnitTypes)objects[1];
+                if ((bool)objects[0]) _eGM.SelectorEnt_UnitTypeCom.UnitType = (UnitTypes)objects[1];
                 break;
 
             case RpcTypes.SetUnit:
@@ -351,11 +354,11 @@ internal sealed class PhotonPunRPC : MonoBehaviour
             _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeWoodcutterDict[false],
             _eGM.InfoEnt_UpgradeInfoCom.AmountUpgradeMineDict[false],
 
-            _eGM.FoodEnt_AmountDictCom.AmountDict[false],
-            _eGM.WoodEAmountDictC.AmountDict[false],
-            _eGM.OreEAmountDictC.AmountDict[false],
-            _eGM.IronEAmountDictC.AmountDict[false],
-            _eGM.GoldEAmountDictC.AmountDict[false],
+            _eGM.EconomyEnt_EconomyCom.Food(false),
+            _eGM.EconomyEnt_EconomyCom.Wood(false),
+            _eGM.EconomyEnt_EconomyCom.Ore(false),
+            _eGM.EconomyEnt_EconomyCom.Iron(false),
+            _eGM.EconomyEnt_EconomyCom.Gold(false),
 
             _eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[false],
             _eGM.InfoEnt_BuildingsInfoCom.IsSettedCityDict[false],
@@ -472,11 +475,11 @@ internal sealed class PhotonPunRPC : MonoBehaviour
         int[] xySettedCity = (int[])objects[i++];
 
 
-        _eGM.FoodEnt_AmountDictCom.AmountDict[Instance.IsMasterClient] = food;
-        _eGM.WoodEAmountDictC.AmountDict[Instance.IsMasterClient] = wood;
-        _eGM.OreEAmountDictC.AmountDict[Instance.IsMasterClient] = ore;
-        _eGM.IronEAmountDictC.AmountDict[Instance.IsMasterClient] = iron;
-        _eGM.GoldEAmountDictC.AmountDict[Instance.IsMasterClient] = gold;
+        _eGM.EconomyEnt_EconomyCom.SetFood(Instance.IsMasterClient, food);
+        _eGM.EconomyEnt_EconomyCom.SetWood(Instance.IsMasterClient, wood);
+        _eGM.EconomyEnt_EconomyCom.SetOre(Instance.IsMasterClient, ore);
+        _eGM.EconomyEnt_EconomyCom.SetIron(Instance.IsMasterClient, iron);
+        _eGM.EconomyEnt_EconomyCom.SetGold(Instance.IsMasterClient, gold);
 
         _eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[Instance.IsMasterClient] = isSettedKing;
         _eGM.InfoEnt_BuildingsInfoCom.IsSettedCityDict[Instance.IsMasterClient] = isSettedCity;

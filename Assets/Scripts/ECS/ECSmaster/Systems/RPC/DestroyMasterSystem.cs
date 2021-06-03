@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
-using static Main;
+﻿using Photon.Pun;
 
 internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
 {

@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using static Main;
 
-internal sealed class DonerUISystem : RPCGeneralReduction
+internal sealed class DonerUISystem : RPCGeneralSystemReduction
 {
     private bool _isInited = false;
     private bool IsCurrentDone => _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[Instance.IsMasterClient];

@@ -1,6 +1,6 @@
 ﻿using System;
 
-public struct MistakeComponent
+public struct MistakeeeComponent
 {
     internal Action MistakeAction;
 }

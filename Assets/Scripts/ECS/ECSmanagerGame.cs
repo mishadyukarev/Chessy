@@ -2,7 +2,7 @@
 using System;
 using static Main;
 
-internal sealed class ECSmanagerGame : IDisposable
+internal sealed class ECSmanagerGame
 {
     private EcsWorld _gameWorld;
 
@@ -44,7 +44,7 @@ internal sealed class ECSmanagerGame : IDisposable
         _systemsOtherManager.CreateSystems(this);
     }
 
-    internal void InitSystems()
+    internal void InitAndProcessInjectsSystems()
     {
         _systemsGeneralManager.InitAndProcessInjectsSystems();
         _systemsMasterManager.InitAndProcessInjectsSystems();
@@ -69,12 +69,5 @@ internal sealed class ECSmanagerGame : IDisposable
 
         if (Instance.IsMasterClient) _systemsMasterManager.FixedUpdate();
         else _systemsOtherManager.FixedUpdate();
-    }
-
-    public void Dispose()
-    {
-        _entitiesGeneralManager.Dispose();
-        if (Instance.IsMasterClient) _entitiesMasterManager.Dispose();
-        else _entitiesOtherManager.Dispose();
     }
 }

@@ -14,11 +14,11 @@ internal class MistakeUISystem : SystemGeneralReduction, IEcsRunSystem
 
         _eGM.DonerEntityMistakeComponent.MistakeAction = MistakeDone;
 
-        _eGM.FoodEntityMistakeComponent.MistakeAction = MistakeFood;
-        _eGM.WoodEntityMistakeComponent.MistakeAction = MistakeWood;
-        _eGM.OreEntityMistakeComponent.MistakeAction = MistakeOre;
-        _eGM.IronEntityMistakeComponent.MistakeAction = MistakeIron;
-        _eGM.GoldEntityMistakeComponent.MistakeAction = MistakeGold;
+        _eGM.MistakeEnt_MistakeEconomyCom.FoodMistake = MistakeFood;
+        _eGM.MistakeEnt_MistakeEconomyCom.WoodMistake = MistakeWood;
+        _eGM.MistakeEnt_MistakeEconomyCom.OreMistake = MistakeOre;
+        _eGM.MistakeEnt_MistakeEconomyCom.IronMistake = MistakeIron;
+        _eGM.MistakeEnt_MistakeEconomyCom.GoldMistake = MistakeGold;
     }
 
     public override void Run()

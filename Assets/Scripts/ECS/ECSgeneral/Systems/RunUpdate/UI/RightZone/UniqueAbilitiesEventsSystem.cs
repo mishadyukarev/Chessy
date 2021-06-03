@@ -1,8 +1,8 @@
-﻿internal sealed class UniqueAbilitiesUISystem : RPCGeneralReduction
+﻿internal sealed class UniqueAbilitiesEventsSystem : RPCGeneralSystemReduction
 {
     private int[] XySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
 
-    internal UniqueAbilitiesUISystem(){ }
+    internal UniqueAbilitiesEventsSystem() { }
 
     public override void Run()
     {

@@ -1,6 +1,6 @@
 ﻿using static Main;
 
-internal sealed class TakerUnitsUISystem : RPCGeneralReduction
+internal sealed class TakerUnitsUISystem : RPCGeneralSystemReduction
 {
     public override void Init()
     {

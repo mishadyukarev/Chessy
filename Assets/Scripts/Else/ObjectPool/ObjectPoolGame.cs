@@ -5,7 +5,7 @@ using static Main;
 internal sealed class ObjectPoolGame : ObjectPool
 {
     internal GameObject BackGroundCollider2D;
-    internal AudioSource AudioSource;
+    internal AudioSource MistakeAudioSource;
     internal AudioSource AttackAudioSource;
 
     #region Cell
@@ -50,14 +50,14 @@ internal sealed class ObjectPoolGame : ObjectPool
     #endregion
 
 
-    internal override void Spawn(ResourcesLoad resourcesLoad,Builder builder)
+    internal override void Spawn(ResourcesLoad resourcesLoad, Builder builder)
     {
         base.Spawn(resourcesLoad, builder);
 
 
         var audioSourceGO = builder.CreateGameObject("AudioSource", new Type[] { typeof(AudioSource) });
-        AudioSource = audioSourceGO.GetComponent<AudioSource>();
-        AudioSource.clip = resourcesLoad.SoundConfig.MistakeAudioClip;
+        MistakeAudioSource = audioSourceGO.GetComponent<AudioSource>();
+        MistakeAudioSource.clip = resourcesLoad.SoundConfig.MistakeAudioClip;
 
         AttackAudioSource = builder.CreateGameObject("AttackAudioSource", new Type[] { typeof(AudioSource) }).GetComponent<AudioSource>();
         AttackAudioSource.clip = resourcesLoad.SoundConfig.AttackAudioClip;
@@ -66,6 +66,8 @@ internal sealed class ObjectPoolGame : ObjectPool
             Instance.transform.position + new Vector3(7, 5.5f, 2), Instance.transform.transform.rotation);
 
         SpawnCells(resourcesLoad, Instance.StartValuesGameConfig, Instance.gameObject);
+
+        Instance.GameDisposables.Add(this);
     }
 
     public override void Dispose()
@@ -73,7 +75,7 @@ internal sealed class ObjectPoolGame : ObjectPool
         base.Dispose();
 
         if (BackGroundCollider2D != default) GameObject.Destroy(BackGroundCollider2D);
-        if (AudioSource != default) GameObject.Destroy(AudioSource.gameObject);
+        if (MistakeAudioSource != default) GameObject.Destroy(MistakeAudioSource.gameObject);
         if (AttackAudioSource != default) GameObject.Destroy(AttackAudioSource.gameObject);
 
         if (SupportParentForCells != default) GameObject.Destroy(SupportParentForCells);
@@ -82,7 +84,7 @@ internal sealed class ObjectPoolGame : ObjectPool
     internal void SetActiveAll(bool isActive)
     {
         BackGroundCollider2D.SetActive(isActive);
-        AudioSource.gameObject.SetActive(isActive);
+        MistakeAudioSource.gameObject.SetActive(isActive);
         AttackAudioSource.gameObject.SetActive(isActive);
 
         SupportParentForCells.SetActive(isActive);

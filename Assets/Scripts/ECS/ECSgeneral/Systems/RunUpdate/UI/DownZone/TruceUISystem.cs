@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using static Main;
 
-internal sealed class TruceUISystem : RPCGeneralReduction
+internal sealed class TruceUISystem : RPCGeneralSystemReduction
 {
     private bool _isInited = false;
     private bool IsCurrentTruced => _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[Instance.IsMasterClient];

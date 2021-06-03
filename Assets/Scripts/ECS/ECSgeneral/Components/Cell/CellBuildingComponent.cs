@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-internal struct CellBuildingComponent
+internal struct CellBuildingComponent : IDisposable
 {
     private GameObject _cityGO;
     private GameObject _farmGO;
@@ -13,7 +13,7 @@ internal struct CellBuildingComponent
     private SpriteRenderer _woodcutterSR;
     private SpriteRenderer _mineSR;
 
-    internal CellBuildingComponent(ObjectPoolGame gameObjectPool, int x, int y)
+    internal void Fill(ObjectPoolGame gameObjectPool, int x, int y)
     {
         _cityGO = gameObjectPool.CellBuildingCityGOs[x, y];
         _farmGO = gameObjectPool.CellBuildingFarmGOs[x, y];
@@ -64,5 +64,18 @@ internal struct CellBuildingComponent
             if (player.IsMasterClient) spriteRender.color = Color.blue;
             else spriteRender.color = Color.red;
         }
+    }
+
+    public void Dispose()
+    {
+        _cityGO = default;
+        _farmGO = default;
+        _woodcutterGO = default;
+        _mineGO = default;
+
+        _citySR = default;
+        _farmSR = default;
+        _woodcutterSR = default;
+        _mineSR = default;
     }
 }

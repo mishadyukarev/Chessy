@@ -8,11 +8,13 @@ internal abstract class SystemGeneralReduction : IEcsInitSystem, IEcsRunSystem
 
     protected StartValuesGameConfig _startValuesGameConfig;
     protected CellManager _cM;
+    protected EconomyManager _eM;
 
     protected SystemGeneralReduction()
     {
         _startValuesGameConfig = Instance.StartValuesGameConfig;
         _cM = Instance.CellManager;
+        _eM = Instance.EconomyManager;
     }
 
     public virtual void Init()

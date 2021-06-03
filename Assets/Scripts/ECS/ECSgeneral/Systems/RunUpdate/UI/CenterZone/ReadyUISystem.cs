@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using static Main;
 
-internal sealed class ReadyUISystem : RPCGeneralReduction
+internal sealed class ReadyUISystem : RPCGeneralSystemReduction
 {
     private bool IsCurrentReady => _eGM.ReadyEnt_ReadyCom.IsActivatedDictionary[Instance.IsMasterClient];
 
@@ -14,7 +14,7 @@ internal sealed class ReadyUISystem : RPCGeneralReduction
     {
         base.Run();
 
-        Debug.Log(_eGM.ReadyEnt_ReadyCom.IsActivatedDictionary[Instance.IsMasterClient]);
+        //Debug.Log(_eGM.ReadyEnt_ReadyCom.IsActivatedDictionary[Instance.IsMasterClient]);
 
         if (_eGM.ReadyEnt_ReadyCom.IsSkipped)
         {

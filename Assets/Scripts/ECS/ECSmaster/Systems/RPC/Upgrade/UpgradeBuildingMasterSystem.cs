@@ -19,12 +19,6 @@ internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
 
         Dictionary<bool, int> currentUpgradeBuildingsDict = new Dictionary<bool, int>();
 
-        var foodAmountDict = _eGM.FoodEnt_AmountDictCom.AmountDict;
-        var woodAmountDict = _eGM.WoodEAmountDictC.AmountDict;
-        var oreAmountDict = _eGM.OreEAmountDictC.AmountDict;
-        var ironAmountDict = _eGM.IronEAmountDictC.AmountDict;
-        var goldAmountDict = _eGM.GoldEAmountDictC.AmountDict;
-
         int minusFood = default;
         int minusWood = default;
         int minusOre = default;
@@ -74,19 +68,19 @@ internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
         }
 
 
-        haveFood = foodAmountDict[Info.Sender.IsMasterClient] >= minusFood;
-        haveWood = woodAmountDict[Info.Sender.IsMasterClient] >= minusWood;
-        haveOre = oreAmountDict[Info.Sender.IsMasterClient] >= minusOre;
-        haveIron = ironAmountDict[Info.Sender.IsMasterClient] >= minusIron;
-        haveGold = goldAmountDict[Info.Sender.IsMasterClient] >= minusGold;
+        haveFood = _eGM.EconomyEnt_EconomyCom.Food(Info.Sender.IsMasterClient) >= minusFood;
+        haveWood = _eGM.EconomyEnt_EconomyCom.Wood(Info.Sender.IsMasterClient) >= minusWood;
+        haveOre = _eGM.EconomyEnt_EconomyCom.Ore(Info.Sender.IsMasterClient) >= minusOre;
+        haveIron = _eGM.EconomyEnt_EconomyCom.Iron(Info.Sender.IsMasterClient) >= minusIron;
+        haveGold = _eGM.EconomyEnt_EconomyCom.Gold(Info.Sender.IsMasterClient) >= minusGold;
 
         if (haveFood && haveWood && haveOre && haveIron && haveGold)
         {
-            foodAmountDict[Info.Sender.IsMasterClient] -= minusFood;
-            woodAmountDict[Info.Sender.IsMasterClient] -= minusWood;
-            oreAmountDict[Info.Sender.IsMasterClient] -= minusOre;
-            ironAmountDict[Info.Sender.IsMasterClient] -= minusIron;
-            goldAmountDict[Info.Sender.IsMasterClient] -= minusGold;
+            _eGM.EconomyEnt_EconomyCom.TakeFood(Info.Sender.IsMasterClient, minusFood);
+            _eGM.EconomyEnt_EconomyCom.TakeWood(Info.Sender.IsMasterClient, minusWood);
+            _eGM.EconomyEnt_EconomyCom.TakeOre(Info.Sender.IsMasterClient, minusOre);
+            _eGM.EconomyEnt_EconomyCom.TakeIron(Info.Sender.IsMasterClient, minusIron);
+            _eGM.EconomyEnt_EconomyCom.TakeGold(Info.Sender.IsMasterClient, minusGold);
 
             currentUpgradeBuildingsDict[Info.Sender.IsMasterClient] += 1;
         }

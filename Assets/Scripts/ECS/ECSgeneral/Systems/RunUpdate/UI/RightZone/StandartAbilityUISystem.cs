@@ -3,12 +3,12 @@ using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.UI;
 
-internal class StandartAbilityUISystem : RPCGeneralReduction, IEcsRunSystem
+internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
 {
     private Button _standartAbilityButton1;
     private Button _standartAbilityButton2;
 
-    private int[] _xySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
+    private int[] XySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
 
     internal StandartAbilityUISystem()
     {
@@ -23,9 +23,9 @@ internal class StandartAbilityUISystem : RPCGeneralReduction, IEcsRunSystem
         base.Run();
 
 
-        if (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(_xySelectedCell).IsMine)
+        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
         {
-            switch (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).UnitType)
+            switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
             {
                 case UnitTypes.None:
                     ActiveStandartAbilities(false);
@@ -63,16 +63,16 @@ internal class StandartAbilityUISystem : RPCGeneralReduction, IEcsRunSystem
 
             if (isActive)
             {
-                if (_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).IsProtected) _standartAbilityButton1.image.color = Color.yellow;
+                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsProtected) _standartAbilityButton1.image.color = Color.yellow;
                 else _standartAbilityButton1.image.color = Color.white;
 
-                if (_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).IsRelaxed) _standartAbilityButton2.image.color = Color.green;
+                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsRelaxed) _standartAbilityButton2.image.color = Color.green;
                 else _standartAbilityButton2.image.color = Color.white;
             }
         }
     }
 
 
-    private void StandartAbilityButton1() => _photonPunRPC.ProtectUnitToMaster(!_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).IsProtected, _xySelectedCell);
-    private void StandartAbilityButton2() => _photonPunRPC.RelaxUnitToMaster(!_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).IsRelaxed, _xySelectedCell);
+    private void StandartAbilityButton1() => _photonPunRPC.ProtectUnitToMaster(!_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsProtected, XySelectedCell);
+    private void StandartAbilityButton2() => _photonPunRPC.RelaxUnitToMaster(!_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsRelaxed, XySelectedCell);
 }

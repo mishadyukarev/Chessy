@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using static Main;
+﻿using static Main;
 
 internal sealed class SupportVisionSystem : SystemGeneralReduction
 {
@@ -21,7 +20,7 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
         }
 
 
-        var isSelectedUnit = _eGM.SelectedUnitEntUnitTypeCom.HaveUnit;
+        var isSelectedUnit = _eGM.SelectorEnt_UnitTypeCom.HaveUnit;
 
         if (_isRepeated != isSelectedUnit)
         {

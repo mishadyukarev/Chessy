@@ -39,7 +39,12 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
     internal int Y => 1;
 
 
+    private EcsEntity _economyEntity;
+    internal ref EconomyComponent EconomyEnt_EconomyCom => ref _economyEntity.Get<EconomyComponent>();
 
+
+    private EcsEntity _mistakeEntity;
+    internal ref MistakeEconomyComponent MistakeEnt_MistakeEconomyCom => ref _mistakeEntity.Get<MistakeEconomyComponent>();
 
 
     #region Up
@@ -51,30 +56,11 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
     private EcsEntity _goldEntity;
 
 
-    internal ref AmountDictionaryComponent FoodEnt_AmountDictCom => ref _foodEntity.Get<AmountDictionaryComponent>();
-    internal ref ImageComponent FoodEntityImageComponent => ref _foodEntity.Get<ImageComponent>();
     internal ref TextMeshProGUIComponent FoodEntityTextMeshProGUIComponent => ref _foodEntity.Get<TextMeshProGUIComponent>();
-    internal ref MistakeComponent FoodEntityMistakeComponent => ref _foodEntity.Get<MistakeComponent>();
-
-    internal ref AmountDictionaryComponent WoodEAmountDictC => ref _woodEntity.Get<AmountDictionaryComponent>();
-    internal ref ImageComponent WoodEntityImageComponent => ref _woodEntity.Get<ImageComponent>();
     internal ref TextMeshProGUIComponent WoodEntityTextMeshProGUIComponent => ref _woodEntity.Get<TextMeshProGUIComponent>();
-    internal ref MistakeComponent WoodEntityMistakeComponent => ref _woodEntity.Get<MistakeComponent>();
-
-    internal ref AmountDictionaryComponent OreEAmountDictC => ref _oreEntity.Get<AmountDictionaryComponent>();
-    internal ref ImageComponent OreEntityImageComponent => ref _oreEntity.Get<ImageComponent>();
     internal ref TextMeshProGUIComponent OreEntityTextMeshProGUIComponent => ref _oreEntity.Get<TextMeshProGUIComponent>();
-    internal ref MistakeComponent OreEntityMistakeComponent => ref _oreEntity.Get<MistakeComponent>();
-
-    internal ref AmountDictionaryComponent IronEAmountDictC => ref _ironEntity.Get<AmountDictionaryComponent>();
-    internal ref ImageComponent IronEntityImageComponent => ref _ironEntity.Get<ImageComponent>();
     internal ref TextMeshProGUIComponent IronEntityTextMeshProGUIComponent => ref _ironEntity.Get<TextMeshProGUIComponent>();
-    internal ref MistakeComponent IronEntityMistakeComponent => ref _ironEntity.Get<MistakeComponent>();
-
-    internal ref AmountDictionaryComponent GoldEAmountDictC => ref _goldEntity.Get<AmountDictionaryComponent>();
-    internal ref ImageComponent GoldEntityImageComponent => ref _goldEntity.Get<ImageComponent>();
     internal ref TextMeshProGUIComponent GoldEntityTextMeshProGUIComponent => ref _goldEntity.Get<TextMeshProGUIComponent>();
-    internal ref MistakeComponent GoldEntityMistakeComponent => ref _goldEntity.Get<MistakeComponent>();
 
     #endregion
 
@@ -93,7 +79,7 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
     internal ref ButtonComponent DonerEntityButtonComponent => ref _donerEntity.Get<ButtonComponent>();
     internal ref TextMeshProGUIComponent DonerEntityTextMeshProGUIComponent => ref _donerEntity.Get<TextMeshProGUIComponent>();
     internal ref ActivatedDictionaryComponent DonerEntityIsActivatedDictionaryComponent => ref _donerEntity.Get<ActivatedDictionaryComponent>();
-    internal ref MistakeComponent DonerEntityMistakeComponent => ref _donerEntity.Get<MistakeComponent>();
+    internal ref MistakeeeComponent DonerEntityMistakeComponent => ref _donerEntity.Get<MistakeeeComponent>();
 
     internal ref ButtonComponent TruceEnt_ButtonCom => ref _truceEntity.Get<ButtonComponent>();
     internal ref ActivatedDictionaryComponent TruceEnt_ActivatedDictCom => ref _truceEntity.Get<ActivatedDictionaryComponent>();
@@ -126,10 +112,8 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
     internal ref UnitsInfoComponent InfoEnt_UnitsInfoCom => ref _infoEntity.Get<UnitsInfoComponent>();
     internal ref BuildingsInfoComponent InfoEnt_BuildingsInfoCom => ref _infoEntity.Get<BuildingsInfoComponent>();
     internal ref UpgradeInfoComponent InfoEnt_UpgradeInfoCom => ref _infoEntity.Get<UpgradeInfoComponent>();
+    internal ref UpdatorComponent InfoEnt_UpdatorCom => ref _infoEntity.Get<UpdatorComponent>();
 
-
-    private EcsEntity _updatorEntity;
-    internal ref UpdatorComponent UpdatorEntityAmountComponent => ref _updatorEntity.Get<UpdatorComponent>();
 
 
     private EcsEntity _rPCGeneralEntity;
@@ -140,13 +124,11 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
     internal ref ReadyComponent ReadyEnt_ReadyCom => ref _readyEntity.Get<ReadyComponent>();
 
 
-    private EcsEntity _selectedUnitEntity;
-    internal ref UnitTypeComponent SelectedUnitEntUnitTypeCom => ref _selectedUnitEntity.Get<UnitTypeComponent>();
-
 
     private EcsEntity _selectorEnt;
     internal ref SelectorComponent SelectorEntSelectorCom => ref _selectorEnt.Get<SelectorComponent>();
-    internal ref RaycastHit2DComponent RayComponentSelectorEnt => ref _selectorEnt.Get<RaycastHit2DComponent>();
+    internal ref RaycastHit2DComponent SelectorEnt_RayCom => ref _selectorEnt.Get<RaycastHit2DComponent>();
+    internal ref UnitTypeComponent SelectorEnt_UnitTypeCom => ref _selectorEnt.Get<UnitTypeComponent>();
 
 
     private EcsEntity _soundEnt;
@@ -187,18 +169,81 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
 
     internal EntitiesGeneralManager(EcsWorld gameWorld, CanvasGameManager canvasGameManager, StartValuesGameConfig startValuesGameConfig)
     {
+        GameDisposables.Add(this);/////////////////////////////////////
+
+
+        #region Cells
+
+        _cellEnts = new EcsEntity[startValuesGameConfig.CELL_COUNT_X, startValuesGameConfig.CELL_COUNT_Y];
+        _cellUnitEnts = new EcsEntity[startValuesGameConfig.CELL_COUNT_X, startValuesGameConfig.CELL_COUNT_Y];
+        _cellBuildingEnts = new EcsEntity[startValuesGameConfig.CELL_COUNT_X, startValuesGameConfig.CELL_COUNT_Y];
+        _cellEnvironmentEnts = new EcsEntity[startValuesGameConfig.CELL_COUNT_X, startValuesGameConfig.CELL_COUNT_Y];
+        _cellSupportVisionEnts = new EcsEntity[startValuesGameConfig.CELL_COUNT_X, startValuesGameConfig.CELL_COUNT_Y];
+        _cellEffectEnts = new EcsEntity[startValuesGameConfig.CELL_COUNT_X, startValuesGameConfig.CELL_COUNT_Y];
+
+        for (int x = 0; x < startValuesGameConfig.CELL_COUNT_X; x++)
+        {
+            for (int y = 0; y < startValuesGameConfig.CELL_COUNT_Y; y++)
+            {
+                _cellEnts[x, y] = gameWorld.NewEntity();
+                _cellUnitEnts[x, y] = gameWorld.NewEntity();
+                _cellBuildingEnts[x, y] = gameWorld.NewEntity();
+                _cellEnvironmentEnts[x, y] = gameWorld.NewEntity();
+                _cellSupportVisionEnts[x, y] = gameWorld.NewEntity();
+                _cellEffectEnts[x, y] = gameWorld.NewEntity();
+
+                _cellEnts[x, y]
+                    .Replace(new CellBaseComponent(GameDisposables))
+                    .Replace(new CellComponent(x, y));
+
+                _cellUnitEnts[x, y]
+                    .Replace(new CellUnitComponent(GameDisposables))
+                    .Replace(new OwnerComponent())
+                    .Replace(new UnitTypeComponent());
+
+                _cellBuildingEnts[x, y]
+                    .Replace(new CellBuildingComponent())
+                    .Replace(new BuildingTypeComponent())
+                    .Replace(new CellComponent())
+                    .Replace(new OwnerComponent());
+
+                _cellEnvironmentEnts[x, y]
+                    .Replace(new CellEnvironmentComponent())
+                    .Replace(new CellComponent());
+
+                _cellSupportVisionEnts[x, y]
+                    .Replace(new CellSupportVisionComponent());
+
+                _cellEffectEnts[x, y]
+                    .Replace(new CellEffectComponent());
+            }
+        }
+
+        #endregion
+
+
+
+        _economyEntity = gameWorld.NewEntity()
+            .Replace(new EconomyComponent(GameDisposables));
+
+        _mistakeEntity = gameWorld.NewEntity()
+            .Replace(new MistakeEconomyComponent());
+
+
+
+
         #region Economy
 
         _foodEntity = gameWorld.NewEntity()
-            .Replace(new MistakeComponent());
+            .Replace(new MistakeeeComponent());
         _woodEntity = gameWorld.NewEntity()
-            .Replace(new MistakeComponent());
+            .Replace(new MistakeeeComponent());
         _oreEntity = gameWorld.NewEntity()
-            .Replace(new MistakeComponent());
+            .Replace(new MistakeeeComponent());
         _ironEntity = gameWorld.NewEntity()
-            .Replace(new MistakeComponent());
+            .Replace(new MistakeeeComponent());
         _goldEntity = gameWorld.NewEntity()
-            .Replace(new MistakeComponent());
+            .Replace(new MistakeeeComponent());
 
         FoodEntityTextMeshProGUIComponent.TextMeshProUGUI = canvasGameManager.FoodAmmountText;
         WoodEntityTextMeshProGUIComponent.TextMeshProUGUI = canvasGameManager.WoodAmmountText;
@@ -206,29 +251,9 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
         IronEntityTextMeshProGUIComponent.TextMeshProUGUI = canvasGameManager.IronAmmountText;
         GoldEntityTextMeshProGUIComponent.TextMeshProUGUI = canvasGameManager.GoldAmmountText;
 
-
-        FoodEnt_AmountDictCom.AmountDict = new Dictionary<bool, int>();
-        WoodEAmountDictC.AmountDict = new Dictionary<bool, int>();
-        OreEAmountDictC.AmountDict = new Dictionary<bool, int>();
-        IronEAmountDictC.AmountDict = new Dictionary<bool, int>();
-        GoldEAmountDictC.AmountDict = new Dictionary<bool, int>();
-
-        FoodEnt_AmountDictCom.AmountDict.Add(true, default);
-        FoodEnt_AmountDictCom.AmountDict.Add(false, default);
-
-        WoodEAmountDictC.AmountDict.Add(true, default);
-        WoodEAmountDictC.AmountDict.Add(false, default);
-
-        OreEAmountDictC.AmountDict.Add(true, default);
-        OreEAmountDictC.AmountDict.Add(false, default);
-
-        IronEAmountDictC.AmountDict.Add(true, default);
-        IronEAmountDictC.AmountDict.Add(false, default);
-
-        GoldEAmountDictC.AmountDict.Add(true, default);
-        GoldEAmountDictC.AmountDict.Add(false, default);
-
         #endregion
+
+
 
 
         #region TakerUnits
@@ -262,7 +287,7 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
 
 
         _donerEntity = gameWorld.NewEntity()
-            .Replace(new MistakeComponent()); 
+            .Replace(new MistakeeeComponent());
         DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary = new Dictionary<bool, bool>();
         DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary.Add(true, default);
         DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary.Add(false, default);
@@ -280,24 +305,18 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
         _infoEntity = gameWorld.NewEntity()
             .Replace(new UnitsInfoComponent(startValuesGameConfig))
             .Replace(new BuildingsInfoComponent(startValuesGameConfig))
-            .Replace(new UpgradeInfoComponent(startValuesGameConfig));
-
-
-        _readyEntity = gameWorld.NewEntity()
-            .Replace(new ReadyComponent(startValuesGameConfig));
-
-
-        _updatorEntity = gameWorld.NewEntity()
+            .Replace(new UpgradeInfoComponent(startValuesGameConfig))
             .Replace(new UpdatorComponent());
 
 
-        _selectedUnitEntity = gameWorld.NewEntity();
-        SelectedUnitEntUnitTypeCom.UnitType = UnitTypes.None;
+        _readyEntity = gameWorld.NewEntity()
+            .Replace(new ReadyComponent(GameDisposables));
 
 
         _selectorEnt = gameWorld.NewEntity()
             .Replace(new SelectorComponent(startValuesGameConfig))
-            .Replace(new RaycastHit2DComponent());
+            .Replace(new RaycastHit2DComponent())
+            .Replace(new UnitTypeComponent());
 
         #region Abilities
 
@@ -341,56 +360,6 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
 
         _zoneEnt = gameWorld.NewEntity()
             .Replace(new ZoneComponent());
-
-
-        #region Cells
-
-        _cellEnts = new EcsEntity[startValuesGameConfig.CELL_COUNT_X, startValuesGameConfig.CELL_COUNT_Y];
-        _cellUnitEnts = new EcsEntity[startValuesGameConfig.CELL_COUNT_X, startValuesGameConfig.CELL_COUNT_Y];
-        _cellBuildingEnts = new EcsEntity[startValuesGameConfig.CELL_COUNT_X, startValuesGameConfig.CELL_COUNT_Y];
-        _cellEnvironmentEnts = new EcsEntity[startValuesGameConfig.CELL_COUNT_X, startValuesGameConfig.CELL_COUNT_Y];
-        _cellSupportVisionEnts = new EcsEntity[startValuesGameConfig.CELL_COUNT_X, startValuesGameConfig.CELL_COUNT_Y];
-        _cellEffectEnts = new EcsEntity[startValuesGameConfig.CELL_COUNT_X, startValuesGameConfig.CELL_COUNT_Y];
-
-        for (int x = 0; x < startValuesGameConfig.CELL_COUNT_X; x++)
-        {
-            for (int y = 0; y < startValuesGameConfig.CELL_COUNT_Y; y++)
-            {
-                _cellEnts[x, y] = gameWorld.NewEntity();
-                _cellUnitEnts[x, y] = gameWorld.NewEntity();
-                _cellBuildingEnts[x, y] = gameWorld.NewEntity();
-                _cellEnvironmentEnts[x, y] = gameWorld.NewEntity();
-                _cellSupportVisionEnts[x, y] = gameWorld.NewEntity();
-                _cellEffectEnts[x, y] = gameWorld.NewEntity();
-
-                _cellEnts[x, y]
-                    .Replace(new CellBaseComponent())
-                    .Replace(new CellComponent());
-
-                _cellUnitEnts[x, y]
-                    .Replace(new CellUnitComponent())
-                    .Replace(new OwnerComponent())
-                    .Replace(new UnitTypeComponent());
-
-                _cellBuildingEnts[x, y]
-                    .Replace(new CellBuildingComponent())
-                    .Replace(new BuildingTypeComponent())
-                    .Replace(new CellComponent())
-                    .Replace(new OwnerComponent());
-
-                _cellEnvironmentEnts[x, y]
-                    .Replace(new CellEnvironmentComponent())
-                    .Replace(new CellComponent());
-
-                _cellSupportVisionEnts[x, y]
-                    .Replace(new CellSupportVisionComponent());
-
-                _cellEffectEnts[x, y]
-                    .Replace(new CellEffectComponent());
-            }
-        }
-
-        #endregion
     }
 
 
@@ -401,24 +370,10 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
         {
             for (int y = 0; y < startValuesGameConfig.CELL_COUNT_Y; y++)
             {
-                _cellEnts[x, y]
-                    .Replace(new CellBaseComponent(objectPoolGame, x, y))
-                    .Replace(new CellComponent(x, y));
-
-                _cellUnitEnts[x, y]
-                    .Replace(new CellUnitComponent(objectPoolGame, x, y))
-                    .Replace(new OwnerComponent())
-                    .Replace(new UnitTypeComponent());
-
-                _cellBuildingEnts[x, y]
-                    .Replace(new CellBuildingComponent(objectPoolGame, x, y))
-                    .Replace(new BuildingTypeComponent())
-                    .Replace(new CellComponent(x, y))
-                    .Replace(new OwnerComponent());
-
-                _cellEnvironmentEnts[x, y]
-                    .Replace(new CellEnvironmentComponent(objectPoolGame, x, y))
-                    .Replace(new CellComponent(x, y));
+                CellEnt_CellBaseCom(x, y).Fill(objectPoolGame, x, y);
+                CellUnitEnt_CellUnitCom(x, y).Fill(objectPoolGame, x, y);
+                CellBuildingEnt_CellBuildingCom(x, y).Fill(objectPoolGame, x, y);
+                CellEnvEnt_CellEnvCom(x, y).Fill(objectPoolGame, x, y);
 
                 _cellSupportVisionEnts[x, y]
                     .Replace(new CellSupportVisionComponent(objectPoolGame, x, y));
@@ -449,6 +404,9 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
             InfoEnt_UnitsInfoCom.AmountBishopDict[true] = startValuesGameConfig.AMOUNT_BISHOP_MASTER;
             InfoEnt_UnitsInfoCom.AmountBishopDict[false] = startValuesGameConfig.AMOUNT_BISHOP_OTHER;
 
+            InfoEnt_BuildingsInfoCom.IsSettedCityDict[true] = default;
+            InfoEnt_BuildingsInfoCom.IsSettedCityDict[false] = default;
+
             InfoEnt_BuildingsInfoCom.AmountFarmDict[true] = default;
             InfoEnt_BuildingsInfoCom.AmountFarmDict[false] = default;
 
@@ -463,17 +421,17 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
 
             #region Economy
 
-            FoodEnt_AmountDictCom.AmountDict[true] = startValuesGameConfig.AMOUNT_FOOD_MASTER;
-            WoodEAmountDictC.AmountDict[true] = startValuesGameConfig.AMOUNT_WOOD_MASTER;
-            OreEAmountDictC.AmountDict[true] = startValuesGameConfig.AMOUNT_ORE_MASTER;
-            IronEAmountDictC.AmountDict[true] = startValuesGameConfig.AMOUNT_IRON_MASTER;
-            GoldEAmountDictC.AmountDict[true] = startValuesGameConfig.AMOUNT_GOLD_MASTER;
+            EconomyEnt_EconomyCom.SetFood(true, startValuesGameConfig.AMOUNT_FOOD_MASTER);
+            EconomyEnt_EconomyCom.SetWood(true, startValuesGameConfig.AMOUNT_WOOD_MASTER);
+            EconomyEnt_EconomyCom.SetOre(true, startValuesGameConfig.AMOUNT_ORE_MASTER);
+            EconomyEnt_EconomyCom.SetIron(true, startValuesGameConfig.AMOUNT_IRON_MASTER);
+            EconomyEnt_EconomyCom.SetGold(true, startValuesGameConfig.AMOUNT_GOLD_MASTER);
 
-            FoodEnt_AmountDictCom.AmountDict[false] = startValuesGameConfig.AMOUNT_FOOD_OTHER;
-            WoodEAmountDictC.AmountDict[false] = startValuesGameConfig.AMOUNT_WOOD_OTHER;
-            OreEAmountDictC.AmountDict[false] = startValuesGameConfig.AMOUNT_ORE_OTHER;
-            IronEAmountDictC.AmountDict[false] = startValuesGameConfig.AMOUNT_IRON_OTHER;
-            GoldEAmountDictC.AmountDict[false] = startValuesGameConfig.AMOUNT_GOLD_OTHER;
+            EconomyEnt_EconomyCom.SetFood(false, startValuesGameConfig.AMOUNT_FOOD_OTHER);
+            EconomyEnt_EconomyCom.SetWood(false, startValuesGameConfig.AMOUNT_WOOD_OTHER);
+            EconomyEnt_EconomyCom.SetOre(false, startValuesGameConfig.AMOUNT_ORE_OTHER);
+            EconomyEnt_EconomyCom.SetIron(false, startValuesGameConfig.AMOUNT_IRON_OTHER);
+            EconomyEnt_EconomyCom.SetGold(false, startValuesGameConfig.AMOUNT_GOLD_OTHER);
 
             #endregion
 
@@ -527,13 +485,17 @@ internal sealed class EntitiesGeneralManager : EntitiesManager
     {
         base.Dispose();
 
+        EconomyEnt_EconomyCom.Dispose();
+
         DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[true] = false;
         DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[false] = false;
 
         ReadyEnt_ReadyCom.IsSkipped = default;
         ReadyEnt_ReadyCom.IsActivatedDictionary[true] = false;
         ReadyEnt_ReadyCom.IsActivatedDictionary[false] = false;
-
         ReadyEnt_ReadyCom.IsActivatedDictionary[Main.Instance.IsMasterClient] = false;
+
+        TruceEnt_ActivatedDictCom.IsActivatedDictionary[true] = default;
+        TruceEnt_ActivatedDictCom.IsActivatedDictionary[false] = default;
     }
 }

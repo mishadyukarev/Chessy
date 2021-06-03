@@ -1,12 +1,13 @@
-﻿internal struct CellComponent
+﻿using System;
+
+internal struct CellComponent
 {
-    private int _xyLength;
     private int[] _xy;
     internal int[] Xy
     {
         get
         {
-            var xy = new int[_xyLength];
+            var xy = new int[2];
 
             xy[0] = _xy[0];
             xy[1] = _xy[1];
@@ -18,6 +19,5 @@
     internal CellComponent(params int[] xy)
     {
         _xy = xy;
-        _xyLength = _xy.Length;
     }
 }

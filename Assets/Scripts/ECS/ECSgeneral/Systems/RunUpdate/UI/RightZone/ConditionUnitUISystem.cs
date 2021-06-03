@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using TMPro;
+﻿using TMPro;
 using static Main;
 
 internal class ConditionUnitUISystem : SystemGeneralReduction

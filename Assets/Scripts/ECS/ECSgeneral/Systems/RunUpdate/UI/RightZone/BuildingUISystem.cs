@@ -1,7 +1,7 @@
 ﻿using UnityEngine.UI;
 using static Main;
 
-internal sealed class BuildingUISystem : RPCGeneralReduction
+internal sealed class BuildingUISystem : RPCGeneralSystemReduction
 {
     private Button _buildingAbilityButton0;
     private Button _buildingAbilityButton1;

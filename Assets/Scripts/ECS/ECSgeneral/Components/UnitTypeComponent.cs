@@ -1,4 +1,6 @@
-﻿internal struct UnitTypeComponent
+﻿using System;
+
+internal struct UnitTypeComponent : IDisposable
 {
     internal UnitTypes UnitType;
 
@@ -30,5 +32,10 @@
                     return false;
             }
         }
+    }
+
+    public void Dispose()
+    {
+        UnitType = default;
     }
 }

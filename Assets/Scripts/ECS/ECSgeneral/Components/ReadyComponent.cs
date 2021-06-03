@@ -1,6 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
-internal struct ReadyComponent
+internal struct ReadyComponent : IDisposable
 {
     private Dictionary<bool, bool> _isActivatedDict;
 
@@ -8,12 +9,21 @@ internal struct ReadyComponent
 
     internal Dictionary<bool, bool> IsActivatedDictionary => _isActivatedDict;
 
-    internal ReadyComponent(StartValuesGameConfig startValuesGameConfig)
+    internal ReadyComponent(List<IDisposable> disposables)
     {
         IsSkipped = default;
 
         _isActivatedDict = new Dictionary<bool, bool>();
         _isActivatedDict.Add(true, default);
         _isActivatedDict.Add(false, default);
+
+        disposables.Add(this);
+    }
+
+    public void Dispose()
+    {
+        _isActivatedDict[true] = default;
+        _isActivatedDict[false] = default;
+        IsSkipped = default;
     }
 }

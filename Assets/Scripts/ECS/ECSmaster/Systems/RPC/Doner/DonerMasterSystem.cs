@@ -13,7 +13,7 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 
         if (_eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[info.Sender.IsMasterClient])
         {
-            _photonPunRPC.DoneToGeneral(info.Sender, false, isDone, _eGM.UpdatorEntityAmountComponent.AmountMotions);
+            _photonPunRPC.DoneToGeneral(info.Sender, false, isDone, _eGM.InfoEnt_UpdatorCom.AmountMotions);
 
             _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[info.Sender.IsMasterClient] = isDone;
 
@@ -25,7 +25,7 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
             {
                 _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RPCSystems);
 
-                _photonPunRPC.DoneToGeneral(RpcTarget.All, true, false, _eGM.UpdatorEntityAmountComponent.AmountMotions);
+                _photonPunRPC.DoneToGeneral(RpcTarget.All, true, false, _eGM.InfoEnt_UpdatorCom.AmountMotions);
             }
         }
         else

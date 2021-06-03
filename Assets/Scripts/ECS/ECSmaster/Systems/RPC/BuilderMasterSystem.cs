@@ -13,37 +13,13 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
         if (_cM.CellUnitWorker.HaveMaxSteps(XyCell) && !_eGM.CellBuildingEnt_BuildingTypeCom(XyCell).HaveBuilding)
         {
-            var isMasterInfo = Info.Sender.IsMasterClient;
-
             bool canSet = false;
-
-            bool haveFood = true;
-            bool haveWood = true;
-            bool haveOre = true;
-            bool haveIron = true;
-            bool haveGold = true;
-
-            var foodAmountDict = _eGM.FoodEnt_AmountDictCom.AmountDict;
-            var woodAmountDict = _eGM.WoodEAmountDictC.AmountDict;
-            var oreAmountDict = _eGM.OreEAmountDictC.AmountDict;
-            var ironAmountDict = _eGM.IronEAmountDictC.AmountDict;
-            var goldAmountDict = _eGM.GoldEAmountDictC.AmountDict;
-
-            int minusFood = default;
-            int minusWood = default;
-            int minusOre = default;
-            int minusIron = default;
-            int minusGold = default;
-
-
             switch (BuildingType)
             {
                 case BuildingTypes.None:
                     break;
 
-
                 case BuildingTypes.City:
-
                     _cM.CellBuildingWorker.SetBuilding(BuildingType, Info.Sender, XyCell);
                     //_eGM.CellBuildingEnt_CellBuildingCom(XyCell).SetBuilding(BuildingType, Info.Sender);
                     _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
@@ -53,88 +29,36 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
                     if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultTree) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.AdultForest);
                     if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.Fertilizer);
-
                     break;
-
 
                 case BuildingTypes.Farm:
-
                     canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizerResources;
-
-                    if (canSet)
-                    {
-                        minusFood = _startValuesGameConfig.FOOD_FOR_BUILDING_FARM;
-                        minusWood = _startValuesGameConfig.WOOD_FOR_BUILDING_FARM;
-                        minusOre = _startValuesGameConfig.ORE_FOR_BUILDING_FARM;
-                        minusIron = _startValuesGameConfig.IRON_FOR_BUILDING_FARM;
-                        minusGold = _startValuesGameConfig.GOLD_FOR_BUILDING_FARM;
-                    }
-
                     break;
-
 
                 case BuildingTypes.Woodcutter:
-
                     canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultTree && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveForestResources;
-
-                    if (canSet)
-                    {
-                        minusFood = _startValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
-                        minusWood = _startValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
-                        minusOre = _startValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
-                        minusIron = _startValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
-                        minusGold = _startValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
-                    }
-
                     break;
-
 
                 case BuildingTypes.Mine:
-
                     canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveHill && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveOreResources;
-
-                    if (canSet)
-                    {
-                        minusFood = _startValuesGameConfig.FOOD_FOR_BUILDING_MINE;
-                        minusWood = _startValuesGameConfig.WOOD_FOR_BUILDING_MINE;
-                        minusOre = _startValuesGameConfig.ORE_FOR_BUILDING_MINE;
-                        minusIron = _startValuesGameConfig.IRON_FOR_BUILDING_MINE;
-                        minusGold = _startValuesGameConfig.GOLD_FOR_BUILDING_MINE;
-                    }
-
                     break;
-
 
                 default:
                     break;
             }
-
-            if (BuildingType != BuildingTypes.City)
+            if (canSet)
             {
-                if (canSet)
+                if (_eM.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves))
                 {
-                    haveFood = foodAmountDict[isMasterInfo] >= minusFood;
-                    haveWood = woodAmountDict[isMasterInfo] >= minusWood;
-                    haveOre = oreAmountDict[isMasterInfo] >= minusOre;
-                    haveIron = ironAmountDict[isMasterInfo] >= minusIron;
-                    haveGold = goldAmountDict[isMasterInfo] >= minusGold;
-
-                    if (haveFood && haveWood && haveOre && haveIron && haveGold)
-                    {
-                        foodAmountDict[isMasterInfo] -= minusFood;
-                        woodAmountDict[isMasterInfo] -= minusWood;
-                        oreAmountDict[isMasterInfo] -= minusOre;
-                        ironAmountDict[isMasterInfo] -= minusIron;
-                        goldAmountDict[isMasterInfo] -= minusGold;
-
-
-                        _cM.CellBuildingWorker.SetBuilding(BuildingType, Info.Sender, XyCell);
-                        _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
-                    }
+                    _eM.CreateBuilding(BuildingType, Info.Sender);
+                    _cM.CellBuildingWorker.SetBuilding(BuildingType, Info.Sender, XyCell);
+                    _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
+                }
+                else
+                {
+                    _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves);
                 }
             }
-
-            _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haveFood, haveWood, haveOre, haveIron, haveGold);
         }
     }
 }

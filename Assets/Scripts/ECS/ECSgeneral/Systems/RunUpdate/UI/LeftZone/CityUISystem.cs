@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using static Main;
 
-internal sealed class CityUISystem : RPCGeneralReduction
+internal sealed class CityUISystem : RPCGeneralSystemReduction
 {
     private GameObject _leftZoneCityZoneGO;
 

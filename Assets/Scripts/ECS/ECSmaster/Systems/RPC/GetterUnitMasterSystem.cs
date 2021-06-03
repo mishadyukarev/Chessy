@@ -1,5 +1,4 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Photon.Pun;
 
 
 internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
