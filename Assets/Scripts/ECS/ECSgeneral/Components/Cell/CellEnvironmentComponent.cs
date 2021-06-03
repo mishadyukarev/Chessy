@@ -3,29 +3,38 @@ using UnityEngine;
 
 internal struct CellEnvironmentComponent
 {
-    private EntitiesGeneralManager _eGM;
-
-    private bool _haveFertilizer;
-    private bool _haveMountain;
-    private bool _haveAdultForest;
-    private bool _haveYoungForest;
-    private bool _haveHill;
+    internal bool _haveFertilizer;
+    internal bool _haveMountain;
+    internal bool _haveAdultTree;
+    internal bool _haveYoungTree;
+    internal bool _haveHill;
     private GameObject _youngTreeGO;
     private GameObject _fertilizerGO;
     private GameObject _mountainGO;
-    private GameObject _treeGO;
+    private GameObject _adultTreeGO;
     private GameObject _hillGO;
+    private SpriteRenderer _youngTreeSR;
+    private SpriteRenderer _fertilizerSR;
+    private SpriteRenderer _mountainSR;
+    private SpriteRenderer _adultTreeSR;
+    private SpriteRenderer _hillSR;
 
-    internal int AmountFertilizer;
-    internal int AmountForest;
-    internal bool HaveFertilizerResources => AmountFertilizer <= 0;
-    internal bool HaveForestResources => AmountForest <= 0;
+    internal int AmountFertilizerResources;
+    internal int AmountForestResources;
+    internal int AmountOreResources;
+
+    internal int MineStep;
 
     internal bool HaveFertilizer => _haveFertilizer;
     internal bool HaveMountain => _haveMountain;
-    internal bool HaveAdultTree => _haveAdultForest;
-    internal bool HaveYoungTree => _haveYoungForest;
+    internal bool HaveAdultTree => _haveAdultTree;
+    internal bool HaveYoungTree => _haveYoungTree;
     internal bool HaveHill => _haveHill;
+
+
+    internal bool HaveFertilizerResources => AmountFertilizerResources > 0;
+    internal bool HaveForestResources => AmountForestResources > 0;
+    internal bool HaveOreResources => AmountOreResources > 0;
 
     internal List<EnvironmentTypes> ListEnvironmentTypes
     {
@@ -34,8 +43,8 @@ internal struct CellEnvironmentComponent
             List<EnvironmentTypes> listEnvironmentTypes = new List<EnvironmentTypes>();
 
             if (_haveFertilizer) listEnvironmentTypes.Add(EnvironmentTypes.Fertilizer);
-            if (_haveAdultForest) listEnvironmentTypes.Add(EnvironmentTypes.AdultForest);
-            if (_haveYoungForest) listEnvironmentTypes.Add(EnvironmentTypes.YoungForest);
+            if (_haveAdultTree) listEnvironmentTypes.Add(EnvironmentTypes.AdultForest);
+            if (_haveYoungTree) listEnvironmentTypes.Add(EnvironmentTypes.YoungForest);
             if (_haveHill) listEnvironmentTypes.Add(EnvironmentTypes.Hill);
 
             return listEnvironmentTypes;
@@ -43,27 +52,34 @@ internal struct CellEnvironmentComponent
     }
 
 
-    internal CellEnvironmentComponent(EntitiesGeneralManager eGM, ObjectPool gameObjectPool, int x, int y)
+    internal CellEnvironmentComponent(ObjectPoolGame gameObjectPool, int x, int y)
     {
-        _eGM = eGM;
+        AmountFertilizerResources = default;
+        AmountForestResources = default;
+        AmountOreResources = default;
 
-        AmountFertilizer = default;
-        AmountForest = default;
+        MineStep = default;
 
         _haveFertilizer = false;
-        _haveYoungForest = false;
-        _haveAdultForest = false;
+        _haveYoungTree = false;
+        _haveAdultTree = false;
         _haveMountain = false;
         _haveHill = false;
-        
+
         _fertilizerGO = gameObjectPool.CellEnvironmentFoodGOs[x, y];
         _mountainGO = gameObjectPool.CellEnvironmentMountainGOs[x, y];
-        _treeGO = gameObjectPool.CellEnvironmentTreeGOs[x, y];
-        _youngTreeGO = gameObjectPool.CellEnvironmentYoungTreeGOs[x, y];
+        _adultTreeGO = gameObjectPool.CellEnvironmentForestGOs[x, y];
+        _youngTreeGO = gameObjectPool.CellEnvironmentYoungForestGOs[x, y];
         _hillGO = gameObjectPool.CellEnvironmentHillGOs[x, y];
+
+        _fertilizerSR = _fertilizerGO.GetComponent<SpriteRenderer>();
+        _mountainSR = _mountainGO.GetComponent<SpriteRenderer>();
+        _adultTreeSR = _adultTreeGO.GetComponent<SpriteRenderer>();
+        _youngTreeSR = _youngTreeGO.GetComponent<SpriteRenderer>();
+        _hillSR = _hillGO.GetComponent<SpriteRenderer>();
     }
 
-    internal void SetNewEnvironment(EnvironmentTypes environmentType)
+    internal void SetNewEnvironment(EnvironmentTypes environmentType, params int[] xy)
     {
         switch (environmentType)
         {
@@ -76,25 +92,26 @@ internal struct CellEnvironmentComponent
                 break;
 
             case EnvironmentTypes.AdultForest:
-                _haveAdultForest = true;
-                _treeGO.SetActive(true);
-                AmountForest = Random.Range(15, 20);
+                _haveAdultTree = true;
+                _adultTreeGO.SetActive(true);
+                AmountForestResources = Random.Range(15, 20);
                 break;
 
             case EnvironmentTypes.YoungForest:
-                _haveYoungForest = true;
+                _haveYoungTree = true;
                 _youngTreeGO.SetActive(true);
                 break;
 
             case EnvironmentTypes.Hill:
                 _haveHill = true;
                 _hillGO.SetActive(true);
+                AmountOreResources = Random.Range(50, 60);
                 break;
 
             case EnvironmentTypes.Fertilizer:
                 _haveFertilizer = true;
                 _fertilizerGO.SetActive(true);
-                AmountFertilizer = Random.Range(15, 20);
+                AmountFertilizerResources = Random.Range(15, 20);
                 break;
 
             default:
@@ -114,24 +131,26 @@ internal struct CellEnvironmentComponent
                 break;
 
             case EnvironmentTypes.AdultForest:
-                _haveAdultForest = true;
-                _treeGO.SetActive(true);
-                AmountForest = amountEnvironmet;
+                _haveAdultTree = true;
+                _adultTreeGO.SetActive(true);
+                AmountForestResources = amountEnvironmet;
                 break;
 
             case EnvironmentTypes.YoungForest:
-                _haveYoungForest = true;
+                _haveYoungTree = true;
                 _youngTreeGO.SetActive(true);
                 break;
 
             case EnvironmentTypes.Hill:
                 _haveHill = true;
                 _hillGO.SetActive(true);
+                AmountOreResources = amountEnvironmet;
                 break;
 
             case EnvironmentTypes.Fertilizer:
                 _haveFertilizer = true;
                 _fertilizerGO.SetActive(true);
+                AmountFertilizerResources = amountEnvironmet;
                 break;
 
             default:
@@ -151,13 +170,13 @@ internal struct CellEnvironmentComponent
                 break;
 
             case EnvironmentTypes.AdultForest:
-                _haveAdultForest = false;
-                _treeGO.SetActive(false);
-                AmountForest = 0;
+                _haveAdultTree = false;
+                _adultTreeGO.SetActive(false);
+                AmountForestResources = 0;
                 break;
 
             case EnvironmentTypes.YoungForest:
-                _haveYoungForest = false;
+                _haveYoungTree = false;
                 _youngTreeGO.SetActive(false);
                 break;
 
@@ -169,7 +188,7 @@ internal struct CellEnvironmentComponent
             case EnvironmentTypes.Fertilizer:
                 _haveFertilizer = false;
                 _fertilizerGO.SetActive(false);
-                AmountFertilizer = 0;
+                AmountFertilizerResources = 0;
                 break;
 
             default:

@@ -8,36 +8,33 @@ internal sealed class SystemsMasterManager : SystemsManager
         RPCSystems = new EcsSystems(ecsWorld);
     }
 
-    internal void CreateInitSystems(ECSmanager eCSmanager)
+    internal void CreateSystems(ECSmanagerGame eCSmanager)
     {
         RunUpdateSystems
-            .Add(new EconomyMasterSystem(eCSmanager), nameof(EconomyMasterSystem));
+            .Add(new EconomyMasterSystem(), nameof(EconomyMasterSystem));
 
         RPCSystems
-            .Add(new UpdateMotionMasterSystem(eCSmanager), nameof(UpdateMotionMasterSystem))
-            .Add(new VisibilityUnitsMasterSystem(eCSmanager), nameof(VisibilityUnitsMasterSystem))
-            .Add(new BuilderMasterSystem(eCSmanager), nameof(BuilderMasterSystem))
-            .Add(new DestroyMasterSystem(eCSmanager), nameof(DestroyMasterSystem))
-            .Add(new ShiftUnitMasterSystem(eCSmanager), nameof(ShiftUnitMasterSystem))
-            .Add(new AttackUnitMasterSystem(eCSmanager), nameof(AttackUnitMasterSystem))
-            .Add(new RelaxMasterSystem(eCSmanager), nameof(RelaxMasterSystem))
-            .Add(new ProtectMasterSystem(eCSmanager), nameof(ProtectMasterSystem))
-            .Add(new ReadyMasterSystem(eCSmanager), nameof(ReadyMasterSystem))
-            .Add(new DonerMasterSystem(eCSmanager), nameof(DonerMasterSystem))
-            .Add(new CreatorUnitMasterSystem(eCSmanager), nameof(CreatorUnitMasterSystem))
-            .Add(new UpgradeUnitMasterSystem(eCSmanager), nameof(UpgradeUnitMasterSystem))
-            .Add(new GetterUnitMasterSystem(eCSmanager), nameof(GetterUnitMasterSystem))
-            .Add(new MeltOreMasterSystem(eCSmanager), nameof(MeltOreMasterSystem))
-            .Add(new SetterUnitMasterSystem(eCSmanager), nameof(SetterUnitMasterSystem))
-            .Add(new UniquePawnAbilityMasterSystem(eCSmanager), nameof(UniquePawnAbilityMasterSystem))
-            .Add(new FireUpdatorMasterSystem(eCSmanager), nameof(FireUpdatorMasterSystem))
-            .Add(new UpgradeBuildingMasterSystem(eCSmanager), nameof(UpgradeBuildingMasterSystem))
-            .Add(new EconomyUpdatorMasterSystem(eCSmanager), nameof(EconomyUpdatorMasterSystem))
-            .Add(new FertilizeUpdatorMasterSystem(eCSmanager), nameof(FertilizeUpdatorMasterSystem))
-            .Add(new TruceMasterSystem(eCSmanager), nameof(TruceMasterSystem));
-
-
-        InitAndProcessInjectsSystems();
+            .Add(new UpdateMotionMasterSystem(), nameof(UpdateMotionMasterSystem))
+            .Add(new VisibilityUnitsMasterSystem(), nameof(VisibilityUnitsMasterSystem))
+            .Add(new BuilderMasterSystem(), nameof(BuilderMasterSystem))
+            .Add(new DestroyMasterSystem(), nameof(DestroyMasterSystem))
+            .Add(new ShiftUnitMasterSystem(), nameof(ShiftUnitMasterSystem))
+            .Add(new AttackUnitMasterSystem(), nameof(AttackUnitMasterSystem))
+            .Add(new RelaxMasterSystem(), nameof(RelaxMasterSystem))
+            .Add(new ProtectMasterSystem(), nameof(ProtectMasterSystem))
+            .Add(new ReadyMasterSystem(), nameof(ReadyMasterSystem))
+            .Add(new DonerMasterSystem(), nameof(DonerMasterSystem))
+            .Add(new CreatorUnitMasterSystem(), nameof(CreatorUnitMasterSystem))
+            .Add(new UpgradeUnitMasterSystem(), nameof(UpgradeUnitMasterSystem))
+            .Add(new GetterUnitMasterSystem(), nameof(GetterUnitMasterSystem))
+            .Add(new MeltOreMasterSystem(), nameof(MeltOreMasterSystem))
+            .Add(new SetterUnitMasterSystem(), nameof(SetterUnitMasterSystem))
+            .Add(new UniquePawnAbilityMasterSystem(), nameof(UniquePawnAbilityMasterSystem))
+            .Add(new FireUpdatorMasterSystem(), nameof(FireUpdatorMasterSystem))
+            .Add(new UpgradeBuildingMasterSystem(), nameof(UpgradeBuildingMasterSystem))
+            .Add(new EconomyUpdatorMasterSystem(), nameof(EconomyUpdatorMasterSystem))
+            .Add(new FertilizeUpdatorMasterSystem(), nameof(FertilizeUpdatorMasterSystem))
+            .Add(new TruceMasterSystem(), nameof(TruceMasterSystem));
     }
 
     internal override void InitAndProcessInjectsSystems()

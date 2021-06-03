@@ -1,16 +1,13 @@
 ﻿using Leopotam.Ecs;
 
-internal class ZoneUISystem : SystemGeneralReduction, IEcsRunSystem
+internal sealed class ZoneUISystem : SystemGeneralReduction
 {
-    private PhotonPunRPC _photonPunRPC = default;
+    internal ZoneUISystem() { }
 
-    internal ZoneUISystem(ECSmanager eCSmanager) : base(eCSmanager)
+    public override void Run()
     {
+        base.Run();
 
-    }
-
-    public void Run()
-    {
         //foreach (var item in _zoneComponentRef.Unref().XYMasterZone)
         //{
         //    CellSupportVisionComponent(item).ActiveVision(true, SupportVisionTypes.Zone, InstanceGame.MasterClient);

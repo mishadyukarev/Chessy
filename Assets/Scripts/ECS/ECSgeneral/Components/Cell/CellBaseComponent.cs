@@ -1,22 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using static Main;
 
-internal struct CellBaseComponent
+internal struct CellBaseComponent : IDisposable
 {
-    private Dictionary<bool, bool> _isStartedDict;
     private GameObject _cellGO;
+
+    private Dictionary<bool, bool> _isStartedDict;
+
 
     internal bool IsSelected;
     internal bool IsStarted(bool isMaster) => _isStartedDict[isMaster];
+
     internal int InstanceIDGO => _cellGO.GetInstanceID();
     internal bool IsActiveSelfGO => _cellGO.activeSelf;
 
 
-    internal CellBaseComponent(StartValuesGameConfig startValuesGameConfig, ObjectPool objectPool, int x, int y)
+    internal CellBaseComponent(ObjectPoolGame objectPoolGame, int x, int y)
     {
         _isStartedDict = new Dictionary<bool, bool>();
 
-        if (startValuesGameConfig.IS_TEST)
+        _cellGO = objectPoolGame.CellsGO[x, y];
+
+        if (Instance.TestType == TestTypes.Standart)
         {
             _isStartedDict[true] = true;
             _isStartedDict[false] = true;
@@ -27,8 +34,13 @@ internal struct CellBaseComponent
             _isStartedDict[false] = y > 8 && x > 2 && x < 12;
         }
 
-        IsSelected = false;
+        IsSelected = default;
+    }
 
-        _cellGO = objectPool.CellsGO[x, y];
+    public void Dispose()
+    {
+        _isStartedDict[true] = default;
+        _isStartedDict[false] = default;
+        IsSelected = default;
     }
 }

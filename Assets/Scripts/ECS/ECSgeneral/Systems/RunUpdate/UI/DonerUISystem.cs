@@ -1,21 +1,22 @@
-﻿using Leopotam.Ecs;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using static MainGame;
+using static Main;
 
-internal class DonerUISystem : RPCGeneralReduction, IEcsRunSystem
+internal sealed class DonerUISystem : RPCGeneralReduction
 {
+    private bool _isInited = false;
     private bool IsCurrentDone => _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[Instance.IsMasterClient];
     private Button CurrentButton => _eGM.DonerEntityButtonComponent.Button;
-
-    internal DonerUISystem(ECSmanager eCSmanager) : base(eCSmanager)
-    {
-        CurrentButton.onClick.AddListener(delegate { Done(); });
-    }
 
     public override void Run()
     {
         base.Run();
+
+        if (!_isInited)
+        {
+            CurrentButton.onClick.AddListener(delegate { Done(); });
+            _isInited = true;
+        }
 
         if (IsCurrentDone) CurrentButton.image.color = Color.red;
         else CurrentButton.image.color = Color.white;

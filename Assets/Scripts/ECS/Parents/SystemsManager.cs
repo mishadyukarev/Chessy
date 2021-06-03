@@ -3,15 +3,11 @@ using UnityEngine;
 
 public abstract class SystemsManager
 {
-    protected EcsWorld _ecsWorld;
-
     internal EcsSystems RunUpdateSystems;
     internal EcsSystems FixedUpdateSystems;
 
     protected SystemsManager(EcsWorld ecsWorld)
     {
-        _ecsWorld = ecsWorld;
-
         RunUpdateSystems = new EcsSystems(ecsWorld);
         FixedUpdateSystems = new EcsSystems(ecsWorld);
     }
@@ -28,8 +24,6 @@ public abstract class SystemsManager
 
     internal void Update() => RunUpdateSystems.Run();
     internal void FixedUpdate() => FixedUpdateSystems.Run();
-
-    internal void Destroy() => RunUpdateSystems.Destroy();
 
 
 

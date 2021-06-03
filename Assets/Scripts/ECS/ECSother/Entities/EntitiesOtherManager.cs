@@ -3,7 +3,7 @@
 
 internal class EntitiesOtherManager : EntitiesManager
 {
-    internal EntitiesOtherManager(EcsWorld ecsWorld) : base(ecsWorld)
+    internal EntitiesOtherManager(EcsWorld gameWorld)// : base(gameWorld)
     {
 
     }

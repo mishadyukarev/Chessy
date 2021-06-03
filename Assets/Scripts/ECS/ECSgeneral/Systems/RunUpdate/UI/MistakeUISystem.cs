@@ -8,8 +8,10 @@ internal class MistakeUISystem : SystemGeneralReduction, IEcsRunSystem
     private float _timer;
     private bool _isStartedMistake;
 
-    internal MistakeUISystem(ECSmanager eCSmanager) : base(eCSmanager)
+    public override void Init()
     {
+        base.Init();
+
         _eGM.DonerEntityMistakeComponent.MistakeAction = MistakeDone;
 
         _eGM.FoodEntityMistakeComponent.MistakeAction = MistakeFood;
@@ -19,8 +21,10 @@ internal class MistakeUISystem : SystemGeneralReduction, IEcsRunSystem
         _eGM.GoldEntityMistakeComponent.MistakeAction = MistakeGold;
     }
 
-    public void Run()
+    public override void Run()
     {
+        base.Run();
+
         if (_isStartedMistake)
         {
             _timer += Time.deltaTime;

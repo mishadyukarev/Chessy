@@ -1,35 +1,35 @@
 ﻿using Leopotam.Ecs;
 
-internal class ProtectMasterSystem : SystemMasterReduction, IEcsRunSystem
+internal sealed class ProtectMasterSystem : SystemMasterReduction
 {
     private int[] xyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
     internal bool isActive => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
 
-    internal ProtectMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
-
-    public void Run()
+    public override void Run()
     {
+        base.Run();
+
         if (isActive)
         {
-            if (!_eGM.CellEnt_CellUnitCom(xyCell).IsProtected)
+            if (!_eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected)
             {
-                if (_eGM.CellEnt_CellUnitCom(xyCell).HaveMaxSteps)
+                if (_cM.CellUnitWorker.HaveMaxSteps(xyCell))
                 {
-                    _eGM.CellEnt_CellUnitCom(xyCell).IsProtected = true;
-                    _eGM.CellEnt_CellUnitCom(xyCell).IsRelaxed = false;
-                    _eGM.CellEnt_CellUnitCom(xyCell).AmountSteps = 0;
+                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = true;
+                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed = false;
+                    _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
                 }
             }
         }
 
         else
         {
-            if (_eGM.CellEnt_CellUnitCom(xyCell).IsProtected)
+            if (_eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected)
             {
-                if (_eGM.CellEnt_CellUnitCom(xyCell).HaveMaxSteps)
+                if (_cM.CellUnitWorker.HaveMaxSteps(xyCell))
                 {
-                    _eGM.CellEnt_CellUnitCom(xyCell).IsProtected = false;
-                    _eGM.CellEnt_CellUnitCom(xyCell).AmountSteps = 0;
+                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = false;
+                    _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
                 }
             }
         }

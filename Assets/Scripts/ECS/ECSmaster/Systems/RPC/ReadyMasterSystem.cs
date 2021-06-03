@@ -1,24 +1,20 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Photon.Pun;
 
-internal class ReadyMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
+internal sealed class ReadyMasterSystem : RPCMasterSystemReduction
 {
-    internal bool isReady => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
-    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+    private bool IsReady => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
+    private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
-    internal ReadyMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
+    public override void Run()
     {
+        base.Run();
 
-    }
+        _eGM.ReadyEnt_ReadyCom.IsActivatedDictionary[Info.Sender.IsMasterClient] = IsReady;
 
-    public void Run()
-    {
-        _eGM.ReadyEntIsActivatedDictCom.IsActivatedDictionary[Info.Sender.IsMasterClient] = isReady;
+        if (_eGM.ReadyEnt_ReadyCom.IsActivatedDictionary[true]
+            && _eGM.ReadyEnt_ReadyCom.IsActivatedDictionary[false])
+            _photonPunRPC.ReadyToGeneral(RpcTarget.All, false, true);
 
-        if (_eGM.ReadyEntIsActivatedDictCom.IsActivatedDictionary[true]
-            && _eGM.ReadyEntIsActivatedDictCom.IsActivatedDictionary[false])
-            _photonPunRPC.ReadyToGeneral(RpcTarget.All, true, true);
-
-        else _photonPunRPC.ReadyToGeneral(Info.Sender, isReady, false);
+        else _photonPunRPC.ReadyToGeneral(Info.Sender, IsReady, false);
     }
 }

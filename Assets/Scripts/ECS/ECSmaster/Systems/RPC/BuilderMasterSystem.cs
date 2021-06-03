@@ -6,14 +6,12 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
     private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
     private BuildingTypes BuildingType => _eMM.RPCMasterEnt_RPCMasterCom.BuildingType;
 
-    internal BuilderMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
-
     public override void Run()
     {
         base.Run();
 
 
-        if (_eGM.CellEnt_CellUnitCom(XyCell).HaveMaxSteps && !_eGM.CellBuildingEnt_BuildingTypeCom(XyCell).HaveBuilding)
+        if (_cM.CellUnitWorker.HaveMaxSteps(XyCell) && !_eGM.CellBuildingEnt_BuildingTypeCom(XyCell).HaveBuilding)
         {
             var isMasterInfo = Info.Sender.IsMasterClient;
 
@@ -46,9 +44,9 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
                 case BuildingTypes.City:
 
-                    _cellWorker.SetBuilding(BuildingType, Info.Sender, XyCell);
+                    _cM.CellBuildingWorker.SetBuilding(BuildingType, Info.Sender, XyCell);
                     //_eGM.CellBuildingEnt_CellBuildingCom(XyCell).SetBuilding(BuildingType, Info.Sender);
-                    _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps = 0;
+                    _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
 
                     _eGM.InfoEnt_BuildingsInfoCom.IsSettedCityDict[Info.Sender.IsMasterClient] = true;
                     _eGM.InfoEnt_BuildingsInfoCom.XySettedCityDict[Info.Sender.IsMasterClient] = XyCell;
@@ -61,7 +59,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
                 case BuildingTypes.Farm:
 
-                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer;
+                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizerResources;
 
                     if (canSet)
                     {
@@ -77,7 +75,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
                 case BuildingTypes.Woodcutter:
 
-                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultTree;
+                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultTree && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveForestResources;
 
                     if (canSet)
                     {
@@ -93,7 +91,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
                 case BuildingTypes.Mine:
 
-                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveHill;
+                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveHill && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveOreResources;
 
                     if (canSet)
                     {
@@ -130,8 +128,8 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                         goldAmountDict[isMasterInfo] -= minusGold;
 
 
-                        _cellWorker.SetBuilding(BuildingType, Info.Sender, XyCell);
-                        _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps = 0;
+                        _cM.CellBuildingWorker.SetBuilding(BuildingType, Info.Sender, XyCell);
+                        _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
                     }
                 }
             }

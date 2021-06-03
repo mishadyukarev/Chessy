@@ -1,11 +1,9 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
+﻿using Photon.Pun;
 
-internal class MeltOreMasterSystem : RPCMasterSystemReduction
+internal sealed class MeltOreMasterSystem : RPCMasterSystemReduction
 {
     internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
-    internal MeltOreMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
     public override void Run()
     {

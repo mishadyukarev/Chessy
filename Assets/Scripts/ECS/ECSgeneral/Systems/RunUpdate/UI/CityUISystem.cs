@@ -1,9 +1,10 @@
-﻿using UnityEngine.UI;
-using static MainGame;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using static Main;
 
-internal class CityUISystem : RPCGeneralReduction
+internal sealed class CityUISystem : RPCGeneralReduction
 {
-    private Image _leftImage;
+    private GameObject _leftZoneCityZoneGO;
 
     private Button _meltOreButton;
 
@@ -22,38 +23,38 @@ internal class CityUISystem : RPCGeneralReduction
     private int[] _xySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
 
 
-    internal CityUISystem(ECSmanager eCSmanager) : base(eCSmanager)
+    internal CityUISystem()
     {
-        _leftImage = Instance.ObjectPool.LeftImage;
+        _leftZoneCityZoneGO = Instance.CanvasGameManager.LeftZoneBuildingZoneGO;
 
-        _inGameLeftUpgradePawnButton = Instance.ObjectPool.InGameLeftUpgadePawnButton;
+        _inGameLeftUpgradePawnButton = Instance.CanvasGameManager.LeftZoneCityZoneUpgadePawnButton;
         _inGameLeftUpgradePawnButton.onClick.AddListener(delegate { UpgradeUnit(UnitTypes.Pawn); });
 
-        _inGameLeftUpgradeRookButton = Instance.ObjectPool.InGameLeftUpgadeRookButton;
+        _inGameLeftUpgradeRookButton = Instance.CanvasGameManager.LeftZoneCityZoneUpgadeRookButton;
         _inGameLeftUpgradeRookButton.onClick.AddListener(delegate { UpgradeUnit(UnitTypes.Rook); });
 
-        _inGameLeftUpgradeBishopButton = Instance.ObjectPool.InGameLeftUpgadeBishopButton;
+        _inGameLeftUpgradeBishopButton = Instance.CanvasGameManager.LeftZoneCityZoneUpgadeBishopButton;
         _inGameLeftUpgradeBishopButton.onClick.AddListener(delegate { UpgradeUnit(UnitTypes.Bishop); });
 
 
-        _buyPawnButton = Instance.ObjectPool.InGameLeftBuyPawnButton;
+        _buyPawnButton = Instance.CanvasGameManager.LeftZoneCityZoneBuyPawnButton;
         _buyPawnButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Pawn); });
 
-        _gameLeftBuyRookButton = Instance.ObjectPool.InGameLeftBuyRookButton;
+        _gameLeftBuyRookButton = Instance.CanvasGameManager.LeftZoneCityZoneBuyRookButton;
         _gameLeftBuyRookButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Rook); });
 
-        _gameLeftBuyBishopButton = Instance.ObjectPool.InGameLeftBuyBishopButton;
+        _gameLeftBuyBishopButton = Instance.CanvasGameManager.LeftZoneCityZoneBuyBishopButton;
         _gameLeftBuyBishopButton.onClick.AddListener(delegate { BuyUnit(UnitTypes.Bishop); });
 
-        _meltOreButton = Instance.ObjectPool.LeftMeltButton;
+        _meltOreButton = Instance.CanvasGameManager.LeftZoneCityZoneMeltButton;
         _meltOreButton.onClick.AddListener(delegate { MeltOre(); });
 
 
-        _inGameLeftUpgradeFarmButton = Instance.ObjectPool.LeftUpgradeFarmButton;
+        _inGameLeftUpgradeFarmButton = Instance.CanvasGameManager.LeftZoneCityZoneUpgradeFarmButton;
         _inGameLeftUpgradeFarmButton.onClick.AddListener(delegate { UpgradeBuilding(BuildingTypes.Farm); });
-        _inGameLeftUpgradeWoodcutter = Instance.ObjectPool.LeftUpgradeWoodcutterButton;
+        _inGameLeftUpgradeWoodcutter = Instance.CanvasGameManager.LeftZoneCityZoneUpgradeWoodcutterButton;
         _inGameLeftUpgradeWoodcutter.onClick.AddListener(delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
-        _inGameLeftUpgradeMine = Instance.ObjectPool.LeftUpgradeMineButton;
+        _inGameLeftUpgradeMine = Instance.CanvasGameManager.LeftZoneCityZoneUpgradeMineButton;
         _inGameLeftUpgradeMine.onClick.AddListener(delegate { UpgradeBuilding(BuildingTypes.Mine); });
     }
 
@@ -61,18 +62,18 @@ internal class CityUISystem : RPCGeneralReduction
     {
         base.Run();
 
-        if (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).BuildingType == BuildingTypes.City)
+        if (_eGM.SelectorEntSelectorCom.IsSelected && _eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).BuildingType == BuildingTypes.City)
         {
             if (_eGM.CellBuildingEnt_OwnerCom(_xySelectedCell).IsMine)
             {
-                _leftImage.gameObject.SetActive(true);
+                _leftZoneCityZoneGO.SetActive(true);
             }
 
-            else _leftImage.gameObject.SetActive(false);
+            else _leftZoneCityZoneGO.SetActive(false);
         }
         else
         {
-            _leftImage.gameObject.SetActive(false);
+            _leftZoneCityZoneGO.SetActive(false);
         }
     }
 

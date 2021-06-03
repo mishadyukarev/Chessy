@@ -1,6 +1,6 @@
 ﻿using Photon.Realtime;
-using UnityEngine;
 using System;
+using UnityEngine;
 
 internal struct CellBuildingComponent
 {
@@ -13,7 +13,7 @@ internal struct CellBuildingComponent
     private SpriteRenderer _woodcutterSR;
     private SpriteRenderer _mineSR;
 
-    internal CellBuildingComponent(ObjectPool gameObjectPool, int x, int y)
+    internal CellBuildingComponent(ObjectPoolGame gameObjectPool, int x, int y)
     {
         _cityGO = gameObjectPool.CellBuildingCityGOs[x, y];
         _farmGO = gameObjectPool.CellBuildingFarmGOs[x, y];
@@ -26,8 +26,7 @@ internal struct CellBuildingComponent
         _mineSR = _mineGO.GetComponent<SpriteRenderer>();
     }
 
-
-    internal void SetColorBuilding(BuildingTypes buildingType, Player owner)
+    internal void SetEnabledSR(bool isActive, BuildingTypes buildingType, Player player = default)
     {
         SpriteRenderer spriteRender;
 
@@ -38,55 +37,32 @@ internal struct CellBuildingComponent
 
             case BuildingTypes.City:
                 spriteRender = _citySR;
+                spriteRender.enabled = isActive;
                 break;
 
             case BuildingTypes.Farm:
                 spriteRender = _farmSR;
+                spriteRender.enabled = isActive;
                 break;
 
             case BuildingTypes.Woodcutter:
                 spriteRender = _woodcutterSR;
+                spriteRender.enabled = isActive;
                 break;
 
             case BuildingTypes.Mine:
                 spriteRender = _mineSR;
+                spriteRender.enabled = isActive;
                 break;
 
             default:
                 throw new Exception();
         }
 
-        if (owner.IsMasterClient) spriteRender.color = Color.blue;
-        else spriteRender.color = Color.red;
-    }
-
-    internal void SetEnabledSR(bool isActive, BuildingTypes buildingType)
-    {
-        switch (buildingType)
+        if (player != default)
         {
-            case BuildingTypes.None:
-                throw new Exception();
-
-            case BuildingTypes.City:
-                _citySR.enabled = isActive;
-                break;
-
-            case BuildingTypes.Farm:
-                _farmSR.enabled = isActive;
-                break;
-
-            case BuildingTypes.Woodcutter:
-                _woodcutterSR.enabled = isActive;
-                break;
-
-            case BuildingTypes.Mine:
-                _mineSR.enabled = isActive;
-                break;
-
-            default:
-                throw new Exception();
+            if (player.IsMasterClient) spriteRender.color = Color.blue;
+            else spriteRender.color = Color.red;
         }
     }
-
-
 }

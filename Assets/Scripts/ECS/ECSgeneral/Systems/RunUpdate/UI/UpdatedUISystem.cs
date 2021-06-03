@@ -1,11 +1,9 @@
-﻿
-using Leopotam.Ecs;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static MainGame;
+using static Main;
 
-internal class UpdatedUISystem : SystemGeneralReduction, IEcsRunSystem
+internal sealed class UpdatedUISystem : SystemGeneralReduction
 {
     private GameObject _inGameRefreshZoneGO;
     private Image _inGameRefreshZoneRefreshImage;
@@ -13,18 +11,20 @@ internal class UpdatedUISystem : SystemGeneralReduction, IEcsRunSystem
 
     private float _timer;
 
-    internal UpdatedUISystem(ECSmanager eCSmanager) : base(eCSmanager)
+    internal UpdatedUISystem()
     {
-        _inGameRefreshZoneGO = Instance.ObjectPool.InGameRefreshZoneGO;
-        _inGameRefreshZoneRefreshImage = Instance.ObjectPool.InGameRefreshZoneRefreshImage;
-        _inGameRefreshZoneRefreshText = Instance.ObjectPool.InGameRefreshZoneRefreshText;
+        _inGameRefreshZoneGO = Instance.CanvasGameManager.InGameRefreshZoneGO;
+        _inGameRefreshZoneRefreshImage = Instance.CanvasGameManager.InGameRefreshZoneRefreshImage;
+        _inGameRefreshZoneRefreshText = Instance.CanvasGameManager.InGameRefreshZoneRefreshText;
     }
 
-    public void Run()
+    public override void Run()
     {
-        if (_eGM.UpdatorEntityActiveComponent.IsActived)
+        base.Run();
+
+        if (_eGM.UpdatorEntityAmountComponent.IsUpdated)
         {
-            _inGameRefreshZoneRefreshText.text = "Motion: " + _eGM.UpdatorEntityAmountComponent.Amount;
+            _inGameRefreshZoneRefreshText.text = "Motion: " + _eGM.UpdatorEntityAmountComponent.AmountMotions;
             _inGameRefreshZoneGO.SetActive(true);
 
             _timer += Time.deltaTime;
@@ -32,7 +32,7 @@ internal class UpdatedUISystem : SystemGeneralReduction, IEcsRunSystem
             if (_timer >= 1)
             {
                 _inGameRefreshZoneGO.SetActive(false);
-                _eGM.UpdatorEntityActiveComponent.IsActived = false;
+                _eGM.UpdatorEntityAmountComponent.IsUpdated = false;
                 _timer = 0;
             }
         }

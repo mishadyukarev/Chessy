@@ -13,50 +13,47 @@ internal sealed class AnimationAttackUnitSystem : SystemGeneralReduction
     private int[] XyEndCell => _eGM.AnimationAttackUnitComponent.XyEndCell;
 
 
-    internal AnimationAttackUnitSystem(ECSmanager eCSmanager) : base(eCSmanager)
-    {
-
-    }
+    internal AnimationAttackUnitSystem() { }
 
     public override void Run()
     {
         base.Run();
 
-        if (_isInit)
-        {
-            _isInit = false;
-            _sGM.TryActiveRunSystem(false, this.ToString(), _sGM.RunUpdateSystems);
-            return;
-        }
+        //if (_isInit)
+        //{
+        //    _isInit = false;
+        //    _sGM.TryActiveRunSystem(false, this.ToString(), _sGM.RunUpdateSystems);
+        //    return;
+        //}
 
-        if (_isOne)
-        {
-            _heading = _eGM.CellEnt_CellUnitCom(XyEndCell).CurrentUnitTransform.position - _eGM.CellEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.position;
-            _distance = _heading.magnitude;
-            _direction = _heading / _distance;
+        //if (_isOne)
+        //{
+        //    _heading = _eGM.CellUnitEnt_CellUnitCom(XyEndCell).CurrentUnitTransform.position - _eGM.CellUnitEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.position;
+        //    _distance = _heading.magnitude;
+        //    _direction = _heading / _distance;
 
-            _eGM.CellEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.Translate(_direction * Time.deltaTime * _speedAnimation);
+        //    _eGM.CellUnitEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.Translate(_direction * Time.deltaTime * _speedAnimation);
 
-            if (_distance <= 0.1f)
-            {
-                _isOne = false;
-            }
+        //    if (_distance <= 0.1f)
+        //    {
+        //        _isOne = false;
+        //    }
 
-        }
-        else
-        {
-            _heading = _eGM.CellEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.position - _eGM.CellEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.position;
-            _distance = _heading.magnitude;
-            _direction = _heading / _distance;
+        //}
+        //else
+        //{
+        //    _heading = _eGM.CellUnitEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.position - _eGM.CellUnitEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.position;
+        //    _distance = _heading.magnitude;
+        //    _direction = _heading / _distance;
 
-            _eGM.CellEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.Translate(_direction * Time.deltaTime * _speedAnimation);
+        //    _eGM.CellUnitEnt_CellUnitCom(XyStartCell).CurrentUnitTransform.Translate(_direction * Time.deltaTime * _speedAnimation);
 
-            if (_distance <= 0.01f)
-            {
-                _sGM.TryActiveRunSystem(false, this.ToString(), _sGM.RunUpdateSystems);
-                _isOne = true;
-            }
-        }
+        //    if (_distance <= 0.01f)
+        //    {
+        //        _sGM.TryActiveRunSystem(false, this.ToString(), _sGM.RunUpdateSystems);
+        //        _isOne = true;
+        //    }
+        //}
 
     }
 }

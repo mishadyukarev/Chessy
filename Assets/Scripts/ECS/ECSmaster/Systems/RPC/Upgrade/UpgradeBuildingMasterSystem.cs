@@ -1,15 +1,10 @@
 ﻿using Photon.Pun;
 using System.Collections.Generic;
 
-internal class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
+internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
 {
     internal BuildingTypes BuildingType => _eMM.RPCMasterEnt_RPCMasterCom.BuildingType;
     internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
-
-    internal UpgradeBuildingMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
-    {
-
-    }
 
     public override void Run()
     {

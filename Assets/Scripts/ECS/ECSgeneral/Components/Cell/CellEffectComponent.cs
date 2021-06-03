@@ -10,7 +10,7 @@ internal struct CellEffectComponent
 
 
 
-    internal CellEffectComponent(ObjectPool gameObjectPool, int x, int y)
+    internal CellEffectComponent(ObjectPoolGame gameObjectPool, int x, int y)
     {
         _haveFire = default;
         _fireGO = gameObjectPool.CellEffectFireGOs[x, y];
@@ -24,7 +24,7 @@ internal struct CellEffectComponent
             case EffectTypes.Fire:
                 _haveFire = isActive;
                 _fireGO.SetActive(isActive);
-                if(!isActive) TimeFire = 0;
+                if (!isActive) TimeFire = 0;
                 break;
 
             default:

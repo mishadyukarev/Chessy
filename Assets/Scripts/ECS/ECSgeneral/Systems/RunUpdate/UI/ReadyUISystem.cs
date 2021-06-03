@@ -1,43 +1,30 @@
-﻿using Leopotam.Ecs;
-using UnityEngine;
-using UnityEngine.UI;
-using static MainGame;
+﻿using UnityEngine;
+using static Main;
 
-internal class ReadyUISystem : RPCGeneralReduction, IEcsRunSystem
+internal sealed class ReadyUISystem : RPCGeneralReduction
 {
-    private SystemsGeneralManager _systemsGeneralManager;
+    private bool IsCurrentReady => _eGM.ReadyEnt_ReadyCom.IsActivatedDictionary[Instance.IsMasterClient];
 
-    private RectTransform _parentReadyZone;
-    private Button _readyButton;
-
-    private bool _isCurrentReady => _eGM.ReadyEntIsActivatedDictCom.IsActivatedDictionary[Instance.IsMasterClient];
-
-
-
-    internal ReadyUISystem(ECSmanager eCSmanager) : base(eCSmanager)
+    internal ReadyUISystem()
     {
-        _systemsGeneralManager = eCSmanager.SystemsGeneralManager;
-
-        _parentReadyZone = Instance.ObjectPool.ParentReadyZone;
-        _readyButton = Instance.ObjectPool.ReadyButton;
-        _readyButton.onClick.AddListener(delegate { Ready(); });
+        Instance.CanvasGameManager.ReadyButton.onClick.AddListener(delegate { Ready(); });
     }
 
-    public void Run()
+    public override void Run()
     {
-        if (_eGM.ReadyEntStartGameCom.IsStartedGame)
+        base.Run();
+
+        Debug.Log(_eGM.ReadyEnt_ReadyCom.IsActivatedDictionary[Instance.IsMasterClient]);
+
+        if (_eGM.ReadyEnt_ReadyCom.IsSkipped)
         {
-            _parentReadyZone.gameObject.SetActive(false);
-            _systemsGeneralManager.TryActiveRunSystem(false, this.ToString(), _systemsGeneralManager.RunUpdateSystems);
+            Instance.CanvasGameManager.ParentReadyZone.gameObject.SetActive(false);
         }
+        else Instance.CanvasGameManager.ParentReadyZone.gameObject.SetActive(true);
 
-        if (_isCurrentReady) _readyButton.image.color = Color.red;
-        else _readyButton.image.color = Color.white;
+        if (IsCurrentReady) Instance.CanvasGameManager.ReadyButton.image.color = Color.red;
+        else Instance.CanvasGameManager.ReadyButton.image.color = Color.white;
     }
 
-    private void Ready()
-    {
-        if (_isCurrentReady) _photonPunRPC.ReadyToMaster(!_isCurrentReady);
-        else _photonPunRPC.ReadyToMaster(!_isCurrentReady);
-    }
+    private void Ready() => _photonPunRPC.ReadyToMaster(!IsCurrentReady);
 }

@@ -1,8 +1,7 @@
 ﻿using Leopotam.Ecs;
 
-internal class EconomyMasterSystem : SystemMasterReduction, IEcsRunSystem
+internal sealed class EconomyMasterSystem : SystemMasterReduction
 {
-    internal EconomyMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
     public override void Run()
     {

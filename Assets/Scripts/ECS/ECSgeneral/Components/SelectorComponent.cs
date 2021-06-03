@@ -13,6 +13,8 @@ public struct SelectorComponent
     internal int[] XYpreviousCell;
     internal int[] XYselectedCell;
 
+    internal bool IsSelected;
+
 
     internal bool IsGettedCell;
 
@@ -27,6 +29,8 @@ public struct SelectorComponent
         XYpreviousCell = new int[nameValueManager.XY_FOR_ARRAY];
 
         IsGettedCell = default;
+
+        IsSelected = default;
 
         SetterUnitDelegate = default;
         AttackUnitAction = default;

@@ -7,7 +7,7 @@ internal sealed class FertilizeUpdatorMasterSystem : SystemGeneralReduction
     private int _standartRandom => Random.Range(0, 100);
     private int _randomFor2 => Random.Range(2, 4);
 
-    internal FertilizeUpdatorMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
+    internal FertilizeUpdatorMasterSystem()
     {
         _randomFor = _randomFor2;
     }
@@ -41,7 +41,7 @@ internal sealed class FertilizeUpdatorMasterSystem : SystemGeneralReduction
                                     _eGM.IronEAmountDictC.AmountDict[_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient] += _startValuesGameConfig.IRON_FOR_BUILDING_FARM;
                                     _eGM.GoldEAmountDictC.AmountDict[_eGM.CellBuildingEnt_OwnerCom(x, y).IsMasterClient] += _startValuesGameConfig.GOLD_FOR_BUILDING_FARM;
 
-                                    _cellWorker.ResetBuilding(x, y);
+                                    _cM.CellBuildingWorker.ResetBuilding(x, y);
                                 }
                                 _steps = 0;
                                 _randomFor = _randomFor2;

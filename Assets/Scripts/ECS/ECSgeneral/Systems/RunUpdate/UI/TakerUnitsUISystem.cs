@@ -1,9 +1,11 @@
-﻿using static MainGame;
+﻿using static Main;
 
 internal sealed class TakerUnitsUISystem : RPCGeneralReduction
 {
-    internal TakerUnitsUISystem(ECSmanager eCSmanager) : base(eCSmanager)
+    public override void Init()
     {
+        base.Init();
+
         _eGM.TakerKingEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(_eGM.TakerKingEntityUnitTypeComponent.UnitType); });
         _eGM.TakerPawnEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(_eGM.TakerPawnEntityUnitTypeComponent.UnitType); });
         _eGM.TakerRookEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(_eGM.TakerRookEntityUnitTypeComponent.UnitType); });

@@ -1,12 +1,13 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class UnityEvents
+public class UnityEvents : IDisposable
 {
     private EventSystem _eventSystem;
     private StandaloneInputModule _standaloneInputModule;
 
-    public UnityEvents(Builder builderManager)
+    internal UnityEvents(Builder builderManager)
     {
         var types = new Type[]
         {
@@ -18,5 +19,10 @@ public class UnityEvents
 
         _eventSystem = goES.GetComponent<EventSystem>();
         _standaloneInputModule = goES.GetComponent<StandaloneInputModule>();
+    }
+
+    public void Dispose()
+    {
+        GameObject.Destroy(_eventSystem.gameObject);
     }
 }

@@ -1,12 +1,15 @@
-﻿using Leopotam.Ecs;
-using static MainGame;
+﻿using System;
 
-internal abstract class EntitiesManager
+internal abstract class EntitiesManager : IDisposable
 {
-    protected ObjectPool ObjectPool => Instance.ObjectPool;
-    protected StartValuesGameConfig StartValuesGameConfig => Instance.StartValuesGameConfig;
 
-    internal EcsWorld GameWorld;
+    internal virtual void FillEntities()
+    {
 
-    protected EntitiesManager(EcsWorld ecsWorld) => GameWorld = ecsWorld;
+    }
+
+    public virtual void Dispose()
+    {
+
+    }
 }

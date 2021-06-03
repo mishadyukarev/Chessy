@@ -1,9 +1,9 @@
 ﻿using System;
 using UnityEngine;
 
-public class Builder
+internal sealed class Builder
 {
-    public GameObject CreateGameObject(string name, Type[] types = default, Transform parent = default)
+    internal GameObject CreateGameObject(string name, Type[] types = default, Transform parent = default)
     {
         var gameObject = new GameObject(name);
 

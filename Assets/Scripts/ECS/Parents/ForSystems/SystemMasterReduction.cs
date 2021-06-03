@@ -1,11 +1,14 @@
-﻿internal abstract class SystemMasterReduction : SystemGeneralReduction
+﻿using static Main;
+internal abstract class SystemMasterReduction : SystemGeneralReduction
 {
     protected EntitiesMasterManager _eMM;
     protected SystemsMasterManager _sMM;
 
-    protected SystemMasterReduction(ECSmanager eCSmanager) : base(eCSmanager)
+    public override void Init()
     {
-        _eMM = eCSmanager.EntitiesMasterManager;
-        _sMM = eCSmanager.SystemsMasterManager;
+        base.Init();
+
+        _eMM = Instance.ECSmanagerGame.EntitiesMasterManager;
+        _sMM = Instance.ECSmanagerGame.SystemsMasterManager;
     }
 }

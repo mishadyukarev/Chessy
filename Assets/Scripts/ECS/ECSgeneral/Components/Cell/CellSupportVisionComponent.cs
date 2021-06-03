@@ -9,14 +9,28 @@ internal struct CellSupportVisionComponent
     private GameObject _uniqueAttackGO;
     private GameObject _zoneGO;
 
-    internal CellSupportVisionComponent(ObjectPool gameObjectPool, int x, int y)
+    private SpriteRenderer _selectorSR;
+    private SpriteRenderer _spawnSR;
+    private SpriteRenderer _wayUnitSR;
+    private SpriteRenderer _simpleAttackSR;
+    private SpriteRenderer _uniqueAttackSR;
+    private SpriteRenderer _zoneSR;
+
+    internal CellSupportVisionComponent(ObjectPoolGame objectPool, int x, int y)
     {
-        _selectorGO = gameObjectPool.CellSupportVisionSelectorGOs[x, y];
-        _spawnGO = gameObjectPool.CellSupportVisionSpawnGOs[x, y];
-        _wayUnitGO = gameObjectPool.CellSupportVisionWayUnitGOs[x, y];
-        _enemyGO = gameObjectPool.CellSupportVisionEnemyGOs[x, y];
-        _uniqueAttackGO = gameObjectPool.CellSupportVisionUniqueAttackGOs[x, y];
-        _zoneGO = gameObjectPool.CellSupportVisionZoneGOs[x, y];
+        _selectorGO = objectPool.CellSupportVisionSelectorGOs[x, y];
+        _spawnGO = objectPool.CellSupportVisionSpawnGOs[x, y];
+        _wayUnitGO = objectPool.CellSupportVisionWayUnitGOs[x, y];
+        _enemyGO = objectPool.CellSupportVisionEnemyGOs[x, y];
+        _uniqueAttackGO = objectPool.CellSupportVisionUniqueAttackGOs[x, y];
+        _zoneGO = objectPool.CellSupportVisionZoneGOs[x, y];
+
+        _selectorSR = _selectorGO.GetComponent<SpriteRenderer>();
+        _spawnSR = _spawnGO.GetComponent<SpriteRenderer>();
+        _wayUnitSR = _wayUnitGO.GetComponent<SpriteRenderer>();
+        _simpleAttackSR = _enemyGO.GetComponent<SpriteRenderer>();
+        _uniqueAttackSR = _uniqueAttackGO.GetComponent<SpriteRenderer>();
+        _zoneSR = _zoneGO.GetComponent<SpriteRenderer>();
     }
 
 
@@ -28,26 +42,27 @@ internal struct CellSupportVisionComponent
                 break;
 
             case SupportVisionTypes.Selector:
-                _selectorGO.SetActive(isActive);
+                _selectorSR.enabled = isActive;
                 break;
 
             case SupportVisionTypes.Spawn:
-                _spawnGO.SetActive(isActive);
+                _spawnSR.enabled = isActive;
                 break;
 
-            case SupportVisionTypes.WayOfUnit:
-                _wayUnitGO.SetActive(isActive);
+            case SupportVisionTypes.WayUnit:
+                _wayUnitSR.enabled = isActive;
                 break;
 
             case SupportVisionTypes.SimpleAttack:
-                _enemyGO.SetActive(isActive);
+                _simpleAttackSR.enabled = isActive;
                 break;
 
             case SupportVisionTypes.UniqueAttack:
-                _uniqueAttackGO.SetActive(isActive);
+                _uniqueAttackSR.enabled = isActive;
                 break;
 
             case SupportVisionTypes.Zone:
+                _zoneSR.enabled = isActive;
                 break;
 
             default:

@@ -5,40 +5,38 @@ public class SystemsGeneralManager : SystemsManager
     internal EcsSystems ForSelectorRunUpdateSystem = default;
     internal SystemsGeneralManager(EcsWorld ecsWorld) : base(ecsWorld)
     {
-        ForSelectorRunUpdateSystem = new EcsSystems(_ecsWorld);
+        ForSelectorRunUpdateSystem = new EcsSystems(ecsWorld);
     }
 
-    internal void CreateInitSystems(ECSmanager eCSmanager)
+    internal void CreateSystems(ECSmanagerGame eCSmanager, CellManager cellManager, Names names)
     {
         RunUpdateSystems
-            .Add(new InputSystem(eCSmanager), nameof(InputSystem))
-            .Add(new SelectorSystem(eCSmanager), nameof(SelectorSystem))
-            .Add(new SupportVisionSystem(eCSmanager), nameof(SupportVisionSystem))
-            .Add(new SoundSystem(eCSmanager), nameof(SoundSystem))
-            .Add(new AnimationAttackUnitSystem(eCSmanager), nameof(AnimationAttackUnitSystem))
+            .Add(new InputSystem(), nameof(InputSystem))
+            .Add(new SelectorSystem(), nameof(SelectorSystem))
+            .Add(new SupportVisionSystem(), nameof(SupportVisionSystem))
+            .Add(new SoundSystem(), nameof(SoundSystem))
 
-            .Add(new UISystem(eCSmanager), nameof(UISystem))
-            .Add(new ReadyUISystem(eCSmanager), nameof(ReadyUISystem))
-            .Add(new DonerUISystem(eCSmanager), nameof(DonerUISystem))
-            .Add(new TakerUnitsUISystem(eCSmanager), nameof(TakerUnitsUISystem))
-            .Add(new StandartAbilityUISystem(eCSmanager), nameof(StandartAbilityUISystem))
-            .Add(new ConditionUnitUISystem(eCSmanager), nameof(ConditionUnitUISystem))
-            .Add(new TheEndGameUISystem(eCSmanager), nameof(TheEndGameUISystem))
-            .Add(new BuildingUISystem(eCSmanager), nameof(BuildingUISystem))
-            .Add(new EconomyUISystem(eCSmanager), nameof(EconomyUISystem))
-            .Add(new ZoneUISystem(eCSmanager), nameof(ZoneUISystem))
-            .Add(new MistakeUISystem(eCSmanager), nameof(MistakeUISystem))
-            .Add(new CityUISystem(eCSmanager), nameof(CityUISystem))
-            .Add(new UpdatedUISystem(eCSmanager), nameof(UpdatedUISystem))
-            .Add(new UniqueAbilitiesUISystem(eCSmanager), nameof(UniqueAbilitiesUISystem))
-            .Add(new TruceUISystem(eCSmanager), nameof(TruceUISystem));
+            .Add(new UISystem(), nameof(UISystem))
+            .Add(new ReadyUISystem(), nameof(ReadyUISystem))
+            .Add(new DonerUISystem(), nameof(DonerUISystem))
+            .Add(new TakerUnitsUISystem(), nameof(TakerUnitsUISystem))
+            .Add(new StandartAbilityUISystem(), nameof(StandartAbilityUISystem))
+            .Add(new ConditionUnitUISystem(), nameof(ConditionUnitUISystem))
+            .Add(new TheEndGameUISystem(), nameof(TheEndGameUISystem))
+            .Add(new BuildingUISystem(), nameof(BuildingUISystem))
+            .Add(new EconomyUISystem(), nameof(EconomyUISystem))
+            .Add(new ZoneUISystem(), nameof(ZoneUISystem))
+            .Add(new MistakeUISystem(), nameof(MistakeUISystem))
+            .Add(new CityUISystem(), nameof(CityUISystem))
+            .Add(new UpdatedUISystem(), nameof(UpdatedUISystem))
+            .Add(new UniqueAbilitiesUISystem(), nameof(UniqueAbilitiesUISystem))
+            .Add(new TruceUISystem(), nameof(TruceUISystem))
+            .Add(new EnvironmentUISystem(), nameof(EnvironmentUISystem));
 
 
         ForSelectorRunUpdateSystem
-            .Add(new GetterCellSystem(eCSmanager), nameof(GetterCellSystem))
-            .Add(new RaySystem(eCSmanager), nameof(RaySystem));
-
-        this.InitAndProcessInjectsSystems();
+            .Add(new GetterCellSystem(), nameof(GetterCellSystem))
+            .Add(new RaySystem(), nameof(RaySystem));
     }
 
     internal override void InitAndProcessInjectsSystems()
@@ -49,5 +47,4 @@ public class SystemsGeneralManager : SystemsManager
 
         ForSelectorRunUpdateSystem.Init();
     }
-
 }

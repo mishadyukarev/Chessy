@@ -6,16 +6,11 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
     private UniqueAbilitiesPawnTypes UniqueAbilitiesPawnType => _eMM.RPCMasterEnt_RPCMasterCom.UniqueAbilitiesPawnType;
     private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
 
-    internal UniquePawnAbilityMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
-    {
-
-    }
-
     public override void Run()
     {
         base.Run();
 
-        if (_eGM.CellEnt_CellUnitCom(XyCell).HaveMinAmountSteps && _eGM.CellBuildingEnt_BuildingTypeCom(XyCell).BuildingType != BuildingTypes.City)
+        if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMinAmountSteps && _eGM.CellBuildingEnt_BuildingTypeCom(XyCell).BuildingType != BuildingTypes.City)
         {
             bool haveFood = true;
             bool haveWood = true;
@@ -38,10 +33,10 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
             switch (UniqueAbilitiesPawnType)
             {
                 case UniqueAbilitiesPawnTypes.AbilityOne:
-                    if (_eGM.CellEnt_CellEffectCom(XyCell).HaveFire)
+                    if (_eGM.CellEffectEnt_CellEffectCom(XyCell).HaveFire)
                     {
-                        _eGM.CellEnt_CellEffectCom(XyCell).SetResetEffect(false, EffectTypes.Fire);
-                        _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps -= 1;
+                        _eGM.CellEffectEnt_CellEffectCom(XyCell).SetResetEffect(false, EffectTypes.Fire);
+                        _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps -= 1;
                     }
                     else if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultTree)
                     {
@@ -65,8 +60,8 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                             ironAmountDict[Info.Sender.IsMasterClient] -= minusIron;
                             goldAmountDict[Info.Sender.IsMasterClient] -= minusGold;
 
-                            _eGM.CellEnt_CellEffectCom(XyCell).SetResetEffect(true, EffectTypes.Fire);
-                            _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps -= 1;
+                            _eGM.CellEffectEnt_CellEffectCom(XyCell).SetResetEffect(true, EffectTypes.Fire);
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps -= 1;
                         }
                         else
                         {
@@ -100,7 +95,7 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                             goldAmountDict[Info.Sender.IsMasterClient] -= minusGold;
 
                             _eGM.CellEnvEnt_CellEnvCom(XyCell).SetNewEnvironment(EnvironmentTypes.Fertilizer);
-                            _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps -= 1;
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps -= 1;
                         }
                         else
                         {
@@ -131,7 +126,7 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                             oreAmountDict[Info.Sender.IsMasterClient] -= minusOre;
                             ironAmountDict[Info.Sender.IsMasterClient] -= minusIron;
                             goldAmountDict[Info.Sender.IsMasterClient] -= minusGold;
-                            _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps -= 1;
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps -= 1;
 
                             _eGM.CellEnvEnt_CellEnvCom(XyCell).SetNewEnvironment(EnvironmentTypes.YoungForest);
                         }

@@ -1,23 +1,21 @@
 ﻿using Photon.Pun;
 using UnityEngine;
-using static MainGame;
+using static Main;
 
 internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 {
     private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
-    internal TruceMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
-
     public override void Run()
     {
         base.Run();
-      
-        _photonPunRPC.TruceToGeneral(Info.Sender, false, _eGM.RpcGeneralEnt_FromInfoCom.IsActived, _eGM.UpdatorEntityAmountComponent.Amount);
+
+        _photonPunRPC.TruceToGeneral(Info.Sender, false, _eGM.RpcGeneralEnt_FromInfoCom.IsActived, _eGM.UpdatorEntityAmountComponent.AmountMotions);
 
         _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[Info.Sender.IsMasterClient] = _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
 
 
-        bool isTruce = Instance.StartValuesGameConfig.IS_TEST ||
+        bool isTruce = Instance.TestType == TestTypes.Standart ||
         _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[true]
             && _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[false];
 
@@ -25,8 +23,8 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 
         if (isTruce)
         {
-            _eGM.UpdatorEntityAmountComponent.Amount += Random.Range(4500, 5500);
-            _photonPunRPC.TruceToGeneral(RpcTarget.All, true, false, _eGM.UpdatorEntityAmountComponent.Amount);
+            _eGM.UpdatorEntityAmountComponent.AmountMotions += Random.Range(4500, 5500);
+            _photonPunRPC.TruceToGeneral(RpcTarget.All, true, false, _eGM.UpdatorEntityAmountComponent.AmountMotions);
 
             int random;
 
@@ -34,35 +32,35 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
             {
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
-                    if (_eGM.CellEnt_CellUnitCom(x, y).HaveUnit)
+                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
                     {
-                        switch (_eGM.CellEnt_CellUnitCom(x, y).UnitType)
+                        switch (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType)
                         {
                             case UnitTypes.None:
                                 break;
 
                             case UnitTypes.King:
-                                _eGM.InfoEnt_UnitsInfoCom.AmountKingDict[_eGM.CellEnt_CellUnitCom(x, y).IsMasterClient] += 1;
-                                _eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[_eGM.CellEnt_CellUnitCom(x, y).IsMasterClient] = false;
+                                _eGM.InfoEnt_UnitsInfoCom.AmountKingDict[_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient] += 1;
+                                _eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient] = false;
                                 break;
 
                             case UnitTypes.Pawn:
-                                _eGM.InfoEnt_UnitsInfoCom.AmountPawnDict[_eGM.CellEnt_CellUnitCom(x, y).IsMasterClient] += 1;
+                                _eGM.InfoEnt_UnitsInfoCom.AmountPawnDict[_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient] += 1;
                                 break;
 
                             case UnitTypes.Rook:
-                                _eGM.InfoEnt_UnitsInfoCom.AmountRookDict[_eGM.CellEnt_CellUnitCom(x, y).IsMasterClient] += 1;
+                                _eGM.InfoEnt_UnitsInfoCom.AmountRookDict[_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient] += 1;
                                 break;
 
                             case UnitTypes.Bishop:
-                                _eGM.InfoEnt_UnitsInfoCom.AmountBishopDict[_eGM.CellEnt_CellUnitCom(x, y).IsMasterClient] += 1;
+                                _eGM.InfoEnt_UnitsInfoCom.AmountBishopDict[_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient] += 1;
                                 break;
 
                             default:
                                 break;
                         }
 
-                        _eGM.CellEnt_CellUnitCom(x, y).ResetUnit();
+                        _cM.CellUnitWorker.ResetUnit(x, y);
 
                     }
 
@@ -74,7 +72,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                 break;
 
                             case BuildingTypes.City:
-                                _cellWorker.ResetBuilding(x, y);
+                                _cM.CellBuildingWorker.ResetBuilding(x, y);
                                 break;
 
                             case BuildingTypes.Farm:
@@ -83,7 +81,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                 //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_FARM;
                                 //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_FARM;
                                 //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_FARM;
-                                _cellWorker.ResetBuilding(x, y);
+                                _cM.CellBuildingWorker.ResetBuilding(x, y);
                                 break;
 
                             case BuildingTypes.Woodcutter:
@@ -92,7 +90,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                 //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
                                 //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
                                 //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
-                                _cellWorker.ResetBuilding(x, y);
+                                _cM.CellBuildingWorker.ResetBuilding(x, y);
                                 break;
 
                             case BuildingTypes.Mine:
@@ -101,7 +99,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                 //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_MINE;
                                 //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_MINE;
                                 //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_MINE;
-                                _cellWorker.ResetBuilding(x, y);
+                                _cM.CellBuildingWorker.ResetBuilding(x, y);
                                 break;
 
                             default:
@@ -128,7 +126,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                     }
 
                     if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveMountain
-                         && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree && _eGM.CellBuildingEnt_BuildingTypeCom(x,y).BuildingType != BuildingTypes.City)
+                         && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree && _eGM.CellBuildingEnt_BuildingTypeCom(x, y).BuildingType != BuildingTypes.City)
                     {
                         random = Random.Range(0, 100);
 
@@ -141,26 +139,14 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
             }
 
 
-            //for (int x = 0; x < _eGM.Xamount; x++)
-            //{
-            //    for (int y = 0; y < _eGM.Yamount; y++)
-            //    {
-            //        if(!_eGM.CellEnt_CellEnvCom(x,y).HaveMountain && !_eGM.CellEnt_CellEnvCom(x, y).HaveAdultTree 
-            //            && _eGM.CellEnt_CellBuildingCom(x, y).BuildingType != BuildingTypes.City)
-            //        {
-            //            random = Random.Range(0, 100);
-
-            //            if (random <= Instance.StartValuesGameConfig.PERCENT_FOOD)
-            //            {
-            //                _eGM.CellEnt_CellEnvCom(x, y).SetResetEnvironment(true, EnvironmentTypes.Fertilizer);
-            //            }
-            //        }
-            //    }
-            //}
-
-
             _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[true] = false;
             _eGM.TruceEnt_ActivatedDictCom.IsActivatedDictionary[false] = false;
+
+            _eGM.FoodEnt_AmountDictCom.AmountDict[true] += 10;
+            _eGM.FoodEnt_AmountDictCom.AmountDict[false] += 10;
+
+            _eGM.WoodEAmountDictC.AmountDict[true] += 10;
+            _eGM.WoodEAmountDictC.AmountDict[false] += 10;
         }
     }
 }

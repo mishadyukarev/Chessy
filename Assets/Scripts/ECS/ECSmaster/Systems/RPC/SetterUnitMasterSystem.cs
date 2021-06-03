@@ -1,19 +1,19 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
 
-internal class SetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
+internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 {
     internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
     internal UnitTypes UnitType => _eMM.RPCMasterEnt_RPCMasterCom.UnitType;
     private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
 
-    internal SetterUnitMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
-
-    public void Run()
+    public override void Run()
     {
+        base.Run();
+
         bool isSetted = false;
 
-        if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveMountain && !_eGM.CellEnt_CellUnitCom(XyCell).HaveUnit)
+        if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveMountain && !_eGM.CellUnitEnt_UnitTypeCom(XyCell).HaveUnit)
         {
             switch (UnitType)
             {
@@ -27,8 +27,8 @@ internal class SetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                     {
                         if (_eGM.CellEnt_CellBaseCom(XyCell).IsStarted(true))
                         {
-                            _eGM.CellEnt_CellUnitCom(XyCell).SetUnit(UnitTypes.King, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, Info.Sender);
-                            _eGM.CellEnt_CellUnitCom(XyCell).AmountHealth = _eGM.CellEnt_CellUnitCom(XyCell).MaxAmountHealth;
+                            _cM.CellUnitWorker.SetUnit(UnitTypes.King, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, Info.Sender, XyCell);
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = _cM.CellUnitWorker.MaxAmountHealth(XyCell);
                             _eGM.InfoEnt_UnitsInfoCom.AmountKingDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
@@ -38,8 +38,8 @@ internal class SetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                     {
                         if (_eGM.CellEnt_CellBaseCom(XyCell).IsStarted(false))
                         {
-                            _eGM.CellEnt_CellUnitCom(XyCell).SetUnit(UnitTypes.King, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, Info.Sender);
-                            _eGM.CellEnt_CellUnitCom(XyCell).AmountHealth = _eGM.CellEnt_CellUnitCom(XyCell).MaxAmountHealth;
+                            _cM.CellUnitWorker.SetUnit(UnitTypes.King, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, Info.Sender, XyCell);
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = _cM.CellUnitWorker.MaxAmountHealth(XyCell);
                             _eGM.InfoEnt_UnitsInfoCom.AmountKingDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
@@ -57,8 +57,8 @@ internal class SetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                     {
                         if (_eGM.CellEnt_CellBaseCom(XyCell).IsStarted(true))
                         {
-                            _eGM.CellEnt_CellUnitCom(XyCell).SetUnit(UnitTypes.Pawn, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, Info.Sender);
-                            _eGM.CellEnt_CellUnitCom(XyCell).AmountHealth = _eGM.CellEnt_CellUnitCom(XyCell).MaxAmountHealth;
+                            _cM.CellUnitWorker.SetUnit(UnitTypes.Pawn, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, Info.Sender, XyCell);
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = _cM.CellUnitWorker.MaxAmountHealth(XyCell);
                             _eGM.InfoEnt_UnitsInfoCom.AmountPawnDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
@@ -69,8 +69,8 @@ internal class SetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                     {
                         if (_eGM.CellEnt_CellBaseCom(XyCell).IsStarted(false))
                         {
-                            _eGM.CellEnt_CellUnitCom(XyCell).SetUnit(UnitTypes.Pawn, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, Info.Sender);
-                            _eGM.CellEnt_CellUnitCom(XyCell).AmountHealth = _eGM.CellEnt_CellUnitCom(XyCell).MaxAmountHealth;
+                            _cM.CellUnitWorker.SetUnit(UnitTypes.Pawn, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, Info.Sender, XyCell);
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = _cM.CellUnitWorker.MaxAmountHealth(XyCell);
                             _eGM.InfoEnt_UnitsInfoCom.AmountPawnDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
@@ -86,8 +86,8 @@ internal class SetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                     {
                         if (_eGM.CellEnt_CellBaseCom(XyCell).IsStarted(true))
                         {
-                            _eGM.CellEnt_CellUnitCom(XyCell).SetUnit(UnitTypes.Rook, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, Info.Sender);
-                            _eGM.CellEnt_CellUnitCom(XyCell).AmountHealth = _eGM.CellEnt_CellUnitCom(XyCell).MaxAmountHealth;
+                            _cM.CellUnitWorker.SetUnit(UnitTypes.Rook, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, Info.Sender, XyCell);
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = _cM.CellUnitWorker.MaxAmountHealth(XyCell);
                             _eGM.InfoEnt_UnitsInfoCom.AmountRookDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
@@ -97,8 +97,8 @@ internal class SetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                     {
                         if (_eGM.CellEnt_CellBaseCom(XyCell).IsStarted(false))
                         {
-                            _eGM.CellEnt_CellUnitCom(XyCell).SetUnit(UnitTypes.Rook, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, Info.Sender);
-                            _eGM.CellEnt_CellUnitCom(XyCell).AmountHealth = _eGM.CellEnt_CellUnitCom(XyCell).MaxAmountHealth;
+                            _cM.CellUnitWorker.SetUnit(UnitTypes.Rook, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, Info.Sender, XyCell);
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = _cM.CellUnitWorker.MaxAmountHealth(XyCell);
                             _eGM.InfoEnt_UnitsInfoCom.AmountRookDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
@@ -114,8 +114,8 @@ internal class SetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                     {
                         if (_eGM.CellEnt_CellBaseCom(XyCell).IsStarted(true))
                         {
-                            _eGM.CellEnt_CellUnitCom(XyCell).SetUnit(UnitTypes.Bishop, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, Info.Sender);
-                            _eGM.CellEnt_CellUnitCom(XyCell).AmountHealth = _eGM.CellEnt_CellUnitCom(XyCell).MaxAmountHealth;
+                            _cM.CellUnitWorker.SetUnit(UnitTypes.Bishop, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, Info.Sender, XyCell);
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = _cM.CellUnitWorker.MaxAmountHealth(XyCell);
                             _eGM.InfoEnt_UnitsInfoCom.AmountBishopDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }
@@ -125,8 +125,8 @@ internal class SetterUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                     {
                         if (_eGM.CellEnt_CellBaseCom(XyCell).IsStarted(false))
                         {
-                            _eGM.CellEnt_CellUnitCom(XyCell).SetUnit(UnitTypes.Bishop, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, Info.Sender);
-                            _eGM.CellEnt_CellUnitCom(XyCell).AmountHealth = _eGM.CellEnt_CellUnitCom(XyCell).MaxAmountHealth;
+                            _cM.CellUnitWorker.SetUnit(UnitTypes.Bishop, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, Info.Sender, XyCell);
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = _cM.CellUnitWorker.MaxAmountHealth(XyCell);
                             _eGM.InfoEnt_UnitsInfoCom.AmountBishopDict[Info.Sender.IsMasterClient] -= _startValuesGameConfig.AMOUNT_FOR_TAKE_UNIT;
                             isSetted = true;
                         }

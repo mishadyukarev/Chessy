@@ -1,9 +1,9 @@
-﻿using static MainGame;
+﻿using static Main;
 internal abstract class RPCMasterSystemReduction : SystemMasterReduction
 {
     protected PhotonPunRPC _photonPunRPC;
 
-    internal RPCMasterSystemReduction(ECSmanager eCSmanager) : base(eCSmanager)
+    internal RPCMasterSystemReduction() : base()
     {
         _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
     }

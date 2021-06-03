@@ -1,12 +1,14 @@
 ﻿using Leopotam.Ecs;
-using static MainGame;
+using static Main;
 
-internal class EconomyUISystem : SystemGeneralReduction, IEcsRunSystem
+internal class EconomyUISystem : SystemGeneralReduction
 {
-    internal EconomyUISystem(ECSmanager eCSmanager) : base(eCSmanager) { }
+    internal EconomyUISystem(){ }
 
-    public void Run()
+    public override void Run()
     {
+        base.Run();
+
         _eGM.FoodEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.FoodEnt_AmountDictCom.AmountDict[Instance.IsMasterClient].ToString();
         _eGM.WoodEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.WoodEAmountDictC.AmountDict[Instance.IsMasterClient].ToString();
         _eGM.OreEntityTextMeshProGUIComponent.TextMeshProUGUI.text = _eGM.OreEAmountDictC.AmountDict[Instance.IsMasterClient].ToString();

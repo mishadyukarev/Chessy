@@ -1,32 +1,26 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using static MainGame;
+using static Main;
 
-internal class DestroyMasterSystem : SystemMasterReduction, IEcsRunSystem
+internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
 {
-    private PhotonPunRPC _photonPunRPC;
     private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
     private PhotonMessageInfo info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
-
-    internal DestroyMasterSystem(ECSmanager eCSmanager) : base(eCSmanager)
-    {
-        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
-    }
 
     public override void Run()
     {
         base.Run();
 
-        if (_eGM.CellEnt_CellUnitCom(XyCell).IsHim(info.Sender))
+        if (_eGM.CellUnitEnt_CellOwnerCom(XyCell).IsHim(info.Sender))
         {
-            if (_eGM.CellEnt_CellUnitCom(XyCell).HaveMaxSteps)
+            if (_cM.CellUnitWorker.HaveMaxSteps(XyCell))
             {
-                if(_eGM.CellBuildingEnt_BuildingTypeCom(XyCell).BuildingType == BuildingTypes.City)
+                if (_eGM.CellBuildingEnt_BuildingTypeCom(XyCell).BuildingType == BuildingTypes.City)
                 {
-                    _photonPunRPC.EndGameToMaster(_eGM.CellEnt_CellUnitCom(XyCell).ActorNumberOwner);
+                    _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XyCell).ActorNumber);
                 }
-                _eGM.CellEnt_CellUnitCom(XyCell).AmountSteps = 0;
-                _cellWorker.ResetBuilding(XyCell);
+                _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
+                _cM.CellBuildingWorker.ResetBuilding(XyCell);
             }
         }
     }

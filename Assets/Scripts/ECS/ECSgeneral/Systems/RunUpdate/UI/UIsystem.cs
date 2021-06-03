@@ -1,17 +1,14 @@
-﻿using Leopotam.Ecs;
-using UnityEngine.UI;
-using static MainGame;
+﻿using UnityEngine.UI;
+using static Main;
 
-internal class UISystem : SystemGeneralReduction, IEcsRunSystem
+internal class UISystem : RPCGeneralReduction
 {
-    private GameSceneManager _photonManagerScene;
-    private PhotonPunRPC _photonPunRPC;
+    private SceneManager _photonManagerScene;
 
 
 
     private Image _rightUpUnitImage;
     private Image _rightMiddleUnitImage;
-    private Image _leftEconomyImage;
 
     private Button _buttonLeave;
 
@@ -28,44 +25,33 @@ internal class UISystem : SystemGeneralReduction, IEcsRunSystem
     private int[] _xySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
 
 
-    internal UISystem(ECSmanager eCSmanager) : base(eCSmanager)
+    internal UISystem()
     {
-        _photonManagerScene = Instance.PhotonGameManager.GameSceneManager;
-        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
-
-
-
-        #region Images
-
-        //_rightUpUnitImage = MainGame.Instance.GameObjectPool.RightUpImage;
-        //_rightMiddleUnitImage = MainGame.Instance.GameObjectPool.RightMiddleImage;
-        _leftEconomyImage = MainGame.Instance.ObjectPool.LeftImage;
-
-        //_rightMiddleUnitImage.gameObject.SetActive(false);
-
-        #endregion
+        _photonManagerScene = Instance.PhotonGameManager.SceneManager;
 
 
         #region Ability zone
 
-        _uniqueAbilityButton1 = MainGame.Instance.ObjectPool.UniqueFirstAbilityButton;
-        _uniqueAbilityButton2 = MainGame.Instance.ObjectPool.UniqueSecondAbilityButton;
-        _uniqueAbilityButton3 = MainGame.Instance.ObjectPool.UniqueThirdAbilityButton;
+        _uniqueAbilityButton1 = Main.Instance.CanvasGameManager.UniqueFirstAbilityButton;
+        _uniqueAbilityButton2 = Main.Instance.CanvasGameManager.UniqueSecondAbilityButton;
+        _uniqueAbilityButton3 = Main.Instance.CanvasGameManager.UniqueThirdAbilityButton;
 
 
         #endregion
 
-        _buttonLeave = MainGame.Instance.ObjectPool.ButtonLeave;
+        _buttonLeave = Main.Instance.CanvasGameManager.ButtonLeave;
         _buttonLeave.onClick.AddListener(delegate { Leave(); });
 
     }
 
 
-    public void Run()
+    public override void Run()
     {
-        if (_eGM.CellEnt_CellUnitCom(_xySelectedCell).IsMine)
+        base.Run();
+
+        if (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(_xySelectedCell).IsMine)
         {
-            switch (_eGM.CellEnt_CellUnitCom(_xySelectedCell).UnitType)
+            switch (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).UnitType)
             {
                 case UnitTypes.None:
 
@@ -91,36 +77,14 @@ internal class UISystem : SystemGeneralReduction, IEcsRunSystem
             ActivateUniqueAbilities(default, false);
         }
 
-        Instance.ObjectPool.RightImage.gameObject.SetActive(false);
+        Instance.CanvasGameManager.RightImage.gameObject.SetActive(false);
 
-        if (_eGM.CellEnt_CellUnitCom(_xySelectedCell).HaveUnit)
+        if (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).HaveUnit)
         {
-            if (_eGM.CellEnt_CellUnitCom(_xySelectedCell).IsActivatedUnitDict[Instance.IsMasterClient])
+            if (_eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).IsActivatedUnitDict[Instance.IsMasterClient])
             {
-                Instance.ObjectPool.RightImage.gameObject.SetActive(true);
+                Instance.CanvasGameManager.RightImage.gameObject.SetActive(true);
             }
-        }
-
-
-
-
-        switch (_eGM.CellBuildingEnt_BuildingTypeCom(_xySelectedCell).BuildingType)
-        {
-            case BuildingTypes.None:
-                ActiveLeftEconomy(false);
-                break;
-
-            case BuildingTypes.City:
-                ActiveLeftEconomy(true);
-                break;
-
-            default:
-                break;
-
-                void ActiveLeftEconomy(bool isActive)
-                {
-                    _leftEconomyImage.gameObject.SetActive(isActive);
-                }
         }
     }
     private void ActivateUniqueAbilities(UnitTypes unitType, bool isActive)

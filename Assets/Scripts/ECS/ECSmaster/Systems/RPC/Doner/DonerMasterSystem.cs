@@ -1,13 +1,11 @@
-﻿using Leopotam.Ecs;
-using Photon.Pun;
-using static MainGame;
+﻿using Photon.Pun;
+using static Main;
 
-internal class DonerMasterSystem : RPCMasterSystemReduction
+internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 {
     internal bool isDone => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
     internal PhotonMessageInfo info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
 
-    internal DonerMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
 
     public override void Run()
     {
@@ -15,11 +13,11 @@ internal class DonerMasterSystem : RPCMasterSystemReduction
 
         if (_eGM.InfoEnt_UnitsInfoCom.IsSettedKingDict[info.Sender.IsMasterClient])
         {
-            _photonPunRPC.DoneToGeneral(info.Sender, false, isDone, _eGM.UpdatorEntityAmountComponent.Amount);
+            _photonPunRPC.DoneToGeneral(info.Sender, false, isDone, _eGM.UpdatorEntityAmountComponent.AmountMotions);
 
             _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[info.Sender.IsMasterClient] = isDone;
 
-            bool isRefreshed = Instance.StartValuesGameConfig.IS_TEST
+            bool isRefreshed = Instance.TestType == TestTypes.Standart
                 || _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[true]
                 && _eGM.DonerEntityIsActivatedDictionaryComponent.IsActivatedDictionary[false];
 
@@ -27,7 +25,7 @@ internal class DonerMasterSystem : RPCMasterSystemReduction
             {
                 _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RPCSystems);
 
-                _photonPunRPC.DoneToGeneral(RpcTarget.All, true, false, _eGM.UpdatorEntityAmountComponent.Amount);
+                _photonPunRPC.DoneToGeneral(RpcTarget.All, true, false, _eGM.UpdatorEntityAmountComponent.AmountMotions);
             }
         }
         else

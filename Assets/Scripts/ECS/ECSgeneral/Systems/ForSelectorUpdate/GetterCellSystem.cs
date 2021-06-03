@@ -1,10 +1,10 @@
 ﻿using Leopotam.Ecs;
 
-internal sealed class GetterCellSystem : SystemGeneralReduction, IEcsRunSystem
+internal sealed class GetterCellSystem : SystemGeneralReduction
 {
-    internal GetterCellSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
+    internal GetterCellSystem() { }
 
-    public void Run()
+    public override void Run()
     {
         if (_eGM.RayComponentSelectorEnt.RaycastHit2D != default)
         {

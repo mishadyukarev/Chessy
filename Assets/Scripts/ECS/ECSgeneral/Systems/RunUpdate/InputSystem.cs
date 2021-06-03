@@ -2,13 +2,16 @@
 
 internal sealed class InputSystem : SystemGeneralReduction
 {
-    internal InputSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
+    public override void Init()
+    {
+        base.Init();
+    }
 
     public override void Run()
     {
         base.Run();
 
-        if (Input.GetMouseButtonDown(0)) _eGM.InputEntityMouseClickComponent.IsClick = true;
-        else _eGM.InputEntityMouseClickComponent.IsClick = false;
+        if (Input.GetMouseButtonDown(0)) _eGM.InputEnt_InputCom.IsClick = true;
+        else _eGM.InputEnt_InputCom.IsClick = false;
     }
 }

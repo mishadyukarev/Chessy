@@ -1,15 +1,15 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
 
-internal class CreatorUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
+internal sealed class CreatorUnitMasterSystem : RPCMasterSystemReduction
 {
     internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
     internal UnitTypes UnitType => _eMM.RPCMasterEnt_RPCMasterCom.UnitType;
 
-    internal CreatorUnitMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
-
-    public void Run()
+    public override void Run()
     {
+        base.Run();
+
         bool haveFood = true;
         bool haveWood = true;
         bool haveOre = true;

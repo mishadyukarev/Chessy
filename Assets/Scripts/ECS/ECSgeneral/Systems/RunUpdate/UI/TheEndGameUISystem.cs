@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using TMPro;
 using UnityEngine;
-using static MainGame;
+using static Main;
 
 internal class TheEndGameUISystem : SystemGeneralReduction, IEcsRunSystem
 {
@@ -9,14 +9,16 @@ internal class TheEndGameUISystem : SystemGeneralReduction, IEcsRunSystem
     private TextMeshProUGUI _theEndGameText;
 
 
-    internal TheEndGameUISystem(ECSmanager eCSmanager) : base(eCSmanager)
+    internal TheEndGameUISystem()
     {
-        _parentTheEndGameZone = Instance.ObjectPool.ParentTheEndGameZone;
-        _theEndGameText = Instance.ObjectPool.TheEndGameText;
+        _parentTheEndGameZone = Instance.CanvasGameManager.ParentTheEndGameZone;
+        _theEndGameText = Instance.CanvasGameManager.TheEndGameText;
     }
 
-    public void Run()
+    public override void Run()
     {
+        base.Run();
+
         if (_eGM.EndGameEntEndGameCom.IsEndGame)
         {
             _parentTheEndGameZone.gameObject.SetActive(true);

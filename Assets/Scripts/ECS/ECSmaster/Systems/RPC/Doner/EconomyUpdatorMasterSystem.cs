@@ -1,10 +1,5 @@
-﻿using UnityEngine;
-using static MainGame;
-
-internal sealed class EconomyUpdatorMasterSystem : SystemMasterReduction
+﻿internal sealed class EconomyUpdatorMasterSystem : SystemMasterReduction
 {
-    internal EconomyUpdatorMasterSystem(ECSmanager eCSmanager) : base(eCSmanager) { }
-
     public override void Run()
     {
         base.Run();
@@ -14,10 +9,8 @@ internal sealed class EconomyUpdatorMasterSystem : SystemMasterReduction
         {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-               
+
             }
         }
-
-
     }
 }

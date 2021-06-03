@@ -1,4 +1,4 @@
 ﻿internal struct StartGameComponent
 {
-    internal bool IsStartedGame;
+    //internal bool IsStartedGame;
 }

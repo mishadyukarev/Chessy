@@ -1,10 +1,8 @@
-﻿using Leopotam.Ecs;
-
-internal sealed class UniqueAbilitiesUISystem : RPCGeneralReduction
+﻿internal sealed class UniqueAbilitiesUISystem : RPCGeneralReduction
 {
     private int[] XySelectedCell => _eGM.SelectorEntSelectorCom.XYselectedCell;
 
-    internal UniqueAbilitiesUISystem(ECSmanager eCSmanager) : base(eCSmanager) { }
+    internal UniqueAbilitiesUISystem(){ }
 
     public override void Run()
     {
@@ -15,10 +13,10 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralReduction
         _eGM.Unique2AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
         _eGM.Unique3AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
 
-        if (_eGM.CellEnt_CellUnitCom(XySelectedCell).IsMine)
+        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
         {
 
-            switch (_eGM.CellEnt_CellUnitCom(XySelectedCell).UnitType)
+            switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
             {
                 case UnitTypes.None:
                     break;
@@ -31,7 +29,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralReduction
                     _eGM.Unique1AbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
                     _eGM.Unique1AbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityOne); });
 
-                    if (_eGM.CellEnt_CellEffectCom(XySelectedCell).HaveFire)
+                    if (_eGM.CellEffectEnt_CellEffectCom(XySelectedCell).HaveFire)
                     {
                         _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Put Out FIRE";
                     }
