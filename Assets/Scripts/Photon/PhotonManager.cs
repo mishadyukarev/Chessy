@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using static Main;
 
-internal class PhotonManager
+internal sealed class PhotonManager
 {
     private PhotonView _photonView;
     private PhotonPunRPC _photonPunRPC;
@@ -11,22 +11,17 @@ internal class PhotonManager
     internal PhotonPunRPC PhotonPunRPC => _photonPunRPC;
 
 
-    internal PhotonManager()
+    internal PhotonManager(ECSManager eCSManager)
     {
-        Instance.gameObject.AddComponent<PhotonView>();
-        Instance.gameObject.AddComponent<SceneManager>();
-        Instance.gameObject.AddComponent<PhotonPunRPC>();
+        _photonView = Instance.gameObject.AddComponent<PhotonView>();
+        _sceneManager = Instance.gameObject.AddComponent<SceneManager>();
+        _photonPunRPC = Instance.gameObject.AddComponent<PhotonPunRPC>();
 
-        _photonView = Instance.gameObject.GetPhotonView();
-        _sceneManager = Instance.gameObject.GetComponent<SceneManager>();
-        _photonPunRPC = Instance.gameObject.GetComponent<PhotonPunRPC>();
-
-        _photonPunRPC.Constructor(_photonView);
-
+        _photonPunRPC.Constructor(_photonView, eCSManager);
 
         _photonView.FindObservables(true);
 
         if (Instance.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
-        else _photonView.ViewID = Instance.StartValuesGameConfig.NUMBER_PHOTON_VIEW;
+        else _photonView.ViewID = Instance.ECSmanagerGame.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig.NUMBER_PHOTON_VIEW;
     }
 }

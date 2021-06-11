@@ -24,31 +24,29 @@ internal sealed class PhotonPunRPC : MonoBehaviour
 
     private int _i;
 
-    internal void Constructor(PhotonView photonView)
+    internal void Constructor(PhotonView photonView, ECSManager eCSmanager)
     {
         _photonView = photonView;
 
-        PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
-    }
-
-    internal void InitAfterECS(ECSmanager eCSmanager, CellManager cellManager, EconomyManager economyManager)
-    {
         _sMM = eCSmanager.SystemsMasterManager;
         _eMM = eCSmanager.EntitiesMasterManager;
 
         _eGM = eCSmanager.EntitiesGeneralManager;
         _sGM = eCSmanager.SystemsGeneralManager;
 
-        _cM = cellManager;
-        _eM = economyManager;
+        _cM = eCSmanager.CellManager;
+        _eM = eCSmanager.EconomyManager;
+
+
+        PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
     }
 
 
     #region PUN
 
     internal void ReadyToMaster(in bool isReady) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Ready, new object[] { isReady });
-    internal void ReadyToGeneral(Player playerTo, bool isCurrentReady) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Ready, new object[] { isCurrentReady});
-    internal void ReadyToGeneral(RpcTarget rpcTarget, bool isCurrentReady) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Ready, new object[] { isCurrentReady});
+    internal void ReadyToGeneral(Player playerTo, bool isCurrentReady) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Ready, new object[] { isCurrentReady });
+    internal void ReadyToGeneral(RpcTarget rpcTarget, bool isCurrentReady) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Ready, new object[] { isCurrentReady });
 
     internal void DoneToMaster(bool isDone) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Done, new object[] { isDone });
     internal void DoneToGeneral(Player playerTo, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Done, new object[] { isRefreshed, isDone, numberMotion });

@@ -12,21 +12,31 @@ internal sealed class SceneManager : MonoBehaviourPunCallbacks
     private TextMeshProUGUI _logTex;
     private const int MAX_PLAYERS = 2;
 
-    internal void InitMenu()
+    internal void ToggleScene(SceneTypes sceneType)
     {
+        switch (sceneType)
+        {
+            case SceneTypes.Menu:
+                _logTex = Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("LogText").GetComponent<TextMeshProUGUI>();
 
-        _logTex = Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("LogText").GetComponent<TextMeshProUGUI>();
-
-        Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("CreateRoomButton").GetComponent<Button>().onClick.AddListener(CreateRoom);
-        Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("JoinRandomButton").GetComponent<Button>().onClick.AddListener(JoinRandomRoom);
-        Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("QuitButton").GetComponent<Button>().onClick.AddListener(Quit);
+                Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("CreateRoomButton").GetComponent<Button>().onClick.AddListener(CreateRoom);
+                Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("JoinRandomButton").GetComponent<Button>().onClick.AddListener(JoinRandomRoom);
+                Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("QuitButton").GetComponent<Button>().onClick.AddListener(Quit);
 
 
-        PhotonNetwork.NickName = "Player " + Random.Range(10000, 100000);
-        Log("Player's name is set to " + PhotonNetwork.NickName);
+                PhotonNetwork.NickName = "Player " + Random.Range(10000, 100000);
+                Log("Player's name is set to " + PhotonNetwork.NickName);
 
-        PhotonNetwork.GameVersion = "100";
-        PhotonNetwork.ConnectUsingSettings();
+                PhotonNetwork.GameVersion = "100";
+                PhotonNetwork.ConnectUsingSettings();
+                break;
+
+            case SceneTypes.Game:
+                break;
+
+            default:
+                break;
+        }
     }
 
 

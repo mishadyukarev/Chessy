@@ -1,9 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
-using System;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 internal sealed class Main : MonoBehaviour
 {
@@ -13,20 +10,12 @@ internal sealed class Main : MonoBehaviour
     [SerializeField] private TestTypes _testType;
     [SerializeField] private SceneTypes _sceneType;
 
-    private bool _isStart = true;
     private static Main _instance;
     private Builder _builder;
     private Names _names;
-    private ResourcesLoad _resourcesLoad;
     private PhotonManager _photonManager;
-    private ECSmanager _eCSmanagerGame;
-    private UnityEvents _unityEvents;
+    private ECSManager _eCSmanager;
     private GameObject _parentGOs;
-    private EventManager _eventManager;
-    private SaverData _saverData;
-    private SoundManager _soundManager;
-    private CanvasManager _canvasManager;
-    private CameraManager _cameraManager;
 
     #endregion
 
@@ -43,14 +32,12 @@ internal sealed class Main : MonoBehaviour
     internal Player MasterClient => PhotonNetwork.MasterClient;
     internal Player LocalPlayer => PhotonNetwork.LocalPlayer;
 
-    internal StartValuesGameConfig StartValuesGameConfig => _resourcesLoad.StartValuesGameConfig;
     internal Names Names => _names;
-    internal ECSmanager ECSmanagerGame => _eCSmanagerGame;
-    internal ResourcesLoad ResourcesLoad => _resourcesLoad;
+    internal ECSManager ECSmanagerGame => _eCSmanager;
     internal Builder Builder => _builder;
     internal GameObject ParentGOs => _parentGOs;
     internal PhotonManager PhotonGameManager => _photonManager;
-    internal CanvasManager CanvasManager => _canvasManager;
+    internal ref CanvasCommComponent CanvasManager => ref _eCSmanager.EntitiesCommonManager.CanvasEnt_CanvasCommCom;
 
     #endregion
 
@@ -62,21 +49,9 @@ internal sealed class Main : MonoBehaviour
         _instance = this;
         _builder = new Builder();
         _names = new Names();
-        _unityEvents = new UnityEvents();
-        _resourcesLoad = new ResourcesLoad();
-        _saverData = new SaverData();
-        _photonManager = new PhotonManager();
 
-        _canvasManager = new CanvasManager(_resourcesLoad, _names);
-        _soundManager = new SoundManager(_resourcesLoad, _builder, _saverData);
-        _cameraManager = new CameraManager(_resourcesLoad);
-
-        _eCSmanagerGame = new ECSmanager();
-        _eCSmanagerGame.InitAndProcessInjectsSystems();
-        _eventManager = new EventManager(_eCSmanagerGame.EntitiesGeneralManager, _photonManager.PhotonPunRPC);
-        
-        _photonManager.PhotonPunRPC.InitAfterECS(_eCSmanagerGame, _eCSmanagerGame.CellManager, _eCSmanagerGame.EconomyManager);
-
+        _eCSmanager = new ECSManager();
+        _photonManager = new PhotonManager(_eCSmanager);
 
         ToggleScene(_sceneType);
     }
@@ -86,11 +61,15 @@ internal sealed class Main : MonoBehaviour
         switch (_sceneType)
         {
             case SceneTypes.Menu:
-                _soundManager.SyncValues();
+                if (_eCSmanager.EntitiesCommonManager.SoundEnt_SliderCommCom.Value != _eCSmanager.EntitiesCommonManager.SaverEnt_SaverCommonCom.SliderVolume)
+                {
+                    _eCSmanager.EntitiesCommonManager.SaverEnt_SaverCommonCom.SliderVolume = _eCSmanager.EntitiesCommonManager.SoundEnt_SliderCommCom.Value;
+                    _eCSmanager.EntitiesCommonManager.SoundEnt_AudioSourceCommCom.Volume = _eCSmanager.EntitiesCommonManager.SaverEnt_SaverCommonCom.SliderVolume;
+                }
                 break;
 
             case SceneTypes.Game:
-                _eCSmanagerGame.OwnUpdate();
+                _eCSmanager.OwnUpdate();
                 _photonManager.SceneManager.OwnUpdate();
                 break;
 
@@ -106,44 +85,20 @@ internal sealed class Main : MonoBehaviour
         switch (_sceneType)
         {
             case SceneTypes.Menu:
-                if (_isStart)
-                {
-                    _isStart = !_isStart;
-                }
-                else
-                {
-                    Destroy(_canvasManager.InGameZoneGO);
-                    Destroy(_parentGOs);
-                }
+                Destroy(_parentGOs);
                 _parentGOs = new GameObject(_names.IN_MENU_GAME_ZONE);
 
-                _canvasManager.ToggleScene(_sceneType);
-                _soundManager.ToggleScene(_sceneType, _canvasManager.InMenuZoneCanvasGO);
-                _cameraManager.ToggleScene(_sceneType);
-
-                _photonManager.SceneManager.InitMenu();
-
+                _eCSmanager.ToggleScene(_sceneType);
+                _photonManager.SceneManager.ToggleScene(_sceneType);
                 break;
 
 
             case SceneTypes.Game:
-                if (_isStart)
-                {
-                    _isStart = !_isStart;
-                }
-                else
-                {
-                    Destroy(_parentGOs);
-                    Destroy(_canvasManager.InMenuZoneCanvasGO);
-                }
-
+                Destroy(_parentGOs);
                 _parentGOs = new GameObject(_names.GAME);
 
-                _canvasManager.ToggleScene(_sceneType);
-                _cameraManager.ToggleScene(_sceneType);
-                _eCSmanagerGame.SpawnAndFillEntities();
-                _eventManager.FillEvents();
-
+                _eCSmanager.ToggleScene(_sceneType);
+                _photonManager.SceneManager.ToggleScene(_sceneType);
                 _photonManager.PhotonPunRPC.RefreshAllToMaster();
 
                 break;

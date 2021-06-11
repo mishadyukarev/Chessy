@@ -1,10 +1,12 @@
 ﻿using Leopotam.Ecs;
-using System;
 using static Main;
 
-internal sealed class ECSmanager
+internal sealed class ECSManager
 {
+    private EcsWorld _commonWorld;
     private EcsWorld _gameWorld;
+
+    private EntitiesCommonManager _entitiesCommonManager;
 
     private EntitiesGeneralManager _entitiesGeneralManager;
     private SystemsGeneralManager _systemsGeneralManager;
@@ -16,8 +18,10 @@ internal sealed class ECSmanager
     private EntitiesOtherManager _entitiesOtherManager;
 
     private CellManager _cellManager;
-    protected EconomyManager _economyManager;
+    private EconomyManager _economyManager;
 
+
+    internal EntitiesCommonManager EntitiesCommonManager => _entitiesCommonManager;
 
     internal EntitiesGeneralManager EntitiesGeneralManager => _entitiesGeneralManager;
     internal SystemsGeneralManager SystemsGeneralManager => _systemsGeneralManager;
@@ -33,39 +37,54 @@ internal sealed class ECSmanager
 
 
 
-    internal ECSmanager()
+    internal ECSManager()
     {
+        _commonWorld = new EcsWorld();
         _gameWorld = new EcsWorld();
 
-        _entitiesGeneralManager = new EntitiesGeneralManager(_gameWorld);
-        _systemsGeneralManager = new SystemsGeneralManager(_gameWorld);
-        _systemsGeneralManager.CreateSystems();
+        _entitiesCommonManager = new EntitiesCommonManager(_commonWorld);
 
-        _entitiesMasterManager = new EntitiesMasterManager(_gameWorld, this);
-        _systemsMasterManager = new SystemsMasterManager(_gameWorld);
-        _systemsMasterManager.CreateSystems(this);
+        _entitiesGeneralManager = new EntitiesGeneralManager(_gameWorld, _entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
+        _systemsGeneralManager = new SystemsGeneralManager();
+
+        _entitiesMasterManager = new EntitiesMasterManager(_gameWorld);
+        _systemsMasterManager = new SystemsMasterManager();
 
         _entitiesOtherManager = new EntitiesOtherManager(_gameWorld);
-        _systemsOtherManager = new SystemsOtherManager(_gameWorld);
-        _systemsOtherManager.CreateSystems(this);
+        _systemsOtherManager = new SystemsOtherManager();
 
-        _cellManager = new CellManager();
-        _economyManager = new EconomyManager();
-
-        _cellManager.InitAfterECS(this);
-        _economyManager.InitAfterECS(this);
+        _cellManager = new CellManager(this, _entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
+        _economyManager = new EconomyManager(this);
     }
 
-    internal void InitAndProcessInjectsSystems()
+    internal void ToggleScene(SceneTypes sceneType)
     {
-        _systemsGeneralManager.InitAndProcessInjectsSystems();
-        _systemsMasterManager.InitAndProcessInjectsSystems();
-        _systemsOtherManager.InitAndProcessInjectsSystems();
-    }
+        _entitiesCommonManager.ToggleScene(sceneType);
 
-    internal void SpawnAndFillEntities()
-    {
-        _entitiesGeneralManager.SpawnAndFillEntities();
+        switch (sceneType)
+        {
+            case SceneTypes.Menu:
+                break;
+
+            case SceneTypes.Game:
+                _entitiesGeneralManager.FillEntities(_gameWorld, _entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
+
+                _systemsGeneralManager.CreateSystems(_gameWorld);
+                _systemsMasterManager.CreateSystems(_gameWorld);
+                _systemsOtherManager.CreateSystems(_gameWorld);
+
+                _systemsGeneralManager.ProcessInjects();
+                _systemsMasterManager.ProcessInjects();
+                _systemsOtherManager.ProcessInjects();
+
+                _systemsGeneralManager.Init();
+                _systemsMasterManager.Init();
+                _systemsOtherManager.Init();
+                break;
+
+            default:
+                break;
+        }
     }
 
     public void OwnUpdate()
@@ -75,11 +94,11 @@ internal sealed class ECSmanager
         if (Instance.IsMasterClient) _systemsMasterManager.Update();
         else _systemsOtherManager.Update();
     }
-    internal void FixedUpdate()
+    internal void OwnFixedUpdate()
     {
-        _systemsGeneralManager.FixedUpdate();
+        //_systemsGeneralManager.FixedUpdate();
 
-        if (Instance.IsMasterClient) _systemsMasterManager.FixedUpdate();
-        else _systemsOtherManager.FixedUpdate();
+        //if (Instance.IsMasterClient) _systemsMasterManager.FixedUpdate();
+        //else _systemsOtherManager.FixedUpdate();
     }
 }

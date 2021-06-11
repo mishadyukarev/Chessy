@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b493c22da380fea4ba3a8164359ffeb4, type: 3}
   m_Name: Sprites
   m_EditorClassIdentifier: 
-  BlackSprite: {fileID: 21300000, guid: c82f9e5fe2e215247ac62407c66a8b70, type: 3}
-  WhiteSprite: {fileID: 21300000, guid: eb2f93f5a925ea444a8e8877c2184a07, type: 3}
+  BlackSprite: {fileID: 21300000, guid: 132a18fad4c6e8242b60291675fc6707, type: 3}
+  WhiteSprite: {fileID: 21300000, guid: d39bc426ea1289b4fb42736ee7024730, type: 3}
