@@ -2,6 +2,7 @@
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 using static Main;
 
 internal sealed class SceneManager : MonoBehaviourPunCallbacks
@@ -11,12 +12,14 @@ internal sealed class SceneManager : MonoBehaviourPunCallbacks
     private TextMeshProUGUI _logTex;
     private const int MAX_PLAYERS = 2;
 
-    internal void InitMenu(CanvasMenuManager canvasMenuManager)
+    internal void InitMenu()
     {
-        _logTex = canvasMenuManager.LogText;
-        canvasMenuManager.CreateRoomButton.onClick.AddListener(CreateRoom);
-        canvasMenuManager.JoinRandomButton.onClick.AddListener(JoinRandomRoom);
-        canvasMenuManager.QuitButton.onClick.AddListener(Quit);
+
+        _logTex = Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("LogText").GetComponent<TextMeshProUGUI>();
+
+        Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("CreateRoomButton").GetComponent<Button>().onClick.AddListener(CreateRoom);
+        Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("JoinRandomButton").GetComponent<Button>().onClick.AddListener(JoinRandomRoom);
+        Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("QuitButton").GetComponent<Button>().onClick.AddListener(Quit);
 
 
         PhotonNetwork.NickName = "Player " + Random.Range(10000, 100000);

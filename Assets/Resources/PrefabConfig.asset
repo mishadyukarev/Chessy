@@ -15,4 +15,4 @@ MonoBehaviour:
   CellGO: {fileID: 1163169271467345143, guid: f47acd5886e71c74583b97cd0154c00a, type: 3}
   BackGroundCollider2D: {fileID: 3206497363972971245, guid: ca98208f96e0b8244895cbe1e68ca492,
     type: 3}
-  Camera: {fileID: 6632262037689420567, guid: 33a78a0bfa7ee9e40bb6ca2a4b383280, type: 3}
+  Camera: {fileID: 6632262037689420560, guid: 33a78a0bfa7ee9e40bb6ca2a4b383280, type: 3}

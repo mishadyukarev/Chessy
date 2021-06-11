@@ -7,18 +7,12 @@ public class UnityEvents : IDisposable
     private EventSystem _eventSystem;
     private StandaloneInputModule _standaloneInputModule;
 
-    internal UnityEvents(Builder builderManager)
+    internal UnityEvents()
     {
-        var types = new Type[]
-        {
-            typeof(EventSystem),
-            typeof(StandaloneInputModule),
-        };
+        var goES = new GameObject("EventSystem");
 
-        var goES = builderManager.CreateGameObject("EventSystem", types);
-
-        _eventSystem = goES.GetComponent<EventSystem>();
-        _standaloneInputModule = goES.GetComponent<StandaloneInputModule>();
+        _eventSystem = goES.AddComponent<EventSystem>();
+        _standaloneInputModule = goES.AddComponent<StandaloneInputModule>();
     }
 
     public void Dispose()

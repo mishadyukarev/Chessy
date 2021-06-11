@@ -5,5 +5,5 @@ internal class PrefabConfig : ScriptableObject
 {
     [SerializeField] internal GameObject CellGO;
     [SerializeField] internal GameObject BackGroundCollider2D;
-    [SerializeField] internal GameObject Camera;
+    [SerializeField] internal Camera Camera;
 }

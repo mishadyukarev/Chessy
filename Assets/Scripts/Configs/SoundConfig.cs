@@ -1,8 +1,13 @@
 ﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "SoundConfig", fileName = "SoundConfig")]
-internal class SoundConfig : ScriptableObject
+internal sealed class SoundConfig : ScriptableObject
 {
-    [SerializeField] internal AudioClip MistakeAudioClip = default;
-    [SerializeField] internal AudioClip AttackAudioClip = default;
+    [SerializeField] private AudioClip _mistakeAudioClip;
+    [SerializeField] private AudioClip _attackAudioClip;
+    [SerializeField] private AudioClip _musicAudioClip;
+
+    internal AudioClip MistakeAudioClip => _mistakeAudioClip;
+    internal AudioClip AttackAudioClip => _attackAudioClip;
+    internal AudioClip MusicAudioClip => _musicAudioClip;
 }

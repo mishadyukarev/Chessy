@@ -8,5 +8,8 @@ public enum SupportVisionTypes
     WayUnit,
     SimpleAttack,
     UniqueAttack,
-    Zone
+    Zone,
+    Fertilize,
+    Forest,
+    Ore
 }

@@ -1,6 +1,4 @@
-﻿using JetBrains.Annotations;
-using Photon.Pun;
-using UnityEngine;
+﻿using Photon.Pun;
 using static Main;
 
 internal class PhotonManager
@@ -13,15 +11,15 @@ internal class PhotonManager
     internal PhotonPunRPC PhotonPunRPC => _photonPunRPC;
 
 
-    internal PhotonManager([NotNull]GameObject mainGO, CanvasMenuManager canvasMenuManager)
+    internal PhotonManager()
     {
-        mainGO.AddComponent<PhotonView>();
-        mainGO.AddComponent<SceneManager>();
-        mainGO.AddComponent<PhotonPunRPC>();
+        Instance.gameObject.AddComponent<PhotonView>();
+        Instance.gameObject.AddComponent<SceneManager>();
+        Instance.gameObject.AddComponent<PhotonPunRPC>();
 
-        _photonView = mainGO.GetPhotonView();
-        _sceneManager = mainGO.GetComponent<SceneManager>();
-        _photonPunRPC = mainGO.GetComponent<PhotonPunRPC>();
+        _photonView = Instance.gameObject.GetPhotonView();
+        _sceneManager = Instance.gameObject.GetComponent<SceneManager>();
+        _photonPunRPC = Instance.gameObject.GetComponent<PhotonPunRPC>();
 
         _photonPunRPC.Constructor(_photonView);
 
@@ -30,8 +28,5 @@ internal class PhotonManager
 
         if (Instance.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
         else _photonView.ViewID = Instance.StartValuesGameConfig.NUMBER_PHOTON_VIEW;
-
-
-        _sceneManager.InitMenu(canvasMenuManager);
     }
 }
