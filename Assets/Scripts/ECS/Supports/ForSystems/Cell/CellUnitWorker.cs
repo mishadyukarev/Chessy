@@ -222,7 +222,7 @@ internal sealed class CellUnitWorker : CellWorker
 
         }
 
-        switch (_eGM.CellBuilEnt_BuilTypeCom(xy).BuildingType)
+        switch (_eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType)
         {
             case BuildingTypes.City:
 

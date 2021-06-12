@@ -33,9 +33,9 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
     internal ref CellComponent CellEnvEnt_CellCom(params int[] xy) => ref _cellEnvironmentEnts[xy[X], xy[Y]].Get<CellComponent>();
 
     internal ref CellBuildingComponent CellBuildEnt_CellBuilCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellBuildingComponent>();
-    internal ref BuildingTypeComponent CellBuilEnt_BuilTypeCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<BuildingTypeComponent>();
-    internal ref CellComponent CellBuildingEnt_CellCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellComponent>();
-    internal ref OwnerComponent CellBuilEnt_OwnerCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerComponent>();
+    internal ref BuildingTypeComponent CellBuildEnt_BuilTypeCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<BuildingTypeComponent>();
+    internal ref CellComponent CellBuildEnt_CellCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellComponent>();
+    internal ref OwnerComponent CellBuildEnt_OwnerCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerComponent>();
 
     internal ref CellSupportVisionComponent CellSupVisEnt_CellSupVisCom(params int[] xy) => ref _cellSupportVisionEnts[xy[X], xy[Y]].Get<CellSupportVisionComponent>();
 
@@ -177,21 +177,21 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
     }
 
 
-    internal void FillEntities(EcsWorld ecsWorld, ResourcesCommComponent resourcesCommComponent)
+    internal void FillEntities(ResourcesCommComponent resourcesCommComponent)
     {
         SpawnCells(resourcesCommComponent);
 
 
-        BackGroundGO = GameObject.Instantiate(Instance.ECSmanagerGame.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.BackGroundCollider2D,
+        BackGroundGO = GameObject.Instantiate(Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.BackGroundCollider2D,
             Instance.transform.position + new Vector3(7, 5.5f, 2), Instance.transform.rotation, Instance.ParentGOs.transform);
         BackGroundSR = BackGroundGO.GetComponent<SpriteRenderer>();
         BackGroundSR.transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
         MistakeAudioSource = Instance.Builder.CreateGameObject("MistakeAudioSource", new Type[] { typeof(AudioSource) }, Instance.ParentGOs.transform).GetComponent<AudioSource>();
-        MistakeAudioSource.clip = Instance.ECSmanagerGame.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.MistakeAudioClip;
+        MistakeAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.MistakeAudioClip;
 
         AttackAudioSource = Instance.Builder.CreateGameObject("AttackAudioSource", new Type[] { typeof(AudioSource) }, Instance.ParentGOs.transform).GetComponent<AudioSource>();
-        AttackAudioSource.clip = Instance.ECSmanagerGame.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackAudioClip;
+        AttackAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackAudioClip;
 
         EconomyEnt_EconomyCom.Fill();
         EconomyUIEnt_EconomyUICom.Fill();
@@ -259,9 +259,9 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
 
     private void SpawnCells(ResourcesCommComponent resourcesCommComponent)
     {
-        var cellGO = Instance.ECSmanagerGame.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.CellGO;
-        var whiteCellSR = Instance.ECSmanagerGame.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig.WhiteSprite;
-        var blackCellSR = Instance.ECSmanagerGame.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig.BlackSprite;
+        var cellGO = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.CellGO;
+        var whiteCellSR = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig.WhiteSprite;
+        var blackCellSR = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig.BlackSprite;
 
         var CellsGO = new GameObject[resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_X, resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_Y];
 
@@ -361,6 +361,13 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
             {
                 for (int y = 0; y < Yamount; y++)
                 {
+                    if (CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
+                    {
+                        Instance.ECSmanager.CellManager.CellBuildingWorker.ResetBuilding(x, y);
+                    }
+                    Instance.ECSmanager.CellManager.CellUnitWorker.ResetUnit(x, y);
+                    CellEnvEnt_CellEnvCom(x, y).ResetAll();
+
                     int random;
 
                     random = UnityEngine.Random.Range(1, 100);

@@ -8,7 +8,7 @@ internal abstract class SystemMasterReduction : SystemGeneralReduction
     {
         base.Init();
 
-        _eMM = Instance.ECSmanagerGame.EntitiesMasterManager;
-        _sMM = Instance.ECSmanagerGame.SystemsMasterManager;
+        _eMM = Instance.ECSmanager.EntitiesMasterManager;
+        _sMM = Instance.ECSmanager.SystemsMasterManager;
     }
 }

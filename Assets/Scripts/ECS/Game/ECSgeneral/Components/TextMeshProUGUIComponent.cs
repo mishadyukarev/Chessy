@@ -11,4 +11,5 @@ internal struct TextMeshProUGUIComponent
     }
 
     internal void SetTextMeshProUGUI(TextMeshProUGUI textMeshProUGUI) => _textMeshProUGUI = textMeshProUGUI;
+    internal void SetActive(bool isActive) => _textMeshProUGUI.gameObject.SetActive(isActive);
 }

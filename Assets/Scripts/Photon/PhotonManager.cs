@@ -22,6 +22,24 @@ internal sealed class PhotonManager
         _photonView.FindObservables(true);
 
         if (Instance.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
-        else _photonView.ViewID = Instance.ECSmanagerGame.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig.NUMBER_PHOTON_VIEW;
+        else _photonView.ViewID = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig.NUMBER_PHOTON_VIEW;
+    }
+
+    internal void ToggleScene(SceneTypes sceneType)
+    {
+        switch (sceneType)
+        {
+            case SceneTypes.Menu:
+                _sceneManager.ToggleScene(sceneType);
+                break;
+
+            case SceneTypes.Game:
+                _sceneManager.ToggleScene(sceneType);
+                _photonPunRPC.RefreshAllToMaster();
+                break;
+
+            default:
+                break;
+        }
     }
 }

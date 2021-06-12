@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 
-public abstract class SystemsManager
+internal abstract class SystemsManager
 {
     internal EcsSystems RunUpdateSystems;
 
@@ -23,16 +23,12 @@ public abstract class SystemsManager
     {
         var numberOfNamedSystem = currentSystems.GetNamedRunSystem(namedSystem);
 
-        if (numberOfNamedSystem != -1)
-        {
-            currentSystems.GetRunSystems().Items[numberOfNamedSystem].System.Run();
-            return true;
-        }
-        else
-        {
-            Debug.Log("Не нашёл систему");
-            return false;
-        }
+        var haveSystem = numberOfNamedSystem != -1;
+
+        if (haveSystem) currentSystems.GetRunSystems().Items[numberOfNamedSystem].System.Run();
+        else Debug.Log("Не нашёл систему");
+
+        return haveSystem;
     }
     internal bool TryActiveRunSystem(bool isActive, string namedSystem, EcsSystems currentSystems)
     {

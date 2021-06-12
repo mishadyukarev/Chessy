@@ -33,7 +33,7 @@ internal sealed class Main : MonoBehaviour
     internal Player LocalPlayer => PhotonNetwork.LocalPlayer;
 
     internal Names Names => _names;
-    internal ECSManager ECSmanagerGame => _eCSmanager;
+    internal ECSManager ECSmanager => _eCSmanager;
     internal Builder Builder => _builder;
     internal GameObject ParentGOs => _parentGOs;
     internal PhotonManager PhotonGameManager => _photonManager;
@@ -89,7 +89,7 @@ internal sealed class Main : MonoBehaviour
                 _parentGOs = new GameObject(_names.IN_MENU_GAME_ZONE);
 
                 _eCSmanager.ToggleScene(_sceneType);
-                _photonManager.SceneManager.ToggleScene(_sceneType);
+                _photonManager.ToggleScene(_sceneType);
                 break;
 
 
@@ -98,9 +98,7 @@ internal sealed class Main : MonoBehaviour
                 _parentGOs = new GameObject(_names.GAME);
 
                 _eCSmanager.ToggleScene(_sceneType);
-                _photonManager.SceneManager.ToggleScene(_sceneType);
-                _photonManager.PhotonPunRPC.RefreshAllToMaster();
-
+                _photonManager.ToggleScene(_sceneType);
                 break;
 
             default:

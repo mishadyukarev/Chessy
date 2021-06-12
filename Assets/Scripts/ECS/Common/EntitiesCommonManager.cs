@@ -10,21 +10,27 @@ internal sealed class EntitiesCommonManager : EntitiesManager
     private EcsEntity _saverEnt;
     internal ref SaverCommonComponent SaverEnt_SaverCommonCom => ref _saverEnt.Get<SaverCommonComponent>();
 
+
     private EcsEntity _resourcesEnt;
     internal ref ResourcesCommComponent ResourcesEnt_ResourcesCommonCom => ref _resourcesEnt.Get<ResourcesCommComponent>();
 
+
     private EcsEntity _cameraEnt;
     internal ref CameraCommComponent CameraEnt_CameraCommonCom => ref _cameraEnt.Get<CameraCommComponent>();
+
 
     private EcsEntity _soundEnt;
     internal ref AudioSourceCommComponent SoundEnt_AudioSourceCommCom => ref _soundEnt.Get<AudioSourceCommComponent>();
     internal ref SliderCommComponent SoundEnt_SliderCommCom => ref _soundEnt.Get<SliderCommComponent>();
 
+
     private EcsEntity _canvasEnt;
     internal ref CanvasCommComponent CanvasEnt_CanvasCommCom => ref _canvasEnt.Get<CanvasCommComponent>();
 
+
     private EcsEntity _unityEventEnt;
     internal ref UnityEventCommComponent UnityEventEnt_CanvasCommCom => ref _unityEventEnt.Get<UnityEventCommComponent>();
+
 
     internal EntitiesCommonManager(EcsWorld ecsWorld)
     {
@@ -51,7 +57,6 @@ internal sealed class EntitiesCommonManager : EntitiesManager
 
         _canvasEnt = ecsWorld.NewEntity();
         CanvasEnt_CanvasCommCom.Canvas = GameObject.Instantiate(ResourcesEnt_ResourcesCommonCom.Canvas);
-
         GameObject.Destroy(CanvasEnt_CanvasCommCom.Canvas.transform.Find("InMenuZone").gameObject);
         GameObject.Destroy(CanvasEnt_CanvasCommCom.Canvas.transform.Find("InGameZone").gameObject);
 

@@ -11,7 +11,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
         base.Run();
 
 
-        if (_cM.CellUnitWorker.HaveMaxSteps(XyCell) && !_eGM.CellBuilEnt_BuilTypeCom(XyCell).HaveBuilding)
+        if (_cM.CellUnitWorker.HaveMaxSteps(XyCell) && !_eGM.CellBuildEnt_BuilTypeCom(XyCell).HaveBuilding)
         {
             bool canSet = false;
             switch (BuildingType)

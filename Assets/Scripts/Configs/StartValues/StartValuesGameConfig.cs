@@ -308,9 +308,6 @@ public class StartValuesGameConfig : ScriptableObject
 
     internal readonly int CELL_COUNT_X = 15;
     internal readonly int CELL_COUNT_Y = 12;
-    //internal readonly int X = 0;
-    //internal readonly int Y = 1;
-    //internal readonly int XY_FOR_ARRAY = 2;
 
     #endregion
 

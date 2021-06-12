@@ -12,15 +12,15 @@ internal abstract class SystemGeneralReduction : IEcsInitSystem, IEcsRunSystem
 
     protected SystemGeneralReduction()
     {
-        _startValuesGameConfig = Instance.ECSmanagerGame.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
+        _startValuesGameConfig = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
     }
 
     public virtual void Init()
     {
-        _eGM = Instance.ECSmanagerGame.EntitiesGeneralManager;
-        _sGM = Instance.ECSmanagerGame.SystemsGeneralManager;
-        _cM = Instance.ECSmanagerGame.CellManager;
-        _eM = Instance.ECSmanagerGame.EconomyManager;
+        _eGM = Instance.ECSmanager.EntitiesGeneralManager;
+        _sGM = Instance.ECSmanager.SystemsGeneralManager;
+        _cM = Instance.ECSmanager.CellManager;
+        _eM = Instance.ECSmanager.EconomyManager;
     }
 
     public virtual void Run()

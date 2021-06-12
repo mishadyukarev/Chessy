@@ -9,13 +9,13 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
     {
         base.Run();
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected && _eGM.CellBuilEnt_BuilTypeCom(XySelectedCell).BuildingType != BuildingTypes.City)
+        if (_eGM.SelectorEnt_SelectorCom.IsSelected && _eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType != BuildingTypes.City)
         {
-            _eGM.LeftZoneEnt_ParentCom.SetActive(true);
+            _eGM.EnvironmentZoneEnt_ParentCom.SetActive(true);
         }
         else
         {
-            _eGM.LeftZoneEnt_ParentCom.SetActive(false);
+            _eGM.EnvironmentZoneEnt_ParentCom.SetActive(false);
         }
 
         _eGM.EnvFerilizerEnt_TextMeshProUGUICom.Text = "Fertilizer: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountFertilizerResources;

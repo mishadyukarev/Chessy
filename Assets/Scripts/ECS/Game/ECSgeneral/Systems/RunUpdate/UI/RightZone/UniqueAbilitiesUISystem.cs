@@ -9,9 +9,6 @@
         base.Run();
 
 
-        _eGM.Unique1AbilityEnt_ButtonCom.SetActive(false);
-        _eGM.Unique2AbilityEnt_ButtonCom.SetActive(false);
-        _eGM.Unique3AbilityEnt_ButtonCom.SetActive(false);
 
         if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
         {
@@ -25,6 +22,7 @@
                     break;
 
                 case UnitTypes.Pawn:
+                    _eGM.UniqueAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(true);
                     _eGM.Unique1AbilityEnt_ButtonCom.SetActive(true);
                     _eGM.Unique1AbilityEnt_ButtonCom.RemoveAllListeners();
                     _eGM.Unique1AbilityEnt_ButtonCom.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityOne); });
@@ -61,6 +59,13 @@
                     break;
             }
 
+        }
+        else
+        {
+            _eGM.UniqueAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
+            _eGM.Unique1AbilityEnt_ButtonCom.SetActive(false);
+            _eGM.Unique2AbilityEnt_ButtonCom.SetActive(false);
+            _eGM.Unique3AbilityEnt_ButtonCom.SetActive(false);
         }
     }
 

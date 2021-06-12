@@ -14,7 +14,7 @@ internal sealed class EconomyManager
     private int _numberIron = 3;
     private int _numberGold = 4;
 
-    private StartValuesGameConfig StartValuesGameConfig => Instance.ECSmanagerGame.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
+    private StartValuesGameConfig StartValuesGameConfig => Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
     internal int AmountResourse => _amountResourse;
     internal int NumberFood => _numberFood;
     internal int NumberWood => _numberWood;
@@ -109,8 +109,6 @@ internal sealed class EconomyManager
             default:
                 break;
         }
-
-        _eGM.BuildingsEnt_BuildingsCom.AddAmountBuildings(buildingType, player.IsMasterClient);
     }
 
 

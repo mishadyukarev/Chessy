@@ -13,7 +13,7 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
         {
             if (_cM.CellUnitWorker.HaveMaxSteps(XyCell))
             {
-                if (_eGM.CellBuilEnt_BuilTypeCom(XyCell).BuildingType == BuildingTypes.City)
+                if (_eGM.CellBuildEnt_BuilTypeCom(XyCell).BuildingType == BuildingTypes.City)
                 {
                     _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XyCell).ActorNumber);
                 }

@@ -91,12 +91,38 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
 
     #region Right
 
+    private EcsEntity _rightZoneEnt;
+    internal ref ParentComponent RightZoneEnt_ParentCom => ref _rightZoneEnt.Get<ParentComponent>();
+
+
     #region StatsZone
 
     private EcsEntity _statsZoneEnt;
     internal ref ParentComponent StatsEnt_ParentCom => ref _statsZoneEnt.Get<ParentComponent>();
 
     #endregion
+
+
+    #region StandartAbilities
+
+    private EcsEntity _standartAbilitiesZoneEnt;
+    internal ref TextMeshProUGUIComponent StandartAbilitiesZoneEnt_TextMeshProUGUICom => ref _standartAbilitiesZoneEnt.Get<TextMeshProUGUIComponent>();
+
+
+    private EcsEntity _standartFirstAbilityEnt;
+    internal ref ButtonComponent StandartFirstAbilityEnt_ButtonCom => ref _standartFirstAbilityEnt.Get<ButtonComponent>();
+
+
+    private EcsEntity _standartSecondAbilityEnt;
+    internal ref ButtonComponent StandartSecondAbilityEnt_ButtonCom => ref _standartSecondAbilityEnt.Get<ButtonComponent>();
+
+    #endregion
+
+
+    #region UniqueAbilities
+
+    private EcsEntity _uniqueAbilitiesZoneEnt;
+    internal ref TextMeshProUGUIComponent UniqueAbilitiesZoneEnt_TextMeshProUGUICom => ref _uniqueAbilitiesZoneEnt.Get<TextMeshProUGUIComponent>();
 
 
     private EcsEntity _uniqueFirstAbilityEnt;
@@ -116,10 +142,40 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
     #endregion
 
 
+    #region BuildingAbilities
+
+    private EcsEntity _buildingAbilitiesZoneEnt;
+    internal ref TextMeshProUGUIComponent BuildingAbilitiesZoneEnt_TextMeshProUGUICom => ref _buildingAbilitiesZoneEnt.Get<TextMeshProUGUIComponent>();
+
+
+    private EcsEntity _buildingFirstAbilityEnt;
+    internal ref ButtonComponent BuildingFirstAbilityEnt_ButtonCom => ref _buildingFirstAbilityEnt.Get<ButtonComponent>();
+    internal ref TextMeshProUGUIComponent BuildingFirstAbilityEnt_TextMeshProGUICom => ref _buildingFirstAbilityEnt.Get<TextMeshProUGUIComponent>();
+
+
+    private EcsEntity _buildingSecondAbilityEnt;
+    internal ref ButtonComponent BuildingSecondAbilityEnt_ButtonCom => ref _buildingSecondAbilityEnt.Get<ButtonComponent>();
+    internal ref TextMeshProUGUIComponent BuildingSecondAbilityEnt_TextMeshProGUICom => ref _buildingSecondAbilityEnt.Get<TextMeshProUGUIComponent>();
+
+
+    private EcsEntity _buildingThirdAbilityEnt;
+    internal ref ButtonComponent BuildingThirdAbilityEnt_ButtonCom => ref _buildingThirdAbilityEnt.Get<ButtonComponent>();
+    internal ref TextMeshProUGUIComponent BuildingThirdAbilityEnt_TextMeshProGUICom => ref _buildingThirdAbilityEnt.Get<TextMeshProUGUIComponent>();
+
+
+    private EcsEntity _buildingFourthAbilityEnt;
+    internal ref ButtonComponent BuildingFourthAbilityEnt_ButtonCom => ref _buildingFourthAbilityEnt.Get<ButtonComponent>();
+    internal ref TextMeshProUGUIComponent BuildingFourthAbilityEnt_TextMeshProGUICom => ref _buildingFourthAbilityEnt.Get<TextMeshProUGUIComponent>();
+
+    #endregion
+
+    #endregion
+
+
     #region Left
 
     private EcsEntity _leftZoneEnt;
-    internal ref ImageComponent LeftZoneEnt_ImageCom => ref _leftZoneEnt.Get<ImageComponent>();
+    //internal ref ImageComponent LeftZoneEnt_ImageCom => ref _leftZoneEnt.Get<ImageComponent>();
     internal ref ParentComponent LeftZoneEnt_ParentCom => ref _leftZoneEnt.Get<ParentComponent>();
 
 
@@ -129,8 +185,48 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
     internal ref ParentComponent BuildingZoneEnt_ParentCom => ref _buildingZoneEnt.Get<ParentComponent>();
 
 
+
     private EcsEntity _meltOreUIEnt;
     internal ref ButtonComponent MeltOreEnt_ButtonCom => ref _meltOreUIEnt.Get<ButtonComponent>();
+
+
+
+    private EcsEntity _buyPawnUIEnt;
+    internal ref ButtonComponent BuyPawnUIEnt_ButtonCom => ref _buyPawnUIEnt.Get<ButtonComponent>();
+
+
+    private EcsEntity _buyRookUIEnt;
+    internal ref ButtonComponent BuyRookUIEnt_ButtonCom => ref _buyRookUIEnt.Get<ButtonComponent>();
+
+
+    private EcsEntity _buyBishopUIEnt;
+    internal ref ButtonComponent BuyBishopUIEnt_ButtonCom => ref _buyBishopUIEnt.Get<ButtonComponent>();
+
+
+
+    private EcsEntity _upgradePawnUIEnt;
+    internal ref ButtonComponent UpgradePawnUIEnt_ButtonCom => ref _upgradePawnUIEnt.Get<ButtonComponent>();
+
+
+    private EcsEntity _upgradeRookUIEnt;
+    internal ref ButtonComponent UpgradeRookUIEnt_ButtonCom => ref _upgradeRookUIEnt.Get<ButtonComponent>();
+
+
+    private EcsEntity _upgradeBishopUIEnt;
+    internal ref ButtonComponent UpgradeBishopUIEnt_ButtonCom => ref _upgradeBishopUIEnt.Get<ButtonComponent>();
+
+
+
+    private EcsEntity _upgradeFarmUIEnt;
+    internal ref ButtonComponent UpgradeFarmUIEnt_ButtonCom => ref _upgradeFarmUIEnt.Get<ButtonComponent>();
+
+
+    private EcsEntity _upgradeWoodcutterUIEnt;
+    internal ref ButtonComponent UpgradeWoodcutterUIEnt_ButtonCom => ref _upgradeWoodcutterUIEnt.Get<ButtonComponent>();
+
+
+    private EcsEntity _upgradeMineUIEnt;
+    internal ref ButtonComponent UpgradeMineUIEnt_ButtonCom => ref _upgradeMineUIEnt.Get<ButtonComponent>();
 
     #endregion
 
@@ -232,64 +328,49 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
 
         #region LeftZone
 
-        _leftZoneEnt = gameWorld.NewEntity()
-            .Replace(new ParentComponent())
-            .Replace(new ImageComponent());
+        _leftZoneEnt = gameWorld.NewEntity();
 
+        _buildingZoneEnt = gameWorld.NewEntity();
+        _meltOreUIEnt = gameWorld.NewEntity();
+        _buyPawnUIEnt = gameWorld.NewEntity();
+        _buyRookUIEnt = gameWorld.NewEntity();
+        _buyBishopUIEnt = gameWorld.NewEntity();
+        _upgradePawnUIEnt = gameWorld.NewEntity();
+        _upgradeRookUIEnt = gameWorld.NewEntity();
+        _upgradeBishopUIEnt = gameWorld.NewEntity();
+        _upgradeFarmUIEnt = gameWorld.NewEntity();
+        _upgradeWoodcutterUIEnt = gameWorld.NewEntity();
+        _upgradeMineUIEnt = gameWorld.NewEntity();
 
-        #region BuildingZone
-
-        _buildingZoneEnt = gameWorld.NewEntity()
-            .Replace(new ParentComponent());
-
-        _meltOreUIEnt = gameWorld.NewEntity()
-            .Replace(new ButtonComponent());
-
-        #endregion
-
-
-        #region Environment
-
-        _environmentZoneEnt = gameWorld.NewEntity()
-            .Replace(new ParentComponent());
-
-        _environmentInfoEnt = gameWorld.NewEntity()
-            .Replace(new ButtonComponent());
-
-        _envFertilizerEnt = gameWorld.NewEntity()
-            .Replace(new TextMeshProUGUIComponent());
-
-        _envForestEnt = gameWorld.NewEntity()
-            .Replace(new TextMeshProUGUIComponent());
-
-        _envOreEnt = gameWorld.NewEntity()
-            .Replace(new TextMeshProUGUIComponent());
-
-        #endregion
+        _environmentZoneEnt = gameWorld.NewEntity();
+        _environmentInfoEnt = gameWorld.NewEntity();
+        _envFertilizerEnt = gameWorld.NewEntity();
+        _envForestEnt = gameWorld.NewEntity();
+        _envOreEnt = gameWorld.NewEntity();
 
         #endregion
 
 
         #region Right
 
-        #region StatsZone
+        _rightZoneEnt = gameWorld.NewEntity();
 
-        _statsZoneEnt = gameWorld.NewEntity()
-            .Replace(new ParentComponent());
+        _statsZoneEnt = gameWorld.NewEntity();
 
-        #endregion
+        _standartAbilitiesZoneEnt = gameWorld.NewEntity();
+        _standartFirstAbilityEnt = gameWorld.NewEntity();
+        _standartSecondAbilityEnt = gameWorld.NewEntity();
 
-        _uniqueFirstAbilityEnt = gameWorld.NewEntity()
-            .Replace(new ButtonComponent())
-            .Replace(new TextMeshProUGUIComponent());
+        _uniqueAbilitiesZoneEnt = gameWorld.NewEntity();
+        _uniqueFirstAbilityEnt = gameWorld.NewEntity();
+        _uniqueSecondAbilityEnt = gameWorld.NewEntity();
+        _uniqueThirdAbilityEnt = gameWorld.NewEntity();
 
-        _uniqueSecondAbilityEnt = gameWorld.NewEntity()
-            .Replace(new ButtonComponent())
-            .Replace(new TextMeshProUGUIComponent());
-
-        _uniqueThirdAbilityEnt = gameWorld.NewEntity()
-            .Replace(new ButtonComponent())
-            .Replace(new TextMeshProUGUIComponent());
+        _buildingAbilitiesZoneEnt = gameWorld.NewEntity();
+        _buildingFirstAbilityEnt = gameWorld.NewEntity();
+        _buildingSecondAbilityEnt = gameWorld.NewEntity();
+        _buildingThirdAbilityEnt = gameWorld.NewEntity();
+        _buildingFourthAbilityEnt = gameWorld.NewEntity();
 
         #endregion
 
@@ -359,19 +440,6 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
         TruceEnt_MistakeCom.CreateEvent();
 
 
-        var uniqueAbilityButton1 = GameObject.Find("UniqueAbilityButton1").GetComponent<Button>();
-        Unique1AbilityEnt_ButtonCom.SetButton(uniqueAbilityButton1);
-        UniqueFirstAbilityEnt_TextMeshProGUICom.SetTextMeshProUGUI(uniqueAbilityButton1.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
-
-        var uniqueAbilityButton2 = GameObject.Find("UniqueAbilityButton2").GetComponent<Button>();
-        Unique2AbilityEnt_ButtonCom.SetButton(uniqueAbilityButton2);
-        Unique2AbilityEnt_TextMeshProGUICom.SetTextMeshProUGUI(uniqueAbilityButton2.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
-
-        var uniqueAbilityButton3 = GameObject.Find("UniqueAbilityButton3").GetComponent<Button>();
-        Unique3AbilityEnt_ButtonCom.SetButton(uniqueAbilityButton3);
-        Unique3AbilityEnt_TextMeshProGUICom.SetTextMeshProUGUI(uniqueAbilityButton3.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
-
-
         #endregion
 
 
@@ -380,7 +448,6 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
         var leftZoneGO = Instance.CanvasManager.InGameZoneGO.transform.Find("LeftZone").gameObject;
 
         LeftZoneEnt_ParentCom.SetParent(leftZoneGO);
-        LeftZoneEnt_ImageCom.SetImage(leftZoneGO.transform.Find("LeftZoneImage").GetComponent<Image>());
 
 
         #region BuildingZone
@@ -390,6 +457,15 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
         BuildingZoneEnt_ParentCom.SetParent(buildingZoneGO);
 
         MeltOreEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("MeltOreButton").GetComponent<Button>());
+        BuyPawnUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("BuyPawnButton").GetComponent<Button>());
+        BuyRookUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("BuyRookButton").GetComponent<Button>());
+        BuyBishopUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("BuyBishopButton").GetComponent<Button>());
+        UpgradePawnUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradePawnButton").GetComponent<Button>());
+        UpgradeRookUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradeRookButton").GetComponent<Button>());
+        UpgradeBishopUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradeBishopButton").GetComponent<Button>());
+        UpgradeFarmUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradeFarmButton").GetComponent<Button>());
+        UpgradeWoodcutterUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradeWoodcutterButton").GetComponent<Button>());
+        UpgradeMineUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradeMineButton").GetComponent<Button>());
 
         #endregion
 
@@ -417,7 +493,39 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
 
         var rightZoneGO = Instance.CanvasManager.InGameZoneGO.transform.Find("RightZone").gameObject;
 
+        RightZoneEnt_ParentCom.SetParent(rightZoneGO);
+
         StatsEnt_ParentCom.SetParent(rightZoneGO.transform.Find("StatsZone").gameObject);
+
+        StandartAbilitiesZoneEnt_TextMeshProUGUICom.SetTextMeshProUGUI(rightZoneGO.transform.Find("StandartAbilityText").GetComponent<TextMeshProUGUI>());
+        StandartFirstAbilityEnt_ButtonCom.SetButton(rightZoneGO.transform.Find("StandartAbilityButton1").GetComponent<Button>());
+        StandartSecondAbilityEnt_ButtonCom.SetButton(rightZoneGO.transform.Find("StandartAbilityButton2").GetComponent<Button>());
+
+
+        UniqueAbilitiesZoneEnt_TextMeshProUGUICom.SetTextMeshProUGUI(rightZoneGO.transform.Find("UniqueAbilitiesText").GetComponent<TextMeshProUGUI>());
+
+        var uniqueAbilityButton1 = rightZoneGO.transform.Find("UniqueAbilityButton1").GetComponent<Button>();
+        Unique1AbilityEnt_ButtonCom.SetButton(uniqueAbilityButton1);
+        UniqueFirstAbilityEnt_TextMeshProGUICom.SetTextMeshProUGUI(uniqueAbilityButton1.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+
+        var uniqueAbilityButton2 = rightZoneGO.transform.Find("UniqueAbilityButton2").GetComponent<Button>();
+        Unique2AbilityEnt_ButtonCom.SetButton(uniqueAbilityButton2);
+        Unique2AbilityEnt_TextMeshProGUICom.SetTextMeshProUGUI(uniqueAbilityButton2.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+
+        var uniqueAbilityButton3 = rightZoneGO.transform.Find("UniqueAbilityButton3").GetComponent<Button>();
+        Unique3AbilityEnt_ButtonCom.SetButton(uniqueAbilityButton3);
+        Unique3AbilityEnt_TextMeshProGUICom.SetTextMeshProUGUI(uniqueAbilityButton3.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+
+
+        BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetTextMeshProUGUI(rightZoneGO.transform.Find("BuildingAbilitiesText").GetComponent<TextMeshProUGUI>());
+        var buildingFirstAbilityButtom = rightZoneGO.transform.Find("BuildingAbilityButton1").GetComponent<Button>();
+        BuildingFirstAbilityEnt_ButtonCom.SetButton(buildingFirstAbilityButtom);
+        BuildingFirstAbilityEnt_TextMeshProGUICom.SetTextMeshProUGUI(buildingFirstAbilityButtom.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+        BuildingSecondAbilityEnt_ButtonCom.SetButton(rightZoneGO.transform.Find("BuildingAbilityButton2").GetComponent<Button>());
+        BuildingThirdAbilityEnt_ButtonCom.SetButton(rightZoneGO.transform.Find("BuildingAbilityButton3").GetComponent<Button>());
+        var buildingFourthAbilityButtom = rightZoneGO.transform.Find("BuildingAbilityButton4").GetComponent<Button>();
+        BuildingFourthAbilityEnt_ButtonCom.SetButton(buildingFourthAbilityButtom);
+        BuildingFourthAbilityEnt_TextMeshProGUICom.SetTextMeshProUGUI(buildingFourthAbilityButtom.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
 
         #endregion
     }

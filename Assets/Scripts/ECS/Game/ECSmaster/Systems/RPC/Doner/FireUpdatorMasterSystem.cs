@@ -20,7 +20,11 @@
 
                     if (_eGM.CellEffectEnt_CellEffectCom(x, y).TimeFire >= 3)
                     {
-                        _cM.CellBuildingWorker.ResetBuilding(x, y);
+                        if(_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
+                        {
+                            _cM.CellBuildingWorker.ResetBuilding(x, y);
+                        }
+
 
                         _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
 

@@ -1,13 +1,9 @@
 ﻿using System;
 
-internal struct BuildingTypeComponent : IDisposable
+internal struct BuildingTypeComponent
 {
     internal BuildingTypes BuildingType;
 
     internal bool HaveBuilding => BuildingType != BuildingTypes.None;
 
-    public void Dispose()
-    {
-        BuildingType = default;
-    }
 }

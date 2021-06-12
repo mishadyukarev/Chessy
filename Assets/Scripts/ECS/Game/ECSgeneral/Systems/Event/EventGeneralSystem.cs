@@ -4,6 +4,8 @@ internal sealed class EventGeneralSystem : RPCGeneralSystemReduction
 {
     private SceneManager _sceneManager;
 
+    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
+
     internal EventGeneralSystem()
     {
         _sceneManager = Instance.PhotonGameManager.SceneManager;
@@ -27,6 +29,9 @@ internal sealed class EventGeneralSystem : RPCGeneralSystemReduction
         _eGM.EnvironmentInfoEnt_ButtonCom.AddListener(EnvironmentInfo);
 
         _eGM.LeaveEnt_ButtonCom.AddListener(_sceneManager.LeaveRoom);
+
+        _eGM.StandartFirstAbilityEnt_ButtonCom.AddListener(StandartAbilityButton1);
+        _eGM.StandartSecondAbilityEnt_ButtonCom.AddListener(StandartAbilityButton2);
     }
 
 
@@ -38,4 +43,6 @@ internal sealed class EventGeneralSystem : RPCGeneralSystemReduction
     private void Done() => _photonPunRPC.DoneToMaster(!_eGM.DonerEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient));
     private void Truce() => _photonPunRPC.TruceToMaster(!_eGM.TruceEnt_ActivatedDictCom.IsActivated(Instance.IsMasterClient));
     private void EnvironmentInfo() => _eGM.EnvironmentInfoEnt_IsActivatedCom.IsActivated = !_eGM.EnvironmentInfoEnt_IsActivatedCom.IsActivated;
+    private void StandartAbilityButton1() => _photonPunRPC.ProtectUnitToMaster(!_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsProtected, XySelectedCell);
+    private void StandartAbilityButton2() => _photonPunRPC.RelaxUnitToMaster(!_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsRelaxed, XySelectedCell);
 }

@@ -168,6 +168,22 @@ internal struct CellEnvironmentComponent
         }
     }
 
+    internal void ResetAll()
+    {
+        _haveMountain = false;
+        _mountainGO.SetActive(false);
+        _haveAdultTree = false;
+        _adultTreeGO.SetActive(false);
+        AmountForestResources = 0;
+        _haveYoungTree = false;
+        _youngTreeGO.SetActive(false);
+        _haveHill = false;
+        _hillGO.SetActive(false);
+        _haveFertilizer = false;
+        _fertilizerGO.SetActive(false);
+        AmountFertilizerResources = 0;
+    }
+
     internal void Fill(GameObject environmentGO)
     {
         _fertilizerGO = environmentGO.transform.Find("Food").gameObject;

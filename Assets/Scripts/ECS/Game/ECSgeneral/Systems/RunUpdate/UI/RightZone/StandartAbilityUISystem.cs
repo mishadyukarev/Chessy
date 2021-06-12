@@ -1,75 +1,62 @@
-﻿using UnityEngine.UI;
+﻿using UnityEngine;
+using UnityEngine.UI;
 
 internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
 {
-    private Button _standartAbilityButton1;
-    private Button _standartAbilityButton2;
-
     private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
-
-    internal StandartAbilityUISystem()
-    {
-        //_standartAbilityButton1 = Main.Instance.CanvasGameManager.StandartAbilityButton1;
-        //_standartAbilityButton1.onClick.AddListener(delegate { StandartAbilityButton1(); });
-        //_standartAbilityButton2 = Main.Instance.CanvasGameManager.StandartAbilityButton2;
-        //_standartAbilityButton2.onClick.AddListener(delegate { StandartAbilityButton2(); });
-    }
 
     public override void Run()
     {
         base.Run();
 
 
-        //if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
-        //{
-        //    switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
-        //    {
-        //        case UnitTypes.None:
-        //            ActiveStandartAbilities(false);
-        //            break;
+        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+        {
+            switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
+            {
+                case UnitTypes.None:
+                    ActiveStandartAbilities(false);
+                    break;
 
-        //        case UnitTypes.King:
-        //            ActiveStandartAbilities(true);
-        //            break;
+                case UnitTypes.King:
+                    ActiveStandartAbilities(true);
+                    break;
 
-        //        case UnitTypes.Pawn:
-        //            ActiveStandartAbilities(true);
-        //            break;
+                case UnitTypes.Pawn:
+                    ActiveStandartAbilities(true);
+                    break;
 
-        //        case UnitTypes.Rook:
-        //            ActiveStandartAbilities(true);
-        //            break;
+                case UnitTypes.Rook:
+                    ActiveStandartAbilities(true);
+                    break;
 
-        //        case UnitTypes.Bishop:
-        //            ActiveStandartAbilities(true);
-        //            break;
+                case UnitTypes.Bishop:
+                    ActiveStandartAbilities(true);
+                    break;
 
-        //        default:
-        //            break;
-        //    }
-        //}
-        //else
-        //{
-        //    ActiveStandartAbilities(false);
-        //}
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            ActiveStandartAbilities(false);
+        }
 
-        //void ActiveStandartAbilities(bool isActive)
-        //{
-        //    _standartAbilityButton1.gameObject.SetActive(isActive);
-        //    _standartAbilityButton2.gameObject.SetActive(isActive);
+        void ActiveStandartAbilities(bool isActive)
+        {
+            _eGM.StandartAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(isActive);
+            _eGM.StandartFirstAbilityEnt_ButtonCom.SetActive(isActive);
+            _eGM.StandartSecondAbilityEnt_ButtonCom.SetActive(isActive);
 
-        //    if (isActive)
-        //    {
-        //        if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsProtected) _standartAbilityButton1.image.color = Color.yellow;
-        //        else _standartAbilityButton1.image.color = Color.white;
+            if (isActive)
+            {
+                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsProtected) _eGM.StandartFirstAbilityEnt_ButtonCom.SetColor(Color.yellow);
+                else _eGM.StandartFirstAbilityEnt_ButtonCom.SetColor(Color.white);
 
-        //        if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsRelaxed) _standartAbilityButton2.image.color = Color.green;
-        //        else _standartAbilityButton2.image.color = Color.white;
-        //    }
-        //}
+                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsRelaxed) _eGM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.green);
+                else _eGM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.white);
+            }
+        }
     }
-
-
-    private void StandartAbilityButton1() => _photonPunRPC.ProtectUnitToMaster(!_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsProtected, XySelectedCell);
-    private void StandartAbilityButton2() => _photonPunRPC.RelaxUnitToMaster(!_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsRelaxed, XySelectedCell);
 }

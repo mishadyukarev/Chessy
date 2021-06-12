@@ -10,7 +10,7 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMinAmountSteps && _eGM.CellBuilEnt_BuilTypeCom(XyCell).BuildingType != BuildingTypes.City)
+        if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMinAmountSteps && _eGM.CellBuildEnt_BuilTypeCom(XyCell).BuildingType != BuildingTypes.City)
         {
             bool haveFood = true;
             bool haveWood = true;

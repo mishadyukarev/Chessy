@@ -322,11 +322,11 @@ internal sealed class PhotonPunRPC : MonoBehaviour
                 listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveHill);
                 listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveMountain);
 
-                listObjects.Add(_eGM.CellBuilEnt_BuilTypeCom(x, y).HaveBuilding);
-                if (_eGM.CellBuilEnt_BuilTypeCom(x, y).HaveBuilding)
+                listObjects.Add(_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding);
+                if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
                 {
-                    listObjects.Add(_eGM.CellBuilEnt_BuilTypeCom(x, y).BuildingType);
-                    listObjects.Add(_eGM.CellBuilEnt_OwnerCom(x, y).ActorNumber);
+                    listObjects.Add(_eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType);
+                    listObjects.Add(_eGM.CellBuildEnt_OwnerCom(x, y).ActorNumber);
                 }
 
 

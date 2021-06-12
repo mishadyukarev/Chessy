@@ -42,7 +42,9 @@ internal sealed class ECSManager
         _commonWorld = new EcsWorld();
         _gameWorld = new EcsWorld();
 
+
         _entitiesCommonManager = new EntitiesCommonManager(_commonWorld);
+
 
         _entitiesGeneralManager = new EntitiesGeneralManager(_gameWorld, _entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
         _systemsGeneralManager = new SystemsGeneralManager();
@@ -53,8 +55,24 @@ internal sealed class ECSManager
         _entitiesOtherManager = new EntitiesOtherManager(_gameWorld);
         _systemsOtherManager = new SystemsOtherManager();
 
+
         _cellManager = new CellManager(this, _entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
         _economyManager = new EconomyManager(this);
+    }
+
+    internal void OwnUpdate()
+    {
+        _systemsGeneralManager.Update();
+
+        if (Instance.IsMasterClient) _systemsMasterManager.Update();
+        else _systemsOtherManager.Update();
+    }
+    internal void OwnFixedUpdate()
+    {
+        //_systemsGeneralManager.FixedUpdate();
+
+        //if (Instance.IsMasterClient) _systemsMasterManager.FixedUpdate();
+        //else _systemsOtherManager.FixedUpdate();
     }
 
     internal void ToggleScene(SceneTypes sceneType)
@@ -67,7 +85,7 @@ internal sealed class ECSManager
                 break;
 
             case SceneTypes.Game:
-                _entitiesGeneralManager.FillEntities(_gameWorld, _entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
+                _entitiesGeneralManager.FillEntities(_entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
 
                 _systemsGeneralManager.CreateSystems(_gameWorld);
                 _systemsMasterManager.CreateSystems(_gameWorld);
@@ -85,20 +103,5 @@ internal sealed class ECSManager
             default:
                 break;
         }
-    }
-
-    public void OwnUpdate()
-    {
-        _systemsGeneralManager.Update();
-
-        if (Instance.IsMasterClient) _systemsMasterManager.Update();
-        else _systemsOtherManager.Update();
-    }
-    internal void OwnFixedUpdate()
-    {
-        //_systemsGeneralManager.FixedUpdate();
-
-        //if (Instance.IsMasterClient) _systemsMasterManager.FixedUpdate();
-        //else _systemsOtherManager.FixedUpdate();
     }
 }

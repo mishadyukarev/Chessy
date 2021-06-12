@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-public class SystemsGeneralManager : SystemsManager
+internal sealed class SystemsGeneralManager : SystemsManager
 {
     internal EcsSystems ForSelectorRunUpdateSystem;
     internal EcsSystems EventSystems;
@@ -22,7 +22,7 @@ public class SystemsGeneralManager : SystemsManager
             .Add(new BuildingUISystem(), nameof(BuildingUISystem))
             .Add(new EconomyUISystem(), nameof(EconomyUISystem))
             .Add(new MistakeUISystem(), nameof(MistakeUISystem))
-            .Add(new CityUISystem(), nameof(CityUISystem))
+            .Add(new LeftBuildingUISystem(), nameof(LeftBuildingUISystem))
             .Add(new UpdatedUISystem(), nameof(UpdatedUISystem))
             .Add(new UniqueAbilitiesUISystem(), nameof(UniqueAbilitiesUISystem))
             .Add(new TruceUISystem(), nameof(TruceUISystem))
