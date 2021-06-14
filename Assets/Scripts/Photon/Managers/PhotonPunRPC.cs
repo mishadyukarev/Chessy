@@ -45,8 +45,8 @@ internal sealed class PhotonPunRPC : MonoBehaviour
     #region PUN
 
     internal void ReadyToMaster(in bool isReady) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Ready, new object[] { isReady });
-    internal void ReadyToGeneral(Player playerTo, bool isCurrentReady) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Ready, new object[] { isCurrentReady });
-    internal void ReadyToGeneral(RpcTarget rpcTarget, bool isCurrentReady) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Ready, new object[] { isCurrentReady });
+    internal void ReadyToGeneral(Player playerTo, bool isCurrentReady, bool isStartedGame) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Ready, new object[] { isCurrentReady, isStartedGame });
+    internal void ReadyToGeneral(RpcTarget rpcTarget, bool isCurrentReady, bool isStartedGame) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Ready, new object[] { isCurrentReady, isStartedGame });
 
     internal void DoneToMaster(bool isDone) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Done, new object[] { isDone });
     internal void DoneToGeneral(Player playerTo, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Done, new object[] { isRefreshed, isDone, numberMotion });
@@ -209,7 +209,9 @@ internal sealed class PhotonPunRPC : MonoBehaviour
 
             case RpcTypes.Ready:
                 bool isActivated = (bool)objects[_i++];
+                bool isStartedGame = (bool)objects[_i++];
                 _eGM.ReadyEnt_ActivatedDictCom.SetIsActivated(Instance.IsMasterClient, isActivated);
+                _eGM.ReadyEnt_StartedGameCom.IsStartedGame = isStartedGame;
                 break;
 
             case RpcTypes.Done:
@@ -348,8 +350,8 @@ internal sealed class PhotonPunRPC : MonoBehaviour
             _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, false),
             _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Mine, false),
 
-            _eGM.EconomyEnt_EconomyCom.Food(false),
-            _eGM.EconomyEnt_EconomyCom.Wood(false),
+            _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, false),
+            _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood, false),
             _eGM.EconomyEnt_EconomyCom.Ore(false),
             _eGM.EconomyEnt_EconomyCom.Iron(false),
             _eGM.EconomyEnt_EconomyCom.Gold(false),
@@ -431,11 +433,11 @@ internal sealed class PhotonPunRPC : MonoBehaviour
 
                     player = PhotonNetwork.PlayerList[actorNumberBuilding - 1];
 
-                    _cM.CellBuildingWorker.SetBuilding(buildingType, player, x, y);
+                    _cM.CellBuildingWorker.SetBuilding(false, buildingType, player, x, y);
                 }
                 else
                 {
-                    _cM.CellBuildingWorker.ResetBuilding(x, y);
+                    _cM.CellBuildingWorker.ResetBuilding(false, x, y);
                 }
 
 

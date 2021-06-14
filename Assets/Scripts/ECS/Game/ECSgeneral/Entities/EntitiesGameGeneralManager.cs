@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Main;
 
-internal sealed partial class EntitiesGeneralManager : EntitiesManager
+internal sealed partial class EntitiesGeneralManager : EntitiesManager, IDisposable
 {
     internal GameObject BackGroundGO;
     internal SpriteRenderer BackGroundSR;
@@ -20,6 +20,7 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
     private EcsEntity[,] _cellBuildingEnts;
     private EcsEntity[,] _cellEnvironmentEnts;
     private EcsEntity[,] _cellSupportVisionEnts;
+    private EcsEntity[,] _cellSupportStaticEnts;
     private EcsEntity[,] _cellEffectEnts;
 
     internal ref CellBaseComponent CellEnt_CellBaseCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellBaseComponent>();
@@ -38,6 +39,8 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
     internal ref OwnerComponent CellBuildEnt_OwnerCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerComponent>();
 
     internal ref CellSupportVisionComponent CellSupVisEnt_CellSupVisCom(params int[] xy) => ref _cellSupportVisionEnts[xy[X], xy[Y]].Get<CellSupportVisionComponent>();
+
+    internal ref CellSupportStaticComponent CellSupStatEnt_CellSupStatCom(params int[] xy) => ref _cellSupportStaticEnts[xy[X], xy[Y]].Get<CellSupportStaticComponent>();
 
     internal ref CellEffectComponent CellEffectEnt_CellEffectCom(params int[] xy) => ref _cellEffectEnts[xy[X], xy[Y]].Get<CellEffectComponent>();
 
@@ -96,6 +99,7 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
         _cellBuildingEnts = new EcsEntity[resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_X, resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_Y];
         _cellEnvironmentEnts = new EcsEntity[resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_X, resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_Y];
         _cellSupportVisionEnts = new EcsEntity[resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_X, resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_Y];
+        _cellSupportStaticEnts = new EcsEntity[resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_X, resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_Y];
         _cellEffectEnts = new EcsEntity[resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_X, resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_Y];
 
         for (int x = 0; x < resourcesCommComponent.StartValuesGameConfig.CELL_COUNT_X; x++)
@@ -106,6 +110,7 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
                 _cellBuildingEnts[x, y] = gameWorld.NewEntity();
                 _cellEnvironmentEnts[x, y] = gameWorld.NewEntity();
                 _cellSupportVisionEnts[x, y] = gameWorld.NewEntity();
+                _cellSupportStaticEnts[x, y] = gameWorld.NewEntity();
                 _cellEffectEnts[x, y] = gameWorld.NewEntity();
 
                 //_cellEnts[x, y]
@@ -147,7 +152,6 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
             .Replace(new UpgradeUnitsComponent());
 
         _buildingsEnt = gameWorld.NewEntity()
-            .Replace(new BuildingsComponent(resourcesCommComponent.StartValuesGameConfig))
             .Replace(new UpgradeBuildingsComponent());
 
 
@@ -157,7 +161,8 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
             .Replace(new UnitTypeComponent());
 
 
-        _rPCGeneralEntity = gameWorld.NewEntity().Replace(new RpcComponent());
+        _rPCGeneralEntity = gameWorld.NewEntity()
+            .Replace(new RpcComponent());
 
         _inputEnt = gameWorld.NewEntity()
             .Replace(new InputComponent());
@@ -193,13 +198,14 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
         AttackAudioSource = Instance.Builder.CreateGameObject("AttackAudioSource", new Type[] { typeof(AudioSource) }, Instance.ParentGOs.transform).GetComponent<AudioSource>();
         AttackAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackAudioClip;
 
-        EconomyEnt_EconomyCom.Fill();
+        BuildingsEnt_BuildingsCom.CreateDict();
+        BuildingsEnt_UpgradeBuildingsCom.CreateDict();
+
+        EconomyEnt_EconomyCom.CreateDict();
         EconomyUIEnt_EconomyUICom.Fill();
 
-        UnitInventorEnt_UnitInventorCom.Fill();
-        UnitInventorEnt_UpgradeUnitCom.Fill();
-
-        BuildingsEnt_UpgradeBuildingsCom.Fill();
+        UnitInventorEnt_UnitInventorCom.CreateDict();
+        UnitInventorEnt_UpgradeUnitCom.CreateDict();
 
 
         SpawnAndFillCanvasEntities();
@@ -323,6 +329,9 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
                 parentGO = CellsGO[x, y].transform.Find("SupportVisions").gameObject;
                 CellSupVisEnt_CellSupVisCom(x, y).Fill(parentGO);
 
+                parentGO = CellsGO[x,y].transform.Find("SupportStatic").gameObject;
+                CellSupStatEnt_CellSupStatCom(x, y).Fill(parentGO);
+
                 parentGO = CellsGO[x, y].transform.Find("Units").gameObject;
                 CellUnitEnt_CellUnitCom(x, y).Fill(parentGO);
 
@@ -363,7 +372,7 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
                 {
                     if (CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
                     {
-                        Instance.ECSmanager.CellManager.CellBuildingWorker.ResetBuilding(x, y);
+                        Instance.ECSmanager.CellManager.CellBuildingWorker.ResetBuilding(true, x, y);
                     }
                     Instance.ECSmanager.CellManager.CellUnitWorker.ResetUnit(x, y);
                     CellEnvEnt_CellEnvCom(x, y).ResetAll();
@@ -398,5 +407,11 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
                 }
             }
         }
+    }
+
+    public void Dispose()
+    {
+        SelectorEnt_SelectorCom.Dispose();
+        ReadyEnt_StartedGameCom.Dispose();
     }
 }

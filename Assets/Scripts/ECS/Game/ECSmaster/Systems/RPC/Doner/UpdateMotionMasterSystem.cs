@@ -70,7 +70,7 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                             if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizerResources)
                             {
                                 _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.Fertilizer);
-                                _cM.CellBuildingWorker.ResetBuilding(x, y);
+                                _cM.CellBuildingWorker.ResetBuilding(true,x, y);
                             }
                             break;
 
@@ -79,7 +79,7 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                             if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveForestResources)
                             {
                                 _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
-                                _cM.CellBuildingWorker.ResetBuilding(x, y);
+                                _cM.CellBuildingWorker.ResetBuilding(true,x, y);
                             }
                             break;
 
@@ -87,7 +87,7 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                             _eGM.CellEnvEnt_CellEnvCom(x, y).AmountOreResources -= (int)(Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig.BENEFIT_ORE_MINE + (0.25f * _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Mine, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient)));
                             if (_eGM.CellEnvEnt_CellEnvCom(x, y).MineStep >= 10 || !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveOreResources)
                             {
-                                _cM.CellBuildingWorker.ResetBuilding(x, y);
+                                _cM.CellBuildingWorker.ResetBuilding(true,x, y);
                                 _eGM.CellEnvEnt_CellEnvCom(x, y).MineStep = 0;
                             }
                             _eGM.CellEnvEnt_CellEnvCom(x, y).MineStep += 1;

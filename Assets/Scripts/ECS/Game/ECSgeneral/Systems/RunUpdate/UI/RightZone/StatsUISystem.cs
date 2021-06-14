@@ -2,20 +2,7 @@
 
 internal class StatsUISystem : SystemGeneralReduction
 {
-    private TextMeshProUGUI _hpCurrentUnitText;
-    private TextMeshProUGUI _damageCurrentUnitText;
-    private TextMeshProUGUI _protectionCurrentUnitText;
-    private TextMeshProUGUI _stepsCurrentUnitText;
-
     private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
-
-    internal StatsUISystem()
-    {
-        //_hpCurrentUnitText = Instance.CanvasGameManager.HpCurrentUnitText;
-        //_damageCurrentUnitText = Instance.CanvasGameManager.DamageCurrentUnitText;
-        //_protectionCurrentUnitText = Instance.CanvasGameManager.ProtectionCurrentUnitText;
-        //_stepsCurrentUnitText = Instance.CanvasGameManager.StepsCurrentUnitText;
-    }
 
     public override void Run()
     {
@@ -30,9 +17,9 @@ internal class StatsUISystem : SystemGeneralReduction
             _eGM.StatsEnt_ParentCom.SetActive(false);
         }
 
-        //    _hpCurrentUnitText.text = _eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).AmountHealth.ToString();
-        //    _damageCurrentUnitText.text = _cM.CellUnitWorker.SimplePowerDamage(_xySelectedCell).ToString();
-        //    _protectionCurrentUnitText.text = _cM.CellUnitWorker.PowerProtection(_xySelectedCell).ToString();
-        //    _stepsCurrentUnitText.text = _eGM.CellUnitEnt_CellUnitCom(_xySelectedCell).AmountSteps.ToString();
+        _eGM.HealthUIEnt_TextMeshProUGUICom.Text = _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountHealth.ToString();
+        _eGM.PowerAttackUIEnt_TextMeshProUGUICom.Text = _cM.CellUnitWorker.SimplePowerDamage(XySelectedCell).ToString();
+        _eGM.PowerProtectionUIEnt_TextMeshProUGUICom.Text = _cM.CellUnitWorker.PowerProtection(XySelectedCell).ToString();
+        _eGM.AmountStepsUIEnt_TextMeshProUGUICom.Text = _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps.ToString();
     }
 }

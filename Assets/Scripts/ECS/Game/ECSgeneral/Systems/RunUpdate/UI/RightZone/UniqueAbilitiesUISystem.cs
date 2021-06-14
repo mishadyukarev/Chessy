@@ -19,9 +19,12 @@
                     break;
 
                 case UnitTypes.King:
+                    _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
                     break;
 
                 case UnitTypes.Pawn:
+                    _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(true);
+
                     _eGM.UniqueAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(true);
                     _eGM.Unique1AbilityEnt_ButtonCom.SetActive(true);
                     _eGM.Unique1AbilityEnt_ButtonCom.RemoveAllListeners();
@@ -36,7 +39,6 @@
 
                         _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.Text = "Fire forest";
                     }
-
 
                     _eGM.Unique2AbilityEnt_ButtonCom.SetActive(true);
                     _eGM.Unique2AbilityEnt_ButtonCom.RemoveAllListeners();
@@ -60,12 +62,10 @@
             }
 
         }
+
         else
         {
-            _eGM.UniqueAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
-            _eGM.Unique1AbilityEnt_ButtonCom.SetActive(false);
-            _eGM.Unique2AbilityEnt_ButtonCom.SetActive(false);
-            _eGM.Unique3AbilityEnt_ButtonCom.SetActive(false);
+            _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
         }
     }
 

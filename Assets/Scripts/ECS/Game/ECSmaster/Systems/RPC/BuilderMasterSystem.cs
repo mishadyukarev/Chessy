@@ -20,8 +20,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     break;
 
                 case BuildingTypes.City:
-                    _cM.CellBuildingWorker.SetBuilding(BuildingType, Info.Sender, XyCell);
-                    //_eGM.CellBuildingEnt_CellBuildingCom(XyCell).SetBuilding(BuildingType, Info.Sender);
+                    _cM.CellBuildingWorker.SetBuilding(true, BuildingType, Info.Sender, XyCell);
                     _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
 
                     _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Info.Sender.IsMasterClient] = true;
@@ -51,7 +50,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                 if (_eM.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves))
                 {
                     _eM.CreateBuilding(BuildingType, Info.Sender);
-                    _cM.CellBuildingWorker.SetBuilding(BuildingType, Info.Sender, XyCell);
+                    _cM.CellBuildingWorker.SetBuilding(true, BuildingType, Info.Sender, XyCell);
                     _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
                 }
                 else

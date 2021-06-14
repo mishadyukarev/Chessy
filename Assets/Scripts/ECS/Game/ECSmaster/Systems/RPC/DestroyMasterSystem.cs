@@ -18,7 +18,7 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
                     _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XyCell).ActorNumber);
                 }
                 _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
-                _cM.CellBuildingWorker.ResetBuilding(XyCell);
+                _cM.CellBuildingWorker.ResetBuilding(true, XyCell);
             }
         }
     }

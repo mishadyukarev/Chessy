@@ -59,8 +59,8 @@ internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
         }
 
 
-        haveFood = _eGM.EconomyEnt_EconomyCom.Food(Info.Sender.IsMasterClient) >= minusFood;
-        haveWood = _eGM.EconomyEnt_EconomyCom.Wood(Info.Sender.IsMasterClient) >= minusWood;
+        haveFood = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, Info.Sender.IsMasterClient) >= minusFood;
+        haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,Info.Sender.IsMasterClient) >= minusWood;
         haveOre = _eGM.EconomyEnt_EconomyCom.Ore(Info.Sender.IsMasterClient) >= minusOre;
         haveIron = _eGM.EconomyEnt_EconomyCom.Iron(Info.Sender.IsMasterClient) >= minusIron;
         haveGold = _eGM.EconomyEnt_EconomyCom.Gold(Info.Sender.IsMasterClient) >= minusGold;

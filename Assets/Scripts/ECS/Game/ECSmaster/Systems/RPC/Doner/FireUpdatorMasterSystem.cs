@@ -22,7 +22,7 @@
                     {
                         if(_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
                         {
-                            _cM.CellBuildingWorker.ResetBuilding(x, y);
+                            _cM.CellBuildingWorker.ResetBuilding(true, x, y);
                         }
 
 

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-internal struct EconomyComponent : IDisposable
+internal struct EconomyComponent
 {
     private Dictionary<bool, int> _foodAmount;
     private Dictionary<bool, int> _woodAmount;
@@ -9,7 +9,7 @@ internal struct EconomyComponent : IDisposable
     private Dictionary<bool, int> _ironAmount;
     private Dictionary<bool, int> _goldAmount;
 
-    internal void Fill()
+    internal void CreateDict()
     {
         _foodAmount = new Dictionary<bool, int>();
         _woodAmount = new Dictionary<bool, int>();
@@ -33,12 +33,37 @@ internal struct EconomyComponent : IDisposable
         _goldAmount.Add(false, default);
     }
 
-    internal int Food(bool key) => _foodAmount[key];
+    internal int AmountResources(EconomyTypes economyType, bool key)
+    {
+        switch (economyType)
+        {
+            case EconomyTypes.None:
+                throw new Exception();
+
+            case EconomyTypes.Food:
+                return _foodAmount[key];
+
+            case EconomyTypes.Wood:
+                return _woodAmount[key];
+
+            case EconomyTypes.Ore:
+                return _oreAmount[key];
+
+            case EconomyTypes.Iron:
+                return _ironAmount[key];
+
+            case EconomyTypes.Gold:
+                return _goldAmount[key];
+
+            default:
+                throw new Exception();
+        }
+    }
+
     internal void SetFood(bool key, int value) => _foodAmount[key] = value;
     internal void AddFood(bool key, int value) => _foodAmount[key] += value;
     internal void TakeFood(bool key, int value) => _foodAmount[key] -= value;
 
-    internal int Wood(bool key) => _woodAmount[key];
     internal void SetWood(bool key, int value) => _woodAmount[key] = value;
     internal void AddWood(bool key, int value) => _woodAmount[key] += value;
     internal void TakeWood(bool key, int value) => _woodAmount[key] -= value;
@@ -57,23 +82,4 @@ internal struct EconomyComponent : IDisposable
     internal void SetGold(bool key, int value) => _goldAmount[key] = value;
     internal void AddGold(bool key, int value) => _goldAmount[key] += value;
     internal void TakeGold(bool key, int value) => _goldAmount[key] -= value;
-
-
-    public void Dispose()
-    {
-        _foodAmount[true] = default;
-        _foodAmount[false] = default;
-
-        _woodAmount[true] = default;
-        _woodAmount[false] = default;
-
-        _oreAmount[true] = default;
-        _oreAmount[false] = default;
-
-        _ironAmount[true] = default;
-        _ironAmount[false] = default;
-
-        _goldAmount[true] = default;
-        _goldAmount[false] = default;
-    }
 }

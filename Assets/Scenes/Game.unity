@@ -150,8 +150,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 762423351fefc0446a74904a6fb5dadd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _isOfflineMode: 1
-  _testType: 1
+  _isOfflineMode: 0
+  _testType: 0
   _sceneType: 0
 --- !u!4 &1488428464
 Transform:

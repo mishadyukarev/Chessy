@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using System;
 using static Main;
 
 internal sealed class ECSManager
@@ -82,6 +83,7 @@ internal sealed class ECSManager
         switch (sceneType)
         {
             case SceneTypes.Menu:
+                _entitiesGeneralManager.Dispose();
                 break;
 
             case SceneTypes.Game:

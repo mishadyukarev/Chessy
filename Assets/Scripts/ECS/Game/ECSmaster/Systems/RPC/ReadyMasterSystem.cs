@@ -12,8 +12,8 @@ internal sealed class ReadyMasterSystem : RPCMasterSystemReduction
         _eGM.ReadyEnt_ActivatedDictCom.SetIsActivated(Info.Sender.IsMasterClient, IsReady);
 
         if (_eGM.ReadyEnt_ActivatedDictCom.IsActivatedAll)
-            _photonPunRPC.ReadyToGeneral(RpcTarget.All, false);
+            _photonPunRPC.ReadyToGeneral(RpcTarget.All, false, true);
 
-        else _photonPunRPC.ReadyToGeneral(Info.Sender, IsReady);
+        else _photonPunRPC.ReadyToGeneral(Info.Sender, IsReady, false);
     }
 }

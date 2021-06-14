@@ -16,7 +16,7 @@ internal sealed class ReadyZoneUISystem : SystemGeneralReduction
             _eGM.ReadyEnt_ButtonCom.SetColor(Color.white);
         }
 
-        if (_eGM.ReadyEnt_ActivatedDictCom.IsActivatedAll || Instance.TestType == TestTypes.Standart)
+        if (_eGM.ReadyEnt_StartedGameCom.IsStartedGame || Instance.TestType == TestTypes.Standart)
         {
             _eGM.ReadyEnt_ParentCom.SetActive(false);
         }

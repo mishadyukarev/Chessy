@@ -15,13 +15,13 @@
 
                     if (one == two)
                     {
-                        _eGM.SelectorEnt_SelectorCom.XYcurrentCell = new int[] { x, y };
+                        _eGM.SelectorEnt_SelectorCom.XyCurrentCell = new int[] { x, y };
                         _eGM.SelectorEnt_SelectorCom.IsGettedCell = true;
                         return;
                     }
                 }
             }
-            _eGM.SelectorEnt_SelectorCom.XYcurrentCell = new int[] { -1, -1 };
+            _eGM.SelectorEnt_SelectorCom.XyCurrentCell = new int[] { -1, -1 };
             _eGM.SelectorEnt_SelectorCom.IsGettedCell = false;
         }
     }

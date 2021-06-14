@@ -72,7 +72,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                 break;
 
                             case BuildingTypes.City:
-                                _cM.CellBuildingWorker.ResetBuilding(x, y);
+                                _cM.CellBuildingWorker.ResetBuilding(true,x, y);
                                 break;
 
                             case BuildingTypes.Farm:
@@ -81,7 +81,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                 //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_FARM;
                                 //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_FARM;
                                 //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_FARM;
-                                _cM.CellBuildingWorker.ResetBuilding(x, y);
+                                _cM.CellBuildingWorker.ResetBuilding(true,x, y);
                                 break;
 
                             case BuildingTypes.Woodcutter:
@@ -90,7 +90,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                 //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
                                 //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
                                 //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
-                                _cM.CellBuildingWorker.ResetBuilding(x, y);
+                                _cM.CellBuildingWorker.ResetBuilding(true,x, y);
                                 break;
 
                             case BuildingTypes.Mine:
@@ -99,7 +99,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                 //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_MINE;
                                 //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_MINE;
                                 //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_MINE;
-                                _cM.CellBuildingWorker.ResetBuilding(x, y);
+                                _cM.CellBuildingWorker.ResetBuilding(true,x, y);
                                 break;
 
                             default:

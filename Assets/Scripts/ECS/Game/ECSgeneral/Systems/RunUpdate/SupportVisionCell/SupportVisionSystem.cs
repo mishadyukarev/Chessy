@@ -8,7 +8,7 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
     {
         base.Run();
 
-        _eGM.CellSupVisEnt_CellSupVisCom(_eGM.SelectorEnt_SelectorCom.XYpreviousCell).ActiveVision(false, SupportVisionTypes.Selector);
+        _eGM.CellSupVisEnt_CellSupVisCom(_eGM.SelectorEnt_SelectorCom.XyPreviousCell).ActiveVision(false, SupportVisionTypes.Selector);
 
         if (_eGM.CellEnt_CellBaseCom(_eGM.SelectorEnt_SelectorCom.XySelectedCell).IsSelected)
         {

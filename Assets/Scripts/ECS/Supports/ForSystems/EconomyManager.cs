@@ -41,24 +41,24 @@ internal sealed class EconomyManager
                 return true;
 
             case BuildingTypes.Farm:
-                haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
-                haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
+                haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_BUILDING_FARM;
+                haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_BUILDING_FARM;
                 haves[_numberOre] = _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) >= StartValuesGameConfig.ORE_FOR_BUILDING_FARM;
                 haves[_numberIron] = _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) >= StartValuesGameConfig.IRON_FOR_BUILDING_FARM;
                 haves[_numberGold] = _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) >= StartValuesGameConfig.GOLD_FOR_BUILDING_FARM;
                 break;
 
             case BuildingTypes.Woodcutter:
-                haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
-                haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
+                haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
+                haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
                 haves[_numberOre] = _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) >= StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
                 haves[_numberIron] = _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) >= StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
                 haves[_numberGold] = _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) >= StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
                 break;
 
             case BuildingTypes.Mine:
-                haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
-                haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
+                haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_BUILDING_MINE;
+                haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_BUILDING_MINE;
                 haves[_numberOre] = _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) >= StartValuesGameConfig.ORE_FOR_BUILDING_MINE;
                 haves[_numberIron] = _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) >= StartValuesGameConfig.IRON_FOR_BUILDING_MINE;
                 haves[_numberGold] = _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) >= StartValuesGameConfig.GOLD_FOR_BUILDING_MINE;
@@ -83,24 +83,24 @@ internal sealed class EconomyManager
                 break;
 
             case BuildingTypes.Farm:
-                _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_BUILDING_FARM);
-                _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_BUILDING_FARM);
+                _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_BUILDING_FARM);
+                _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_BUILDING_FARM);
                 _eGM.EconomyEnt_EconomyCom.SetOre(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) - StartValuesGameConfig.ORE_FOR_BUILDING_FARM);
                 _eGM.EconomyEnt_EconomyCom.SetIron(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) - StartValuesGameConfig.IRON_FOR_BUILDING_FARM);
                 _eGM.EconomyEnt_EconomyCom.SetGold(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) - StartValuesGameConfig.GOLD_FOR_BUILDING_FARM);
                 break;
 
             case BuildingTypes.Woodcutter:
-                _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER);
-                _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER);
+                _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER);
+                _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER);
                 _eGM.EconomyEnt_EconomyCom.SetOre(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) - StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER);
                 _eGM.EconomyEnt_EconomyCom.SetIron(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) - StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER);
                 _eGM.EconomyEnt_EconomyCom.SetGold(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) - StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER);
                 break;
 
             case BuildingTypes.Mine:
-                _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_BUILDING_MINE);
-                _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_BUILDING_MINE);
+                _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_BUILDING_MINE);
+                _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_BUILDING_MINE);
                 _eGM.EconomyEnt_EconomyCom.SetOre(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) - StartValuesGameConfig.ORE_FOR_BUILDING_MINE);
                 _eGM.EconomyEnt_EconomyCom.SetIron(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) - StartValuesGameConfig.IRON_FOR_BUILDING_MINE);
                 _eGM.EconomyEnt_EconomyCom.SetGold(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) - StartValuesGameConfig.GOLD_FOR_BUILDING_MINE);
@@ -126,24 +126,24 @@ internal sealed class EconomyManager
                 throw new Exception();
 
             case UnitTypes.Pawn:
-                haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
-                haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_BUYING_PAWN;
+                haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_BUYING_PAWN;
+                haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_BUYING_PAWN;
                 haves[_numberOre] = _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) >= StartValuesGameConfig.ORE_FOR_BUYING_PAWN;
                 haves[_numberIron] = _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) >= StartValuesGameConfig.IRON_FOR_BUYING_PAWN;
                 haves[_numberGold] = _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) >= StartValuesGameConfig.GOLD_FOR_BUYING_PAWN;
                 break;
 
             case UnitTypes.Rook:
-                haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
-                haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_BUYING_ROOK;
+                haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_BUYING_ROOK;
+                haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_BUYING_ROOK;
                 haves[_numberOre] = _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) >= StartValuesGameConfig.ORE_FOR_BUYING_ROOK;
                 haves[_numberIron] = _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) >= StartValuesGameConfig.IRON_FOR_BUYING_ROOK;
                 haves[_numberGold] = _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) >= StartValuesGameConfig.GOLD_FOR_BUYING_ROOK;
                 break;
 
             case UnitTypes.Bishop:
-                haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
-                haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
+                haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP;
+                haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP;
                 haves[_numberOre] = _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) >= StartValuesGameConfig.ORE_FOR_BUYING_BISHOP;
                 haves[_numberIron] = _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) >= StartValuesGameConfig.IRON_FOR_BUYING_BISHOP;
                 haves[_numberGold] = _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) >= StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP;
@@ -168,24 +168,24 @@ internal sealed class EconomyManager
                 throw new Exception();
 
             case UnitTypes.Pawn:
-                _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_BUYING_PAWN);
-                _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_BUYING_PAWN);
+                _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_BUYING_PAWN);
+                _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_BUYING_PAWN);
                 _eGM.EconomyEnt_EconomyCom.SetOre(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) - StartValuesGameConfig.ORE_FOR_BUYING_PAWN);
                 _eGM.EconomyEnt_EconomyCom.SetIron(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) - StartValuesGameConfig.IRON_FOR_BUYING_PAWN);
                 _eGM.EconomyEnt_EconomyCom.SetGold(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) - StartValuesGameConfig.GOLD_FOR_BUYING_PAWN);
                 break;
 
             case UnitTypes.Rook:
-                _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_BUYING_ROOK);
-                _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_BUYING_ROOK);
+                _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_BUYING_ROOK);
+                _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_BUYING_ROOK);
                 _eGM.EconomyEnt_EconomyCom.SetOre(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) - StartValuesGameConfig.ORE_FOR_BUYING_ROOK);
                 _eGM.EconomyEnt_EconomyCom.SetIron(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) - StartValuesGameConfig.IRON_FOR_BUYING_ROOK);
                 _eGM.EconomyEnt_EconomyCom.SetGold(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) - StartValuesGameConfig.GOLD_FOR_BUYING_ROOK);
                 break;
 
             case UnitTypes.Bishop:
-                _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP);
-                _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP);
+                _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_BUYING_BISHOP);
+                _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_BUYING_BISHOP);
                 _eGM.EconomyEnt_EconomyCom.SetOre(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) - StartValuesGameConfig.ORE_FOR_BUYING_BISHOP);
                 _eGM.EconomyEnt_EconomyCom.SetIron(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) - StartValuesGameConfig.IRON_FOR_BUYING_BISHOP);
                 _eGM.EconomyEnt_EconomyCom.SetGold(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) - StartValuesGameConfig.GOLD_FOR_BUYING_BISHOP);
@@ -204,8 +204,8 @@ internal sealed class EconomyManager
         haves = new bool[_amountResourse];
         for (int i = 0; i < haves.Length; i++) haves[i] = true;
 
-        haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_MELTING_ORE;
-        haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
+        haves[_numberFood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) >= StartValuesGameConfig.FOOD_FOR_MELTING_ORE;
+        haves[_numberWood] = _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) >= StartValuesGameConfig.WOOD_FOR_MELTING_ORE;
         haves[_numberOre] = _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) >= StartValuesGameConfig.ORE_FOR_MELTING_ORE;
         haves[_numberIron] = _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) >= StartValuesGameConfig.IRON_FOR_MELTING_ORE;
         haves[_numberGold] = _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) >= StartValuesGameConfig.GOLD_FOR_MELTING_ORE;
@@ -216,8 +216,8 @@ internal sealed class EconomyManager
 
     internal void MeltOre(Player player)
     {
-        _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Food(player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_MELTING_ORE);
-        _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Wood(player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_MELTING_ORE);
+        _eGM.EconomyEnt_EconomyCom.SetFood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Food, player.IsMasterClient) - StartValuesGameConfig.FOOD_FOR_MELTING_ORE);
+        _eGM.EconomyEnt_EconomyCom.SetWood(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.AmountResources(EconomyTypes.Wood,player.IsMasterClient) - StartValuesGameConfig.WOOD_FOR_MELTING_ORE);
         _eGM.EconomyEnt_EconomyCom.SetOre(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Ore(player.IsMasterClient) - StartValuesGameConfig.ORE_FOR_MELTING_ORE);
         _eGM.EconomyEnt_EconomyCom.SetIron(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Iron(player.IsMasterClient) - StartValuesGameConfig.IRON_FOR_MELTING_ORE);
         _eGM.EconomyEnt_EconomyCom.SetGold(player.IsMasterClient, _eGM.EconomyEnt_EconomyCom.Gold(player.IsMasterClient) - StartValuesGameConfig.GOLD_FOR_MELTING_ORE);

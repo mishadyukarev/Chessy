@@ -62,6 +62,9 @@ TagManager:
   - name: SupportVision
     uniqueID: 3935270689
     locked: 0
+  - name: SupportStatic
+    uniqueID: 1021817141
+    locked: 0
   - name: Units
     uniqueID: 3112104483
     locked: 0

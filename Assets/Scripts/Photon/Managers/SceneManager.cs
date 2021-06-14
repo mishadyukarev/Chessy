@@ -10,7 +10,8 @@ internal sealed class SceneManager : MonoBehaviourPunCallbacks
     #region Menu
 
     private TextMeshProUGUI _logTex;
-    private const int MAX_PLAYERS = 2;
+    private const byte MAX_PLAYERS = 2;
+    private LoadBalancingClient _loadBalancingClient = new LoadBalancingClient();
 
     internal void ToggleScene(SceneTypes sceneType)
     {
@@ -24,11 +25,16 @@ internal sealed class SceneManager : MonoBehaviourPunCallbacks
                 Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("QuitButton").GetComponent<Button>().onClick.AddListener(Quit);
 
 
+                //_loadBalancingClient.NickName = "Player " + Random.Range(10000, 100000);
+                //Log("Player's name is set to " + _loadBalancingClient.NickName);
+                //_loadBalancingClient.AppVersion = "1";
+                //_loadBalancingClient.ConnectUsingSettings(new AppSettings());
+
                 PhotonNetwork.NickName = "Player " + Random.Range(10000, 100000);
                 Log("Player's name is set to " + PhotonNetwork.NickName);
-
-                PhotonNetwork.GameVersion = "100";
+                PhotonNetwork.GameVersion = "1";
                 PhotonNetwork.ConnectUsingSettings();
+
                 break;
 
             case SceneTypes.Game:
@@ -42,10 +48,16 @@ internal sealed class SceneManager : MonoBehaviourPunCallbacks
 
     public void CreateRoom()
     {
+        //EnterRoomParams enterRoomParams = new EnterRoomParams();
+        //enterRoomParams.RoomOptions = new RoomOptions();
+        //enterRoomParams.RoomName = Random.Range(1, 9999999999).ToString();
+        //enterRoomParams.RoomOptions.MaxPlayers = MAX_PLAYERS;
+        //_loadBalancingClient.OpCreateRoom(enterRoomParams);
+
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.MaxPlayers = MAX_PLAYERS;
         roomOptions.PlayerTtl = 200;//1000
-        var roomName = Random.Range(10000, 100000).ToString();
+        var roomName = Random.Range(1, 9999999).ToString();
 
         PhotonNetwork.CreateRoom(roomName, roomOptions, null);
     }

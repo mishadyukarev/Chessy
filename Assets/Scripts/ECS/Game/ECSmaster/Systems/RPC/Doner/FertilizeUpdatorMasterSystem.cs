@@ -41,7 +41,7 @@ internal sealed class FertilizeUpdatorMasterSystem : SystemGeneralReduction
                                     _eGM.EconomyEnt_EconomyCom.AddIron(_eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, _startValuesGameConfig.IRON_FOR_BUILDING_FARM);
                                     _eGM.EconomyEnt_EconomyCom.AddGold(_eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, _startValuesGameConfig.GOLD_FOR_BUILDING_FARM);
 
-                                    _cM.CellBuildingWorker.ResetBuilding(x, y);
+                                    _cM.CellBuildingWorker.ResetBuilding(true, x, y);
                                 }
                                 _steps = 0;
                                 _randomFor = _randomFor2;

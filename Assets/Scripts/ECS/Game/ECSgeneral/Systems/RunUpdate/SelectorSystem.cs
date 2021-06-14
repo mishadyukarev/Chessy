@@ -10,7 +10,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
     private bool _canExecuteStartClick = true;
     private bool _isStartSelectedDirect = true;
 
-    private int[] XyPreviousCell => _eGM.SelectorEnt_SelectorCom.XYpreviousCell;
+    private int[] XyPreviousCell => _eGM.SelectorEnt_SelectorCom.XyPreviousCell;
     private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
 
 
@@ -59,7 +59,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                     if (_eGM.SelectorEnt_SelectorCom.IsGettedCell)
                     {
-                        var xyCurrentCell = _eGM.SelectorEnt_SelectorCom.XYcurrentCell;
+                        var xyCurrentCell = _eGM.SelectorEnt_SelectorCom.XyCurrentCell;
 
                         if (_eGM.InputEnt_InputCom.IsClick)
                         {

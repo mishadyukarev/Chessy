@@ -10,7 +10,7 @@ internal struct UnitInventorComponent
     private Dictionary<bool, int> _amountRookDict;
     private Dictionary<bool, int> _amountBishopDict;
 
-    internal void Fill()
+    internal void CreateDict()
     {
         _isSettedKingDict = new Dictionary<bool, bool>();
 

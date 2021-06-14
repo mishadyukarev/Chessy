@@ -32,32 +32,32 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
                 {
                     if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer)
                     {
-                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(true, SupportVisionTypes.Fertilize);
-                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).SetScale(SupportVisionTypes.Fertilize, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountFertilizerResources / 20f, 0.15f, 1));
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Fertilizer);
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Fertilizer, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountFertilizerResources / 20f, 0.15f, 1));
                     }
                     else
                     {
-                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Fertilize);
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Fertilizer);
                     }
 
                     if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree)
                     {
-                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(true, SupportVisionTypes.Forest);
-                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).SetScale(SupportVisionTypes.Forest, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources / 20f, 0.15f, 1));
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Wood);
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Wood, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources / 20f, 0.15f, 1));
                     }
                     else
                     {
-                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Forest);
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Wood);
                     }
 
                     if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveHill)
                     {
-                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(true, SupportVisionTypes.Ore);
-                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).SetScale(SupportVisionTypes.Ore, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountOreResources / 60f, 0.15f, 1));
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Ore);
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Ore, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountOreResources / 60f, 0.15f, 1));
                     }
                     else
                     {
-                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Ore);
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Ore);
                     }
                 }
             }
@@ -68,9 +68,9 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
             {
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
-                    _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Fertilize);
-                    _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Forest);
-                    _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Ore);
+                    _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Fertilizer);
+                    _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Wood);
+                    _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Ore);
                 }
             }
         }

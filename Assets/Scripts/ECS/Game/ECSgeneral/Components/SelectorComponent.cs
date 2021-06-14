@@ -2,15 +2,15 @@
 using System;
 using System.Collections.Generic;
 
-public struct SelectorComponent
+public struct SelectorComponent : IDisposable
 {
     internal List<int[]> AvailableCellsForShift;
     internal List<int[]> AvailableCellsSimpleAttack;
     internal List<int[]> AvailableCellsUniqueAttack;
 
-    internal int[] XYcurrentCell;
+    internal int[] XyCurrentCell;
 
-    internal int[] XYpreviousCell;
+    internal int[] XyPreviousCell;
     internal int[] XySelectedCell;
 
     internal bool IsSelected;
@@ -24,9 +24,9 @@ public struct SelectorComponent
 
     internal SelectorComponent(int xy)
     {
-        XYcurrentCell = new int[xy];
+        XyCurrentCell = new int[xy];
         XySelectedCell = new int[xy];
-        XYpreviousCell = new int[xy];
+        XyPreviousCell = new int[xy];
 
         IsGettedCell = default;
 
@@ -39,5 +39,12 @@ public struct SelectorComponent
         AvailableCellsForShift = new List<int[]>();
         AvailableCellsSimpleAttack = new List<int[]>();
         AvailableCellsUniqueAttack = new List<int[]>();
+    }
+
+    public void Dispose()
+    {
+        XySelectedCell[0] = default;
+        XySelectedCell[1] = default;
+        IsSelected = default;
     }
 }

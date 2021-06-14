@@ -9,7 +9,4 @@ public enum SupportVisionTypes
     SimpleAttack,
     UniqueAttack,
     Zone,
-    Fertilize,
-    Forest,
-    Ore
 }
