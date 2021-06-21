@@ -13,27 +13,33 @@ internal sealed class SceneManager : MonoBehaviourPunCallbacks
     private const byte MAX_PLAYERS = 2;
     private LoadBalancingClient _loadBalancingClient = new LoadBalancingClient();
 
+    internal void Constructor()
+    {
+
+    }
+
     internal void ToggleScene(SceneTypes sceneType)
     {
         switch (sceneType)
         {
             case SceneTypes.Menu:
-                _logTex = Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("LogText").GetComponent<TextMeshProUGUI>();
+                _logTex = Instance.CanvasManager.FindUnderParent<TextMeshProUGUI>(SceneTypes.Menu, "LogText");
 
-                Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("CreateRoomButton").GetComponent<Button>().onClick.AddListener(CreateRoom);
-                Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("JoinRandomButton").GetComponent<Button>().onClick.AddListener(JoinRandomRoom);
-                Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("QuitButton").GetComponent<Button>().onClick.AddListener(Quit);
+                Instance.CanvasManager.FindUnderParent<Button>(SceneTypes.Menu, "CreateRoomButton").onClick.AddListener(CreateRoom);
+                Instance.CanvasManager.FindUnderParent<Button>(SceneTypes.Menu, "JoinRandomButton").onClick.AddListener(JoinRandomRoom);
+                Instance.CanvasManager.FindUnderParent<Button>(SceneTypes.Menu, "QuitButton").onClick.AddListener(Quit);
 
+                PhotonNetwork.NickName = "Player " + Random.Range(10000, 100000);
+                PhotonNetwork.GameVersion = "1";
+                PhotonNetwork.ConnectUsingSettings();
 
+                //Log("Player's name is set to " + PhotonNetwork.NickName);
                 //_loadBalancingClient.NickName = "Player " + Random.Range(10000, 100000);
                 //Log("Player's name is set to " + _loadBalancingClient.NickName);
                 //_loadBalancingClient.AppVersion = "1";
                 //_loadBalancingClient.ConnectUsingSettings(new AppSettings());
 
-                PhotonNetwork.NickName = "Player " + Random.Range(10000, 100000);
-                Log("Player's name is set to " + PhotonNetwork.NickName);
-                PhotonNetwork.GameVersion = "1";
-                PhotonNetwork.ConnectUsingSettings();
+
 
                 break;
 
@@ -67,9 +73,9 @@ internal sealed class SceneManager : MonoBehaviourPunCallbacks
         PhotonNetwork.JoinRandomRoom();
     }
 
-    private void Log(string message)
+    internal void Log(string message)
     {
-        Debug.Log(message);
+        //Debug.Log(message);
         _logTex.text += "\n";
         _logTex.text += message;
     }
@@ -124,6 +130,8 @@ internal sealed class SceneManager : MonoBehaviourPunCallbacks
         //Instance.ToggleScene(SceneTypes.Menu);
         PhotonNetwork.LeaveRoom();
     }
+
+    internal void Disconect() => PhotonNetwork.Disconnect();
 
     public override void OnLeftRoom()
     {

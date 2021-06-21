@@ -41,6 +41,7 @@ internal sealed class Main : MonoBehaviour
 
     #endregion
 
+    
 
     private void Start()
     {
@@ -58,6 +59,9 @@ internal sealed class Main : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log(PhotonNetwork.CountOfRooms);
+        
+            
         switch (_sceneType)
         {
             case SceneTypes.Menu:
@@ -104,5 +108,10 @@ internal sealed class Main : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    private void OnApplicationQuit()
+    {
+        //_photonManager.SceneManager.Disconect();
     }
 }

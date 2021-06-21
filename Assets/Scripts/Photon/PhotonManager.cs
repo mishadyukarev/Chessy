@@ -18,6 +18,7 @@ internal sealed class PhotonManager
         _photonPunRPC = Instance.gameObject.AddComponent<PhotonPunRPC>();
 
         _photonPunRPC.Constructor(_photonView, eCSManager);
+        _sceneManager.Constructor();
 
         _photonView.FindObservables(true);
 

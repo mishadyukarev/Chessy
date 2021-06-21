@@ -13,7 +13,6 @@ internal sealed class SystemsGeneralManager : SystemsManager
             .Add(new SupportVisionSystem(), nameof(SupportVisionSystem))
             .Add(new SoundEventsSystem(), nameof(SoundEventsSystem))
 
-            .Add(new UISystem(), nameof(UISystem))
             .Add(new DonerUISystem(), nameof(DonerUISystem))
             .Add(new TakerUnitsUISystem(), nameof(TakerUnitsUISystem))
             .Add(new StandartAbilityUISystem(), nameof(StandartAbilityUISystem))

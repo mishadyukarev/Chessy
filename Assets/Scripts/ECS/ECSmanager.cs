@@ -68,13 +68,6 @@ internal sealed class ECSManager
         if (Instance.IsMasterClient) _systemsMasterManager.Update();
         else _systemsOtherManager.Update();
     }
-    internal void OwnFixedUpdate()
-    {
-        //_systemsGeneralManager.FixedUpdate();
-
-        //if (Instance.IsMasterClient) _systemsMasterManager.FixedUpdate();
-        //else _systemsOtherManager.FixedUpdate();
-    }
 
     internal void ToggleScene(SceneTypes sceneType)
     {

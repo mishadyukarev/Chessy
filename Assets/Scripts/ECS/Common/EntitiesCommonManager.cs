@@ -43,12 +43,14 @@ internal sealed class EntitiesCommonManager : EntitiesManager
 
 
         _cameraEnt = ecsWorld.NewEntity();
-        CameraEnt_CameraCommonCom.SetCamera(GameObject.Instantiate(ResourcesEnt_ResourcesCommonCom.PrefabConfig.Camera));
+        var camera = GameObject.Instantiate(ResourcesEnt_ResourcesCommonCom.PrefabConfig.Camera);
+        camera.name = "CommonCamera";
+        CameraEnt_CameraCommonCom.SetCamera(camera);
         CameraEnt_CameraCommonCom.Camera.gameObject.transform.position += new Vector3(7, 5.5f, -2);
 
 
         _soundEnt = ecsWorld.NewEntity();
-        SoundEnt_AudioSourceCommCom.SetAudioSource(Instance.Builder.CreateGameObject("MusicAudioSource", new Type[] { typeof(AudioSource) }).GetComponent<AudioSource>());
+        SoundEnt_AudioSourceCommCom.SetAudioSource(Instance.Builder.CreateGameObject("CommonAudio", new Type[] { typeof(AudioSource) }).GetComponent<AudioSource>());
         SoundEnt_AudioSourceCommCom.SetClip(ResourcesEnt_ResourcesCommonCom.SoundConfig.MusicAudioClip);
         SoundEnt_AudioSourceCommCom.Volume = 0.2f;
         SoundEnt_AudioSourceCommCom.Loop = true;
@@ -56,9 +58,12 @@ internal sealed class EntitiesCommonManager : EntitiesManager
 
 
         _canvasEnt = ecsWorld.NewEntity();
-        CanvasEnt_CanvasCommCom.Canvas = GameObject.Instantiate(ResourcesEnt_ResourcesCommonCom.Canvas);
-        GameObject.Destroy(CanvasEnt_CanvasCommCom.Canvas.transform.Find("InMenuZone").gameObject);
-        GameObject.Destroy(CanvasEnt_CanvasCommCom.Canvas.transform.Find("InGameZone").gameObject);
+        var canvas = GameObject.Instantiate(ResourcesEnt_ResourcesCommonCom.Canvas);
+        canvas.name = "Canvas";
+        CanvasEnt_CanvasCommCom.SetCanvas(canvas);
+
+        //CanvasEnt_CanvasCommCom.DestroyZoneUI(SceneTypes.Menu);
+        //CanvasEnt_CanvasCommCom.DestroyZoneUI(SceneTypes.Game);
 
 
         _unityEventEnt = ecsWorld.NewEntity();
@@ -72,19 +77,18 @@ internal sealed class EntitiesCommonManager : EntitiesManager
         switch (sceneType)
         {
             case SceneTypes.Menu:
-                GameObject.Destroy(CanvasEnt_CanvasCommCom.InGameZoneGO);
+                CanvasEnt_CanvasCommCom.DestroyZoneUI(SceneTypes.Game);
 
-                CanvasEnt_CanvasCommCom.InMenuZoneCanvasGO = GameObject.Instantiate(ResourcesEnt_ResourcesCommonCom.InMenuZoneGO, CanvasEnt_CanvasCommCom.Canvas.transform);
-                CanvasEnt_CanvasCommCom.InMenuZoneCanvasGO.name = Instance.Names.InMenuZone;
+                CanvasEnt_CanvasCommCom.SetZoneUI(SceneTypes.Menu, ResourcesEnt_ResourcesCommonCom);
 
-                SoundEnt_SliderCommCom.SetSlider(Instance.CanvasManager.InMenuZoneCanvasGO.transform.Find("Slider").GetComponent<Slider>());
+                var slider = CanvasEnt_CanvasCommCom.FindUnderParent<Slider>(SceneTypes.Menu, "Slider");
+                SoundEnt_SliderCommCom.SetSlider(slider);
                 break;
 
             case SceneTypes.Game:
-                GameObject.Destroy(CanvasEnt_CanvasCommCom.InMenuZoneCanvasGO);
+                CanvasEnt_CanvasCommCom.DestroyZoneUI(SceneTypes.Menu);
 
-                CanvasEnt_CanvasCommCom.InGameZoneGO = GameObject.Instantiate(ResourcesEnt_ResourcesCommonCom.InGameZoneGO, CanvasEnt_CanvasCommCom.Canvas.transform);
-                CanvasEnt_CanvasCommCom.InGameZoneGO.name = Instance.Names.IN_GAME_CANVAS_Zone;
+                CanvasEnt_CanvasCommCom.SetZoneUI(SceneTypes.Game, ResourcesEnt_ResourcesCommonCom);
 
                 CameraEnt_CameraCommonCom.Camera.transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
                 break;

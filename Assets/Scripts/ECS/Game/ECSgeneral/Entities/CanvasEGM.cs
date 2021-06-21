@@ -403,39 +403,41 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
     {
         #region Center
 
-        var theEndGameZone = Instance.CanvasManager.InGameZoneGO.transform.Find("TheEndGameZone").gameObject;
+        
+        var theEndGameZone = Instance.CanvasManager.FindUnderParent(SceneTypes.Game, "TheEndGameZone");
 
         EndGameEnt_TextMeshProGUICom.SetTextMeshProUGUI(theEndGameZone.transform.Find("TheEndGameText").GetComponent<TextMeshProUGUI>());
         EndGameEnt_ParentCom.SetParent(theEndGameZone);
 
-
-        var readyZone = Instance.CanvasManager.InGameZoneGO.transform.Find("ReadyZone").gameObject;
+       
+        var readyZone = Instance.CanvasManager.FindUnderParent(SceneTypes.Game, "ReadyZone");
 
         ReadyEnt_ParentCom.SetParent(readyZone);
         ReadyEnt_ButtonCom.SetButton(readyZone.transform.Find("ReadyButton").GetComponent<Button>());
         ReadyEnt_ActivatedDictCom.CreateDict();
 
 
-        var motionZone = Instance.CanvasManager.InGameZoneGO.transform.Find("MotionZone").gameObject;
+        var motionZone = Instance.CanvasManager.FindUnderParent(SceneTypes.Game, "MotionZone");
 
         MotionEnt_ParentCom.SetParent(motionZone);
         MotionEnt_TextMeshProUGUICom.SetTextMeshProUGUI(motionZone.transform.Find("MotionText").GetComponent<TextMeshProUGUI>());
 
         #endregion
 
-
-        LeaveEnt_ButtonCom.SetButton(Instance.CanvasManager.InGameZoneGO.transform.Find("ButtonLeave").GetComponent<Button>());
+        
+        LeaveEnt_ButtonCom.SetButton(Instance.CanvasManager.FindUnderParent<Button>(SceneTypes.Game, "ButtonLeave"));
 
         #region Up
 
-        var upZoneGO = Instance.CanvasManager.InGameZoneGO.transform.Find("UpZone").gameObject;
+        var upZoneGO = Instance.CanvasManager.FindUnderParent(SceneTypes.Game, "UpZone");
 
         #endregion
 
 
         #region Down
 
-        var downZone = Instance.CanvasManager.InGameZoneGO.transform.Find("DownZone");
+        
+        var downZone = Instance.CanvasManager.FindUnderParent(SceneTypes.Game, "DownZone");
 
 
         var takeUnitZone = downZone.transform.Find("TakeUnitZone");
@@ -467,7 +469,9 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
 
         #region Left
 
-        var leftZoneGO = Instance.CanvasManager.InGameZoneGO.transform.Find("LeftZone").gameObject;
+       
+
+        var leftZoneGO = Instance.CanvasManager.FindUnderParent(SceneTypes.Game, "LeftZone");
 
         LeftZoneEnt_ParentCom.SetParent(leftZoneGO);
 
@@ -512,8 +516,8 @@ internal sealed partial class EntitiesGeneralManager : EntitiesManager
 
 
         #region RightZone
-
-        var rightZoneGO = Instance.CanvasManager.InGameZoneGO.transform.Find("RightZone").gameObject;
+         
+        var rightZoneGO = Instance.CanvasManager.FindUnderParent(SceneTypes.Game, "RightZone");
 
         RightZoneEnt_ParentCom.SetParent(rightZoneGO);
 
