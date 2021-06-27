@@ -1,81 +1,84 @@
 ﻿using System;
 using UnityEngine;
 
-internal struct CanvasCommComponent
+namespace Assets.Scripts
 {
-    private Canvas _canvas;
-    private GameObject _inMenuZoneGO;
-    private GameObject _inGameZoneGO;
+    public struct CanvasCommComponent
+    {
+        private Canvas _canvas;
+        private GameObject _inMenuZoneGO;
+        private GameObject _inGameZoneGO;
 
-    internal void SetCanvas(Canvas canvas)
-    {
-        _canvas = canvas;
-        _inMenuZoneGO = _canvas.transform.Find("InMenuZone").gameObject;
-        _inGameZoneGO = _canvas.transform.Find("InGameZone").gameObject;
-        GameObject.Destroy(_inMenuZoneGO);
-        GameObject.Destroy(_inGameZoneGO);
-    }
-    internal void SetZoneUI(SceneTypes sceneType, ResourcesCommComponent resourcesCommComponent)
-    {
-        switch (sceneType)
+        internal void SetCanvas(Canvas canvas)
         {
-            case SceneTypes.Menu:
-                _inMenuZoneGO = GameObject.Instantiate(resourcesCommComponent.InMenuZoneGO, _canvas.transform);
-                break;
-
-            case SceneTypes.Game:
-                _inGameZoneGO = GameObject.Instantiate(resourcesCommComponent.InGameZoneGO, _canvas.transform);
-                break;
-
-            default:
-                break;
+            _canvas = canvas;
+            _inMenuZoneGO = _canvas.transform.Find("InMenuZone").gameObject;
+            _inGameZoneGO = _canvas.transform.Find("InGameZone").gameObject;
+            UnityEngine.Object.Destroy(_inMenuZoneGO);
+            UnityEngine.Object.Destroy(_inGameZoneGO);
         }
-    }
-
-    internal void DestroyZoneUI(SceneTypes sceneType)
-    {
-        switch (sceneType)
+        internal void SetZoneUI(SceneTypes sceneType, ResourcesCommComponent resourcesCommComponent)
         {
-            case SceneTypes.Menu:
-                GameObject.Destroy(_inMenuZoneGO);
-                break;
+            switch (sceneType)
+            {
+                case SceneTypes.Menu:
+                    _inMenuZoneGO = UnityEngine.Object.Instantiate(resourcesCommComponent.InMenuZoneGO, _canvas.transform);
+                    break;
 
-            case SceneTypes.Game:
-                GameObject.Destroy(_inGameZoneGO);
-                break;
+                case SceneTypes.Game:
+                    _inGameZoneGO = UnityEngine.Object.Instantiate(resourcesCommComponent.InGameZoneGO, _canvas.transform);
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
+            }
         }
-    }
 
-    internal T FindUnderParent<T>(SceneTypes sceneType, string nameGO)
-    {
-        switch (sceneType)
+        internal void DestroyZoneUI(SceneTypes sceneType)
         {
-            case SceneTypes.Menu:
-                return _inMenuZoneGO.transform.Find(nameGO).GetComponent<T>();
+            switch (sceneType)
+            {
+                case SceneTypes.Menu:
+                    GameObject.Destroy(_inMenuZoneGO);
+                    break;
 
-            case SceneTypes.Game:
-                return _inGameZoneGO.transform.Find(nameGO).GetComponent<T>();
+                case SceneTypes.Game:
+                    GameObject.Destroy(_inGameZoneGO);
+                    break;
 
-            default:
-                throw new Exception();
+                default:
+                    break;
+            }
         }
-    }
 
-    internal GameObject FindUnderParent(SceneTypes sceneType, string nameGO)
-    {
-        switch (sceneType)
+        internal T FindUnderParent<T>(SceneTypes sceneType, string nameGO)
         {
-            case SceneTypes.Menu:
-                return _inMenuZoneGO.transform.Find(nameGO).gameObject;
+            switch (sceneType)
+            {
+                case SceneTypes.Menu:
+                    return _inMenuZoneGO.transform.Find(nameGO).GetComponent<T>();
 
-            case SceneTypes.Game:
-                return _inGameZoneGO.transform.Find(nameGO).gameObject;
+                case SceneTypes.Game:
+                    return _inGameZoneGO.transform.Find(nameGO).GetComponent<T>();
 
-            default:
-                throw new Exception();
+                default:
+                    throw new Exception();
+            }
+        }
+
+        internal GameObject FindUnderParent(SceneTypes sceneType, string nameGO)
+        {
+            switch (sceneType)
+            {
+                case SceneTypes.Menu:
+                    return _inMenuZoneGO.transform.Find(nameGO).gameObject;
+
+                case SceneTypes.Game:
+                    return _inGameZoneGO.transform.Find(nameGO).gameObject;
+
+                default:
+                    throw new Exception();
+            }
         }
     }
 }

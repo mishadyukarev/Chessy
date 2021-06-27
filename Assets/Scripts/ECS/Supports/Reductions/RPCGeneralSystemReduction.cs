@@ -1,11 +1,14 @@
-﻿using static Main;
-internal abstract class RPCGeneralSystemReduction : SystemGeneralReduction
-{
-    protected PhotonPunRPC _photonPunRPC;
+﻿using static Assets.Scripts.Main;
 
-    internal RPCGeneralSystemReduction()
+namespace Assets.Scripts
+{
+    internal abstract class RPCGeneralSystemReduction : SystemGeneralReduction
     {
-        _photonPunRPC = Instance.PhotonGameManager.PhotonPunRPC;
+        protected PhotonPunRPC _photonPunRPC;
+
+        internal RPCGeneralSystemReduction()
+        {
+            _photonPunRPC = Instance.PhotonManager.PhotonPunRPC;
+        }
     }
 }
-

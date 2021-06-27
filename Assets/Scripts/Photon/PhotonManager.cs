@@ -1,46 +1,66 @@
-﻿using Photon.Pun;
-using static Main;
+﻿using Assets.Scripts.Abstractions;
+using Photon.Pun;
+using static Assets.Scripts.Main;
 
-internal sealed class PhotonManager
+namespace Assets.Scripts
 {
-    private PhotonView _photonView;
-    private PhotonPunRPC _photonPunRPC;
-    private SceneManager _sceneManager;
-
-    internal SceneManager SceneManager => _sceneManager;
-    internal PhotonPunRPC PhotonPunRPC => _photonPunRPC;
-
-
-    internal PhotonManager(ECSManager eCSManager)
+    public sealed class PhotonManager
     {
-        _photonView = Instance.gameObject.AddComponent<PhotonView>();
-        _sceneManager = Instance.gameObject.AddComponent<SceneManager>();
-        _photonPunRPC = Instance.gameObject.AddComponent<PhotonPunRPC>();
+        private PhotonView _photonView;
+        private PhotonPunRPC _photonPunRPC;
+        private PhotonSceneManager _sceneManager;
 
-        _photonPunRPC.Constructor(_photonView, eCSManager);
-        _sceneManager.Constructor();
+        public PhotonSceneManager SceneManager => _sceneManager;
+        public PhotonPunRPC PhotonPunRPC => _photonPunRPC;
 
-        _photonView.FindObservables(true);
 
-        if (Instance.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
-        else _photonView.ViewID = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig.NUMBER_PHOTON_VIEW;
-    }
-
-    internal void ToggleScene(SceneTypes sceneType)
-    {
-        switch (sceneType)
+        public PhotonManager(ECSManager eCSManager)
         {
-            case SceneTypes.Menu:
-                _sceneManager.ToggleScene(sceneType);
-                break;
+            _photonView = Instance.gameObject.AddComponent<PhotonView>();
+            _sceneManager = Instance.gameObject.AddComponent<PhotonSceneManager>();
+            _photonPunRPC = Instance.gameObject.AddComponent<PhotonPunRPC>();
 
-            case SceneTypes.Game:
-                _sceneManager.ToggleScene(sceneType);
-                _photonPunRPC.RefreshAllToMaster();
-                break;
+            _photonPunRPC.Constructor(_photonView, eCSManager);
+            _sceneManager.Constructor();
 
-            default:
-                break;
+            _photonView.FindObservables(true);
+
+            if (Instance.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
+            else _photonView.ViewID = ValuesConst.NUMBER_PHOTON_VIEW;
+        }
+
+        internal void OwnUpdate(SceneTypes sceneType)
+        {
+            switch (sceneType)
+            {
+                case SceneTypes.Menu:       
+                    break;
+
+                case SceneTypes.Game:
+                    _sceneManager.OwnUpdate();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        internal void ToggleScene(SceneTypes sceneType)
+        {
+            switch (sceneType)
+            {
+                case SceneTypes.Menu:
+                    _sceneManager.ToggleScene(sceneType);
+                    break;
+
+                case SceneTypes.Game:
+                    _sceneManager.ToggleScene(sceneType);
+                    _photonPunRPC.RefreshAllToMaster();
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }

@@ -1,14 +1,17 @@
 ﻿using UnityEngine.UI;
 
-internal struct SliderCommComponent
+namespace Assets.Scripts
 {
-    private Slider _slider;
-
-    internal float Value
+    internal struct SliderCommComponent
     {
-        get => _slider.value;
-        set => _slider.value = value;
-    }
+        private Slider _slider;
 
-    internal void SetSlider(Slider slider) => _slider = slider;
+        internal float Value
+        {
+            get => _slider.value;
+            set => _slider.value = value;
+        }
+
+        internal void SetSlider(Slider slider) => _slider = slider;
+    }
 }

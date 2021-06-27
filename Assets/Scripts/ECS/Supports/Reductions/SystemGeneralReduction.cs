@@ -1,30 +1,33 @@
 ﻿using Leopotam.Ecs;
-using static Main;
+using static Assets.Scripts.Main;
 
-internal abstract class SystemGeneralReduction : IEcsInitSystem, IEcsRunSystem
+namespace Assets.Scripts
 {
-    protected EntitiesGeneralManager _eGM;
-    protected SystemsGeneralManager _sGM;
-
-    protected StartValuesGameConfig _startValuesGameConfig;
-    protected CellManager _cM;
-    protected EconomyManager _eM;
-
-    protected SystemGeneralReduction()
+    internal abstract class SystemGeneralReduction : IEcsInitSystem, IEcsRunSystem
     {
-        _startValuesGameConfig = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
-    }
+        protected EntitiesGameGeneralManager _eGM;
+        protected SystemsGameGeneralManager _sGM;
 
-    public virtual void Init()
-    {
-        _eGM = Instance.ECSmanager.EntitiesGeneralManager;
-        _sGM = Instance.ECSmanager.SystemsGeneralManager;
-        _cM = Instance.ECSmanager.CellManager;
-        _eM = Instance.ECSmanager.EconomyManager;
-    }
+        protected StartGameValuesConfig _startValuesGameConfig;
+        protected CellManager _cellM;
+        protected EconomyManager _econM;
 
-    public virtual void Run()
-    {
+        protected SystemGeneralReduction()
+        {
+            _startValuesGameConfig = Instance.StartValuesGameConfig;
+        }
 
+        public virtual void Init()
+        {
+            _eGM = Instance.ECSmanager.EntitiesGameGeneralManager;
+            _sGM = Instance.ECSmanager.SystemsGameGeneralManager;
+            _cellM = Instance.ECSmanager.CellManager;
+            _econM = Instance.ECSmanager.EconomyManager;
+        }
+
+        public virtual void Run()
+        {
+
+        }
     }
 }

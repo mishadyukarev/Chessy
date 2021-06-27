@@ -1,7 +1,10 @@
 ﻿using UnityEngine.EventSystems;
 
-internal struct UnityEventCommComponent
+namespace Assets.Scripts
 {
-    internal EventSystem EventSystem;
-    internal StandaloneInputModule StandaloneInputModule;
+    internal struct UnityEventCommComponent
+    {
+        internal EventSystem EventSystem;
+        internal StandaloneInputModule StandaloneInputModule;
+    }
 }

@@ -1,8 +1,11 @@
-﻿internal sealed class CellEnvironmentWorker : CellWorker
+﻿namespace Assets.Scripts
 {
-    internal CellEnvironmentWorker(ECSManager eCSmanager) : base(eCSmanager)
+    internal sealed class CellEnvironmentWorker : CellWorker
     {
+        internal CellEnvironmentWorker(ECSManager eCSmanager) : base(eCSmanager)
+        {
+
+        }
 
     }
-
 }

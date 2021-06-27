@@ -1,102 +1,124 @@
 ﻿using Leopotam.Ecs;
-using System;
-using static Main;
+using static Assets.Scripts.Main;
 
-internal sealed class ECSManager
+namespace Assets.Scripts
 {
-    private EcsWorld _commonWorld;
-    private EcsWorld _gameWorld;
-
-    private EntitiesCommonManager _entitiesCommonManager;
-
-    private EntitiesGeneralManager _entitiesGeneralManager;
-    private SystemsGeneralManager _systemsGeneralManager;
-
-    private SystemsMasterManager _systemsMasterManager;
-    private EntitiesMasterManager _entitiesMasterManager;
-
-    private SystemsOtherManager _systemsOtherManager;
-    private EntitiesOtherManager _entitiesOtherManager;
-
-    private CellManager _cellManager;
-    private EconomyManager _economyManager;
-
-
-    internal EntitiesCommonManager EntitiesCommonManager => _entitiesCommonManager;
-
-    internal EntitiesGeneralManager EntitiesGeneralManager => _entitiesGeneralManager;
-    internal SystemsGeneralManager SystemsGeneralManager => _systemsGeneralManager;
-
-    internal EntitiesMasterManager EntitiesMasterManager => _entitiesMasterManager;
-    internal SystemsMasterManager SystemsMasterManager => _systemsMasterManager;
-
-    internal EntitiesOtherManager EntitiesOtherManager => _entitiesOtherManager;
-    internal SystemsOtherManager SystemsOtherManager => _systemsOtherManager;
-
-    internal CellManager CellManager => _cellManager;
-    internal EconomyManager EconomyManager => _economyManager;
-
-
-
-    internal ECSManager()
+    public sealed class ECSManager
     {
-        _commonWorld = new EcsWorld();
-        _gameWorld = new EcsWorld();
+        private EcsWorld _commonWorld;
+        private EcsWorld _menuWorld;
+        private EcsWorld _gameWorld;
+
+        private EntitiesCommonManager _entitiesCommonManager;
 
 
-        _entitiesCommonManager = new EntitiesCommonManager(_commonWorld);
+        private EntitiesGameGeneralManager _entitiesGameGeneralManager;
+        private SystemsGameGeneralManager _systemsGameGeneralManager;
+
+        private EntitiesGameMasterManager _entitiesGameMasterManager;
+        private SystemsGameMasterManager _systemsGameMasterManager;
+
+        private EntitiesGameOtherManager _entitiesGameOtherManager;
+        private SystemsGameOtherManager _systemsGameOtherManager;
 
 
-        _entitiesGeneralManager = new EntitiesGeneralManager(_gameWorld, _entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
-        _systemsGeneralManager = new SystemsGeneralManager();
-
-        _entitiesMasterManager = new EntitiesMasterManager(_gameWorld);
-        _systemsMasterManager = new SystemsMasterManager();
-
-        _entitiesOtherManager = new EntitiesOtherManager(_gameWorld);
-        _systemsOtherManager = new SystemsOtherManager();
+        private CellManager _cellManager;
+        private EconomyManager _economyManager;
 
 
-        _cellManager = new CellManager(this, _entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
-        _economyManager = new EconomyManager(this);
-    }
 
-    internal void OwnUpdate()
-    {
-        _systemsGeneralManager.Update();
+        public EntitiesCommonManager EntitiesCommonManager => _entitiesCommonManager;
 
-        if (Instance.IsMasterClient) _systemsMasterManager.Update();
-        else _systemsOtherManager.Update();
-    }
 
-    internal void ToggleScene(SceneTypes sceneType)
-    {
-        _entitiesCommonManager.ToggleScene(sceneType);
+        public EntitiesGameGeneralManager EntitiesGameGeneralManager => _entitiesGameGeneralManager;
+        public SystemsGameGeneralManager SystemsGameGeneralManager => _systemsGameGeneralManager;
 
-        switch (sceneType)
+        public EntitiesGameMasterManager EntitiesGameMasterManager => _entitiesGameMasterManager;
+        public SystemsGameMasterManager SystemsGameMasterManager => _systemsGameMasterManager;
+
+        public EntitiesGameOtherManager EntitiesGameOtherManager => _entitiesGameOtherManager;
+        public SystemsGameOtherManager SystemsGameOtherManager => _systemsGameOtherManager;
+
+
+        public CellManager CellManager => _cellManager;
+        public EconomyManager EconomyManager => _economyManager;
+
+
+
+        public ECSManager()
         {
-            case SceneTypes.Menu:
-                _entitiesGeneralManager.Dispose();
-                break;
+            _commonWorld = new EcsWorld();
+            _menuWorld = new EcsWorld();
+            _gameWorld = new EcsWorld();
 
-            case SceneTypes.Game:
-                _entitiesGeneralManager.FillEntities(_entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
 
-                _systemsGeneralManager.CreateSystems(_gameWorld);
-                _systemsMasterManager.CreateSystems(_gameWorld);
-                _systemsOtherManager.CreateSystems(_gameWorld);
+            _entitiesCommonManager = new EntitiesCommonManager(_commonWorld);
 
-                _systemsGeneralManager.ProcessInjects();
-                _systemsMasterManager.ProcessInjects();
-                _systemsOtherManager.ProcessInjects();
 
-                _systemsGeneralManager.Init();
-                _systemsMasterManager.Init();
-                _systemsOtherManager.Init();
-                break;
+            _entitiesGameGeneralManager = new EntitiesGameGeneralManager(_gameWorld, _entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
+            _systemsGameGeneralManager = new SystemsGameGeneralManager();
 
-            default:
-                break;
+            _entitiesGameMasterManager = new EntitiesGameMasterManager(_gameWorld);
+            _systemsGameMasterManager = new SystemsGameMasterManager();
+
+            _entitiesGameOtherManager = new EntitiesGameOtherManager(_gameWorld);
+            _systemsGameOtherManager = new SystemsGameOtherManager();
+
+
+            _cellManager = new CellManager(this);
+            _economyManager = new EconomyManager(_entitiesGameGeneralManager);
+        }
+
+        public void OwnUpdate(SceneTypes sceneType)
+        {
+            _entitiesCommonManager.OwnUpdate(sceneType);
+
+            switch (sceneType)
+            {
+                case SceneTypes.Menu:
+                    break;
+
+                case SceneTypes.Game:
+                    _systemsGameGeneralManager.Update();
+
+                    if (Instance.IsMasterClient) _systemsGameMasterManager.Update();
+                    else _systemsGameOtherManager.Update();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        public void ToggleScene(SceneTypes sceneType)
+        {
+            _entitiesCommonManager.ToggleScene(sceneType);
+
+            switch (sceneType)
+            {
+                case SceneTypes.Menu:
+                    _entitiesGameGeneralManager.Dispose();
+                    break;
+
+                case SceneTypes.Game:
+                    _entitiesGameGeneralManager.FillEntities(_entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
+
+                    _systemsGameGeneralManager.CreateSystems(_gameWorld);
+                    _systemsGameMasterManager.CreateSystems(_gameWorld);
+                    _systemsGameOtherManager.CreateSystems(_gameWorld);
+
+                    _systemsGameGeneralManager.ProcessInjects();
+                    _systemsGameMasterManager.ProcessInjects();
+                    _systemsGameOtherManager.ProcessInjects();
+
+                    _systemsGameGeneralManager.Init();
+                    _systemsGameMasterManager.Init();
+                    _systemsGameOtherManager.Init();
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }

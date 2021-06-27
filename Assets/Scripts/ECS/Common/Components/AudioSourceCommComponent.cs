@@ -1,22 +1,25 @@
 ﻿using UnityEngine;
 
-internal struct AudioSourceCommComponent
+namespace Assets.Scripts
 {
-    private AudioSource _audioSource;
-
-    internal float Volume
+    internal struct AudioSourceCommComponent
     {
-        get => _audioSource.volume;
-        set => _audioSource.volume = value;
-    }
+        private AudioSource _audioSource;
 
-    internal bool Loop
-    {
-        get => _audioSource.loop;
-        set => _audioSource.loop = value;
-    }
+        internal float Volume
+        {
+            get => _audioSource.volume;
+            set => _audioSource.volume = value;
+        }
 
-    internal void SetAudioSource(AudioSource audioSource) => _audioSource = audioSource;
-    internal void SetClip(AudioClip audioClip) => _audioSource.clip = audioClip;
-    internal void Play() => _audioSource.Play();
+        internal bool Loop
+        {
+            get => _audioSource.loop;
+            set => _audioSource.loop = value;
+        }
+
+        internal void SetAudioSource(AudioSource audioSource) => _audioSource = audioSource;
+        internal void SetClip(AudioClip audioClip) => _audioSource.clip = audioClip;
+        internal void Play() => _audioSource.Play();
+    }
 }

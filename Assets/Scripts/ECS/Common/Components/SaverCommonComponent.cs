@@ -1,5 +1,7 @@
-﻿
-internal struct SaverCommonComponent
+﻿namespace Assets.Scripts
 {
-    internal float SliderVolume;
+    internal struct SaverCommonComponent
+    {
+        internal float SliderVolume;
+    }
 }

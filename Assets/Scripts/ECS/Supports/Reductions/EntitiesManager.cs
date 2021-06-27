@@ -1,8 +1,10 @@
-﻿internal abstract class EntitiesManager
+﻿namespace Assets.Scripts
 {
-    //internal StartValuesGameConfig StartValues => Instance.StartValuesGameConfig;
-    internal virtual void FillEntities()
+    public abstract class EntitiesManager
     {
+        internal virtual void FillEntities()
+        {
 
+        }
     }
 }

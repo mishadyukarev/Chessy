@@ -1,12 +1,15 @@
 ﻿using UnityEngine;
 
-internal struct CameraCommComponent
+namespace Assets.Scripts
 {
-    private Camera _camera;
-    internal Camera Camera => _camera;
-
-    internal void SetCamera(Camera camera)
+    internal struct CameraCommComponent
     {
-        _camera = camera;
+        private Camera _camera;
+        internal Camera Camera => _camera;
+
+        internal void SetCamera(Camera camera)
+        {
+            _camera = camera;
+        }
     }
 }

@@ -1,14 +1,18 @@
-﻿using static Main;
-internal abstract class SystemMasterReduction : SystemGeneralReduction
+﻿using static Assets.Scripts.Main;
+
+namespace Assets.Scripts
 {
-    protected EntitiesMasterManager _eMM;
-    protected SystemsMasterManager _sMM;
-
-    public override void Init()
+    internal abstract class SystemMasterReduction : SystemGeneralReduction
     {
-        base.Init();
+        protected EntitiesGameMasterManager _eMM;
+        protected SystemsGameMasterManager _sMM;
 
-        _eMM = Instance.ECSmanager.EntitiesMasterManager;
-        _sMM = Instance.ECSmanager.SystemsMasterManager;
+        public override void Init()
+        {
+            base.Init();
+
+            _eMM = Instance.ECSmanager.EntitiesGameMasterManager;
+            _sMM = Instance.ECSmanager.SystemsGameMasterManager;
+        }
     }
 }

@@ -1,38 +1,40 @@
 ﻿using UnityEngine;
 
-internal struct ResourcesCommComponent
+namespace Assets.Scripts
 {
-    private Camera _camera;
-    private Canvas _canvas;
-    private GameObject _inMenuZoneGO;
-    private GameObject _inGameZoneGO;
-
-    private PrefabConfig _prefabConfig;
-    private SoundConfig _soundConfig;
-    private SpritesConfig _spritesConfig;
-    private StartValuesGameConfig _startValuesConfig;
-
-    internal Canvas Canvas => _canvas;
-
-    internal GameObject InMenuZoneGO => _inMenuZoneGO;
-    internal GameObject InGameZoneGO => _inGameZoneGO;
-
-    internal PrefabConfig PrefabConfig => _prefabConfig;
-    internal SoundConfig SoundConfig => _soundConfig;
-    internal SpritesConfig SpritesConfig => _spritesConfig;
-    internal StartValuesGameConfig StartValuesGameConfig => _startValuesConfig;
-
-
-    internal void FillFromResources()
+    internal struct ResourcesCommComponent
     {
-        _canvas = Resources.Load<Canvas>("Canvas");
+        //private Camera _camera;
+        //private Canvas _canvas;
+        private GameObject _inMenuZoneGO;
+        private GameObject _inGameZoneGO;
 
-        _inMenuZoneGO = _canvas.transform.Find("InMenuZone").gameObject;
-        _inGameZoneGO = _canvas.transform.Find("InGameZone").gameObject;
+        private PrefabData _prefabConfig;
+        private SoundData _soundConfig;
+        private SpritesData _spritesConfig;
+        private StartGameValuesConfig _startValuesConfig;
 
-        _prefabConfig = Resources.Load<PrefabConfig>("PrefabConfig");
-        _soundConfig = Resources.Load<SoundConfig>("SoundConfig");
-        _spritesConfig = Resources.Load<SpritesConfig>("Sprites");
-        _startValuesConfig = Resources.Load<StartValuesGameConfig>("StartValues");
+        //internal Canvas Canvas => _canvas;
+
+        internal GameObject InMenuZoneGO => _inMenuZoneGO;
+        internal GameObject InGameZoneGO => _inGameZoneGO;
+
+        internal PrefabData PrefabConfig => _prefabConfig;
+        internal SoundData SoundConfig => _soundConfig;
+        internal SpritesData SpritesConfig => _spritesConfig;
+        internal StartGameValuesConfig StartValuesGameConfig => _startValuesConfig;
+
+
+        internal void FillFromResources()
+        {
+            _prefabConfig = Resources.Load<PrefabData>("PrefabData");
+
+            _inMenuZoneGO = _prefabConfig.Canvas.transform.Find("InMenuZone").gameObject;
+            _inGameZoneGO = _prefabConfig.Canvas.transform.Find("InGameZone").gameObject;
+
+            _soundConfig = Resources.Load<SoundData>("SoundData");
+            _spritesConfig = Resources.Load<SpritesData>("SpritesData");
+            _startValuesConfig = Resources.Load<StartGameValuesConfig>("StartValues");
+        }
     }
 }
