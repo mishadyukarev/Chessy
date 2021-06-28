@@ -20,4 +20,6 @@
     SetUnit,
     UniquePawnAbility,
     UpgradeBuilding,
+
+    Upgrade,
 }

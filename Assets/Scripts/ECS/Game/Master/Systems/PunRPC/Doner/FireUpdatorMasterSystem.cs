@@ -22,7 +22,7 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 
                     if (_eGM.CellEffectEnt_CellEffectCom(x, y).TimeFire >= 3)
                     {
-                        if(_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
+                        if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
                         {
                             _cellM.CellBuildingWorker.ResetBuilding(true, x, y);
                         }

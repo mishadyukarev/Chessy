@@ -75,7 +75,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
                 _cellM.CellUnitWorker.ResetUnit(XySelectedCell);
                 if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Rook && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Bishop)
                 {
-                    _cellM.CellUnitWorker.SetUnit(XyPreviousCell, XySelectedCell);
+                    _cellM.CellUnitWorker.ShiftUnit(XyPreviousCell, XySelectedCell);
                     _cellM.CellUnitWorker.ResetUnit(XyPreviousCell);
                 }
             }

@@ -36,7 +36,7 @@ internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
                 minusWood = 0;
                 minusOre = 0;
                 minusIron = 0;
-                minusGold = 1;
+                minusGold = 3;
                 break;
 
             case BuildingTypes.Woodcutter:
@@ -44,7 +44,7 @@ internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
                 minusWood = 0;
                 minusOre = 0;
                 minusIron = 0;
-                minusGold = 1;
+                minusGold = 3;
                 break;
 
             case BuildingTypes.Mine:
@@ -52,7 +52,7 @@ internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
                 minusWood = 0;
                 minusOre = 0;
                 minusIron = 0;
-                minusGold = 1;
+                minusGold = 3;
                 break;
 
             default:
@@ -61,7 +61,7 @@ internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
 
 
         haveFood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) >= minusFood;
-        haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood,Info.Sender.IsMasterClient) >= minusWood;
+        haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient) >= minusWood;
         haveOre = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient) >= minusOre;
         haveIron = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient) >= minusIron;
         haveGold = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient) >= minusGold;

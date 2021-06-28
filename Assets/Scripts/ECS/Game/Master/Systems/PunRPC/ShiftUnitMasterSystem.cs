@@ -19,7 +19,7 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
         {
             if (_cellM.CellBaseOperations.TryFindCellInList(XySelectedCell, xyAvailableCellsForShift))
             {
-                _cellM.CellUnitWorker.SetUnit(XyPreviousCell, XySelectedCell);
+                _cellM.CellUnitWorker.ShiftUnit(XyPreviousCell, XySelectedCell);
 
 
                 _cellM.CellUnitWorker.ResetUnit(XyPreviousCell);

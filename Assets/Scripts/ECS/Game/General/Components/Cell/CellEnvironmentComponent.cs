@@ -77,7 +77,7 @@ internal struct CellEnvironmentComponent
             case EnvironmentTypes.Hill:
                 _haveHill = true;
                 _hillGO.SetActive(true);
-                AmountOreResources = UnityEngine.Random.Range(50, 60);
+                AmountOreResources = 999;
                 break;
 
             case EnvironmentTypes.Fertilizer:

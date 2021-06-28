@@ -1,6 +1,4 @@
-﻿using System;
-
-internal struct BuildingTypeComponent
+﻿internal struct BuildingTypeComponent
 {
     internal BuildingTypes BuildingType;
 

@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using UnityEngine;
 
 namespace Assets.Scripts.ECS.Game.General.Systems
 {
@@ -15,11 +14,11 @@ namespace Assets.Scripts.ECS.Game.General.Systems
         public override void Run()
         {
             base.Run();
-           
+
             for (int x = 0; x < _eGM.Xamount; x++)
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
-                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(x,y).IsMine)
+                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMine)
                     {
                         var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
 

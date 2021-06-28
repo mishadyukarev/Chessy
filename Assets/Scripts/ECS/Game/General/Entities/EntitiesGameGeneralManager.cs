@@ -340,7 +340,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                 parentGO = CellsGO[x, y].transform.Find("SupportVisions").gameObject;
                 CellSupVisEnt_CellSupVisCom(x, y).Fill(parentGO);
 
-                parentGO = CellsGO[x,y].transform.Find("SupportStatic").gameObject;
+                parentGO = CellsGO[x, y].transform.Find("SupportStatic").gameObject;
                 CellSupStatEnt_CellSupStatCom(x, y).Fill(parentGO);
 
                 parentGO = CellsGO[x, y].transform.Find("Units").gameObject;

@@ -1,4 +1,5 @@
 ﻿
+using Assets.Scripts.Abstractions.Enums;
 using System;
 using System.Collections.Generic;
 
@@ -15,6 +16,7 @@ public struct SelectorComponent : IDisposable
 
     internal bool IsSelected;
 
+    internal UpgradeModTypes UpgradeModType;
 
     internal bool IsGettedCell;
 
@@ -31,6 +33,8 @@ public struct SelectorComponent : IDisposable
         IsGettedCell = default;
 
         IsSelected = default;
+
+        UpgradeModType = default;
 
         SetterUnitDelegate = default;
         AttackUnitAction = default;

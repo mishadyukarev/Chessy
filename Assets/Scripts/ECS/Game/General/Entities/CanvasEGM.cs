@@ -222,16 +222,8 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
 
 
 
-    private EcsEntity _upgradePawnUIEnt;
-    internal ref ButtonComponent UpgradePawnUIEnt_ButtonCom => ref _upgradePawnUIEnt.Get<ButtonComponent>();
-
-
-    private EcsEntity _upgradeRookUIEnt;
-    internal ref ButtonComponent UpgradeRookUIEnt_ButtonCom => ref _upgradeRookUIEnt.Get<ButtonComponent>();
-
-
-    private EcsEntity _upgradeBishopUIEnt;
-    internal ref ButtonComponent UpgradeBishopUIEnt_ButtonCom => ref _upgradeBishopUIEnt.Get<ButtonComponent>();
+    private EcsEntity _upgradeUnitUIEnt;
+    internal ref ButtonComponent UpgradeUnitUIEnt_ButtonCom => ref _upgradeUnitUIEnt.Get<ButtonComponent>();
 
 
 
@@ -353,9 +345,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
         _buyPawnUIEnt = gameWorld.NewEntity();
         _buyRookUIEnt = gameWorld.NewEntity();
         _buyBishopUIEnt = gameWorld.NewEntity();
-        _upgradePawnUIEnt = gameWorld.NewEntity();
-        _upgradeRookUIEnt = gameWorld.NewEntity();
-        _upgradeBishopUIEnt = gameWorld.NewEntity();
+        _upgradeUnitUIEnt = gameWorld.NewEntity();
         _upgradeFarmUIEnt = gameWorld.NewEntity();
         _upgradeWoodcutterUIEnt = gameWorld.NewEntity();
         _upgradeMineUIEnt = gameWorld.NewEntity();
@@ -486,9 +476,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
         BuyPawnUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("BuyPawnButton").GetComponent<Button>());
         BuyRookUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("BuyRookButton").GetComponent<Button>());
         BuyBishopUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("BuyBishopButton").GetComponent<Button>());
-        UpgradePawnUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradePawnButton").GetComponent<Button>());
-        UpgradeRookUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradeRookButton").GetComponent<Button>());
-        UpgradeBishopUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradeBishopButton").GetComponent<Button>());
+        UpgradeUnitUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradeUnitButton").GetComponent<Button>());
         UpgradeFarmUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradeFarmButton").GetComponent<Button>());
         UpgradeWoodcutterUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradeWoodcutterButton").GetComponent<Button>());
         UpgradeMineUIEnt_ButtonCom.SetButton(buildingZoneGO.transform.Find("UpgradeMineButton").GetComponent<Button>());

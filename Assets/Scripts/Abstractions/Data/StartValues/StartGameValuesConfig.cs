@@ -111,7 +111,7 @@ public class StartGameValuesConfig : ScriptableObject
 
     public readonly int FOOD_FOR_MELTING_ORE = 0;
     public readonly int WOOD_FOR_MELTING_ORE = 5;
-    public readonly int ORE_FOR_MELTING_ORE = 5;
+    public readonly int ORE_FOR_MELTING_ORE = 3;
     public readonly int IRON_FOR_MELTING_ORE = 0;
     public readonly int GOLD_FOR_MELTING_ORE = 0;
 
@@ -133,7 +133,7 @@ public class StartGameValuesConfig : ScriptableObject
     public readonly int GOLD_FOR_BUILDING_WOODCUTTER = 0;
 
     public readonly int FOOD_FOR_BUILDING_MINE = 0;
-    public readonly int WOOD_FOR_BUILDING_MINE = 15;
+    public readonly int WOOD_FOR_BUILDING_MINE = 10;
     public readonly int ORE_FOR_BUILDING_MINE = 0;
     public readonly int IRON_FOR_BUILDING_MINE = 0;
     public readonly int GOLD_FOR_BUILDING_MINE = 0;
@@ -165,38 +165,42 @@ public class StartGameValuesConfig : ScriptableObject
 
     public readonly int AMOUNT_HEALTH_KING = 300;
     public readonly int AMOUNT_HEALTH_PAWN = 100;
+    public readonly int AMOUNT_HEALTH_PAWN_SWORD = 150;
     public readonly int AMOUNT_HEALTH_ROOK = 100;
     public readonly int AMOUNT_HEALTH_BISHOP = 100;
 
 
     private readonly float PERCENT_FOR_HEALTH_KING = 0.15f;
     private readonly float PERCENT_FOR_HEALTH_PAWN = 0.2f;
+    private readonly float PERCENT_FOR_HEALTH_PAWN_SWORD = 0.2f;
     private readonly float PERCENT_FOR_HEALTH_ROOK = 0.2f;
     private readonly float PERCENT_FOR_HEALTH_BISHOP = 0.2f;
 
     public int HEALTH_FOR_ADDING_KING => (int)(AMOUNT_HEALTH_KING * PERCENT_FOR_HEALTH_KING);
     public int HEALTH_FOR_ADDING_PAWN => (int)(AMOUNT_HEALTH_PAWN * PERCENT_FOR_HEALTH_PAWN);
+    public int HEALTH_FOR_ADDING_PAWN_SWORD => (int)(AMOUNT_HEALTH_PAWN_SWORD * PERCENT_FOR_HEALTH_PAWN_SWORD);
     public int HEALTH_FOR_ADDING_ROOK => (int)(AMOUNT_HEALTH_KING * PERCENT_FOR_HEALTH_ROOK);
     public int HEALTH_FOR_ADDING_BISHOP => (int)(AMOUNT_HEALTH_PAWN * PERCENT_FOR_HEALTH_BISHOP);
 
 
-    private readonly float PERCENT_UPGRADE_HEALTH_KING = 0.10f;
-    private readonly float PERCENT_UPGRADE_HEALTH_PAWN = 0.10f;
-    private readonly float PERCENT_UPGRADE_HEALTH_ROOK = 0.10f;
-    private readonly float PERCENT_UPGRADE_HEALTH_BISHOP = 0.10f;
+    //private readonly float PERCENT_UPGRADE_HEALTH_KING = 0.10f;
+    //private readonly float PERCENT_UPGRADE_HEALTH_PAWN = 0.10f;
+    //private readonly float PERCENT_UPGRADE_HEALTH_ROOK = 0.10f;
+    //private readonly float PERCENT_UPGRADE_HEALTH_BISHOP = 0.10f;
 
-    public int HEALTH_UPGRADE_ADDING_KING => (int)(AMOUNT_HEALTH_KING * PERCENT_UPGRADE_HEALTH_KING);
-    public int HEALTH_UPGRADE_ADDING_PAWN => (int)(AMOUNT_HEALTH_PAWN * PERCENT_UPGRADE_HEALTH_PAWN);
-    public int HEALTH_UPGRADE_ADDING_ROOK => (int)(AMOUNT_HEALTH_ROOK * PERCENT_UPGRADE_HEALTH_ROOK);
-    public int HEALTH_UPGRADE_ADDING_BISHOP => (int)(AMOUNT_HEALTH_BISHOP * PERCENT_UPGRADE_HEALTH_BISHOP);
+    //public int HEALTH_UPGRADE_ADDING_KING => (int)(AMOUNT_HEALTH_KING * PERCENT_UPGRADE_HEALTH_KING);
+    //public int HEALTH_UPGRADE_ADDING_PAWN => (int)(AMOUNT_HEALTH_PAWN * PERCENT_UPGRADE_HEALTH_PAWN);
+    //public int HEALTH_UPGRADE_ADDING_ROOK => (int)(AMOUNT_HEALTH_ROOK * PERCENT_UPGRADE_HEALTH_ROOK);
+    //public int HEALTH_UPGRADE_ADDING_BISHOP => (int)(AMOUNT_HEALTH_BISHOP * PERCENT_UPGRADE_HEALTH_BISHOP);
 
     #endregion
 
 
     #region Damage
 
-    public readonly int SIMPLE_POWER_DAMAGE_KING = 70;
+    public readonly int SIMPLE_POWER_DAMAGE_KING = 90;
     public readonly int SIMPLE_POWER_DAMAGE_PAWN = 50;
+    public readonly int SIMPLE_POWER_DAMAGE_PAWN_SWORD = 75;
     public readonly int SIMPLE_POWER_DAMAGE_ROOK = 25;
     public readonly int SIMPLE_POWER_DAMAGE_BISHOP = 25;
 
@@ -205,10 +209,11 @@ public class StartGameValuesConfig : ScriptableObject
     private readonly float PERCENT_UPGRADE_DAMAGE_ROOK = 0.15f;
     private readonly float PERCENT_UPGRADE_DAMAGE_BISHOP = 0.15f;
 
-    public readonly float RATION_UNIQUE_POWER_DAMAGE_KING = 0.25f;
-    public readonly float RATION_UNIQUE_POWER_DAMAGE_PAWN = 0.25f;
-    public readonly float RATION_UNIQUE_POWER_DAMAGE_ROOK = 0.25f;
-    public readonly float RATION_UNIQUE_POWER_DAMAGE_BISHOP = 0.25f;
+    public readonly float RATION_UNIQUE_POWER_DAMAGE_KING = 0.3f;
+    public readonly float RATION_UNIQUE_POWER_DAMAGE_PAWN = 0.3f;
+    public readonly float RATION_UNIQUE_POWER_DAMAGE_PAWN_SWORD = 0.3f;
+    public readonly float RATION_UNIQUE_POWER_DAMAGE_ROOK = 0.3f;
+    public readonly float RATION_UNIQUE_POWER_DAMAGE_BISHOP = 0.3f;
 
     public int DAMAGE_UPGRADE_ADDING_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_UPGRADE_DAMAGE_KING);
     public int DAMAGE_UPGRADE_ADDING_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_UPGRADE_DAMAGE_PAWN);
@@ -224,11 +229,13 @@ public class StartGameValuesConfig : ScriptableObject
 
     private readonly float PERCENT_PROTECTION_CITY_FOR_KING = 0.15f;
     private readonly float PERCENT_PROTECTION_CITY_FOR_PAWN = 0.15f;
+    private readonly float PERCENT_PROTECTION_CITY_FOR_PAWN_SWORD = 0.15f;
     private readonly float PERCENT_PROTECTION_CITY_FOR_ROOK = 0.15f;
     private readonly float PERCENT_PROTECTION_CITY_FOR_BISHOP = 0.15f;
 
     public int PROTECTION_CITY_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_PROTECTION_CITY_FOR_KING);
     public int PROTECTION_CITY_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_PROTECTION_CITY_FOR_PAWN);
+    public int PROTECTION_CITY_PAWN_SWORD => (int)(SIMPLE_POWER_DAMAGE_PAWN_SWORD * PERCENT_PROTECTION_CITY_FOR_PAWN_SWORD);
     public int PROTECTION_CITY_ROOK => (int)(SIMPLE_POWER_DAMAGE_ROOK * PERCENT_PROTECTION_CITY_FOR_ROOK);
     public int PROTECTION_CITY_BISHOP => (int)(SIMPLE_POWER_DAMAGE_BISHOP * PERCENT_PROTECTION_CITY_FOR_BISHOP);
 
@@ -239,32 +246,38 @@ public class StartGameValuesConfig : ScriptableObject
 
     private readonly float PERCENT_PROTECTION_FOOD_FOR_KING = -0.1f;
     private readonly float PERCENT_PROTECTION_FOOD_FOR_PAWN = -0.1f;
+    private readonly float PERCENT_PROTECTION_FOOD_FOR_PAWN_SWORD = -0.1f;
     private readonly float PERCENT_PROTECTION_FOOD_FOR_ROOK = -0.1f;
     private readonly float PERCENT_PROTECTION_FOOD_FOR_BISHOP = -0.1f;
 
     private readonly float PERCENT_PROTECTION_TREE_FOR_KING = 0.15f;
     private readonly float PERCENT_PROTECTION_TREE_FOR_PAWN = 0.15f;
+    private readonly float PERCENT_PROTECTION_TREE_FOR_PAWN_SWORD = 0.15f;
     private readonly float PERCENT_PROTECTION_TREE_FOR_ROOK = 0.15f;
     private readonly float PERCENT_PROTECTION_TREE_FOR_BISHOP = 0.15f;
 
     private readonly float PERCENT_PROTECTION_HILL_FOR_KING = 0.15f;
     private readonly float PERCENT_PROTECTION_HILL_FOR_PAWN = 0.15f;
+    private readonly float PERCENT_PROTECTION_HILL_FOR_PAWN_SWORD = 0.15f;
     private readonly float PERCENT_PROTECTION_HILL_FOR_ROOK = 0.15f;
     private readonly float PERCENT_PROTECTION_HILL_FOR_BISHOP = 0.15f;
 
 
     public int PROTECTION_FOOD_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_PROTECTION_FOOD_FOR_KING);
     public int PROTECTION_FOOD_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_PROTECTION_FOOD_FOR_PAWN);
+    public int PROTECTION_FOOD_FOR_PAWN_SWORD => (int)(SIMPLE_POWER_DAMAGE_PAWN_SWORD * PERCENT_PROTECTION_FOOD_FOR_PAWN_SWORD);
     public int PROTECTION_FOOD_FOR_ROOK => (int)(SIMPLE_POWER_DAMAGE_ROOK * PERCENT_PROTECTION_FOOD_FOR_ROOK);
     public int PROTECTION_FOOD_FOR_BISHOP => (int)(SIMPLE_POWER_DAMAGE_BISHOP * PERCENT_PROTECTION_FOOD_FOR_BISHOP);
 
     public int PROTECTION_HILL_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_PROTECTION_HILL_FOR_KING);
     public int PROTECTION_HILL_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_PROTECTION_HILL_FOR_PAWN);
+    public int PROTECTION_HILL_FOR_PAWN_SWORD => (int)(SIMPLE_POWER_DAMAGE_PAWN_SWORD * PERCENT_PROTECTION_HILL_FOR_PAWN_SWORD);
     public int PROTECTION_HILL_FOR_ROOK => (int)(SIMPLE_POWER_DAMAGE_ROOK * PERCENT_PROTECTION_HILL_FOR_ROOK);
     public int PROTECTION_HILL_FOR_BISHOP => (int)(SIMPLE_POWER_DAMAGE_BISHOP * PERCENT_PROTECTION_HILL_FOR_BISHOP);
 
     public int PROTECTION_TREE_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * PERCENT_PROTECTION_TREE_FOR_KING);
     public int PROTECTION_TREE_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * PERCENT_PROTECTION_TREE_FOR_PAWN);
+    public int PROTECTION_TREE_FOR_PAWN_SWORD => (int)(SIMPLE_POWER_DAMAGE_PAWN_SWORD * PERCENT_PROTECTION_TREE_FOR_PAWN_SWORD);
     public int PROTECTION_TREE_FOR_ROOK => (int)(SIMPLE_POWER_DAMAGE_ROOK * PERCENT_PROTECTION_TREE_FOR_ROOK);
     public int PROTECTION_TREE_FOR_BISHOP => (int)(SIMPLE_POWER_DAMAGE_BISHOP * PERCENT_PROTECTION_TREE_FOR_BISHOP);
 
@@ -275,6 +288,7 @@ public class StartGameValuesConfig : ScriptableObject
 
     public readonly float PERCENT_FOR_PROTECTION_KING = 0.3f;
     public readonly float PERCENT_FOR_PROTECTION_PAWN = 0.3f;
+    public readonly float PERCENT_FOR_PROTECTION_PAWN_SWORD = 0.3f;
     public readonly float PERCENT_FOR_PROTECTION_ROOK = 0.3f;
     public readonly float PERCENT_FOR_PROTECTION_BISHOP = 0.3f;
 
@@ -291,6 +305,7 @@ public class StartGameValuesConfig : ScriptableObject
 
     public readonly int STANDART_AMOUNT_STEPS_KING = 1;
     public readonly int STANDART_AMOUNT_STEPS_PAWN = 2;
+    public readonly int STANDART_AMOUNT_STEPS_PAWN_SWORD = 2;
     public readonly int STANDART_AMOUNT_STEPS_ROOK = 2;
     public readonly int STANDART_AMOUNT_STEPS_BISHOP = 2;
 

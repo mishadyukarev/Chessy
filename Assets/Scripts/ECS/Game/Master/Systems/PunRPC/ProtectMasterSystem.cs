@@ -29,7 +29,7 @@ internal sealed class ProtectMasterSystem : SystemMasterReduction
                 if (_cellM.CellUnitWorker.HaveMaxSteps(xyCell))
                 {
                     _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = false;
-                    _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
+                    //_eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
                 }
             }
         }

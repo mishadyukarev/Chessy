@@ -15,7 +15,7 @@ internal struct CellBuildingComponent
 
     internal void Fill(GameObject buildingGO)
     {
-        _cityParentGO = buildingGO.transform.Find("City").gameObject;  
+        _cityParentGO = buildingGO.transform.Find("City").gameObject;
         _farmGO = buildingGO.transform.Find("Farm").gameObject;
         _woodcutterGO = buildingGO.transform.Find("Woodcutter").gameObject;
         _mineGO = buildingGO.transform.Find("Mine").gameObject;

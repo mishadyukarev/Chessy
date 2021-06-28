@@ -42,7 +42,7 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                         minusGold = 0;
 
                         haveFood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) >= minusFood;
-                        haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood,Info.Sender.IsMasterClient) >= minusWood;
+                        haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient) >= minusWood;
                         haveOre = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient) >= minusOre;
                         haveIron = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient) >= minusIron;
                         haveGold = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient) >= minusGold;
@@ -109,7 +109,7 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                         minusGold = 0;
 
                         haveFood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) >= minusFood;
-                        haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood,Info.Sender.IsMasterClient) >= minusWood;
+                        haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient) >= minusWood;
                         haveOre = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient) >= minusOre;
                         haveIron = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient) >= minusIron;
                         haveGold = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient) >= minusGold;

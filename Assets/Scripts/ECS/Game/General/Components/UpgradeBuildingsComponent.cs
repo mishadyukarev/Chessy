@@ -22,6 +22,16 @@ internal struct UpgradeBuildingsComponent
 
         _amountUpgradeMineDict.Add(true, default);
         _amountUpgradeMineDict.Add(false, default);
+
+
+        _amountUpgradeFarmDict[true] += 1;
+        _amountUpgradeFarmDict[false] += 1;
+
+        _amountUpgradeWoodcutterDict[true] += 1;
+        _amountUpgradeWoodcutterDict[false] += 1;
+
+        _amountUpgradeMineDict[true] += 1;
+        _amountUpgradeMineDict[false] += 1;
     }
 
 

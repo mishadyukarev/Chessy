@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
 using Leopotam.Ecs;
 
 public sealed class SystemsGameMasterManager : SystemsManager
@@ -31,7 +32,8 @@ public sealed class SystemsGameMasterManager : SystemsManager
             .Add(new UpgradeBuildingMasterSystem(), nameof(UpgradeBuildingMasterSystem))
             .Add(new EconomyUpdatorMasterSystem(), nameof(EconomyUpdatorMasterSystem))
             .Add(new FertilizeUpdatorMasterSystem(), nameof(FertilizeUpdatorMasterSystem))
-            .Add(new TruceMasterSystem(), nameof(TruceMasterSystem));
+            .Add(new TruceMasterSystem(), nameof(TruceMasterSystem))
+            .Add(new UpgradeMasterSystem(), nameof(UpgradeMasterSystem));
     }
 
     internal override void ProcessInjects()

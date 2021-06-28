@@ -16,6 +16,7 @@ internal struct CellSupportVisionComponent
     private SpriteRenderer _simpleAttackSR;
     private SpriteRenderer _uniqueAttackSR;
     private SpriteRenderer _zoneSR;
+    private SpriteRenderer _upgradeSR;
 
     internal void Fill(GameObject supportVisionGO)
     {
@@ -32,6 +33,7 @@ internal struct CellSupportVisionComponent
         _simpleAttackSR = _enemyGO.GetComponent<SpriteRenderer>();
         _uniqueAttackSR = _uniqueAttackGO.GetComponent<SpriteRenderer>();
         _zoneSR = _zoneGO.GetComponent<SpriteRenderer>();
+        _upgradeSR = supportVisionGO.transform.Find("Upgrade").GetComponent<SpriteRenderer>();
     }
 
 
@@ -64,6 +66,10 @@ internal struct CellSupportVisionComponent
 
             case SupportVisionTypes.Zone:
                 _zoneSR.enabled = isActive;
+                break;
+
+            case SupportVisionTypes.Upgrade:
+                _upgradeSR.enabled = isActive;
                 break;
 
             default:

@@ -47,7 +47,7 @@ namespace Assets.Scripts
         {
             _instance = this;
 
-            _eCSmanager = new ECSManager(); 
+            _eCSmanager = new ECSManager();
             _photonManager = new PhotonManager(_eCSmanager);
 
             ToggleScene(_sceneType);
@@ -55,7 +55,7 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            Debug.Log(PhotonNetwork.CountOfRooms);
+            //Debug.Log(PhotonNetwork.CountOfRooms);
 
             _eCSmanager.OwnUpdate(_sceneType);
             _photonManager.OwnUpdate(_sceneType);

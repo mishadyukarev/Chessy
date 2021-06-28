@@ -1,4 +1,6 @@
-﻿using ExitGames.Client.Photon;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -57,6 +59,8 @@ namespace Assets.Scripts
         public void TruceToMaster(bool isTruce) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Truce, new object[] { isTruce });
         public void TruceToGeneral(Player playerTo, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Truce, new object[] { isRefreshed, isDone, numberMotion });
         public void TruceToGeneral(RpcTarget rpcTarget, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Truce, new object[] { isRefreshed, isDone, numberMotion });
+
+        public void UpgradeToMaster(UpgradeModTypes upgradeModType, int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Upgrade, new object[] { upgradeModType, xyCell });
 
         public void ShiftUnitToMaster(in int[] xyPreviousCell, in int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Shift, new object[] { xyPreviousCell, xySelectedCell });
         public void AttackUnitToMaster(int[] xyPreviousCell, int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Attack, new object[] { xyPreviousCell, xySelectedCell });
@@ -190,6 +194,14 @@ namespace Assets.Scripts
                 case RpcTypes.UpgradeBuilding:
                     _eMM.RPCMasterEnt_RPCMasterCom.BuildingType = (BuildingTypes)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(UpgradeBuildingMasterSystem), _sMM.RPCSystems);
+                    break;
+
+                case RpcTypes.Upgrade:
+
+                    Debug.Log("Welcome");
+                    _eMM.RPCMasterEnt_RPCMasterCom.UpgradeModType = (UpgradeModTypes)objects[0];
+                    _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[1];
+                    _sMM.TryInvokeRunSystem(nameof(UpgradeMasterSystem), _sMM.RPCSystems);
                     break;
 
                 default:

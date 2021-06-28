@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 
 internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
 {
@@ -14,9 +15,7 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
         _eGM.BuyRookUIEnt_ButtonCom.AddListener(delegate { BuyUnit(UnitTypes.Rook); });
         _eGM.BuyBishopUIEnt_ButtonCom.AddListener(delegate { BuyUnit(UnitTypes.Bishop); });
 
-        _eGM.UpgradePawnUIEnt_ButtonCom.AddListener(delegate { UpgradeUnit(UnitTypes.Pawn); });
-        _eGM.UpgradeRookUIEnt_ButtonCom.AddListener(delegate { UpgradeUnit(UnitTypes.Rook); });
-        _eGM.UpgradeBishopUIEnt_ButtonCom.AddListener(delegate { UpgradeUnit(UnitTypes.Bishop); });
+        _eGM.UpgradeUnitUIEnt_ButtonCom.AddListener(delegate { ToggleUpgradeMod(UpgradeModTypes.Unit); });
 
 
         _eGM.UpgradeFarmUIEnt_ButtonCom.AddListener(delegate { UpgradeBuilding(BuildingTypes.Farm); });
@@ -45,8 +44,17 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
 
 
     private void BuyUnit(UnitTypes unitType) => _photonPunRPC.CreateUnitToMaster(unitType);
-
-    private void UpgradeUnit(UnitTypes unitType) => _photonPunRPC.UpgradeUnitToMaster(unitType);
+    private void ToggleUpgradeMod(UpgradeModTypes upgradeModType)
+    {
+        if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.None)
+        {
+            _eGM.SelectorEnt_SelectorCom.UpgradeModType = upgradeModType;
+        }
+        else
+        {
+            _eGM.SelectorEnt_SelectorCom.UpgradeModType = UpgradeModTypes.None;
+        }
+    }
     private void UpgradeBuilding(BuildingTypes buildingType) => _photonPunRPC.UpgradeBuildingToMaster(buildingType);
 
     private void MeltOre() => _photonPunRPC.MeltOreToMaster();

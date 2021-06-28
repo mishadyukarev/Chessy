@@ -15,8 +15,9 @@ internal struct CellUnitComponent
     private float _standartZ;
 
     private SpriteRenderer _kingSR;
-    private SpriteRenderer _pawnParentSR;
-    private SpriteRenderer _rookParentSR;
+    private SpriteRenderer _pawnSR;
+    private SpriteRenderer _pawnSwordSR;
+    private SpriteRenderer _rookSR;
     private SpriteRenderer _bishopSR;
     private SpriteRenderer _standartColorSR;
 
@@ -25,6 +26,7 @@ internal struct CellUnitComponent
     internal bool IsRelaxed;
     internal int AmountHealth;
     internal int AmountSteps;
+
     internal bool HaveHealth => AmountHealth > 0;
     internal bool HaveMinAmountSteps => AmountSteps >= 1;
 
@@ -44,8 +46,9 @@ internal struct CellUnitComponent
         _bishopGO = unitParentGO.transform.Find("Bishop").gameObject;
 
         _kingSR = _kingGO.GetComponent<SpriteRenderer>();
-        _pawnParentSR = _pawnGO.GetComponent<SpriteRenderer>();
-        _rookParentSR = _rookGO.GetComponent<SpriteRenderer>();
+        _pawnSR = _pawnGO.GetComponent<SpriteRenderer>();
+        _pawnSwordSR = unitParentGO.transform.Find("PawnSword").GetComponent<SpriteRenderer>();
+        _rookSR = _rookGO.GetComponent<SpriteRenderer>();
         _bishopSR = _bishopGO.GetComponent<SpriteRenderer>();
         _standartColorSR = unitParentGO.transform.Find("Color").GetComponent<SpriteRenderer>();
 
@@ -67,12 +70,17 @@ internal struct CellUnitComponent
                 break;
 
             case UnitTypes.Pawn:
-                _pawnParentSR.enabled = isActive;
+                _pawnSR.enabled = isActive;
+                _standartColorSR.enabled = isActive;
+                break;
+
+            case UnitTypes.PawnSword:
+                _pawnSwordSR.enabled = isActive;
                 _standartColorSR.enabled = isActive;
                 break;
 
             case UnitTypes.Rook:
-                _rookParentSR.enabled = isActive;
+                _rookSR.enabled = isActive;
                 _standartColorSR.enabled = isActive;
                 break;
 
@@ -107,11 +115,15 @@ internal struct CellUnitComponent
                         break;
 
                     case UnitTypes.Pawn:
-                        _pawnParentSR.flipX = isActivated;
+                        _pawnSR.flipX = isActivated;
+                        break;
+
+                    case UnitTypes.PawnSword:
+                        _pawnSwordSR.flipX = isActivated;
                         break;
 
                     case UnitTypes.Rook:
-                        _rookParentSR.flipX = isActivated;
+                        _rookSR.flipX = isActivated;
                         break;
 
                     case UnitTypes.Bishop:
@@ -134,11 +146,15 @@ internal struct CellUnitComponent
                         break;
 
                     case UnitTypes.Pawn:
-                        _pawnParentSR.flipY = isActivated;
+                        _pawnSR.flipY = isActivated;
+                        break;
+
+                    case UnitTypes.PawnSword:
+                        _pawnSwordSR.flipY = isActivated;
                         break;
 
                     case UnitTypes.Rook:
-                        _rookParentSR.flipY = isActivated;
+                        _rookSR.flipY = isActivated;
                         break;
 
                     case UnitTypes.Bishop:
@@ -167,11 +183,15 @@ internal struct CellUnitComponent
                 break;
 
             case UnitTypes.Pawn:
-                _pawnParentSR.transform.rotation = Quaternion.Euler(x, y, z);
+                _pawnSR.transform.rotation = Quaternion.Euler(x, y, z);
+                break;
+
+            case UnitTypes.PawnSword:
+                _pawnSwordSR.transform.rotation = Quaternion.Euler(x, y, z);
                 break;
 
             case UnitTypes.Rook:
-                _rookParentSR.transform.rotation = Quaternion.Euler(x, y, z);
+                _rookSR.transform.rotation = Quaternion.Euler(x, y, z);
                 break;
 
             case UnitTypes.Bishop:
@@ -180,78 +200,6 @@ internal struct CellUnitComponent
 
             default:
                 break;
-        }
-    }
-
-    internal float GetX(UnitTypes unitType)
-    {
-        switch (unitType)
-        {
-            case UnitTypes.None:
-                throw new System.Exception();
-
-            case UnitTypes.King:
-                return _kingSR.transform.rotation.x;
-
-            case UnitTypes.Pawn:
-                return _pawnParentSR.transform.rotation.x;
-
-            case UnitTypes.Rook:
-                return _rookParentSR.transform.rotation.x;
-
-            case UnitTypes.Bishop:
-                return _bishopSR.transform.rotation.x;
-
-            default:
-                throw new System.Exception();
-        }
-    }
-
-    internal float GetY(UnitTypes unitType)
-    {
-        switch (unitType)
-        {
-            case UnitTypes.None:
-                throw new System.Exception();
-
-            case UnitTypes.King:
-                return _kingSR.transform.rotation.y;
-
-            case UnitTypes.Pawn:
-                return _pawnParentSR.transform.rotation.y;
-
-            case UnitTypes.Rook:
-                return _rookParentSR.transform.rotation.y;
-
-            case UnitTypes.Bishop:
-                return _bishopSR.transform.rotation.y;
-
-            default:
-                throw new System.Exception();
-        }
-    }
-
-    internal float GetZ(UnitTypes unitType)
-    {
-        switch (unitType)
-        {
-            case UnitTypes.None:
-                throw new System.Exception();
-
-            case UnitTypes.King:
-                return _kingSR.transform.rotation.z;
-
-            case UnitTypes.Pawn:
-                return _pawnParentSR.transform.rotation.z;
-
-            case UnitTypes.Rook:
-                return _rookParentSR.transform.rotation.z;
-
-            case UnitTypes.Bishop:
-                return _bishopSR.transform.rotation.z;
-
-            default:
-                throw new System.Exception();
         }
     }
 }

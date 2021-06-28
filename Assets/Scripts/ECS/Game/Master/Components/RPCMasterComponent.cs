@@ -1,4 +1,6 @@
-﻿internal struct RPCMasterComponent
+﻿using Assets.Scripts.Abstractions.Enums;
+
+internal struct RPCMasterComponent
 {
     internal UniqueAbilitiesPawnTypes UniqueAbilitiesPawnType;
     internal int[] XyCell;
@@ -6,4 +8,5 @@
     internal int[] XySelected;
     internal int[] XyPrevious;
     internal UnitTypes UnitType;
+    internal UpgradeModTypes UpgradeModType;
 }

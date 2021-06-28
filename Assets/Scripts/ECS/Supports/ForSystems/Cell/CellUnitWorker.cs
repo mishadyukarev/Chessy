@@ -25,13 +25,16 @@ namespace Assets.Scripts
                     return Instance.StartValuesGameConfig.AMOUNT_HEALTH_KING;
 
                 case UnitTypes.Pawn:
-                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_PAWN + _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
+                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_PAWN; //+ _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
+
+                case UnitTypes.PawnSword:
+                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_PAWN_SWORD;
 
                 case UnitTypes.Rook:
-                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_ROOK + _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
+                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_ROOK; //+ _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
 
                 case UnitTypes.Bishop:
-                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_BISHOP + _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
+                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_BISHOP; //+ _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
 
                 default:
                     return default;
@@ -39,7 +42,6 @@ namespace Assets.Scripts
         }
         internal int SimplePowerDamage(params int[] xy)
         {
-
             switch (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType)
             {
                 case UnitTypes.None:
@@ -49,13 +51,16 @@ namespace Assets.Scripts
                     return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_KING;
 
                 case UnitTypes.Pawn:
-                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN + _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_PAWN;
+                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN;// + _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_PAWN;
+
+                case UnitTypes.PawnSword:
+                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN_SWORD; //+ _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_PAWN;
 
                 case UnitTypes.Rook:
-                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_ROOK + _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_ROOK;
+                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_ROOK; //+ _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_ROOK;
 
                 case UnitTypes.Bishop:
-                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_BISHOP + _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_BISHOP;
+                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_BISHOP; //+ _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_BISHOP;
 
                 default:
                     return default;
@@ -75,6 +80,9 @@ namespace Assets.Scripts
 
                 case UnitTypes.Pawn:
                     return (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_PAWN);
+
+                case UnitTypes.PawnSword:
+                    return (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_PAWN_SWORD);
 
                 case UnitTypes.Rook:
                     return (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_ROOK);
@@ -105,6 +113,10 @@ namespace Assets.Scripts
                         powerProtection += (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_PAWN);
                         break;
 
+                    case UnitTypes.PawnSword:
+                        powerProtection += (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_PAWN_SWORD);
+                        break;
+
                     case UnitTypes.Rook:
                         powerProtection += (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_ROOK);
                         break;
@@ -125,6 +137,10 @@ namespace Assets.Scripts
 
                     case UnitTypes.Pawn:
                         powerProtection -= (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_PAWN);
+                        break;
+
+                    case UnitTypes.PawnSword:
+                        powerProtection -= (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_PAWN_SWORD);
                         break;
 
                     case UnitTypes.Rook:
@@ -162,7 +178,6 @@ namespace Assets.Scripts
 
 
                     case UnitTypes.Pawn:
-
                         switch (item)
                         {
                             case EnvironmentTypes.Fertilizer:
@@ -177,7 +192,24 @@ namespace Assets.Scripts
                                 powerProtection += Instance.StartValuesGameConfig.PROTECTION_HILL_FOR_PAWN;
                                 break;
                         }
+                        break;
 
+
+                    case UnitTypes.PawnSword:
+                        switch (item)
+                        {
+                            case EnvironmentTypes.Fertilizer:
+                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_FOOD_FOR_PAWN_SWORD;
+                                break;
+
+                            case EnvironmentTypes.AdultForest:
+                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_TREE_FOR_PAWN_SWORD;
+                                break;
+
+                            case EnvironmentTypes.Hill:
+                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_HILL_FOR_PAWN_SWORD;
+                                break;
+                        }
                         break;
 
 
@@ -237,6 +269,10 @@ namespace Assets.Scripts
                             powerProtection += Instance.StartValuesGameConfig.PROTECTION_CITY_PAWN;
                             break;
 
+                        case UnitTypes.PawnSword:
+                            powerProtection += Instance.StartValuesGameConfig.PROTECTION_CITY_PAWN_SWORD;
+                            break;
+
                         case UnitTypes.Rook:
                             powerProtection += Instance.StartValuesGameConfig.PROTECTION_CITY_ROOK;
                             break;
@@ -272,6 +308,9 @@ namespace Assets.Scripts
 
                 case UnitTypes.Pawn:
                     return _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
+
+                case UnitTypes.PawnSword:
+                    return _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN_SWORD;
 
                 case UnitTypes.Rook:
                     return _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
@@ -322,6 +361,11 @@ namespace Assets.Scripts
                     _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
                     break;
 
+                case UnitTypes.PawnSword:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN_SWORD;
+                    break;
+
+
                 case UnitTypes.Rook:
                     _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
                     break;
@@ -345,7 +389,7 @@ namespace Assets.Scripts
 
             SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player, xy);
         }
-        internal void SetUnit(int[] xyFromUnitTo, int[] xyTo)
+        internal void ShiftUnit(int[] xyFromUnitTo, int[] xyTo)
         {
             var unitType = _eGM.CellUnitEnt_UnitTypeCom(xyFromUnitTo).UnitType;
             var amountHealth = _eGM.CellUnitEnt_CellUnitCom(xyFromUnitTo).AmountHealth;
@@ -371,6 +415,7 @@ namespace Assets.Scripts
                 case UnitTypes.None:
                     _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.King);
                     _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.Pawn);
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.PawnSword);
                     _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.Rook);
                     _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.Bishop);
                     break;
@@ -383,6 +428,10 @@ namespace Assets.Scripts
                     _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
+                case UnitTypes.PawnSword:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    break;
+
                 case UnitTypes.Rook:
                     _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
@@ -390,6 +439,46 @@ namespace Assets.Scripts
                 case UnitTypes.Bishop:
                     _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
+            }
+        }
+
+        internal void ChangeUnitType(int[] xy, UnitTypes newUnitType)
+        {
+            _eGM.CellUnitEnt_UnitTypeCom(xy).UnitType = newUnitType;
+
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.King);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.Pawn);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.PawnSword);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.Rook);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.Bishop);
+
+            switch (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType)
+            {
+                case UnitTypes.None:
+                    throw new System.Exception();
+
+                case UnitTypes.King:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.King, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    break;
+
+                case UnitTypes.Pawn:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    break;
+
+                case UnitTypes.PawnSword:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    break;
+
+                case UnitTypes.Rook:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    break;
+
+                case UnitTypes.Bishop:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    break;
+
+                default:
+                    throw new System.Exception();
             }
         }
 

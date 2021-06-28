@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions;
+using Assets.Scripts.Abstractions.Enums;
 using static Assets.Scripts.Main;
 
 internal sealed class SelectorSystem : RPCGeneralSystemReduction
@@ -56,7 +57,28 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                         if (_eGM.InputEnt_InputCom.IsClick)
                         {
-                            if (_eGM.DonerEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient))
+                            if (_eGM.SelectorEnt_SelectorCom.UpgradeModType != UpgradeModTypes.None)
+                            {
+                                var upgadeType = _eGM.SelectorEnt_SelectorCom.UpgradeModType;
+
+                                switch (_eGM.SelectorEnt_SelectorCom.UpgradeModType)
+                                {
+                                    case UpgradeModTypes.None:
+                                        break;
+
+                                    case UpgradeModTypes.Unit:
+                                        _photonPunRPC.UpgradeToMaster(upgadeType, xyCurrentCell);
+                                        break;
+
+                                    case UpgradeModTypes.Building:
+                                        break;
+
+                                    default:
+                                        break;
+                                }
+                            }
+
+                            else if (_eGM.DonerEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient))
                             {
                                 if (_canExecuteStartClick)
                                 {
@@ -236,6 +258,8 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                         _eGM.SelectorEnt_UnitTypeCom.UnitType = default;
 
                         _cellM.CellBaseOperations.CleanXY(XyPreviousCell);
+
+                        _eGM.SelectorEnt_SelectorCom.UpgradeModType = UpgradeModTypes.None;
                     }
                 }
             }

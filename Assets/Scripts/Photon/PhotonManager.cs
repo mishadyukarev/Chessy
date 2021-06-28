@@ -33,7 +33,7 @@ namespace Assets.Scripts
         {
             switch (sceneType)
             {
-                case SceneTypes.Menu:       
+                case SceneTypes.Menu:
                     break;
 
                 case SceneTypes.Game:

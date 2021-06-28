@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Abstractions;
 using Assets.Scripts.ECS.Common.Components;
 using Leopotam.Ecs;
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -37,7 +36,8 @@ namespace Assets.Scripts
 
         private EcsEntity _soundEnt;
         internal ref AudioSourceCommComponent SoundEnt_AudioSourceCommCom => ref _soundEnt.Get<AudioSourceCommComponent>();
-        /*Need Replace*/ internal ref SliderCommComponent SoundEnt_SliderCommCom => ref _soundEnt.Get<SliderCommComponent>(); 
+        /*Need Replace*/
+        internal ref SliderCommComponent SoundEnt_SliderCommCom => ref _soundEnt.Get<SliderCommComponent>();
 
 
         private EcsEntity _unityEventEnt;
@@ -111,7 +111,7 @@ namespace Assets.Scripts
 
                 default:
                     break;
-            }           
+            }
         }
 
         internal void ToggleScene(SceneTypes sceneType)

@@ -54,7 +54,7 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
                     if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveHill)
                     {
                         _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Ore);
-                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Ore, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountOreResources / 60f, 0.15f, 1));
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Ore, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountOreResources / 999f, 0.15f, 1));
                     }
                     else
                     {

@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts;
 using UnityEngine;
-using UnityEngine.UI;
 
 internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
 {
@@ -24,6 +23,10 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
                     break;
 
                 case UnitTypes.Pawn:
+                    ActiveStandartAbilities(true);
+                    break;
+
+                case UnitTypes.PawnSword:
                     ActiveStandartAbilities(true);
                     break;
 
