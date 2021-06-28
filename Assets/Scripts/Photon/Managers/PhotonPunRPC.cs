@@ -355,8 +355,8 @@ namespace Assets.Scripts
             _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, false),
             _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, false),
             _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, false),
-            _eGM.EconomyEnt_EconomyCom.Iron(false),
-            _eGM.EconomyEnt_EconomyCom.Gold(false),
+            _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, false),
+            _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, false),
 
             _eGM.UnitInventorEnt_UnitInventorCom.IsSettedKing(false),
             _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[false],
@@ -473,11 +473,11 @@ namespace Assets.Scripts
             int[] xySettedCity = (int[])objects[i++];
 
 
-            _eGM.EconomyEnt_EconomyCom.SetFood(Instance.IsMasterClient, food);
-            _eGM.EconomyEnt_EconomyCom.SetWood(Instance.IsMasterClient, wood);
-            _eGM.EconomyEnt_EconomyCom.SetOre(Instance.IsMasterClient, ore);
-            _eGM.EconomyEnt_EconomyCom.SetIron(Instance.IsMasterClient, iron);
-            _eGM.EconomyEnt_EconomyCom.SetGold(Instance.IsMasterClient, gold);
+            _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, Instance.IsMasterClient, food);
+            _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, Instance.IsMasterClient, wood);
+            _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, Instance.IsMasterClient, ore);
+            _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, Instance.IsMasterClient, iron);
+            _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, Instance.IsMasterClient, gold);
 
             _eGM.UnitInventorEnt_UnitInventorCom.SetSettedKing(Instance.IsMasterClient, isSettedKing);
             _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Instance.IsMasterClient] = isSettedCity;

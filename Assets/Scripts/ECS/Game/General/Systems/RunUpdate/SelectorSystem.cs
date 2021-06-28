@@ -67,7 +67,6 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                                     _cellM.CellBaseOperations.CopyXYinTo(XySelectedCell, XyPreviousCell);
                                     _canExecuteStartClick = false;
-
                                 }
 
                                 else

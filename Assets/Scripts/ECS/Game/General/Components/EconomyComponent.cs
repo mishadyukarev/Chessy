@@ -33,9 +33,9 @@ internal struct EconomyComponent
         _goldAmount.Add(false, default);
     }
 
-    internal int AmountResources(ResourceTypes economyType, bool key)
+    internal int AmountResources(ResourceTypes resourceType, bool key)
     {
-        switch (economyType)
+        switch (resourceType)
         {
             case ResourceTypes.None:
                 throw new Exception();
@@ -60,9 +60,9 @@ internal struct EconomyComponent
         }
     }
 
-    internal void SetAmountResources(ResourceTypes economyType, bool key, int value)
+    internal void SetAmountResources(ResourceTypes resourceType, bool key, int value)
     {
-        switch (economyType)
+        switch (resourceType)
         {
             case ResourceTypes.None:
                 throw new Exception();
@@ -92,25 +92,67 @@ internal struct EconomyComponent
         }
     }
 
-    internal void SetFood(bool key, int value) => _foodAmount[key] = value;
-    internal void AddFood(bool key, int value) => _foodAmount[key] += value;
-    internal void TakeFood(bool key, int value) => _foodAmount[key] -= value;
+    internal void AddAmountResources(ResourceTypes resourceType, bool key, int value)
+    {
+        switch (resourceType)
+        {
+            case ResourceTypes.None:
+                throw new Exception();
 
-    internal void SetWood(bool key, int value) => _woodAmount[key] = value;
-    internal void AddWood(bool key, int value) => _woodAmount[key] += value;
-    internal void TakeWood(bool key, int value) => _woodAmount[key] -= value;
+            case ResourceTypes.Food:
+                _foodAmount[key] += value;
+                break;
 
-    internal void SetOre(bool key, int value) => _oreAmount[key] = value;
-    internal void AddOre(bool key, int value) => _oreAmount[key] += value;
-    internal void TakeOre(bool key, int value) => _oreAmount[key] -= value;
+            case ResourceTypes.Wood:
+                _woodAmount[key] += value;
+                break;
 
-    internal int Iron(bool key) => _ironAmount[key];
-    internal void SetIron(bool key, int value) => _ironAmount[key] = value;
-    internal void AddIron(bool key, int value) => _ironAmount[key] += value;
-    internal void TakeIron(bool key, int value) => _ironAmount[key] -= value;
+            case ResourceTypes.Ore:
+                _oreAmount[key] += value;
+                break;
 
-    internal int Gold(bool key) => _goldAmount[key];
-    internal void SetGold(bool key, int value) => _goldAmount[key] = value;
-    internal void AddGold(bool key, int value) => _goldAmount[key] += value;
-    internal void TakeGold(bool key, int value) => _goldAmount[key] -= value;
+            case ResourceTypes.Iron:
+                _ironAmount[key] += value;
+                break;
+
+            case ResourceTypes.Gold:
+                _goldAmount[key] += value;
+                break;
+
+            default:
+                throw new Exception();
+        }
+    }
+
+    internal void TakeAmountResources(ResourceTypes resourceType, bool key, int value)
+    {
+        switch (resourceType)
+        {
+            case ResourceTypes.None:
+                throw new Exception();
+
+            case ResourceTypes.Food:
+                _foodAmount[key] -= value;
+                break;
+
+            case ResourceTypes.Wood:
+                _woodAmount[key] -= value;
+                break;
+
+            case ResourceTypes.Ore:
+                _oreAmount[key] -= value;
+                break;
+
+            case ResourceTypes.Iron:
+                _ironAmount[key] -= value;
+                break;
+
+            case ResourceTypes.Gold:
+                _goldAmount[key] -= value;
+                break;
+
+            default:
+                throw new Exception();
+        }
+    }
 }

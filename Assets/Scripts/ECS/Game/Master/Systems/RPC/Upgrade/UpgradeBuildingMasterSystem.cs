@@ -63,16 +63,16 @@ internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
         haveFood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) >= minusFood;
         haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood,Info.Sender.IsMasterClient) >= minusWood;
         haveOre = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient) >= minusOre;
-        haveIron = _eGM.EconomyEnt_EconomyCom.Iron(Info.Sender.IsMasterClient) >= minusIron;
-        haveGold = _eGM.EconomyEnt_EconomyCom.Gold(Info.Sender.IsMasterClient) >= minusGold;
+        haveIron = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient) >= minusIron;
+        haveGold = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient) >= minusGold;
 
         if (haveFood && haveWood && haveOre && haveIron && haveGold)
         {
-            _eGM.EconomyEnt_EconomyCom.TakeFood(Info.Sender.IsMasterClient, minusFood);
-            _eGM.EconomyEnt_EconomyCom.TakeWood(Info.Sender.IsMasterClient, minusWood);
-            _eGM.EconomyEnt_EconomyCom.TakeOre(Info.Sender.IsMasterClient, minusOre);
-            _eGM.EconomyEnt_EconomyCom.TakeIron(Info.Sender.IsMasterClient, minusIron);
-            _eGM.EconomyEnt_EconomyCom.TakeGold(Info.Sender.IsMasterClient, minusGold);
+            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient, minusFood);
+            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient, minusWood);
+            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient, minusOre);
+            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, minusIron);
+            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, minusGold);
 
             _eGM.BuildingsEnt_UpgradeBuildingsCom.AddAmountUpgrades(BuildingType, Info.Sender.IsMasterClient);
         }

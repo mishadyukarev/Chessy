@@ -3,11 +3,11 @@ using UnityEngine;
 
 internal struct CellEnvironmentComponent
 {
-    internal bool _haveFertilizer;
-    internal bool _haveMountain;
-    internal bool _haveAdultTree;
-    internal bool _haveYoungTree;
-    internal bool _haveHill;
+    private bool _haveFertilizer;
+    private bool _haveMountain;
+    private bool _haveAdultTree;
+    private bool _haveYoungTree;
+    private bool _haveHill;
     private GameObject _youngTreeGO;
     private GameObject _fertilizerGO;
     private GameObject _mountainGO;

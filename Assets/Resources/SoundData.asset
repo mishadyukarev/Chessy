@@ -13,5 +13,8 @@ MonoBehaviour:
   m_Name: SoundData
   m_EditorClassIdentifier: 
   _mistakeAudioClip: {fileID: 8300000, guid: ef245931af46d0e4fbaa7f3a8d55def7, type: 3}
-  _attackAudioClip: {fileID: 8300000, guid: b4e46919ee3365a48ae66247b49fe313, type: 3}
+  _attackSwordAudioClip: {fileID: 8300000, guid: b4e46919ee3365a48ae66247b49fe313,
+    type: 3}
   _musicAudioClip: {fileID: 8300000, guid: a6f4d7c42453e9943aed113a9130537a, type: 3}
+  _pickArcherAudioClip: {fileID: 8300000, guid: 04442f064d8839644b4f68709ef0af60,
+    type: 3}

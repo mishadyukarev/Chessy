@@ -31,17 +31,17 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                 haveFood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) >= _startValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
                 haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood,Info.Sender.IsMasterClient) >= _startValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
                 haveOre = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient) >= _startValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
-                haveIron = _eGM.EconomyEnt_EconomyCom.Iron(Info.Sender.IsMasterClient) >= _startValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
-                haveGold = _eGM.EconomyEnt_EconomyCom.Gold(Info.Sender.IsMasterClient) >= _startValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
+                haveIron = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient) >= _startValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
+                haveGold = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient) >= _startValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
 
 
                 if (haveFood && haveWood && haveOre && haveIron && haveGold)
                 {
-                    _eGM.EconomyEnt_EconomyCom.TakeFood(Info.Sender.IsMasterClient, _startValuesGameConfig.FOOD_FOR_UPGRADE_PAWN);
-                    _eGM.EconomyEnt_EconomyCom.TakeWood(Info.Sender.IsMasterClient, _startValuesGameConfig.WOOD_FOR_UPGRADE_PAWN);
-                    _eGM.EconomyEnt_EconomyCom.TakeOre(Info.Sender.IsMasterClient, _startValuesGameConfig.ORE_FOR_UPGRADE_PAWN);
-                    _eGM.EconomyEnt_EconomyCom.TakeIron(Info.Sender.IsMasterClient, _startValuesGameConfig.IRON_FOR_UPGRADE_PAWN);
-                    _eGM.EconomyEnt_EconomyCom.TakeGold(Info.Sender.IsMasterClient, _startValuesGameConfig.GOLD_FOR_UPGRADE_PAWN);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient, _startValuesGameConfig.FOOD_FOR_UPGRADE_PAWN);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient, _startValuesGameConfig.WOOD_FOR_UPGRADE_PAWN);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient, _startValuesGameConfig.ORE_FOR_UPGRADE_PAWN);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, _startValuesGameConfig.IRON_FOR_UPGRADE_PAWN);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, _startValuesGameConfig.GOLD_FOR_UPGRADE_PAWN);
 
                     _eGM.UnitInventorEnt_UpgradeUnitCom.AddAmountUpgrades(UnitTypes.Pawn, Info.Sender.IsMasterClient);
                     for (int x = 0; x < ValuesConst.CELL_COUNT_X; x++)
@@ -62,17 +62,17 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                 haveFood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) >= _startValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
                 haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood,Info.Sender.IsMasterClient) >= _startValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
                 haveOre = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient) >= _startValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
-                haveIron = _eGM.EconomyEnt_EconomyCom.Iron(Info.Sender.IsMasterClient) >= _startValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
-                haveGold = _eGM.EconomyEnt_EconomyCom.Gold(Info.Sender.IsMasterClient) >= _startValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
+                haveIron = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient) >= _startValuesGameConfig.IRON_FOR_UPGRADE_ROOK;
+                haveGold = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient) >= _startValuesGameConfig.GOLD_FOR_UPGRADE_ROOK;
 
 
                 if (haveFood && haveWood && haveOre && haveIron && haveGold)
                 {
-                    _eGM.EconomyEnt_EconomyCom.TakeFood(Info.Sender.IsMasterClient, _startValuesGameConfig.FOOD_FOR_UPGRADE_ROOK);
-                    _eGM.EconomyEnt_EconomyCom.TakeWood(Info.Sender.IsMasterClient, _startValuesGameConfig.WOOD_FOR_UPGRADE_ROOK);
-                    _eGM.EconomyEnt_EconomyCom.TakeOre(Info.Sender.IsMasterClient, _startValuesGameConfig.ORE_FOR_UPGRADE_ROOK);
-                    _eGM.EconomyEnt_EconomyCom.TakeIron(Info.Sender.IsMasterClient, _startValuesGameConfig.IRON_FOR_UPGRADE_ROOK);
-                    _eGM.EconomyEnt_EconomyCom.TakeGold(Info.Sender.IsMasterClient, _startValuesGameConfig.GOLD_FOR_UPGRADE_ROOK);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient, _startValuesGameConfig.FOOD_FOR_UPGRADE_ROOK);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient, _startValuesGameConfig.WOOD_FOR_UPGRADE_ROOK);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient, _startValuesGameConfig.ORE_FOR_UPGRADE_ROOK);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, _startValuesGameConfig.IRON_FOR_UPGRADE_ROOK);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, _startValuesGameConfig.GOLD_FOR_UPGRADE_ROOK);
 
                     _eGM.UnitInventorEnt_UpgradeUnitCom.AddAmountUpgrades(UnitTypes.Rook, Info.Sender.IsMasterClient);
                     for (int x = 0; x < ValuesConst.CELL_COUNT_X; x++)
@@ -91,17 +91,17 @@ internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
                 haveFood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) >= _startValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP;
                 haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood,Info.Sender.IsMasterClient) >= _startValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP;
                 haveOre = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient) >= _startValuesGameConfig.ORE_FOR_UPGRADE_BISHOP;
-                haveIron = _eGM.EconomyEnt_EconomyCom.Iron(Info.Sender.IsMasterClient) >= _startValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
-                haveGold = _eGM.EconomyEnt_EconomyCom.Gold(Info.Sender.IsMasterClient) >= _startValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
+                haveIron = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient) >= _startValuesGameConfig.IRON_FOR_UPGRADE_BISHOP;
+                haveGold = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient) >= _startValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP;
 
 
                 if (haveFood && haveWood && haveOre && haveIron && haveGold)
                 {
-                    _eGM.EconomyEnt_EconomyCom.TakeFood(Info.Sender.IsMasterClient, _startValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP);
-                    _eGM.EconomyEnt_EconomyCom.TakeWood(Info.Sender.IsMasterClient, _startValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP);
-                    _eGM.EconomyEnt_EconomyCom.TakeOre(Info.Sender.IsMasterClient, _startValuesGameConfig.ORE_FOR_UPGRADE_BISHOP);
-                    _eGM.EconomyEnt_EconomyCom.TakeIron(Info.Sender.IsMasterClient, _startValuesGameConfig.IRON_FOR_UPGRADE_BISHOP);
-                    _eGM.EconomyEnt_EconomyCom.TakeGold(Info.Sender.IsMasterClient, _startValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient, _startValuesGameConfig.FOOD_FOR_UPGRADE_BISHOP);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient, _startValuesGameConfig.WOOD_FOR_UPGRADE_BISHOP);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient, _startValuesGameConfig.ORE_FOR_UPGRADE_BISHOP);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, _startValuesGameConfig.IRON_FOR_UPGRADE_BISHOP);
+                    _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, _startValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP);
 
                     _eGM.UnitInventorEnt_UpgradeUnitCom.AddAmountUpgrades(UnitTypes.Bishop, Info.Sender.IsMasterClient);
                     for (int x = 0; x < ValuesConst.CELL_COUNT_X; x++)

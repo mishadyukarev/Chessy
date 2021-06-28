@@ -142,11 +142,11 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
             _eGM.TruceEnt_ActivatedDictCom.SetIsActivated(true, false);
             _eGM.TruceEnt_ActivatedDictCom.SetIsActivated(false, false);
 
-            _eGM.EconomyEnt_EconomyCom.AddFood(true, 10);
-            _eGM.EconomyEnt_EconomyCom.AddFood(false, 10);
+            _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, true, 10);
+            _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, false, 10);
 
-            _eGM.EconomyEnt_EconomyCom.AddWood(true, 10);
-            _eGM.EconomyEnt_EconomyCom.AddWood(false, 10);
+            _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, true, 10);
+            _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, false, 10);
         }
     }
 }

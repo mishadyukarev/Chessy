@@ -14,6 +14,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     internal SpriteRenderer BackGroundSR;
     internal AudioSource MistakeAudioSource;
     internal AudioSource AttackAudioSource;
+    internal AudioSource PickArcherAudioSource;
 
 
     #region Cells
@@ -201,7 +202,13 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
         AttackAudioSource = new GameObject("AttackAudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
         Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(AttackAudioSource.transform);
-        AttackAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackAudioClip;
+        AttackAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackSwordAudioClip;
+
+        PickArcherAudioSource = new GameObject("PickArcherAudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
+        Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(AttackAudioSource.transform);
+        PickArcherAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.PickArcherAudioClip;
+
+
 
         BuildingsEnt_BuildingsCom.CreateDict();
         BuildingsEnt_UpgradeBuildingsCom.CreateDict();
@@ -251,18 +258,17 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
 
             #region Economy
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_FOOD_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_WOOD_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_ORE_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_IRON_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_GOLD_MASTER);
 
-            EconomyEnt_EconomyCom.SetFood(true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_FOOD_MASTER);
-            EconomyEnt_EconomyCom.SetWood(true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_WOOD_MASTER);
-            EconomyEnt_EconomyCom.SetOre(true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_ORE_MASTER);
-            EconomyEnt_EconomyCom.SetIron(true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_IRON_MASTER);
-            EconomyEnt_EconomyCom.SetGold(true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_GOLD_MASTER);
-
-            EconomyEnt_EconomyCom.SetFood(false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_FOOD_OTHER);
-            EconomyEnt_EconomyCom.SetWood(false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_WOOD_OTHER);
-            EconomyEnt_EconomyCom.SetOre(false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_ORE_OTHER);
-            EconomyEnt_EconomyCom.SetIron(false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_IRON_OTHER);
-            EconomyEnt_EconomyCom.SetGold(false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_GOLD_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_FOOD_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_WOOD_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_ORE_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_IRON_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_GOLD_OTHER);
 
             #endregion
         }

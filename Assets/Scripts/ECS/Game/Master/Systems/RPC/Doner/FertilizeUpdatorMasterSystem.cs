@@ -37,11 +37,11 @@ internal sealed class FertilizeUpdatorMasterSystem : SystemGeneralReduction
 
                                 if (_eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType == BuildingTypes.Farm)
                                 {
-                                    _eGM.EconomyEnt_EconomyCom.AddFood(_eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM);
-                                    _eGM.EconomyEnt_EconomyCom.AddWood(_eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM);
-                                    _eGM.EconomyEnt_EconomyCom.AddOre(_eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.ORE_FOR_BUILDING_FARM);
-                                    _eGM.EconomyEnt_EconomyCom.AddIron(_eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.IRON_FOR_BUILDING_FARM);
-                                    _eGM.EconomyEnt_EconomyCom.AddGold(_eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Ore, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.ORE_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Iron, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.IRON_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Gold, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM);
 
                                     _cellM.CellBuildingWorker.ResetBuilding(true, x, y);
                                 }

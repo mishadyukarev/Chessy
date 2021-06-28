@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.ECS.Game.General.Systems;
+using Assets.Scripts.ECS.Game.General.Systems.RunUpdate.Sound;
 using Leopotam.Ecs;
 
 public sealed class SystemsGameGeneralManager : SystemsManager
@@ -13,6 +15,8 @@ public sealed class SystemsGameGeneralManager : SystemsManager
             .Add(new SelectorSystem(), nameof(SelectorSystem))
             .Add(new SupportVisionSystem(), nameof(SupportVisionSystem))
             .Add(new SoundEventsSystem(), nameof(SoundEventsSystem))
+            .Add(new FliperAndRotatorUnitSystem(), nameof(FliperAndRotatorUnitSystem))
+            .Add(new PickSoundSystem(), nameof(PickSoundSystem))
 
             .Add(new DonerUISystem(), nameof(DonerUISystem))
             .Add(new TakerUnitsUISystem(), nameof(TakerUnitsUISystem))
