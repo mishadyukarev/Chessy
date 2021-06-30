@@ -165,6 +165,8 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 
                 _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, true, 10);
                 _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, false, 10);
+
+                _photonPunRPC.DoneToGeneral(RpcTarget.All, false, false, _eGM.MotionEnt_AmountCom.Amount);
             }
         }
 

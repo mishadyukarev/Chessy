@@ -54,6 +54,8 @@ namespace Assets.Scripts
 
         private void Update()
         {
+            Debug.Log(PhotonNetwork.CountOfRooms);
+
             _eCSmanager.OwnUpdate(_sceneType);
             _photonManager.OwnUpdate(_sceneType);
         }

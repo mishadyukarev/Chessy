@@ -58,13 +58,24 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                     {
                         if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                         {
-                            if (_eGM.SelectorEnt_SelectorCom.UpgradeModType != UpgradeModTypes.None)
+                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMine)
                             {
-                                _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(true, SupportVisionTypes.Upgrade);
-                            }
-                            else
-                            {
-                                _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
+                                switch (_eGM.SelectorEnt_SelectorCom.UpgradeModType)
+                                {
+                                    case UpgradeModTypes.None:
+                                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
+                                        break;
+
+                                    case UpgradeModTypes.Unit:
+                                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(true, SupportVisionTypes.Upgrade);
+                                        break;
+
+                                    case UpgradeModTypes.Building:
+                                        break;
+
+                                    default:
+                                        break;
+                                }
                             }
                         }
 
