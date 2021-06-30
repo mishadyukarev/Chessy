@@ -3,7 +3,7 @@ using Photon.Pun;
 
 internal sealed class MeltOreMasterSystem : RPCMasterSystemReduction
 {
-    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
 
 
     public override void Run()

@@ -6,6 +6,7 @@ using Leopotam.Ecs;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static Assets.Scripts.Abstractions.ValuesConst;
 using static Assets.Scripts.Main;
 
 public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDisposable
@@ -27,31 +28,30 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     private EcsEntity[,] _cellSupportStaticEnts;
     private EcsEntity[,] _cellEffectEnts;
 
-    internal ref CellBaseComponent CellEnt_CellBaseCom(params int[] xy) => ref _cellEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<CellBaseComponent>();
-    internal ref CellComponent CellEnt_CellCom(params int[] xy) => ref _cellEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<CellComponent>();
+    internal ref CellBaseComponent CellEnt_CellBaseCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellBaseComponent>();
+    internal ref CellComponent CellEnt_CellCom(params int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellComponent>();
 
-    internal ref CellUnitComponent CellUnitEnt_CellUnitCom(params int[] xy) => ref _cellUnitEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<CellUnitComponent>();
-    internal ref OwnerComponent CellUnitEnt_CellOwnerCom(params int[] xy) => ref _cellUnitEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<OwnerComponent>();
-    internal ref OwnerBotComponent CellUnitEnt_CellOwnerBotCom(params int[] xy) => ref _cellUnitEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<OwnerBotComponent>();
-    internal ref UnitTypeComponent CellUnitEnt_UnitTypeCom(params int[] xy) => ref _cellUnitEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<UnitTypeComponent>();
+    internal ref CellUnitComponent CellUnitEnt_CellUnitCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<CellUnitComponent>();
+    internal ref OwnerComponent CellUnitEnt_CellOwnerCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<OwnerComponent>();
+    internal ref OwnerBotComponent CellUnitEnt_CellOwnerBotCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<OwnerBotComponent>();
+    internal ref UnitTypeComponent CellUnitEnt_UnitTypeCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<UnitTypeComponent>();
 
-    internal ref CellEnvironmentComponent CellEnvEnt_CellEnvCom(params int[] xy) => ref _cellEnvironmentEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<CellEnvironmentComponent>();
-    internal ref CellComponent CellEnvEnt_CellCom(params int[] xy) => ref _cellEnvironmentEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<CellComponent>();
+    internal ref CellEnvironmentComponent CellEnvEnt_CellEnvCom(params int[] xy) => ref _cellEnvironmentEnts[xy[X], xy[Y]].Get<CellEnvironmentComponent>();
 
-    internal ref CellBuildingComponent CellBuildEnt_CellBuilCom(params int[] xy) => ref _cellBuildingEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<CellBuildingComponent>();
-    internal ref BuildingTypeComponent CellBuildEnt_BuilTypeCom(params int[] xy) => ref _cellBuildingEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<BuildingTypeComponent>();
-    internal ref CellComponent CellBuildEnt_CellCom(params int[] xy) => ref _cellBuildingEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<CellComponent>();
-    internal ref OwnerComponent CellBuildEnt_OwnerCom(params int[] xy) => ref _cellBuildingEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<OwnerComponent>();
-    internal ref OwnerBotComponent CellBuildEnt_CellOwnerBotCom(params int[] xy) => ref _cellBuildingEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<OwnerBotComponent>();
+    internal ref CellBuildingComponent CellBuildEnt_CellBuilCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellBuildingComponent>();
+    internal ref BuildingTypeComponent CellBuildEnt_BuilTypeCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<BuildingTypeComponent>();
+    internal ref CellComponent CellBuildEnt_CellCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellComponent>();
+    internal ref OwnerComponent CellBuildEnt_OwnerCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerComponent>();
+    internal ref OwnerBotComponent CellBuildEnt_CellOwnerBotCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerBotComponent>();
 
-    internal ref CellSupportVisionComponent CellSupVisEnt_CellSupVisCom(params int[] xy) => ref _cellSupportVisionEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<CellSupportVisionComponent>();
+    internal ref CellSupportVisionComponent CellSupVisEnt_CellSupVisCom(params int[] xy) => ref _cellSupportVisionEnts[xy[X], xy[Y]].Get<CellSupportVisionComponent>();
 
-    internal ref CellSupportStaticComponent CellSupStatEnt_CellSupStatCom(params int[] xy) => ref _cellSupportStaticEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<CellSupportStaticComponent>();
+    internal ref CellSupportStaticComponent CellSupStatEnt_CellSupStatCom(params int[] xy) => ref _cellSupportStaticEnts[xy[X], xy[Y]].Get<CellSupportStaticComponent>();
 
-    internal ref CellEffectComponent CellEffectEnt_CellEffectCom(params int[] xy) => ref _cellEffectEnts[xy[ValuesConst.X], xy[ValuesConst.Y]].Get<CellEffectComponent>();
+    internal ref CellEffectComponent CellEffectEnt_CellEffectCom(params int[] xy) => ref _cellEffectEnts[xy[X], xy[Y]].Get<CellEffectComponent>();
 
-    internal int Xamount => _cellEnts.GetUpperBound(ValuesConst.X) + 1;
-    internal int Yamount => _cellEnts.GetUpperBound(ValuesConst.Y) + 1;
+    internal int Xamount => _cellEnts.GetUpperBound(X) + 1;
+    internal int Yamount => _cellEnts.GetUpperBound(Y) + 1;
 
     #endregion
 
@@ -71,7 +71,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
 
     private EcsEntity _rPCGeneralEntity;
-    internal ref RpcComponent RpcGeneralEnt_FromInfoCom => ref _rPCGeneralEntity.Get<RpcComponent>();
+    internal ref RpcComponent RpcGeneralEnt_RPCCom => ref _rPCGeneralEntity.Get<RpcComponent>();
 
 
     private EcsEntity _selectorEnt;
@@ -81,31 +81,29 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
 
     private EcsEntity _soundEnt;
-    internal ref SoundComponent SoundEntSoundCom => ref _soundEnt.Get<SoundComponent>();
+    internal ref SoundComponent SoundEnt_SoundCom => ref _soundEnt.Get<SoundComponent>();
 
 
     private EcsEntity _zoneEnt;
-    internal ref ZoneComponent ZoneComponent => ref _zoneEnt.Get<ZoneComponent>();
+    internal ref ZoneComponent ZoneEnt_ZoneCom => ref _zoneEnt.Get<ZoneComponent>();
 
 
     private EcsEntity _animationEnt;
-    internal ref AnimationAttackUnitComponent AnimationAttackUnitComponent => ref _animationEnt.Get<AnimationAttackUnitComponent>();
+    internal ref AnimationAttackUnitComponent AnimationAttack_UnitComponent => ref _animationEnt.Get<AnimationAttackUnitComponent>();
 
 
     internal EntitiesGameGeneralManager(EcsWorld gameWorld, ResourcesCommComponent resourcesCommComponent)
     {
-        #region Cells
+        _cellEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellUnitEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellBuildingEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellEnvironmentEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellSupportVisionEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellSupportStaticEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellEffectEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
 
-        _cellEnts = new EcsEntity[ValuesConst.CELL_COUNT_X, ValuesConst.CELL_COUNT_Y];
-        _cellUnitEnts = new EcsEntity[ValuesConst.CELL_COUNT_X, ValuesConst.CELL_COUNT_Y];
-        _cellBuildingEnts = new EcsEntity[ValuesConst.CELL_COUNT_X, ValuesConst.CELL_COUNT_Y];
-        _cellEnvironmentEnts = new EcsEntity[ValuesConst.CELL_COUNT_X, ValuesConst.CELL_COUNT_Y];
-        _cellSupportVisionEnts = new EcsEntity[ValuesConst.CELL_COUNT_X, ValuesConst.CELL_COUNT_Y];
-        _cellSupportStaticEnts = new EcsEntity[ValuesConst.CELL_COUNT_X, ValuesConst.CELL_COUNT_Y];
-        _cellEffectEnts = new EcsEntity[ValuesConst.CELL_COUNT_X, ValuesConst.CELL_COUNT_Y];
-
-        for (int x = 0; x < ValuesConst.CELL_COUNT_X; x++)
-            for (int y = 0; y < ValuesConst.CELL_COUNT_Y; y++)
+        for (int x = 0; x < CELL_COUNT_X; x++)
+            for (int y = 0; y < CELL_COUNT_Y; y++)
             {
                 _cellEnts[x, y] = gameWorld.NewEntity();
                 _cellUnitEnts[x, y] = gameWorld.NewEntity();
@@ -114,71 +112,17 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                 _cellSupportVisionEnts[x, y] = gameWorld.NewEntity();
                 _cellSupportStaticEnts[x, y] = gameWorld.NewEntity();
                 _cellEffectEnts[x, y] = gameWorld.NewEntity();
-
-                //_cellEnts[x, y]
-                //    .Replace(new CellComponent(x, y));
-
-                _cellUnitEnts[x, y]
-                    .Replace(new CellUnitComponent())
-                    .Replace(new OwnerComponent())
-                    .Replace(new UnitTypeComponent());
-
-                _cellBuildingEnts[x, y]
-                    .Replace(new CellBuildingComponent())
-                    .Replace(new BuildingTypeComponent())
-                    .Replace(new CellComponent())
-                    .Replace(new OwnerComponent());
-
-                _cellEnvironmentEnts[x, y]
-                    .Replace(new CellEnvironmentComponent())
-                    .Replace(new CellComponent());
-
-                _cellSupportVisionEnts[x, y]
-                    .Replace(new CellSupportVisionComponent());
-
-                _cellEffectEnts[x, y]
-                    .Replace(new CellEffectComponent());
             }
 
-
-        #endregion
-
-
-        _economyEnt = gameWorld.NewEntity()
-            .Replace(new EconomyComponent())
-            .Replace(new EconomyUIComponent())
-            .Replace(new MistakeEconomyComponent());
-
-        _unitInventorEnt = gameWorld.NewEntity()
-            .Replace(new UnitInventorComponent())
-            .Replace(new UpgradeUnitsComponent());
-
-        _buildingsEnt = gameWorld.NewEntity()
-            .Replace(new UpgradeBuildingsComponent());
-
-
-        _selectorEnt = gameWorld.NewEntity()
-            .Replace(new SelectorComponent(ValuesConst.XY_FOR_ARRAY))
-            .Replace(new RaycastHit2DComponent())
-            .Replace(new UnitTypeComponent());
-
-
-        _rPCGeneralEntity = gameWorld.NewEntity()
-            .Replace(new RpcComponent());
-
-        _inputEnt = gameWorld.NewEntity()
-            .Replace(new InputComponent());
-
-        _soundEnt = gameWorld.NewEntity()
-            .Replace(new SoundComponent());
-
-
-        _animationEnt = gameWorld.NewEntity()
-            .Replace(new AnimationAttackUnitComponent());
-
-        _zoneEnt = gameWorld.NewEntity()
-            .Replace(new ZoneComponent());
-
+        _economyEnt = gameWorld.NewEntity();
+        _unitInventorEnt = gameWorld.NewEntity();
+        _buildingsEnt = gameWorld.NewEntity();
+        _selectorEnt = gameWorld.NewEntity();
+        _rPCGeneralEntity = gameWorld.NewEntity();
+        _inputEnt = gameWorld.NewEntity();
+        _soundEnt = gameWorld.NewEntity();
+        _animationEnt = gameWorld.NewEntity();
+        _zoneEnt = gameWorld.NewEntity();
 
         ConstructCanvast(gameWorld);
     }
@@ -187,7 +131,6 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     internal void FillEntities(ResourcesCommComponent resourcesCommComponent)
     {
         SpawnCells(resourcesCommComponent);
-
 
         BackGroundGO = GameObject.Instantiate(Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.BackGroundCollider2D,
             Instance.transform.position + new Vector3(7, 5.5f, 2), Instance.transform.rotation);
@@ -210,17 +153,29 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
 
 
-        BuildingsEnt_BuildingsCom.CreateDict();
-        BuildingsEnt_UpgradeBuildingsCom.CreateDict();
+        EconomyEnt_EconomyCom.StartFill();
+        EconomyUIEnt_EconomyUICom.StartFill();
+        EconomyEnt_MistakeEconomyCom.StartFill();
 
-        EconomyEnt_EconomyCom.CreateDict();
-        EconomyUIEnt_EconomyUICom.Fill();
+        BuildingsEnt_BuildingsCom.StartFill();
+        BuildingsEnt_UpgradeBuildingsCom.StartFill();
 
-        UnitInventorEnt_UnitInventorCom.CreateDict();
-        UnitInventorEnt_UpgradeUnitCom.CreateDict();
+        UnitInventorEnt_UnitInventorCom.StartFill();
+        UnitInventorEnt_UpgradeUnitCom.StartFill();
 
+        SelectorEnt_SelectorCom.StartFill();
+        SelectorEnt_RayCom.StartFill();
+        SelectorEnt_UnitTypeCom.StartFill();
 
-        SpawnAndFillCanvasEntities();
+        RpcGeneralEnt_RPCCom.StartFill();
+
+        InputEnt_InputCom.StartFill();
+
+        SoundEnt_SoundCom.StartFill();
+
+        AnimationAttack_UnitComponent.StartFill();
+
+        ZoneEnt_ZoneCom.StartFill();
 
 
         if (Instance.IsMasterClient)
@@ -272,6 +227,10 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
             #endregion
         }
+
+
+
+        SpawnAndFillCanvasEntities();
     }
 
     private void SpawnCells(ResourcesCommComponent resourcesCommComponent)
@@ -280,13 +239,16 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
         var whiteCellSR = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig.WhiteSprite;
         var blackCellSR = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig.BlackSprite;
 
-        var CellsGO = new GameObject[ValuesConst.CELL_COUNT_X, ValuesConst.CELL_COUNT_Y];
+        var CellsGO = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
 
         var supportParentForCells = new GameObject("Cells");
         Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(supportParentForCells.transform);
 
-        for (int x = 0; x < ValuesConst.CELL_COUNT_X; x++)
-            for (int y = 0; y < ValuesConst.CELL_COUNT_Y; y++)
+
+
+
+        for (int x = 0; x < CELL_COUNT_X; x++)
+            for (int y = 0; y < CELL_COUNT_Y; y++)
             {
                 if (y % 2 == 0)
                 {
@@ -317,77 +279,50 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
                 CellsGO[x, y].transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
-                var isStartedDict = new Dictionary<bool, bool>();
-                if (Instance.TestType == TestTypes.Standart)
-                {
-                    isStartedDict[true] = true;
-                    isStartedDict[false] = true;
-                }
-                else
-                {
-                    isStartedDict[true] = y < 3 && x > 2 && x < 12;
-                    isStartedDict[false] = y > 8 && x > 2 && x < 12;
-                }
 
-                CellEnt_CellCom(x, y).SetXy(x, y);
+
+                var isStartedDict = new Dictionary<bool, bool>();
+                isStartedDict[true] = y < 3 && x > 2 && x < 12;
+                isStartedDict[false] = y > 8 && x > 2 && x < 12;
 
                 CellsGO[x, y].transform.SetParent(supportParentForCells.transform);
-                CellEnt_CellBaseCom(x, y).Fill(supportParentForCells, CellsGO[x, y], isStartedDict);
+                CellEnt_CellBaseCom(x, y).StartFill(supportParentForCells, CellsGO[x, y], isStartedDict);
+                CellEnt_CellCom(x, y).StartFill();
+
 
                 GameObject parentGO = CellsGO[x, y].transform.Find("Environments").gameObject;
-                CellEnvEnt_CellEnvCom(x, y).Fill(parentGO);
+                CellEnvEnt_CellEnvCom(x, y).StartFill(parentGO);
+
 
                 parentGO = CellsGO[x, y].transform.Find("SupportVisions").gameObject;
                 CellSupVisEnt_CellSupVisCom(x, y).Fill(parentGO);
 
+
                 parentGO = CellsGO[x, y].transform.Find("SupportStatic").gameObject;
                 CellSupStatEnt_CellSupStatCom(x, y).Fill(parentGO);
 
+
                 parentGO = CellsGO[x, y].transform.Find("Units").gameObject;
-                CellUnitEnt_CellUnitCom(x, y).Fill(parentGO);
+                CellUnitEnt_CellUnitCom(x, y).StartFill(parentGO);
+                CellUnitEnt_UnitTypeCom(x, y).StartFill();
+                CellUnitEnt_CellOwnerCom(x, y).StartFill();
+                CellUnitEnt_CellOwnerBotCom(x, y).StartFill();
+
 
                 parentGO = CellsGO[x, y].transform.Find("Buildings").gameObject;
-                CellBuildEnt_CellBuilCom(x, y).Fill(parentGO);
+                CellBuildEnt_CellBuilCom(x, y).StartFill(parentGO);
+                CellBuildEnt_BuilTypeCom(x, y).StartFill();
+                CellBuildEnt_OwnerCom(x, y).StartFill();
+                CellBuildEnt_CellOwnerBotCom(x, y).StartFill();
 
 
                 parentGO = CellsGO[x, y].transform.Find("Effects").gameObject;
                 CellEffectEnt_CellEffectCom(x, y).Fill(parentGO);
-            }
 
 
-        GameObject CreateGameObject(GameObject go, Sprite sprite, int x, int y, GameObject mainGameGO2)
-        {
-            var goo = GameObject.Instantiate(go, mainGameGO2.transform.position + new Vector3(x, y, mainGameGO2.transform.position.z), mainGameGO2.transform.rotation);
 
-            var SR = goo.GetComponent<SpriteRenderer>();
-            SR.sprite = sprite;
-
-            return goo;
-        }
-
-        void SetActive(GameObject go, int x, int y)
-        {
-            if (x >= 0 && y == 0 || x >= 0 && y == 11 ||
-            x == 0 && y >= 0 || x == 14 && y >= 0 ||
-            x == 1 && y == 1 || x == 2 && y == 1 || x == 12 && y == 1 || x == 13 && y == 1 ||
-            x == 1 && y == 10 || x == 2 && y == 10 || x == 12 && y == 10 || x == 13 && y == 10)
-                go.SetActive(false);
-        }
-
-
-        if (Instance.IsMasterClient)
-        {
-            for (int x = 0; x < Xamount; x++)
-            {
-                for (int y = 0; y < Yamount; y++)
+                if (Instance.IsMasterClient)
                 {
-                    if (CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
-                    {
-                        Instance.ECSmanager.CellManager.CellBuildingWorker.ResetBuilding(true, x, y);
-                    }
-                    Instance.ECSmanager.CellManager.CellUnitWorker.ResetUnit(x, y);
-                    CellEnvEnt_CellEnvCom(x, y).ResetAll();
-
                     int random;
 
                     random = UnityEngine.Random.Range(1, 100);
@@ -415,16 +350,97 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                                 CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Fertilizer);
                         }
                     }
+
                 }
             }
+
+
+        if (Instance.GameType == GameTypes.WithBot)
+        {
+            int[] xy0 = new int[XY_FOR_ARRAY];
+            xy0[X] = 8;
+            xy0[Y] = 8;
+            var isSettedForest = false;
+            Instance.ECSmanager.CellManager.CellUnitWorker.SetBotUnit(UnitTypes.King, true, 300, 2, true, true, xy0);
+            CellEnvEnt_CellEnvCom(xy0).ResetAll();
+            var xyAround = Instance.ECSmanager.CellManager.CellUnitWorker.TryGetXYAround(xy0);
+
+            foreach (var xy1 in xyAround)
+            {
+                Instance.ECSmanager.CellManager.CellUnitWorker.SetBotUnit(UnitTypes.Pawn, true, 150, 2, true, true, xy1);
+                CellEnvEnt_CellEnvCom(xy1).ResetAll();
+
+                if (!isSettedForest)
+                {
+                    CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.AdultForest, xy1);
+                    isSettedForest = true;
+                }
+            }
+
+            xy0[X] = 8;
+            xy0[Y] = 6;
+            Instance.ECSmanager.CellManager.CellBuildingWorker.SetBotBuilding(BuildingTypes.City, xy0);
+            CellEnvEnt_CellEnvCom(xy0).ResetAll();
+
+            int i = 0;
+            xyAround = Instance.ECSmanager.CellManager.CellUnitWorker.TryGetXYAround(xy0);
+            foreach (var xy1 in xyAround)
+            {
+                Instance.ECSmanager.CellManager.CellUnitWorker.SetBotUnit(UnitTypes.PawnSword, true, 150, 2, true, true, xy1);
+                CellEnvEnt_CellEnvCom(xy1).ResetAll();
+
+                if (i == 0)
+                {
+                    Instance.ECSmanager.CellManager.CellUnitWorker.ResetUnit(xy1);
+                    CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.Mountain, xy1);
+                }
+
+                else if (i == 3 || i == 4 || i == 6)
+                {
+                    CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.AdultForest, xy1);
+                }
+
+                else if (i == 1)
+                {
+                    CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.Hill, xy1);
+                }
+
+                else if (i == 1 || i == 2 || i == 5)
+                {
+                    CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.Fertilizer, xy1);
+                }
+
+
+                i++;
+            }
+        }
+
+
+
+        GameObject CreateGameObject(GameObject go, Sprite sprite, int x, int y, GameObject mainGameGO2)
+        {
+            var goo = GameObject.Instantiate(go, mainGameGO2.transform.position + new Vector3(x, y, mainGameGO2.transform.position.z), mainGameGO2.transform.rotation);
+
+            var SR = goo.GetComponent<SpriteRenderer>();
+            SR.sprite = sprite;
+
+            return goo;
+        }
+
+        void SetActive(GameObject go, int x, int y)
+        {
+            if (x >= 0 && y == 0 || x >= 0 && y == 11 ||
+            x == 0 && y >= 0 || x == 14 && y >= 0 ||
+            x == 1 && y == 1 || x == 2 && y == 1 || x == 12 && y == 1 || x == 13 && y == 1 ||
+            x == 1 && y == 10 || x == 2 && y == 10 || x == 12 && y == 10 || x == 13 && y == 10)
+                go.SetActive(false);
         }
     }
 
     public void Dispose()
     {
-        SelectorEnt_SelectorCom.Dispose();
         ReadyEnt_StartedGameCom.Dispose();
 
-        SelectorEnt_SelectorCom.Dispose();
+        EndGameEntEndGameCom.Dispose();
     }
 }

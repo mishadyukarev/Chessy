@@ -11,34 +11,58 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-
-        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
         {
-            switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
+            if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
             {
-                case UnitTypes.None:
-                    break;
+                if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+                {
+                    switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
+                    {
+                        case UnitTypes.None:
+                            break;
 
-                case UnitTypes.King:
+                        case UnitTypes.King:
+                            _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+                            break;
+
+                        case UnitTypes.Pawn:
+                            PawnAndPawnSword();
+                            break;
+
+                        case UnitTypes.PawnSword:
+                            PawnAndPawnSword();
+                            break;
+
+                        case UnitTypes.Rook:
+                            _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+                            break;
+
+                        case UnitTypes.RookCrossbow:
+                            _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+                            break;
+
+                        case UnitTypes.Bishop:
+                            _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+                            break;
+
+                        case UnitTypes.BishopCrossbow:
+                            _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+
+                else
+                {
                     _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
-                    break;
-
-                case UnitTypes.Pawn:
-                    PawnAndPawnSword();
-                    break;
-
-                case UnitTypes.PawnSword:
-                    PawnAndPawnSword();
-                    break;
-
-                case UnitTypes.Rook:
-                    break;
-
-                case UnitTypes.Bishop:
-                    break;
-
-                default:
-                    break;
+                }
+            }
+            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
+            {
+                _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
             }
 
             void PawnAndPawnSword()

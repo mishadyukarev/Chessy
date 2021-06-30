@@ -11,7 +11,7 @@ internal struct EconomyUIComponent
     private TextMeshProUGUI _goldText;
 
 
-    internal void Fill()
+    internal void StartFill()
     {
         _foodText = GameObject.Find("FoodAmount").GetComponent<TextMeshProUGUI>();
         _woodText = GameObject.Find("WoodAmount").GetComponent<TextMeshProUGUI>();

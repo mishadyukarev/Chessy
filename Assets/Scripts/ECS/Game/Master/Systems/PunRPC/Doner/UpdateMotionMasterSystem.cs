@@ -23,28 +23,37 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                     {
                         if(_eGM.CellUnitEnt_CellUnitCom(x,y).AmountHealth == _cellM.CellUnitWorker.MaxAmountHealth(x, y))
                         {
-                            if(_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Pawn
-                                || _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.PawnSword)
+                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                             {
-                                if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer)
+                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Pawn
+                                    || _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.PawnSword)
                                 {
-                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, 1);
-                                    _eGM.CellEnvEnt_CellEnvCom(x, y).AmountFertilizerResources -= 1;
-
-                                    if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizerResources)
+                                    if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer)
                                     {
-                                        _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.Fertilizer);
+                                        _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, 1);
+                                        _eGM.CellEnvEnt_CellEnvCom(x, y).AmountFertilizerResources -= 1;
+
+                                        if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizerResources)
+                                        {
+                                            _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.Fertilizer);
+                                        }
                                     }
-                                }
 
-                                else if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree)
-                                {
-                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, 1);
-                                    _eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources -= 1;
-
-                                    if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveForestResources)
+                                    else if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree)
                                     {
-                                        _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
+                                        _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, 1);
+                                        _eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources -= 1;
+
+                                        if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveForestResources)
+                                        {
+                                            _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        _eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed = false;
+                                        _eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected = true;
                                     }
                                 }
 
@@ -53,12 +62,6 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                                     _eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed = false;
                                     _eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected = true;
                                 }
-                            }
-
-                            else
-                            {
-                                _eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed = false;
-                                _eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected = true;
                             }
                         }
                         else
@@ -89,8 +92,20 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                                         _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth = _cellM.CellUnitWorker.MaxAmountHealth(x, y);
                                     break;
 
+                                case UnitTypes.RookCrossbow:
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += _startValuesGameConfig.HEALTH_FOR_ADDING_ROOK_CROSSBOW;
+                                    if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > _cellM.CellUnitWorker.MaxAmountHealth(x, y))
+                                        _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth = _cellM.CellUnitWorker.MaxAmountHealth(x, y);
+                                    break;
+
                                 case UnitTypes.Bishop:
                                     _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += _startValuesGameConfig.HEALTH_FOR_ADDING_BISHOP;
+                                    if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > _cellM.CellUnitWorker.MaxAmountHealth(x, y))
+                                        _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth = _cellM.CellUnitWorker.MaxAmountHealth(x, y);
+                                    break;
+
+                                case UnitTypes.BishopCrossbow:
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth += _startValuesGameConfig.HEALTH_FOR_ADDING_BISHOP_CROSSBOW;
                                     if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > _cellM.CellUnitWorker.MaxAmountHealth(x, y))
                                         _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth = _cellM.CellUnitWorker.MaxAmountHealth(x, y);
                                     break;
@@ -171,15 +186,6 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                 }
             }
         }
-
-
-
-        //_eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, true, 1);
-        //_eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, false, 1);
-
-        //_eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, true, 1);
-        //_eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, false, 1);
-
 
         _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(true, false);
         _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(false, false);

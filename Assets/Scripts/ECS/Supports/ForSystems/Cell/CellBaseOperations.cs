@@ -1,36 +1,31 @@
-﻿using Assets.Scripts.Abstractions;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using static Assets.Scripts.Abstractions.ValuesConst;
 
 namespace Assets.Scripts
 {
-    internal sealed class CellBaseOperations
+    public sealed class CellBaseOperations
     {
-        private const int _x = ValuesConst.X;
-        private const int _y = ValuesConst.Y;
-        private const int _xy = ValuesConst.XY_FOR_ARRAY;
-
-
         internal int[] CopyXY(int[] inArray)
         {
-            int[] array = new int[_xy];
+            int[] array = new int[XY_FOR_ARRAY];
             Array.Copy(inArray, array, array.Length);
             return array;
         }
         internal void CopyXYinTo(in int[] InXYCell, int[] ToXYCell)
         {
-            ToXYCell[_x] = InXYCell[_x];
-            ToXYCell[_y] = InXYCell[_y];
+            ToXYCell[X] = InXYCell[X];
+            ToXYCell[Y] = InXYCell[Y];
         }
         internal void CleanXY(int[] xy)
         {
-            xy[_x] = default;
-            xy[_y] = default;
+            xy[X] = default;
+            xy[Y] = default;
         }
         internal bool CompareXY(in int[] xyLeft, in int[] xyRight)
         {
-            if (xyLeft[_x] == xyRight[_x]
-                && xyLeft[_y] == xyRight[_y])
+            if (xyLeft[X] == xyRight[X]
+                && xyLeft[Y] == xyRight[Y])
             {
                 return true;
             }
@@ -42,12 +37,12 @@ namespace Assets.Scripts
 
             for (int i = 0; i < inList.Count; i++)
             {
-                var array = new int[_xy];
+                var array = new int[XY_FOR_ARRAY];
 
                 var inArray = inList[i];
 
-                array[_x] = inArray[_x];
-                array[_y] = inArray[_y];
+                array[X] = inArray[X];
+                array[Y] = inArray[Y];
 
                 toList.Add(array);
             }
@@ -60,12 +55,12 @@ namespace Assets.Scripts
 
             for (int i = 0; i < inList.Count; i++)
             {
-                var array = new int[_xy];
+                var array = new int[XY_FOR_ARRAY];
 
                 var inArray = inList[i];
 
-                array[_x] = inArray[_x];
-                array[_y] = inArray[_y];
+                array[X] = inArray[X];
+                array[Y] = inArray[Y];
 
                 toList.Add(array);
             }

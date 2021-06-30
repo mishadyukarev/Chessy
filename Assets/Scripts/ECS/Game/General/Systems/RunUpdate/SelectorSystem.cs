@@ -114,10 +114,10 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                         else if (_eGM.CellEnt_CellBaseCom(xyCurrentCell).IsStartedCell(false))
                                             _photonPunRPC.SetUniToMaster(xyCurrentCell, _eGM.SelectorEnt_UnitTypeCom.UnitType);
 
-                                        else _eGM.SoundEntSoundCom.MistakeSoundAction();
+                                        else _eGM.SoundEnt_SoundCom.MistakeSoundAction();
                                     }
 
-                                    else _eGM.SoundEntSoundCom.MistakeSoundAction();
+                                    else _eGM.SoundEnt_SoundCom.MistakeSoundAction();
                                 }
 
                                 else if (_canExecuteStartClick)
@@ -129,14 +129,17 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                                     if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
                                     {
-                                        if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+                                        if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
                                         {
-                                            if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveMinAmountSteps)
+                                            if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
                                             {
-                                                _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift = _cellM.CellUnitWorker.GetCellsForShift(XySelectedCell);
-                                                _cellM.CellUnitWorker.GetCellsForAttack(Instance.LocalPlayer, out _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack, out _eGM.SelectorEnt_SelectorCom.AvailableCellsUniqueAttack, XySelectedCell);
+                                                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveMinAmountSteps)
+                                                {
+                                                    _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift = _cellM.CellUnitWorker.GetCellsForShift(XySelectedCell);
+                                                    _cellM.CellUnitWorker.GetCellsForAttack(Instance.LocalPlayer, out _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack, out _eGM.SelectorEnt_SelectorCom.AvailableCellsUniqueAttack, XySelectedCell);
 
-                                                _canShiftUnit = true;
+                                                    _canShiftUnit = true;
+                                                }
                                             }
                                         }
                                     }
@@ -157,28 +160,29 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                                     if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
                                     {
-                                        if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+                                        if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
                                         {
-                                            if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveMinAmountSteps)
+                                            if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
                                             {
-                                                _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift = _cellM.CellUnitWorker.GetCellsForShift(XySelectedCell);
-                                                _cellM.CellUnitWorker.GetCellsForAttack(Instance.LocalPlayer, out _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack, out _eGM.SelectorEnt_SelectorCom.AvailableCellsUniqueAttack, XySelectedCell);
+                                                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveMinAmountSteps)
+                                                {
+                                                    _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift = _cellM.CellUnitWorker.GetCellsForShift(XySelectedCell);
+                                                    _cellM.CellUnitWorker.GetCellsForAttack(Instance.LocalPlayer, out _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack, out _eGM.SelectorEnt_SelectorCom.AvailableCellsUniqueAttack, XySelectedCell);
 
-                                                _canShiftUnit = true;
+                                                    _canShiftUnit = true;
+                                                }
+
+                                                else
+                                                {
+                                                    ClearAvailableCells();
+
+                                                    _canShiftUnit = false;
+                                                }
                                             }
 
                                             else
                                             {
-                                                ClearAvailableCells();
 
-                                                _canShiftUnit = false;
-                                            }
-                                        }
-
-                                        else
-                                        {
-                                            if (_eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).HaveMinAmountSteps)
-                                            {
                                                 if (_cellM.CellBaseOperations.TryFindCellInList(XySelectedCell, _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack))
                                                 {
                                                     _photonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
@@ -190,19 +194,40 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                                 }
                                             }
                                         }
+
+                                        else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
+                                        {
+                                            if (_cellM.CellBaseOperations.TryFindCellInList(XySelectedCell, _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack))
+                                            {
+                                                _photonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
+                                            }
+
+                                            else if (_cellM.CellBaseOperations.TryFindCellInList(XySelectedCell, _eGM.SelectorEnt_SelectorCom.AvailableCellsUniqueAttack))
+                                            {
+                                                _photonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
+                                            }
+
+                                            ClearAvailableCells();
+                                        }
                                     }
 
                                     else
                                     {
                                         if (_canShiftUnit)
                                         {
-                                            if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).IsMine)
+                                            if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).HaveUnit)
                                             {
-                                                if (_eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).HaveMinAmountSteps)
+                                                if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).HaveOwner)
                                                 {
-                                                    if (_cellM.CellBaseOperations.TryFindCellInList(XySelectedCell, _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift))
+                                                    if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).IsMine)
                                                     {
-                                                        _photonPunRPC.ShiftUnitToMaster(XyPreviousCell, XySelectedCell);
+                                                        if (_eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).HaveMinAmountSteps)
+                                                        {
+                                                            if (_cellM.CellBaseOperations.TryFindCellInList(XySelectedCell, _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift))
+                                                            {
+                                                                _photonPunRPC.ShiftUnitToMaster(XyPreviousCell, XySelectedCell);
+                                                            }
+                                                        }
                                                     }
                                                 }
                                             }
@@ -223,7 +248,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                     if (_isStartSelectedDirect)
                                     {
                                         if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit)
-                                            _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnableSR(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
+                                            _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSR(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
 
                                         _cellM.CellBaseOperations.CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
                                         _isStartSelectedDirect = false;
@@ -231,9 +256,9 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                     else
                                     {
                                         if (!_eGM.CellUnitEnt_UnitTypeCom(_xyPreviousVisionCell).HaveUnit)
-                                            _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).EnableSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
+                                            _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).EnablePlayerSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
 
-                                        _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnableSR(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
+                                        _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSR(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
                                         _cellM.CellBaseOperations.CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
                                     }
 
@@ -254,7 +279,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                         ClearAvailableCells();
 
-                        _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).EnableSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
+                        _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).EnablePlayerSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
                         _eGM.SelectorEnt_UnitTypeCom.UnitType = default;
 
                         _cellM.CellBaseOperations.CleanXY(XyPreviousCell);

@@ -1,6 +1,6 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -9,14 +9,13 @@ namespace Assets.Scripts
     {
         #region Variables
 
-        [SerializeField] private bool _isOfflineMode;
-        [SerializeField] private TestTypes _testType;
-        [SerializeField] private BotTypes _botType;
+        private bool _isOfflineMode;
         private SceneTypes _sceneType = SceneTypes.Menu;
-
         private static Main _instance;
         private PhotonManager _photonManager;
         private ECSManager _eCSmanager;
+
+        [NonSerialized]public GameTypes GameType;
 
         #endregion
 
@@ -26,8 +25,6 @@ namespace Assets.Scripts
         public static Main Instance => _instance;
 
         public bool IsOfflineMode => _isOfflineMode;
-        public TestTypes TestType => _testType;
-        public BotTypes BotType => _botType;
         public SceneTypes SceneType => _sceneType;
 
         public bool IsMasterClient => PhotonNetwork.IsMasterClient;
@@ -39,6 +36,8 @@ namespace Assets.Scripts
 
         public ref CanvasCommComponent CanvasManager => ref _eCSmanager.EntitiesCommonManager.CanvasEnt_CanvasCommCom;
         public StartGameValuesConfig StartValuesGameConfig => _eCSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
+
+        public CellUnitWorker CellUnitWorker => _eCSmanager.CellManager.CellUnitWorker;
 
         #endregion
 
@@ -55,8 +54,6 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            //Debug.Log(PhotonNetwork.CountOfRooms);
-
             _eCSmanager.OwnUpdate(_sceneType);
             _photonManager.OwnUpdate(_sceneType);
         }

@@ -7,7 +7,7 @@ internal struct UpgradeBuildingsComponent
     private Dictionary<bool, int> _amountUpgradeWoodcutterDict;
     private Dictionary<bool, int> _amountUpgradeMineDict;
 
-    internal void CreateDict()
+    internal void StartFill()
     {
         _amountUpgradeFarmDict = new Dictionary<bool, int>();
         _amountUpgradeWoodcutterDict = new Dictionary<bool, int>();

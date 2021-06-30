@@ -4,7 +4,7 @@ using Photon.Pun;
 internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
 {
     internal BuildingTypes BuildingType => _eMM.RPCMasterEnt_RPCMasterCom.BuildingType;
-    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
 
     public override void Run()
     {

@@ -3,7 +3,7 @@ using Photon.Pun;
 
 internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
 {
-    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
     private UniqueAbilitiesPawnTypes UniqueAbilitiesPawnType => _eMM.RPCMasterEnt_RPCMasterCom.UniqueAbilitiesPawnType;
     private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
 
@@ -69,8 +69,8 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
 
                     if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultTree && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveYoungTree)
                     {
-                        minusFood = 0;
-                        minusWood = 5;
+                        minusFood = 5;
+                        minusWood = 0;
                         minusOre = 0;
                         minusIron = 0;
                         minusGold = 0;

@@ -1,6 +1,4 @@
-﻿using System;
-
-internal struct UnitTypeComponent : IDisposable
+﻿internal struct UnitTypeComponent
 {
     internal UnitTypes UnitType;
 
@@ -22,10 +20,19 @@ internal struct UnitTypeComponent : IDisposable
                 case UnitTypes.Pawn:
                     return true;
 
+                case UnitTypes.PawnSword:
+                    return true;
+
                 case UnitTypes.Rook:
                     return false;
 
+                case UnitTypes.RookCrossbow:
+                    return false;
+
                 case UnitTypes.Bishop:
+                    return false;
+
+                case UnitTypes.BishopCrossbow:
                     return false;
 
                 default:
@@ -34,8 +41,8 @@ internal struct UnitTypeComponent : IDisposable
         }
     }
 
-    public void Dispose()
+    internal void StartFill()
     {
-        UnitType = default;
+        UnitType = UnitTypes.None;
     }
 }

@@ -1,15 +1,16 @@
 ﻿using Assets.Scripts.Abstractions;
+using Assets.Scripts.Abstractions.Enums;
 using Photon.Realtime;
 using System.Collections.Generic;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
 {
-    internal sealed class CellUnitWorker : CellWorker
+    public sealed class CellUnitWorker : CellWorker
     {
         private CellBaseOperations _cellBaseOperations;
 
-        internal CellUnitWorker(ECSManager eCSmanager, CellBaseOperations cellBaseOperations) : base(eCSmanager)
+        public CellUnitWorker(ECSManager eCSmanager, CellBaseOperations cellBaseOperations) : base(eCSmanager)
         {
             _cellBaseOperations = cellBaseOperations;
         }
@@ -25,16 +26,22 @@ namespace Assets.Scripts
                     return Instance.StartValuesGameConfig.AMOUNT_HEALTH_KING;
 
                 case UnitTypes.Pawn:
-                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_PAWN; //+ _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_PAWN;
+                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_PAWN;
 
                 case UnitTypes.PawnSword:
                     return Instance.StartValuesGameConfig.AMOUNT_HEALTH_PAWN_SWORD;
 
                 case UnitTypes.Rook:
-                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_ROOK; //+ _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_ROOK;
+                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_ROOK;
+
+                case UnitTypes.RookCrossbow:
+                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_ROOK_CROSSBOW;
 
                 case UnitTypes.Bishop:
-                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_BISHOP; //+ _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.HEALTH_UPGRADE_ADDING_BISHOP;
+                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_BISHOP;
+
+                case UnitTypes.BishopCrossbow:
+                    return Instance.StartValuesGameConfig.AMOUNT_HEALTH_BISHOP_CROSSBOW;
 
                 default:
                     return default;
@@ -51,16 +58,22 @@ namespace Assets.Scripts
                     return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_KING;
 
                 case UnitTypes.Pawn:
-                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN;// + _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_PAWN;
+                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN;
 
                 case UnitTypes.PawnSword:
-                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN_SWORD; //+ _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_PAWN;
+                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_PAWN_SWORD;
 
                 case UnitTypes.Rook:
-                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_ROOK; //+ _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_ROOK;
+                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_ROOK;
+
+                case UnitTypes.RookCrossbow:
+                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_ROOK_CROSSBOW;
 
                 case UnitTypes.Bishop:
-                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_BISHOP; //+ _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient) * Instance.StartValuesGameConfig.DAMAGE_UPGRADE_ADDING_BISHOP;
+                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_BISHOP;
+
+                case UnitTypes.BishopCrossbow:
+                    return Instance.StartValuesGameConfig.SIMPLE_POWER_DAMAGE_BISHOP_CROSSBOW;
 
                 default:
                     return default;
@@ -87,9 +100,14 @@ namespace Assets.Scripts
                 case UnitTypes.Rook:
                     return (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_ROOK);
 
+                case UnitTypes.RookCrossbow:
+                    return (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_ROOK_CROSSBOW);
+
                 case UnitTypes.Bishop:
                     return (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_BISHOP);
 
+                case UnitTypes.BishopCrossbow:
+                    return (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.RATION_UNIQUE_POWER_DAMAGE_BISHOP_CROSSBOW);
 
                 default:
                     return default;
@@ -121,8 +139,16 @@ namespace Assets.Scripts
                         powerProtection += (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_ROOK);
                         break;
 
+                    case UnitTypes.RookCrossbow:
+                        powerProtection += (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_ROOK_CROSSBOW);
+                        break;
+
                     case UnitTypes.Bishop:
                         powerProtection += (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_BISHOP);
+                        break;
+
+                    case UnitTypes.BishopCrossbow:
+                        powerProtection += (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_BISHOP_CROSSBOW);
                         break;
                 }
             }
@@ -147,8 +173,16 @@ namespace Assets.Scripts
                         powerProtection -= (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_ROOK);
                         break;
 
+                    case UnitTypes.RookCrossbow:
+                        powerProtection -= (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_ROOK_CROSSBOW);
+                        break;
+
                     case UnitTypes.Bishop:
                         powerProtection -= (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_BISHOP);
+                        break;
+
+                    case UnitTypes.BishopCrossbow:
+                        powerProtection -= (int)(SimplePowerDamage(xy) * Instance.StartValuesGameConfig.PERCENT_FOR_PROTECTION_BISHOP_CROSSBOW);
                         break;
                 }
             }
@@ -214,7 +248,6 @@ namespace Assets.Scripts
 
 
                     case UnitTypes.Rook:
-
                         switch (item)
                         {
                             case EnvironmentTypes.Fertilizer:
@@ -229,12 +262,28 @@ namespace Assets.Scripts
                                 powerProtection += Instance.StartValuesGameConfig.PROTECTION_HILL_FOR_ROOK;
                                 break;
                         }
+                        break;
 
+
+                    case UnitTypes.RookCrossbow:
+                        switch (item)
+                        {
+                            case EnvironmentTypes.Fertilizer:
+                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_FOOD_FOR_ROOK_CROSSBOW;
+                                break;
+
+                            case EnvironmentTypes.AdultForest:
+                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_TREE_FOR_ROOK_CROSSBOW;
+                                break;
+
+                            case EnvironmentTypes.Hill:
+                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_HILL_FOR_ROOK_CROSSBOW;
+                                break;
+                        }
                         break;
 
 
                     case UnitTypes.Bishop:
-
                         switch (item)
                         {
                             case EnvironmentTypes.Fertilizer:
@@ -249,7 +298,24 @@ namespace Assets.Scripts
                                 powerProtection += Instance.StartValuesGameConfig.PROTECTION_HILL_FOR_BISHOP;
                                 break;
                         }
+                        break;
 
+
+                    case UnitTypes.BishopCrossbow:
+                        switch (item)
+                        {
+                            case EnvironmentTypes.Fertilizer:
+                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_FOOD_FOR_BISHOP_CROSSBOW;
+                                break;
+
+                            case EnvironmentTypes.AdultForest:
+                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_TREE_FOR_BISHOP_CROSSBOW;
+                                break;
+
+                            case EnvironmentTypes.Hill:
+                                powerProtection += Instance.StartValuesGameConfig.PROTECTION_HILL_FOR_BISHOP_CROSSBOW;
+                                break;
+                        }
                         break;
                 }
 
@@ -277,8 +343,16 @@ namespace Assets.Scripts
                             powerProtection += Instance.StartValuesGameConfig.PROTECTION_CITY_ROOK;
                             break;
 
+                        case UnitTypes.RookCrossbow:
+                            powerProtection += Instance.StartValuesGameConfig.PROTECTION_CITY_ROOK_CROSSBOW;
+                            break;
+
                         case UnitTypes.Bishop:
                             powerProtection += Instance.StartValuesGameConfig.PROTECTION_CITY_BISHOP;
+                            break;
+
+                        case UnitTypes.BishopCrossbow:
+                            powerProtection += Instance.StartValuesGameConfig.PROTECTION_CITY_BISHOP_CROSSBOW;
                             break;
                     }
 
@@ -315,8 +389,14 @@ namespace Assets.Scripts
                 case UnitTypes.Rook:
                     return _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
 
+                case UnitTypes.RookCrossbow:
+                    return _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK_CROSSBOW;
+
                 case UnitTypes.Bishop:
                     return _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
+
+                case UnitTypes.BishopCrossbow:
+                    return _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW;
             }
             return false;
 
@@ -365,19 +445,28 @@ namespace Assets.Scripts
                     _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN_SWORD;
                     break;
 
-
                 case UnitTypes.Rook:
                     _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
+                    break;
+
+                case UnitTypes.RookCrossbow:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK_CROSSBOW;
                     break;
 
                 case UnitTypes.Bishop:
                     _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
                     break;
 
+                case UnitTypes.BishopCrossbow:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps = Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW;
+                    break;
+
                 default:
                     break;
             }
         }
+
+
         internal void ResetUnit(params int[] xy)
         {
             UnitTypes unitType = default;
@@ -386,8 +475,10 @@ namespace Assets.Scripts
             bool isProtected = default;
             bool isRelaxed = default;
             Player player = default;
+            bool haveBot = default;
 
-            SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player, xy);
+            SetPlayerUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player, xy);
+            SetBotUnit(unitType, haveBot, amountHealth, amountSteps, isProtected, isRelaxed, xy);
         }
         internal void ShiftUnit(int[] xyFromUnitTo, int[] xyTo)
         {
@@ -398,9 +489,9 @@ namespace Assets.Scripts
             var isRelaxed = _eGM.CellUnitEnt_CellUnitCom(xyFromUnitTo).IsRelaxed;
             var player = _eGM.CellUnitEnt_CellOwnerCom(xyFromUnitTo).Owner;
 
-            SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player, xyTo);
+            SetPlayerUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player, xyTo);
         }
-        internal void SetUnit(UnitTypes unitType, int amountHealth, int amountSteps, bool isProtected, bool isRelaxed, Player player, params int[] xy)
+        internal void SetPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, bool isProtected, bool isRelaxed, Player player, params int[] xy)
         {
             _eGM.CellUnitEnt_UnitTypeCom(xy).UnitType = unitType;
             _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps = amountSteps;
@@ -410,34 +501,98 @@ namespace Assets.Scripts
             _eGM.CellUnitEnt_CellOwnerCom(xy).SetOwner(player);
 
 
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.King, player);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.Pawn, player);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.PawnSword, player);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.Rook, player);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.RookCrossbow, player);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.Bishop, player);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.BishopCrossbow, player);
+
             switch (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType)
             {
                 case UnitTypes.None:
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.King);
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.Pawn);
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.PawnSword);
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.Rook);
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.Bishop);
                     break;
 
                 case UnitTypes.King:
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.King, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.King, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.Pawn:
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.PawnSword:
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.Rook:
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    break;
+
+                case UnitTypes.RookCrossbow:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.RookCrossbow, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.Bishop:
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    break;
+
+                case UnitTypes.BishopCrossbow:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.BishopCrossbow, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    break;
+            }
+        }
+
+        internal void SetBotUnit(UnitTypes unitType, bool haveBot, int amountHealth, int amountSteps, bool isProtected, bool isRelaxed, params int[] xy)
+        {
+            _eGM.CellUnitEnt_UnitTypeCom(xy).UnitType = unitType;
+            _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps = amountSteps;
+            _eGM.CellUnitEnt_CellUnitCom(xy).AmountHealth = amountHealth;
+            _eGM.CellUnitEnt_CellUnitCom(xy).IsProtected = isProtected;
+            _eGM.CellUnitEnt_CellUnitCom(xy).IsRelaxed = isRelaxed;
+            _eGM.CellUnitEnt_CellOwnerBotCom(xy).HaveBot = haveBot;
+
+
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.King);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Pawn);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.PawnSword);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Rook);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.RookCrossbow);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Bishop);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.BishopCrossbow);
+
+            switch (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType)
+            {
+                case UnitTypes.None:
+                    break;
+
+                case UnitTypes.King:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.King);
+                    break;
+
+                case UnitTypes.Pawn:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.Pawn);
+                    break;
+
+                case UnitTypes.PawnSword:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.PawnSword);
+                    break;
+
+                case UnitTypes.Rook:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.Rook);
+                    break;
+
+                case UnitTypes.RookCrossbow:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.RookCrossbow);
+                    break;
+
+                case UnitTypes.Bishop:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.Bishop);
+                    break;
+
+                case UnitTypes.BishopCrossbow:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.BishopCrossbow);
                     break;
             }
         }
@@ -446,11 +601,13 @@ namespace Assets.Scripts
         {
             _eGM.CellUnitEnt_UnitTypeCom(xy).UnitType = newUnitType;
 
-            _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.King);
-            _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.Pawn);
-            _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.PawnSword);
-            _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.Rook);
-            _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, UnitTypes.Bishop);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.King);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Pawn);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.PawnSword);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Rook);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.RookCrossbow);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Bishop);
+            _eGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.BishopCrossbow);
 
             switch (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType)
             {
@@ -458,23 +615,31 @@ namespace Assets.Scripts
                     throw new System.Exception();
 
                 case UnitTypes.King:
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.King, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.King, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.Pawn:
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.PawnSword:
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.Rook:
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    break;
+
+                case UnitTypes.RookCrossbow:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.RookCrossbow, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.Bishop:
-                    _eGM.CellUnitEnt_CellUnitCom(xy).EnableSR(true, UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    break;
+
+                case UnitTypes.BishopCrossbow:
+                    _eGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.BishopCrossbow, _eGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 default:
@@ -517,29 +682,48 @@ namespace Assets.Scripts
                     {
                         if (NeedAmountSteps(xy1) <= _eGM.CellUnitEnt_CellUnitCom(xy).AmountSteps || HaveMaxSteps(xy))
                         {
-                            if (_eGM.CellUnitEnt_UnitTypeCom(xy1).HaveUnit && !_eGM.CellUnitEnt_CellOwnerCom(xy1).IsHim(playerFrom))
+                            if (_eGM.CellUnitEnt_UnitTypeCom(xy1).HaveUnit)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Pawn)
+                                if (_eGM.CellUnitEnt_CellOwnerCom(xy1).HaveOwner)
                                 {
-                                    if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Up || directType1 == DirectTypes.Down)
+                                    if (!_eGM.CellUnitEnt_CellOwnerCom(xy1).IsHim(playerFrom))
+                                    {
+                                        if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Pawn || _eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.PawnSword)
+                                        {
+                                            if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Up || directType1 == DirectTypes.Down)
+                                            {
+                                                availableCellsSimpleAttack.Add(xy1);
+                                            }
+                                            else availableCellsUniqueAttack.Add(xy1);
+                                        }
+
+                                        else if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.King)
+                                        {
+                                            availableCellsSimpleAttack.Add(xy1);
+                                        }
+                                    }
+                                }
+                                else if (_eGM.CellUnitEnt_CellOwnerBotCom(xy1).HaveBot)
+                                {
+                                    if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Pawn || _eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.PawnSword)
+                                    {
+                                        if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Up || directType1 == DirectTypes.Down)
+                                        {
+                                            availableCellsSimpleAttack.Add(xy1);
+                                        }
+                                        else availableCellsUniqueAttack.Add(xy1);
+                                    }
+
+                                    else if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.King)
                                     {
                                         availableCellsSimpleAttack.Add(xy1);
                                     }
-                                    else availableCellsUniqueAttack.Add(xy1);
-                                }
-
-                                else if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.King)
-                                {
-                                    availableCellsSimpleAttack.Add(xy1);
                                 }
                             }
                         }
                     }
                 }
             }
-
-
-
 
 
 
@@ -555,24 +739,51 @@ namespace Assets.Scripts
                         {
                             if (!_eGM.CellEnvEnt_CellEnvCom(xy1).HaveMountain)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(xy1).HaveUnit && !_eGM.CellUnitEnt_CellOwnerCom(xy1).IsHim(playerFrom))
+                                if (_eGM.CellUnitEnt_UnitTypeCom(xy1).HaveUnit)
                                 {
-                                    if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Rook)
+                                    if (_eGM.CellUnitEnt_CellOwnerCom(xy1).HaveOwner)
                                     {
-                                        if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Up || directType1 == DirectTypes.Down)
+                                        if (!_eGM.CellUnitEnt_CellOwnerCom(xy1).IsHim(playerFrom))
                                         {
-                                            availableCellsUniqueAttack.Add(xy1);
+                                            if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Rook || _eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.RookCrossbow)
+                                            {
+                                                if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Up || directType1 == DirectTypes.Down)
+                                                {
+                                                    availableCellsUniqueAttack.Add(xy1);
+                                                }
+                                                else availableCellsSimpleAttack.Add(xy1);
+                                            }
+
+                                            else if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Bishop || _eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.BishopCrossbow)
+                                            {
+                                                if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Up || directType1 == DirectTypes.Down)
+                                                {
+                                                    availableCellsSimpleAttack.Add(xy1);
+                                                }
+                                                else availableCellsUniqueAttack.Add(xy1);
+                                            }
                                         }
-                                        else availableCellsSimpleAttack.Add(xy1);
                                     }
 
-                                    else if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Bishop)
+                                    else if (_eGM.CellUnitEnt_CellOwnerBotCom(xy1).HaveBot)
                                     {
-                                        if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Up || directType1 == DirectTypes.Down)
+                                        if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Rook || _eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.RookCrossbow)
                                         {
-                                            availableCellsSimpleAttack.Add(xy1);
+                                            if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Up || directType1 == DirectTypes.Down)
+                                            {
+                                                availableCellsUniqueAttack.Add(xy1);
+                                            }
+                                            else availableCellsSimpleAttack.Add(xy1);
                                         }
-                                        else availableCellsUniqueAttack.Add(xy1);
+
+                                        else if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Bishop || _eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.BishopCrossbow)
+                                        {
+                                            if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Up || directType1 == DirectTypes.Down)
+                                            {
+                                                availableCellsSimpleAttack.Add(xy1);
+                                            }
+                                            else availableCellsUniqueAttack.Add(xy1);
+                                        }
                                     }
                                 }
                             }
@@ -583,41 +794,97 @@ namespace Assets.Scripts
 
                         if (_eGM.CellUnitEnt_CellUnitCom(xy2).IsActivatedUnitDict[Instance.IsMasterClient])
                         {
-                            if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Rook)
+                            if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Rook || _eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.RookCrossbow)
                             {
                                 if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Down || directType1 == DirectTypes.Up)
                                 {
-                                    if (!_eGM.CellEnvEnt_CellEnvCom(xy2).HaveMountain && _eGM.CellUnitEnt_UnitTypeCom(xy2).HaveUnit && !_eGM.CellUnitEnt_CellOwnerCom(xy2).IsHim(playerFrom))
+                                    if (!_eGM.CellEnvEnt_CellEnvCom(xy2).HaveMountain)
                                     {
-                                        availableCellsUniqueAttack.Add(xy2);
+                                        if (_eGM.CellUnitEnt_UnitTypeCom(xy2).HaveUnit)
+                                        {
+                                            if (_eGM.CellUnitEnt_CellOwnerCom(xy2).HaveOwner)
+                                            {
+                                                if (!_eGM.CellUnitEnt_CellOwnerCom(xy2).IsHim(playerFrom))
+                                                {
+                                                    availableCellsUniqueAttack.Add(xy2);
+                                                }
+                                            }
+
+                                            else if (_eGM.CellUnitEnt_CellOwnerBotCom(xy2).HaveBot)
+                                            {
+                                                availableCellsUniqueAttack.Add(xy2);
+                                            }
+                                        }
                                     }
                                 }
 
                                 if (directType1 == DirectTypes.LeftDown || directType1 == DirectTypes.LeftUp || directType1 == DirectTypes.RightDown || directType1 == DirectTypes.RightUp)
                                 {
-                                    if (!_eGM.CellEnvEnt_CellEnvCom(xy2).HaveMountain && _eGM.CellUnitEnt_UnitTypeCom(xy2).HaveUnit && !_eGM.CellUnitEnt_CellOwnerCom(xy2).IsHim(playerFrom))
+                                    if (!_eGM.CellEnvEnt_CellEnvCom(xy2).HaveMountain)
                                     {
-                                        availableCellsSimpleAttack.Add(xy2);
+                                        if (_eGM.CellUnitEnt_UnitTypeCom(xy2).HaveUnit)
+                                        {
+                                            if (_eGM.CellUnitEnt_CellOwnerCom(xy2).HaveOwner)
+                                            {
+                                                if (!_eGM.CellUnitEnt_CellOwnerCom(xy2).IsHim(playerFrom))
+                                                {
+                                                    availableCellsSimpleAttack.Add(xy2);
+                                                }
+                                            }
+
+                                            else if (_eGM.CellUnitEnt_CellOwnerBotCom(xy2).HaveBot)
+                                            {
+                                                availableCellsSimpleAttack.Add(xy2);
+                                            }
+                                        }
                                     }
                                 }
                             }
 
 
-                            else if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Bishop)
+                            else if (_eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.Bishop || _eGM.CellUnitEnt_UnitTypeCom(xy).UnitType == UnitTypes.BishopCrossbow)
                             {
                                 if (directType1 == DirectTypes.LeftDown || directType1 == DirectTypes.LeftUp || directType1 == DirectTypes.RightDown || directType1 == DirectTypes.RightUp)
                                 {
-                                    if (!_eGM.CellEnvEnt_CellEnvCom(xy2).HaveMountain && _eGM.CellUnitEnt_UnitTypeCom(xy2).HaveUnit && !_eGM.CellUnitEnt_CellOwnerCom(xy2).IsHim(playerFrom))
+                                    if (!_eGM.CellEnvEnt_CellEnvCom(xy2).HaveMountain)
                                     {
-                                        availableCellsUniqueAttack.Add(xy2);
+                                        if (_eGM.CellUnitEnt_UnitTypeCom(xy2).HaveUnit)
+                                        {
+                                            if (_eGM.CellUnitEnt_CellOwnerCom(xy2).HaveOwner)
+                                            {
+                                                if (!_eGM.CellUnitEnt_CellOwnerCom(xy2).IsHim(playerFrom))
+                                                {
+                                                    availableCellsUniqueAttack.Add(xy2);
+                                                }
+                                            }
+
+                                            else if (_eGM.CellUnitEnt_CellOwnerBotCom(xy2).HaveBot)
+                                            {
+                                                availableCellsUniqueAttack.Add(xy2);
+                                            }
+                                        }
                                     }
                                 }
 
                                 if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Down || directType1 == DirectTypes.Up)
                                 {
-                                    if (!_eGM.CellEnvEnt_CellEnvCom(xy2).HaveMountain && _eGM.CellUnitEnt_UnitTypeCom(xy2).HaveUnit && !_eGM.CellUnitEnt_CellOwnerCom(xy2).IsHim(playerFrom))
+                                    if (!_eGM.CellEnvEnt_CellEnvCom(xy2).HaveMountain)
                                     {
-                                        availableCellsSimpleAttack.Add(xy2);
+                                        if (_eGM.CellUnitEnt_UnitTypeCom(xy2).HaveUnit)
+                                        {
+                                            if (_eGM.CellUnitEnt_CellOwnerCom(xy2).HaveOwner)
+                                            {
+                                                if (!_eGM.CellUnitEnt_CellOwnerCom(xy2).IsHim(playerFrom))
+                                                {
+                                                    availableCellsSimpleAttack.Add(xy2);
+                                                }
+                                            }
+
+                                            else if (_eGM.CellUnitEnt_CellOwnerBotCom(xy2).HaveBot)
+                                            {
+                                                availableCellsSimpleAttack.Add(xy2);
+                                            }
+                                        }
                                     }
                                 }
                             }

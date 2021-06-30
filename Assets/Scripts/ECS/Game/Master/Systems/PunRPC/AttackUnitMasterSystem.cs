@@ -5,7 +5,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 {
     internal int[] XyPreviousCell => _eMM.RPCMasterEnt_RPCMasterCom.XyPrevious;
     internal int[] XySelectedCell => _eMM.RPCMasterEnt_RPCMasterCom.XySelected;
-    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
 
     private bool _isAttacked;
 
@@ -73,7 +73,10 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
                     _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).ActorNumber);
 
                 _cellM.CellUnitWorker.ResetUnit(XySelectedCell);
-                if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Rook && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Bishop)
+                if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Rook
+                    && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.RookCrossbow
+                    && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Bishop
+                    && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.BishopCrossbow)
                 {
                     _cellM.CellUnitWorker.ShiftUnit(XyPreviousCell, XySelectedCell);
                     _cellM.CellUnitWorker.ResetUnit(XyPreviousCell);

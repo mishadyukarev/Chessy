@@ -10,37 +10,62 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
         {
-            switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
+            if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
             {
-                case UnitTypes.None:
+                if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+                {
+                    switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
+                    {
+                        case UnitTypes.None:
+                            ActiveStandartAbilities(false);
+                            break;
+
+                        case UnitTypes.King:
+                            ActiveStandartAbilities(true);
+                            break;
+
+                        case UnitTypes.Pawn:
+                            ActiveStandartAbilities(true);
+                            break;
+
+                        case UnitTypes.PawnSword:
+                            ActiveStandartAbilities(true);
+                            break;
+
+                        case UnitTypes.Rook:
+                            ActiveStandartAbilities(true);
+                            break;
+
+                        case UnitTypes.RookCrossbow:
+                            ActiveStandartAbilities(true);
+                            break;
+
+                        case UnitTypes.Bishop:
+                            ActiveStandartAbilities(true);
+                            break;
+
+                        case UnitTypes.BishopCrossbow:
+                            ActiveStandartAbilities(true);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+
+                else
+                {
                     ActiveStandartAbilities(false);
-                    break;
-
-                case UnitTypes.King:
-                    ActiveStandartAbilities(true);
-                    break;
-
-                case UnitTypes.Pawn:
-                    ActiveStandartAbilities(true);
-                    break;
-
-                case UnitTypes.PawnSword:
-                    ActiveStandartAbilities(true);
-                    break;
-
-                case UnitTypes.Rook:
-                    ActiveStandartAbilities(true);
-                    break;
-
-                case UnitTypes.Bishop:
-                    ActiveStandartAbilities(true);
-                    break;
-
-                default:
-                    break;
+                }
             }
+
+            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
+            {
+                ActiveStandartAbilities(false);
+            }
+            
         }
         else
         {

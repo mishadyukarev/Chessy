@@ -4,7 +4,7 @@ using Photon.Pun;
 internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 {
     private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
-    private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+    private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
     private BuildingTypes BuildingType => _eMM.RPCMasterEnt_RPCMasterCom.BuildingType;
 
     public override void Run()
@@ -21,7 +21,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     break;
 
                 case BuildingTypes.City:
-                    _cellM.CellBuildingWorker.SetBuilding(true, BuildingType, Info.Sender, XyCell);
+                    _cellM.CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
                     _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
 
                     _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Info.Sender.IsMasterClient] = true;
@@ -51,7 +51,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                 if (_econM.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves))
                 {
                     _econM.CreateBuilding(BuildingType, Info.Sender);
-                    _cellM.CellBuildingWorker.SetBuilding(true, BuildingType, Info.Sender, XyCell);
+                    _cellM.CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
                     _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
                 }
                 else

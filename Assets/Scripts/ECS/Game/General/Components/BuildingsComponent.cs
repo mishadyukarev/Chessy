@@ -12,7 +12,7 @@ internal struct BuildingsComponent
     internal Dictionary<bool, bool> IsSettedCityDict => _isSettedCityDict;
     internal Dictionary<bool, int[]> XySettedCityDict => _xySettedCityDict;
 
-    internal void CreateDict()
+    internal void StartFill()
     {
         _isSettedCityDict = new Dictionary<bool, bool>();
         _xySettedCityDict = new Dictionary<bool, int[]>();

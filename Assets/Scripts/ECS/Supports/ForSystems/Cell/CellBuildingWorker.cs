@@ -2,15 +2,15 @@
 
 namespace Assets.Scripts
 {
-    internal sealed class CellBuildingWorker : CellWorker
+    public sealed class CellBuildingWorker : CellWorker
     {
-        internal CellBuildingWorker(ECSManager eCSmanager) : base(eCSmanager) { }
+        public CellBuildingWorker(ECSManager eCSmanager) : base(eCSmanager) { }
 
-        internal void SetBuilding(bool withEconomy, BuildingTypes buildingType, Player owner, params int[] xy)
+        internal void SetPlayerBuilding(bool withEconomy, BuildingTypes buildingType, Player owner, params int[] xy)
         {
             _eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = buildingType;
             _eGM.CellBuildEnt_OwnerCom(xy).SetOwner(owner);
-            _eGM.CellBuildEnt_CellBuilCom(xy).SetEnabledSR(true, _eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType, owner);
+            _eGM.CellBuildEnt_CellBuilCom(xy).EnabledPlayerSR(true, _eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType, owner);
 
             if (withEconomy)
             {
@@ -19,24 +19,44 @@ namespace Assets.Scripts
             }
         }
 
+        internal void SetBotBuilding(BuildingTypes buildingType, params int[] xy)
+        {
+            _eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = buildingType;
+            _eGM.CellBuildEnt_CellOwnerBotCom(xy).HaveBot = true;
+            _eGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(true, _eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType);
+        }
+
         internal void ResetBuilding(bool withEconomy, params int[] xy)
         {
+            var buildType = _eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType;
+
             if (withEconomy)
             {
-                if (_eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType == BuildingTypes.City)
+                if (_eGM.CellBuildEnt_OwnerCom(xy).HaveOwner)
                 {
-                    _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[_eGM.CellBuildEnt_OwnerCom(xy).IsMasterClient] = false;
-                    _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[_eGM.CellBuildEnt_OwnerCom(xy).IsMasterClient] = default;
-                }
+                    if (buildType == BuildingTypes.City)
+                    {
+                        _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[_eGM.CellBuildEnt_OwnerCom(xy).IsMasterClient] = false;
+                        _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[_eGM.CellBuildEnt_OwnerCom(xy).IsMasterClient] = default;
+                    }
 
-                _eGM.BuildingsEnt_BuildingsCom.TakeAmountBuildings
-                    (_eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType, _eGM.CellBuildEnt_OwnerCom(xy).IsMasterClient);
+                    _eGM.BuildingsEnt_BuildingsCom.TakeAmountBuildings(buildType, _eGM.CellBuildEnt_OwnerCom(xy).IsMasterClient);
+                }
             }
 
+            if (_eGM.CellBuildEnt_OwnerCom(xy).HaveOwner)
+            {
+                _eGM.CellBuildEnt_CellBuilCom(xy).EnabledPlayerSR(false, buildType);
+                _eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = BuildingTypes.None;
+                _eGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
+            }
 
-            _eGM.CellBuildEnt_CellBuilCom(xy).SetEnabledSR(false, _eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType);
-            _eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = BuildingTypes.None;
-            _eGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
+            else if (_eGM.CellBuildEnt_CellOwnerBotCom(xy).HaveBot)
+            {
+                _eGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(false, buildType);
+                _eGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = BuildingTypes.None;
+                _eGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
+            }
         }
     }
 }

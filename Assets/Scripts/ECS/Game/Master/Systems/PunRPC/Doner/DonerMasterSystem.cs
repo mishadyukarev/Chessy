@@ -4,8 +4,8 @@ using static Assets.Scripts.Main;
 
 internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 {
-    internal bool isDone => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
-    internal PhotonMessageInfo info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+    internal bool isDone => _eGM.RpcGeneralEnt_RPCCom.IsActived;
+    internal PhotonMessageInfo info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
 
 
     public override void Run()
@@ -18,7 +18,7 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 
             _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(info.Sender.IsMasterClient, isDone);
 
-            bool isRefreshed = Instance.TestType == TestTypes.Standart
+            bool isRefreshed = Instance.GameType == GameTypes.WithBot
                 || _eGM.DonerEnt_IsActivatedDictCom.IsActivated(true)
                 && _eGM.DonerEnt_IsActivatedDictCom.IsActivated(false);
 

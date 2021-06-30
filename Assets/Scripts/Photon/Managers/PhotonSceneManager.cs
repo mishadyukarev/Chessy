@@ -27,9 +27,10 @@ namespace Assets.Scripts
                 case SceneTypes.Menu:
                     _logTex = Instance.CanvasManager.FindUnderParent<TextMeshProUGUI>(SceneTypes.Menu, "LogText");
 
-                    Instance.CanvasManager.FindUnderParent<Button>(SceneTypes.Menu, "CreateRoomButton").onClick.AddListener(CreateRoom);
-                    Instance.CanvasManager.FindUnderParent<Button>(SceneTypes.Menu, "JoinRandomButton").onClick.AddListener(JoinRandomRoom);
-                    Instance.CanvasManager.FindUnderParent<Button>(SceneTypes.Menu, "QuitButton").onClick.AddListener(Quit);
+                    Instance.CanvasManager.FindUnderParent<Button>(sceneType, "CreateRoomButton").onClick.AddListener(CreateRoom);
+                    Instance.CanvasManager.FindUnderParent<Button>(sceneType, "JoinRandomButton").onClick.AddListener(JoinRandomRoom);
+                    Instance.CanvasManager.FindUnderParent<Button>(sceneType, "QuitButton").onClick.AddListener(Quit);
+                    Instance.CanvasManager.FindUnderParent<Button>(sceneType, "CreateTestGameButton").onClick.AddListener(TestGame);
 
                     PhotonNetwork.NickName = "Player " + Random.Range(10000, 100000);
                     PhotonNetwork.GameVersion = "1";
@@ -49,6 +50,8 @@ namespace Assets.Scripts
 
         public void CreateRoom()
         {
+            Instance.GameType = GameTypes.None;
+
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = MAX_PLAYERS;
             //roomOptions.PlayerTtl = 200;//1000
@@ -72,6 +75,18 @@ namespace Assets.Scripts
         }
 
         public void Quit() => Application.Quit();
+        private void TestGame()
+        {
+            Instance.GameType = GameTypes.WithBot;
+
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.MaxPlayers = MAX_PLAYERS;
+            roomOptions.IsVisible = false;
+            roomOptions.IsOpen = false;
+            var roomName = Random.Range(1, 9999999).ToString();
+
+            PhotonNetwork.CreateRoom(roomName, roomOptions, null);
+        }
 
 
 
@@ -92,6 +107,11 @@ namespace Assets.Scripts
         public override void OnConnectedToMaster()
         {
             Log("Connected to Master");
+        }
+
+        public override void OnDisconnected(DisconnectCause cause)
+        {
+
         }
 
         #endregion

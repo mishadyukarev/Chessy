@@ -2,4 +2,9 @@
 {
     internal int[] XyStartCell;
     internal int[] XyEndCell;
+
+    internal void StartFill()
+    {
+
+    }
 }

@@ -98,7 +98,7 @@ namespace Assets.Scripts
         [PunRPC]
         private void MasterRPC(RpcTypes rPCType, object[] objects, PhotonMessageInfo info)
         {
-            _eGM.RpcGeneralEnt_FromInfoCom.FromInfo = info;
+            _eGM.RpcGeneralEnt_RPCCom.FromInfo = info;
 
             switch (rPCType)
             {
@@ -106,17 +106,17 @@ namespace Assets.Scripts
                     break;
 
                 case RpcTypes.Ready:
-                    _eGM.RpcGeneralEnt_FromInfoCom.IsActived = (bool)objects[0];
+                    _eGM.RpcGeneralEnt_RPCCom.IsActived = (bool)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(ReadyMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Done:
-                    _eGM.RpcGeneralEnt_FromInfoCom.IsActived = (bool)objects[0];
+                    _eGM.RpcGeneralEnt_RPCCom.IsActived = (bool)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(DonerMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Truce:
-                    _eGM.RpcGeneralEnt_FromInfoCom.IsActived = (bool)objects[0];
+                    _eGM.RpcGeneralEnt_RPCCom.IsActived = (bool)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RPCSystems);
 
                     break;
@@ -149,13 +149,13 @@ namespace Assets.Scripts
                     break;
 
                 case RpcTypes.Protect:
-                    _eGM.RpcGeneralEnt_FromInfoCom.IsActived = (bool)objects[0];
+                    _eGM.RpcGeneralEnt_RPCCom.IsActived = (bool)objects[0];
                     _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[1];
                     _sMM.TryInvokeRunSystem(nameof(ProtectMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Relax:
-                    _eGM.RpcGeneralEnt_FromInfoCom.IsActived = (bool)objects[0];
+                    _eGM.RpcGeneralEnt_RPCCom.IsActived = (bool)objects[0];
                     _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[1];
                     _sMM.TryInvokeRunSystem(nameof(RelaxMasterSystem), _sMM.RPCSystems);
                     break;
@@ -197,8 +197,6 @@ namespace Assets.Scripts
                     break;
 
                 case RpcTypes.Upgrade:
-
-                    Debug.Log("Welcome");
                     _eMM.RPCMasterEnt_RPCMasterCom.UpgradeModType = (UpgradeModTypes)objects[0];
                     _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[1];
                     _sMM.TryInvokeRunSystem(nameof(UpgradeMasterSystem), _sMM.RPCSystems);
@@ -214,7 +212,7 @@ namespace Assets.Scripts
         private void GeneralRPC(RpcTypes rPCType, object[] objects, PhotonMessageInfo info)
         {
             _i = 0;
-            _eGM.RpcGeneralEnt_FromInfoCom.FromInfo = info;
+            _eGM.RpcGeneralEnt_RPCCom.FromInfo = info;
 
             switch (rPCType)
             {
@@ -247,7 +245,7 @@ namespace Assets.Scripts
 
                 case RpcTypes.Attack:
                     if ((bool)objects[0]) _eGM.SelectorEnt_SelectorCom.AttackUnitAction();
-                    if ((bool)objects[1]) _eGM.SoundEntSoundCom.AttackSoundAction();
+                    if ((bool)objects[1]) _eGM.SoundEnt_SoundCom.AttackSoundAction();
                     break;
 
                 case RpcTypes.Mistake:
@@ -269,7 +267,7 @@ namespace Assets.Scripts
                             if (!haveGold) _eGM.EconomyEnt_MistakeEconomyCom.GoldMistake();
 
                             if (!haveFood || !haveWood || !haveOre || !haveIron || !haveGold)
-                                _eGM.SoundEntSoundCom.MistakeSoundAction.Invoke();
+                                _eGM.SoundEnt_SoundCom.MistakeSoundAction.Invoke();
                             break;
 
                         case MistakeTypes.UnitType:
@@ -294,7 +292,7 @@ namespace Assets.Scripts
                     break;
             }
 
-            RefreshAllToMaster();
+            //RefreshAllToMaster();
         }
 
         #endregion
@@ -321,11 +319,20 @@ namespace Assets.Scripts
                     {
                         listObjects.Add(_eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[false]);
                         listObjects.Add(_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
-                        listObjects.Add(_eGM.CellUnitEnt_CellOwnerCom(x, y).ActorNumber);
                         listObjects.Add(_eGM.CellUnitEnt_CellUnitCom(x, y).AmountSteps);
                         listObjects.Add(_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth);
                         listObjects.Add(_eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected);
                         listObjects.Add(_eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed);
+
+                        listObjects.Add(_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner);
+                        if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                        {
+                            listObjects.Add(_eGM.CellUnitEnt_CellOwnerCom(x, y).ActorNumber);
+                        }
+                        else
+                        {
+                            listObjects.Add(_eGM.CellUnitEnt_CellOwnerBotCom(x, y).HaveBot);
+                        }         
                     }
 
 
@@ -338,11 +345,25 @@ namespace Assets.Scripts
                     listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveHill);
                     listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveMountain);
 
-                    listObjects.Add(_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding);
-                    if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
+
+
+                    var haveBuilding = _eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding;
+                    listObjects.Add(haveBuilding);
+
+                    if (haveBuilding)
                     {
                         listObjects.Add(_eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType);
-                        listObjects.Add(_eGM.CellBuildEnt_OwnerCom(x, y).ActorNumber);
+
+                        var haveOwner = _eGM.CellBuildEnt_OwnerCom(x, y).HaveOwner;
+                        listObjects.Add(haveOwner);
+                        if (haveOwner)
+                        {
+                            listObjects.Add(_eGM.CellBuildEnt_OwnerCom(x, y).ActorNumber);
+                        }
+                        else
+                        {
+                            listObjects.Add(_eGM.CellBuildEnt_CellOwnerBotCom(x, y).HaveBot);
+                        }
                     }
 
 
@@ -385,27 +406,36 @@ namespace Assets.Scripts
         {
             int i = 0;
             for (int x = 0; x < _eGM.Xamount; x++)
-            {
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
                     Player player;
+                    bool haveOwner = false;
 
                     bool haveUnit = (bool)objects[i++];
                     if (haveUnit)
                     {
                         bool isActiveUnit = (bool)objects[i++];
                         UnitTypes unitType = (UnitTypes)objects[i++];
-                        int actorNumber = (int)objects[i++];
                         int amountSteps = (int)objects[i++];
                         int amountHealth = (int)objects[i++];
                         bool isProtected = (bool)objects[i++];
                         bool isRelaxed = (bool)objects[i++];
 
+                        haveOwner = (bool)objects[i++];
+                        if (haveOwner)
+                        {
+                            int actorNumber = (int)objects[i++];
+                            player = PhotonNetwork.PlayerList[actorNumber - 1];
 
-                        player = PhotonNetwork.PlayerList[actorNumber - 1];
+                            _cM.CellUnitWorker.SetPlayerUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player, x, y);
+                        }
+                        else
+                        {
+                            bool haveBot = (bool)objects[i++];
+                            _cM.CellUnitWorker.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, isProtected, isRelaxed, x, y);
+                        }
 
                         _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[Instance.IsMasterClient] = isActiveUnit;
-                        _cM.CellUnitWorker.SetUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player, x, y);
                         _eGM.CellUnitEnt_CellUnitCom(x, y).EnableSR(isActiveUnit, unitType);
                     }
                     else
@@ -440,14 +470,27 @@ namespace Assets.Scripts
 
 
                     bool haveBuilding = (bool)objects[i++];
+
                     if (haveBuilding)
                     {
                         BuildingTypes buildingType = (BuildingTypes)objects[i++];
-                        int actorNumberBuilding = (int)objects[i++];
 
-                        player = PhotonNetwork.PlayerList[actorNumberBuilding - 1];
+                        haveOwner = (bool)objects[i++];
 
-                        _cM.CellBuildingWorker.SetBuilding(false, buildingType, player, x, y);
+                        if (haveOwner)
+                        {
+                            int actorNumberBuilding = (int)objects[i++];
+                            player = PhotonNetwork.PlayerList[actorNumberBuilding - 1];
+                            _cM.CellBuildingWorker.SetPlayerBuilding(false, buildingType, player, x, y);
+                        }
+                        else
+                        {
+                            bool haveBot = (bool)objects[i++];
+                            if (haveBot)
+                            {
+                                _cM.CellBuildingWorker.SetBotBuilding(BuildingTypes.City, x, y);
+                            }
+                        }
                     }
                     else
                     {
@@ -459,7 +502,7 @@ namespace Assets.Scripts
 
                     _eGM.CellEffectEnt_CellEffectCom(x, y).SetResetEffect(haveFire, EffectTypes.Fire);
                 }
-            }
+
         }
 
         [PunRPC]

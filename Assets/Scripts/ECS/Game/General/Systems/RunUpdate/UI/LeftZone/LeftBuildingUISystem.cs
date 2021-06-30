@@ -29,12 +29,14 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
 
         if (_eGM.SelectorEnt_SelectorCom.IsSelected && _eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
         {
-            if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).IsMine)
+            if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).HaveOwner)
             {
-                _eGM.BuildingZoneEnt_ParentCom.SetActive(true);
+                if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).IsMine)
+                {
+                    _eGM.BuildingZoneEnt_ParentCom.SetActive(true);
+                }
+                else _eGM.BuildingZoneEnt_ParentCom.SetActive(false);
             }
-
-            else _eGM.BuildingZoneEnt_ParentCom.SetActive(false);
         }
         else
         {

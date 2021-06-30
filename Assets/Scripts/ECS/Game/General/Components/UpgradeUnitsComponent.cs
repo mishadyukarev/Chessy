@@ -7,7 +7,7 @@ internal struct UpgradeUnitsComponent : IDisposable
     private Dictionary<bool, int> _amountUpgradeRookDict;
     private Dictionary<bool, int> _amountUpgradeBishopDict;
 
-    internal void CreateDict()
+    internal void StartFill()
     {
         _amountUpgradePawnDict = new Dictionary<bool, int>();
         _amountUpgradeRookDict = new Dictionary<bool, int>();

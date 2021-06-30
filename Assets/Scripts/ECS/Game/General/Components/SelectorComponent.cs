@@ -2,8 +2,9 @@
 using Assets.Scripts.Abstractions.Enums;
 using System;
 using System.Collections.Generic;
+using static Assets.Scripts.Abstractions.ValuesConst;
 
-public struct SelectorComponent : IDisposable
+public struct SelectorComponent
 {
     internal List<int[]> AvailableCellsForShift;
     internal List<int[]> AvailableCellsSimpleAttack;
@@ -24,11 +25,11 @@ public struct SelectorComponent : IDisposable
     internal Action AttackUnitAction;
     internal Action ShiftUnitDelegate;
 
-    internal SelectorComponent(int xy)
+    internal void StartFill()
     {
-        XyCurrentCell = new int[xy];
-        XySelectedCell = new int[xy];
-        XyPreviousCell = new int[xy];
+        XyCurrentCell = new int[XY_FOR_ARRAY];
+        XySelectedCell = new int[XY_FOR_ARRAY];
+        XyPreviousCell = new int[XY_FOR_ARRAY];
 
         IsGettedCell = default;
 
@@ -43,12 +44,5 @@ public struct SelectorComponent : IDisposable
         AvailableCellsForShift = new List<int[]>();
         AvailableCellsSimpleAttack = new List<int[]>();
         AvailableCellsUniqueAttack = new List<int[]>();
-    }
-
-    public void Dispose()
-    {
-        XySelectedCell[0] = default;
-        XySelectedCell[1] = default;
-        IsSelected = default;
     }
 }

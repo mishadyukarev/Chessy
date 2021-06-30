@@ -3,7 +3,7 @@ using static Assets.Scripts.Main;
 
 internal sealed class BuildingUISystem : RPCGeneralSystemReduction
 {
-    private int[] _xySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
+    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
 
 
     public override void Init()
@@ -21,27 +21,68 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected && _eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).HaveUnit && _eGM.CellUnitEnt_CellOwnerCom(_xySelectedCell).IsMine)
+        if (_eGM.SelectorEnt_SelectorCom.IsSelected && _eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
         {
-            switch (_eGM.CellUnitEnt_UnitTypeCom(_xySelectedCell).UnitType)
+            if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
             {
-                case UnitTypes.King:
+                if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+                {
+                    switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
+                    {
+                        case UnitTypes.None:
+                            break;
+
+                        case UnitTypes.King:
+                            Activate(false);
+                            break;
+
+                        case UnitTypes.Pawn:
+                            PawnAndPawnSword();
+                            break;
+
+                        case UnitTypes.PawnSword:
+                            PawnAndPawnSword();
+                            break;
+
+                        case UnitTypes.Rook:
+                            Activate(false);
+                            break;
+
+                        case UnitTypes.RookCrossbow:
+                            Activate(false);
+                            break;
+
+                        case UnitTypes.Bishop:
+                            Activate(false);
+                            break;
+
+                        case UnitTypes.BishopCrossbow:
+                            Activate(false);
+                            break;
+
+                        default:
+                            break;
+                    }
+                }
+
+                else
+                {
                     _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
                     _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
                     _eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
                     _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(false);
                     _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
-                    break;
-
-                case UnitTypes.Pawn:
-                    PawnAndPawnSword();
-                    break;
-
-                    case UnitTypes.PawnSword:
-                    PawnAndPawnSword();
-                    break;
+                }
             }
 
+            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
+            {
+                _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
+                _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
+                _eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
+                _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(false);
+                _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
+            }
 
             void PawnAndPawnSword()
             {
@@ -53,24 +94,41 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
 
                 _eGM.BuildingFourthAbilityEnt_ButtonCom.RemoveAllListeners();
 
-                if (_eGM.CellBuildEnt_BuilTypeCom(_xySelectedCell).HaveBuilding)
+                if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).HaveBuilding)
                 {
-                    if (_eGM.CellBuildEnt_OwnerCom(_xySelectedCell).IsMine)
+                    if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).HaveOwner)
                     {
-                        if (_eGM.CellBuildEnt_BuilTypeCom(_xySelectedCell).BuildingType == BuildingTypes.City)
+                        if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).IsMine)
                         {
-                            _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
+                            if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
+                            {
+                                _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
+                            }
+                            else
+                            {
+                                _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
+                                _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Destroy";
+                            }
                         }
                         else
+                        {
+                            if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
+                            {
+                                _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
+                                _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Destroy";
+                            }
+                        }
+                    }
+
+                    else if (_eGM.CellBuildEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
+                    {
+                        if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
                         {
                             _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
                             _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Destroy";
                         }
                     }
-                    else
-                    {
 
-                    }
                 }
                 else
                 {
@@ -97,6 +155,15 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
         }
     }
 
-    private void Build(BuildingTypes buildingType) => _photonPunRPC.BuildToMaster(_xySelectedCell, buildingType);
-    private void Destroy() => _photonPunRPC.DestroyBuildingToMaster(_xySelectedCell);
+    private void Activate(bool isActivated)
+    {
+        _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(isActivated);
+        _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(isActivated);
+        _eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(isActivated);
+        _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(isActivated);
+        _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(isActivated);
+    }
+
+    private void Build(BuildingTypes buildingType) => _photonPunRPC.BuildToMaster(XySelectedCell, buildingType);
+    private void Destroy() => _photonPunRPC.DestroyBuildingToMaster(XySelectedCell);
 }

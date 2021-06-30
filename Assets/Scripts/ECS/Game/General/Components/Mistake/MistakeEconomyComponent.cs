@@ -8,4 +8,9 @@ internal struct MistakeEconomyComponent
     internal Action OreMistake;
     internal Action IronMistake;
     internal Action GoldMistake;
+
+    internal void StartFill()
+    {
+
+    }
 }

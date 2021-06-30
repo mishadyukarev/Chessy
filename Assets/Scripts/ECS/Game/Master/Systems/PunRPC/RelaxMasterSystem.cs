@@ -2,7 +2,7 @@
 
 internal sealed class RelaxMasterSystem : SystemMasterReduction
 {
-    internal bool isActive => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
+    internal bool isActive => _eGM.RpcGeneralEnt_RPCCom.IsActived;
     internal int[] xyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
 
     public override void Run()

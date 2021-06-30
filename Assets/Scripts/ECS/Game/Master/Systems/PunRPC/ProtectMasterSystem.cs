@@ -3,7 +3,7 @@
 internal sealed class ProtectMasterSystem : SystemMasterReduction
 {
     private int[] xyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
-    internal bool isActive => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
+    internal bool isActive => _eGM.RpcGeneralEnt_RPCCom.IsActived;
 
     public override void Run()
     {

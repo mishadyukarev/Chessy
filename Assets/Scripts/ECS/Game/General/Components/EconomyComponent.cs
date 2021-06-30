@@ -9,7 +9,7 @@ internal struct EconomyComponent
     private Dictionary<bool, int> _ironAmount;
     private Dictionary<bool, int> _goldAmount;
 
-    internal void CreateDict()
+    internal void StartFill()
     {
         _foodAmount = new Dictionary<bool, int>();
         _woodAmount = new Dictionary<bool, int>();

@@ -168,6 +168,23 @@ internal struct CellEnvironmentComponent
         }
     }
 
+    internal void StartFill(GameObject environmentGO)
+    {
+        _fertilizerGO = environmentGO.transform.Find("Food").gameObject;
+        _mountainGO = environmentGO.transform.Find("Mountain").gameObject;
+        _adultTreeGO = environmentGO.transform.Find("Tree").gameObject;
+        _youngTreeGO = environmentGO.transform.Find("YoungTree").gameObject;
+        _hillGO = environmentGO.transform.Find("Hill").gameObject;
+
+        _fertilizerSR = _fertilizerGO.GetComponent<SpriteRenderer>();
+        _mountainSR = _mountainGO.GetComponent<SpriteRenderer>();
+        _adultTreeSR = _adultTreeGO.GetComponent<SpriteRenderer>();
+        _youngTreeSR = _youngTreeGO.GetComponent<SpriteRenderer>();
+        _hillSR = _hillGO.GetComponent<SpriteRenderer>();
+
+        ResetAll();
+    }
+
     internal void ResetAll()
     {
         _haveMountain = false;
@@ -182,21 +199,5 @@ internal struct CellEnvironmentComponent
         _haveFertilizer = false;
         _fertilizerGO.SetActive(false);
         AmountFertilizerResources = 0;
-    }
-
-    internal void Fill(GameObject environmentGO)
-    {
-        _fertilizerGO = environmentGO.transform.Find("Food").gameObject;
-        _mountainGO = environmentGO.transform.Find("Mountain").gameObject;
-        _adultTreeGO = environmentGO.transform.Find("Tree").gameObject;
-        _youngTreeGO = environmentGO.transform.Find("YoungTree").gameObject;
-        _hillGO = environmentGO.transform.Find("Hill").gameObject;
-
-        _fertilizerSR = _fertilizerGO.GetComponent<SpriteRenderer>();
-        _mountainSR = _mountainGO.GetComponent<SpriteRenderer>();
-        _adultTreeSR = _adultTreeGO.GetComponent<SpriteRenderer>();
-        _youngTreeSR = _youngTreeGO.GetComponent<SpriteRenderer>();
-        _hillSR = _hillGO.GetComponent<SpriteRenderer>();
-
     }
 }

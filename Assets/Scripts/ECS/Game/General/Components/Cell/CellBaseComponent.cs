@@ -13,7 +13,7 @@ internal struct CellBaseComponent
     internal int InstanceIDGO => _cellGO.GetInstanceID();
     internal bool IsActiveSelfGO => _cellGO.activeSelf;
 
-    internal void Fill(GameObject parentGO, GameObject cellGO, Dictionary<bool, bool> isStartedDict)
+    internal void StartFill(GameObject parentGO, GameObject cellGO, Dictionary<bool, bool> isStartedDict)
     {
         _parentGO = parentGO;
         _cellGO = cellGO;

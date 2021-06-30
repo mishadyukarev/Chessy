@@ -6,5 +6,10 @@ namespace Assets.Scripts
     {
         internal List<int[]> XYMasterZone;
         internal List<int[]> XYOtherZone;
+
+        internal void StartFill()
+        {
+
+        }
     }
 }

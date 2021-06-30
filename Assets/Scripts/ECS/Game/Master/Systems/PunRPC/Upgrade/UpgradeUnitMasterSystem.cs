@@ -6,7 +6,7 @@ using Photon.Pun;
 internal class UpgradeUnitMasterSystem : RPCMasterSystemReduction, IEcsRunSystem
 {
     internal UnitTypes UnitType => _eMM.RPCMasterEnt_RPCMasterCom.UnitType;
-    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
 
     public override void Run()
     {

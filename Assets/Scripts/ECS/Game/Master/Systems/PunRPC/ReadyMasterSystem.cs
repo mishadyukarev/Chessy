@@ -3,8 +3,8 @@ using Photon.Pun;
 
 internal sealed class ReadyMasterSystem : RPCMasterSystemReduction
 {
-    private bool IsReady => _eGM.RpcGeneralEnt_FromInfoCom.IsActived;
-    private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+    private bool IsReady => _eGM.RpcGeneralEnt_RPCCom.IsActived;
+    private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
 
     public override void Run()
     {

@@ -404,13 +404,15 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
 
         ReadyEnt_ParentCom.SetParent(readyZone);
         ReadyEnt_ButtonCom.SetButton(readyZone.transform.Find("ReadyButton").GetComponent<Button>());
-        ReadyEnt_ActivatedDictCom.CreateDict();
+        ReadyEnt_ActivatedDictCom.StartFill();
 
 
         var motionZone = Instance.CanvasManager.FindUnderParent(SceneTypes.Game, "MotionZone");
 
         MotionEnt_ParentCom.SetParent(motionZone);
         MotionEnt_TextMeshProUGUICom.SetTextMeshProUGUI(motionZone.transform.Find("MotionText").GetComponent<TextMeshProUGUI>());
+        MotionEnt_AmountCom.StartFill();
+
 
         #endregion
 
@@ -446,10 +448,10 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
 
 
         DonerEnt_MistakeCom.CreateEvent();
-        DonerEnt_IsActivatedDictCom.CreateDict();
+        DonerEnt_IsActivatedDictCom.StartFill();
         DonerEnt_ButtonCom.SetButton(downZone.transform.Find("DonerButton").GetComponent<Button>());
 
-        TruceEnt_ActivatedDictCom.CreateDict();
+        TruceEnt_ActivatedDictCom.StartFill();
         TruceEnt_ButtonCom.SetButton(downZone.transform.Find("TruceButton").GetComponent<Button>());
         TruceEnt_MistakeCom.CreateEvent();
 

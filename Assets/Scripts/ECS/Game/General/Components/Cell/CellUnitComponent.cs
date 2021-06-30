@@ -5,11 +5,6 @@ using UnityEngine;
 
 internal struct CellUnitComponent
 {
-    private GameObject _pawnGO;
-    private GameObject _kingGO;
-    private GameObject _rookGO;
-    private GameObject _bishopGO;
-
     private float _standartX;
     private float _standartY;
     private float _standartZ;
@@ -18,7 +13,9 @@ internal struct CellUnitComponent
     private SpriteRenderer _pawnSR;
     private SpriteRenderer _pawnSwordSR;
     private SpriteRenderer _rookSR;
+    private SpriteRenderer _rookCrossbowSR;
     private SpriteRenderer _bishopSR;
+    private SpriteRenderer _bishopCrossbowSR;
     private SpriteRenderer _standartColorSR;
 
     internal Dictionary<bool, bool> IsActivatedUnitDict;
@@ -34,22 +31,19 @@ internal struct CellUnitComponent
     internal float StandartY => _standartY;
     internal float StandartZ => _standartZ;
 
-    internal void Fill(GameObject unitParentGO)
+    internal void StartFill(GameObject unitParentGO)
     {
         IsActivatedUnitDict = new Dictionary<bool, bool>();
         IsActivatedUnitDict.Add(true, default);
         IsActivatedUnitDict.Add(false, default);
 
-        _kingGO = unitParentGO.transform.Find("King").gameObject;
-        _pawnGO = unitParentGO.transform.Find("Pawn").gameObject;
-        _rookGO = unitParentGO.transform.Find("Rook").gameObject;
-        _bishopGO = unitParentGO.transform.Find("Bishop").gameObject;
-
-        _kingSR = _kingGO.GetComponent<SpriteRenderer>();
-        _pawnSR = _pawnGO.GetComponent<SpriteRenderer>();
+        _kingSR = unitParentGO.transform.Find("King").GetComponent<SpriteRenderer>();
+        _pawnSR = unitParentGO.transform.Find("Pawn").GetComponent<SpriteRenderer>();
         _pawnSwordSR = unitParentGO.transform.Find("PawnSword").GetComponent<SpriteRenderer>();
-        _rookSR = _rookGO.GetComponent<SpriteRenderer>();
-        _bishopSR = _bishopGO.GetComponent<SpriteRenderer>();
+        _rookSR = unitParentGO.transform.Find("Rook").GetComponent<SpriteRenderer>();
+        _rookCrossbowSR = unitParentGO.transform.Find("RookCrossbow").GetComponent<SpriteRenderer>();
+        _bishopSR = unitParentGO.transform.Find("Bishop").GetComponent<SpriteRenderer>();
+        _bishopCrossbowSR = unitParentGO.transform.Find("BishopCrossbow").GetComponent<SpriteRenderer>();
         _standartColorSR = unitParentGO.transform.Find("Color").GetComponent<SpriteRenderer>();
 
         _standartX = unitParentGO.transform.parent.transform.rotation.eulerAngles.x;
@@ -57,7 +51,25 @@ internal struct CellUnitComponent
         _standartZ = unitParentGO.transform.parent.transform.rotation.eulerAngles.z;
     }
 
-    internal void EnableSR(bool isActive, UnitTypes unitType, Player player = default)
+    internal void EnablePlayerSR(bool isActive, UnitTypes unitType, Player player)
+    {
+        EnableSR(isActive, unitType);
+
+        if (player != default)
+        {
+            if (player.IsMasterClient) _standartColorSR.color = Color.blue;
+            else _standartColorSR.color = Color.red;
+        }
+    }
+
+    internal void EnableBotSR(bool isActive, UnitTypes unitType)
+    {
+        EnableSR(isActive, unitType);
+
+        if (isActive) _standartColorSR.color = Color.red;
+    }
+
+    internal void EnableSR(bool isActive, UnitTypes unitType)
     {
         switch (unitType)
         {
@@ -84,8 +96,18 @@ internal struct CellUnitComponent
                 _standartColorSR.enabled = isActive;
                 break;
 
+            case UnitTypes.RookCrossbow:
+                _rookCrossbowSR.enabled = isActive;
+                _standartColorSR.enabled = isActive;
+                break;
+
             case UnitTypes.Bishop:
                 _bishopSR.enabled = isActive;
+                _standartColorSR.enabled = isActive;
+                break;
+
+            case UnitTypes.BishopCrossbow:
+                _bishopCrossbowSR.enabled = isActive;
                 _standartColorSR.enabled = isActive;
                 break;
 
@@ -93,11 +115,6 @@ internal struct CellUnitComponent
                 break;
         }
 
-        if (player != default && _standartColorSR != default)
-        {
-            if (player.IsMasterClient) _standartColorSR.color = Color.blue;
-            else _standartColorSR.color = Color.red;
-        }
     }
 
     internal void Flip(bool isActivated, UnitTypes unitType, XyTypes flipType)
@@ -126,8 +143,16 @@ internal struct CellUnitComponent
                         _rookSR.flipX = isActivated;
                         break;
 
+                    case UnitTypes.RookCrossbow:
+                        _rookCrossbowSR.flipX = isActivated;
+                        break;
+
                     case UnitTypes.Bishop:
                         _bishopSR.flipX = isActivated;
+                        break;
+
+                    case UnitTypes.BishopCrossbow:
+                        _bishopCrossbowSR.flipX = isActivated;
                         break;
 
                     default:
@@ -157,8 +182,16 @@ internal struct CellUnitComponent
                         _rookSR.flipY = isActivated;
                         break;
 
+                    case UnitTypes.RookCrossbow:
+                        _rookCrossbowSR.flipY = isActivated;
+                        break;
+
                     case UnitTypes.Bishop:
                         _bishopSR.flipY = isActivated;
+                        break;
+
+                    case UnitTypes.BishopCrossbow:
+                        _bishopCrossbowSR.flipY = isActivated;
                         break;
 
                     default:
@@ -194,8 +227,16 @@ internal struct CellUnitComponent
                 _rookSR.transform.rotation = Quaternion.Euler(x, y, z);
                 break;
 
+            case UnitTypes.RookCrossbow:
+                _rookCrossbowSR.transform.rotation = Quaternion.Euler(x, y, z);
+                break;
+
             case UnitTypes.Bishop:
                 _bishopSR.transform.rotation = Quaternion.Euler(x, y, z);
+                break;
+
+            case UnitTypes.BishopCrossbow:
+                _bishopCrossbowSR.transform.rotation = Quaternion.Euler(x, y, z);
                 break;
 
             default:

@@ -6,7 +6,7 @@ internal struct ActivatedDictionaryComponent
 
     internal bool IsActivatedAll => _isActivatedDict[true] && _isActivatedDict[false];
 
-    internal void CreateDict()
+    internal void StartFill()
     {
         _isActivatedDict = new Dictionary<bool, bool>();
         _isActivatedDict[true] = default;

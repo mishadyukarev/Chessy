@@ -1,18 +1,20 @@
-﻿internal struct CellComponent
+﻿using static Assets.Scripts.Abstractions.ValuesConst;
+
+internal struct CellComponent
 {
     private int[] _xy;
     internal int[] XyCopy
     {
         get
         {
-            var xy = new int[2];
+            var xy = new int[XY_FOR_ARRAY];
 
-            xy[0] = _xy[0];
-            xy[1] = _xy[1];
+            xy[X] = _xy[X];
+            xy[Y] = _xy[Y];
 
             return xy;
         }
     }
 
-    internal void SetXy(params int[] xy) => _xy = xy;
+    internal void StartFill(params int[] xy) => _xy = xy;
 }

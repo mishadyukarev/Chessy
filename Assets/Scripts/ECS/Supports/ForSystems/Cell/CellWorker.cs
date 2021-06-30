@@ -1,9 +1,9 @@
 ﻿namespace Assets.Scripts
 {
-    internal class CellWorker
+    public class CellWorker
     {
         protected EntitiesGameGeneralManager _eGM;
-        internal CellWorker(ECSManager eCSmanager)
+        public CellWorker(ECSManager eCSmanager)
         {
             _eGM = eCSmanager.EntitiesGameGeneralManager;
         }

@@ -4,7 +4,7 @@ using Photon.Pun;
 internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
 {
     private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
-    private PhotonMessageInfo info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+    private PhotonMessageInfo info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
 
     public override void Run()
     {
@@ -19,6 +19,7 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
                     _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XyCell).ActorNumber);
                 }
                 _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
+
                 _cellM.CellBuildingWorker.ResetBuilding(true, XyCell);
             }
         }

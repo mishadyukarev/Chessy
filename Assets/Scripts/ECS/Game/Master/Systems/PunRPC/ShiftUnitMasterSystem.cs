@@ -6,7 +6,7 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
 {
     internal int[] XyPreviousCell => _eMM.RPCMasterEnt_RPCMasterCom.XyPrevious;
     internal int[] XySelectedCell => _eMM.RPCMasterEnt_RPCMasterCom.XySelected;
-    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
 
 
     public override void Run()

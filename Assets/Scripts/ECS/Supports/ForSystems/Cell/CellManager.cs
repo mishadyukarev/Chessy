@@ -7,10 +7,10 @@
         private CellBuildingWorker _cellBuildingWorker;
         private CellEnvironmentWorker _cellEnvironmentWorker;
 
-        internal CellBaseOperations CellBaseOperations => _cellBaseOperations;
-        internal CellUnitWorker CellUnitWorker => _cellUnitWorker;
-        internal CellBuildingWorker CellBuildingWorker => _cellBuildingWorker;
-        internal CellEnvironmentWorker CellEnvironmentWorker => _cellEnvironmentWorker;
+        public CellBaseOperations CellBaseOperations => _cellBaseOperations;
+        public CellUnitWorker CellUnitWorker => _cellUnitWorker;
+        public CellBuildingWorker CellBuildingWorker => _cellBuildingWorker;
+        public CellEnvironmentWorker CellEnvironmentWorker => _cellEnvironmentWorker;
 
         internal CellManager(ECSManager eCSmanager)
         {

@@ -6,8 +6,8 @@ internal sealed class SoundEventsSystem : SystemGeneralReduction
     {
         base.Init();
 
-        _eGM.SoundEntSoundCom.MistakeSoundAction = MistakeSound;
-        _eGM.SoundEntSoundCom.AttackSoundAction = AttackSound;
+        _eGM.SoundEnt_SoundCom.MistakeSoundAction = MistakeSound;
+        _eGM.SoundEnt_SoundCom.AttackSoundAction = AttackSound;
     }
 
     public override void Run()

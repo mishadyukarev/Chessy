@@ -6,7 +6,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
     internal class UpgradeMasterSystem : RPCMasterSystemReduction
     {
-        private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_FromInfoCom.FromInfo;
+        private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
 
         private UpgradeModTypes UpgradeModType => _eMM.RPCMasterEnt_RPCMasterCom.UpgradeModType;
         private int[] XyCellForUpgrade => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
@@ -58,28 +58,10 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
 
                         case UnitTypes.PawnSword:
-                            haveFood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) >= _startValuesGameConfig.FOOD_FOR_UPGRADE_PAWN;
-                            haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient) >= _startValuesGameConfig.WOOD_FOR_UPGRADE_PAWN;
-                            haveOre = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient) >= _startValuesGameConfig.ORE_FOR_UPGRADE_PAWN;
-                            haveIron = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient) >= _startValuesGameConfig.IRON_FOR_UPGRADE_PAWN;
-                            haveGold = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient) >= _startValuesGameConfig.GOLD_FOR_UPGRADE_PAWN;
-
-
-                            if (haveFood && haveWood && haveOre && haveIron && haveGold)
-                            {
-                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient, _startValuesGameConfig.FOOD_FOR_UPGRADE_PAWN);
-                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient, _startValuesGameConfig.WOOD_FOR_UPGRADE_PAWN);
-                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient, _startValuesGameConfig.ORE_FOR_UPGRADE_PAWN);
-                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, _startValuesGameConfig.IRON_FOR_UPGRADE_PAWN);
-                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, _startValuesGameConfig.GOLD_FOR_UPGRADE_PAWN);
-                            }
-                            break;
-
-                            
+                            break;                          
 
 
                         case UnitTypes.Rook:
-
                             haveFood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) >= _startValuesGameConfig.FOOD_FOR_UPGRADE_ROOK;
                             haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient) >= _startValuesGameConfig.WOOD_FOR_UPGRADE_ROOK;
                             haveOre = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient) >= _startValuesGameConfig.ORE_FOR_UPGRADE_ROOK;
@@ -94,7 +76,13 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                 _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient, _startValuesGameConfig.ORE_FOR_UPGRADE_ROOK);
                                 _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, _startValuesGameConfig.IRON_FOR_UPGRADE_ROOK);
                                 _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, _startValuesGameConfig.GOLD_FOR_UPGRADE_ROOK);
+
+                                _cellM.CellUnitWorker.ChangeUnitType(XyCellForUpgrade, UnitTypes.RookCrossbow);
                             }
+                            break;
+
+
+                        case UnitTypes.RookCrossbow:
                             break;
 
 
@@ -113,7 +101,13 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                 _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient, _startValuesGameConfig.ORE_FOR_UPGRADE_BISHOP);
                                 _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, _startValuesGameConfig.IRON_FOR_UPGRADE_BISHOP);
                                 _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, _startValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP);
+
+                                _cellM.CellUnitWorker.ChangeUnitType(XyCellForUpgrade, UnitTypes.BishopCrossbow);
                             }
+                            break;
+
+
+                        case UnitTypes.BishopCrossbow:
                             break;
 
                         default:
