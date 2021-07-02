@@ -3,4 +3,5 @@
     Fertilizer,
     Wood,
     Ore,
+    Hp,
 }

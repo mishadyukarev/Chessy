@@ -4,7 +4,7 @@ using static Assets.Scripts.Main;
 
 internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 {
-    internal bool isDone => _eGM.RpcGeneralEnt_RPCCom.IsActived;
+    internal bool isDone => _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething;
     internal PhotonMessageInfo info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
 
 

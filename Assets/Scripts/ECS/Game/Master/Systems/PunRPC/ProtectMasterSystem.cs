@@ -3,7 +3,7 @@
 internal sealed class ProtectMasterSystem : SystemMasterReduction
 {
     private int[] xyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
-    internal bool isActive => _eGM.RpcGeneralEnt_RPCCom.IsActived;
+    internal bool isActive => _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething;
 
     public override void Run()
     {
@@ -13,7 +13,7 @@ internal sealed class ProtectMasterSystem : SystemMasterReduction
         {
             if (!_eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected)
             {
-                if (_cellM.CellUnitWorker.HaveMaxSteps(xyCell))
+                if (_eGM.CellUnitEnt_CellUnitCom(xyCell).HaveMinAmountSteps)
                 {
                     _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = true;
                     _eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed = false;
@@ -26,11 +26,7 @@ internal sealed class ProtectMasterSystem : SystemMasterReduction
         {
             if (_eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected)
             {
-                if (_cellM.CellUnitWorker.HaveMaxSteps(xyCell))
-                {
-                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = false;
-                    //_eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
-                }
+                _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = false;
             }
         }
     }

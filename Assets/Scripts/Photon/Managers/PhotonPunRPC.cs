@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
+using Assets.Scripts.Static;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -20,9 +21,6 @@ namespace Assets.Scripts
         private SystemsGameGeneralManager _sGM;
         private SystemsGameMasterManager _sMM;
 
-        private CellManager _cM;
-        private EconomyManager _eM;
-
         private string MasterRPCName => nameof(MasterRPC);
         private string GeneralRPCName => nameof(GeneralRPC);
 
@@ -37,9 +35,6 @@ namespace Assets.Scripts
 
             _eGM = eCSmanager.EntitiesGameGeneralManager;
             _sGM = eCSmanager.SystemsGameGeneralManager;
-
-            _cM = eCSmanager.CellManager;
-            _eM = eCSmanager.EconomyManager;
 
 
             PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
@@ -106,17 +101,17 @@ namespace Assets.Scripts
                     break;
 
                 case RpcTypes.Ready:
-                    _eGM.RpcGeneralEnt_RPCCom.IsActived = (bool)objects[0];
+                    _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(ReadyMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Done:
-                    _eGM.RpcGeneralEnt_RPCCom.IsActived = (bool)objects[0];
+                    _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(DonerMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Truce:
-                    _eGM.RpcGeneralEnt_RPCCom.IsActived = (bool)objects[0];
+                    _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RPCSystems);
 
                     break;
@@ -149,13 +144,13 @@ namespace Assets.Scripts
                     break;
 
                 case RpcTypes.Protect:
-                    _eGM.RpcGeneralEnt_RPCCom.IsActived = (bool)objects[0];
+                    _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
                     _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[1];
                     _sMM.TryInvokeRunSystem(nameof(ProtectMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Relax:
-                    _eGM.RpcGeneralEnt_RPCCom.IsActived = (bool)objects[0];
+                    _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
                     _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[1];
                     _sMM.TryInvokeRunSystem(nameof(RelaxMasterSystem), _sMM.RPCSystems);
                     break;
@@ -427,12 +422,12 @@ namespace Assets.Scripts
                             int actorNumber = (int)objects[i++];
                             player = PhotonNetwork.PlayerList[actorNumber - 1];
 
-                            _cM.CellUnitWorker.SetPlayerUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player, x, y);
+                            CellUnitWorker.SetPlayerUnit(unitType, amountHealth, amountSteps, isProtected, isRelaxed, player, x, y);
                         }
                         else
                         {
                             bool haveBot = (bool)objects[i++];
-                            _cM.CellUnitWorker.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, isProtected, isRelaxed, x, y);
+                            CellUnitWorker.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, isProtected, isRelaxed, x, y);
                         }
 
                         _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[Instance.IsMasterClient] = isActiveUnit;
@@ -440,7 +435,7 @@ namespace Assets.Scripts
                     }
                     else
                     {
-                        _cM.CellUnitWorker.ResetUnit(x, y);
+                        CellUnitWorker.ResetUnit(x, y);
                     }
 
                     int amountResourcesFertilizer = (int)objects[i++];
@@ -481,20 +476,20 @@ namespace Assets.Scripts
                         {
                             int actorNumberBuilding = (int)objects[i++];
                             player = PhotonNetwork.PlayerList[actorNumberBuilding - 1];
-                            _cM.CellBuildingWorker.SetPlayerBuilding(false, buildingType, player, x, y);
+                            CellBuildingWorker.SetPlayerBuilding(false, buildingType, player, x, y);
                         }
                         else
                         {
                             bool haveBot = (bool)objects[i++];
                             if (haveBot)
                             {
-                                _cM.CellBuildingWorker.SetBotBuilding(BuildingTypes.City, x, y);
+                                CellBuildingWorker.SetBotBuilding(BuildingTypes.City, x, y);
                             }
                         }
                     }
                     else
                     {
-                        _cM.CellBuildingWorker.ResetBuilding(false, x, y);
+                        CellBuildingWorker.ResetBuilding(false, x, y);
                     }
 
 

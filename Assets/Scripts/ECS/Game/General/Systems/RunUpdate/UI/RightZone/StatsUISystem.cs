@@ -11,8 +11,8 @@ internal class StatsUISystem : SystemGeneralReduction
         if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
         {
             _eGM.HealthUIEnt_TextMeshProUGUICom.Text = _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountHealth.ToString();
-            _eGM.PowerAttackUIEnt_TextMeshProUGUICom.Text = _cellM.CellUnitWorker.SimplePowerDamage(XySelectedCell).ToString();
-            _eGM.PowerProtectionUIEnt_TextMeshProUGUICom.Text = _cellM.CellUnitWorker.PowerProtection(XySelectedCell).ToString();
+            _eGM.PowerAttackUIEnt_TextMeshProUGUICom.Text = CellUnitWorker.SimplePowerDamage(XySelectedCell).ToString();
+            _eGM.PowerProtectionUIEnt_TextMeshProUGUICom.Text = CellUnitWorker.PowerProtection(XySelectedCell).ToString();
             _eGM.AmountStepsUIEnt_TextMeshProUGUICom.Text = _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps.ToString();
 
             _eGM.StatsEnt_ParentCom.SetActive(true);

@@ -8,7 +8,7 @@ public class StartGameValuesConfig : ScriptableObject
 
     private byte _fertilizerPercent = 30;
     private byte _forestPercent = 30;
-    private byte _hillPercent = 10;
+    private byte _hillPercent = 5;
     private byte _mountainPercent = 5;
 
 
@@ -41,20 +41,20 @@ public class StartGameValuesConfig : ScriptableObject
 
     #region Stats
 
-    public readonly int AMOUNT_GOLD_MASTER = 0;
-    public readonly int AMOUNT_GOLD_OTHER = 0;
+    public readonly int AMOUNT_FOOD_MASTER = 10;
+    public readonly int AMOUNT_FOOD_OTHER = 10;
 
-    public readonly int AMOUNT_FOOD_MASTER = 30;
-    public readonly int AMOUNT_FOOD_OTHER = 30;
-
-    public readonly int AMOUNT_WOOD_MASTER = 30;
-    public readonly int AMOUNT_WOOD_OTHER = 30;
+    public readonly int AMOUNT_WOOD_MASTER = 10;
+    public readonly int AMOUNT_WOOD_OTHER = 10;
 
     public readonly int AMOUNT_ORE_MASTER = 0;
     public readonly int AMOUNT_ORE_OTHER = 0;
 
     public readonly int AMOUNT_IRON_MASTER = 0;
     public readonly int AMOUNT_IRON_OTHER = 0;
+
+    public readonly int AMOUNT_GOLD_MASTER = 0;
+    public readonly int AMOUNT_GOLD_OTHER = 0;
 
     #endregion
 

@@ -30,7 +30,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                             {
                                 _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[false] = false;
 
-                                List<int[]> list = _cellM.CellUnitWorker.TryGetXYAround(x, y);
+                                List<int[]> list = CellUnitWorker.TryGetXYAround(x, y);
                                 foreach (var xy in list)
                                 {
                                     if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveUnit)
@@ -53,7 +53,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                             {
                                 _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[true] = false;
 
-                                List<int[]> list = _cellM.CellUnitWorker.TryGetXYAround(x, y);
+                                List<int[]> list = CellUnitWorker.TryGetXYAround(x, y);
                                 foreach (var xy in list)
                                 {
                                     if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveUnit)
@@ -80,7 +80,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[true] = false;
 
-                            List<int[]> list = _cellM.CellUnitWorker.TryGetXYAround(x, y);
+                            List<int[]> list = CellUnitWorker.TryGetXYAround(x, y);
                             foreach (var xy in list)
                             {
                                 if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveUnit)

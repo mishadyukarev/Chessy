@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using static Assets.Scripts.Static.CellBaseOperations;
 
 namespace Assets.Scripts.ECS.Game.General.Systems
 {
@@ -28,7 +29,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                             var standartY = _eGM.CellUnitEnt_CellUnitCom(x, y).StandartY;
                             var standartZ = _eGM.CellUnitEnt_CellUnitCom(x, y).StandartZ;
 
-                            if (_cellM.CellBaseOperations.CompareXY(_eGM.SelectorEnt_SelectorCom.XySelectedCell, new int[] { x, y }))
+                            if (CompareXY(_eGM.SelectorEnt_SelectorCom.XySelectedCell, new int[] { x, y }))
                             {
                                 switch (unitType)
                                 {

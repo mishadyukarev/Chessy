@@ -10,9 +10,9 @@ internal sealed class CreatorUnitMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if (_econM.CanCreateUnit(UnitType, Info.Sender, out bool[] haves))
+        if (EconomyManager.CanCreateUnit(UnitType, Info.Sender, out bool[] haves))
         {
-            _econM.CreateUnit(UnitType, Info.Sender);
+            EconomyManager.CreateUnit(UnitType, Info.Sender);
         }
         else _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves);
     }

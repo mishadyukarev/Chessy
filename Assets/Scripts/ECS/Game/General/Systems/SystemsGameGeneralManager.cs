@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.ECS.Game.General.Systems;
 using Assets.Scripts.ECS.Game.General.Systems.RunUpdate.Sound;
+using Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone;
 using Leopotam.Ecs;
 
 public sealed class SystemsGameGeneralManager : SystemsManager
@@ -32,7 +33,8 @@ public sealed class SystemsGameGeneralManager : SystemsManager
             .Add(new TruceUISystem(), nameof(TruceUISystem))
             .Add(new EnvironmentUISystem(), nameof(EnvironmentUISystem))
             .Add(new ReadyZoneUISystem(), nameof(ReadyZoneUISystem))
-            .Add(new RightZoneUISystem(), nameof(RightZoneUISystem));
+            .Add(new RightZoneUISystem(), nameof(RightZoneUISystem))
+            .Add(new FinderIdleUnitUISystem(), nameof(FinderIdleUnitUISystem));
 
         ForSelectorRunUpdateSystem = new EcsSystems(ecsWorld)
             .Add(new GetterCellSystem(), nameof(GetterCellSystem))

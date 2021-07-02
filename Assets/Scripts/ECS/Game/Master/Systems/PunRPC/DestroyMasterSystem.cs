@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Static;
 using Photon.Pun;
 
 internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
@@ -12,7 +13,7 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
 
         if (_eGM.CellUnitEnt_CellOwnerCom(XyCell).IsHim(info.Sender))
         {
-            if (_cellM.CellUnitWorker.HaveMaxSteps(XyCell))
+            if (CellUnitWorker.HaveMaxSteps(XyCell))
             {
                 if (_eGM.CellBuildEnt_BuilTypeCom(XyCell).BuildingType == BuildingTypes.City)
                 {
@@ -20,7 +21,7 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
                 }
                 _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
 
-                _cellM.CellBuildingWorker.ResetBuilding(true, XyCell);
+                CellBuildingWorker.ResetBuilding(true, XyCell);
             }
         }
     }

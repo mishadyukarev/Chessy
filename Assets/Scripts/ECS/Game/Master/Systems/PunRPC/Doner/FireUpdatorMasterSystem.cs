@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Static;
 
 internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 {
@@ -18,13 +19,13 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 
                     _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth -= 40;
                     if (!_eGM.CellUnitEnt_CellUnitCom(x, y).HaveHealth)
-                        _cellM.CellUnitWorker.ResetUnit(x, y);
+                        CellUnitWorker.ResetUnit(x, y);
 
                     if (_eGM.CellEffectEnt_CellEffectCom(x, y).TimeFire >= 3)
                     {
                         if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
                         {
-                            _cellM.CellBuildingWorker.ResetBuilding(true, x, y);
+                            CellBuildingWorker.ResetBuilding(true, x, y);
                         }
 
 
@@ -33,7 +34,7 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                         _eGM.CellEffectEnt_CellEffectCom(x, y).SetResetEffect(false, EffectTypes.Fire);
 
 
-                        var aroundXYList = _cellM.CellUnitWorker.TryGetXYAround(x, y);
+                        var aroundXYList = CellUnitWorker.TryGetXYAround(x, y);
                         foreach (var xy in aroundXYList)
                         {
                             if (_eGM.CellEnvEnt_CellEnvCom(xy).HaveAdultTree)

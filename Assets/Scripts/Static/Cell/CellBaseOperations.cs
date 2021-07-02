@@ -2,27 +2,27 @@
 using System.Collections.Generic;
 using static Assets.Scripts.Abstractions.ValuesConst;
 
-namespace Assets.Scripts
+namespace Assets.Scripts.Static
 {
-    public sealed class CellBaseOperations
+    public static class CellBaseOperations
     {
-        internal int[] CopyXY(int[] inArray)
+        internal static int[] CopyXY(int[] inArray)
         {
             int[] array = new int[XY_FOR_ARRAY];
             Array.Copy(inArray, array, array.Length);
             return array;
         }
-        internal void CopyXYinTo(in int[] InXYCell, int[] ToXYCell)
+        internal static void CopyXYinTo(in int[] InXYCell, int[] ToXYCell)
         {
             ToXYCell[X] = InXYCell[X];
             ToXYCell[Y] = InXYCell[Y];
         }
-        internal void CleanXY(int[] xy)
+        internal static void CleanXY(int[] xy)
         {
             xy[X] = default;
             xy[Y] = default;
         }
-        internal bool CompareXY(in int[] xyLeft, in int[] xyRight)
+        internal static bool CompareXY(in int[] xyLeft, in int[] xyRight)
         {
             if (xyLeft[X] == xyRight[X]
                 && xyLeft[Y] == xyRight[Y])
@@ -31,7 +31,7 @@ namespace Assets.Scripts
             }
             else { return false; }
         }
-        internal List<int[]> CopyListXY(in List<int[]> inList)
+        internal static List<int[]> CopyListXY(in List<int[]> inList)
         {
             var toList = new List<int[]>();
 
@@ -49,7 +49,7 @@ namespace Assets.Scripts
 
             return toList;
         }
-        internal void CopyListXYinTo(List<int[]> inList, List<int[]> toList)
+        internal static void CopyListXYinTo(List<int[]> inList, List<int[]> toList)
         {
             toList.Clear();
 
@@ -65,7 +65,7 @@ namespace Assets.Scripts
                 toList.Add(array);
             }
         }
-        internal bool TryFindCellInList(int[] xyCell, in List<int[]> list)
+        internal static bool TryFindCellInList(int[] xyCell, in List<int[]> list)
         {
             foreach (var xy in list)
             {

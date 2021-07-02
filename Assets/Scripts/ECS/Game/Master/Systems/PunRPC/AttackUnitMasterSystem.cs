@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Photon.Pun;
+using static Assets.Scripts.Static.CellBaseOperations;
 
 internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 {
@@ -14,11 +15,11 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        _cellM.CellUnitWorker.GetCellsForAttack(Info.Sender,
+        CellUnitWorker.GetCellsForAttack(Info.Sender,
             out var availableCellsSimpleAttack, out var availableCellsUniqueAttack, XyPreviousCell);
 
-        var isFindedSimple = _cellM.CellBaseOperations.TryFindCellInList(XySelectedCell, availableCellsSimpleAttack);
-        var isFindedUnique = _cellM.CellBaseOperations.TryFindCellInList(XySelectedCell, availableCellsUniqueAttack);
+        var isFindedSimple = TryFindCellInList(XySelectedCell, availableCellsSimpleAttack);
+        var isFindedUnique = TryFindCellInList(XySelectedCell, availableCellsUniqueAttack);
 
 
         if (isFindedSimple || isFindedUnique)
@@ -31,17 +32,17 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
             int damageToSelelected = 0;
 
 
-            damageToSelelected += _cellM.CellUnitWorker.SimplePowerDamage(XyPreviousCell);
-            damageToSelelected -= _cellM.CellUnitWorker.PowerProtection(XySelectedCell);
+            damageToSelelected += CellUnitWorker.SimplePowerDamage(XyPreviousCell);
+            damageToSelelected -= CellUnitWorker.PowerProtection(XySelectedCell);
 
 
             if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).IsMelee)
             {
-                damageToPrevious += _cellM.CellUnitWorker.SimplePowerDamage(XySelectedCell);
+                damageToPrevious += CellUnitWorker.SimplePowerDamage(XySelectedCell);
 
                 if (isFindedUnique)
                 {
-                    damageToSelelected += _cellM.CellUnitWorker.UniquePowerDamage(XyPreviousCell);
+                    damageToSelelected += CellUnitWorker.UniquePowerDamage(XyPreviousCell);
                 }
             }
 
@@ -49,7 +50,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
             {
                 if (isFindedUnique)
                 {
-                    damageToSelelected += _cellM.CellUnitWorker.UniquePowerDamage(XyPreviousCell);
+                    damageToSelelected += CellUnitWorker.UniquePowerDamage(XyPreviousCell);
                 }
             }
 
@@ -62,9 +63,20 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
             if (!_eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).HaveHealth)
             {
                 if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType == UnitTypes.King)
-                    _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).ActorNumber);
+                {
+                    if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
+                    {
+                        _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).ActorNumber);
+                    }
 
-                _cellM.CellUnitWorker.ResetUnit(XyPreviousCell);
+                    else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
+                    {
+
+                    }
+                }
+
+
+                CellUnitWorker.ResetUnit(XyPreviousCell);
             }
 
             if (!_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveHealth)
@@ -72,14 +84,14 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
                 if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType == UnitTypes.King)
                     _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).ActorNumber);
 
-                _cellM.CellUnitWorker.ResetUnit(XySelectedCell);
+                CellUnitWorker.ResetUnit(XySelectedCell);
                 if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Rook
                     && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.RookCrossbow
                     && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Bishop
                     && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.BishopCrossbow)
                 {
-                    _cellM.CellUnitWorker.ShiftUnit(XyPreviousCell, XySelectedCell);
-                    _cellM.CellUnitWorker.ResetUnit(XyPreviousCell);
+                    CellUnitWorker.ShiftUnit(XyPreviousCell, XySelectedCell);
+                    CellUnitWorker.ResetUnit(XyPreviousCell);
                 }
             }
 

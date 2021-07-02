@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Static;
 using Photon.Pun;
 
 internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
@@ -12,7 +13,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
         base.Run();
 
 
-        if (_cellM.CellUnitWorker.HaveMaxSteps(XyCell) && !_eGM.CellBuildEnt_BuilTypeCom(XyCell).HaveBuilding)
+        if (CellUnitWorker.HaveMaxSteps(XyCell) && !_eGM.CellBuildEnt_BuilTypeCom(XyCell).HaveBuilding)
         {
             bool canSet = false;
             switch (BuildingType)
@@ -21,7 +22,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     break;
 
                 case BuildingTypes.City:
-                    _cellM.CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
+                    CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
                     _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
 
                     _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Info.Sender.IsMasterClient] = true;
@@ -48,10 +49,10 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
             }
             if (canSet)
             {
-                if (_econM.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves))
+                if (EconomyManager.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves))
                 {
-                    _econM.CreateBuilding(BuildingType, Info.Sender);
-                    _cellM.CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
+                    EconomyManager.CreateBuilding(BuildingType, Info.Sender);
+                    CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
                     _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
                 }
                 else

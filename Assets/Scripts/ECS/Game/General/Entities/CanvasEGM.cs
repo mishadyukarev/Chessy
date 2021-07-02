@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using Leopotam.Ecs;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using static Assets.Scripts.Main;
 
@@ -19,6 +20,10 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
     internal ref ButtonComponent ReadyEnt_ButtonCom => ref _readyEnt.Get<ButtonComponent>();
     internal ref ActivatedDictionaryComponent ReadyEnt_ActivatedDictCom => ref _readyEnt.Get<ActivatedDictionaryComponent>();
     internal ref StartedGameComponent ReadyEnt_StartedGameCom => ref _readyEnt.Get<StartedGameComponent>();
+
+
+    private EcsEntity _joinDiscordEnt;
+    internal ref ButtonComponent JoinDiscordEnt_ButtonCom => ref _joinDiscordEnt.Get<ButtonComponent>();
 
 
     private EcsEntity _motionEnt;
@@ -58,6 +63,10 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
     internal ref ButtonComponent TruceEnt_ButtonCom => ref _truceEntity.Get<ButtonComponent>();
     internal ref ActivatedDictionaryComponent TruceEnt_ActivatedDictCom => ref _truceEntity.Get<ActivatedDictionaryComponent>();
     internal ref MistakeComponent TruceEnt_MistakeCom => ref _truceEntity.Get<MistakeComponent>();
+
+
+    private EcsEntity _finderIdleEntity;
+    internal ref ButtonComponent FinderIdleEnt_ButtonCom => ref _finderIdleEntity.Get<ButtonComponent>();
 
 
     #region Takers
@@ -289,6 +298,8 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
             .Replace(new ParentComponent())
             .Replace(new TextMeshProUGUIComponent());
 
+        _joinDiscordEnt = gameWorld.NewEntity();
+
         #endregion
 
 
@@ -332,6 +343,8 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
             .Replace(new ButtonComponent())
             .Replace(new ActivatedDictionaryComponent())
             .Replace(new MistakeComponent());
+
+        _finderIdleEntity = gameWorld.NewEntity();
 
         #endregion
 
@@ -391,6 +404,9 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
 
     internal void SpawnAndFillCanvasEntities()
     {
+        LeaveEnt_ButtonCom.SetButton(Instance.CanvasManager.FindUnderParent<Button>(SceneTypes.Game, "ButtonLeave"));
+
+
         #region Center
 
 
@@ -407,6 +423,10 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
         ReadyEnt_ActivatedDictCom.StartFill();
 
 
+        JoinDiscordEnt_ButtonCom.SetButton(readyZone.transform.Find("JoinDiscordButton").GetComponent<Button>());
+        JoinDiscordEnt_ButtonCom.AddListener(delegate { Application.OpenURL("https://discord.gg/yxfZnrkBPU"); });
+
+
         var motionZone = Instance.CanvasManager.FindUnderParent(SceneTypes.Game, "MotionZone");
 
         MotionEnt_ParentCom.SetParent(motionZone);
@@ -416,8 +436,6 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
 
         #endregion
 
-
-        LeaveEnt_ButtonCom.SetButton(Instance.CanvasManager.FindUnderParent<Button>(SceneTypes.Game, "ButtonLeave"));
 
         #region Up
 
@@ -454,6 +472,8 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
         TruceEnt_ActivatedDictCom.StartFill();
         TruceEnt_ButtonCom.SetButton(downZone.transform.Find("TruceButton").GetComponent<Button>());
         TruceEnt_MistakeCom.CreateEvent();
+
+        FinderIdleEnt_ButtonCom.SetButton(downZone.transform.Find("FinderIdleButton").GetComponent<Button>());
 
 
         #endregion

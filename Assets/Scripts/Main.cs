@@ -9,7 +9,7 @@ namespace Assets.Scripts
     {
         #region Variables
 
-        private bool _isOfflineMode;
+        private bool _isOfflineMode = false;
         private SceneTypes _sceneType = SceneTypes.Menu;
         private static Main _instance;
         private PhotonManager _photonManager;
@@ -37,7 +37,7 @@ namespace Assets.Scripts
         public ref CanvasCommComponent CanvasManager => ref _eCSmanager.EntitiesCommonManager.CanvasEnt_CanvasCommCom;
         public StartGameValuesConfig StartValuesGameConfig => _eCSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
 
-        public CellUnitWorker CellUnitWorker => _eCSmanager.CellManager.CellUnitWorker;
+        public EntitiesGameGeneralManager EGM => _eCSmanager.EntitiesGameGeneralManager;
 
         #endregion
 
@@ -54,7 +54,8 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            Debug.Log(PhotonNetwork.CountOfRooms);
+            //Debug.Log(PhotonNetwork.CountOfRooms);
+            Debug.Log(PhotonNetwork.CloudRegion);
 
             _eCSmanager.OwnUpdate(_sceneType);
             _photonManager.OwnUpdate(_sceneType);

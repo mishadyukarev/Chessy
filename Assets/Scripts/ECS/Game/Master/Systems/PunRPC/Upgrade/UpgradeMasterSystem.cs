@@ -52,7 +52,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                 _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, _startValuesGameConfig.IRON_FOR_UPGRADE_PAWN);
                                 _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, _startValuesGameConfig.GOLD_FOR_UPGRADE_PAWN);
 
-                                _cellM.CellUnitWorker.ChangeUnitType(XyCellForUpgrade, UnitTypes.PawnSword);
+                                CellUnitWorker.ChangeUnitType(XyCellForUpgrade, UnitTypes.PawnSword);
                             }
                             break;
 
@@ -77,7 +77,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                 _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, _startValuesGameConfig.IRON_FOR_UPGRADE_ROOK);
                                 _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, _startValuesGameConfig.GOLD_FOR_UPGRADE_ROOK);
 
-                                _cellM.CellUnitWorker.ChangeUnitType(XyCellForUpgrade, UnitTypes.RookCrossbow);
+                                CellUnitWorker.ChangeUnitType(XyCellForUpgrade, UnitTypes.RookCrossbow);
                             }
                             break;
 
@@ -102,7 +102,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                 _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, _startValuesGameConfig.IRON_FOR_UPGRADE_BISHOP);
                                 _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, _startValuesGameConfig.GOLD_FOR_UPGRADE_BISHOP);
 
-                                _cellM.CellUnitWorker.ChangeUnitType(XyCellForUpgrade, UnitTypes.BishopCrossbow);
+                                CellUnitWorker.ChangeUnitType(XyCellForUpgrade, UnitTypes.BishopCrossbow);
                             }
                             break;
 

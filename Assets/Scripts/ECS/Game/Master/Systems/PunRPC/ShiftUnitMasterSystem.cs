@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using Photon.Pun;
 using System.Collections.Generic;
+using static Assets.Scripts.Static.CellBaseOperations;
 
 internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
 {
@@ -13,20 +14,20 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        List<int[]> xyAvailableCellsForShift = _cellM.CellUnitWorker.GetCellsForShift(XyPreviousCell);
+        List<int[]> xyAvailableCellsForShift = CellUnitWorker.GetCellsForShift(XyPreviousCell);
 
         if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).IsHim(Info.Sender) && _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).HaveMinAmountSteps)
         {
-            if (_cellM.CellBaseOperations.TryFindCellInList(XySelectedCell, xyAvailableCellsForShift))
+            if (TryFindCellInList(XySelectedCell, xyAvailableCellsForShift))
             {
-                _cellM.CellUnitWorker.ShiftUnit(XyPreviousCell, XySelectedCell);
+                CellUnitWorker.ShiftUnit(XyPreviousCell, XySelectedCell);
 
 
-                _cellM.CellUnitWorker.ResetUnit(XyPreviousCell);
+                CellUnitWorker.ResetUnit(XyPreviousCell);
 
 
                 _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps
-                    -= _cellM.CellUnitWorker.NeedAmountSteps(XySelectedCell);
+                    -= CellUnitWorker.NeedAmountSteps(XySelectedCell);
                 if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps < 0) _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps = 0;
 
                 _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsProtected = false;

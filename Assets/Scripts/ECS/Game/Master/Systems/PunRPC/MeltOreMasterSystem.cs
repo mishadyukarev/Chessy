@@ -10,9 +10,9 @@ internal sealed class MeltOreMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if (_econM.CanMeltOre(Info.Sender, out bool[] haves))
+        if (EconomyManager.CanMeltOre(Info.Sender, out bool[] haves))
         {
-            _econM.MeltOre(Info.Sender);
+            EconomyManager.MeltOre(Info.Sender);
         }
         else
         {

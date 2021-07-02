@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Static;
 using UnityEngine;
 using static Assets.Scripts.Main;
 
@@ -43,7 +44,7 @@ internal sealed class FertilizeUpdatorMasterSystem : SystemGeneralReduction
                                     _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Iron, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.IRON_FOR_BUILDING_FARM);
                                     _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Gold, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM);
 
-                                    _cellM.CellBuildingWorker.ResetBuilding(true, x, y);
+                                    CellBuildingWorker.ResetBuilding(true, x, y);
                                 }
                                 _steps = 0;
                                 _randomFor = _randomFor2;

@@ -107,6 +107,7 @@ namespace Assets.Scripts
         public override void OnConnectedToMaster()
         {
             Log("Connected to Master");
+            PhotonNetwork.ConnectToRegion("ru");
         }
 
         public override void OnDisconnected(DisconnectCause cause)

@@ -22,10 +22,6 @@ namespace Assets.Scripts
         private SystemsGameOtherManager _systemsGameOtherManager;
 
 
-        private CellManager _cellManager;
-        private EconomyManager _economyManager;
-
-
 
         public EntitiesCommonManager EntitiesCommonManager => _entitiesCommonManager;
 
@@ -38,11 +34,6 @@ namespace Assets.Scripts
 
         public EntitiesGameOtherManager EntitiesGameOtherManager => _entitiesGameOtherManager;
         public SystemsGameOtherManager SystemsGameOtherManager => _systemsGameOtherManager;
-
-
-        public CellManager CellManager => _cellManager;
-        public EconomyManager EconomyManager => _economyManager;
-
 
 
         public ECSManager()
@@ -63,10 +54,6 @@ namespace Assets.Scripts
 
             _entitiesGameOtherManager = new EntitiesGameOtherManager(_gameWorld);
             _systemsGameOtherManager = new SystemsGameOtherManager();
-
-
-            _cellManager = new CellManager(this);
-            _economyManager = new EconomyManager(_entitiesGameGeneralManager);
         }
 
         public void OwnUpdate(SceneTypes sceneType)

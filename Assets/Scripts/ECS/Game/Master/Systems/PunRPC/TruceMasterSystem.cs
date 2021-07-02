@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Static;
 using Photon.Pun;
 using UnityEngine;
 using static Assets.Scripts.Main;
@@ -13,10 +14,10 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 
         if(Instance.GameType != GameTypes.WithBot)
         {
-            _photonPunRPC.TruceToGeneral(Info.Sender, false, _eGM.RpcGeneralEnt_RPCCom.IsActived, _eGM.MotionEnt_AmountCom.Amount);
+            _photonPunRPC.TruceToGeneral(Info.Sender, false, _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething, _eGM.MotionEnt_AmountCom.Amount);
 
 
-            _eGM.TruceEnt_ActivatedDictCom.SetIsActivated(Info.Sender.IsMasterClient, _eGM.RpcGeneralEnt_RPCCom.IsActived);
+            _eGM.TruceEnt_ActivatedDictCom.SetIsActivated(Info.Sender.IsMasterClient, _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething);
 
 
 
@@ -76,7 +77,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                         break;
                                 }
 
-                                _cellM.CellUnitWorker.ResetUnit(x, y);
+                                CellUnitWorker.ResetUnit(x, y);
                             }
                         }
 
@@ -90,7 +91,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                         break;
 
                                     case BuildingTypes.City:
-                                        _cellM.CellBuildingWorker.ResetBuilding(true, x, y);
+                                        CellBuildingWorker.ResetBuilding(true, x, y);
                                         break;
 
                                     case BuildingTypes.Farm:
@@ -99,7 +100,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                         //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_FARM;
                                         //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_FARM;
                                         //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_FARM;
-                                        _cellM.CellBuildingWorker.ResetBuilding(true, x, y);
+                                        CellBuildingWorker.ResetBuilding(true, x, y);
                                         break;
 
                                     case BuildingTypes.Woodcutter:
@@ -108,7 +109,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                         //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
                                         //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
                                         //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
-                                        _cellM.CellBuildingWorker.ResetBuilding(true, x, y);
+                                        CellBuildingWorker.ResetBuilding(true, x, y);
                                         break;
 
                                     case BuildingTypes.Mine:
@@ -117,7 +118,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                         //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_MINE;
                                         //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_MINE;
                                         //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_MINE;
-                                        _cellM.CellBuildingWorker.ResetBuilding(true, x, y);
+                                        CellBuildingWorker.ResetBuilding(true, x, y);
                                         break;
 
                                     default:

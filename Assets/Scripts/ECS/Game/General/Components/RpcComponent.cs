@@ -3,7 +3,7 @@
 internal struct RpcComponent
 {
     internal PhotonMessageInfo FromInfo;
-    internal bool IsActived;
+    internal bool NeedActiveSomething;
 
     internal void StartFill()
     {

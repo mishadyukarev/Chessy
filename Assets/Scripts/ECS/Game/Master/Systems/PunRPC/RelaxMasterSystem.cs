@@ -2,35 +2,31 @@
 
 internal sealed class RelaxMasterSystem : SystemMasterReduction
 {
-    internal bool isActive => _eGM.RpcGeneralEnt_RPCCom.IsActived;
-    internal int[] xyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
+    private bool NeedActiveRelax => _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething;
+    private int[] XyCellForRelax => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
 
     public override void Run()
     {
         base.Run();
 
-        if (isActive)
+        if (NeedActiveRelax)
         {
-            if (!_eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed)
+            if (!_eGM.CellUnitEnt_CellUnitCom(XyCellForRelax).IsRelaxed)
             {
-                if (_cellM.CellUnitWorker.HaveMaxSteps(xyCell))
+                if (_eGM.CellUnitEnt_CellUnitCom(XyCellForRelax).HaveMinAmountSteps)
                 {
-                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed = true;
-                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = false;
-                    _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
+                    _eGM.CellUnitEnt_CellUnitCom(XyCellForRelax).IsRelaxed = true;
+                    _eGM.CellUnitEnt_CellUnitCom(XyCellForRelax).IsProtected = false;
+                    _eGM.CellUnitEnt_CellUnitCom(XyCellForRelax).AmountSteps = 0;
                 }
             }
         }
 
         else
         {
-            if (_eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed)
+            if (_eGM.CellUnitEnt_CellUnitCom(XyCellForRelax).IsRelaxed)
             {
-                if (_cellM.CellUnitWorker.HaveMaxSteps(xyCell))
-                {
-                    _eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed = false;
-                    _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
-                }
+                _eGM.CellUnitEnt_CellUnitCom(XyCellForRelax).IsRelaxed = false;
             }
         }
     }

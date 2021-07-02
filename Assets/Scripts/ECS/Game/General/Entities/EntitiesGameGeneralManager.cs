@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions;
 using Assets.Scripts.ECS.Game.General.Components;
+using Assets.Scripts.Static;
 using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
 using System;
@@ -361,13 +362,13 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
             xy0[X] = 8;
             xy0[Y] = 8;
             var isSettedForest = false;
-            Instance.ECSmanager.CellManager.CellUnitWorker.SetBotUnit(UnitTypes.King, true, 300, 2, true, true, xy0);
+            CellUnitWorker.SetBotUnit(UnitTypes.King, true, 300, 2, true, true, xy0);
             CellEnvEnt_CellEnvCom(xy0).ResetAll();
-            var xyAround = Instance.ECSmanager.CellManager.CellUnitWorker.TryGetXYAround(xy0);
+            var xyAround = CellUnitWorker.TryGetXYAround(xy0);
 
             foreach (var xy1 in xyAround)
             {
-                Instance.ECSmanager.CellManager.CellUnitWorker.SetBotUnit(UnitTypes.Pawn, true, 150, 2, true, true, xy1);
+                CellUnitWorker.SetBotUnit(UnitTypes.Pawn, true, 150, 2, true, true, xy1);
                 CellEnvEnt_CellEnvCom(xy1).ResetAll();
 
                 if (!isSettedForest)
@@ -379,19 +380,19 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
             xy0[X] = 8;
             xy0[Y] = 6;
-            Instance.ECSmanager.CellManager.CellBuildingWorker.SetBotBuilding(BuildingTypes.City, xy0);
+            CellBuildingWorker.SetBotBuilding(BuildingTypes.City, xy0);
             CellEnvEnt_CellEnvCom(xy0).ResetAll();
 
             int i = 0;
-            xyAround = Instance.ECSmanager.CellManager.CellUnitWorker.TryGetXYAround(xy0);
+            xyAround = CellUnitWorker.TryGetXYAround(xy0);
             foreach (var xy1 in xyAround)
             {
-                Instance.ECSmanager.CellManager.CellUnitWorker.SetBotUnit(UnitTypes.PawnSword, true, 150, 2, true, true, xy1);
+                CellUnitWorker.SetBotUnit(UnitTypes.PawnSword, true, 150, 2, true, true, xy1);
                 CellEnvEnt_CellEnvCom(xy1).ResetAll();
 
                 if (i == 0)
                 {
-                    Instance.ECSmanager.CellManager.CellUnitWorker.ResetUnit(xy1);
+                    CellUnitWorker.ResetUnit(xy1);
                     CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.Mountain, xy1);
                 }
 

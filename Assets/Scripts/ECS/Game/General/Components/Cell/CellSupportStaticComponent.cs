@@ -10,6 +10,7 @@ internal struct CellSupportStaticComponent
     private SpriteRenderer _fertilizerSR;
     private SpriteRenderer _woodSR;
     private SpriteRenderer _oreSR;
+    private SpriteRenderer _hpSR;
 
 
     internal void Fill(GameObject supportStaticGO)
@@ -21,6 +22,7 @@ internal struct CellSupportStaticComponent
         _fertilizerSR = _fertilizerGO.GetComponent<SpriteRenderer>();
         _woodSR = _woodGO.GetComponent<SpriteRenderer>();
         _oreSR = _oreGO.GetComponent<SpriteRenderer>();
+        _hpSR = supportStaticGO.transform.Find("Hp").GetComponent<SpriteRenderer>();
     }
 
     internal void ActiveVision(bool isActive, SupportStaticTypes supportStaticType)
@@ -37,6 +39,35 @@ internal struct CellSupportStaticComponent
 
             case SupportStaticTypes.Ore:
                 _oreSR.enabled = isActive;
+                break;
+
+            case SupportStaticTypes.Hp:
+                _hpSR.enabled = isActive;
+                break;
+
+            default:
+                throw new Exception();
+        }
+    }
+
+    internal void SetColor(SupportStaticTypes supportStaticType, Color color)
+    {
+        switch (supportStaticType)
+        {
+            case SupportStaticTypes.Fertilizer:
+                _fertilizerSR.color = color;
+                break;
+
+            case SupportStaticTypes.Wood:
+                _woodSR.color  = color;
+                break;
+
+            case SupportStaticTypes.Ore:
+                _oreSR.color= color;
+                break;
+
+            case SupportStaticTypes.Hp:
+                _hpSR.color = color;
                 break;
 
             default:
@@ -58,6 +89,10 @@ internal struct CellSupportStaticComponent
 
             case SupportStaticTypes.Ore:
                 _oreGO.transform.localScale = vector;
+                break;
+
+            case SupportStaticTypes.Hp:
+                _hpSR.transform.localScale = vector;
                 break;
 
             default:
