@@ -2,6 +2,7 @@
 {
     public static class ValuesConst
     {
+
         public const int CELL_COUNT_X = 15;
         public const int CELL_COUNT_Y = 12;
 

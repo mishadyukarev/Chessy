@@ -10,6 +10,7 @@ namespace Assets.Scripts
 {
     public sealed class PhotonSceneManager : MonoBehaviourPunCallbacks
     {
+
         #region Menu
 
         private TextMeshProUGUI _logTex;
@@ -34,10 +35,10 @@ namespace Assets.Scripts
                     Instance.CanvasManager.FindUnderParent<Button>(sceneType, "CreateTestGameButton").onClick.AddListener(TestGame);
 
                     PhotonNetwork.NickName = "Player " + Random.Range(10000, 100000);
-                    PhotonNetwork.GameVersion = "1";
                     PhotonNetwork.PhotonServerSettings.DevRegion = "ru";
                     PhotonNetwork.PhotonServerSettings.StartInOfflineMode = Instance.IsOfflineMode;
                     PhotonNetwork.ConnectUsingSettings();
+                    PhotonNetwork.GameVersion = VERSION_PHOTON_GAME;
                     break;
 
                 case SceneTypes.Game:
