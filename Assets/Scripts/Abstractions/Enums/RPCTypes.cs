@@ -14,13 +14,11 @@
     Protect,
     Mistake,
     CreateUnit,
-    UpgradeUnit,
     MeltOre,
     GetUnit,
     SetUnit,
     UniquePawnAbility,
     Fire,
-    UpgradeBuilding,
 
     Upgrade,
 }

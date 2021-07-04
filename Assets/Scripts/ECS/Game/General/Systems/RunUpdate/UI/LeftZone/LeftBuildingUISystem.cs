@@ -57,6 +57,7 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
             _eGM.SelectorEnt_SelectorCom.UpgradeModType = UpgradeModTypes.None;
         }
     }
+
     private void UpgradeBuilding(BuildingTypes buildingType) => _photonPunRPC.UpgradeBuildingToMaster(buildingType);
 
     private void MeltOre() => _photonPunRPC.MeltOreToMaster();

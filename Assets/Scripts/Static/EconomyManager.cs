@@ -22,7 +22,7 @@ namespace Assets.Scripts
                     return true;
 
                 case BuildingTypes.Farm:
-                    haves[FOOD_NUMBER] = StartVGC.FOOD_FOR_BUILDING_FARM == NULL_RESOURCES ? true :  Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= StartVGC.FOOD_FOR_BUILDING_FARM;
+                    haves[FOOD_NUMBER] = StartVGC.FOOD_FOR_BUILDING_FARM == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= StartVGC.FOOD_FOR_BUILDING_FARM;
                     haves[WOOD_NUMBER] = StartVGC.WOOD_FOR_BUILDING_FARM == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= StartVGC.WOOD_FOR_BUILDING_FARM;
                     haves[ORE_NUMBER] = StartVGC.ORE_FOR_BUILDING_FARM == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= StartVGC.ORE_FOR_BUILDING_FARM;
                     haves[IRON_NUMBER] = StartVGC.IRON_FOR_BUILDING_FARM == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= StartVGC.IRON_FOR_BUILDING_FARM;
@@ -330,6 +330,191 @@ namespace Assets.Scripts
                 default:
                     break;
             }
+        }
+
+        internal static bool CanUpgradeUnit(Player player, UnitTypes unitType, out bool[] haves)
+        {
+            haves = new bool[AMOUNT_RESOURCES_TYPES];
+
+            switch (unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    throw new Exception();
+
+                case UnitTypes.Pawn:
+                    haves[FOOD_NUMBER] = StartVGC.FOOD_FOR_UPGRADE_PAWN == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= StartVGC.FOOD_FOR_UPGRADE_PAWN;
+                    haves[WOOD_NUMBER] = StartVGC.WOOD_FOR_UPGRADE_PAWN == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= StartVGC.WOOD_FOR_UPGRADE_PAWN;
+                    haves[ORE_NUMBER] = StartVGC.ORE_FOR_UPGRADE_PAWN == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= StartVGC.ORE_FOR_UPGRADE_PAWN;
+                    haves[IRON_NUMBER] = StartVGC.IRON_FOR_UPGRADE_PAWN == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= StartVGC.IRON_FOR_UPGRADE_PAWN;
+                    haves[GOLD_NUMBER] = StartVGC.GOLD_FOR_UPGRADE_PAWN == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= StartVGC.GOLD_FOR_UPGRADE_PAWN;
+                    break;
+
+                case UnitTypes.PawnSword:
+                    throw new Exception();
+
+                case UnitTypes.Rook:
+                    haves[FOOD_NUMBER] = StartVGC.FOOD_FOR_UPGRADE_ROOK == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= StartVGC.FOOD_FOR_UPGRADE_ROOK;
+                    haves[WOOD_NUMBER] = StartVGC.WOOD_FOR_UPGRADE_ROOK == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= StartVGC.WOOD_FOR_UPGRADE_ROOK;
+                    haves[ORE_NUMBER] = StartVGC.ORE_FOR_UPGRADE_ROOK == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= StartVGC.ORE_FOR_UPGRADE_ROOK;
+                    haves[IRON_NUMBER] = StartVGC.IRON_FOR_UPGRADE_ROOK == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= StartVGC.IRON_FOR_UPGRADE_ROOK;
+                    haves[GOLD_NUMBER] = StartVGC.GOLD_FOR_UPGRADE_ROOK == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= StartVGC.GOLD_FOR_UPGRADE_ROOK;
+                    break;
+
+                case UnitTypes.RookCrossbow:
+                    throw new Exception();
+
+                case UnitTypes.Bishop:
+                    haves[FOOD_NUMBER] = StartVGC.FOOD_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= StartVGC.FOOD_FOR_UPGRADE_BISHOP;
+                    haves[WOOD_NUMBER] = StartVGC.WOOD_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= StartVGC.WOOD_FOR_UPGRADE_BISHOP;
+                    haves[ORE_NUMBER] = StartVGC.ORE_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= StartVGC.ORE_FOR_UPGRADE_BISHOP;
+                    haves[IRON_NUMBER] = StartVGC.IRON_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= StartVGC.IRON_FOR_UPGRADE_BISHOP;
+                    haves[GOLD_NUMBER] = StartVGC.GOLD_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= StartVGC.GOLD_FOR_UPGRADE_BISHOP;
+                    break;
+
+                case UnitTypes.BishopCrossbow:
+                    throw new Exception();
+
+                default:
+                    throw new Exception();
+            }
+
+            return HavedAll(haves);
+        }
+
+        internal static void UpgradeUnit(Player player, UnitTypes unitType)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    throw new Exception();
+
+                case UnitTypes.Pawn:
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, StartVGC.FOOD_FOR_UPGRADE_PAWN);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, StartVGC.WOOD_FOR_UPGRADE_PAWN);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, StartVGC.ORE_FOR_UPGRADE_PAWN);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, StartVGC.IRON_FOR_UPGRADE_PAWN);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, StartVGC.GOLD_FOR_UPGRADE_PAWN);
+                    break;
+
+                case UnitTypes.PawnSword:
+                    throw new Exception();
+
+                case UnitTypes.Rook:
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, StartVGC.FOOD_FOR_UPGRADE_ROOK);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, StartVGC.WOOD_FOR_UPGRADE_ROOK);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, StartVGC.ORE_FOR_UPGRADE_ROOK);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, StartVGC.IRON_FOR_UPGRADE_ROOK);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, StartVGC.GOLD_FOR_UPGRADE_ROOK);
+                    break;
+
+                case UnitTypes.RookCrossbow:
+                    throw new Exception();
+
+                case UnitTypes.Bishop:
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, StartVGC.FOOD_FOR_UPGRADE_BISHOP);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, StartVGC.WOOD_FOR_UPGRADE_BISHOP);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, StartVGC.ORE_FOR_UPGRADE_BISHOP);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, StartVGC.IRON_FOR_UPGRADE_BISHOP);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, StartVGC.GOLD_FOR_UPGRADE_BISHOP);
+                    break;
+
+                case UnitTypes.BishopCrossbow:
+                    throw new Exception();
+
+                default:
+                    throw new Exception();
+            }
+        }
+
+        internal static bool CanUpgradeBuildings(Player player, BuildingTypes buildingType, out bool[] haves)
+        {
+            haves = new bool[AMOUNT_RESOURCES_TYPES];
+
+            switch (buildingType)
+            {
+                case BuildingTypes.None:
+                    throw new Exception();
+
+                case BuildingTypes.City:
+                    throw new Exception();
+
+                case BuildingTypes.Farm:
+                    haves[FOOD_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= 0;
+                    haves[WOOD_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= 0;
+                    haves[ORE_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= 0;
+                    haves[IRON_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= 0;
+                    haves[GOLD_NUMBER] = 5 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= 5;
+                    break;
+
+                case BuildingTypes.Woodcutter:
+                    haves[FOOD_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= 0;
+                    haves[WOOD_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= 0;
+                    haves[ORE_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= 0;
+                    haves[IRON_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= 0;
+                    haves[GOLD_NUMBER] = 5 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= 5;
+                    break;
+
+                case BuildingTypes.Mine:
+                    haves[FOOD_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= 0;
+                    haves[WOOD_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= 0;
+                    haves[ORE_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= 0;
+                    haves[IRON_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= 0;
+                    haves[GOLD_NUMBER] = 5 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= 5;
+                    break;
+
+                default:
+                    break;
+            }
+
+            return HavedAll(haves);
+        }
+
+        internal static void UpgradeBuildings(Player player, BuildingTypes buildingType)
+        {
+            switch (buildingType)
+            {
+                case BuildingTypes.None:
+                    throw new Exception();
+
+                case BuildingTypes.City:
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, 0);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, 0);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, 0);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, 0);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, 5);
+                    break;
+
+                case BuildingTypes.Farm:
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, 0);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, 0);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, 0);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, 0);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, 5);
+                    break;
+
+                case BuildingTypes.Woodcutter:
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, 0);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, 0);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, 0);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, 0);
+                    Instance.EGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, 5);
+                    break;
+
+                case BuildingTypes.Mine:
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+
+
+            Instance.EGM.BuildingsEnt_UpgradeBuildingsCom.AddAmountUpgrades(buildingType, player.IsMasterClient);
         }
 
         private static bool HavedAll(bool[] haves) => haves[FOOD_NUMBER] && haves[WOOD_NUMBER] && haves[ORE_NUMBER] && haves[IRON_NUMBER] && haves[GOLD_NUMBER];

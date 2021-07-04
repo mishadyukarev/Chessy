@@ -89,6 +89,7 @@ namespace Assets.Scripts
 
                 case SceneTypes.Game:
                     _entitiesGameGeneralManager.FillEntities(_entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
+                    _entitiesGameMasterManager.FillEntities();
 
                     _systemsGameGeneralManager.CreateSystems(_gameWorld);
                     _systemsGameMasterManager.CreateSystems(_gameWorld);

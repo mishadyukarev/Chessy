@@ -55,7 +55,8 @@ namespace Assets.Scripts
         public void TruceToGeneral(Player playerTo, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Truce, new object[] { isRefreshed, isDone, numberMotion });
         public void TruceToGeneral(RpcTarget rpcTarget, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Truce, new object[] { isRefreshed, isDone, numberMotion });
 
-        public void UpgradeToMaster(UpgradeModTypes upgradeModType, int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Upgrade, new object[] { upgradeModType, xyCell });
+        public void UpgradeUnitToMaster(int[] xyCell, UpgradeModTypes upgradeModType = UpgradeModTypes.Unit) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Upgrade, new object[] { upgradeModType, xyCell });
+        public void UpgradeBuildingToMaster(BuildingTypes buildingType, UpgradeModTypes upgradeModType = UpgradeModTypes.Building) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Upgrade, new object[] { upgradeModType, buildingType });
 
         public void ShiftUnitToMaster(in int[] xyPreviousCell, in int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Shift, new object[] { xyPreviousCell, xySelectedCell });
         public void AttackUnitToMaster(int[] xyPreviousCell, int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Attack, new object[] { xyPreviousCell, xySelectedCell });
@@ -78,8 +79,6 @@ namespace Assets.Scripts
         public void UniqueAbilityPawnToMaster(int[] xy, UniqueAbilitiesPawnTypes uniqueAbilitiesPawnType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.UniquePawnAbility, new object[] { xy, uniqueAbilitiesPawnType });
 
         public void CreateUnitToMaster(UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.CreateUnit, new object[] { unitType });
-        public void UpgradeUnitToMaster(UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.UpgradeUnit, new object[] { unitType });
-        public void UpgradeBuildingToMaster(BuildingTypes buildingType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.UpgradeBuilding, new object[] { buildingType });
 
         public void MeltOreToMaster() => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.MeltOre, new object[] { });
 
@@ -161,10 +160,10 @@ namespace Assets.Scripts
                     _sMM.TryInvokeRunSystem(nameof(CreatorUnitMasterSystem), _sMM.RPCSystems);
                     break;
 
-                case RpcTypes.UpgradeUnit:
-                    _eMM.RPCMasterEnt_RPCMasterCom.UnitType = (UnitTypes)objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(UpgradeUnitMasterSystem), _sMM.RPCSystems);
-                    break;
+                //case RpcTypes.UpgradeUnit:
+                //    _eMM.RPCMasterEnt_RPCMasterCom.UnitType = (UnitTypes)objects[0];
+                //    _sMM.TryInvokeRunSystem(nameof(UpgradeUnitMasterSystem), _sMM.RPCSystems);
+                //    break;
 
                 case RpcTypes.MeltOre:
                     _sMM.TryInvokeRunSystem(nameof(MeltOreMasterSystem), _sMM.RPCSystems);
@@ -195,15 +194,34 @@ namespace Assets.Scripts
                     _sMM.TryInvokeRunSystem(nameof(FireMasterSystem), _sMM.RPCSystems);
                     break;
 
-                case RpcTypes.UpgradeBuilding:
-                    _eMM.RPCMasterEnt_RPCMasterCom.BuildingType = (BuildingTypes)objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(UpgradeBuildingMasterSystem), _sMM.RPCSystems);
-                    break;
+                //case RpcTypes.UpgradeBuilding:
+                //    _eMM.RPCMasterEnt_RPCMasterCom.BuildingType = (BuildingTypes)objects[0];
+                //    _sMM.TryInvokeRunSystem(nameof(UpgradeBuildingMasterSystem), _sMM.RPCSystems);
+                //    break;
 
                 case RpcTypes.Upgrade:
-                    _eMM.RPCMasterEnt_RPCMasterCom.UpgradeModType = (UpgradeModTypes)objects[0];
-                    _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[1];
+                    var upgradeModType = (UpgradeModTypes)objects[0];
+                    _eMM.UpgradeEnt_UpgradeTypeCom.UpgradeModType = upgradeModType;
+
+                    switch (upgradeModType)
+                    {
+                        case UpgradeModTypes.None:
+                            throw new Exception();
+
+                        case UpgradeModTypes.Unit:
+                            _eMM.UpgradeEnt_XyCellCom.XyCell = (int[])objects[1];
+                            break;
+
+                        case UpgradeModTypes.Building:
+                            _eMM.UpgradeEnt_BuildingTypeCom.BuildingType = (BuildingTypes)objects[1];
+                            break;
+
+                        default:
+                            throw new Exception();
+                    }
+
                     _sMM.TryInvokeRunSystem(nameof(UpgradeMasterSystem), _sMM.RPCSystems);
+
                     break;
 
                 default:

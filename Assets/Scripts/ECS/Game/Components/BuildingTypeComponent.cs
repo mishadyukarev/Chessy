@@ -1,11 +1,17 @@
 ﻿internal struct BuildingTypeComponent
 {
-    internal BuildingTypes BuildingType;
+    private BuildingTypes _buildingTypes;
 
-    internal bool HaveBuilding => BuildingType != BuildingTypes.None;
+    internal BuildingTypes BuildingType
+    {
+        get => _buildingTypes;
+        set => _buildingTypes = value;
+    }
+
+    internal bool HaveBuilding => _buildingTypes != BuildingTypes.None;
 
     internal void StartFill()
     {
-        BuildingType = BuildingTypes.None;
+        _buildingTypes = BuildingTypes.None;
     }
 }

@@ -65,25 +65,9 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                             }
 
-                            else if (_eGM.SelectorEnt_SelectorCom.UpgradeModType != UpgradeModTypes.None)
+                            else if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.Unit)
                             {
-                                var upgadeType = _eGM.SelectorEnt_SelectorCom.UpgradeModType;
-
-                                switch (_eGM.SelectorEnt_SelectorCom.UpgradeModType)
-                                {
-                                    case UpgradeModTypes.None:
-                                        break;
-
-                                    case UpgradeModTypes.Unit:
-                                        _photonPunRPC.UpgradeToMaster(upgadeType, xyCurrentCell);
-                                        break;
-
-                                    case UpgradeModTypes.Building:
-                                        break;
-
-                                    default:
-                                        break;
-                                }
+                                _photonPunRPC.UpgradeUnitToMaster(xyCurrentCell);
                             }
 
                             else if (_eGM.DonerEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient))

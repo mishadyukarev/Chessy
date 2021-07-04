@@ -10,72 +10,13 @@ internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-
-        bool haveFood = true;
-        bool haveWood = true;
-        bool haveOre = true;
-        bool haveIron = true;
-        bool haveGold = true;
-
-        int minusFood = default;
-        int minusWood = default;
-        int minusOre = default;
-        int minusIron = default;
-        int minusGold = default;
-
-        switch (BuildingType)
+        if(EconomyManager.CanUpgradeBuildings(Info.Sender, BuildingType, out bool[] haves))
         {
-            case BuildingTypes.None:
-                break;
-
-            case BuildingTypes.City:
-                break;
-
-            case BuildingTypes.Farm:
-                minusFood = 0;
-                minusWood = 0;
-                minusOre = 0;
-                minusIron = 0;
-                minusGold = 5;
-                break;
-
-            case BuildingTypes.Woodcutter:
-                minusFood = 0;
-                minusWood = 0;
-                minusOre = 0;
-                minusIron = 0;
-                minusGold = 5;
-                break;
-
-            case BuildingTypes.Mine:
-                minusFood = 0;
-                minusWood = 0;
-                minusOre = 0;
-                minusIron = 0;
-                minusGold = 5;
-                break;
-
-            default:
-                break;
+            EconomyManager.UpgradeBuildings(Info.Sender, BuildingType);
         }
-
-
-        haveFood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) >= minusFood;
-        haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient) >= minusWood;
-        haveOre = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient) >= minusOre;
-        haveIron = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient) >= minusIron;
-        haveGold = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient) >= minusGold;
-
-        if (haveFood && haveWood && haveOre && haveIron && haveGold)
+        else
         {
-            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient, minusFood);
-            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient, minusWood);
-            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient, minusOre);
-            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, minusIron);
-            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, minusGold);
-
-            _eGM.BuildingsEnt_UpgradeBuildingsCom.AddAmountUpgrades(BuildingType, Info.Sender.IsMasterClient);
+            _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves);
         }
-        _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haveFood, haveWood, haveOre, haveIron, haveGold);
     }
 }
