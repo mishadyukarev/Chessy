@@ -10,6 +10,9 @@
         public const int Y = 1;
 
 
+        public const int NULL_RESOURCES = 0;
+
+
         public const int MIN_AMOUNT_STEPS_FOR_UNIT = 1;
         public const int AMOUNT_FOR_DEATH = 0;
 

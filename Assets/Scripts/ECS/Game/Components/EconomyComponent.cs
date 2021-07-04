@@ -92,7 +92,7 @@ internal struct EconomyComponent
         }
     }
 
-    internal void AddAmountResources(ResourceTypes resourceType, bool key, int value)
+    internal void AddAmountResources(ResourceTypes resourceType, bool key, int value = 1)
     {
         switch (resourceType)
         {
@@ -124,7 +124,7 @@ internal struct EconomyComponent
         }
     }
 
-    internal void TakeAmountResources(ResourceTypes resourceType, bool key, int value)
+    internal void TakeAmountResources(ResourceTypes resourceType, bool key, int value = 1)
     {
         switch (resourceType)
         {

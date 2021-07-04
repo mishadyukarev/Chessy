@@ -74,6 +74,7 @@ namespace Assets.Scripts
         public void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Mistake, new object[] { MistakeTypes.EconomyType, haves });
         public void MistakeUnitToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Mistake, new object[] { MistakeTypes.UnitType });
 
+        public void FireToMaster(int[] fromXy, int[] toXy) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Fire, new object[] { fromXy, toXy });
         public void UniqueAbilityPawnToMaster(int[] xy, UniqueAbilitiesPawnTypes uniqueAbilitiesPawnType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.UniquePawnAbility, new object[] { xy, uniqueAbilitiesPawnType });
 
         public void CreateUnitToMaster(UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.CreateUnit, new object[] { unitType });
@@ -184,6 +185,14 @@ namespace Assets.Scripts
                     _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[0];
                     _eMM.RPCMasterEnt_RPCMasterCom.UniqueAbilitiesPawnType = (UniqueAbilitiesPawnTypes)objects[1];
                     _sMM.TryInvokeRunSystem(nameof(UniquePawnAbilityMasterSystem), _sMM.RPCSystems);
+                    break;
+
+                case RpcTypes.Fire:
+                    _eMM.FromInfoEnt_FromInfoCom.Info = info;
+
+                    _eMM.FireEnt_FromToXyCom.FromXyCopy = (int[])objects[0];
+                    _eMM.FireEnt_FromToXyCom.ToXyCopy = (int[])objects[1];
+                    _sMM.TryInvokeRunSystem(nameof(FireMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.UpgradeBuilding:
@@ -373,9 +382,6 @@ namespace Assets.Scripts
 
             objects = new object[]
             {
-            _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Pawn, false),
-            _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Rook, false),
-            _eGM.UnitInventorEnt_UpgradeUnitCom.AmountUpgrades(UnitTypes.Bishop, false),
             _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Farm, false),
             _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, false),
             _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Mine, false),
@@ -386,7 +392,7 @@ namespace Assets.Scripts
             _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, false),
             _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, false),
 
-            _eGM.UnitInventorEnt_UnitInventorCom.IsSettedKing(false),
+            _eGM.UnitInfoEnt_UnitInventorCom.IsSettedKing(false),
             _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[false],
             _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[false],
             };
@@ -505,9 +511,6 @@ namespace Assets.Scripts
         {
             int i = 0;
 
-            _eGM.UnitInventorEnt_UpgradeUnitCom.SetAmountUpgrades(UnitTypes.Pawn, Instance.IsMasterClient, (int)objects[i++]);
-            _eGM.UnitInventorEnt_UpgradeUnitCom.SetAmountUpgrades(UnitTypes.Rook, Instance.IsMasterClient, (int)objects[i++]);
-            _eGM.UnitInventorEnt_UpgradeUnitCom.SetAmountUpgrades(UnitTypes.Bishop, Instance.IsMasterClient, (int)objects[i++]);
             _eGM.BuildingsEnt_UpgradeBuildingsCom.SetAmountUpgrades(BuildingTypes.Farm, Instance.IsMasterClient, (int)objects[i++]);
             _eGM.BuildingsEnt_UpgradeBuildingsCom.SetAmountUpgrades(BuildingTypes.Woodcutter, Instance.IsMasterClient, (int)objects[i++]);
             _eGM.BuildingsEnt_UpgradeBuildingsCom.SetAmountUpgrades(BuildingTypes.Mine, Instance.IsMasterClient, (int)objects[i++]);
@@ -529,7 +532,7 @@ namespace Assets.Scripts
             _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, Instance.IsMasterClient, iron);
             _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, Instance.IsMasterClient, gold);
 
-            _eGM.UnitInventorEnt_UnitInventorCom.SetSettedKing(Instance.IsMasterClient, isSettedKing);
+            _eGM.UnitInfoEnt_UnitInventorCom.SetSettedKing(Instance.IsMasterClient, isSettedKing);
             _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Instance.IsMasterClient] = isSettedCity;
             _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[Instance.IsMasterClient] = xySettedCity;
         }

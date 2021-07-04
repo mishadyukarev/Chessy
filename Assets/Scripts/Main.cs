@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Photon.Pun;
 using Photon.Realtime;
 using System;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Assets.Scripts
         private PhotonManager _photonManager;
         private ECSManager _eCSmanager;
 
-        [NonSerialized]public GameTypes GameType;
+        [NonSerialized]public GameModTypes GameModeType;
 
         #endregion
 

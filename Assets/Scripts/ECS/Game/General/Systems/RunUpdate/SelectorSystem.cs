@@ -60,7 +60,12 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                         if (_eGM.InputEnt_InputCom.IsClick)
                         {
-                            if (_eGM.SelectorEnt_SelectorCom.UpgradeModType != UpgradeModTypes.None)
+                            if (_eGM.SelectorEnt_SelectorCom.PickedFire)
+                            {
+
+                            }
+
+                            else if (_eGM.SelectorEnt_SelectorCom.UpgradeModType != UpgradeModTypes.None)
                             {
                                 var upgadeType = _eGM.SelectorEnt_SelectorCom.UpgradeModType;
 

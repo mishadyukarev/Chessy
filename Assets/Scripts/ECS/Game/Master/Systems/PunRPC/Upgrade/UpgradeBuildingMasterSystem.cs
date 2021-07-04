@@ -36,7 +36,7 @@ internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
                 minusWood = 0;
                 minusOre = 0;
                 minusIron = 0;
-                minusGold = 10;
+                minusGold = 5;
                 break;
 
             case BuildingTypes.Woodcutter:
@@ -44,7 +44,7 @@ internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
                 minusWood = 0;
                 minusOre = 0;
                 minusIron = 0;
-                minusGold = 10;
+                minusGold = 5;
                 break;
 
             case BuildingTypes.Mine:
@@ -52,7 +52,7 @@ internal sealed class UpgradeBuildingMasterSystem : RPCMasterSystemReduction
                 minusWood = 0;
                 minusOre = 0;
                 minusIron = 0;
-                minusGold = 10;
+                minusGold = 5;
                 break;
 
             default:

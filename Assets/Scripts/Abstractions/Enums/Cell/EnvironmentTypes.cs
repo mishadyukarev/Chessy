@@ -3,8 +3,8 @@
     None,
 
     Fertilizer,
-    AdultForest,
     YoungForest,
+    AdultForest,
     Hill,
     Mountain,
 }

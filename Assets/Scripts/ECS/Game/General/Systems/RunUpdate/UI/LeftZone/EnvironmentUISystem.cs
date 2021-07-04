@@ -34,7 +34,7 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
                     if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer)
                     {
                         _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Fertilizer);
-                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Fertilizer, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountFertilizerResources / 20f, 0.15f, 1));
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Fertilizer, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountFertilizerResources / _eGM.CellEnvEnt_CellEnvCom(x, y).MaxAmountResources(EnvironmentTypes.Fertilizer), 0.15f, 1));
                     }
                     else
                     {
@@ -44,7 +44,7 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
                     if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree)
                     {
                         _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Wood);
-                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Wood, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources / 20f, 0.15f, 1));
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Wood, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources / _eGM.CellEnvEnt_CellEnvCom(x,y).MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1));
                     }
                     else
                     {
@@ -54,7 +54,7 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
                     if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveHill)
                     {
                         _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Ore);
-                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Ore, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountOreResources / 999f, 0.15f, 1));
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Ore, new Vector3(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountOreResources / _eGM.CellEnvEnt_CellEnvCom(x, y).MaxAmountResources(EnvironmentTypes.Hill), 0.15f, 1));
                     }
                     else
                     {

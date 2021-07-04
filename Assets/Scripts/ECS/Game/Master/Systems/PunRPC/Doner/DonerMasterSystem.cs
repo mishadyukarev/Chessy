@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 using Photon.Pun;
 using static Assets.Scripts.Main;
 
@@ -12,13 +13,13 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if (_eGM.UnitInventorEnt_UnitInventorCom.IsSettedKing(info.Sender.IsMasterClient))
+        if (_eGM.UnitInfoEnt_UnitInventorCom.IsSettedKing(info.Sender.IsMasterClient))
         {
             _photonPunRPC.DoneToGeneral(info.Sender, false, isDone, _eGM.MotionEnt_AmountCom.Amount);
 
             _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(info.Sender.IsMasterClient, isDone);
 
-            bool isRefreshed = Instance.GameType == GameTypes.WithBot
+            bool isRefreshed = Instance.GameModeType == GameModTypes.WithBot
                 || _eGM.DonerEnt_IsActivatedDictCom.IsActivated(true)
                 && _eGM.DonerEnt_IsActivatedDictCom.IsActivated(false);
 

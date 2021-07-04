@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Static;
 using Photon.Pun;
 using UnityEngine;
@@ -12,7 +13,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if(Instance.GameType != GameTypes.WithBot)
+        if(Instance.GameModeType != GameModTypes.WithBot)
         {
             _photonPunRPC.TruceToGeneral(Info.Sender, false, _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething, _eGM.MotionEnt_AmountCom.Amount);
 
@@ -45,32 +46,32 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                         break;
 
                                     case UnitTypes.King:
-                                        _eGM.UnitInventorEnt_UnitInventorCom.AddAmountUnits(UnitTypes.King, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
-                                        _eGM.UnitInventorEnt_UnitInventorCom.SetSettedKing(_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, false);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.King, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.SetSettedKing(_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, false);
                                         break;
 
                                     case UnitTypes.Pawn:
-                                        _eGM.UnitInventorEnt_UnitInventorCom.AddAmountUnits(UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         break;
 
                                     case UnitTypes.PawnSword:
-                                        _eGM.UnitInventorEnt_UnitInventorCom.AddAmountUnits(UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         break;
 
                                     case UnitTypes.Rook:
-                                        _eGM.UnitInventorEnt_UnitInventorCom.AddAmountUnits(UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         break;
 
                                     case UnitTypes.RookCrossbow:
-                                        _eGM.UnitInventorEnt_UnitInventorCom.AddAmountUnits(UnitTypes.RookCrossbow, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.RookCrossbow, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         break;
 
                                     case UnitTypes.Bishop:
-                                        _eGM.UnitInventorEnt_UnitInventorCom.AddAmountUnits(UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         break;
 
                                     case UnitTypes.BishopCrossbow:
-                                        _eGM.UnitInventorEnt_UnitInventorCom.AddAmountUnits(UnitTypes.BishopCrossbow, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.BishopCrossbow, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         break;
 
                                     default:

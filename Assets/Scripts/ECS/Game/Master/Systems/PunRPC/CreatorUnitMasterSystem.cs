@@ -13,6 +13,7 @@ internal sealed class CreatorUnitMasterSystem : RPCMasterSystemReduction
         if (EconomyManager.CanCreateUnit(UnitType, Info.Sender, out bool[] haves))
         {
             EconomyManager.CreateUnit(UnitType, Info.Sender);
+            Main.Instance.EGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitType, Info.Sender.IsMasterClient);
         }
         else _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves);
     }

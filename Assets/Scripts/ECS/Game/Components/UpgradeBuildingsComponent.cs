@@ -14,24 +14,24 @@ internal struct UpgradeBuildingsComponent
         _amountUpgradeMineDict = new Dictionary<bool, int>();
 
 
-        _amountUpgradeFarmDict.Add(true, default);
-        _amountUpgradeFarmDict.Add(false, default);
+        _amountUpgradeFarmDict.Add(true, 1);
+        _amountUpgradeFarmDict.Add(false, 1);
 
-        _amountUpgradeWoodcutterDict.Add(true, default);
-        _amountUpgradeWoodcutterDict.Add(false, default);
+        _amountUpgradeWoodcutterDict.Add(true, 1);
+        _amountUpgradeWoodcutterDict.Add(false, 1);
 
-        _amountUpgradeMineDict.Add(true, default);
-        _amountUpgradeMineDict.Add(false, default);
+        _amountUpgradeMineDict.Add(true, 1);
+        _amountUpgradeMineDict.Add(false, 1);
 
 
-        _amountUpgradeFarmDict[true] += 1;
-        _amountUpgradeFarmDict[false] += 1;
+        //_amountUpgradeFarmDict[true] += 1;
+        //_amountUpgradeFarmDict[false] += 1;
 
-        _amountUpgradeWoodcutterDict[true] += 1;
-        _amountUpgradeWoodcutterDict[false] += 1;
+        //_amountUpgradeWoodcutterDict[true] += 1;
+        //_amountUpgradeWoodcutterDict[false] += 1;
 
-        _amountUpgradeMineDict[true] += 1;
-        _amountUpgradeMineDict[false] += 1;
+        //_amountUpgradeMineDict[true] += 1;
+        //_amountUpgradeMineDict[false] += 1;
     }
 
 

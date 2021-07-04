@@ -18,6 +18,7 @@ public struct SelectorComponent
     internal bool IsSelected;
 
     internal UpgradeModTypes UpgradeModType;
+    internal bool PickedFire;
 
     internal bool IsGettedCell;
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "StartValues", fileName = "StartValues")]
 public class StartGameValuesConfig : ScriptableObject
@@ -41,11 +42,11 @@ public class StartGameValuesConfig : ScriptableObject
 
     #region Stats
 
-    public readonly int AMOUNT_FOOD_MASTER = 10;
-    public readonly int AMOUNT_FOOD_OTHER = 10;
+    public readonly int AMOUNT_FOOD_MASTER = 15;
+    public readonly int AMOUNT_FOOD_OTHER = 15;
 
-    public readonly int AMOUNT_WOOD_MASTER = 10;
-    public readonly int AMOUNT_WOOD_OTHER = 10;
+    public readonly int AMOUNT_WOOD_MASTER = 15;
+    public readonly int AMOUNT_WOOD_OTHER = 15;
 
     public readonly int AMOUNT_ORE_MASTER = 0;
     public readonly int AMOUNT_ORE_OTHER = 0;
@@ -110,10 +111,98 @@ public class StartGameValuesConfig : ScriptableObject
     #region Melting
 
     public readonly int FOOD_FOR_MELTING_ORE = 0;
-    public readonly int WOOD_FOR_MELTING_ORE = 5;
-    public readonly int ORE_FOR_MELTING_ORE = 3;
+    public readonly int WOOD_FOR_MELTING_ORE = 15;
+    public readonly int ORE_FOR_MELTING_ORE = 4;
     public readonly int IRON_FOR_MELTING_ORE = 0;
     public readonly int GOLD_FOR_MELTING_ORE = 0;
+
+    #endregion
+
+
+    #region Fire
+
+    private int _foodForPawnFire = 0;
+    private int _woodForPawnFire = 1;
+    private int _oreForPawnFire = 0;
+    private int _ironForPawnFire = 0;
+    private int _goldForPawnFire = 0;
+
+    public int FoodForPawnFire => _foodForPawnFire;
+    public int WoodForPawnFire => _woodForPawnFire;
+    public int OreForPawnFire => _oreForPawnFire;
+    public int IronForPawnFire => _ironForPawnFire;
+    public int GoldForPawnFire => _goldForPawnFire;
+
+
+
+    private int _foodForPawnSwordFire = 0;
+    private int _woodForPawnSwordFire = 1;
+    private int _oreForPawnSwordFire = 0;
+    private int _ironForPawnSwordFire = 0;
+    private int _goldForPawnSwordFire = 0;
+
+    public int FoodForPawnSwordFire => _foodForPawnSwordFire;
+    public int WoodForPawnSwordFire => _woodForPawnSwordFire;
+    public int OreForPawnSwordFire => _oreForPawnSwordFire;
+    public int IronForPawnSwordFire => _ironForPawnSwordFire;
+    public int GoldForPawnSwordFire => _goldForPawnSwordFire;
+
+
+
+    private int _foodForRookFire = 0;
+    private int _woodForRookFire = 1;
+    private int _oreForRookFire = 0;
+    private int _ironForRookFire = 0;
+    private int _goldForRookFire = 0;
+
+    public int FoodForRookFire => _foodForRookFire;
+    public int WoodForRookFire => _woodForRookFire;
+    public int OreForRookFire => _oreForRookFire;
+    public int IronForRookFire => _ironForRookFire;
+    public int GoldForRookFire => _goldForRookFire;
+
+
+
+    private int _foodForRookCrossbowFire = 0;
+    private int _woodForRookCrossbowFire = 1;
+    private int _oreForRookCrossbowFire = 0;
+    private int _ironForRookCrossbowFire = 0;
+    private int _goldForRookCrossbowFire = 0;
+
+    public int FoodForRookCrossbowFire => _foodForRookCrossbowFire;
+    public int WoodForRookCrossbowFire => _woodForRookCrossbowFire;
+    public int OreForRookCrossbowFire => _oreForRookCrossbowFire;
+    public int IronForRookCrossbowFire => _ironForRookCrossbowFire;
+    public int GoldForRookCrossbowFire => _goldForRookCrossbowFire;
+
+
+
+    private int _foodForBishopFire = 0;
+    private int _woodForBishopFire = 1;
+    private int _oreForBishopFire = 0;
+    private int _ironForBishopFire = 0;
+    private int _goldForBishopFire = 0;
+
+    public int FoodForBishopFire => _foodForBishopFire;
+    public int WoodForBishopFire => _woodForBishopFire;
+    public int OreForBishopFire => _oreForBishopFire;
+    public int IronForBishopFire => _ironForBishopFire;
+    public int GoldForBishopFire => _goldForBishopFire;
+
+
+
+    private int _foodForBishopCrossbowFire = 0;
+    private int _woodForBishopCrossbowFire = 1;
+    private int _oreForBishopCrossbowFire = 0;
+    private int _ironForBishopCrossbowFire = 0;
+    private int _goldForBishopCrossbowFire = 0;
+
+    public int FoodForBishopCrossbowFire => _foodForBishopCrossbowFire;
+    public int WoodForBishopCrossbowFire => _woodForBishopCrossbowFire;
+    public int OreForBishopCrossbowFire => _oreForBishopCrossbowFire;
+    public int IronForBishopCrossbowFire => _ironForBishopCrossbowFire;
+    public int GoldForBishopCrossbowFire => _goldForBishopCrossbowFire;
+
 
     #endregion
 
@@ -127,13 +216,13 @@ public class StartGameValuesConfig : ScriptableObject
     public readonly int GOLD_FOR_BUILDING_FARM = 0;
 
     public readonly int FOOD_FOR_BUILDING_WOODCUTTER = 0;
-    public readonly int WOOD_FOR_BUILDING_WOODCUTTER = 5;
+    public readonly int WOOD_FOR_BUILDING_WOODCUTTER = 10;
     public readonly int ORE_FOR_BUILDING_WOODCUTTER = 0;
     public readonly int IRON_FOR_BUILDING_WOODCUTTER = 0;
     public readonly int GOLD_FOR_BUILDING_WOODCUTTER = 0;
 
     public readonly int FOOD_FOR_BUILDING_MINE = 0;
-    public readonly int WOOD_FOR_BUILDING_MINE = 10;
+    public readonly int WOOD_FOR_BUILDING_MINE = 15;
     public readonly int ORE_FOR_BUILDING_MINE = 0;
     public readonly int IRON_FOR_BUILDING_MINE = 0;
     public readonly int GOLD_FOR_BUILDING_MINE = 0;
@@ -145,8 +234,8 @@ public class StartGameValuesConfig : ScriptableObject
 
     #region Benefit
 
-    public readonly int BENEFIT_FOOD_FARM = 1;
-    public readonly int BENEFIT_WOOD_WOODCUTTER = 1;
+    public readonly int BENEFIT_FOOD_FARM = 3;
+    public readonly int BENEFIT_WOOD_WOODCUTTER = 2;
     public readonly int BENEFIT_ORE_MINE = 1;
 
     public readonly int BENEFIT_FOOD_CITY = 1;
@@ -201,13 +290,13 @@ public class StartGameValuesConfig : ScriptableObject
     public readonly int SIMPLE_POWER_DAMAGE_BISHOP = 25;
     public readonly int SIMPLE_POWER_DAMAGE_BISHOP_CROSSBOW = 50;
 
-    public readonly float RATION_UNIQUE_POWER_DAMAGE_KING = 0.3f;
-    public readonly float RATION_UNIQUE_POWER_DAMAGE_PAWN = 0.3f;
-    public readonly float RATION_UNIQUE_POWER_DAMAGE_PAWN_SWORD = 0.3f;
-    public readonly float RATION_UNIQUE_POWER_DAMAGE_ROOK = 0.3f;
-    public readonly float RATION_UNIQUE_POWER_DAMAGE_ROOK_CROSSBOW = 0.3f;
-    public readonly float RATION_UNIQUE_POWER_DAMAGE_BISHOP = 0.3f;
-    public readonly float RATION_UNIQUE_POWER_DAMAGE_BISHOP_CROSSBOW = 0.3f;
+    public readonly float RATION_UNIQUE_POWER_DAMAGE_KING = 0.4f;
+    public readonly float RATION_UNIQUE_POWER_DAMAGE_PAWN = 0.4f;
+    public readonly float RATION_UNIQUE_POWER_DAMAGE_PAWN_SWORD = 0.4f;
+    public readonly float RATION_UNIQUE_POWER_DAMAGE_ROOK = 0.4f;
+    public readonly float RATION_UNIQUE_POWER_DAMAGE_ROOK_CROSSBOW = 0.4f;
+    public readonly float RATION_UNIQUE_POWER_DAMAGE_BISHOP = 0.4f;
+    public readonly float RATION_UNIQUE_POWER_DAMAGE_BISHOP_CROSSBOW = 0.4f;
 
     #endregion
 

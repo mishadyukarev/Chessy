@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
@@ -50,7 +51,7 @@ namespace Assets.Scripts
 
         public void CreateRoom()
         {
-            Instance.GameType = GameTypes.None;
+            Instance.GameModeType = GameModTypes.None;
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = MAX_PLAYERS;
@@ -77,7 +78,7 @@ namespace Assets.Scripts
         public void Quit() => Application.Quit();
         private void TestGame()
         {
-            Instance.GameType = GameTypes.WithBot;
+            Instance.GameModeType = GameModTypes.WithBot;
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = MAX_PLAYERS;

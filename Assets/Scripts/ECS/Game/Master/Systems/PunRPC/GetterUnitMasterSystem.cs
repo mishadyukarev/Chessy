@@ -21,7 +21,7 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.King:
-                isGetted = _eGM.UnitInventorEnt_UnitInventorCom.HaveUnit(UnitType, Info.Sender.IsMasterClient);
+                isGetted = _eGM.UnitInfoEnt_UnitInventorCom.HaveUnit(UnitType, Info.Sender.IsMasterClient);
                 if (isGetted)
                 {
                     unitType = UnitTypes.King;
@@ -29,12 +29,12 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.Pawn:
-                if(_eGM.UnitInventorEnt_UnitInventorCom.HaveUnit(UnitTypes.PawnSword, Info.Sender.IsMasterClient))
+                if(_eGM.UnitInfoEnt_UnitInventorCom.HaveUnit(UnitTypes.PawnSword, Info.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.PawnSword;
                 }
-                else if (_eGM.UnitInventorEnt_UnitInventorCom.HaveUnit(UnitTypes.Pawn, Info.Sender.IsMasterClient))
+                else if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnit(UnitTypes.Pawn, Info.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.Pawn;
@@ -45,12 +45,12 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.Rook:
-                if (_eGM.UnitInventorEnt_UnitInventorCom.HaveUnit(UnitTypes.RookCrossbow, Info.Sender.IsMasterClient))
+                if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnit(UnitTypes.RookCrossbow, Info.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.RookCrossbow;
                 }
-                else if (_eGM.UnitInventorEnt_UnitInventorCom.HaveUnit(UnitTypes.Rook, Info.Sender.IsMasterClient))
+                else if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnit(UnitTypes.Rook, Info.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.Rook;
@@ -61,12 +61,12 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.Bishop:
-                if (_eGM.UnitInventorEnt_UnitInventorCom.HaveUnit(UnitTypes.BishopCrossbow, Info.Sender.IsMasterClient))
+                if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnit(UnitTypes.BishopCrossbow, Info.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.BishopCrossbow;
                 }
-                else if (_eGM.UnitInventorEnt_UnitInventorCom.HaveUnit(UnitTypes.Bishop, Info.Sender.IsMasterClient))
+                else if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnit(UnitTypes.Bishop, Info.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.Bishop;

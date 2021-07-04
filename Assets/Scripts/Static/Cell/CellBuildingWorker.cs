@@ -33,11 +33,11 @@ namespace Assets.Scripts.Static
             {
                 if (Instance.EGM.CellBuildEnt_OwnerCom(xy).HaveOwner)
                 {
-                    if (buildType == BuildingTypes.City)
+                    if(buildType == BuildingTypes.City)
                     {
                         Instance.EGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Instance.EGM.CellBuildEnt_OwnerCom(xy).IsMasterClient] = false;
                         Instance.EGM.BuildingsEnt_BuildingsCom.XySettedCityDict[Instance.EGM.CellBuildEnt_OwnerCom(xy).IsMasterClient] = default;
-                    }
+                    }                  
 
                     Instance.EGM.BuildingsEnt_BuildingsCom.TakeAmountBuildings(buildType, Instance.EGM.CellBuildEnt_OwnerCom(xy).IsMasterClient);
                 }
@@ -46,16 +46,16 @@ namespace Assets.Scripts.Static
             if (Instance.EGM.CellBuildEnt_OwnerCom(xy).HaveOwner)
             {
                 Instance.EGM.CellBuildEnt_CellBuilCom(xy).EnabledPlayerSR(false, buildType);
-                Instance.EGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = BuildingTypes.None;
                 Instance.EGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
             }
 
             else if (Instance.EGM.CellBuildEnt_CellOwnerBotCom(xy).HaveBot)
             {
-                Instance.EGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(false, buildType);
-                Instance.EGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = BuildingTypes.None;
+                Instance.EGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(false, buildType);       
                 Instance.EGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
             }
+
+            Instance.EGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = BuildingTypes.None;
         }
     }
 }

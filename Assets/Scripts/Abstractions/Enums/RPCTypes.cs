@@ -19,6 +19,7 @@
     GetUnit,
     SetUnit,
     UniquePawnAbility,
+    Fire,
     UpgradeBuilding,
 
     Upgrade,

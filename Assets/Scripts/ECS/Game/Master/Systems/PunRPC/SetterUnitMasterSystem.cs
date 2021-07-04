@@ -26,12 +26,12 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                     {
                         CellUnitWorker.SetPlayerUnit(UnitTypes.King, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_KING, false, false, Info.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = CellUnitWorker.MaxAmountHealth(XyCell);
-                        _eGM.UnitInventorEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
+                        _eGM.UnitInfoEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
                         isSetted = true;
                     }
                     else isSetted = false;
 
-                    _eGM.UnitInventorEnt_UnitInventorCom.SetSettedKing(Info.Sender.IsMasterClient, isSetted);
+                    _eGM.UnitInfoEnt_UnitInventorCom.SetSettedKing(Info.Sender.IsMasterClient, isSetted);
                     break;
 
 
@@ -40,7 +40,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                     {
                         CellUnitWorker.SetPlayerUnit(UnitTypes.Pawn, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, false, false, Info.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = CellUnitWorker.MaxAmountHealth(XyCell);
-                        _eGM.UnitInventorEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
+                        _eGM.UnitInfoEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
                         isSetted = true;
                     }
                     else isSetted = false;
@@ -52,7 +52,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                     {
                         CellUnitWorker.SetPlayerUnit(UnitType, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN_SWORD, false, false, Info.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = CellUnitWorker.MaxAmountHealth(XyCell);
-                        _eGM.UnitInventorEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
+                        _eGM.UnitInfoEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
                         isSetted = true;
                     }
                     else isSetted = false;
@@ -64,7 +64,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                     {
                         CellUnitWorker.SetPlayerUnit(UnitTypes.Rook, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, false, false, Info.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = CellUnitWorker.MaxAmountHealth(XyCell);
-                        _eGM.UnitInventorEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
+                        _eGM.UnitInfoEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
                         isSetted = true;
                     }
                     else isSetted = false;
@@ -76,7 +76,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                     {
                         CellUnitWorker.SetPlayerUnit(UnitType, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK_CROSSBOW, false, false, Info.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = CellUnitWorker.MaxAmountHealth(XyCell);
-                        _eGM.UnitInventorEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
+                        _eGM.UnitInfoEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
                         isSetted = true;
                     }
                     else isSetted = false;
@@ -88,7 +88,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                     {
                         CellUnitWorker.SetPlayerUnit(UnitTypes.Bishop, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, false, false, Info.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = CellUnitWorker.MaxAmountHealth(XyCell);
-                        _eGM.UnitInventorEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
+                        _eGM.UnitInfoEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
                         isSetted = true;
                     }
                     break;
@@ -99,7 +99,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                     {
                         CellUnitWorker.SetPlayerUnit(UnitType, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW, false, false, Info.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountHealth = CellUnitWorker.MaxAmountHealth(XyCell);
-                        _eGM.UnitInventorEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
+                        _eGM.UnitInfoEnt_UnitInventorCom.TakeAmountUnits(UnitType, Info.Sender.IsMasterClient);
                         isSetted = true;
                     }
                     else isSetted = false;

@@ -59,7 +59,7 @@ namespace Assets.Scripts
 
 
             _saverEnt = commonWorld.NewEntity();
-            SaverEnt_SaverCommCom.SliderVolume = 0.3f;
+            SaverEnt_SaverCommCom.SliderVolume = 0.15f;
 
 
             _resourcesEnt = commonWorld.NewEntity();

@@ -33,7 +33,8 @@ public sealed class SystemsGameMasterManager : SystemsManager
             .Add(new EconomyUpdatorMasterSystem(), nameof(EconomyUpdatorMasterSystem))
             .Add(new FertilizeUpdatorMasterSystem(), nameof(FertilizeUpdatorMasterSystem))
             .Add(new TruceMasterSystem(), nameof(TruceMasterSystem))
-            .Add(new UpgradeMasterSystem(), nameof(UpgradeMasterSystem));
+            .Add(new UpgradeMasterSystem(), nameof(UpgradeMasterSystem))
+            .Add(new FireMasterSystem(), nameof(FireMasterSystem));
     }
 
     internal override void ProcessInjects()

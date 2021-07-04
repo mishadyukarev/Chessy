@@ -13,7 +13,7 @@ internal sealed class ProtectMasterSystem : SystemMasterReduction
         {
             if (!_eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected)
             {
-                if (_eGM.CellUnitEnt_CellUnitCom(xyCell).HaveMinAmountSteps)
+                if (CellUnitWorker.HaveMaxSteps(xyCell))
                 {
                     _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = true;
                     _eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed = false;

@@ -51,6 +51,33 @@ internal struct CellEnvironmentComponent
         }
     }
 
+    internal float MaxAmountResources(EnvironmentTypes environmentTypes)
+    {
+        switch (environmentTypes)
+        {
+            case EnvironmentTypes.None:
+                throw new System.Exception();
+
+            case EnvironmentTypes.Fertilizer:
+                return 50;
+
+            case EnvironmentTypes.YoungForest:
+                throw new System.Exception();
+
+            case EnvironmentTypes.AdultForest:
+                return 20;
+
+            case EnvironmentTypes.Hill:
+                return 999;
+
+            case EnvironmentTypes.Mountain:
+                throw new System.Exception();
+
+            default:
+                throw new System.Exception();
+        }
+    }
+
     internal void SetNewEnvironment(EnvironmentTypes environmentType, params int[] xy)
     {
         switch (environmentType)
@@ -58,15 +85,10 @@ internal struct CellEnvironmentComponent
             case EnvironmentTypes.None:
                 break;
 
-            case EnvironmentTypes.Mountain:
-                _haveMountain = true;
-                _mountainGO.SetActive(true);
-                break;
-
-            case EnvironmentTypes.AdultForest:
-                _haveAdultTree = true;
-                _adultTreeGO.SetActive(true);
-                AmountForestResources = UnityEngine.Random.Range(15, 20);
+            case EnvironmentTypes.Fertilizer:
+                _haveFertilizer = true;
+                _fertilizerGO.SetActive(true);
+                AmountFertilizerResources = UnityEngine.Random.Range(40, (int)MaxAmountResources(environmentType));
                 break;
 
             case EnvironmentTypes.YoungForest:
@@ -74,16 +96,21 @@ internal struct CellEnvironmentComponent
                 _youngTreeGO.SetActive(true);
                 break;
 
+            case EnvironmentTypes.AdultForest:
+                _haveAdultTree = true;
+                _adultTreeGO.SetActive(true);
+                AmountForestResources = UnityEngine.Random.Range(15, (int)MaxAmountResources(environmentType));
+                break;
+
             case EnvironmentTypes.Hill:
                 _haveHill = true;
                 _hillGO.SetActive(true);
-                AmountOreResources = 999;
+                AmountOreResources = (int)MaxAmountResources(environmentType);
                 break;
 
-            case EnvironmentTypes.Fertilizer:
-                _haveFertilizer = true;
-                _fertilizerGO.SetActive(true);
-                AmountFertilizerResources = UnityEngine.Random.Range(15, 20);
+            case EnvironmentTypes.Mountain:
+                _haveMountain = true;
+                _mountainGO.SetActive(true);
                 break;
 
             default:

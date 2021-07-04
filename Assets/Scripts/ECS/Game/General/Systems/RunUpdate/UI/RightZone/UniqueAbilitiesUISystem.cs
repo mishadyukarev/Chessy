@@ -27,11 +27,11 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                             break;
 
                         case UnitTypes.Pawn:
-                            PawnAndPawnSword();
+                            Melee();
                             break;
 
                         case UnitTypes.PawnSword:
-                            PawnAndPawnSword();
+                            Melee();
                             break;
 
                         case UnitTypes.Rook:
@@ -65,14 +65,14 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                 _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
             }
 
-            void PawnAndPawnSword()
+            void Melee()
             {
                 _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(true);
 
                 _eGM.UniqueAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(true);
                 _eGM.Unique1AbilityEnt_ButtonCom.SetActive(true);
                 _eGM.Unique1AbilityEnt_ButtonCom.RemoveAllListeners();
-                _eGM.Unique1AbilityEnt_ButtonCom.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityOne); });
+                _eGM.Unique1AbilityEnt_ButtonCom.AddListener(delegate { Fire(XySelectedCell, XySelectedCell); });
 
                 if (_eGM.CellEffectEnt_CellEffectCom(XySelectedCell).HaveFire)
                 {
@@ -94,7 +94,6 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                 _eGM.Unique3AbilityEnt_ButtonCom.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityThree); });
                 _eGM.Unique3AbilityEnt_TextMeshProGUICom.Text = "Seed Forest";
             }
-
         }
 
         else
@@ -106,5 +105,10 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
     private void PawnUniqieAbility(UniqueAbilitiesPawnTypes uniqueAbilitiesPawnType)
     {
         _photonPunRPC.UniqueAbilityPawnToMaster(XySelectedCell, uniqueAbilitiesPawnType);
+    }
+
+    private void Fire(int[] fromXy, int[] toXy)
+    {
+        _photonPunRPC.FireToMaster(fromXy, toXy);
     }
 }

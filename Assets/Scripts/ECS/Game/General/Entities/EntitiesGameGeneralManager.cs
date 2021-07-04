@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions;
+using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Static;
 using ExitGames.Client.Photon.StructWrapping;
@@ -62,9 +62,8 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     internal ref UpgradeBuildingsComponent BuildingsEnt_UpgradeBuildingsCom => ref _buildingsEnt.Get<UpgradeBuildingsComponent>();
 
 
-    private EcsEntity _unitInventorEnt;
-    internal ref UnitInventorComponent UnitInventorEnt_UnitInventorCom => ref _unitInventorEnt.Get<UnitInventorComponent>();
-    internal ref UpgradeUnitsComponent UnitInventorEnt_UpgradeUnitCom => ref _unitInventorEnt.Get<UpgradeUnitsComponent>();
+    private EcsEntity _unitInfoEnt;
+    internal ref UnitInventorComponent UnitInfoEnt_UnitInventorCom => ref _unitInfoEnt.Get<UnitInventorComponent>();
 
 
     private EcsEntity _inputEnt;
@@ -116,7 +115,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
             }
 
         _economyEnt = gameWorld.NewEntity();
-        _unitInventorEnt = gameWorld.NewEntity();
+        _unitInfoEnt = gameWorld.NewEntity();
         _buildingsEnt = gameWorld.NewEntity();
         _selectorEnt = gameWorld.NewEntity();
         _rPCGeneralEntity = gameWorld.NewEntity();
@@ -161,8 +160,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
         BuildingsEnt_BuildingsCom.StartFill();
         BuildingsEnt_UpgradeBuildingsCom.StartFill();
 
-        UnitInventorEnt_UnitInventorCom.StartFill();
-        UnitInventorEnt_UpgradeUnitCom.StartFill();
+        UnitInfoEnt_UnitInventorCom.StartFill();
 
         SelectorEnt_SelectorCom.StartFill();
         SelectorEnt_RayCom.StartFill();
@@ -183,20 +181,20 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
         {
             #region Info
 
-            UnitInventorEnt_UnitInventorCom.SetSettedKing(true, false);
-            UnitInventorEnt_UnitInventorCom.SetSettedKing(false, false);
+            UnitInfoEnt_UnitInventorCom.SetSettedKing(true, false);
+            UnitInfoEnt_UnitInventorCom.SetSettedKing(false, false);
 
-            UnitInventorEnt_UnitInventorCom.SetAmountUnits(UnitTypes.King, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_KING_MASTER);
-            UnitInventorEnt_UnitInventorCom.SetAmountUnits(UnitTypes.King, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_KING_OTHER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnits(UnitTypes.King, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_KING_MASTER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnits(UnitTypes.King, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_KING_OTHER);
 
-            UnitInventorEnt_UnitInventorCom.SetAmountUnits(UnitTypes.Pawn, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_PAWN_MASTER);
-            UnitInventorEnt_UnitInventorCom.SetAmountUnits(UnitTypes.Pawn, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_PAWN_OTHER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnits(UnitTypes.Pawn, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_PAWN_MASTER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnits(UnitTypes.Pawn, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_PAWN_OTHER);
 
-            UnitInventorEnt_UnitInventorCom.SetAmountUnits(UnitTypes.Rook, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_ROOK_MASTER);
-            UnitInventorEnt_UnitInventorCom.SetAmountUnits(UnitTypes.Rook, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_ROOK_OTHER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnits(UnitTypes.Rook, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_ROOK_MASTER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnits(UnitTypes.Rook, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_ROOK_OTHER);
 
-            UnitInventorEnt_UnitInventorCom.SetAmountUnits(UnitTypes.Bishop, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_BISHOP_MASTER);
-            UnitInventorEnt_UnitInventorCom.SetAmountUnits(UnitTypes.Bishop, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_BISHOP_OTHER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnits(UnitTypes.Bishop, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_BISHOP_MASTER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnits(UnitTypes.Bishop, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_BISHOP_OTHER);
 
             BuildingsEnt_BuildingsCom.IsSettedCityDict[true] = default;
             BuildingsEnt_BuildingsCom.IsSettedCityDict[false] = default;
@@ -356,7 +354,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
             }
 
 
-        if (Instance.GameType == GameTypes.WithBot)
+        if (Instance.GameModeType == GameModTypes.WithBot)
         {
             int[] xy0 = new int[XY_FOR_ARRAY];
             xy0[X] = 8;

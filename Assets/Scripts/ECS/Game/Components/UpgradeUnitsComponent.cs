@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-internal struct UpgradeUnitsComponent : IDisposable
+internal struct UpgradeUnitsComponent
 {
     private Dictionary<bool, int> _amountUpgradePawnDict;
     private Dictionary<bool, int> _amountUpgradeRookDict;
@@ -100,10 +100,5 @@ internal struct UpgradeUnitsComponent : IDisposable
             default:
                 throw new Exception();
         }
-    }
-
-    public void Dispose()
-    {
-
     }
 }
