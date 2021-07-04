@@ -105,6 +105,46 @@ public class StartGameValuesConfig : ScriptableObject
     public readonly int IRON_FOR_UPGRADE_BISHOP = 1;
     public readonly int GOLD_FOR_UPGRADE_BISHOP = 0;
 
+
+    private int _foodForUpgradeFarm = 0;
+    private int _woodForUpgradeFarm = 0;
+    private int _oreForUpgradeFarm = 0;
+    private int _ironForUpgradeFarm = 0;
+    private int _goldForUpgradeFarm = 5;
+
+    public int FoodForUpgradeFarm => _foodForUpgradeFarm;
+    public int WoodForUpgradeFarm => _woodForUpgradeFarm;
+    public int OreForUpgradeFarm => _oreForUpgradeFarm;
+    public int IronForUpgradeFarm => _ironForUpgradeFarm;
+    public int GoldForUpgradeFarm => _goldForUpgradeFarm;
+
+
+    private int _foodForUpgradeWoodcutter = 0;
+    private int _woodForUpgradeWoodcutter = 0;
+    private int _oreForUpgradeWoodcutter = 0;
+    private int _ironForUpgradeWoodcutter = 0;
+    private int _goldForUpgradeWoodcutter = 5;
+
+    public int FoodForUpgradeWoodcutter => _foodForUpgradeWoodcutter;
+    public int WoodForUpgradeWoodcutter => _woodForUpgradeWoodcutter;
+    public int OreForUpgradeWoodcutter => _oreForUpgradeWoodcutter;
+    public int IronForUpgradeWoodcutter => _ironForUpgradeWoodcutter;
+    public int GoldForUpgradeWoodcutter => _goldForUpgradeWoodcutter;
+
+
+    private int _foodForUpgradeMine = 0;
+    private int _woodForUpgradeMine = 0;
+    private int _oreForUpgradeMine = 0;
+    private int _ironForUpgradeMine = 0;
+    private int _goldForUpgradeMine = 5;
+
+    public int FoodForUpgradeMine => _foodForUpgradeMine;
+    public int WoodForUpgradeMine => _woodForUpgradeMine;
+    public int OreForUpgradeMine => _oreForUpgradeMine;
+    public int IronForUpgradeMine => _ironForUpgradeMine;
+    public int GoldForUpgradeMine => _goldForUpgradeMine;
+
+
     #endregion
 
 

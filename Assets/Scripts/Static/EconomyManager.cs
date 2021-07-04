@@ -445,27 +445,27 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case BuildingTypes.Farm:
-                    haves[FOOD_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= 0;
-                    haves[WOOD_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= 0;
-                    haves[ORE_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= 0;
-                    haves[IRON_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= 0;
-                    haves[GOLD_NUMBER] = 5 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= 5;
+                    haves[FOOD_NUMBER] = StartVGC.FoodForUpgradeFarm == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= StartVGC.FoodForUpgradeFarm;
+                    haves[WOOD_NUMBER] = StartVGC.WoodForUpgradeFarm == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= StartVGC.WoodForUpgradeFarm;
+                    haves[ORE_NUMBER] = StartVGC.OreForUpgradeFarm == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= StartVGC.OreForUpgradeFarm;
+                    haves[IRON_NUMBER] = StartVGC.IronForUpgradeFarm == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= StartVGC.IronForUpgradeFarm;
+                    haves[GOLD_NUMBER] = StartVGC.GoldForUpgradeFarm == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= StartVGC.GoldForUpgradeFarm;
                     break;
 
                 case BuildingTypes.Woodcutter:
-                    haves[FOOD_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= 0;
-                    haves[WOOD_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= 0;
-                    haves[ORE_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= 0;
-                    haves[IRON_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= 0;
-                    haves[GOLD_NUMBER] = 5 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= 5;
+                    haves[FOOD_NUMBER] = StartVGC.FoodForUpgradeWoodcutter == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= StartVGC.FoodForUpgradeWoodcutter;
+                    haves[WOOD_NUMBER] = StartVGC.WoodForUpgradeWoodcutter == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= StartVGC.WoodForUpgradeWoodcutter;
+                    haves[ORE_NUMBER] = StartVGC.OreForUpgradeWoodcutter == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= StartVGC.OreForUpgradeWoodcutter;
+                    haves[IRON_NUMBER] = StartVGC.IronForUpgradeWoodcutter == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= StartVGC.IronForUpgradeWoodcutter;
+                    haves[GOLD_NUMBER] = StartVGC.GoldForUpgradeWoodcutter == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= StartVGC.GoldForUpgradeWoodcutter;
                     break;
 
                 case BuildingTypes.Mine:
-                    haves[FOOD_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= 0;
-                    haves[WOOD_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= 0;
-                    haves[ORE_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= 0;
-                    haves[IRON_NUMBER] = 0 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= 0;
-                    haves[GOLD_NUMBER] = 5 == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= 5;
+                    haves[FOOD_NUMBER] = StartVGC.FoodForUpgradeMine == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= StartVGC.FoodForUpgradeMine;
+                    haves[WOOD_NUMBER] = StartVGC.WoodForUpgradeMine == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= StartVGC.WoodForUpgradeMine;
+                    haves[ORE_NUMBER] = StartVGC.OreForUpgradeMine == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= StartVGC.OreForUpgradeMine;
+                    haves[IRON_NUMBER] = StartVGC.IronForUpgradeMine == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= StartVGC.IronForUpgradeMine;
+                    haves[GOLD_NUMBER] = StartVGC.GoldForUpgradeMine == NULL_RESOURCES ? true : Instance.EGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= StartVGC.GoldForUpgradeMine;
                     break;
 
                 default:

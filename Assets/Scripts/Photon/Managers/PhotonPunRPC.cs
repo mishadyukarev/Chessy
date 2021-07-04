@@ -160,11 +160,6 @@ namespace Assets.Scripts
                     _sMM.TryInvokeRunSystem(nameof(CreatorUnitMasterSystem), _sMM.RPCSystems);
                     break;
 
-                //case RpcTypes.UpgradeUnit:
-                //    _eMM.RPCMasterEnt_RPCMasterCom.UnitType = (UnitTypes)objects[0];
-                //    _sMM.TryInvokeRunSystem(nameof(UpgradeUnitMasterSystem), _sMM.RPCSystems);
-                //    break;
-
                 case RpcTypes.MeltOre:
                     _sMM.TryInvokeRunSystem(nameof(MeltOreMasterSystem), _sMM.RPCSystems);
                     break;
@@ -193,11 +188,6 @@ namespace Assets.Scripts
                     _eMM.FireEnt_FromToXyCom.ToXyCopy = (int[])objects[1];
                     _sMM.TryInvokeRunSystem(nameof(FireMasterSystem), _sMM.RPCSystems);
                     break;
-
-                //case RpcTypes.UpgradeBuilding:
-                //    _eMM.RPCMasterEnt_RPCMasterCom.BuildingType = (BuildingTypes)objects[0];
-                //    _sMM.TryInvokeRunSystem(nameof(UpgradeBuildingMasterSystem), _sMM.RPCSystems);
-                //    break;
 
                 case RpcTypes.Upgrade:
                     var upgradeModType = (UpgradeModTypes)objects[0];
