@@ -618,6 +618,7 @@ namespace Assets.Scripts
 
                 case UnitTypes.PawnSword:
                     Instance.EGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.PawnSword, Instance.EGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGM.CellUnitEnt_CellUnitCom(xy).AmountHealth += Instance.StartValuesGameConfig.AMOUNT_HEALTH_PAWN_SWORD - Instance.StartValuesGameConfig.AMOUNT_HEALTH_PAWN;
                     break;
 
                 case UnitTypes.Rook:
@@ -626,6 +627,7 @@ namespace Assets.Scripts
 
                 case UnitTypes.RookCrossbow:
                     Instance.EGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.RookCrossbow, Instance.EGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGM.CellUnitEnt_CellUnitCom(xy).AmountHealth += Instance.StartValuesGameConfig.AMOUNT_HEALTH_ROOK_CROSSBOW - Instance.StartValuesGameConfig.AMOUNT_HEALTH_ROOK;
                     break;
 
                 case UnitTypes.Bishop:
@@ -634,6 +636,7 @@ namespace Assets.Scripts
 
                 case UnitTypes.BishopCrossbow:
                     Instance.EGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.BishopCrossbow, Instance.EGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGM.CellUnitEnt_CellUnitCom(xy).AmountHealth += Instance.StartValuesGameConfig.AMOUNT_HEALTH_BISHOP_CROSSBOW - Instance.StartValuesGameConfig.AMOUNT_HEALTH_BISHOP;
                     break;
 
                 default:

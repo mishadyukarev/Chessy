@@ -7,16 +7,7 @@ public class StartGameValuesConfig : ScriptableObject
 
     #region PERCENT ENVIRONMENT
 
-    private byte _fertilizerPercent = 30;
-    private byte _forestPercent = 30;
-    private byte _hillPercent = 5;
-    private byte _mountainPercent = 5;
 
-
-    public byte FertilizerPercent => _fertilizerPercent;
-    public byte ForestPercent => _forestPercent;
-    public byte HillPercent => _hillPercent;
-    public byte MountainPercent => _mountainPercent;
 
     #endregion
 
@@ -42,11 +33,11 @@ public class StartGameValuesConfig : ScriptableObject
 
     #region Stats
 
-    public readonly int AMOUNT_FOOD_MASTER = 15;
-    public readonly int AMOUNT_FOOD_OTHER = 15;
+    public readonly int AMOUNT_FOOD_MASTER = 25;
+    public readonly int AMOUNT_FOOD_OTHER = 25;
 
-    public readonly int AMOUNT_WOOD_MASTER = 15;
-    public readonly int AMOUNT_WOOD_OTHER = 15;
+    public readonly int AMOUNT_WOOD_MASTER = 25;
+    public readonly int AMOUNT_WOOD_OTHER = 25;
 
     public readonly int AMOUNT_ORE_MASTER = 0;
     public readonly int AMOUNT_ORE_OTHER = 0;
@@ -110,7 +101,7 @@ public class StartGameValuesConfig : ScriptableObject
     private int _woodForUpgradeFarm = 0;
     private int _oreForUpgradeFarm = 0;
     private int _ironForUpgradeFarm = 0;
-    private int _goldForUpgradeFarm = 5;
+    private int _goldForUpgradeFarm = 3;
 
     public int FoodForUpgradeFarm => _foodForUpgradeFarm;
     public int WoodForUpgradeFarm => _woodForUpgradeFarm;
@@ -123,7 +114,7 @@ public class StartGameValuesConfig : ScriptableObject
     private int _woodForUpgradeWoodcutter = 0;
     private int _oreForUpgradeWoodcutter = 0;
     private int _ironForUpgradeWoodcutter = 0;
-    private int _goldForUpgradeWoodcutter = 5;
+    private int _goldForUpgradeWoodcutter = 3;
 
     public int FoodForUpgradeWoodcutter => _foodForUpgradeWoodcutter;
     public int WoodForUpgradeWoodcutter => _woodForUpgradeWoodcutter;
@@ -136,7 +127,7 @@ public class StartGameValuesConfig : ScriptableObject
     private int _woodForUpgradeMine = 0;
     private int _oreForUpgradeMine = 0;
     private int _ironForUpgradeMine = 0;
-    private int _goldForUpgradeMine = 5;
+    private int _goldForUpgradeMine = 3;
 
     public int FoodForUpgradeMine => _foodForUpgradeMine;
     public int WoodForUpgradeMine => _woodForUpgradeMine;
@@ -151,7 +142,7 @@ public class StartGameValuesConfig : ScriptableObject
     #region Melting
 
     public readonly int FOOD_FOR_MELTING_ORE = 0;
-    public readonly int WOOD_FOR_MELTING_ORE = 15;
+    public readonly int WOOD_FOR_MELTING_ORE = 10;
     public readonly int ORE_FOR_MELTING_ORE = 4;
     public readonly int IRON_FOR_MELTING_ORE = 0;
     public readonly int GOLD_FOR_MELTING_ORE = 0;
@@ -162,7 +153,7 @@ public class StartGameValuesConfig : ScriptableObject
     #region Fire
 
     private int _foodForPawnFire = 0;
-    private int _woodForPawnFire = 1;
+    private int _woodForPawnFire = 0;
     private int _oreForPawnFire = 0;
     private int _ironForPawnFire = 0;
     private int _goldForPawnFire = 0;
@@ -176,7 +167,7 @@ public class StartGameValuesConfig : ScriptableObject
 
 
     private int _foodForPawnSwordFire = 0;
-    private int _woodForPawnSwordFire = 1;
+    private int _woodForPawnSwordFire = 0;
     private int _oreForPawnSwordFire = 0;
     private int _ironForPawnSwordFire = 0;
     private int _goldForPawnSwordFire = 0;
@@ -190,7 +181,7 @@ public class StartGameValuesConfig : ScriptableObject
 
 
     private int _foodForRookFire = 0;
-    private int _woodForRookFire = 1;
+    private int _woodForRookFire = 0;
     private int _oreForRookFire = 0;
     private int _ironForRookFire = 0;
     private int _goldForRookFire = 0;
@@ -204,7 +195,7 @@ public class StartGameValuesConfig : ScriptableObject
 
 
     private int _foodForRookCrossbowFire = 0;
-    private int _woodForRookCrossbowFire = 1;
+    private int _woodForRookCrossbowFire = 0;
     private int _oreForRookCrossbowFire = 0;
     private int _ironForRookCrossbowFire = 0;
     private int _goldForRookCrossbowFire = 0;
@@ -218,7 +209,7 @@ public class StartGameValuesConfig : ScriptableObject
 
 
     private int _foodForBishopFire = 0;
-    private int _woodForBishopFire = 1;
+    private int _woodForBishopFire = 0;
     private int _oreForBishopFire = 0;
     private int _ironForBishopFire = 0;
     private int _goldForBishopFire = 0;
@@ -232,7 +223,7 @@ public class StartGameValuesConfig : ScriptableObject
 
 
     private int _foodForBishopCrossbowFire = 0;
-    private int _woodForBishopCrossbowFire = 1;
+    private int _woodForBishopCrossbowFire = 0;
     private int _oreForBishopCrossbowFire = 0;
     private int _ironForBishopCrossbowFire = 0;
     private int _goldForBishopCrossbowFire = 0;
@@ -262,7 +253,7 @@ public class StartGameValuesConfig : ScriptableObject
     public readonly int GOLD_FOR_BUILDING_WOODCUTTER = 0;
 
     public readonly int FOOD_FOR_BUILDING_MINE = 0;
-    public readonly int WOOD_FOR_BUILDING_MINE = 15;
+    public readonly int WOOD_FOR_BUILDING_MINE = 10;
     public readonly int ORE_FOR_BUILDING_MINE = 0;
     public readonly int IRON_FOR_BUILDING_MINE = 0;
     public readonly int GOLD_FOR_BUILDING_MINE = 0;
@@ -274,8 +265,8 @@ public class StartGameValuesConfig : ScriptableObject
 
     #region Benefit
 
-    public readonly int BENEFIT_FOOD_FARM = 3;
-    public readonly int BENEFIT_WOOD_WOODCUTTER = 2;
+    public readonly int BENEFIT_FOOD_FARM = 1;
+    public readonly int BENEFIT_WOOD_WOODCUTTER = 1;
     public readonly int BENEFIT_ORE_MINE = 1;
 
     public readonly int BENEFIT_FOOD_CITY = 1;
@@ -301,7 +292,7 @@ public class StartGameValuesConfig : ScriptableObject
     public readonly int AMOUNT_HEALTH_BISHOP_CROSSBOW = 150;
 
 
-    private readonly float PERCENT_FOR_HEALTH_KING = 0.15f;
+    private readonly float PERCENT_FOR_HEALTH_KING = 0.2f;
     private readonly float PERCENT_FOR_HEALTH_PAWN = 0.2f;
     private readonly float PERCENT_FOR_HEALTH_PAWN_SWORD = 0.2f;
     private readonly float PERCENT_FOR_HEALTH_ROOK = 0.2f;
@@ -322,7 +313,7 @@ public class StartGameValuesConfig : ScriptableObject
 
     #region Damage
 
-    public readonly int SIMPLE_POWER_DAMAGE_KING = 90;
+    public readonly int SIMPLE_POWER_DAMAGE_KING = 100;
     public readonly int SIMPLE_POWER_DAMAGE_PAWN = 50;
     public readonly int SIMPLE_POWER_DAMAGE_PAWN_SWORD = 75;
     public readonly int SIMPLE_POWER_DAMAGE_ROOK = 25;

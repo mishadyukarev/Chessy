@@ -8,7 +8,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Assets.Scripts.Abstractions.ValuesConst;
+using static Assets.Scripts.Abstractions.EnvironmentValues;
 using static Assets.Scripts.Main;
+using Assets.Scripts.Abstractions;
 
 public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDisposable
 {
@@ -324,32 +326,29 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                 {
                     int random;
 
-                    random = UnityEngine.Random.Range(1, 100);
-                    if (random <= resourcesCommComponent.StartValuesGameConfig.MountainPercent)
-                        CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Mountain);
+                    if (y >= 5 && y <= 6)
+                    {
+                        random = UnityEngine.Random.Range(1, 100);
+                        if (random <= MOUNTAIN_PERCENT)
+                            CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Mountain);
+                    }
 
                     if (!CellEnvEnt_CellEnvCom(x, y).HaveMountain)
                     {
                         random = UnityEngine.Random.Range(1, 100);
-                        if (random <= resourcesCommComponent.StartValuesGameConfig.ForestPercent)
+                        if (random <= FOREST_PERCENT)
                         {
                             CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.AdultForest);
                         }
 
-
-                        random = UnityEngine.Random.Range(1, 100);
-                        if (random <= resourcesCommComponent.StartValuesGameConfig.HillPercent)
-                            CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Hill);
-
-
-                        if (!CellEnvEnt_CellEnvCom(x, y).HaveAdultTree)
+                        if (y >= 5 && y <= 6)
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= resourcesCommComponent.StartValuesGameConfig.FertilizerPercent)
-                                CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Fertilizer);
-                        }
-                    }
+                            if (random <= HILL_PERCENT)
+                                CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Hill);
 
+                        }    
+                    }
                 }
             }
 
@@ -402,11 +401,6 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                 else if (i == 1)
                 {
                     CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.Hill, xy1);
-                }
-
-                else if (i == 1 || i == 2 || i == 5)
-                {
-                    CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.Fertilizer, xy1);
                 }
 
 

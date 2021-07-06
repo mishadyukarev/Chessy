@@ -23,6 +23,8 @@ internal struct CellEnvironmentComponent
     internal int AmountForestResources;
     internal int AmountOreResources;
 
+    internal int AmountStepsExtractForest;
+
     internal int MineStep;
 
     internal bool HaveFertilizer => _haveFertilizer;
@@ -59,13 +61,13 @@ internal struct CellEnvironmentComponent
                 throw new System.Exception();
 
             case EnvironmentTypes.Fertilizer:
-                return 50;
+                return 15;
 
             case EnvironmentTypes.YoungForest:
                 throw new System.Exception();
 
             case EnvironmentTypes.AdultForest:
-                return 20;
+                return 15;
 
             case EnvironmentTypes.Hill:
                 return 999;
@@ -88,7 +90,7 @@ internal struct CellEnvironmentComponent
             case EnvironmentTypes.Fertilizer:
                 _haveFertilizer = true;
                 _fertilizerGO.SetActive(true);
-                AmountFertilizerResources = UnityEngine.Random.Range(40, (int)MaxAmountResources(environmentType));
+                AmountFertilizerResources = UnityEngine.Random.Range(10, (int)MaxAmountResources(environmentType));
                 break;
 
             case EnvironmentTypes.YoungForest:
@@ -99,7 +101,7 @@ internal struct CellEnvironmentComponent
             case EnvironmentTypes.AdultForest:
                 _haveAdultTree = true;
                 _adultTreeGO.SetActive(true);
-                AmountForestResources = UnityEngine.Random.Range(15, (int)MaxAmountResources(environmentType));
+                AmountForestResources = UnityEngine.Random.Range(10, (int)MaxAmountResources(environmentType));
                 break;
 
             case EnvironmentTypes.Hill:
@@ -226,5 +228,7 @@ internal struct CellEnvironmentComponent
         _haveFertilizer = false;
         _fertilizerGO.SetActive(false);
         AmountFertilizerResources = 0;
+
+        AmountStepsExtractForest = 0;
     }
 }

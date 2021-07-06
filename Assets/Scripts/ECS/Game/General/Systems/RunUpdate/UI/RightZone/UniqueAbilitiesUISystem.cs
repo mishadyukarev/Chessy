@@ -84,10 +84,10 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                     _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.Text = "Fire forest";
                 }
 
-                _eGM.Unique2AbilityEnt_ButtonCom.SetActive(true);
-                _eGM.Unique2AbilityEnt_ButtonCom.RemoveAllListeners();
-                _eGM.Unique2AbilityEnt_ButtonCom.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityTwo); });
-                _eGM.Unique2AbilityEnt_TextMeshProGUICom.Text = "Fertilize Field";
+                //_eGM.Unique2AbilityEnt_ButtonCom.SetActive(false);
+                //_eGM.Unique2AbilityEnt_ButtonCom.RemoveAllListeners();
+                //_eGM.Unique2AbilityEnt_ButtonCom.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityTwo); });
+                //_eGM.Unique2AbilityEnt_TextMeshProGUICom.Text = "Fertilize Field";
 
                 _eGM.Unique3AbilityEnt_ButtonCom.SetActive(true);
                 _eGM.Unique3AbilityEnt_ButtonCom.RemoveAllListeners();

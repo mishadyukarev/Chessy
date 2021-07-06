@@ -84,23 +84,20 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                                 if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Pawn
                                     || _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.PawnSword)
                                 {
-                                    //if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer)
-                                    //{
-                                    //    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, 1);
-                                    //    _eGM.CellEnvEnt_CellEnvCom(x, y).AmountFertilizerResources -= 1;
-
-                                    //    if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizerResources)
-                                    //    {
-                                    //        _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.Fertilizer);
-                                    //    }
-                                    //}
-
                                     if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree)
                                     {
                                         _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, 1);
                                         _eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources -= 1;
+                                        _eGM.CellEnvEnt_CellEnvCom(x, y).AmountStepsExtractForest += 1;
 
-                                        if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveForestResources)
+                                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveForestResources)
+                                        {
+                                            if(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountStepsExtractForest >= 3)
+                                            {
+                                                CellBuildingWorker.SetPlayerBuilding(true, BuildingTypes.Woodcutter, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner, x, y);
+                                            }
+                                        }
+                                        else
                                         {
                                             _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
                                         }
@@ -174,6 +171,8 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 
                     else
                     {
+                        _eGM.CellEnvEnt_CellEnvCom(x, y).AmountStepsExtractForest = 0;
+
                         if (CellUnitWorker.HaveMaxSteps(x, y))
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected = true;
@@ -204,12 +203,6 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 
                             if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizerResources)
                             {
-                                //Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM);
-                                //Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM);
-                                //Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Ore, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.ORE_FOR_BUILDING_FARM);
-                                //Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Iron, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.IRON_FOR_BUILDING_FARM);
-                                //Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Gold, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM);
-
                                 _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.Fertilizer);
                                 CellBuildingWorker.ResetBuilding(true, x, y);
                             }
@@ -223,12 +216,6 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 
                             if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveForestResources)
                             {
-                                Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER);
-                                Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER);
-                                Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Ore, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER);
-                                Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Iron, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER);
-                                Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Gold, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER);
-
                                 _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
                                 CellBuildingWorker.ResetBuilding(true, x, y);
                             }
@@ -242,12 +229,6 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 
                             if (_eGM.CellEnvEnt_CellEnvCom(x, y).MineStep >= 10 || !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveOreResources)
                             {
-                                Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.FOOD_FOR_BUILDING_MINE);
-                                Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.WOOD_FOR_BUILDING_MINE);
-                                Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Ore, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.ORE_FOR_BUILDING_MINE);
-                                Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Iron, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.IRON_FOR_BUILDING_MINE);
-                                Instance.EGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Gold, Instance.EGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.GOLD_FOR_BUILDING_MINE);
-
                                 CellBuildingWorker.ResetBuilding(true, x, y);
                                 _eGM.CellEnvEnt_CellEnvCom(x, y).MineStep = 0;
                             }

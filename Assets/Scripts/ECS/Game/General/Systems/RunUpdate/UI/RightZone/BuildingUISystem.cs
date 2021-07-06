@@ -11,7 +11,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
         base.Init();
 
         _eGM.BuildingFirstAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.Farm); });
-        _eGM.BuildingSecondAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.Woodcutter); });
+        //_eGM.BuildingSecondAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.Woodcutter); });
         _eGM.BuildingThirdAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.Mine); });
         _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.City); });
     }
@@ -69,7 +69,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                 {
                     _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
                     _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
-                    _eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
+                    //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
                     _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(false);
                     _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
                 }
@@ -79,7 +79,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
             {
                 _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
                 _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
-                _eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
+                //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
                 _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(false);
                 _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
             }
@@ -88,7 +88,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
             {
                 _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(true);
                 _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(true);
-                _eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(true);
+                //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(true);
                 _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(true);
                 _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(true);
 
@@ -149,7 +149,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
         {
             _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
             _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
-            _eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
+            //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
             _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(false);
             _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
         }
@@ -159,7 +159,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
     {
         _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(isActivated);
         _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(isActivated);
-        _eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(isActivated);
+        //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(isActivated);
         _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(isActivated);
         _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(isActivated);
     }

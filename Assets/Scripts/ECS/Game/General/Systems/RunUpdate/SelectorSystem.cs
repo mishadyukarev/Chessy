@@ -42,8 +42,6 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                 ClearAvailableCells();
 
                 CleanXY(XyPreviousCell);
-
-                //ActivateSelector(false, XyPreviousCell, XySelectedCell);
             }
         }
         else
@@ -235,7 +233,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                         {
                             if (_eGM.SelectorEnt_UnitTypeCom.HaveUnit)
                             {
-                                if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit)
+                                if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit || !_eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).IsActivatedUnitDict[Instance.IsMasterClient])
                                 {
                                     if (_isStartSelectedDirect)
                                     {
@@ -247,7 +245,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                     }
                                     else
                                     {
-                                        if (!_eGM.CellUnitEnt_UnitTypeCom(_xyPreviousVisionCell).HaveUnit)
+                                        //if (!_eGM.CellUnitEnt_UnitTypeCom(_xyPreviousVisionCell).HaveUnit)
                                             _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).EnablePlayerSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
 
                                         _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSR(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);

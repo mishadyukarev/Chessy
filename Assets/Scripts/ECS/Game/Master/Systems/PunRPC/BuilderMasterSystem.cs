@@ -13,7 +13,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
         base.Run();
 
 
-        if (CellUnitWorker.HaveMaxSteps(XyCell) && !_eGM.CellBuildEnt_BuilTypeCom(XyCell).HaveBuilding)
+        if (!_eGM.CellBuildEnt_BuilTypeCom(XyCell).HaveBuilding)
         {
             bool canSet = false;
             switch (BuildingType)
@@ -33,7 +33,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     break;
 
                 case BuildingTypes.Farm:
-                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizerResources;
+                    canSet = !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultTree;
                     break;
 
                 case BuildingTypes.Woodcutter:
@@ -49,15 +49,33 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
             }
             if (canSet)
             {
-                if (EconomyManager.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves))
+                if(BuildingType != BuildingTypes.Farm )
                 {
-                    EconomyManager.CreateBuilding(BuildingType, Info.Sender);
-                    CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
-                    _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
+                    if (EconomyManager.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves) && CellUnitWorker.HaveMaxSteps(XyCell))
+                    {
+                        EconomyManager.CreateBuilding(BuildingType, Info.Sender);
+                        CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
+                        _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
+                    }
+                    else
+                    {
+                        _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves);
+                    }
                 }
                 else
                 {
-                    _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves);
+                    if (EconomyManager.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves))
+                    {
+                        _eGM.CellEnvEnt_CellEnvCom(XyCell).SetNewEnvironment(EnvironmentTypes.Fertilizer);
+
+                        EconomyManager.CreateBuilding(BuildingType, Info.Sender);
+                        CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
+                        _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps -= 1;
+                    }
+                    else
+                    {
+                        _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves);
+                    }
                 }
             }
         }
