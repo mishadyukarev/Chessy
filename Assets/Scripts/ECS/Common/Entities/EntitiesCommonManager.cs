@@ -68,8 +68,9 @@ namespace Assets.Scripts
 
             _cameraEnt = commonWorld.NewEntity();
             var camera = UnityEngine.Object.Instantiate(ResourcesEnt_ResourcesCommonCom.PrefabConfig.Camera, Instance.transform.position, Instance.transform.rotation);
-            camera.transform.position += new Vector3(7, 5.5f, -2);
+            camera.transform.position += new Vector3(7, 4.8f, -2);
             camera.name = "Camera";
+            camera.orthographicSize = 5.6f;
             CommParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(camera.transform);
             CameraEnt_CameraCommonCom.SetCamera(camera);
 

@@ -326,7 +326,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                 {
                     int random;
 
-                    if (y >= 5 && y <= 6)
+                    if (y >= 4 && y <= 6)
                     {
                         random = UnityEngine.Random.Range(1, 100);
                         if (random <= MOUNTAIN_PERCENT)
@@ -341,7 +341,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                             CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.AdultForest);
                         }
 
-                        if (y >= 5 && y <= 6)
+                        if (y >= 4 && y <= 6)
                         {
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= HILL_PERCENT)
@@ -422,10 +422,11 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
         void SetActive(GameObject go, int x, int y)
         {
-            if (x >= 0 && y == 0 || x >= 0 && y == 11 ||
+            if (x >= 0 && y == 0 || x >= 0 && y == 10 ||
+                x == 1 && y >= 0|| x == 13 && y >= 0 ||
             x == 0 && y >= 0 || x == 14 && y >= 0 ||
             x == 1 && y == 1 || x == 2 && y == 1 || x == 12 && y == 1 || x == 13 && y == 1 ||
-            x == 1 && y == 10 || x == 2 && y == 10 || x == 12 && y == 10 || x == 13 && y == 10)
+            x == 1 && y == 9 || x == 2 && y == 9 || x == 12 && y == 9 || x == 13 && y == 9)
                 go.SetActive(false);
         }
     }
