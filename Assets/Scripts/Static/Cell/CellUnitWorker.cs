@@ -904,7 +904,7 @@ namespace Assets.Scripts
 
                 if (Instance.EGM.CellEnt_CellBaseCom(xyResultCell).IsActiveSelfGO)
                 {
-                    xyAvailableCells.Add(CopyXY(xyResultCell));
+                    xyAvailableCells.Add(CopyXy(xyResultCell));
                 }
             }
 

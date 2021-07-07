@@ -72,22 +72,22 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                             {
                                 if (_canExecuteStartClick)
                                 {
-                                    CopyXYinTo(xyCurrentCell, XySelectedCell);
+                                    CopyXyInTo(xyCurrentCell, XySelectedCell);
 
                                     if (!CompareXY(XyPreviousCell, XySelectedCell))
                                         ActivateSelector(true, XyPreviousCell, XySelectedCell);
 
-                                    CopyXYinTo(XySelectedCell, XyPreviousCell);
+                                    CopyXyInTo(XySelectedCell, XyPreviousCell);
                                     _canExecuteStartClick = false;
                                 }
 
                                 else
                                 {
                                     if (!CompareXY(XySelectedCell, xyCurrentCell))
-                                        CopyXYinTo(XySelectedCell, XyPreviousCell);
+                                        CopyXyInTo(XySelectedCell, XyPreviousCell);
 
 
-                                    CopyXYinTo(xyCurrentCell, XySelectedCell);
+                                    CopyXyInTo(xyCurrentCell, XySelectedCell);
                                     ActivateSelector(true, XyPreviousCell, XySelectedCell);
                                 }
                             }
@@ -112,7 +112,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                                 else if (_canExecuteStartClick)
                                 {
-                                    CopyXYinTo(xyCurrentCell, XySelectedCell);
+                                    CopyXyInTo(xyCurrentCell, XySelectedCell);
 
                                     if (!CompareXY(XyPreviousCell, XySelectedCell))
                                         ActivateSelector(true, XyPreviousCell, XySelectedCell);
@@ -134,17 +134,17 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                         }
                                     }
 
-                                    CopyXYinTo(XySelectedCell, XyPreviousCell);
+                                    CopyXyInTo(XySelectedCell, XyPreviousCell);
                                     _canExecuteStartClick = false;
                                 }
 
                                 else
                                 {
                                     if (!CompareXY(XySelectedCell, xyCurrentCell))
-                                        CopyXYinTo(XySelectedCell, XyPreviousCell);
+                                        CopyXyInTo(XySelectedCell, XyPreviousCell);
 
 
-                                    CopyXYinTo(xyCurrentCell, XySelectedCell);
+                                    CopyXyInTo(xyCurrentCell, XySelectedCell);
                                     ActivateSelector(true, XyPreviousCell, XySelectedCell);
 
 
@@ -240,7 +240,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                         if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit)
                                             _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSR(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
 
-                                        CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
+                                        CopyXyInTo(xyCurrentCell, _xyPreviousVisionCell);
                                         _isStartSelectedDirect = false;
                                     }
                                     else
@@ -249,7 +249,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                             _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).EnablePlayerSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
 
                                         _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSR(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
-                                        CopyXYinTo(xyCurrentCell, _xyPreviousVisionCell);
+                                        CopyXyInTo(xyCurrentCell, _xyPreviousVisionCell);
                                     }
 
                                 }
@@ -286,8 +286,9 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
     private void ActivateSelector(in bool isActive, in int[] xyPreviousCell, in int[] xySelectedCell)
     {
-        _eGM.CellEnt_CellBaseCom(xyPreviousCell).IsSelected = false;
-        _eGM.CellEnt_CellBaseCom(xySelectedCell).IsSelected = isActive;
+        //_eGM.CellEnt_CellBaseCom(xyPreviousCell).IsSelected = false;
+        //_eGM.CellEnt_CellBaseCom(xySelectedCell).IsSelected = isActive;
+
         _eGM.SelectorEnt_SelectorCom.IsSelected = isActive;
     }
 

@@ -19,7 +19,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
         private void FindIdleUnit()
         {
             var xy = _eGM.SelectorEnt_SelectorCom.XySelectedCell;
-            _eGM.CellEnt_CellBaseCom(xy).IsSelected = false;
+            //_eGM.CellEnt_CellBaseCom(xy).IsSelected = false;
             _eGM.SelectorEnt_SelectorCom.IsSelected = false;
             _eGM.SelectorEnt_SelectorCom.XySelectedCell = new int[] { 0, 0 };
 
@@ -35,7 +35,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
                             {
                                 //if (!_eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected && !_eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed)
 
-                                _eGM.CellEnt_CellBaseCom(x, y).IsSelected = true;
+                                //_eGM.CellEnt_CellBaseCom(x, y).IsSelected = true;
                                 _eGM.SelectorEnt_SelectorCom.IsSelected = true;
                                 _eGM.SelectorEnt_SelectorCom.XySelectedCell = new int[] { x, y };
                             }

@@ -1,16 +1,28 @@
 ﻿
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static;
 using System;
 using System.Collections.Generic;
 using static Assets.Scripts.Abstractions.ValuesConst;
+using static Assets.Scripts.Static.CellBaseOperations;
 
 public struct SelectorComponent
 {
+    private int[] _xyCurrentCell;
+
+    private int[] _xyPreviousCell;
+    private int[] _xySelectedCell;
+
     internal List<int[]> AvailableCellsForShift;
     internal List<int[]> AvailableCellsSimpleAttack;
     internal List<int[]> AvailableCellsUniqueAttack;
 
-    internal int[] XyCurrentCell;
+
+    internal int[] XyCurrentCell
+    {
+        get => (int[])_xyCurrentCell.Clone();
+        set => _xyCurrentCell = (int[])value.Clone();
+    }
 
     internal int[] XyPreviousCell;
     internal int[] XySelectedCell;
@@ -28,7 +40,7 @@ public struct SelectorComponent
 
     internal void StartFill()
     {
-        XyCurrentCell = new int[XY_FOR_ARRAY];
+        _xyCurrentCell = new int[XY_FOR_ARRAY];
         XySelectedCell = new int[XY_FOR_ARRAY];
         XyPreviousCell = new int[XY_FOR_ARRAY];
 

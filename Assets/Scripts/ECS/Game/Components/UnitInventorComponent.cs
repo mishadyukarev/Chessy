@@ -50,8 +50,8 @@ internal struct UnitInventorComponent
         _amountBishopCrossbowDict.Add(false, default);
     }
 
-    internal bool IsSettedKing(bool isMaster) => _isSettedKingDict[isMaster];
-    internal void SetSettedKing(bool isMaster, bool isSetted) => _isSettedKingDict[isMaster] = isSetted;
+    internal bool IsSettedKing(bool key) => _isSettedKingDict[key];
+    internal void SetSettedKing(bool key, bool value) => _isSettedKingDict[key] = value;
 
     internal int AmountUnits(UnitTypes unitType, bool isMaster)
     {
@@ -86,7 +86,7 @@ internal struct UnitInventorComponent
         }
     }
 
-    internal bool HaveUnit(UnitTypes unitType, bool isMaster)
+    internal bool HaveUnitInInventor(UnitTypes unitType, bool isMaster)
     {
         switch (unitType)
         {
@@ -119,7 +119,7 @@ internal struct UnitInventorComponent
         }
     }
 
-    internal void SetAmountUnits(UnitTypes unitType, bool isMaster, int value)
+    internal void SetAmountUnitsInInventor(UnitTypes unitType, bool isMaster, int value)
     {
         switch (unitType)
         {
@@ -159,7 +159,7 @@ internal struct UnitInventorComponent
         }
     }
 
-    internal void AddAmountUnits(UnitTypes unitType, bool isMaster, int adding = 1)
+    internal void AddUnitsInInventor(UnitTypes unitType, bool isMaster, int adding = 1)
     {
         switch (unitType)
         {
@@ -199,7 +199,7 @@ internal struct UnitInventorComponent
         }
     }
 
-    internal void TakeAmountUnits(UnitTypes unitType, bool isMaster, int taking = -1)
+    internal void TakeUnitsInInventor(UnitTypes unitType, bool isMaster, int taking = -1)
     {
         switch (unitType)
         {

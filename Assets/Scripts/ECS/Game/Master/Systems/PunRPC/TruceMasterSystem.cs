@@ -46,32 +46,32 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                         break;
 
                                     case UnitTypes.King:
-                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.King, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.King, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         _eGM.UnitInfoEnt_UnitInventorCom.SetSettedKing(_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, false);
                                         break;
 
                                     case UnitTypes.Pawn:
-                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         break;
 
                                     case UnitTypes.PawnSword:
-                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         break;
 
                                     case UnitTypes.Rook:
-                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         break;
 
                                     case UnitTypes.RookCrossbow:
-                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.RookCrossbow, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.RookCrossbow, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         break;
 
                                     case UnitTypes.Bishop:
-                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         break;
 
                                     case UnitTypes.BishopCrossbow:
-                                        _eGM.UnitInfoEnt_UnitInventorCom.AddAmountUnits(UnitTypes.BishopCrossbow, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                        _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.BishopCrossbow, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
                                         break;
 
                                     default:
@@ -92,33 +92,18 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                         break;
 
                                     case BuildingTypes.City:
-                                        CellBuildingWorker.ResetBuilding(true, x, y);
+                                        //CellBuildingWorker.ResetBuilding(true, x, y);
                                         break;
 
                                     case BuildingTypes.Farm:
-                                        //_eGM.FoodEnt_AmountDictCom.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.FOOD_FOR_BUILDING_FARM;
-                                        //_eGM.WoodEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.WOOD_FOR_BUILDING_FARM;
-                                        //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_FARM;
-                                        //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_FARM;
-                                        //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_FARM;
                                         CellBuildingWorker.ResetBuilding(true, x, y);
                                         break;
 
                                     case BuildingTypes.Woodcutter:
-                                        //_eGM.FoodEnt_AmountDictCom.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.FOOD_FOR_BUILDING_WOODCUTTER;
-                                        //_eGM.WoodEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.WOOD_FOR_BUILDING_WOODCUTTER;
-                                        //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_WOODCUTTER;
-                                        //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_WOODCUTTER;
-                                        //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_WOODCUTTER;
                                         CellBuildingWorker.ResetBuilding(true, x, y);
                                         break;
 
                                     case BuildingTypes.Mine:
-                                        //_eGM.FoodEnt_AmountDictCom.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.FOOD_FOR_BUILDING_MINE;
-                                        //_eGM.WoodEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.WOOD_FOR_BUILDING_MINE;
-                                        //_eGM.OreEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.ORE_FOR_BUILDING_MINE;
-                                        //_eGM.IronEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.IRON_FOR_BUILDING_MINE;
-                                        //_eGM.GoldEAmountDictC.AmountDict[_eGM.CellEnt_CellBuildingCom(x, y).IsMasterOwner] += _startValuesGameConfig.GOLD_FOR_BUILDING_MINE;
                                         CellBuildingWorker.ResetBuilding(true, x, y);
                                         break;
 

@@ -18,7 +18,7 @@ namespace Assets.Scripts
 
         [NonSerialized]public GameModTypes GameModeType;
 
-        public const string VERSION_PHOTON_GAME = "0.1c";
+        public const string VERSION_PHOTON_GAME = "0.1d";
 
         #endregion
 
@@ -57,8 +57,6 @@ namespace Assets.Scripts
 
         private void Update()
         {
-            //Debug.Log(PhotonNetwork.CloudRegion);
-
             _eCSmanager.OwnUpdate(_sceneType);
             _photonManager.OwnUpdate(_sceneType);
         }
