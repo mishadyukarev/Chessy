@@ -129,7 +129,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                         }
 
                         if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer
-                            && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveMountain && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree
+                            && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveMountain && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest
                                  && _eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType != BuildingTypes.City)
                         {
                             random = Random.Range(0, 100);
@@ -147,7 +147,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                         }
 
                         if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveMountain
-                             && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree && _eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType != BuildingTypes.City)
+                             && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest && _eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType != BuildingTypes.City)
                         {
                             random = Random.Range(0, 100);
 

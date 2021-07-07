@@ -284,7 +284,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
                 var isStartedDict = new Dictionary<bool, bool>();
                 isStartedDict[true] = y < 3 && x > 2 && x < 12;
-                isStartedDict[false] = y > 8 && x > 2 && x < 12;
+                isStartedDict[false] = y > 7 && x > 2 && x < 12;
 
                 CellsGO[x, y].transform.SetParent(supportParentForCells.transform);
                 CellEnt_CellBaseCom(x, y).StartFill(supportParentForCells, CellsGO[x, y], isStartedDict);
@@ -340,6 +340,16 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                         {
                             CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.AdultForest);
                         }
+
+                        if(!CellEnvEnt_CellEnvCom(x, y).HaveAdultForest)
+                        {
+                            random = UnityEngine.Random.Range(1, 100);
+                            if (random <= FERTILIZER_PERCENT)
+                            {
+                                CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Fertilizer);
+                            }
+                        }
+                        
 
                         if (y >= 4 && y <= 6)
                         {

@@ -37,7 +37,7 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                         var aroundXYList = CellUnitWorker.TryGetXYAround(x, y);
                         foreach (var xy in aroundXYList)
                         {
-                            if (_eGM.CellEnvEnt_CellEnvCom(xy).HaveAdultTree)
+                            if (_eGM.CellEnvEnt_CellEnvCom(xy).HaveAdultForest)
                             {
                                 _eGM.CellEffectEnt_CellEffectCom(xy).SetResetEffect(true, EffectTypes.Fire);
                             }

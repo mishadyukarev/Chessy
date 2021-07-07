@@ -28,16 +28,16 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Info.Sender.IsMasterClient] = true;
                     _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[Info.Sender.IsMasterClient] = XyCell;
 
-                    if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultTree) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.AdultForest);
+                    if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultForest) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.AdultForest);
                     if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.Fertilizer);
                     break;
 
                 case BuildingTypes.Farm:
-                    canSet = !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultTree;
+                    canSet = !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultForest;
                     break;
 
                 case BuildingTypes.Woodcutter:
-                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultTree && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveForestResources;
+                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultForest && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveForestResources;
                     break;
 
                 case BuildingTypes.Mine:
@@ -66,7 +66,15 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                 {
                     if (EconomyManager.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves))
                     {
-                        _eGM.CellEnvEnt_CellEnvCom(XyCell).SetNewEnvironment(EnvironmentTypes.Fertilizer);
+                        if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer)
+                        {
+                            _eGM.CellEnvEnt_CellEnvCom(XyCell).AmountFertilizerResources += _eGM.CellEnvEnt_CellEnvCom(XyCell).MaxAmountResources(EnvironmentTypes.Fertilizer);
+                        }
+                        else
+                        {
+                            _eGM.CellEnvEnt_CellEnvCom(XyCell).SetNewEnvironment(EnvironmentTypes.Fertilizer);
+                        }
+               
 
                         EconomyManager.CreateBuilding(BuildingType, Info.Sender);
                         CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);

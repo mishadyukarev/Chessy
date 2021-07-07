@@ -78,28 +78,36 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                     {
                         if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth == CellUnitWorker.MaxAmountHealth(x, y))
                         {
-                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                            if (!_eGM.CellBuildEnt_BuilTypeCom(x,y).HaveBuilding)
                             {
-
-                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Pawn
-                                    || _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.PawnSword)
+                                if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                                 {
-                                    if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree)
+                                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Pawn
+                                        || _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.PawnSword)
                                     {
-                                        _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, 1);
-                                        _eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources -= 1;
-                                        _eGM.CellEnvEnt_CellEnvCom(x, y).AmountStepsExtractForest += 1;
-
-                                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveForestResources)
+                                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest)
                                         {
-                                            if(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountStepsExtractForest >= 3)
+                                            _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, 1);
+                                            _eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources -= 1;
+                                            _eGM.CellEnvEnt_CellEnvCom(x, y).AmountStepsExtractForest += 1;
+
+                                            if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveForestResources)
                                             {
-                                                CellBuildingWorker.SetPlayerBuilding(true, BuildingTypes.Woodcutter, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner, x, y);
+                                                if (_eGM.CellEnvEnt_CellEnvCom(x, y).AmountStepsExtractForest >= 3)
+                                                {
+                                                    CellBuildingWorker.SetPlayerBuilding(true, BuildingTypes.Woodcutter, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner, x, y);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
                                             }
                                         }
+
                                         else
                                         {
-                                            _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
+                                            _eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed = false;
+                                            _eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected = true;
                                         }
                                     }
 
@@ -109,13 +117,7 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                                         _eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected = true;
                                     }
                                 }
-
-                                else
-                                {
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed = false;
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected = true;
-                                }
-                            }
+                            }     
                         }
                         else
                         {

@@ -26,7 +26,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                     {
                         if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsHim(Instance.MasterClient))
                         {
-                            if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree)
+                            if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest)
                             {
                                 _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[false] = false;
 
@@ -49,7 +49,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         }
                         else
                         {
-                            if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree)
+                            if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest)
                             {
                                 _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[true] = false;
 
@@ -76,7 +76,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
 
                     else if (_eGM.CellUnitEnt_CellOwnerBotCom(x, y).HaveBot)
                     {
-                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree)
+                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest)
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[true] = false;
 

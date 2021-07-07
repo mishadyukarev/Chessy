@@ -67,7 +67,7 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
 
                 case UniqueAbilitiesPawnTypes.AbilityTwo:
 
-                    if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultTree && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveYoungTree)
+                    if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultForest && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveYoungTree)
                     {
                         minusFood = 0;
                         minusWood = 0;
@@ -100,7 +100,7 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                     break;
 
                 case UniqueAbilitiesPawnTypes.AbilityThree:
-                    if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultTree && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveYoungTree)
+                    if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultForest && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveYoungTree)
                     {
                         minusFood = 0;
                         minusWood = 0;

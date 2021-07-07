@@ -352,7 +352,7 @@ namespace Assets.Scripts
                     listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources);
                     listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountOreResources);
                     listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer);
-                    listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultTree);
+                    listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest);
                     listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveYoungTree);
                     listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveHill);
                     listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveMountain);

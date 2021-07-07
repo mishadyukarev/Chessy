@@ -70,7 +70,7 @@ namespace Assets.Scripts
             var camera = UnityEngine.Object.Instantiate(ResourcesEnt_ResourcesCommonCom.PrefabConfig.Camera, Instance.transform.position, Instance.transform.rotation);
             camera.transform.position += new Vector3(7, 4.8f, -2);
             camera.name = "Camera";
-            camera.orthographicSize = 5.6f;
+            camera.orthographicSize = 5.7f;
             CommParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(camera.transform);
             CameraEnt_CameraCommonCom.SetCamera(camera);
 
@@ -141,7 +141,17 @@ namespace Assets.Scripts
 
                     CanvasEnt_CanvasCommCom.SetZoneUI(SceneTypes.Game, ResourcesEnt_ResourcesCommonCom);
 
-                    CameraEnt_CameraCommonCom.Camera.transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
+                    if (Instance.IsMasterClient)
+                    {
+                        CameraEnt_CameraCommonCom.Camera.transform.rotation = new Quaternion(0, 0, 0, 0);
+                    }
+                    else
+                    {
+                        CameraEnt_CameraCommonCom.Camera.transform.rotation = new Quaternion(0, 0, 180, 0);
+                        CameraEnt_CameraCommonCom.Camera.transform.position += new Vector3(0, 0.5f, 0);
+                    }
+
+                    //CameraEnt_CameraCommonCom.Camera.transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
                     break;
 
                 default:

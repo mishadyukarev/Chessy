@@ -29,7 +29,7 @@ internal struct CellEnvironmentComponent
 
     internal bool HaveFertilizer => _haveFertilizer;
     internal bool HaveMountain => _haveMountain;
-    internal bool HaveAdultTree => _haveAdultTree;
+    internal bool HaveAdultForest => _haveAdultTree;
     internal bool HaveYoungTree => _haveYoungTree;
     internal bool HaveHill => _haveHill;
 
@@ -53,7 +53,7 @@ internal struct CellEnvironmentComponent
         }
     }
 
-    internal float MaxAmountResources(EnvironmentTypes environmentTypes)
+    internal int MaxAmountResources(EnvironmentTypes environmentTypes)
     {
         switch (environmentTypes)
         {

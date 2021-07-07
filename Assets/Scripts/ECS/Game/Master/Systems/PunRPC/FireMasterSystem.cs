@@ -19,7 +19,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                 _eGM.CellEffectEnt_CellEffectCom(ToXy).SetResetEffect(false, EffectTypes.Fire);
                 _eGM.CellUnitEnt_CellUnitCom(ToXy).AmountSteps -= 1;
             }
-            else if (_eGM.CellEnvEnt_CellEnvCom(ToXy).HaveAdultTree)
+            else if (_eGM.CellEnvEnt_CellEnvCom(ToXy).HaveAdultForest)
 
                 if (_eGM.CellUnitEnt_CellOwnerCom(FromXy).HaveOwner)
 
