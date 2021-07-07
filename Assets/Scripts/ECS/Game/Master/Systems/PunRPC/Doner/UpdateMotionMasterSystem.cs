@@ -78,17 +78,27 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                     {
                         if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth == CellUnitWorker.MaxAmountHealth(x, y))
                         {
-                            if (!_eGM.CellBuildEnt_BuilTypeCom(x,y).HaveBuilding)
+                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                             {
-                                if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Pawn
+                                    || _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.PawnSword)
                                 {
-                                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.Pawn
-                                        || _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType == UnitTypes.PawnSword)
+                                    if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest)
                                     {
-                                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest)
+                                        _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, 1);
+                                        _eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources -= 1;
+
+                                        if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveForestResources)
                                         {
-                                            _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, 1);
-                                            _eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources -= 1;
+                                            _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
+                                        }
+
+                                        if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
+                                        {
+                                            _eGM.CellEnvEnt_CellEnvCom(x, y).AmountStepsExtractForest = 0;
+                                        }
+                                        else
+                                        {
                                             _eGM.CellEnvEnt_CellEnvCom(x, y).AmountStepsExtractForest += 1;
 
                                             if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveForestResources)
@@ -103,12 +113,6 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                                                 _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
                                             }
                                         }
-
-                                        else
-                                        {
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed = false;
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected = true;
-                                        }
                                     }
 
                                     else
@@ -117,7 +121,14 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                                         _eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected = true;
                                     }
                                 }
-                            }     
+
+                                else
+                                {
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed = false;
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected = true;
+                                }
+                            }
+
                         }
                         else
                         {

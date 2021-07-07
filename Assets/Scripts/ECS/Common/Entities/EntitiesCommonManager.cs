@@ -10,6 +10,8 @@ namespace Assets.Scripts
 {
     public sealed class EntitiesCommonManager : EntitiesManager
     {
+        private Vector3 _posForCamera = new Vector3(7, 4.8f, -2);
+
         private EcsEntity _canvasEnt;
         internal ref CanvasCommComponent CanvasEnt_CanvasCommCom => ref _canvasEnt.Get<CanvasCommComponent>();
 
@@ -68,7 +70,7 @@ namespace Assets.Scripts
 
             _cameraEnt = commonWorld.NewEntity();
             var camera = UnityEngine.Object.Instantiate(ResourcesEnt_ResourcesCommonCom.PrefabConfig.Camera, Instance.transform.position, Instance.transform.rotation);
-            camera.transform.position += new Vector3(7, 4.8f, -2);
+            camera.transform.position += _posForCamera;
             camera.name = "Camera";
             camera.orthographicSize = 5.7f;
             CommParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(camera.transform);
@@ -144,14 +146,13 @@ namespace Assets.Scripts
                     if (Instance.IsMasterClient)
                     {
                         CameraEnt_CameraCommonCom.Camera.transform.rotation = new Quaternion(0, 0, 0, 0);
+                        CameraEnt_CameraCommonCom.Camera.transform.position = Instance.transform.position + _posForCamera;
                     }
                     else
                     {
                         CameraEnt_CameraCommonCom.Camera.transform.rotation = new Quaternion(0, 0, 180, 0);
-                        CameraEnt_CameraCommonCom.Camera.transform.position += new Vector3(0, 0.5f, 0);
+                        CameraEnt_CameraCommonCom.Camera.transform.position = Instance.transform.position + _posForCamera + new Vector3(0, 0.5f, 0);
                     }
-
-                    //CameraEnt_CameraCommonCom.Camera.transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
                     break;
 
                 default:
