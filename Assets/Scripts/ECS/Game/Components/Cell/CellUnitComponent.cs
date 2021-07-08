@@ -40,7 +40,7 @@ internal struct CellUnitComponent
         _defendRelaxSR = unitParentGO.transform.Find("DefendRelax").GetComponent<SpriteRenderer>();
     }
 
-    internal int AmountStepsInProtecRelax(ProtectRelaxTypes protectRelaxType)
+    internal int AmountStepsInProtectRelax(ProtectRelaxTypes protectRelaxType)
     {
         switch (protectRelaxType)
         {
@@ -57,7 +57,7 @@ internal struct CellUnitComponent
                 throw new Exception();
         }
     }
-    internal void ResetAmountStepsInProtecRelax(ProtectRelaxTypes protectRelaxType)
+    internal void ResetAmountStepsInProtectRelax(ProtectRelaxTypes protectRelaxType)
     {
         switch (protectRelaxType)
         {

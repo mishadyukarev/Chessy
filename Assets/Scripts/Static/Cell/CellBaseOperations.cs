@@ -22,7 +22,7 @@ namespace Assets.Scripts.Static
             xy[X] = default;
             xy[Y] = default;
         }
-        internal static bool CompareXY(in int[] xyLeft, in int[] xyRight)
+        internal static bool CompareXy(in int[] xyLeft, in int[] xyRight)
         {
             if (xyLeft[X] == xyRight[X]
                 && xyLeft[Y] == xyRight[Y])
@@ -69,7 +69,7 @@ namespace Assets.Scripts.Static
         {
             foreach (var xy in list)
             {
-                if (CompareXY(xy, xyCell))
+                if (CompareXy(xy, xyCell))
                 {
                     return true;
                 }

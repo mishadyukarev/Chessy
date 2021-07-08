@@ -16,6 +16,8 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
     private int[] XyPreviousCell => _eGM.SelectorEnt_SelectorCom.XyPreviousCell;
     private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
+    private bool IsSelected { get => _eGM.SelectorEnt_SelectorCom.IsSelected; set => _eGM.SelectorEnt_SelectorCom.IsSelected = value; }
+
 
     public override void Init()
     {
@@ -74,8 +76,8 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                 {
                                     CopyXyInTo(xyCurrentCell, XySelectedCell);
 
-                                    if (!CompareXY(XyPreviousCell, XySelectedCell))
-                                        ActivateSelector(true, XyPreviousCell, XySelectedCell);
+                                    if (!CompareXy(XyPreviousCell, XySelectedCell))
+                                        IsSelected = true;
 
                                     CopyXyInTo(XySelectedCell, XyPreviousCell);
                                     _canExecuteStartClick = false;
@@ -83,12 +85,12 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                                 else
                                 {
-                                    if (!CompareXY(XySelectedCell, xyCurrentCell))
+                                    if (!CompareXy(XySelectedCell, xyCurrentCell))
                                         CopyXyInTo(XySelectedCell, XyPreviousCell);
 
 
                                     CopyXyInTo(xyCurrentCell, XySelectedCell);
-                                    ActivateSelector(true, XyPreviousCell, XySelectedCell);
+                                    IsSelected = true;
                                 }
                             }
 
@@ -114,8 +116,8 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                 {
                                     CopyXyInTo(xyCurrentCell, XySelectedCell);
 
-                                    if (!CompareXY(XyPreviousCell, XySelectedCell))
-                                        ActivateSelector(true, XyPreviousCell, XySelectedCell);
+                                    if (!CompareXy(XyPreviousCell, XySelectedCell))
+                                        IsSelected = true;
 
                                     if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
                                     {
@@ -123,6 +125,15 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                         {
                                             if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
                                             {
+                                                if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).IsMelee)
+                                                {
+                                                    _eGM.PickMeleeEnt_AudioSourceCom.Play();
+                                                }
+                                                else
+                                                {
+                                                    _eGM.PickArcherEnt_AudioSourceCom.Play();
+                                                }
+
                                                 if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveMinAmountSteps)
                                                 {
                                                     _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift = CellUnitWorker.GetCellsForShift(XySelectedCell);
@@ -140,12 +151,12 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                                 else
                                 {
-                                    if (!CompareXY(XySelectedCell, xyCurrentCell))
+                                    if (!CompareXy(XySelectedCell, xyCurrentCell))
                                         CopyXyInTo(XySelectedCell, XyPreviousCell);
 
 
                                     CopyXyInTo(xyCurrentCell, XySelectedCell);
-                                    ActivateSelector(true, XyPreviousCell, XySelectedCell);
+                                    IsSelected = true;
 
 
                                     if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
@@ -154,6 +165,15 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                         {
                                             if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
                                             {
+                                                if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).IsMelee)
+                                                {
+                                                    _eGM.PickMeleeEnt_AudioSourceCom.Play();
+                                                }
+                                                else
+                                                {
+                                                    _eGM.PickArcherEnt_AudioSourceCom.Play();
+                                                }
+
                                                 if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveMinAmountSteps)
                                                 {
                                                     _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift = CellUnitWorker.GetCellsForShift(XySelectedCell);
@@ -265,7 +285,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                         _canShiftUnit = false;
                         _canExecuteStartClick = true;
 
-                        ActivateSelector(false, XyPreviousCell, XySelectedCell);
+                        IsSelected = false;
 
                         ClearAvailableCells();
 
@@ -284,11 +304,8 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
     #region Methods
 
-    private void ActivateSelector(in bool isActive, in int[] xyPreviousCell, in int[] xySelectedCell)
+    private void ActivateSelector(in bool isActive)
     {
-        //_eGM.CellEnt_CellBaseCom(xyPreviousCell).IsSelected = false;
-        //_eGM.CellEnt_CellBaseCom(xySelectedCell).IsSelected = isActive;
-
         _eGM.SelectorEnt_SelectorCom.IsSelected = isActive;
     }
 

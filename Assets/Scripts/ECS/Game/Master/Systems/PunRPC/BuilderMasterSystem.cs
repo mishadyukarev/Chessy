@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Static;
 using Photon.Pun;
 
@@ -26,6 +27,8 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                 case BuildingTypes.City:
                     if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
                     {
+                        _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Building);
+
                         CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
 
@@ -60,6 +63,8 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     {
                         if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
                         {
+                            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Building);
+
                             EconomyManager.CreateBuilding(BuildingType, Info.Sender);
                             CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
                             _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
@@ -76,6 +81,8 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     {
                         if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMinAmountSteps)
                         {
+                            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Building);
+
                             if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Fertilizer))
                             {
                                 _eGM.CellEnvEnt_CellEnvCom(XyCell).AddAmountResources(ResourceTypes.Food, _eGM.CellEnvEnt_CellEnvCom(XyCell).MaxAmountResources(EnvironmentTypes.Fertilizer));

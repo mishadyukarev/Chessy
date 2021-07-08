@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 using Photon.Pun;
 using static Assets.Scripts.Static.CellBaseOperations;
 
@@ -39,6 +40,8 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
             if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).IsMelee)
             {
+                _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);      
+
                 damageToPrevious += CellUnitWorker.SimplePowerDamage(unitTypeSelected);
 
                 if (isFindedUnique)
@@ -49,6 +52,8 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
             else
             {
+                _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
+
                 if (isFindedUnique)
                 {
                     damageToSelelected += CellUnitWorker.UniquePowerDamage(unitTypePrevious);
@@ -101,7 +106,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
         else _isAttacked = false;
 
 
-        _photonPunRPC.AttackUnitToGeneral(Info.Sender, _isAttacked, _isAttacked);
+        _photonPunRPC.AttackUnitToGeneral(Info.Sender, _isAttacked);
         _photonPunRPC.AttackUnitToGeneral(RpcTarget.All, false, _isAttacked, XyPreviousCell, XySelectedCell);
     }
 }

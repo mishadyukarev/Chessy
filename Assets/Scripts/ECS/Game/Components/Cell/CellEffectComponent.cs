@@ -10,6 +10,8 @@ internal struct CellEffectComponent
     internal void StartFill(GameObject effectsGO)
     {
         _fireSR = effectsGO.transform.Find("Fire").GetComponent<SpriteRenderer>();
+        _haveFire = default;
+        _timeStepsFire = default;
     }
 
     internal bool HaveEffect(EffectTypes effectType)

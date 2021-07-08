@@ -25,7 +25,7 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
             {
                 if (_eGM.SelectorEnt_UnitTypeCom.HaveUnit)
                 {
-                    if (!CellBaseOperations.CompareXY(new int[] { x, y }, _eGM.SelectorEnt_SelectorCom.XySelectedCell)/*!_eGM.CellEnt_CellBaseCom(x, y).IsSelected*/ && !_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit
+                    if (!CellBaseOperations.CompareXy(new int[] { x, y }, _eGM.SelectorEnt_SelectorCom.XySelectedCell)/*!_eGM.CellEnt_CellBaseCom(x, y).IsSelected*/ && !_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit
                         && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Mountain))
                     {
                         if (Instance.IsMasterClient)
@@ -46,7 +46,7 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                     }
                 }
 
-                else if (!CellBaseOperations.CompareXY(new int[] { x, y }, _eGM.SelectorEnt_SelectorCom.XySelectedCell) /*_eGM.CellEnt_CellBaseCom(x, y).IsSelected*/)
+                else if (!CellBaseOperations.CompareXy(new int[] { x, y }, _eGM.SelectorEnt_SelectorCom.XySelectedCell) /*_eGM.CellEnt_CellBaseCom(x, y).IsSelected*/)
                 {
                     _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Spawn);
                 }

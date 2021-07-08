@@ -15,6 +15,11 @@ MonoBehaviour:
   _mistakeAudioClip: {fileID: 8300000, guid: ef245931af46d0e4fbaa7f3a8d55def7, type: 3}
   _attackSwordAudioClip: {fileID: 8300000, guid: b4e46919ee3365a48ae66247b49fe313,
     type: 3}
+  _attackArcherAC: {fileID: 8300000, guid: 3087562296fc7974481c42d424d06c40, type: 3}
   _musicAudioClip: {fileID: 8300000, guid: a6f4d7c42453e9943aed113a9130537a, type: 3}
   _pickArcherAudioClip: {fileID: 8300000, guid: 04442f064d8839644b4f68709ef0af60,
     type: 3}
+  _pickMeleeAC: {fileID: 8300000, guid: 3d25efc997423f0469a0df44a7a6fac4, type: 3}
+  _buildingAC: {fileID: 8300000, guid: 672239ba33baa644284af5236202d8cb, type: 3}
+  _fireAC: {fileID: 8300000, guid: 56788ab1b5f21384ea89998a0b4c4346, type: 3}
+  _settingUnitAC: {fileID: 8300000, guid: feda874ff8e57b94ca370ac9f9140fad, type: 3}

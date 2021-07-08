@@ -18,7 +18,6 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     internal SpriteRenderer BackGroundSR;
     internal AudioSource MistakeAudioSource;
     internal AudioSource AttackAudioSource;
-    internal AudioSource PickArcherAudioSource;
 
 
     #region Cells
@@ -61,6 +60,34 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     #endregion
 
 
+    #region Music
+
+    private EcsEntity _attackArcherSoundEnt;
+    internal ref AudioSourceComponent AttackArcherEnt_AudioSourceCom => ref _attackArcherSoundEnt.Get<AudioSourceComponent>();
+
+
+    private EcsEntity _pickArcherSoundEnt;
+    internal ref AudioSourceComponent PickArcherEnt_AudioSourceCom => ref _pickArcherSoundEnt.Get<AudioSourceComponent>();
+
+
+    private EcsEntity _pickMeleeSoundEnt;
+    internal ref AudioSourceComponent PickMeleeEnt_AudioSourceCom => ref _pickMeleeSoundEnt.Get<AudioSourceComponent>();
+
+
+    private EcsEntity _buildingSoundEnt;
+    internal ref AudioSourceComponent BuildingSoundEnt_AudioSourceCom => ref _buildingSoundEnt.Get<AudioSourceComponent>();
+
+
+    private EcsEntity _fireSoundEnt;
+    internal ref AudioSourceComponent FireSoundEnt_AudioSourceCom => ref _fireSoundEnt.Get<AudioSourceComponent>();
+
+
+    private EcsEntity _settingSoundEnt;
+    internal ref AudioSourceComponent SettingSoundEnt_AudioSourceCom => ref _settingSoundEnt.Get<AudioSourceComponent>();
+
+    #endregion
+
+
     private EcsEntity _buildingsEnt;
     internal ref BuildingsComponent BuildingsEnt_BuildingsCom => ref _buildingsEnt.Get<BuildingsComponent>();
     internal ref UpgradeBuildingsComponent BuildingsEnt_UpgradeBuildingsCom => ref _buildingsEnt.Get<UpgradeBuildingsComponent>();
@@ -85,7 +112,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
 
     private EcsEntity _soundEnt;
-    internal ref SoundComponent SoundEnt_SoundCom => ref _soundEnt.Get<SoundComponent>();
+    internal ref SounddComponent SoundEnt_SoundCom => ref _soundEnt.Get<SounddComponent>();
 
 
     private EcsEntity _zoneEnt;
@@ -118,6 +145,13 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                 _cellEffectEnts[x, y] = gameWorld.NewEntity();
             }
 
+        _attackArcherSoundEnt = gameWorld.NewEntity();
+        _pickArcherSoundEnt = gameWorld.NewEntity();
+        _pickMeleeSoundEnt = gameWorld.NewEntity();
+        _buildingSoundEnt = gameWorld.NewEntity();
+        _fireSoundEnt = gameWorld.NewEntity();
+        _settingSoundEnt = gameWorld.NewEntity();
+
         _economyEnt = gameWorld.NewEntity();
         _unitInfoEnt = gameWorld.NewEntity();
         _buildingsEnt = gameWorld.NewEntity();
@@ -136,24 +170,55 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     {
         SpawnCells();
 
+        var audioSourceParentGO = new GameObject("AudioSource");
+        Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(audioSourceParentGO.transform);
+
+        MistakeAudioSource = audioSourceParentGO.AddComponent<AudioSource>();
+        MistakeAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.MistakeAudioClip;
+
+        AttackAudioSource = audioSourceParentGO.AddComponent<AudioSource>();
+        AttackAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackSwordAudioClip;
+
+
+        var attackAS = audioSourceParentGO.AddComponent<AudioSource>();
+        attackAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackArcherAC;
+        AttackArcherEnt_AudioSourceCom.StartFill(attackAS);
+
+
+        var pickArcherAudioSource = audioSourceParentGO.AddComponent<AudioSource>();
+        pickArcherAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.PickArcherAudioClip;
+        PickArcherEnt_AudioSourceCom.StartFill(pickArcherAudioSource);
+
+
+        var pickMeleeAS = audioSourceParentGO.AddComponent<AudioSource>();
+        pickMeleeAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.PickMeleeAC;
+        pickMeleeAS.volume = 0.3f;
+        PickMeleeEnt_AudioSourceCom.StartFill(pickMeleeAS);
+
+
+        var buildingAS = audioSourceParentGO.AddComponent<AudioSource>();
+        buildingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.BuildingAC;
+        buildingAS.volume = 0.3f;
+        BuildingSoundEnt_AudioSourceCom.StartFill(buildingAS);
+
+
+        var settingAS = audioSourceParentGO.AddComponent<AudioSource>();
+        settingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.SettingUnitAC;
+        SettingSoundEnt_AudioSourceCom.StartFill(settingAS);
+
+
+        var fireAS = audioSourceParentGO.AddComponent<AudioSource>();
+        fireAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.FireAC;
+        fireAS.volume = 0.3f;
+        FireSoundEnt_AudioSourceCom.StartFill(fireAS);
+
+
         BackGroundGO = GameObject.Instantiate(Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.BackGroundCollider2D,
-            Instance.transform.position + new Vector3(7, 5.5f, 2), Instance.transform.rotation);
+        Instance.transform.position + new Vector3(7, 5.5f, 2), Instance.transform.rotation);
 
         Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(BackGroundGO.transform);
         BackGroundSR = BackGroundGO.GetComponent<SpriteRenderer>();
         BackGroundSR.transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
-
-        MistakeAudioSource = new GameObject("MistakeAudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
-        Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(MistakeAudioSource.transform);
-        MistakeAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.MistakeAudioClip;
-
-        AttackAudioSource = new GameObject("AttackAudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
-        Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(AttackAudioSource.transform);
-        AttackAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackSwordAudioClip;
-
-        PickArcherAudioSource = new GameObject("PickArcherAudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
-        Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(AttackAudioSource.transform);
-        PickArcherAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.PickArcherAudioClip;
 
 
 

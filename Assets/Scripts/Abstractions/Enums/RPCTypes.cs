@@ -18,6 +18,7 @@
     SetUnit,
     UniquePawnAbility,
     Fire,
+    Sound,
 
     Upgrade,
 }

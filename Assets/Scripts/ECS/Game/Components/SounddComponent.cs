@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-internal struct SoundComponent
+internal struct SounddComponent
 {
     internal Action MistakeSoundAction;
     internal Action AttackSoundAction;

@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Photon.Pun;
 using static Assets.Scripts.Abstractions.ValuesConst;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
@@ -20,11 +21,13 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                 _eGM.CellUnitEnt_CellUnitCom(ToXyCopy).TakeAmountSteps();
             }
             else if (_eGM.CellEnvEnt_CellEnvCom(ToXyCopy).HaveEnvironment(EnvironmentTypes.AdultForest))
-
+            {
                 if (_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).HaveOwner)
 
                     if (EconomyManager.CanFireSomething(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType, out bool[] haves))
                     {
+                        _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Fire);
+
                         EconomyManager.Fire(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType);
 
                         _eGM.CellEffectEnt_CellEffectCom(ToXyCopy).SetEffect(EffectTypes.Fire);
@@ -34,6 +37,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     {
                         _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves[FOOD_NUMBER], haves[WOOD_NUMBER], haves[ORE_NUMBER], haves[IRON_NUMBER], haves[GOLD_NUMBER]);
                     }
+            }
+
         }
     }
 }

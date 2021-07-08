@@ -60,7 +60,7 @@ namespace Assets.Scripts
 
         public void ShiftUnitToMaster(in int[] xyPreviousCell, in int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Shift, new object[] { xyPreviousCell, xySelectedCell });
         public void AttackUnitToMaster(int[] xyPreviousCell, int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Attack, new object[] { xyPreviousCell, xySelectedCell });
-        public void AttackUnitToGeneral(Player playerTo, bool isAttacked, bool isActivatedSound) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Attack, new object[] { isAttacked, isActivatedSound });
+        public void AttackUnitToGeneral(Player playerTo, bool isAttacked) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Attack, new object[] { isAttacked });
         public void AttackUnitToGeneral(RpcTarget rpcTarget, bool isAttacked, bool isActivatedSound, int[] xyStart, int[] xyEnd) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Attack, new object[] { isAttacked, isActivatedSound, xyStart, xyEnd });
 
         public void BuildToMaster(int[] xyCell, BuildingTypes buildingType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Build, new object[] { xyCell, buildingType });
@@ -86,7 +86,10 @@ namespace Assets.Scripts
 
 
         public void SetUniToMaster(int[] xyCell, UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.SetUnit, new object[] { xyCell, unitType });
-        public void SetUniToGeneral(Player playerTo, bool isSetted) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.SetUnit, new object[] { isSetted });
+        public void SetUnitToGeneral(Player playerTo, bool isSetted) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.SetUnit, new object[] { isSetted });
+
+        public void SoundToGeneral(RpcTarget rpcTarget, SoundEffectTypes soundEffectType) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Sound, new object[] { soundEffectType });
+        public void SoundToGeneral(Player playerTo, SoundEffectTypes soundEffectType) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Sound, new object[] { soundEffectType });
 
 
         [PunRPC]
@@ -250,7 +253,7 @@ namespace Assets.Scripts
 
                 case RpcTypes.Attack:
                     if ((bool)objects[0]) _eGM.SelectorEnt_SelectorCom.AttackUnitAction();
-                    if ((bool)objects[1]) _eGM.SoundEnt_SoundCom.AttackSoundAction();
+                    //if ((bool)objects[1]) _eGM.SoundEnt_SoundCom.AttackSoundAction();
                     break;
 
                 case RpcTypes.Mistake:
@@ -293,11 +296,37 @@ namespace Assets.Scripts
                     if ((bool)objects[0]) _eGM.SelectorEnt_SelectorCom.SetterUnitDelegate();
                     break;
 
+                case RpcTypes.Sound:
+                    switch ((SoundEffectTypes)objects[0])
+                    {
+                        case SoundEffectTypes.AttackArcher:
+                            _eGM.AttackArcherEnt_AudioSourceCom.Play();
+                            break;
+
+                        case SoundEffectTypes.AttackMelee:
+                            _eGM.SoundEnt_SoundCom.AttackSoundAction();
+                            break;
+
+                        case SoundEffectTypes.Building:
+                            _eGM.BuildingSoundEnt_AudioSourceCom.Play();
+                            break;
+
+                        case SoundEffectTypes.Fire:
+                            _eGM.FireSoundEnt_AudioSourceCom.Play();
+                            break;
+
+                        case SoundEffectTypes.Setting:
+                            _eGM.SettingSoundEnt_AudioSourceCom.Play();
+                            break;
+
+                        default:
+                            break;
+                    }
+                    break;
+
                 default:
                     break;
             }
-
-            //RefreshAllToMaster();
         }
 
         #endregion

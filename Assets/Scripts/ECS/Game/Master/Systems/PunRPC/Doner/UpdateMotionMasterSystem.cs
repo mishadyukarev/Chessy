@@ -99,7 +99,7 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 
                                         if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
                                         {
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).ResetAmountStepsInProtecRelax(ProtectRelaxTypes.Relaxed);
+                                            _eGM.CellUnitEnt_CellUnitCom(x, y).ResetAmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed);
                                         }
                                         else
                                         {
@@ -107,7 +107,7 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 
                                             if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveResources(ResourceTypes.Wood))
                                             {
-                                                if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountStepsInProtecRelax(ProtectRelaxTypes.Relaxed) >= 3)
+                                                if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed) >= 3)
                                                 {
                                                     CellBuildingWorker.SetPlayerBuilding(true, BuildingTypes.Woodcutter, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner, x, y);
                                                 }
@@ -186,7 +186,7 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 
                     else
                     {
-                        _eGM.CellUnitEnt_CellUnitCom(x, y).ResetAmountStepsInProtecRelax(ProtectRelaxTypes.Relaxed);
+                        _eGM.CellUnitEnt_CellUnitCom(x, y).ResetAmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed);
 
                         if (_eGM.CellUnitEnt_CellUnitCom(x,y).HaveMaxSteps(unitType))
                         {
