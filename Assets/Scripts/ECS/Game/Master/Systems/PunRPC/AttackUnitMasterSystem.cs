@@ -24,25 +24,26 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
         if (isFindedSimple || isFindedUnique)
         {
-            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).AmountSteps = 0;
-            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).IsProtected = false;
-            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).IsRelaxed = false;
+            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).ResetAmountSteps();
+            _eGM.CellUnitEnt_ProtectRelaxCom(XyPreviousCell).ResetProtectedRelaxedType();
 
             int damageToPrevious = 0;
             int damageToSelelected = 0;
 
+            var unitTypePrevious = _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType;
+            var unitTypeSelected = _eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType;
 
-            damageToSelelected += CellUnitWorker.SimplePowerDamage(XyPreviousCell);
+            damageToSelelected += CellUnitWorker.SimplePowerDamage(unitTypePrevious);
             damageToSelelected -= CellUnitWorker.PowerProtection(XySelectedCell);
 
 
             if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).IsMelee)
             {
-                damageToPrevious += CellUnitWorker.SimplePowerDamage(XySelectedCell);
+                damageToPrevious += CellUnitWorker.SimplePowerDamage(unitTypeSelected);
 
                 if (isFindedUnique)
                 {
-                    damageToSelelected += CellUnitWorker.UniquePowerDamage(XyPreviousCell);
+                    damageToSelelected += CellUnitWorker.UniquePowerDamage(unitTypePrevious);
                 }
             }
 
@@ -50,14 +51,14 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
             {
                 if (isFindedUnique)
                 {
-                    damageToSelelected += CellUnitWorker.UniquePowerDamage(XyPreviousCell);
+                    damageToSelelected += CellUnitWorker.UniquePowerDamage(unitTypePrevious);
                 }
             }
 
             if (damageToSelelected < 0) damageToSelelected = 0;
 
-            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).AmountHealth -= damageToPrevious;
-            _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountHealth -= damageToSelelected;
+            _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).TakeAmountHealth(damageToPrevious);
+            _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).TakeAmountHealth(damageToSelelected);
 
 
             if (!_eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).HaveHealth)

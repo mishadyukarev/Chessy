@@ -13,13 +13,15 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
 
         if (_eGM.CellUnitEnt_CellOwnerCom(XyCell).IsHim(info.Sender))
         {
-            if (CellUnitWorker.HaveMaxSteps(XyCell))
+            var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCell).UnitType;
+
+            if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
             {
                 if (_eGM.CellBuildEnt_BuilTypeCom(XyCell).BuildingType == BuildingTypes.City)
                 {
                     _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XyCell).ActorNumber);
                 }
-                _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
+                _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
 
                 CellBuildingWorker.ResetBuilding(true, XyCell);
             }

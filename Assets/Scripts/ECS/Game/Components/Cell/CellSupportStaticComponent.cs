@@ -3,25 +3,16 @@ using UnityEngine;
 
 internal struct CellSupportStaticComponent
 {
-    private GameObject _fertilizerGO;
-    private GameObject _woodGO;
-    private GameObject _oreGO;
-
     private SpriteRenderer _fertilizerSR;
     private SpriteRenderer _woodSR;
     private SpriteRenderer _oreSR;
     private SpriteRenderer _hpSR;
 
-
     internal void Fill(GameObject supportStaticGO)
     {
-        _fertilizerGO = supportStaticGO.transform.Find("Fertilizer").gameObject;
-        _woodGO = supportStaticGO.transform.Find("Forest").gameObject;
-        _oreGO = supportStaticGO.transform.Find("Ore").gameObject;
-
-        _fertilizerSR = _fertilizerGO.GetComponent<SpriteRenderer>();
-        _woodSR = _woodGO.GetComponent<SpriteRenderer>();
-        _oreSR = _oreGO.GetComponent<SpriteRenderer>();
+        _fertilizerSR = supportStaticGO.transform.Find("Fertilizer").GetComponent<SpriteRenderer>();
+        _woodSR = supportStaticGO.transform.Find("Forest").GetComponent<SpriteRenderer>();
+        _oreSR = supportStaticGO.transform.Find("Ore").GetComponent<SpriteRenderer>();
         _hpSR = supportStaticGO.transform.Find("Hp").GetComponent<SpriteRenderer>();
     }
 
@@ -80,15 +71,15 @@ internal struct CellSupportStaticComponent
         switch (supportStaticType)
         {
             case SupportStaticTypes.Fertilizer:
-                _fertilizerGO.transform.localScale = vector;
+                _fertilizerSR.transform.localScale = vector;
                 break;
 
             case SupportStaticTypes.Wood:
-                _woodGO.transform.localScale = vector;
+                _woodSR.transform.localScale = vector;
                 break;
 
             case SupportStaticTypes.Ore:
-                _oreGO.transform.localScale = vector;
+                _oreSR.transform.localScale = vector;
                 break;
 
             case SupportStaticTypes.Hp:

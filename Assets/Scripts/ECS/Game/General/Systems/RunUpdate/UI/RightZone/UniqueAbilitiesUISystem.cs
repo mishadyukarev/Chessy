@@ -74,7 +74,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                 _eGM.Unique1AbilityEnt_ButtonCom.RemoveAllListeners();
                 _eGM.Unique1AbilityEnt_ButtonCom.AddListener(delegate { Fire(XySelectedCell, XySelectedCell); });
 
-                if (_eGM.CellEffectEnt_CellEffectCom(XySelectedCell).HaveFire)
+                if (_eGM.CellEffectEnt_CellEffectCom(XySelectedCell).HaveEffect(EffectTypes.Fire))
                 {
                     _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.Text = "Put Out FIRE";
                 }

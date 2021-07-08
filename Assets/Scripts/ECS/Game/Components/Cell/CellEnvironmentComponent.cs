@@ -1,55 +1,222 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 internal struct CellEnvironmentComponent
 {
     private bool _haveFertilizer;
-    private bool _haveMountain;
-    private bool _haveAdultTree;
     private bool _haveYoungTree;
+    private bool _haveAdultTree;
     private bool _haveHill;
-    private GameObject _youngTreeGO;
-    private GameObject _fertilizerGO;
-    private GameObject _mountainGO;
-    private GameObject _adultTreeGO;
-    private GameObject _hillGO;
-    private SpriteRenderer _youngTreeSR;
+    private bool _haveMountain;
     private SpriteRenderer _fertilizerSR;
-    private SpriteRenderer _mountainSR;
+    private SpriteRenderer _youngTreeSR;
     private SpriteRenderer _adultTreeSR;
     private SpriteRenderer _hillSR;
+    private SpriteRenderer _mountainSR;
+    private int _amountFoodResources;
+    private int _amountWoodResources;
+    private int _amountOreResources;
 
-    internal int AmountFertilizerResources;
-    internal int AmountForestResources;
-    internal int AmountOreResources;
-
-    internal int AmountStepsExtractForest;
-
-    internal int MineStep;
-
-    internal bool HaveFertilizer => _haveFertilizer;
-    internal bool HaveMountain => _haveMountain;
-    internal bool HaveAdultForest => _haveAdultTree;
-    internal bool HaveYoungTree => _haveYoungTree;
-    internal bool HaveHill => _haveHill;
-
-
-    internal bool HaveFertilizerResources => AmountFertilizerResources > 0;
-    internal bool HaveForestResources => AmountForestResources > 0;
-    internal bool HaveOreResources => AmountOreResources > 0;
-
-    internal List<EnvironmentTypes> ListEnvironmentTypes
+    internal void StartFill(GameObject environmentGO)
     {
-        get
+        _fertilizerSR = environmentGO.transform.Find("Food").GetComponent<SpriteRenderer>();
+        _youngTreeSR = environmentGO.transform.Find("YoungTree").GetComponent<SpriteRenderer>();
+        _adultTreeSR = environmentGO.transform.Find("Tree").GetComponent<SpriteRenderer>();
+        _hillSR = environmentGO.transform.Find("Hill").GetComponent<SpriteRenderer>();
+        _mountainSR = environmentGO.transform.Find("Mountain").GetComponent<SpriteRenderer>();             
+
+        ResetAll();
+    }
+
+    internal void ResetAll()
+    {
+        _haveFertilizer = false;
+        _haveYoungTree = false;
+        _haveAdultTree = false;
+        _haveHill = false;
+        _haveMountain = false;
+
+        _fertilizerSR.enabled = false;
+        _youngTreeSR.enabled = false;
+        _adultTreeSR.enabled = false;
+        _hillSR.enabled = false;
+        _mountainSR.enabled = false;
+
+
+        _amountFoodResources = 0;
+        _amountWoodResources = 0;
+        _amountOreResources = 0;
+    }
+
+    internal bool HaveEnvironment(EnvironmentTypes environmentType)
+    {
+        switch (environmentType)
         {
-            List<EnvironmentTypes> listEnvironmentTypes = new List<EnvironmentTypes>();
+            case EnvironmentTypes.None:
+                throw new Exception();
 
-            if (_haveFertilizer) listEnvironmentTypes.Add(EnvironmentTypes.Fertilizer);
-            if (_haveAdultTree) listEnvironmentTypes.Add(EnvironmentTypes.AdultForest);
-            if (_haveYoungTree) listEnvironmentTypes.Add(EnvironmentTypes.YoungForest);
-            if (_haveHill) listEnvironmentTypes.Add(EnvironmentTypes.Hill);
+            case EnvironmentTypes.Fertilizer:
+                return _haveFertilizer;
 
-            return listEnvironmentTypes;
+            case EnvironmentTypes.YoungForest:
+                return _haveYoungTree;
+
+            case EnvironmentTypes.AdultForest:
+                return _haveAdultTree;
+
+            case EnvironmentTypes.Hill:
+                return _haveHill;
+
+            case EnvironmentTypes.Mountain:
+                return _haveMountain;
+
+            default:
+                throw new Exception();
+        }
+    }
+
+    internal bool HaveResources(ResourceTypes resourceType)
+    {
+        switch (resourceType)
+        {
+            case ResourceTypes.None:
+                throw new Exception();
+
+            case ResourceTypes.Food:
+                return _amountFoodResources > 0;
+
+            case ResourceTypes.Wood:
+                return _amountWoodResources > 0;
+
+            case ResourceTypes.Ore:
+                return _amountOreResources > 0;
+
+            case ResourceTypes.Iron:
+                throw new Exception();
+
+            case ResourceTypes.Gold:
+                throw new Exception();
+
+            default:
+                throw new Exception();
+        }
+    }
+
+    internal int AmountResources(ResourceTypes resourceType)
+    {
+        switch (resourceType)
+        {
+            case ResourceTypes.None:
+                throw new Exception();
+
+            case ResourceTypes.Food:
+                return _amountFoodResources;
+
+            case ResourceTypes.Wood:
+                return _amountWoodResources;
+
+            case ResourceTypes.Ore:
+                return _amountOreResources;
+
+            case ResourceTypes.Iron:
+                throw new Exception();
+
+            case ResourceTypes.Gold:
+                throw new Exception();
+
+            default:
+                throw new Exception();
+        }
+    }
+
+    internal void SetAmountResources(ResourceTypes resourceType, int value)
+    {
+        switch (resourceType)
+        {
+            case ResourceTypes.None:
+                throw new Exception();
+
+            case ResourceTypes.Food:
+                _amountFoodResources = value;
+                break;
+
+            case ResourceTypes.Wood:
+                _amountWoodResources = value;
+                break;
+
+            case ResourceTypes.Ore:
+                _amountOreResources = value;
+                break;
+
+            case ResourceTypes.Iron:
+                throw new Exception();
+
+            case ResourceTypes.Gold:
+                throw new Exception();
+
+            default:
+                throw new Exception();
+        }
+    }
+
+    internal void AddAmountResources(ResourceTypes resourceType, int adding = 1)
+    {
+        switch (resourceType)
+        {
+            case ResourceTypes.None:
+                throw new Exception();
+
+            case ResourceTypes.Food:
+                _amountFoodResources += adding;
+                break;
+
+            case ResourceTypes.Wood:
+                _amountWoodResources += adding;
+                break;
+
+            case ResourceTypes.Ore:
+                _amountOreResources += adding;
+                break;
+
+            case ResourceTypes.Iron:
+                throw new Exception();
+
+            case ResourceTypes.Gold:
+                throw new Exception();
+
+            default:
+                throw new Exception();
+        }
+    }
+
+    internal void TakeAmountResources(ResourceTypes resourceType, int taking = 1)
+    {
+        switch (resourceType)
+        {
+            case ResourceTypes.None:
+                throw new Exception();
+
+            case ResourceTypes.Food:
+                _amountFoodResources -= taking;
+                break;
+
+            case ResourceTypes.Wood:
+                _amountWoodResources -= taking;
+                break;
+
+            case ResourceTypes.Ore:
+                _amountOreResources -= taking;
+                break;
+
+            case ResourceTypes.Iron:
+                throw new Exception();
+
+            case ResourceTypes.Gold:
+                throw new Exception();
+
+            default:
+                throw new Exception();
         }
     }
 
@@ -80,6 +247,33 @@ internal struct CellEnvironmentComponent
         }
     }
 
+    internal int MinAmountResources(EnvironmentTypes environmentTypes)
+    {
+        switch (environmentTypes)
+        {
+            case EnvironmentTypes.None:
+                throw new System.Exception();
+
+            case EnvironmentTypes.Fertilizer:
+                return 10;
+
+            case EnvironmentTypes.YoungForest:
+                throw new System.Exception();
+
+            case EnvironmentTypes.AdultForest:
+                return 10;
+
+            case EnvironmentTypes.Hill:
+                return 999;
+
+            case EnvironmentTypes.Mountain:
+                throw new System.Exception();
+
+            default:
+                throw new System.Exception();
+        }
+    }
+
     internal void SetNewEnvironment(EnvironmentTypes environmentType, params int[] xy)
     {
         switch (environmentType)
@@ -89,30 +283,30 @@ internal struct CellEnvironmentComponent
 
             case EnvironmentTypes.Fertilizer:
                 _haveFertilizer = true;
-                _fertilizerGO.SetActive(true);
-                AmountFertilizerResources = UnityEngine.Random.Range(10, (int)MaxAmountResources(environmentType));
+                _fertilizerSR.enabled = true;
+                _amountFoodResources = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType));
                 break;
 
             case EnvironmentTypes.YoungForest:
                 _haveYoungTree = true;
-                _youngTreeGO.SetActive(true);
+                _youngTreeSR.enabled = true;
                 break;
 
             case EnvironmentTypes.AdultForest:
                 _haveAdultTree = true;
-                _adultTreeGO.SetActive(true);
-                AmountForestResources = UnityEngine.Random.Range(10, (int)MaxAmountResources(environmentType));
+                _adultTreeSR.enabled = true;
+                _amountWoodResources = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType));
                 break;
 
             case EnvironmentTypes.Hill:
                 _haveHill = true;
-                _hillGO.SetActive(true);
-                AmountOreResources = (int)MaxAmountResources(environmentType);
+                _hillSR.enabled = true;
+                _amountOreResources = MaxAmountResources(environmentType);
                 break;
 
             case EnvironmentTypes.Mountain:
                 _haveMountain = true;
-                _mountainGO.SetActive(true);
+                _mountainSR.enabled = true;
                 break;
 
             default:
@@ -128,30 +322,30 @@ internal struct CellEnvironmentComponent
 
             case EnvironmentTypes.Mountain:
                 _haveMountain = true;
-                _mountainGO.SetActive(true);
+                _mountainSR.enabled = true;
                 break;
 
             case EnvironmentTypes.AdultForest:
                 _haveAdultTree = true;
-                _adultTreeGO.SetActive(true);
-                AmountForestResources = amountEnvironmet;
+                _adultTreeSR.enabled = true;
+                _amountWoodResources = amountEnvironmet;
                 break;
 
             case EnvironmentTypes.YoungForest:
                 _haveYoungTree = true;
-                _youngTreeGO.SetActive(true);
+                _youngTreeSR.enabled = true;
                 break;
 
             case EnvironmentTypes.Hill:
                 _haveHill = true;
-                _hillGO.SetActive(true);
-                AmountOreResources = amountEnvironmet;
+                _hillSR.enabled = true;
+                _amountOreResources = amountEnvironmet;
                 break;
 
             case EnvironmentTypes.Fertilizer:
                 _haveFertilizer = true;
-                _fertilizerGO.SetActive(true);
-                AmountFertilizerResources = amountEnvironmet;
+                _fertilizerSR.enabled = true;
+                _amountFoodResources = amountEnvironmet;
                 break;
 
             default:
@@ -167,68 +361,33 @@ internal struct CellEnvironmentComponent
 
             case EnvironmentTypes.Mountain:
                 _haveMountain = false;
-                _mountainGO.SetActive(false);
+                _mountainSR.enabled = false;
                 break;
 
             case EnvironmentTypes.AdultForest:
                 _haveAdultTree = false;
-                _adultTreeGO.SetActive(false);
-                AmountForestResources = 0;
+                _adultTreeSR.enabled = false;
+                _amountWoodResources = 0;
                 break;
 
             case EnvironmentTypes.YoungForest:
                 _haveYoungTree = false;
-                _youngTreeGO.SetActive(false);
+                _youngTreeSR.enabled = false;
                 break;
 
             case EnvironmentTypes.Hill:
                 _haveHill = false;
-                _hillGO.SetActive(false);
+                _hillSR.enabled = false;
                 break;
 
             case EnvironmentTypes.Fertilizer:
                 _haveFertilizer = false;
-                _fertilizerGO.SetActive(false);
-                AmountFertilizerResources = 0;
+                _fertilizerSR.enabled = false;
+                _amountFoodResources = 0;
                 break;
 
             default:
                 break;
         }
-    }
-
-    internal void StartFill(GameObject environmentGO)
-    {
-        _fertilizerGO = environmentGO.transform.Find("Food").gameObject;
-        _mountainGO = environmentGO.transform.Find("Mountain").gameObject;
-        _adultTreeGO = environmentGO.transform.Find("Tree").gameObject;
-        _youngTreeGO = environmentGO.transform.Find("YoungTree").gameObject;
-        _hillGO = environmentGO.transform.Find("Hill").gameObject;
-
-        _fertilizerSR = _fertilizerGO.GetComponent<SpriteRenderer>();
-        _mountainSR = _mountainGO.GetComponent<SpriteRenderer>();
-        _adultTreeSR = _adultTreeGO.GetComponent<SpriteRenderer>();
-        _youngTreeSR = _youngTreeGO.GetComponent<SpriteRenderer>();
-        _hillSR = _hillGO.GetComponent<SpriteRenderer>();
-
-        ResetAll();
-    }
-
-    internal void ResetAll()
-    {
-        _haveMountain = false;
-        _mountainGO.SetActive(false);
-        _haveAdultTree = false;
-        _adultTreeGO.SetActive(false);
-        AmountForestResources = 0;
-        _haveYoungTree = false;
-        _youngTreeGO.SetActive(false);
-        _haveHill = false;
-        _hillGO.SetActive(false);
-        _haveFertilizer = false;
-        _fertilizerGO.SetActive(false);
-        AmountFertilizerResources = 0;
-
-        AmountStepsExtractForest = 0;
     }
 }

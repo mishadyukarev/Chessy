@@ -13,15 +13,15 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
         {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                if (_eGM.CellEffectEnt_CellEffectCom(x, y).HaveFire)
+                if (_eGM.CellEffectEnt_CellEffectCom(x, y).HaveEffect(EffectTypes.Fire))
                 {
-                    _eGM.CellEffectEnt_CellEffectCom(x, y).TimeFire += 1;
+                    _eGM.CellEffectEnt_CellEffectCom(x, y).AddTimeStepsEffect(EffectTypes.Fire);
 
-                    _eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth -= 40;
+                    _eGM.CellUnitEnt_CellUnitCom(x, y).TakeAmountHealth(40);
                     if (!_eGM.CellUnitEnt_CellUnitCom(x, y).HaveHealth)
                         CellUnitWorker.ResetUnit(x, y);
 
-                    if (_eGM.CellEffectEnt_CellEffectCom(x, y).TimeFire >= 3)
+                    if (_eGM.CellEffectEnt_CellEffectCom(x, y).TimeStepsEffect(EffectTypes.Fire) >= 3)
                     {
                         if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
                         {
@@ -31,19 +31,19 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 
                         _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
 
-                        _eGM.CellEffectEnt_CellEffectCom(x, y).SetResetEffect(false, EffectTypes.Fire);
+                        _eGM.CellEffectEnt_CellEffectCom(x, y).ResetEffect(EffectTypes.Fire);
 
 
                         var aroundXYList = CellUnitWorker.TryGetXYAround(x, y);
                         foreach (var xy in aroundXYList)
                         {
-                            if (_eGM.CellEnvEnt_CellEnvCom(xy).HaveAdultForest)
+                            if (_eGM.CellEnvEnt_CellEnvCom(xy).HaveEnvironment(EnvironmentTypes.AdultForest))
                             {
-                                _eGM.CellEffectEnt_CellEffectCom(xy).SetResetEffect(true, EffectTypes.Fire);
+                                _eGM.CellEffectEnt_CellEffectCom(xy).SetEffect(EffectTypes.Fire);
                             }
                         }
 
-                        _eGM.CellEffectEnt_CellEffectCom(x, y).TimeFire = 0;
+                        _eGM.CellEffectEnt_CellEffectCom(x, y).SetTimeStepsEffect(EffectTypes.Fire, 0);
                     }
 
                 }

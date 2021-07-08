@@ -23,12 +23,17 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
     internal ref BuildingTypeComponent UpgradeEnt_BuildingTypeCom => ref _upgradeEnt.Get<BuildingTypeComponent>();
 
 
+    private EcsEntity _protectRelaxEnt;
+    internal ref ProtectRelaxComponent ProtectRelaxEnt_ProtectRelaxCom => ref _protectRelaxEnt.Get<ProtectRelaxComponent>();
+
+
     public EntitiesGameMasterManager(EcsWorld gameWorld)
     {
         _fromInfoEnt = gameWorld.NewEntity();
         _masterRPCEntity = gameWorld.NewEntity();
         _fireEnt = gameWorld.NewEntity();
         _upgradeEnt = gameWorld.NewEntity();
+        _protectRelaxEnt = gameWorld.NewEntity();
     }
 
     internal override void FillEntities()
@@ -42,5 +47,7 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
         UpgradeEnt_UpgradeTypeCom.StartFill();
         UpgradeEnt_XyCellCom.StartFill();
         UpgradeEnt_BuildingTypeCom.StartFill();
+
+        ProtectRelaxEnt_ProtectRelaxCom.StartFill();
     }
 }

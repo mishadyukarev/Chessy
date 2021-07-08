@@ -46,7 +46,7 @@ namespace Assets.Scripts
             _entitiesCommonManager = new EntitiesCommonManager(_commonWorld);
 
 
-            _entitiesGameGeneralManager = new EntitiesGameGeneralManager(_gameWorld, _entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
+            _entitiesGameGeneralManager = new EntitiesGameGeneralManager(_gameWorld);
             _systemsGameGeneralManager = new SystemsGameGeneralManager();
 
             _entitiesGameMasterManager = new EntitiesGameMasterManager(_gameWorld);

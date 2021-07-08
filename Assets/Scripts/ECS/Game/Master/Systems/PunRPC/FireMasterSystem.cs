@@ -14,12 +14,12 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
             base.Run();
 
 
-            if (_eGM.CellEffectEnt_CellEffectCom(ToXy).HaveFire)
+            if (_eGM.CellEffectEnt_CellEffectCom(ToXy).HaveEffect(EffectTypes.Fire))
             {
-                _eGM.CellEffectEnt_CellEffectCom(ToXy).SetResetEffect(false, EffectTypes.Fire);
-                _eGM.CellUnitEnt_CellUnitCom(ToXy).AmountSteps -= 1;
+                _eGM.CellEffectEnt_CellEffectCom(ToXy).ResetEffect(EffectTypes.Fire);
+                _eGM.CellUnitEnt_CellUnitCom(ToXy).TakeAmountSteps();
             }
-            else if (_eGM.CellEnvEnt_CellEnvCom(ToXy).HaveAdultForest)
+            else if (_eGM.CellEnvEnt_CellEnvCom(ToXy).HaveEnvironment(EnvironmentTypes.AdultForest))
 
                 if (_eGM.CellUnitEnt_CellOwnerCom(FromXy).HaveOwner)
 
@@ -27,8 +27,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     {
                         EconomyManager.Fire(_eGM.CellUnitEnt_CellOwnerCom(FromXy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXy).UnitType);
 
-                        _eGM.CellEffectEnt_CellEffectCom(ToXy).SetResetEffect(true, EffectTypes.Fire);
-                        _eGM.CellUnitEnt_CellUnitCom(ToXy).AmountSteps -= 1;
+                        _eGM.CellEffectEnt_CellEffectCom(ToXy).SetEffect(EffectTypes.Fire);
+                        _eGM.CellUnitEnt_CellUnitCom(ToXy).TakeAmountSteps();
                     }
                     else
                     {

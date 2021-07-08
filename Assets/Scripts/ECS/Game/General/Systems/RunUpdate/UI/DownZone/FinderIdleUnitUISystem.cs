@@ -28,18 +28,17 @@ namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
                     if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
+                    {
+                        var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
 
                         if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
 
-                            if (CellUnitWorker.HaveMaxSteps(x, y))
+                            if (_eGM.CellUnitEnt_CellUnitCom(x,y).HaveMaxSteps(unitType))
                             {
-                                //if (!_eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected && !_eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed)
-
-                                //_eGM.CellEnt_CellBaseCom(x, y).IsSelected = true;
                                 _eGM.SelectorEnt_SelectorCom.IsSelected = true;
                                 _eGM.SelectorEnt_SelectorCom.XySelectedCell = new int[] { x, y };
                             }
-
+                    }
                 }
         }
     }

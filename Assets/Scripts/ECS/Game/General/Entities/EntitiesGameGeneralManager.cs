@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Static;
 using ExitGames.Client.Photon.StructWrapping;
@@ -7,10 +8,9 @@ using Leopotam.Ecs;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Assets.Scripts.Abstractions.ValuesConst;
 using static Assets.Scripts.Abstractions.EnvironmentValues;
+using static Assets.Scripts.Abstractions.ValuesConst;
 using static Assets.Scripts.Main;
-using Assets.Scripts.Abstractions;
 
 public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDisposable
 {
@@ -38,6 +38,8 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     internal ref OwnerComponent CellUnitEnt_CellOwnerCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<OwnerComponent>();
     internal ref OwnerBotComponent CellUnitEnt_CellOwnerBotCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<OwnerBotComponent>();
     internal ref UnitTypeComponent CellUnitEnt_UnitTypeCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<UnitTypeComponent>();
+    internal ref ActivatedDictComponent CellUnitEnt_ActivatedForPlayersCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<ActivatedDictComponent>();
+    internal ref ProtectRelaxComponent CellUnitEnt_ProtectRelaxCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<ProtectRelaxComponent>();
 
     internal ref CellEnvironmentComponent CellEnvEnt_CellEnvCom(params int[] xy) => ref _cellEnvironmentEnts[xy[X], xy[Y]].Get<CellEnvironmentComponent>();
 
@@ -94,7 +96,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     internal ref AnimationAttackUnitComponent AnimationAttack_UnitComponent => ref _animationEnt.Get<AnimationAttackUnitComponent>();
 
 
-    internal EntitiesGameGeneralManager(EcsWorld gameWorld, ResourcesCommComponent resourcesCommComponent)
+    internal EntitiesGameGeneralManager(EcsWorld gameWorld)
     {
         _cellEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
         _cellUnitEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
@@ -132,7 +134,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
     internal void FillEntities(ResourcesCommComponent resourcesCommComponent)
     {
-        SpawnCells(resourcesCommComponent);
+        SpawnCells();
 
         BackGroundGO = GameObject.Instantiate(Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.BackGroundCollider2D,
             Instance.transform.position + new Vector3(7, 5.5f, 2), Instance.transform.rotation);
@@ -234,18 +236,16 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
         SpawnAndFillCanvasEntities();
     }
 
-    private void SpawnCells(ResourcesCommComponent resourcesCommComponent)
+    private void SpawnCells()
     {
         var cellGO = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.CellGO;
         var whiteCellSR = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig.WhiteSprite;
         var blackCellSR = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig.BlackSprite;
 
-        var CellsGO = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
+        var cellsGO = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
 
         var supportParentForCells = new GameObject("Cells");
         Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(supportParentForCells.transform);
-
-
 
 
         for (int x = 0; x < CELL_COUNT_X; x++)
@@ -255,70 +255,69 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                 {
                     if (x % 2 == 0)
                     {
-                        CellsGO[x, y] = CreateGameObject(cellGO, blackCellSR, x, y, Instance.gameObject);
-                        SetActive(CellsGO[x, y], x, y);
+                        cellsGO[x, y] = CreateGameObject(cellGO, blackCellSR, x, y, Instance.gameObject);
+                        SetActive(cellsGO[x, y], x, y);
                     }
                     if (x % 2 != 0)
                     {
-                        CellsGO[x, y] = CreateGameObject(cellGO, whiteCellSR, x, y, Instance.gameObject);
-                        SetActive(CellsGO[x, y], x, y);
+                        cellsGO[x, y] = CreateGameObject(cellGO, whiteCellSR, x, y, Instance.gameObject);
+                        SetActive(cellsGO[x, y], x, y);
                     }
                 }
                 if (y % 2 != 0)
                 {
                     if (x % 2 != 0)
                     {
-                        CellsGO[x, y] = CreateGameObject(cellGO, blackCellSR, x, y, Instance.gameObject);
-                        SetActive(CellsGO[x, y], x, y);
+                        cellsGO[x, y] = CreateGameObject(cellGO, blackCellSR, x, y, Instance.gameObject);
+                        SetActive(cellsGO[x, y], x, y);
                     }
                     if (x % 2 == 0)
                     {
-                        CellsGO[x, y] = CreateGameObject(cellGO, whiteCellSR, x, y, Instance.gameObject);
-                        SetActive(CellsGO[x, y], x, y);
+                        cellsGO[x, y] = CreateGameObject(cellGO, whiteCellSR, x, y, Instance.gameObject);
+                        SetActive(cellsGO[x, y], x, y);
                     }
                 }
-
-                CellsGO[x, y].transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
-
-
 
                 var isStartedDict = new Dictionary<bool, bool>();
                 isStartedDict[true] = y < 3 && x > 2 && x < 12;
                 isStartedDict[false] = y > 7 && x > 2 && x < 12;
 
-                CellsGO[x, y].transform.SetParent(supportParentForCells.transform);
-                CellEnt_CellBaseCom(x, y).StartFill(supportParentForCells, CellsGO[x, y], isStartedDict);
+                cellsGO[x, y].transform.SetParent(supportParentForCells.transform);
+                CellEnt_CellBaseCom(x, y).StartFill(supportParentForCells, cellsGO[x, y], isStartedDict);
+                CellEnt_CellBaseCom(x, y).RotateAndFixRot();
                 CellEnt_CellCom(x, y).StartFill();
 
 
-                GameObject parentGO = CellsGO[x, y].transform.Find("Environments").gameObject;
+                GameObject parentGO = cellsGO[x, y].transform.Find("Environments").gameObject;
                 CellEnvEnt_CellEnvCom(x, y).StartFill(parentGO);
 
 
-                parentGO = CellsGO[x, y].transform.Find("SupportVisions").gameObject;
+                parentGO = cellsGO[x, y].transform.Find("SupportVisions").gameObject;
                 CellSupVisEnt_CellSupVisCom(x, y).Fill(parentGO);
 
 
-                parentGO = CellsGO[x, y].transform.Find("SupportStatic").gameObject;
+                parentGO = cellsGO[x, y].transform.Find("SupportStatic").gameObject;
                 CellSupStatEnt_CellSupStatCom(x, y).Fill(parentGO);
 
 
-                parentGO = CellsGO[x, y].transform.Find("Units").gameObject;
+                parentGO = cellsGO[x, y].transform.Find("Units").gameObject;
                 CellUnitEnt_CellUnitCom(x, y).StartFill(parentGO);
                 CellUnitEnt_UnitTypeCom(x, y).StartFill();
                 CellUnitEnt_CellOwnerCom(x, y).StartFill();
                 CellUnitEnt_CellOwnerBotCom(x, y).StartFill();
+                CellUnitEnt_ActivatedForPlayersCom(x, y).StartFill();
+                CellUnitEnt_ProtectRelaxCom(x, y).StartFill();
 
 
-                parentGO = CellsGO[x, y].transform.Find("Buildings").gameObject;
+                parentGO = cellsGO[x, y].transform.Find("Buildings").gameObject;
                 CellBuildEnt_CellBuilCom(x, y).StartFill(parentGO);
                 CellBuildEnt_BuilTypeCom(x, y).StartFill();
                 CellBuildEnt_OwnerCom(x, y).StartFill();
                 CellBuildEnt_CellOwnerBotCom(x, y).StartFill();
 
 
-                parentGO = CellsGO[x, y].transform.Find("Effects").gameObject;
-                CellEffectEnt_CellEffectCom(x, y).Fill(parentGO);
+                parentGO = cellsGO[x, y].transform.Find("Effects").gameObject;
+                CellEffectEnt_CellEffectCom(x, y).StartFill(parentGO);
 
 
 
@@ -333,7 +332,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                             CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Mountain);
                     }
 
-                    if (!CellEnvEnt_CellEnvCom(x, y).HaveMountain)
+                    if (!CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Mountain))
                     {
                         random = UnityEngine.Random.Range(1, 100);
                         if (random <= FOREST_PERCENT)
@@ -341,7 +340,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                             CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.AdultForest);
                         }
 
-                        if(!CellEnvEnt_CellEnvCom(x, y).HaveAdultForest)
+                        if (!CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest))
                         {
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= FERTILIZER_PERCENT)
@@ -349,7 +348,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                                 CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Fertilizer);
                             }
                         }
-                        
+
 
                         if (y >= 4 && y <= 6)
                         {
@@ -357,7 +356,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
                             if (random <= HILL_PERCENT)
                                 CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Hill);
 
-                        }    
+                        }
                     }
                 }
             }
@@ -369,13 +368,13 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
             xy0[X] = 8;
             xy0[Y] = 8;
             var isSettedForest = false;
-            CellUnitWorker.SetBotUnit(UnitTypes.King, true, 300, 2, true, true, xy0);
+            CellUnitWorker.SetBotUnit(UnitTypes.King, true, 300, 2, ProtectRelaxTypes.Relaxed, xy0);
             CellEnvEnt_CellEnvCom(xy0).ResetAll();
             var xyAround = CellUnitWorker.TryGetXYAround(xy0);
 
             foreach (var xy1 in xyAround)
             {
-                CellUnitWorker.SetBotUnit(UnitTypes.Pawn, true, 150, 2, true, true, xy1);
+                CellUnitWorker.SetBotUnit(UnitTypes.Pawn, true, 150, 2, ProtectRelaxTypes.Relaxed, xy1);
                 CellEnvEnt_CellEnvCom(xy1).ResetAll();
 
                 if (!isSettedForest)
@@ -394,7 +393,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
             xyAround = CellUnitWorker.TryGetXYAround(xy0);
             foreach (var xy1 in xyAround)
             {
-                CellUnitWorker.SetBotUnit(UnitTypes.PawnSword, true, 150, 2, true, true, xy1);
+                CellUnitWorker.SetBotUnit(UnitTypes.PawnSword, true, 150, 2, ProtectRelaxTypes.Relaxed, xy1);
                 CellEnvEnt_CellEnvCom(xy1).ResetAll();
 
                 if (i == 0)
@@ -433,7 +432,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
         void SetActive(GameObject go, int x, int y)
         {
             if (x >= 0 && y == 0 || x >= 0 && y == 10 ||
-                x == 1 && y >= 0|| x == 13 && y >= 0 ||
+                x == 1 && y >= 0 || x == 13 && y >= 0 ||
             x == 0 && y >= 0 || x == 14 && y >= 0 ||
             x == 1 && y == 1 || x == 2 && y == 1 || x == 12 && y == 1 || x == 13 && y == 1 ||
             x == 1 && y == 9 || x == 2 && y == 9 || x == 12 && y == 9 || x == 13 && y == 9)

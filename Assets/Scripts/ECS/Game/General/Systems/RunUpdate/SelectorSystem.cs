@@ -96,7 +96,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                             {
                                 if (_eGM.SelectorEnt_UnitTypeCom.HaveUnit)
                                 {
-                                    if (!_eGM.CellEnvEnt_CellEnvCom(xyCurrentCell).HaveMountain && !_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit)
+                                    if (!_eGM.CellEnvEnt_CellEnvCom(xyCurrentCell).HaveEnvironment(EnvironmentTypes.Mountain) && !_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit)
                                     {
                                         if (Instance.IsMasterClient && _eGM.CellEnt_CellBaseCom(xyCurrentCell).IsStartedCell(true))
                                             _photonPunRPC.SetUniToMaster(xyCurrentCell, _eGM.SelectorEnt_UnitTypeCom.UnitType);
@@ -233,7 +233,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                         {
                             if (_eGM.SelectorEnt_UnitTypeCom.HaveUnit)
                             {
-                                if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit || !_eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).IsActivatedUnitDict[Instance.IsMasterClient])
+                                if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit || !_eGM.CellUnitEnt_ActivatedForPlayersCom(xyCurrentCell).IsActivated(Instance.IsMasterClient) /*IsActivatedUnitDict[Instance.IsMasterClient]*/)
                                 {
                                     if (_isStartSelectedDirect)
                                     {

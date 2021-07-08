@@ -23,25 +23,25 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
                 case BuildingTypes.City:
                     CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
-                    _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
+                    _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
 
                     _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Info.Sender.IsMasterClient] = true;
                     _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[Info.Sender.IsMasterClient] = XyCell;
 
-                    if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultForest) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.AdultForest);
-                    if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.Fertilizer);
+                    if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest)) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.AdultForest);
+                    if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Fertilizer)) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.Fertilizer);
                     break;
 
                 case BuildingTypes.Farm:
-                    canSet = !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultForest;
+                    canSet = !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest);
                     break;
 
                 case BuildingTypes.Woodcutter:
-                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultForest && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveForestResources;
+                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest) && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveResources(ResourceTypes.Wood);
                     break;
 
                 case BuildingTypes.Mine:
-                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveHill && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveOreResources;
+                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Hill) && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveResources(ResourceTypes.Ore);
                     break;
 
                 default:
@@ -51,11 +51,16 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
             {
                 if(BuildingType != BuildingTypes.Farm )
                 {
-                    if (EconomyManager.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves) && CellUnitWorker.HaveMaxSteps(XyCell))
+                    if (EconomyManager.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves))
                     {
-                        EconomyManager.CreateBuilding(BuildingType, Info.Sender);
-                        CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
-                        _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps = 0;
+                        var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCell).UnitType;
+
+                        if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
+                        {
+                            EconomyManager.CreateBuilding(BuildingType, Info.Sender);
+                            CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
+                        }
                     }
                     else
                     {
@@ -66,19 +71,21 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                 {
                     if (EconomyManager.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves))
                     {
-                        if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer)
+                        if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMinAmountSteps)
                         {
-                            _eGM.CellEnvEnt_CellEnvCom(XyCell).AmountFertilizerResources += _eGM.CellEnvEnt_CellEnvCom(XyCell).MaxAmountResources(EnvironmentTypes.Fertilizer);
-                        }
-                        else
-                        {
-                            _eGM.CellEnvEnt_CellEnvCom(XyCell).SetNewEnvironment(EnvironmentTypes.Fertilizer);
-                        }
-               
+                            if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Fertilizer))
+                            {
+                                _eGM.CellEnvEnt_CellEnvCom(XyCell).AddAmountResources(ResourceTypes.Food, _eGM.CellEnvEnt_CellEnvCom(XyCell).MaxAmountResources(EnvironmentTypes.Fertilizer));
+                            }
+                            else
+                            {
+                                _eGM.CellEnvEnt_CellEnvCom(XyCell).SetNewEnvironment(EnvironmentTypes.Fertilizer);
+                            }
 
-                        EconomyManager.CreateBuilding(BuildingType, Info.Sender);
-                        CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
-                        _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps -= 1;
+                            EconomyManager.CreateBuilding(BuildingType, Info.Sender);
+                            CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
+                        }
                     }
                     else
                     {

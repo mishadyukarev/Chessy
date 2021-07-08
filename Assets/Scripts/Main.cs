@@ -40,7 +40,7 @@ namespace Assets.Scripts
         public ref CanvasCommComponent CanvasManager => ref _eCSmanager.EntitiesCommonManager.CanvasEnt_CanvasCommCom;
         public StartGameValuesConfig StartValuesGameConfig => _eCSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
 
-        public EntitiesGameGeneralManager EGM => _eCSmanager.EntitiesGameGeneralManager;
+        public EntitiesGameGeneralManager EGGM => _eCSmanager.EntitiesGameGeneralManager;
 
         #endregion
 

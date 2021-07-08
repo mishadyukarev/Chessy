@@ -19,9 +19,9 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
             _eGM.EnvironmentZoneEnt_ParentCom.SetActive(false);
         }
 
-        _eGM.EnvFerilizerEnt_TextMeshProUGUICom.Text = "Fertilizer: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountFertilizerResources;
-        _eGM.EnvForestEnt_TextMeshProUGUICom.Text = "Forest: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountForestResources;
-        _eGM.EnvOreEnt_TextMeshProUGUICom.Text = "Ore: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountOreResources;
+        _eGM.EnvFerilizerEnt_TextMeshProUGUICom.Text = "Fertilizer: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountResources(ResourceTypes.Food);
+        _eGM.EnvForestEnt_TextMeshProUGUICom.Text = "Forest: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountResources(ResourceTypes.Wood);
+        _eGM.EnvOreEnt_TextMeshProUGUICom.Text = "Ore: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountResources(ResourceTypes.Ore);
 
 
 
@@ -31,30 +31,30 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
             {
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
-                    if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer)
+                    if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Fertilizer))
                     {
                         _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Fertilizer);
-                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Fertilizer, new Vector3((float)_eGM.CellEnvEnt_CellEnvCom(x, y).AmountFertilizerResources / (float)_eGM.CellEnvEnt_CellEnvCom(x, y).MaxAmountResources(EnvironmentTypes.Fertilizer), 0.15f, 1));
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Fertilizer, new Vector3((float)_eGM.CellEnvEnt_CellEnvCom(x, y).AmountResources(ResourceTypes.Food) / (float)_eGM.CellEnvEnt_CellEnvCom(x, y).MaxAmountResources(EnvironmentTypes.Fertilizer), 0.15f, 1));
                     }
                     else
                     {
                         _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Fertilizer);
                     }
 
-                    if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest)
+                    if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest))
                     {
                         _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Wood);
-                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Wood, new Vector3((float)_eGM.CellEnvEnt_CellEnvCom(x, y).AmountForestResources / (float)_eGM.CellEnvEnt_CellEnvCom(x,y).MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1));
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Wood, new Vector3((float)_eGM.CellEnvEnt_CellEnvCom(x, y).AmountResources(ResourceTypes.Wood) / (float)_eGM.CellEnvEnt_CellEnvCom(x,y).MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1));
                     }
                     else
                     {
                         _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Wood);
                     }
 
-                    if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveHill)
+                    if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Hill))
                     {
                         _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Ore);
-                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Ore, new Vector3((float)_eGM.CellEnvEnt_CellEnvCom(x, y).AmountOreResources / (float)_eGM.CellEnvEnt_CellEnvCom(x, y).MaxAmountResources(EnvironmentTypes.Hill), 0.15f, 1));
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Ore, new Vector3((float)_eGM.CellEnvEnt_CellEnvCom(x, y).AmountResources(ResourceTypes.Ore) / (float)_eGM.CellEnvEnt_CellEnvCom(x, y).MaxAmountResources(EnvironmentTypes.Hill), 0.15f, 1));
                     }
                     else
                     {

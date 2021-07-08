@@ -30,7 +30,7 @@ internal sealed class FertilizeUpdatorMasterSystem : SystemGeneralReduction
                 {
                     if (_eGM.CellEnt_CellBaseCom(x, y).IsActiveSelfGO)
                     {
-                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveFertilizer)
+                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Fertilizer))
                         {
                             if (_standartRandom <= 80)
                             {

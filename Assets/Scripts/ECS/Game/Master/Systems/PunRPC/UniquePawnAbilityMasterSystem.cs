@@ -67,7 +67,7 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
 
                 case UniqueAbilitiesPawnTypes.AbilityTwo:
 
-                    if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultForest && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveYoungTree)
+                    if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Fertilizer) && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest) && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.YoungForest))
                     {
                         minusFood = 0;
                         minusWood = 0;
@@ -90,7 +90,7 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                             _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, minusGold);
 
                             _eGM.CellEnvEnt_CellEnvCom(XyCell).SetNewEnvironment(EnvironmentTypes.Fertilizer);
-                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps -= 1;
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).TakeAmountSteps();
                         }
                         else
                         {
@@ -100,7 +100,7 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                     break;
 
                 case UniqueAbilitiesPawnTypes.AbilityThree:
-                    if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveFertilizer && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveAdultForest && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveYoungTree)
+                    if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Fertilizer) && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest) && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.YoungForest))
                     {
                         minusFood = 0;
                         minusWood = 0;
@@ -121,7 +121,7 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                             _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient, minusOre);
                             _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, minusIron);
                             _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, minusGold);
-                            _eGM.CellUnitEnt_CellUnitCom(XyCell).AmountSteps -= 1;
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).TakeAmountSteps();
 
                             _eGM.CellEnvEnt_CellEnvCom(XyCell).SetNewEnvironment(EnvironmentTypes.YoungForest);
                         }

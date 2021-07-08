@@ -2,14 +2,6 @@
 
 internal struct CellSupportVisionComponent
 {
-    private GameObject _selectorGO;
-    private GameObject _spawnGO;
-    private GameObject _wayUnitGO;
-    private GameObject _enemyGO;
-    private GameObject _uniqueAttackGO;
-    private GameObject _zoneGO;
-
-
     private SpriteRenderer _selectorSR;
     private SpriteRenderer _spawnSR;
     private SpriteRenderer _wayUnitSR;
@@ -20,19 +12,12 @@ internal struct CellSupportVisionComponent
 
     internal void Fill(GameObject supportVisionGO)
     {
-        _selectorGO = supportVisionGO.transform.Find("Selector").gameObject;
-        _spawnGO = supportVisionGO.transform.Find("Assignment").gameObject;
-        _wayUnitGO = supportVisionGO.transform.Find("WayOfUnit").gameObject;
-        _enemyGO = supportVisionGO.transform.Find("Enemy").gameObject;
-        _uniqueAttackGO = supportVisionGO.transform.Find("UniqueAttack").gameObject;
-        _zoneGO = supportVisionGO.transform.Find("Zone").gameObject;
-
-        _selectorSR = _selectorGO.GetComponent<SpriteRenderer>();
-        _spawnSR = _spawnGO.GetComponent<SpriteRenderer>();
-        _wayUnitSR = _wayUnitGO.GetComponent<SpriteRenderer>();
-        _simpleAttackSR = _enemyGO.GetComponent<SpriteRenderer>();
-        _uniqueAttackSR = _uniqueAttackGO.GetComponent<SpriteRenderer>();
-        _zoneSR = _zoneGO.GetComponent<SpriteRenderer>();
+        _selectorSR = supportVisionGO.transform.Find("Selector").GetComponent<SpriteRenderer>();
+        _spawnSR = supportVisionGO.transform.Find("Assignment").GetComponent<SpriteRenderer>();
+        _wayUnitSR = supportVisionGO.transform.Find("WayOfUnit").GetComponent<SpriteRenderer>();
+        _simpleAttackSR = supportVisionGO.transform.Find("Enemy").GetComponent<SpriteRenderer>();
+        _uniqueAttackSR = supportVisionGO.transform.Find("UniqueAttack").GetComponent<SpriteRenderer>();
+        _zoneSR = supportVisionGO.transform.Find("Zone").GetComponent<SpriteRenderer>();
         _upgradeSR = supportVisionGO.transform.Find("Upgrade").GetComponent<SpriteRenderer>();
     }
 

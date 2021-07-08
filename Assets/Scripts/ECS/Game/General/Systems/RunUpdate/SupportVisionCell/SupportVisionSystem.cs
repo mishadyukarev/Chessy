@@ -26,7 +26,7 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                 if (_eGM.SelectorEnt_UnitTypeCom.HaveUnit)
                 {
                     if (!CellBaseOperations.CompareXY(new int[] { x, y }, _eGM.SelectorEnt_SelectorCom.XySelectedCell)/*!_eGM.CellEnt_CellBaseCom(x, y).IsSelected*/ && !_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit
-                        && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveMountain)
+                        && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Mountain))
                     {
                         if (Instance.IsMasterClient)
                         {
@@ -52,15 +52,19 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                 }
 
 
-                if (_eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[Instance.IsMasterClient])
+                if (_eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).IsActivated(Instance.IsMasterClient))
                 {
                     if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
                     {
+                        var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
+
                         if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner || _eGM.CellUnitEnt_CellOwnerBotCom(x, y).HaveBot)
                         {
                             _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Hp);
 
-                            float xCordinate = (float)_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth / (float)CellUnitWorker.MaxAmountHealth(x, y);
+
+                            float maxAmountHealth = CellUnitWorker.MaxAmountHealth(unitType);
+                            float xCordinate = (float)_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth / maxAmountHealth;
                             _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
 
 
@@ -83,12 +87,12 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
 
 
 
-                        if (_eGM.CellUnitEnt_CellUnitCom(x, y).IsProtected)
+                        if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsProtected)
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
                             _eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.yellow);
                         }
-                        else if (_eGM.CellUnitEnt_CellUnitCom(x, y).IsRelaxed)
+                        else if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsRelaxed)
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
                             _eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.green);
@@ -99,7 +103,7 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                         }
 
 
-                        if (CellUnitWorker.HaveMaxSteps(x, y))
+                        if (_eGM.CellUnitEnt_CellUnitCom(x, y).HaveMaxSteps(unitType))
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).EnableStandartColorSR(true);
                         }

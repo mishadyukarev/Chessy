@@ -7,55 +7,55 @@ namespace Assets.Scripts.Static
     {
         internal static void SetPlayerBuilding(bool withEconomy, BuildingTypes buildingType, Player owner, params int[] xy)
         {
-            Instance.EGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = buildingType;
-            Instance.EGM.CellBuildEnt_OwnerCom(xy).SetOwner(owner);
-            Instance.EGM.CellBuildEnt_CellBuilCom(xy).EnabledPlayerSR(true, Instance.EGM.CellBuildEnt_BuilTypeCom(xy).BuildingType, owner);
+            Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = buildingType;
+            Instance.EGGM.CellBuildEnt_OwnerCom(xy).SetOwner(owner);
+            Instance.EGGM.CellBuildEnt_CellBuilCom(xy).EnabledPlayerSR(true, Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType, owner);
 
             if (withEconomy)
             {
-                Instance.EGM.BuildingsEnt_BuildingsCom.AddAmountBuildings
-                    (Instance.EGM.CellBuildEnt_BuilTypeCom(xy).BuildingType, Instance.EGM.CellBuildEnt_OwnerCom(xy).IsMasterClient);
+                Instance.EGGM.BuildingsEnt_BuildingsCom.AddAmountBuildings
+                    (Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType, Instance.EGGM.CellBuildEnt_OwnerCom(xy).IsMasterClient);
             }
         }
 
         internal static void SetBotBuilding(BuildingTypes buildingType, params int[] xy)
         {
-            Instance.EGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = buildingType;
-            Instance.EGM.CellBuildEnt_CellOwnerBotCom(xy).HaveBot = true;
-            Instance.EGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(true, Instance.EGM.CellBuildEnt_BuilTypeCom(xy).BuildingType);
+            Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = buildingType;
+            Instance.EGGM.CellBuildEnt_CellOwnerBotCom(xy).HaveBot = true;
+            Instance.EGGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(true, Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType);
         }
 
         internal static void ResetBuilding(bool withEconomy, params int[] xy)
         {
-            var buildType = Instance.EGM.CellBuildEnt_BuilTypeCom(xy).BuildingType;
+            var buildType = Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType;
 
             if (withEconomy)
             {
-                if (Instance.EGM.CellBuildEnt_OwnerCom(xy).HaveOwner)
+                if (Instance.EGGM.CellBuildEnt_OwnerCom(xy).HaveOwner)
                 {
                     if(buildType == BuildingTypes.City)
                     {
-                        Instance.EGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Instance.EGM.CellBuildEnt_OwnerCom(xy).IsMasterClient] = false;
-                        Instance.EGM.BuildingsEnt_BuildingsCom.XySettedCityDict[Instance.EGM.CellBuildEnt_OwnerCom(xy).IsMasterClient] = default;
+                        Instance.EGGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Instance.EGGM.CellBuildEnt_OwnerCom(xy).IsMasterClient] = false;
+                        Instance.EGGM.BuildingsEnt_BuildingsCom.XySettedCityDict[Instance.EGGM.CellBuildEnt_OwnerCom(xy).IsMasterClient] = default;
                     }                  
 
-                    Instance.EGM.BuildingsEnt_BuildingsCom.TakeAmountBuildings(buildType, Instance.EGM.CellBuildEnt_OwnerCom(xy).IsMasterClient);
+                    Instance.EGGM.BuildingsEnt_BuildingsCom.TakeAmountBuildings(buildType, Instance.EGGM.CellBuildEnt_OwnerCom(xy).IsMasterClient);
                 }
             }
 
-            if (Instance.EGM.CellBuildEnt_OwnerCom(xy).HaveOwner)
+            if (Instance.EGGM.CellBuildEnt_OwnerCom(xy).HaveOwner)
             {
-                Instance.EGM.CellBuildEnt_CellBuilCom(xy).EnabledPlayerSR(false, buildType);
-                Instance.EGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
+                Instance.EGGM.CellBuildEnt_CellBuilCom(xy).EnabledPlayerSR(false, buildType);
+                Instance.EGGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
             }
 
-            else if (Instance.EGM.CellBuildEnt_CellOwnerBotCom(xy).HaveBot)
+            else if (Instance.EGGM.CellBuildEnt_CellOwnerBotCom(xy).HaveBot)
             {
-                Instance.EGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(false, buildType);       
-                Instance.EGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
+                Instance.EGGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(false, buildType);       
+                Instance.EGGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
             }
 
-            Instance.EGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = BuildingTypes.None;
+            Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = BuildingTypes.None;
         }
     }
 }

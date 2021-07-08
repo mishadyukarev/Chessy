@@ -9,7 +9,7 @@ internal sealed class RightZoneUISystem : SystemGeneralReduction
     {
         base.Run();
 
-        if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsActivatedUnitDict[Instance.IsMasterClient])
+        if (_eGM.CellUnitEnt_ActivatedForPlayersCom(XySelectedCell).IsActivated(Instance.IsMasterClient))
         {
             if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
             {

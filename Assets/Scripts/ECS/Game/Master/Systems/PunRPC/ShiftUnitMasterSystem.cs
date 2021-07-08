@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 using Photon.Pun;
 using System.Collections.Generic;
 using static Assets.Scripts.Static.CellBaseOperations;
@@ -26,12 +27,10 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
                 CellUnitWorker.ResetUnit(XyPreviousCell);
 
 
-                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps
-                    -= CellUnitWorker.NeedAmountSteps(XySelectedCell);
-                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps < 0) _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps = 0;
+                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).TakeAmountSteps(CellUnitWorker.NeedAmountSteps(XySelectedCell));
+                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps < 0) _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).ResetAmountSteps();
 
-                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsProtected = false;
-                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsRelaxed = false;
+                _eGM.CellUnitEnt_ProtectRelaxCom(XySelectedCell).ResetProtectedRelaxedType();
             }
         }
     }

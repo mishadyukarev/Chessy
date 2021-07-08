@@ -3,18 +3,7 @@
 internal struct CellComponent
 {
     private int[] _xy;
-    internal int[] XyCopy
-    {
-        get
-        {
-            var xy = new int[XY_FOR_ARRAY];
-
-            xy[X] = _xy[X];
-            xy[Y] = _xy[Y];
-
-            return xy;
-        }
-    }
+    internal int[] XyClone => (int[])_xy.Clone();
 
     internal void StartFill(params int[] xy) => _xy = xy;
 }

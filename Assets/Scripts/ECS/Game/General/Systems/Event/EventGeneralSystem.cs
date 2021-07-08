@@ -1,4 +1,5 @@
-﻿using static Assets.Scripts.Main;
+﻿using Assets.Scripts.Abstractions.Enums;
+using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
 {
@@ -45,7 +46,7 @@ namespace Assets.Scripts
         private void Done() => _photonPunRPC.DoneToMaster(!_eGM.DonerEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient));
         private void Truce() => _photonPunRPC.TruceToMaster(!_eGM.TruceEnt_ActivatedDictCom.IsActivated(Instance.IsMasterClient));
         private void EnvironmentInfo() => _eGM.EnvironmentInfoEnt_IsActivatedCom.IsActivated = !_eGM.EnvironmentInfoEnt_IsActivatedCom.IsActivated;
-        private void StandartAbilityButton1() => _photonPunRPC.ProtectUnitToMaster(!_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsProtected, XySelectedCell);
-        private void StandartAbilityButton2() => _photonPunRPC.RelaxUnitToMaster(!_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).IsRelaxed, XySelectedCell);
+        private void StandartAbilityButton1() => _photonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Protected, XySelectedCell);
+        private void StandartAbilityButton2() => _photonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Relaxed, XySelectedCell);
     }
 }

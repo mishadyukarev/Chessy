@@ -15,8 +15,8 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
         {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[true] = true;
-                _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[false] = true;
+                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(true, true);
+                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(false, true);
 
 
 
@@ -26,9 +26,9 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                     {
                         if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsHim(Instance.MasterClient))
                         {
-                            if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest)
+                            if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest))
                             {
-                                _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[false] = false;
+                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(false, false);
 
                                 List<int[]> list = CellUnitWorker.TryGetXYAround(x, y);
                                 foreach (var xy in list)
@@ -39,7 +39,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                         {
                                             if (!_eGM.CellUnitEnt_CellOwnerCom(xy).IsHim(Instance.MasterClient))
                                             {
-                                                _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[false] = true;
+                                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(false, true);
                                                 break;
                                             }
                                         }
@@ -49,9 +49,9 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         }
                         else
                         {
-                            if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest)
+                            if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest))
                             {
-                                _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[true] = false;
+                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(true, false);
 
                                 List<int[]> list = CellUnitWorker.TryGetXYAround(x, y);
                                 foreach (var xy in list)
@@ -62,7 +62,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                         {
                                             if (_eGM.CellUnitEnt_CellOwnerCom(xy).IsHim(Instance.MasterClient))
                                             {
-                                                _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[true] = true;
+                                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(true, true);
                                                 break;
                                             }
                                         }
@@ -71,14 +71,14 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                             }
                         }
 
-                        _eGM.CellUnitEnt_CellUnitCom(x, y).EnablePlayerSR(_eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[Instance.IsMasterClient], _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner);
+                        _eGM.CellUnitEnt_CellUnitCom(x, y).EnablePlayerSR(_eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).IsActivated(Instance.IsMasterClient), _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner);
                     }
 
                     else if (_eGM.CellUnitEnt_CellOwnerBotCom(x, y).HaveBot)
                     {
-                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveAdultForest)
+                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest))
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[true] = false;
+                            _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(true, false);// IsActivatedUnitDict[true] = false;
 
                             List<int[]> list = CellUnitWorker.TryGetXYAround(x, y);
                             foreach (var xy in list)
@@ -89,7 +89,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                     {
                                         if (_eGM.CellUnitEnt_CellOwnerCom(xy).IsHim(Instance.MasterClient))
                                         {
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[true] = true;
+                                            _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(true, true);//.IsActivatedUnitDict[true] = true;
                                             break;
                                         }
                                     }
@@ -97,7 +97,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                             }
                         }
 
-                        _eGM.CellUnitEnt_CellUnitCom(x, y).EnableBotSR(_eGM.CellUnitEnt_CellUnitCom(x, y).IsActivatedUnitDict[Instance.IsMasterClient], _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
+                        _eGM.CellUnitEnt_CellUnitCom(x, y).EnableBotSR(_eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).IsActivated(Instance.IsMasterClient), _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
                     }
                 }
             }

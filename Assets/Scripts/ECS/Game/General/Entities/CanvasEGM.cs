@@ -18,7 +18,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
     private EcsEntity _readyEnt;
     internal ref ParentComponent ReadyEnt_ParentCom => ref _readyEnt.Get<ParentComponent>();
     internal ref ButtonComponent ReadyEnt_ButtonCom => ref _readyEnt.Get<ButtonComponent>();
-    internal ref ActivatedDictionaryComponent ReadyEnt_ActivatedDictCom => ref _readyEnt.Get<ActivatedDictionaryComponent>();
+    internal ref ActivatedDictComponent ReadyEnt_ActivatedDictCom => ref _readyEnt.Get<ActivatedDictComponent>();
     internal ref StartedGameComponent ReadyEnt_StartedGameCom => ref _readyEnt.Get<StartedGameComponent>();
 
 
@@ -55,13 +55,13 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
 
     internal ref ButtonComponent DonerEnt_ButtonCom => ref _donerEntity.Get<ButtonComponent>();
     internal ref TextMeshProUGUIComponent DonerEnt_TextMeshProGUICom => ref _donerEntity.Get<TextMeshProUGUIComponent>();
-    internal ref ActivatedDictionaryComponent DonerEnt_IsActivatedDictCom => ref _donerEntity.Get<ActivatedDictionaryComponent>();
+    internal ref ActivatedDictComponent DonerEnt_IsActivatedDictCom => ref _donerEntity.Get<ActivatedDictComponent>();
     internal ref MistakeComponent DonerEnt_MistakeCom => ref _donerEntity.Get<MistakeComponent>();
 
 
     private EcsEntity _truceEntity;
     internal ref ButtonComponent TruceEnt_ButtonCom => ref _truceEntity.Get<ButtonComponent>();
-    internal ref ActivatedDictionaryComponent TruceEnt_ActivatedDictCom => ref _truceEntity.Get<ActivatedDictionaryComponent>();
+    internal ref ActivatedDictComponent TruceEnt_ActivatedDictCom => ref _truceEntity.Get<ActivatedDictComponent>();
     internal ref MistakeComponent TruceEnt_MistakeCom => ref _truceEntity.Get<MistakeComponent>();
 
 
@@ -336,12 +336,12 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
 
         _truceEntity = gameWorld.NewEntity()
             .Replace(new ButtonComponent())
-            .Replace(new ActivatedDictionaryComponent())
+            .Replace(new ActivatedDictComponent())
             .Replace(new MistakeComponent());
 
         _donerEntity = gameWorld.NewEntity()
             .Replace(new ButtonComponent())
-            .Replace(new ActivatedDictionaryComponent())
+            .Replace(new ActivatedDictComponent())
             .Replace(new MistakeComponent());
 
         _finderIdleEntity = gameWorld.NewEntity();
