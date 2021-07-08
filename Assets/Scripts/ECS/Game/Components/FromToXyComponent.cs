@@ -7,43 +7,16 @@ namespace Assets.Scripts.ECS.Components
         private int[] _fromXy;
         private int[] _toXy;
 
-        internal int[] FromXy => _fromXy;
-        internal int[] ToXy => _toXy;
-
         internal int[] FromXyCopy
         {
-            get
-            {
-                var xy = new int[XY_FOR_ARRAY];
-
-                xy[X] = _fromXy[X];
-                xy[Y] = _fromXy[Y];
-
-                return xy;
-            }
-            set
-            {
-                _fromXy[X] = value[X];
-                _fromXy[Y] = value[Y];
-            }
+            get => (int[])_fromXy.Clone();
+            set => _fromXy = (int[])value.Clone();
         }
 
         internal int[] ToXyCopy
         {
-            get
-            {
-                var xy = new int[XY_FOR_ARRAY];
-
-                xy[X] = _toXy[X];
-                xy[Y] = _toXy[Y];
-
-                return xy;
-            }
-            set
-            {
-                _toXy[X] = value[X];
-                _toXy[Y] = value[Y];
-            }
+            get => (int[])_toXy.Clone();
+            set => _toXy = (int[])value.Clone();
         }
 
         internal void StartFill()

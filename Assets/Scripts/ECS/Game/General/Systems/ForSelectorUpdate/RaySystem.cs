@@ -15,18 +15,18 @@ internal sealed class RaySystem : SystemGeneralReduction
         base.Run();
 
         _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        _eGM.SelectorEnt_RayCom.RaycastHit2D = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
+        _eGM.SelectorEnt_RayCom.SetRaycastHit2D(Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE));
 
 
 
 #if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
-        _eGM.SelectorEnt_RayCom.IsUI = EventSystem.current.IsPointerOverGameObject();
+        _eGM.SelectorEnt_RayCom.SetIsUI(EventSystem.current.IsPointerOverGameObject());
 #endif
 
 #if UNITY_ANDROID
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            _eGM.SelectorEnt_RayCom.IsUI = EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId);
+            _eGM.SelectorEnt_RayCom.SetIsUI(EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId));
         }
 #endif
     }

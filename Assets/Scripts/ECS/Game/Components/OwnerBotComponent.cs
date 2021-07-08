@@ -4,11 +4,12 @@ namespace Assets.Scripts.ECS.Game.General.Components
 {
     internal struct OwnerBotComponent
     {
-        internal bool HaveBot;
+        private bool _haveBot;
 
-        internal void StartFill()
-        {
-            HaveBot = false;
-        }
+        internal bool HaveBot => _haveBot;
+
+        internal void SetBot(bool haveBot) => _haveBot = haveBot;
+
+        internal void StartFill() => _haveBot = default;
     }
 }

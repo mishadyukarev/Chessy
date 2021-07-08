@@ -2,16 +2,10 @@
 {
     private BuildingTypes _buildingTypes;
 
-    internal BuildingTypes BuildingType
-    {
-        get => _buildingTypes;
-        set => _buildingTypes = value;
-    }
-
+    internal BuildingTypes BuildingType => _buildingTypes;
     internal bool HaveBuilding => _buildingTypes != BuildingTypes.None;
 
-    internal void StartFill()
-    {
-        _buildingTypes = BuildingTypes.None;
-    }
+    internal void StartFill() => _buildingTypes = default;
+    internal void SetBuildingType(BuildingTypes buildingType) => _buildingTypes = buildingType;
+    internal void ResetBuildingType() => _buildingTypes = default;
 }

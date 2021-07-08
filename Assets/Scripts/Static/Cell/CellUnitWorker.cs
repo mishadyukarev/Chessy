@@ -322,22 +322,6 @@ namespace Assets.Scripts
             return powerProtection;
 
         }
-        internal static int NeedAmountSteps(params int[] xy)
-        {
-            int amountSteps = 1;
-
-            if (Instance.EGGM.CellEnvEnt_CellEnvCom(xy).HaveEnvironment(EnvironmentTypes.Fertilizer))
-                amountSteps += Instance.StartValuesGameConfig.NEED_AMOUNT_STEPS_FOOD;
-
-            if (Instance.EGGM.CellEnvEnt_CellEnvCom(xy).HaveEnvironment(EnvironmentTypes.AdultForest))
-                amountSteps += Instance.StartValuesGameConfig.NEED_AMOUNT_STEPS_TREE;
-
-            if (Instance.EGGM.CellEnvEnt_CellEnvCom(xy).HaveEnvironment(EnvironmentTypes.Hill))
-                amountSteps += Instance.StartValuesGameConfig.NEED_AMOUNT_STEPS_HILL;
-
-            return amountSteps;
-        }
-
 
         internal static void ResetUnit(params int[] xy)
         {
@@ -363,7 +347,7 @@ namespace Assets.Scripts
         }
         internal static void SetPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, Player player, params int[] xy)
         {
-            Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType = unitType;
+            Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).SetUnitType(unitType);
             Instance.EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountSteps(amountSteps);
             Instance.EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountHealth(amountHealth);
             Instance.EGGM.CellUnitEnt_ProtectRelaxCom(xy).SetProtectedRelaxedType(protectRelaxType);
@@ -415,11 +399,11 @@ namespace Assets.Scripts
 
         internal static void SetBotUnit(UnitTypes unitType, bool haveBot, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, params int[] xy)
         {
-            Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType = unitType;
+            Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).SetUnitType(unitType);
             Instance.EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountSteps(amountSteps);
             Instance.EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountHealth(amountHealth);
             Instance.EGGM.CellUnitEnt_ProtectRelaxCom(xy).SetProtectedRelaxedType(protectRelaxType);
-            Instance.EGGM.CellUnitEnt_CellOwnerBotCom(xy).HaveBot = haveBot;
+            Instance.EGGM.CellUnitEnt_CellOwnerBotCom(xy).SetBot(haveBot);
 
 
             Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.King);
@@ -465,9 +449,9 @@ namespace Assets.Scripts
             }
         }
 
-        internal static void ChangeUnitType(int[] xy, UnitTypes newUnitType)
+        internal static void ChangeUnit(int[] xy, UnitTypes newUnitType)
         {
-            Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType = newUnitType;
+            Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).SetUnitType(newUnitType);
 
             Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.King);
             Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Pawn);
@@ -483,8 +467,7 @@ namespace Assets.Scripts
                     throw new System.Exception();
 
                 case UnitTypes.King:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.King, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
-                    break;
+                    throw new System.Exception();
 
                 case UnitTypes.Pawn:
                     Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Pawn, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
@@ -531,7 +514,7 @@ namespace Assets.Scripts
                 {
                     var unitType = Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType;
 
-                    if (Instance.EGGM.CellUnitEnt_CellUnitCom(xy).AmountSteps >= NeedAmountSteps(xy1) || Instance.EGGM.CellUnitEnt_CellUnitCom(xy).HaveMaxSteps(unitType))
+                    if (Instance.EGGM.CellUnitEnt_CellUnitCom(xy).AmountSteps >= EGGM.CellEnvEnt_CellEnvCom(xy1).NeedAmountSteps() || Instance.EGGM.CellUnitEnt_CellUnitCom(xy).HaveMaxSteps(unitType))
                     {
                         xyAvailableCellsForShift.Add(xy1);
                     }
@@ -555,7 +538,7 @@ namespace Assets.Scripts
                     {
                         var unitType = Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType;
 
-                        if (NeedAmountSteps(xy1) <= Instance.EGGM.CellUnitEnt_CellUnitCom(xy).AmountSteps || Instance.EGGM.CellUnitEnt_CellUnitCom(xy).HaveMaxSteps(unitType))
+                        if (EGGM.CellEnvEnt_CellEnvCom(xy1).NeedAmountSteps() <= Instance.EGGM.CellUnitEnt_CellUnitCom(xy).AmountSteps || Instance.EGGM.CellUnitEnt_CellUnitCom(xy).HaveMaxSteps(unitType))
                         {
                             if (Instance.EGGM.CellUnitEnt_UnitTypeCom(xy1).HaveUnit)
                             {

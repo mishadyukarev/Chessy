@@ -32,7 +32,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     if (EconomyManager.CanUpgradeUnit(Info.Sender, NeededUnitTypeForUpgrade, out haves))
                     {
                         EconomyManager.UpgradeUnit(Info.Sender, NeededUnitTypeForUpgrade);
-                        CellUnitWorker.ChangeUnitType(XyCellForUpgrade, NeededUnitTypeForUpgrade + FOR_NEXT_UPGRADE);
+                        CellUnitWorker.ChangeUnit(XyCellForUpgrade, NeededUnitTypeForUpgrade + FOR_NEXT_UPGRADE);
                     }
                     else
                     {

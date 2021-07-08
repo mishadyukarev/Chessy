@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using static Assets.Scripts.Main;
 
 internal struct CellEnvironmentComponent
 {
@@ -389,5 +390,21 @@ internal struct CellEnvironmentComponent
             default:
                 break;
         }
+    }
+
+    internal int NeedAmountSteps()
+    {
+        int amountSteps = 1;
+
+        if (HaveEnvironment(EnvironmentTypes.Fertilizer))
+            amountSteps += Instance.StartValuesGameConfig.NEED_AMOUNT_STEPS_FOOD;
+
+        if (HaveEnvironment(EnvironmentTypes.AdultForest))
+            amountSteps += Instance.StartValuesGameConfig.NEED_AMOUNT_STEPS_TREE;
+
+        if (HaveEnvironment(EnvironmentTypes.Hill))
+            amountSteps += Instance.StartValuesGameConfig.NEED_AMOUNT_STEPS_HILL;
+
+        return amountSteps;
     }
 }

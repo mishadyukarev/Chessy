@@ -15,6 +15,8 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
         if (!_eGM.CellBuildEnt_BuilTypeCom(XyCell).HaveBuilding)
         {
+            var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCell).UnitType;
+
             bool canSet = false;
             switch (BuildingType)
             {
@@ -22,14 +24,17 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     break;
 
                 case BuildingTypes.City:
-                    CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
-                    _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
+                    if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
+                    {
+                        CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
+                        _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
 
-                    _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Info.Sender.IsMasterClient] = true;
-                    _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[Info.Sender.IsMasterClient] = XyCell;
+                        _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Info.Sender.IsMasterClient] = true;
+                        _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[Info.Sender.IsMasterClient] = XyCell;
 
-                    if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest)) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.AdultForest);
-                    if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Fertilizer)) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.Fertilizer);
+                        if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest)) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.AdultForest);
+                        if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Fertilizer)) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.Fertilizer);
+                    }     
                     break;
 
                 case BuildingTypes.Farm:
@@ -53,8 +58,6 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                 {
                     if (EconomyManager.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves))
                     {
-                        var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCell).UnitType;
-
                         if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
                         {
                             EconomyManager.CreateBuilding(BuildingType, Info.Sender);

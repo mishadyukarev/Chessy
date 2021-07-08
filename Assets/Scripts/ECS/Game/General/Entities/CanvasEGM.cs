@@ -452,16 +452,16 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
 
         var takeUnitZone = downZone.transform.Find("TakeUnitZone");
 
-        TakerKingEnt_UnitTypeCom.UnitType = UnitTypes.King;
+        TakerKingEnt_UnitTypeCom.SetUnitType(UnitTypes.King);
         TakerKingEnt_ButtonCom.SetButton(takeUnitZone.transform.Find("TakeUnit0Button").GetComponent<Button>());
 
-        TakerPawnEntityUnitTypeComponent.UnitType = UnitTypes.Pawn;
+        TakerPawnEntityUnitTypeComponent.SetUnitType(UnitTypes.Pawn);
         TakerPawnEntityButtonComponent.SetButton(takeUnitZone.transform.Find("TakeUnit1Button").GetComponent<Button>());
 
-        TakerRookEntityUnitTypeComponent.UnitType = UnitTypes.Rook;
+        TakerRookEntityUnitTypeComponent.SetUnitType(UnitTypes.Rook);
         TakerRookEntityButtonComponent.SetButton(takeUnitZone.transform.Find("TakeUnit2Button").GetComponent<Button>());
 
-        TakerBishopEntityUnitTypeComponent.UnitType = UnitTypes.Bishop;
+        TakerBishopEntityUnitTypeComponent.SetUnitType(UnitTypes.Bishop);
         TakerBishopEntityButtonComponent.SetButton(takeUnitZone.transform.Find("TakeUnit3Button").GetComponent<Button>());
 
 

@@ -38,8 +38,6 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                 {
                     var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
 
-                    _eGM.CellUnitEnt_CellUnitCom(x, y).RefreshAmountSteps(unitType);
-
                     if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                     {
                         switch (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType)
@@ -195,6 +193,8 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                             _eGM.CellUnitEnt_ProtectRelaxCom(x, y).SetProtectedRelaxedType(ProtectRelaxTypes.Protected);
                         }
                     }
+
+                    _eGM.CellUnitEnt_CellUnitCom(x, y).RefreshAmountSteps(unitType);
                 }
 
 
@@ -260,7 +260,7 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
         _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(true, false);
         _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(false, false);
 
-        _eGM.MotionEnt_AmountCom.Amount += 1;
+        _eGM.MotionEnt_AmountCom.AddAmount();
 
 
 

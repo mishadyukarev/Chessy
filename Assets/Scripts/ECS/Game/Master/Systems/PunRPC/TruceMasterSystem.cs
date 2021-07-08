@@ -28,7 +28,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 
             if (isTruce)
             {
-                _eGM.MotionEnt_AmountCom.Amount += Random.Range(4500, 5500);
+                _eGM.MotionEnt_AmountCom.AddAmount(Random.Range(4500, 5500));
                 _photonPunRPC.TruceToGeneral(RpcTarget.All, true, false, _eGM.MotionEnt_AmountCom.Amount);
 
                 int random;

@@ -270,7 +270,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                         ClearAvailableCells();
 
                         _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).EnablePlayerSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
-                        _eGM.SelectorEnt_UnitTypeCom.UnitType = default;
+                        _eGM.SelectorEnt_UnitTypeCom.ResetUnit();
 
                         CleanXY(XyPreviousCell);
 
@@ -304,7 +304,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
     private void IsSetted()
     {
-        _eGM.SelectorEnt_UnitTypeCom.UnitType = default;
+        _eGM.SelectorEnt_UnitTypeCom.ResetUnit();
         _isStartSelectedDirect = true;
     }
 

@@ -1,15 +1,16 @@
-﻿internal struct UnitTypeComponent
+﻿using System;
+
+internal struct UnitTypeComponent
 {
-    internal UnitTypes UnitType;
+    private UnitTypes _unitType;
 
+    internal UnitTypes UnitType => _unitType;
     internal bool HaveUnit => UnitType != UnitTypes.None;
-
-
     internal bool IsMelee
     {
         get
         {
-            switch (UnitType)
+            switch (_unitType)
             {
                 case UnitTypes.None:
                     return false;
@@ -41,8 +42,7 @@
         }
     }
 
-    internal void StartFill()
-    {
-        UnitType = UnitTypes.None;
-    }
+    internal void StartFill() => _unitType = default;
+    internal void SetUnitType(UnitTypes unitType) => _unitType = unitType;
+    internal void ResetUnit() => _unitType = default;
 }

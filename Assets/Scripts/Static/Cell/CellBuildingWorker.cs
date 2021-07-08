@@ -7,7 +7,7 @@ namespace Assets.Scripts.Static
     {
         internal static void SetPlayerBuilding(bool withEconomy, BuildingTypes buildingType, Player owner, params int[] xy)
         {
-            Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = buildingType;
+            Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).SetBuildingType(buildingType);
             Instance.EGGM.CellBuildEnt_OwnerCom(xy).SetOwner(owner);
             Instance.EGGM.CellBuildEnt_CellBuilCom(xy).EnabledPlayerSR(true, Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType, owner);
 
@@ -20,8 +20,8 @@ namespace Assets.Scripts.Static
 
         internal static void SetBotBuilding(BuildingTypes buildingType, params int[] xy)
         {
-            Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = buildingType;
-            Instance.EGGM.CellBuildEnt_CellOwnerBotCom(xy).HaveBot = true;
+            Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).SetBuildingType(buildingType);
+            Instance.EGGM.CellBuildEnt_CellOwnerBotCom(xy).SetBot(true);
             Instance.EGGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(true, Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType);
         }
 
@@ -55,7 +55,7 @@ namespace Assets.Scripts.Static
                 Instance.EGGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
             }
 
-            Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType = BuildingTypes.None;
+            Instance.EGGM.CellBuildEnt_BuilTypeCom(xy).ResetBuildingType();
         }
     }
 }

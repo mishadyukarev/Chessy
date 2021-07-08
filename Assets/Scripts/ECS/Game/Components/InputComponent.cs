@@ -1,10 +1,10 @@
 ﻿
 internal struct InputComponent
 {
-    internal bool IsClick;
+    private bool _isClicked;
 
-    internal void StartFill()
-    {
+    internal bool IsClick => _isClicked;
 
-    }
+    internal void StartFill() => _isClicked = default;
+    internal void SetIsClicked(bool isClicked) => _isClicked = isClicked;
 }

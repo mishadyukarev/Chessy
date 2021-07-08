@@ -196,7 +196,7 @@ namespace Assets.Scripts
                             break;
 
                         case UpgradeModTypes.Building:
-                            _eMM.UpgradeEnt_BuildingTypeCom.BuildingType = (BuildingTypes)objects[1];
+                            _eMM.UpgradeEnt_BuildingTypeCom.SetBuildingType((BuildingTypes)objects[1]);
                             break;
 
                         default:
@@ -234,13 +234,13 @@ namespace Assets.Scripts
                 case RpcTypes.Done:
                     _eGM.MotionEnt_IsActivatedCom.IsActivated = (bool)objects[0];
                     _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(Instance.IsMasterClient, (bool)objects[1]);
-                    _eGM.MotionEnt_AmountCom.Amount = (int)objects[2];
+                    _eGM.MotionEnt_AmountCom.SetAmount((int)objects[2]);
                     break;
 
                 case RpcTypes.Truce:
                     _eGM.MotionEnt_IsActivatedCom.IsActivated = (bool)objects[_i++];
                     _eGM.TruceEnt_ActivatedDictCom.SetIsActivated(Instance.IsMasterClient, (bool)objects[_i++]);
-                    _eGM.MotionEnt_AmountCom.Amount = (int)objects[_i++];
+                    _eGM.MotionEnt_AmountCom.SetAmount((int)objects[_i++]);
                     break;
 
                 case RpcTypes.EndGame:
@@ -286,7 +286,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcTypes.GetUnit:
-                    if ((bool)objects[0]) _eGM.SelectorEnt_UnitTypeCom.UnitType = (UnitTypes)objects[1];
+                    if ((bool)objects[0]) _eGM.SelectorEnt_UnitTypeCom.SetUnitType((UnitTypes)objects[1]);
                     break;
 
                 case RpcTypes.SetUnit:
