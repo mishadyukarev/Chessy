@@ -1,12 +1,9 @@
 ﻿
 using System;
 
-internal struct StartedGameComponent : IDisposable
+internal struct StartedGameComponent
 {
     internal bool IsStartedGame;
 
-    public void Dispose()
-    {
-        IsStartedGame = false;
-    }
+    public void StartFill() => IsStartedGame = false;
 }

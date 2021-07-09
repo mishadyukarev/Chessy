@@ -66,6 +66,7 @@ namespace Assets.Scripts
 
         public void JoinRandomRoom()
         {
+            Instance.GameModeType = GameModTypes.None;
             PhotonNetwork.JoinRandomRoom();
         }
 
@@ -168,6 +169,7 @@ namespace Assets.Scripts
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
             LeaveRoom();
+            ToggleScene(SceneTypes.Menu);
         }
     }
 }

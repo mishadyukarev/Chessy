@@ -1,9 +1,11 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Photon.Pun;
 using System;
 
-internal sealed class ProtectRelaxMasterSystem : SystemMasterReduction
+internal sealed class ProtectRelaxMasterSystem : RPCMasterSystemReduction
 {
+    private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
     private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
     private ProtectRelaxTypes ProtectRelaxType => _eMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType;
 
@@ -11,60 +13,62 @@ internal sealed class ProtectRelaxMasterSystem : SystemMasterReduction
     {
         base.Run();
 
+        var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCell).UnitType;
+
         switch (ProtectRelaxType)
         {
             case ProtectRelaxTypes.None:
-                throw new Exception();
+                break;
 
             case ProtectRelaxTypes.Protected:
                 if (_eGM.CellUnitEnt_ProtectRelaxCom(XyCell).IsProtected)
                 {
+                    _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
                     _eGM.CellUnitEnt_ProtectRelaxCom(XyCell).ResetProtectedRelaxedType();
-                }
-                else
-                {
-                    _eGM.CellUnitEnt_ProtectRelaxCom(XyCell).SetProtectedRelaxedType(ProtectRelaxType);
-                    _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
+                    return;
                 }
                 break;
 
             case ProtectRelaxTypes.Relaxed:
                 if (_eGM.CellUnitEnt_ProtectRelaxCom(XyCell).IsRelaxed)
                 {
+                    _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
                     _eGM.CellUnitEnt_ProtectRelaxCom(XyCell).ResetProtectedRelaxedType();
-                }
-                else
-                {
-                    _eGM.CellUnitEnt_ProtectRelaxCom(XyCell).SetProtectedRelaxedType(ProtectRelaxType);
-                    _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
+                    return;
                 }
                 break;
 
             default:
-                throw new Exception();
+                break;
         }
 
+        if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
+        {
+            switch (ProtectRelaxType)
+            {
+                case ProtectRelaxTypes.None:
+                    throw new Exception();
 
+                case ProtectRelaxTypes.Protected:
+                    _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
+                    _eGM.CellUnitEnt_ProtectRelaxCom(XyCell).SetProtectedRelaxedType(ProtectRelaxType);
+                    _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
+                    break;
 
-        //if (isActive)
-        //{
-        //    if (!_eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected)
-        //    {
-        //        if (CellUnitWorker.HaveMaxSteps(xyCell))
-        //        {
-        //            _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = true;
-        //            _eGM.CellUnitEnt_CellUnitCom(xyCell).IsRelaxed = false;
-        //            _eGM.CellUnitEnt_CellUnitCom(xyCell).AmountSteps = 0;
-        //        }
-        //    }
-        //}
+                case ProtectRelaxTypes.Relaxed:
+                    _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
+                    _eGM.CellUnitEnt_ProtectRelaxCom(XyCell).SetProtectedRelaxedType(ProtectRelaxType);
+                    _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
+                    break;
 
-        //else
-        //{
-        //    if (_eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected)
-        //    {
-        //        _eGM.CellUnitEnt_CellUnitCom(xyCell).IsProtected = false;
-        //    }
-        //}
+                default:
+                    throw new Exception();
+            }
+        }
+
+        else
+        {
+            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
+        }
     }
 }

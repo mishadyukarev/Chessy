@@ -7,5 +7,13 @@
         Building,
         Fire,
         Setting,
+        Mistake,
+        SoundGoldPack,
+        Melting,
+        Destroy,
+        UpgradeUnitMelee,
+        UpgradeUnitArcher,
+        Seeding,
+        ClickToTable,
     }
 }

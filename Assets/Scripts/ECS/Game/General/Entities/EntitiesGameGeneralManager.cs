@@ -85,6 +85,31 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     private EcsEntity _settingSoundEnt;
     internal ref AudioSourceComponent SettingSoundEnt_AudioSourceCom => ref _settingSoundEnt.Get<AudioSourceComponent>();
 
+
+    private EcsEntity _buySoundEnt;
+    internal ref AudioSourceComponent BuySoundEnt_AudioSourceCom => ref _buySoundEnt.Get<AudioSourceComponent>();
+
+
+    private EcsEntity _meltingSoundEnt;
+    internal ref AudioSourceComponent MeltingSoundEnt_AudioSourceCom => ref _meltingSoundEnt.Get<AudioSourceComponent>();
+
+
+    private EcsEntity _destroySoundEnt;
+    internal ref AudioSourceComponent DestroySoundEnt_AudioSourceCom => ref _destroySoundEnt.Get<AudioSourceComponent>();
+
+
+    private EcsEntity _upgradeUnitMeleeSoundEnt;
+    internal ref AudioSourceComponent UpgradeUnitMeleeSoundEnt_AudioSourceCom => ref _upgradeUnitMeleeSoundEnt.Get<AudioSourceComponent>();
+
+
+    private EcsEntity _seedingSoundEnt;
+    internal ref AudioSourceComponent SeedingSoundEnt_AudioSourceCom => ref _seedingSoundEnt.Get<AudioSourceComponent>();
+
+
+    private EcsEntity _shiftUnitSoundEnt;
+    internal ref AudioSourceComponent ShiftUnitSoundEnt_AudioSourceCom => ref _shiftUnitSoundEnt.Get<AudioSourceComponent>();
+
+
     #endregion
 
 
@@ -151,6 +176,12 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
         _buildingSoundEnt = gameWorld.NewEntity();
         _fireSoundEnt = gameWorld.NewEntity();
         _settingSoundEnt = gameWorld.NewEntity();
+        _buySoundEnt = gameWorld.NewEntity();
+        _meltingSoundEnt = gameWorld.NewEntity();
+        _destroySoundEnt = gameWorld.NewEntity();
+        _upgradeUnitMeleeSoundEnt = gameWorld.NewEntity();
+        _seedingSoundEnt = gameWorld.NewEntity();
+        _shiftUnitSoundEnt = gameWorld.NewEntity();
 
         _economyEnt = gameWorld.NewEntity();
         _unitInfoEnt = gameWorld.NewEntity();
@@ -182,23 +213,25 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
         var attackAS = audioSourceParentGO.AddComponent<AudioSource>();
         attackAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackArcherAC;
+        attackAS.volume = 0.6f;
         AttackArcherEnt_AudioSourceCom.StartFill(attackAS);
 
 
         var pickArcherAudioSource = audioSourceParentGO.AddComponent<AudioSource>();
         pickArcherAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.PickArcherAudioClip;
+        pickArcherAudioSource.volume = 0.7f;
         PickArcherEnt_AudioSourceCom.StartFill(pickArcherAudioSource);
 
 
         var pickMeleeAS = audioSourceParentGO.AddComponent<AudioSource>();
         pickMeleeAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.PickMeleeAC;
-        pickMeleeAS.volume = 0.3f;
+        pickMeleeAS.volume = 0.1f;
         PickMeleeEnt_AudioSourceCom.StartFill(pickMeleeAS);
 
 
         var buildingAS = audioSourceParentGO.AddComponent<AudioSource>();
         buildingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.BuildingAC;
-        buildingAS.volume = 0.3f;
+        buildingAS.volume = 0.1f;
         BuildingSoundEnt_AudioSourceCom.StartFill(buildingAS);
 
 
@@ -209,8 +242,43 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
         var fireAS = audioSourceParentGO.AddComponent<AudioSource>();
         fireAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.FireAC;
-        fireAS.volume = 0.3f;
+        fireAS.volume = 0.2f;
         FireSoundEnt_AudioSourceCom.StartFill(fireAS);
+
+
+        var buyAS = audioSourceParentGO.AddComponent<AudioSource>();
+        buyAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.BuyAC;
+        buyAS.volume = 0.3f;
+        BuySoundEnt_AudioSourceCom.StartFill(buyAS);
+
+
+        var meltingAS = audioSourceParentGO.AddComponent<AudioSource>();
+        meltingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.Melting_Clip;
+        meltingAS.volume = 0.3f;
+        MeltingSoundEnt_AudioSourceCom.StartFill(meltingAS);
+
+        var destroyAS = audioSourceParentGO.AddComponent<AudioSource>();
+        destroyAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.Destroy_Clip;
+        destroyAS.volume = 0.3f;
+        DestroySoundEnt_AudioSourceCom.StartFill(destroyAS);
+
+
+        var upgradeUnitMeleeAS = audioSourceParentGO.AddComponent<AudioSource>();
+        upgradeUnitMeleeAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.UpgradeUnitMelee_Clip;
+        upgradeUnitMeleeAS.volume = 0.2f;
+        UpgradeUnitMeleeSoundEnt_AudioSourceCom.StartFill(upgradeUnitMeleeAS);
+
+
+        var seedingAS = audioSourceParentGO.AddComponent<AudioSource>();
+        seedingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.Seeding_Clip;
+        seedingAS.volume = 0.2f;
+        SeedingSoundEnt_AudioSourceCom.StartFill(seedingAS);
+
+
+        var shiftUnitAS = audioSourceParentGO.AddComponent<AudioSource>();
+        shiftUnitAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.ShiftUnit_Clip;
+        shiftUnitAS.volume = 0.6f;
+        ShiftUnitSoundEnt_AudioSourceCom.StartFill(shiftUnitAS);
 
 
         BackGroundGO = GameObject.Instantiate(Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.BackGroundCollider2D,
@@ -507,8 +575,6 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
     public void Dispose()
     {
-        ReadyEnt_StartedGameCom.Dispose();
-
         EndGameEntEndGameCom.Dispose();
     }
 }

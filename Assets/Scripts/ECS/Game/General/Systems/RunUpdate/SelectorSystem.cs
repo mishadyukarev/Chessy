@@ -106,10 +106,10 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                         else if (_eGM.CellEnt_CellBaseCom(xyCurrentCell).IsStartedCell(false))
                                             _photonPunRPC.SetUniToMaster(xyCurrentCell, _eGM.SelectorEnt_UnitTypeCom.UnitType);
 
-                                        else _eGM.SoundEnt_SoundCom.MistakeSoundAction();
+                                        else _photonPunRPC.SoundToGeneral(Instance.LocalPlayer, SoundEffectTypes.Mistake);
                                     }
 
-                                    else _eGM.SoundEnt_SoundCom.MistakeSoundAction();
+                                    else _photonPunRPC.SoundToGeneral(Instance.LocalPlayer, SoundEffectTypes.Mistake);
                                 }
 
                                 else if (_canExecuteStartClick)

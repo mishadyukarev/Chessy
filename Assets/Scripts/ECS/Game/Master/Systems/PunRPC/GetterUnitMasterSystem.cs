@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 using Photon.Pun;
 
 
@@ -79,7 +80,6 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
             default:
                 break;
         }
-
         _photonPunRPC.GetUnitToGeneral(Info.Sender, isGetted, unitType);
     }
 }

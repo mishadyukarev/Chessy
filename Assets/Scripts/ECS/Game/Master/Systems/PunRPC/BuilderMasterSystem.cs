@@ -14,7 +14,12 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
         base.Run();
 
 
-        if (!_eGM.CellBuildEnt_BuilTypeCom(XyCell).HaveBuilding)
+        if (_eGM.CellBuildEnt_BuilTypeCom(XyCell).HaveBuilding)
+        {
+            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
+        }
+
+        else
         {
             var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCell).UnitType;
 
@@ -37,11 +42,15 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
                         if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest)) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.AdultForest);
                         if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Fertilizer)) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.Fertilizer);
-                    }     
+                    }
+                    else
+                    {
+                        _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
+                    }
                     break;
 
                 case BuildingTypes.Farm:
-                    canSet = !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest);
+                    canSet = !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest) && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.YoungForest);
                     break;
 
                 case BuildingTypes.Woodcutter:
@@ -57,7 +66,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
             }
             if (canSet)
             {
-                if(BuildingType != BuildingTypes.Farm )
+                if (BuildingType != BuildingTypes.Farm)
                 {
                     if (EconomyManager.CanCreateBuilding(BuildingType, Info.Sender, out bool[] haves))
                     {
@@ -69,9 +78,14 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                             CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
                             _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
                         }
+                        else
+                        {
+                            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
+                        }
                     }
                     else
                     {
+                        _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
                         _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves);
                     }
                 }
@@ -96,9 +110,14 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                             CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
                             _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
                         }
+                        else
+                        {
+                            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
+                        }
                     }
                     else
                     {
+                        _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
                         _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves);
                     }
                 }

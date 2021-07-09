@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 using Photon.Pun;
 
 internal sealed class CreatorUnitMasterSystem : RPCMasterSystemReduction
@@ -14,7 +15,13 @@ internal sealed class CreatorUnitMasterSystem : RPCMasterSystemReduction
         {
             EconomyManager.CreateUnit(UnitType, Info.Sender);
             Main.Instance.EGGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitType, Info.Sender.IsMasterClient);
+
+            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.SoundGoldPack);
         }
-        else _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves);
+        else
+        {
+            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
+            _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves);
+        }
     }
 }

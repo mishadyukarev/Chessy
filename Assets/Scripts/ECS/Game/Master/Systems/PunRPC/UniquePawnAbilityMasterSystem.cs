@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 using Photon.Pun;
 
 internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
@@ -66,37 +67,6 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                     break;
 
                 case UniqueAbilitiesPawnTypes.AbilityTwo:
-
-                    if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Fertilizer) && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest) && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.YoungForest))
-                    {
-                        minusFood = 0;
-                        minusWood = 0;
-                        minusOre = 0;
-                        minusIron = 0;
-                        minusGold = 0;
-
-                        haveFood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) >= minusFood;
-                        haveWood = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient) >= minusWood;
-                        haveOre = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient) >= minusOre;
-                        haveIron = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient) >= minusIron;
-                        haveGold = _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient) >= minusGold;
-
-                        if (haveFood && haveWood && haveOre && haveIron && haveGold)
-                        {
-                            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient, minusFood);
-                            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, Info.Sender.IsMasterClient, minusWood);
-                            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, Info.Sender.IsMasterClient, minusOre);
-                            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, Info.Sender.IsMasterClient, minusIron);
-                            _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, minusGold);
-
-                            _eGM.CellEnvEnt_CellEnvCom(XyCell).SetNewEnvironment(EnvironmentTypes.Fertilizer);
-                            _eGM.CellUnitEnt_CellUnitCom(XyCell).TakeAmountSteps();
-                        }
-                        else
-                        {
-                            _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haveFood, haveWood, haveOre, haveIron, haveGold);
-                        }
-                    }
                     break;
 
                 case UniqueAbilitiesPawnTypes.AbilityThree:
@@ -123,12 +93,18 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                             _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, Info.Sender.IsMasterClient, minusGold);
                             _eGM.CellUnitEnt_CellUnitCom(XyCell).TakeAmountSteps();
 
+                            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Seeding);
                             _eGM.CellEnvEnt_CellEnvCom(XyCell).SetNewEnvironment(EnvironmentTypes.YoungForest);
                         }
                         else
                         {
+                            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
                             _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haveFood, haveWood, haveOre, haveIron, haveGold);
                         }
+                    }
+                    else
+                    {
+                        _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
                     }
                     break;
 
@@ -136,6 +112,10 @@ internal sealed class UniquePawnAbilityMasterSystem : RPCMasterSystemReduction
                     break;
             }
 
+        }
+        else
+        {
+            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
         }
     }
 }

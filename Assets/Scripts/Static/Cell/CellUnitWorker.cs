@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Abstractions;
 using Assets.Scripts.Abstractions.Enums;
 using Photon.Realtime;
+using System;
 using System.Collections.Generic;
 using static Assets.Scripts.Main;
 using static Assets.Scripts.Static.CellBaseOperations;
@@ -10,6 +11,40 @@ namespace Assets.Scripts
     public static class CellUnitWorker
     {
         internal static EntitiesGameGeneralManager EGGM => Instance.EGGM;
+
+
+        internal static bool IsMelee(UnitTypes unitType)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    return true;
+
+                case UnitTypes.Pawn:
+                    return true;
+
+                case UnitTypes.PawnSword:
+                    return true;
+
+                case UnitTypes.Rook:
+                    return false;
+
+                case UnitTypes.RookCrossbow:
+                    return false;
+
+                case UnitTypes.Bishop:
+                    return false;
+
+                case UnitTypes.BishopCrossbow:
+                    return false;
+
+                default:
+                    throw new Exception();
+            }
+        }
 
         internal static int MaxAmountHealth(UnitTypes unitType)
         {

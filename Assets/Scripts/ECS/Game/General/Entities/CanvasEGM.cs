@@ -406,7 +406,6 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
     {
         LeaveEnt_ButtonCom.SetButton(Instance.CanvasManager.FindUnderParent<Button>(SceneTypes.Game, "ButtonLeave"));
 
-
         #region Center
 
 
@@ -421,6 +420,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
         ReadyEnt_ParentCom.SetParent(readyZone);
         ReadyEnt_ButtonCom.SetButton(readyZone.transform.Find("ReadyButton").GetComponent<Button>());
         ReadyEnt_ActivatedDictCom.StartFill();
+        ReadyEnt_StartedGameCom.StartFill();
 
 
         JoinDiscordEnt_ButtonCom.SetButton(readyZone.transform.Find("JoinDiscordButton").GetComponent<Button>());

@@ -98,26 +98,35 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                 {
                     if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).HaveOwner)
                     {
-                        if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).IsMine)
+                        if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
                         {
-                            if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
-                            {
-                                _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
-                            }
-                            else
-                            {
-                                _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
-                                _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Destroy";
-                            }
+                            _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
                         }
                         else
                         {
-                            if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
-                            {
-                                _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
-                                _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Destroy";
-                            }
+                            _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
+                            _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Destroy";
                         }
+                        //if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).IsMine)
+                        //{
+                        //    if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
+                        //    {
+                        //        _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
+                        //    }
+                        //    else
+                        //    {
+                        //        _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
+                        //        _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Destroy";
+                        //    }
+                        //}
+                        //else
+                        //{
+                        //    if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
+                        //    {
+                        //        _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
+                        //        _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Destroy";
+                        //    }
+                        //}
                     }
 
                     else if (_eGM.CellBuildEnt_CellOwnerBotCom(XySelectedCell).HaveBot)

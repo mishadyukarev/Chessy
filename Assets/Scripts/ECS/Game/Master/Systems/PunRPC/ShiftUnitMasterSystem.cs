@@ -21,6 +21,8 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
         {
             if (TryFindCellInList(XySelectedCell, xyAvailableCellsForShift))
             {
+                _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
+
                 CellUnitWorker.ShiftUnit(XyPreviousCell, XySelectedCell);
 
 

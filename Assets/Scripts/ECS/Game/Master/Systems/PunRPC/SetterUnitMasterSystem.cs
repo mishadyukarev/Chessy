@@ -110,7 +110,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                     break;
             }
         }
-        if (isSetted) _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Setting);
+        if (isSetted) _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
         _photonPunRPC.SetUnitToGeneral(Info.Sender, isSetted);
     }
 }

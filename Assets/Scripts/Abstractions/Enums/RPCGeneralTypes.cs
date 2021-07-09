@@ -4,6 +4,14 @@
     {
         None,
 
+        Ready,
+        Done,
+        Truce,
+        EndGame,
+        Attack,
+        Mistake,
+        GetUnit,
+        SetUnit,
         Sound,
     }
 }

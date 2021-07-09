@@ -13,20 +13,36 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if(Instance.GameModeType != GameModTypes.WithBot)
+        if (Instance.GameModeType == GameModTypes.WithBot)
         {
-            _photonPunRPC.TruceToGeneral(Info.Sender, false, _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething, _eGM.MotionEnt_AmountCom.Amount);
+            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
+        }
 
+        else
+        {
+            var amountAdultForest = 0;
+            for (int x = 0; x < _eGM.Xamount; x++)
+                for (int y = 0; y < _eGM.Yamount; y++)
+                {
+                    if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest)
+                        && _eGM.CellEnt_CellBaseCom(x, y).IsActiveSelfGO)
+                    {
+                        ++amountAdultForest;
+                    }
+                }
 
-            _eGM.TruceEnt_ActivatedDictCom.SetIsActivated(Info.Sender.IsMasterClient, _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething);
+            if (amountAdultForest <= 6 || _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) < 0)
+            {
+                _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
+                _photonPunRPC.TruceToGeneral(Info.Sender, false, _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething, _eGM.MotionEnt_AmountCom.Amount);
+                _eGM.TruceEnt_ActivatedDictCom.SetIsActivated(Info.Sender.IsMasterClient, _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething);
+            }
+            else
+            {
+                _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
+            }
 
-
-
-            bool isTruce = _eGM.TruceEnt_ActivatedDictCom.IsActivated(true)
-                && _eGM.TruceEnt_ActivatedDictCom.IsActivated(false);
-
-
-            if (isTruce)
+            if (_eGM.TruceEnt_ActivatedDictCom.IsActivatedAll)
             {
                 _eGM.MotionEnt_AmountCom.AddAmount(Random.Range(4500, 5500));
                 _photonPunRPC.TruceToGeneral(RpcTarget.All, true, false, _eGM.MotionEnt_AmountCom.Amount);
@@ -82,35 +98,40 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                             }
                         }
 
-                        if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
+                        //if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
+                        //{
+                        //    if (_eGM.CellBuildEnt_OwnerCom(x, y).HaveOwner)
+                        //    {
+                        //        switch (_eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType)
+                        //        {
+                        //            case BuildingTypes.None:
+                        //                break;
+
+                        //            case BuildingTypes.City:
+                        //                //CellBuildingWorker.ResetBuilding(true, x, y);
+                        //                break;
+
+                        //            case BuildingTypes.Farm:
+                        //                CellBuildingWorker.ResetBuilding(true, x, y);
+                        //                break;
+
+                        //            case BuildingTypes.Woodcutter:
+                        //                CellBuildingWorker.ResetBuilding(true, x, y);
+                        //                break;
+
+                        //            case BuildingTypes.Mine:
+                        //                CellBuildingWorker.ResetBuilding(true, x, y);
+                        //                break;
+
+                        //            default:
+                        //                break;
+                        //        }
+                        //    }
+                        //}
+                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.YoungForest))
                         {
-                            if (_eGM.CellBuildEnt_OwnerCom(x, y).HaveOwner)
-                            {
-                                switch (_eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType)
-                                {
-                                    case BuildingTypes.None:
-                                        break;
-
-                                    case BuildingTypes.City:
-                                        //CellBuildingWorker.ResetBuilding(true, x, y);
-                                        break;
-
-                                    case BuildingTypes.Farm:
-                                        CellBuildingWorker.ResetBuilding(true, x, y);
-                                        break;
-
-                                    case BuildingTypes.Woodcutter:
-                                        CellBuildingWorker.ResetBuilding(true, x, y);
-                                        break;
-
-                                    case BuildingTypes.Mine:
-                                        CellBuildingWorker.ResetBuilding(true, x, y);
-                                        break;
-
-                                    default:
-                                        break;
-                                }
-                            }
+                            _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.YoungForest);
+                            _eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.AdultForest);
                         }
 
                         if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Fertilizer)
@@ -123,12 +144,6 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                             {
                                 _eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Fertilizer);
                             }
-                        }
-
-                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.YoungForest))
-                        {
-                            _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.YoungForest);
-                            _eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.AdultForest);
                         }
 
                         if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Fertilizer) && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Mountain)
@@ -156,7 +171,5 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                 _photonPunRPC.DoneToGeneral(RpcTarget.All, false, false, _eGM.MotionEnt_AmountCom.Amount);
             }
         }
-
-        
     }
 }

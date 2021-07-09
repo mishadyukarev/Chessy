@@ -44,24 +44,24 @@ namespace Assets.Scripts
         #region PUN
 
         public void ReadyToMaster(in bool isReady) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Ready, new object[] { isReady });
-        public void ReadyToGeneral(Player playerTo, bool isCurrentReady, bool isStartedGame) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Ready, new object[] { isCurrentReady, isStartedGame });
-        public void ReadyToGeneral(RpcTarget rpcTarget, bool isCurrentReady, bool isStartedGame) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Ready, new object[] { isCurrentReady, isStartedGame });
+        public void ReadyToGeneral(Player playerTo, bool isCurrentReady, bool isStartedGame) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Ready, new object[] { isCurrentReady, isStartedGame });
+        public void ReadyToGeneral(RpcTarget rpcTarget, bool isCurrentReady, bool isStartedGame) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Ready, new object[] { isCurrentReady, isStartedGame });
 
         public void DoneToMaster(bool isDone) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Done, new object[] { isDone });
-        public void DoneToGeneral(Player playerTo, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Done, new object[] { isRefreshed, isDone, numberMotion });
-        public void DoneToGeneral(RpcTarget rpcTarget, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Done, new object[] { isRefreshed, isDone, numberMotion });
+        public void DoneToGeneral(Player playerTo, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Done, new object[] { isRefreshed, isDone, numberMotion });
+        public void DoneToGeneral(RpcTarget rpcTarget, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Done, new object[] { isRefreshed, isDone, numberMotion });
 
         public void TruceToMaster(bool isTruce) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Truce, new object[] { isTruce });
-        public void TruceToGeneral(Player playerTo, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Truce, new object[] { isRefreshed, isDone, numberMotion });
-        public void TruceToGeneral(RpcTarget rpcTarget, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Truce, new object[] { isRefreshed, isDone, numberMotion });
+        public void TruceToGeneral(Player playerTo, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Truce, new object[] { isRefreshed, isDone, numberMotion });
+        public void TruceToGeneral(RpcTarget rpcTarget, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Truce, new object[] { isRefreshed, isDone, numberMotion });
 
         public void UpgradeUnitToMaster(int[] xyCell, UpgradeModTypes upgradeModType = UpgradeModTypes.Unit) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Upgrade, new object[] { upgradeModType, xyCell });
         public void UpgradeBuildingToMaster(BuildingTypes buildingType, UpgradeModTypes upgradeModType = UpgradeModTypes.Building) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Upgrade, new object[] { upgradeModType, buildingType });
 
         public void ShiftUnitToMaster(in int[] xyPreviousCell, in int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Shift, new object[] { xyPreviousCell, xySelectedCell });
         public void AttackUnitToMaster(int[] xyPreviousCell, int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Attack, new object[] { xyPreviousCell, xySelectedCell });
-        public void AttackUnitToGeneral(Player playerTo, bool isAttacked) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Attack, new object[] { isAttacked });
-        public void AttackUnitToGeneral(RpcTarget rpcTarget, bool isAttacked, bool isActivatedSound, int[] xyStart, int[] xyEnd) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Attack, new object[] { isAttacked, isActivatedSound, xyStart, xyEnd });
+        public void AttackUnitToGeneral(Player playerTo, bool isAttacked) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Attack, new object[] { isAttacked });
+        public void AttackUnitToGeneral(RpcTarget rpcTarget, bool isAttacked, bool isActivatedSound, int[] xyStart, int[] xyEnd) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Attack, new object[] { isAttacked, isActivatedSound, xyStart, xyEnd });
 
         public void BuildToMaster(int[] xyCell, BuildingTypes buildingType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Build, new object[] { xyCell, buildingType });
         public void DestroyBuildingToMaster(int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Destroy, new object[] { xyCell });
@@ -69,10 +69,10 @@ namespace Assets.Scripts
         public void ProtectRelaxUnitToMaster(ProtectRelaxTypes protectRelaxType, int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.ProtectRelax, new object[] { protectRelaxType, xyCell });
 
         public void EndGameToMaster(int actorNumberWinner) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.EndGame, new object[] { actorNumberWinner });
-        public void EndGameToGeneral(RpcTarget rpcTarget, int actorNumberWinner) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.EndGame, new object[] { actorNumberWinner });
+        public void EndGameToGeneral(RpcTarget rpcTarget, int actorNumberWinner) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
 
-        public void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Mistake, new object[] { MistakeTypes.EconomyType, haves });
-        public void MistakeUnitToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Mistake, new object[] { MistakeTypes.UnitType });
+        public void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.EconomyType, haves });
+        public void MistakeUnitToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.UnitType });
 
         public void FireToMaster(int[] fromXy, int[] toXy) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Fire, new object[] { fromXy, toXy });
         public void UniqueAbilityPawnToMaster(int[] xy, UniqueAbilitiesPawnTypes uniqueAbilitiesPawnType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.UniquePawnAbility, new object[] { xy, uniqueAbilitiesPawnType });
@@ -82,14 +82,14 @@ namespace Assets.Scripts
         public void MeltOreToMaster() => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.MeltOre, new object[] { });
 
         public void GetUnitToMaster(UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.GetUnit, new object[] { unitType });
-        public void GetUnitToGeneral(Player playerTo, bool isGetted, UnitTypes unitType) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.GetUnit, new object[] { isGetted, unitType });
+        public void GetUnitToGeneral(Player playerTo, bool isGetted, UnitTypes unitType) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.GetUnit, new object[] { isGetted, unitType });
 
 
         public void SetUniToMaster(int[] xyCell, UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.SetUnit, new object[] { xyCell, unitType });
-        public void SetUnitToGeneral(Player playerTo, bool isSetted) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.SetUnit, new object[] { isSetted });
+        public void SetUnitToGeneral(Player playerTo, bool isSetted) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SetUnit, new object[] { isSetted });
 
-        public void SoundToGeneral(RpcTarget rpcTarget, SoundEffectTypes soundEffectType) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcTypes.Sound, new object[] { soundEffectType });
-        public void SoundToGeneral(Player playerTo, SoundEffectTypes soundEffectType) => _photonView.RPC(GeneralRPCName, playerTo, RpcTypes.Sound, new object[] { soundEffectType });
+        public void SoundToGeneral(RpcTarget rpcTarget, SoundEffectTypes soundEffectType) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Sound, new object[] { soundEffectType });
+        public void SoundToGeneral(Player playerTo, SoundEffectTypes soundEffectType) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Sound, new object[] { soundEffectType });
 
 
         [PunRPC]
@@ -217,51 +217,49 @@ namespace Assets.Scripts
         }
 
         [PunRPC]
-        private void GeneralRPC(RpcTypes rPCType, object[] objects, PhotonMessageInfo info)
+        private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo info)
         {
             _i = 0;
             _eGM.RpcGeneralEnt_RPCCom.FromInfo = info;
 
-            switch (rPCType)
+            switch (rpcGeneralType)
             {
-                case RpcTypes.None:
+                case RpcGeneralTypes.None:
                     break;
 
-                case RpcTypes.Ready:
+                case RpcGeneralTypes.Ready:
                     bool isActivated = (bool)objects[_i++];
                     bool isStartedGame = (bool)objects[_i++];
                     _eGM.ReadyEnt_ActivatedDictCom.SetIsActivated(Instance.IsMasterClient, isActivated);
                     _eGM.ReadyEnt_StartedGameCom.IsStartedGame = isStartedGame;
                     break;
 
-                case RpcTypes.Done:
-                    _eGM.MotionEnt_IsActivatedCom.IsActivated = (bool)objects[0];
-                    _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(Instance.IsMasterClient, (bool)objects[1]);
-                    _eGM.MotionEnt_AmountCom.SetAmount((int)objects[2]);
+                case RpcGeneralTypes.Done:
+                    _eGM.MotionEnt_IsActivatedCom.IsActivated = (bool)objects[_i++];
+                    _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(Instance.IsMasterClient, (bool)objects[_i++]);
+                    _eGM.MotionEnt_AmountCom.SetAmount((int)objects[_i++]);
                     break;
 
-                case RpcTypes.Truce:
+                case RpcGeneralTypes.Truce:
                     _eGM.MotionEnt_IsActivatedCom.IsActivated = (bool)objects[_i++];
                     _eGM.TruceEnt_ActivatedDictCom.SetIsActivated(Instance.IsMasterClient, (bool)objects[_i++]);
                     _eGM.MotionEnt_AmountCom.SetAmount((int)objects[_i++]);
                     break;
 
-                case RpcTypes.EndGame:
+                case RpcGeneralTypes.EndGame:
                     _eGM.EndGameEntEndGameCom.IsEndGame = true;
-                    _eGM.EndGameEntEndGameCom.PlayerWinner = PhotonNetwork.PlayerList[(int)objects[0] - 1];
+                    _eGM.EndGameEntEndGameCom.PlayerWinner = PhotonNetwork.PlayerList[(int)objects[_i++] - 1];
                     break;
 
-                case RpcTypes.Attack:
-                    if ((bool)objects[0]) _eGM.SelectorEnt_SelectorCom.AttackUnitAction();
-                    //if ((bool)objects[1]) _eGM.SoundEnt_SoundCom.AttackSoundAction();
+                case RpcGeneralTypes.Attack:
+                    if ((bool)objects[_i++]) _eGM.SelectorEnt_SelectorCom.AttackUnitAction();
                     break;
 
-                case RpcTypes.Mistake:
-
-                    switch ((MistakeTypes)objects[0])
+                case RpcGeneralTypes.Mistake:
+                    switch ((MistakeTypes)objects[_i++])
                     {
                         case MistakeTypes.EconomyType:
-                            var haves = (bool[])objects[1];
+                            var haves = (bool[])objects[_i++];
                             var haveFood = haves[0];
                             var haveWood = haves[1];
                             var haveOre = haves[2];
@@ -273,9 +271,6 @@ namespace Assets.Scripts
                             if (!haveOre) _eGM.EconomyEnt_MistakeEconomyCom.OreMistake();
                             if (!haveIron) _eGM.EconomyEnt_MistakeEconomyCom.IronMistake();
                             if (!haveGold) _eGM.EconomyEnt_MistakeEconomyCom.GoldMistake();
-
-                            if (!haveFood || !haveWood || !haveOre || !haveIron || !haveGold)
-                                _eGM.SoundEnt_SoundCom.MistakeSoundAction.Invoke();
                             break;
 
                         case MistakeTypes.UnitType:
@@ -285,26 +280,25 @@ namespace Assets.Scripts
                         default:
                             break;
                     }
-
                     break;
 
-                case RpcTypes.GetUnit:
-                    if ((bool)objects[0]) _eGM.SelectorEnt_UnitTypeCom.SetUnitType((UnitTypes)objects[1]);
+                case RpcGeneralTypes.GetUnit:
+                    if ((bool)objects[_i++]) _eGM.SelectorEnt_UnitTypeCom.SetUnitType((UnitTypes)objects[_i++]);
                     break;
 
-                case RpcTypes.SetUnit:
-                    if ((bool)objects[0]) _eGM.SelectorEnt_SelectorCom.SetterUnitDelegate();
+                case RpcGeneralTypes.SetUnit:
+                    if ((bool)objects[_i++]) _eGM.SelectorEnt_SelectorCom.SetterUnitDelegate();
                     break;
 
-                case RpcTypes.Sound:
-                    switch ((SoundEffectTypes)objects[0])
+                case RpcGeneralTypes.Sound:
+                    switch ((SoundEffectTypes)objects[_i++])
                     {
                         case SoundEffectTypes.AttackArcher:
                             _eGM.AttackArcherEnt_AudioSourceCom.Play();
                             break;
 
                         case SoundEffectTypes.AttackMelee:
-                            _eGM.SoundEnt_SoundCom.AttackSoundAction();
+                            _eGM.AttackAudioSource.Play();
                             break;
 
                         case SoundEffectTypes.Building:
@@ -317,6 +311,38 @@ namespace Assets.Scripts
 
                         case SoundEffectTypes.Setting:
                             _eGM.SettingSoundEnt_AudioSourceCom.Play();
+                            break;
+
+                        case SoundEffectTypes.Mistake:
+                            _eGM.MistakeAudioSource.Play();
+                            break;
+
+                        case SoundEffectTypes.SoundGoldPack:
+                            _eGM.BuySoundEnt_AudioSourceCom.Play();
+                            break;
+
+                        case SoundEffectTypes.Melting:
+                            _eGM.MeltingSoundEnt_AudioSourceCom.Play();
+                            break;
+
+                        case SoundEffectTypes.Destroy:
+                            _eGM.DestroySoundEnt_AudioSourceCom.Play();
+                            break;
+
+                        case SoundEffectTypes.UpgradeUnitMelee:
+                            _eGM.UpgradeUnitMeleeSoundEnt_AudioSourceCom.Play();
+                            break;
+
+                        case SoundEffectTypes.UpgradeUnitArcher:
+                            _eGM.PickArcherEnt_AudioSourceCom.Play();
+                            break;
+
+                        case SoundEffectTypes.Seeding:
+                            _eGM.SeedingSoundEnt_AudioSourceCom.Play();
+                            break;
+
+                        case SoundEffectTypes.ClickToTable:
+                            _eGM.ShiftUnitSoundEnt_AudioSourceCom.Play();
                             break;
 
                         default:
