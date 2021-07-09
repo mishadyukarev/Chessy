@@ -34,7 +34,7 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
                     if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Fertilizer))
                     {
                         _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Fertilizer);
-                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Fertilizer, new Vector3((float)_eGM.CellEnvEnt_CellEnvCom(x, y).AmountResources(ResourceTypes.Food) / (float)_eGM.CellEnvEnt_CellEnvCom(x, y).MaxAmountResources(EnvironmentTypes.Fertilizer), 0.15f, 1));
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Fertilizer, new Vector3((float)_eGM.CellEnvEnt_CellEnvCom(x, y).AmountResources(ResourceTypes.Food) / (float)(_eGM.CellEnvEnt_CellEnvCom(x, y).MaxAmountResources(EnvironmentTypes.Fertilizer) + _eGM.CellEnvEnt_CellEnvCom(x, y).MaxAmountResources(EnvironmentTypes.Fertilizer)), 0.15f, 1));
                     }
                     else
                     {

@@ -108,7 +108,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
                             EconomyManager.CreateBuilding(BuildingType, Info.Sender);
                             CellBuildingWorker.SetPlayerBuilding(true, BuildingType, Info.Sender, XyCell);
-                            _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
+                            _eGM.CellUnitEnt_CellUnitCom(XyCell).TakeAmountSteps();
                         }
                         else
                         {

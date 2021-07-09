@@ -247,6 +247,7 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
                                 CellBuildingWorker.ResetBuilding(true, x, y);
                                 _eGM.CellBuildEnt_CellBuilCom(x, y).SetTimeStepsBuilding(BuildingTypes.Mine, 0);
                             }
+
                             _eGM.CellBuildEnt_CellBuilCom(x, y).AddTimeStepsBuilding(BuildingTypes.Mine, minus);
                             break;
 
