@@ -105,7 +105,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                         else
                         {
                             _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
-                            _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Destroy";
+                            _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Destroy");
                         }
                         //if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).IsMine)
                         //{
@@ -134,7 +134,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                         if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
                         {
                             _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
-                            _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Destroy";
+                            _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Destroy");
                         }
                     }
 
@@ -148,7 +148,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                     else
                     {
                         _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.City); });
-                        _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Build City";
+                        _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Build City");
                     }
                 }
             }

@@ -9,6 +9,7 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
     private Dictionary<bool, int> _amountMotionsWithoutFood = new Dictionary<bool, int>();
     private int _countForResetUnitMaster = 2;
     private int _countForResetUnitOther = 2;
+    private Dictionary<bool, int> _amountMotionsWithoutFoodForTruce = new Dictionary<bool, int>();
 
     public override void Init()
     {
@@ -16,6 +17,9 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 
         _amountMotionsWithoutFood.Add(true, 0);
         _amountMotionsWithoutFood.Add(false, 0);
+
+        _amountMotionsWithoutFoodForTruce.Add(true, 0);
+        _amountMotionsWithoutFoodForTruce.Add(false, 0);
     }
 
 
@@ -107,7 +111,7 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 
                                             if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveResources(ResourceTypes.Wood))
                                             {
-                                                if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed) >= 3)
+                                                if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed) >= 1)
                                                 {
                                                     CellBuildingWorker.SetPlayerBuilding(true, BuildingTypes.Woodcutter, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner, x, y);
                                                 }
@@ -269,82 +273,105 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 
         if (0 > _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, true))
         {
-            _amountMotionsWithoutFood[true] += 1;
+            ++_amountMotionsWithoutFoodForTruce[true];
+
+            _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, true, 0);
         }
         else
         {
+            _amountMotionsWithoutFoodForTruce[true] = 0;
+            _amountMotionsWithoutFood[true] = 0;
             _countForResetUnitMaster = 2;
-        }
-
-        if (_amountMotionsWithoutFood[true] >= _countForResetUnitMaster)
-        {
-            var isResetedUnit = false;
-            for (int x = 0; x < _eGM.Xamount; x++)
-            {
-                for (int y = 0; y < _eGM.Yamount; y++)
-                {
-                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
-                    {
-                        if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
-                        {
-                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient)
-                            {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType != UnitTypes.King)
-                                {
-                                    CellUnitWorker.ResetUnit(x, y);
-                                    isResetedUnit = true;
-                                    _amountMotionsWithoutFood[true] = 0;
-                                    _countForResetUnitMaster = 1;
-                                    break;
-                                }
-                            }
-                        }
-                    }
-
-                }
-                if (isResetedUnit) break;
-            }
         }
 
 
 
         if (0 > _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, false))
         {
-            _amountMotionsWithoutFood[false] += 1;
+            ++_amountMotionsWithoutFoodForTruce[false];
+
+            _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, false, 0);
+
+            
         }
         else
         {
+            _amountMotionsWithoutFoodForTruce[false] = 0;
+            _amountMotionsWithoutFood[false] = 0;
             _countForResetUnitOther = 2;
         }
 
-        if (_amountMotionsWithoutFood[false] >= _countForResetUnitOther)
+
+        if (_amountMotionsWithoutFoodForTruce[true] >= 2 && _amountMotionsWithoutFoodForTruce[false] >= 2)
         {
-            var isResetedUnit = false;
-            for (int x = 0; x < _eGM.Xamount; x++)
+            _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RPCSystems);
+
+            _amountMotionsWithoutFoodForTruce[true] = 0;
+            _amountMotionsWithoutFoodForTruce[false] = 0;
+        }
+        else
+        {
+            if (++_amountMotionsWithoutFood[true] >= _countForResetUnitMaster)
             {
-                for (int y = 0; y < _eGM.Yamount; y++)
+                var isResetedUnit = false;
+                for (int x = 0; x < _eGM.Xamount; x++)
                 {
-                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
+                    for (int y = 0; y < _eGM.Yamount; y++)
                     {
-                        if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                        if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
                         {
-                            if (!_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient)
+                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType != UnitTypes.King)
+                                if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient)
                                 {
-                                    CellUnitWorker.ResetUnit(x, y);
-                                    isResetedUnit = true;
-                                    _amountMotionsWithoutFood[false] = 0;
-                                    _countForResetUnitOther = 1;
-                                    break;
+                                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType != UnitTypes.King)
+                                    {
+                                        CellUnitWorker.ResetPlayerUnit(x, y);
+                                        isResetedUnit = true;
+                                        _amountMotionsWithoutFood[true] = 0;
+                                        _countForResetUnitMaster = 1;
+                                        break;
+                                    }
                                 }
                             }
                         }
-                    }
 
+                    }
+                    if (isResetedUnit) break;
                 }
-                if (isResetedUnit) break;
             }
-        }
+
+            if (++_amountMotionsWithoutFood[false] >= _countForResetUnitOther)
+            {
+                var isResetedUnit = false;
+                for (int x = 0; x < _eGM.Xamount; x++)
+                {
+                    for (int y = 0; y < _eGM.Yamount; y++)
+                    {
+                        if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
+                        {
+                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                            {
+                                if (!_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient)
+                                {
+                                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType != UnitTypes.King)
+                                    {
+                                        CellUnitWorker.ResetPlayerUnit(x, y);
+
+                                        isResetedUnit = true;
+                                        _amountMotionsWithoutFood[false] = 0;
+                                        _countForResetUnitOther = 1;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                    if (isResetedUnit) break;
+                }
+            }
+
+        }   
     }
 }

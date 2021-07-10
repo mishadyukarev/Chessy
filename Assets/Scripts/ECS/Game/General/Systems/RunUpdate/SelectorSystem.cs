@@ -60,12 +60,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                         if (_eGM.InputEnt_InputCom.IsClick)
                         {
-                            if (_eGM.SelectorEnt_SelectorCom.PickedFire)
-                            {
-
-                            }
-
-                            else if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.Unit)
+                            if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.Unit)
                             {
                                 _photonPunRPC.UpgradeUnitToMaster(xyCurrentCell);
                             }
@@ -185,13 +180,14 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                                 else
                                                 {
                                                     ClearAvailableCells();
-
                                                     _canShiftUnit = false;
                                                 }
                                             }
 
                                             else
                                             {
+                                                ClearAvailableCells();
+                                                _canShiftUnit = false;
 
                                                 if (TryFindCellInList(XySelectedCell, _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack))
                                                 {

@@ -30,12 +30,12 @@ namespace Assets.Scripts
                     break;
 
                 case BuildingTypes.Woodcutter:
-                    haves[FOOD_NUMBER] = StartVGC.FOOD_FOR_BUILDING_WOODCUTTER == NULL_RESOURCES ? true : Instance.EGGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= StartVGC.FOOD_FOR_BUILDING_WOODCUTTER;
-                    haves[WOOD_NUMBER] = StartVGC.WOOD_FOR_BUILDING_WOODCUTTER == NULL_RESOURCES ? true : Instance.EGGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= StartVGC.WOOD_FOR_BUILDING_WOODCUTTER;
-                    haves[ORE_NUMBER] = StartVGC.ORE_FOR_BUILDING_WOODCUTTER == NULL_RESOURCES ? true : Instance.EGGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= StartVGC.ORE_FOR_BUILDING_WOODCUTTER;
-                    haves[IRON_NUMBER] = StartVGC.IRON_FOR_BUILDING_WOODCUTTER == NULL_RESOURCES ? true : Instance.EGGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= StartVGC.IRON_FOR_BUILDING_WOODCUTTER;
-                    haves[GOLD_NUMBER] = StartVGC.GOLD_FOR_BUILDING_WOODCUTTER == NULL_RESOURCES ? true : Instance.EGGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= StartVGC.GOLD_FOR_BUILDING_WOODCUTTER;
-                    break;
+                    //haves[FOOD_NUMBER] = StartVGC.FOOD_FOR_BUILDING_WOODCUTTER == NULL_RESOURCES ? true : Instance.EGGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= StartVGC.FOOD_FOR_BUILDING_WOODCUTTER;
+                    //haves[WOOD_NUMBER] = StartVGC.WOOD_FOR_BUILDING_WOODCUTTER == NULL_RESOURCES ? true : Instance.EGGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= StartVGC.WOOD_FOR_BUILDING_WOODCUTTER;
+                    //haves[ORE_NUMBER] = StartVGC.ORE_FOR_BUILDING_WOODCUTTER == NULL_RESOURCES ? true : Instance.EGGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= StartVGC.ORE_FOR_BUILDING_WOODCUTTER;
+                    //haves[IRON_NUMBER] = StartVGC.IRON_FOR_BUILDING_WOODCUTTER == NULL_RESOURCES ? true : Instance.EGGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= StartVGC.IRON_FOR_BUILDING_WOODCUTTER;
+                    //haves[GOLD_NUMBER] = StartVGC.GOLD_FOR_BUILDING_WOODCUTTER == NULL_RESOURCES ? true : Instance.EGGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= StartVGC.GOLD_FOR_BUILDING_WOODCUTTER;
+                    throw new Exception();
 
                 case BuildingTypes.Mine:
                     haves[FOOD_NUMBER] = StartVGC.FOOD_FOR_BUILDING_MINE == NULL_RESOURCES ? true : Instance.EGGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, player.IsMasterClient) >= StartVGC.FOOD_FOR_BUILDING_MINE;
@@ -71,12 +71,12 @@ namespace Assets.Scripts
                     break;
 
                 case BuildingTypes.Woodcutter:
-                    Instance.EGGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, StartVGC.FOOD_FOR_BUILDING_WOODCUTTER);
-                    Instance.EGGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, StartVGC.WOOD_FOR_BUILDING_WOODCUTTER);
-                    Instance.EGGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, StartVGC.ORE_FOR_BUILDING_WOODCUTTER);
-                    Instance.EGGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, StartVGC.IRON_FOR_BUILDING_WOODCUTTER);
-                    Instance.EGGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, StartVGC.GOLD_FOR_BUILDING_WOODCUTTER);
-                    break;
+                    //Instance.EGGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, StartVGC.FOOD_FOR_BUILDING_WOODCUTTER);
+                    //Instance.EGGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, StartVGC.WOOD_FOR_BUILDING_WOODCUTTER);
+                    //Instance.EGGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, StartVGC.ORE_FOR_BUILDING_WOODCUTTER);
+                    //Instance.EGGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, StartVGC.IRON_FOR_BUILDING_WOODCUTTER);
+                    //Instance.EGGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, StartVGC.GOLD_FOR_BUILDING_WOODCUTTER);
+                    throw new Exception();
 
                 case BuildingTypes.Mine:
                     Instance.EGGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, StartVGC.FOOD_FOR_BUILDING_MINE);

@@ -148,6 +148,39 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     internal ref AnimationAttackUnitComponent AnimationAttack_UnitComponent => ref _animationEnt.Get<AnimationAttackUnitComponent>();
 
 
+    #region UnitInfoInGame
+
+    private EcsEntity _kingInfoInGameEnt;
+    internal ref AmountDictionaryComponent KingInfoInGameEnt_AmountDictCom => ref _kingInfoInGameEnt.Get<AmountDictionaryComponent>();
+
+
+    private EcsEntity _pawnInfoInGameEnt;
+    internal ref AmountDictionaryComponent PawnInfoInGameEnt_AmountDictCom => ref _pawnInfoInGameEnt.Get<AmountDictionaryComponent>();
+
+
+    private EcsEntity _pawnSwordInfoInGameEnt;
+    internal ref AmountDictionaryComponent PawnSwordInfoInGameEnt_AmountDictCom => ref _pawnSwordInfoInGameEnt.Get<AmountDictionaryComponent>();
+
+
+    private EcsEntity _rookInfoInGameEnt;
+    internal ref AmountDictionaryComponent RookInfoInGameEnt_AmountDictCom => ref _rookInfoInGameEnt.Get<AmountDictionaryComponent>();
+
+
+    private EcsEntity _rookCrossbowInfoInGameEnt;
+    internal ref AmountDictionaryComponent RookCrossbowInfoInGameEnt_AmountDictCom => ref _rookCrossbowInfoInGameEnt.Get<AmountDictionaryComponent>();
+
+
+    private EcsEntity _bishopInfoInGameEnt;
+    internal ref AmountDictionaryComponent BishopInfoInGameEnt_AmountDictCom => ref _bishopInfoInGameEnt.Get<AmountDictionaryComponent>();
+
+
+    private EcsEntity _bishopCrossbowInfoInGameEnt;
+    internal ref AmountDictionaryComponent BishopCrossbowInfoInGameEnt_AmountDictCom => ref _bishopCrossbowInfoInGameEnt.Get<AmountDictionaryComponent>();
+
+    #endregion
+
+
+
     internal EntitiesGameGeneralManager(EcsWorld gameWorld)
     {
         _cellEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
@@ -192,6 +225,15 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
         _soundEnt = gameWorld.NewEntity();
         _animationEnt = gameWorld.NewEntity();
         _zoneEnt = gameWorld.NewEntity();
+
+        _kingInfoInGameEnt = gameWorld.NewEntity();
+        _pawnInfoInGameEnt = gameWorld.NewEntity();
+        _pawnSwordInfoInGameEnt = gameWorld.NewEntity();
+        _rookInfoInGameEnt = gameWorld.NewEntity();
+        _rookCrossbowInfoInGameEnt = gameWorld.NewEntity();
+        _bishopInfoInGameEnt = gameWorld.NewEntity();
+        _bishopCrossbowInfoInGameEnt = gameWorld.NewEntity();
+
 
         ConstructCanvast(gameWorld);
     }
@@ -364,7 +406,13 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
             #endregion
         }
 
-
+        KingInfoInGameEnt_AmountDictCom.StartFill();
+        PawnInfoInGameEnt_AmountDictCom.StartFill();
+        PawnSwordInfoInGameEnt_AmountDictCom.StartFill();
+        RookInfoInGameEnt_AmountDictCom.StartFill();
+        RookCrossbowInfoInGameEnt_AmountDictCom.StartFill();
+        BishopInfoInGameEnt_AmountDictCom.StartFill();
+        BishopCrossbowInfoInGameEnt_AmountDictCom.StartFill();
 
         SpawnAndFillCanvasEntities();
     }
@@ -531,7 +579,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
                 if (i == 0)
                 {
-                    CellUnitWorker.ResetUnit(xy1);
+                    CellUnitWorker.ResetBotUnit(xy1);
                     CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.Mountain, xy1);
                 }
 

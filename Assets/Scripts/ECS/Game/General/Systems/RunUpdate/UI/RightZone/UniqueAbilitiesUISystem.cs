@@ -76,12 +76,12 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
 
                 if (_eGM.CellEffectEnt_CellEffectCom(XySelectedCell).HaveEffect(EffectTypes.Fire))
                 {
-                    _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.Text = "Put Out FIRE";
+                    _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.SetText("Put Out FIRE");
                 }
                 else
                 {
 
-                    _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.Text = "Fire forest";
+                    _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.SetText("Fire forest");
                 }
 
                 _eGM.Unique2AbilityEnt_ButtonCom.SetActive(false);
@@ -89,7 +89,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                 _eGM.Unique3AbilityEnt_ButtonCom.SetActive(true);
                 _eGM.Unique3AbilityEnt_ButtonCom.RemoveAllListeners();
                 _eGM.Unique3AbilityEnt_ButtonCom.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityThree); });
-                _eGM.Unique3AbilityEnt_TextMeshProGUICom.Text = "Seed Forest";
+                _eGM.Unique3AbilityEnt_TextMeshProGUICom.SetText("Seed Forest");
             }
         }
 

@@ -12,7 +12,7 @@ internal sealed class UpdatedUISystem : SystemGeneralReduction
 
         if (_eGM.MotionEnt_IsActivatedCom.IsActivated)
         {
-            _eGM.MotionEnt_TextMeshProUGUICom.Text = "Motion: " + _eGM.MotionEnt_AmountCom.Amount;
+            _eGM.MotionEnt_TextMeshProUGUICom.SetText("Motion: " + _eGM.MotionEnt_AmountCom.Amount);
             _eGM.MotionEnt_ParentCom.SetActive(true);
 
             _timer += Time.deltaTime;

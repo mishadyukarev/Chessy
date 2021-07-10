@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static;
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
@@ -358,18 +359,6 @@ namespace Assets.Scripts
 
         }
 
-        internal static void ResetUnit(params int[] xy)
-        {
-            UnitTypes unitType = default;
-            int amountHealth = default;
-            int amountSteps = default;
-            ProtectRelaxTypes protectRelaxType = default;
-            Player player = default;
-            bool haveBot = default;
-
-            SetPlayerUnit(unitType, amountHealth, amountSteps, protectRelaxType, player, xy);
-            SetBotUnit(unitType, haveBot, amountHealth, amountSteps, protectRelaxType, xy);
-        }
         internal static void ShiftUnit(int[] xyFromUnitTo, int[] xyTo)
         {
             var unitType = Instance.EGGM.CellUnitEnt_UnitTypeCom(xyFromUnitTo).UnitType;
@@ -382,6 +371,8 @@ namespace Assets.Scripts
         }
         internal static void SetPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, Player player, params int[] xy)
         {
+            UnitInfoManager.AddAmountUnitInGame(unitType, player.IsMasterClient);
+
             Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).SetUnitType(unitType);
             Instance.EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountSteps(amountSteps);
             Instance.EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountHealth(amountHealth);
@@ -430,6 +421,36 @@ namespace Assets.Scripts
                     Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.BishopCrossbow, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
             }
+        }
+
+        internal static void ResetPlayerUnit(params int[] xy)
+        {
+            var previousUnitType = EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType;
+            var previousIsMasterOwner = EGGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient;
+
+            UnitInfoManager.TakeAmountUnitInGame(previousUnitType, previousIsMasterOwner);
+
+
+
+            UnitTypes unitType = default;
+            int amountHealth = default;
+            int amountSteps = default;
+            ProtectRelaxTypes protectRelaxType = default;
+            Player player = default;
+
+            EGGM.CellUnitEnt_UnitTypeCom(xy).SetUnitType(unitType);
+            EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountHealth(amountHealth);
+            EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountSteps(amountSteps);
+            EGGM.CellUnitEnt_ProtectRelaxCom(xy).SetProtectedRelaxedType(protectRelaxType);
+            EGGM.CellUnitEnt_CellOwnerCom(xy).SetOwner(player);
+
+            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.King, player);
+            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.Pawn, player);
+            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.PawnSword, player);
+            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.Rook, player);
+            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.RookCrossbow, player);
+            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.Bishop, player);
+            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.BishopCrossbow, player);
         }
 
         internal static void SetBotUnit(UnitTypes unitType, bool haveBot, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, params int[] xy)
@@ -482,6 +503,17 @@ namespace Assets.Scripts
                     Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.BishopCrossbow);
                     break;
             }
+        }
+
+        internal static void ResetBotUnit(params int[] xy)
+        {
+            UnitTypes unitType = default;
+            int amountHealth = default;
+            int amountSteps = default;
+            ProtectRelaxTypes protectRelaxType = default;
+            bool haveBot = default;
+
+            SetBotUnit(unitType, haveBot, amountHealth, amountSteps, protectRelaxType, xy);
         }
 
         internal static void ChangeUnit(int[] xy, UnitTypes newUnitType)

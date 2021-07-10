@@ -113,8 +113,17 @@ namespace Assets.Scripts
                     break;
 
                 case RpcTypes.Truce:
-                    _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RPCSystems);
+                    SoundToGeneral(info.Sender, SoundEffectTypes.Mistake);
+
+                    //if (Instance.GameModeType == GameModTypes.WithBot)
+                    //{
+                    //    SoundToGeneral(info.Sender, SoundEffectTypes.Mistake);
+                    //}
+                    //else
+                    //{
+                    //    //_eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
+                    //    //_sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RPCSystems);
+                    //}
 
                     break;
 
@@ -213,6 +222,7 @@ namespace Assets.Scripts
                 default:
                     break;
             }
+
             RefreshAllToMaster();
         }
 
@@ -391,7 +401,7 @@ namespace Assets.Scripts
                         else
                         {
                             listObjects.Add(_eGM.CellUnitEnt_CellOwnerBotCom(x, y).HaveBot);
-                        }         
+                        }
                     }
 
 
@@ -437,9 +447,20 @@ namespace Assets.Scripts
 
             objects = new object[]
             {
+               _eGM.BuildingsEnt_BuildingsCom.AmountBuildings(BuildingTypes.Farm, false),
+            _eGM.BuildingsEnt_BuildingsCom.AmountBuildings(BuildingTypes.Woodcutter, false),
+            _eGM.BuildingsEnt_BuildingsCom.AmountBuildings(BuildingTypes.Mine, false),
+
             _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Farm, false),
             _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, false),
             _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Mine, false),
+
+            UnitInfoManager.AmountUnitsInGame(UnitTypes.Pawn, false),
+            UnitInfoManager.AmountUnitsInGame(UnitTypes.PawnSword, false),
+            UnitInfoManager.AmountUnitsInGame(UnitTypes.Rook, false),
+            UnitInfoManager.AmountUnitsInGame(UnitTypes.RookCrossbow, false),
+            UnitInfoManager.AmountUnitsInGame(UnitTypes.Bishop, false),
+            UnitInfoManager.AmountUnitsInGame(UnitTypes.BishopCrossbow, false),
 
             _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, false),
             _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, false),
@@ -495,7 +516,14 @@ namespace Assets.Scripts
                     }
                     else
                     {
-                        CellUnitWorker.ResetUnit(x, y);
+                        if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                        {
+                            CellUnitWorker.ResetPlayerUnit(x, y);
+                        }
+                        else
+                        {
+                            CellUnitWorker.ResetBotUnit(x, y);
+                        }
                     }
 
                     int amountResourcesFertilizer = (int)objects[i++];
@@ -565,9 +593,24 @@ namespace Assets.Scripts
         {
             int i = 0;
 
+            var amountFarm = (int)objects[i++];
+            var amountWoodcutter = (int)objects[i++];
+            var amountMine = (int)objects[i++];
+
+            _eGM.BuildingsEnt_BuildingsCom.SetAmountBuildings(BuildingTypes.Farm, Instance.IsMasterClient, amountFarm);
+            _eGM.BuildingsEnt_BuildingsCom.SetAmountBuildings(BuildingTypes.Woodcutter, Instance.IsMasterClient, amountWoodcutter);
+            _eGM.BuildingsEnt_BuildingsCom.SetAmountBuildings(BuildingTypes.Mine, Instance.IsMasterClient, amountMine);
+
             _eGM.BuildingsEnt_UpgradeBuildingsCom.SetAmountUpgrades(BuildingTypes.Farm, Instance.IsMasterClient, (int)objects[i++]);
             _eGM.BuildingsEnt_UpgradeBuildingsCom.SetAmountUpgrades(BuildingTypes.Woodcutter, Instance.IsMasterClient, (int)objects[i++]);
             _eGM.BuildingsEnt_UpgradeBuildingsCom.SetAmountUpgrades(BuildingTypes.Mine, Instance.IsMasterClient, (int)objects[i++]);
+
+            var amountPawn = (int)objects[i++];
+            var amountPawnSword = (int)objects[i++];
+            var amountRook = (int)objects[i++];
+            var amountRookCrossbow = (int)objects[i++];
+            var amountBishop = (int)objects[i++];
+            var amountBishopCrossbow = (int)objects[i++];
 
             var food = (int)objects[i++];
             var wood = (int)objects[i++];
@@ -578,6 +621,14 @@ namespace Assets.Scripts
             bool isSettedKing = (bool)objects[i++];
             bool isSettedCity = (bool)objects[i++];
             int[] xySettedCity = (int[])objects[i++];
+
+
+            UnitInfoManager.SetAmountUnitInGame(UnitTypes.Pawn, Instance.IsMasterClient, amountPawn);
+            UnitInfoManager.SetAmountUnitInGame(UnitTypes.PawnSword, Instance.IsMasterClient, amountPawnSword);
+            UnitInfoManager.SetAmountUnitInGame(UnitTypes.Rook, Instance.IsMasterClient, amountRook);
+            UnitInfoManager.SetAmountUnitInGame(UnitTypes.RookCrossbow, Instance.IsMasterClient, amountRookCrossbow);
+            UnitInfoManager.SetAmountUnitInGame(UnitTypes.Bishop, Instance.IsMasterClient, amountBishop);
+            UnitInfoManager.SetAmountUnitInGame(UnitTypes.BishopCrossbow, Instance.IsMasterClient, amountBishopCrossbow);
 
 
             _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, Instance.IsMasterClient, food);

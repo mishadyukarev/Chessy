@@ -81,8 +81,15 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
                     }
                 }
 
+                if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).HaveOwner)
+                {
+                    CellUnitWorker.ResetPlayerUnit(XyPreviousCell);
 
-                CellUnitWorker.ResetUnit(XyPreviousCell);
+                }
+                else
+                {
+                    CellUnitWorker.ResetBotUnit(XyPreviousCell);
+                }          
             }
 
             if (!_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveHealth)
@@ -90,14 +97,34 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
                 if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType == UnitTypes.King)
                     _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).ActorNumber);
 
-                CellUnitWorker.ResetUnit(XySelectedCell);
+
+                if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
+                {
+                    CellUnitWorker.ResetPlayerUnit(XySelectedCell);
+                }
+                else
+                {
+                    CellUnitWorker.ResetBotUnit(XySelectedCell);
+                }
+
+                
+
+
                 if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Rook
                     && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.RookCrossbow
                     && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Bishop
                     && _eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.BishopCrossbow)
                 {
                     CellUnitWorker.ShiftUnit(XyPreviousCell, XySelectedCell);
-                    CellUnitWorker.ResetUnit(XyPreviousCell);
+
+                    if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).HaveOwner)
+                    {
+                        CellUnitWorker.ResetPlayerUnit(XyPreviousCell);
+                    }
+                    else
+                    {
+                        CellUnitWorker.ResetBotUnit(XyPreviousCell);
+                    }
                 }
             }
 

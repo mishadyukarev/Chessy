@@ -4,7 +4,7 @@
 
     internal int Amount => _amount;
 
-    internal void StartFill() => _amount = default;
+    internal void StartFill(int amount = default) => _amount = amount;
 
     internal void SetAmount(int amount) => _amount = amount;
     internal void AddAmount(int adding = 1) => _amount += adding;

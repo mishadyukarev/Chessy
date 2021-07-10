@@ -229,13 +229,13 @@ internal struct CellEnvironmentComponent
                 throw new System.Exception();
 
             case EnvironmentTypes.Fertilizer:
-                return 15;
+                return 10;
 
             case EnvironmentTypes.YoungForest:
                 throw new System.Exception();
 
             case EnvironmentTypes.AdultForest:
-                return 15;
+                return 10;
 
             case EnvironmentTypes.Hill:
                 return 999;
@@ -256,13 +256,13 @@ internal struct CellEnvironmentComponent
                 throw new System.Exception();
 
             case EnvironmentTypes.Fertilizer:
-                return 10;
+                return 5;
 
             case EnvironmentTypes.YoungForest:
                 throw new System.Exception();
 
             case EnvironmentTypes.AdultForest:
-                return 10;
+                return 5;
 
             case EnvironmentTypes.Hill:
                 return 999;

@@ -19,7 +19,18 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 
                     _eGM.CellUnitEnt_CellUnitCom(x, y).TakeAmountHealth(40);
                     if (!_eGM.CellUnitEnt_CellUnitCom(x, y).HaveHealth)
-                        CellUnitWorker.ResetUnit(x, y);
+                    {
+                        if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                        {
+                            CellUnitWorker.ResetPlayerUnit(x, y);
+                        }
+                        else
+                        {
+                            CellUnitWorker.ResetBotUnit(x, y);
+                        }
+                        
+                    }
+
 
                     if (_eGM.CellEffectEnt_CellEffectCom(x, y).TimeStepsEffect(EffectTypes.Fire) >= 3)
                     {

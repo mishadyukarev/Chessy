@@ -26,8 +26,15 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
                 CellUnitWorker.ShiftUnit(XyPreviousCell, XySelectedCell);
 
 
-                CellUnitWorker.ResetUnit(XyPreviousCell);
-     
+                if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).HaveOwner)
+                {
+                    CellUnitWorker.ResetPlayerUnit(XyPreviousCell);
+                }
+                else
+                {
+                    CellUnitWorker.ResetBotUnit(XyPreviousCell);
+                }
+
 
                 _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).TakeAmountSteps(_eGM.CellEnvEnt_CellEnvCom(XySelectedCell).NeedAmountSteps());
                 if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps < 0) _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).ResetAmountSteps();

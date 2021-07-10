@@ -10,8 +10,8 @@ internal sealed class TheEndGameUISystem : SystemGeneralReduction
         if (_eGM.EndGameEntEndGameCom.IsEndGame)
         {
             _eGM.EndGameEnt_ParentCom.SetActive(true);
-            if (_eGM.EndGameEntEndGameCom.PlayerWinner.IsLocal) _eGM.EndGameEnt_TextMeshProGUICom.Text = "You're WINNER!";
-            else _eGM.EndGameEnt_TextMeshProGUICom.Text = "You're loser :(";
+            if (_eGM.EndGameEntEndGameCom.PlayerWinner.IsLocal) _eGM.EndGameEnt_TextMeshProGUICom.SetText("You're WINNER!");
+            else _eGM.EndGameEnt_TextMeshProGUICom.SetText("You're loser :(");
         }
         else
         {

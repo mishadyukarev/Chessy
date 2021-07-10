@@ -19,9 +19,9 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
             _eGM.EnvironmentZoneEnt_ParentCom.SetActive(false);
         }
 
-        _eGM.EnvFerilizerEnt_TextMeshProUGUICom.Text = "Fertilizer: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountResources(ResourceTypes.Food);
-        _eGM.EnvForestEnt_TextMeshProUGUICom.Text = "Forest: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountResources(ResourceTypes.Wood);
-        _eGM.EnvOreEnt_TextMeshProUGUICom.Text = "Ore: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountResources(ResourceTypes.Ore);
+        _eGM.EnvFerilizerEnt_TextMeshProUGUICom.SetText("Fertilizer: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountResources(ResourceTypes.Food));
+        _eGM.EnvForestEnt_TextMeshProUGUICom.SetText("Forest: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountResources(ResourceTypes.Wood));
+        _eGM.EnvOreEnt_TextMeshProUGUICom.SetText("Ore: " + _eGM.CellEnvEnt_CellEnvCom(XySelectedCell).AmountResources(ResourceTypes.Ore));
 
 
 

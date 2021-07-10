@@ -246,11 +246,11 @@ public class StartGameValuesConfig : ScriptableObject
     public readonly int IRON_FOR_BUILDING_FARM = 0;
     public readonly int GOLD_FOR_BUILDING_FARM = 0;
 
-    public readonly int FOOD_FOR_BUILDING_WOODCUTTER = 0;
-    public readonly int WOOD_FOR_BUILDING_WOODCUTTER = 10;
-    public readonly int ORE_FOR_BUILDING_WOODCUTTER = 0;
-    public readonly int IRON_FOR_BUILDING_WOODCUTTER = 0;
-    public readonly int GOLD_FOR_BUILDING_WOODCUTTER = 0;
+    //public readonly int FOOD_FOR_BUILDING_WOODCUTTER = 0;
+    //public readonly int WOOD_FOR_BUILDING_WOODCUTTER = 10;
+    //public readonly int ORE_FOR_BUILDING_WOODCUTTER = 0;
+    //public readonly int IRON_FOR_BUILDING_WOODCUTTER = 0;
+    //public readonly int GOLD_FOR_BUILDING_WOODCUTTER = 0;
 
     public readonly int FOOD_FOR_BUILDING_MINE = 0;
     public readonly int WOOD_FOR_BUILDING_MINE = 10;
