@@ -18,8 +18,11 @@ namespace Assets.Scripts
             set => _audioSource.loop = value;
         }
 
+        internal bool IsPlaying => _audioSource.isPlaying;
+
         internal void SetAudioSource(AudioSource audioSource) => _audioSource = audioSource;
         internal void SetClip(AudioClip audioClip) => _audioSource.clip = audioClip;
         internal void Play() => _audioSource.Play();
+        internal void Stop() => _audioSource.Stop();
     }
 }

@@ -6,23 +6,9 @@ namespace Assets.Scripts.ECS.Game.Components
     {
         private AudioSource _audioSource;
 
+        internal bool IsPlaying => _audioSource.isPlaying;
+
         internal void StartFill(AudioSource audioSource) => _audioSource = audioSource;
         internal void Play() => _audioSource.Play();
     }
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-
 }

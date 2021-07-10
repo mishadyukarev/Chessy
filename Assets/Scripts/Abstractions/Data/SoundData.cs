@@ -18,6 +18,7 @@ public sealed class SoundData : ScriptableObject
     [SerializeField] private AudioClip _upgradeUnitMelee_clip;
     [SerializeField] private AudioClip _seeding_clip;
     [SerializeField] private AudioClip _shiftUnit_clip;
+    [SerializeField] private AudioClip _truce_clip;
 
     public AudioClip MistakeAudioClip => _mistakeAudioClip;
     public AudioClip AttackSwordAudioClip => _attackSwordAudioClip;
@@ -34,4 +35,5 @@ public sealed class SoundData : ScriptableObject
     public AudioClip UpgradeUnitMelee_Clip => _upgradeUnitMelee_clip;
     public AudioClip Seeding_Clip => _seeding_clip;
     public AudioClip ShiftUnit_Clip => _shiftUnit_clip;
+    public AudioClip Truce_Clip => _truce_clip;
 }

@@ -15,5 +15,6 @@
         UpgradeUnitArcher,
         Seeding,
         ClickToTable,
+        Truce,
     }
 }

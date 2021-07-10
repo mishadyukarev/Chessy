@@ -355,6 +355,10 @@ namespace Assets.Scripts
                             _eGM.ShiftUnitSoundEnt_AudioSourceCom.Play();
                             break;
 
+                        case SoundEffectTypes.Truce:
+                            _eGM.TruceSoundEnt_AudioSourceCom.Play();
+                            break;
+
                         default:
                             break;
                     }

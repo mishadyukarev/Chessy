@@ -110,6 +110,10 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     internal ref AudioSourceComponent ShiftUnitSoundEnt_AudioSourceCom => ref _shiftUnitSoundEnt.Get<AudioSourceComponent>();
 
 
+    private EcsEntity _truceSoundEnt;
+    internal ref AudioSourceComponent TruceSoundEnt_AudioSourceCom => ref _truceSoundEnt.Get<AudioSourceComponent>();
+
+
     #endregion
 
 
@@ -215,6 +219,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
         _upgradeUnitMeleeSoundEnt = gameWorld.NewEntity();
         _seedingSoundEnt = gameWorld.NewEntity();
         _shiftUnitSoundEnt = gameWorld.NewEntity();
+        _truceSoundEnt = gameWorld.NewEntity();
 
         _economyEnt = gameWorld.NewEntity();
         _unitInfoEnt = gameWorld.NewEntity();
@@ -321,6 +326,14 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
         shiftUnitAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.ShiftUnit_Clip;
         shiftUnitAS.volume = 0.6f;
         ShiftUnitSoundEnt_AudioSourceCom.StartFill(shiftUnitAS);
+
+
+        var truceAS = audioSourceParentGO.AddComponent<AudioSource>();
+        truceAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.Truce_Clip;
+        truceAS.volume = 0.6f;
+        TruceSoundEnt_AudioSourceCom.StartFill(truceAS);
+
+
 
 
         BackGroundGO = GameObject.Instantiate(Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.BackGroundCollider2D,

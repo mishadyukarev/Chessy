@@ -1,10 +1,11 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Static;
+using Photon.Pun;
 using System.Collections.Generic;
 using static Assets.Scripts.Main;
 
-internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
+internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
 {
     private Dictionary<bool, int> _amountMotionsWithoutFood = new Dictionary<bool, int>();
     private int _countForResetUnitMaster = 2;
@@ -304,6 +305,8 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 
         if (_amountMotionsWithoutFoodForTruce[true] >= 2 && _amountMotionsWithoutFoodForTruce[false] >= 2)
         {
+            _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
+
             _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RPCSystems);
 
             _amountMotionsWithoutFoodForTruce[true] = 0;
