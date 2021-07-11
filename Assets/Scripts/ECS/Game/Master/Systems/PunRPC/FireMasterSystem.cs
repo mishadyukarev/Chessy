@@ -6,9 +6,9 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
     internal sealed class FireMasterSystem : RPCMasterSystemReduction
     {
-        private PhotonMessageInfo Info => _eMM.FromInfoEnt_FromInfoCom.Info;
-        private int[] FromXyCopy => _eMM.FireEnt_FromToXyCom.FromXyCopy;
-        private int[] ToXyCopy => _eMM.FireEnt_FromToXyCom.ToXyCopy;
+        private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
+        private int[] FromXyCopy => _eMM.FireEnt_FromToXyCom.FromXy;
+        private int[] ToXyCopy => _eMM.FireEnt_FromToXyCom.ToXy;
 
         public override void Run()
         {
@@ -36,18 +36,18 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                         }
                         else
                         {
-                            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
-                            _photonPunRPC.MistakeEconomyToGeneral(Info.Sender, haves);
+                            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            _photonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
                         }
                 }
                 else
                 {
-                    _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
+                    _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                 }
             }
             else
             {
-                _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
+                _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
             }
         }
     }

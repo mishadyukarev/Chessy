@@ -5,10 +5,10 @@ using static Assets.Scripts.Static.CellBaseOperations;
 
 internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 {
+    internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
+
     internal int[] XyPreviousCell => _eMM.RPCMasterEnt_RPCMasterCom.XyPrevious;
     internal int[] XySelectedCell => _eMM.RPCMasterEnt_RPCMasterCom.XySelected;
-    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
-
     private bool _isAttacked;
 
 
@@ -16,7 +16,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        CellUnitWorker.GetCellsForAttack(Info.Sender,
+        CellUnitWorker.GetCellsForAttack(InfoFrom.Sender,
             out var availableCellsSimpleAttack, out var availableCellsUniqueAttack, XyPreviousCell);
 
         var isFindedSimple = TryFindCellInList(XySelectedCell, availableCellsSimpleAttack);
@@ -133,7 +133,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
         else _isAttacked = false;
 
 
-        _photonPunRPC.AttackUnitToGeneral(Info.Sender, _isAttacked);
+        _photonPunRPC.AttackUnitToGeneral(InfoFrom.Sender, _isAttacked);
         _photonPunRPC.AttackUnitToGeneral(RpcTarget.All, false, _isAttacked, XyPreviousCell, XySelectedCell);
     }
 }

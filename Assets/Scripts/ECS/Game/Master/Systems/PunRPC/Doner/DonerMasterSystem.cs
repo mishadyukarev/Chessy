@@ -5,21 +5,21 @@ using static Assets.Scripts.Main;
 
 internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 {
-    internal bool isDone => _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething;
-    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
+    internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
 
+    internal bool isDone => _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething;
 
     public override void Run()
     {
         base.Run();
 
-        if (_eGM.UnitInfoEnt_UnitInventorCom.IsSettedKing(Info.Sender.IsMasterClient))
+        if (_eGM.UnitInfoEnt_UnitInventorCom.IsSettedKing(InfoFrom.Sender.IsMasterClient))
         {
-            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
+            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
-            _photonPunRPC.DoneToGeneral(Info.Sender, false, isDone, _eGM.MotionEnt_AmountCom.Amount);
+            _photonPunRPC.DoneToGeneral(InfoFrom.Sender, false, isDone, _eGM.MotionEnt_AmountCom.Amount);
 
-            _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(Info.Sender.IsMasterClient, isDone);
+            _eGM.DonerEnt_IsActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, isDone);
 
             bool isRefreshed = Instance.GameModeType == GameModTypes.WithBot
                 || _eGM.DonerEnt_IsActivatedDictCom.IsActivated(true)
@@ -35,7 +35,7 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
         }
         else
         {
-            _photonPunRPC.MistakeUnitToGeneral(Info.Sender);
+            _photonPunRPC.MistakeUnitToGeneral(InfoFrom.Sender);
         }
     }
 }

@@ -25,13 +25,13 @@ public sealed class SystemsGameMasterManager : SystemsManager
             .Add(new GetterUnitMasterSystem(), nameof(GetterUnitMasterSystem))
             .Add(new MeltOreMasterSystem(), nameof(MeltOreMasterSystem))
             .Add(new SetterUnitMasterSystem(), nameof(SetterUnitMasterSystem))
-            .Add(new UniquePawnAbilityMasterSystem(), nameof(UniquePawnAbilityMasterSystem))
             .Add(new FireUpdatorMasterSystem(), nameof(FireUpdatorMasterSystem))
             .Add(new EconomyUpdatorMasterSystem(), nameof(EconomyUpdatorMasterSystem))
             .Add(new FertilizeUpdatorMasterSystem(), nameof(FertilizeUpdatorMasterSystem))
             .Add(new TruceMasterSystem(), nameof(TruceMasterSystem))
             .Add(new UpgradeMasterSystem(), nameof(UpgradeMasterSystem))
-            .Add(new FireMasterSystem(), nameof(FireMasterSystem));
+            .Add(new FireMasterSystem(), nameof(FireMasterSystem))
+            .Add(new SeedingMasterSystem(), nameof(SeedingMasterSystem));
     }
 
     internal override void ProcessInjects()

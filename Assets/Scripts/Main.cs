@@ -18,7 +18,7 @@ namespace Assets.Scripts
 
         [NonSerialized]public GameModTypes GameModeType;
 
-        public const string VERSION_PHOTON_GAME = "0.1d";
+        public const string VERSION_PHOTON_GAME = "0.1f";
 
         #endregion
 

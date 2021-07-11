@@ -3,18 +3,19 @@ using Photon.Pun;
 
 internal sealed class ReadyMasterSystem : RPCMasterSystemReduction
 {
+    private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
+
     private bool IsReady => _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething;
-    private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
 
     public override void Run()
     {
         base.Run();
 
-        _eGM.ReadyEnt_ActivatedDictCom.SetIsActivated(Info.Sender.IsMasterClient, IsReady);
+        _eGM.ReadyEnt_ActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, IsReady);
 
         if (_eGM.ReadyEnt_ActivatedDictCom.IsActivatedAll)
             _photonPunRPC.ReadyToGeneral(RpcTarget.All, false, true);
 
-        else _photonPunRPC.ReadyToGeneral(Info.Sender, IsReady, false);
+        else _photonPunRPC.ReadyToGeneral(InfoFrom.Sender, IsReady, false);
     }
 }

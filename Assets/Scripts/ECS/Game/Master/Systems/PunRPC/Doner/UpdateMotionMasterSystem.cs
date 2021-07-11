@@ -263,8 +263,8 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
             }
         }
 
-        _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(true, false);
-        _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(false, false);
+        _eGM.DonerEnt_IsActivatedDictCom.SetActivated(true, false);
+        _eGM.DonerEnt_IsActivatedDictCom.SetActivated(false, false);
 
         _eGM.MotionEnt_AmountCom.AddAmount();
 

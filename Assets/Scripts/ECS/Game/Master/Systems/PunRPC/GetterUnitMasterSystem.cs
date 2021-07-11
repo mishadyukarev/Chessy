@@ -5,10 +5,11 @@ using Photon.Pun;
 
 internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
 {
+    internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
+
     private int _amountForTakingUnit = 1;
 
     internal UnitTypes UnitType => _eMM.RPCMasterEnt_RPCMasterCom.UnitType;
-    internal PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
 
     public override void Run()
     {
@@ -22,7 +23,7 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.King:
-                isGetted = _eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitType, Info.Sender.IsMasterClient);
+                isGetted = _eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                 if (isGetted)
                 {
                     unitType = UnitTypes.King;
@@ -30,12 +31,12 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.Pawn:
-                if(_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.PawnSword, Info.Sender.IsMasterClient))
+                if(_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.PawnSword, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.PawnSword;
                 }
-                else if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.Pawn, Info.Sender.IsMasterClient))
+                else if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.Pawn, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.Pawn;
@@ -46,12 +47,12 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.Rook:
-                if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.RookCrossbow, Info.Sender.IsMasterClient))
+                if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.RookCrossbow, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.RookCrossbow;
                 }
-                else if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.Rook, Info.Sender.IsMasterClient))
+                else if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.Rook, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.Rook;
@@ -62,12 +63,12 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.Bishop:
-                if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.BishopCrossbow, Info.Sender.IsMasterClient))
+                if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.BishopCrossbow, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.BishopCrossbow;
                 }
-                else if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.Bishop, Info.Sender.IsMasterClient))
+                else if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.Bishop, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.Bishop;
@@ -80,6 +81,6 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
             default:
                 break;
         }
-        _photonPunRPC.GetUnitToGeneral(Info.Sender, isGetted, unitType);
+        _photonPunRPC.GetUnitToGeneral(InfoFrom.Sender, isGetted, unitType);
     }
 }

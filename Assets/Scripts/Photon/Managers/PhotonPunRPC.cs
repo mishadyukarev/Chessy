@@ -51,10 +51,6 @@ namespace Assets.Scripts
         public void DoneToGeneral(Player playerTo, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Done, new object[] { isRefreshed, isDone, numberMotion });
         public void DoneToGeneral(RpcTarget rpcTarget, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Done, new object[] { isRefreshed, isDone, numberMotion });
 
-        public void TruceToMaster(bool isTruce) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Truce, new object[] { isTruce });
-        public void TruceToGeneral(Player playerTo, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Truce, new object[] { isRefreshed, isDone, numberMotion });
-        public void TruceToGeneral(RpcTarget rpcTarget, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Truce, new object[] { isRefreshed, isDone, numberMotion });
-
         public void UpgradeUnitToMaster(int[] xyCell, UpgradeModTypes upgradeModType = UpgradeModTypes.Unit) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Upgrade, new object[] { upgradeModType, xyCell });
         public void UpgradeBuildingToMaster(BuildingTypes buildingType, UpgradeModTypes upgradeModType = UpgradeModTypes.Building) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Upgrade, new object[] { upgradeModType, buildingType });
 
@@ -75,7 +71,7 @@ namespace Assets.Scripts
         public void MistakeUnitToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.UnitType });
 
         public void FireToMaster(int[] fromXy, int[] toXy) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Fire, new object[] { fromXy, toXy });
-        public void UniqueAbilityPawnToMaster(int[] xy, UniqueAbilitiesPawnTypes uniqueAbilitiesPawnType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.UniquePawnAbility, new object[] { xy, uniqueAbilitiesPawnType });
+        public void SeedEnvironmentToMaster(int[] xy, EnvironmentTypes environmentType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.SeedEnvironment, new object[] { xy, environmentType });
 
         public void CreateUnitToMaster(UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.CreateUnit, new object[] { unitType });
 
@@ -93,9 +89,9 @@ namespace Assets.Scripts
 
 
         [PunRPC]
-        private void MasterRPC(RpcTypes rPCType, object[] objects, PhotonMessageInfo info)
+        private void MasterRPC(RpcTypes rPCType, object[] objects, PhotonMessageInfo infoFrom)
         {
-            _eGM.RpcGeneralEnt_RPCCom.FromInfo = info;
+            _eMM.FromInfoEnt_FromInfoCom.SetFromInfo(infoFrom);
 
             switch (rPCType)
             {
@@ -110,21 +106,6 @@ namespace Assets.Scripts
                 case RpcTypes.Done:
                     _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(DonerMasterSystem), _sMM.RPCSystems);
-                    break;
-
-                case RpcTypes.Truce:
-                    SoundToGeneral(info.Sender, SoundEffectTypes.Mistake);
-
-                    //if (Instance.GameModeType == GameModTypes.WithBot)
-                    //{
-                    //    SoundToGeneral(info.Sender, SoundEffectTypes.Mistake);
-                    //}
-                    //else
-                    //{
-                    //    //_eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
-                    //    //_sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RPCSystems);
-                    //}
-
                     break;
 
                 case RpcTypes.EndGame:
@@ -156,7 +137,7 @@ namespace Assets.Scripts
 
                 case RpcTypes.ProtectRelax:
                     _eMM.ProtectRelaxEnt_ProtectRelaxCom.SetProtectedRelaxedType((ProtectRelaxTypes)objects[0]);
-                    _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[1];
+                    _eMM.ProtectRelaxEnt_XyCellCom.XyCell = (int[])objects[1];
                     _sMM.TryInvokeRunSystem(nameof(ProtectRelaxMasterSystem), _sMM.RPCSystems);
                     break;
 
@@ -180,24 +161,21 @@ namespace Assets.Scripts
                     _sMM.TryInvokeRunSystem(nameof(SetterUnitMasterSystem), _sMM.RPCSystems);
                     break;
 
-                case RpcTypes.UniquePawnAbility:
-                    _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[0];
-                    _eMM.RPCMasterEnt_RPCMasterCom.UniqueAbilitiesPawnType = (UniqueAbilitiesPawnTypes)objects[1];
-                    _sMM.TryInvokeRunSystem(nameof(UniquePawnAbilityMasterSystem), _sMM.RPCSystems);
+                case RpcTypes.SeedEnvironment:
+                    _eMM.SeedingEnt_XyCellCom.XyCell = (int[])objects[0];
+                    _eMM.SeedingEnt_EnvironmentTypesCom.SetEnvironmentType((EnvironmentTypes)objects[1]);
+                    _sMM.TryInvokeRunSystem(nameof(SeedingMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Fire:
-                    _eMM.FromInfoEnt_FromInfoCom.Info = info;
-
-                    _eMM.FireEnt_FromToXyCom.FromXyCopy = (int[])objects[0];
-                    _eMM.FireEnt_FromToXyCom.ToXyCopy = (int[])objects[1];
+                    _eMM.FireEnt_FromToXyCom.FromXy = (int[])objects[0];
+                    _eMM.FireEnt_FromToXyCom.ToXy = (int[])objects[1];
                     _sMM.TryInvokeRunSystem(nameof(FireMasterSystem), _sMM.RPCSystems);
                     break;
 
                 case RpcTypes.Upgrade:
                     var upgradeModType = (UpgradeModTypes)objects[0];
                     _eMM.UpgradeEnt_UpgradeTypeCom.UpgradeModType = upgradeModType;
-
                     switch (upgradeModType)
                     {
                         case UpgradeModTypes.None:
@@ -214,9 +192,7 @@ namespace Assets.Scripts
                         default:
                             throw new Exception();
                     }
-
                     _sMM.TryInvokeRunSystem(nameof(UpgradeMasterSystem), _sMM.RPCSystems);
-
                     break;
 
                 default:
@@ -227,10 +203,10 @@ namespace Assets.Scripts
         }
 
         [PunRPC]
-        private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo info)
+        private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _i = 0;
-            _eGM.RpcGeneralEnt_RPCCom.FromInfo = info;
+            _eGM.FromInfoEnt_FromInfoCom.SetFromInfo(infoFrom);
 
             switch (rpcGeneralType)
             {
@@ -240,19 +216,19 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.Ready:
                     bool isActivated = (bool)objects[_i++];
                     bool isStartedGame = (bool)objects[_i++];
-                    _eGM.ReadyEnt_ActivatedDictCom.SetIsActivated(Instance.IsMasterClient, isActivated);
+                    _eGM.ReadyEnt_ActivatedDictCom.SetActivated(Instance.IsMasterClient, isActivated);
                     _eGM.ReadyEnt_StartedGameCom.IsStartedGame = isStartedGame;
                     break;
 
                 case RpcGeneralTypes.Done:
-                    _eGM.MotionEnt_IsActivatedCom.IsActivated = (bool)objects[_i++];
-                    _eGM.DonerEnt_IsActivatedDictCom.SetIsActivated(Instance.IsMasterClient, (bool)objects[_i++]);
+                    _eGM.MotionEnt_ActivatedCom.SetActivated((bool)objects[_i++]);
+                    _eGM.DonerEnt_IsActivatedDictCom.SetActivated(Instance.IsMasterClient, (bool)objects[_i++]);
                     _eGM.MotionEnt_AmountCom.SetAmount((int)objects[_i++]);
                     break;
 
                 case RpcGeneralTypes.Truce:
-                    _eGM.MotionEnt_IsActivatedCom.IsActivated = (bool)objects[_i++];
-                    _eGM.TruceEnt_ActivatedDictCom.SetIsActivated(Instance.IsMasterClient, (bool)objects[_i++]);
+                    _eGM.MotionEnt_ActivatedCom.SetActivated((bool)objects[_i++]);
+                    _eGM.TruceEnt_ActivatedDictCom.SetActivated(Instance.IsMasterClient, (bool)objects[_i++]);
                     _eGM.MotionEnt_AmountCom.SetAmount((int)objects[_i++]);
                     break;
 
@@ -301,67 +277,8 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.Sound:
-                    switch ((SoundEffectTypes)objects[_i++])
-                    {
-                        case SoundEffectTypes.AttackArcher:
-                            _eGM.AttackArcherEnt_AudioSourceCom.Play();
-                            break;
-
-                        case SoundEffectTypes.AttackMelee:
-                            _eGM.AttackAudioSource.Play();
-                            break;
-
-                        case SoundEffectTypes.Building:
-                            _eGM.BuildingSoundEnt_AudioSourceCom.Play();
-                            break;
-
-                        case SoundEffectTypes.Fire:
-                            _eGM.FireSoundEnt_AudioSourceCom.Play();
-                            break;
-
-                        case SoundEffectTypes.Setting:
-                            _eGM.SettingSoundEnt_AudioSourceCom.Play();
-                            break;
-
-                        case SoundEffectTypes.Mistake:
-                            _eGM.MistakeAudioSource.Play();
-                            break;
-
-                        case SoundEffectTypes.SoundGoldPack:
-                            _eGM.BuySoundEnt_AudioSourceCom.Play();
-                            break;
-
-                        case SoundEffectTypes.Melting:
-                            _eGM.MeltingSoundEnt_AudioSourceCom.Play();
-                            break;
-
-                        case SoundEffectTypes.Destroy:
-                            _eGM.DestroySoundEnt_AudioSourceCom.Play();
-                            break;
-
-                        case SoundEffectTypes.UpgradeUnitMelee:
-                            _eGM.UpgradeUnitMeleeSoundEnt_AudioSourceCom.Play();
-                            break;
-
-                        case SoundEffectTypes.UpgradeUnitArcher:
-                            _eGM.PickArcherEnt_AudioSourceCom.Play();
-                            break;
-
-                        case SoundEffectTypes.Seeding:
-                            _eGM.SeedingSoundEnt_AudioSourceCom.Play();
-                            break;
-
-                        case SoundEffectTypes.ClickToTable:
-                            _eGM.ShiftUnitSoundEnt_AudioSourceCom.Play();
-                            break;
-
-                        case SoundEffectTypes.Truce:
-                            _eGM.TruceSoundEnt_AudioSourceCom.Play();
-                            break;
-
-                        default:
-                            break;
-                    }
+                    var soundEffectType = (SoundEffectTypes)objects[_i++];
+                    SoundManager.PlaySoundEffect(soundEffectType);
                     break;
 
                 default:
@@ -515,7 +432,7 @@ namespace Assets.Scripts
                             CellUnitWorker.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, protectRelaxType, x, y);
                         }
 
-                        _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(Instance.IsMasterClient, isActiveUnit);
+                        _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetActivated(Instance.IsMasterClient, isActiveUnit);
                         _eGM.CellUnitEnt_CellUnitCom(x, y).EnableSR(isActiveUnit, unitType);
                     }
                     else

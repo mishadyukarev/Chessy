@@ -88,7 +88,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
 
                 _eGM.Unique3AbilityEnt_ButtonCom.SetActive(true);
                 _eGM.Unique3AbilityEnt_ButtonCom.RemoveAllListeners();
-                _eGM.Unique3AbilityEnt_ButtonCom.AddListener(delegate { PawnUniqieAbility(UniqueAbilitiesPawnTypes.AbilityThree); });
+                _eGM.Unique3AbilityEnt_ButtonCom.AddListener(delegate { SeedEnvironment(EnvironmentTypes.YoungForest); });
                 _eGM.Unique3AbilityEnt_TextMeshProGUICom.SetText("Seed Forest");
             }
         }
@@ -99,9 +99,9 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
         }
     }
 
-    private void PawnUniqieAbility(UniqueAbilitiesPawnTypes uniqueAbilitiesPawnType)
+    private void SeedEnvironment(EnvironmentTypes environmentType)
     {
-        _photonPunRPC.UniqueAbilityPawnToMaster(XySelectedCell, uniqueAbilitiesPawnType);
+        _photonPunRPC.SeedEnvironmentToMaster(XySelectedCell, environmentType);
     }
 
     private void Fire(int[] fromXy, int[] toXy)

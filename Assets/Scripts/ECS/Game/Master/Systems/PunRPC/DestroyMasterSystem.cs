@@ -5,8 +5,10 @@ using Photon.Pun;
 
 internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
 {
+    private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
+
     private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
-    private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
+
 
     public override void Run()
     {
@@ -33,7 +35,7 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
             }
             else
             {
-                _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
+                _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
             }
         //}
     }

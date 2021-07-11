@@ -380,13 +380,8 @@ namespace Assets.Scripts
             Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).SetOwner(player);
 
 
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.King, player);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.Pawn, player);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.PawnSword, player);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.Rook, player);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.RookCrossbow, player);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.Bishop, player);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.BishopCrossbow, player);
+
+            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).DisableVisionAllSR();
 
             switch (Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType)
             {
@@ -394,31 +389,31 @@ namespace Assets.Scripts
                     break;
 
                 case UnitTypes.King:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.King, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.King, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.Pawn:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Pawn, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.Pawn, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.PawnSword:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.PawnSword, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.PawnSword, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.Rook:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Rook, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.Rook, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.RookCrossbow:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.RookCrossbow, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.RookCrossbow, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.Bishop:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Bishop, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.Bishop, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.BishopCrossbow:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.BishopCrossbow, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.BishopCrossbow, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
             }
         }
@@ -444,13 +439,7 @@ namespace Assets.Scripts
             EGGM.CellUnitEnt_ProtectRelaxCom(xy).SetProtectedRelaxedType(protectRelaxType);
             EGGM.CellUnitEnt_CellOwnerCom(xy).SetOwner(player);
 
-            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.King, player);
-            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.Pawn, player);
-            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.PawnSword, player);
-            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.Rook, player);
-            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.RookCrossbow, player);
-            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.Bishop, player);
-            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(false, UnitTypes.BishopCrossbow, player);
+            EGGM.CellUnitEnt_CellUnitCom(xy).DisableVisionAllSR();
         }
 
         internal static void SetBotUnit(UnitTypes unitType, bool haveBot, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, params int[] xy)
@@ -462,13 +451,7 @@ namespace Assets.Scripts
             Instance.EGGM.CellUnitEnt_CellOwnerBotCom(xy).SetBot(haveBot);
 
 
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.King);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Pawn);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.PawnSword);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Rook);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.RookCrossbow);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Bishop);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.BishopCrossbow);
+            EGGM.CellUnitEnt_CellUnitCom(xy).DisableVisionAllSR();
 
             switch (Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType)
             {
@@ -476,31 +459,31 @@ namespace Assets.Scripts
                     break;
 
                 case UnitTypes.King:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.King);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSRAndSetColor(UnitTypes.King);
                     break;
 
                 case UnitTypes.Pawn:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.Pawn);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSRAndSetColor(UnitTypes.Pawn);
                     break;
 
                 case UnitTypes.PawnSword:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.PawnSword);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSRAndSetColor(UnitTypes.PawnSword);
                     break;
 
                 case UnitTypes.Rook:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.Rook);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSRAndSetColor(UnitTypes.Rook);
                     break;
 
                 case UnitTypes.RookCrossbow:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.RookCrossbow);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSRAndSetColor(UnitTypes.RookCrossbow);
                     break;
 
                 case UnitTypes.Bishop:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.Bishop);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSRAndSetColor(UnitTypes.Bishop);
                     break;
 
                 case UnitTypes.BishopCrossbow:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(true, UnitTypes.BishopCrossbow);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSRAndSetColor(UnitTypes.BishopCrossbow);
                     break;
             }
         }
@@ -520,13 +503,7 @@ namespace Assets.Scripts
         {
             Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).SetUnitType(newUnitType);
 
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.King);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Pawn);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.PawnSword);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Rook);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.RookCrossbow);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.Bishop);
-            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSR(false, UnitTypes.BishopCrossbow);
+            Instance.EGGM.CellUnitEnt_CellUnitCom(xy).DisableVisionAllSR();
 
             switch (Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType)
             {
@@ -537,29 +514,29 @@ namespace Assets.Scripts
                     throw new System.Exception();
 
                 case UnitTypes.Pawn:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Pawn, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.Pawn, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.PawnSword:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.PawnSword, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.PawnSword, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     Instance.EGGM.CellUnitEnt_CellUnitCom(xy).AddAmountHealth(Instance.StartValuesGameConfig.AMOUNT_HEALTH_PAWN_SWORD - Instance.StartValuesGameConfig.AMOUNT_HEALTH_PAWN);
                     break;
 
                 case UnitTypes.Rook:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Rook, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.Rook, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.RookCrossbow:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.RookCrossbow, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.RookCrossbow, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     Instance.EGGM.CellUnitEnt_CellUnitCom(xy).AddAmountHealth(Instance.StartValuesGameConfig.AMOUNT_HEALTH_ROOK_CROSSBOW - Instance.StartValuesGameConfig.AMOUNT_HEALTH_ROOK);
                     break;
 
                 case UnitTypes.Bishop:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.Bishop, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.Bishop, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     break;
 
                 case UnitTypes.BishopCrossbow:
-                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSR(true, UnitTypes.BishopCrossbow, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+                    Instance.EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.BishopCrossbow, Instance.EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
                     Instance.EGGM.CellUnitEnt_CellUnitCom(xy).AddAmountHealth(Instance.StartValuesGameConfig.AMOUNT_HEALTH_BISHOP_CROSSBOW - Instance.StartValuesGameConfig.AMOUNT_HEALTH_BISHOP);
                     break;
 
@@ -902,6 +879,5 @@ namespace Assets.Scripts
 
             return xyDirectCell;
         }
-
     }
 }

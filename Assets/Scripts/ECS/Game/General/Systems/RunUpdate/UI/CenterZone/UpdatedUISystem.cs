@@ -10,7 +10,7 @@ internal sealed class UpdatedUISystem : SystemGeneralReduction
 
         base.Run();
 
-        if (_eGM.MotionEnt_IsActivatedCom.IsActivated)
+        if (_eGM.MotionEnt_ActivatedCom.IsActivated)
         {
             _eGM.MotionEnt_TextMeshProUGUICom.SetText("Motion: " + _eGM.MotionEnt_AmountCom.Amount);
             _eGM.MotionEnt_ParentCom.SetActive(true);
@@ -20,7 +20,7 @@ internal sealed class UpdatedUISystem : SystemGeneralReduction
             if (_timer >= 1)
             {
                 _eGM.MotionEnt_ParentCom.SetActive(false);
-                _eGM.MotionEnt_IsActivatedCom.IsActivated = false;
+                _eGM.MotionEnt_ActivatedCom.SetActivated(false);
                 _timer = 0;
             }
         }

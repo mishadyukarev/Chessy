@@ -11,33 +11,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-
-        //var amountAdultForest = 0;
-        //for (int x = 0; x < _eGM.Xamount; x++)
-        //    for (int y = 0; y < _eGM.Yamount; y++)
-        //    {
-        //        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest)
-        //            && _eGM.CellEnt_CellBaseCom(x, y).IsActiveSelfGO)
-        //        {
-        //            ++amountAdultForest;
-        //        }
-        //    }
-
-        ////if (amountAdultForest <= 6 || _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Info.Sender.IsMasterClient) < 0)
-        ////{
-        ////    _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
-        ////    _photonPunRPC.TruceToGeneral(Info.Sender, false, _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething, _eGM.MotionEnt_AmountCom.Amount);
-        ////    _eGM.TruceEnt_ActivatedDictCom.SetIsActivated(Info.Sender.IsMasterClient, _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething);
-        ////}
-        ////else
-        ////{
-        ////    _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
-        ////}
-
-        //if (amountAdultForest <= 5 /*_eGM.TruceEnt_ActivatedDictCom.IsActivatedAll*/)
-        //{
         _eGM.MotionEnt_AmountCom.AddAmount(Random.Range(4500, 5500));
-        _photonPunRPC.TruceToGeneral(RpcTarget.All, true, false, _eGM.MotionEnt_AmountCom.Amount);
 
         int random;
 
@@ -161,8 +135,8 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
             }
 
 
-        _eGM.TruceEnt_ActivatedDictCom.SetIsActivated(true, false);
-        _eGM.TruceEnt_ActivatedDictCom.SetIsActivated(false, false);
+        _eGM.TruceEnt_ActivatedDictCom.SetActivated(true, false);
+        _eGM.TruceEnt_ActivatedDictCom.SetActivated(false, false);
 
         _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, true, 15);
         _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, false, 15);

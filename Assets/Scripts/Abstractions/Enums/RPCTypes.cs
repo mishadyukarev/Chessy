@@ -4,7 +4,6 @@
 
     Ready,
     Done,
-    Truce,
     EndGame,
     Build,
     Destroy,
@@ -16,7 +15,7 @@
     MeltOre,
     GetUnit,
     SetUnit,
-    UniquePawnAbility,
+    SeedEnvironment,
     Fire,
     Sound,
 

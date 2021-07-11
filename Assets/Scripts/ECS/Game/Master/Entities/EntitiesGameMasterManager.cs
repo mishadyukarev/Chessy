@@ -13,6 +13,10 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
     internal ref RPCMasterComponent RPCMasterEnt_RPCMasterCom => ref _masterRPCEntity.Get<RPCMasterComponent>();
 
 
+    private EcsEntity _readyEnt;
+    internal ref ActivatedComponent ReadyEnt_IsActivatedCom => ref _readyEnt.Get<ActivatedComponent>();
+
+
     private EcsEntity _fireEnt;
     internal ref FromToXyComponent FireEnt_FromToXyCom => ref _fireEnt.Get<FromToXyComponent>();
 
@@ -25,15 +29,24 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
 
     private EcsEntity _protectRelaxEnt;
     internal ref ProtectRelaxComponent ProtectRelaxEnt_ProtectRelaxCom => ref _protectRelaxEnt.Get<ProtectRelaxComponent>();
+    internal ref XyCellComponent ProtectRelaxEnt_XyCellCom => ref _protectRelaxEnt.Get<XyCellComponent>();
+
+
+    private EcsEntity _seedingEnt;
+    internal ref EnvironmentTypesComponent SeedingEnt_EnvironmentTypesCom => ref _seedingEnt.Get<EnvironmentTypesComponent>();
+    internal ref XyCellComponent SeedingEnt_XyCellCom => ref _seedingEnt.Get<XyCellComponent>();
 
 
     public EntitiesGameMasterManager(EcsWorld gameWorld)
     {
         _fromInfoEnt = gameWorld.NewEntity();
         _masterRPCEntity = gameWorld.NewEntity();
+
+        _readyEnt = gameWorld.NewEntity();
         _fireEnt = gameWorld.NewEntity();
         _upgradeEnt = gameWorld.NewEntity();
         _protectRelaxEnt = gameWorld.NewEntity();
+        _seedingEnt = gameWorld.NewEntity();
     }
 
     internal override void FillEntities()
@@ -42,6 +55,9 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
 
         FromInfoEnt_FromInfoCom.StartFill();
         _masterRPCEntity.Replace(new RPCMasterComponent());
+
+
+        ReadyEnt_IsActivatedCom.StartFill();
         FireEnt_FromToXyCom.StartFill();
 
         UpgradeEnt_UpgradeTypeCom.StartFill();
@@ -49,5 +65,9 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
         UpgradeEnt_BuildingTypeCom.StartFill();
 
         ProtectRelaxEnt_ProtectRelaxCom.StartFill();
+        ProtectRelaxEnt_XyCellCom.StartFill();
+
+        SeedingEnt_EnvironmentTypesCom.StartFill();
+        SeedingEnt_XyCellCom.StartFill();
     }
 }

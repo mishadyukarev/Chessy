@@ -27,8 +27,6 @@ namespace Assets.Scripts
 
             _eGM.DonerEnt_ButtonCom.AddListener(delegate { Done(); });
 
-            _eGM.TruceEnt_ButtonCom.AddListener(Truce);
-
             _eGM.EnvironmentInfoEnt_ButtonCom.AddListener(EnvironmentInfo);
 
             _eGM.LeaveEnt_ButtonCom.AddListener(_sceneManager.LeaveRoom);
@@ -44,10 +42,9 @@ namespace Assets.Scripts
             if (!_eGM.DonerEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient)) _photonPunRPC.GetUnitToMaster(unitType);
         }
         private void Done() => _photonPunRPC.DoneToMaster(!_eGM.DonerEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient));
-        private void Truce() => _photonPunRPC.TruceToMaster(!_eGM.TruceEnt_ActivatedDictCom.IsActivated(Instance.IsMasterClient));
         private void EnvironmentInfo()
         {
-            _eGM.EnvironmentInfoEnt_IsActivatedCom.IsActivated = !_eGM.EnvironmentInfoEnt_IsActivatedCom.IsActivated;
+            _eGM.EnvironmentInfoEnt_IsActivatedCom.ToggleActivated();
         }
         private void StandartAbilityButton1() => _photonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Protected, XySelectedCell);
         private void StandartAbilityButton2() => _photonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Relaxed, XySelectedCell);

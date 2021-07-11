@@ -28,7 +28,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
 
     private EcsEntity _motionEnt;
     internal ref AmountComponent MotionEnt_AmountCom => ref _motionEnt.Get<AmountComponent>();
-    internal ref IsActivatedComponent MotionEnt_IsActivatedCom => ref _motionEnt.Get<IsActivatedComponent>();
+    internal ref ActivatedComponent MotionEnt_ActivatedCom => ref _motionEnt.Get<ActivatedComponent>();
     internal ref ParentComponent MotionEnt_ParentCom => ref _motionEnt.Get<ParentComponent>();
     internal ref TextMeshProUGUIComponent MotionEnt_TextMeshProUGUICom => ref _motionEnt.Get<TextMeshProUGUIComponent>();
 
@@ -262,7 +262,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
 
     private EcsEntity _environmentInfoEnt;
     internal ref ButtonComponent EnvironmentInfoEnt_ButtonCom => ref _environmentInfoEnt.Get<ButtonComponent>();
-    internal ref IsActivatedComponent EnvironmentInfoEnt_IsActivatedCom => ref _environmentZoneEnt.Get<IsActivatedComponent>();
+    internal ref ActivatedComponent EnvironmentInfoEnt_IsActivatedCom => ref _environmentZoneEnt.Get<ActivatedComponent>();
 
 
     private EcsEntity _envFertilizerEnt;
@@ -297,7 +297,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
             .Replace(new TextMeshProUGUIComponent());
 
         _motionEnt = gameWorld.NewEntity()
-            .Replace(new IsActivatedComponent())
+            .Replace(new ActivatedComponent())
             .Replace(new AmountComponent())
             .Replace(new ParentComponent())
             .Replace(new TextMeshProUGUIComponent());

@@ -5,35 +5,36 @@ using System;
 
 internal sealed class ProtectRelaxMasterSystem : RPCMasterSystemReduction
 {
-    private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
-    private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
-    private ProtectRelaxTypes ProtectRelaxType => _eMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType;
+    private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
+
+    private int[] XyCellForProtectRelax => _eMM.ProtectRelaxEnt_XyCellCom.XyCell;
+    private ProtectRelaxTypes NeededProtectRelaxType => _eMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType;
 
     public override void Run()
     {
         base.Run();
 
-        var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCell).UnitType;
+        var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCellForProtectRelax).UnitType;
 
-        switch (ProtectRelaxType)
+        switch (NeededProtectRelaxType)
         {
             case ProtectRelaxTypes.None:
                 break;
 
             case ProtectRelaxTypes.Protected:
-                if (_eGM.CellUnitEnt_ProtectRelaxCom(XyCell).IsProtected)
+                if (_eGM.CellUnitEnt_ProtectRelaxCom(XyCellForProtectRelax).IsProtected)
                 {
-                    _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
-                    _eGM.CellUnitEnt_ProtectRelaxCom(XyCell).ResetProtectedRelaxedType();
+                    _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
+                    _eGM.CellUnitEnt_ProtectRelaxCom(XyCellForProtectRelax).ResetProtectedRelaxedType();
                     return;
                 }
                 break;
 
             case ProtectRelaxTypes.Relaxed:
-                if (_eGM.CellUnitEnt_ProtectRelaxCom(XyCell).IsRelaxed)
+                if (_eGM.CellUnitEnt_ProtectRelaxCom(XyCellForProtectRelax).IsRelaxed)
                 {
-                    _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
-                    _eGM.CellUnitEnt_ProtectRelaxCom(XyCell).ResetProtectedRelaxedType();
+                    _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
+                    _eGM.CellUnitEnt_ProtectRelaxCom(XyCellForProtectRelax).ResetProtectedRelaxedType();
                     return;
                 }
                 break;
@@ -42,23 +43,23 @@ internal sealed class ProtectRelaxMasterSystem : RPCMasterSystemReduction
                 break;
         }
 
-        if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
+        if (_eGM.CellUnitEnt_CellUnitCom(XyCellForProtectRelax).HaveMaxSteps(unitType))
         {
-            switch (ProtectRelaxType)
+            switch (NeededProtectRelaxType)
             {
                 case ProtectRelaxTypes.None:
                     throw new Exception();
 
                 case ProtectRelaxTypes.Protected:
-                    _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
-                    _eGM.CellUnitEnt_ProtectRelaxCom(XyCell).SetProtectedRelaxedType(ProtectRelaxType);
-                    _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
+                    _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
+                    _eGM.CellUnitEnt_ProtectRelaxCom(XyCellForProtectRelax).SetProtectedRelaxedType(NeededProtectRelaxType);
+                    _eGM.CellUnitEnt_CellUnitCom(XyCellForProtectRelax).ResetAmountSteps();
                     break;
 
                 case ProtectRelaxTypes.Relaxed:
-                    _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.ClickToTable);
-                    _eGM.CellUnitEnt_ProtectRelaxCom(XyCell).SetProtectedRelaxedType(ProtectRelaxType);
-                    _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
+                    _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
+                    _eGM.CellUnitEnt_ProtectRelaxCom(XyCellForProtectRelax).SetProtectedRelaxedType(NeededProtectRelaxType);
+                    _eGM.CellUnitEnt_CellUnitCom(XyCellForProtectRelax).ResetAmountSteps();
                     break;
 
                 default:
@@ -68,7 +69,7 @@ internal sealed class ProtectRelaxMasterSystem : RPCMasterSystemReduction
 
         else
         {
-            _photonPunRPC.SoundToGeneral(Info.Sender, SoundEffectTypes.Mistake);
+            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
         }
     }
 }

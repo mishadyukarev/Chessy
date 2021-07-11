@@ -15,10 +15,10 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
         {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(true, true);
-                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(false, true);
+                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetActivated(true, true);
+                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetActivated(false, true);
 
-
+                
 
                 if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
                 {
@@ -28,7 +28,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         {
                             if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest))
                             {
-                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(false, false);
+                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetActivated(false, false);
 
                                 List<int[]> list = CellUnitWorker.TryGetXYAround(x, y);
                                 foreach (var xy in list)
@@ -39,7 +39,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                         {
                                             if (!_eGM.CellUnitEnt_CellOwnerCom(xy).IsHim(Instance.MasterClient))
                                             {
-                                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(false, true);
+                                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetActivated(false, true);
                                                 break;
                                             }
                                         }
@@ -51,7 +51,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         {
                             if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest))
                             {
-                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(true, false);
+                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetActivated(true, false);
 
                                 List<int[]> list = CellUnitWorker.TryGetXYAround(x, y);
                                 foreach (var xy in list)
@@ -62,7 +62,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                         {
                                             if (_eGM.CellUnitEnt_CellOwnerCom(xy).IsHim(Instance.MasterClient))
                                             {
-                                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(true, true);
+                                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetActivated(true, true);
                                                 break;
                                             }
                                         }
@@ -70,15 +70,24 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                 }
                             }
                         }
+                        var isActivatedVisionCellUnit = _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).IsActivated(Instance.IsMasterClient);
 
-                        _eGM.CellUnitEnt_CellUnitCom(x, y).EnablePlayerSR(_eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).IsActivated(Instance.IsMasterClient), _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner);
+                        if (isActivatedVisionCellUnit)
+                        {
+                            var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
+                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnablePlayerSRAndSetColor(unitType, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner);
+                        }
+                        else
+                        {
+                            _eGM.CellUnitEnt_CellUnitCom(x, y).DisableVisionAllSR();
+                        }             
                     }
 
                     else if (_eGM.CellUnitEnt_CellOwnerBotCom(x, y).HaveBot)
                     {
                         if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest))
                         {
-                            _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(true, false);// IsActivatedUnitDict[true] = false;
+                            _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetActivated(true, false);// IsActivatedUnitDict[true] = false;
 
                             List<int[]> list = CellUnitWorker.TryGetXYAround(x, y);
                             foreach (var xy in list)
@@ -89,7 +98,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                     {
                                         if (_eGM.CellUnitEnt_CellOwnerCom(xy).IsHim(Instance.MasterClient))
                                         {
-                                            _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetIsActivated(true, true);//.IsActivatedUnitDict[true] = true;
+                                            _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetActivated(true, true);//.IsActivatedUnitDict[true] = true;
                                             break;
                                         }
                                     }
@@ -97,7 +106,17 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                             }
                         }
 
-                        _eGM.CellUnitEnt_CellUnitCom(x, y).EnableBotSR(_eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).IsActivated(Instance.IsMasterClient), _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
+                        var isActivatedVisionCellUnit = _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).IsActivated(Instance.IsMasterClient);
+
+                        if (isActivatedVisionCellUnit)
+                        {
+                            var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
+                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnablePlayerSRAndSetColor(unitType, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner);
+                        }
+                        else
+                        {
+                            _eGM.CellUnitEnt_CellUnitCom(x, y).DisableVisionAllSR();
+                        }
                     }
                 }
             }

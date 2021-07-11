@@ -134,6 +134,10 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
     internal ref RpcComponent RpcGeneralEnt_RPCCom => ref _rPCGeneralEntity.Get<RpcComponent>();
 
 
+    private EcsEntity _fromInfoEnt;
+    internal ref FromInfoComponent FromInfoEnt_FromInfoCom => ref _fromInfoEnt.Get<FromInfoComponent>();
+
+
     private EcsEntity _selectorEnt;
     internal ref SelectorComponent SelectorEnt_SelectorCom => ref _selectorEnt.Get<SelectorComponent>();
     internal ref RaycastHit2DComponent SelectorEnt_RayCom => ref _selectorEnt.Get<RaycastHit2DComponent>();
@@ -230,6 +234,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
         _soundEnt = gameWorld.NewEntity();
         _animationEnt = gameWorld.NewEntity();
         _zoneEnt = gameWorld.NewEntity();
+        _fromInfoEnt = gameWorld.NewEntity();
 
         _kingInfoInGameEnt = gameWorld.NewEntity();
         _pawnInfoInGameEnt = gameWorld.NewEntity();
@@ -367,6 +372,8 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
         AnimationAttack_UnitComponent.StartFill();
 
         ZoneEnt_ZoneCom.StartFill();
+
+        FromInfoEnt_FromInfoCom.StartFill();
 
 
         if (Instance.IsMasterClient)

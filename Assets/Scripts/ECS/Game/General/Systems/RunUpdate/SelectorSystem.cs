@@ -5,6 +5,7 @@ using static Assets.Scripts.Main;
 using static Assets.Scripts.Abstractions.ValuesConst;
 using static Assets.Scripts.Abstractions.NameConst;
 using static Assets.Scripts.Static.CellBaseOperations;
+using Assets.Scripts.Static;
 
 internal sealed class SelectorSystem : RPCGeneralSystemReduction
 {
@@ -101,10 +102,10 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                         else if (_eGM.CellEnt_CellBaseCom(xyCurrentCell).IsStartedCell(false))
                                             _photonPunRPC.SetUniToMaster(xyCurrentCell, _eGM.SelectorEnt_UnitTypeCom.UnitType);
 
-                                        else _photonPunRPC.SoundToGeneral(Instance.LocalPlayer, SoundEffectTypes.Mistake);
+                                        else SoundManager.PlaySoundEffect(SoundEffectTypes.Mistake);
                                     }
 
-                                    else _photonPunRPC.SoundToGeneral(Instance.LocalPlayer, SoundEffectTypes.Mistake);
+                                    else SoundManager.PlaySoundEffect(SoundEffectTypes.Mistake);
                                 }
 
                                 else if (_canExecuteStartClick)
@@ -254,17 +255,16 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                     if (_isStartSelectedDirect)
                                     {
                                         if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit)
-                                            _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSR(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
+                                            _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSRAndSetColor(_eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
 
                                         CopyXyInTo(xyCurrentCell, _xyPreviousVisionCell);
                                         _isStartSelectedDirect = false;
                                     }
                                     else
                                     {
-                                        //if (!_eGM.CellUnitEnt_UnitTypeCom(_xyPreviousVisionCell).HaveUnit)
-                                            _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).EnablePlayerSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
+                                        _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).DisableVisionAllSR();
 
-                                        _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSR(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
+                                        _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSRAndSetColor(_eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
                                         CopyXyInTo(xyCurrentCell, _xyPreviousVisionCell);
                                     }
 
@@ -285,7 +285,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                         ClearAvailableCells();
 
-                        _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).EnablePlayerSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
+                        _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).DisableVisionAllSR();
                         _eGM.SelectorEnt_UnitTypeCom.ResetUnit();
 
                         CleanXY(XyPreviousCell);

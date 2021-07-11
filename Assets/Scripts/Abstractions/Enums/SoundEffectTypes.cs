@@ -2,6 +2,8 @@
 {
     public enum SoundEffectTypes
     {
+        None,
+
         AttackArcher,
         AttackMelee,
         Building,
