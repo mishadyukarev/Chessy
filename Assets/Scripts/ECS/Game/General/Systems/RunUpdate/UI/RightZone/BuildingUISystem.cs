@@ -98,15 +98,29 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                 {
                     if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).HaveOwner)
                     {
-                        if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
+                        if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).IsMine)
                         {
-                            _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
+                            if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
+                            {
+                                _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
+                            }
+                            else
+                            {
+                                _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
+                                _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Destroy");
+                            }
                         }
+
                         else
                         {
+                            _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(true);
+
                             _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
                             _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Destroy");
                         }
+
+
+
                         //if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).IsMine)
                         //{
                         //    if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)

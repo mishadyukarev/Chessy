@@ -424,7 +424,7 @@ namespace Assets.Scripts
                             int actorNumber = (int)objects[i++];
                             player = PhotonNetwork.PlayerList[actorNumber - 1];
 
-                            CellUnitWorker.SetPlayerUnit(unitType, amountHealth, amountSteps, protectRelaxType, player, x, y);
+                            CellUnitWorker.SetPlayerUnit(false, unitType, amountHealth, amountSteps, protectRelaxType, player, x, y);
                         }
                         else
                         {
@@ -439,7 +439,7 @@ namespace Assets.Scripts
                     {
                         if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                         {
-                            CellUnitWorker.ResetPlayerUnit(x, y);
+                            CellUnitWorker.ResetPlayerUnit(false, x, y);
                         }
                         else
                         {

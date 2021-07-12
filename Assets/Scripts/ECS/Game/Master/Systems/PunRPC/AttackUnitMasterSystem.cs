@@ -83,7 +83,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
                 if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).HaveOwner)
                 {
-                    CellUnitWorker.ResetPlayerUnit(XyPreviousCell);
+                    CellUnitWorker.ResetPlayerUnit(true, XyPreviousCell);
 
                 }
                 else
@@ -100,7 +100,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
                 if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
                 {
-                    CellUnitWorker.ResetPlayerUnit(XySelectedCell);
+                    CellUnitWorker.ResetPlayerUnit(true, XySelectedCell);
                 }
                 else
                 {
@@ -119,7 +119,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
                     if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).HaveOwner)
                     {
-                        CellUnitWorker.ResetPlayerUnit(XyPreviousCell);
+                        CellUnitWorker.ResetPlayerUnit(false, XyPreviousCell);
                     }
                     else
                     {

@@ -187,7 +187,6 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                                             else
                                             {
-                                                ClearAvailableCells();
                                                 _canShiftUnit = false;
 
                                                 if (TryFindCellInList(XySelectedCell, _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack))
@@ -199,6 +198,8 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                                 {
                                                     _photonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
                                                 }
+
+                                                ClearAvailableCells();
                                             }
                                         }
 

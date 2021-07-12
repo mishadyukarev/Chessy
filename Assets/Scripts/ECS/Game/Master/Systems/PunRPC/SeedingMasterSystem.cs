@@ -25,19 +25,31 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     throw new Exception();
 
                 case EnvironmentTypes.YoungForest:
-                    if (!_eGM.CellEnvEnt_CellEnvCom(XyCellForSeeding).HaveEnvironment(EnvironmentTypes.Fertilizer))
+                    if (_eGM.CellUnitEnt_CellUnitCom(XyCellForSeeding).HaveMinAmountSteps)
                     {
-                        if (!_eGM.CellEnvEnt_CellEnvCom(XyCellForSeeding).HaveEnvironment(EnvironmentTypes.AdultForest))
-
-                            if (!_eGM.CellEnvEnt_CellEnvCom(XyCellForSeeding).HaveEnvironment(EnvironmentTypes.YoungForest))
+                        if (!_eGM.CellBuildEnt_BuilTypeCom(XyCellForSeeding).HaveBuilding)
+                        {
+                            if (!_eGM.CellEnvEnt_CellEnvCom(XyCellForSeeding).HaveEnvironment(EnvironmentTypes.Fertilizer))
                             {
-                                _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Seeding);
-                                _eGM.CellEnvEnt_CellEnvCom(XyCellForSeeding).SetNewEnvironment(EnvironmentTypes.YoungForest);
+                                if (!_eGM.CellEnvEnt_CellEnvCom(XyCellForSeeding).HaveEnvironment(EnvironmentTypes.AdultForest))
+
+                                    if (!_eGM.CellEnvEnt_CellEnvCom(XyCellForSeeding).HaveEnvironment(EnvironmentTypes.YoungForest))
+                                    {
+                                        _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Seeding);
+                                        _eGM.CellEnvEnt_CellEnvCom(XyCellForSeeding).SetNewEnvironment(EnvironmentTypes.YoungForest);
+
+                                        _eGM.CellUnitEnt_CellUnitCom(XyCellForSeeding).TakeAmountSteps();
+                                    }
                             }
-                    }
-                    else
-                    {
-                        _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            else
+                            {
+                                _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            }
+                        }
+                        else
+                        {
+                            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        }
                     }
                     break;
 

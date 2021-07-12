@@ -28,7 +28,7 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
 
                 if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).HaveOwner)
                 {
-                    CellUnitWorker.ResetPlayerUnit(XyPreviousCell);
+                    CellUnitWorker.ResetPlayerUnit(false, XyPreviousCell);
                 }
                 else
                 {

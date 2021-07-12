@@ -65,7 +65,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 
                         if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                         {
-                            CellUnitWorker.ResetPlayerUnit(x, y);
+                            CellUnitWorker.ResetPlayerUnit(true, x, y);
                         }
                         else
                         {

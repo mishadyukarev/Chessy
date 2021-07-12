@@ -367,11 +367,11 @@ namespace Assets.Scripts
             var protectRelaxType = Instance.EGGM.CellUnitEnt_ProtectRelaxCom(xyFromUnitTo).ProtectRelaxType;
             var player = Instance.EGGM.CellUnitEnt_CellOwnerCom(xyFromUnitTo).Owner;
 
-            SetPlayerUnit(unitType, amountHealth, amountSteps, protectRelaxType, player, xyTo);
+            SetPlayerUnit(false, unitType, amountHealth, amountSteps, protectRelaxType, player, xyTo);
         }
-        internal static void SetPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, Player player, params int[] xy)
+        internal static void SetPlayerUnit(bool withEconomy, UnitTypes unitType, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, Player player, params int[] xy)
         {
-            UnitInfoManager.AddAmountUnitInGame(unitType, player.IsMasterClient);
+            if(withEconomy) UnitInfoManager.AddAmountUnitInGame(unitType, player.IsMasterClient);
 
             Instance.EGGM.CellUnitEnt_UnitTypeCom(xy).SetUnitType(unitType);
             Instance.EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountSteps(amountSteps);
@@ -418,12 +418,12 @@ namespace Assets.Scripts
             }
         }
 
-        internal static void ResetPlayerUnit(params int[] xy)
+        internal static void ResetPlayerUnit(bool withEconomy, params int[] xy)
         {
             var previousUnitType = EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType;
             var previousIsMasterOwner = EGGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient;
 
-            UnitInfoManager.TakeAmountUnitInGame(previousUnitType, previousIsMasterOwner);
+            if (withEconomy) UnitInfoManager.TakeAmountUnitInGame(previousUnitType, previousIsMasterOwner);
 
 
 
