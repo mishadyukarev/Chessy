@@ -5,6 +5,7 @@ using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Static;
 using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
+using Photon.Pun;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -376,6 +377,15 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
         FromInfoEnt_FromInfoCom.StartFill();
 
 
+        KingInfoInGameEnt_AmountDictCom.StartFill();
+        PawnInfoInGameEnt_AmountDictCom.StartFill();
+        PawnSwordInfoInGameEnt_AmountDictCom.StartFill();
+        RookInfoInGameEnt_AmountDictCom.StartFill();
+        RookCrossbowInfoInGameEnt_AmountDictCom.StartFill();
+        BishopInfoInGameEnt_AmountDictCom.StartFill();
+        BishopCrossbowInfoInGameEnt_AmountDictCom.StartFill();
+
+
         if (Instance.IsMasterClient)
         {
             #region Info
@@ -425,14 +435,6 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDispo
 
             #endregion
         }
-
-        KingInfoInGameEnt_AmountDictCom.StartFill();
-        PawnInfoInGameEnt_AmountDictCom.StartFill();
-        PawnSwordInfoInGameEnt_AmountDictCom.StartFill();
-        RookInfoInGameEnt_AmountDictCom.StartFill();
-        RookCrossbowInfoInGameEnt_AmountDictCom.StartFill();
-        BishopInfoInGameEnt_AmountDictCom.StartFill();
-        BishopCrossbowInfoInGameEnt_AmountDictCom.StartFill();
 
         SpawnAndFillCanvasEntities();
     }

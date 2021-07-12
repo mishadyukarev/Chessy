@@ -3,6 +3,8 @@
     public enum GameModTypes
     {
         None,
+
+        Multiplayer,
         WithBot,
     }
 }
