@@ -5,7 +5,7 @@ namespace Assets.Scripts.Static
 {
     internal static class UnitInfoManager
     {
-        private static EntitiesGameGeneralManager EGGM => Instance.EGGM;
+        private static EntitiesGameGeneralManager EGGM => Instance.EntGGM;
 
         internal static int AmountUnitsInGame(UnitTypes unitType, bool key)
         {

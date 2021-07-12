@@ -10,7 +10,7 @@ namespace Assets.Scripts.Static
 {
     internal static class SoundManager
     {
-        internal static EntitiesGameGeneralManager EGGM => Instance.EGGM;
+        internal static EntitiesGameGeneralManager EGGM => Instance.EntGGM;
         internal static void PlaySoundEffect(SoundEffectTypes soundEffectType)
         {
             switch (soundEffectType)

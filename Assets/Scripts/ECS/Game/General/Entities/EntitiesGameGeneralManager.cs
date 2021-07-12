@@ -13,7 +13,7 @@ using static Assets.Scripts.Abstractions.EnvironmentValues;
 using static Assets.Scripts.Abstractions.ValuesConst;
 using static Assets.Scripts.Main;
 
-public sealed partial class EntitiesGameGeneralManager : EntitiesManager, IDisposable
+public sealed partial class EntitiesGameGeneralManager : IDisposable
 {
     internal GameObject BackGroundGO;
     internal SpriteRenderer BackGroundSR;

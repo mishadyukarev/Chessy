@@ -14,7 +14,7 @@ internal sealed class CreatorUnitMasterSystem : RPCMasterSystemReduction
         if (EconomyManager.CanCreateUnit(UnitType, InfoFrom.Sender, out bool[] haves))
         {
             EconomyManager.CreateUnit(UnitType, InfoFrom.Sender);
-            Main.Instance.EGGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
+            Main.Instance.EntGGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
 
             _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.SoundGoldPack);
         }

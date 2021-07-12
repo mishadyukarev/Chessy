@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Menu.Entities;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -17,8 +18,6 @@ namespace Assets.Scripts
         private ECSManager _eCSmanager;
 
         [NonSerialized]public GameModTypes GameModeType;
-
-        public const string VERSION_PHOTON_GAME = "0.1g";
 
         #endregion
 
@@ -40,7 +39,8 @@ namespace Assets.Scripts
         public ref CanvasCommComponent CanvasManager => ref _eCSmanager.EntitiesCommonManager.CanvasEnt_CanvasCommCom;
         public StartGameValuesConfig StartValuesGameConfig => _eCSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
 
-        public EntitiesGameGeneralManager EGGM => _eCSmanager.EntitiesGameGeneralManager;
+        public EntitiesGameGeneralManager EntGGM => _eCSmanager.EntitiesGameGeneralManager;
+        public EntitiesMenuManager EntMenuM => _eCSmanager.EntitiesMenuManager;
 
         #endregion
 
@@ -59,6 +59,8 @@ namespace Assets.Scripts
         {
             _eCSmanager.OwnUpdate(_sceneType);
             _photonManager.OwnUpdate(_sceneType);
+
+            Debug.Log(PhotonNetwork.CountOfPlayers);
         }
 
         private void OnApplicationQuit() { }

@@ -6,7 +6,7 @@ internal struct ButtonComponent
 {
     private Button _button;
 
-    internal void SetButton(Button button) => _button = button;
+    internal void StartFill(Button button) => _button = button;
 
     internal void AddListener(UnityAction unityAction) => _button.onClick.AddListener(unityAction);
     internal void RemoveAllListeners() => _button.onClick.RemoveAllListeners();

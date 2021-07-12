@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions;
 using Photon.Pun;
+using System;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
@@ -33,15 +34,19 @@ namespace Assets.Scripts
         {
             switch (sceneType)
             {
+                case SceneTypes.None:
+                    throw new Exception();
+
                 case SceneTypes.Menu:
+                    _sceneManager.OwnUpdate(sceneType);
                     break;
 
                 case SceneTypes.Game:
-                    _sceneManager.OwnUpdate();
+                    _sceneManager.OwnUpdate(sceneType);
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
         }
 

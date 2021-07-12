@@ -1,4 +1,5 @@
-﻿using Leopotam.Ecs;
+﻿using Assets.Scripts.ECS.Menu.Entities;
+using Leopotam.Ecs;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
@@ -10,6 +11,9 @@ namespace Assets.Scripts
         private EcsWorld _gameWorld;
 
         private EntitiesCommonManager _entitiesCommonManager;
+
+
+        private EntitiesMenuManager _entitiesMenuManager;
 
 
         private EntitiesGameGeneralManager _entitiesGameGeneralManager;
@@ -24,6 +28,9 @@ namespace Assets.Scripts
 
 
         public EntitiesCommonManager EntitiesCommonManager => _entitiesCommonManager;
+
+
+        public EntitiesMenuManager EntitiesMenuManager => _entitiesMenuManager;
 
 
         public EntitiesGameGeneralManager EntitiesGameGeneralManager => _entitiesGameGeneralManager;
@@ -44,6 +51,9 @@ namespace Assets.Scripts
 
 
             _entitiesCommonManager = new EntitiesCommonManager(_commonWorld);
+
+
+            _entitiesMenuManager = new EntitiesMenuManager(_menuWorld);
 
 
             _entitiesGameGeneralManager = new EntitiesGameGeneralManager(_gameWorld);
@@ -84,7 +94,9 @@ namespace Assets.Scripts
             switch (sceneType)
             {
                 case SceneTypes.Menu:
-                    _entitiesGameGeneralManager.Dispose();
+                    _entitiesMenuManager.FillEntities();
+
+                    _entitiesGameGeneralManager.Dispose();//
                     break;
 
                 case SceneTypes.Game:
