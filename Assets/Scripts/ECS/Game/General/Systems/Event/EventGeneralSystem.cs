@@ -25,7 +25,7 @@ namespace Assets.Scripts
             _eGM.TakerRookEntityButtonComponent.AddListener(delegate { GetUnit(_eGM.TakerRookEntityUnitTypeComponent.UnitType); });
             _eGM.TakerBishopEntityButtonComponent.AddListener(delegate { GetUnit(_eGM.TakerBishopEntityUnitTypeComponent.UnitType); });
 
-            _eGM.DonerEnt_ButtonCom.AddListener(delegate { Done(); });
+            _eGM.DonerUIEnt_ButtonCom.AddListener(delegate { Done(); });
 
             _eGM.EnvironmentInfoEnt_ButtonCom.AddListener(EnvironmentInfo);
 
@@ -39,9 +39,9 @@ namespace Assets.Scripts
         private void Ready() => _photonPunRPC.ReadyToMaster(!_eGM.ReadyEnt_ActivatedDictCom.IsActivated(Instance.IsMasterClient));
         private void GetUnit(UnitTypes unitType)
         {
-            if (!_eGM.DonerEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient)) _photonPunRPC.GetUnitToMaster(unitType);
+            if (!_eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient)) _photonPunRPC.GetUnitToMaster(unitType);
         }
-        private void Done() => _photonPunRPC.DoneToMaster(!_eGM.DonerEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient));
+        private void Done() => _photonPunRPC.DoneToMaster(!_eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient));
         private void EnvironmentInfo()
         {
             _eGM.EnvironmentInfoEnt_IsActivatedCom.ToggleActivated();

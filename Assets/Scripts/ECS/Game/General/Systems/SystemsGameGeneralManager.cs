@@ -6,11 +6,17 @@ using Leopotam.Ecs;
 
 public sealed class SystemsGameGeneralManager : SystemsManager
 {
-    internal EcsSystems ForSelectorRunUpdateSystem;
-    internal EcsSystems EventSystems;
+    private EcsSystems _forSelectorSystem;
+    private EcsSystems _eventSystems;
 
-    internal void CreateSystems(EcsWorld ecsWorld)
+    internal EcsSystems ForSelectorRunUpdateSystem => _forSelectorSystem;
+    internal EcsSystems EventSystems => _eventSystems;
+
+    internal override void CreateSystems(EcsWorld ecsWorld)
     {
+        base.CreateSystems(ecsWorld);
+
+
         RunUpdateSystems = new EcsSystems(ecsWorld)
             .Add(new InputSystem(), nameof(InputSystem))
             .Add(new SelectorSystem(), nameof(SelectorSystem))
@@ -36,27 +42,38 @@ public sealed class SystemsGameGeneralManager : SystemsManager
             .Add(new RightZoneUISystem(), nameof(RightZoneUISystem))
             .Add(new FinderIdleUnitUISystem(), nameof(FinderIdleUnitUISystem));
 
-        ForSelectorRunUpdateSystem = new EcsSystems(ecsWorld)
+        _forSelectorSystem = new EcsSystems(ecsWorld)
             .Add(new GetterCellSystem(), nameof(GetterCellSystem))
             .Add(new RaySystem(), nameof(RaySystem));
 
-        EventSystems = new EcsSystems(ecsWorld)
+        _eventSystems = new EcsSystems(ecsWorld)
             .Add(new EventGeneralSystem(), nameof(EventGeneralSystem));
+    }
+
+    internal override void DestroySystems()
+    {
+        base.DestroySystems();
+
+        if (!_isStartedFilling)
+        {
+            _forSelectorSystem.Destroy();
+            _eventSystems.Destroy();
+        }
     }
 
     internal override void ProcessInjects()
     {
         base.ProcessInjects();
 
-        ForSelectorRunUpdateSystem.ProcessInjects();
-        EventSystems.ProcessInjects();
+        _forSelectorSystem.ProcessInjects();
+        _eventSystems.ProcessInjects();
     }
 
     internal override void Init()
     {
         base.Init();
 
-        ForSelectorRunUpdateSystem.Init();
-        EventSystems.Init();
+        _forSelectorSystem.Init();
+        _eventSystems.Init();
     }
 }

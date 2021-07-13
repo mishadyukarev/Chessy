@@ -8,7 +8,7 @@ internal sealed class TruceUISystem : RPCGeneralSystemReduction
     {
         base.Run();
 
-        if (_eGM.TruceEnt_ActivatedDictCom.IsActivated(Instance.IsMasterClient)) _eGM.TruceEnt_ButtonCom.SetColor(Color.red);
-        else _eGM.TruceEnt_ButtonCom.SetColor(Color.white);
+        //if (_eGM.TruceEnt_ActivatedDictCom.IsActivated(Instance.IsMasterClient)) _eGM.TruceEnt_ButtonCom.SetColor(Color.red);
+        //else _eGM.TruceEnt_ButtonCom.SetColor(Color.white);
     }
 }

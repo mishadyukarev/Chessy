@@ -4,14 +4,18 @@ using Leopotam.Ecs;
 
 public sealed class SystemsGameMasterManager : SystemsManager
 {
-    internal EcsSystems RPCSystems;
+    private EcsSystems _rpcSystems;
 
-    internal void CreateSystems(EcsWorld ecsWorld)
+    internal EcsSystems RpcSystems => _rpcSystems;
+
+    internal override void CreateSystems(EcsWorld gameWorld)
     {
-        RunUpdateSystems = new EcsSystems(ecsWorld)
+        base.CreateSystems(gameWorld);
+
+        RunUpdateSystems = new EcsSystems(gameWorld)
             .Add(new EconomyMasterSystem(), nameof(EconomyMasterSystem));
 
-        RPCSystems = new EcsSystems(ecsWorld)
+        _rpcSystems = new EcsSystems(gameWorld)
             .Add(new UpdateMotionMasterSystem(), nameof(UpdateMotionMasterSystem))
             .Add(new VisibilityUnitsMasterSystem(), nameof(VisibilityUnitsMasterSystem))
             .Add(new BuilderMasterSystem(), nameof(BuilderMasterSystem))
@@ -34,17 +38,27 @@ public sealed class SystemsGameMasterManager : SystemsManager
             .Add(new SeedingMasterSystem(), nameof(SeedingMasterSystem));
     }
 
+    internal override void DestroySystems()
+    {
+        base.DestroySystems();
+
+        if(!_isStartedFilling)
+        {
+            RpcSystems.Destroy();
+        }
+    }
+
     internal override void ProcessInjects()
     {
         base.ProcessInjects();
 
-        RPCSystems.ProcessInjects();
+        RpcSystems.ProcessInjects();
     }
 
     internal override void Init()
     {
         base.Init();
 
-        RPCSystems.Init();
+        RpcSystems.Init();
     }
 }

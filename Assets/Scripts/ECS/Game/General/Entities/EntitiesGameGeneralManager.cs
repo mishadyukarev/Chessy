@@ -13,13 +13,14 @@ using static Assets.Scripts.Abstractions.EnvironmentValues;
 using static Assets.Scripts.Abstractions.ValuesConst;
 using static Assets.Scripts.Main;
 
-public sealed partial class EntitiesGameGeneralManager : IDisposable
+public sealed partial class EntitiesGameGeneralManager
 {
     internal GameObject BackGroundGO;
     internal SpriteRenderer BackGroundSR;
     internal AudioSource MistakeAudioSource;
     internal AudioSource AttackAudioSource;
 
+    private ResourcesCommComponent ResourcesCommComponent => Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom;
 
     #region Cells
 
@@ -250,7 +251,7 @@ public sealed partial class EntitiesGameGeneralManager : IDisposable
     }
 
 
-    internal void FillEntities(ResourcesCommComponent resourcesCommComponent)
+    internal void FillEntities()
     {
         SpawnCells();
 
@@ -393,17 +394,17 @@ public sealed partial class EntitiesGameGeneralManager : IDisposable
             UnitInfoEnt_UnitInventorCom.SetSettedKing(true, false);
             UnitInfoEnt_UnitInventorCom.SetSettedKing(false, false);
 
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_KING_MASTER);
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_KING_OTHER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_KING_MASTER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_KING_OTHER);
 
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_PAWN_MASTER);
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_PAWN_OTHER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_PAWN_MASTER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_PAWN_OTHER);
 
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_ROOK_MASTER);
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_ROOK_OTHER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_ROOK_MASTER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_ROOK_OTHER);
 
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_BISHOP_MASTER);
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_BISHOP_OTHER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_BISHOP_MASTER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_BISHOP_OTHER);
 
             BuildingsEnt_BuildingsCom.IsSettedCityDict[true] = default;
             BuildingsEnt_BuildingsCom.IsSettedCityDict[false] = default;
@@ -421,17 +422,17 @@ public sealed partial class EntitiesGameGeneralManager : IDisposable
 
 
             #region Economy
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_FOOD_MASTER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_WOOD_MASTER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_ORE_MASTER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_IRON_MASTER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, true, resourcesCommComponent.StartValuesGameConfig.AMOUNT_GOLD_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_FOOD_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_WOOD_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_ORE_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_IRON_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_GOLD_MASTER);
 
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_FOOD_OTHER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_WOOD_OTHER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_ORE_OTHER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_IRON_OTHER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, false, resourcesCommComponent.StartValuesGameConfig.AMOUNT_GOLD_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_FOOD_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_WOOD_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_ORE_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_IRON_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_GOLD_OTHER);
 
             #endregion
         }
@@ -641,10 +642,5 @@ public sealed partial class EntitiesGameGeneralManager : IDisposable
             x == 1 && y == 9 || x == 2 && y == 9 || x == 12 && y == 9 || x == 13 && y == 9)
                 go.SetActive(false);
         }
-    }
-
-    public void Dispose()
-    {
-        EndGameEntEndGameCom.Dispose();
     }
 }

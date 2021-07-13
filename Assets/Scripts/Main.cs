@@ -1,8 +1,6 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Menu.Entities;
+﻿using Assets.Scripts.ECS.Menu.Entities;
 using Photon.Pun;
 using Photon.Realtime;
-using System;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -11,13 +9,12 @@ namespace Assets.Scripts
     {
         #region Variables
 
-        private bool _isOfflineMode = false;
-        private SceneTypes _sceneType = SceneTypes.Menu;
+        private SceneTypes _currentSceneType = SceneTypes.Menu;
         private static Main _instance;
         private PhotonMainManager _photonManager;
         private ECSManager _eCSmanager;
 
-        //[NonSerialized]public GameModTypes GameModeType;
+        public const string VERSION_PHOTON_GAME = "0.1h";
 
         #endregion
 
@@ -26,8 +23,7 @@ namespace Assets.Scripts
 
         public static Main Instance => _instance;
 
-        public bool IsOfflineMode => _isOfflineMode;
-        public SceneTypes SceneType => _sceneType;
+        public SceneTypes CurrentSceneType => _currentSceneType;
 
         public bool IsMasterClient => PhotonNetwork.IsMasterClient;
         public Player MasterClient => PhotonNetwork.MasterClient;
@@ -52,29 +48,23 @@ namespace Assets.Scripts
             _eCSmanager = new ECSManager();
             _photonManager = new PhotonMainManager(_eCSmanager);
 
-            ToggleScene(_sceneType);
+            ToggleScene(_currentSceneType);
         }
 
         private void Update()
         {
-            _eCSmanager.OwnUpdate(_sceneType);
-            _photonManager.OwnUpdate(_sceneType);
-
-            //Debug.Log(PhotonNetwork.CountOfPlayers);
-
-            //Debug.Log(Instance.IsMasterClient);
-
-            //Debug.Log(PhotonNetwork.CurrentRoom.Name);
+            _eCSmanager.OwnUpdate(_currentSceneType);
+            _photonManager.OwnUpdate(_currentSceneType);
         }
 
         private void OnApplicationQuit() { }
 
         public void ToggleScene(SceneTypes sceneType)
         {
-            _sceneType = sceneType;
+            _currentSceneType = sceneType;
 
-            _eCSmanager.ToggleScene(_sceneType);
-            _photonManager.ToggleScene(_sceneType);
+            _eCSmanager.ToggleScene(_currentSceneType);
+            _photonManager.ToggleScene(_currentSceneType);
         }
     }
 }

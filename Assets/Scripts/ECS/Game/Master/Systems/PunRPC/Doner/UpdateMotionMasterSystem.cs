@@ -29,7 +29,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
         base.Run();
 
 
-        _sMM.TryInvokeRunSystem(nameof(FireUpdatorMasterSystem), _sMM.RPCSystems);
+        _sMM.TryInvokeRunSystem(nameof(FireUpdatorMasterSystem), _sMM.RpcSystems);
         //_sMM.TryInvokeRunSystem(nameof(EconomyUpdatorMasterSystem), _sMM.RPCSystems);
         //_sMM.TryInvokeRunSystem(nameof(FertilizeUpdatorMasterSystem), _sMM.RPCSystems);
 
@@ -261,8 +261,8 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
             }
         }
 
-        _eGM.DonerEnt_IsActivatedDictCom.SetActivated(true, false);
-        _eGM.DonerEnt_IsActivatedDictCom.SetActivated(false, false);
+        _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(true, false);
+        _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(false, false);
 
         _eGM.MotionEnt_AmountCom.AddAmount();
 
@@ -315,7 +315,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
         if(amountAdultForest <= 3)
         {
             _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
-            _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RPCSystems);
+            _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RpcSystems);
         }
 
 
@@ -324,7 +324,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
         {
             _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
 
-            _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RPCSystems);
+            _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RpcSystems);
 
             _amountMotionsWithoutFoodForTruce[true] = 0;
             _amountMotionsWithoutFoodForTruce[false] = 0;

@@ -11,8 +11,6 @@ namespace Assets.Scripts
 {
     public sealed class PhotonSceneManager : MonoBehaviourPunCallbacks
     {
-        public const string VERSION_PHOTON_GAME = "0.1g";
-
         #region Menu
 
         private TextMeshProUGUI _logTex;

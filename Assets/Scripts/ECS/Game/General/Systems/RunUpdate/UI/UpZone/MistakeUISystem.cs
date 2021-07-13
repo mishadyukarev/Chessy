@@ -13,7 +13,7 @@ internal sealed class MistakeUISystem : SystemGeneralReduction
     {
         if (!_isInited)
         {
-            _eGM.DonerEnt_MistakeCom.AddListener(MistakeDone);
+            _eGM.DonerUIEnt_MistakeCom.AddListener(MistakeDone);
 
             _eGM.EconomyEnt_MistakeEconomyCom.FoodMistake = delegate { MistakeEnvironment(ResourceTypes.Food); };
             _eGM.EconomyEnt_MistakeEconomyCom.WoodMistake = delegate { MistakeEnvironment(ResourceTypes.Wood); };

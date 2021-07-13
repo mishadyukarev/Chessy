@@ -5,8 +5,9 @@
         None,
 
         Ready,
-        Done,
-        Truce,
+        SetDonerActiveUI,
+        SetAmountMotion,
+        ActiveAmountMotionUI,
         EndGame,
         Attack,
         Mistake,

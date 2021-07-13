@@ -134,17 +134,16 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                 }
             }
 
-
-        _eGM.TruceEnt_ActivatedDictCom.SetActivated(true, false);
-        _eGM.TruceEnt_ActivatedDictCom.SetActivated(false, false);
-
         _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, true, 15);
         _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, false, 15);
 
         _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, true, 15);
         _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, false, 15);
 
-        _photonPunRPC.DoneToGeneral(RpcTarget.All, false, false, _eGM.MotionEnt_AmountCom.Amount);
+        //_photonPunRPC.DoneToGeneral(RpcTarget.All, false);
+        _photonPunRPC.SetAmountMotionToGeneral(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+        _photonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
+        _photonPunRPC.SetDonerActiveToGeneral(RpcTarget.All, false);
         //}
     }
 }

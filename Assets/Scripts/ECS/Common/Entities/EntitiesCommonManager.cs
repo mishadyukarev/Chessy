@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Abstractions;
 using Assets.Scripts.ECS.Common.Components;
+using Assets.Scripts.ECS.Components;
 using Leopotam.Ecs;
+using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -18,6 +20,10 @@ namespace Assets.Scripts
 
         private EcsEntity _commonParentGOZoneEnt;
         internal ref ParentGOZoneComponent CommParentGOZoneEnt_ParentGOZoneCom => ref _commonParentGOZoneEnt.Get<ParentGOZoneComponent>();
+
+
+        private EcsEntity _mainSettingsGame;
+        internal ref MainSettingsGameComponent MainSettingsGameEnt_MainSettingsGameCom => ref _mainSettingsGame.Get<MainSettingsGameComponent>();
 
 
         private EcsEntity _toggleSceneParentGOZoneEnt;
@@ -51,6 +57,10 @@ namespace Assets.Scripts
             _commonParentGOZoneEnt = commonWorld.NewEntity();
             var commonZoneGO = new GameObject(NameConst.COMMON_ZONE);
             CommParentGOZoneEnt_ParentGOZoneCom.SetParent(commonZoneGO);
+
+
+            _mainSettingsGame = commonWorld.NewEntity();
+            MainSettingsGameEnt_MainSettingsGameCom.StartFill(StepModeTypes.ByQueue);
 
 
             _toggleSceneParentGOZoneEnt = commonWorld.NewEntity();
@@ -104,6 +114,9 @@ namespace Assets.Scripts
         {
             switch (sceneType)
             {
+                case SceneTypes.None:
+                    throw new Exception();
+
                 case SceneTypes.Menu:
                     SaverEnt_SaverCommCom.SliderVolume = SoundEnt_SliderCommCom.Value;
                     SoundEnt_AudioSourceCommCom.Volume = SaverEnt_SaverCommCom.SliderVolume;

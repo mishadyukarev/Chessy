@@ -66,7 +66,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                 _photonPunRPC.UpgradeUnitToMaster(xyCurrentCell);
                             }
 
-                            else if (_eGM.DonerEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient))
+                            else if (_eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient))
                             {
                                 if (_canExecuteStartClick)
                                 {

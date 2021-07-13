@@ -1,15 +1,15 @@
 ﻿using Photon.Realtime;
 using System;
 
-internal struct EndGameComponent : IDisposable
+internal struct EndGameComponent
 {
     internal bool IsEndGame;
 
     internal Player PlayerWinner;
 
-    public void Dispose()
+    internal void StartFill()
     {
-        IsEndGame = false;
+        IsEndGame = default;
         PlayerWinner = default;
     }
 }

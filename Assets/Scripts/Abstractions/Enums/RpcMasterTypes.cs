@@ -1,4 +1,4 @@
-﻿public enum RpcTypes
+﻿public enum RpcMasterTypes
 {
     None,
 

@@ -56,18 +56,12 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
 
     #region Down
 
-    private EcsEntity _donerEntity;
+    private EcsEntity _donerUIEnt;
 
-    internal ref ButtonComponent DonerEnt_ButtonCom => ref _donerEntity.Get<ButtonComponent>();
-    internal ref TextMeshProUGUIComponent DonerEnt_TextMeshProGUICom => ref _donerEntity.Get<TextMeshProUGUIComponent>();
-    internal ref ActivatedDictComponent DonerEnt_IsActivatedDictCom => ref _donerEntity.Get<ActivatedDictComponent>();
-    internal ref MistakeComponent DonerEnt_MistakeCom => ref _donerEntity.Get<MistakeComponent>();
-
-
-    private EcsEntity _truceEntity;
-    internal ref ButtonComponent TruceEnt_ButtonCom => ref _truceEntity.Get<ButtonComponent>();
-    internal ref ActivatedDictComponent TruceEnt_ActivatedDictCom => ref _truceEntity.Get<ActivatedDictComponent>();
-    internal ref MistakeComponent TruceEnt_MistakeCom => ref _truceEntity.Get<MistakeComponent>();
+    internal ref ButtonComponent DonerUIEnt_ButtonCom => ref _donerUIEnt.Get<ButtonComponent>();
+    internal ref TextMeshProUGUIComponent DonerUIEnt_TextMeshProGUICom => ref _donerUIEnt.Get<TextMeshProUGUIComponent>();
+    internal ref ActivatedDictComponent DonerUIEnt_IsActivatedDictCom => ref _donerUIEnt.Get<ActivatedDictComponent>();
+    internal ref MistakeComponent DonerUIEnt_MistakeCom => ref _donerUIEnt.Get<MistakeComponent>();
 
 
     private EcsEntity _finderIdleEntity;
@@ -287,7 +281,6 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
         #region Center
 
         _endGameEnt = gameWorld.NewEntity()
-            .Replace(new EndGameComponent())
             .Replace(new ParentComponent())
             .Replace(new TextMeshProUGUIComponent());
 
@@ -339,13 +332,7 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
             .Replace(new ButtonComponent())
             .Replace(new TextMeshProUGUIComponent());
 
-
-        _truceEntity = gameWorld.NewEntity()
-            .Replace(new ButtonComponent())
-            .Replace(new ActivatedDictComponent())
-            .Replace(new MistakeComponent());
-
-        _donerEntity = gameWorld.NewEntity()
+        _donerUIEnt = gameWorld.NewEntity()
             .Replace(new ButtonComponent())
             .Replace(new ActivatedDictComponent())
             .Replace(new MistakeComponent());
@@ -412,6 +399,8 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
     {
         LeaveEnt_ButtonCom.StartFill(Instance.CanvasManager.FindUnderParent<Button>(SceneTypes.Game, "ButtonLeave"));
 
+        EndGameEntEndGameCom.StartFill();
+
         #region Center
 
 
@@ -474,13 +463,9 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
         TakerBishopEntityButtonComponent.StartFill(takeUnitZone.transform.Find("TakeUnit3Button").GetComponent<Button>());
 
 
-        DonerEnt_MistakeCom.CreateEvent();
-        DonerEnt_IsActivatedDictCom.StartFill();
-        DonerEnt_ButtonCom.StartFill(downZone.transform.Find("DonerButton").GetComponent<Button>());
-
-        TruceEnt_ActivatedDictCom.StartFill();
-        TruceEnt_ButtonCom.StartFill(downZone.transform.Find("TruceButton").GetComponent<Button>());
-        TruceEnt_MistakeCom.CreateEvent();
+        DonerUIEnt_MistakeCom.CreateEvent();
+        DonerUIEnt_IsActivatedDictCom.StartFill();
+        DonerUIEnt_ButtonCom.StartFill(downZone.transform.Find("DonerButton").GetComponent<Button>());
 
         FinderIdleEnt_ButtonCom.StartFill(downZone.transform.Find("FinderIdleButton").GetComponent<Button>());
 

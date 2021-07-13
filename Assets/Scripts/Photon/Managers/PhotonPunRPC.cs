@@ -43,45 +43,50 @@ namespace Assets.Scripts
 
         #region PUN
 
-        public void ReadyToMaster(in bool isReady) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Ready, new object[] { isReady });
+        public void ReadyToMaster(in bool isReady) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Ready, new object[] { isReady });
         public void ReadyToGeneral(Player playerTo, bool isCurrentReady, bool isStartedGame) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Ready, new object[] { isCurrentReady, isStartedGame });
         public void ReadyToGeneral(RpcTarget rpcTarget, bool isCurrentReady, bool isStartedGame) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Ready, new object[] { isCurrentReady, isStartedGame });
 
-        public void DoneToMaster(bool isDone) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Done, new object[] { isDone });
-        public void DoneToGeneral(Player playerTo, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Done, new object[] { isRefreshed, isDone, numberMotion });
-        public void DoneToGeneral(RpcTarget rpcTarget, bool isRefreshed, bool isDone, int numberMotion) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Done, new object[] { isRefreshed, isDone, numberMotion });
+        public void DoneToMaster(bool isDone) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[] { isDone });
+        public void SetDonerActiveToGeneral(Player playerTo, bool isDoned) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SetDonerActiveUI, new object[] { isDoned });
+        public void SetDonerActiveToGeneral(RpcTarget rpcTarget, bool isDoned) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.SetDonerActiveUI, new object[] { isDoned });
+        public void SetAmountMotionToGeneral(Player playerTo, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SetAmountMotion, new object[] { numberMotion });
+        public void SetAmountMotionToGeneral(RpcTarget rpcTarget, int numberMotion) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.SetAmountMotion, new object[] { numberMotion });
+        public void ActiveAmountMotionUIToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.ActiveAmountMotionUI, new object[0]);
+        public void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[0]);
 
-        public void UpgradeUnitToMaster(int[] xyCell, UpgradeModTypes upgradeModType = UpgradeModTypes.Unit) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Upgrade, new object[] { upgradeModType, xyCell });
-        public void UpgradeBuildingToMaster(BuildingTypes buildingType, UpgradeModTypes upgradeModType = UpgradeModTypes.Building) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Upgrade, new object[] { upgradeModType, buildingType });
 
-        public void ShiftUnitToMaster(in int[] xyPreviousCell, in int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Shift, new object[] { xyPreviousCell, xySelectedCell });
-        public void AttackUnitToMaster(int[] xyPreviousCell, int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Attack, new object[] { xyPreviousCell, xySelectedCell });
+        public void UpgradeUnitToMaster(int[] xyCell, UpgradeModTypes upgradeModType = UpgradeModTypes.Unit) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, xyCell });
+        public void UpgradeBuildingToMaster(BuildingTypes buildingType, UpgradeModTypes upgradeModType = UpgradeModTypes.Building) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, buildingType });
+
+        public void ShiftUnitToMaster(in int[] xyPreviousCell, in int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { xyPreviousCell, xySelectedCell });
+        public void AttackUnitToMaster(int[] xyPreviousCell, int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Attack, new object[] { xyPreviousCell, xySelectedCell });
         public void AttackUnitToGeneral(Player playerTo, bool isAttacked) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Attack, new object[] { isAttacked });
         public void AttackUnitToGeneral(RpcTarget rpcTarget, bool isAttacked, bool isActivatedSound, int[] xyStart, int[] xyEnd) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Attack, new object[] { isAttacked, isActivatedSound, xyStart, xyEnd });
 
-        public void BuildToMaster(int[] xyCell, BuildingTypes buildingType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Build, new object[] { xyCell, buildingType });
-        public void DestroyBuildingToMaster(int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Destroy, new object[] { xyCell });
+        public void BuildToMaster(int[] xyCell, BuildingTypes buildingType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Build, new object[] { xyCell, buildingType });
+        public void DestroyBuildingToMaster(int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Destroy, new object[] { xyCell });
 
-        public void ProtectRelaxUnitToMaster(ProtectRelaxTypes protectRelaxType, int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.ProtectRelax, new object[] { protectRelaxType, xyCell });
+        public void ProtectRelaxUnitToMaster(ProtectRelaxTypes protectRelaxType, int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ProtectRelax, new object[] { protectRelaxType, xyCell });
 
-        public void EndGameToMaster(int actorNumberWinner) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.EndGame, new object[] { actorNumberWinner });
+        public void EndGameToMaster(int actorNumberWinner) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.EndGame, new object[] { actorNumberWinner });
         public void EndGameToGeneral(RpcTarget rpcTarget, int actorNumberWinner) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
 
         public void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.EconomyType, haves });
         public void MistakeUnitToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.UnitType });
 
-        public void FireToMaster(int[] fromXy, int[] toXy) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.Fire, new object[] { fromXy, toXy });
-        public void SeedEnvironmentToMaster(int[] xy, EnvironmentTypes environmentType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.SeedEnvironment, new object[] { xy, environmentType });
+        public void FireToMaster(int[] fromXy, int[] toXy) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromXy, toXy });
+        public void SeedEnvironmentToMaster(int[] xy, EnvironmentTypes environmentType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { xy, environmentType });
 
-        public void CreateUnitToMaster(UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.CreateUnit, new object[] { unitType });
+        public void CreateUnitToMaster(UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CreateUnit, new object[] { unitType });
 
-        public void MeltOreToMaster() => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.MeltOre, new object[] { });
+        public void MeltOreToMaster() => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.MeltOre, new object[] { });
 
-        public void GetUnitToMaster(UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.GetUnit, new object[] { unitType });
+        public void GetUnitToMaster(UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GetUnit, new object[] { unitType });
         public void GetUnitToGeneral(Player playerTo, bool isGetted, UnitTypes unitType) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.GetUnit, new object[] { isGetted, unitType });
 
 
-        public void SetUniToMaster(int[] xyCell, UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcTypes.SetUnit, new object[] { xyCell, unitType });
+        public void SetUniToMaster(int[] xyCell, UnitTypes unitType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SetUnit, new object[] { xyCell, unitType });
         public void SetUnitToGeneral(Player playerTo, bool isSetted) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SetUnit, new object[] { isSetted });
 
         public void SoundToGeneral(RpcTarget rpcTarget, SoundEffectTypes soundEffectType) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Sound, new object[] { soundEffectType });
@@ -89,91 +94,91 @@ namespace Assets.Scripts
 
 
         [PunRPC]
-        private void MasterRPC(RpcTypes rPCType, object[] objects, PhotonMessageInfo infoFrom)
+        private void MasterRPC(RpcMasterTypes rPCType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _eMM.FromInfoEnt_FromInfoCom.SetFromInfo(infoFrom);
 
             switch (rPCType)
             {
-                case RpcTypes.None:
+                case RpcMasterTypes.None:
                     break;
 
-                case RpcTypes.Ready:
+                case RpcMasterTypes.Ready:
                     _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(ReadyMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(ReadyMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.Done:
+                case RpcMasterTypes.Done:
                     _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(DonerMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(DonerMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.EndGame:
+                case RpcMasterTypes.EndGame:
                     EndGameToGeneral(RpcTarget.All, (int)objects[0]);
                     break;
 
-                case RpcTypes.Build:
+                case RpcMasterTypes.Build:
                     _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[0];
                     _eMM.RPCMasterEnt_RPCMasterCom.BuildingType = (BuildingTypes)objects[1];
-                    _sMM.TryInvokeRunSystem(nameof(BuilderMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(BuilderMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.Destroy:
+                case RpcMasterTypes.Destroy:
                     _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(DestroyMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(DestroyMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.Shift:
+                case RpcMasterTypes.Shift:
                     _eMM.RPCMasterEnt_RPCMasterCom.XyPrevious = (int[])objects[0];
                     _eMM.RPCMasterEnt_RPCMasterCom.XySelected = (int[])objects[1];
-                    _sMM.TryInvokeRunSystem(nameof(ShiftUnitMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(ShiftUnitMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.Attack:
+                case RpcMasterTypes.Attack:
                     _eMM.RPCMasterEnt_RPCMasterCom.XyPrevious = (int[])objects[0];
                     _eMM.RPCMasterEnt_RPCMasterCom.XySelected = (int[])objects[1];
-                    _sMM.TryInvokeRunSystem(nameof(AttackUnitMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(AttackUnitMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.ProtectRelax:
+                case RpcMasterTypes.ProtectRelax:
                     _eMM.ProtectRelaxEnt_ProtectRelaxCom.SetProtectedRelaxedType((ProtectRelaxTypes)objects[0]);
                     _eMM.ProtectRelaxEnt_XyCellCom.XyCell = (int[])objects[1];
-                    _sMM.TryInvokeRunSystem(nameof(ProtectRelaxMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(ProtectRelaxMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.CreateUnit:
+                case RpcMasterTypes.CreateUnit:
                     _eMM.RPCMasterEnt_RPCMasterCom.UnitType = (UnitTypes)objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(CreatorUnitMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(CreatorUnitMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.MeltOre:
-                    _sMM.TryInvokeRunSystem(nameof(MeltOreMasterSystem), _sMM.RPCSystems);
+                case RpcMasterTypes.MeltOre:
+                    _sMM.TryInvokeRunSystem(nameof(MeltOreMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.GetUnit:
+                case RpcMasterTypes.GetUnit:
                     _eMM.RPCMasterEnt_RPCMasterCom.UnitType = (UnitTypes)objects[0];
-                    _sMM.TryInvokeRunSystem(nameof(GetterUnitMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(GetterUnitMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.SetUnit:
+                case RpcMasterTypes.SetUnit:
                     _eMM.RPCMasterEnt_RPCMasterCom.XyCell = (int[])objects[0];
                     _eMM.RPCMasterEnt_RPCMasterCom.UnitType = (UnitTypes)objects[1];
-                    _sMM.TryInvokeRunSystem(nameof(SetterUnitMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(SetterUnitMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.SeedEnvironment:
+                case RpcMasterTypes.SeedEnvironment:
                     _eMM.SeedingEnt_XyCellCom.XyCell = (int[])objects[0];
                     _eMM.SeedingEnt_EnvironmentTypesCom.SetEnvironmentType((EnvironmentTypes)objects[1]);
-                    _sMM.TryInvokeRunSystem(nameof(SeedingMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(SeedingMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.Fire:
+                case RpcMasterTypes.Fire:
                     _eMM.FireEnt_FromToXyCom.FromXy = (int[])objects[0];
                     _eMM.FireEnt_FromToXyCom.ToXy = (int[])objects[1];
-                    _sMM.TryInvokeRunSystem(nameof(FireMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(FireMasterSystem), _sMM.RpcSystems);
                     break;
 
-                case RpcTypes.Upgrade:
+                case RpcMasterTypes.Upgrade:
                     var upgradeModType = (UpgradeModTypes)objects[0];
                     _eMM.UpgradeEnt_UpgradeTypeCom.UpgradeModType = upgradeModType;
                     switch (upgradeModType)
@@ -192,7 +197,7 @@ namespace Assets.Scripts
                         default:
                             throw new Exception();
                     }
-                    _sMM.TryInvokeRunSystem(nameof(UpgradeMasterSystem), _sMM.RPCSystems);
+                    _sMM.TryInvokeRunSystem(nameof(UpgradeMasterSystem), _sMM.RpcSystems);
                     break;
 
                 default:
@@ -211,7 +216,7 @@ namespace Assets.Scripts
             switch (rpcGeneralType)
             {
                 case RpcGeneralTypes.None:
-                    break;
+                    throw new Exception();
 
                 case RpcGeneralTypes.Ready:
                     bool isActivated = (bool)objects[_i++];
@@ -220,16 +225,16 @@ namespace Assets.Scripts
                     _eGM.ReadyEnt_StartedGameCom.IsStartedGame = isStartedGame;
                     break;
 
-                case RpcGeneralTypes.Done:
-                    _eGM.MotionEnt_ActivatedCom.SetActivated((bool)objects[_i++]);
-                    _eGM.DonerEnt_IsActivatedDictCom.SetActivated(Instance.IsMasterClient, (bool)objects[_i++]);
+                case RpcGeneralTypes.SetDonerActiveUI:
+                    _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(Instance.IsMasterClient, (bool)objects[_i++]);
+                    break;
+
+                case RpcGeneralTypes.SetAmountMotion:
                     _eGM.MotionEnt_AmountCom.SetAmount((int)objects[_i++]);
                     break;
 
-                case RpcGeneralTypes.Truce:
-                    _eGM.MotionEnt_ActivatedCom.SetActivated((bool)objects[_i++]);
-                    _eGM.TruceEnt_ActivatedDictCom.SetActivated(Instance.IsMasterClient, (bool)objects[_i++]);
-                    _eGM.MotionEnt_AmountCom.SetAmount((int)objects[_i++]);
+                case RpcGeneralTypes.ActiveAmountMotionUI:
+                    _eGM.MotionEnt_ActivatedCom.SetActivated(true);
                     break;
 
                 case RpcGeneralTypes.EndGame:
@@ -260,7 +265,7 @@ namespace Assets.Scripts
                             break;
 
                         case MistakeTypes.UnitType:
-                            _eGM.DonerEnt_MistakeCom.Invoke();
+                            _eGM.DonerUIEnt_MistakeCom.Invoke();
                             break;
 
                         default:
@@ -282,10 +287,15 @@ namespace Assets.Scripts
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
         }
 
+        [PunRPC]
+        private void OtherRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
+        {
+
+        }
         #endregion
 
 
@@ -296,7 +306,7 @@ namespace Assets.Scripts
         [PunRPC]
         private void RefreshAllMaster()
         {
-            _sMM.TryInvokeRunSystem(nameof(VisibilityUnitsMasterSystem), _sMM.RPCSystems);
+            _sMM.TryInvokeRunSystem(nameof(VisibilityUnitsMasterSystem), _sMM.RpcSystems);
 
             #region Sending
 

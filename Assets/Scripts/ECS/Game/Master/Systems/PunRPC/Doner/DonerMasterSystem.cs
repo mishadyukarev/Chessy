@@ -7,7 +7,7 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 {
     internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
 
-    internal bool isDone => _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething;
+    internal bool NeedDoneOrNot => _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething;
 
     public override void Run()
     {
@@ -17,20 +17,23 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
         {
             _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
-            _photonPunRPC.DoneToGeneral(InfoFrom.Sender, false, isDone, _eGM.MotionEnt_AmountCom.Amount);
+            //_photonPunRPC.DoneToGeneral(InfoFrom.Sender, false, NeedDoneOrNot, _eGM.MotionEnt_AmountCom.Amount);
 
-            _eGM.DonerEnt_IsActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, isDone);
+            _photonPunRPC.SetDonerActiveToGeneral(InfoFrom.Sender, NeedDoneOrNot);
 
-            bool isRefreshed = PhotonNetwork.OfflineMode/*Instance.GameModeType == GameModTypes.WithBot*/
-                || _eGM.DonerEnt_IsActivatedDictCom.IsActivated(true)
-                && _eGM.DonerEnt_IsActivatedDictCom.IsActivated(false);
+            _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, NeedDoneOrNot);
+
+            bool isRefreshed = PhotonNetwork.OfflineMode
+                || _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(true)
+                && _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(false);
 
             if (isRefreshed)
             {            
+                _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
 
-                _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RPCSystems);
-
-                _photonPunRPC.DoneToGeneral(RpcTarget.All, true, false, _eGM.MotionEnt_AmountCom.Amount);
+                _photonPunRPC.SetAmountMotionToGeneral(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+                _photonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
+                _photonPunRPC.SetDonerActiveToGeneral(RpcTarget.All, false);
             }
         }
         else

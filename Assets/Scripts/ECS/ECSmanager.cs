@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.ECS.Menu.Entities;
 using Leopotam.Ecs;
+using System;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
@@ -72,6 +73,9 @@ namespace Assets.Scripts
 
             switch (sceneType)
             {
+                case SceneTypes.None:
+                    throw new Exception();
+
                 case SceneTypes.Menu:
                     break;
 
@@ -83,7 +87,7 @@ namespace Assets.Scripts
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
         }
 
@@ -93,15 +97,22 @@ namespace Assets.Scripts
 
             switch (sceneType)
             {
+                case SceneTypes.None:
+                    throw new Exception();
+
                 case SceneTypes.Menu:
                     _entitiesMenuManager.FillEntities();
-
-                    _entitiesGameGeneralManager.Dispose();//
                     break;
 
                 case SceneTypes.Game:
-                    _entitiesGameGeneralManager.FillEntities(_entitiesCommonManager.ResourcesEnt_ResourcesCommonCom);
+                    _entitiesGameGeneralManager.FillEntities();
                     _entitiesGameMasterManager.FillEntities();
+                    _entitiesGameOtherManager.FillEntities();
+
+
+                    _systemsGameGeneralManager.DestroySystems();
+                    _systemsGameMasterManager.DestroySystems();
+                    _systemsGameOtherManager.DestroySystems();
 
                     _systemsGameGeneralManager.CreateSystems(_gameWorld);
                     _systemsGameMasterManager.CreateSystems(_gameWorld);
@@ -117,7 +128,7 @@ namespace Assets.Scripts
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
         }
     }

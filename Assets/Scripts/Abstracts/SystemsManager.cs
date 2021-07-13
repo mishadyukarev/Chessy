@@ -5,7 +5,22 @@ namespace Assets.Scripts
 {
     public abstract class SystemsManager
     {
+        protected bool _isStartedFilling = true;
         internal EcsSystems RunUpdateSystems;
+
+        internal virtual void CreateSystems(EcsWorld ecsWorld)
+        {
+            _isStartedFilling = false;
+        }
+
+        internal virtual void DestroySystems()
+        {
+            if (!_isStartedFilling)
+            {
+                RunUpdateSystems.Destroy();
+            }
+        }
+
 
         internal virtual void ProcessInjects()
         {
