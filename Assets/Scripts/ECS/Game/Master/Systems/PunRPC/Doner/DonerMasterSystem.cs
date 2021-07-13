@@ -21,7 +21,7 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 
             _eGM.DonerEnt_IsActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, isDone);
 
-            bool isRefreshed = Instance.GameModeType == GameModTypes.WithBot
+            bool isRefreshed = PhotonNetwork.OfflineMode/*Instance.GameModeType == GameModTypes.WithBot*/
                 || _eGM.DonerEnt_IsActivatedDictCom.IsActivated(true)
                 && _eGM.DonerEnt_IsActivatedDictCom.IsActivated(false);
 

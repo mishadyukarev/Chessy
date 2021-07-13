@@ -5,7 +5,7 @@ using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
 {
-    public sealed class PhotonManager
+    public sealed class PhotonMainManager
     {
         private PhotonView _photonView;
         private PhotonPunRPC _photonPunRPC;
@@ -13,9 +13,10 @@ namespace Assets.Scripts
 
         public PhotonSceneManager SceneManager => _sceneManager;
         public PhotonPunRPC PhotonPunRPC => _photonPunRPC;
+        public PhotonView PhotonView => _photonView;
 
 
-        public PhotonManager(ECSManager eCSManager)
+        public PhotonMainManager(ECSManager eCSManager)
         {
             _photonView = Instance.gameObject.AddComponent<PhotonView>();
             _sceneManager = Instance.gameObject.AddComponent<PhotonSceneManager>();

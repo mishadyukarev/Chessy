@@ -50,16 +50,20 @@ namespace Assets.Scripts
             {
                 case SceneTypes.Menu:
                     _logTex = Instance.CanvasManager.FindUnderParent<TextMeshProUGUI>(SceneTypes.Menu, "LogText");
-
-                    Instance.CanvasManager.FindUnderParent<Button>(sceneType, "CreateRoomButton").onClick.AddListener(CreateRoom);
-                    Instance.CanvasManager.FindUnderParent<Button>(sceneType, "JoinRandomButton").onClick.AddListener(JoinRandomRoom);
                     Instance.CanvasManager.FindUnderParent<Button>(sceneType, "QuitButton").onClick.AddListener(delegate { Application.Quit(); });
-                    //Instance.CanvasManager.FindUnderParent<Button>(sceneType, "CreateTestGameButton").onClick.AddListener(TestGame);
+
 
                     Instance.EntMenuM.JoinOnlineEnt_ButtonCom.AddListener(ConnectOnline);
                     Instance.EntMenuM.JoinOfflineEnt_ButtonCom.AddListener(ConnectOffline);
+                    Instance.EntMenuM.CreateRoomEnt_ButtonCom.AddListener(CreateRoom);
+                    Instance.EntMenuM.JoinRandomRoomEnt_ButtonCom.AddListener(JoinRandomRoom);
+                    Instance.EntMenuM.TestSoloGameEnt_ButtonCom.AddListener(CreateTestSoloGame);
 
-                    //ConnectUsingSettingsWithData(true);
+                    Instance.EntMenuM.CreateFriendRoomEnt_ButtonCom
+                        .AddListener(delegate { CreateFriendRoom(Instance.EntMenuM.CreateFriendRoomEnt_InputFieldCom.Text); });
+
+                    Instance.EntMenuM.JoinFriendRoomEnt_ButtonCom
+                        .AddListener(delegate { JoinFriendRoom(Instance.EntMenuM.JoinFriendRoomEnt_InputFieldCom.Text); });
                     break;
 
                 case SceneTypes.Game:
@@ -82,13 +86,18 @@ namespace Assets.Scripts
 
         private void ConnectOffline()
         {
-            ConnectUsingSettingsWithData(true);
+            if (PhotonNetwork.IsConnected)
+            {
+                PhotonNetwork.Disconnect();
+            }
+            else
+            {
+                ConnectUsingSettingsWithData(true);
+            }
         }
 
         public void CreateRoom()
         {
-            Instance.GameModeType = GameModTypes.Multiplayer;
-
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = MAX_PLAYERS;
             //roomOptions.PlayerTtl = 200;//1000
@@ -99,51 +108,46 @@ namespace Assets.Scripts
             PhotonNetwork.CreateRoom(roomName, roomOptions, null);
         }
 
+        public void CreateFriendRoom(string roomName)
+        {
+            RoomOptions roomOptions = new RoomOptions();
+            roomOptions.MaxPlayers = MAX_PLAYERS;
+            //roomOptions.PlayerTtl = 200;//1000
+            roomOptions.IsVisible = false;
+            roomOptions.IsOpen = true;
+
+            PhotonNetwork.CreateRoom(roomName, roomOptions, null);
+        }
+
         public void JoinRandomRoom()
         {
-            Instance.GameModeType = GameModTypes.Multiplayer;
-
             PhotonNetwork.JoinRandomRoom();
         }
 
-        private void TestGame()
+        private void JoinFriendRoom(string roomName)
         {
-            Instance.GameModeType = GameModTypes.WithBot;
-            PhotonNetwork.OfflineMode = false;
+            PhotonNetwork.JoinRoom(roomName);
+        }
 
-            Instance.ToggleScene(SceneTypes.Game);
+        private void CreateTestSoloGame()
+        {
+            PhotonNetwork.CreateRoom(default);
         }
         internal void LeaveRoom()
         {
             PhotonNetwork.LeaveRoom();
-
-            //switch (Instance.GameModeType)
-            //{
-            //    case GameModTypes.None:
-            //        throw new Exception();
-
-            //    case GameModTypes.Multiplayer:
-            //        PhotonNetwork.LeaveRoom();
-            //        break;
-
-            //    case GameModTypes.WithBot:
-            //        Instance.ToggleScene(SceneTypes.Menu);
-            //        break;
-
-            //    default:
-            //        throw new Exception();
-            //}
         }
 
         #endregion
 
         private void ConnectUsingSettingsWithData(bool isOffline)
         {
+            PhotonNetwork.PhotonServerSettings.StartInOfflineMode = isOffline;
+
             PhotonNetwork.PhotonServerSettings.DevRegion = "ru";
             PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "ru";
             PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion = VERSION_PHOTON_GAME;
             PhotonNetwork.PhotonServerSettings.name = "Player " + UnityEngine.Random.Range(1, 999999);
-            PhotonNetwork.PhotonServerSettings.StartInOfflineMode = isOffline;
 
             PhotonNetwork.ConnectUsingSettings();
         }
@@ -153,34 +157,40 @@ namespace Assets.Scripts
 
 
 
-        //public override void OnConnected()
-        //{
-        //    base.OnConnected();
+        public override void OnConnected()
+        {
+            base.OnConnected();
 
-        //    OnConnectedToMaster();
-        //}
+            OnConnectedToMaster();
+        }
+        public override void OnDisconnected(DisconnectCause cause)
+        {
+            ConnectUsingSettingsWithData(true);
+        }
 
         public override void OnConnectedToMaster()
         {
             if (PhotonNetwork.OfflineMode)
             {
+                Instance.EntMenuM.OnlineRightZoneEnt_ImageCom.SetActive(true);
+                Instance.EntMenuM.JoinOnlineEnt_ButtonCom.SetActive(true);
+
+                SetTextOnUpLog("Offline");
                 Instance.EntMenuM.JoinOfflineEnt_ButtonCom.SetActive(false);
+                Instance.EntMenuM.OfflineLeftZoneEnt_ImageCom.SetActive(false);
             }
             else
             {
-                SetTextOnUpLog("Online");
+                Instance.EntMenuM.JoinOfflineEnt_ButtonCom.SetActive(true);
+                Instance.EntMenuM.OfflineLeftZoneEnt_ImageCom.SetActive(true);
 
+                SetTextOnUpLog("Online");
                 Instance.EntMenuM.OnlineRightZoneEnt_ImageCom.SetActive(false);
                 Instance.EntMenuM.JoinOnlineEnt_ButtonCom.SetActive(false);
             }
 
             //PhotonNetwork.ConnectToRegion("ru");
         }
-        public override void OnDisconnected(DisconnectCause cause)
-        {
-
-        }
-
 
         public override void OnJoinRandomFailed(short returnCode, string message)
         {

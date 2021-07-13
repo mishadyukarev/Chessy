@@ -14,10 +14,10 @@ namespace Assets.Scripts
         private bool _isOfflineMode = false;
         private SceneTypes _sceneType = SceneTypes.Menu;
         private static Main _instance;
-        private PhotonManager _photonManager;
+        private PhotonMainManager _photonManager;
         private ECSManager _eCSmanager;
 
-        [NonSerialized]public GameModTypes GameModeType;
+        //[NonSerialized]public GameModTypes GameModeType;
 
         #endregion
 
@@ -34,7 +34,7 @@ namespace Assets.Scripts
         public Player LocalPlayer => PhotonNetwork.LocalPlayer;
 
         public ECSManager ECSmanager => _eCSmanager;
-        public PhotonManager PhotonManager => _photonManager;
+        public PhotonMainManager PhotonManager => _photonManager;
 
         public ref CanvasCommComponent CanvasManager => ref _eCSmanager.EntitiesCommonManager.CanvasEnt_CanvasCommCom;
         public StartGameValuesConfig StartValuesGameConfig => _eCSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
@@ -50,7 +50,7 @@ namespace Assets.Scripts
             _instance = this;
 
             _eCSmanager = new ECSManager();
-            _photonManager = new PhotonManager(_eCSmanager);
+            _photonManager = new PhotonMainManager(_eCSmanager);
 
             ToggleScene(_sceneType);
         }
@@ -60,7 +60,11 @@ namespace Assets.Scripts
             _eCSmanager.OwnUpdate(_sceneType);
             _photonManager.OwnUpdate(_sceneType);
 
-            Debug.Log(PhotonNetwork.CountOfPlayers);
+            //Debug.Log(PhotonNetwork.CountOfPlayers);
+
+            //Debug.Log(Instance.IsMasterClient);
+
+            //Debug.Log(PhotonNetwork.CurrentRoom.Name);
         }
 
         private void OnApplicationQuit() { }

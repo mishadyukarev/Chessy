@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Photon.Pun;
 using UnityEngine;
 using static Assets.Scripts.Main;
 
@@ -18,7 +19,7 @@ internal sealed class ReadyZoneUISystem : SystemGeneralReduction
             _eGM.ReadyEnt_ButtonCom.SetColor(Color.white);
         }
 
-        if (_eGM.ReadyEnt_StartedGameCom.IsStartedGame || Instance.GameModeType == GameModTypes.WithBot)
+        if (_eGM.ReadyEnt_StartedGameCom.IsStartedGame || PhotonNetwork.OfflineMode/*Instance.GameModeType == GameModTypes.WithBot*/)
         {
             _eGM.ReadyEnt_ParentCom.SetActive(false);
         }

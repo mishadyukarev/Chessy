@@ -565,7 +565,7 @@ public sealed partial class EntitiesGameGeneralManager : IDisposable
             }
 
 
-        if (Instance.GameModeType == GameModTypes.WithBot)
+        if (PhotonNetwork.OfflineMode/*Instance.GameModeType == GameModTypes.WithBot*/)
         {
             int[] xy0 = new int[XY_FOR_ARRAY];
             xy0[X] = 8;
