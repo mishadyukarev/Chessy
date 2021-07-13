@@ -287,18 +287,18 @@ public class StartGameValuesConfig : ScriptableObject
     public readonly int AMOUNT_HEALTH_PAWN = 100;
     public readonly int AMOUNT_HEALTH_PAWN_SWORD = 150;
     public readonly int AMOUNT_HEALTH_ROOK = 100;
-    public readonly int AMOUNT_HEALTH_ROOK_CROSSBOW = 150;
+    public readonly int AMOUNT_HEALTH_ROOK_CROSSBOW = 100;
     public readonly int AMOUNT_HEALTH_BISHOP = 100;
-    public readonly int AMOUNT_HEALTH_BISHOP_CROSSBOW = 150;
+    public readonly int AMOUNT_HEALTH_BISHOP_CROSSBOW = 100;
 
 
     private readonly float PERCENT_FOR_HEALTH_KING = 0.2f;
-    private readonly float PERCENT_FOR_HEALTH_PAWN = 0.2f;
+    private readonly float PERCENT_FOR_HEALTH_PAWN = 0.3f;
     private readonly float PERCENT_FOR_HEALTH_PAWN_SWORD = 0.2f;
-    private readonly float PERCENT_FOR_HEALTH_ROOK = 0.2f;
-    private readonly float PERCENT_FOR_HEALTH_ROOK_CROSSBOW = 0.2f;
-    private readonly float PERCENT_FOR_HEALTH_BISHOP = 0.2f;
-    private readonly float PERCENT_FOR_HEALTH_BISHOP_CROSSBOW = 0.2f;
+    private readonly float PERCENT_FOR_HEALTH_ROOK = 0.3f;
+    private readonly float PERCENT_FOR_HEALTH_ROOK_CROSSBOW = 0.3f;
+    private readonly float PERCENT_FOR_HEALTH_BISHOP = 0.3f;
+    private readonly float PERCENT_FOR_HEALTH_BISHOP_CROSSBOW = 0.3f;
 
     public int HEALTH_FOR_ADDING_KING => (int)(AMOUNT_HEALTH_KING * PERCENT_FOR_HEALTH_KING);
     public int HEALTH_FOR_ADDING_PAWN => (int)(AMOUNT_HEALTH_PAWN * PERCENT_FOR_HEALTH_PAWN);
@@ -313,7 +313,7 @@ public class StartGameValuesConfig : ScriptableObject
 
     #region Damage
 
-    public readonly int SIMPLE_POWER_DAMAGE_KING = 100;
+    public readonly int SIMPLE_POWER_DAMAGE_KING = 110;
     public readonly int SIMPLE_POWER_DAMAGE_PAWN = 50;
     public readonly int SIMPLE_POWER_DAMAGE_PAWN_SWORD = 75;
     public readonly int SIMPLE_POWER_DAMAGE_ROOK = 25;
