@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
 using Photon.Pun;
 using UnityEngine;
 
@@ -141,9 +140,9 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
         _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, false, 15);
 
         //_photonPunRPC.DoneToGeneral(RpcTarget.All, false);
-        _photonPunRPC.SetAmountMotionToGeneral(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+        _photonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
         _photonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-        _photonPunRPC.SetDonerActiveToGeneral(RpcTarget.All, false);
+        _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
         //}
     }
 }

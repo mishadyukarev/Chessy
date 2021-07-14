@@ -18,7 +18,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                 _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetActivated(true, true);
                 _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetActivated(false, true);
 
-                
+
 
                 if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
                 {
@@ -80,7 +80,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         else
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).DisableVisionAllSR();
-                        }             
+                        }
                     }
 
                     else if (_eGM.CellUnitEnt_CellOwnerBotCom(x, y).HaveBot)

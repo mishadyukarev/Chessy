@@ -19,6 +19,10 @@ namespace Assets.Scripts.ECS.Menu.Entities
         internal ref ImageComponent OnlineRightZoneEnt_ImageCom => ref _onlineRightZoneEnt.Get<ImageComponent>();
 
 
+        private EcsEntity _stepModeUIEnt;
+        internal ref DropdownTMPComponent StepModUIEnt_DropDownTMPCom => ref _stepModeUIEnt.Get<DropdownTMPComponent>();
+
+
         #region PublicGameZone
 
         private EcsEntity _createRoomEnt;
@@ -35,7 +39,7 @@ namespace Assets.Scripts.ECS.Menu.Entities
 
         private EcsEntity _createFriendRoomEnt;
         internal ref ButtonComponent CreateFriendRoomEnt_ButtonCom => ref _createFriendRoomEnt.Get<ButtonComponent>();
-        internal ref InputFieldComponent CreateFriendRoomEnt_InputFieldCom => ref _createFriendRoomEnt.Get<InputFieldComponent>(); 
+        internal ref InputFieldComponent CreateFriendRoomEnt_InputFieldCom => ref _createFriendRoomEnt.Get<InputFieldComponent>();
 
 
         private EcsEntity _joinFriendRoomEnt;
@@ -67,6 +71,8 @@ namespace Assets.Scripts.ECS.Menu.Entities
         {
             _joinOnlineEnt = ecsWorld.NewEntity();
             _onlineRightZoneEnt = ecsWorld.NewEntity();
+            _stepModeUIEnt = ecsWorld.NewEntity();
+
             _createRoomEnt = ecsWorld.NewEntity();
             _joinRandomRoomEnt = ecsWorld.NewEntity();
             _createFriendRoomEnt = ecsWorld.NewEntity();
@@ -86,6 +92,9 @@ namespace Assets.Scripts.ECS.Menu.Entities
 
             var onlineRightZoneImage = rightZone.transform.Find("RightZone_Image").GetComponent<Image>();
             OnlineRightZoneEnt_ImageCom.StartFill(onlineRightZoneImage);
+
+            var stepMod_Dropdown = rightZone.transform.Find("Dropdown").GetComponent<TMP_Dropdown>();
+            StepModUIEnt_DropDownTMPCom.StartFill(stepMod_Dropdown);
 
             var createRoomButton = rightZone.transform.Find("CreateRoomButton").GetComponent<Button>();
             CreateRoomEnt_ButtonCom.StartFill(createRoomButton);

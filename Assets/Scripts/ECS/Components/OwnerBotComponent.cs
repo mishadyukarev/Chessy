@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-
-namespace Assets.Scripts.ECS.Game.General.Components
+﻿namespace Assets.Scripts.ECS.Game.General.Components
 {
     internal struct OwnerBotComponent
     {

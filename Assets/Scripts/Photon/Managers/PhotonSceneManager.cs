@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums;
+﻿using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -97,13 +97,18 @@ namespace Assets.Scripts
         public void CreateRoom()
         {
             RoomOptions roomOptions = new RoomOptions();
+
+            roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
+            roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), Instance.EntMenuM.StepModUIEnt_DropDownTMPCom.StepModValue } };
+
+
             roomOptions.MaxPlayers = MAX_PLAYERS;
             //roomOptions.PlayerTtl = 200;//1000
             roomOptions.IsVisible = true;
             roomOptions.IsOpen = true;
             var roomName = UnityEngine.Random.Range(1, 9999999).ToString();
 
-            PhotonNetwork.CreateRoom(roomName, roomOptions, null);
+            PhotonNetwork.CreateRoom(roomName, roomOptions);
         }
 
         public void CreateFriendRoom(string roomName)
@@ -114,12 +119,13 @@ namespace Assets.Scripts
             roomOptions.IsVisible = false;
             roomOptions.IsOpen = true;
 
-            PhotonNetwork.CreateRoom(roomName, roomOptions, null);
+            PhotonNetwork.CreateRoom(roomName, roomOptions, default);
         }
 
         public void JoinRandomRoom()
         {
-            PhotonNetwork.JoinRandomRoom();
+            Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), Instance.EntMenuM.StepModUIEnt_DropDownTMPCom.StepModValue } };
+            PhotonNetwork.JoinRandomRoom(expectedCustomRoomProperties, MAX_PLAYERS);
         }
 
         private void JoinFriendRoom(string roomName)
@@ -172,6 +178,7 @@ namespace Assets.Scripts
             {
                 Instance.EntMenuM.OnlineRightZoneEnt_ImageCom.SetActive(true);
                 Instance.EntMenuM.JoinOnlineEnt_ButtonCom.SetActive(true);
+                Instance.EntMenuM.StepModUIEnt_DropDownTMPCom.SetActive(true);
 
                 SetTextOnUpLog("Offline");
                 Instance.EntMenuM.JoinOfflineEnt_ButtonCom.SetActive(false);
@@ -185,6 +192,7 @@ namespace Assets.Scripts
                 SetTextOnUpLog("Online");
                 Instance.EntMenuM.OnlineRightZoneEnt_ImageCom.SetActive(false);
                 Instance.EntMenuM.JoinOnlineEnt_ButtonCom.SetActive(false);
+                Instance.EntMenuM.StepModUIEnt_DropDownTMPCom.SetActive(false);
             }
 
             //PhotonNetwork.ConnectToRegion("ru");

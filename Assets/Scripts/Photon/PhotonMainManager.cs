@@ -55,17 +55,21 @@ namespace Assets.Scripts
         {
             switch (sceneType)
             {
+                case SceneTypes.None:
+                    throw new Exception();
+
                 case SceneTypes.Menu:
                     _sceneManager.ToggleScene(sceneType);
+                    _photonPunRPC.ToggleScene(sceneType);
                     break;
 
                 case SceneTypes.Game:
                     _sceneManager.ToggleScene(sceneType);
-                    _photonPunRPC.RefreshAllToMaster();
+                    _photonPunRPC.ToggleScene(sceneType);
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
         }
     }

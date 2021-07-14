@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using static Assets.Scripts.Main;
 
@@ -25,7 +24,7 @@ internal struct CellEnvironmentComponent
         _youngTreeSR = environmentGO.transform.Find("YoungTree").GetComponent<SpriteRenderer>();
         _adultTreeSR = environmentGO.transform.Find("Tree").GetComponent<SpriteRenderer>();
         _hillSR = environmentGO.transform.Find("Hill").GetComponent<SpriteRenderer>();
-        _mountainSR = environmentGO.transform.Find("Mountain").GetComponent<SpriteRenderer>();             
+        _mountainSR = environmentGO.transform.Find("Mountain").GetComponent<SpriteRenderer>();
 
         ResetAll();
     }

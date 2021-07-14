@@ -465,6 +465,15 @@ public sealed partial class EntitiesGameGeneralManager : EntitiesManager
 
         DonerUIEnt_MistakeCom.CreateEvent();
         DonerUIEnt_IsActivatedDictCom.StartFill();
+
+        if (Instance.IsMasterClient)
+        {
+            if (Instance.EntComM.SaverEnt_StepModeTypeCom.IsByQueueMode)
+            {
+                DonerUIEnt_IsActivatedDictCom.SetActivated(false, true);
+            }
+        }
+
         DonerUIEnt_ButtonCom.StartFill(downZone.transform.Find("DonerButton").GetComponent<Button>());
 
         FinderIdleEnt_ButtonCom.StartFill(downZone.transform.Find("FinderIdleButton").GetComponent<Button>());

@@ -42,7 +42,7 @@ public sealed class SystemsGameMasterManager : SystemsManager
     {
         base.DestroySystems();
 
-        if(!_isStartedFilling)
+        if (!_isStartedFilling)
         {
             RpcSystems.Destroy();
         }

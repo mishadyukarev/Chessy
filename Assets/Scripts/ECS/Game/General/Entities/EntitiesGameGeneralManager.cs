@@ -6,7 +6,6 @@ using Assets.Scripts.Static;
 using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
 using Photon.Pun;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Assets.Scripts.Abstractions.EnvironmentValues;
@@ -21,6 +20,7 @@ public sealed partial class EntitiesGameGeneralManager
     internal AudioSource AttackAudioSource;
 
     private ResourcesCommComponent ResourcesCommComponent => Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom;
+
 
     #region Cells
 
@@ -193,6 +193,8 @@ public sealed partial class EntitiesGameGeneralManager
 
     internal EntitiesGameGeneralManager(EcsWorld gameWorld)
     {
+        //_playersInfoEnt = gameWorld.NewEntity();
+
         _cellEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
         _cellUnitEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
         _cellBuildingEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
@@ -251,8 +253,10 @@ public sealed partial class EntitiesGameGeneralManager
     }
 
 
-    internal void FillEntities()
+    internal override void FillEntities()
     {
+        base.FillEntities();
+
         SpawnCells();
 
         var audioSourceParentGO = new GameObject("AudioSource");
@@ -435,6 +439,7 @@ public sealed partial class EntitiesGameGeneralManager
             EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_GOLD_OTHER);
 
             #endregion
+
         }
 
         SpawnAndFillCanvasEntities();

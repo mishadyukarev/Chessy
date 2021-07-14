@@ -304,7 +304,7 @@ namespace Assets.Scripts
                     if (Instance.EntGGM.CellEnvEnt_CellEnvCom(xy).HaveEnvironment(EnvironmentTypes.Hill))
                         powerProtection += Instance.StartValuesGameConfig.PROTECTION_HILL_FOR_ROOK_CROSSBOW;
                     break;
-            }     
+            }
 
             switch (Instance.EntGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType)
             {
@@ -371,7 +371,7 @@ namespace Assets.Scripts
         }
         internal static void SetPlayerUnit(bool withEconomy, UnitTypes unitType, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, Player player, params int[] xy)
         {
-            if(withEconomy) UnitInfoManager.AddAmountUnitInGame(unitType, player.IsMasterClient);
+            if (withEconomy) UnitInfoManager.AddAmountUnitInGame(unitType, player.IsMasterClient);
 
             Instance.EntGGM.CellUnitEnt_UnitTypeCom(xy).SetUnitType(unitType);
             Instance.EntGGM.CellUnitEnt_CellUnitCom(xy).SetAmountSteps(amountSteps);

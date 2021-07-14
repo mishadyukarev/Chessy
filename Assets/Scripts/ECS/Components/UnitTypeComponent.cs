@@ -1,6 +1,4 @@
-﻿using System;
-
-internal struct UnitTypeComponent
+﻿internal struct UnitTypeComponent
 {
     private UnitTypes _unitType;
 
@@ -41,6 +39,14 @@ internal struct UnitTypeComponent
             }
         }
     }
+
+    internal bool IsKing => _unitType == UnitTypes.King;
+    internal bool IsPawn => _unitType == UnitTypes.Pawn;
+    internal bool IsPawnSword => _unitType == UnitTypes.PawnSword;
+    internal bool IsRook => _unitType == UnitTypes.Rook;
+    internal bool IsRookCrossbow => _unitType == UnitTypes.RookCrossbow;
+    internal bool IsBishop => _unitType == UnitTypes.Bishop;
+    internal bool IsBishopCrossbow => _unitType == UnitTypes.BishopCrossbow;
 
     internal void StartFill() => _unitType = default;
     internal void SetUnitType(UnitTypes unitType) => _unitType = unitType;

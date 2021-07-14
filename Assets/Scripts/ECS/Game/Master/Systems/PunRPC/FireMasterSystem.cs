@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Photon.Pun;
-using static Assets.Scripts.Abstractions.ValuesConst;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {

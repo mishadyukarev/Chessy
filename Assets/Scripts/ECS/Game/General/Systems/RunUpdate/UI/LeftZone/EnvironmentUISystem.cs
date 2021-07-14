@@ -44,7 +44,7 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
                     if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest))
                     {
                         _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Wood);
-                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Wood, new Vector3((float)_eGM.CellEnvEnt_CellEnvCom(x, y).AmountResources(ResourceTypes.Wood) / (float)_eGM.CellEnvEnt_CellEnvCom(x,y).MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1));
+                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Wood, new Vector3((float)_eGM.CellEnvEnt_CellEnvCom(x, y).AmountResources(ResourceTypes.Wood) / (float)_eGM.CellEnvEnt_CellEnvCom(x, y).MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1));
                     }
                     else
                     {

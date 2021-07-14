@@ -307,13 +307,13 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
             for (int y = 0; y < _eGM.Yamount; y++)
             {
                 if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest)
-                    && _eGM.CellEnt_CellBaseCom(x,y).IsActiveSelfGO)
+                    && _eGM.CellEnt_CellBaseCom(x, y).IsActiveSelfGO)
                 {
                     ++amountAdultForest;
                 }
             }
 
-        if(amountAdultForest <= 3)
+        if (amountAdultForest <= 3)
         {
             _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
             _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RpcSystems);

@@ -4,7 +4,7 @@ using static Assets.Scripts.Main;
 internal sealed class BuildingUISystem : RPCGeneralSystemReduction
 {
     private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
-
+    private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
     public override void Init()
     {
@@ -187,6 +187,12 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
         _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(isActivated);
     }
 
-    private void Build(BuildingTypes buildingType) => _photonPunRPC.BuildToMaster(XySelectedCell, buildingType);
-    private void Destroy() => _photonPunRPC.DestroyBuildingToMaster(XySelectedCell);
+    private void Build(BuildingTypes buildingType)
+    {
+        if (!IsActivatedDoner) _photonPunRPC.BuildToMaster(XySelectedCell, buildingType);
+    }
+    private void Destroy()
+    {
+        if (!IsActivatedDoner) _photonPunRPC.DestroyBuildingToMaster(XySelectedCell);
+    }
 }

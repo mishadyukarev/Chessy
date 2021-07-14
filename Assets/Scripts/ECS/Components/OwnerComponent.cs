@@ -1,5 +1,4 @@
 ﻿using Photon.Realtime;
-using System;
 
 internal struct OwnerComponent
 {

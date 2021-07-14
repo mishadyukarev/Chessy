@@ -33,11 +33,11 @@ namespace Assets.Scripts.Static
             {
                 if (Instance.EntGGM.CellBuildEnt_OwnerCom(xy).HaveOwner)
                 {
-                    if(buildType == BuildingTypes.City)
+                    if (buildType == BuildingTypes.City)
                     {
                         Instance.EntGGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Instance.EntGGM.CellBuildEnt_OwnerCom(xy).IsMasterClient] = false;
                         Instance.EntGGM.BuildingsEnt_BuildingsCom.XySettedCityDict[Instance.EntGGM.CellBuildEnt_OwnerCom(xy).IsMasterClient] = default;
-                    }                  
+                    }
 
                     Instance.EntGGM.BuildingsEnt_BuildingsCom.TakeAmountBuildings(buildType, Instance.EntGGM.CellBuildEnt_OwnerCom(xy).IsMasterClient);
                 }
@@ -51,7 +51,7 @@ namespace Assets.Scripts.Static
 
             else if (Instance.EntGGM.CellBuildEnt_CellOwnerBotCom(xy).HaveBot)
             {
-                Instance.EntGGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(false, buildType);       
+                Instance.EntGGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(false, buildType);
                 Instance.EntGGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
             }
 

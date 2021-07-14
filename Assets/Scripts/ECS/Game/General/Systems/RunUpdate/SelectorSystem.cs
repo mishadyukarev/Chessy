@@ -1,11 +1,10 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions;
 using Assets.Scripts.Abstractions.Enums;
-using static Assets.Scripts.Main;
-using static Assets.Scripts.Abstractions.ValuesConst;
-using static Assets.Scripts.Abstractions.NameConst;
-using static Assets.Scripts.Static.CellBaseOperations;
 using Assets.Scripts.Static;
+using static Assets.Scripts.Abstractions.NameConst;
+using static Assets.Scripts.Abstractions.ValuesConst;
+using static Assets.Scripts.Main;
+using static Assets.Scripts.Static.CellBaseOperations;
 
 internal sealed class SelectorSystem : RPCGeneralSystemReduction
 {
@@ -63,7 +62,14 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                         {
                             if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.Unit)
                             {
-                                _photonPunRPC.UpgradeUnitToMaster(xyCurrentCell);
+                                if (_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit)
+                                {
+                                    _photonPunRPC.UpgradeUnitToMaster(xyCurrentCell);
+                                }
+                                else
+                                {
+                                    _eGM.SelectorEnt_SelectorCom.UpgradeModType = UpgradeModTypes.None;
+                                }
                             }
 
                             else if (_eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient))

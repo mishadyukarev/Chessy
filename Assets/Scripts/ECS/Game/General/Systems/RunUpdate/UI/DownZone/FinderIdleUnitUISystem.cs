@@ -33,7 +33,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
 
                         if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
 
-                            if (_eGM.CellUnitEnt_CellUnitCom(x,y).HaveMaxSteps(unitType))
+                            if (_eGM.CellUnitEnt_CellUnitCom(x, y).HaveMaxSteps(unitType))
                             {
                                 _eGM.SelectorEnt_SelectorCom.IsSelected = true;
                                 _eGM.SelectorEnt_SelectorCom.XySelectedCell = new int[] { x, y };

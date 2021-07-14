@@ -1,6 +1,4 @@
 ﻿using Assets.Scripts;
-using UnityEngine;
-using static Assets.Scripts.Main;
 
 internal sealed class TruceUISystem : RPCGeneralSystemReduction
 {

@@ -1,8 +1,10 @@
 ﻿using Assets.Scripts;
+using static Assets.Scripts.Main;
 
 internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
 {
     private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
+    private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
     internal UniqueAbilitiesUISystem() { }
 
@@ -101,11 +103,11 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
 
     private void SeedEnvironment(EnvironmentTypes environmentType)
     {
-        _photonPunRPC.SeedEnvironmentToMaster(XySelectedCell, environmentType);
+        if (!IsActivatedDoner) _photonPunRPC.SeedEnvironmentToMaster(XySelectedCell, environmentType);
     }
 
     private void Fire(int[] fromXy, int[] toXy)
     {
-        _photonPunRPC.FireToMaster(fromXy, toXy);
+        if (!IsActivatedDoner) _photonPunRPC.FireToMaster(fromXy, toXy);
     }
 }

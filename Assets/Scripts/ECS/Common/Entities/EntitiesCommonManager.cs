@@ -22,8 +22,8 @@ namespace Assets.Scripts
         internal ref ParentGOZoneComponent CommParentGOZoneEnt_ParentGOZoneCom => ref _commonParentGOZoneEnt.Get<ParentGOZoneComponent>();
 
 
-        private EcsEntity _mainSettingsGame;
-        internal ref MainSettingsGameComponent MainSettingsGameEnt_MainSettingsGameCom => ref _mainSettingsGame.Get<MainSettingsGameComponent>();
+        //private EcsEntity _mainSettingsGame;
+        //internal ref StepModeTypeComponent MainSettingsGameEnt_MainSettingsGameCom => ref _mainSettingsGame.Get<StepModeTypeComponent>();
 
 
         private EcsEntity _toggleSceneParentGOZoneEnt;
@@ -31,7 +31,8 @@ namespace Assets.Scripts
 
 
         private EcsEntity _saverEnt;
-        internal ref SaverCommonComponent SaverEnt_SaverCommCom => ref _saverEnt.Get<SaverCommonComponent>();
+        internal ref SaverComponent SaverEnt_SaverCommCom => ref _saverEnt.Get<SaverComponent>();
+        internal ref StepModeTypeComponent SaverEnt_StepModeTypeCom => ref _saverEnt.Get<StepModeTypeComponent>();
 
 
         private EcsEntity _resourcesEnt;
@@ -59,8 +60,8 @@ namespace Assets.Scripts
             CommParentGOZoneEnt_ParentGOZoneCom.SetParent(commonZoneGO);
 
 
-            _mainSettingsGame = commonWorld.NewEntity();
-            MainSettingsGameEnt_MainSettingsGameCom.StartFill(StepModeTypes.ByQueue);
+            //_mainSettingsGame = commonWorld.NewEntity();
+            //MainSettingsGameEnt_MainSettingsGameCom.StartFill(StepModeTypes.ByQueue);
 
 
             _toggleSceneParentGOZoneEnt = commonWorld.NewEntity();
@@ -72,6 +73,7 @@ namespace Assets.Scripts
 
             _saverEnt = commonWorld.NewEntity();
             SaverEnt_SaverCommCom.SliderVolume = 0.15f;
+            SaverEnt_StepModeTypeCom.StartFill();
 
 
             _resourcesEnt = commonWorld.NewEntity();
@@ -120,13 +122,15 @@ namespace Assets.Scripts
                 case SceneTypes.Menu:
                     SaverEnt_SaverCommCom.SliderVolume = SoundEnt_SliderCommCom.Value;
                     SoundEnt_AudioSourceCommCom.Volume = SaverEnt_SaverCommCom.SliderVolume;
+
+                    SaverEnt_StepModeTypeCom.SetStepModeType(Instance.EntMenuM.StepModUIEnt_DropDownTMPCom.StepModValue);
                     break;
 
                 case SceneTypes.Game:
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
         }
 
@@ -134,6 +138,9 @@ namespace Assets.Scripts
         {
             switch (sceneType)
             {
+                case SceneTypes.None:
+                    throw new Exception();
+
                 case SceneTypes.Menu:
                     ToggleSceneParentGOZoneEnt_ParentGOZoneCom.DestroyCurrentGOZone();
                     ToggleSceneParentGOZoneEnt_ParentGOZoneCom.SetParent(new GameObject(NameConst.IN_MENU_GAME_ZONE));
@@ -169,7 +176,7 @@ namespace Assets.Scripts
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
         }
     }

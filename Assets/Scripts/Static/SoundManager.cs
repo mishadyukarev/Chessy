@@ -1,9 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts.Static

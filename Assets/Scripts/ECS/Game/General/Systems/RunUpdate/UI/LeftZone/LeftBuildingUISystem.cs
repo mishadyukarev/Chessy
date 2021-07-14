@@ -1,9 +1,11 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using static Assets.Scripts.Main;
 
 internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
 {
     private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
+    private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
     public override void Init()
     {
@@ -45,20 +47,32 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
     }
 
 
-    private void BuyUnit(UnitTypes unitType) => _photonPunRPC.CreateUnitToMaster(unitType);
+    private void BuyUnit(UnitTypes unitType)
+    {
+        if (!IsActivatedDoner) _photonPunRPC.CreateUnitToMaster(unitType);
+    }
     private void ToggleUpgradeMod(UpgradeModTypes upgradeModType)
     {
-        if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.None)
+        if (!IsActivatedDoner)
         {
-            _eGM.SelectorEnt_SelectorCom.UpgradeModType = upgradeModType;
-        }
-        else
-        {
-            _eGM.SelectorEnt_SelectorCom.UpgradeModType = UpgradeModTypes.None;
+            if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.None)
+            {
+                _eGM.SelectorEnt_SelectorCom.UpgradeModType = upgradeModType;
+            }
+            else
+            {
+                _eGM.SelectorEnt_SelectorCom.UpgradeModType = UpgradeModTypes.None;
+            }
         }
     }
 
-    private void UpgradeBuilding(BuildingTypes buildingType) => _photonPunRPC.UpgradeBuildingToMaster(buildingType);
+    private void UpgradeBuilding(BuildingTypes buildingType)
+    {
+        if (!IsActivatedDoner) _photonPunRPC.UpgradeBuildingToMaster(buildingType);
+    }
 
-    private void MeltOre() => _photonPunRPC.MeltOreToMaster();
+    private void MeltOre()
+    {
+        if (!IsActivatedDoner) _photonPunRPC.MeltOreToMaster();
+    }
 }

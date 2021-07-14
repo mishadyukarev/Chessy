@@ -1,10 +1,8 @@
 ﻿
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
 using System;
 using System.Collections.Generic;
 using static Assets.Scripts.Abstractions.ValuesConst;
-using static Assets.Scripts.Static.CellBaseOperations;
 
 public struct SelectorComponent
 {

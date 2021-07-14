@@ -1,7 +1,4 @@
-﻿
-using System;
-
-internal struct StartedGameComponent
+﻿internal struct StartedGameComponent
 {
     internal bool IsStartedGame;
 

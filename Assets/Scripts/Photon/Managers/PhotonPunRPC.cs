@@ -21,8 +21,12 @@ namespace Assets.Scripts
         private SystemsGameGeneralManager _sGM;
         private SystemsGameMasterManager _sMM;
 
+        private EntitiesGameOtherManager _entOM;
+        private SystemsGameOtherManager _sysOM;
+
         private string MasterRPCName => nameof(MasterRPC);
         private string GeneralRPCName => nameof(GeneralRPC);
+        private string OtherRPCName => nameof(OtherRPC);
 
         private int _i;
 
@@ -36,10 +40,35 @@ namespace Assets.Scripts
             _eGM = eCSmanager.EntitiesGameGeneralManager;
             _sGM = eCSmanager.SystemsGameGeneralManager;
 
+            _entOM = eCSmanager.EntitiesGameOtherManager;
+            _sysOM = eCSmanager.SystemsGameOtherManager;
+
 
             PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
         }
 
+        internal void ToggleScene(SceneTypes sceneType)
+        {
+            switch (sceneType)
+            {
+                case SceneTypes.None:
+                    throw new Exception();
+
+                case SceneTypes.Menu:
+                    break;
+
+                case SceneTypes.Game:
+                    if (!Instance.IsMasterClient)
+                    {
+                        SyncAllToMaster();
+                        //GetStepModTypeToMaster();
+                    }
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+        }
 
         #region PUN
 
@@ -48,16 +77,13 @@ namespace Assets.Scripts
         public void ReadyToGeneral(RpcTarget rpcTarget, bool isCurrentReady, bool isStartedGame) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Ready, new object[] { isCurrentReady, isStartedGame });
 
         public void DoneToMaster(bool isDone) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[] { isDone });
-        public void SetDonerActiveToGeneral(Player playerTo, bool isDoned) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SetDonerActiveUI, new object[] { isDoned });
-        public void SetDonerActiveToGeneral(RpcTarget rpcTarget, bool isDoned) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.SetDonerActiveUI, new object[] { isDoned });
-        public void SetAmountMotionToGeneral(Player playerTo, int numberMotion) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SetAmountMotion, new object[] { numberMotion });
-        public void SetAmountMotionToGeneral(RpcTarget rpcTarget, int numberMotion) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.SetAmountMotion, new object[] { numberMotion });
-        public void ActiveAmountMotionUIToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.ActiveAmountMotionUI, new object[0]);
-        public void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[0]);
+        public void ActiveAmountMotionUIToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
+        public void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
+        public void SetAmountMotionToOther(Player playerTo, int numberMotion) => _photonView.RPC(OtherRPCName, playerTo, RpcOtherTypes.SetAmountMotion, new object[] { numberMotion });
+        public void SetAmountMotionToOther(RpcTarget rpcTarget, int numberMotion) => _photonView.RPC(OtherRPCName, rpcTarget, RpcOtherTypes.SetAmountMotion, new object[] { numberMotion });
 
-
-        public void UpgradeUnitToMaster(int[] xyCell, UpgradeModTypes upgradeModType = UpgradeModTypes.Unit) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, xyCell });
-        public void UpgradeBuildingToMaster(BuildingTypes buildingType, UpgradeModTypes upgradeModType = UpgradeModTypes.Building) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, buildingType });
+        public void UpgradeUnitToMaster(int[] xyCellForUpgrade, UpgradeModTypes upgradeModType = UpgradeModTypes.Unit) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, xyCellForUpgrade });
+        public void UpgradeBuildingToMaster(BuildingTypes buildingTypeForUpgrade, UpgradeModTypes upgradeModType = UpgradeModTypes.Building) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, buildingTypeForUpgrade });
 
         public void ShiftUnitToMaster(in int[] xyPreviousCell, in int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { xyPreviousCell, xySelectedCell });
         public void AttackUnitToMaster(int[] xyPreviousCell, int[] xySelectedCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Attack, new object[] { xyPreviousCell, xySelectedCell });
@@ -94,11 +120,11 @@ namespace Assets.Scripts
 
 
         [PunRPC]
-        private void MasterRPC(RpcMasterTypes rPCType, object[] objects, PhotonMessageInfo infoFrom)
+        private void MasterRPC(RpcMasterTypes rpcType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _eMM.FromInfoEnt_FromInfoCom.SetFromInfo(infoFrom);
 
-            switch (rPCType)
+            switch (rpcType)
             {
                 case RpcMasterTypes.None:
                     break;
@@ -111,6 +137,10 @@ namespace Assets.Scripts
                 case RpcMasterTypes.Done:
                     _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(DonerMasterSystem), _sMM.RpcSystems);
+                    break;
+
+                case RpcMasterTypes.GetStepModType:
+                    //SetStepModTypeToOther(infoFrom.Sender, Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType);
                     break;
 
                 case RpcMasterTypes.EndGame:
@@ -204,7 +234,7 @@ namespace Assets.Scripts
                     break;
             }
 
-            RefreshAllToMaster();
+            SyncAllToMaster();
         }
 
         [PunRPC]
@@ -227,10 +257,6 @@ namespace Assets.Scripts
 
                 case RpcGeneralTypes.SetDonerActiveUI:
                     _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(Instance.IsMasterClient, (bool)objects[_i++]);
-                    break;
-
-                case RpcGeneralTypes.SetAmountMotion:
-                    _eGM.MotionEnt_AmountCom.SetAmount((int)objects[_i++]);
                     break;
 
                 case RpcGeneralTypes.ActiveAmountMotionUI:
@@ -292,16 +318,35 @@ namespace Assets.Scripts
         }
 
         [PunRPC]
-        private void OtherRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
+        private void OtherRPC(RpcOtherTypes rpcOtherType, object[] objects, PhotonMessageInfo infoFrom)
         {
+            _i = 0;
+            _entOM.FromInfoEnt_FromInfoCom.SetFromInfo(infoFrom);
 
+            switch (rpcOtherType)
+            {
+                case RpcOtherTypes.None:
+                    throw new Exception();
+
+                case RpcOtherTypes.SetAmountMotion:
+                    _eGM.MotionEnt_AmountCom.SetAmount((int)objects[_i++]);
+                    break;
+
+                case RpcOtherTypes.SetStepModType:
+                    Instance.EntComM.SaverEnt_StepModeTypeCom.SetStepModeType((StepModeTypes)objects[_i++]);
+                    break;
+
+                default:
+                    throw new Exception();
+            }
         }
+
         #endregion
 
 
         #region Refresh
 
-        internal void RefreshAllToMaster() => _photonView.RPC(nameof(RefreshAllMaster), RpcTarget.MasterClient);
+        internal void SyncAllToMaster() => _photonView.RPC(nameof(RefreshAllMaster), RpcTarget.MasterClient);
 
         [PunRPC]
         private void RefreshAllMaster()
@@ -315,6 +360,12 @@ namespace Assets.Scripts
             {
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
+                    listObjects.Add(Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType);
+                    listObjects.Add(_eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(false));
+
+
+
+
                     listObjects.Add(_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit);
                     if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
                     {
@@ -373,7 +424,7 @@ namespace Assets.Scripts
             object[] objects = new object[listObjects.Count];
             for (int i = 0; i < objects.Length; i++) objects[i] = listObjects[i];
 
-            _photonView.RPC(nameof(RefreshCellsGeneral), RpcTarget.Others, objects);
+            _photonView.RPC(nameof(RefreshCellsOther), RpcTarget.Others, objects);
 
 
             objects = new object[]
@@ -403,19 +454,33 @@ namespace Assets.Scripts
             _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[false],
             _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[false],
             };
-            _photonView.RPC(nameof(RefreshEconomyGeneral), RpcTarget.Others, objects);
+            _photonView.RPC(nameof(RefreshEconomyOther), RpcTarget.Others, objects);
 
             #endregion
 
         }
 
         [PunRPC]
-        private void RefreshCellsGeneral(object[] objects)
+        private void RefreshCellsOther(object[] objects)
         {
             int i = 0;
             for (int x = 0; x < _eGM.Xamount; x++)
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
+                    Instance.EntComM.SaverEnt_StepModeTypeCom.SetStepModeType((StepModeTypes)objects[i++]);
+                    bool isActivatedDoner = (bool)objects[i++];
+                    _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(Instance.IsMasterClient, isActivatedDoner);
+
+
+
+
+
+
+
+
+
+
+
                     Player player;
                     bool haveOwner = false;
 
@@ -520,7 +585,7 @@ namespace Assets.Scripts
         }
 
         [PunRPC]
-        private void RefreshEconomyGeneral(object[] objects)
+        private void RefreshEconomyOther(object[] objects)
         {
             int i = 0;
 

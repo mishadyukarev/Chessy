@@ -4,6 +4,7 @@
 
     Ready,
     Done,
+    GetStepModType,
     EndGame,
     Build,
     Destroy,

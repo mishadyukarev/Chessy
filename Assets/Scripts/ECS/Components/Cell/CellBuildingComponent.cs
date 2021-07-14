@@ -63,7 +63,7 @@ internal struct CellBuildingComponent
         sR.enabled = isActive;
 
         if (player != default)
-        {    
+        {
             if (player.IsMasterClient) sR.color = Color.blue;
             else sR.color = Color.red;
         }

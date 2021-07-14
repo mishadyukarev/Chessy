@@ -50,11 +50,11 @@ internal struct CellSupportStaticComponent
                 break;
 
             case SupportStaticTypes.Wood:
-                _woodSR.color  = color;
+                _woodSR.color = color;
                 break;
 
             case SupportStaticTypes.Ore:
-                _oreSR.color= color;
+                _oreSR.color = color;
                 break;
 
             case SupportStaticTypes.Hp:

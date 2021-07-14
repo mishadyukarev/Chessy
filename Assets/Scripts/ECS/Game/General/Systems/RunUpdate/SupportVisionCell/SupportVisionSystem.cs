@@ -68,7 +68,7 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                             _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
 
 
-                            if(!_eGM.CellUnitEnt_CellOwnerBotCom(x, y).HaveBot)
+                            if (!_eGM.CellUnitEnt_CellOwnerBotCom(x, y).HaveBot)
                             {
                                 if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient)
                                 {
@@ -86,17 +86,18 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                         }
 
 
-
                         if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsProtected)
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
                             _eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.yellow);
                         }
+
                         else if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsRelaxed)
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
                             _eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.green);
                         }
+
                         else
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(false);
@@ -107,40 +108,41 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).EnableStandartColorSR(true);
                         }
+
                         else
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).EnableStandartColorSR(false);
                         }
                     }
+
                     else
                     {
                         _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Hp);
                     }
 
-                    
 
-                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType != UnitTypes.King)
+
+
+                    if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.Unit)
                     {
-                        if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                        if (_eGM.CellUnitEnt_UnitTypeCom(x, y).IsPawn || _eGM.CellUnitEnt_UnitTypeCom(x, y).IsRook || _eGM.CellUnitEnt_UnitTypeCom(x, y).IsBishop)
                         {
-                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMine)
+                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                             {
-                                switch (_eGM.SelectorEnt_SelectorCom.UpgradeModType)
+                                if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMine)
                                 {
-                                    case UpgradeModTypes.None:
-                                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
-                                        break;
-
-                                    case UpgradeModTypes.Unit:
-                                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(true, SupportVisionTypes.Upgrade);
-                                        break;
-
-                                    case UpgradeModTypes.Building:
-                                        break;
-
-                                    default:
-                                        break;
+                                    _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(true, SupportVisionTypes.Upgrade);
                                 }
+
+                                else
+                                {
+                                    _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
+                                }
+                            }
+
+                            else
+                            {
+                                _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
                             }
                         }
 
@@ -149,10 +151,42 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                             _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
                         }
                     }
-                }
-                else
-                {
-                    _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Hp);
+                    else
+                    {
+                        _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
+                    }
+
+
+                    //        switch (_eGM.SelectorEnt_SelectorCom.UpgradeModType)
+                    //        {
+                    //            case UpgradeModTypes.None:
+                    //                _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
+                    //                break;
+
+                    //            case UpgradeModTypes.Unit:
+                    //                _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(true, SupportVisionTypes.Upgrade);
+                    //                break;
+
+                    //            case UpgradeModTypes.Building:
+                    //                break;
+
+                    //            default:
+                    //                break;
+                    //        }
+                    //    }
+                    //}
+
+                    //else
+                    //{
+                    //    _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
+                    //}
+                    //    }
+                    //}
+                    //else
+                    //{
+                    //    _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
+                    //    _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Hp);
+                    //}
                 }
             }
 

@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
 using Photon.Pun;
 
 
@@ -31,7 +30,7 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.Pawn:
-                if(_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.PawnSword, InfoFrom.Sender.IsMasterClient))
+                if (_eGM.UnitInfoEnt_UnitInventorCom.HaveUnitInInventor(UnitTypes.PawnSword, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.PawnSword;

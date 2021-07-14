@@ -40,7 +40,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
             if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).IsMelee)
             {
-                _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);      
+                _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
                 damageToPrevious += CellUnitWorker.SimplePowerDamage(unitTypeSelected);
 
@@ -89,7 +89,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
                 else
                 {
                     CellUnitWorker.ResetBotUnit(XyPreviousCell);
-                }          
+                }
             }
 
             if (!_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveHealth)
@@ -107,7 +107,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
                     CellUnitWorker.ResetBotUnit(XySelectedCell);
                 }
 
-                
+
 
 
                 if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).UnitType != UnitTypes.Rook

@@ -37,6 +37,7 @@ namespace Assets.Scripts
 
         public EntitiesGameGeneralManager EntGGM => _eCSmanager.EntitiesGameGeneralManager;
         public EntitiesMenuManager EntMenuM => _eCSmanager.EntitiesMenuManager;
+        public EntitiesCommonManager EntComM => _eCSmanager.EntitiesCommonManager;
 
         #endregion
 

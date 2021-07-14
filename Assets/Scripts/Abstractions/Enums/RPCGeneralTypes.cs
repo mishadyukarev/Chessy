@@ -6,7 +6,6 @@
 
         Ready,
         SetDonerActiveUI,
-        SetAmountMotion,
         ActiveAmountMotionUI,
         EndGame,
         Attack,

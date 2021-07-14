@@ -9,11 +9,15 @@ internal struct ActivatedDictComponent
     internal void StartFill()
     {
         _isActivatedDict = new Dictionary<bool, bool>();
-        _isActivatedDict[true] = default;
-        _isActivatedDict[false] = default;
+        ResetAll();
     }
 
     internal bool IsActivated(bool key) => _isActivatedDict[key];
     internal void SetActivated(bool key, bool value) => _isActivatedDict[key] = value;
 
+    internal void ResetAll()
+    {
+        _isActivatedDict[true] = default;
+        _isActivatedDict[false] = default;
+    }
 }

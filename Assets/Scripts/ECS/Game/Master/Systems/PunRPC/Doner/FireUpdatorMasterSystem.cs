@@ -28,7 +28,7 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                         {
                             CellUnitWorker.ResetBotUnit(x, y);
                         }
-                        
+
                     }
 
 

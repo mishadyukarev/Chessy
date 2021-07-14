@@ -65,7 +65,7 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
             {
                 ActiveStandartAbilities(false);
             }
-            
+
         }
         else
         {
