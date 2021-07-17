@@ -236,6 +236,10 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                             {
                                 _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
                                 CellBuildingWorker.ResetBuilding(true, x, y);
+
+                                if (_eGM.CellEffectEnt_CellEffectCom(x, y).HaveEffect(EffectTypes.Fire))
+                                    _eGM.CellEffectEnt_CellEffectCom(x, y).ResetEffect(EffectTypes.Fire);
+
                             }
                             break;
 

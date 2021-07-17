@@ -121,8 +121,6 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                     }
 
 
-
-
                     if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.Unit)
                     {
                         if (_eGM.CellUnitEnt_UnitTypeCom(x, y).IsPawn || _eGM.CellUnitEnt_UnitTypeCom(x, y).IsRook || _eGM.CellUnitEnt_UnitTypeCom(x, y).IsBishop)
@@ -155,38 +153,10 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                     {
                         _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
                     }
-
-
-                    //        switch (_eGM.SelectorEnt_SelectorCom.UpgradeModType)
-                    //        {
-                    //            case UpgradeModTypes.None:
-                    //                _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
-                    //                break;
-
-                    //            case UpgradeModTypes.Unit:
-                    //                _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(true, SupportVisionTypes.Upgrade);
-                    //                break;
-
-                    //            case UpgradeModTypes.Building:
-                    //                break;
-
-                    //            default:
-                    //                break;
-                    //        }
-                    //    }
-                    //}
-
-                    //else
-                    //{
-                    //    _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
-                    //}
-                    //    }
-                    //}
-                    //else
-                    //{
-                    //    _eGM.CellSupVisEnt_CellSupVisCom(x, y).ActiveVision(false, SupportVisionTypes.Upgrade);
-                    //    _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Hp);
-                    //}
+                }
+                else
+                {
+                    _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Hp);
                 }
             }
 

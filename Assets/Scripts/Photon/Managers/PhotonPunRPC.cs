@@ -58,10 +58,10 @@ namespace Assets.Scripts
                     break;
 
                 case SceneTypes.Game:
+                    _sMM.TryInvokeRunSystem(nameof(VisibilityUnitsMasterSystem), _sMM.RpcSystems);
                     if (!Instance.IsMasterClient)
                     {
                         SyncAllToMaster();
-                        //GetStepModTypeToMaster();
                     }
                     break;
 
@@ -137,10 +137,6 @@ namespace Assets.Scripts
                 case RpcMasterTypes.Done:
                     _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething = (bool)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(DonerMasterSystem), _sMM.RpcSystems);
-                    break;
-
-                case RpcMasterTypes.GetStepModType:
-                    //SetStepModTypeToOther(infoFrom.Sender, Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType);
                     break;
 
                 case RpcMasterTypes.EndGame:
@@ -234,6 +230,7 @@ namespace Assets.Scripts
                     break;
             }
 
+            _sMM.TryInvokeRunSystem(nameof(VisibilityUnitsMasterSystem), _sMM.RpcSystems);
             SyncAllToMaster();
         }
 
@@ -348,11 +345,50 @@ namespace Assets.Scripts
 
         internal void SyncAllToMaster() => _photonView.RPC(nameof(RefreshAllMaster), RpcTarget.MasterClient);
 
+        internal void Sync(SyncTypes syncType) => _photonView.RPC(nameof(RefreshAllMaster), RpcTarget.MasterClient);
+
+
+        private void SyncMaster(SyncTypes syncType)
+        {
+            switch (syncType)
+            {
+                case SyncTypes.None:
+                    throw new Exception();
+
+                case SyncTypes.All:
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+        }
+
+        private void SyncOther(SyncTypes syncType)
+        {
+            switch (syncType)
+            {
+                case SyncTypes.None:
+                    break;
+
+                case SyncTypes.All:
+                    break;
+
+                case SyncTypes.Cell:
+                    break;
+
+                case SyncTypes.Economy:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+
+
         [PunRPC]
         private void RefreshAllMaster()
         {
-            _sMM.TryInvokeRunSystem(nameof(VisibilityUnitsMasterSystem), _sMM.RpcSystems);
-
             #region Sending
 
             List<object> listObjects = new List<object>();
