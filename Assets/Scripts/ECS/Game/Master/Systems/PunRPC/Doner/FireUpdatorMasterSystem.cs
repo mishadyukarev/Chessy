@@ -22,7 +22,7 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                     {
                         if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                         {
-                            CellUnitWorker.ResetPlayerUnit(true, x, y);
+                            CellUnitWorker.ResetPlayerUnit(x, y);
                         }
                         else
                         {

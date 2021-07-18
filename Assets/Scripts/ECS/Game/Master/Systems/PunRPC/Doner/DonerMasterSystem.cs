@@ -11,7 +11,7 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 
     internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
 
-    internal bool NeedDoneOrNot => _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething;
+    internal bool NeedDoneOrNot => _eMM.DonerEnt_IsActivatedCom.IsActivated;
 
     public override void Init()
     {

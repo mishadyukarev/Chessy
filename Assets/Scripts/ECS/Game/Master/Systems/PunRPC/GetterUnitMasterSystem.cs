@@ -4,11 +4,10 @@ using Photon.Pun;
 
 internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
 {
-    internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
-
     private int _amountForTakingUnit = 1;
 
-    internal UnitTypes UnitType => _eMM.RPCMasterEnt_RPCMasterCom.UnitType;
+    internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
+    internal UnitTypes UnitType => _eMM.CreatorEnt_UnitTypeCom.UnitType;
 
     public override void Run()
     {

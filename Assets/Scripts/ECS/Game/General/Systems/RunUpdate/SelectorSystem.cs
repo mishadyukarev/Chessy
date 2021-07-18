@@ -2,7 +2,7 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Static;
 using static Assets.Scripts.Abstractions.NameConst;
-using static Assets.Scripts.Abstractions.ValuesConst;
+using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
 using static Assets.Scripts.Main;
 using static Assets.Scripts.Static.CellBaseOperations;
 
@@ -62,7 +62,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                         {
                             if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.Unit)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit)
+                                if (_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveAnyUnit)
                                 {
                                     _photonPunRPC.UpgradeUnitToMaster(xyCurrentCell);
                                 }
@@ -98,9 +98,9 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                             else
                             {
-                                if (_eGM.SelectorEnt_UnitTypeCom.HaveUnit)
+                                if (_eGM.SelectorEnt_UnitTypeCom.HaveAnyUnit)
                                 {
-                                    if (!_eGM.CellEnvEnt_CellEnvCom(xyCurrentCell).HaveEnvironment(EnvironmentTypes.Mountain) && !_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit)
+                                    if (!_eGM.CellEnvEnt_CellEnvCom(xyCurrentCell).HaveEnvironment(EnvironmentTypes.Mountain) && !_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveAnyUnit)
                                     {
                                         if (Instance.IsMasterClient && _eGM.CellEnt_CellBaseCom(xyCurrentCell).IsStartedCell(true))
                                             _photonPunRPC.SetUniToMaster(xyCurrentCell, _eGM.SelectorEnt_UnitTypeCom.UnitType);
@@ -121,7 +121,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                     if (!CompareXy(XyPreviousCell, XySelectedCell))
                                         IsSelected = true;
 
-                                    if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
+                                    if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
                                     {
                                         if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
                                         {
@@ -161,7 +161,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                     IsSelected = true;
 
 
-                                    if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
+                                    if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
                                     {
                                         if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
                                         {
@@ -229,7 +229,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                     {
                                         if (_canShiftUnit)
                                         {
-                                            if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).HaveUnit)
+                                            if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).HaveAnyUnit)
                                             {
                                                 if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).HaveOwner)
                                                 {
@@ -255,13 +255,13 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                         else
                         {
-                            if (_eGM.SelectorEnt_UnitTypeCom.HaveUnit)
+                            if (_eGM.SelectorEnt_UnitTypeCom.HaveAnyUnit)
                             {
-                                if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit || !_eGM.CellUnitEnt_ActivatedForPlayersCom(xyCurrentCell).IsActivated(Instance.IsMasterClient) /*IsActivatedUnitDict[Instance.IsMasterClient]*/)
+                                if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveAnyUnit || !_eGM.CellUnitEnt_ActivatedForPlayersCom(xyCurrentCell).IsActivated(Instance.IsMasterClient) /*IsActivatedUnitDict[Instance.IsMasterClient]*/)
                                 {
                                     if (_isStartSelectedDirect)
                                     {
-                                        if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveUnit)
+                                        if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveAnyUnit)
                                             _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSRAndSetColor(_eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
 
                                         CopyXyInTo(xyCurrentCell, _xyPreviousVisionCell);
@@ -269,7 +269,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
                                     }
                                     else
                                     {
-                                        _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).DisableVisionAllSR();
+                                        //_eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).DisableVisionAllSR();
 
                                         _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSRAndSetColor(_eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
                                         CopyXyInTo(xyCurrentCell, _xyPreviousVisionCell);
@@ -292,7 +292,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                         ClearAvailableCells();
 
-                        _eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).DisableVisionAllSR();
+                        //_eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).DisableVisionAllSR();
                         _eGM.SelectorEnt_UnitTypeCom.ResetUnit();
 
                         CleanXY(XyPreviousCell);

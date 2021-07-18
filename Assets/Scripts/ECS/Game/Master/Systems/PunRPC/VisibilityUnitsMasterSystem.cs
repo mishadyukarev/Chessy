@@ -20,7 +20,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
 
 
 
-                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
+                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
                 {
                     if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                     {
@@ -33,7 +33,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                 List<int[]> list = CellUnitWorker.TryGetXYAround(x, y);
                                 foreach (var xy in list)
                                 {
-                                    if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveUnit)
+                                    if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveAnyUnit)
                                     {
                                         if (_eGM.CellUnitEnt_CellOwnerCom(xy).HaveOwner)
                                         {
@@ -56,7 +56,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                 List<int[]> list = CellUnitWorker.TryGetXYAround(x, y);
                                 foreach (var xy in list)
                                 {
-                                    if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveUnit)
+                                    if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveAnyUnit)
                                     {
                                         if (_eGM.CellUnitEnt_CellOwnerCom(xy).HaveOwner)
                                         {
@@ -79,7 +79,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         }
                         else
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).DisableVisionAllSR();
+                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnableSR(false, _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
                         }
                     }
 
@@ -92,7 +92,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                             List<int[]> list = CellUnitWorker.TryGetXYAround(x, y);
                             foreach (var xy in list)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveUnit)
+                                if (_eGM.CellUnitEnt_UnitTypeCom(xy).HaveAnyUnit)
                                 {
                                     if (_eGM.CellUnitEnt_CellOwnerCom(xy).HaveOwner)
                                     {
@@ -115,7 +115,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         }
                         else
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).DisableVisionAllSR();
+                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnableSR(false, _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
                         }
                     }
                 }

@@ -1,4 +1,4 @@
-﻿using static Assets.Scripts.Abstractions.ValuesConst;
+﻿using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
 
 namespace Assets.Scripts.ECS.Components
 {
@@ -23,6 +23,12 @@ namespace Assets.Scripts.ECS.Components
         {
             _fromXy = new int[XY_FOR_ARRAY];
             _toXy = new int[XY_FOR_ARRAY];
+        }
+
+        internal void SetAllXy(int[] fromXy, int[] toXy)
+        {
+            FromXy = fromXy;
+            ToXy = toXy;
         }
     }
 }

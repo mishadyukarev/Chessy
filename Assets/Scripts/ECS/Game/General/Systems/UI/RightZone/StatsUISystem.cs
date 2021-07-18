@@ -9,7 +9,7 @@ internal class StatsUISystem : SystemGeneralReduction
     {
         base.Run();
 
-        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
+        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
         {
 
             _eGM.HealthUIEnt_TextMeshProUGUICom.SetText(_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountHealth.ToString());

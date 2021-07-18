@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.Static;
 using Photon.Pun;
 using System.Collections.Generic;
@@ -39,7 +40,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
         {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
+                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
                 {
                     var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
 
@@ -140,43 +141,43 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                             switch (unitType)
                             {
                                 case UnitTypes.King:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(_startValuesGameConfig.HEALTH_FOR_ADDING_KING);
-                                    if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > _startValuesGameConfig.AMOUNT_HEALTH_KING)
-                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(_startValuesGameConfig.AMOUNT_HEALTH_KING);
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_KING);
+                                    if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > UnitValues.STANDART_AMOUNT_HEALTH_KING)
+                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(UnitValues.STANDART_AMOUNT_HEALTH_KING);
                                     break;
 
                                 case UnitTypes.Pawn:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(_startValuesGameConfig.HEALTH_FOR_ADDING_PAWN);
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_PAWN);
                                     if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > CellUnitWorker.MaxAmountHealth(unitType))
                                         _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(CellUnitWorker.MaxAmountHealth(unitType));
                                     break;
 
                                 case UnitTypes.PawnSword:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(_startValuesGameConfig.HEALTH_FOR_ADDING_PAWN_SWORD);
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_PAWN_SWORD);
                                     if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > CellUnitWorker.MaxAmountHealth(unitType))
                                         _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(CellUnitWorker.MaxAmountHealth(unitType));
                                     break;
 
                                 case UnitTypes.Rook:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(_startValuesGameConfig.HEALTH_FOR_ADDING_ROOK);
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_ROOK);
                                     if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > CellUnitWorker.MaxAmountHealth(unitType))
                                         _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(CellUnitWorker.MaxAmountHealth(unitType));
                                     break;
 
                                 case UnitTypes.RookCrossbow:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(_startValuesGameConfig.HEALTH_FOR_ADDING_ROOK_CROSSBOW);
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_ROOK_CROSSBOW);
                                     if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > CellUnitWorker.MaxAmountHealth(unitType))
                                         _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(CellUnitWorker.MaxAmountHealth(unitType));
                                     break;
 
                                 case UnitTypes.Bishop:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(_startValuesGameConfig.HEALTH_FOR_ADDING_BISHOP);
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_BISHOP);
                                     if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > CellUnitWorker.MaxAmountHealth(unitType))
                                         _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(CellUnitWorker.MaxAmountHealth(unitType));
                                     break;
 
                                 case UnitTypes.BishopCrossbow:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(_startValuesGameConfig.HEALTH_FOR_ADDING_BISHOP_CROSSBOW);
+                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_BISHOP_CROSSBOW);
                                     if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > CellUnitWorker.MaxAmountHealth(unitType))
                                         _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(CellUnitWorker.MaxAmountHealth(unitType));
                                     break;
@@ -214,7 +215,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                             break;
 
                         case BuildingTypes.Farm:
-                            minus = Instance.StartValuesGameConfig.BENEFIT_FOOD_FARM * _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Farm, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient);
+                            minus = EconomyValues.BENEFIT_FOOD_FARM * _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Farm, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient);
 
                             _eGM.CellEnvEnt_CellEnvCom(x, y).TakeAmountResources(ResourceTypes.Food, minus);
                             _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, minus);
@@ -227,7 +228,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                             break;
 
                         case BuildingTypes.Woodcutter:
-                            minus = Instance.StartValuesGameConfig.BENEFIT_WOOD_WOODCUTTER * _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient);
+                            minus = EconomyValues.BENEFIT_WOOD_WOODCUTTER * _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient);
 
                             _eGM.CellEnvEnt_CellEnvCom(x, y).TakeAmountResources(ResourceTypes.Wood, minus);
                             _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, minus);
@@ -244,7 +245,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                             break;
 
                         case BuildingTypes.Mine:
-                            minus = Instance.StartValuesGameConfig.BENEFIT_ORE_MINE * _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Mine, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient);
+                            minus = EconomyValues.BENEFIT_ORE_MINE * _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Mine, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient);
 
                             _eGM.CellEnvEnt_CellEnvCom(x, y).TakeAmountResources(ResourceTypes.Ore, minus);
                             _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Ore, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, minus);
@@ -343,7 +344,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                 {
                     for (int y = 0; y < _eGM.Yamount; y++)
                     {
-                        if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
+                        if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
                         {
                             if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                             {
@@ -351,7 +352,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                                 {
                                     if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType != UnitTypes.King)
                                     {
-                                        CellUnitWorker.ResetPlayerUnit(true, x, y);
+                                        CellUnitWorker.ResetPlayerUnit(x, y);
                                         isResetedUnit = true;
                                         _amountMotionsWithoutFood[true] = 0;
                                         _countForResetUnitMaster = 1;
@@ -373,7 +374,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                 {
                     for (int y = 0; y < _eGM.Yamount; y++)
                     {
-                        if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
+                        if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
                         {
                             if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                             {
@@ -381,7 +382,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                                 {
                                     if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType != UnitTypes.King)
                                     {
-                                        CellUnitWorker.ResetPlayerUnit(true, x, y);
+                                        CellUnitWorker.ResetPlayerUnit(x, y);
 
                                         isResetedUnit = true;
                                         _amountMotionsWithoutFood[false] = 0;

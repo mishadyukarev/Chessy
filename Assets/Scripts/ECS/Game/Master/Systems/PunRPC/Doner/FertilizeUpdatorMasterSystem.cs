@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.Static;
 using UnityEngine;
 using static Assets.Scripts.Main;
@@ -38,11 +39,11 @@ internal sealed class FertilizeUpdatorMasterSystem : SystemGeneralReduction
 
                                 if (_eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType == BuildingTypes.Farm)
                                 {
-                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.FOOD_FOR_BUILDING_FARM);
-                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.WOOD_FOR_BUILDING_FARM);
-                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Ore, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.ORE_FOR_BUILDING_FARM);
-                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Iron, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.IRON_FOR_BUILDING_FARM);
-                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Gold, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, Instance.StartValuesGameConfig.GOLD_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, EconomyValues.FOOD_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, EconomyValues.WOOD_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Ore, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, EconomyValues.ORE_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Iron, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, EconomyValues.IRON_FOR_BUILDING_FARM);
+                                    _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Gold, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, EconomyValues.GOLD_FOR_BUILDING_FARM);
 
                                     CellBuildingWorker.ResetBuilding(true, x, y);
                                 }

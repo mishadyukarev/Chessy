@@ -20,7 +20,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                 _eGM.CellEffectEnt_CellEffectCom(x, y).ResetEffect(EffectTypes.Fire);
 
 
-                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
+                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
                 {
                     if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                     {
@@ -64,7 +64,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 
                         if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
                         {
-                            CellUnitWorker.ResetPlayerUnit(true, x, y);
+                            CellUnitWorker.ResetPlayerUnit(x, y);
                         }
                         else
                         {

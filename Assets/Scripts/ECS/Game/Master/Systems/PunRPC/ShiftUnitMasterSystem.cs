@@ -8,38 +8,28 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
 {
     internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
 
-    internal int[] XyPreviousCell => _eMM.RPCMasterEnt_RPCMasterCom.XyPrevious;
-    internal int[] XySelectedCell => _eMM.RPCMasterEnt_RPCMasterCom.XySelected;
+    internal int[] FromXy => _eMM.ShiftEnt_FromToXyCom.FromXy;
+    internal int[] ToXy => _eMM.ShiftEnt_FromToXyCom.ToXy;
 
     public override void Run()
     {
         base.Run();
 
-        List<int[]> xyAvailableCellsForShift = CellUnitWorker.GetCellsForShift(XyPreviousCell);
+        List<int[]> xyAvailableCellsForShift = CellUnitWorker.GetCellsForShift(FromXy);
 
-        if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).IsHim(InfoFrom.Sender) && _eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).HaveMinAmountSteps)
+        if (_eGM.CellUnitEnt_CellOwnerCom(FromXy).IsHim(InfoFrom.Sender) && _eGM.CellUnitEnt_CellUnitCom(FromXy).HaveMinAmountSteps)
         {
-            if (TryFindCellInList(XySelectedCell, xyAvailableCellsForShift))
+            if (TryFindCellInList(ToXy, xyAvailableCellsForShift))
             {
                 _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
-                CellUnitWorker.ShiftUnit(XyPreviousCell, XySelectedCell);
+                CellUnitWorker.ShiftPlayerUnit(FromXy, ToXy);
 
 
-                if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).HaveOwner)
-                {
-                    CellUnitWorker.ResetPlayerUnit(false, XyPreviousCell);
-                }
-                else
-                {
-                    CellUnitWorker.ResetBotUnit(XyPreviousCell);
-                }
+                _eGM.CellUnitEnt_CellUnitCom(ToXy).TakeAmountSteps(_eGM.CellEnvEnt_CellEnvCom(ToXy).NeedAmountSteps());
+                if (_eGM.CellUnitEnt_CellUnitCom(ToXy).AmountSteps < 0) _eGM.CellUnitEnt_CellUnitCom(ToXy).ResetAmountSteps();
 
-
-                _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).TakeAmountSteps(_eGM.CellEnvEnt_CellEnvCom(XySelectedCell).NeedAmountSteps());
-                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps < 0) _eGM.CellUnitEnt_CellUnitCom(XySelectedCell).ResetAmountSteps();
-
-                _eGM.CellUnitEnt_ProtectRelaxCom(XySelectedCell).ResetProtectedRelaxedType();
+                _eGM.CellUnitEnt_ProtectRelaxCom(ToXy).ResetProtectedRelaxedType();
             }
         }
     }

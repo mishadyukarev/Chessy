@@ -2,7 +2,7 @@
 using Assets.Scripts.Abstractions.Enums;
 using System;
 using System.Collections.Generic;
-using static Assets.Scripts.Abstractions.ValuesConst;
+using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
 
 public struct SelectorComponent
 {
@@ -14,6 +14,8 @@ public struct SelectorComponent
     internal List<int[]> AvailableCellsForShift;
     internal List<int[]> AvailableCellsSimpleAttack;
     internal List<int[]> AvailableCellsUniqueAttack;
+
+    internal List<int[]> StartCellsForSettingUnit;
 
 
     internal int[] XyCurrentCell

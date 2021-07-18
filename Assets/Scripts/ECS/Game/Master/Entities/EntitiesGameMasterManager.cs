@@ -9,12 +9,12 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
     internal ref FromInfoComponent FromInfoEnt_FromInfoCom => ref _fromInfoEnt.Get<FromInfoComponent>();
 
 
-    private EcsEntity _masterRPCEntity;
-    internal ref RPCMasterComponent RPCMasterEnt_RPCMasterCom => ref _masterRPCEntity.Get<RPCMasterComponent>();
-
-
     private EcsEntity _readyEnt;
     internal ref ActivatedComponent ReadyEnt_IsActivatedCom => ref _readyEnt.Get<ActivatedComponent>();
+
+
+    private EcsEntity _donerEnt;
+    internal ref ActivatedComponent DonerEnt_IsActivatedCom => ref _donerEnt.Get<ActivatedComponent>();
 
 
     private EcsEntity _fireEnt;
@@ -37,16 +37,54 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
     internal ref XyCellComponent SeedingEnt_XyCellCom => ref _seedingEnt.Get<XyCellComponent>();
 
 
+    private EcsEntity _buildEnt;
+    internal ref XyCellComponent BuildEnt_XyCellCom => ref _buildEnt.Get<XyCellComponent>();
+    internal ref BuildingTypeComponent BuildEnt_BuildingTypeCom => ref _buildEnt.Get<BuildingTypeComponent>();
+
+
+    private EcsEntity _destroyEnt;
+    internal ref XyCellComponent DestroyEnt_XyCellCom => ref _destroyEnt.Get<XyCellComponent>();
+
+
+    private EcsEntity _shiftEnt;
+    internal ref FromToXyComponent ShiftEnt_FromToXyCom => ref _shiftEnt.Get<FromToXyComponent>();
+
+
+    private EcsEntity _attackEnt;
+    internal ref FromToXyComponent AttackEnt_FromToXyCom => ref _attackEnt.Get<FromToXyComponent>();
+
+
+    private EcsEntity _creatorEnt;
+    internal ref UnitTypeComponent CreatorEnt_UnitTypeCom => ref _creatorEnt.Get<UnitTypeComponent>();
+
+
+    private EcsEntity _getterUnitEnt;
+    internal ref UnitTypeComponent GetterUnitEnt_UnitTypeCom => ref _getterUnitEnt.Get<UnitTypeComponent>();
+
+
+    private EcsEntity _settingUnitEnt;
+    internal ref XyCellComponent SettingUnitEnt_XyCellCom => ref _settingUnitEnt.Get<XyCellComponent>();
+    internal ref UnitTypeComponent SettingUnitEnt_UnitTypeCom => ref _settingUnitEnt.Get<UnitTypeComponent>();
+
+
     public EntitiesGameMasterManager(EcsWorld gameWorld)
     {
         _fromInfoEnt = gameWorld.NewEntity();
-        _masterRPCEntity = gameWorld.NewEntity();
 
         _readyEnt = gameWorld.NewEntity();
+        _donerEnt = gameWorld.NewEntity();
+
         _fireEnt = gameWorld.NewEntity();
         _upgradeEnt = gameWorld.NewEntity();
         _protectRelaxEnt = gameWorld.NewEntity();
         _seedingEnt = gameWorld.NewEntity();
+        _buildEnt = gameWorld.NewEntity();
+        _destroyEnt = gameWorld.NewEntity();
+        _shiftEnt = gameWorld.NewEntity();
+        _attackEnt = gameWorld.NewEntity();
+        _creatorEnt = gameWorld.NewEntity();
+        _getterUnitEnt = gameWorld.NewEntity();
+        _settingUnitEnt = gameWorld.NewEntity();
     }
 
     internal override void FillEntities()
@@ -54,10 +92,12 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
         base.FillEntities();
 
         FromInfoEnt_FromInfoCom.StartFill();
-        _masterRPCEntity.Replace(new RPCMasterComponent());
-
 
         ReadyEnt_IsActivatedCom.StartFill();
+
+        DonerEnt_IsActivatedCom.StartFill();
+
+
         FireEnt_FromToXyCom.StartFill();
 
         UpgradeEnt_UpgradeTypeCom.StartFill();
@@ -69,5 +109,21 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
 
         SeedingEnt_EnvironmentTypesCom.StartFill();
         SeedingEnt_XyCellCom.StartFill();
+
+        BuildEnt_XyCellCom.StartFill();
+        BuildEnt_BuildingTypeCom.StartFill();
+
+        DestroyEnt_XyCellCom.StartFill();
+
+        ShiftEnt_FromToXyCom.StartFill();
+
+        AttackEnt_FromToXyCom.StartFill();
+
+        CreatorEnt_UnitTypeCom.StartFill();
+
+        GetterUnitEnt_UnitTypeCom.StartFill();
+
+        SettingUnitEnt_XyCellCom.StartFill();
+        SettingUnitEnt_UnitTypeCom.StartFill();
     }
 }

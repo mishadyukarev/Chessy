@@ -13,7 +13,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
+        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
         {
             if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
             {

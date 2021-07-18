@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Assets.Scripts.Abstractions.ValuesConsts;
+using System;
 using UnityEngine;
 using static Assets.Scripts.Main;
+using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
 
 internal struct CellEnvironmentComponent
 {
@@ -225,25 +227,25 @@ internal struct CellEnvironmentComponent
         switch (environmentTypes)
         {
             case EnvironmentTypes.None:
-                throw new System.Exception();
+                throw new Exception();
 
             case EnvironmentTypes.Fertilizer:
-                return 10;
+                return MAX_AMOUNT_FOOD;
 
             case EnvironmentTypes.YoungForest:
-                throw new System.Exception();
+                throw new Exception();
 
             case EnvironmentTypes.AdultForest:
-                return 10;
+                return MAX_AMOUNT_WOOD;
 
             case EnvironmentTypes.Hill:
-                return 999;
+                return MAX_AMOUNT_ORE;
 
             case EnvironmentTypes.Mountain:
-                throw new System.Exception();
+                throw new Exception();
 
             default:
-                throw new System.Exception();
+                throw new Exception();
         }
     }
 
@@ -252,25 +254,25 @@ internal struct CellEnvironmentComponent
         switch (environmentTypes)
         {
             case EnvironmentTypes.None:
-                throw new System.Exception();
+                throw new Exception();
 
             case EnvironmentTypes.Fertilizer:
-                return 5;
+                return MIN_AMOUNT_FOOD;
 
             case EnvironmentTypes.YoungForest:
-                throw new System.Exception();
+                throw new Exception();
 
             case EnvironmentTypes.AdultForest:
-                return 5;
+                return MIN_AMOUNT_WOOD;
 
             case EnvironmentTypes.Hill:
-                return 999;
+                return MIN_AMOUNT_ORE;
 
             case EnvironmentTypes.Mountain:
-                throw new System.Exception();
+                throw new Exception();
 
             default:
-                throw new System.Exception();
+                throw new Exception();
         }
     }
 
@@ -396,13 +398,13 @@ internal struct CellEnvironmentComponent
         int amountSteps = 1;
 
         if (HaveEnvironment(EnvironmentTypes.Fertilizer))
-            amountSteps += Instance.StartValuesGameConfig.NEED_AMOUNT_STEPS_FOOD;
+            amountSteps += UnitValues.NEED_AMOUNT_STEPS_FOOD;
 
         if (HaveEnvironment(EnvironmentTypes.AdultForest))
-            amountSteps += Instance.StartValuesGameConfig.NEED_AMOUNT_STEPS_TREE;
+            amountSteps += UnitValues.NEED_AMOUNT_STEPS_TREE;
 
         if (HaveEnvironment(EnvironmentTypes.Hill))
-            amountSteps += Instance.StartValuesGameConfig.NEED_AMOUNT_STEPS_HILL;
+            amountSteps += UnitValues.NEED_AMOUNT_STEPS_HILL;
 
         return amountSteps;
     }

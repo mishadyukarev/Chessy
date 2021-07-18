@@ -21,7 +21,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected && _eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
+        if (_eGM.SelectorEnt_SelectorCom.IsSelected && _eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
         {
             if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
             {

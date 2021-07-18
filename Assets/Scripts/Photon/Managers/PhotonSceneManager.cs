@@ -37,7 +37,7 @@ namespace Assets.Scripts
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
         }
 
@@ -46,6 +46,9 @@ namespace Assets.Scripts
         {
             switch (sceneType)
             {
+                case SceneTypes.None:
+                    throw new Exception();
+
                 case SceneTypes.Menu:
                     _logTex = Instance.CanvasManager.FindUnderParent<TextMeshProUGUI>(SceneTypes.Menu, "LogText");
                     Instance.CanvasManager.FindUnderParent<Button>(sceneType, "QuitButton").onClick.AddListener(delegate { Application.Quit(); });
@@ -68,7 +71,7 @@ namespace Assets.Scripts
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
         }
 
@@ -194,8 +197,6 @@ namespace Assets.Scripts
                 Instance.EntMenuM.JoinOnlineEnt_ButtonCom.SetActive(false);
                 Instance.EntMenuM.StepModUIEnt_DropDownTMPCom.SetActive(false);
             }
-
-            //PhotonNetwork.ConnectToRegion("ru");
         }
 
         public override void OnJoinRandomFailed(short returnCode, string message)

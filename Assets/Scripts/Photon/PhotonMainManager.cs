@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Abstractions;
+﻿using Assets.Scripts.Abstractions.ValuesConsts;
 using Photon.Pun;
 using System;
 using static Assets.Scripts.Main;

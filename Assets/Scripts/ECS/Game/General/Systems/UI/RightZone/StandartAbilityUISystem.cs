@@ -10,7 +10,7 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveUnit)
+        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
         {
             if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
             {

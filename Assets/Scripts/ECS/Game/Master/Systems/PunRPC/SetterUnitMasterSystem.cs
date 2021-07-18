@@ -1,12 +1,13 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.ValuesConsts;
 using Photon.Pun;
 
 internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 {
     internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
-    internal UnitTypes UnitType => _eMM.RPCMasterEnt_RPCMasterCom.UnitType;
-    private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
+    internal UnitTypes UnitType => _eMM.SettingUnitEnt_UnitTypeCom.UnitType;
+    private int[] XyCell => _eMM.SettingUnitEnt_XyCellCom.XyCell;
 
     public override void Run()
     {
@@ -14,7 +15,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
         bool isSetted = false;
 
-        if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Mountain) && !_eGM.CellUnitEnt_UnitTypeCom(XyCell).HaveUnit)
+        if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Mountain) && !_eGM.CellUnitEnt_UnitTypeCom(XyCell).HaveAnyUnit)
         {
             switch (UnitType)
             {
@@ -25,7 +26,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                 case UnitTypes.King:
                     if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
                     {
-                        CellUnitWorker.SetPlayerUnit(true, UnitTypes.King, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_KING, ProtectRelaxTypes.None, InfoFrom.Sender, XyCell);
+                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
                         _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                         isSetted = true;
@@ -39,7 +40,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                 case UnitTypes.Pawn:
                     if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
                     {
-                        CellUnitWorker.SetPlayerUnit(true, UnitTypes.Pawn, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN, ProtectRelaxTypes.None, InfoFrom.Sender, XyCell);
+                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
                         _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                         isSetted = true;
@@ -51,7 +52,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                 case UnitTypes.PawnSword:
                     if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
                     {
-                        CellUnitWorker.SetPlayerUnit(true, UnitType, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN_SWORD, ProtectRelaxTypes.None, InfoFrom.Sender, XyCell);
+                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
                         _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                         isSetted = true;
@@ -63,7 +64,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                 case UnitTypes.Rook:
                     if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
                     {
-                        CellUnitWorker.SetPlayerUnit(true, UnitTypes.Rook, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK, ProtectRelaxTypes.None, InfoFrom.Sender, XyCell);
+                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
                         _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                         isSetted = true;
@@ -75,7 +76,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                 case UnitTypes.RookCrossbow:
                     if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
                     {
-                        CellUnitWorker.SetPlayerUnit(true, UnitType, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK_CROSSBOW, ProtectRelaxTypes.None, InfoFrom.Sender, XyCell);
+                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
                         _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                         isSetted = true;
@@ -87,7 +88,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                 case UnitTypes.Bishop:
                     if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
                     {
-                        CellUnitWorker.SetPlayerUnit(true, UnitTypes.Bishop, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP, ProtectRelaxTypes.None, InfoFrom.Sender, XyCell);
+                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
                         _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                         isSetted = true;
@@ -98,7 +99,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
                 case UnitTypes.BishopCrossbow:
                     if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
                     {
-                        CellUnitWorker.SetPlayerUnit(true, UnitType, default, _startValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW, ProtectRelaxTypes.None, InfoFrom.Sender, XyCell);
+                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
                         _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                         isSetted = true;

@@ -5,7 +5,7 @@ using Photon.Pun;
 internal sealed class CreatorUnitMasterSystem : RPCMasterSystemReduction
 {
     internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
-    internal UnitTypes UnitType => _eMM.RPCMasterEnt_RPCMasterCom.UnitType;
+    internal UnitTypes UnitType => _eMM.CreatorEnt_UnitTypeCom.UnitType;
 
     public override void Run()
     {

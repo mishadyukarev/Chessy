@@ -27,7 +27,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
             for (int x = 0; x < _eGM.Xamount; x++)
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
-                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveUnit)
+                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
                     {
                         var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
 

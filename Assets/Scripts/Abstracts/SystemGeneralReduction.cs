@@ -8,11 +8,9 @@ namespace Assets.Scripts
         protected EntitiesGameGeneralManager _eGM;
         protected SystemsGameGeneralManager _sGM;
 
-        protected StartGameValuesConfig _startValuesGameConfig;
-
         protected SystemGeneralReduction()
         {
-            _startValuesGameConfig = Instance.StartValuesGameConfig;
+
         }
 
         public virtual void Init()

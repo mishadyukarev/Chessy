@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.ValuesConsts;
 using Photon.Realtime;
 using System;
 using UnityEngine;
@@ -130,25 +131,25 @@ internal struct CellUnitComponent
                 throw new Exception();
 
             case UnitTypes.King:
-                return _amountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING;
+                return _amountSteps == UnitValues.STANDART_AMOUNT_STEPS_KING;
 
             case UnitTypes.Pawn:
-                return _amountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN;
+                return _amountSteps == UnitValues.STANDART_AMOUNT_STEPS_PAWN;
 
             case UnitTypes.PawnSword:
-                return _amountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN_SWORD;
+                return _amountSteps == UnitValues.STANDART_AMOUNT_STEPS_PAWN_SWORD;
 
             case UnitTypes.Rook:
-                return _amountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK;
+                return _amountSteps == UnitValues.STANDART_AMOUNT_STEPS_ROOK;
 
             case UnitTypes.RookCrossbow:
-                return _amountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK_CROSSBOW;
+                return _amountSteps == UnitValues.STANDART_AMOUNT_STEPS_ROOK_CROSSBOW;
 
             case UnitTypes.Bishop:
-                return _amountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP;
+                return _amountSteps == UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
 
             case UnitTypes.BishopCrossbow:
-                return _amountSteps == Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW;
+                return _amountSteps == UnitValues.STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW;
 
             default:
                 throw new Exception();
@@ -159,31 +160,31 @@ internal struct CellUnitComponent
         switch (unitType)
         {
             case UnitTypes.King:
-                SetAmountSteps(Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_KING);
+                SetAmountSteps(UnitValues.STANDART_AMOUNT_STEPS_KING);
                 break;
 
             case UnitTypes.Pawn:
-                SetAmountSteps(Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN);
+                SetAmountSteps(UnitValues.STANDART_AMOUNT_STEPS_PAWN);
                 break;
 
             case UnitTypes.PawnSword:
-                SetAmountSteps(Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_PAWN_SWORD);
+                SetAmountSteps(UnitValues.STANDART_AMOUNT_STEPS_PAWN_SWORD);
                 break;
 
             case UnitTypes.Rook:
-                SetAmountSteps(Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK);
+                SetAmountSteps(UnitValues.STANDART_AMOUNT_STEPS_ROOK);
                 break;
 
             case UnitTypes.RookCrossbow:
-                SetAmountSteps(Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_ROOK_CROSSBOW);
+                SetAmountSteps(UnitValues.STANDART_AMOUNT_STEPS_ROOK_CROSSBOW);
                 break;
 
             case UnitTypes.Bishop:
-                SetAmountSteps(Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP);
+                SetAmountSteps(UnitValues.STANDART_AMOUNT_STEPS_BISHOP);
                 break;
 
             case UnitTypes.BishopCrossbow:
-                SetAmountSteps(Instance.StartValuesGameConfig.STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW);
+                SetAmountSteps(UnitValues.STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW);
                 break;
 
             default:
@@ -198,10 +199,12 @@ internal struct CellUnitComponent
 
     internal void EnablePlayerSRAndSetColor(UnitTypes unitType, Player player)
     {
+        //if (player == default) throw new Exception();
+
+
         EnableSR(true, unitType);
 
         if (player != default)
-        {
             if (player.IsMasterClient)
             {
                 _standartColorSR.color = Color.blue;
@@ -212,14 +215,16 @@ internal struct CellUnitComponent
                 _standartColorSR.color = Color.red;
                 _defendRelaxSR.color = Color.yellow;
             }
-        }
     }
+
     internal void EnableBotSRAndSetColor(UnitTypes unitType)
     {
         EnableSR(true, unitType);
 
         _standartColorSR.color = Color.red;
     }
+
+
     internal void EnableSR(bool isActive, UnitTypes unitType)
     {
         switch (unitType)
@@ -272,19 +277,6 @@ internal struct CellUnitComponent
             default:
                 throw new Exception();
         }
-
-    }
-    internal void DisableVisionAllSR()
-    {
-        _kingSR.enabled = false;
-        _pawnSR.enabled = false;
-        _pawnSwordSR.enabled = false;
-        _rookSR.enabled = false;
-        _rookCrossbowSR.enabled = false;
-        _bishopSR.enabled = false;
-        _bishopCrossbowSR.enabled = false;
-        _standartColorSR.enabled = false;
-        _defendRelaxSR.enabled = false;
     }
 
     internal void SetColorDefendRelaxSR(Color color) => _defendRelaxSR.color = color;

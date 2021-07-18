@@ -5,7 +5,7 @@ internal sealed class ReadyMasterSystem : RPCMasterSystemReduction
 {
     private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
 
-    private bool IsReady => _eGM.RpcGeneralEnt_RPCCom.NeedActiveSomething;
+    private bool IsReady => _eMM.ReadyEnt_IsActivatedCom.IsActivated;
 
     public override void Run()
     {

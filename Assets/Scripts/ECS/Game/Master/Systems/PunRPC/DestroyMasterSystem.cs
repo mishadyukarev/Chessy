@@ -7,7 +7,7 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
 {
     private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
 
-    private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
+    private int[] XyCell => _eMM.DestroyEnt_XyCellCom.XyCell;
 
 
     public override void Run()

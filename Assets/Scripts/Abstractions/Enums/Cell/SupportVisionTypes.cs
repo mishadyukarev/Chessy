@@ -8,6 +8,5 @@ public enum SupportVisionTypes
     WayUnit,
     SimpleAttack,
     UniqueAttack,
-    Zone,
     Upgrade,
 }

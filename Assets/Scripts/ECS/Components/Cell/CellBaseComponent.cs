@@ -17,6 +17,9 @@ internal struct CellBaseComponent
     {
         switch (xyzType)
         {
+            case XyzTypes.None:
+                throw new System.Exception();
+
             case XyzTypes.X:
                 return _cellGO.transform.rotation.eulerAngles.x;
 
@@ -39,7 +42,7 @@ internal struct CellBaseComponent
         _isStartedCellDict = isStartedDict;
     }
 
-    internal void RotateAndFixRot()
+    internal void Rotate()
     {
         _cellGO.transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
     }

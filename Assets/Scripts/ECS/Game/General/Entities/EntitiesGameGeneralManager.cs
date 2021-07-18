@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Static;
@@ -8,9 +9,10 @@ using Leopotam.Ecs;
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
-using static Assets.Scripts.Abstractions.EnvironmentValues;
-using static Assets.Scripts.Abstractions.ValuesConst;
+using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
+using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
 using static Assets.Scripts.Main;
+using Assets.Scripts.ECS.Components;
 
 public sealed partial class EntitiesGameGeneralManager
 {
@@ -50,7 +52,7 @@ public sealed partial class EntitiesGameGeneralManager
     internal ref OwnerComponent CellBuildEnt_OwnerCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerComponent>();
     internal ref OwnerBotComponent CellBuildEnt_CellOwnerBotCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerBotComponent>();
 
-    internal ref CellSupportVisionComponent CellSupVisEnt_CellSupVisCom(params int[] xy) => ref _cellSupportVisionEnts[xy[X], xy[Y]].Get<CellSupportVisionComponent>();
+    internal ref SpriteRendererComponent CellSupVisEnt_SpriteRenderer(params int[] xy) => ref _cellSupportVisionEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
 
     internal ref CellSupportStaticComponent CellSupStatEnt_CellSupStatCom(params int[] xy) => ref _cellSupportStaticEnts[xy[X], xy[Y]].Get<CellSupportStaticComponent>();
 
@@ -193,10 +195,8 @@ public sealed partial class EntitiesGameGeneralManager
 
     internal EntitiesGameGeneralManager(EcsWorld gameWorld)
     {
-        //_playersInfoEnt = gameWorld.NewEntity();
-
-        _cellEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        _cellUnitEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellEnts = new EcsEntity[CellValues.CELL_COUNT_X, CellValues.CELL_COUNT_Y];
+        _cellUnitEnts = new EcsEntity[CellValues.CELL_COUNT_X, CELL_COUNT_Y];
         _cellBuildingEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
         _cellEnvironmentEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
         _cellSupportVisionEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
@@ -398,17 +398,17 @@ public sealed partial class EntitiesGameGeneralManager
             UnitInfoEnt_UnitInventorCom.SetSettedKing(true, false);
             UnitInfoEnt_UnitInventorCom.SetSettedKing(false, false);
 
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_KING_MASTER);
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_KING_OTHER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, true, EconomyValues.AMOUNT_KING_MASTER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, false, EconomyValues.AMOUNT_KING_OTHER);
 
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_PAWN_MASTER);
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_PAWN_OTHER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, true, EconomyValues.AMOUNT_PAWN_MASTER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, false, EconomyValues.AMOUNT_PAWN_OTHER);
 
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_ROOK_MASTER);
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_ROOK_OTHER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, true, EconomyValues.AMOUNT_ROOK_MASTER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, false, EconomyValues.AMOUNT_ROOK_OTHER);
 
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_BISHOP_MASTER);
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_BISHOP_OTHER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, true, EconomyValues.AMOUNT_BISHOP_MASTER);
+            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, false, EconomyValues.AMOUNT_BISHOP_OTHER);
 
             BuildingsEnt_BuildingsCom.IsSettedCityDict[true] = default;
             BuildingsEnt_BuildingsCom.IsSettedCityDict[false] = default;
@@ -426,17 +426,17 @@ public sealed partial class EntitiesGameGeneralManager
 
 
             #region Economy
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_FOOD_MASTER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_WOOD_MASTER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_ORE_MASTER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_IRON_MASTER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, true, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_GOLD_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, true, EconomyValues.AMOUNT_FOOD_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, true, EconomyValues.AMOUNT_WOOD_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, true, EconomyValues.AMOUNT_ORE_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, true, EconomyValues.AMOUNT_IRON_MASTER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, true, EconomyValues.AMOUNT_GOLD_MASTER);
 
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_FOOD_OTHER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_WOOD_OTHER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_ORE_OTHER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_IRON_OTHER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, false, ResourcesCommComponent.StartValuesGameConfig.AMOUNT_GOLD_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, false, EconomyValues.AMOUNT_FOOD_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, false, EconomyValues.AMOUNT_WOOD_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, false, EconomyValues.AMOUNT_ORE_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, false, EconomyValues.AMOUNT_IRON_OTHER);
+            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, false, EconomyValues.AMOUNT_GOLD_OTHER);
 
             #endregion
 
@@ -493,7 +493,7 @@ public sealed partial class EntitiesGameGeneralManager
 
                 cellsGO[x, y].transform.SetParent(supportParentForCells.transform);
                 CellEnt_CellBaseCom(x, y).StartFill(supportParentForCells, cellsGO[x, y], isStartedDict);
-                CellEnt_CellBaseCom(x, y).RotateAndFixRot();
+                CellEnt_CellBaseCom(x, y).Rotate();
                 CellEnt_CellCom(x, y).StartFill();
 
 
@@ -501,8 +501,8 @@ public sealed partial class EntitiesGameGeneralManager
                 CellEnvEnt_CellEnvCom(x, y).StartFill(parentGO);
 
 
-                parentGO = cellsGO[x, y].transform.Find("SupportVisions").gameObject;
-                CellSupVisEnt_CellSupVisCom(x, y).Fill(parentGO);
+                parentGO = cellsGO[x, y].transform.Find("SupportVision").gameObject;
+                CellSupVisEnt_SpriteRenderer(x, y).StartFill(parentGO.GetComponent<SpriteRenderer>());
 
 
                 parentGO = cellsGO[x, y].transform.Find("SupportStatic").gameObject;
@@ -537,14 +537,14 @@ public sealed partial class EntitiesGameGeneralManager
                     if (y >= 4 && y <= 6)
                     {
                         random = UnityEngine.Random.Range(1, 100);
-                        if (random <= MOUNTAIN_PERCENT)
+                        if (random <= START_MOUNTAIN_PERCENT)
                             CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Mountain);
                     }
 
                     if (!CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Mountain))
                     {
                         random = UnityEngine.Random.Range(1, 100);
-                        if (random <= FOREST_PERCENT)
+                        if (random <= START_FOREST_PERCENT)
                         {
                             CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.AdultForest);
                         }
@@ -552,7 +552,7 @@ public sealed partial class EntitiesGameGeneralManager
                         if (!CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest))
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= FERTILIZER_PERCENT)
+                            if (random <= START_FERTILIZER_PERCENT)
                             {
                                 CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Fertilizer);
                             }
@@ -562,7 +562,7 @@ public sealed partial class EntitiesGameGeneralManager
                         if (y >= 4 && y <= 6)
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= HILL_PERCENT)
+                            if (random <= START_HILL_PERCENT)
                                 CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Hill);
 
                         }
@@ -571,7 +571,7 @@ public sealed partial class EntitiesGameGeneralManager
             }
 
 
-        if (PhotonNetwork.OfflineMode/*Instance.GameModeType == GameModTypes.WithBot*/)
+        if (PhotonNetwork.OfflineMode)
         {
             int[] xy0 = new int[XY_FOR_ARRAY];
             xy0[X] = 8;

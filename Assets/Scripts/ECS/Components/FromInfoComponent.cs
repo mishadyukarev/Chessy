@@ -8,8 +8,8 @@ namespace Assets.Scripts.ECS.Game.Components
 
         internal PhotonMessageInfo InfoFrom => _fromInfo;
 
-        internal void SetFromInfo(PhotonMessageInfo fromInfo) => _fromInfo = fromInfo;
 
         internal void StartFill() => _fromInfo = default;
+        internal void SetFromInfo(PhotonMessageInfo fromInfo) => _fromInfo = fromInfo;
     }
 }

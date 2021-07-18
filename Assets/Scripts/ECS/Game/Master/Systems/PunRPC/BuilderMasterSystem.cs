@@ -7,8 +7,8 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 {
     private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
 
-    private int[] XyCell => _eMM.RPCMasterEnt_RPCMasterCom.XyCell;
-    private BuildingTypes BuildingType => _eMM.RPCMasterEnt_RPCMasterCom.BuildingType;
+    private int[] XyCell => _eMM.BuildEnt_XyCellCom.XyCell;
+    private BuildingTypes BuildingType => _eMM.BuildEnt_BuildingTypeCom.BuildingType;
 
     public override void Run()
     {

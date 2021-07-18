@@ -29,7 +29,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     break;
 
                 case UpgradeModTypes.Unit:
-                    if (_eGM.CellUnitEnt_UnitTypeCom(XyCellForUpgrade).HaveUnit)
+                    if (_eGM.CellUnitEnt_UnitTypeCom(XyCellForUpgrade).HaveAnyUnit)
                     {
                         if (EconomyManager.CanUpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade, out haves))
                         {
