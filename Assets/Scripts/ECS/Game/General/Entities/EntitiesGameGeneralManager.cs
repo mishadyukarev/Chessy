@@ -47,7 +47,7 @@ public sealed partial class EntitiesGameGeneralManager
 
 
     internal ref CellEnvironmentComponent CellEnvEnt_CellEnvCom(params int[] xy) => ref _cellEnvironmentEnts[xy[X], xy[Y]].Get<CellEnvironmentComponent>();
-    internal ref SpriteRendererComponent CellEnvEnt_SpriteRendererCom(params int[] xy) => ref _cellEnvironmentEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
+    //internal ref SpriteRendererComponent CellEnvEnt_SpriteRendererCom(params int[] xy) => ref _cellEnvironmentEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
 
 
     internal ref CellBuildingComponent CellBuildEnt_CellBuilCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellBuildingComponent>();
@@ -520,8 +520,8 @@ public sealed partial class EntitiesGameGeneralManager
 
 
                 GameObject parentGO = cellsGO[x, y].transform.Find("Environments").gameObject;
-                CellEnvEnt_CellEnvCom(x, y).StartFill();
-                CellEnvEnt_SpriteRendererCom(x, y).StartFill(parentGO.GetComponent<SpriteRenderer>());
+                CellEnvEnt_CellEnvCom(x, y).StartFill(parentGO);
+                //CellEnvEnt_SpriteRendererCom(x, y).StartFill(parentGO.GetComponent<SpriteRenderer>());
 
 
                 parentGO = cellsGO[x, y].transform.Find("SupportVision").gameObject;

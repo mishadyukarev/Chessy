@@ -11,27 +11,44 @@ internal struct CellEnvironmentComponent
     private bool _haveAdultTree;
     private bool _haveHill;
     private bool _haveMountain;
-
+    private SpriteRenderer _fertilizerSR;
+    private SpriteRenderer _youngTreeSR;
+    private SpriteRenderer _adultTreeSR;
+    private SpriteRenderer _hillSR;
+    private SpriteRenderer _mountainSR;
     private int _amountFoodResources;
     private int _amountWoodResources;
     private int _amountOreResources;
 
-    internal void StartFill()
+    internal void StartFill(GameObject environmentGO)
     {
+        _fertilizerSR = environmentGO.transform.Find("Food").GetComponent<SpriteRenderer>();
+        _youngTreeSR = environmentGO.transform.Find("YoungTree").GetComponent<SpriteRenderer>();
+        _adultTreeSR = environmentGO.transform.Find("Tree").GetComponent<SpriteRenderer>();
+        _hillSR = environmentGO.transform.Find("Hill").GetComponent<SpriteRenderer>();
+        _mountainSR = environmentGO.transform.Find("Mountain").GetComponent<SpriteRenderer>();
+
         ResetAll();
     }
 
     internal void ResetAll()
     {
-        _haveFertilizer = default;
-        _haveYoungTree = default;
-        _haveAdultTree = default;
-        _haveHill = default;
-        _haveMountain = default;
+        _haveFertilizer = false;
+        _haveYoungTree = false;
+        _haveAdultTree = false;
+        _haveHill = false;
+        _haveMountain = false;
 
-        _amountFoodResources = default;
-        _amountWoodResources = default;
-        _amountOreResources = default;
+        _fertilizerSR.enabled = false;
+        _youngTreeSR.enabled = false;
+        _adultTreeSR.enabled = false;
+        _hillSR.enabled = false;
+        _mountainSR.enabled = false;
+
+
+        _amountFoodResources = 0;
+        _amountWoodResources = 0;
+        _amountOreResources = 0;
     }
 
     internal bool HaveEnvironment(EnvironmentTypes environmentType)
@@ -60,38 +77,6 @@ internal struct CellEnvironmentComponent
                 throw new Exception();
         }
     }
-    internal void AddEnvironment(EnvironmentTypes environmentType)
-    {
-        switch (environmentType)
-        {
-            case EnvironmentTypes.None:
-                throw new Exception();
-
-            case EnvironmentTypes.Fertilizer:
-                _haveFertilizer = true;
-                break;
-
-            case EnvironmentTypes.YoungForest:
-                _haveYoungTree = true;
-                break;
-
-            case EnvironmentTypes.AdultForest:
-                _haveAdultTree = true;
-                break;
-
-            case EnvironmentTypes.Hill:
-                _haveHill = true;
-                break;
-
-            case EnvironmentTypes.Mountain:
-                _haveMountain = true;
-                break;
-
-            default:
-                throw new Exception();
-        }
-    }
-
 
     internal bool HaveResources(ResourceTypes resourceType)
     {
@@ -291,6 +276,122 @@ internal struct CellEnvironmentComponent
         }
     }
 
+    internal void SetNewEnvironment(EnvironmentTypes environmentType, params int[] xy)
+    {
+        switch (environmentType)
+        {
+            case EnvironmentTypes.None:
+                break;
+
+            case EnvironmentTypes.Fertilizer:
+                _haveFertilizer = true;
+                _fertilizerSR.enabled = true;
+                _amountFoodResources = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType));
+                break;
+
+            case EnvironmentTypes.YoungForest:
+                _haveYoungTree = true;
+                _youngTreeSR.enabled = true;
+                break;
+
+            case EnvironmentTypes.AdultForest:
+                _haveAdultTree = true;
+                _adultTreeSR.enabled = true;
+                _amountWoodResources = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType));
+                break;
+
+            case EnvironmentTypes.Hill:
+                _haveHill = true;
+                _hillSR.enabled = true;
+                _amountOreResources = MaxAmountResources(environmentType);
+                break;
+
+            case EnvironmentTypes.Mountain:
+                _haveMountain = true;
+                _mountainSR.enabled = true;
+                break;
+
+            default:
+                break;
+        }
+    }
+    internal void SetEnvironment(EnvironmentTypes environmentType, int amountEnvironmet)
+    {
+        switch (environmentType)
+        {
+            case EnvironmentTypes.None:
+                break;
+
+            case EnvironmentTypes.Mountain:
+                _haveMountain = true;
+                _mountainSR.enabled = true;
+                break;
+
+            case EnvironmentTypes.AdultForest:
+                _haveAdultTree = true;
+                _adultTreeSR.enabled = true;
+                _amountWoodResources = amountEnvironmet;
+                break;
+
+            case EnvironmentTypes.YoungForest:
+                _haveYoungTree = true;
+                _youngTreeSR.enabled = true;
+                break;
+
+            case EnvironmentTypes.Hill:
+                _haveHill = true;
+                _hillSR.enabled = true;
+                _amountOreResources = amountEnvironmet;
+                break;
+
+            case EnvironmentTypes.Fertilizer:
+                _haveFertilizer = true;
+                _fertilizerSR.enabled = true;
+                _amountFoodResources = amountEnvironmet;
+                break;
+
+            default:
+                break;
+        }
+    }
+    internal void ResetEnvironment(EnvironmentTypes environmentType)
+    {
+        switch (environmentType)
+        {
+            case EnvironmentTypes.None:
+                break;
+
+            case EnvironmentTypes.Mountain:
+                _haveMountain = false;
+                _mountainSR.enabled = false;
+                break;
+
+            case EnvironmentTypes.AdultForest:
+                _haveAdultTree = false;
+                _adultTreeSR.enabled = false;
+                _amountWoodResources = 0;
+                break;
+
+            case EnvironmentTypes.YoungForest:
+                _haveYoungTree = false;
+                _youngTreeSR.enabled = false;
+                break;
+
+            case EnvironmentTypes.Hill:
+                _haveHill = false;
+                _hillSR.enabled = false;
+                break;
+
+            case EnvironmentTypes.Fertilizer:
+                _haveFertilizer = false;
+                _fertilizerSR.enabled = false;
+                _amountFoodResources = 0;
+                break;
+
+            default:
+                break;
+        }
+    }
 
     internal int NeedAmountSteps()
     {
