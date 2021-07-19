@@ -27,7 +27,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
         if (isFindedSimple || isFindedUnique)
         {
             _eGM.CellUnitEnt_CellUnitCom(FromXy).ResetAmountSteps();
-            _eGM.CellUnitEnt_ProtectRelaxCom(FromXy).ResetProtectedRelaxedType();
+            _eGM.CellUnitEnt_ProtectRelaxCom(FromXy).Reset();
 
             int damageToPrevious = 0;
             int damageToSelelected = 0;

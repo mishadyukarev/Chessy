@@ -2,6 +2,7 @@
 using Assets.Scripts.Abstractions.Enums;
 using static Assets.Scripts.Main;
 using static Assets.Scripts.Static.CellBaseOperations;
+using static Assets.Scripts.CellUnitWorker;
 
 internal sealed class SelectorSystem : RPCGeneralSystemReduction
 {
@@ -216,21 +217,20 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
             {
                 if (_eGM.SelectorEnt_UnitTypeCom.HaveAnyUnit)
                 {
-                    if (!_eGM.CellUnitEnt_UnitTypeCom(XyCurrentCell).HaveAnyUnit || !_eGM.CellUnitEnt_ActivatedForPlayersCom(XyCurrentCell).IsActivated(Instance.IsMasterClient) /*IsActivatedUnitDict[Instance.IsMasterClient]*/)
+                    if (!_eGM.CellUnitEnt_UnitTypeCom(XyCurrentCell).HaveAnyUnit || !_eGM.CellUnitEnt_ActivatedForPlayersCom(XyCurrentCell).IsActivated(Instance.IsMasterClient))
                     {
                         if (_eGM.SelectorEnt_SelectorCom.IsStartSelectedDirect)
                         {
                             if (!_eGM.CellUnitEnt_UnitTypeCom(XyCurrentCell).HaveAnyUnit)
-                                _eGM.CellUnitEnt_CellUnitCom(XyCurrentCell).EnablePlayerSRAndSetColor(_eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
+                                ActiveSelectorVisionUnit(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, XyCurrentCell);
 
                             XyPreviousVisionCell = XyCurrentCell;
                             _eGM.SelectorEnt_SelectorCom.IsStartSelectedDirect = false;
                         }
                         else
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(XyPreviousVisionCell).SwitchSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType);
-
-                            _eGM.CellUnitEnt_CellUnitCom(XyCurrentCell).EnablePlayerSRAndSetColor(_eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
+                            ActiveSelectorVisionUnit(false, _eGM.SelectorEnt_UnitTypeCom.UnitType, XyPreviousVisionCell);
+                            ActiveSelectorVisionUnit(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, XyCurrentCell);
 
                             XyPreviousVisionCell = XyCurrentCell;
                         }
@@ -250,7 +250,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                 ClearAvailableCells();
 
-                _eGM.CellUnitEnt_CellUnitCom(XyPreviousVisionCell).SwitchSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType);
+                _eGM.CellUnitEnt_SpriteRendererCom(XyPreviousVisionCell).ActivateSR(false); //SwitchSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType);
                 _eGM.SelectorEnt_UnitTypeCom.ResetUnit();
 
                 XyPreviousCell.Clean();

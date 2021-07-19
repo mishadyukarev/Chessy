@@ -75,11 +75,11 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         if (isActivatedVisionCellUnit)
                         {
                             var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnablePlayerSRAndSetColor(unitType, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner);
+                            _eGM.CellUnitEnt_SpriteRendererCom(x, y).ActivateSR(true);
                         }
                         else
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).SwitchSR(false, _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
+                            _eGM.CellUnitEnt_SpriteRendererCom(x, y).ActivateSR(false);
                         }
                     }
 
@@ -111,11 +111,11 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         if (isActivatedVisionCellUnit)
                         {
                             var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnablePlayerSRAndSetColor(unitType, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner);
+                            _eGM.CellUnitEnt_SpriteRendererCom(x, y).ActivateSR(true);
                         }
                         else
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).SwitchSR(false, _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
+                            _eGM.CellUnitEnt_SpriteRendererCom(x, y).ActivateSR(false);
                         }
                     }
                 }

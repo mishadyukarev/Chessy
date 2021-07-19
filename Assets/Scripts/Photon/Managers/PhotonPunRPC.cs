@@ -169,7 +169,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.ProtectRelax:
-                    _eMM.ProtectRelaxEnt_ProtectRelaxCom.SetProtectedRelaxedType((ProtectRelaxTypes)objects[0]);
+                    _eMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType = (ProtectRelaxTypes)objects[0];
                     _eMM.ProtectRelaxEnt_XyCellCom.SetXyCell((int[])objects[1]);
                     _sMM.TryInvokeRunSystem(nameof(ProtectRelaxMasterSystem), _sMM.RpcSystems);
                     break;

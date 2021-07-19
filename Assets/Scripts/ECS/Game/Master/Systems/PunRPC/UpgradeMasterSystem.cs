@@ -34,7 +34,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                         if (EconomyManager.CanUpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade, out haves))
                         {
                             EconomyManager.UpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade);
-                            CellUnitWorker.ChangeUnit(XyCellForUpgrade, NeededUnitTypeForUpgrade + FOR_NEXT_UPGRADE);
+                            CellUnitWorker.ChangePlayerUnit(XyCellForUpgrade, NeededUnitTypeForUpgrade + FOR_NEXT_UPGRADE);
 
                             if (_eGM.CellUnitEnt_UnitTypeCom(XyCellForUpgrade).IsMelee)
                             {

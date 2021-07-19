@@ -24,52 +24,52 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                         {
                             if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMine)
                             {
-                                if (_eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected).Compare(new int[] { x, y }))
-                                {
-                                    switch (unitType)
-                                    {
-                                        case UnitTypes.None:
-                                            break;
+                                //if (_eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected).Compare(new int[] { x, y }))
+                                //{
+                                //    switch (unitType)
+                                //    {
+                                //        case UnitTypes.None:
+                                //            break;
 
-                                        case UnitTypes.King:
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
-                                            break;
+                                //        case UnitTypes.King:
+                                //            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
+                                //            break;
 
-                                        case UnitTypes.Pawn:
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
-                                            break;
+                                //        case UnitTypes.Pawn:
+                                //            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
+                                //            break;
 
-                                        case UnitTypes.PawnSword:
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
-                                            break;
+                                //        case UnitTypes.PawnSword:
+                                //            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
+                                //            break;
 
-                                        case UnitTypes.Rook:
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).SetRotation(unitType, 0, 0, standartZ - 90);
-                                            break;
+                                //        case UnitTypes.Rook:
+                                //            _eGM.CellUnitEnt_CellUnitCom(x, y).SetRotation(unitType, 0, 0, standartZ - 90);
+                                //            break;
 
-                                        case UnitTypes.RookCrossbow:
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).SetRotation(unitType, 0, 0, standartZ - 90);
-                                            break;
+                                //        case UnitTypes.RookCrossbow:
+                                //            _eGM.CellUnitEnt_CellUnitCom(x, y).SetRotation(unitType, 0, 0, standartZ - 90);
+                                //            break;
 
-                                        case UnitTypes.Bishop:
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
-                                            break;
+                                //        case UnitTypes.Bishop:
+                                //            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
+                                //            break;
 
-                                        case UnitTypes.BishopCrossbow:
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
-                                            break;
+                                //        case UnitTypes.BishopCrossbow:
+                                //            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
+                                //            break;
 
-                                        default:
-                                            break;
-                                    }
-                                }
+                                //        default:
+                                //            break;
+                                //    }
+                                //}
 
-                                else
-                                {
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(false, unitType, XyTypes.X);
+                                //else
+                                //{
+                                //    _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(false, unitType, XyTypes.X);
 
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).SetRotation(unitType, 0, 0, standartZ);
-                                }
+                                //    _eGM.CellUnitEnt_CellUnitCom(x, y).SetRotation(unitType, 0, 0, standartZ);
+                                //}
                             }
                         }
                     }

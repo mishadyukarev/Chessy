@@ -1,15 +1,51 @@
 ﻿using Photon.Realtime;
+using System;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts.Static
 {
     public static class CellBuildingWorker
     {
+
+        internal static EntitiesGameGeneralManager EGGM => Instance.EntGGM;
+        internal static SpritesData SpritesData => Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig;
+
+        private static void SetSpriteRender(BuildingTypes buildingType, params int[] xy)
+        {
+            switch (buildingType)
+            {
+                case BuildingTypes.None:
+                    throw new Exception();
+
+                case BuildingTypes.City:
+                    EGGM.CellBuildEnt_SpriteRendererCom(xy).SetSprite(SpritesData.City);
+                    break;
+
+                case BuildingTypes.Farm:
+                    EGGM.CellBuildEnt_SpriteRendererCom(xy).SetSprite(SpritesData.Farm);
+                    break;
+
+                case BuildingTypes.Woodcutter:
+                    EGGM.CellBuildEnt_SpriteRendererCom(xy).SetSprite(SpritesData.Woodcutter);
+                    break;
+
+                case BuildingTypes.Mine:
+                    EGGM.CellBuildEnt_SpriteRendererCom(xy).SetSprite(SpritesData.Mine);
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+        }
+
+
+
         internal static void SetPlayerBuilding(bool withEconomy, BuildingTypes buildingType, Player owner, params int[] xy)
         {
             Instance.EntGGM.CellBuildEnt_BuilTypeCom(xy).SetBuildingType(buildingType);
             Instance.EntGGM.CellBuildEnt_OwnerCom(xy).SetOwner(owner);
-            Instance.EntGGM.CellBuildEnt_CellBuilCom(xy).EnabledPlayerSR(true, Instance.EntGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType, owner);
+            Instance.EntGGM.CellBuildEnt_SpriteRendererCom(xy).ActivateSR(true);
+            SetSpriteRender(buildingType, xy);
 
             if (withEconomy)
             {
@@ -22,7 +58,9 @@ namespace Assets.Scripts.Static
         {
             Instance.EntGGM.CellBuildEnt_BuilTypeCom(xy).SetBuildingType(buildingType);
             Instance.EntGGM.CellBuildEnt_CellOwnerBotCom(xy).SetBot(true);
-            Instance.EntGGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(true, Instance.EntGGM.CellBuildEnt_BuilTypeCom(xy).BuildingType);
+
+            EGGM.CellBuildEnt_SpriteRendererCom(xy).ActivateSR(true);
+            SetSpriteRender(buildingType, xy);
         }
 
         internal static void ResetBuilding(bool withEconomy, params int[] xy)
@@ -45,13 +83,15 @@ namespace Assets.Scripts.Static
 
             if (Instance.EntGGM.CellBuildEnt_OwnerCom(xy).HaveOwner)
             {
-                Instance.EntGGM.CellBuildEnt_CellBuilCom(xy).EnabledPlayerSR(false, buildType);
+                EGGM.CellBuildEnt_SpriteRendererCom(xy).ActivateSR(false);
+
+
                 Instance.EntGGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
             }
 
             else if (Instance.EntGGM.CellBuildEnt_CellOwnerBotCom(xy).HaveBot)
             {
-                Instance.EntGGM.CellBuildEnt_CellBuilCom(xy).EnabledBotSR(false, buildType);
+                EGGM.CellBuildEnt_SpriteRendererCom(xy).ActivateSR(false);
                 Instance.EntGGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
             }
 

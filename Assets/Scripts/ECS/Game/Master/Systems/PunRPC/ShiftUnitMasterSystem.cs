@@ -30,7 +30,7 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
                 _eGM.CellUnitEnt_CellUnitCom(ToXy).TakeAmountSteps(_eGM.CellEnvEnt_CellEnvCom(ToXy).NeedAmountSteps());
                 if (_eGM.CellUnitEnt_CellUnitCom(ToXy).AmountSteps < 0) _eGM.CellUnitEnt_CellUnitCom(ToXy).ResetAmountSteps();
 
-                _eGM.CellUnitEnt_ProtectRelaxCom(ToXy).ResetProtectedRelaxedType();
+                _eGM.CellUnitEnt_ProtectRelaxCom(ToXy).Reset();
             }
         }
     }

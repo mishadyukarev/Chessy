@@ -81,13 +81,13 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
 
             if (isActive)
             {
-                if (_eGM.CellUnitEnt_ProtectRelaxCom(XySelectedCell).IsProtected)
+                if (_eGM.CellUnitEnt_ProtectRelaxCom(XySelectedCell).IsType(ProtectRelaxTypes.Relaxed))
                 {
                     _eGM.StandartFirstAbilityEnt_ButtonCom.SetColor(Color.yellow);
                 }
                 else _eGM.StandartFirstAbilityEnt_ButtonCom.SetColor(Color.white);
 
-                if (_eGM.CellUnitEnt_ProtectRelaxCom(XySelectedCell).IsRelaxed) _eGM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.green);
+                if (_eGM.CellUnitEnt_ProtectRelaxCom(XySelectedCell).IsType(ProtectRelaxTypes.Relaxed)) _eGM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.green);
                 else _eGM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.white);
             }
         }

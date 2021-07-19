@@ -43,20 +43,36 @@ public sealed partial class EntitiesGameGeneralManager
     internal ref UnitTypeComponent CellUnitEnt_UnitTypeCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<UnitTypeComponent>();
     internal ref ActivatedDictComponent CellUnitEnt_ActivatedForPlayersCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<ActivatedDictComponent>();
     internal ref ProtectRelaxComponent CellUnitEnt_ProtectRelaxCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<ProtectRelaxComponent>();
+    internal ref SpriteRendererComponent CellUnitEnt_SpriteRendererCom(params int[] xy) => ref _cellUnitEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
+
 
     internal ref CellEnvironmentComponent CellEnvEnt_CellEnvCom(params int[] xy) => ref _cellEnvironmentEnts[xy[X], xy[Y]].Get<CellEnvironmentComponent>();
+    internal ref SpriteRendererComponent CellEnvEnt_SpriteRendererCom(params int[] xy) => ref _cellEnvironmentEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
+
 
     internal ref CellBuildingComponent CellBuildEnt_CellBuilCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellBuildingComponent>();
     internal ref BuildingTypeComponent CellBuildEnt_BuilTypeCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<BuildingTypeComponent>();
     internal ref CellComponent CellBuildEnt_CellCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellComponent>();
     internal ref OwnerComponent CellBuildEnt_OwnerCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerComponent>();
     internal ref OwnerBotComponent CellBuildEnt_CellOwnerBotCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerBotComponent>();
+    internal ref SpriteRendererComponent CellBuildEnt_SpriteRendererCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
+
 
     internal ref SpriteRendererComponent CellSupVisEnt_SpriteRenderer(params int[] xy) => ref _cellSupportVisionEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
 
     internal ref CellSupportStaticComponent CellSupStatEnt_CellSupStatCom(params int[] xy) => ref _cellSupportStaticEnts[xy[X], xy[Y]].Get<CellSupportStaticComponent>();
 
     internal ref CellEffectComponent CellEffectEnt_CellEffectCom(params int[] xy) => ref _cellEffectEnts[xy[X], xy[Y]].Get<CellEffectComponent>();
+
+
+    private EcsEntity[,] _cellMaxStepsEnts;
+    internal ref SpriteRendererComponent CellMaxStepsEnt_SpriteRendererCom(params int[] xy) => ref _cellMaxStepsEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
+
+
+    private EcsEntity[,] _cellProtectRelaxEnts;
+    internal ref SpriteRendererComponent CellProtectRelaxEnt_SpriteRendererCom(params int[] xy) => ref _cellProtectRelaxEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
+
+
 
     internal int Xamount => _cellEnts.GetUpperBound(X) + 1;
     internal int Yamount => _cellEnts.GetUpperBound(Y) + 1;
@@ -196,13 +212,15 @@ public sealed partial class EntitiesGameGeneralManager
 
     internal EntitiesGameGeneralManager(EcsWorld gameWorld)
     {
-        _cellEnts = new EcsEntity[CellValues.CELL_COUNT_X, CellValues.CELL_COUNT_Y];
-        _cellUnitEnts = new EcsEntity[CellValues.CELL_COUNT_X, CELL_COUNT_Y];
+        _cellEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellUnitEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
         _cellBuildingEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
         _cellEnvironmentEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
         _cellSupportVisionEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
         _cellSupportStaticEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
         _cellEffectEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellMaxStepsEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellProtectRelaxEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
 
         for (int x = 0; x < CELL_COUNT_X; x++)
             for (int y = 0; y < CELL_COUNT_Y; y++)
@@ -214,6 +232,8 @@ public sealed partial class EntitiesGameGeneralManager
                 _cellSupportVisionEnts[x, y] = gameWorld.NewEntity();
                 _cellSupportStaticEnts[x, y] = gameWorld.NewEntity();
                 _cellEffectEnts[x, y] = gameWorld.NewEntity();
+                _cellMaxStepsEnts[x, y] = gameWorld.NewEntity();
+                _cellProtectRelaxEnts[x, y] = gameWorld.NewEntity();
             }
 
         _attackArcherSoundEnt = gameWorld.NewEntity();
@@ -500,7 +520,8 @@ public sealed partial class EntitiesGameGeneralManager
 
 
                 GameObject parentGO = cellsGO[x, y].transform.Find("Environments").gameObject;
-                CellEnvEnt_CellEnvCom(x, y).StartFill(parentGO);
+                CellEnvEnt_CellEnvCom(x, y).StartFill();
+                CellEnvEnt_SpriteRendererCom(x, y).StartFill(parentGO.GetComponent<SpriteRenderer>());
 
 
                 parentGO = cellsGO[x, y].transform.Find("SupportVision").gameObject;
@@ -511,25 +532,34 @@ public sealed partial class EntitiesGameGeneralManager
                 CellSupStatEnt_CellSupStatCom(x, y).Fill(parentGO);
 
 
-                parentGO = cellsGO[x, y].transform.Find("Units").gameObject;
-                CellUnitEnt_CellUnitCom(x, y).StartFill(parentGO);
+                parentGO = cellsGO[x, y].transform.Find("Unit").gameObject;
+                CellUnitEnt_CellUnitCom(x, y).StartFill();
                 CellUnitEnt_UnitTypeCom(x, y).StartFill();
                 CellUnitEnt_CellOwnerCom(x, y).StartFill();
                 CellUnitEnt_CellOwnerBotCom(x, y).StartFill();
                 CellUnitEnt_ActivatedForPlayersCom(x, y).StartFill();
                 CellUnitEnt_ProtectRelaxCom(x, y).StartFill();
+                CellUnitEnt_SpriteRendererCom(x, y).StartFill(parentGO.GetComponent<SpriteRenderer>());
 
 
                 parentGO = cellsGO[x, y].transform.Find("Buildings").gameObject;
-                CellBuildEnt_CellBuilCom(x, y).StartFill(parentGO);
+                CellBuildEnt_CellBuilCom(x, y).StartFill();
                 CellBuildEnt_BuilTypeCom(x, y).StartFill();
                 CellBuildEnt_OwnerCom(x, y).StartFill();
                 CellBuildEnt_CellOwnerBotCom(x, y).StartFill();
+                CellBuildEnt_SpriteRendererCom(x, y).StartFill(parentGO.GetComponent<SpriteRenderer>());
 
 
                 parentGO = cellsGO[x, y].transform.Find("Effects").gameObject;
                 CellEffectEnt_CellEffectCom(x, y).StartFill(parentGO);
 
+
+                parentGO = cellsGO[x, y].transform.Find("MaxSteps").gameObject;
+                CellMaxStepsEnt_SpriteRendererCom(x, y).StartFill(parentGO.GetComponent<SpriteRenderer>());
+
+
+                parentGO = cellsGO[x, y].transform.Find("ProtectRelax").gameObject;
+                CellProtectRelaxEnt_SpriteRendererCom(x, y).StartFill(parentGO.GetComponent<SpriteRenderer>());
 
 
                 if (Instance.IsMasterClient)

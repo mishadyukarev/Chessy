@@ -74,22 +74,22 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                         }
 
 
-                        if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsProtected)
+                        if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsType(ProtectRelaxTypes.Protected))
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.yellow);
+                            //_eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
+                            //_eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.yellow);
                         }
 
-                        else if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsRelaxed)
+                        else if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsType(ProtectRelaxTypes.Relaxed))
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.green);
+                            //_eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
+                            //_eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.green);
                         }
 
 
                         if (_eGM.CellUnitEnt_CellUnitCom(x, y).HaveMaxSteps(unitType))
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnableStandartColorSR(true);
+                            //_eGM.CellUnitEnt_CellUnitCom(x, y).EnableStandartColorSR(true);
                         }
                     }
 

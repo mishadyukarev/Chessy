@@ -83,7 +83,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                         }
                     }
 
-                    if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsRelaxed)
+                    if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsType(ProtectRelaxTypes.Relaxed))
                     {
                         if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth == CellUnitWorker.MaxAmountHealth(unitType))
                         {
@@ -125,13 +125,13 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
 
                                     else
                                     {
-                                        _eGM.CellUnitEnt_ProtectRelaxCom(x, y).SetProtectedRelaxedType(ProtectRelaxTypes.Protected);
+                                        _eGM.CellUnitEnt_ProtectRelaxCom(x, y).ProtectRelaxType = ProtectRelaxTypes.Protected;
                                     }
                                 }
 
                                 else
                                 {
-                                    _eGM.CellUnitEnt_ProtectRelaxCom(x, y).SetProtectedRelaxedType(ProtectRelaxTypes.Protected);
+                                    _eGM.CellUnitEnt_ProtectRelaxCom(x, y).ProtectRelaxType = ProtectRelaxTypes.Protected;
                                 }
                             }
 
@@ -194,7 +194,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
 
                         if (_eGM.CellUnitEnt_CellUnitCom(x, y).HaveMaxSteps(unitType))
                         {
-                            _eGM.CellUnitEnt_ProtectRelaxCom(x, y).SetProtectedRelaxedType(ProtectRelaxTypes.Protected);
+                            _eGM.CellUnitEnt_ProtectRelaxCom(x, y).ProtectRelaxType = ProtectRelaxTypes.Protected;
                         }
                     }
 

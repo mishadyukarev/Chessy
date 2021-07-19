@@ -14,3 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _black_Sprite: {fileID: 21300000, guid: 132a18fad4c6e8242b60291675fc6707, type: 3}
   _white_Sprite: {fileID: 21300000, guid: d39bc426ea1289b4fb42736ee7024730, type: 3}
+  _kingSprite: {fileID: 21300000, guid: e278817bd01bd7443ad388289b53d404, type: 3}
+  _pawnSprite: {fileID: 21300000, guid: 87f546d910797b1468d0d9e548ec2031, type: 3}
+  _pawnSwordSprite: {fileID: 21300000, guid: b319af837126ca343a78629200b5f301, type: 3}
+  _rookSprite: {fileID: 21300000, guid: 06d236349ef0fd2429458a733d58e2b0, type: 3}
+  _rookCrossbowSprite: {fileID: 21300000, guid: 2306cfca972ebfc4983cba8cf8ad8cd5,
+    type: 3}
+  _bishopSprite: {fileID: 21300000, guid: 8e42c635d6cb5cd448a763a3022874e4, type: 3}
+  _bishopCrossbowSprite: {fileID: 21300000, guid: 989abdbbfbc32a148ba4fe92160cf1e9,
+    type: 3}
+  _citySprite: {fileID: 21300000, guid: f4ea07c0b3ace6b4880a3ce7e469d41f, type: 3}
+  _farmSprite: {fileID: 21300000, guid: 30684e08ddc40714684366a1f3346d97, type: 3}
+  _woodcutterSprite: {fileID: 21300000, guid: 43186546374ebcb4c886b904e733aa7d, type: 3}
+  _mineSprite: {fileID: 21300000, guid: eb9165ea65648b944966e83670fbbaa5, type: 3}

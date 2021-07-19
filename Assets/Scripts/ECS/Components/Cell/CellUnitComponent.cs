@@ -1,21 +1,9 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
-using Photon.Realtime;
 using System;
-using UnityEngine;
-using static Assets.Scripts.Main;
 
 internal struct CellUnitComponent
 {
-    private SpriteRenderer _kingSR;
-    private SpriteRenderer _pawnSR;
-    private SpriteRenderer _pawnSwordSR;
-    private SpriteRenderer _rookSR;
-    private SpriteRenderer _rookCrossbowSR;
-    private SpriteRenderer _bishopSR;
-    private SpriteRenderer _bishopCrossbowSR;
-    private SpriteRenderer _standartColorSR;
-    private SpriteRenderer _defendRelaxSR;
     private int _amountHealth;
     private int _amountSteps;
     private int _amountStepsInNone;
@@ -28,17 +16,13 @@ internal struct CellUnitComponent
     internal bool HaveHealth => _amountHealth > 0;
     internal bool HaveMinAmountSteps => _amountSteps >= 1;
 
-    internal void StartFill(GameObject unitParentGO)
+    internal void StartFill()
     {
-        _kingSR = unitParentGO.transform.Find("King").GetComponent<SpriteRenderer>();
-        _pawnSR = unitParentGO.transform.Find("Pawn").GetComponent<SpriteRenderer>();
-        _pawnSwordSR = unitParentGO.transform.Find("PawnSword").GetComponent<SpriteRenderer>();
-        _rookSR = unitParentGO.transform.Find("Rook").GetComponent<SpriteRenderer>();
-        _rookCrossbowSR = unitParentGO.transform.Find("RookCrossbow").GetComponent<SpriteRenderer>();
-        _bishopSR = unitParentGO.transform.Find("Bishop").GetComponent<SpriteRenderer>();
-        _bishopCrossbowSR = unitParentGO.transform.Find("BishopCrossbow").GetComponent<SpriteRenderer>();
-        _standartColorSR = unitParentGO.transform.Find("Color").GetComponent<SpriteRenderer>();
-        _defendRelaxSR = unitParentGO.transform.Find("DefendRelax").GetComponent<SpriteRenderer>();
+        _amountHealth = default;
+        _amountSteps = default;
+        _amountStepsInNone = default;
+        _amountStepsInProtected = default;
+        _amountStepsInRelaxed = default;
     }
 
     internal int AmountStepsInProtectRelax(ProtectRelaxTypes protectRelaxType)
@@ -197,216 +181,130 @@ internal struct CellUnitComponent
     internal int AddAmountHealth(int adding = 1) => _amountHealth += adding;
     internal int TakeAmountHealth(int taking = 1) => _amountHealth -= taking;
 
-    internal void EnablePlayerSRAndSetColor(UnitTypes unitType, Player player)
-    {
-        //if (player == default) throw new Exception();
+    //internal void Flip(bool isActivated, UnitTypes unitType, XyTypes flipType)
+    //{
+    //    switch (flipType)
+    //    {
+    //        case XyTypes.X:
+    //            switch (unitType)
+    //            {
+    //                case UnitTypes.None:
+    //                    break;
 
+    //                case UnitTypes.King:
+    //                    _kingSR.flipX = isActivated;
+    //                    break;
 
-        SwitchSR(true, unitType);
+    //                case UnitTypes.Pawn:
+    //                    _pawnSR.flipX = isActivated;
+    //                    break;
 
-        if (player != default)
-            if (player.IsMasterClient)
-            {
-                _standartColorSR.color = Color.blue;
-                _defendRelaxSR.color = Color.yellow;
-            }
-            else
-            {
-                _standartColorSR.color = Color.red;
-                _defendRelaxSR.color = Color.yellow;
-            }
-    }
+    //                case UnitTypes.PawnSword:
+    //                    _pawnSwordSR.flipX = isActivated;
+    //                    break;
 
-    internal void EnableBotSRAndSetColor(UnitTypes unitType)
-    {
-        SwitchSR(true, unitType);
+    //                case UnitTypes.Rook:
+    //                    _rookSR.flipX = isActivated;
+    //                    break;
 
-        _standartColorSR.color = Color.red;
-    }
+    //                case UnitTypes.RookCrossbow:
+    //                    _rookCrossbowSR.flipX = isActivated;
+    //                    break;
 
+    //                case UnitTypes.Bishop:
+    //                    _bishopSR.flipX = isActivated;
+    //                    break;
 
-    internal void SwitchSR(bool isActive, UnitTypes unitType)
-    {
-        switch (unitType)
-        {
-            case UnitTypes.None:
-                throw new Exception();
+    //                case UnitTypes.BishopCrossbow:
+    //                    _bishopCrossbowSR.flipX = isActivated;
+    //                    break;
 
-            case UnitTypes.King:
-                _kingSR.enabled = isActive;
-                _standartColorSR.enabled = isActive;
-                _defendRelaxSR.enabled = isActive;
-                break;
+    //                default:
+    //                    break;
+    //            }
+    //            break;
 
-            case UnitTypes.Pawn:
-                _pawnSR.enabled = isActive;
-                _standartColorSR.enabled = isActive;
-                _defendRelaxSR.enabled = isActive;
-                break;
+    //        case XyTypes.Y:
+    //            switch (unitType)
+    //            {
+    //                case UnitTypes.None:
+    //                    break;
 
-            case UnitTypes.PawnSword:
-                _pawnSwordSR.enabled = isActive;
-                _standartColorSR.enabled = isActive;
-                _defendRelaxSR.enabled = isActive;
-                break;
+    //                case UnitTypes.King:
+    //                    _kingSR.flipY = isActivated;
+    //                    break;
 
-            case UnitTypes.Rook:
-                _rookSR.enabled = isActive;
-                _standartColorSR.enabled = isActive;
-                _defendRelaxSR.enabled = isActive;
-                break;
+    //                case UnitTypes.Pawn:
+    //                    _pawnSR.flipY = isActivated;
+    //                    break;
 
-            case UnitTypes.RookCrossbow:
-                _rookCrossbowSR.enabled = isActive;
-                _standartColorSR.enabled = isActive;
-                _defendRelaxSR.enabled = isActive;
-                break;
+    //                case UnitTypes.PawnSword:
+    //                    _pawnSwordSR.flipY = isActivated;
+    //                    break;
 
-            case UnitTypes.Bishop:
-                _bishopSR.enabled = isActive;
-                _standartColorSR.enabled = isActive;
-                _defendRelaxSR.enabled = isActive;
-                break;
+    //                case UnitTypes.Rook:
+    //                    _rookSR.flipY = isActivated;
+    //                    break;
 
-            case UnitTypes.BishopCrossbow:
-                _bishopCrossbowSR.enabled = isActive;
-                _standartColorSR.enabled = isActive;
-                _defendRelaxSR.enabled = isActive;
-                break;
+    //                case UnitTypes.RookCrossbow:
+    //                    _rookCrossbowSR.flipY = isActivated;
+    //                    break;
 
-            default:
-                throw new Exception();
-        }
-    }
+    //                case UnitTypes.Bishop:
+    //                    _bishopSR.flipY = isActivated;
+    //                    break;
 
-    internal void SetColorDefendRelaxSR(Color color) => _defendRelaxSR.color = color;
-    internal void EnableDefendRelaxSR(bool isActive) => _defendRelaxSR.enabled = isActive;
-    internal void EnableStandartColorSR(bool isActive) => _standartColorSR.enabled = isActive;
+    //                case UnitTypes.BishopCrossbow:
+    //                    _bishopCrossbowSR.flipY = isActivated;
+    //                    break;
 
-    internal void Flip(bool isActivated, UnitTypes unitType, XyTypes flipType)
-    {
-        switch (flipType)
-        {
-            case XyTypes.X:
-                switch (unitType)
-                {
-                    case UnitTypes.None:
-                        break;
+    //                default:
+    //                    break;
+    //            }
+    //            break;
 
-                    case UnitTypes.King:
-                        _kingSR.flipX = isActivated;
-                        break;
+    //        default:
+    //            break;
+    //    }
+    //}
+    //internal void SetRotation(UnitTypes unitType, float x, float y, float z)
+    //{
+    //    switch (unitType)
+    //    {
+    //        case UnitTypes.None:
+    //            break;
 
-                    case UnitTypes.Pawn:
-                        _pawnSR.flipX = isActivated;
-                        break;
+    //        case UnitTypes.King:
+    //            _kingSR.transform.rotation = Quaternion.Euler(x, y, z);
+    //            break;
 
-                    case UnitTypes.PawnSword:
-                        _pawnSwordSR.flipX = isActivated;
-                        break;
+    //        case UnitTypes.Pawn:
+    //            _pawnSR.transform.rotation = Quaternion.Euler(x, y, z);
+    //            break;
 
-                    case UnitTypes.Rook:
-                        _rookSR.flipX = isActivated;
-                        break;
+    //        case UnitTypes.PawnSword:
+    //            _pawnSwordSR.transform.rotation = Quaternion.Euler(x, y, z);
+    //            break;
 
-                    case UnitTypes.RookCrossbow:
-                        _rookCrossbowSR.flipX = isActivated;
-                        break;
+    //        case UnitTypes.Rook:
+    //            _rookSR.transform.rotation = Quaternion.Euler(x, y, z);
+    //            break;
 
-                    case UnitTypes.Bishop:
-                        _bishopSR.flipX = isActivated;
-                        break;
+    //        case UnitTypes.RookCrossbow:
+    //            _rookCrossbowSR.transform.rotation = Quaternion.Euler(x, y, z);
+    //            break;
 
-                    case UnitTypes.BishopCrossbow:
-                        _bishopCrossbowSR.flipX = isActivated;
-                        break;
+    //        case UnitTypes.Bishop:
+    //            _bishopSR.transform.rotation = Quaternion.Euler(x, y, z);
+    //            break;
 
-                    default:
-                        break;
-                }
-                break;
+    //        case UnitTypes.BishopCrossbow:
+    //            _bishopCrossbowSR.transform.rotation = Quaternion.Euler(x, y, z);
+    //            break;
 
-            case XyTypes.Y:
-                switch (unitType)
-                {
-                    case UnitTypes.None:
-                        break;
-
-                    case UnitTypes.King:
-                        _kingSR.flipY = isActivated;
-                        break;
-
-                    case UnitTypes.Pawn:
-                        _pawnSR.flipY = isActivated;
-                        break;
-
-                    case UnitTypes.PawnSword:
-                        _pawnSwordSR.flipY = isActivated;
-                        break;
-
-                    case UnitTypes.Rook:
-                        _rookSR.flipY = isActivated;
-                        break;
-
-                    case UnitTypes.RookCrossbow:
-                        _rookCrossbowSR.flipY = isActivated;
-                        break;
-
-                    case UnitTypes.Bishop:
-                        _bishopSR.flipY = isActivated;
-                        break;
-
-                    case UnitTypes.BishopCrossbow:
-                        _bishopCrossbowSR.flipY = isActivated;
-                        break;
-
-                    default:
-                        break;
-                }
-                break;
-
-            default:
-                break;
-        }
-    }
-    internal void SetRotation(UnitTypes unitType, float x, float y, float z)
-    {
-        switch (unitType)
-        {
-            case UnitTypes.None:
-                break;
-
-            case UnitTypes.King:
-                _kingSR.transform.rotation = Quaternion.Euler(x, y, z);
-                break;
-
-            case UnitTypes.Pawn:
-                _pawnSR.transform.rotation = Quaternion.Euler(x, y, z);
-                break;
-
-            case UnitTypes.PawnSword:
-                _pawnSwordSR.transform.rotation = Quaternion.Euler(x, y, z);
-                break;
-
-            case UnitTypes.Rook:
-                _rookSR.transform.rotation = Quaternion.Euler(x, y, z);
-                break;
-
-            case UnitTypes.RookCrossbow:
-                _rookCrossbowSR.transform.rotation = Quaternion.Euler(x, y, z);
-                break;
-
-            case UnitTypes.Bishop:
-                _bishopSR.transform.rotation = Quaternion.Euler(x, y, z);
-                break;
-
-            case UnitTypes.BishopCrossbow:
-                _bishopCrossbowSR.transform.rotation = Quaternion.Euler(x, y, z);
-                break;
-
-            default:
-                break;
-        }
-    }
+    //        default:
+    //            break;
+    //    }
+    //}
 }
 

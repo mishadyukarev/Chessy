@@ -8,12 +8,62 @@ using static Assets.Scripts.Main;
 using static Assets.Scripts.Static.CellBaseOperations;
 using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
 using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     public static class CellUnitWorker
     {
         internal static EntitiesGameGeneralManager EGGM => Instance.EntGGM;
+        internal static SpritesData SpritesData => Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig;
+
+        private static void SetStandartValuesUnit(UnitTypes unitType, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, params int[] xy)
+        {
+            EGGM.CellUnitEnt_UnitTypeCom(xy).SetUnitType(unitType);
+            EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountHealth(amountHealth);
+            EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountSteps(amountSteps);
+            EGGM.CellUnitEnt_ProtectRelaxCom(xy).ProtectRelaxType = protectRelaxType;
+        }
+        private static void SetSprite(UnitTypes unitType, params int[] xy)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    EGGM.CellUnitEnt_SpriteRendererCom(xy).SetSprite(SpritesData.KingSprite);
+                    break;
+
+                case UnitTypes.Pawn:
+                    EGGM.CellUnitEnt_SpriteRendererCom(xy).SetSprite(SpritesData.PawnSprite);
+                    break;
+
+                case UnitTypes.PawnSword:
+                    EGGM.CellUnitEnt_SpriteRendererCom(xy).SetSprite(SpritesData.PawnSwordSprite);
+                    break;
+
+                case UnitTypes.Rook:
+                    EGGM.CellUnitEnt_SpriteRendererCom(xy).SetSprite(SpritesData.RookSprite);
+                    break;
+
+                case UnitTypes.RookCrossbow:
+                    EGGM.CellUnitEnt_SpriteRendererCom(xy).SetSprite(SpritesData.RookCrossbowSprite);
+                    break;
+
+                case UnitTypes.Bishop:
+                    EGGM.CellUnitEnt_SpriteRendererCom(xy).SetSprite(SpritesData.BishopSprite);
+                    break;
+
+                case UnitTypes.BishopCrossbow:
+                    EGGM.CellUnitEnt_SpriteRendererCom(xy).SetSprite(SpritesData.BishopCrossbowSprite);
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+        }
+
 
 
         internal static bool IsMelee(UnitTypes unitType)
@@ -114,6 +164,7 @@ namespace Assets.Scripts
                     return default;
             }
         }
+
         internal static int UniquePowerDamage(UnitTypes unitType)
         {
             switch (unitType)
@@ -147,13 +198,14 @@ namespace Assets.Scripts
             }
 
         }
+
         internal static int PowerProtection(params int[] xy)
         {
             var unitType = EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType;
 
             int powerProtection = 0;
 
-            if (EGGM.CellUnitEnt_ProtectRelaxCom(xy).IsProtected)
+            if (EGGM.CellUnitEnt_ProtectRelaxCom(xy).IsType(ProtectRelaxTypes.Protected))
             {
                 switch (unitType)
                 {
@@ -187,7 +239,7 @@ namespace Assets.Scripts
                 }
             }
 
-            else if (EGGM.CellUnitEnt_ProtectRelaxCom(xy).IsRelaxed)
+            else if (EGGM.CellUnitEnt_ProtectRelaxCom(xy).IsType(ProtectRelaxTypes.Relaxed))
             {
                 switch (unitType)
                 {
@@ -360,13 +412,8 @@ namespace Assets.Scripts
 
         }
 
-        private static void SetStandartValuesUnit(UnitTypes unitType, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, params int[] xy)
-        {
-            EGGM.CellUnitEnt_UnitTypeCom(xy).SetUnitType(unitType);
-            EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountHealth(amountHealth);
-            EGGM.CellUnitEnt_CellUnitCom(xy).SetAmountSteps(amountSteps);
-            EGGM.CellUnitEnt_ProtectRelaxCom(xy).SetProtectedRelaxedType(protectRelaxType);
-        }
+
+        #region Player
 
         internal static void ShiftPlayerUnit(int[] fromXy, int[] toXy)
         {
@@ -379,13 +426,30 @@ namespace Assets.Scripts
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, toXy);
             EGGM.CellUnitEnt_CellOwnerCom(toXy).SetOwner(player);
 
+            EGGM.CellMaxStepsEnt_SpriteRendererCom(toXy).ActivateSR(true);
+
+            SetSprite(unitType, toXy);
+
+            if (EGGM.CellUnitEnt_CellOwnerCom(toXy).IsMasterClient)
+            {
+                EGGM.CellMaxStepsEnt_SpriteRendererCom(toXy).SetColorSR(Color.blue);
+            }
+            else
+            {
+                EGGM.CellMaxStepsEnt_SpriteRendererCom(toXy).SetColorSR(Color.red);
+            }
 
 
-            EGGM.CellUnitEnt_CellUnitCom(fromXy).SwitchSR(false, unitType);
+
+
+            EGGM.CellUnitEnt_SpriteRendererCom(fromXy).ActivateSR(false);
 
             SetStandartValuesUnit(default, default, default, default, fromXy);
             EGGM.CellUnitEnt_CellOwnerCom(fromXy).ResetOwner();
+
+            EGGM.CellMaxStepsEnt_SpriteRendererCom(fromXy).ActivateSR(false);
         }
+
         internal static void SetNewPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, Player player, params int[] xy)
         {
             UnitInfoManager.AddAmountUnitInGame(unitType, player.IsMasterClient);
@@ -393,43 +457,15 @@ namespace Assets.Scripts
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
             EGGM.CellUnitEnt_CellOwnerCom(xy).SetOwner(player);
 
-            switch (EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
+            EGGM.CellMaxStepsEnt_SpriteRendererCom(xy).ActivateSR(true);
+            if (player.IsMasterClient)
+                EGGM.CellMaxStepsEnt_SpriteRendererCom(xy).SetColorSR(Color.blue);
 
-                case UnitTypes.King:
-                    EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.King, EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
-                    break;
+            else EGGM.CellMaxStepsEnt_SpriteRendererCom(xy).SetColorSR(Color.red);
 
-                case UnitTypes.Pawn:
-                    EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.Pawn, EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
-                    break;
-
-                case UnitTypes.PawnSword:
-                    EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.PawnSword, EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
-                    break;
-
-                case UnitTypes.Rook:
-                    EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.Rook, EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
-                    break;
-
-                case UnitTypes.RookCrossbow:
-                    EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.RookCrossbow, EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
-                    break;
-
-                case UnitTypes.Bishop:
-                    EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.Bishop, EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
-                    break;
-
-                case UnitTypes.BishopCrossbow:
-                    EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(UnitTypes.BishopCrossbow, EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
+            SetSprite(unitType, xy);
         }
+
         internal static void SetNewPlayerUnit(UnitTypes unitType, Player player, int[] xy)
         {
             int amountHealth;
@@ -481,12 +517,13 @@ namespace Assets.Scripts
 
             SetNewPlayerUnit(unitType, amountHealth, amountSteps, ProtectRelaxTypes.None, player, xy);
         }
+
         internal static void ResetPlayerUnit(params int[] xy)
         {
             var previousUnitType = EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType;
             var previousIsMasterOwner = EGGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient;
 
-            EGGM.CellUnitEnt_CellUnitCom(xy).SwitchSR(false, previousUnitType);
+            EGGM.CellUnitEnt_SpriteRendererCom(xy).ActivateSR(false);
 
             UnitInfoManager.TakeAmountUnitInGame(previousUnitType, previousIsMasterOwner);
 
@@ -500,47 +537,25 @@ namespace Assets.Scripts
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
             EGGM.CellUnitEnt_CellOwnerCom(xy).SetOwner(player);
         }
+
         internal static void SyncPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, Player player, params int[] xy)
         {
             if (EGGM.CellUnitEnt_UnitTypeCom(xy).HaveAnyUnit)
             {
-                EGGM.CellUnitEnt_CellUnitCom(xy).SwitchSR(false, EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType);
+                EGGM.CellUnitEnt_SpriteRendererCom(xy).ActivateSR(false);
             }
 
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
             EGGM.CellUnitEnt_CellOwnerCom(xy).SetOwner(player);
         }
 
-
-        internal static void SetBotUnit(UnitTypes unitType, bool haveBot, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, params int[] xy)
+        internal static void ChangePlayerUnit(int[] xy, UnitTypes newUnitType)
         {
-            SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
-            EGGM.CellUnitEnt_CellOwnerBotCom(xy).SetBot(haveBot);
-
-            EGGM.CellUnitEnt_CellUnitCom(xy).EnableBotSRAndSetColor(unitType);
-        }
-        internal static void ResetBotUnit(params int[] xy)
-        {
-            if (EGGM.CellUnitEnt_UnitTypeCom(xy).HaveAnyUnit)
-                EGGM.CellUnitEnt_CellUnitCom(xy).SwitchSR(false, EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType);
-
-            UnitTypes unitType = default;
-            int amountHealth = default;
-            int amountSteps = default;
-            ProtectRelaxTypes protectRelaxType = default;
-            bool haveBot = default;
-
-            SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
-            EGGM.CellUnitEnt_CellOwnerBotCom(xy).SetBot(haveBot);
-        }
-
-        internal static void ChangeUnit(int[] xy, UnitTypes newUnitType)
-        {
-            EGGM.CellUnitEnt_CellUnitCom(xy).SwitchSR(false, EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType);
+            EGGM.CellUnitEnt_SpriteRendererCom(xy).ActivateSR(false);
 
             EGGM.CellUnitEnt_UnitTypeCom(xy).SetUnitType(newUnitType);
 
-            EGGM.CellUnitEnt_CellUnitCom(xy).EnablePlayerSRAndSetColor(newUnitType, EGGM.CellUnitEnt_CellOwnerCom(xy).Owner);
+            EGGM.CellUnitEnt_SpriteRendererCom(xy).ActivateSR(true);
 
             switch (EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType)
             {
@@ -576,6 +591,53 @@ namespace Assets.Scripts
             }
         }
 
+        internal static void ActiveSelectorVisionUnit(bool isActive, UnitTypes unitType, params int[] xy)
+        {
+            if (isActive)
+            {
+                EGGM.CellUnitEnt_SpriteRendererCom(xy).ActivateSR(isActive);
+                SetSprite(unitType, xy);
+            }
+
+            else
+            {
+                EGGM.CellUnitEnt_SpriteRendererCom(xy).ActivateSR(isActive);
+            }
+        }
+
+        #endregion
+
+
+        #region Bot
+
+        internal static void SetBotUnit(UnitTypes unitType, bool haveBot, int amountHealth, int amountSteps, ProtectRelaxTypes protectRelaxType, params int[] xy)
+        {
+            SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
+            EGGM.CellUnitEnt_CellOwnerBotCom(xy).SetBot(haveBot);
+
+            EGGM.CellUnitEnt_SpriteRendererCom(xy).ActivateSR(true);
+        }
+
+        internal static void ResetBotUnit(params int[] xy)
+        {
+            if (EGGM.CellUnitEnt_UnitTypeCom(xy).HaveAnyUnit)
+                EGGM.CellUnitEnt_SpriteRendererCom(xy).ActivateSR(false);
+
+            UnitTypes unitType = default;
+            int amountHealth = default;
+            int amountSteps = default;
+            ProtectRelaxTypes protectRelaxType = default;
+            bool haveBot = default;
+
+            SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
+            EGGM.CellUnitEnt_CellOwnerBotCom(xy).SetBot(haveBot);
+        }
+
+        #endregion
+
+
+
+        #region ForMoving
 
         internal static void GetCellsForShift(this List<int[]> list, params int[] xy)
         {
@@ -929,5 +991,7 @@ namespace Assets.Scripts
 
             return xyDirectCell;
         }
+
+        #endregion
     }
 }
