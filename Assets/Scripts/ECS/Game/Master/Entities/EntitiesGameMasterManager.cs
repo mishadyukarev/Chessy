@@ -22,7 +22,7 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
 
 
     private EcsEntity _upgradeEnt;
-    internal ref UpgradeTypeComponent UpgradeEnt_UpgradeTypeCom => ref _upgradeEnt.Get<UpgradeTypeComponent>();
+    internal ref UpgradeModTypeComponent UpgradeEnt_UpgradeTypeCom => ref _upgradeEnt.Get<UpgradeModTypeComponent>();
     internal ref XyCellComponent UpgradeEnt_XyCellCom => ref _upgradeEnt.Get<XyCellComponent>();
     internal ref BuildingTypeComponent UpgradeEnt_BuildingTypeCom => ref _upgradeEnt.Get<BuildingTypeComponent>();
 

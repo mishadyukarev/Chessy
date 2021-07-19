@@ -381,7 +381,7 @@ namespace Assets.Scripts
 
 
 
-            EGGM.CellUnitEnt_CellUnitCom(fromXy).EnableSR(false, unitType);
+            EGGM.CellUnitEnt_CellUnitCom(fromXy).SwitchSR(false, unitType);
 
             SetStandartValuesUnit(default, default, default, default, fromXy);
             EGGM.CellUnitEnt_CellOwnerCom(fromXy).ResetOwner();
@@ -486,7 +486,7 @@ namespace Assets.Scripts
             var previousUnitType = EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType;
             var previousIsMasterOwner = EGGM.CellUnitEnt_CellOwnerCom(xy).IsMasterClient;
 
-            EGGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, previousUnitType);
+            EGGM.CellUnitEnt_CellUnitCom(xy).SwitchSR(false, previousUnitType);
 
             UnitInfoManager.TakeAmountUnitInGame(previousUnitType, previousIsMasterOwner);
 
@@ -504,7 +504,7 @@ namespace Assets.Scripts
         {
             if (EGGM.CellUnitEnt_UnitTypeCom(xy).HaveAnyUnit)
             {
-                EGGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType);
+                EGGM.CellUnitEnt_CellUnitCom(xy).SwitchSR(false, EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType);
             }
 
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
@@ -522,7 +522,7 @@ namespace Assets.Scripts
         internal static void ResetBotUnit(params int[] xy)
         {
             if (EGGM.CellUnitEnt_UnitTypeCom(xy).HaveAnyUnit)
-                EGGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType);
+                EGGM.CellUnitEnt_CellUnitCom(xy).SwitchSR(false, EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType);
 
             UnitTypes unitType = default;
             int amountHealth = default;
@@ -536,7 +536,7 @@ namespace Assets.Scripts
 
         internal static void ChangeUnit(int[] xy, UnitTypes newUnitType)
         {
-            EGGM.CellUnitEnt_CellUnitCom(xy).EnableSR(false, EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType);
+            EGGM.CellUnitEnt_CellUnitCom(xy).SwitchSR(false, EGGM.CellUnitEnt_UnitTypeCom(xy).UnitType);
 
             EGGM.CellUnitEnt_UnitTypeCom(xy).SetUnitType(newUnitType);
 
@@ -577,11 +577,11 @@ namespace Assets.Scripts
         }
 
 
-        internal static List<int[]> GetCellsForShift(params int[] xy)
+        internal static void GetCellsForShift(this List<int[]> list, params int[] xy)
         {
-            var listAvailable = TryGetXYAround(xy);
+            if (list == default) throw new Exception();
 
-            var xyAvailableCellsForShift = new List<int[]>();
+            var listAvailable = TryGetXYAround(xy);
 
             foreach (var xy1 in listAvailable)
             {
@@ -591,11 +591,10 @@ namespace Assets.Scripts
 
                     if (EGGM.CellUnitEnt_CellUnitCom(xy).AmountSteps >= EGGM.CellEnvEnt_CellEnvCom(xy1).NeedAmountSteps() || EGGM.CellUnitEnt_CellUnitCom(xy).HaveMaxSteps(unitType))
                     {
-                        xyAvailableCellsForShift.Add(xy1);
+                        list.Add(xy1);
                     }
                 }
             }
-            return xyAvailableCellsForShift;
         }
         internal static void GetCellsForAttack(Player playerFrom, out List<int[]> availableCellsSimpleAttack, out List<int[]> availableCellsUniqueAttack, int[] xy)
         {
@@ -826,9 +825,9 @@ namespace Assets.Scripts
                 }
             }
         }
-        internal static List<int[]> GetStartCellsForSettingUnit(Player player)
+        internal static void GetStartCellsForSettingUnit(this List<int[]> list, Player player)
         {
-            var startCellsForSettingUnit = new List<int[]>();
+            if (list == default) throw new Exception();
 
             for (int x = 0; x < EGGM.Xamount; x++)
                 for (int y = 0; y < EGGM.Yamount; y++)
@@ -839,13 +838,11 @@ namespace Assets.Scripts
                         {
                             if (EGGM.CellEnt_CellBaseCom(x, y).IsStartedCell(player.IsMasterClient))
                             {
-                                startCellsForSettingUnit.Add(new int[] { x, y });
+                                list.Add(new int[] { x, y });
                             }
                         }
                     }
                 }
-
-            return startCellsForSettingUnit;
         }
         
         internal static List<int[]> TryGetXYAround(params int[] xyStartCell)

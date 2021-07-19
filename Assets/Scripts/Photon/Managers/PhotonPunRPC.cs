@@ -208,7 +208,7 @@ namespace Assets.Scripts
 
                 case RpcMasterTypes.Upgrade:
                     var upgradeModType = (UpgradeModTypes)objects[0];
-                    _eMM.UpgradeEnt_UpgradeTypeCom.UpgradeModType = upgradeModType;
+                    _eMM.UpgradeEnt_UpgradeTypeCom.SetUpgradeModType(upgradeModType);
                     switch (upgradeModType)
                     {
                         case UpgradeModTypes.None:
@@ -237,6 +237,8 @@ namespace Assets.Scripts
             SyncToMaster(SyncTypes.Economy);
         }
 
+        public void GetAvailableCellsToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.GetAvailableCellsForSetting, new object[] { });
+
         [PunRPC]
         private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
         {
@@ -263,13 +265,22 @@ namespace Assets.Scripts
                     _eGM.MotionEnt_ActivatedCom.SetActivated(true);
                     break;
 
+                case RpcGeneralTypes.GetAvailableCellsForSetting:
+                    _eGM.SelectorEnt_SelectorCom.GetCellsForSettingUnit(Instance.LocalPlayer);
+                    break;
+
                 case RpcGeneralTypes.EndGame:
                     _eGM.EndGameEntEndGameCom.IsEndGame = true;
                     _eGM.EndGameEntEndGameCom.PlayerWinner = PhotonNetwork.PlayerList[(int)objects[_currentNumber++] - 1];
                     break;
 
                 case RpcGeneralTypes.Attack:
-                    if ((bool)objects[_currentNumber++]) _eGM.SelectorEnt_SelectorCom.AttackUnitAction();
+                    if ((bool)objects[_currentNumber++])
+                    {
+                        _eGM.SelectorEnt_SelectorCom.ClearAvailableCells(AvailableCellTypes.Shift);
+                        _eGM.SelectorEnt_SelectorCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
+                        _eGM.SelectorEnt_SelectorCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
+                    }
                     break;
 
                 case RpcGeneralTypes.Mistake:
@@ -304,7 +315,11 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.SetUnit:
-                    if ((bool)objects[_currentNumber++]) _eGM.SelectorEnt_SelectorCom.SetterUnitDelegate();
+                    if ((bool)objects[_currentNumber++])
+                    {
+                        _eGM.SelectorEnt_SelectorCom.IsStartSelectedDirect = true;
+                        _eGM.SelectorEnt_UnitTypeCom.ResetUnit();
+                    }
                     break;
 
                 case RpcGeneralTypes.Sound:

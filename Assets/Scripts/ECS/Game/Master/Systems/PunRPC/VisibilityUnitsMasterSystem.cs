@@ -79,7 +79,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         }
                         else
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnableSR(false, _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
+                            _eGM.CellUnitEnt_CellUnitCom(x, y).SwitchSR(false, _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
                         }
                     }
 
@@ -115,7 +115,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         }
                         else
                         {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnableSR(false, _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
+                            _eGM.CellUnitEnt_CellUnitCom(x, y).SwitchSR(false, _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
                         }
                     }
                 }

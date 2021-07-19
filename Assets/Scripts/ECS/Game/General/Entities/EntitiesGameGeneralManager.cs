@@ -146,6 +146,7 @@ public sealed partial class EntitiesGameGeneralManager
     internal ref SelectorComponent SelectorEnt_SelectorCom => ref _selectorEnt.Get<SelectorComponent>();
     internal ref RaycastHit2DComponent SelectorEnt_RayCom => ref _selectorEnt.Get<RaycastHit2DComponent>();
     internal ref UnitTypeComponent SelectorEnt_UnitTypeCom => ref _selectorEnt.Get<UnitTypeComponent>();
+    internal ref UpgradeModTypeComponent SelectorEnt_UpgradeModTypeCom => ref _selectorEnt.Get<UpgradeModTypeComponent>();
 
 
     private EcsEntity _soundEnt;
@@ -368,6 +369,7 @@ public sealed partial class EntitiesGameGeneralManager
         SelectorEnt_SelectorCom.StartFill();
         SelectorEnt_RayCom.StartFill();
         SelectorEnt_UnitTypeCom.StartFill();
+        SelectorEnt_UpgradeModTypeCom.StartFill();
 
         RpcGeneralEnt_RPCCom.StartFill();
 

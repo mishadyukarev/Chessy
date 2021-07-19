@@ -9,34 +9,24 @@ using static Assets.Scripts.Static.CellBaseOperations;
 
 internal sealed class SupportVisionSystem : SystemGeneralReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
+    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
 
     public override void Run()
     {
         base.Run();
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected)
-        {
-            ActiveSupVis(true, SupportVisionTypes.Selector, XySelectedCell);
-        }
-        else
-        {
-            ActiveSupVis(false, SupportVisionTypes.Selector, XySelectedCell);
-        }
-
         for (int x = 0; x < _eGM.Xamount; x++)
             for (int y = 0; y < _eGM.Yamount; y++)
             {
+                DisableSupVis(x, y);
+
                 if (_eGM.SelectorEnt_UnitTypeCom.HaveAnyUnit)
                 {
-                    //if (!CompareXy(new int[] { x, y }, _eGM.SelectorEnt_SelectorCom.XySelectedCell) && !_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit
-                    //    && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Mountain))
-                    //{
                     if (Instance.IsMasterClient)
                     {
                         if (_eGM.CellEnt_CellBaseCom(x, y).IsStartedCell(Instance.IsMasterClient))
                         {
-                            ActiveSupVis(true, SupportVisionTypes.Spawn, x, y);
+                            EnableSupVis(SupportVisionTypes.Spawn, x, y);
                         }
                     }
 
@@ -44,15 +34,9 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                     {
                         if (_eGM.CellEnt_CellBaseCom(x, y).IsStartedCell(Instance.IsMasterClient))
                         {
-                            ActiveSupVis(true, SupportVisionTypes.Spawn, x, y);
+                            EnableSupVis(SupportVisionTypes.Spawn, x, y);
                         }
                     }
-                    //}
-                }
-
-                else if (!CompareXy(new int[] { x, y }, _eGM.SelectorEnt_SelectorCom.XySelectedCell))
-                {
-                    //ActiveSupVis(false, SupportVisionTypes.Spawn, x, y);
                 }
 
 
@@ -102,30 +86,15 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                             _eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.green);
                         }
 
-                        else
-                        {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(false);
-                        }
-
 
                         if (_eGM.CellUnitEnt_CellUnitCom(x, y).HaveMaxSteps(unitType))
                         {
                             _eGM.CellUnitEnt_CellUnitCom(x, y).EnableStandartColorSR(true);
                         }
-
-                        else
-                        {
-                            _eGM.CellUnitEnt_CellUnitCom(x, y).EnableStandartColorSR(false);
-                        }
-                    }
-
-                    else
-                    {
-                        _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Hp);
                     }
 
 
-                    if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.Unit)
+                    if (_eGM.SelectorEnt_UpgradeModTypeCom.IsUpgradeModType(UpgradeModTypes.Unit))
                     {
                         if (_eGM.CellUnitEnt_UnitTypeCom(x, y).IsUnit(UnitTypes.Pawn)|| _eGM.CellUnitEnt_UnitTypeCom(x, y).IsUnit(UnitTypes.Rook) || _eGM.CellUnitEnt_UnitTypeCom(x, y).IsUnit(UnitTypes.Bishop))
                         {
@@ -133,44 +102,21 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                             {
                                 if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMine)
                                 {
-                                    //ActiveSupVis(true, SupportVisionTypes.Upgrade, x, y);
-                                }
-
-                                else
-                                {
-                                    //ActiveSupVis(false, SupportVisionTypes.Upgrade, x, y);
+                                    EnableSupVis(SupportVisionTypes.Upgrade, x, y);
                                 }
                             }
-
-                            else
-                            {
-                                //ActiveSupVis(false, SupportVisionTypes.Upgrade, x, y);
-                            }
-                        }
-
-                        else
-                        {
-                            //ActiveSupVis(false, SupportVisionTypes.Upgrade, x, y);
                         }
                     }
-                    else
-                    {
-                        //ActiveSupVis(false, SupportVisionTypes.Upgrade, x, y);
-                    }
-                }
-                else
-                {
-                    //_eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(false, SupportStaticTypes.Hp);
                 }
             }
 
-        foreach (var xy in _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift)
-            ActiveSupVis(true, SupportVisionTypes.WayUnit, xy);
+        if (_eGM.SelectorEnt_SelectorCom.IsSelected)
+        {
+            EnableSupVis(SupportVisionTypes.Selector, XySelectedCell);
+        }
 
-        foreach (var xy in _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack)
-            ActiveSupVis(true, SupportVisionTypes.SimpleAttack, xy);
-
-        foreach (var xy in _eGM.SelectorEnt_SelectorCom.AvailableCellsUniqueAttack)
-            ActiveSupVis(true, SupportVisionTypes.UniqueAttack, xy);
+        _eGM.SelectorEnt_SelectorCom.GetAllCells(AvailableCellTypes.Shift).ForEach((xy) => EnableSupVis(SupportVisionTypes.Shift, xy));
+        _eGM.SelectorEnt_SelectorCom.GetAllCells(AvailableCellTypes.SimpleAttack).ForEach((xy) => EnableSupVis(SupportVisionTypes.SimpleAttack, xy));
+        _eGM.SelectorEnt_SelectorCom.GetAllCells(AvailableCellTypes.UniqueAttack).ForEach((xy) => EnableSupVis(SupportVisionTypes.UniqueAttack, xy));
     }
 }

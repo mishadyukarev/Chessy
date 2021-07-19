@@ -202,7 +202,7 @@ internal struct CellUnitComponent
         //if (player == default) throw new Exception();
 
 
-        EnableSR(true, unitType);
+        SwitchSR(true, unitType);
 
         if (player != default)
             if (player.IsMasterClient)
@@ -219,13 +219,13 @@ internal struct CellUnitComponent
 
     internal void EnableBotSRAndSetColor(UnitTypes unitType)
     {
-        EnableSR(true, unitType);
+        SwitchSR(true, unitType);
 
         _standartColorSR.color = Color.red;
     }
 
 
-    internal void EnableSR(bool isActive, UnitTypes unitType)
+    internal void SwitchSR(bool isActive, UnitTypes unitType)
     {
         switch (unitType)
         {

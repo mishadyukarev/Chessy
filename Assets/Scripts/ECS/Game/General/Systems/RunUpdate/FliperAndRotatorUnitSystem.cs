@@ -24,7 +24,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                         {
                             if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMine)
                             {
-                                if (CompareXy(_eGM.SelectorEnt_SelectorCom.XySelectedCell, new int[] { x, y }))
+                                if (_eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected).Compare(new int[] { x, y }))
                                 {
                                     switch (unitType)
                                     {

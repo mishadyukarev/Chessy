@@ -7,6 +7,7 @@
         Ready,
         SetDonerActiveUI,
         ActiveAmountMotionUI,
+        GetAvailableCellsForSetting,
         EndGame,
         Attack,
         Mistake,

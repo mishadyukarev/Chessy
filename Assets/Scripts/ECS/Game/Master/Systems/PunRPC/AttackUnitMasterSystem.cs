@@ -20,8 +20,8 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
         CellUnitWorker.GetCellsForAttack(InfoFrom.Sender,
             out var availableCellsSimpleAttack, out var availableCellsUniqueAttack, FromXy);
 
-        var isFindedSimple = TryFindCellInList(ToXy, availableCellsSimpleAttack);
-        var isFindedUnique = TryFindCellInList(ToXy, availableCellsUniqueAttack);
+        var isFindedSimple = availableCellsSimpleAttack.TryFindCell(ToXy);
+        var isFindedUnique = availableCellsUniqueAttack.TryFindCell(ToXy);
 
 
         if (isFindedSimple || isFindedUnique)

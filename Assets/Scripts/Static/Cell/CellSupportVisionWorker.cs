@@ -9,9 +9,9 @@ namespace Assets.Scripts.Static.Cell
     {
         private static EntitiesGameGeneralManager EGGM => Instance.EntGGM;
 
-        internal static void ActiveSupVis(bool isActive, SupportVisionTypes supportVisionType, params int[] xy)
+        internal static void EnableSupVis(SupportVisionTypes supportVisionType, params int[] xy)
         {
-            EGGM.CellSupVisEnt_SpriteRenderer(xy).ActivateSR(isActive);
+            EGGM.CellSupVisEnt_SpriteRenderer(xy).ActivateSR(true);
 
             switch (supportVisionType)
             {
@@ -26,7 +26,7 @@ namespace Assets.Scripts.Static.Cell
                     EGGM.CellSupVisEnt_SpriteRenderer(xy).SetColorSR(UniqueAttack_Color);
                     break;
 
-                case SupportVisionTypes.WayUnit:
+                case SupportVisionTypes.Shift:
                     EGGM.CellSupVisEnt_SpriteRenderer(xy).SetColorSR(UniqueAttack_Color);
                     break;
 
@@ -46,5 +46,7 @@ namespace Assets.Scripts.Static.Cell
                     throw new Exception();
             }
         }
+
+        internal static void DisableSupVis(params int[] xy) => EGGM.CellSupVisEnt_SpriteRenderer(xy).ActivateSR(false);
     }
 }

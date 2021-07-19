@@ -1,9 +1,11 @@
-﻿namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.Sound
+﻿using Assets.Scripts.Abstractions.Enums;
+
+namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.Sound
 {
     internal class PickSoundSystem : SystemGeneralReduction
     {
         private bool _isActivated;
-        private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
+        private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
 
         public override void Run()
         {

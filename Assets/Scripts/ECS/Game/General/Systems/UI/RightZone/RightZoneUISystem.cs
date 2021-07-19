@@ -1,9 +1,10 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 using static Assets.Scripts.Main;
 
 internal sealed class RightZoneUISystem : SystemGeneralReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
+    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
 
     public override void Run()
     {

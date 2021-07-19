@@ -1,352 +1,270 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
-using static Assets.Scripts.Abstractions.NameConst;
-using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
 using static Assets.Scripts.Main;
 using static Assets.Scripts.Static.CellBaseOperations;
 
 internal sealed class SelectorSystem : RPCGeneralSystemReduction
 {
-    private int[] _xyPreviousVisionCell;
+    private int[] XyPreviousCell { get => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Previous); set => _eGM.SelectorEnt_SelectorCom.SetXy(SelectorCellTypes.Previous, value); }
+    private int[] XySelectedCell { get => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected); set => _eGM.SelectorEnt_SelectorCom.SetXy(SelectorCellTypes.Selected, value); }
+    private int[] XyCurrentCell { get => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Current); set => _eGM.SelectorEnt_SelectorCom.SetXy(SelectorCellTypes.Current, value); }
+    private int[] XyPreviousVisionCell { get => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.PreviousVision); set => _eGM.SelectorEnt_SelectorCom.SetXy(SelectorCellTypes.PreviousVision, value); }
 
-    private bool _canShiftUnit = false;
-    private bool _canExecuteStartClick = true;
-    private bool _isStartSelectedDirect = true;
-
-    private int[] XyPreviousCell => _eGM.SelectorEnt_SelectorCom.XyPreviousCell;
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
     private bool IsSelected { get => _eGM.SelectorEnt_SelectorCom.IsSelected; set => _eGM.SelectorEnt_SelectorCom.IsSelected = value; }
-
-
-    public override void Init()
-    {
-        base.Init();
-
-        _xyPreviousVisionCell = new int[XY_FOR_ARRAY];
-        _eGM.SelectorEnt_SelectorCom.SetterUnitDelegate = IsSetted;
-        _eGM.SelectorEnt_SelectorCom.AttackUnitAction = IsAttacked;
-        _eGM.SelectorEnt_SelectorCom.ShiftUnitDelegate = SetIsShifted;
-    }
 
     public override void Run()
     {
         base.Run();
 
-        _sGM.TryInvokeRunSystem(nameof(RaySystem), _sGM.ForSelectorRunUpdateSystem);
-
-        if (_eGM.SelectorEnt_RayCom.IsUI)
+        if (_eGM.SelectorEnt_RayCom.IsGettedType(RaycastGettedTypes.UI))
         {
             if (_eGM.InputEnt_InputCom.IsClick)
             {
-                _canShiftUnit = false;
+                _eGM.SelectorEnt_SelectorCom.CanShiftUnit = false;
 
                 ClearAvailableCells();
 
-                CleanXY(XyPreviousCell);
+                XyPreviousCell.Clean();
             }
         }
-        else
+
+        else if (_eGM.SelectorEnt_RayCom.IsGettedType(RaycastGettedTypes.Cell))
         {
-            if (_eGM.SelectorEnt_RayCom.RaycastHit2D)
+            if (_eGM.InputEnt_InputCom.IsClick)
             {
-                if (_eGM.SelectorEnt_RayCom.RaycastHit2D.collider.gameObject.tag == TAG_CELL)
+                if (_eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient))
                 {
-                    _sGM.TryInvokeRunSystem(nameof(GetterCellSystem), _sGM.ForSelectorRunUpdateSystem);
-
-                    if (_eGM.SelectorEnt_SelectorCom.IsGettedCell)
+                    if (_eGM.SelectorEnt_SelectorCom.CanExecuteStartClick)
                     {
-                        var xyCurrentCell = _eGM.SelectorEnt_SelectorCom.XyCurrentCell;
+                        XySelectedCell = XyCurrentCell;
 
-                        if (_eGM.InputEnt_InputCom.IsClick)
-                        {
-                            if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.Unit)
-                            {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveAnyUnit)
-                                {
-                                    _photonPunRPC.UpgradeUnitToMaster(xyCurrentCell);
-                                }
-                                else
-                                {
-                                    _eGM.SelectorEnt_SelectorCom.UpgradeModType = UpgradeModTypes.None;
-                                }
-                            }
+                        if (!XyPreviousCell.Compare(XySelectedCell))
+                            IsSelected = true;
 
-                            else if (_eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient))
-                            {
-                                if (_canExecuteStartClick)
-                                {
-                                    CopyXyInTo(xyCurrentCell, XySelectedCell);
+                        XyPreviousCell = XySelectedCell;
+                        _eGM.SelectorEnt_SelectorCom.CanExecuteStartClick = false;
+                    }
 
-                                    if (!CompareXy(XyPreviousCell, XySelectedCell))
-                                        IsSelected = true;
+                    else
+                    {
+                        if (!XySelectedCell.Compare(XyCurrentCell))
+                            XyPreviousCell = XySelectedCell;
 
-                                    CopyXyInTo(XySelectedCell, XyPreviousCell);
-                                    _canExecuteStartClick = false;
-                                }
-
-                                else
-                                {
-                                    if (!CompareXy(XySelectedCell, xyCurrentCell))
-                                        CopyXyInTo(XySelectedCell, XyPreviousCell);
-
-
-                                    CopyXyInTo(xyCurrentCell, XySelectedCell);
-                                    IsSelected = true;
-                                }
-                            }
-
-                            else
-                            {
-                                if (_eGM.SelectorEnt_UnitTypeCom.HaveAnyUnit)
-                                {
-                                    if (!_eGM.CellEnvEnt_CellEnvCom(xyCurrentCell).HaveEnvironment(EnvironmentTypes.Mountain) && !_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveAnyUnit)
-                                    {
-                                        if (Instance.IsMasterClient && _eGM.CellEnt_CellBaseCom(xyCurrentCell).IsStartedCell(true))
-                                            _photonPunRPC.SetUniToMaster(xyCurrentCell, _eGM.SelectorEnt_UnitTypeCom.UnitType);
-
-                                        else if (_eGM.CellEnt_CellBaseCom(xyCurrentCell).IsStartedCell(false))
-                                            _photonPunRPC.SetUniToMaster(xyCurrentCell, _eGM.SelectorEnt_UnitTypeCom.UnitType);
-
-                                        else SoundManager.PlaySoundEffect(SoundEffectTypes.Mistake);
-                                    }
-
-                                    else SoundManager.PlaySoundEffect(SoundEffectTypes.Mistake);
-                                }
-
-                                else if (_canExecuteStartClick)
-                                {
-                                    CopyXyInTo(xyCurrentCell, XySelectedCell);
-
-                                    if (!CompareXy(XyPreviousCell, XySelectedCell))
-                                        IsSelected = true;
-
-                                    if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
-                                    {
-                                        if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
-                                        {
-                                            if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
-                                            {
-                                                if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).IsMelee)
-                                                {
-                                                    _eGM.PickMeleeEnt_AudioSourceCom.Play();
-                                                }
-                                                else
-                                                {
-                                                    _eGM.PickArcherEnt_AudioSourceCom.Play();
-                                                }
-
-                                                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveMinAmountSteps)
-                                                {
-                                                    _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift = CellUnitWorker.GetCellsForShift(XySelectedCell);
-                                                    CellUnitWorker.GetCellsForAttack(Instance.LocalPlayer, out _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack, out _eGM.SelectorEnt_SelectorCom.AvailableCellsUniqueAttack, XySelectedCell);
-
-                                                    _canShiftUnit = true;
-                                                }
-                                            }
-                                        }
-                                    }
-
-                                    CopyXyInTo(XySelectedCell, XyPreviousCell);
-                                    _canExecuteStartClick = false;
-                                }
-
-                                else
-                                {
-                                    if (!CompareXy(XySelectedCell, xyCurrentCell))
-                                        CopyXyInTo(XySelectedCell, XyPreviousCell);
-
-
-                                    CopyXyInTo(xyCurrentCell, XySelectedCell);
-                                    IsSelected = true;
-
-
-                                    if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
-                                    {
-                                        if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
-                                        {
-                                            if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
-                                            {
-                                                if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).IsMelee)
-                                                {
-                                                    _eGM.PickMeleeEnt_AudioSourceCom.Play();
-                                                }
-                                                else
-                                                {
-                                                    _eGM.PickArcherEnt_AudioSourceCom.Play();
-                                                }
-
-                                                if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveMinAmountSteps)
-                                                {
-                                                    _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift = CellUnitWorker.GetCellsForShift(XySelectedCell);
-                                                    CellUnitWorker.GetCellsForAttack(Instance.LocalPlayer, out _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack, out _eGM.SelectorEnt_SelectorCom.AvailableCellsUniqueAttack, XySelectedCell);
-
-                                                    _canShiftUnit = true;
-                                                }
-
-                                                else
-                                                {
-                                                    ClearAvailableCells();
-                                                    _canShiftUnit = false;
-                                                }
-                                            }
-
-                                            else
-                                            {
-                                                _canShiftUnit = false;
-
-                                                if (TryFindCellInList(XySelectedCell, _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack))
-                                                {
-                                                    _photonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
-                                                }
-
-                                                else if (TryFindCellInList(XySelectedCell, _eGM.SelectorEnt_SelectorCom.AvailableCellsUniqueAttack))
-                                                {
-                                                    _photonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
-                                                }
-
-                                                ClearAvailableCells();
-                                            }
-                                        }
-
-                                        else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
-                                        {
-                                            if (TryFindCellInList(XySelectedCell, _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack))
-                                            {
-                                                _photonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
-                                            }
-
-                                            else if (TryFindCellInList(XySelectedCell, _eGM.SelectorEnt_SelectorCom.AvailableCellsUniqueAttack))
-                                            {
-                                                _photonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
-                                            }
-
-                                            ClearAvailableCells();
-                                        }
-                                    }
-
-                                    else
-                                    {
-                                        if (_canShiftUnit)
-                                        {
-                                            if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).HaveAnyUnit)
-                                            {
-                                                if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).HaveOwner)
-                                                {
-                                                    if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).IsMine)
-                                                    {
-                                                        if (_eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).HaveMinAmountSteps)
-                                                        {
-                                                            if (TryFindCellInList(XySelectedCell, _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift))
-                                                            {
-                                                                _photonPunRPC.ShiftUnitToMaster(XyPreviousCell, XySelectedCell);
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                            ClearAvailableCells();
-                                            _canShiftUnit = false;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-
-                        else
-                        {
-                            if (_eGM.SelectorEnt_UnitTypeCom.HaveAnyUnit)
-                            {
-                                if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveAnyUnit || !_eGM.CellUnitEnt_ActivatedForPlayersCom(xyCurrentCell).IsActivated(Instance.IsMasterClient) /*IsActivatedUnitDict[Instance.IsMasterClient]*/)
-                                {
-                                    if (_isStartSelectedDirect)
-                                    {
-                                        if (!_eGM.CellUnitEnt_UnitTypeCom(xyCurrentCell).HaveAnyUnit)
-                                            _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSRAndSetColor(_eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
-
-                                        CopyXyInTo(xyCurrentCell, _xyPreviousVisionCell);
-                                        _isStartSelectedDirect = false;
-                                    }
-                                    else
-                                    {
-                                        //_eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).DisableVisionAllSR();
-
-                                        _eGM.CellUnitEnt_CellUnitCom(xyCurrentCell).EnablePlayerSRAndSetColor(_eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
-                                        CopyXyInTo(xyCurrentCell, _xyPreviousVisionCell);
-                                    }
-
-                                }
-                            }
-                        }
+                        XySelectedCell = XyCurrentCell;
+                        IsSelected = true;
                     }
                 }
 
                 else
                 {
-                    if (_eGM.InputEnt_InputCom.IsClick)
+                    if (_eGM.SelectorEnt_UpgradeModTypeCom.IsUpgradeModType(UpgradeModTypes.Unit))
                     {
-                        _canShiftUnit = false;
-                        _canExecuteStartClick = true;
+                        if (_eGM.CellUnitEnt_UnitTypeCom(XyCurrentCell).HaveAnyUnit)
+                        {
+                            _photonPunRPC.UpgradeUnitToMaster(XyCurrentCell);
+                        }
+                        else
+                        {
+                            _eGM.SelectorEnt_UpgradeModTypeCom.ResetUpgradeModType();
+                        }
+                    }
 
-                        IsSelected = false;
+                    if (_eGM.SelectorEnt_UnitTypeCom.HaveAnyUnit)
+                    {
+                        _photonPunRPC.SetUniToMaster(XyCurrentCell, _eGM.SelectorEnt_UnitTypeCom.UnitType);
+                    }
 
-                        ClearAvailableCells();
+                    else if (_eGM.SelectorEnt_SelectorCom.CanExecuteStartClick)
+                    {
+                        XySelectedCell = XyCurrentCell;
 
-                        //_eGM.CellUnitEnt_CellUnitCom(_xyPreviousVisionCell).DisableVisionAllSR();
-                        _eGM.SelectorEnt_UnitTypeCom.ResetUnit();
+                        if (!XyPreviousCell.Compare(XySelectedCell))
+                            IsSelected = true;
 
-                        CleanXY(XyPreviousCell);
+                        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
+                        {
+                            if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
+                            {
+                                if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+                                {
+                                    if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).IsMelee)
+                                    {
+                                        _eGM.PickMeleeEnt_AudioSourceCom.Play();
+                                    }
+                                    else
+                                    {
+                                        _eGM.PickArcherEnt_AudioSourceCom.Play();
+                                    }
 
-                        _eGM.SelectorEnt_SelectorCom.UpgradeModType = UpgradeModTypes.None;
+                                    if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveMinAmountSteps)
+                                    {
+                                        _eGM.SelectorEnt_SelectorCom.GetCellsForShift(XySelectedCell);
+                                        _eGM.SelectorEnt_SelectorCom.GetCellsForAllAttack(Instance.LocalPlayer, XySelectedCell);
+
+                                        _eGM.SelectorEnt_SelectorCom.CanShiftUnit = true;
+                                    }
+                                }
+                            }
+                        }
+                        XyPreviousCell = XySelectedCell;
+                        _eGM.SelectorEnt_SelectorCom.CanExecuteStartClick = false;
+                    }
+
+                    else
+                    {
+                        if (!XySelectedCell.Compare(XyCurrentCell))
+                            XyPreviousCell = XySelectedCell;
+
+
+                        XySelectedCell = XyCurrentCell;
+                        IsSelected = true;
+
+
+                        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
+                        {
+                            if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
+                            {
+                                if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+                                {
+                                    if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).IsMelee)
+                                    {
+                                        _eGM.PickMeleeEnt_AudioSourceCom.Play();
+                                    }
+                                    else
+                                    {
+                                        _eGM.PickArcherEnt_AudioSourceCom.Play();
+                                    }
+
+                                    if (_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).HaveMinAmountSteps)
+                                    {
+                                        _eGM.SelectorEnt_SelectorCom.GetCellsForShift(XySelectedCell);
+                                        _eGM.SelectorEnt_SelectorCom.GetCellsForAllAttack(Instance.LocalPlayer, XySelectedCell);
+
+                                        _eGM.SelectorEnt_SelectorCom.CanShiftUnit = true;
+                                    }
+
+                                    else
+                                    {
+                                        ClearAvailableCells();
+                                        _eGM.SelectorEnt_SelectorCom.CanShiftUnit = false;
+                                    }
+                                }
+
+                                else
+                                {
+                                    _eGM.SelectorEnt_SelectorCom.CanShiftUnit = false;
+
+                                    if (_eGM.SelectorEnt_SelectorCom.TryFindCell(AvailableCellTypes.SimpleAttack, XySelectedCell))
+                                    {
+                                        _photonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
+                                    }
+
+                                    else if (_eGM.SelectorEnt_SelectorCom.TryFindCell(AvailableCellTypes.UniqueAttack, XySelectedCell))
+                                    {
+                                        _photonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
+                                    }
+
+                                    ClearAvailableCells();
+                                }
+                            }
+
+                            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
+                            {
+                                if (_eGM.SelectorEnt_SelectorCom.TryFindCell(AvailableCellTypes.SimpleAttack, XySelectedCell))
+                                {
+                                    _photonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
+                                }
+
+                                else if (_eGM.SelectorEnt_SelectorCom.TryFindCell(AvailableCellTypes.UniqueAttack, XySelectedCell))
+                                {
+                                    _photonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
+                                }
+
+                                ClearAvailableCells();
+                            }
+                        }
+
+                        else
+                        {
+                            if (_eGM.SelectorEnt_SelectorCom.CanShiftUnit)
+                            {
+                                if (_eGM.CellUnitEnt_UnitTypeCom(XyPreviousCell).HaveAnyUnit)
+                                {
+                                    if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).HaveOwner)
+                                    {
+                                        if (_eGM.CellUnitEnt_CellOwnerCom(XyPreviousCell).IsMine)
+                                        {
+                                            if (_eGM.CellUnitEnt_CellUnitCom(XyPreviousCell).HaveMinAmountSteps)
+                                            {
+                                                if (_eGM.SelectorEnt_SelectorCom.TryFindCell(AvailableCellTypes.Shift, XySelectedCell))
+                                                {
+                                                    _photonPunRPC.ShiftUnitToMaster(XyPreviousCell, XySelectedCell);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                                ClearAvailableCells();
+                                _eGM.SelectorEnt_SelectorCom.CanShiftUnit = false;
+                            }
+                        }
                     }
                 }
+            }
+
+            else
+            {
+                if (_eGM.SelectorEnt_UnitTypeCom.HaveAnyUnit)
+                {
+                    if (!_eGM.CellUnitEnt_UnitTypeCom(XyCurrentCell).HaveAnyUnit || !_eGM.CellUnitEnt_ActivatedForPlayersCom(XyCurrentCell).IsActivated(Instance.IsMasterClient) /*IsActivatedUnitDict[Instance.IsMasterClient]*/)
+                    {
+                        if (_eGM.SelectorEnt_SelectorCom.IsStartSelectedDirect)
+                        {
+                            if (!_eGM.CellUnitEnt_UnitTypeCom(XyCurrentCell).HaveAnyUnit)
+                                _eGM.CellUnitEnt_CellUnitCom(XyCurrentCell).EnablePlayerSRAndSetColor(_eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
+
+                            XyPreviousVisionCell = XyCurrentCell;
+                            _eGM.SelectorEnt_SelectorCom.IsStartSelectedDirect = false;
+                        }
+                        else
+                        {
+                            _eGM.CellUnitEnt_CellUnitCom(XyPreviousVisionCell).SwitchSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType);
+
+                            _eGM.CellUnitEnt_CellUnitCom(XyCurrentCell).EnablePlayerSRAndSetColor(_eGM.SelectorEnt_UnitTypeCom.UnitType, Instance.LocalPlayer);
+
+                            XyPreviousVisionCell = XyCurrentCell;
+                        }
+                    }
+                }
+            }
+        }
+
+        else
+        {
+            if (_eGM.InputEnt_InputCom.IsClick)
+            {
+                _eGM.SelectorEnt_SelectorCom.CanShiftUnit = false;
+                _eGM.SelectorEnt_SelectorCom.CanExecuteStartClick = true;
+
+                IsSelected = false;
+
+                ClearAvailableCells();
+
+                _eGM.CellUnitEnt_CellUnitCom(XyPreviousVisionCell).SwitchSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType);
+                _eGM.SelectorEnt_UnitTypeCom.ResetUnit();
+
+                XyPreviousCell.Clean();
+
+                _eGM.SelectorEnt_UpgradeModTypeCom.ResetUpgradeModType();
             }
         }
     }
 
 
-    #region Methods
-
-    private void ActivateSelector(in bool isActive)
-    {
-        _eGM.SelectorEnt_SelectorCom.IsSelected = isActive;
-    }
-
     private void ClearAvailableCells()
     {
-        _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift.Clear();
-        _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack.Clear();
-        _eGM.SelectorEnt_SelectorCom.AvailableCellsUniqueAttack.Clear();
+        _eGM.SelectorEnt_SelectorCom.ClearAvailableCells(AvailableCellTypes.Shift);
+        _eGM.SelectorEnt_SelectorCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
+        _eGM.SelectorEnt_SelectorCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
     }
-
-
-    #region Delegates
-
-    private void IsSetted()
-    {
-        _eGM.SelectorEnt_UnitTypeCom.ResetUnit();
-        _isStartSelectedDirect = true;
-    }
-
-    private void IsAttacked()
-    {
-        _eGM.SelectorEnt_SelectorCom.AvailableCellsForShift.Clear();
-        _eGM.SelectorEnt_SelectorCom.AvailableCellsSimpleAttack.Clear();
-        _eGM.SelectorEnt_SelectorCom.AvailableCellsUniqueAttack.Clear();
-    }
-
-    private void SetIsShifted()
-    {
-
-        //ActivateSelectorAndSelectorVision(false, in _xyPreviousCell, in _xySelectedCell);
-        //_supportVisionComponentRef.Unref().SetWayInvoke(false, _xyAvailableCells);
-        //_canShiftUnit = false;
-
-        //_photonPunRPC.ContainerRPC.SetResetShifted(false);
-
-    }
-
-    #endregion
-
-    #endregion
 }

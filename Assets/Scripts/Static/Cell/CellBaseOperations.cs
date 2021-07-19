@@ -6,33 +6,36 @@ namespace Assets.Scripts.Static
 {
     public static class CellBaseOperations
     {
-        internal static int[] CopyXy(int[] inArray)
-        {
-            int[] array = new int[XY_FOR_ARRAY];
-            Array.Copy(inArray, array, array.Length);
-            return array;
-        }
-        internal static void CopyXyInTo(in int[] InXYCell, int[] ToXYCell)
-        {
-            ToXYCell[X] = InXYCell[X];
-            ToXYCell[Y] = InXYCell[Y];
-        }
-        internal static void CleanXY(int[] xy)
+        //internal static int[] CopyXy(int[] inArray)
+        //{
+        //    int[] array = new int[XY_FOR_ARRAY];
+        //    Array.Copy(inArray, array, array.Length);
+        //    return array;
+        //}
+        //internal static void CopyXyInTo(in int[] InXYCell, int[] ToXYCell)
+        //{
+        //    ToXYCell[X] = InXYCell[X];
+        //    ToXYCell[Y] = InXYCell[Y];
+        //}
+        internal static void Clean(this int[] xy)
         {
             xy[X] = default;
             xy[Y] = default;
         }
-        internal static bool CompareXy(in int[] xyLeft, in int[] xyRight)
+        internal static bool Compare(this int[] xyLeft, in int[] xyRight)
         {
             if (xyLeft[X] == xyRight[X]
                 && xyLeft[Y] == xyRight[Y])
             {
                 return true;
             }
-            else { return false; }
+            else return false;
         }
-        internal static List<int[]> CopyListXY(in List<int[]> inList)
+
+        internal static List<int[]> Copy(this List<int[]> inList)
         {
+            if (inList == default) throw new Exception();
+
             var toList = new List<int[]>();
 
             for (int i = 0; i < inList.Count; i++)
@@ -65,11 +68,11 @@ namespace Assets.Scripts.Static
                 toList.Add(array);
             }
         }
-        internal static bool TryFindCellInList(int[] xyCell, in List<int[]> list)
+        internal static bool TryFindCell(this List<int[]> list, int[] xyCell)
         {
             foreach (var xy in list)
             {
-                if (CompareXy(xy, xyCell))
+                if (Compare(xy, xyCell))
                 {
                     return true;
                 }

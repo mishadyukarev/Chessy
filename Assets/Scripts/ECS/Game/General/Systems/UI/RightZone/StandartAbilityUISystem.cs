@@ -1,9 +1,10 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 using UnityEngine;
 
 internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
+    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
 
     public override void Run()
     {

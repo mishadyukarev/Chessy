@@ -7,7 +7,7 @@ namespace Assets.Scripts
     {
         private PhotonSceneManager _sceneManager;
 
-        private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
+        private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
         private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
         internal EventGeneralSystem()
@@ -47,7 +47,7 @@ namespace Assets.Scripts
         }
         private void Done()
         {
-            _eGM.SelectorEnt_SelectorCom.UpgradeModType = UpgradeModTypes.None;
+            _eGM.SelectorEnt_UpgradeModTypeCom.ResetUpgradeModType();
 
             switch (Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType)
             {

@@ -19,6 +19,7 @@ public sealed class SystemsGameGeneralManager : SystemsManager
 
         RunUpdateSystems = new EcsSystems(ecsWorld)
             .Add(new InputSystem(), nameof(InputSystem))
+            .Add(new RaySystem(), nameof(RaySystem))
             .Add(new SelectorSystem(), nameof(SelectorSystem))
             .Add(new SupportVisionSystem(), nameof(SupportVisionSystem))
             .Add(new SoundEventsSystem(), nameof(SoundEventsSystem))

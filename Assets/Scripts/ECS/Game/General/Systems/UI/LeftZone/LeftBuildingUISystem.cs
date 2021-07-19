@@ -4,7 +4,7 @@ using static Assets.Scripts.Main;
 
 internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.XySelectedCell;
+    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
     private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
     public override void Init()
@@ -55,13 +55,13 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
     {
         if (!IsActivatedDoner)
         {
-            if (_eGM.SelectorEnt_SelectorCom.UpgradeModType == UpgradeModTypes.None)
+            if (_eGM.SelectorEnt_UpgradeModTypeCom.IsUpgradeModType(UpgradeModTypes.None))
             {
-                _eGM.SelectorEnt_SelectorCom.UpgradeModType = upgradeModType;
+                _eGM.SelectorEnt_UpgradeModTypeCom.SetUpgradeModType(upgradeModType);
             }
             else
             {
-                _eGM.SelectorEnt_SelectorCom.UpgradeModType = UpgradeModTypes.None;
+                _eGM.SelectorEnt_UpgradeModTypeCom.ResetUpgradeModType();
             }
         }
     }
