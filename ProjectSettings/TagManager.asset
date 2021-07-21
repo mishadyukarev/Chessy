@@ -59,7 +59,7 @@ TagManager:
   - name: SupportVision
     uniqueID: 3301346089
     locked: 0
-  - name: SupportStatic
+  - name: SupportEnvStatic
     uniqueID: 4170661099
     locked: 0
   - name: Unit
@@ -70,7 +70,4 @@ TagManager:
     locked: 0
   - name: ProtectRelax
     uniqueID: 878055947
-    locked: 0
-  - name: Hp
-    uniqueID: 495466449
     locked: 0

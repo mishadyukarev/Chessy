@@ -59,7 +59,7 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
         {
             if (_eGM.SelectorEnt_UpgradeModTypeCom.IsUpgradeModType(UpgradeModTypes.None))
             {
-                _eGM.SelectorEnt_UpgradeModTypeCom.SetUpgradeModType(upgradeModType);
+                _eGM.SelectorEnt_UpgradeModTypeCom.UpgradeModType = upgradeModType;
             }
             else
             {

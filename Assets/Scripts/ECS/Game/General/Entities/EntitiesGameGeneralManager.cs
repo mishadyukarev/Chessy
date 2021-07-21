@@ -1,5 +1,4 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.ValuesConsts;
+﻿using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Components;
@@ -230,10 +229,6 @@ public sealed partial class EntitiesGameGeneralManager
     internal ref UpgradeBuildingsComponent BuildingsEnt_UpgradeBuildingsCom => ref _buildingsEnt.Get<UpgradeBuildingsComponent>();
 
 
-    private EcsEntity _unitInfoEnt;
-    internal ref UnitInventorComponent UnitInfoEnt_UnitInventorCom => ref _unitInfoEnt.Get<UnitInventorComponent>();
-
-
     private EcsEntity _inputEnt;
     internal ref InputComponent InputEnt_InputCom => ref _inputEnt.Get<InputComponent>();
 
@@ -244,7 +239,9 @@ public sealed partial class EntitiesGameGeneralManager
     #endregion
 
 
-    #region UnitInfoInGame
+    #region Info
+
+    #region Units
 
     private EcsEntity _kingInfoInGameEnt;
     internal ref AmountDictionaryComponent KingInfoInGameEnt_AmountDictCom => ref _kingInfoInGameEnt.Get<AmountDictionaryComponent>();
@@ -272,6 +269,35 @@ public sealed partial class EntitiesGameGeneralManager
 
     private EcsEntity _bishopCrossbowInfoInGameEnt;
     internal ref AmountDictionaryComponent BishopCrossbowInfoInGameEnt_AmountDictCom => ref _bishopCrossbowInfoInGameEnt.Get<AmountDictionaryComponent>();
+
+    #endregion
+
+
+    #region Buildings
+
+    private EcsEntity _farmsInfoEnt;
+    internal ref AmountUpgradesDictComponent FarmsInfoEnt_AmountUpgradesCom => ref _farmsInfoEnt.Get<AmountUpgradesDictComponent>();
+    internal ref AmountBuildingsInGameDictComponent FarmsInfoEnt_AmountBuildingsInGameCom => ref _farmsInfoEnt.Get<AmountBuildingsInGameDictComponent>();
+
+
+    private EcsEntity _woodcuttersInfoEnt;
+    internal ref AmountUpgradesDictComponent WoodcuttersInfoEnt_AmountUpgradesCom => ref _woodcuttersInfoEnt.Get<AmountUpgradesDictComponent>();
+    internal ref AmountBuildingsInGameDictComponent WoodcuttersInfoEnt_AmountBuildingsInGameCom => ref _woodcuttersInfoEnt.Get<AmountBuildingsInGameDictComponent>();
+
+
+    private EcsEntity _minesInfoEnt;
+    internal ref AmountUpgradesDictComponent MinesInfoEnt_AmountUpgradesCom => ref _minesInfoEnt.Get<AmountUpgradesDictComponent>();
+    internal ref AmountBuildingsInGameDictComponent MinesInfoEnt_AmountBuildingsInGameCom => ref _minesInfoEnt.Get<AmountBuildingsInGameDictComponent>();
+
+    #endregion
+
+    #endregion
+
+
+    #region Inventor
+
+    private EcsEntity _unitInfoEnt;
+    internal ref UnitInventorComponent UnitInfoEnt_UnitInventorCom => ref _unitInfoEnt.Get<UnitInventorComponent>();
 
     #endregion
 
@@ -345,6 +371,7 @@ public sealed partial class EntitiesGameGeneralManager
         _availableCellsUniqueAttackEnt = gameWorld.NewEntity();
 
         #endregion
+
 
         _attackArcherSoundEnt = gameWorld.NewEntity();
         _pickArcherSoundEnt = gameWorld.NewEntity();

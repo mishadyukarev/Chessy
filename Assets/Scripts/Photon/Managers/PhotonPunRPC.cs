@@ -211,7 +211,7 @@ namespace Assets.Scripts
 
                 case RpcMasterTypes.Upgrade:
                     var upgradeModType = (UpgradeModTypes)objects[0];
-                    _eMM.UpgradeEnt_UpgradeTypeCom.SetUpgradeModType(upgradeModType);
+                    _eMM.UpgradeEnt_UpgradeTypeCom.UpgradeModType = upgradeModType;
                     switch (upgradeModType)
                     {
                         case UpgradeModTypes.None:
