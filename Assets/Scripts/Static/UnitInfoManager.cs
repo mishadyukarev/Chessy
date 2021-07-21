@@ -3,9 +3,8 @@ using static Assets.Scripts.Main;
 
 namespace Assets.Scripts.Static
 {
-    internal static class UnitInfoManager
+    internal class UnitInfoManager : CellWorker
     {
-        private static EntitiesGameGeneralManager EGGM => Instance.EntGGM;
 
         internal static int AmountUnitsInGame(UnitTypes unitType, bool key)
         {

@@ -11,15 +11,15 @@ internal sealed class MeltOreMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if (EconomyManager.CanMeltOre(InfoFrom.Sender, out bool[] haves))
+        if (EconomyWorker.CanMeltOre(InfoFrom.Sender, out bool[] haves))
         {
-            EconomyManager.MeltOre(InfoFrom.Sender);
-            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Melting);
+            EconomyWorker.MeltOre(InfoFrom.Sender);
+            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Melting);
         }
         else
         {
-            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-            _photonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
+            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+            PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
         }
     }
 }

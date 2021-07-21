@@ -41,7 +41,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
             if (_eGM.CellUnitEnt_UnitTypeCom(FromXy).IsMelee)
             {
-                _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+                PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
                 damageToPrevious += CellUnitWorker.SimplePowerDamage(unitTypeSelected);
 
@@ -53,7 +53,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
             else
             {
-                _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
+                PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
 
                 if (isFindedUnique)
                 {
@@ -73,10 +73,10 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
                 {
                     if (_eGM.CellUnitEnt_CellOwnerCom(ToXy).HaveOwner)
                     {
-                        _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(ToXy).ActorNumber);
+                        PhotonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(ToXy).ActorNumber);
                     }
 
-                    else if (_eGM.CellUnitEnt_CellOwnerBotCom(ToXy).HaveBot)
+                    else if (_eGM.CellUnitEnt_CellOwnerBotCom(ToXy).IsBot)
                     {
 
                     }
@@ -96,7 +96,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
             if (!_eGM.CellUnitEnt_CellUnitCom(ToXy).HaveAmountHealth)
             {
                 if (_eGM.CellUnitEnt_UnitTypeCom(ToXy).UnitType == UnitTypes.King)
-                    _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(FromXy).ActorNumber);
+                    PhotonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(FromXy).ActorNumber);
 
 
                 if (_eGM.CellUnitEnt_CellOwnerCom(ToXy).HaveOwner)
@@ -134,7 +134,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
         else _isAttacked = false;
 
 
-        _photonPunRPC.AttackUnitToGeneral(InfoFrom.Sender, _isAttacked);
-        _photonPunRPC.AttackUnitToGeneral(RpcTarget.All, false, _isAttacked, FromXy, ToXy);
+        PhotonPunRPC.AttackUnitToGeneral(InfoFrom.Sender, _isAttacked);
+        PhotonPunRPC.AttackUnitToGeneral(RpcTarget.All, false, _isAttacked, FromXy, ToXy);
     }
 }

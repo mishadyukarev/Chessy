@@ -10,8 +10,8 @@ internal sealed class AnimationAttackUnitSystem : SystemGeneralReduction
     private float _speedAnimation = 3f;
     private float _distance;
 
-    private int[] XyStartCell => _eGM.AnimationAttack_UnitComponent.XyStartCell;
-    private int[] XyEndCell => _eGM.AnimationAttack_UnitComponent.XyEndCell;
+    //private int[] XyStartCell => _eGM.AnimationAttack_UnitComponent.XyStartCell;
+    //private int[] XyEndCell => _eGM.AnimationAttack_UnitComponent.XyEndCell;
 
 
     internal AnimationAttackUnitSystem() { }

@@ -45,7 +45,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
             {
                 var xy = new int[] { x, y };
 
-                if (HaveAnyUnit(xy))
+                if (HaveAnyUnitOnCell(xy))
                 {
                     var unitType = UnitType(xy);
 
@@ -327,7 +327,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
 
         if (amountAdultForest <= 3)
         {
-            _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
+            PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
             _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RpcSystems);
         }
 
@@ -335,7 +335,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
 
         if (_amountMotionsWithoutFoodForTruce[true] >= 2 && _amountMotionsWithoutFoodForTruce[false] >= 2)
         {
-            _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
+            PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
 
             _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RpcSystems);
 
@@ -353,7 +353,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                     {
                         var xy = new int[] { x, y };
 
-                        if (HaveAnyUnit(xy))
+                        if (HaveAnyUnitOnCell(xy))
                         {
                             if (HaveOwner(xy))
                             {
@@ -385,7 +385,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                     {
                         var xy = new int[] { x, y };
 
-                        if (HaveAnyUnit(xy))
+                        if (HaveAnyUnitOnCell(xy))
                         {
                             if (HaveOwner(xy))
                             {

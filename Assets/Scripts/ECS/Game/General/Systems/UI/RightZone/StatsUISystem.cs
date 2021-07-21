@@ -1,9 +1,10 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static;
 
 internal class StatsUISystem : SystemGeneralReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
     private UnitTypes UnitType => _eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType;
 
     public override void Run()

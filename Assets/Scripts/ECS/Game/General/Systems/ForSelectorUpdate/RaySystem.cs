@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -27,7 +28,7 @@ internal sealed class RaySystem : SystemGeneralReduction
 
                     if (one == two)
                     {
-                        _eGM.SelectorEnt_SelectorCom.SetXy(SelectorCellTypes.Current, new int[] { x, y });
+                        SelectorWorker.SetXy(SelectorCellTypes.Current, new int[] { x, y });
                         _eGM.SelectorEnt_RayCom.SetGettedType(RaycastGettedTypes.Cell);
                         return;
                     }

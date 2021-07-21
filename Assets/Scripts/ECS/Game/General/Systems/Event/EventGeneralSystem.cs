@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
@@ -7,7 +8,7 @@ namespace Assets.Scripts
     {
         private PhotonSceneManager _sceneManager;
 
-        private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
+        private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
         private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
         internal EventGeneralSystem()
@@ -37,12 +38,12 @@ namespace Assets.Scripts
         }
 
 
-        private void Ready() => _photonPunRPC.ReadyToMaster(!_eGM.ReadyEnt_ActivatedDictCom.IsActivated(Instance.IsMasterClient));
+        private void Ready() => PhotonPunRPC.ReadyToMaster(!_eGM.ReadyEnt_ActivatedDictCom.IsActivated(Instance.IsMasterClient));
         private void GetUnit(UnitTypes unitType)
         {
             if (!IsActivatedDoner)
             {
-                _photonPunRPC.GetUnitToMaster(unitType);
+                PhotonPunRPC.GetUnitToMaster(unitType);
             }
         }
         private void Done()
@@ -55,11 +56,11 @@ namespace Assets.Scripts
                     break;
 
                 case StepModeTypes.ByQueue:
-                    if (!IsActivatedDoner) _photonPunRPC.DoneToMaster(!IsActivatedDoner);
+                    if (!IsActivatedDoner) PhotonPunRPC.DoneToMaster(!IsActivatedDoner);
                     break;
 
                 case StepModeTypes.Together:
-                    _photonPunRPC.DoneToMaster(!IsActivatedDoner);
+                    PhotonPunRPC.DoneToMaster(!IsActivatedDoner);
                     break;
 
                 default:
@@ -73,12 +74,12 @@ namespace Assets.Scripts
         private void StandartAbilityButton1()
         {
             if (!IsActivatedDoner)
-                _photonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Protected, XySelectedCell);
+                PhotonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Protected, XySelectedCell);
         }
         private void StandartAbilityButton2()
         {
             if (!IsActivatedDoner)
-                _photonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Relaxed, XySelectedCell);
+                PhotonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Relaxed, XySelectedCell);
         }
     }
 }

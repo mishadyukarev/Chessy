@@ -1,10 +1,9 @@
 ﻿using Assets.Scripts;
 using System.Collections.Generic;
-using static Assets.Scripts.Main;
 using static Assets.Scripts.CellEnvironmentWorker;
 using static Assets.Scripts.CellUnitWorker;
+using static Assets.Scripts.Main;
 using static Assets.Scripts.Static.Cell.CellSpaceWorker;
-using Assets.Scripts.Static.Cell;
 
 internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
 {
@@ -15,7 +14,6 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
 
 
         for (int x = 0; x < _eGM.Xamount; x++)
-        {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
                 var xy = new int[] { x, y };
@@ -24,7 +22,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                 SetIsActivated(false, true, xy);
 
 
-                if (HaveAnyUnit(xy))
+                if (HaveAnyUnitOnCell(xy))
                 {
                     if (HaveOwner(xy))
                     {
@@ -34,14 +32,14 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                             {
                                 SetIsActivated(false, false, xy);
 
-                                List<int[]> list = CellSpaceWorker.TryGetXYAround(xy);
+                                List<int[]> list = TryGetXYAround(xy);
                                 foreach (var xy1 in list)
                                 {
-                                    if (_eGM.CellUnitEnt_UnitTypeCom(xy1).HaveAnyUnit)
+                                    if (HaveAnyUnitOnCell(xy1))
                                     {
-                                        if (_eGM.CellUnitEnt_CellOwnerCom(xy1).HaveOwner)
+                                        if (HaveOwner(xy1))
                                         {
-                                            if (!_eGM.CellUnitEnt_CellOwnerCom(xy1).IsHim(Instance.MasterClient))
+                                            if (!IsHim(Instance.MasterClient, xy1))
                                             {
                                                 SetIsActivated(false, true, xy);
                                                 break;
@@ -60,11 +58,11 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                 List<int[]> list = TryGetXYAround(xy);
                                 foreach (var xy1 in list)
                                 {
-                                    if (_eGM.CellUnitEnt_UnitTypeCom(xy1).HaveAnyUnit)
+                                    if (HaveAnyUnitOnCell(xy1))
                                     {
-                                        if (_eGM.CellUnitEnt_CellOwnerCom(xy1).HaveOwner)
+                                        if (HaveOwner(xy1))
                                         {
-                                            if (_eGM.CellUnitEnt_CellOwnerCom(xy1).IsHim(Instance.MasterClient))
+                                            if (IsHim(Instance.MasterClient, xy1))
                                             {
                                                 SetIsActivated(true, true, xy);
                                                 break;
@@ -78,15 +76,15 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
 
                         if (isActivatedVisionCellUnit)
                         {
-                            SetEnabled(true, xy);
+                            SetEnabledUnit(true, xy);
                         }
                         else
                         {
-                            SetEnabled(false, xy);
+                            SetEnabledUnit(false, xy);
                         }
                     }
 
-                    else if (HaveBot(xy))
+                    else if (IsBotOnCell(xy))
                     {
                         if (HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                         {
@@ -95,11 +93,11 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                             List<int[]> list = TryGetXYAround(xy);
                             foreach (var xy1 in list)
                             {
-                                if (_eGM.CellUnitEnt_UnitTypeCom(xy1).HaveAnyUnit)
+                                if (HaveAnyUnitOnCell(xy1))
                                 {
-                                    if (_eGM.CellUnitEnt_CellOwnerCom(xy1).HaveOwner)
+                                    if (HaveOwner(xy1))
                                     {
-                                        if (_eGM.CellUnitEnt_CellOwnerCom(xy1).IsHim(Instance.MasterClient))
+                                        if (IsHim(Instance.MasterClient, xy1))
                                         {
                                             SetIsActivated(true, true, xy);
                                             break;
@@ -113,15 +111,14 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
 
                         if (isActivatedVisionCellUnit)
                         {
-                            SetEnabled(true, xy);
+                            SetEnabledUnit(true, xy);
                         }
                         else
                         {
-                            SetEnabled(false, xy);
+                            SetEnabledUnit(false, xy);
                         }
                     }
                 }
             }
-        }
     }
 }

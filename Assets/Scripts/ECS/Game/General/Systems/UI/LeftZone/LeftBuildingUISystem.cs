@@ -1,10 +1,12 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static;
 using static Assets.Scripts.Main;
+using static Assets.Scripts.PhotonPunRPC;
 
 internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
     private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
     public override void Init()
@@ -49,7 +51,7 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
 
     private void BuyUnit(UnitTypes unitType)
     {
-        if (!IsActivatedDoner) _photonPunRPC.CreateUnitToMaster(unitType);
+        if (!IsActivatedDoner) CreateUnitToMaster(unitType);
     }
     private void ToggleUpgradeMod(UpgradeModTypes upgradeModType)
     {
@@ -68,11 +70,11 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
 
     private void UpgradeBuilding(BuildingTypes buildingType)
     {
-        if (!IsActivatedDoner) _photonPunRPC.UpgradeBuildingToMaster(buildingType);
+        if (!IsActivatedDoner) UpgradeBuildingToMaster(buildingType);
     }
 
     private void MeltOre()
     {
-        if (!IsActivatedDoner) _photonPunRPC.MeltOreToMaster();
+        if (!IsActivatedDoner) MeltOreToMaster();
     }
 }

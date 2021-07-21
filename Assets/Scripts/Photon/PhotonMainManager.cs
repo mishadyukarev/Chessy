@@ -22,7 +22,7 @@ namespace Assets.Scripts
             _sceneManager = Instance.gameObject.AddComponent<PhotonSceneManager>();
             _photonPunRPC = Instance.gameObject.AddComponent<PhotonPunRPC>();
 
-            _photonPunRPC.Constructor(_photonView, eCSManager);
+            PhotonPunRPC.Constructor(_photonView, eCSManager);
             _sceneManager.Constructor();
 
             _photonView.FindObservables(true);
@@ -60,12 +60,12 @@ namespace Assets.Scripts
 
                 case SceneTypes.Menu:
                     _sceneManager.ToggleScene(sceneType);
-                    _photonPunRPC.ToggleScene(sceneType);
+                    PhotonPunRPC.ToggleScene(sceneType);
                     break;
 
                 case SceneTypes.Game:
                     _sceneManager.ToggleScene(sceneType);
-                    _photonPunRPC.ToggleScene(sceneType);
+                    PhotonPunRPC.ToggleScene(sceneType);
                     break;
 
                 default:

@@ -52,7 +52,7 @@ namespace Assets.Scripts.Static
 
             return toList;
         }
-        internal static void CopyListXYinTo(List<int[]> inList, List<int[]> toList)
+        internal static void CopyListXYinTo(this List<int[]> inList, List<int[]> toList)
         {
             toList.Clear();
 

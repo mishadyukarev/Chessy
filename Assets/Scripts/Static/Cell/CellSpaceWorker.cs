@@ -3,10 +3,8 @@ using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
 
 namespace Assets.Scripts.Static.Cell
 {
-    internal static class CellSpaceWorker
+    internal class CellSpaceWorker : MainWorker
     {
-        internal static EntitiesGameGeneralManager EGGM => Main.Instance.EntGGM;
-
         internal static List<int[]> TryGetXYAround(int[] xyStartCell)
         {
             var xyAvailableCells = new List<int[]>();

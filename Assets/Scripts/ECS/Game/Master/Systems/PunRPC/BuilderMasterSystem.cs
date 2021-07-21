@@ -18,7 +18,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
         if (_eGM.CellBuildEnt_BuilTypeCom(XyCell).HaveBuilding)
         {
-            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
         }
 
         else
@@ -34,7 +34,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                 case BuildingTypes.City:
                     if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
                     {
-                        _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
+                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
 
                         CellBuildingWorker.SetPlayerBuilding(true, BuildingType, InfoFrom.Sender, XyCell);
                         _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
@@ -47,7 +47,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     }
                     else
                     {
-                        _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                     }
                     break;
 
@@ -70,34 +70,34 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
             {
                 if (BuildingType != BuildingTypes.Farm)
                 {
-                    if (EconomyManager.CanCreateBuilding(BuildingType, InfoFrom.Sender, out bool[] haves))
+                    if (EconomyWorker.CanCreateBuilding(BuildingType, InfoFrom.Sender, out bool[] haves))
                     {
                         if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
                         {
-                            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
+                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
 
-                            EconomyManager.CreateBuilding(BuildingType, InfoFrom.Sender);
+                            EconomyWorker.CreateBuilding(BuildingType, InfoFrom.Sender);
                             CellBuildingWorker.SetPlayerBuilding(true, BuildingType, InfoFrom.Sender, XyCell);
                             _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
                         }
                         else
                         {
-                            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                         }
                     }
                     else
                     {
-                        _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                        _photonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
+                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
                     }
                 }
                 else
                 {
-                    if (EconomyManager.CanCreateBuilding(BuildingType, InfoFrom.Sender, out bool[] haves))
+                    if (EconomyWorker.CanCreateBuilding(BuildingType, InfoFrom.Sender, out bool[] haves))
                     {
                         if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMinAmountSteps)
                         {
-                            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
+                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
 
                             if (HaveEnvironment(EnvironmentTypes.Fertilizer, XyCell))
                             {
@@ -108,19 +108,19 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                                 SetNewEnvironment(EnvironmentTypes.Fertilizer, XyCell);
                             }
 
-                            EconomyManager.CreateBuilding(BuildingType, InfoFrom.Sender);
+                            EconomyWorker.CreateBuilding(BuildingType, InfoFrom.Sender);
                             CellBuildingWorker.SetPlayerBuilding(true, BuildingType, InfoFrom.Sender, XyCell);
                             _eGM.CellUnitEnt_CellUnitCom(XyCell).TakeAmountSteps();
                         }
                         else
                         {
-                            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                         }
                     }
                     else
                     {
-                        _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                        _photonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
+                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
                     }
                 }
             }

@@ -1,9 +1,7 @@
 ﻿namespace Assets.Scripts.Static.Cell
 {
-    internal static class CellSupportBlocksWorker
+    internal class CellSupportBlocksWorker : MainWorker
     {
-        internal static EntitiesGameGeneralManager EGGM => Main.Instance.EntGGM;
-
 
     }
 }

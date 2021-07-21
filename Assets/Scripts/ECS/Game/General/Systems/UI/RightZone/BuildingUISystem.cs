@@ -1,10 +1,11 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static;
 using static Assets.Scripts.Main;
 
 internal sealed class BuildingUISystem : RPCGeneralSystemReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
     private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
     public override void Init()
@@ -76,7 +77,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                 }
             }
 
-            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
+            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).IsBot)
             {
                 _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
                 _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
@@ -144,7 +145,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                         //}
                     }
 
-                    else if (_eGM.CellBuildEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
+                    else if (_eGM.CellBuildEnt_CellOwnerBotCom(XySelectedCell).IsBot)
                     {
                         if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
                         {
@@ -190,10 +191,10 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
 
     private void Build(BuildingTypes buildingType)
     {
-        if (!IsActivatedDoner) _photonPunRPC.BuildToMaster(XySelectedCell, buildingType);
+        if (!IsActivatedDoner) PhotonPunRPC.BuildToMaster(XySelectedCell, buildingType);
     }
     private void Destroy()
     {
-        if (!IsActivatedDoner) _photonPunRPC.DestroyBuildingToMaster(XySelectedCell);
+        if (!IsActivatedDoner) PhotonPunRPC.DestroyBuildingToMaster(XySelectedCell);
     }
 }

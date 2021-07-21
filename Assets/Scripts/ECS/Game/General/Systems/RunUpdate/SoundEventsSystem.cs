@@ -1,9 +1,10 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static;
 
 internal sealed class SoundEventsSystem : SystemGeneralReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
 
     public override void Init()
     {

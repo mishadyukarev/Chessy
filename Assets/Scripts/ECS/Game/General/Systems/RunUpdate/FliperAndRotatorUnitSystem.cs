@@ -16,7 +16,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                 {
                     var xy = new int[] { x, y };
 
-                    if (HaveAnyUnit(xy))
+                    if (HaveAnyUnitOnCell(xy))
                     {
                         var unitType = UnitType(xy);
 

@@ -23,11 +23,11 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
         {
             var buildingType = _eGM.CellBuildEnt_BuilTypeCom(XyCell).BuildingType;
 
-            _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
+            PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
 
             if (buildingType == BuildingTypes.City)
             {
-                _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XyCell).ActorNumber);
+                PhotonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XyCell).ActorNumber);
             }
             _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
 
@@ -36,7 +36,7 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
         }
         else
         {
-            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
         }
         //}
     }

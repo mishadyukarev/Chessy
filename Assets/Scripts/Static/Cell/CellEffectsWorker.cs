@@ -1,9 +1,8 @@
 ﻿using System;
-using static EntitiesGameGeneralManager;
 
 namespace Assets.Scripts.Static.Cell
 {
-    internal static class CellEffectsWorker
+    internal class CellEffectsWorker : MainWorker
     {
         internal static bool HaveEffect(EffectTypes effectType, int[] xy)
         {
@@ -13,7 +12,7 @@ namespace Assets.Scripts.Static.Cell
                     throw new Exception();
 
                 case EffectTypes.Fire:
-                    return CellFireEnt_HaverEffectCom(xy).HaveEffect;
+                    return EGGM.CellFireEnt_HaverEffectCom(xy).HaveEffect;
 
                 default:
                     throw new Exception();
@@ -28,9 +27,9 @@ namespace Assets.Scripts.Static.Cell
                     throw new Exception();
 
                 case EffectTypes.Fire:
-                    CellFireEnt_HaverEffectCom(xy).HaveEffect = true;
-                    CellFireEnt_TimeStepsCom(xy).ResetTimeSteps();
-                    CellFireEnt_SprRendCom(xy).Enabled = true;
+                    EGGM.CellFireEnt_HaverEffectCom(xy).HaveEffect = true;
+                    EGGM.CellFireEnt_TimeStepsCom(xy).ResetTimeSteps();
+                    EGGM.CellFireEnt_SprRendCom(xy).Enabled = true;
                     break;
 
                 default:
@@ -46,9 +45,9 @@ namespace Assets.Scripts.Static.Cell
                     throw new Exception();
 
                 case EffectTypes.Fire:
-                    CellFireEnt_HaverEffectCom(xy).HaveEffect = false;
-                    CellFireEnt_TimeStepsCom(xy).ResetTimeSteps();
-                    CellFireEnt_SprRendCom(xy).Enabled = false;
+                    EGGM.CellFireEnt_HaverEffectCom(xy).HaveEffect = false;
+                    EGGM.CellFireEnt_TimeStepsCom(xy).ResetTimeSteps();
+                    EGGM.CellFireEnt_SprRendCom(xy).Enabled = false;
                     break;
 
                 default:
@@ -56,7 +55,7 @@ namespace Assets.Scripts.Static.Cell
             }
         }
 
-        internal static void SyncEffect(bool isActive, EffectTypes effectType, int[]xy)
+        internal static void SyncEffect(bool isActive, EffectTypes effectType, int[] xy)
         {
             switch (effectType)
             {
@@ -64,8 +63,8 @@ namespace Assets.Scripts.Static.Cell
                     throw new Exception();
 
                 case EffectTypes.Fire:
-                    CellFireEnt_HaverEffectCom(xy).HaveEffect = isActive;
-                    CellFireEnt_SprRendCom(xy).Enabled = isActive;
+                    EGGM.CellFireEnt_HaverEffectCom(xy).HaveEffect = isActive;
+                    EGGM.CellFireEnt_SprRendCom(xy).Enabled = isActive;
                     break;
 
                 default:
@@ -81,7 +80,7 @@ namespace Assets.Scripts.Static.Cell
                     throw new Exception();
 
                 case EffectTypes.Fire:
-                    return CellFireEnt_TimeStepsCom(xy).TimeSteps;
+                    return EGGM.CellFireEnt_TimeStepsCom(xy).TimeSteps;
 
                 default:
                     throw new Exception();
@@ -96,7 +95,7 @@ namespace Assets.Scripts.Static.Cell
                     throw new Exception();
 
                 case EffectTypes.Fire:
-                    CellFireEnt_TimeStepsCom(xy).SetTimeSteps(value);
+                    EGGM.CellFireEnt_TimeStepsCom(xy).SetTimeSteps(value);
                     break;
 
                 default:
@@ -112,7 +111,7 @@ namespace Assets.Scripts.Static.Cell
                     throw new Exception();
 
                 case EffectTypes.Fire:
-                    CellFireEnt_TimeStepsCom(xy).AddTimeSteps(adding);
+                    EGGM.CellFireEnt_TimeStepsCom(xy).AddTimeSteps(adding);
                     break;
 
                 default:
@@ -128,7 +127,7 @@ namespace Assets.Scripts.Static.Cell
                     throw new Exception();
 
                 case EffectTypes.Fire:
-                    CellFireEnt_TimeStepsCom(xy).TakeTimeSteps(taking);
+                    EGGM.CellFireEnt_TimeStepsCom(xy).TakeTimeSteps(taking);
                     break;
 
                 default:

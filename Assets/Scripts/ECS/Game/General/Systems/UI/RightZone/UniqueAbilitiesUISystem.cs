@@ -1,11 +1,12 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static;
 using Assets.Scripts.Static.Cell;
 using static Assets.Scripts.Main;
 
 internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
     private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
     internal UniqueAbilitiesUISystem() { }
@@ -64,7 +65,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                     _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
                 }
             }
-            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
+            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).IsBot)
             {
                 _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
             }
@@ -105,11 +106,11 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
 
     private void SeedEnvironment(EnvironmentTypes environmentType)
     {
-        if (!IsActivatedDoner) _photonPunRPC.SeedEnvironmentToMaster(XySelectedCell, environmentType);
+        if (!IsActivatedDoner) PhotonPunRPC.SeedEnvironmentToMaster(XySelectedCell, environmentType);
     }
 
     private void Fire(int[] fromXy, int[] toXy)
     {
-        if (!IsActivatedDoner) _photonPunRPC.FireToMaster(fromXy, toXy);
+        if (!IsActivatedDoner) PhotonPunRPC.FireToMaster(fromXy, toXy);
     }
 }

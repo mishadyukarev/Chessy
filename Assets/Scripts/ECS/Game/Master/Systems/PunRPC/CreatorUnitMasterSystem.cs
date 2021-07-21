@@ -11,17 +11,17 @@ internal sealed class CreatorUnitMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if (EconomyManager.CanCreateUnit(UnitType, InfoFrom.Sender, out bool[] haves))
+        if (EconomyWorker.CanCreateUnit(UnitType, InfoFrom.Sender, out bool[] haves))
         {
-            EconomyManager.CreateUnit(UnitType, InfoFrom.Sender);
+            EconomyWorker.CreateUnit(UnitType, InfoFrom.Sender);
             Main.Instance.EntGGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
 
-            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.SoundGoldPack);
+            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.SoundGoldPack);
         }
         else
         {
-            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-            _photonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
+            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+            PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
         }
     }
 }

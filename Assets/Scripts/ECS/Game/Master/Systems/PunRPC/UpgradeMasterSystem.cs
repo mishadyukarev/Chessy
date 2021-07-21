@@ -31,39 +31,39 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                 case UpgradeModTypes.Unit:
                     if (_eGM.CellUnitEnt_UnitTypeCom(XyCellForUpgrade).HaveAnyUnit)
                     {
-                        if (EconomyManager.CanUpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade, out haves))
+                        if (EconomyWorker.CanUpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade, out haves))
                         {
-                            EconomyManager.UpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade);
+                            EconomyWorker.UpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade);
                             CellUnitWorker.ChangePlayerUnit(XyCellForUpgrade, NeededUnitTypeForUpgrade + FOR_NEXT_UPGRADE);
 
                             if (_eGM.CellUnitEnt_UnitTypeCom(XyCellForUpgrade).IsMelee)
                             {
-                                _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.UpgradeUnitMelee);
+                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.UpgradeUnitMelee);
                             }
                             else
                             {
-                                _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.UpgradeUnitArcher);
+                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.UpgradeUnitArcher);
                             }
                         }
                         else
                         {
-                            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                            _photonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
+                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
                         }
                     }
                     break;
 
                 case UpgradeModTypes.Building:
-                    if (EconomyManager.CanUpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade, out haves))
+                    if (EconomyWorker.CanUpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade, out haves))
                     {
-                        EconomyManager.UpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade);
+                        EconomyWorker.UpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade);
 
-                        _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.SoundGoldPack);
+                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.SoundGoldPack);
                     }
                     else
                     {
-                        _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                        _photonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
+                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
                     }
                     break;
 

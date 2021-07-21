@@ -1,13 +1,12 @@
-﻿using Photon.Realtime;
+﻿using Assets.Scripts.Static.Cell;
+using Photon.Realtime;
 using System;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts.Static
 {
-    public static class CellBuildingWorker
+    public class CellBuildingWorker : MainWorker
     {
-
-        internal static EntitiesGameGeneralManager EGGM => Instance.EntGGM;
         internal static SpritesData SpritesData => Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig;
 
         private static void SetSpriteRender(BuildingTypes buildingType, params int[] xy)
@@ -89,7 +88,7 @@ namespace Assets.Scripts.Static
                 Instance.EntGGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
             }
 
-            else if (Instance.EntGGM.CellBuildEnt_CellOwnerBotCom(xy).HaveBot)
+            else if (Instance.EntGGM.CellBuildEnt_CellOwnerBotCom(xy).IsBot)
             {
                 EGGM.CellBuildEnt_SpriteRendererCom(xy).Enabled = false;
                 Instance.EntGGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);

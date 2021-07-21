@@ -1,13 +1,12 @@
 ﻿using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.Static.Cell;
 using System;
 using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
 
 namespace Assets.Scripts
 {
-    public static class CellEnvironmentWorker
+    public class CellEnvironmentWorker : MainWorker
     {
-        internal static EntitiesGameGeneralManager EGGM => Main.Instance.EntGGM;
-
         internal static void ResetAll(int[] xy)
         {
             ResetEnvironment(EnvironmentTypes.Fertilizer, xy);

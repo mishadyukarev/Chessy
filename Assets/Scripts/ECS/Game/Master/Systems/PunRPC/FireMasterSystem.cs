@@ -27,29 +27,29 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                 {
                     if (_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).HaveOwner)
 
-                        if (EconomyManager.CanFireSomething(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType, out bool[] haves))
+                        if (EconomyWorker.CanFireSomething(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType, out bool[] haves))
                         {
-                            _photonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
+                            PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
-                            EconomyManager.Fire(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType);
+                            EconomyWorker.Fire(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType);
 
                             CellEffectsWorker.SetEffect(EffectTypes.Fire, ToXyCopy);
                             _eGM.CellUnitEnt_CellUnitCom(ToXyCopy).TakeAmountSteps();
                         }
                         else
                         {
-                            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                            _photonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
+                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
                         }
                 }
                 else
                 {
-                    _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                    PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                 }
             }
             else
             {
-                _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
             }
         }
     }

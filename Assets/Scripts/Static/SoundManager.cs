@@ -1,10 +1,11 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static.Cell;
 using System;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts.Static
 {
-    internal static class SoundManager
+    internal class SoundManager : MainWorker
     {
         internal static EntitiesGameGeneralManager EGGM => Instance.EntGGM;
         internal static void PlaySoundEffect(SoundEffectTypes soundEffectType)

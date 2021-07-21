@@ -1,19 +1,17 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Components;
-using Assets.Scripts.Static;
 using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
-using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
 using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
-using static Assets.Scripts.Main;
-using Assets.Scripts.ECS.Components;
+using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
 using static Assets.Scripts.CellEnvironmentWorker;
+using static Assets.Scripts.Main;
 
 public sealed partial class EntitiesGameGeneralManager
 {
@@ -22,17 +20,15 @@ public sealed partial class EntitiesGameGeneralManager
     internal AudioSource MistakeAudioSource;
     internal AudioSource AttackAudioSource;
 
-    private ResourcesCommComponent ResourcesCommComponent => Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom;
-
 
     #region Cells
 
-    private static EcsEntity[,] _cellProtectRelaxEnts;
-    internal static ref SpriteRendererComponent CellProtectRelaxEnt_SpriteRendererCom(int[] xy) => ref _cellProtectRelaxEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
+    private EcsEntity[,] _cellProtectRelaxEnts;
+    internal ref SpriteRendererComponent CellProtectRelaxEnt_SpriteRendererCom(int[] xy) => ref _cellProtectRelaxEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
 
 
-    private static EcsEntity[,] _cellMaxStepsEnts;
-    internal static ref SpriteRendererComponent CellMaxStepsEnt_SpriteRendererCom(int[] xy) => ref _cellMaxStepsEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
+    private EcsEntity[,] _cellMaxStepsEnts;
+    internal ref SpriteRendererComponent CellMaxStepsEnt_SpriteRendererCom(int[] xy) => ref _cellMaxStepsEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
 
 
     private EcsEntity[,] _cellUnitEnts;
@@ -69,10 +65,10 @@ public sealed partial class EntitiesGameGeneralManager
     internal ref SpriteRendererComponent CellSupVisEnt_SpriteRenderer(int[] xy) => ref _cellSupportVisionEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
 
 
-    private static EcsEntity[,] _cellFireEnts;
-    internal static ref SpriteRendererComponent CellFireEnt_SprRendCom(int[] xy) => ref _cellFireEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
-    internal static ref HaverEffectComponent CellFireEnt_HaverEffectCom(int[] xy) => ref _cellFireEnts[xy[X], xy[Y]].Get<HaverEffectComponent>();
-    internal static ref TimeStepsComponent CellFireEnt_TimeStepsCom(int[] xy) => ref _cellFireEnts[xy[X], xy[Y]].Get<TimeStepsComponent>();
+    private EcsEntity[,] _cellFireEnts;
+    internal ref SpriteRendererComponent CellFireEnt_SprRendCom(int[] xy) => ref _cellFireEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
+    internal ref HaverEffectComponent CellFireEnt_HaverEffectCom(int[] xy) => ref _cellFireEnts[xy[X], xy[Y]].Get<HaverEffectComponent>();
+    internal ref TimeStepsComponent CellFireEnt_TimeStepsCom(int[] xy) => ref _cellFireEnts[xy[X], xy[Y]].Get<TimeStepsComponent>();
 
 
     private EcsEntity[,] _cellBuildingEnts;
@@ -123,6 +119,49 @@ public sealed partial class EntitiesGameGeneralManager
 
     internal int Xamount => _cellEnts.GetUpperBound(X) + 1;
     internal int Yamount => _cellEnts.GetUpperBound(Y) + 1;
+
+    #endregion
+
+
+    #region Selector
+
+    private EcsEntity _selectorEnt;
+    internal ref SelectorComponent SelectorEnt_SelectorCom => ref _selectorEnt.Get<SelectorComponent>();
+    internal ref RaycastHit2DComponent SelectorEnt_RayCom => ref _selectorEnt.Get<RaycastHit2DComponent>();
+    internal ref UnitTypeComponent SelectorEnt_UnitTypeCom => ref _selectorEnt.Get<UnitTypeComponent>();
+    internal ref UpgradeModTypeComponent SelectorEnt_UpgradeModTypeCom => ref _selectorEnt.Get<UpgradeModTypeComponent>();
+
+
+    private EcsEntity _xyCurrentCellEnt;
+    internal ref XyCellComponent XyCurrentCellEnt_XyCellCom => ref _xyCurrentCellEnt.Get<XyCellComponent>();
+
+
+    private EcsEntity _xySelectedCellEnt;
+    internal ref XyCellComponent XySelectedCellEnt_XyCellCom => ref _xySelectedCellEnt.Get<XyCellComponent>();
+
+
+    private EcsEntity _xyPreviousCellEnt;
+    internal ref XyCellComponent XyPreviousCellEnt_XyCellCom => ref _xyPreviousCellEnt.Get<XyCellComponent>();
+
+
+    private EcsEntity _xyPreviousVisionCellEnt;
+    internal ref XyCellComponent XyPreviousVisionCellEnt_XyCellCom => ref _xyPreviousVisionCellEnt.Get<XyCellComponent>();
+
+
+    private EcsEntity _availableCellsSettingEnt;
+    internal ref AvailableCellsComponent AvailableCellsSettingEnt_AvailCellsCom => ref _availableCellsSettingEnt.Get<AvailableCellsComponent>();
+
+
+    private EcsEntity _availableCellsShiftEnt;
+    internal ref AvailableCellsComponent AvailableCellsShiftEnt_AvailCellsCom => ref _availableCellsShiftEnt.Get<AvailableCellsComponent>();
+
+
+    private EcsEntity _availableCellsSimpleAttackEnt;
+    internal ref AvailableCellsComponent AvailableCellsSimpleAttackEnt_AvailCellsCom => ref _availableCellsSimpleAttackEnt.Get<AvailableCellsComponent>();
+
+
+    private EcsEntity _availableCellsUniqueAttackEnt;
+    internal ref AvailableCellsComponent AvailableCellsUniqueAttackEnt_AvailCellsCom => ref _availableCellsUniqueAttackEnt.Get<AvailableCellsComponent>();
 
     #endregion
 
@@ -199,31 +238,8 @@ public sealed partial class EntitiesGameGeneralManager
     internal ref InputComponent InputEnt_InputCom => ref _inputEnt.Get<InputComponent>();
 
 
-    private EcsEntity _rPCGeneralEntity;
-    internal ref RpcComponent RpcGeneralEnt_RPCCom => ref _rPCGeneralEntity.Get<RpcComponent>();
-
-
     private EcsEntity _fromInfoEnt;
     internal ref FromInfoComponent FromInfoEnt_FromInfoCom => ref _fromInfoEnt.Get<FromInfoComponent>();
-
-
-    private EcsEntity _selectorEnt;
-    internal ref SelectorComponent SelectorEnt_SelectorCom => ref _selectorEnt.Get<SelectorComponent>();
-    internal ref RaycastHit2DComponent SelectorEnt_RayCom => ref _selectorEnt.Get<RaycastHit2DComponent>();
-    internal ref UnitTypeComponent SelectorEnt_UnitTypeCom => ref _selectorEnt.Get<UnitTypeComponent>();
-    internal ref UpgradeModTypeComponent SelectorEnt_UpgradeModTypeCom => ref _selectorEnt.Get<UpgradeModTypeComponent>();
-
-
-    private EcsEntity _soundEnt;
-    internal ref SounddComponent SoundEnt_SoundCom => ref _soundEnt.Get<SounddComponent>();
-
-
-    private EcsEntity _zoneEnt;
-    internal ref ZoneComponent ZoneEnt_ZoneCom => ref _zoneEnt.Get<ZoneComponent>();
-
-
-    private EcsEntity _animationEnt;
-    internal ref AnimationAttackUnitComponent AnimationAttack_UnitComponent => ref _animationEnt.Get<AnimationAttackUnitComponent>();
 
     #endregion
 
@@ -263,6 +279,8 @@ public sealed partial class EntitiesGameGeneralManager
 
     internal EntitiesGameGeneralManager(EcsWorld gameWorld)
     {
+        #region Cells
+
         _cellProtectRelaxEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
         _cellMaxStepsEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
         _cellUnitEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
@@ -309,6 +327,25 @@ public sealed partial class EntitiesGameGeneralManager
                 _cellEnts[x, y] = gameWorld.NewEntity();
             }
 
+        #endregion
+
+
+        #region Selector
+
+        _selectorEnt = gameWorld.NewEntity();
+
+        _xyCurrentCellEnt = gameWorld.NewEntity();
+        _xySelectedCellEnt = gameWorld.NewEntity();
+        _xyPreviousCellEnt = gameWorld.NewEntity();
+        _xyPreviousVisionCellEnt = gameWorld.NewEntity();
+
+        _availableCellsSettingEnt = gameWorld.NewEntity();
+        _availableCellsShiftEnt = gameWorld.NewEntity();
+        _availableCellsSimpleAttackEnt = gameWorld.NewEntity();
+        _availableCellsUniqueAttackEnt = gameWorld.NewEntity();
+
+        #endregion
+
         _attackArcherSoundEnt = gameWorld.NewEntity();
         _pickArcherSoundEnt = gameWorld.NewEntity();
         _pickMeleeSoundEnt = gameWorld.NewEntity();
@@ -326,12 +363,7 @@ public sealed partial class EntitiesGameGeneralManager
         _economyEnt = gameWorld.NewEntity();
         _unitInfoEnt = gameWorld.NewEntity();
         _buildingsEnt = gameWorld.NewEntity();
-        _selectorEnt = gameWorld.NewEntity();
-        _rPCGeneralEntity = gameWorld.NewEntity();
         _inputEnt = gameWorld.NewEntity();
-        _soundEnt = gameWorld.NewEntity();
-        _animationEnt = gameWorld.NewEntity();
-        _zoneEnt = gameWorld.NewEntity();
         _fromInfoEnt = gameWorld.NewEntity();
 
         _kingInfoInGameEnt = gameWorld.NewEntity();
@@ -351,7 +383,9 @@ public sealed partial class EntitiesGameGeneralManager
     {
         base.FillEntities();
 
-        SpawnCells();
+        SpawnAndFillCells();
+        FillSelectorEnts();
+
 
         var audioSourceParentGO = new GameObject("AudioSource");
         Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(audioSourceParentGO.transform);
@@ -464,15 +498,7 @@ public sealed partial class EntitiesGameGeneralManager
         SelectorEnt_UnitTypeCom.StartFill();
         SelectorEnt_UpgradeModTypeCom.StartFill();
 
-        RpcGeneralEnt_RPCCom.StartFill();
-
         InputEnt_InputCom.StartFill();
-
-        SoundEnt_SoundCom.StartFill();
-
-        AnimationAttack_UnitComponent.StartFill();
-
-        ZoneEnt_ZoneCom.StartFill();
 
         FromInfoEnt_FromInfoCom.StartFill();
 
@@ -540,7 +566,7 @@ public sealed partial class EntitiesGameGeneralManager
         SpawnAndFillCanvasEntities();
     }
 
-    private void SpawnCells()
+    private void SpawnAndFillCells()
     {
         var cellGO = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.CellGO;
         var whiteCellSR = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig.WhiteSprite;
@@ -772,5 +798,18 @@ public sealed partial class EntitiesGameGeneralManager
             x == 1 && y == 9 || x == 2 && y == 9 || x == 12 && y == 9 || x == 13 && y == 9)
                 go.SetActive(false);
         }
+    }
+
+    private void FillSelectorEnts()
+    {
+        XyCurrentCellEnt_XyCellCom.StartFill();
+        XySelectedCellEnt_XyCellCom.StartFill();
+        XyPreviousCellEnt_XyCellCom.StartFill();
+        XyPreviousVisionCellEnt_XyCellCom.StartFill();
+
+        AvailableCellsSettingEnt_AvailCellsCom.StartFill();
+        AvailableCellsShiftEnt_AvailCellsCom.StartFill();
+        AvailableCellsSimpleAttackEnt_AvailCellsCom.StartFill();
+        AvailableCellsUniqueAttackEnt_AvailCellsCom.StartFill();
     }
 }

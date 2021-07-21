@@ -15,14 +15,13 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        List<int[]> xyAvailableCellsForShift = new List<int[]>();
-        xyAvailableCellsForShift.GetCellsForShift(FromXy);
+        List<int[]> xyAvailableCellsForShift = CellUnitWorker.GetCellsForShift(FromXy);
 
         if (_eGM.CellUnitEnt_CellOwnerCom(FromXy).IsHim(InfoFrom.Sender) && _eGM.CellUnitEnt_CellUnitCom(FromXy).HaveMinAmountSteps)
         {
             if (xyAvailableCellsForShift.TryFindCell(ToXy))
             {
-                _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
+                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
                 CellUnitWorker.ShiftPlayerUnit(FromXy, ToXy);
 

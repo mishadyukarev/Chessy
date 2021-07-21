@@ -79,6 +79,6 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
             default:
                 break;
         }
-        _photonPunRPC.GetUnitToGeneral(InfoFrom.Sender, isGetted, unitType);
+        PhotonPunRPC.GetUnitToGeneral(InfoFrom.Sender, isGetted, unitType);
     }
 }

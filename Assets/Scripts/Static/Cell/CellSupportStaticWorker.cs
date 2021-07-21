@@ -3,10 +3,8 @@ using UnityEngine;
 
 namespace Assets.Scripts.Static.Cell
 {
-    internal static class CellSupportStaticWorker
+    internal class CellSupportStaticWorker : MainWorker
     {
-        internal static EntitiesGameGeneralManager EGGM => Main.Instance.EntGGM;
-
         internal static void ActiveVision(bool isActive, SupportStaticTypes supportStaticType, int[] xy)
         {
             switch (supportStaticType)

@@ -1,10 +1,11 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static;
 using UnityEngine;
 
 internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
 
     public override void Run()
     {
@@ -62,7 +63,7 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
                 }
             }
 
-            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
+            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).IsBot)
             {
                 ActiveStandartAbilities(false);
             }

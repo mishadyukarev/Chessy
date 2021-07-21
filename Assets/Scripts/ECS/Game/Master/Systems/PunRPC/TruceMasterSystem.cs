@@ -7,8 +7,6 @@ using static Assets.Scripts.CellUnitWorker;
 
 internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 {
-    private PhotonMessageInfo Info => _eGM.RpcGeneralEnt_RPCCom.FromInfo;
-
     public override void Run()
     {
         base.Run();
@@ -24,7 +22,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 
                 CellEffectsWorker.ResetEffect(EffectTypes.Fire, xy);
 
-                if (HaveAnyUnit(xy))
+                if (HaveAnyUnitOnCell(xy))
                 {
                     if (HaveOwner(xy))
                     {
@@ -113,9 +111,9 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
         _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, true, 15);
         _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, false, 15);
 
-        //_photonPunRPC.DoneToGeneral(RpcTarget.All, false);
-        _photonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
-        _photonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
+        //PhotonPunRPC.DoneToGeneral(RpcTarget.All, false);
+        PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+        PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
         _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
         //}
     }

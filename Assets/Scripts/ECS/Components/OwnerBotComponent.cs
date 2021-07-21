@@ -4,7 +4,7 @@
     {
         private bool _haveBot;
 
-        internal bool HaveBot => _haveBot;
+        internal bool IsBot => _haveBot;
 
         internal void SetBot(bool haveBot) => _haveBot = haveBot;
 

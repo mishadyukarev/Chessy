@@ -36,7 +36,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                                     if (!HaveEnvironment(EnvironmentTypes.YoungForest, XyCellForSeeding))
                                     {
-                                        _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Seeding);
+                                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Seeding);
                                         SetNewEnvironment(EnvironmentTypes.YoungForest, XyCellForSeeding);
 
                                         _eGM.CellUnitEnt_CellUnitCom(XyCellForSeeding).TakeAmountSteps();
@@ -44,12 +44,12 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                             }
                             else
                             {
-                                _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                             }
                         }
                         else
                         {
-                            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                         }
                     }
                     break;

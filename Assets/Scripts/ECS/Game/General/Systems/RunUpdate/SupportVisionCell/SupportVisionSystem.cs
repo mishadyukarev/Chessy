@@ -6,10 +6,11 @@ using static Assets.Scripts.Static.Cell.CellSupportVisionWorker;
 using static Assets.Scripts.Static.Cell.CellSupportStaticWorker;
 using static Assets.Scripts.CellUnitWorker;
 using static Assets.Scripts.CellWorker;
+using Assets.Scripts.Static;
 
 internal sealed class SupportVisionSystem : SystemGeneralReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
 
     public override void Run()
     {
@@ -44,11 +45,11 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                 
                 if (IsActivated(Instance.IsMasterClient, xy))
                 {
-                    if (HaveAnyUnit(xy))
+                    if (HaveAnyUnitOnCell(xy))
                     {
                         var unitType = UnitType(xy);
 
-                        if (HaveOwner(xy) || HaveBot(xy))
+                        if (HaveOwner(xy) || IsBotOnCell(xy))
                         {
                             ActiveVision(true, SupportStaticTypes.Hp, xy);
 
@@ -58,7 +59,7 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
 
                             SetScale(SupportStaticTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1), xy);
 
-                            if (!HaveBot(xy))
+                            if (!IsBotOnCell(xy))
                             {
                                 if (IsMasterClient(xy))
                                 {
@@ -117,8 +118,8 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
             EnableSupVis(SupportVisionTypes.Selector, XySelectedCell);
         }
 
-        _eGM.SelectorEnt_SelectorCom.GetAllCells(AvailableCellTypes.Shift).ForEach((xy) => EnableSupVis(SupportVisionTypes.Shift, xy));
-        _eGM.SelectorEnt_SelectorCom.GetAllCells(AvailableCellTypes.SimpleAttack).ForEach((xy) => EnableSupVis(SupportVisionTypes.SimpleAttack, xy));
-        _eGM.SelectorEnt_SelectorCom.GetAllCells(AvailableCellTypes.UniqueAttack).ForEach((xy) => EnableSupVis(SupportVisionTypes.UniqueAttack, xy));
+        SelectorWorker.GetAllCells(AvailableCellTypes.Shift).ForEach((xy) => EnableSupVis(SupportVisionTypes.Shift, xy));
+        SelectorWorker.GetAllCells(AvailableCellTypes.SimpleAttack).ForEach((xy) => EnableSupVis(SupportVisionTypes.SimpleAttack, xy));
+        SelectorWorker.GetAllCells(AvailableCellTypes.UniqueAttack).ForEach((xy) => EnableSupVis(SupportVisionTypes.UniqueAttack, xy));
     }
 }

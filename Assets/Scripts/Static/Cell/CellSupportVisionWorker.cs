@@ -5,10 +5,8 @@ using static Assets.Scripts.Abstractions.ValuesConsts.Colors;
 
 namespace Assets.Scripts.Static.Cell
 {
-    public static class CellSupportVisionWorker
+    public class CellSupportVisionWorker : MainWorker
     {
-        private static EntitiesGameGeneralManager EGGM => Instance.EntGGM;
-
         internal static void EnableSupVis(SupportVisionTypes supportVisionType, int[] xy)
         {
             EGGM.CellSupVisEnt_SpriteRenderer(xy).Enabled = true;

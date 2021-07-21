@@ -1,10 +1,11 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static;
 using static Assets.Scripts.Main;
 
 internal sealed class RightZoneUISystem : SystemGeneralReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
 
     public override void Run()
     {
@@ -18,7 +19,7 @@ internal sealed class RightZoneUISystem : SystemGeneralReduction
                 {
                     _eGM.RightZoneEnt_ParentCom.SetActive(true);
                 }
-                else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).HaveBot)
+                else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).IsBot)
                 {
                     _eGM.RightZoneEnt_ParentCom.SetActive(true);
                 }

@@ -27,14 +27,14 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 
         if (_eGM.UnitInfoEnt_UnitInventorCom.IsSettedKing(InfoFrom.Sender.IsMasterClient))
         {
-            _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
+            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
             if (PhotonNetwork.OfflineMode)
             {
                 _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
 
-                _photonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
-                _photonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
+                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+                PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
                 _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
             }
             else
@@ -53,14 +53,14 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
                             if (_doneOrNotFromStartAnyUpdate[false] == true)
                             {
                                 _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(false, false);
-                                //_photonPunRPC.SetDonerActiveToGeneral(PhotonNetwork.PlayerList[1], false);
+                                //PhotonPunRPC.SetDonerActiveToGeneral(PhotonNetwork.PlayerList[1], false);
                             }
                             else
                             {
                                 _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
 
-                                _photonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
-                                _photonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
+                                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+                                PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
                                 _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
 
                                 _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
@@ -79,8 +79,8 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
                             {
                                 _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
 
-                                _photonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
-                                _photonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
+                                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+                                PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
                                 _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
 
                                 _doneOrNotFromStartAnyUpdate[false] = true;
@@ -93,7 +93,7 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
                         break;
 
                     case StepModeTypes.Together:
-                        //_photonPunRPC.SetDonerActiveToGeneral(InfoFrom.Sender, NeedDoneOrNot);
+                        //PhotonPunRPC.SetDonerActiveToGeneral(InfoFrom.Sender, NeedDoneOrNot);
                         _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, NeedDoneOrNot);
 
                         _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, NeedDoneOrNot);
@@ -106,8 +106,8 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
                         {
                             _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
 
-                            _photonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
-                            _photonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
+                            PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+                            PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
                             _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
                         }
                         break;
@@ -119,7 +119,7 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
         }
         else
         {
-            _photonPunRPC.MistakeUnitToGeneral(InfoFrom.Sender);
+            PhotonPunRPC.MistakeUnitToGeneral(InfoFrom.Sender);
         }
     }
 }

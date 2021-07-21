@@ -1,11 +1,10 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static.Cell;
 
 namespace Assets.Scripts
 {
-    public static class CellWorker
+    public class CellWorker : MainWorker
     {
-        internal static EntitiesGameGeneralManager EGGM => Main.Instance.EntGGM;
-
         internal static int InstanceIDGO(int[] xy) => EGGM.CellEnt_CellBaseCom(xy).InstanceIDGO;
         internal static bool IsActiveSelfGO(int[] xy) => EGGM.CellEnt_CellBaseCom(xy).IsActiveSelfGO;
         internal static bool IsStartedCell(bool key, int[] xy) => EGGM.CellEnt_CellBaseCom(xy).IsStartedCell(key);

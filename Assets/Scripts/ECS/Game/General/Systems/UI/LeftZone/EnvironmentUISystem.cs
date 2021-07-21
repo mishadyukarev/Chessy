@@ -1,13 +1,13 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static.Cell;
+using Assets.Scripts.Static;
 using UnityEngine;
-using static Assets.Scripts.Static.Cell.CellSupportStaticWorker;
 using static Assets.Scripts.CellEnvironmentWorker;
+using static Assets.Scripts.Static.Cell.CellSupportStaticWorker;
 
 internal sealed class EnvironmentUISystem : SystemGeneralReduction
 {
-    private int[] XySelectedCell => _eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
 
 
     public override void Run()
