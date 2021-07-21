@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static.Cell;
 using Photon.Pun;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
@@ -15,12 +16,14 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
             if (_eGM.CellUnitEnt_CellUnitCom(FromXyCopy).HaveMinAmountSteps)
             {
-                if (_eGM.CellEffectEnt_CellEffectCom(ToXyCopy).HaveEffect(EffectTypes.Fire))
+                
+
+                if (CellEffectsWorker.HaveEffect(EffectTypes.Fire, ToXyCopy))
                 {
-                    _eGM.CellEffectEnt_CellEffectCom(ToXyCopy).ResetEffect(EffectTypes.Fire);
+                    CellEffectsWorker.ResetEffect(EffectTypes.Fire, ToXyCopy);
                     _eGM.CellUnitEnt_CellUnitCom(ToXyCopy).TakeAmountSteps();
                 }
-                else if (_eGM.CellEnvEnt_CellEnvCom(ToXyCopy).HaveEnvironment(EnvironmentTypes.AdultForest))
+                else if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, ToXyCopy))
                 {
                     if (_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).HaveOwner)
 
@@ -30,7 +33,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                             EconomyManager.Fire(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType);
 
-                            _eGM.CellEffectEnt_CellEffectCom(ToXyCopy).SetEffect(EffectTypes.Fire);
+                            CellEffectsWorker.SetEffect(EffectTypes.Fire, ToXyCopy);
                             _eGM.CellUnitEnt_CellUnitCom(ToXyCopy).TakeAmountSteps();
                         }
                         else

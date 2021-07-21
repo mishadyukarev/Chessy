@@ -1,11 +1,11 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
-using Assets.Scripts.Static.Cell;
 using UnityEngine;
 using static Assets.Scripts.Main;
 using static Assets.Scripts.Static.Cell.CellSupportVisionWorker;
-using static Assets.Scripts.Static.CellBaseOperations;
+using static Assets.Scripts.Static.Cell.CellSupportStaticWorker;
+using static Assets.Scripts.CellUnitWorker;
+using static Assets.Scripts.CellWorker;
 
 internal sealed class SupportVisionSystem : SystemGeneralReduction
 {
@@ -18,76 +18,78 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
         for (int x = 0; x < _eGM.Xamount; x++)
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                DisableSupVis(x, y);
+                int[] xy = new int[] { x, y };
+
+                DisableSupVis(xy);
 
                 if (_eGM.SelectorEnt_UnitTypeCom.HaveAnyUnit)
                 {
                     if (Instance.IsMasterClient)
                     {
-                        if (_eGM.CellEnt_CellBaseCom(x, y).IsStartedCell(Instance.IsMasterClient))
+                        if (IsStartedCell(Instance.IsMasterClient, xy))
                         {
-                            EnableSupVis(SupportVisionTypes.Spawn, x, y);
+                            EnableSupVis(SupportVisionTypes.Spawn, xy);
                         }
                     }
 
                     else
                     {
-                        if (_eGM.CellEnt_CellBaseCom(x, y).IsStartedCell(Instance.IsMasterClient))
+                        if (IsStartedCell(Instance.IsMasterClient, xy))
                         {
-                            EnableSupVis(SupportVisionTypes.Spawn, x, y);
+                            EnableSupVis(SupportVisionTypes.Spawn, xy);
                         }
                     }
                 }
 
-
-                if (_eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).IsActivated(Instance.IsMasterClient))
+                
+                if (IsActivated(Instance.IsMasterClient, xy))
                 {
-                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
+                    if (HaveAnyUnit(xy))
                     {
-                        var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
+                        var unitType = UnitType(xy);
 
-                        if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner || _eGM.CellUnitEnt_CellOwnerBotCom(x, y).HaveBot)
+                        if (HaveOwner(xy) || HaveBot(xy))
                         {
-                            _eGM.CellSupStatEnt_CellSupStatCom(x, y).ActiveVision(true, SupportStaticTypes.Hp);
+                            ActiveVision(true, SupportStaticTypes.Hp, xy);
 
 
                             float maxAmountHealth = CellUnitWorker.MaxAmountHealth(unitType);
-                            float xCordinate = (float)_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth / maxAmountHealth;
-                            _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetScale(SupportStaticTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
+                            float xCordinate = (float)AmountHealth(xy) / maxAmountHealth;
 
+                            SetScale(SupportStaticTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1), xy);
 
-                            if (!_eGM.CellUnitEnt_CellOwnerBotCom(x, y).HaveBot)
+                            if (!HaveBot(xy))
                             {
-                                if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient)
+                                if (IsMasterClient(xy))
                                 {
-                                    _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetColor(SupportStaticTypes.Hp, Color.blue);
+                                    SetColor(SupportStaticTypes.Hp, Color.blue, xy);
                                 }
                                 else
                                 {
-                                    _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetColor(SupportStaticTypes.Hp, Color.red);
+                                    SetColor(SupportStaticTypes.Hp, Color.red, xy);
                                 }
                             }
                             else
                             {
-                                _eGM.CellSupStatEnt_CellSupStatCom(x, y).SetColor(SupportStaticTypes.Hp, Color.red);
+                                SetColor(SupportStaticTypes.Hp, Color.red, xy);
                             }
                         }
 
 
-                        if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsType(ProtectRelaxTypes.Protected))
+                        if (IsTypeProtectRelax(ProtectRelaxTypes.Protected, xy))
                         {
                             //_eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
                             //_eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.yellow);
                         }
 
-                        else if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsType(ProtectRelaxTypes.Relaxed))
+                        else if (IsTypeProtectRelax(ProtectRelaxTypes.Relaxed, xy))
                         {
                             //_eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
                             //_eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.green);
                         }
 
 
-                        if (_eGM.CellUnitEnt_CellUnitCom(x, y).HaveMaxSteps(unitType))
+                        if (HaveMaxAmountSteps(unitType, xy))
                         {
                             //_eGM.CellUnitEnt_CellUnitCom(x, y).EnableStandartColorSR(true);
                         }
@@ -96,13 +98,13 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
 
                     if (_eGM.SelectorEnt_UpgradeModTypeCom.IsUpgradeModType(UpgradeModTypes.Unit))
                     {
-                        if (_eGM.CellUnitEnt_UnitTypeCom(x, y).IsUnit(UnitTypes.Pawn)|| _eGM.CellUnitEnt_UnitTypeCom(x, y).IsUnit(UnitTypes.Rook) || _eGM.CellUnitEnt_UnitTypeCom(x, y).IsUnit(UnitTypes.Bishop))
+                        if (IsUnitType(UnitTypes.Pawn, xy) || IsUnitType(UnitTypes.Rook, xy) || IsUnitType(UnitTypes.Bishop, xy))
                         {
-                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                            if (HaveOwner(xy)) 
                             {
-                                if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMine)
+                                if (IsMine(xy))
                                 {
-                                    EnableSupVis(SupportVisionTypes.Upgrade, x, y);
+                                    EnableSupVis(SupportVisionTypes.Upgrade, xy);
                                 }
                             }
                         }

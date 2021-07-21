@@ -7,13 +7,13 @@ using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
 internal struct CellEnvironmentComponent
 {
     private bool _haveFertilizer;
-    private bool _haveYoungTree;
-    private bool _haveAdultTree;
+    private bool _haveYoungForest;
+    private bool _haveAdultForest;
     private bool _haveHill;
     private bool _haveMountain;
     private SpriteRenderer _fertilizerSR;
-    private SpriteRenderer _youngTreeSR;
-    private SpriteRenderer _adultTreeSR;
+    private SpriteRenderer _youngForestSR;
+    private SpriteRenderer _adultForestSR;
     private SpriteRenderer _hillSR;
     private SpriteRenderer _mountainSR;
     private int _amountFoodResources;
@@ -22,9 +22,9 @@ internal struct CellEnvironmentComponent
 
     internal void StartFill(GameObject environmentGO)
     {
-        _fertilizerSR = environmentGO.transform.Find("Food").GetComponent<SpriteRenderer>();
-        _youngTreeSR = environmentGO.transform.Find("YoungTree").GetComponent<SpriteRenderer>();
-        _adultTreeSR = environmentGO.transform.Find("Tree").GetComponent<SpriteRenderer>();
+        _fertilizerSR = environmentGO.transform.Find("Fertilizer").GetComponent<SpriteRenderer>();
+        _youngForestSR = environmentGO.transform.Find("YoungForest").GetComponent<SpriteRenderer>();
+        _adultForestSR = environmentGO.transform.Find("AdultForest").GetComponent<SpriteRenderer>();
         _hillSR = environmentGO.transform.Find("Hill").GetComponent<SpriteRenderer>();
         _mountainSR = environmentGO.transform.Find("Mountain").GetComponent<SpriteRenderer>();
 
@@ -34,14 +34,14 @@ internal struct CellEnvironmentComponent
     internal void ResetAll()
     {
         _haveFertilizer = false;
-        _haveYoungTree = false;
-        _haveAdultTree = false;
+        _haveYoungForest = false;
+        _haveAdultForest = false;
         _haveHill = false;
         _haveMountain = false;
 
         _fertilizerSR.enabled = false;
-        _youngTreeSR.enabled = false;
-        _adultTreeSR.enabled = false;
+        _youngForestSR.enabled = false;
+        _adultForestSR.enabled = false;
         _hillSR.enabled = false;
         _mountainSR.enabled = false;
 
@@ -62,10 +62,10 @@ internal struct CellEnvironmentComponent
                 return _haveFertilizer;
 
             case EnvironmentTypes.YoungForest:
-                return _haveYoungTree;
+                return _haveYoungForest;
 
             case EnvironmentTypes.AdultForest:
-                return _haveAdultTree;
+                return _haveAdultForest;
 
             case EnvironmentTypes.Hill:
                 return _haveHill;
@@ -290,13 +290,13 @@ internal struct CellEnvironmentComponent
                 break;
 
             case EnvironmentTypes.YoungForest:
-                _haveYoungTree = true;
-                _youngTreeSR.enabled = true;
+                _haveYoungForest = true;
+                _youngForestSR.enabled = true;
                 break;
 
             case EnvironmentTypes.AdultForest:
-                _haveAdultTree = true;
-                _adultTreeSR.enabled = true;
+                _haveAdultForest = true;
+                _adultForestSR.enabled = true;
                 _amountWoodResources = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType));
                 break;
 
@@ -328,14 +328,14 @@ internal struct CellEnvironmentComponent
                 break;
 
             case EnvironmentTypes.AdultForest:
-                _haveAdultTree = true;
-                _adultTreeSR.enabled = true;
+                _haveAdultForest = true;
+                _adultForestSR.enabled = true;
                 _amountWoodResources = amountEnvironmet;
                 break;
 
             case EnvironmentTypes.YoungForest:
-                _haveYoungTree = true;
-                _youngTreeSR.enabled = true;
+                _haveYoungForest = true;
+                _youngForestSR.enabled = true;
                 break;
 
             case EnvironmentTypes.Hill:
@@ -367,14 +367,14 @@ internal struct CellEnvironmentComponent
                 break;
 
             case EnvironmentTypes.AdultForest:
-                _haveAdultTree = false;
-                _adultTreeSR.enabled = false;
+                _haveAdultForest = false;
+                _adultForestSR.enabled = false;
                 _amountWoodResources = 0;
                 break;
 
             case EnvironmentTypes.YoungForest:
-                _haveYoungTree = false;
-                _youngTreeSR.enabled = false;
+                _haveYoungForest = false;
+                _youngForestSR.enabled = false;
                 break;
 
             case EnvironmentTypes.Hill:

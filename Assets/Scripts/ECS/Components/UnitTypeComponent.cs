@@ -2,19 +2,17 @@
 
 internal struct UnitTypeComponent
 {
-    private UnitTypes _unitType;
+    internal UnitTypes UnitType { get; set; }
+    internal bool HaveAnyUnit => UnitType != UnitTypes.None;
 
-    internal UnitTypes UnitType => _unitType;
-    internal bool HaveAnyUnit => _unitType != UnitTypes.None;
-
-    internal bool IsMelee => IsMelee(_unitType);
-    internal int SimplePowerDamage => SimplePowerDamage(_unitType);
-    internal int UniquePowerDamage => UniquePowerDamage(_unitType);
-    internal int MaxAmountHealth => MaxAmountHealth(_unitType);
+    internal bool IsMelee => IsMelee(UnitType);
+    internal int SimplePowerDamage => SimplePowerDamage(UnitType);
+    internal int UniquePowerDamage => UniquePowerDamage(UnitType);
+    internal int MaxAmountHealth => MaxAmountHealth(UnitType);
 
 
-    internal void StartFill(UnitTypes unitType = default) => _unitType = unitType;
-    internal void SetUnitType(UnitTypes unitType) => _unitType = unitType;
-    internal bool IsUnit(UnitTypes unitType) => _unitType == unitType;
-    internal void ResetUnit() => _unitType = default;
+    internal void StartFill(UnitTypes unitType = default) => UnitType = unitType;
+
+    internal bool IsUnit(UnitTypes unitType) => UnitType == unitType;
+    internal void ResetUnit() => UnitType = default;
 }

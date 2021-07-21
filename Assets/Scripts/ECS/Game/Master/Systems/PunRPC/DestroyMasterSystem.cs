@@ -2,6 +2,7 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Static;
 using Photon.Pun;
+using static Assets.Scripts.CellEnvironmentWorker;
 
 internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
 {
@@ -30,7 +31,7 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
             }
             _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
 
-            if (buildingType == BuildingTypes.Farm) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.Fertilizer);
+            if (buildingType == BuildingTypes.Farm) ResetEnvironment(EnvironmentTypes.Fertilizer, XyCell);
             CellBuildingWorker.ResetBuilding(true, XyCell);
         }
         else

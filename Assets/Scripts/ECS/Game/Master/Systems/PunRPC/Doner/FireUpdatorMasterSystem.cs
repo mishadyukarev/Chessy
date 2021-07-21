@@ -1,5 +1,9 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Static;
+using static Assets.Scripts.Static.Cell.CellEffectsWorker;
+using static Assets.Scripts.CellEnvironmentWorker;
+using static Assets.Scripts.CellUnitWorker;
+using Assets.Scripts.Static.Cell;
 
 internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 {
@@ -13,26 +17,28 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
         {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                if (_eGM.CellEffectEnt_CellEffectCom(x, y).HaveEffect(EffectTypes.Fire))
-                {
-                    _eGM.CellEffectEnt_CellEffectCom(x, y).AddTimeStepsEffect(EffectTypes.Fire);
+                var xy = new int[] { x, y };
 
-                    _eGM.CellUnitEnt_CellUnitCom(x, y).TakeAmountHealth(40);
-                    if (!_eGM.CellUnitEnt_CellUnitCom(x, y).HaveHealth)
+                if (HaveEffect(EffectTypes.Fire, xy))
+                {
+                    AddTimeStepsEffect(EffectTypes.Fire, xy);
+
+                    TakeAmountHealth(xy, 40);
+                    if (!HaveAmountHealth(xy))
                     {
-                        if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                        if (HaveOwner(xy))
                         {
-                            CellUnitWorker.ResetPlayerUnit(x, y);
+                            ResetPlayerUnit(xy);
                         }
                         else
                         {
-                            CellUnitWorker.ResetBotUnit(x, y);
+                            ResetBotUnit(x, y);
                         }
 
                     }
 
 
-                    if (_eGM.CellEffectEnt_CellEffectCom(x, y).TimeStepsEffect(EffectTypes.Fire) >= 3)
+                    if (TimeStepsEffect(EffectTypes.Fire, xy) >= 3)
                     {
                         if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
                         {
@@ -40,21 +46,21 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                         }
 
 
-                        _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
+                        ResetEnvironment(EnvironmentTypes.AdultForest, xy);
 
-                        _eGM.CellEffectEnt_CellEffectCom(x, y).ResetEffect(EffectTypes.Fire);
+                        ResetEffect(EffectTypes.Fire, xy);
 
 
-                        var aroundXYList = CellUnitWorker.TryGetXYAround(x, y);
-                        foreach (var xy in aroundXYList)
+                        var aroundXYList = CellSpaceWorker.TryGetXYAround(xy);
+                        foreach (var xy1 in aroundXYList)
                         {
-                            if (_eGM.CellEnvEnt_CellEnvCom(xy).HaveEnvironment(EnvironmentTypes.AdultForest))
+                            if (HaveEnvironment(EnvironmentTypes.AdultForest, xy1))
                             {
-                                _eGM.CellEffectEnt_CellEffectCom(xy).SetEffect(EffectTypes.Fire);
+                                SetEffect(EffectTypes.Fire, xy1);
                             }
                         }
 
-                        _eGM.CellEffectEnt_CellEffectCom(x, y).SetTimeStepsEffect(EffectTypes.Fire, 0);
+                        SetTimeStepsEffect(EffectTypes.Fire, 0, xy);
                     }
 
                 }

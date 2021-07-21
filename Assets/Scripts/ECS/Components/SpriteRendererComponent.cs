@@ -6,10 +6,16 @@ namespace Assets.Scripts.ECS.Components
     {
         private SpriteRenderer _sR;
 
-        internal void StartFill(SpriteRenderer sR) => _sR = sR;
+        internal bool Enabled
+        {
+            get => _sR.enabled;
+            set => _sR.enabled = value;
+        }
+        internal Sprite Sprite { set => _sR.sprite = value; }
+        internal Color Color { set => _sR.color = value; }
+        internal Vector3 LocalScale { set => _sR.transform.localScale = value; }
 
-        internal void ActivateSR(bool isActive) => _sR.enabled = isActive;
-        internal void SetColorSR(Color color) => _sR.color = color;
-        internal void SetSprite(Sprite sprite) => _sR.sprite = sprite;
+
+        internal void StartFill(SpriteRenderer sR) => _sR = sR;
     }
 }

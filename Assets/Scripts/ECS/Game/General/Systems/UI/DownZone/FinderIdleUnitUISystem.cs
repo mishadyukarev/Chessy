@@ -1,7 +1,6 @@
-﻿
-
-using Assets.Scripts.Abstractions.Enums;
+﻿using Assets.Scripts.Abstractions.Enums;
 using System.Collections.Generic;
+using static Assets.Scripts.CellUnitWorker;
 
 namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
 {
@@ -27,13 +26,15 @@ namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
             for (int x = 0; x < _eGM.Xamount; x++)
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
-                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
+                    var xy = new int[] { x, y };
+
+                    if (HaveAnyUnit(xy))
                     {
-                        var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
+                        var unitType = UnitType(xy);
 
-                        if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                        if (HaveOwner(xy))
 
-                            if (_eGM.CellUnitEnt_CellUnitCom(x, y).HaveMaxSteps(unitType))
+                            if (_eGM.CellUnitEnt_CellUnitCom(xy).HaveMaxSteps(unitType))
                             {
                                 _eGM.SelectorEnt_SelectorCom.IsSelected = true;
                                 _eGM.SelectorEnt_SelectorCom.SetXy(SelectorCellTypes.Selected, new int[] { x, y });

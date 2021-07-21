@@ -18,19 +18,19 @@ namespace Assets.Scripts.Static
                     throw new Exception();
 
                 case BuildingTypes.City:
-                    EGGM.CellBuildEnt_SpriteRendererCom(xy).SetSprite(SpritesData.City);
+                    EGGM.CellBuildEnt_SpriteRendererCom(xy).Sprite = SpritesData.City;
                     break;
 
                 case BuildingTypes.Farm:
-                    EGGM.CellBuildEnt_SpriteRendererCom(xy).SetSprite(SpritesData.Farm);
+                    EGGM.CellBuildEnt_SpriteRendererCom(xy).Sprite = SpritesData.Farm;
                     break;
 
                 case BuildingTypes.Woodcutter:
-                    EGGM.CellBuildEnt_SpriteRendererCom(xy).SetSprite(SpritesData.Woodcutter);
+                    EGGM.CellBuildEnt_SpriteRendererCom(xy).Sprite = SpritesData.Woodcutter;
                     break;
 
                 case BuildingTypes.Mine:
-                    EGGM.CellBuildEnt_SpriteRendererCom(xy).SetSprite(SpritesData.Mine);
+                    EGGM.CellBuildEnt_SpriteRendererCom(xy).Sprite = SpritesData.Mine;
                     break;
 
                 default:
@@ -44,7 +44,7 @@ namespace Assets.Scripts.Static
         {
             Instance.EntGGM.CellBuildEnt_BuilTypeCom(xy).SetBuildingType(buildingType);
             Instance.EntGGM.CellBuildEnt_OwnerCom(xy).SetOwner(owner);
-            Instance.EntGGM.CellBuildEnt_SpriteRendererCom(xy).ActivateSR(true);
+            Instance.EntGGM.CellBuildEnt_SpriteRendererCom(xy).Enabled = true;
             SetSpriteRender(buildingType, xy);
 
             if (withEconomy)
@@ -59,7 +59,7 @@ namespace Assets.Scripts.Static
             Instance.EntGGM.CellBuildEnt_BuilTypeCom(xy).SetBuildingType(buildingType);
             Instance.EntGGM.CellBuildEnt_CellOwnerBotCom(xy).SetBot(true);
 
-            EGGM.CellBuildEnt_SpriteRendererCom(xy).ActivateSR(true);
+            EGGM.CellBuildEnt_SpriteRendererCom(xy).Enabled = true;
             SetSpriteRender(buildingType, xy);
         }
 
@@ -83,7 +83,7 @@ namespace Assets.Scripts.Static
 
             if (Instance.EntGGM.CellBuildEnt_OwnerCom(xy).HaveOwner)
             {
-                EGGM.CellBuildEnt_SpriteRendererCom(xy).ActivateSR(false);
+                EGGM.CellBuildEnt_SpriteRendererCom(xy).Enabled = false;
 
 
                 Instance.EntGGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
@@ -91,7 +91,7 @@ namespace Assets.Scripts.Static
 
             else if (Instance.EntGGM.CellBuildEnt_CellOwnerBotCom(xy).HaveBot)
             {
-                EGGM.CellBuildEnt_SpriteRendererCom(xy).ActivateSR(false);
+                EGGM.CellBuildEnt_SpriteRendererCom(xy).Enabled = false;
                 Instance.EntGGM.CellBuildEnt_OwnerCom(xy).SetOwner(default);
             }
 

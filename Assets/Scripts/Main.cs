@@ -1,9 +1,7 @@
-﻿using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.ECS.Menu.Entities;
+﻿using Assets.Scripts.ECS.Menu.Entities;
 using Photon.Pun;
 using Photon.Realtime;
 using UnityEngine;
-using static Assets.Scripts.Abstractions.ValuesConsts.Colors;
 
 namespace Assets.Scripts
 {

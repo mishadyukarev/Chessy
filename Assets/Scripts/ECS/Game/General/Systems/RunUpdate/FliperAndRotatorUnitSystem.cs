@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using static Assets.Scripts.Static.CellBaseOperations;
+using static Assets.Scripts.CellUnitWorker;
+using static Assets.Scripts.CellWorker;
 
 namespace Assets.Scripts.ECS.Game.General.Systems
 {
@@ -12,17 +14,19 @@ namespace Assets.Scripts.ECS.Game.General.Systems
             for (int x = 0; x < _eGM.Xamount; x++)
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
-                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
+                    var xy = new int[] { x, y };
+
+                    if (HaveAnyUnit(xy))
                     {
-                        var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
+                        var unitType = UnitType(xy);
 
-                        var standartX = _eGM.CellEnt_CellBaseCom(x, y).GetEulerAngle(XyzTypes.X);
-                        var standartY = _eGM.CellEnt_CellBaseCom(x, y).GetEulerAngle(XyzTypes.Y);
-                        var standartZ = _eGM.CellEnt_CellBaseCom(x, y).GetEulerAngle(XyzTypes.Z);
+                        var standartX = GetEulerAngle(XyzTypes.X, xy);
+                        var standartY = GetEulerAngle(XyzTypes.Y, xy);
+                        var standartZ = GetEulerAngle(XyzTypes.Z, xy);
 
-                        if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                        if (HaveOwner(xy))
                         {
-                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMine)
+                            if (IsMine(xy))
                             {
                                 //if (_eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected).Compare(new int[] { x, y }))
                                 //{

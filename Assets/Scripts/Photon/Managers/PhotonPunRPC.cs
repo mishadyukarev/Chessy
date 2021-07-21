@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
 using Assets.Scripts.Static;
+using Assets.Scripts.Static.Cell;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -8,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using static Assets.Scripts.Main;
+using static Assets.Scripts.CellEnvironmentWorker;
+using static Assets.Scripts.CellUnitWorker;
 
 namespace Assets.Scripts
 {
@@ -175,7 +178,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.CreateUnit:
-                    _eMM.CreatorEnt_UnitTypeCom.SetUnitType((UnitTypes)objects[0]);
+                    _eMM.CreatorEnt_UnitTypeCom.UnitType = (UnitTypes)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(CreatorUnitMasterSystem), _sMM.RpcSystems);
                     break;
 
@@ -184,13 +187,13 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.GetUnit:
-                    _eMM.CreatorEnt_UnitTypeCom.SetUnitType((UnitTypes)objects[0]);
+                    _eMM.CreatorEnt_UnitTypeCom.UnitType = (UnitTypes)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(GetterUnitMasterSystem), _sMM.RpcSystems);
                     break;
 
                 case RpcMasterTypes.SetUnit:
                     _eMM.SettingUnitEnt_XyCellCom.SetXyCell((int[])objects[0]);
-                    _eMM.SettingUnitEnt_UnitTypeCom.SetUnitType((UnitTypes)objects[1]);
+                    _eMM.SettingUnitEnt_UnitTypeCom.UnitType = (UnitTypes)objects[1];
                     _sMM.TryInvokeRunSystem(nameof(SetterUnitMasterSystem), _sMM.RpcSystems);
                     break;
 
@@ -311,7 +314,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.GetUnit:
-                    if ((bool)objects[_currentNumber++]) _eGM.SelectorEnt_UnitTypeCom.SetUnitType((UnitTypes)objects[_currentNumber++]);
+                    if ((bool)objects[_currentNumber++]) _eGM.SelectorEnt_UnitTypeCom.UnitType = (UnitTypes)objects[_currentNumber++];
                     break;
 
                 case RpcGeneralTypes.SetUnit:
@@ -344,7 +347,7 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case RpcOtherTypes.SetAmountMotion:
-                    _eGM.MotionEnt_AmountCom.SetAmount((int)objects[_currentNumber++]);
+                    _eGM.MotionEnt_AmountCom.Amount = (int)objects[_currentNumber++];
                     break;
 
                 case RpcOtherTypes.SetStepModType:
@@ -376,39 +379,41 @@ namespace Assets.Scripts
                     for (int x = 0; x < _eGM.Xamount; x++)
                         for (int y = 0; y < _eGM.Yamount; y++)
                         {
+                            var xy = new int[] { x, y };
+
                             listObjects.Add(Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType);
                             listObjects.Add(_eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(false));
 
 
-                            listObjects.Add(_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit);
-                            if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
+                            listObjects.Add(HaveAnyUnit(xy));
+                            if (HaveAnyUnit(xy))
                             {
-                                listObjects.Add(_eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).IsActivated(false));
-                                listObjects.Add(_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType);
-                                listObjects.Add(_eGM.CellUnitEnt_CellUnitCom(x, y).AmountSteps);
-                                listObjects.Add(_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth);
-                                listObjects.Add(_eGM.CellUnitEnt_ProtectRelaxCom(x, y).ProtectRelaxType);
+                                listObjects.Add(IsActivated(false, xy));
+                                listObjects.Add(UnitType(xy));
+                                listObjects.Add(AmountSteps(xy));
+                                listObjects.Add(AmountHealth(xy));
+                                listObjects.Add(ProtectRelaxType(xy));
 
-                                listObjects.Add(_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner);
-                                if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                                listObjects.Add(HaveOwner(xy));
+                                if (HaveOwner(xy))
                                 {
-                                    listObjects.Add(_eGM.CellUnitEnt_CellOwnerCom(x, y).ActorNumber);
+                                    listObjects.Add(ActorNumber(xy));
                                 }
                                 else
                                 {
-                                    listObjects.Add(_eGM.CellUnitEnt_CellOwnerBotCom(x, y).HaveBot);
+                                    listObjects.Add(HaveBot(xy));
                                 }
                             }
 
 
-                            listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountResources(ResourceTypes.Food));
-                            listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountResources(ResourceTypes.Wood));
-                            listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).AmountResources(ResourceTypes.Ore));
-                            listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Fertilizer));
-                            listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest));
-                            listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.YoungForest));
-                            listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Hill));
-                            listObjects.Add(_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Mountain));
+                            listObjects.Add(AmountResources(ResourceTypes.Food, xy));
+                            listObjects.Add(AmountResources(ResourceTypes.Wood, xy));
+                            listObjects.Add(AmountResources(ResourceTypes.Ore, xy));
+                            listObjects.Add(HaveEnvironment(EnvironmentTypes.Fertilizer, xy));
+                            listObjects.Add(HaveEnvironment(EnvironmentTypes.AdultForest, xy));
+                            listObjects.Add(HaveEnvironment(EnvironmentTypes.YoungForest, xy));
+                            listObjects.Add(HaveEnvironment(EnvironmentTypes.Hill, xy));
+                            listObjects.Add(HaveEnvironment(EnvironmentTypes.Mountain, xy));
 
 
 
@@ -432,7 +437,7 @@ namespace Assets.Scripts
                             }
 
 
-                            listObjects.Add(_eGM.CellEffectEnt_CellEffectCom(x, y).HaveEffect(EffectTypes.Fire));
+                            listObjects.Add(CellEffectsWorker.HaveEffect(EffectTypes.Fire, xy));
                         }
 
                     objects = new object[listObjects.Count];
@@ -492,6 +497,8 @@ namespace Assets.Scripts
                     for (int x = 0; x < _eGM.Xamount; x++)
                         for (int y = 0; y < _eGM.Yamount; y++)
                         {
+                            var xy = new int[] { x, y };
+
                             Instance.EntComM.SaverEnt_StepModeTypeCom.SetStepModeType((StepModeTypes)objects[_currentNumber++]);
                             bool isActivatedDoner = (bool)objects[_currentNumber++];
                             _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(Instance.IsMasterClient, isActivatedDoner);
@@ -516,15 +523,15 @@ namespace Assets.Scripts
                                     int actorNumber = (int)objects[_currentNumber++];
                                     player = PhotonNetwork.PlayerList[actorNumber - 1];
 
-                                    CellUnitWorker.SyncPlayerUnit(unitType, amountHealth, amountSteps, protectRelaxType, player, x, y);
+                                    CellUnitWorker.SyncPlayerUnit(unitType, amountHealth, amountSteps, protectRelaxType, player, xy);
                                 }
                                 else
                                 {
                                     bool haveBot = (bool)objects[_currentNumber++];
-                                    CellUnitWorker.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, protectRelaxType, x, y);
+                                    CellUnitWorker.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, protectRelaxType, xy);
                                 }
 
-                                _eGM.CellUnitEnt_ActivatedForPlayersCom(x, y).SetActivated(Instance.IsMasterClient, isActiveUnit);
+                                SetIsActivated(Instance.IsMasterClient, isActiveUnit, xy);
                             }
                             else
                             {
@@ -547,20 +554,20 @@ namespace Assets.Scripts
                             bool haveHill = (bool)objects[_currentNumber++];
                             bool haveMountain = (bool)objects[_currentNumber++];
 
-                            if (haveFertilizer) _eGM.CellEnvEnt_CellEnvCom(x, y).SetEnvironment(EnvironmentTypes.Fertilizer, amountResourcesFertilizer);
-                            else _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.Fertilizer);
+                            if (haveFertilizer) SetEnvironment(EnvironmentTypes.Fertilizer, amountResourcesFertilizer, xy);
+                            else ResetEnvironment(EnvironmentTypes.Fertilizer, xy);
 
-                            if (haveAdultForest) _eGM.CellEnvEnt_CellEnvCom(x, y).SetEnvironment(EnvironmentTypes.AdultForest, amountResourcesForest);
-                            else _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
+                            if (haveAdultForest) SetEnvironment(EnvironmentTypes.AdultForest, amountResourcesForest, xy);
+                            else ResetEnvironment(EnvironmentTypes.AdultForest, xy);
 
-                            if (haveYoungTree) _eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.YoungForest);
-                            else _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.YoungForest);
+                            if (haveYoungTree) SetNewEnvironment(EnvironmentTypes.YoungForest, xy);
+                            else ResetEnvironment(EnvironmentTypes.YoungForest, xy);
 
-                            if (haveHill) _eGM.CellEnvEnt_CellEnvCom(x, y).SetEnvironment(EnvironmentTypes.Hill, oreResources);
-                            else _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.Hill);
+                            if (haveHill) SetEnvironment(EnvironmentTypes.Hill, oreResources, xy);
+                            else ResetEnvironment(EnvironmentTypes.Hill, xy);
 
-                            if (haveMountain) _eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Mountain);
-                            else _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.Mountain);
+                            if (haveMountain) SetNewEnvironment(EnvironmentTypes.Mountain, xy);
+                            else ResetEnvironment(EnvironmentTypes.Mountain, xy);
 
 
 
@@ -595,7 +602,7 @@ namespace Assets.Scripts
 
                             bool haveFire = (bool)objects[_currentNumber++];
 
-                            _eGM.CellEffectEnt_CellEffectCom(x, y).SyncEffect(haveFire, EffectTypes.Fire);
+                            CellEffectsWorker.SyncEffect(haveFire, EffectTypes.Fire, xy);
                         }
                     break;
 

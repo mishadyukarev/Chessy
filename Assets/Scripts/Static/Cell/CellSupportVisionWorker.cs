@@ -9,9 +9,9 @@ namespace Assets.Scripts.Static.Cell
     {
         private static EntitiesGameGeneralManager EGGM => Instance.EntGGM;
 
-        internal static void EnableSupVis(SupportVisionTypes supportVisionType, params int[] xy)
+        internal static void EnableSupVis(SupportVisionTypes supportVisionType, int[] xy)
         {
-            EGGM.CellSupVisEnt_SpriteRenderer(xy).ActivateSR(true);
+            EGGM.CellSupVisEnt_SpriteRenderer(xy).Enabled = true;
 
             switch (supportVisionType)
             {
@@ -19,27 +19,27 @@ namespace Assets.Scripts.Static.Cell
                     throw new Exception();
 
                 case SupportVisionTypes.Selector:
-                    EGGM.CellSupVisEnt_SpriteRenderer(xy).SetColorSR(Selector_Color);
+                    EGGM.CellSupVisEnt_SpriteRenderer(xy).Color = Selector_Color;
                     break;
 
                 case SupportVisionTypes.Spawn:
-                    EGGM.CellSupVisEnt_SpriteRenderer(xy).SetColorSR(UniqueAttack_Color);
+                    EGGM.CellSupVisEnt_SpriteRenderer(xy).Color = UniqueAttack_Color;
                     break;
 
                 case SupportVisionTypes.Shift:
-                    EGGM.CellSupVisEnt_SpriteRenderer(xy).SetColorSR(UniqueAttack_Color);
+                    EGGM.CellSupVisEnt_SpriteRenderer(xy).Color = UniqueAttack_Color;
                     break;
 
                 case SupportVisionTypes.SimpleAttack:
-                    EGGM.CellSupVisEnt_SpriteRenderer(xy).SetColorSR(UniqueAttack_Color);
+                    EGGM.CellSupVisEnt_SpriteRenderer(xy).Color = UniqueAttack_Color;
                     break;
 
                 case SupportVisionTypes.UniqueAttack:
-                    EGGM.CellSupVisEnt_SpriteRenderer(xy).SetColorSR(UniqueAttack_Color);
+                    EGGM.CellSupVisEnt_SpriteRenderer(xy).Color = UniqueAttack_Color;
                     break;
 
                 case SupportVisionTypes.Upgrade:
-                    EGGM.CellSupVisEnt_SpriteRenderer(xy).SetColorSR(UniqueAttack_Color);
+                    EGGM.CellSupVisEnt_SpriteRenderer(xy).Color = UniqueAttack_Color;
                     break;
 
                 default:
@@ -47,6 +47,6 @@ namespace Assets.Scripts.Static.Cell
             }
         }
 
-        internal static void DisableSupVis(params int[] xy) => EGGM.CellSupVisEnt_SpriteRenderer(xy).ActivateSR(false);
+        internal static void DisableSupVis(int[] xy) => EGGM.CellSupVisEnt_SpriteRenderer(xy).Enabled = false;
     }
 }

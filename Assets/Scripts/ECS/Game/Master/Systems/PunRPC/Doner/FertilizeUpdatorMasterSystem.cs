@@ -3,6 +3,8 @@ using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.Static;
 using UnityEngine;
 using static Assets.Scripts.Main;
+using static Assets.Scripts.CellEnvironmentWorker;
+using static Assets.Scripts.CellWorker;
 
 internal sealed class FertilizeUpdatorMasterSystem : SystemGeneralReduction
 {
@@ -29,13 +31,15 @@ internal sealed class FertilizeUpdatorMasterSystem : SystemGeneralReduction
             {
                 for (int y = 0; y < _eGM.Yamount; y++)
                 {
-                    if (_eGM.CellEnt_CellBaseCom(x, y).IsActiveSelfGO)
+                    var xy = new int[] { x, y };
+
+                    if (IsActiveSelfGO(xy))
                     {
-                        if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Fertilizer))
+                        if (HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
                         {
                             if (_standartRandom <= 80)
                             {
-                                _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.Fertilizer);
+                                ResetEnvironment(EnvironmentTypes.Fertilizer, xy);
 
                                 if (_eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType == BuildingTypes.Farm)
                                 {

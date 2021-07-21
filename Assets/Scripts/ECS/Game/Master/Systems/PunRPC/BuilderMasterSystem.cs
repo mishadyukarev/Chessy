@@ -2,6 +2,7 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Static;
 using Photon.Pun;
+using static Assets.Scripts.CellEnvironmentWorker;
 
 internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 {
@@ -41,8 +42,8 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                         _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[InfoFrom.Sender.IsMasterClient] = true;
                         _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[InfoFrom.Sender.IsMasterClient] = XyCell;
 
-                        if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest)) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.AdultForest);
-                        if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Fertilizer)) _eGM.CellEnvEnt_CellEnvCom(XyCell).ResetEnvironment(EnvironmentTypes.Fertilizer);
+                        if (HaveEnvironment(EnvironmentTypes.AdultForest, XyCell)) ResetEnvironment(EnvironmentTypes.AdultForest, XyCell);
+                        if (HaveEnvironment(EnvironmentTypes.Fertilizer, XyCell)) ResetEnvironment(EnvironmentTypes.Fertilizer, XyCell);
                     }
                     else
                     {
@@ -51,15 +52,15 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     break;
 
                 case BuildingTypes.Farm:
-                    canSet = !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest) && !_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.YoungForest);
+                    canSet = !HaveEnvironment(EnvironmentTypes.AdultForest, XyCell) && !HaveEnvironment(EnvironmentTypes.YoungForest, XyCell);
                     break;
 
                 case BuildingTypes.Woodcutter:
-                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.AdultForest) && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveResources(ResourceTypes.Wood);
+                    canSet = HaveEnvironment(EnvironmentTypes.AdultForest, XyCell) && HaveResources(ResourceTypes.Wood, XyCell);
                     break;
 
                 case BuildingTypes.Mine:
-                    canSet = _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Hill) && _eGM.CellEnvEnt_CellEnvCom(XyCell).HaveResources(ResourceTypes.Ore);
+                    canSet = HaveEnvironment(EnvironmentTypes.Hill, XyCell) && HaveResources(ResourceTypes.Ore, XyCell);
                     break;
 
                 default:
@@ -98,13 +99,13 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                         {
                             _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
 
-                            if (_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Fertilizer))
+                            if (HaveEnvironment(EnvironmentTypes.Fertilizer, XyCell))
                             {
-                                _eGM.CellEnvEnt_CellEnvCom(XyCell).AddAmountResources(ResourceTypes.Food, _eGM.CellEnvEnt_CellEnvCom(XyCell).MaxAmountResources(EnvironmentTypes.Fertilizer));
+                                AddAmountResources(ResourceTypes.Food, XyCell, MaxAmountResources(EnvironmentTypes.Fertilizer));
                             }
                             else
                             {
-                                _eGM.CellEnvEnt_CellEnvCom(XyCell).SetNewEnvironment(EnvironmentTypes.Fertilizer);
+                                SetNewEnvironment(EnvironmentTypes.Fertilizer, XyCell);
                             }
 
                             EconomyManager.CreateBuilding(BuildingType, InfoFrom.Sender);

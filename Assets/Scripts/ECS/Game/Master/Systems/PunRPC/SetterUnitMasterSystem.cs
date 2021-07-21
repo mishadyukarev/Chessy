@@ -15,7 +15,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
         bool isSetted = false;
 
-        if (!_eGM.CellEnvEnt_CellEnvCom(XyCell).HaveEnvironment(EnvironmentTypes.Mountain) && !_eGM.CellUnitEnt_UnitTypeCom(XyCell).HaveAnyUnit)
+        if (!CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Mountain, XyCell) && !_eGM.CellUnitEnt_UnitTypeCom(XyCell).HaveAnyUnit)
         {
             switch (UnitType)
             {

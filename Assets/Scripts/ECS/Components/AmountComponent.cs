@@ -1,12 +1,12 @@
 ﻿internal struct AmountComponent
 {
-    private int _amount;
+    internal int Amount { get; set; }
 
-    internal int Amount => _amount;
+    internal bool HaveAmount => Amount > 0;
 
-    internal void StartFill(int amount = default) => _amount = amount;
+    internal void StartFill(int amount = default) => Amount = amount;
 
-    internal void SetAmount(int amount) => _amount = amount;
-    internal void AddAmount(int adding = 1) => _amount += adding;
-    internal void TakeAmount(int taking = 1) => _amount -= taking;
+    internal void AddAmount(int adding = 1) => Amount += adding;
+    internal void TakeAmount(int taking = 1) => Amount -= taking;
+    internal void ResetAmount() => Amount = default;
 }

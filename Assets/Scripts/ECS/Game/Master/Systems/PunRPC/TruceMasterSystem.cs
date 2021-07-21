@@ -1,6 +1,9 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Static.Cell;
 using Photon.Pun;
 using UnityEngine;
+using static Assets.Scripts.CellEnvironmentWorker;
+using static Assets.Scripts.CellUnitWorker;
 
 internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 {
@@ -17,118 +20,89 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
         for (int x = 0; x < _eGM.Xamount; x++)
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                _eGM.CellEffectEnt_CellEffectCom(x, y).ResetEffect(EffectTypes.Fire);
+                var xy = new int[] { x, y };
 
+                CellEffectsWorker.ResetEffect(EffectTypes.Fire, xy);
 
-                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
+                if (HaveAnyUnit(xy))
                 {
-                    if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                    if (HaveOwner(xy))
                     {
-                        switch (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType)
+                        switch (UnitType(xy))
                         {
                             case UnitTypes.None:
                                 break;
 
                             case UnitTypes.King:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.King, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
-                                _eGM.UnitInfoEnt_UnitInventorCom.SetSettedKing(_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, false);
+                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.King, IsMasterClient(xy));
+                                _eGM.UnitInfoEnt_UnitInventorCom.SetSettedKing(IsMasterClient(xy), false);
                                 break;
 
                             case UnitTypes.Pawn:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.Pawn, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.Pawn, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.PawnSword:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.PawnSword, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.PawnSword, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.Rook:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.Rook, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.Rook, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.RookCrossbow:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.RookCrossbow, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.RookCrossbow, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.Bishop:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.Bishop, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.Bishop, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.BishopCrossbow:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.BishopCrossbow, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.BishopCrossbow, IsMasterClient(xy));
                                 break;
 
                             default:
                                 break;
                         }
 
-                        if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                        if (HaveOwner(xy))
                         {
-                            CellUnitWorker.ResetPlayerUnit(x, y);
+                            ResetPlayerUnit(xy);
                         }
                         else
                         {
-                            CellUnitWorker.ResetBotUnit(x, y);
+                            ResetBotUnit(x, y);
                         }
                     }
                 }
 
-                //if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
-                //{
-                //    if (_eGM.CellBuildEnt_OwnerCom(x, y).HaveOwner)
-                //    {
-                //        switch (_eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType)
-                //        {
-                //            case BuildingTypes.None:
-                //                break;
-
-                //            case BuildingTypes.City:
-                //                //CellBuildingWorker.ResetBuilding(true, x, y);
-                //                break;
-
-                //            case BuildingTypes.Farm:
-                //                CellBuildingWorker.ResetBuilding(true, x, y);
-                //                break;
-
-                //            case BuildingTypes.Woodcutter:
-                //                CellBuildingWorker.ResetBuilding(true, x, y);
-                //                break;
-
-                //            case BuildingTypes.Mine:
-                //                CellBuildingWorker.ResetBuilding(true, x, y);
-                //                break;
-
-                //            default:
-                //                break;
-                //        }
-                //    }
-                //}
-                if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.YoungForest))
+                if (HaveEnvironment(EnvironmentTypes.YoungForest, xy))
                 {
-                    _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.YoungForest);
-                    _eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.AdultForest);
+                    ResetEnvironment(EnvironmentTypes.YoungForest, xy);
+                    SetNewEnvironment(EnvironmentTypes.AdultForest, xy);
                 }
 
-                if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Fertilizer)
-                    && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Mountain) && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest)
+                if (!HaveEnvironment(EnvironmentTypes.Fertilizer, xy)
+                    && !HaveEnvironment(EnvironmentTypes.Mountain, xy) && !HaveEnvironment(EnvironmentTypes.AdultForest, xy)
                          && _eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType != BuildingTypes.City)
                 {
                     random = Random.Range(0, 100);
 
                     if (random <= 20)
                     {
-                        _eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.Fertilizer);
+                        SetNewEnvironment(EnvironmentTypes.Fertilizer, xy);
                     }
                 }
 
-                if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Fertilizer) && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.Mountain)
-                     && !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest) && _eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType != BuildingTypes.City)
+                if (!HaveEnvironment(EnvironmentTypes.Fertilizer, xy) && !HaveEnvironment(EnvironmentTypes.Mountain, xy)
+                     && !HaveEnvironment(EnvironmentTypes.AdultForest, xy) && _eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType != BuildingTypes.City)
                 {
                     random = Random.Range(0, 100);
 
                     if (random <= 5)
                     {
-                        _eGM.CellEnvEnt_CellEnvCom(x, y).SetNewEnvironment(EnvironmentTypes.AdultForest);
+                        SetNewEnvironment(EnvironmentTypes.AdultForest, xy);
                     }
                 }
             }

@@ -250,7 +250,7 @@ internal sealed class SelectorSystem : RPCGeneralSystemReduction
 
                 ClearAvailableCells();
 
-                _eGM.CellUnitEnt_SpriteRendererCom(XyPreviousVisionCell).ActivateSR(false); //SwitchSR(false, _eGM.SelectorEnt_UnitTypeCom.UnitType);
+                _eGM.CellUnitEnt_SpriteRendererCom(XyPreviousVisionCell).Enabled = false;
                 _eGM.SelectorEnt_UnitTypeCom.ResetUnit();
 
                 XyPreviousCell.Clean();

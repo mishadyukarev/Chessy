@@ -44,27 +44,33 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Places
-    uniqueID: 1022102661
-    locked: 0
-  - name: Cells
-    uniqueID: 3505101863
+  - name: Cell
+    uniqueID: 3112104483
     locked: 0
   - name: Environment
     uniqueID: 156443979
     locked: 0
-  - name: Buildings
-    uniqueID: 2015217643
+  - name: Building
+    uniqueID: 801937539
     locked: 0
-  - name: Effects
+  - name: Fire
     uniqueID: 2994770637
     locked: 0
   - name: SupportVision
-    uniqueID: 3935270689
+    uniqueID: 3301346089
     locked: 0
   - name: SupportStatic
-    uniqueID: 1021817141
+    uniqueID: 4170661099
     locked: 0
-  - name: Cell
-    uniqueID: 3112104483
+  - name: Unit
+    uniqueID: 1121464767
+    locked: 0
+  - name: MaxSteps
+    uniqueID: 517785969
+    locked: 0
+  - name: ProtectRelax
+    uniqueID: 878055947
+    locked: 0
+  - name: Hp
+    uniqueID: 495466449
     locked: 0

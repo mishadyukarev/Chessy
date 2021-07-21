@@ -67,7 +67,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
             _eGM.CellUnitEnt_CellUnitCom(ToXy).TakeAmountHealth(damageToSelelected);
 
 
-            if (!_eGM.CellUnitEnt_CellUnitCom(FromXy).HaveHealth)
+            if (!_eGM.CellUnitEnt_CellUnitCom(FromXy).HaveAmountHealth)
             {
                 if (_eGM.CellUnitEnt_UnitTypeCom(FromXy).UnitType == UnitTypes.King)
                 {
@@ -93,7 +93,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
                 }
             }
 
-            if (!_eGM.CellUnitEnt_CellUnitCom(ToXy).HaveHealth)
+            if (!_eGM.CellUnitEnt_CellUnitCom(ToXy).HaveAmountHealth)
             {
                 if (_eGM.CellUnitEnt_UnitTypeCom(ToXy).UnitType == UnitTypes.King)
                     _photonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(FromXy).ActorNumber);

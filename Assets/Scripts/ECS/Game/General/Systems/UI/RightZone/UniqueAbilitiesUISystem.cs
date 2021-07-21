@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Static.Cell;
 using static Assets.Scripts.Main;
 
 internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
@@ -77,7 +78,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                 _eGM.Unique1AbilityEnt_ButtonCom.RemoveAllListeners();
                 _eGM.Unique1AbilityEnt_ButtonCom.AddListener(delegate { Fire(XySelectedCell, XySelectedCell); });
 
-                if (_eGM.CellEffectEnt_CellEffectCom(XySelectedCell).HaveEffect(EffectTypes.Fire))
+                if (CellEffectsWorker.HaveEffect(EffectTypes.Fire, XySelectedCell))
                 {
                     _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.SetText("Put Out FIRE");
                 }

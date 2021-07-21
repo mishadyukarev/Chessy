@@ -17,7 +17,7 @@ internal sealed class EconomyUISystem : SystemGeneralReduction
             - UnitInfoManager.AmountUnitsInGame(UnitTypes.Bishop, Instance.IsMasterClient)
             - UnitInfoManager.AmountUnitsInGame(UnitTypes.BishopCrossbow, Instance.IsMasterClient);
 
-        _eGM.FoodAddingEnt_AmountCom.SetAmount(amountAddingFood);
+        _eGM.FoodAddingEnt_AmountCom.Amount = amountAddingFood;
 
         if (amountAddingFood < 0)
             _eGM.FoodAddingEnt_TextMeshProUGUICom.SetText(amountAddingFood.ToString());

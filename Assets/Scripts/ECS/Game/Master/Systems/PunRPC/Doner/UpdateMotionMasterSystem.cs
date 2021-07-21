@@ -2,9 +2,12 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.Static;
+using Assets.Scripts.Static.Cell;
 using Photon.Pun;
 using System.Collections.Generic;
 using static Assets.Scripts.Main;
+using static Assets.Scripts.CellEnvironmentWorker;
+using static Assets.Scripts.CellUnitWorker;
 
 internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
 {
@@ -40,13 +43,15 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
         {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
-                {
-                    var unitType = _eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType;
+                var xy = new int[] { x, y };
 
-                    if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                if (HaveAnyUnit(xy))
+                {
+                    var unitType = UnitType(xy);
+
+                    if (HaveOwner(xy))
                     {
-                        switch (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType)
+                        switch (UnitType(xy))
                         {
                             case UnitTypes.None:
                                 break;
@@ -55,27 +60,27 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                                 break;
 
                             case UnitTypes.Pawn:
-                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.PawnSword:
-                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.Rook:
-                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.RookCrossbow:
-                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.Bishop:
-                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.BishopCrossbow:
-                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient);
+                                _eGM.EconomyEnt_EconomyCom.TakeAmountResources(ResourceTypes.Food, IsMasterClient(xy));
                                 break;
 
                             default:
@@ -83,55 +88,55 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                         }
                     }
 
-                    if (_eGM.CellUnitEnt_ProtectRelaxCom(x, y).IsType(ProtectRelaxTypes.Relaxed))
+                    if (IsTypeProtectRelax(ProtectRelaxTypes.Relaxed, xy))
                     {
-                        if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth == CellUnitWorker.MaxAmountHealth(unitType))
+                        if (AmountHealth(xy) == CellUnitWorker.MaxAmountHealth(unitType))
                         {
-                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                            if (HaveOwner(xy))
                             {
                                 if (unitType == UnitTypes.Pawn || unitType == UnitTypes.PawnSword)
                                 {
-                                    if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest))
+                                    if (HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                                     {
-                                        _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient, 1);
-                                        _eGM.CellEnvEnt_CellEnvCom(x, y).TakeAmountResources(ResourceTypes.Wood);
+                                        _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, IsMasterClient(xy), 1);
+                                        TakeAmountResources(ResourceTypes.Wood, xy);
 
-                                        if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveResources(ResourceTypes.Wood))
+                                        if (!HaveResources(ResourceTypes.Wood, xy))
                                         {
-                                            _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
+                                            ResetEnvironment(EnvironmentTypes.AdultForest, xy);
                                         }
 
                                         if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
                                         {
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).ResetAmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed);
+                                            ResetAmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed, xy);
                                         }
                                         else
                                         {
-                                            _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed);
+                                            AddAmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed, xy);
 
-                                            if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveResources(ResourceTypes.Wood))
+                                            if (HaveResources(ResourceTypes.Wood, xy))
                                             {
-                                                if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed) >= 1)
+                                                if (AmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed, xy) >= 1)
                                                 {
-                                                    CellBuildingWorker.SetPlayerBuilding(true, BuildingTypes.Woodcutter, _eGM.CellUnitEnt_CellOwnerCom(x, y).Owner, x, y);
+                                                    CellBuildingWorker.SetPlayerBuilding(true, BuildingTypes.Woodcutter, Owner(xy), x, y);
                                                 }
                                             }
                                             else
                                             {
-                                                _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
+                                                ResetEnvironment(EnvironmentTypes.AdultForest, xy);
                                             }
                                         }
                                     }
 
                                     else
                                     {
-                                        _eGM.CellUnitEnt_ProtectRelaxCom(x, y).ProtectRelaxType = ProtectRelaxTypes.Protected;
+                                        SetProtectRelaxType(ProtectRelaxTypes.Protected, xy);
                                     }
                                 }
 
                                 else
                                 {
-                                    _eGM.CellUnitEnt_ProtectRelaxCom(x, y).ProtectRelaxType = ProtectRelaxTypes.Protected;
+                                    SetProtectRelaxType(ProtectRelaxTypes.Protected, xy);
                                 }
                             }
 
@@ -141,45 +146,45 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                             switch (unitType)
                             {
                                 case UnitTypes.King:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_KING);
-                                    if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > UnitValues.STANDART_AMOUNT_HEALTH_KING)
-                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(UnitValues.STANDART_AMOUNT_HEALTH_KING);
+                                    AddAmountHealth(xy, UnitValues.HEALTH_FOR_ADDING_KING);
+                                    if (AmountHealth(xy) > UnitValues.STANDART_AMOUNT_HEALTH_KING)
+                                        SetAmountHealth(UnitValues.STANDART_AMOUNT_HEALTH_KING, xy);
                                     break;
 
                                 case UnitTypes.Pawn:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_PAWN);
-                                    if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > CellUnitWorker.MaxAmountHealth(unitType))
-                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(CellUnitWorker.MaxAmountHealth(unitType));
+                                    AddAmountHealth(xy, UnitValues.HEALTH_FOR_ADDING_PAWN);
+                                    if (AmountHealth(xy) > MaxAmountHealth(unitType))
+                                        SetAmountHealth(MaxAmountHealth(unitType), xy);
                                     break;
 
                                 case UnitTypes.PawnSword:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_PAWN_SWORD);
-                                    if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > CellUnitWorker.MaxAmountHealth(unitType))
-                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(CellUnitWorker.MaxAmountHealth(unitType));
+                                    AddAmountHealth(xy, UnitValues.HEALTH_FOR_ADDING_PAWN_SWORD);
+                                    if (AmountHealth(xy) > MaxAmountHealth(unitType))
+                                        SetAmountHealth(MaxAmountHealth(unitType), xy);
                                     break;
 
                                 case UnitTypes.Rook:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_ROOK);
-                                    if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > CellUnitWorker.MaxAmountHealth(unitType))
-                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(CellUnitWorker.MaxAmountHealth(unitType));
+                                    AddAmountHealth(xy, UnitValues.HEALTH_FOR_ADDING_ROOK);
+                                    if (AmountHealth(xy) > MaxAmountHealth(unitType))
+                                        SetAmountHealth(MaxAmountHealth(unitType), xy);
                                     break;
 
                                 case UnitTypes.RookCrossbow:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_ROOK_CROSSBOW);
-                                    if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > CellUnitWorker.MaxAmountHealth(unitType))
-                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(CellUnitWorker.MaxAmountHealth(unitType));
+                                    AddAmountHealth(xy, UnitValues.HEALTH_FOR_ADDING_ROOK_CROSSBOW);
+                                    if (AmountHealth(xy) > MaxAmountHealth(unitType))
+                                        SetAmountHealth(MaxAmountHealth(unitType), xy);
                                     break;
 
                                 case UnitTypes.Bishop:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_BISHOP);
-                                    if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > CellUnitWorker.MaxAmountHealth(unitType))
-                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(CellUnitWorker.MaxAmountHealth(unitType));
+                                    AddAmountHealth(xy, UnitValues.HEALTH_FOR_ADDING_BISHOP);
+                                    if (AmountHealth(xy) > MaxAmountHealth(unitType))
+                                        SetAmountHealth(MaxAmountHealth(unitType), xy);
                                     break;
 
                                 case UnitTypes.BishopCrossbow:
-                                    _eGM.CellUnitEnt_CellUnitCom(x, y).AddAmountHealth(UnitValues.HEALTH_FOR_ADDING_BISHOP_CROSSBOW);
-                                    if (_eGM.CellUnitEnt_CellUnitCom(x, y).AmountHealth > CellUnitWorker.MaxAmountHealth(unitType))
-                                        _eGM.CellUnitEnt_CellUnitCom(x, y).SetAmountHealth(CellUnitWorker.MaxAmountHealth(unitType));
+                                    AddAmountHealth(xy, UnitValues.HEALTH_FOR_ADDING_BISHOP_CROSSBOW);
+                                    if (AmountHealth(xy) > MaxAmountHealth(unitType))
+                                        SetAmountHealth(MaxAmountHealth(unitType), xy);
                                     break;
 
                                 default:
@@ -190,15 +195,15 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
 
                     else
                     {
-                        _eGM.CellUnitEnt_CellUnitCom(x, y).ResetAmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed);
+                        ResetAmountStepsInProtectRelax(ProtectRelaxTypes.Relaxed, xy);
 
-                        if (_eGM.CellUnitEnt_CellUnitCom(x, y).HaveMaxSteps(unitType))
+                        if (HaveMaxAmountSteps(unitType, xy))
                         {
-                            _eGM.CellUnitEnt_ProtectRelaxCom(x, y).ProtectRelaxType = ProtectRelaxTypes.Protected;
+                            SetProtectRelaxType(ProtectRelaxTypes.Protected, xy);
                         }
                     }
 
-                    _eGM.CellUnitEnt_CellUnitCom(x, y).RefreshAmountSteps(unitType);
+                    RefreshAmountSteps(unitType, xy);
                 }
 
 
@@ -217,12 +222,12 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                         case BuildingTypes.Farm:
                             minus = EconomyValues.BENEFIT_FOOD_FARM * _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Farm, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient);
 
-                            _eGM.CellEnvEnt_CellEnvCom(x, y).TakeAmountResources(ResourceTypes.Food, minus);
+                            TakeAmountResources(ResourceTypes.Food, xy, minus);
                             _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, minus);
 
-                            if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveResources(ResourceTypes.Food))
+                            if (!HaveResources(ResourceTypes.Food, xy))
                             {
-                                _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.Fertilizer);
+                                ResetEnvironment(EnvironmentTypes.Fertilizer, xy);
                                 CellBuildingWorker.ResetBuilding(true, x, y);
                             }
                             break;
@@ -230,16 +235,16 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                         case BuildingTypes.Woodcutter:
                             minus = EconomyValues.BENEFIT_WOOD_WOODCUTTER * _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient);
 
-                            _eGM.CellEnvEnt_CellEnvCom(x, y).TakeAmountResources(ResourceTypes.Wood, minus);
+                            TakeAmountResources(ResourceTypes.Wood, xy, minus);
                             _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, minus);
 
-                            if (!_eGM.CellEnvEnt_CellEnvCom(x, y).HaveResources(ResourceTypes.Wood))
+                            if (!HaveResources(ResourceTypes.Wood, xy))
                             {
-                                _eGM.CellEnvEnt_CellEnvCom(x, y).ResetEnvironment(EnvironmentTypes.AdultForest);
+                                ResetEnvironment(EnvironmentTypes.AdultForest, xy);
                                 CellBuildingWorker.ResetBuilding(true, x, y);
 
-                                if (_eGM.CellEffectEnt_CellEffectCom(x, y).HaveEffect(EffectTypes.Fire))
-                                    _eGM.CellEffectEnt_CellEffectCom(x, y).ResetEffect(EffectTypes.Fire);
+                                if (CellEffectsWorker.HaveEffect(EffectTypes.Fire, xy))
+                                    CellEffectsWorker.ResetEffect(EffectTypes.Fire, xy);
 
                             }
                             break;
@@ -247,10 +252,10 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                         case BuildingTypes.Mine:
                             minus = EconomyValues.BENEFIT_ORE_MINE * _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Mine, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient);
 
-                            _eGM.CellEnvEnt_CellEnvCom(x, y).TakeAmountResources(ResourceTypes.Ore, minus);
+                            TakeAmountResources(ResourceTypes.Ore, xy, minus);
                             _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Ore, _eGM.CellBuildEnt_OwnerCom(x, y).IsMasterClient, minus);
 
-                            if (_eGM.CellBuildEnt_CellBuilCom(x, y).TimeStepsBuilding(BuildingTypes.Mine) >= 10 || !_eGM.CellEnvEnt_CellEnvCom(x, y).HaveResources(ResourceTypes.Ore))
+                            if (_eGM.CellBuildEnt_CellBuilCom(x, y).TimeStepsBuilding(BuildingTypes.Mine) >= 10 || !HaveResources(ResourceTypes.Ore, xy))
                             {
                                 CellBuildingWorker.ResetBuilding(true, x, y);
                                 _eGM.CellBuildEnt_CellBuilCom(x, y).SetTimeStepsBuilding(BuildingTypes.Mine, 0);
@@ -311,8 +316,10 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
         for (int x = 0; x < _eGM.Xamount; x++)
             for (int y = 0; y < _eGM.Yamount; y++)
             {
-                if (_eGM.CellEnvEnt_CellEnvCom(x, y).HaveEnvironment(EnvironmentTypes.AdultForest)
-                    && _eGM.CellEnt_CellBaseCom(x, y).IsActiveSelfGO)
+                var xy = new int[] { x, y };
+
+                if (HaveEnvironment(EnvironmentTypes.AdultForest, xy)
+                    && CellWorker.IsActiveSelfGO(xy))
                 {
                     ++amountAdultForest;
                 }
@@ -344,15 +351,17 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                 {
                     for (int y = 0; y < _eGM.Yamount; y++)
                     {
-                        if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
+                        var xy = new int[] { x, y };
+
+                        if (HaveAnyUnit(xy))
                         {
-                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                            if (HaveOwner(xy))
                             {
-                                if (_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient)
+                                if (IsMasterClient(xy))
                                 {
-                                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType != UnitTypes.King)
+                                    if (!IsUnitType(UnitTypes.King, xy))
                                     {
-                                        CellUnitWorker.ResetPlayerUnit(x, y);
+                                        CellUnitWorker.ResetPlayerUnit(xy);
                                         isResetedUnit = true;
                                         _amountMotionsWithoutFood[true] = 0;
                                         _countForResetUnitMaster = 1;
@@ -374,15 +383,17 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                 {
                     for (int y = 0; y < _eGM.Yamount; y++)
                     {
-                        if (_eGM.CellUnitEnt_UnitTypeCom(x, y).HaveAnyUnit)
+                        var xy = new int[] { x, y };
+
+                        if (HaveAnyUnit(xy))
                         {
-                            if (_eGM.CellUnitEnt_CellOwnerCom(x, y).HaveOwner)
+                            if (HaveOwner(xy))
                             {
-                                if (!_eGM.CellUnitEnt_CellOwnerCom(x, y).IsMasterClient)
+                                if (!IsMasterClient(xy))
                                 {
-                                    if (_eGM.CellUnitEnt_UnitTypeCom(x, y).UnitType != UnitTypes.King)
+                                    if (!IsUnitType(UnitTypes.King, xy))
                                     {
-                                        CellUnitWorker.ResetPlayerUnit(x, y);
+                                        CellUnitWorker.ResetPlayerUnit(xy);
 
                                         isResetedUnit = true;
                                         _amountMotionsWithoutFood[false] = 0;

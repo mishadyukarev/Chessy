@@ -27,7 +27,7 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
                 CellUnitWorker.ShiftPlayerUnit(FromXy, ToXy);
 
 
-                _eGM.CellUnitEnt_CellUnitCom(ToXy).TakeAmountSteps(_eGM.CellEnvEnt_CellEnvCom(ToXy).NeedAmountSteps());
+                _eGM.CellUnitEnt_CellUnitCom(ToXy).TakeAmountSteps(CellEnvironmentWorker.NeedAmountSteps(ToXy));
                 if (_eGM.CellUnitEnt_CellUnitCom(ToXy).AmountSteps < 0) _eGM.CellUnitEnt_CellUnitCom(ToXy).ResetAmountSteps();
 
                 _eGM.CellUnitEnt_ProtectRelaxCom(ToXy).Reset();

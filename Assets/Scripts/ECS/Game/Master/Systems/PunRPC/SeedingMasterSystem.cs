@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Photon.Pun;
 using System;
+using static Assets.Scripts.CellEnvironmentWorker;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
@@ -29,14 +30,14 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     {
                         if (!_eGM.CellBuildEnt_BuilTypeCom(XyCellForSeeding).HaveBuilding)
                         {
-                            if (!_eGM.CellEnvEnt_CellEnvCom(XyCellForSeeding).HaveEnvironment(EnvironmentTypes.Fertilizer))
+                            if (!HaveEnvironment(EnvironmentTypes.Fertilizer, XyCellForSeeding))
                             {
-                                if (!_eGM.CellEnvEnt_CellEnvCom(XyCellForSeeding).HaveEnvironment(EnvironmentTypes.AdultForest))
+                                if (!HaveEnvironment(EnvironmentTypes.AdultForest, XyCellForSeeding))
 
-                                    if (!_eGM.CellEnvEnt_CellEnvCom(XyCellForSeeding).HaveEnvironment(EnvironmentTypes.YoungForest))
+                                    if (!HaveEnvironment(EnvironmentTypes.YoungForest, XyCellForSeeding))
                                     {
                                         _photonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Seeding);
-                                        _eGM.CellEnvEnt_CellEnvCom(XyCellForSeeding).SetNewEnvironment(EnvironmentTypes.YoungForest);
+                                        SetNewEnvironment(EnvironmentTypes.YoungForest, XyCellForSeeding);
 
                                         _eGM.CellUnitEnt_CellUnitCom(XyCellForSeeding).TakeAmountSteps();
                                     }

@@ -13,7 +13,7 @@ internal struct CellUnitComponent
     internal int AmountHealth => _amountHealth;
     internal int AmountSteps => _amountSteps;
 
-    internal bool HaveHealth => _amountHealth > 0;
+    internal bool HaveAmountHealth => _amountHealth > 0;
     internal bool HaveMinAmountSteps => _amountSteps >= 1;
 
     internal void StartFill()
