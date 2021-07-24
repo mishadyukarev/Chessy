@@ -10,23 +10,23 @@ internal sealed class UpdatedUISystem : SystemGeneralReduction
 
         base.Run();
 
-        if (_eGM.MotionEnt_ActivatedCom.IsActivated)
+        if (_eGGUIM.MotionEnt_ActivatedCom.IsActivated)
         {
-            _eGM.MotionEnt_TextMeshProUGUICom.SetText("Motion: " + _eGM.MotionEnt_AmountCom.Amount);
-            _eGM.MotionEnt_ParentCom.SetActive(true);
+            _eGGUIM.MotionEnt_TextMeshProUGUICom.SetText("Motion: " + _eGGUIM.MotionEnt_AmountCom.Amount);
+            _eGGUIM.MotionEnt_ParentCom.SetActive(true);
 
             _timer += Time.deltaTime;
 
             if (_timer >= 1)
             {
-                _eGM.MotionEnt_ParentCom.SetActive(false);
-                _eGM.MotionEnt_ActivatedCom.SetActivated(false);
+                _eGGUIM.MotionEnt_ParentCom.SetActive(false);
+                _eGGUIM.MotionEnt_ActivatedCom.IsActivated = false;
                 _timer = 0;
             }
         }
         else
         {
-            _eGM.MotionEnt_ParentCom.SetActive(false);
+            _eGGUIM.MotionEnt_ParentCom.SetActive(false);
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using System.Collections.Generic;
 using static Assets.Scripts.Main;
@@ -25,7 +27,7 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if (_eGM.UnitInfoEnt_UnitInventorCom.IsSettedKing(InfoFrom.Sender.IsMasterClient))
+        if (InfoUnitsWorker.IsSettedKing(InfoFrom.Sender.IsMasterClient))
         {
             PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
@@ -33,9 +35,9 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
             {
                 _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
 
-                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGGUIM.MotionEnt_AmountCom.Amount);
                 PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-                _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
+                _eGGUIM.DonerUIEnt_IsActivatedDictCom.ResetAll();
             }
             else
             {
@@ -45,46 +47,46 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
                         throw new System.Exception();
 
                     case StepModeTypes.ByQueue:
-                        _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, true);
+                        _eGGUIM.DonerUIEnt_IsActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, true);
                         _doneOrNotFromStartAnyUpdate[InfoFrom.Sender.IsMasterClient] = false;
 
                         if (InfoFrom.Sender.IsMasterClient)
                         {
                             if (_doneOrNotFromStartAnyUpdate[false] == true)
                             {
-                                _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(false, false);
+                                _eGGUIM.DonerUIEnt_IsActivatedDictCom.SetActivated(false, false);
                                 //PhotonPunRPC.SetDonerActiveToGeneral(PhotonNetwork.PlayerList[1], false);
                             }
                             else
                             {
                                 _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
 
-                                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+                                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGGUIM.MotionEnt_AmountCom.Amount);
                                 PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-                                _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
+                                _eGGUIM.DonerUIEnt_IsActivatedDictCom.ResetAll();
 
-                                _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
+                                _eGGUIM.DonerUIEnt_IsActivatedDictCom.ResetAll();
 
                                 _doneOrNotFromStartAnyUpdate[true] = true;
-                                _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(true, true);
+                                _eGGUIM.DonerUIEnt_IsActivatedDictCom.SetActivated(true, true);
                             }
                         }
                         else
                         {
                             if (_doneOrNotFromStartAnyUpdate[true] == true)
                             {
-                                _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(true, false);
+                                _eGGUIM.DonerUIEnt_IsActivatedDictCom.SetActivated(true, false);
                             }
                             else
                             {
                                 _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
 
-                                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+                                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGGUIM.MotionEnt_AmountCom.Amount);
                                 PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-                                _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
+                                _eGGUIM.DonerUIEnt_IsActivatedDictCom.ResetAll();
 
                                 _doneOrNotFromStartAnyUpdate[false] = true;
-                                _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(false, true);
+                                _eGGUIM.DonerUIEnt_IsActivatedDictCom.SetActivated(false, true);
                             }
                         }
 
@@ -94,21 +96,21 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 
                     case StepModeTypes.Together:
                         //PhotonPunRPC.SetDonerActiveToGeneral(InfoFrom.Sender, NeedDoneOrNot);
-                        _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, NeedDoneOrNot);
+                        _eGGUIM.DonerUIEnt_IsActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, NeedDoneOrNot);
 
-                        _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, NeedDoneOrNot);
+                        _eGGUIM.DonerUIEnt_IsActivatedDictCom.SetActivated(InfoFrom.Sender.IsMasterClient, NeedDoneOrNot);
 
                         bool needUpdate = PhotonNetwork.OfflineMode
-                            || _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(true)
-                            && _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(false);
+                            || _eGGUIM.DonerUIEnt_IsActivatedDictCom.IsActivated(true)
+                            && _eGGUIM.DonerUIEnt_IsActivatedDictCom.IsActivated(false);
 
                         if (needUpdate)
                         {
                             _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
 
-                            PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+                            PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGGUIM.MotionEnt_AmountCom.Amount);
                             PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-                            _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
+                            _eGGUIM.DonerUIEnt_IsActivatedDictCom.ResetAll();
                         }
                         break;
 

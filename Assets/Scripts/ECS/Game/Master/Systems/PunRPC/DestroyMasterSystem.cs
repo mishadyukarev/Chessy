@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
+using Assets.Scripts.Workers;
 using Photon.Pun;
 using static Assets.Scripts.CellEnvironmentWorker;
 
@@ -19,7 +19,7 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
         //{
         var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCell).UnitType;
 
-        if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
+        if (CellUnitWorker.HaveMaxAmountSteps(XyCell))
         {
             var buildingType = _eGM.CellBuildEnt_BuilTypeCom(XyCell).BuildingType;
 
@@ -27,12 +27,14 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
 
             if (buildingType == BuildingTypes.City)
             {
-                PhotonPunRPC.EndGameToMaster(_eGM.CellUnitEnt_CellOwnerCom(XyCell).ActorNumber);
+                PhotonPunRPC.EndGameToMaster(CellUnitWorker.ActorNumber(XyCell));
             }
-            _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
+            CellUnitWorker.ResetAmountSteps(XyCell);
 
             if (buildingType == BuildingTypes.Farm) ResetEnvironment(EnvironmentTypes.Fertilizer, XyCell);
-            CellBuildingWorker.ResetBuilding(true, XyCell);
+
+            InfoBuidlingsWorker.TakeAmountBuildingsInGame(buildingType, CellUnitWorker.IsMasterClient(XyCell), XyCell);
+            CellBuildingWorker.ResetPlayerBuilding(XyCell);
         }
         else
         {

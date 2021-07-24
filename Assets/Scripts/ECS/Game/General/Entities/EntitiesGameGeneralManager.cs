@@ -1,7 +1,10 @@
-﻿using Assets.Scripts.Abstractions.ValuesConsts;
+﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Components;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Info;
 using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
 using Photon.Pun;
@@ -12,7 +15,7 @@ using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
 using static Assets.Scripts.CellEnvironmentWorker;
 using static Assets.Scripts.Main;
 
-public sealed partial class EntitiesGameGeneralManager
+public sealed class EntitiesGameGeneralManager : EntitiesManager
 {
     internal GameObject BackGroundGO;
     internal SpriteRenderer BackGroundSR;
@@ -75,7 +78,7 @@ public sealed partial class EntitiesGameGeneralManager
     internal ref BuildingTypeComponent CellBuildEnt_BuilTypeCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<BuildingTypeComponent>();
     internal ref CellComponent CellBuildEnt_CellCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<CellComponent>();
     internal ref OwnerComponent CellBuildEnt_OwnerCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerComponent>();
-    internal ref OwnerBotComponent CellBuildEnt_CellOwnerBotCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerBotComponent>();
+    internal ref OwnerBotComponent CellBuildEnt_OwnerBotCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<OwnerBotComponent>();
     internal ref SpriteRendererComponent CellBuildEnt_SpriteRendererCom(params int[] xy) => ref _cellBuildingEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
 
 
@@ -83,7 +86,7 @@ public sealed partial class EntitiesGameGeneralManager
 
     private EcsEntity[,] _cellFertilizerEnts;
     internal ref SpriteRendererComponent CellFertilizerEnt_SprRendCom(int[] xy) => ref _cellFertilizerEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
-    internal ref AmountComponent CellFertilizerEnt_AmountCom(int[] xy) => ref _cellFertilizerEnts[xy[X], xy[Y]].Get<AmountComponent>();
+    internal ref AmountResourcesComponent CellFertilizerEnt_AmountResourcesCom(int[] xy) => ref _cellFertilizerEnts[xy[X], xy[Y]].Get<AmountResourcesComponent>();
     internal ref HaveEnvironmentComponent CellFertilizerEnt_HaveEnvCom(int[] xy) => ref _cellFertilizerEnts[xy[X], xy[Y]].Get<HaveEnvironmentComponent>();
 
 
@@ -94,13 +97,13 @@ public sealed partial class EntitiesGameGeneralManager
 
     private EcsEntity[,] _cellAdultForestEnts;
     internal ref SpriteRendererComponent CellAdultForestEnt_SprRendCom(int[] xy) => ref _cellAdultForestEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
-    internal ref AmountComponent CellAdultForestEnt_AmountCom(int[] xy) => ref _cellAdultForestEnts[xy[X], xy[Y]].Get<AmountComponent>();
+    internal ref AmountResourcesComponent CellAdultForestEnt_AmountResourcesCom(int[] xy) => ref _cellAdultForestEnts[xy[X], xy[Y]].Get<AmountResourcesComponent>();
     internal ref HaveEnvironmentComponent CellAdultForestEnt_HaveEnvCom(int[] xy) => ref _cellAdultForestEnts[xy[X], xy[Y]].Get<HaveEnvironmentComponent>();
 
 
     private EcsEntity[,] _cellHillEnts;
     internal ref SpriteRendererComponent CellHillEnt_SprRendCom(int[] xy) => ref _cellHillEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
-    internal ref AmountComponent CellHillEnt_AmountCom(int[] xy) => ref _cellHillEnts[xy[X], xy[Y]].Get<AmountComponent>();
+    internal ref AmountResourcesComponent CellHillEnt_AmountResourcesCom(int[] xy) => ref _cellHillEnts[xy[X], xy[Y]].Get<AmountResourcesComponent>();
     internal ref HaveEnvironmentComponent CellHillEnt_HaveEnvCom(int[] xy) => ref _cellHillEnts[xy[X], xy[Y]].Get<HaveEnvironmentComponent>();
 
 
@@ -113,7 +116,7 @@ public sealed partial class EntitiesGameGeneralManager
 
     private EcsEntity[,] _cellEnts;
     internal ref CellBaseComponent CellEnt_CellBaseCom(int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellBaseComponent>();
-    internal ref CellComponent CellEnt_CellCom(int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<CellComponent>();
+    internal ref XyCellComponent CellEnt_XyCellCom(int[] xy) => ref _cellEnts[xy[X], xy[Y]].Get<XyCellComponent>();
 
 
     internal int Xamount => _cellEnts.GetUpperBound(X) + 1;
@@ -161,6 +164,106 @@ public sealed partial class EntitiesGameGeneralManager
 
     private EcsEntity _availableCellsUniqueAttackEnt;
     internal ref AvailableCellsComponent AvailableCellsUniqueAttackEnt_AvailCellsCom => ref _availableCellsUniqueAttackEnt.Get<AvailableCellsComponent>();
+
+    #endregion
+
+
+    #region Info
+
+    #region Units
+
+    private EcsEntity _kingInfoEnt;
+    internal ref AmountUnitsInGameComponent KingInfoEnt_AmountUnitsInGameCom => ref _kingInfoEnt.Get<AmountUnitsInGameComponent>();
+    internal ref AmountUnitsInInventorDictComponent KingInfoEnt_AmountUnitsInInventorDictCom => ref _kingInfoEnt.Get<AmountUnitsInInventorDictComponent>();
+    internal ref IsSettedUnitDictComponent KingInfoEnt_IsSettedUnitDictCom => ref _kingInfoEnt.Get<IsSettedUnitDictComponent>();
+    internal ref XySettedBuildingDictComponent KingInfoEnt_XySettedBuildingDictCom => ref _kingInfoEnt.Get<XySettedBuildingDictComponent>();
+    internal ref AmountUnitsInStandartConditionComponent KingInfoEnt_AmountUnitsInRelaxCom => ref _kingInfoEnt.Get<AmountUnitsInStandartConditionComponent>();
+
+
+    private EcsEntity _pawnInfoEnt;
+    internal ref AmountUnitsInGameComponent PawnInfoEnt_AmountUnitsInGameCom => ref _pawnInfoEnt.Get<AmountUnitsInGameComponent>();
+    internal ref AmountUnitsInInventorDictComponent PawnInfoEnt_AmountUnitsInInventorDictCom => ref _pawnInfoEnt.Get<AmountUnitsInInventorDictComponent>();
+    internal ref AmountUnitsInStandartConditionComponent PawnInfoEnt_AmountUnitsInRelaxCom => ref _pawnInfoEnt.Get<AmountUnitsInStandartConditionComponent>();
+
+
+
+    private EcsEntity _pawnSwordInfoEnt;
+    internal ref AmountUnitsInGameComponent PawnSwordInfoEnt_AmountUnitsInGameCom => ref _pawnSwordInfoEnt.Get<AmountUnitsInGameComponent>();
+    internal ref AmountUnitsInInventorDictComponent PawnSwordInfoEnt_AmountUnitsInInventorDictCom => ref _pawnSwordInfoEnt.Get<AmountUnitsInInventorDictComponent>();
+    internal ref AmountUnitsInStandartConditionComponent PawnSwordInfoEnt_AmountUnitsInRelaxCom => ref _pawnSwordInfoEnt.Get<AmountUnitsInStandartConditionComponent>();
+
+
+    private EcsEntity _rookInfoEnt;
+    internal ref AmountUnitsInGameComponent RookInfoEnt_AmountUnitsInGameCom => ref _rookInfoEnt.Get<AmountUnitsInGameComponent>();
+    internal ref AmountUnitsInInventorDictComponent RookInfoEnt_AmountUnitsInInventorDictCom => ref _rookInfoEnt.Get<AmountUnitsInInventorDictComponent>();
+    internal ref AmountUnitsInStandartConditionComponent RookInfoEnt_AmountUnitsInRelaxCom => ref _rookInfoEnt.Get<AmountUnitsInStandartConditionComponent>();
+
+
+    private EcsEntity _rookCrossbowInfoEnt;
+    internal ref AmountUnitsInGameComponent RookCrossbowInfoEnt_AmountUnitsInGameCom => ref _rookCrossbowInfoEnt.Get<AmountUnitsInGameComponent>();
+    internal ref AmountUnitsInInventorDictComponent RookCrossbowInfoEnt_AmountUnitsInInventorDictCom => ref _rookCrossbowInfoEnt.Get<AmountUnitsInInventorDictComponent>();
+    internal ref AmountUnitsInStandartConditionComponent RookCrossbowInfoEnt_AmountUnitsInRelaxCom => ref _rookCrossbowInfoEnt.Get<AmountUnitsInStandartConditionComponent>();
+
+
+    private EcsEntity _bishopInfoInGameEnt;
+    internal ref AmountUnitsInGameComponent BishopInfoEnt_AmountUnitsInGameCom => ref _bishopInfoInGameEnt.Get<AmountUnitsInGameComponent>();
+    internal ref AmountUnitsInInventorDictComponent BishopInfoEnt_AmountUnitsInInventorDictCom => ref _bishopInfoInGameEnt.Get<AmountUnitsInInventorDictComponent>();
+    internal ref AmountUnitsInStandartConditionComponent BishopInfoEnt_AmountUnitsInRelaxCom => ref _bishopInfoInGameEnt.Get<AmountUnitsInStandartConditionComponent>();
+
+
+    private EcsEntity _bishopCrossbowInfoEnt;
+    internal ref AmountUnitsInGameComponent BishopCrossbowInfoEnt_AmountUnitsInGameCom => ref _bishopCrossbowInfoEnt.Get<AmountUnitsInGameComponent>();
+    internal ref AmountUnitsInInventorDictComponent BishopCrossbowInfoEnt_AmountUnitsInInventorDictCom => ref _bishopCrossbowInfoEnt.Get<AmountUnitsInInventorDictComponent>();
+    internal ref AmountUnitsInStandartConditionComponent BishopCrossbowInfoEnt_AmountUnitsInStandartCondition => ref _bishopCrossbowInfoEnt.Get<AmountUnitsInStandartConditionComponent>();
+
+    #endregion
+
+
+    #region Buildings
+
+    private EcsEntity _cityInfoEnt;
+    internal ref BuildingsInGameDictComponent CityInfoEnt_AmountBuildingsInGameCom => ref _cityInfoEnt.Get<BuildingsInGameDictComponent>();
+
+
+    private EcsEntity _farmsInfoEnt;
+    internal ref BuildingsInGameDictComponent FarmsInfoEnt_AmountBuildingsInGameCom => ref _farmsInfoEnt.Get<BuildingsInGameDictComponent>();
+    internal ref AmountUpgradesDictComponent FarmsInfoEnt_AmountUpgradesCom => ref _farmsInfoEnt.Get<AmountUpgradesDictComponent>();
+
+
+    private EcsEntity _woodcuttersInfoEnt;
+    internal ref BuildingsInGameDictComponent WoodcuttersInfoEnt_AmountBuildingsInGameCom => ref _woodcuttersInfoEnt.Get<BuildingsInGameDictComponent>();
+    internal ref AmountUpgradesDictComponent WoodcuttersInfoEnt_AmountUpgradesCom => ref _woodcuttersInfoEnt.Get<AmountUpgradesDictComponent>();
+
+
+    private EcsEntity _minesInfoEnt;
+    internal ref BuildingsInGameDictComponent MinesInfoEnt_AmountBuildingsInGameCom => ref _minesInfoEnt.Get<BuildingsInGameDictComponent>();
+    internal ref AmountUpgradesDictComponent MinesInfoEnt_AmountUpgradesCom => ref _minesInfoEnt.Get<AmountUpgradesDictComponent>();
+
+    #endregion
+
+
+    #region Economy
+
+    private EcsEntity _foodInfoEnt;
+    internal ref AmountResourcesDictComponent FoodInfoEnt_AmountResourcesDictCom => ref _foodInfoEnt.Get<AmountResourcesDictComponent>();
+
+
+    private EcsEntity _woodInfoEnt;
+    internal ref AmountResourcesDictComponent WoodInfoEnt_AmountResourcesDictCom => ref _woodInfoEnt.Get<AmountResourcesDictComponent>();
+
+
+    private EcsEntity _oreInfoEnt;
+    internal ref AmountResourcesDictComponent OreInfoEnt_AmountResourcesDictCom => ref _oreInfoEnt.Get<AmountResourcesDictComponent>();
+
+
+    private EcsEntity _ironInfoEnt;
+    internal ref AmountResourcesDictComponent IronInfoEnt_AmountResourcesDictCom => ref _ironInfoEnt.Get<AmountResourcesDictComponent>();
+
+
+    private EcsEntity _goldInfoEnt;
+    internal ref AmountResourcesDictComponent GoldInfoEnt_AmountResourcesDictCom => ref _goldInfoEnt.Get<AmountResourcesDictComponent>();
+
+    #endregion
 
     #endregion
 
@@ -224,11 +327,6 @@ public sealed partial class EntitiesGameGeneralManager
 
     #region Else
 
-    private EcsEntity _buildingsEnt;
-    internal ref BuildingsComponent BuildingsEnt_BuildingsCom => ref _buildingsEnt.Get<BuildingsComponent>();
-    internal ref UpgradeBuildingsComponent BuildingsEnt_UpgradeBuildingsCom => ref _buildingsEnt.Get<UpgradeBuildingsComponent>();
-
-
     private EcsEntity _inputEnt;
     internal ref InputComponent InputEnt_InputCom => ref _inputEnt.Get<InputComponent>();
 
@@ -239,121 +337,9 @@ public sealed partial class EntitiesGameGeneralManager
     #endregion
 
 
-    #region Info
-
-    #region Units
-
-    private EcsEntity _kingInfoInGameEnt;
-    internal ref AmountDictionaryComponent KingInfoInGameEnt_AmountDictCom => ref _kingInfoInGameEnt.Get<AmountDictionaryComponent>();
-
-
-    private EcsEntity _pawnInfoInGameEnt;
-    internal ref AmountDictionaryComponent PawnInfoInGameEnt_AmountDictCom => ref _pawnInfoInGameEnt.Get<AmountDictionaryComponent>();
-
-
-    private EcsEntity _pawnSwordInfoInGameEnt;
-    internal ref AmountDictionaryComponent PawnSwordInfoInGameEnt_AmountDictCom => ref _pawnSwordInfoInGameEnt.Get<AmountDictionaryComponent>();
-
-
-    private EcsEntity _rookInfoInGameEnt;
-    internal ref AmountDictionaryComponent RookInfoInGameEnt_AmountDictCom => ref _rookInfoInGameEnt.Get<AmountDictionaryComponent>();
-
-
-    private EcsEntity _rookCrossbowInfoInGameEnt;
-    internal ref AmountDictionaryComponent RookCrossbowInfoInGameEnt_AmountDictCom => ref _rookCrossbowInfoInGameEnt.Get<AmountDictionaryComponent>();
-
-
-    private EcsEntity _bishopInfoInGameEnt;
-    internal ref AmountDictionaryComponent BishopInfoInGameEnt_AmountDictCom => ref _bishopInfoInGameEnt.Get<AmountDictionaryComponent>();
-
-
-    private EcsEntity _bishopCrossbowInfoInGameEnt;
-    internal ref AmountDictionaryComponent BishopCrossbowInfoInGameEnt_AmountDictCom => ref _bishopCrossbowInfoInGameEnt.Get<AmountDictionaryComponent>();
-
-    #endregion
-
-
-    #region Buildings
-
-    private EcsEntity _farmsInfoEnt;
-    internal ref AmountUpgradesDictComponent FarmsInfoEnt_AmountUpgradesCom => ref _farmsInfoEnt.Get<AmountUpgradesDictComponent>();
-    internal ref AmountBuildingsInGameDictComponent FarmsInfoEnt_AmountBuildingsInGameCom => ref _farmsInfoEnt.Get<AmountBuildingsInGameDictComponent>();
-
-
-    private EcsEntity _woodcuttersInfoEnt;
-    internal ref AmountUpgradesDictComponent WoodcuttersInfoEnt_AmountUpgradesCom => ref _woodcuttersInfoEnt.Get<AmountUpgradesDictComponent>();
-    internal ref AmountBuildingsInGameDictComponent WoodcuttersInfoEnt_AmountBuildingsInGameCom => ref _woodcuttersInfoEnt.Get<AmountBuildingsInGameDictComponent>();
-
-
-    private EcsEntity _minesInfoEnt;
-    internal ref AmountUpgradesDictComponent MinesInfoEnt_AmountUpgradesCom => ref _minesInfoEnt.Get<AmountUpgradesDictComponent>();
-    internal ref AmountBuildingsInGameDictComponent MinesInfoEnt_AmountBuildingsInGameCom => ref _minesInfoEnt.Get<AmountBuildingsInGameDictComponent>();
-
-    #endregion
-
-    #endregion
-
-
-    #region Inventor
-
-    private EcsEntity _unitInfoEnt;
-    internal ref UnitInventorComponent UnitInfoEnt_UnitInventorCom => ref _unitInfoEnt.Get<UnitInventorComponent>();
-
-    #endregion
-
-
-
-    internal EntitiesGameGeneralManager(EcsWorld gameWorld)
+    internal override void FillEntities(EcsWorld gameWorld)
     {
-        #region Cells
-
-        _cellProtectRelaxEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        _cellMaxStepsEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        _cellUnitEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-
-        _cellHpSupStatEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        _cellFertilizeSupStatEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        _cellForestSupStatEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        _cellOreSupStatEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-
-        _cellSupportVisionEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        _cellFireEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        _cellBuildingEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-
-        _cellFertilizerEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        _cellYoungForestEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        _cellAdultForestEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        _cellHillEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        _cellMountainEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-
-        _cellEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-
-        for (int x = 0; x < CELL_COUNT_X; x++)
-            for (int y = 0; y < CELL_COUNT_Y; y++)
-            {
-                _cellProtectRelaxEnts[x, y] = gameWorld.NewEntity();
-                _cellMaxStepsEnts[x, y] = gameWorld.NewEntity();
-                _cellUnitEnts[x, y] = gameWorld.NewEntity();
-
-                _cellHpSupStatEnts[x, y] = gameWorld.NewEntity();
-                _cellFertilizeSupStatEnts[x, y] = gameWorld.NewEntity();
-                _cellForestSupStatEnts[x, y] = gameWorld.NewEntity();
-                _cellOreSupStatEnts[x, y] = gameWorld.NewEntity();
-
-                _cellSupportVisionEnts[x, y] = gameWorld.NewEntity();
-                _cellFireEnts[x, y] = gameWorld.NewEntity();
-                _cellBuildingEnts[x, y] = gameWorld.NewEntity();
-
-                _cellFertilizerEnts[x, y] = gameWorld.NewEntity();
-                _cellYoungForestEnts[x, y] = gameWorld.NewEntity();
-                _cellAdultForestEnts[x, y] = gameWorld.NewEntity();
-                _cellHillEnts[x, y] = gameWorld.NewEntity();
-                _cellMountainEnts[x, y] = gameWorld.NewEntity();
-
-                _cellEnts[x, y] = gameWorld.NewEntity();
-            }
-
-        #endregion
+        base.FillEntities(gameWorld);
 
 
         #region Selector
@@ -373,6 +359,29 @@ public sealed partial class EntitiesGameGeneralManager
         #endregion
 
 
+        #region Info
+
+        _kingInfoEnt = gameWorld.NewEntity();
+        _pawnInfoEnt = gameWorld.NewEntity();
+        _pawnSwordInfoEnt = gameWorld.NewEntity();
+        _rookInfoEnt = gameWorld.NewEntity();
+        _rookCrossbowInfoEnt = gameWorld.NewEntity();
+        _bishopInfoInGameEnt = gameWorld.NewEntity();
+        _bishopCrossbowInfoEnt = gameWorld.NewEntity();
+
+        _cityInfoEnt = gameWorld.NewEntity();
+        _farmsInfoEnt = gameWorld.NewEntity();
+        _woodcuttersInfoEnt = gameWorld.NewEntity();
+        _minesInfoEnt = gameWorld.NewEntity();
+
+        _foodInfoEnt = gameWorld.NewEntity();
+        _woodInfoEnt = gameWorld.NewEntity();
+        _oreInfoEnt = gameWorld.NewEntity();
+        _ironInfoEnt = gameWorld.NewEntity();
+        _goldInfoEnt = gameWorld.NewEntity();
+
+        #endregion
+
         _attackArcherSoundEnt = gameWorld.NewEntity();
         _pickArcherSoundEnt = gameWorld.NewEntity();
         _pickMeleeSoundEnt = gameWorld.NewEntity();
@@ -387,31 +396,16 @@ public sealed partial class EntitiesGameGeneralManager
         _shiftUnitSoundEnt = gameWorld.NewEntity();
         _truceSoundEnt = gameWorld.NewEntity();
 
-        _economyEnt = gameWorld.NewEntity();
-        _unitInfoEnt = gameWorld.NewEntity();
-        _buildingsEnt = gameWorld.NewEntity();
         _inputEnt = gameWorld.NewEntity();
         _fromInfoEnt = gameWorld.NewEntity();
 
-        _kingInfoInGameEnt = gameWorld.NewEntity();
-        _pawnInfoInGameEnt = gameWorld.NewEntity();
-        _pawnSwordInfoInGameEnt = gameWorld.NewEntity();
-        _rookInfoInGameEnt = gameWorld.NewEntity();
-        _rookCrossbowInfoInGameEnt = gameWorld.NewEntity();
-        _bishopInfoInGameEnt = gameWorld.NewEntity();
-        _bishopCrossbowInfoInGameEnt = gameWorld.NewEntity();
 
 
-        ConstructCanvast(gameWorld);
-    }
 
 
-    internal override void FillEntities()
-    {
-        base.FillEntities();
-
-        SpawnAndFillCells();
+        SpawnAndFillCells(gameWorld);
         FillSelectorEnts();
+        FillInfoEnts();
 
 
         var audioSourceParentGO = new GameObject("AudioSource");
@@ -510,16 +504,6 @@ public sealed partial class EntitiesGameGeneralManager
         BackGroundSR.transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
 
-
-        EconomyEnt_EconomyCom.StartFill();
-        EconomyUIEnt_EconomyUICom.StartFill();
-        EconomyEnt_MistakeEconomyCom.StartFill();
-
-        BuildingsEnt_BuildingsCom.StartFill();
-        BuildingsEnt_UpgradeBuildingsCom.StartFill();
-
-        UnitInfoEnt_UnitInventorCom.StartFill();
-
         SelectorEnt_SelectorCom.StartFill();
         SelectorEnt_RayCom.StartFill();
         SelectorEnt_UnitTypeCom.StartFill();
@@ -528,72 +512,9 @@ public sealed partial class EntitiesGameGeneralManager
         InputEnt_InputCom.StartFill();
 
         FromInfoEnt_FromInfoCom.StartFill();
-
-
-        KingInfoInGameEnt_AmountDictCom.StartFill();
-        PawnInfoInGameEnt_AmountDictCom.StartFill();
-        PawnSwordInfoInGameEnt_AmountDictCom.StartFill();
-        RookInfoInGameEnt_AmountDictCom.StartFill();
-        RookCrossbowInfoInGameEnt_AmountDictCom.StartFill();
-        BishopInfoInGameEnt_AmountDictCom.StartFill();
-        BishopCrossbowInfoInGameEnt_AmountDictCom.StartFill();
-
-
-        if (Instance.IsMasterClient)
-        {
-            #region Info
-
-            UnitInfoEnt_UnitInventorCom.SetSettedKing(true, false);
-            UnitInfoEnt_UnitInventorCom.SetSettedKing(false, false);
-
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, true, EconomyValues.AMOUNT_KING_MASTER);
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, false, EconomyValues.AMOUNT_KING_OTHER);
-
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, true, EconomyValues.AMOUNT_PAWN_MASTER);
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, false, EconomyValues.AMOUNT_PAWN_OTHER);
-
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, true, EconomyValues.AMOUNT_ROOK_MASTER);
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, false, EconomyValues.AMOUNT_ROOK_OTHER);
-
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, true, EconomyValues.AMOUNT_BISHOP_MASTER);
-            UnitInfoEnt_UnitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, false, EconomyValues.AMOUNT_BISHOP_OTHER);
-
-            BuildingsEnt_BuildingsCom.IsSettedCityDict[true] = default;
-            BuildingsEnt_BuildingsCom.IsSettedCityDict[false] = default;
-
-            BuildingsEnt_BuildingsCom.SetAmountBuildings(BuildingTypes.Farm, true, default);
-            BuildingsEnt_BuildingsCom.SetAmountBuildings(BuildingTypes.Farm, false, default);
-
-            BuildingsEnt_BuildingsCom.SetAmountBuildings(BuildingTypes.Woodcutter, true, default);
-            BuildingsEnt_BuildingsCom.SetAmountBuildings(BuildingTypes.Woodcutter, false, default);
-
-            BuildingsEnt_BuildingsCom.SetAmountBuildings(BuildingTypes.Mine, true, default);
-            BuildingsEnt_BuildingsCom.SetAmountBuildings(BuildingTypes.Mine, false, default);
-
-            #endregion
-
-
-            #region Economy
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, true, EconomyValues.AMOUNT_FOOD_MASTER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, true, EconomyValues.AMOUNT_WOOD_MASTER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, true, EconomyValues.AMOUNT_ORE_MASTER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, true, EconomyValues.AMOUNT_IRON_MASTER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, true, EconomyValues.AMOUNT_GOLD_MASTER);
-
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, false, EconomyValues.AMOUNT_FOOD_OTHER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, false, EconomyValues.AMOUNT_WOOD_OTHER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, false, EconomyValues.AMOUNT_ORE_OTHER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, false, EconomyValues.AMOUNT_IRON_OTHER);
-            EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, false, EconomyValues.AMOUNT_GOLD_OTHER);
-
-            #endregion
-
-        }
-
-        SpawnAndFillCanvasEntities();
     }
 
-    private void SpawnAndFillCells()
+    private void SpawnAndFillCells(EcsWorld gameWorld)
     {
         var cellGO = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.CellGO;
         var whiteCellSR = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig.WhiteSprite;
@@ -604,6 +525,27 @@ public sealed partial class EntitiesGameGeneralManager
         var supportParentForCells = new GameObject("Cells");
         Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(supportParentForCells.transform);
 
+
+        _cellProtectRelaxEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellMaxStepsEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellUnitEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+
+        _cellHpSupStatEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellFertilizeSupStatEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellForestSupStatEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellOreSupStatEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+
+        _cellSupportVisionEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellFireEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellBuildingEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+
+        _cellFertilizerEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellYoungForestEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellAdultForestEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellHillEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+        _cellMountainEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
+
+        _cellEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
 
         for (int x = 0; x < CELL_COUNT_X; x++)
             for (int y = 0; y < CELL_COUNT_Y; y++)
@@ -638,37 +580,67 @@ public sealed partial class EntitiesGameGeneralManager
                 }
 
 
-                var parentGO = cellsGO[x, y].transform.Find("ProtectRelax").gameObject;
-                CellProtectRelaxEnt_SpriteRendererCom(xy).StartFill(parentGO.GetComponent<SpriteRenderer>());
+                var sr = cellsGO[x, y].transform.Find("ProtectRelax").GetComponent<SpriteRenderer>();
+                _cellProtectRelaxEnts[x, y] = gameWorld.NewEntity()
+                    .Replace(new SpriteRendererComponent(sr));
 
 
-                parentGO = cellsGO[x, y].transform.Find("MaxSteps").gameObject;
-                CellMaxStepsEnt_SpriteRendererCom(xy).StartFill(parentGO.GetComponent<SpriteRenderer>());
+                sr = cellsGO[x, y].transform.Find("MaxSteps").GetComponent<SpriteRenderer>();
+                _cellMaxStepsEnts[x, y] = gameWorld.NewEntity()
+                    .Replace(new SpriteRendererComponent(sr));
 
 
-                parentGO = cellsGO[x, y].transform.Find("Unit").gameObject;
-                CellUnitEnt_CellUnitCom(xy).StartFill();
-                CellUnitEnt_UnitTypeCom(xy).StartFill();
-                CellUnitEnt_CellOwnerCom(xy).StartFill();
-                CellUnitEnt_CellOwnerBotCom(xy).StartFill();
-                CellUnitEnt_ActivatedForPlayersCom(xy).StartFill();
-                CellUnitEnt_ProtectRelaxCom(xy).StartFill();
-                CellUnitEnt_SpriteRendererCom(xy).StartFill(parentGO.GetComponent<SpriteRenderer>());
+                sr = cellsGO[x, y].transform.Find("Unit").GetComponent<SpriteRenderer>();
+                _cellUnitEnts[x, y] = gameWorld.NewEntity()
+                    .Replace(new CellUnitComponent())
+                    .Replace(new UnitTypeComponent())
+                    .Replace(new OwnerComponent())
+                    .Replace(new OwnerBotComponent())
+                    .Replace(new ActivatedDictComponent(new Dictionary<bool, bool>()))
+                    .Replace(new ProtectRelaxComponent())
+                    .Replace(new SpriteRendererComponent(sr));
 
 
-                parentGO = cellsGO[x, y].transform.Find("SupportStatic").gameObject;
-                CellHpSupStatEnt_SpriteRendererCom(xy).StartFill(parentGO.transform.Find("Hp").GetComponent<SpriteRenderer>());
-                CellFertilizeSupStatEnt_SprRendCom(xy).StartFill(parentGO.transform.Find("Fertilizer").GetComponent<SpriteRenderer>());
-                CellWoodSupStatEnt_SprRendCom(xy).StartFill(parentGO.transform.Find("Forest").GetComponent<SpriteRenderer>());
-                CellOreSupStatEnt_SprRendCom(xy).StartFill(parentGO.transform.Find("Ore").GetComponent<SpriteRenderer>());
+
+                _cellHpSupStatEnts[x, y] = gameWorld.NewEntity();
+                _cellFertilizeSupStatEnts[x, y] = gameWorld.NewEntity();
+                _cellForestSupStatEnts[x, y] = gameWorld.NewEntity();
+                _cellOreSupStatEnts[x, y] = gameWorld.NewEntity();
+
+                _cellSupportVisionEnts[x, y] = gameWorld.NewEntity();
+                _cellFireEnts[x, y] = gameWorld.NewEntity();
+                _cellBuildingEnts[x, y] = gameWorld.NewEntity();
+
+                _cellFertilizerEnts[x, y] = gameWorld.NewEntity();
+                _cellYoungForestEnts[x, y] = gameWorld.NewEntity();
+                _cellAdultForestEnts[x, y] = gameWorld.NewEntity();
+                _cellHillEnts[x, y] = gameWorld.NewEntity();
+                _cellMountainEnts[x, y] = gameWorld.NewEntity();
+
+                _cellEnts[x, y] = gameWorld.NewEntity();
+
+
+
+
+
+
+
+
+
+
+                var parentGO = cellsGO[x, y].transform.Find("SupportStatic").gameObject;
+                CellHpSupStatEnt_SpriteRendererCom(xy).SpriteRenderer = parentGO.transform.Find("Hp").GetComponent<SpriteRenderer>();
+                CellFertilizeSupStatEnt_SprRendCom(xy).SpriteRenderer = parentGO.transform.Find("Fertilizer").GetComponent<SpriteRenderer>();
+                CellWoodSupStatEnt_SprRendCom(xy).SpriteRenderer = parentGO.transform.Find("Forest").GetComponent<SpriteRenderer>();
+                CellOreSupStatEnt_SprRendCom(xy).SpriteRenderer = parentGO.transform.Find("Ore").GetComponent<SpriteRenderer>();
 
 
                 parentGO = cellsGO[x, y].transform.Find("SupportVision").gameObject;
-                CellSupVisEnt_SpriteRenderer(xy).StartFill(parentGO.GetComponent<SpriteRenderer>());
+                CellSupVisEnt_SpriteRenderer(xy).SpriteRenderer = parentGO.GetComponent<SpriteRenderer>();
 
 
                 parentGO = cellsGO[x, y].transform.Find("Fire").gameObject;
-                CellFireEnt_SprRendCom(xy).StartFill(parentGO.GetComponent<SpriteRenderer>());
+                CellFireEnt_SprRendCom(xy).SpriteRenderer = parentGO.GetComponent<SpriteRenderer>();
                 CellFireEnt_HaverEffectCom(xy).StartFill();
                 CellFireEnt_TimeStepsCom(xy).StartFill();
 
@@ -677,19 +649,19 @@ public sealed partial class EntitiesGameGeneralManager
                 CellBuildEnt_CellBuilCom(x, y).StartFill();
                 CellBuildEnt_BuilTypeCom(x, y).StartFill();
                 CellBuildEnt_OwnerCom(x, y).StartFill();
-                CellBuildEnt_CellOwnerBotCom(x, y).StartFill();
-                CellBuildEnt_SpriteRendererCom(x, y).StartFill(parentGO.GetComponent<SpriteRenderer>());
+                CellBuildEnt_OwnerBotCom(x, y).StartFill();
+                CellBuildEnt_SpriteRendererCom(x, y).SpriteRenderer = parentGO.GetComponent<SpriteRenderer>();
 
 
                 parentGO = cellsGO[x, y].transform.Find("Environments").gameObject;
-                CellFertilizerEnt_SprRendCom(xy).StartFill(parentGO.transform.Find("Fertilizer").GetComponent<SpriteRenderer>());
-                CellFertilizerEnt_AmountCom(xy).StartFill();
-                CellYoungForestEnt_SprRendCom(xy).StartFill(parentGO.transform.Find("YoungForest").GetComponent<SpriteRenderer>());
-                CellAdultForestEnt_SprRendCom(xy).StartFill(parentGO.transform.Find("AdultForest").GetComponent<SpriteRenderer>());
-                CellAdultForestEnt_AmountCom(xy).StartFill();
-                CellHillEnt_SprRendCom(xy).StartFill(parentGO.transform.Find("Hill").GetComponent<SpriteRenderer>());
-                CellHillEnt_AmountCom(xy).StartFill();
-                CellMountainEnt_SprRendCom(xy).StartFill(parentGO.transform.Find("Mountain").GetComponent<SpriteRenderer>());
+                CellFertilizerEnt_SprRendCom(xy).SpriteRenderer = parentGO.transform.Find("Fertilizer").GetComponent<SpriteRenderer>();
+                CellFertilizerEnt_AmountResourcesCom(xy).AmountResources = default;
+                CellYoungForestEnt_SprRendCom(xy).SpriteRenderer = parentGO.transform.Find("YoungForest").GetComponent<SpriteRenderer>();
+                CellAdultForestEnt_SprRendCom(xy).SpriteRenderer = parentGO.transform.Find("AdultForest").GetComponent<SpriteRenderer>();
+                CellAdultForestEnt_AmountResourcesCom(xy).AmountResources = default;
+                CellHillEnt_SprRendCom(xy).SpriteRenderer = parentGO.transform.Find("Hill").GetComponent<SpriteRenderer>();
+                CellHillEnt_AmountResourcesCom(xy).AmountResources = default;
+                CellMountainEnt_SprRendCom(xy).SpriteRenderer = parentGO.transform.Find("Mountain").GetComponent<SpriteRenderer>();
 
 
                 var isStartedDict = new Dictionary<bool, bool>();
@@ -699,10 +671,7 @@ public sealed partial class EntitiesGameGeneralManager
                 cellsGO[x, y].transform.SetParent(supportParentForCells.transform);
                 CellEnt_CellBaseCom(xy).StartFill(supportParentForCells, cellsGO[x, y].transform.Find("Cell").gameObject, isStartedDict);
                 CellEnt_CellBaseCom(xy).Rotate();
-                CellEnt_CellCom(xy).StartFill();
-
-
-
+                CellEnt_XyCellCom(xy).StartFill();
 
 
 
@@ -838,5 +807,89 @@ public sealed partial class EntitiesGameGeneralManager
         AvailableCellsShiftEnt_AvailCellsCom.StartFill();
         AvailableCellsSimpleAttackEnt_AvailCellsCom.StartFill();
         AvailableCellsUniqueAttackEnt_AvailCellsCom.StartFill();
+    }
+
+    private void FillInfoEnts()
+    {
+        KingInfoEnt_AmountUnitsInGameCom.StartFill();
+        KingInfoEnt_AmountUnitsInInventorDictCom.StartFill();
+        KingInfoEnt_IsSettedUnitDictCom.StartFill();
+        KingInfoEnt_XySettedBuildingDictCom.StartFill();
+        KingInfoEnt_AmountUnitsInRelaxCom.StartFill();
+
+        PawnInfoEnt_AmountUnitsInGameCom.StartFill();
+        PawnInfoEnt_AmountUnitsInInventorDictCom.StartFill();
+        PawnInfoEnt_AmountUnitsInRelaxCom.StartFill();
+
+        PawnSwordInfoEnt_AmountUnitsInGameCom.StartFill();
+        PawnSwordInfoEnt_AmountUnitsInInventorDictCom.StartFill();
+        PawnSwordInfoEnt_AmountUnitsInRelaxCom.StartFill();
+
+        RookInfoEnt_AmountUnitsInGameCom.StartFill();
+        RookInfoEnt_AmountUnitsInInventorDictCom.StartFill();
+        RookInfoEnt_AmountUnitsInRelaxCom.StartFill();
+
+        RookCrossbowInfoEnt_AmountUnitsInGameCom.StartFill();
+        RookCrossbowInfoEnt_AmountUnitsInInventorDictCom.StartFill();
+        RookCrossbowInfoEnt_AmountUnitsInRelaxCom.StartFill();
+
+        BishopInfoEnt_AmountUnitsInGameCom.StartFill();
+        BishopInfoEnt_AmountUnitsInInventorDictCom.StartFill();
+        BishopInfoEnt_AmountUnitsInRelaxCom.StartFill();
+
+        BishopCrossbowInfoEnt_AmountUnitsInGameCom.StartFill();
+        BishopCrossbowInfoEnt_AmountUnitsInInventorDictCom.StartFill();
+        BishopCrossbowInfoEnt_AmountUnitsInStandartCondition.StartFill();
+
+
+        CityInfoEnt_AmountBuildingsInGameCom.StartFill();
+
+        FarmsInfoEnt_AmountBuildingsInGameCom.StartFill();
+        FarmsInfoEnt_AmountUpgradesCom.StartFill();
+
+        WoodcuttersInfoEnt_AmountBuildingsInGameCom.StartFill();
+        WoodcuttersInfoEnt_AmountUpgradesCom.StartFill();
+
+        MinesInfoEnt_AmountBuildingsInGameCom.StartFill();
+        MinesInfoEnt_AmountUpgradesCom.StartFill();
+
+
+        FoodInfoEnt_AmountResourcesDictCom.StartFill();
+        WoodInfoEnt_AmountResourcesDictCom.StartFill();
+        OreInfoEnt_AmountResourcesDictCom.StartFill();
+        IronInfoEnt_AmountResourcesDictCom.StartFill();
+        GoldInfoEnt_AmountResourcesDictCom.StartFill();
+
+
+        if (Instance.IsMasterClient)
+        {
+            InfoUnitsWorker.SetSettedKing(true, false);
+            InfoUnitsWorker.SetSettedKing(false, false);
+
+            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.King, true, EconomyValues.AMOUNT_KING_MASTER);
+            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.King, false, EconomyValues.AMOUNT_KING_OTHER);
+
+            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.Pawn, true, EconomyValues.AMOUNT_PAWN_MASTER);
+            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.Pawn, false, EconomyValues.AMOUNT_PAWN_OTHER);
+
+            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.Rook, true, EconomyValues.AMOUNT_ROOK_MASTER);
+            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.Rook, false, EconomyValues.AMOUNT_ROOK_OTHER);
+
+            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.Bishop, true, EconomyValues.AMOUNT_BISHOP_MASTER);
+            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.Bishop, false, EconomyValues.AMOUNT_BISHOP_OTHER);
+
+
+            InfoResourcesWorker.SetAmountResources(ResourceTypes.Food, true, EconomyValues.AMOUNT_FOOD_MASTER);
+            InfoResourcesWorker.SetAmountResources(ResourceTypes.Wood, true, EconomyValues.AMOUNT_WOOD_MASTER);
+            InfoResourcesWorker.SetAmountResources(ResourceTypes.Ore, true, EconomyValues.AMOUNT_ORE_MASTER);
+            InfoResourcesWorker.SetAmountResources(ResourceTypes.Iron, true, EconomyValues.AMOUNT_IRON_MASTER);
+            InfoResourcesWorker.SetAmountResources(ResourceTypes.Gold, true, EconomyValues.AMOUNT_GOLD_MASTER);
+
+            InfoResourcesWorker.SetAmountResources(ResourceTypes.Food, false, EconomyValues.AMOUNT_FOOD_OTHER);
+            InfoResourcesWorker.SetAmountResources(ResourceTypes.Wood, false, EconomyValues.AMOUNT_WOOD_OTHER);
+            InfoResourcesWorker.SetAmountResources(ResourceTypes.Ore, false, EconomyValues.AMOUNT_ORE_OTHER);
+            InfoResourcesWorker.SetAmountResources(ResourceTypes.Iron, false, EconomyValues.AMOUNT_IRON_OTHER);
+            InfoResourcesWorker.SetAmountResources(ResourceTypes.Gold, false, EconomyValues.AMOUNT_GOLD_OTHER);
+        }
     }
 }

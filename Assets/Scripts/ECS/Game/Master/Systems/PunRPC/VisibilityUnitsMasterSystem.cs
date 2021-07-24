@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using static Assets.Scripts.CellEnvironmentWorker;
 using static Assets.Scripts.CellUnitWorker;
 using static Assets.Scripts.Main;
-using static Assets.Scripts.Static.Cell.CellSpaceWorker;
+using static Assets.Scripts.Workers.Cell.CellSpaceWorker;
 
 internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
 {
@@ -22,7 +22,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                 SetIsActivated(false, true, xy);
 
 
-                if (HaveAnyUnitOnCell(xy))
+                if (HaveAnyUnit(xy))
                 {
                     if (HaveOwner(xy))
                     {
@@ -35,7 +35,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                 List<int[]> list = TryGetXYAround(xy);
                                 foreach (var xy1 in list)
                                 {
-                                    if (HaveAnyUnitOnCell(xy1))
+                                    if (HaveAnyUnit(xy1))
                                     {
                                         if (HaveOwner(xy1))
                                         {
@@ -58,7 +58,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                 List<int[]> list = TryGetXYAround(xy);
                                 foreach (var xy1 in list)
                                 {
-                                    if (HaveAnyUnitOnCell(xy1))
+                                    if (HaveAnyUnit(xy1))
                                     {
                                         if (HaveOwner(xy1))
                                         {
@@ -84,7 +84,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         }
                     }
 
-                    else if (IsBotOnCell(xy))
+                    else if (IsBot(xy))
                     {
                         if (HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                         {
@@ -93,7 +93,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                             List<int[]> list = TryGetXYAround(xy);
                             foreach (var xy1 in list)
                             {
-                                if (HaveAnyUnitOnCell(xy1))
+                                if (HaveAnyUnit(xy1))
                                 {
                                     if (HaveOwner(xy1))
                                     {

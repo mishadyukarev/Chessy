@@ -1,13 +1,13 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
-using Assets.Scripts.Static.Cell;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Cell;
 using static Assets.Scripts.Main;
 
 internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
 {
     private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
-    private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
+    private bool IsActivatedDoner => _eGGUIM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
     internal UniqueAbilitiesUISystem() { }
 
@@ -16,11 +16,11 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
+        if (CellUnitWorker.HaveAnyUnit(XySelectedCell))
         {
-            if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
+            if (CellUnitWorker.HaveOwner(XySelectedCell))
             {
-                if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+                if (CellUnitWorker.IsMine(XySelectedCell))
                 {
                     switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
                     {
@@ -28,7 +28,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                             break;
 
                         case UnitTypes.King:
-                            _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+                            _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
                             break;
 
                         case UnitTypes.Pawn:
@@ -40,19 +40,19 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                             break;
 
                         case UnitTypes.Rook:
-                            _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+                            _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
                             break;
 
                         case UnitTypes.RookCrossbow:
-                            _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+                            _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
                             break;
 
                         case UnitTypes.Bishop:
-                            _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+                            _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
                             break;
 
                         case UnitTypes.BishopCrossbow:
-                            _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+                            _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
                             break;
 
                         default:
@@ -62,45 +62,45 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
 
                 else
                 {
-                    _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+                    _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
                 }
             }
             else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).IsBot)
             {
-                _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+                _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
             }
 
             void Melee()
             {
-                _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(true);
+                _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(true);
 
-                _eGM.UniqueAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(true);
-                _eGM.Unique1AbilityEnt_ButtonCom.SetActive(true);
-                _eGM.Unique1AbilityEnt_ButtonCom.RemoveAllListeners();
-                _eGM.Unique1AbilityEnt_ButtonCom.AddListener(delegate { Fire(XySelectedCell, XySelectedCell); });
+                _eGGUIM.UniqueAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(true);
+                _eGGUIM.Unique1AbilityEnt_ButtonCom.SetActive(true);
+                _eGGUIM.Unique1AbilityEnt_ButtonCom.RemoveAllListeners();
+                _eGGUIM.Unique1AbilityEnt_ButtonCom.AddListener(delegate { Fire(XySelectedCell, XySelectedCell); });
 
                 if (CellEffectsWorker.HaveEffect(EffectTypes.Fire, XySelectedCell))
                 {
-                    _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.SetText("Put Out FIRE");
+                    _eGGUIM.UniqueFirstAbilityEnt_TextMeshProGUICom.SetText("Put Out FIRE");
                 }
                 else
                 {
 
-                    _eGM.UniqueFirstAbilityEnt_TextMeshProGUICom.SetText("Fire forest");
+                    _eGGUIM.UniqueFirstAbilityEnt_TextMeshProGUICom.SetText("Fire forest");
                 }
 
-                _eGM.Unique2AbilityEnt_ButtonCom.SetActive(false);
+                _eGGUIM.Unique2AbilityEnt_ButtonCom.SetActive(false);
 
-                _eGM.Unique3AbilityEnt_ButtonCom.SetActive(true);
-                _eGM.Unique3AbilityEnt_ButtonCom.RemoveAllListeners();
-                _eGM.Unique3AbilityEnt_ButtonCom.AddListener(delegate { SeedEnvironment(EnvironmentTypes.YoungForest); });
-                _eGM.Unique3AbilityEnt_TextMeshProGUICom.SetText("Seed Forest");
+                _eGGUIM.Unique3AbilityEnt_ButtonCom.SetActive(true);
+                _eGGUIM.Unique3AbilityEnt_ButtonCom.RemoveAllListeners();
+                _eGGUIM.Unique3AbilityEnt_ButtonCom.AddListener(delegate { SeedEnvironment(EnvironmentTypes.YoungForest); });
+                _eGGUIM.Unique3AbilityEnt_TextMeshProGUICom.SetText("Seed Forest");
             }
         }
 
         else
         {
-            _eGM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
+            _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
         }
     }
 

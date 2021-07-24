@@ -4,30 +4,7 @@
     {
         #region Health
 
-        public const int STANDART_AMOUNT_HEALTH_KING = 300;
-        public const int STANDART_AMOUNT_HEALTH_PAWN = 100;
-        public const int STANDART_AMOUNT_HEALTH_PAWN_SWORD = 150;
-        public const int STANDART_AMOUNT_HEALTH_ROOK = 100;
-        public const int STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW = 100;
-        public const int STANDART_AMOUNT_HEALTH_BISHOP = 100;
-        public const int STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW = 100;
 
-
-        private const float PERCENT_FOR_HEALTH_KING = 0.2f;
-        private const float PERCENT_FOR_HEALTH_PAWN = 0.3f;
-        private const float PERCENT_FOR_HEALTH_PAWN_SWORD = 0.2f;
-        private const float PERCENT_FOR_HEALTH_ROOK = 0.3f;
-        private const float PERCENT_FOR_HEALTH_ROOK_CROSSBOW = 0.3f;
-        private const float PERCENT_FOR_HEALTH_BISHOP = 0.3f;
-        private const float PERCENT_FOR_HEALTH_BISHOP_CROSSBOW = 0.3f;
-
-        public static int HEALTH_FOR_ADDING_KING => (int)(STANDART_AMOUNT_HEALTH_KING * PERCENT_FOR_HEALTH_KING);
-        public static int HEALTH_FOR_ADDING_PAWN => (int)(STANDART_AMOUNT_HEALTH_PAWN * PERCENT_FOR_HEALTH_PAWN);
-        public static int HEALTH_FOR_ADDING_PAWN_SWORD => (int)(STANDART_AMOUNT_HEALTH_PAWN_SWORD * PERCENT_FOR_HEALTH_PAWN_SWORD);
-        public static int HEALTH_FOR_ADDING_ROOK => (int)(STANDART_AMOUNT_HEALTH_ROOK * PERCENT_FOR_HEALTH_ROOK);
-        public static int HEALTH_FOR_ADDING_ROOK_CROSSBOW => (int)(STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW * PERCENT_FOR_HEALTH_ROOK_CROSSBOW);
-        public static int HEALTH_FOR_ADDING_BISHOP => (int)(STANDART_AMOUNT_HEALTH_BISHOP * PERCENT_FOR_HEALTH_BISHOP);
-        public static int HEALTH_FOR_ADDING_BISHOP_CROSSBOW => (int)(STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW * PERCENT_FOR_HEALTH_BISHOP_CROSSBOW);
 
         #endregion
 

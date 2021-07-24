@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static.Cell;
+using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
@@ -14,27 +15,27 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         {
             base.Run();
 
-            if (_eGM.CellUnitEnt_CellUnitCom(FromXyCopy).HaveMinAmountSteps)
+            if (CellUnitWorker.HaveMinAmountSteps(FromXyCopy))
             {
                 
 
                 if (CellEffectsWorker.HaveEffect(EffectTypes.Fire, ToXyCopy))
                 {
                     CellEffectsWorker.ResetEffect(EffectTypes.Fire, ToXyCopy);
-                    _eGM.CellUnitEnt_CellUnitCom(ToXyCopy).TakeAmountSteps();
+                    CellUnitWorker.TakeAmountSteps(ToXyCopy);
                 }
                 else if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, ToXyCopy))
                 {
-                    if (_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).HaveOwner)
+                    if (CellUnitWorker.HaveOwner(FromXyCopy))
 
-                        if (EconomyWorker.CanFireSomething(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType, out bool[] haves))
+                        if (InfoResourcesWorker.CanFireSomething(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType, out bool[] haves))
                         {
                             PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
-                            EconomyWorker.Fire(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType);
+                            InfoResourcesWorker.Fire(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType);
 
                             CellEffectsWorker.SetEffect(EffectTypes.Fire, ToXyCopy);
-                            _eGM.CellUnitEnt_CellUnitCom(ToXyCopy).TakeAmountSteps();
+                            CellUnitWorker.TakeAmountSteps(ToXyCopy);
                         }
                         else
                         {

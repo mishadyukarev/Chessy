@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Workers.UI.Info;
 using UnityEngine;
 
 internal sealed class MistakeUISystem : SystemGeneralReduction
@@ -13,13 +14,13 @@ internal sealed class MistakeUISystem : SystemGeneralReduction
     {
         if (!_isInited)
         {
-            _eGM.DonerUIEnt_MistakeCom.AddListener(MistakeDone);
+            _eGGUIM.DonerUIEnt_MistakeCom.AddListener(MistakeDone);
 
-            _eGM.EconomyEnt_MistakeEconomyCom.FoodMistake = delegate { MistakeEnvironment(ResourceTypes.Food); };
-            _eGM.EconomyEnt_MistakeEconomyCom.WoodMistake = delegate { MistakeEnvironment(ResourceTypes.Wood); };
-            _eGM.EconomyEnt_MistakeEconomyCom.OreMistake = delegate { MistakeEnvironment(ResourceTypes.Ore); };
-            _eGM.EconomyEnt_MistakeEconomyCom.IronMistake = delegate { MistakeEnvironment(ResourceTypes.Iron); };
-            _eGM.EconomyEnt_MistakeEconomyCom.GoldMistake = delegate { MistakeEnvironment(ResourceTypes.Gold); };
+            _eGGUIM.FoodInfoUIEnt_MistakeResourcesUICom.AddListener(delegate { MistakeEnvironment(ResourceTypes.Food); });
+            _eGGUIM.WoodInfoUIEnt_MistakeResourcesUICom.AddListener(delegate { MistakeEnvironment(ResourceTypes.Wood); });
+            _eGGUIM.OreInfoUIEnt_MistakeResourcesUICom.AddListener(delegate { MistakeEnvironment(ResourceTypes.Ore); });
+            _eGGUIM.IronInfoUIEnt_MistakeResourcesUICom.AddListener(delegate { MistakeEnvironment(ResourceTypes.Iron); });
+            _eGGUIM.GoldInfoUIEnt_MistakeResourcesUICom.AddListener(delegate { MistakeEnvironment(ResourceTypes.Gold); });
 
             _isInited = true;
         }
@@ -33,11 +34,11 @@ internal sealed class MistakeUISystem : SystemGeneralReduction
 
             if (_timer >= TIMER_MISTAKE)
             {
-                _eGM.EconomyUIEnt_EconomyUICom.SetColor(ResourceTypes.Food, Color.white);
-                _eGM.EconomyUIEnt_EconomyUICom.SetColor(ResourceTypes.Wood, Color.white);
-                _eGM.EconomyUIEnt_EconomyUICom.SetColor(ResourceTypes.Ore, Color.white);
-                _eGM.EconomyUIEnt_EconomyUICom.SetColor(ResourceTypes.Iron, Color.white);
-                _eGM.EconomyUIEnt_EconomyUICom.SetColor(ResourceTypes.Gold, Color.white);
+                InfoResourcesUIWorker.SetMainColor(ResourceTypes.Food, Color.white);
+                InfoResourcesUIWorker.SetMainColor(ResourceTypes.Wood, Color.white);
+                InfoResourcesUIWorker.SetMainColor(ResourceTypes.Ore, Color.white);
+                InfoResourcesUIWorker.SetMainColor(ResourceTypes.Iron, Color.white);
+                InfoResourcesUIWorker.SetMainColor(ResourceTypes.Gold, Color.white);
 
                 _isStartedMistake = false;
                 _timer = 0;
@@ -47,11 +48,11 @@ internal sealed class MistakeUISystem : SystemGeneralReduction
 
     private void MistakeDone()
     {
-        _eGM.TakerKingEnt_ButtonCom.SetColor(Color.red);
+        _eGGUIM.TakerKingEnt_ButtonCom.SetColor(Color.red);
     }
     private void MistakeEnvironment(ResourceTypes economyType)
     {
-        _eGM.EconomyUIEnt_EconomyUICom.SetColor(economyType, Color.red);
+        InfoResourcesUIWorker.SetMainColor(economyType, Color.red);
         _isStartedMistake = true;
         _timer = 0;
     }

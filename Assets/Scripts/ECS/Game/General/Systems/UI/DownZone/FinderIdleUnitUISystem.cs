@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
+using Assets.Scripts.Workers;
 using System.Collections.Generic;
 using static Assets.Scripts.CellUnitWorker;
 
@@ -14,7 +14,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
             base.Init();
 
             _preXyList = new List<int[]>();
-            _eGM.FinderIdleEnt_ButtonCom.AddListener(FindIdleUnit);
+            _eGGUIM.FinderIdleEnt_ButtonCom.AddListener(FindIdleUnit);
         }
 
         private void FindIdleUnit()
@@ -29,13 +29,13 @@ namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
                 {
                     var xy = new int[] { x, y };
 
-                    if (HaveAnyUnitOnCell(xy))
+                    if (HaveAnyUnit(xy))
                     {
                         var unitType = UnitType(xy);
 
                         if (HaveOwner(xy))
 
-                            if (_eGM.CellUnitEnt_CellUnitCom(xy).HaveMaxSteps(unitType))
+                            if (CellUnitWorker.HaveMaxAmountSteps(xy))
                             {
                                 _eGM.SelectorEnt_SelectorCom.IsSelected = true;
                                 SelectorWorker.SetXy(SelectorCellTypes.Selected, new int[] { x, y });

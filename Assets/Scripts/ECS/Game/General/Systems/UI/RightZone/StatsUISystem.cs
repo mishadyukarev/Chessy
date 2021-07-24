@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
+using Assets.Scripts.Workers;
 
 internal class StatsUISystem : SystemGeneralReduction
 {
@@ -11,19 +11,19 @@ internal class StatsUISystem : SystemGeneralReduction
     {
         base.Run();
 
-        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
+        if (CellUnitWorker.HaveAnyUnit(XySelectedCell))
         {
 
-            _eGM.HealthUIEnt_TextMeshProUGUICom.SetText(_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountHealth.ToString());
-            _eGM.PowerAttackUIEnt_TextMeshProUGUICom.SetText(CellUnitWorker.SimplePowerDamage(UnitType).ToString());
-            _eGM.PowerProtectionUIEnt_TextMeshProUGUICom.SetText(CellUnitWorker.PowerProtection(XySelectedCell).ToString());
-            _eGM.AmountStepsUIEnt_TextMeshProUGUICom.SetText(_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps.ToString());
+            _eGGUIM.HealthUIEnt_TextMeshProUGUICom.SetText(_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountHealth.ToString());
+            _eGGUIM.PowerAttackUIEnt_TextMeshProUGUICom.SetText(CellUnitWorker.SimplePowerDamage(UnitType).ToString());
+            _eGGUIM.PowerProtectionUIEnt_TextMeshProUGUICom.SetText(CellUnitWorker.PowerProtection(XySelectedCell).ToString());
+            _eGGUIM.AmountStepsUIEnt_TextMeshProUGUICom.SetText(_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps.ToString());
 
-            _eGM.StatsEnt_ParentCom.SetActive(true);
+            _eGGUIM.StatsEnt_ParentCom.SetActive(true);
         }
         else
         {
-            _eGM.StatsEnt_ParentCom.SetActive(false);
+            _eGGUIM.StatsEnt_ParentCom.SetActive(false);
         }
     }
 }

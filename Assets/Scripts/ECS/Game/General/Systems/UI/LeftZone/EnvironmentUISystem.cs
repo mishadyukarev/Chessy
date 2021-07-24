@@ -1,9 +1,9 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
+using Assets.Scripts.Workers;
 using UnityEngine;
 using static Assets.Scripts.CellEnvironmentWorker;
-using static Assets.Scripts.Static.Cell.CellSupportStaticWorker;
+using static Assets.Scripts.Workers.Cell.CellSupportStaticWorker;
 
 internal sealed class EnvironmentUISystem : SystemGeneralReduction
 {
@@ -16,20 +16,20 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
 
         if (_eGM.SelectorEnt_SelectorCom.IsSelected && _eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType != BuildingTypes.City)
         {
-            _eGM.EnvironmentZoneEnt_ParentCom.SetActive(true);
+            _eGGUIM.EnvironmentZoneEnt_ParentCom.SetActive(true);
         }
         else
         {
-            _eGM.EnvironmentZoneEnt_ParentCom.SetActive(false);
+            _eGGUIM.EnvironmentZoneEnt_ParentCom.SetActive(false);
         }
 
-        _eGM.EnvFerilizerEnt_TextMeshProUGUICom.SetText("Fertilizer: " + AmountResources(ResourceTypes.Food, XySelectedCell));
-        _eGM.EnvForestEnt_TextMeshProUGUICom.SetText("Forest: " + AmountResources(ResourceTypes.Wood, XySelectedCell));
-        _eGM.EnvOreEnt_TextMeshProUGUICom.SetText("Ore: " + AmountResources(ResourceTypes.Ore, XySelectedCell));
+        _eGGUIM.EnvFerilizerEnt_TextMeshProUGUICom.SetText("Fertilizer: " + AmountResources(ResourceTypes.Food, XySelectedCell));
+        _eGGUIM.EnvForestEnt_TextMeshProUGUICom.SetText("Forest: " + AmountResources(ResourceTypes.Wood, XySelectedCell));
+        _eGGUIM.EnvOreEnt_TextMeshProUGUICom.SetText("Ore: " + AmountResources(ResourceTypes.Ore, XySelectedCell));
 
 
 
-        if (_eGM.EnvironmentInfoEnt_IsActivatedCom.IsActivated)
+        if (_eGGUIM.EnvironmentInfoEnt_IsActivatedCom.IsActivated)
         {
             for (int x = 0; x < _eGM.Xamount; x++)
             {

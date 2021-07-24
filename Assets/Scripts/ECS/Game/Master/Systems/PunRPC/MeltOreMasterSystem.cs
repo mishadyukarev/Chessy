@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 
 internal sealed class MeltOreMasterSystem : RPCMasterSystemReduction
@@ -11,9 +12,9 @@ internal sealed class MeltOreMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if (EconomyWorker.CanMeltOre(InfoFrom.Sender, out bool[] haves))
+        if (InfoResourcesWorker.CanMeltOre(InfoFrom.Sender, out bool[] haves))
         {
-            EconomyWorker.MeltOre(InfoFrom.Sender);
+            InfoResourcesWorker.MeltOre(InfoFrom.Sender);
             PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Melting);
         }
         else

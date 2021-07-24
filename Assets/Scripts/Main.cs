@@ -25,6 +25,8 @@ namespace Assets.Scripts
 
         public SceneTypes CurrentSceneType => _currentSceneType;
 
+        internal bool IsStarted { get; set; } = true;
+
         public bool IsMasterClient => PhotonNetwork.IsMasterClient;
         public Player MasterClient => PhotonNetwork.MasterClient;
         public Player LocalPlayer => PhotonNetwork.LocalPlayer;
@@ -36,6 +38,7 @@ namespace Assets.Scripts
         public StartGameValuesConfig StartValuesGameConfig => _eCSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
 
         public EntitiesGameGeneralManager EntGGM => _eCSmanager.EntitiesGameGeneralManager;
+        public EntitiesGameGeneralUIManager EntGGUIM => _eCSmanager.EntitiesGameGeneralUIManager;
         public EntitiesMenuManager EntMenuM => _eCSmanager.EntitiesMenuManager;
         public EntitiesCommonManager EntComM => _eCSmanager.EntitiesCommonManager;
 

@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Static;
+﻿using Assets.Scripts.Workers;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Components

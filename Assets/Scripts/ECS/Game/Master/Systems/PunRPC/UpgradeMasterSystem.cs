@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
@@ -29,14 +30,14 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     break;
 
                 case UpgradeModTypes.Unit:
-                    if (_eGM.CellUnitEnt_UnitTypeCom(XyCellForUpgrade).HaveAnyUnit)
+                    if (CellUnitWorker.HaveAnyUnit(XyCellForUpgrade))
                     {
-                        if (EconomyWorker.CanUpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade, out haves))
+                        if (InfoResourcesWorker.CanUpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade, out haves))
                         {
-                            EconomyWorker.UpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade);
+                            InfoResourcesWorker.UpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade);
                             CellUnitWorker.ChangePlayerUnit(XyCellForUpgrade, NeededUnitTypeForUpgrade + FOR_NEXT_UPGRADE);
 
-                            if (_eGM.CellUnitEnt_UnitTypeCom(XyCellForUpgrade).IsMelee)
+                            if (CellUnitWorker.IsMelee(XyCellForUpgrade))
                             {
                                 PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.UpgradeUnitMelee);
                             }
@@ -54,9 +55,9 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     break;
 
                 case UpgradeModTypes.Building:
-                    if (EconomyWorker.CanUpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade, out haves))
+                    if (InfoResourcesWorker.CanUpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade, out haves))
                     {
-                        EconomyWorker.UpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade);
+                        InfoResourcesWorker.UpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade);
 
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.SoundGoldPack);
                     }

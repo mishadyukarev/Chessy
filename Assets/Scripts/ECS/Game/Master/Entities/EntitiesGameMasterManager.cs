@@ -69,6 +69,17 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
 
     public EntitiesGameMasterManager(EcsWorld gameWorld)
     {
+
+    }
+
+    internal override void FillEntities(EcsWorld gameWorld)
+    {
+        base.FillEntities(gameWorld);
+
+
+
+
+
         _fromInfoEnt = gameWorld.NewEntity();
 
         _readyEnt = gameWorld.NewEntity();
@@ -85,11 +96,16 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
         _creatorEnt = gameWorld.NewEntity();
         _getterUnitEnt = gameWorld.NewEntity();
         _settingUnitEnt = gameWorld.NewEntity();
-    }
 
-    internal override void FillEntities()
-    {
-        base.FillEntities();
+
+
+
+
+
+
+
+
+
 
         FromInfoEnt_FromInfoCom.StartFill();
 

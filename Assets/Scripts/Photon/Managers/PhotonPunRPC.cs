@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
-using Assets.Scripts.Static;
-using Assets.Scripts.Static.Cell;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Cell;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -11,6 +11,7 @@ using UnityEngine;
 using static Assets.Scripts.Main;
 using static Assets.Scripts.CellEnvironmentWorker;
 using static Assets.Scripts.CellUnitWorker;
+using Assets.Scripts.Workers.Info;
 
 namespace Assets.Scripts
 {
@@ -19,6 +20,7 @@ namespace Assets.Scripts
         private static PhotonView _photonView;
 
         private EntitiesGameGeneralManager _eGM;
+        private EntitiesGameGeneralUIManager _eGGUIM;
         private EntitiesGameMasterManager _eMM;
 
         private SystemsGameGeneralManager _sGM;
@@ -43,6 +45,7 @@ namespace Assets.Scripts
             _eMM = eCSmanager.EntitiesGameMasterManager;
 
             _eGM = eCSmanager.EntitiesGameGeneralManager;
+            _eGGUIM = eCSmanager.EntitiesGameGeneralUIManager;
             _sGM = eCSmanager.SystemsGameGeneralManager;
 
             _entOM = eCSmanager.EntitiesGameOtherManager;
@@ -137,12 +140,12 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.Ready:
-                    _eMM.ReadyEnt_IsActivatedCom.SetActivated((bool)objects[0]);
+                    _eMM.ReadyEnt_IsActivatedCom.IsActivated = (bool)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(ReadyMasterSystem), _sMM.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Done:
-                    _eMM.DonerEnt_IsActivatedCom.SetActivated((bool)objects[0]);
+                    _eMM.DonerEnt_IsActivatedCom.IsActivated = (bool)objects[0];
                     _sMM.TryInvokeRunSystem(nameof(DonerMasterSystem), _sMM.RpcSystems);
                     break;
 
@@ -152,7 +155,7 @@ namespace Assets.Scripts
 
                 case RpcMasterTypes.Build:
                     _eMM.BuildEnt_XyCellCom.SetXyCell((int[])objects[0]);
-                    _eMM.BuildEnt_BuildingTypeCom.SetBuildingType((BuildingTypes)objects[1]);
+                    _eMM.BuildEnt_BuildingTypeCom.BuildingType = (BuildingTypes)objects[1];
                     _sMM.TryInvokeRunSystem(nameof(BuilderMasterSystem), _sMM.RpcSystems);
                     break;
 
@@ -222,7 +225,7 @@ namespace Assets.Scripts
                             break;
 
                         case UpgradeModTypes.Building:
-                            _eMM.UpgradeEnt_BuildingTypeCom.SetBuildingType((BuildingTypes)objects[1]);
+                            _eMM.UpgradeEnt_BuildingTypeCom.BuildingType = (BuildingTypes)objects[1];
                             break;
 
                         default:
@@ -256,16 +259,16 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.Ready:
                     bool isActivated = (bool)objects[_currentNumber++];
                     bool isStartedGame = (bool)objects[_currentNumber++];
-                    _eGM.ReadyEnt_ActivatedDictCom.SetActivated(Instance.IsMasterClient, isActivated);
-                    _eGM.ReadyEnt_StartedGameCom.IsStartedGame = isStartedGame;
+                    _eGGUIM.ReadyEnt_ActivatedDictCom.SetActivated(Instance.IsMasterClient, isActivated);
+                    _eGGUIM.ReadyEnt_StartedGameCom.IsStartedGame = isStartedGame;
                     break;
 
                 case RpcGeneralTypes.SetDonerActiveUI:
-                    _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(Instance.IsMasterClient, (bool)objects[_currentNumber++]);
+                    _eGGUIM.DonerUIEnt_IsActivatedDictCom.SetActivated(Instance.IsMasterClient, (bool)objects[_currentNumber++]);
                     break;
 
                 case RpcGeneralTypes.ActiveAmountMotionUI:
-                    _eGM.MotionEnt_ActivatedCom.SetActivated(true);
+                    _eGGUIM.MotionEnt_ActivatedCom.IsActivated = true;
                     break;
 
                 case RpcGeneralTypes.GetAvailableCellsForSetting:
@@ -273,8 +276,8 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.EndGame:
-                    _eGM.EndGameEntEndGameCom.IsEndGame = true;
-                    _eGM.EndGameEntEndGameCom.PlayerWinner = PhotonNetwork.PlayerList[(int)objects[_currentNumber++] - 1];
+                    _eGGUIM.EndGameEntEndGameCom.IsEndGame = true;
+                    _eGGUIM.EndGameEntEndGameCom.PlayerWinner = PhotonNetwork.PlayerList[(int)objects[_currentNumber++] - 1];
                     break;
 
                 case RpcGeneralTypes.Attack:
@@ -297,15 +300,15 @@ namespace Assets.Scripts
                             var haveIron = haves[3];
                             var haveGold = haves[4];
 
-                            if (!haveFood) _eGM.EconomyEnt_MistakeEconomyCom.FoodMistake();
-                            if (!haveWood) _eGM.EconomyEnt_MistakeEconomyCom.WoodMistake();
-                            if (!haveOre) _eGM.EconomyEnt_MistakeEconomyCom.OreMistake();
-                            if (!haveIron) _eGM.EconomyEnt_MistakeEconomyCom.IronMistake();
-                            if (!haveGold) _eGM.EconomyEnt_MistakeEconomyCom.GoldMistake();
+                            if (!haveFood) _eGGUIM.FoodInfoUIEnt_MistakeResourcesUICom.Invoke();
+                            if (!haveWood) _eGGUIM.WoodInfoUIEnt_MistakeResourcesUICom.Invoke();
+                            if (!haveOre) _eGGUIM.OreInfoUIEnt_MistakeResourcesUICom.Invoke();
+                            if (!haveIron) _eGGUIM.IronInfoUIEnt_MistakeResourcesUICom.Invoke();
+                            if (!haveGold) _eGGUIM.GoldInfoUIEnt_MistakeResourcesUICom.Invoke();
                             break;
 
                         case MistakeTypes.UnitType:
-                            _eGM.DonerUIEnt_MistakeCom.Invoke();
+                            _eGGUIM.DonerUIEnt_MistakeCom.Invoke();
                             break;
 
                         default:
@@ -321,7 +324,7 @@ namespace Assets.Scripts
                     if ((bool)objects[_currentNumber++])
                     {
                         _eGM.SelectorEnt_SelectorCom.IsStartSelectedDirect = true;
-                        _eGM.SelectorEnt_UnitTypeCom.ResetUnit();
+                        _eGM.SelectorEnt_UnitTypeCom.UnitType = default;
                     }
                     break;
 
@@ -347,7 +350,7 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case RpcOtherTypes.SetAmountMotion:
-                    _eGM.MotionEnt_AmountCom.Amount = (int)objects[_currentNumber++];
+                    _eGGUIM.MotionEnt_AmountCom.Amount = (int)objects[_currentNumber++];
                     break;
 
                 case RpcOtherTypes.SetStepModType:
@@ -382,11 +385,11 @@ namespace Assets.Scripts
                             var xy = new int[] { x, y };
 
                             listObjects.Add(Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType);
-                            listObjects.Add(_eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(false));
+                            listObjects.Add(_eGGUIM.DonerUIEnt_IsActivatedDictCom.IsActivated(false));
 
 
-                            listObjects.Add(HaveAnyUnitOnCell(xy));
-                            if (HaveAnyUnitOnCell(xy))
+                            listObjects.Add(HaveAnyUnit(xy));
+                            if (HaveAnyUnit(xy))
                             {
                                 listObjects.Add(IsActivated(false, xy));
                                 listObjects.Add(UnitType(xy));
@@ -401,7 +404,7 @@ namespace Assets.Scripts
                                 }
                                 else
                                 {
-                                    listObjects.Add(IsBotOnCell(xy));
+                                    listObjects.Add(IsBot(xy));
                                 }
                             }
 
@@ -417,22 +420,22 @@ namespace Assets.Scripts
 
 
 
-                            var haveBuilding = _eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding;
+                            var haveBuilding = CellBuildingWorker.HaveBuilding(xy);
                             listObjects.Add(haveBuilding);
 
                             if (haveBuilding)
                             {
                                 listObjects.Add(_eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType);
 
-                                var haveOwner = _eGM.CellBuildEnt_OwnerCom(x, y).HaveOwner;
+                                var haveOwner = CellUnitWorker.HaveOwner(xy);
                                 listObjects.Add(haveOwner);
                                 if (haveOwner)
                                 {
-                                    listObjects.Add(_eGM.CellBuildEnt_OwnerCom(x, y).ActorNumber);
+                                    listObjects.Add(CellUnitWorker.ActorNumber(xy));
                                 }
                                 else
                                 {
-                                    listObjects.Add(_eGM.CellBuildEnt_CellOwnerBotCom(x, y).IsBot);
+                                    listObjects.Add(_eGM.CellBuildEnt_OwnerBotCom(x, y).IsBot);
                                 }
                             }
 
@@ -450,13 +453,9 @@ namespace Assets.Scripts
                 case SyncTypes.Economy:
                     objects = new object[]
                     {
-                        _eGM.BuildingsEnt_BuildingsCom.AmountBuildings(BuildingTypes.Farm, false),
-                        _eGM.BuildingsEnt_BuildingsCom.AmountBuildings(BuildingTypes.Woodcutter, false),
-                        _eGM.BuildingsEnt_BuildingsCom.AmountBuildings(BuildingTypes.Mine, false),
-
-                        _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Farm, false),
-                        _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, false),
-                        _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Mine, false),
+                        InfoBuidlingsWorker.AmountUpgrades(BuildingTypes.Farm, false),
+                        InfoBuidlingsWorker.AmountUpgrades(BuildingTypes.Woodcutter, false),
+                        InfoBuidlingsWorker.AmountUpgrades(BuildingTypes.Mine, false),
 
                         UnitInfoManager.AmountUnitsInGame(UnitTypes.Pawn, false),
                         UnitInfoManager.AmountUnitsInGame(UnitTypes.PawnSword, false),
@@ -465,15 +464,11 @@ namespace Assets.Scripts
                         UnitInfoManager.AmountUnitsInGame(UnitTypes.Bishop, false),
                         UnitInfoManager.AmountUnitsInGame(UnitTypes.BishopCrossbow, false),
 
-                        _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, false),
-                        _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, false),
-                        _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, false),
-                        _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, false),
-                        _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, false),
-
-                        _eGM.UnitInfoEnt_UnitInventorCom.IsSettedKing(false),
-                        _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[false],
-                        _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[false],
+                        InfoResourcesWorker.AmountResources(ResourceTypes.Food, false),
+                        InfoResourcesWorker.AmountResources(ResourceTypes.Wood, false),
+                        InfoResourcesWorker.AmountResources(ResourceTypes.Ore, false),
+                        InfoResourcesWorker.AmountResources(ResourceTypes.Iron, false),
+                        InfoResourcesWorker.AmountResources(ResourceTypes.Gold, false),
                     };
                     _photonView.RPC(SyncOtherRPCName, RpcTarget.Others, SyncTypes.Economy, objects);
                     break;
@@ -494,6 +489,8 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SyncTypes.Cell:
+                    #region Cell
+
                     for (int x = 0; x < _eGM.Xamount; x++)
                         for (int y = 0; y < _eGM.Yamount; y++)
                         {
@@ -501,7 +498,7 @@ namespace Assets.Scripts
 
                             Instance.EntComM.SaverEnt_StepModeTypeCom.SetStepModeType((StepModeTypes)objects[_currentNumber++]);
                             bool isActivatedDoner = (bool)objects[_currentNumber++];
-                            _eGM.DonerUIEnt_IsActivatedDictCom.SetActivated(Instance.IsMasterClient, isActivatedDoner);
+                            _eGGUIM.DonerUIEnt_IsActivatedDictCom.SetActivated(Instance.IsMasterClient, isActivatedDoner);
 
 
                             Player player;
@@ -583,7 +580,7 @@ namespace Assets.Scripts
                                 {
                                     int actorNumberBuilding = (int)objects[_currentNumber++];
                                     player = PhotonNetwork.PlayerList[actorNumberBuilding - 1];
-                                    CellBuildingWorker.SetPlayerBuilding(false, buildingType, player, x, y);
+                                    CellBuildingWorker.CreatePlayerBuilding(buildingType, player, xy);
                                 }
                                 else
                                 {
@@ -596,7 +593,8 @@ namespace Assets.Scripts
                             }
                             else
                             {
-                                CellBuildingWorker.ResetBuilding(false, x, y);
+                                //Sync
+                                //CellBuildingWorker.ResetBuilding(false, x, y);
                             }
 
 
@@ -604,21 +602,15 @@ namespace Assets.Scripts
 
                             CellEffectsWorker.SyncEffect(haveFire, EffectTypes.Fire, xy);
                         }
+
+                    #endregion
                     break;
 
 
                 case SyncTypes.Economy:
-                    var amountFarm = (int)objects[_currentNumber++];
-                    var amountWoodcutter = (int)objects[_currentNumber++];
-                    var amountMine = (int)objects[_currentNumber++];
-
-                    _eGM.BuildingsEnt_BuildingsCom.SetAmountBuildings(BuildingTypes.Farm, Instance.IsMasterClient, amountFarm);
-                    _eGM.BuildingsEnt_BuildingsCom.SetAmountBuildings(BuildingTypes.Woodcutter, Instance.IsMasterClient, amountWoodcutter);
-                    _eGM.BuildingsEnt_BuildingsCom.SetAmountBuildings(BuildingTypes.Mine, Instance.IsMasterClient, amountMine);
-
-                    _eGM.BuildingsEnt_UpgradeBuildingsCom.SetAmountUpgrades(BuildingTypes.Farm, Instance.IsMasterClient, (int)objects[_currentNumber++]);
-                    _eGM.BuildingsEnt_UpgradeBuildingsCom.SetAmountUpgrades(BuildingTypes.Woodcutter, Instance.IsMasterClient, (int)objects[_currentNumber++]);
-                    _eGM.BuildingsEnt_UpgradeBuildingsCom.SetAmountUpgrades(BuildingTypes.Mine, Instance.IsMasterClient, (int)objects[_currentNumber++]);
+                    var amountFarmUpgrades = (int)objects[_currentNumber++];
+                    var amountWoodcutterUpgrades = (int)objects[_currentNumber++];
+                    var amountMineUpgrades = (int)objects[_currentNumber++];
 
                     var amountPawn = (int)objects[_currentNumber++];
                     var amountPawnSword = (int)objects[_currentNumber++];
@@ -633,10 +625,10 @@ namespace Assets.Scripts
                     var iron = (int)objects[_currentNumber++];
                     var gold = (int)objects[_currentNumber++];
 
-                    bool isSettedKing = (bool)objects[_currentNumber++];
-                    bool isSettedCity = (bool)objects[_currentNumber++];
-                    int[] xySettedCity = (int[])objects[_currentNumber++];
 
+                    InfoBuidlingsWorker.SetAmountUpgrades(BuildingTypes.Farm, Instance.IsMasterClient, amountFarmUpgrades);
+                    InfoBuidlingsWorker.SetAmountUpgrades(BuildingTypes.Woodcutter, Instance.IsMasterClient, amountWoodcutterUpgrades);
+                    InfoBuidlingsWorker.SetAmountUpgrades(BuildingTypes.Mine, Instance.IsMasterClient, amountMineUpgrades);
 
                     UnitInfoManager.SetAmountUnitInGame(UnitTypes.Pawn, Instance.IsMasterClient, amountPawn);
                     UnitInfoManager.SetAmountUnitInGame(UnitTypes.PawnSword, Instance.IsMasterClient, amountPawnSword);
@@ -645,16 +637,11 @@ namespace Assets.Scripts
                     UnitInfoManager.SetAmountUnitInGame(UnitTypes.Bishop, Instance.IsMasterClient, amountBishop);
                     UnitInfoManager.SetAmountUnitInGame(UnitTypes.BishopCrossbow, Instance.IsMasterClient, amountBishopCrossbow);
 
-
-                    _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Food, Instance.IsMasterClient, food);
-                    _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Wood, Instance.IsMasterClient, wood);
-                    _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Ore, Instance.IsMasterClient, ore);
-                    _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Iron, Instance.IsMasterClient, iron);
-                    _eGM.EconomyEnt_EconomyCom.SetAmountResources(ResourceTypes.Gold, Instance.IsMasterClient, gold);
-
-                    _eGM.UnitInfoEnt_UnitInventorCom.SetSettedKing(Instance.IsMasterClient, isSettedKing);
-                    _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Instance.IsMasterClient] = isSettedCity;
-                    _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[Instance.IsMasterClient] = xySettedCity;
+                    InfoResourcesWorker.SetAmountResources(ResourceTypes.Food, Instance.IsMasterClient, food);
+                    InfoResourcesWorker.SetAmountResources(ResourceTypes.Wood, Instance.IsMasterClient, wood);
+                    InfoResourcesWorker.SetAmountResources(ResourceTypes.Ore, Instance.IsMasterClient, ore);
+                    InfoResourcesWorker.SetAmountResources(ResourceTypes.Iron, Instance.IsMasterClient, iron);
+                    InfoResourcesWorker.SetAmountResources(ResourceTypes.Gold, Instance.IsMasterClient, gold);
                     break;
 
                 default:

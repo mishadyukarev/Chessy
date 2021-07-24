@@ -6,6 +6,8 @@ internal struct ActivatedDictComponent
 
     internal bool IsActivatedAll => _isActivatedDict[true] && _isActivatedDict[false];
 
+    internal ActivatedDictComponent(Dictionary<bool, bool> dict) => _isActivatedDict = dict;
+
     internal void StartFill()
     {
         _isActivatedDict = new Dictionary<bool, bool>();

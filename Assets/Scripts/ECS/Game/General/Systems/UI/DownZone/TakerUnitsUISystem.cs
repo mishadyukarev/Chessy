@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Workers.Info;
 using static Assets.Scripts.Main;
 
 internal sealed class TakerUnitsUISystem : RPCGeneralSystemReduction
@@ -7,8 +8,8 @@ internal sealed class TakerUnitsUISystem : RPCGeneralSystemReduction
     {
         base.Run();
 
-        if (_eGM.UnitInfoEnt_UnitInventorCom.IsSettedKing(Instance.IsMasterClient))
-            _eGM.TakerKingEnt_ButtonCom.SetActive(false);
-        else _eGM.TakerKingEnt_ButtonCom.SetActive(true);
+        if (InfoUnitsWorker.IsSettedKing(Instance.IsMasterClient))
+            _eGGUIM.TakerKingEnt_ButtonCom.SetActive(false);
+        else _eGGUIM.TakerKingEnt_ButtonCom.SetActive(true);
     }
 }

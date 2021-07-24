@@ -1,8 +1,9 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using System.Collections.Generic;
-using static Assets.Scripts.Static.CellBaseOperations;
+using static Assets.Scripts.Workers.CellBaseOperations;
 
 internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
 {
@@ -17,19 +18,30 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
 
         List<int[]> xyAvailableCellsForShift = CellUnitWorker.GetCellsForShift(FromXy);
 
-        if (_eGM.CellUnitEnt_CellOwnerCom(FromXy).IsHim(InfoFrom.Sender) && _eGM.CellUnitEnt_CellUnitCom(FromXy).HaveMinAmountSteps)
+        if (CellUnitWorker.IsHim(InfoFrom.Sender, FromXy) && CellUnitWorker.HaveMinAmountSteps(FromXy))
         {
             if (xyAvailableCellsForShift.TryFindCell(ToXy))
             {
                 PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
+
+                var fromUnitType = CellUnitWorker.UnitType(FromXy);
+                var fromIsMasterClient = CellUnitWorker.IsMasterClient(FromXy);
+
+                var fromCondition = CellUnitWorker.ProtectRelaxType(FromXy);
+
+
+                InfoUnitsWorker.TakeUnitInStandartCondition(fromCondition, fromUnitType, fromIsMasterClient, FromXy);
+
                 CellUnitWorker.ShiftPlayerUnit(FromXy, ToXy);
 
+                InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, fromUnitType, fromIsMasterClient, ToXy);
 
-                _eGM.CellUnitEnt_CellUnitCom(ToXy).TakeAmountSteps(CellEnvironmentWorker.NeedAmountSteps(ToXy));
-                if (_eGM.CellUnitEnt_CellUnitCom(ToXy).AmountSteps < 0) _eGM.CellUnitEnt_CellUnitCom(ToXy).ResetAmountSteps();
 
-                _eGM.CellUnitEnt_ProtectRelaxCom(ToXy).Reset();
+                CellUnitWorker.TakeAmountSteps(ToXy, CellEnvironmentWorker.NeedAmountSteps(ToXy));
+                if (CellUnitWorker.AmountSteps(ToXy) < 0) CellUnitWorker.ResetAmountSteps(ToXy);
+
+                CellUnitWorker.ResetProtectedRelaxType(ToXy);
             }
         }
     }

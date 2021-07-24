@@ -1,7 +1,10 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Info;
 using Photon.Pun;
+using System;
 
 internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 {
@@ -13,105 +16,89 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        bool isSetted = false;
-
-        if (!CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Mountain, XyCell) && !_eGM.CellUnitEnt_UnitTypeCom(XyCell).HaveAnyUnit)
+        if (!CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Mountain, XyCell) && !CellUnitWorker.HaveAnyUnit(XyCell)
+            && _eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
         {
             switch (UnitType)
             {
                 case UnitTypes.None:
-                    break;
+                    throw new Exception();
 
 
                 case UnitTypes.King:
-                    if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
-                    {
-                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                        _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
-                        _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
-                        isSetted = true;
-                    }
-                    else isSetted = false;
+                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    _eGM.UnitInfoEnt_UnitInventorCom.SetSettedKing(InfoFrom.Sender.IsMasterClient, isSetted);
+                    CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
+                    CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
+                    InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
+                    InfoUnitsWorker.SetSettedKing(InfoFrom.Sender.IsMasterClient, true);
                     break;
 
 
                 case UnitTypes.Pawn:
-                    if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
-                    {
-                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                        _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
-                        _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
-                        isSetted = true;
-                    }
-                    else isSetted = false;
+                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+
+                    CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
+                    CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
+                    InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.PawnSword:
-                    if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
-                    {
-                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                        _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
-                        _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
-                        isSetted = true;
-                    }
-                    else isSetted = false;
+                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+
+                    CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
+                    CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
+                    InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.Rook:
-                    if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
-                    {
-                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                        _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
-                        _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
-                        isSetted = true;
-                    }
-                    else isSetted = false;
+                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+
+                    CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
+                    CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
+                    InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.RookCrossbow:
-                    if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
-                    {
-                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                        _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
-                        _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
-                        isSetted = true;
-                    }
-                    else isSetted = false;
+                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+
+                    CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
+                    CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
+                    InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.Bishop:
-                    if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
-                    {
-                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                        _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
-                        _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
-                        isSetted = true;
-                    }
+                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+
+                    CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
+                    CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
+                    InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.BishopCrossbow:
-                    if (_eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
-                    {
-                        CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                        _eGM.CellUnitEnt_CellUnitCom(XyCell).SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType));
-                        _eGM.UnitInfoEnt_UnitInventorCom.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
-                        isSetted = true;
-                    }
-                    else isSetted = false;
+                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+
+                    CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
+                    CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
+                    InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
+
+            PhotonPunRPC.SetUnitToGeneral(InfoFrom.Sender, true);
+            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
         }
-        if (isSetted) PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
-        PhotonPunRPC.SetUnitToGeneral(InfoFrom.Sender, isSetted);
+
+        else
+        {
+            PhotonPunRPC.SetUnitToGeneral(InfoFrom.Sender, false);
+        }
     }
 }

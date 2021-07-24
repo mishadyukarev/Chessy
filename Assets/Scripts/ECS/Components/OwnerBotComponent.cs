@@ -2,12 +2,8 @@
 {
     internal struct OwnerBotComponent
     {
-        private bool _haveBot;
+        internal bool IsBot { get; set; }
 
-        internal bool IsBot => _haveBot;
-
-        internal void SetBot(bool haveBot) => _haveBot = haveBot;
-
-        internal void StartFill() => _haveBot = default;
+        internal void StartFill() => IsBot = default;
     }
 }

@@ -1,128 +1,131 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Info;
 using Photon.Pun;
+using System;
 using static Assets.Scripts.CellEnvironmentWorker;
 
 internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 {
     private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.InfoFrom;
 
-    private int[] XyCell => _eMM.BuildEnt_XyCellCom.XyCell;
-    private BuildingTypes BuildingType => _eMM.BuildEnt_BuildingTypeCom.BuildingType;
+    private int[] XyCellForBuilding => _eMM.BuildEnt_XyCellCom.XyCell;
+    private BuildingTypes NeededBuildingTypeForBuilding => _eMM.BuildEnt_BuildingTypeCom.BuildingType;
 
     public override void Run()
     {
         base.Run();
 
 
-        if (_eGM.CellBuildEnt_BuilTypeCom(XyCell).HaveBuilding)
+        if (CellBuildingWorker.HaveBuilding(XyCellForBuilding))
         {
             PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
         }
 
         else
         {
-            var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCell).UnitType;
+            var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCellForBuilding).UnitType;
 
-            bool canSet = false;
-            switch (BuildingType)
+            switch (NeededBuildingTypeForBuilding)
             {
                 case BuildingTypes.None:
-                    break;
+                    throw new Exception();
+
 
                 case BuildingTypes.City:
-                    if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
+                    if (CellUnitWorker.HaveMaxAmountSteps(XyCellForBuilding))
                     {
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
 
-                        CellBuildingWorker.SetPlayerBuilding(true, BuildingType, InfoFrom.Sender, XyCell);
-                        _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
+                        CellBuildingWorker.CreatePlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
+                        InfoBuidlingsWorker.AddAmountBuildingsInGame(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
 
-                        _eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[InfoFrom.Sender.IsMasterClient] = true;
-                        _eGM.BuildingsEnt_BuildingsCom.XySettedCityDict[InfoFrom.Sender.IsMasterClient] = XyCell;
+                        CellUnitWorker.ResetAmountSteps(XyCellForBuilding);
 
-                        if (HaveEnvironment(EnvironmentTypes.AdultForest, XyCell)) ResetEnvironment(EnvironmentTypes.AdultForest, XyCell);
-                        if (HaveEnvironment(EnvironmentTypes.Fertilizer, XyCell)) ResetEnvironment(EnvironmentTypes.Fertilizer, XyCell);
+                        if (HaveEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding)) ResetEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding);
+                        if (HaveEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding)) ResetEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding);
                     }
                     else
                     {
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                     }
                     break;
+
 
                 case BuildingTypes.Farm:
-                    canSet = !HaveEnvironment(EnvironmentTypes.AdultForest, XyCell) && !HaveEnvironment(EnvironmentTypes.YoungForest, XyCell);
-                    break;
-
-                case BuildingTypes.Woodcutter:
-                    canSet = HaveEnvironment(EnvironmentTypes.AdultForest, XyCell) && HaveResources(ResourceTypes.Wood, XyCell);
-                    break;
-
-                case BuildingTypes.Mine:
-                    canSet = HaveEnvironment(EnvironmentTypes.Hill, XyCell) && HaveResources(ResourceTypes.Ore, XyCell);
-                    break;
-
-                default:
-                    break;
-            }
-            if (canSet)
-            {
-                if (BuildingType != BuildingTypes.Farm)
-                {
-                    if (EconomyWorker.CanCreateBuilding(BuildingType, InfoFrom.Sender, out bool[] haves))
+                    if(!HaveEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding) && !HaveEnvironment(EnvironmentTypes.YoungForest, XyCellForBuilding))
                     {
-                        if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMaxSteps(unitType))
+                        if (InfoResourcesWorker.CanCreateNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, out bool[] haves))
                         {
-                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
-
-                            EconomyWorker.CreateBuilding(BuildingType, InfoFrom.Sender);
-                            CellBuildingWorker.SetPlayerBuilding(true, BuildingType, InfoFrom.Sender, XyCell);
-                            _eGM.CellUnitEnt_CellUnitCom(XyCell).ResetAmountSteps();
-                        }
-                        else
-                        {
-                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                        }
-                    }
-                    else
-                    {
-                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                        PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
-                    }
-                }
-                else
-                {
-                    if (EconomyWorker.CanCreateBuilding(BuildingType, InfoFrom.Sender, out bool[] haves))
-                    {
-                        if (_eGM.CellUnitEnt_CellUnitCom(XyCell).HaveMinAmountSteps)
-                        {
-                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
-
-                            if (HaveEnvironment(EnvironmentTypes.Fertilizer, XyCell))
+                            if (CellUnitWorker.HaveMinAmountSteps(XyCellForBuilding))
                             {
-                                AddAmountResources(ResourceTypes.Food, XyCell, MaxAmountResources(EnvironmentTypes.Fertilizer));
+                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
+
+                                if (HaveEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding))
+                                {
+                                    AddAmountResources(ResourceTypes.Food, XyCellForBuilding, MaxAmountResources(EnvironmentTypes.Fertilizer));
+                                }
+                                else
+                                {
+                                    SetNewEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding);
+                                }
+
+                                InfoResourcesWorker.BuyNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender);
+
+                                CellBuildingWorker.CreatePlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
+                                InfoBuidlingsWorker.AddAmountBuildingsInGame(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+
+                                CellUnitWorker.TakeAmountSteps(XyCellForBuilding);
                             }
                             else
                             {
-                                SetNewEnvironment(EnvironmentTypes.Fertilizer, XyCell);
+                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                             }
-
-                            EconomyWorker.CreateBuilding(BuildingType, InfoFrom.Sender);
-                            CellBuildingWorker.SetPlayerBuilding(true, BuildingType, InfoFrom.Sender, XyCell);
-                            _eGM.CellUnitEnt_CellUnitCom(XyCell).TakeAmountSteps();
                         }
                         else
                         {
                             PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
+                        }
+                    }         
+                    break;
+
+                case BuildingTypes.Woodcutter:
+                    throw new Exception();
+
+
+                case BuildingTypes.Mine:
+                    if (HaveEnvironment(EnvironmentTypes.Hill, XyCellForBuilding) && HaveResources(ResourceTypes.Ore, XyCellForBuilding))
+                    {
+                        if (InfoResourcesWorker.CanCreateNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, out bool[] haves))
+                        {
+                            if (CellUnitWorker.HaveMaxAmountSteps(XyCellForBuilding))
+                            {
+                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
+
+                                InfoResourcesWorker.BuyNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender);
+                                InfoBuidlingsWorker.AddAmountBuildingsInGame(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+                                CellBuildingWorker.CreatePlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
+
+                                CellUnitWorker.ResetAmountSteps(XyCellForBuilding);
+                            }
+                            else
+                            {
+                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            }
+                        }
+                        else
+                        {
+                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
                         }
                     }
-                    else
-                    {
-                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                        PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
-                    }
-                }
+                    break;
+
+
+                default:
+                    throw new Exception();
             }
         }
     }

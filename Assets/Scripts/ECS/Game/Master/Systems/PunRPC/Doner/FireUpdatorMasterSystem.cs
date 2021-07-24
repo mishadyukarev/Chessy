@@ -1,9 +1,9 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Static;
-using static Assets.Scripts.Static.Cell.CellEffectsWorker;
+using Assets.Scripts.Workers;
+using static Assets.Scripts.Workers.Cell.CellEffectsWorker;
 using static Assets.Scripts.CellEnvironmentWorker;
 using static Assets.Scripts.CellUnitWorker;
-using Assets.Scripts.Static.Cell;
+using Assets.Scripts.Workers.Cell;
 
 internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 {
@@ -40,9 +40,9 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 
                     if (TimeStepsEffect(EffectTypes.Fire, xy) >= 3)
                     {
-                        if (_eGM.CellBuildEnt_BuilTypeCom(x, y).HaveBuilding)
+                        if (CellBuildingWorker.HaveBuilding(xy))
                         {
-                            CellBuildingWorker.ResetBuilding(true, x, y);
+                            CellBuildingWorker.ResetPlayerBuilding(x, y);
                         }
 
 

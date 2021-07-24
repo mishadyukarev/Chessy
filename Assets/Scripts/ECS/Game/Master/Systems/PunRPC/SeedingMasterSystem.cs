@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers;
 using Photon.Pun;
 using System;
 using static Assets.Scripts.CellEnvironmentWorker;
@@ -26,9 +27,9 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     throw new Exception();
 
                 case EnvironmentTypes.YoungForest:
-                    if (_eGM.CellUnitEnt_CellUnitCom(XyCellForSeeding).HaveMinAmountSteps)
+                    if (CellUnitWorker.HaveMinAmountSteps(XyCellForSeeding))
                     {
-                        if (!_eGM.CellBuildEnt_BuilTypeCom(XyCellForSeeding).HaveBuilding)
+                        if (!CellBuildingWorker.HaveBuilding(XyCellForSeeding))
                         {
                             if (!HaveEnvironment(EnvironmentTypes.Fertilizer, XyCellForSeeding))
                             {
@@ -39,7 +40,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Seeding);
                                         SetNewEnvironment(EnvironmentTypes.YoungForest, XyCellForSeeding);
 
-                                        _eGM.CellUnitEnt_CellUnitCom(XyCellForSeeding).TakeAmountSteps();
+                                        CellUnitWorker.TakeAmountSteps(XyCellForSeeding);
                                     }
                             }
                             else

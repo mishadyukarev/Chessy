@@ -18,6 +18,7 @@ namespace Assets.Scripts
 
 
         private EntitiesGameGeneralManager _entitiesGameGeneralManager;
+        private EntitiesGameGeneralUIManager _entitiesGameGeneralUIManager;
         private SystemsGameGeneralManager _systemsGameGeneralManager;
 
         private EntitiesGameMasterManager _entitiesGameMasterManager;
@@ -35,6 +36,7 @@ namespace Assets.Scripts
 
 
         public EntitiesGameGeneralManager EntitiesGameGeneralManager => _entitiesGameGeneralManager;
+        public EntitiesGameGeneralUIManager EntitiesGameGeneralUIManager => _entitiesGameGeneralUIManager;
         public SystemsGameGeneralManager SystemsGameGeneralManager => _systemsGameGeneralManager;
 
         public EntitiesGameMasterManager EntitiesGameMasterManager => _entitiesGameMasterManager;
@@ -42,7 +44,6 @@ namespace Assets.Scripts
 
         public EntitiesGameOtherManager EntitiesGameOtherManager => _entitiesGameOtherManager;
         public SystemsGameOtherManager SystemsGameOtherManager => _systemsGameOtherManager;
-
 
         public ECSManager()
         {
@@ -57,7 +58,8 @@ namespace Assets.Scripts
             _entitiesMenuManager = new EntitiesMenuManager(_menuWorld);
 
 
-            _entitiesGameGeneralManager = new EntitiesGameGeneralManager(_gameWorld);
+            _entitiesGameGeneralManager = new EntitiesGameGeneralManager();
+            _entitiesGameGeneralUIManager = new EntitiesGameGeneralUIManager(_gameWorld);
             _systemsGameGeneralManager = new SystemsGameGeneralManager();
 
             _entitiesGameMasterManager = new EntitiesGameMasterManager(_gameWorld);
@@ -101,13 +103,19 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
+                    if (!Instance.IsStarted) _gameWorld.Destroy();
+
                     _entitiesMenuManager.FillEntities();
+
+                    Instance.IsStarted = false;
                     break;
 
                 case SceneTypes.Game:
-                    _entitiesGameGeneralManager.FillEntities();
-                    _entitiesGameMasterManager.FillEntities();
-                    _entitiesGameOtherManager.FillEntities();
+                    _gameWorld = new EcsWorld();
+                    _entitiesGameGeneralManager.FillEntities(_gameWorld);
+                    _entitiesGameGeneralUIManager.FillEntities(_gameWorld);
+                    _entitiesGameMasterManager.FillEntities(_gameWorld);
+                    _entitiesGameOtherManager.FillEntities(_gameWorld);
 
 
                     _systemsGameGeneralManager.DestroySystems();

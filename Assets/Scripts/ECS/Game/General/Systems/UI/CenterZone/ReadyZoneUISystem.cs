@@ -9,22 +9,22 @@ internal sealed class ReadyZoneUISystem : SystemGeneralReduction
     {
         base.Run();
 
-        if (_eGM.ReadyEnt_ActivatedDictCom.IsActivated(Instance.IsMasterClient))
+        if (_eGGUIM.ReadyEnt_ActivatedDictCom.IsActivated(Instance.IsMasterClient))
         {
-            _eGM.ReadyEnt_ButtonCom.SetColor(Color.red);
+            _eGGUIM.ReadyEnt_ButtonCom.SetColor(Color.red);
         }
         else
         {
-            _eGM.ReadyEnt_ButtonCom.SetColor(Color.white);
+            _eGGUIM.ReadyEnt_ButtonCom.SetColor(Color.white);
         }
 
-        if (_eGM.ReadyEnt_StartedGameCom.IsStartedGame || PhotonNetwork.OfflineMode/*Instance.GameModeType == GameModTypes.WithBot*/)
+        if (_eGGUIM.ReadyEnt_StartedGameCom.IsStartedGame || PhotonNetwork.OfflineMode/*Instance.GameModeType == GameModTypes.WithBot*/)
         {
-            _eGM.ReadyEnt_ParentCom.SetActive(false);
+            _eGGUIM.ReadyEnt_ParentCom.SetActive(false);
         }
         else
         {
-            _eGM.ReadyEnt_ParentCom.SetActive(true);
+            _eGGUIM.ReadyEnt_ParentCom.SetActive(true);
         }
     }
 }

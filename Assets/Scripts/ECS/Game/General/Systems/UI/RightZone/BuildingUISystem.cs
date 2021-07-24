@@ -1,21 +1,21 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
+using Assets.Scripts.Workers;
 using static Assets.Scripts.Main;
 
 internal sealed class BuildingUISystem : RPCGeneralSystemReduction
 {
     private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
-    private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
+    private bool IsActivatedDoner => _eGGUIM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
     public override void Init()
     {
         base.Init();
 
-        _eGM.BuildingFirstAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.Farm); });
+        _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.Farm); });
         //_eGM.BuildingSecondAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.Woodcutter); });
-        _eGM.BuildingThirdAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.Mine); });
-        _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.City); });
+        _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.Mine); });
+        _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.City); });
     }
 
     public override void Run()
@@ -23,11 +23,11 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected && _eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
+        if (_eGM.SelectorEnt_SelectorCom.IsSelected && CellUnitWorker.HaveAnyUnit(XySelectedCell))
         {
-            if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
+            if (CellUnitWorker.HaveOwner(XySelectedCell))
             {
-                if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+                if (CellUnitWorker.IsMine(XySelectedCell))
                 {
                     switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
                     {
@@ -69,56 +69,56 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
 
                 else
                 {
-                    _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
-                    _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
+                    _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
+                    _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
                     //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
-                    _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(false);
-                    _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
+                    _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.SetActive(false);
+                    _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
                 }
             }
 
             else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).IsBot)
             {
-                _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
-                _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
+                _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
+                _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
                 //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
-                _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(false);
-                _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
+                _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.SetActive(false);
+                _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
             }
 
             void PawnAndPawnSword()
             {
-                _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(true);
-                _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(true);
+                _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(true);
+                _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.SetActive(true);
                 //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(true);
-                _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(true);
-                _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(true);
+                _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.SetActive(true);
+                _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.SetActive(true);
 
-                _eGM.BuildingFourthAbilityEnt_ButtonCom.RemoveAllListeners();
+                _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.RemoveAllListeners();
 
-                if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).HaveBuilding)
+                if (CellBuildingWorker.HaveBuilding(XySelectedCell))
                 {
-                    if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).HaveOwner)
+                    if (CellUnitWorker.HaveOwner(XySelectedCell))
                     {
-                        if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).IsMine)
+                        if (CellUnitWorker.IsMine(XySelectedCell))
                         {
                             if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
                             {
-                                _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
+                                _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
                             }
                             else
                             {
-                                _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
-                                _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Destroy");
+                                _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
+                                _eGGUIM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Destroy");
                             }
                         }
 
                         else
                         {
-                            _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(true);
+                            _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.SetActive(true);
 
-                            _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
-                            _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Destroy");
+                            _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
+                            _eGGUIM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Destroy");
                         }
 
 
@@ -145,26 +145,26 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                         //}
                     }
 
-                    else if (_eGM.CellBuildEnt_CellOwnerBotCom(XySelectedCell).IsBot)
+                    else if (_eGM.CellBuildEnt_OwnerBotCom(XySelectedCell).IsBot)
                     {
                         if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
                         {
-                            _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
-                            _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Destroy");
+                            _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
+                            _eGGUIM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Destroy");
                         }
                     }
 
                 }
                 else
                 {
-                    if (_eGM.BuildingsEnt_BuildingsCom.IsSettedCityDict[Instance.IsMasterClient])
+                    if (InfoBuidlingsWorker.IsSettedCity(Instance.IsMasterClient))
                     {
-                        _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
+                        _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
                     }
                     else
                     {
-                        _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.City); });
-                        _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Build City");
+                        _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.City); });
+                        _eGGUIM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Build City");
                     }
                 }
             }
@@ -172,21 +172,21 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
 
         else
         {
-            _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
-            _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
+            _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
+            _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
             //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
-            _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(false);
-            _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
+            _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.SetActive(false);
+            _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
         }
     }
 
     private void Activate(bool isActivated)
     {
-        _eGM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(isActivated);
-        _eGM.BuildingFirstAbilityEnt_ButtonCom.SetActive(isActivated);
+        _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(isActivated);
+        _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.SetActive(isActivated);
         //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(isActivated);
-        _eGM.BuildingThirdAbilityEnt_ButtonCom.SetActive(isActivated);
-        _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(isActivated);
+        _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.SetActive(isActivated);
+        _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.SetActive(isActivated);
     }
 
     private void Build(BuildingTypes buildingType)

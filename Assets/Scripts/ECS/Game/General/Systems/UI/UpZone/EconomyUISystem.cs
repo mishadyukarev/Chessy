@@ -1,5 +1,8 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Static;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Info;
+using Assets.Scripts.Workers.UI.Info;
+using Photon.Pun;
 using static Assets.Scripts.Main;
 
 internal sealed class EconomyUISystem : SystemGeneralReduction
@@ -8,25 +11,16 @@ internal sealed class EconomyUISystem : SystemGeneralReduction
     {
         base.Run();
 
-        var amountAddingFood = _eGM.BuildingsEnt_BuildingsCom.AmountBuildings(BuildingTypes.Farm, Instance.IsMasterClient)
-            * _eGM.BuildingsEnt_UpgradeBuildingsCom.AmountUpgrades(BuildingTypes.Farm, Instance.IsMasterClient)
-            - UnitInfoManager.AmountUnitsInGame(UnitTypes.Pawn, Instance.IsMasterClient)
-            - UnitInfoManager.AmountUnitsInGame(UnitTypes.PawnSword, Instance.IsMasterClient)
-            - UnitInfoManager.AmountUnitsInGame(UnitTypes.Rook, Instance.IsMasterClient)
-            - UnitInfoManager.AmountUnitsInGame(UnitTypes.RookCrossbow, Instance.IsMasterClient)
-            - UnitInfoManager.AmountUnitsInGame(UnitTypes.Bishop, Instance.IsMasterClient)
-            - UnitInfoManager.AmountUnitsInGame(UnitTypes.BishopCrossbow, Instance.IsMasterClient);
-
-        _eGM.FoodAddingEnt_AmountCom.Amount = amountAddingFood;
+        var amountAddingFood = InfoResourcesWorker.GetCommonAmountExtraction(ResourceTypes.Food, PhotonNetwork.IsMasterClient);
 
         if (amountAddingFood < 0)
-            _eGM.FoodAddingEnt_TextMeshProUGUICom.SetText(amountAddingFood.ToString());
-        else _eGM.FoodAddingEnt_TextMeshProUGUICom.SetText("+ " + amountAddingFood.ToString());
+            InfoResourcesUIWorker.SetAddingText(ResourceTypes.Food, amountAddingFood.ToString());
+        else InfoResourcesUIWorker.SetAddingText(ResourceTypes.Food, "+ " + amountAddingFood.ToString());
 
-        _eGM.EconomyUIEnt_EconomyUICom.SetText(ResourceTypes.Food, _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Food, Instance.IsMasterClient).ToString());
-        _eGM.EconomyUIEnt_EconomyUICom.SetText(ResourceTypes.Wood, _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Wood, Instance.IsMasterClient).ToString());
-        _eGM.EconomyUIEnt_EconomyUICom.SetText(ResourceTypes.Ore, _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Ore, Instance.IsMasterClient).ToString());
-        _eGM.EconomyUIEnt_EconomyUICom.SetText(ResourceTypes.Iron, _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Iron, Instance.IsMasterClient).ToString());
-        _eGM.EconomyUIEnt_EconomyUICom.SetText(ResourceTypes.Gold, _eGM.EconomyEnt_EconomyCom.AmountResources(ResourceTypes.Gold, Instance.IsMasterClient).ToString());
+        InfoResourcesUIWorker.SetMainText(ResourceTypes.Food, InfoResourcesWorker.AmountResources(ResourceTypes.Food, Instance.IsMasterClient).ToString());
+        InfoResourcesUIWorker.SetMainText(ResourceTypes.Wood, InfoResourcesWorker.AmountResources(ResourceTypes.Wood, Instance.IsMasterClient).ToString());
+        InfoResourcesUIWorker.SetMainText(ResourceTypes.Ore, InfoResourcesWorker.AmountResources(ResourceTypes.Ore, Instance.IsMasterClient).ToString());
+        InfoResourcesUIWorker.SetMainText(ResourceTypes.Iron, InfoResourcesWorker.AmountResources(ResourceTypes.Iron, Instance.IsMasterClient).ToString());
+        InfoResourcesUIWorker.SetMainText(ResourceTypes.Gold, InfoResourcesWorker.AmountResources(ResourceTypes.Gold, Instance.IsMasterClient).ToString());
     }
 }

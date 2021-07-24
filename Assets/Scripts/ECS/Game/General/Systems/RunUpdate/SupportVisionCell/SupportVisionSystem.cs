@@ -2,11 +2,11 @@
 using Assets.Scripts.Abstractions.Enums;
 using UnityEngine;
 using static Assets.Scripts.Main;
-using static Assets.Scripts.Static.Cell.CellSupportVisionWorker;
-using static Assets.Scripts.Static.Cell.CellSupportStaticWorker;
+using static Assets.Scripts.Workers.Cell.CellSupportVisionWorker;
+using static Assets.Scripts.Workers.Cell.CellSupportStaticWorker;
 using static Assets.Scripts.CellUnitWorker;
 using static Assets.Scripts.CellWorker;
-using Assets.Scripts.Static;
+using Assets.Scripts.Workers;
 
 internal sealed class SupportVisionSystem : SystemGeneralReduction
 {
@@ -23,7 +23,7 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
 
                 DisableSupVis(xy);
 
-                if (_eGM.SelectorEnt_UnitTypeCom.HaveAnyUnit)
+                if (SelectorWorker.HaveAnySelectorUnit)
                 {
                     if (Instance.IsMasterClient)
                     {
@@ -45,11 +45,11 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                 
                 if (IsActivated(Instance.IsMasterClient, xy))
                 {
-                    if (HaveAnyUnitOnCell(xy))
+                    if (HaveAnyUnit(xy))
                     {
                         var unitType = UnitType(xy);
 
-                        if (HaveOwner(xy) || IsBotOnCell(xy))
+                        if (HaveOwner(xy) || IsBot(xy))
                         {
                             ActiveVision(true, SupportStaticTypes.Hp, xy);
 
@@ -59,7 +59,7 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
 
                             SetScale(SupportStaticTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1), xy);
 
-                            if (!IsBotOnCell(xy))
+                            if (!IsBot(xy))
                             {
                                 if (IsMasterClient(xy))
                                 {
@@ -77,20 +77,20 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                         }
 
 
-                        if (IsTypeProtectRelax(ProtectRelaxTypes.Protected, xy))
+                        if (IsUnitProtectRelaxType(ProtectRelaxTypes.Protected, xy))
                         {
                             //_eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
                             //_eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.yellow);
                         }
 
-                        else if (IsTypeProtectRelax(ProtectRelaxTypes.Relaxed, xy))
+                        else if (IsUnitProtectRelaxType(ProtectRelaxTypes.Relaxed, xy))
                         {
                             //_eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
                             //_eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.green);
                         }
 
 
-                        if (HaveMaxAmountSteps(unitType, xy))
+                        if (HaveMaxAmountSteps(xy))
                         {
                             //_eGM.CellUnitEnt_CellUnitCom(x, y).EnableStandartColorSR(true);
                         }

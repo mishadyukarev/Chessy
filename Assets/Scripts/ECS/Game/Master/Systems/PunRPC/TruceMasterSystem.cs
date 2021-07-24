@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Static.Cell;
+using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using UnityEngine;
 using static Assets.Scripts.CellEnvironmentWorker;
@@ -11,7 +12,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        _eGM.MotionEnt_AmountCom.AddAmount(Random.Range(4500, 5500));
+        _eGGUIM.MotionEnt_AmountCom.Amount += Random.Range(4500, 5500);
 
         int random;
 
@@ -22,7 +23,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 
                 CellEffectsWorker.ResetEffect(EffectTypes.Fire, xy);
 
-                if (HaveAnyUnitOnCell(xy))
+                if (HaveAnyUnit(xy))
                 {
                     if (HaveOwner(xy))
                     {
@@ -32,32 +33,32 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                                 break;
 
                             case UnitTypes.King:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.King, IsMasterClient(xy));
-                                _eGM.UnitInfoEnt_UnitInventorCom.SetSettedKing(IsMasterClient(xy), false);
+                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.King, IsMasterClient(xy));
+                                InfoUnitsWorker.SetSettedKing(IsMasterClient(xy), false);
                                 break;
 
                             case UnitTypes.Pawn:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.Pawn, IsMasterClient(xy));
+                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.Pawn, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.PawnSword:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.PawnSword, IsMasterClient(xy));
+                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.PawnSword, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.Rook:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.Rook, IsMasterClient(xy));
+                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.Rook, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.RookCrossbow:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.RookCrossbow, IsMasterClient(xy));
+                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.RookCrossbow, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.Bishop:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.Bishop, IsMasterClient(xy));
+                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.Bishop, IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.BishopCrossbow:
-                                _eGM.UnitInfoEnt_UnitInventorCom.AddUnitsInInventor(UnitTypes.BishopCrossbow, IsMasterClient(xy));
+                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.BishopCrossbow, IsMasterClient(xy));
                                 break;
 
                             default:
@@ -105,16 +106,16 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                 }
             }
 
-        _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, true, 15);
-        _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Food, false, 15);
+        InfoResourcesWorker.AddAmountResources(ResourceTypes.Food, true, 15);
+        InfoResourcesWorker.AddAmountResources(ResourceTypes.Food, false, 15);
 
-        _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, true, 15);
-        _eGM.EconomyEnt_EconomyCom.AddAmountResources(ResourceTypes.Wood, false, 15);
+        InfoResourcesWorker.AddAmountResources(ResourceTypes.Wood, true, 15);
+        InfoResourcesWorker.AddAmountResources(ResourceTypes.Wood, false, 15);
 
         //PhotonPunRPC.DoneToGeneral(RpcTarget.All, false);
-        PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGM.MotionEnt_AmountCom.Amount);
+        PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGGUIM.MotionEnt_AmountCom.Amount);
         PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-        _eGM.DonerUIEnt_IsActivatedDictCom.ResetAll();
+        _eGGUIM.DonerUIEnt_IsActivatedDictCom.ResetAll();
         //}
     }
 }

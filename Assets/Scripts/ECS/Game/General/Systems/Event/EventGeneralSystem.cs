@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
+using Assets.Scripts.Workers;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
@@ -9,7 +9,7 @@ namespace Assets.Scripts
         private PhotonSceneManager _sceneManager;
 
         private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
-        private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
+        private bool IsActivatedDoner => _eGGUIM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
         internal EventGeneralSystem()
         {
@@ -20,25 +20,25 @@ namespace Assets.Scripts
         {
             base.Init();
 
-            _eGM.ReadyEnt_ButtonCom.AddListener(Ready);
+            _eGGUIM.ReadyEnt_ButtonCom.AddListener(Ready);
 
-            _eGM.TakerKingEnt_ButtonCom.AddListener(delegate { GetUnit(_eGM.TakerKingEnt_UnitTypeCom.UnitType); });
-            _eGM.TakerPawnEntityButtonComponent.AddListener(delegate { GetUnit(_eGM.TakerPawnEntityUnitTypeComponent.UnitType); });
-            _eGM.TakerRookEntityButtonComponent.AddListener(delegate { GetUnit(_eGM.TakerRookEntityUnitTypeComponent.UnitType); });
-            _eGM.TakerBishopEntityButtonComponent.AddListener(delegate { GetUnit(_eGM.TakerBishopEntityUnitTypeComponent.UnitType); });
+            _eGGUIM.TakerKingEnt_ButtonCom.AddListener(delegate { GetUnit(_eGGUIM.TakerKingEnt_UnitTypeCom.UnitType); });
+            _eGGUIM.TakerPawnEntityButtonComponent.AddListener(delegate { GetUnit(_eGGUIM.TakerPawnEntityUnitTypeComponent.UnitType); });
+            _eGGUIM.TakerRookEntityButtonComponent.AddListener(delegate { GetUnit(_eGGUIM.TakerRookEntityUnitTypeComponent.UnitType); });
+            _eGGUIM.TakerBishopEntityButtonComponent.AddListener(delegate { GetUnit(_eGGUIM.TakerBishopEntityUnitTypeComponent.UnitType); });
 
-            _eGM.DonerUIEnt_ButtonCom.AddListener(delegate { Done(); });
+            _eGGUIM.DonerUIEnt_ButtonCom.AddListener(delegate { Done(); });
 
-            _eGM.EnvironmentInfoEnt_ButtonCom.AddListener(EnvironmentInfo);
+            _eGGUIM.EnvironmentInfoEnt_ButtonCom.AddListener(EnvironmentInfo);
 
-            _eGM.LeaveEnt_ButtonCom.AddListener(_sceneManager.LeaveRoom);
+            _eGGUIM.LeaveEnt_ButtonCom.AddListener(_sceneManager.LeaveRoom);
 
-            _eGM.StandartFirstAbilityEnt_ButtonCom.AddListener(StandartAbilityButton1);
-            _eGM.StandartSecondAbilityEnt_ButtonCom.AddListener(StandartAbilityButton2);
+            _eGGUIM.StandartFirstAbilityEnt_ButtonCom.AddListener(StandartAbilityButton1);
+            _eGGUIM.StandartSecondAbilityEnt_ButtonCom.AddListener(StandartAbilityButton2);
         }
 
 
-        private void Ready() => PhotonPunRPC.ReadyToMaster(!_eGM.ReadyEnt_ActivatedDictCom.IsActivated(Instance.IsMasterClient));
+        private void Ready() => PhotonPunRPC.ReadyToMaster(!_eGGUIM.ReadyEnt_ActivatedDictCom.IsActivated(Instance.IsMasterClient));
         private void GetUnit(UnitTypes unitType)
         {
             if (!IsActivatedDoner)
@@ -69,17 +69,36 @@ namespace Assets.Scripts
         }
         private void EnvironmentInfo()
         {
-            _eGM.EnvironmentInfoEnt_IsActivatedCom.ToggleActivated();
+            _eGGUIM.EnvironmentInfoEnt_IsActivatedCom.ToggleActivated();
         }
         private void StandartAbilityButton1()
         {
             if (!IsActivatedDoner)
-                PhotonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Protected, XySelectedCell);
+            {
+                if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Protected, XySelectedCell))
+                {
+                    PhotonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.None, XySelectedCell);
+                }
+                else
+                {
+                    PhotonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Protected, XySelectedCell);
+                }
+            }
+
         }
         private void StandartAbilityButton2()
         {
             if (!IsActivatedDoner)
-                PhotonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Relaxed, XySelectedCell);
+            {
+                if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Relaxed, XySelectedCell))
+                {
+                    PhotonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.None, XySelectedCell);
+                }
+                else
+                {
+                    PhotonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Relaxed, XySelectedCell);
+                }
+            }
         }
     }
 }

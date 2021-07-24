@@ -1,11 +1,11 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using static Assets.Scripts.Main;
-using static Assets.Scripts.Static.CellBaseOperations;
+using static Assets.Scripts.Workers.CellBaseOperations;
 using static Assets.Scripts.CellUnitWorker;
 using static Assets.Scripts.PhotonPunRPC;
-using static Assets.Scripts.Static.SelectorWorker;
-using Assets.Scripts.Static;
+using static Assets.Scripts.Workers.SelectorWorker;
+using Assets.Scripts.Workers;
 
 internal sealed class SelectorSystem : SystemGeneralReduction
 {
@@ -36,7 +36,7 @@ internal sealed class SelectorSystem : SystemGeneralReduction
         {
             if (_eGM.InputEnt_InputCom.IsClick)
             {
-                if (_eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient))
+                if (_eGGUIM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient))
                 {
                     if (_eGM.SelectorEnt_SelectorCom.CanExecuteStartClick)
                     {
@@ -63,7 +63,7 @@ internal sealed class SelectorSystem : SystemGeneralReduction
                 {
                     if (_eGM.SelectorEnt_UpgradeModTypeCom.IsUpgradeModType(UpgradeModTypes.Unit))
                     {
-                        if (HaveAnyUnitOnCell(XyCurrentCell))
+                        if (HaveAnyUnit(XyCurrentCell))
                         {
                             UpgradeUnitToMaster(XyCurrentCell);
                         }
@@ -85,7 +85,7 @@ internal sealed class SelectorSystem : SystemGeneralReduction
                         if (!XyPreviousCell.Compare(XySelectedCell))
                             IsSelected = true;
 
-                        if (HaveAnyUnitOnCell(XySelectedCell))
+                        if (HaveAnyUnit(XySelectedCell))
                         {
                             if (HaveOwner(XySelectedCell))
                             {
@@ -123,7 +123,7 @@ internal sealed class SelectorSystem : SystemGeneralReduction
                         IsSelected = true;
 
 
-                        if (HaveAnyUnitOnCell(XySelectedCell))
+                        if (HaveAnyUnit(XySelectedCell))
                         {
                             if (HaveOwner(XySelectedCell))
                             {
@@ -170,7 +170,7 @@ internal sealed class SelectorSystem : SystemGeneralReduction
                                 }
                             }
 
-                            else if (IsBotOnCell(XySelectedCell))
+                            else if (IsBot(XySelectedCell))
                             {
                                 if (TryFindCell(AvailableCellTypes.SimpleAttack, XySelectedCell))
                                 {
@@ -190,7 +190,7 @@ internal sealed class SelectorSystem : SystemGeneralReduction
                         {
                             if (_eGM.SelectorEnt_SelectorCom.CanShiftUnit)
                             {
-                                if (HaveAnyUnitOnCell(XyPreviousCell))
+                                if (HaveAnyUnit(XyPreviousCell))
                                 {
                                     if (HaveOwner(XyPreviousCell))
                                     {
@@ -218,11 +218,11 @@ internal sealed class SelectorSystem : SystemGeneralReduction
             {
                 if (HaveAnySelectorUnit)
                 {
-                    if (!HaveAnyUnitOnCell(XyCurrentCell) || !IsActivated(Instance.IsMasterClient, XyCurrentCell))
+                    if (!HaveAnyUnit(XyCurrentCell) || !IsActivated(Instance.IsMasterClient, XyCurrentCell))
                     {
                         if (_eGM.SelectorEnt_SelectorCom.IsStartSelectedDirect)
                         {
-                            if (!HaveAnyUnitOnCell(XyCurrentCell))
+                            if (!HaveAnyUnit(XyCurrentCell))
                                 ActiveSelectorVisionUnit(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, XyCurrentCell);
 
                             XyPreviousVisionCell = XyCurrentCell;
@@ -252,7 +252,7 @@ internal sealed class SelectorSystem : SystemGeneralReduction
                 ClearAvailableCells();
 
                 SetEnabledUnit(false, XyPreviousVisionCell);
-                _eGM.SelectorEnt_UnitTypeCom.ResetUnit();
+                _eGM.SelectorEnt_UnitTypeCom.UnitType = default;
 
                 XyPreviousCell.Clean();
 

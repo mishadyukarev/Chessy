@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
+using Assets.Scripts.Workers;
 
 namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.Sound
 {

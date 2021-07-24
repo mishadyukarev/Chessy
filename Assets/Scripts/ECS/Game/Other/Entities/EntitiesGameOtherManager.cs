@@ -13,9 +13,9 @@ public class EntitiesGameOtherManager : EntitiesManager
         _fromInfoEnt = gameWorld.NewEntity();
     }
 
-    internal override void FillEntities()
+    internal override void FillEntities(EcsWorld ecsWorld)
     {
-        base.FillEntities();
+        base.FillEntities(ecsWorld);
 
         FromInfoEnt_FromInfoCom.StartFill();
     }

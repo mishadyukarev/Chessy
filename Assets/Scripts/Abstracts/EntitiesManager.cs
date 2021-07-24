@@ -1,8 +1,10 @@
-﻿namespace Assets.Scripts
+﻿using Leopotam.Ecs;
+
+namespace Assets.Scripts
 {
     public abstract class EntitiesManager
     {
-        internal virtual void FillEntities()
+        internal virtual void FillEntities(EcsWorld ecsWorld)
         {
 
         }

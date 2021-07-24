@@ -1,30 +1,30 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
+using Assets.Scripts.Workers;
 using static Assets.Scripts.Main;
 using static Assets.Scripts.PhotonPunRPC;
 
 internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
 {
     private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
-    private bool IsActivatedDoner => _eGM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
+    private bool IsActivatedDoner => _eGGUIM.DonerUIEnt_IsActivatedDictCom.IsActivated(Instance.IsMasterClient);
 
     public override void Init()
     {
         base.Init();
 
-        _eGM.MeltOreEnt_ButtonCom.AddListener(delegate { MeltOre(); });
+        _eGGUIM.MeltOreEnt_ButtonCom.AddListener(delegate { MeltOre(); });
 
-        _eGM.BuyPawnUIEnt_ButtonCom.AddListener(delegate { BuyUnit(UnitTypes.Pawn); });
-        _eGM.BuyRookUIEnt_ButtonCom.AddListener(delegate { BuyUnit(UnitTypes.Rook); });
-        _eGM.BuyBishopUIEnt_ButtonCom.AddListener(delegate { BuyUnit(UnitTypes.Bishop); });
+        _eGGUIM.BuyPawnUIEnt_ButtonCom.AddListener(delegate { BuyUnit(UnitTypes.Pawn); });
+        _eGGUIM.BuyRookUIEnt_ButtonCom.AddListener(delegate { BuyUnit(UnitTypes.Rook); });
+        _eGGUIM.BuyBishopUIEnt_ButtonCom.AddListener(delegate { BuyUnit(UnitTypes.Bishop); });
 
-        _eGM.UpgradeUnitUIEnt_ButtonCom.AddListener(delegate { ToggleUpgradeMod(UpgradeModTypes.Unit); });
+        _eGGUIM.UpgradeUnitUIEnt_ButtonCom.AddListener(delegate { ToggleUpgradeMod(UpgradeModTypes.Unit); });
 
 
-        _eGM.UpgradeFarmUIEnt_ButtonCom.AddListener(delegate { UpgradeBuilding(BuildingTypes.Farm); });
-        _eGM.UpgradeWoodcutterUIEnt_ButtonCom.AddListener(delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
-        _eGM.UpgradeMineUIEnt_ButtonCom.AddListener(delegate { UpgradeBuilding(BuildingTypes.Mine); });
+        _eGGUIM.UpgradeFarmUIEnt_ButtonCom.AddListener(delegate { UpgradeBuilding(BuildingTypes.Farm); });
+        _eGGUIM.UpgradeWoodcutterUIEnt_ButtonCom.AddListener(delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
+        _eGGUIM.UpgradeMineUIEnt_ButtonCom.AddListener(delegate { UpgradeBuilding(BuildingTypes.Mine); });
     }
 
     public override void Run()
@@ -33,18 +33,18 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
 
         if (_eGM.SelectorEnt_SelectorCom.IsSelected && _eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
         {
-            if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).HaveOwner)
+            if (CellUnitWorker.HaveOwner(XySelectedCell))
             {
-                if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).IsMine)
+                if (CellUnitWorker.IsMine(XySelectedCell))
                 {
-                    _eGM.BuildingZoneEnt_ParentCom.SetActive(true);
+                    _eGGUIM.BuildingZoneEnt_ParentCom.SetActive(true);
                 }
-                else _eGM.BuildingZoneEnt_ParentCom.SetActive(false);
+                else _eGGUIM.BuildingZoneEnt_ParentCom.SetActive(false);
             }
         }
         else
         {
-            _eGM.BuildingZoneEnt_ParentCom.SetActive(false);
+            _eGGUIM.BuildingZoneEnt_ParentCom.SetActive(false);
         }
     }
 

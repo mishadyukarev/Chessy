@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using static Assets.Scripts.Static.CellBaseOperations;
+using static Assets.Scripts.Workers.CellBaseOperations;
 using static Assets.Scripts.CellUnitWorker;
 using static Assets.Scripts.CellWorker;
 
@@ -16,7 +16,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                 {
                     var xy = new int[] { x, y };
 
-                    if (HaveAnyUnitOnCell(xy))
+                    if (HaveAnyUnit(xy))
                     {
                         var unitType = UnitType(xy);
 

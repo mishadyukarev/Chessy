@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Static;
+using Assets.Scripts.Workers;
 using UnityEngine;
 
 internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
@@ -12,11 +12,11 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-        if (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).HaveAnyUnit)
+        if (CellUnitWorker.HaveAnyUnit(XySelectedCell))
         {
-            if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).HaveOwner)
+            if (CellUnitWorker.HaveOwner(XySelectedCell))
             {
-                if (_eGM.CellUnitEnt_CellOwnerCom(XySelectedCell).IsMine)
+                if (CellUnitWorker.IsMine(XySelectedCell))
                 {
                     switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
                     {
@@ -76,20 +76,20 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
 
         void ActiveStandartAbilities(bool isActive)
         {
-            _eGM.StandartAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(isActive);
-            _eGM.StandartFirstAbilityEnt_ButtonCom.SetActive(isActive);
-            _eGM.StandartSecondAbilityEnt_ButtonCom.SetActive(isActive);
+            _eGGUIM.StandartAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(isActive);
+            _eGGUIM.StandartFirstAbilityEnt_ButtonCom.SetActive(isActive);
+            _eGGUIM.StandartSecondAbilityEnt_ButtonCom.SetActive(isActive);
 
             if (isActive)
             {
-                if (_eGM.CellUnitEnt_ProtectRelaxCom(XySelectedCell).IsType(ProtectRelaxTypes.Relaxed))
+                if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Protected, XySelectedCell))
                 {
-                    _eGM.StandartFirstAbilityEnt_ButtonCom.SetColor(Color.yellow);
+                    _eGGUIM.StandartFirstAbilityEnt_ButtonCom.SetColor(Color.yellow);
                 }
-                else _eGM.StandartFirstAbilityEnt_ButtonCom.SetColor(Color.white);
+                else _eGGUIM.StandartFirstAbilityEnt_ButtonCom.SetColor(Color.white);
 
-                if (_eGM.CellUnitEnt_ProtectRelaxCom(XySelectedCell).IsType(ProtectRelaxTypes.Relaxed)) _eGM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.green);
-                else _eGM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.white);
+                if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Relaxed, XySelectedCell)) _eGGUIM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.green);
+                else _eGGUIM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.white);
             }
         }
     }

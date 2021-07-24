@@ -7,15 +7,15 @@ internal sealed class TheEndGameUISystem : SystemGeneralReduction
         base.Run();
 
 
-        if (_eGM.EndGameEntEndGameCom.IsEndGame)
+        if (_eGGUIM.EndGameEntEndGameCom.IsEndGame)
         {
-            _eGM.EndGameEnt_ParentCom.SetActive(true);
-            if (_eGM.EndGameEntEndGameCom.PlayerWinner.IsLocal) _eGM.EndGameEnt_TextMeshProGUICom.SetText("You're WINNER!");
-            else _eGM.EndGameEnt_TextMeshProGUICom.SetText("You're loser :(");
+            _eGGUIM.EndGameEnt_ParentCom.SetActive(true);
+            if (_eGGUIM.EndGameEntEndGameCom.PlayerWinner.IsLocal) _eGGUIM.EndGameEnt_TextMeshProGUICom.SetText("You're WINNER!");
+            else _eGGUIM.EndGameEnt_TextMeshProGUICom.SetText("You're loser :(");
         }
         else
         {
-            _eGM.EndGameEnt_ParentCom.SetActive(false);
+            _eGGUIM.EndGameEnt_ParentCom.SetActive(false);
         }
     }
 }
