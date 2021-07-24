@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.Workers.UI.Info
 {
-    internal class InfoResourcesUIWorker : MainUIWorker
+    internal class InfoResourcesUIWorker : MainGeneralUIWorker
     {
         internal static void SetMainText(ResourceTypes economyTypes, string text)
         {

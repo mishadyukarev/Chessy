@@ -1,8 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using System;
-using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
-
-public struct SelectorComponent
+﻿public struct SelectorComponent
 {
     internal bool IsSelected { get; set; }
 

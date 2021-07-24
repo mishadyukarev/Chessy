@@ -48,7 +48,7 @@ namespace Assets.Scripts
         }
         private void Done()
         {
-            _eGM.SelectorEnt_UpgradeModTypeCom.ResetUpgradeModType();
+            SelectorWorker.ResetUpgradeModType();
 
             switch (Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType)
             {
@@ -75,13 +75,13 @@ namespace Assets.Scripts
         {
             if (!IsActivatedDoner)
             {
-                if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Protected, XySelectedCell))
+                if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Protected, XySelectedCell))
                 {
-                    PhotonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.None, XySelectedCell);
+                    PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionTypes.None, XySelectedCell);
                 }
                 else
                 {
-                    PhotonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Protected, XySelectedCell);
+                    PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionTypes.Protected, XySelectedCell);
                 }
             }
 
@@ -90,13 +90,13 @@ namespace Assets.Scripts
         {
             if (!IsActivatedDoner)
             {
-                if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Relaxed, XySelectedCell))
+                if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Relaxed, XySelectedCell))
                 {
-                    PhotonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.None, XySelectedCell);
+                    PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionTypes.None, XySelectedCell);
                 }
                 else
                 {
-                    PhotonPunRPC.ProtectRelaxUnitToMaster(ProtectRelaxTypes.Relaxed, XySelectedCell);
+                    PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionTypes.Relaxed, XySelectedCell);
                 }
             }
         }

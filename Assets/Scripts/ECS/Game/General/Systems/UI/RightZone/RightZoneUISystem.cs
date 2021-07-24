@@ -11,7 +11,7 @@ internal sealed class RightZoneUISystem : SystemGeneralReduction
     {
         base.Run();
 
-        if (_eGM.CellUnitEnt_ActivatedForPlayersCom(XySelectedCell).IsActivated(Instance.IsMasterClient))
+        if (CellUnitWorker.IsVisibleUnit(Instance.IsMasterClient, XySelectedCell))
         {
             if (CellUnitWorker.HaveAnyUnit(XySelectedCell))
             {
@@ -19,7 +19,7 @@ internal sealed class RightZoneUISystem : SystemGeneralReduction
                 {
                     _eGGUIM.RightZoneEnt_ParentCom.SetActive(true);
                 }
-                else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).IsBot)
+                else if (CellUnitWorker.IsBot(XySelectedCell))
                 {
                     _eGGUIM.RightZoneEnt_ParentCom.SetActive(true);
                 }

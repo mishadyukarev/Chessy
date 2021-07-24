@@ -1,12 +1,11 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using UnityEngine;
-using static Assets.Scripts.Main;
-using static Assets.Scripts.Workers.Cell.CellSupportVisionWorker;
-using static Assets.Scripts.Workers.Cell.CellSupportStaticWorker;
-using static Assets.Scripts.CellUnitWorker;
-using static Assets.Scripts.CellWorker;
 using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.Workers.Game.Else;
+using Assets.Scripts.Workers.Game.Else.Cell;
+using Photon.Pun;
+using UnityEngine;
 
 internal sealed class SupportVisionSystem : SystemGeneralReduction
 {
@@ -21,91 +20,97 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
             {
                 int[] xy = new int[] { x, y };
 
-                DisableSupVis(xy);
+                CellSupVisBlocksWorker.EnableCellSupVisBlocksSR(false, CellSupVisBlocksTypes.Condition, xy);
+                CellSupVisBlocksWorker.EnableCellSupVisBlocksSR(false, CellSupVisBlocksTypes.MaxSteps, xy);
+                CellSupVisWorker.DisableSupVis(xy);
 
                 if (SelectorWorker.HaveAnySelectorUnit)
                 {
-                    if (Instance.IsMasterClient)
+                    if (Main.Instance.IsMasterClient)
                     {
-                        if (IsStartedCell(Instance.IsMasterClient, xy))
+                        if (InfoCellWorker.IsStartedCell(PhotonNetwork.IsMasterClient, xy))
                         {
-                            EnableSupVis(SupportVisionTypes.Spawn, xy);
+                            CellSupVisWorker.EnableSupVis(SupportVisionTypes.Spawn, xy);
                         }
                     }
 
                     else
                     {
-                        if (IsStartedCell(Instance.IsMasterClient, xy))
+                        if (InfoCellWorker.IsStartedCell(PhotonNetwork.IsMasterClient, xy))
                         {
-                            EnableSupVis(SupportVisionTypes.Spawn, xy);
+                            CellSupVisWorker.EnableSupVis(SupportVisionTypes.Spawn, xy);
                         }
                     }
                 }
 
-                
-                if (IsActivated(Instance.IsMasterClient, xy))
-                {
-                    if (HaveAnyUnit(xy))
-                    {
-                        var unitType = UnitType(xy);
 
-                        if (HaveOwner(xy) || IsBot(xy))
+                if (CellUnitWorker.IsVisibleUnit(PhotonNetwork.IsMasterClient, xy))
+                {
+                    if (CellUnitWorker.HaveAnyUnit(xy))
+                    {
+                        var unitType = CellUnitWorker.UnitType(xy);
+
+                        if (CellUnitWorker.HaveOwner(xy) || CellUnitWorker.IsBot(xy))
                         {
-                            ActiveVision(true, SupportStaticTypes.Hp, xy);
+                            CellSupVisBarsWorker.ActiveVision(true, SupportStaticTypes.Hp, xy);
 
 
                             float maxAmountHealth = CellUnitWorker.MaxAmountHealth(unitType);
-                            float xCordinate = (float)AmountHealth(xy) / maxAmountHealth;
+                            float xCordinate = (float)CellUnitWorker.AmountHealth(xy) / maxAmountHealth;
 
-                            SetScale(SupportStaticTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1), xy);
+                            CellSupVisBarsWorker.SetScale(SupportStaticTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1), xy);
 
-                            if (!IsBot(xy))
+                            if (!CellUnitWorker.IsBot(xy))
                             {
-                                if (IsMasterClient(xy))
+                                if (CellUnitWorker.IsMasterClient(xy))
                                 {
-                                    SetColor(SupportStaticTypes.Hp, Color.blue, xy);
+                                    CellSupVisBarsWorker.SetColor(SupportStaticTypes.Hp, Color.blue, xy);
                                 }
                                 else
                                 {
-                                    SetColor(SupportStaticTypes.Hp, Color.red, xy);
+                                    CellSupVisBarsWorker.SetColor(SupportStaticTypes.Hp, Color.red, xy);
                                 }
                             }
                             else
                             {
-                                SetColor(SupportStaticTypes.Hp, Color.red, xy);
+                                CellSupVisBarsWorker.SetColor(SupportStaticTypes.Hp, Color.red, xy);
                             }
                         }
 
 
-                        if (IsUnitProtectRelaxType(ProtectRelaxTypes.Protected, xy))
+                        if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Protected, xy))
                         {
-                            //_eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
-                            //_eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.yellow);
+                            CellSupVisBlocksWorker.EnableCellSupVisBlocksSR(true, CellSupVisBlocksTypes.Condition, xy);
+                            CellSupVisBlocksWorker.SetCellSupVisBlocksColor(Color.yellow, CellSupVisBlocksTypes.Condition, xy);
                         }
 
-                        else if (IsUnitProtectRelaxType(ProtectRelaxTypes.Relaxed, xy))
+                        else if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Relaxed, xy))
                         {
-                            //_eGM.CellUnitEnt_CellUnitCom(x, y).EnableDefendRelaxSR(true);
-                            //_eGM.CellUnitEnt_CellUnitCom(x, y).SetColorDefendRelaxSR(Color.green);
+                            CellSupVisBlocksWorker.EnableCellSupVisBlocksSR(true, CellSupVisBlocksTypes.Condition, xy);
+                            CellSupVisBlocksWorker.SetCellSupVisBlocksColor(Color.green, CellSupVisBlocksTypes.Condition, xy);
                         }
 
 
-                        if (HaveMaxAmountSteps(xy))
+                        if (CellUnitWorker.HaveMaxAmountSteps(xy))
                         {
-                            //_eGM.CellUnitEnt_CellUnitCom(x, y).EnableStandartColorSR(true);
+                            CellSupVisBlocksWorker.EnableCellSupVisBlocksSR(true, CellSupVisBlocksTypes.MaxSteps, xy);
+                        }
+                        else
+                        {
+                            CellSupVisBlocksWorker.EnableCellSupVisBlocksSR(false, CellSupVisBlocksTypes.MaxSteps, xy);
                         }
                     }
 
 
-                    if (_eGM.SelectorEnt_UpgradeModTypeCom.IsUpgradeModType(UpgradeModTypes.Unit))
+                    if (SelectorWorker.IsUpgradeModType(UpgradeModTypes.Unit))
                     {
-                        if (IsUnitType(UnitTypes.Pawn, xy) || IsUnitType(UnitTypes.Rook, xy) || IsUnitType(UnitTypes.Bishop, xy))
+                        if (CellUnitWorker.IsUnitType(UnitTypes.Pawn, xy) || CellUnitWorker.IsUnitType(UnitTypes.Rook, xy) || CellUnitWorker.IsUnitType(UnitTypes.Bishop, xy))
                         {
-                            if (HaveOwner(xy)) 
+                            if (CellUnitWorker.HaveOwner(xy))
                             {
-                                if (IsMine(xy))
+                                if (CellUnitWorker.IsMine(xy))
                                 {
-                                    EnableSupVis(SupportVisionTypes.Upgrade, xy);
+                                    CellSupVisWorker.EnableSupVis(SupportVisionTypes.Upgrade, xy);
                                 }
                             }
                         }
@@ -113,13 +118,27 @@ internal sealed class SupportVisionSystem : SystemGeneralReduction
                 }
             }
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected)
+        if (SelectorWorker.IsSelectedCell)
         {
-            EnableSupVis(SupportVisionTypes.Selector, XySelectedCell);
+            CellSupVisWorker.EnableSupVis(SupportVisionTypes.Selector, XySelectedCell);
         }
 
-        SelectorWorker.GetAllCells(AvailableCellTypes.Shift).ForEach((xy) => EnableSupVis(SupportVisionTypes.Shift, xy));
-        SelectorWorker.GetAllCells(AvailableCellTypes.SimpleAttack).ForEach((xy) => EnableSupVis(SupportVisionTypes.SimpleAttack, xy));
-        SelectorWorker.GetAllCells(AvailableCellTypes.UniqueAttack).ForEach((xy) => EnableSupVis(SupportVisionTypes.UniqueAttack, xy));
+
+        //foreach (var xyUnit in InfoUnitsWorker.GetLixtXyUnits(UnitTypes.King, true))
+        //{
+        //    Debug.Log(xyUnit[0]);
+        //    Debug.Log(xyUnit[1]);
+        //    CellSupportVisionWorker.EnableSupVis(SupportVisionTypes., xyUnit);
+        //}
+
+
+
+
+        //InfoUnitsWorker.Get
+
+
+        AvailableCellsEntsWorker.GetAllCells(AvailableCellTypes.Shift).ForEach((xy) => CellSupVisWorker.EnableSupVis(SupportVisionTypes.Shift, xy));
+        AvailableCellsEntsWorker.GetAllCells(AvailableCellTypes.SimpleAttack).ForEach((xy) => CellSupVisWorker.EnableSupVis(SupportVisionTypes.SimpleAttack, xy));
+        AvailableCellsEntsWorker.GetAllCells(AvailableCellTypes.UniqueAttack).ForEach((xy) => CellSupVisWorker.EnableSupVis(SupportVisionTypes.UniqueAttack, xy));
     }
 }

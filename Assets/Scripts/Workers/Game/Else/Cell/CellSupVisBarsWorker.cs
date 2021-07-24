@@ -1,10 +1,19 @@
-﻿using System;
+﻿using Assets.Scripts.ECS.Game.General.Entities.Containers;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts.Workers.Cell
 {
-    internal class CellSupportStaticWorker : MainGeneralWorker
+    internal class CellSupVisBarsWorker
     {
+        private static CellSupVisBarsEntsContainer _cellSupVisBarsContainer;
+
+        internal CellSupVisBarsWorker(CellSupVisBarsEntsContainer cellSupVisBarsContainer)
+        {
+            _cellSupVisBarsContainer = cellSupVisBarsContainer;
+        }
+
+
         internal static void ActiveVision(bool isActive, SupportStaticTypes supportStaticType, int[] xy)
         {
             switch (supportStaticType)
@@ -13,19 +22,19 @@ namespace Assets.Scripts.Workers.Cell
                     throw new Exception();
 
                 case SupportStaticTypes.Fertilizer:
-                    EGGM.CellFertilizeSupStatEnt_SprRendCom(xy).SpriteRenderer.enabled = isActive;
+                    _cellSupVisBarsContainer.CellFertilizeSupStatEnt_SprRendCom(xy).SpriteRenderer.enabled = isActive;
                     break;
 
                 case SupportStaticTypes.Wood:
-                    EGGM.CellWoodSupStatEnt_SprRendCom(xy).SpriteRenderer.enabled = isActive;
+                    _cellSupVisBarsContainer.CellWoodSupStatEnt_SprRendCom(xy).SpriteRenderer.enabled = isActive;
                     break;
 
                 case SupportStaticTypes.Ore:
-                    EGGM.CellOreSupStatEnt_SprRendCom(xy).SpriteRenderer.enabled = isActive;
+                    _cellSupVisBarsContainer.CellOreSupStatEnt_SprRendCom(xy).SpriteRenderer.enabled = isActive;
                     break;
 
                 case SupportStaticTypes.Hp:
-                    EGGM.CellHpSupStatEnt_SpriteRendererCom(xy).SpriteRenderer.enabled = isActive;
+                    _cellSupVisBarsContainer.CellHpSupStatEnt_SpriteRendererCom(xy).SpriteRenderer.enabled = isActive;
                     break;
 
                 default:
@@ -41,19 +50,19 @@ namespace Assets.Scripts.Workers.Cell
                     throw new Exception();
 
                 case SupportStaticTypes.Fertilizer:
-                    EGGM.CellFertilizeSupStatEnt_SprRendCom(xy).SpriteRenderer.color = color;
+                    _cellSupVisBarsContainer.CellFertilizeSupStatEnt_SprRendCom(xy).SpriteRenderer.color = color;
                     break;
 
                 case SupportStaticTypes.Wood:
-                    EGGM.CellWoodSupStatEnt_SprRendCom(xy).SpriteRenderer.color = color;
+                    _cellSupVisBarsContainer.CellWoodSupStatEnt_SprRendCom(xy).SpriteRenderer.color = color;
                     break;
 
                 case SupportStaticTypes.Ore:
-                    EGGM.CellOreSupStatEnt_SprRendCom(xy).SpriteRenderer.color = color;
+                    _cellSupVisBarsContainer.CellOreSupStatEnt_SprRendCom(xy).SpriteRenderer.color = color;
                     break;
 
                 case SupportStaticTypes.Hp:
-                    EGGM.CellHpSupStatEnt_SpriteRendererCom(xy).SpriteRenderer.color = color;
+                    _cellSupVisBarsContainer.CellHpSupStatEnt_SpriteRendererCom(xy).SpriteRenderer.color = color;
                     break;
 
                 default:
@@ -69,19 +78,19 @@ namespace Assets.Scripts.Workers.Cell
                     throw new Exception();
 
                 case SupportStaticTypes.Fertilizer:
-                    EGGM.CellFertilizeSupStatEnt_SprRendCom(xy).SpriteRenderer.transform.localScale = vector;
+                    _cellSupVisBarsContainer.CellFertilizeSupStatEnt_SprRendCom(xy).SpriteRenderer.transform.localScale = vector;
                     break;
 
                 case SupportStaticTypes.Wood:
-                    EGGM.CellWoodSupStatEnt_SprRendCom(xy).SpriteRenderer.transform.localScale = vector;
+                    _cellSupVisBarsContainer.CellWoodSupStatEnt_SprRendCom(xy).SpriteRenderer.transform.localScale = vector;
                     break;
 
                 case SupportStaticTypes.Ore:
-                    EGGM.CellOreSupStatEnt_SprRendCom(xy).SpriteRenderer.transform.localScale = vector;
+                    _cellSupVisBarsContainer.CellOreSupStatEnt_SprRendCom(xy).SpriteRenderer.transform.localScale = vector;
                     break;
 
                 case SupportStaticTypes.Hp:
-                    EGGM.CellHpSupStatEnt_SpriteRendererCom(xy).SpriteRenderer.transform.localScale = vector;
+                    _cellSupVisBarsContainer.CellHpSupStatEnt_SpriteRendererCom(xy).SpriteRenderer.transform.localScale = vector;
                     break;
 
                 default:

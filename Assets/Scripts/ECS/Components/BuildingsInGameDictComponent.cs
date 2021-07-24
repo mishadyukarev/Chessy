@@ -22,7 +22,7 @@ namespace Assets.Scripts.ECS.Components
         internal void AddAmountBuildingsInGame(bool key, int[] xyAdding) => _buildingsInGameDict[key].Add(xyAdding);
         internal void TakeAmountBuildingsInGame(bool key, int[] xyTaking)
         {
-            var curList =  _buildingsInGameDict[key];
+            var curList = _buildingsInGameDict[key];
 
             for (int xyNumber = 0; xyNumber < curList.Count; xyNumber++)
             {

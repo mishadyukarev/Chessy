@@ -18,7 +18,7 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
             {
                 if (CellUnitWorker.IsMine(XySelectedCell))
                 {
-                    switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
+                    switch (CellUnitWorker.UnitType(XySelectedCell))
                     {
                         case UnitTypes.None:
                             ActiveStandartAbilities(false);
@@ -63,7 +63,7 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
                 }
             }
 
-            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).IsBot)
+            else if (CellUnitWorker.IsBot(XySelectedCell))
             {
                 ActiveStandartAbilities(false);
             }
@@ -82,13 +82,13 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
 
             if (isActive)
             {
-                if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Protected, XySelectedCell))
+                if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Protected, XySelectedCell))
                 {
                     _eGGUIM.StandartFirstAbilityEnt_ButtonCom.SetColor(Color.yellow);
                 }
                 else _eGGUIM.StandartFirstAbilityEnt_ButtonCom.SetColor(Color.white);
 
-                if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Relaxed, XySelectedCell)) _eGGUIM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.green);
+                if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Relaxed, XySelectedCell)) _eGGUIM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.green);
                 else _eGGUIM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.white);
             }
         }

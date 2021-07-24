@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.Game.General.Entities.Containers;
 using Assets.Scripts.Workers.Cell;
 using System;
 
@@ -6,6 +7,8 @@ namespace Assets.Scripts
 {
     public class CellEnvironmentWorker : MainGeneralWorker
     {
+        private static CellEnvironmentEntsContainer _cellEnvironmentEntsContainer;
+
         private const int MAX_AMOUNT_FOOD = 10;
         private const int MAX_AMOUNT_WOOD = 10;
         private const int MAX_AMOUNT_ORE = 999;
@@ -19,6 +22,12 @@ namespace Assets.Scripts
         internal const int START_HILL_PERCENT = 25;
         internal const int START_MOUNTAIN_PERCENT = 15;
 
+
+        internal CellEnvironmentWorker(CellEnvironmentEntsContainer cellEnvironmentEntsContainer)
+        {
+            _cellEnvironmentEntsContainer = cellEnvironmentEntsContainer;
+        }
+
         private static void SetHaveEnvironment(bool haveEnvironment, EnvironmentTypes environmentType, int[] xy)
         {
             switch (environmentType)
@@ -27,23 +36,23 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case EnvironmentTypes.Fertilizer:
-                    EGGM.CellFertilizerEnt_HaveEnvCom(xy).HaveEnvironment = haveEnvironment;
+                    _cellEnvironmentEntsContainer.CellFertilizerEnt_HaveEnvCom(xy).HaveEnvironment = haveEnvironment;
                     break;
 
                 case EnvironmentTypes.YoungForest:
-                    EGGM.CellYoungForestEnt_HaveEnvCom(xy).HaveEnvironment = haveEnvironment;
+                    _cellEnvironmentEntsContainer.CellYoungForestEnt_HaveEnvCom(xy).HaveEnvironment = haveEnvironment;
                     break;
 
                 case EnvironmentTypes.AdultForest:
-                    EGGM.CellAdultForestEnt_HaveEnvCom(xy).HaveEnvironment = haveEnvironment;
+                    _cellEnvironmentEntsContainer.CellAdultForestEnt_HaveEnvCom(xy).HaveEnvironment = haveEnvironment;
                     break;
 
                 case EnvironmentTypes.Hill:
-                    EGGM.CellHillEnt_HaveEnvCom(xy).HaveEnvironment = haveEnvironment;
+                    _cellEnvironmentEntsContainer.CellHillEnt_HaveEnvCom(xy).HaveEnvironment = haveEnvironment;
                     break;
 
                 case EnvironmentTypes.Mountain:
-                    EGGM.CellMountainEnt_HaveEnvCom(xy).HaveEnvironment = haveEnvironment;
+                    _cellEnvironmentEntsContainer.CellMountainEnt_HaveEnvCom(xy).HaveEnvironment = haveEnvironment;
                     break;
 
                 default:
@@ -68,19 +77,19 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case EnvironmentTypes.Fertilizer:
-                    return EGGM.CellFertilizerEnt_HaveEnvCom(xy).HaveEnvironment;
+                    return _cellEnvironmentEntsContainer.CellFertilizerEnt_HaveEnvCom(xy).HaveEnvironment;
 
                 case EnvironmentTypes.YoungForest:
-                    return EGGM.CellYoungForestEnt_HaveEnvCom(xy).HaveEnvironment;
+                    return _cellEnvironmentEntsContainer.CellYoungForestEnt_HaveEnvCom(xy).HaveEnvironment;
 
                 case EnvironmentTypes.AdultForest:
-                    return EGGM.CellAdultForestEnt_HaveEnvCom(xy).HaveEnvironment;
+                    return _cellEnvironmentEntsContainer.CellAdultForestEnt_HaveEnvCom(xy).HaveEnvironment;
 
                 case EnvironmentTypes.Hill:
-                    return EGGM.CellHillEnt_HaveEnvCom(xy).HaveEnvironment;
+                    return _cellEnvironmentEntsContainer.CellHillEnt_HaveEnvCom(xy).HaveEnvironment;
 
                 case EnvironmentTypes.Mountain:
-                    return EGGM.CellMountainEnt_HaveEnvCom(xy).HaveEnvironment;
+                    return _cellEnvironmentEntsContainer.CellMountainEnt_HaveEnvCom(xy).HaveEnvironment;
 
                 default:
                     throw new Exception();
@@ -96,13 +105,13 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case ResourceTypes.Food:
-                    return EGGM.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources > 0;
+                    return _cellEnvironmentEntsContainer.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources > 0;
 
                 case ResourceTypes.Wood:
-                    return EGGM.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources > 0;
+                    return _cellEnvironmentEntsContainer.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources > 0;
 
                 case ResourceTypes.Ore:
-                    return EGGM.CellHillEnt_AmountResourcesCom(xy).AmountResources > 0;
+                    return _cellEnvironmentEntsContainer.CellHillEnt_AmountResourcesCom(xy).AmountResources > 0;
 
                 case ResourceTypes.Iron:
                     throw new Exception();
@@ -123,13 +132,13 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case ResourceTypes.Food:
-                    return EGGM.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources;
+                    return _cellEnvironmentEntsContainer.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources;
 
                 case ResourceTypes.Wood:
-                    return EGGM.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources;
+                    return _cellEnvironmentEntsContainer.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources;
 
                 case ResourceTypes.Ore:
-                    return EGGM.CellHillEnt_AmountResourcesCom(xy).AmountResources;
+                    return _cellEnvironmentEntsContainer.CellHillEnt_AmountResourcesCom(xy).AmountResources;
 
                 case ResourceTypes.Iron:
                     throw new Exception();
@@ -150,15 +159,15 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case ResourceTypes.Food:
-                    EGGM.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources = value;
+                    _cellEnvironmentEntsContainer.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources = value;
                     break;
 
                 case ResourceTypes.Wood:
-                    EGGM.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources = value;
+                    _cellEnvironmentEntsContainer.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources = value;
                     break;
 
                 case ResourceTypes.Ore:
-                    EGGM.CellHillEnt_AmountResourcesCom(xy).AmountResources = value;
+                    _cellEnvironmentEntsContainer.CellHillEnt_AmountResourcesCom(xy).AmountResources = value;
                     break;
 
                 case ResourceTypes.Iron:
@@ -180,15 +189,15 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case ResourceTypes.Food:
-                    EGGM.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources += adding;
+                    _cellEnvironmentEntsContainer.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources += adding;
                     break;
 
                 case ResourceTypes.Wood:
-                    EGGM.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources += adding;
+                    _cellEnvironmentEntsContainer.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources += adding;
                     break;
 
                 case ResourceTypes.Ore:
-                    EGGM.CellHillEnt_AmountResourcesCom(xy).AmountResources += adding;
+                    _cellEnvironmentEntsContainer.CellHillEnt_AmountResourcesCom(xy).AmountResources += adding;
                     break;
 
                 case ResourceTypes.Iron:
@@ -210,15 +219,15 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case ResourceTypes.Food:
-                    EGGM.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources -= taking;
+                    _cellEnvironmentEntsContainer.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources -= taking;
                     break;
 
                 case ResourceTypes.Wood:
-                    EGGM.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources -= taking;
+                    _cellEnvironmentEntsContainer.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources -= taking;
                     break;
 
                 case ResourceTypes.Ore:
-                    EGGM.CellHillEnt_AmountResourcesCom(xy).AmountResources -= taking;
+                    _cellEnvironmentEntsContainer.CellHillEnt_AmountResourcesCom(xy).AmountResources -= taking;
                     break;
 
                 case ResourceTypes.Iron:
@@ -295,33 +304,33 @@ namespace Assets.Scripts
 
                 case EnvironmentTypes.Fertilizer:
                     SetHaveEnvironment(true, environmentType, xy);
-                    EGGM.CellFertilizerEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
-                    EGGM.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources 
+                    _cellEnvironmentEntsContainer.CellFertilizerEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
+                    _cellEnvironmentEntsContainer.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources
                         = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType));
                     break;
 
                 case EnvironmentTypes.YoungForest:
                     SetHaveEnvironment(true, environmentType, xy);
-                    EGGM.CellYoungForestEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
+                    _cellEnvironmentEntsContainer.CellYoungForestEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
                     break;
 
                 case EnvironmentTypes.AdultForest:
                     SetHaveEnvironment(true, environmentType, xy);
-                    EGGM.CellAdultForestEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
-                    EGGM.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources
+                    _cellEnvironmentEntsContainer.CellAdultForestEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
+                    _cellEnvironmentEntsContainer.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources
                         = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType));
                     break;
 
                 case EnvironmentTypes.Hill:
                     SetHaveEnvironment(true, environmentType, xy);
-                    EGGM.CellHillEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
-                    EGGM.CellHillEnt_AmountResourcesCom(xy).AmountResources
+                    _cellEnvironmentEntsContainer.CellHillEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
+                    _cellEnvironmentEntsContainer.CellHillEnt_AmountResourcesCom(xy).AmountResources
                         = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType));
                     break;
 
                 case EnvironmentTypes.Mountain:
                     SetHaveEnvironment(true, environmentType, xy);
-                    EGGM.CellMountainEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
+                    _cellEnvironmentEntsContainer.CellMountainEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
                     break;
 
                 default:
@@ -337,30 +346,30 @@ namespace Assets.Scripts
 
                 case EnvironmentTypes.Fertilizer:
                     SetHaveEnvironment(true, environmentType, xy);
-                    EGGM.CellFertilizerEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
-                    EGGM.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources = amountEnvironmet;
+                    _cellEnvironmentEntsContainer.CellFertilizerEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
+                    _cellEnvironmentEntsContainer.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources = amountEnvironmet;
                     break;
 
                 case EnvironmentTypes.YoungForest:
                     SetHaveEnvironment(true, environmentType, xy);
-                    EGGM.CellYoungForestEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
+                    _cellEnvironmentEntsContainer.CellYoungForestEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
                     break;
 
                 case EnvironmentTypes.AdultForest:
                     SetHaveEnvironment(true, environmentType, xy);
-                    EGGM.CellAdultForestEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
-                    EGGM.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources = amountEnvironmet;
+                    _cellEnvironmentEntsContainer.CellAdultForestEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
+                    _cellEnvironmentEntsContainer.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources = amountEnvironmet;
                     break;
 
                 case EnvironmentTypes.Hill:
                     SetHaveEnvironment(true, environmentType, xy);
-                    EGGM.CellHillEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
-                    EGGM.CellHillEnt_AmountResourcesCom(xy).AmountResources = amountEnvironmet;
+                    _cellEnvironmentEntsContainer.CellHillEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
+                    _cellEnvironmentEntsContainer.CellHillEnt_AmountResourcesCom(xy).AmountResources = amountEnvironmet;
                     break;
 
                 case EnvironmentTypes.Mountain:
-                    EGGM.CellMountainEnt_HaveEnvCom(xy).HaveEnvironment = true;
-                    EGGM.CellMountainEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
+                    _cellEnvironmentEntsContainer.CellMountainEnt_HaveEnvCom(xy).HaveEnvironment = true;
+                    _cellEnvironmentEntsContainer.CellMountainEnt_SprRendCom(xy).SpriteRenderer.enabled = true;
                     break;
 
                 default:
@@ -376,31 +385,31 @@ namespace Assets.Scripts
 
                 case EnvironmentTypes.Fertilizer:
                     SetHaveEnvironment(false, environmentType, xy);
-                    EGGM.CellFertilizerEnt_SprRendCom(xy).SpriteRenderer.enabled = false;
-                    EGGM.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources = default;
+                    _cellEnvironmentEntsContainer.CellFertilizerEnt_SprRendCom(xy).SpriteRenderer.enabled = false;
+                    _cellEnvironmentEntsContainer.CellFertilizerEnt_AmountResourcesCom(xy).AmountResources = default;
                     break;
 
                 case EnvironmentTypes.YoungForest:
                     SetHaveEnvironment(false, environmentType, xy);
-                    EGGM.CellYoungForestEnt_SprRendCom(xy).SpriteRenderer.enabled = false;
+                    _cellEnvironmentEntsContainer.CellYoungForestEnt_SprRendCom(xy).SpriteRenderer.enabled = false;
                     break;
 
                 case EnvironmentTypes.AdultForest:
                     SetHaveEnvironment(false, environmentType, xy);
-                    EGGM.CellAdultForestEnt_SprRendCom(xy).SpriteRenderer.enabled = false;
-                    EGGM.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources = default;
+                    _cellEnvironmentEntsContainer.CellAdultForestEnt_SprRendCom(xy).SpriteRenderer.enabled = false;
+                    _cellEnvironmentEntsContainer.CellAdultForestEnt_AmountResourcesCom(xy).AmountResources = default;
                     break;
 
 
                 case EnvironmentTypes.Hill:
                     SetHaveEnvironment(false, environmentType, xy);
-                    EGGM.CellHillEnt_SprRendCom(xy).SpriteRenderer.enabled = false;
-                    EGGM.CellHillEnt_AmountResourcesCom(xy).AmountResources = default;
+                    _cellEnvironmentEntsContainer.CellHillEnt_SprRendCom(xy).SpriteRenderer.enabled = false;
+                    _cellEnvironmentEntsContainer.CellHillEnt_AmountResourcesCom(xy).AmountResources = default;
                     break;
 
                 case EnvironmentTypes.Mountain:
                     SetHaveEnvironment(false, environmentType, xy);
-                    EGGM.CellMountainEnt_SprRendCom(xy).SpriteRenderer.enabled = false;
+                    _cellEnvironmentEntsContainer.CellMountainEnt_SprRendCom(xy).SpriteRenderer.enabled = false;
                     break;
 
                 default:

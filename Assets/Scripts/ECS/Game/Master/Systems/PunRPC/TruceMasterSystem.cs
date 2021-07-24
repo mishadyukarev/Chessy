@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Game.Else.Fire;
 using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using UnityEngine;
@@ -21,7 +22,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
             {
                 var xy = new int[] { x, y };
 
-                CellEffectsWorker.ResetEffect(EffectTypes.Fire, xy);
+                CellFireWorker.ResetEffect(EffectTypes.Fire, xy);
 
                 if (HaveAnyUnit(xy))
                 {
@@ -84,7 +85,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 
                 if (!HaveEnvironment(EnvironmentTypes.Fertilizer, xy)
                     && !HaveEnvironment(EnvironmentTypes.Mountain, xy) && !HaveEnvironment(EnvironmentTypes.AdultForest, xy)
-                         && _eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType != BuildingTypes.City)
+                         && !CellBuildingWorker.IsBuildingType(BuildingTypes.City, xy))
                 {
                     random = Random.Range(0, 100);
 
@@ -95,7 +96,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                 }
 
                 if (!HaveEnvironment(EnvironmentTypes.Fertilizer, xy) && !HaveEnvironment(EnvironmentTypes.Mountain, xy)
-                     && !HaveEnvironment(EnvironmentTypes.AdultForest, xy) && _eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType != BuildingTypes.City)
+                     && !HaveEnvironment(EnvironmentTypes.AdultForest, xy) && CellBuildingWorker.IsBuildingType(BuildingTypes.City, xy))
                 {
                     random = Random.Range(0, 100);
 

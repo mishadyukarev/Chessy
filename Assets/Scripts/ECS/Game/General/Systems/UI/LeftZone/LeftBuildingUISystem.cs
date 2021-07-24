@@ -31,7 +31,7 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
     {
         base.Run();
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected && _eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
+        if (_eGM.SelectorEnt_SelectorCom.IsSelected && CellBuildingWorker.BuildingType(XySelectedCell) == BuildingTypes.City)
         {
             if (CellUnitWorker.HaveOwner(XySelectedCell))
             {
@@ -57,13 +57,13 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
     {
         if (!IsActivatedDoner)
         {
-            if (_eGM.SelectorEnt_UpgradeModTypeCom.IsUpgradeModType(UpgradeModTypes.None))
+            if (SelectorWorker.IsUpgradeModType(UpgradeModTypes.None))
             {
                 _eGM.SelectorEnt_UpgradeModTypeCom.UpgradeModType = upgradeModType;
             }
             else
             {
-                _eGM.SelectorEnt_UpgradeModTypeCom.ResetUpgradeModType();
+                SelectorWorker.ResetUpgradeModType();
             }
         }
     }

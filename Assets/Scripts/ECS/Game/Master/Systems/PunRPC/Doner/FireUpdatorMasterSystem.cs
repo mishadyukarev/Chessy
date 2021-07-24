@@ -1,9 +1,9 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Workers;
-using static Assets.Scripts.Workers.Cell.CellEffectsWorker;
+using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.Workers.Game.Else.Fire;
 using static Assets.Scripts.CellEnvironmentWorker;
 using static Assets.Scripts.CellUnitWorker;
-using Assets.Scripts.Workers.Cell;
 
 internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 {
@@ -12,16 +12,15 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
     {
         base.Run();
 
-
         for (int x = 0; x < _eGM.Xamount; x++)
         {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
                 var xy = new int[] { x, y };
 
-                if (HaveEffect(EffectTypes.Fire, xy))
+                if (CellFireWorker.HaveEffect(EffectTypes.Fire, xy))
                 {
-                    AddTimeStepsEffect(EffectTypes.Fire, xy);
+                    CellFireWorker.AddTimeStepsEffect(EffectTypes.Fire, xy);
 
                     TakeAmountHealth(xy, 40);
                     if (!HaveAmountHealth(xy))
@@ -38,7 +37,7 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                     }
 
 
-                    if (TimeStepsEffect(EffectTypes.Fire, xy) >= 3)
+                    if (CellFireWorker.TimeStepsEffect(EffectTypes.Fire, xy) >= 3)
                     {
                         if (CellBuildingWorker.HaveBuilding(xy))
                         {
@@ -48,7 +47,7 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 
                         ResetEnvironment(EnvironmentTypes.AdultForest, xy);
 
-                        ResetEffect(EffectTypes.Fire, xy);
+                        CellFireWorker.ResetEffect(EffectTypes.Fire, xy);
 
 
                         var aroundXYList = CellSpaceWorker.TryGetXYAround(xy);
@@ -56,11 +55,11 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                         {
                             if (HaveEnvironment(EnvironmentTypes.AdultForest, xy1))
                             {
-                                SetEffect(EffectTypes.Fire, xy1);
+                                CellFireWorker.SetEffect(EffectTypes.Fire, xy1);
                             }
                         }
 
-                        SetTimeStepsEffect(EffectTypes.Fire, 0, xy);
+                        CellFireWorker.SetTimeStepsEffect(EffectTypes.Fire, 0, xy);
                     }
 
                 }

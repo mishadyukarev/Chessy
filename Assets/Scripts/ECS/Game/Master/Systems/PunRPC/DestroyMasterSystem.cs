@@ -17,11 +17,11 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
 
         //if (_eGM.CellUnitEnt_CellOwnerCom(XyCell).IsHim(Info.Sender))
         //{
-        var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCell).UnitType;
+        var unitType = CellUnitWorker.UnitType(XyCell);
 
         if (CellUnitWorker.HaveMaxAmountSteps(XyCell))
         {
-            var buildingType = _eGM.CellBuildEnt_BuilTypeCom(XyCell).BuildingType;
+            var buildingType = CellBuildingWorker.BuildingType(XyCell);
 
             PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
 

@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Abstractions.Enums
 {
-    public enum ProtectRelaxTypes
+    public enum ConditionTypes
     {
         None,
 

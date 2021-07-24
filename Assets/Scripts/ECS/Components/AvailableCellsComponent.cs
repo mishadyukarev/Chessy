@@ -11,6 +11,11 @@ namespace Assets.Scripts.ECS.Components
         internal int CountCells => _availableCells.Count;
 
 
+        internal AvailableCellsComponent(List<int[]> availableCells)
+        {
+            _availableCells = availableCells;
+        }
+
         internal void StartFill() => _availableCells = new List<int[]>();
 
         internal void SetList(List<int[]> list) => _availableCells = list;

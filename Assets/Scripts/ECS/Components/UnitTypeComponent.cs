@@ -1,6 +1,4 @@
-﻿using static Assets.Scripts.CellUnitWorker;
-
-internal struct UnitTypeComponent
+﻿internal struct UnitTypeComponent
 {
     internal UnitTypes UnitType { get; set; }
 

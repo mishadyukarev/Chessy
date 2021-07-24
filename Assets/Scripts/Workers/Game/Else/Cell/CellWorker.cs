@@ -1,14 +1,42 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.ECS.Game.General.Entities.Containers;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class CellWorker : MainGeneralWorker
+    public class CellWorker
     {
-        internal static int InstanceIDGO(int[] xy) => EGGM.CellEnt_CellBaseCom(xy).InstanceIDGO;
-        internal static bool IsActiveSelfGO(int[] xy) => EGGM.CellEnt_CellBaseCom(xy).IsActiveSelfGO;
-        internal static bool IsStartedCell(bool key, int[] xy) => EGGM.CellEnt_CellBaseCom(xy).IsStartedCell(key);
+        private static CellEntsContainer _cellContainer;
 
-        internal static float GetEulerAngle(XyzTypes xyzType, int[] xy) => EGGM.CellEnt_CellBaseCom(xy).GetEulerAngle(xyzType);
+
+        internal CellWorker(CellEntsContainer cellContainer)
+        {
+            _cellContainer = cellContainer;
+        }
+
+        private static GameObject GetCellGO(int[] xy) => _cellContainer.CellEnt_CellGOCom(xy).CellGO;
+        internal static int GetInstanceIDCell(int[] xy) => GetCellGO(xy).GetInstanceID();
+        internal static bool IsActiveSelfCell(int[] xy) => GetCellGO(xy).activeSelf;
+
+        internal static float GetEulerAngle(XyzTypes xyzType, int[] xy)
+        {
+            switch (xyzType)
+            {
+                case XyzTypes.None:
+                    throw new System.Exception();
+
+                case XyzTypes.X:
+                    return GetCellGO(xy).transform.rotation.eulerAngles.x;
+
+                case XyzTypes.Y:
+                    return GetCellGO(xy).transform.rotation.eulerAngles.y;
+
+                case XyzTypes.Z:
+                    return GetCellGO(xy).transform.rotation.eulerAngles.z;
+
+                default:
+                    throw new System.Exception();
+            }
+        }
     }
 }

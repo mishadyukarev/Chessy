@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
-using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.Workers.Game.Else.Fire;
 using static Assets.Scripts.Main;
 
 internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
@@ -22,7 +22,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
             {
                 if (CellUnitWorker.IsMine(XySelectedCell))
                 {
-                    switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
+                    switch (CellUnitWorker.UnitType(XySelectedCell))
                     {
                         case UnitTypes.None:
                             break;
@@ -65,7 +65,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                     _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
                 }
             }
-            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).IsBot)
+            else if (CellUnitWorker.IsBot(XySelectedCell))
             {
                 _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
             }
@@ -79,7 +79,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                 _eGGUIM.Unique1AbilityEnt_ButtonCom.RemoveAllListeners();
                 _eGGUIM.Unique1AbilityEnt_ButtonCom.AddListener(delegate { Fire(XySelectedCell, XySelectedCell); });
 
-                if (CellEffectsWorker.HaveEffect(EffectTypes.Fire, XySelectedCell))
+                if (CellFireWorker.HaveEffect(EffectTypes.Fire, XySelectedCell))
                 {
                     _eGGUIM.UniqueFirstAbilityEnt_TextMeshProGUICom.SetText("Put Out FIRE");
                 }

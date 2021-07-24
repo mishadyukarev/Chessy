@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Info;
 using Assets.Scripts.Workers.UI.Info;
 using Photon.Pun;

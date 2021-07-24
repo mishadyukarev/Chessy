@@ -23,13 +23,13 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected && CellUnitWorker.HaveAnyUnit(XySelectedCell))
+        if (SelectorWorker.IsSelectedCell && CellUnitWorker.HaveAnyUnit(XySelectedCell))
         {
             if (CellUnitWorker.HaveOwner(XySelectedCell))
             {
                 if (CellUnitWorker.IsMine(XySelectedCell))
                 {
-                    switch (_eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType)
+                    switch (CellUnitWorker.UnitType(XySelectedCell))
                     {
                         case UnitTypes.None:
                             break;
@@ -77,7 +77,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                 }
             }
 
-            else if (_eGM.CellUnitEnt_CellOwnerBotCom(XySelectedCell).IsBot)
+            else if (CellUnitWorker.IsBot(XySelectedCell))
             {
                 _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
                 _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
@@ -102,7 +102,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                     {
                         if (CellUnitWorker.IsMine(XySelectedCell))
                         {
-                            if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
+                            if (CellBuildingWorker.IsBuildingType(BuildingTypes.City, XySelectedCell))
                             {
                                 _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
                             }
@@ -145,9 +145,9 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                         //}
                     }
 
-                    else if (_eGM.CellBuildEnt_OwnerBotCom(XySelectedCell).IsBot)
+                    else if (CellBuildingWorker.IsBot(XySelectedCell))
                     {
-                        if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
+                        if (CellBuildingWorker.IsBuildingType(BuildingTypes.City, XySelectedCell))
                         {
                             _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
                             _eGGUIM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Destroy");

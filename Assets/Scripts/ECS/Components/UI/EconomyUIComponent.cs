@@ -1,6 +1,4 @@
-﻿using System;
-using TMPro;
-using UnityEngine;
+﻿using TMPro;
 
 internal struct EconomyUIComponent
 {

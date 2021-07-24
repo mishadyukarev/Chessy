@@ -3,7 +3,7 @@ using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
 using UnityEngine;
 using static Assets.Scripts.CellEnvironmentWorker;
-using static Assets.Scripts.Workers.Cell.CellSupportStaticWorker;
+using static Assets.Scripts.Workers.Cell.CellSupVisBarsWorker;
 
 internal sealed class EnvironmentUISystem : SystemGeneralReduction
 {
@@ -14,7 +14,7 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
     {
         base.Run();
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected && _eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType != BuildingTypes.City)
+        if (_eGM.SelectorEnt_SelectorCom.IsSelected && CellBuildingWorker.BuildingType(XySelectedCell) != BuildingTypes.City)
         {
             _eGGUIM.EnvironmentZoneEnt_ParentCom.SetActive(true);
         }

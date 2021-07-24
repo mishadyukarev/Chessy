@@ -1,17 +1,18 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
 using Assets.Scripts.Workers;
-using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.Workers.Game.Else;
+using Assets.Scripts.Workers.Game.Else.Fire;
+using Assets.Scripts.Workers.Info;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static Assets.Scripts.Main;
 using static Assets.Scripts.CellEnvironmentWorker;
 using static Assets.Scripts.CellUnitWorker;
-using Assets.Scripts.Workers.Info;
+using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
 {
@@ -103,7 +104,7 @@ namespace Assets.Scripts
         public static void BuildToMaster(int[] xyCell, BuildingTypes buildingType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Build, new object[] { xyCell, buildingType });
         public static void DestroyBuildingToMaster(int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Destroy, new object[] { xyCell });
 
-        public static void ProtectRelaxUnitToMaster(ProtectRelaxTypes protectRelaxType, int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ProtectRelax, new object[] { protectRelaxType, xyCell });
+        public static void ProtectRelaxUnitToMaster(ConditionTypes protectRelaxType, int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ProtectRelax, new object[] { protectRelaxType, xyCell });
 
         public static void EndGameToMaster(int actorNumberWinner) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.EndGame, new object[] { actorNumberWinner });
         public static void EndGameToGeneral(RpcTarget rpcTarget, int actorNumberWinner) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
@@ -175,7 +176,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.ProtectRelax:
-                    _eMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType = (ProtectRelaxTypes)objects[0];
+                    _eMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType = (ConditionTypes)objects[0];
                     _eMM.ProtectRelaxEnt_XyCellCom.SetXyCell((int[])objects[1]);
                     _sMM.TryInvokeRunSystem(nameof(ProtectRelaxMasterSystem), _sMM.RpcSystems);
                     break;
@@ -272,7 +273,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.GetAvailableCellsForSetting:
-                    SelectorWorker.SetAllCells(AvailableCellTypes.SettingUnit, GetStartCellsForSettingUnit(Instance.LocalPlayer));
+                    AvailableCellsEntsWorker.SetAllCells(AvailableCellTypes.SettingUnit, GetStartCellsForSettingUnit(Instance.LocalPlayer));
                     break;
 
                 case RpcGeneralTypes.EndGame:
@@ -283,9 +284,9 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.Attack:
                     if ((bool)objects[_currentNumber++])
                     {
-                        SelectorWorker.ClearAvailableCells(AvailableCellTypes.Shift);
-                        SelectorWorker.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
-                        SelectorWorker.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
+                        AvailableCellsEntsWorker.ClearAvailableCells(AvailableCellTypes.Shift);
+                        AvailableCellsEntsWorker.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
+                        AvailableCellsEntsWorker.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
                     }
                     break;
 
@@ -391,7 +392,7 @@ namespace Assets.Scripts
                             listObjects.Add(HaveAnyUnit(xy));
                             if (HaveAnyUnit(xy))
                             {
-                                listObjects.Add(IsActivated(false, xy));
+                                listObjects.Add(IsVisibleUnit(false, xy));
                                 listObjects.Add(UnitType(xy));
                                 listObjects.Add(AmountSteps(xy));
                                 listObjects.Add(AmountHealth(xy));
@@ -425,7 +426,7 @@ namespace Assets.Scripts
 
                             if (haveBuilding)
                             {
-                                listObjects.Add(_eGM.CellBuildEnt_BuilTypeCom(x, y).BuildingType);
+                                listObjects.Add(CellBuildingWorker.BuildingType(xy));
 
                                 var haveOwner = CellUnitWorker.HaveOwner(xy);
                                 listObjects.Add(haveOwner);
@@ -435,12 +436,12 @@ namespace Assets.Scripts
                                 }
                                 else
                                 {
-                                    listObjects.Add(_eGM.CellBuildEnt_OwnerBotCom(x, y).IsBot);
+                                    listObjects.Add(CellBuildingWorker.IsBot(xy));
                                 }
                             }
 
 
-                            listObjects.Add(CellEffectsWorker.HaveEffect(EffectTypes.Fire, xy));
+                            listObjects.Add(CellFireWorker.HaveEffect(EffectTypes.Fire, xy));
                         }
 
                     objects = new object[listObjects.Count];
@@ -457,12 +458,12 @@ namespace Assets.Scripts
                         InfoBuidlingsWorker.AmountUpgrades(BuildingTypes.Woodcutter, false),
                         InfoBuidlingsWorker.AmountUpgrades(BuildingTypes.Mine, false),
 
-                        UnitInfoManager.AmountUnitsInGame(UnitTypes.Pawn, false),
-                        UnitInfoManager.AmountUnitsInGame(UnitTypes.PawnSword, false),
-                        UnitInfoManager.AmountUnitsInGame(UnitTypes.Rook, false),
-                        UnitInfoManager.AmountUnitsInGame(UnitTypes.RookCrossbow, false),
-                        UnitInfoManager.AmountUnitsInGame(UnitTypes.Bishop, false),
-                        UnitInfoManager.AmountUnitsInGame(UnitTypes.BishopCrossbow, false),
+                        InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Pawn, false),
+                        InfoUnitsWorker.AmountUnitsInGame(UnitTypes.PawnSword, false),
+                        InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Rook, false),
+                        InfoUnitsWorker.AmountUnitsInGame(UnitTypes.RookCrossbow, false),
+                        InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Bishop, false),
+                        InfoUnitsWorker.AmountUnitsInGame(UnitTypes.BishopCrossbow, false),
 
                         InfoResourcesWorker.AmountResources(ResourceTypes.Food, false),
                         InfoResourcesWorker.AmountResources(ResourceTypes.Wood, false),
@@ -511,7 +512,7 @@ namespace Assets.Scripts
                                 UnitTypes unitType = (UnitTypes)objects[_currentNumber++];
                                 int amountSteps = (int)objects[_currentNumber++];
                                 int amountHealth = (int)objects[_currentNumber++];
-                                ProtectRelaxTypes protectRelaxType = (ProtectRelaxTypes)objects[_currentNumber++];
+                                ConditionTypes protectRelaxType = (ConditionTypes)objects[_currentNumber++];
 
                                 haveOwner = (bool)objects[_currentNumber++];
 
@@ -528,7 +529,7 @@ namespace Assets.Scripts
                                     CellUnitWorker.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, protectRelaxType, xy);
                                 }
 
-                                SetIsActivated(Instance.IsMasterClient, isActiveUnit, xy);
+                                SetIsVisibleUnit(Instance.IsMasterClient, isActiveUnit, xy);
                             }
                             else
                             {
@@ -600,7 +601,7 @@ namespace Assets.Scripts
 
                             bool haveFire = (bool)objects[_currentNumber++];
 
-                            CellEffectsWorker.SyncEffect(haveFire, EffectTypes.Fire, xy);
+                            CellFireWorker.SyncEffect(haveFire, EffectTypes.Fire, xy);
                         }
 
                     #endregion
@@ -612,12 +613,12 @@ namespace Assets.Scripts
                     var amountWoodcutterUpgrades = (int)objects[_currentNumber++];
                     var amountMineUpgrades = (int)objects[_currentNumber++];
 
-                    var amountPawn = (int)objects[_currentNumber++];
-                    var amountPawnSword = (int)objects[_currentNumber++];
-                    var amountRook = (int)objects[_currentNumber++];
-                    var amountRookCrossbow = (int)objects[_currentNumber++];
-                    var amountBishop = (int)objects[_currentNumber++];
-                    var amountBishopCrossbow = (int)objects[_currentNumber++];
+                    //var amountPawn = (int)objects[_currentNumber++];
+                    //var amountPawnSword = (int)objects[_currentNumber++];
+                    //var amountRook = (int)objects[_currentNumber++];
+                    //var amountRookCrossbow = (int)objects[_currentNumber++];
+                    //var amountBishop = (int)objects[_currentNumber++];
+                    //var amountBishopCrossbow = (int)objects[_currentNumber++];
 
                     var food = (int)objects[_currentNumber++];
                     var wood = (int)objects[_currentNumber++];
@@ -630,12 +631,12 @@ namespace Assets.Scripts
                     InfoBuidlingsWorker.SetAmountUpgrades(BuildingTypes.Woodcutter, Instance.IsMasterClient, amountWoodcutterUpgrades);
                     InfoBuidlingsWorker.SetAmountUpgrades(BuildingTypes.Mine, Instance.IsMasterClient, amountMineUpgrades);
 
-                    UnitInfoManager.SetAmountUnitInGame(UnitTypes.Pawn, Instance.IsMasterClient, amountPawn);
-                    UnitInfoManager.SetAmountUnitInGame(UnitTypes.PawnSword, Instance.IsMasterClient, amountPawnSword);
-                    UnitInfoManager.SetAmountUnitInGame(UnitTypes.Rook, Instance.IsMasterClient, amountRook);
-                    UnitInfoManager.SetAmountUnitInGame(UnitTypes.RookCrossbow, Instance.IsMasterClient, amountRookCrossbow);
-                    UnitInfoManager.SetAmountUnitInGame(UnitTypes.Bishop, Instance.IsMasterClient, amountBishop);
-                    UnitInfoManager.SetAmountUnitInGame(UnitTypes.BishopCrossbow, Instance.IsMasterClient, amountBishopCrossbow);
+                    //InfoUnitsWorker.SetAmountUnitInGame(UnitTypes.Pawn, Instance.IsMasterClient, amountPawn);
+                    //InfoUnitsWorker.SetAmountUnitInGame(UnitTypes.PawnSword, Instance.IsMasterClient, amountPawnSword);
+                    //InfoUnitsWorker.SetAmountUnitInGame(UnitTypes.Rook, Instance.IsMasterClient, amountRook);
+                    //InfoUnitsWorker.SetAmountUnitInGame(UnitTypes.RookCrossbow, Instance.IsMasterClient, amountRookCrossbow);
+                    //InfoUnitsWorker.SetAmountUnitInGame(UnitTypes.Bishop, Instance.IsMasterClient, amountBishop);
+                    //InfoUnitsWorker.SetAmountUnitInGame(UnitTypes.BishopCrossbow, Instance.IsMasterClient, amountBishopCrossbow);
 
                     InfoResourcesWorker.SetAmountResources(ResourceTypes.Food, Instance.IsMasterClient, food);
                     InfoResourcesWorker.SetAmountResources(ResourceTypes.Wood, Instance.IsMasterClient, wood);

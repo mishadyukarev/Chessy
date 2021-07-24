@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
 
 internal sealed class GetterCellSystem : SystemGeneralReduction
 {

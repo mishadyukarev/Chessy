@@ -15,22 +15,22 @@ internal sealed class ProtectRelaxMasterSystem : SystemMasterReduction
 
         switch (NeededProtectRelaxType)
         {
-            case ProtectRelaxTypes.None:
-                if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Protected, XyCellForProtectRelax))
+            case ConditionTypes.None:
+                if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Protected, XyCellForProtectRelax))
                 {
-                    InfoUnitsWorker.TakeUnitInStandartCondition(ProtectRelaxTypes.Protected, unitType, isMasterClient, XyCellForProtectRelax);
+                    InfoUnitsWorker.TakeUnitInStandartCondition(ConditionTypes.Protected, unitType, isMasterClient, XyCellForProtectRelax);
                 }
-                else if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Relaxed, XyCellForProtectRelax))
+                else if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Relaxed, XyCellForProtectRelax))
                 {
-                    InfoUnitsWorker.TakeUnitInStandartCondition(ProtectRelaxTypes.Relaxed, unitType, isMasterClient, XyCellForProtectRelax);
+                    InfoUnitsWorker.TakeUnitInStandartCondition(ConditionTypes.Relaxed, unitType, isMasterClient, XyCellForProtectRelax);
                 }
 
-                InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, unitType, isMasterClient, XyCellForProtectRelax);
+                InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, unitType, isMasterClient, XyCellForProtectRelax);
                 CellUnitWorker.ResetProtectedRelaxType(XyCellForProtectRelax);
                 break;
 
-            case ProtectRelaxTypes.Protected:
-                if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Protected, XyCellForProtectRelax))
+            case ConditionTypes.Protected:
+                if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Protected, XyCellForProtectRelax))
                 {
                     PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
@@ -40,12 +40,12 @@ internal sealed class ProtectRelaxMasterSystem : SystemMasterReduction
 
                 else if (CellUnitWorker.HaveMaxAmountSteps(XyCellForProtectRelax))
                 {
-                    if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Relaxed, XyCellForProtectRelax))
+                    if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Relaxed, XyCellForProtectRelax))
                     {
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
-                        InfoUnitsWorker.TakeUnitInStandartCondition(ProtectRelaxTypes.Relaxed, unitType, isMasterClient, XyCellForProtectRelax);
-                        InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.Protected, unitType, isMasterClient, XyCellForProtectRelax);
+                        InfoUnitsWorker.TakeUnitInStandartCondition(ConditionTypes.Relaxed, unitType, isMasterClient, XyCellForProtectRelax);
+                        InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.Protected, unitType, isMasterClient, XyCellForProtectRelax);
 
                         CellUnitWorker.SetProtectRelaxType(NeededProtectRelaxType, XyCellForProtectRelax);
 
@@ -56,7 +56,7 @@ internal sealed class ProtectRelaxMasterSystem : SystemMasterReduction
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
                         CellUnitWorker.SetProtectRelaxType(NeededProtectRelaxType, XyCellForProtectRelax);
-                        InfoUnitsWorker.TakeUnitInStandartCondition(ProtectRelaxTypes.None, unitType, isMasterClient, XyCellForProtectRelax);
+                        InfoUnitsWorker.TakeUnitInStandartCondition(ConditionTypes.None, unitType, isMasterClient, XyCellForProtectRelax);
                         InfoUnitsWorker.AddUnitInStandartCondition(NeededProtectRelaxType, unitType, isMasterClient, XyCellForProtectRelax);
 
                         CellUnitWorker.ResetAmountSteps(XyCellForProtectRelax);
@@ -70,21 +70,21 @@ internal sealed class ProtectRelaxMasterSystem : SystemMasterReduction
                 break;
 
 
-            case ProtectRelaxTypes.Relaxed:
-                if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Relaxed, XyCellForProtectRelax))
+            case ConditionTypes.Relaxed:
+                if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Relaxed, XyCellForProtectRelax))
                 {
                     PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
                     CellUnitWorker.ResetProtectedRelaxType(XyCellForProtectRelax);
 
-                    InfoUnitsWorker.TakeUnitInStandartCondition(ProtectRelaxTypes.Relaxed, UnitTypes.Pawn, CellUnitWorker.IsMasterClient(XyCellForProtectRelax), XyCellForProtectRelax);
+                    InfoUnitsWorker.TakeUnitInStandartCondition(ConditionTypes.Relaxed, UnitTypes.Pawn, CellUnitWorker.IsMasterClient(XyCellForProtectRelax), XyCellForProtectRelax);
                 }
 
                 else if (CellUnitWorker.HaveMaxAmountSteps(XyCellForProtectRelax))
                 {
-                    if (CellUnitWorker.IsUnitProtectRelaxType(ProtectRelaxTypes.Protected, XyCellForProtectRelax))
+                    if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Protected, XyCellForProtectRelax))
                     {
-                        InfoUnitsWorker.TakeUnitInStandartCondition(ProtectRelaxTypes.Protected, unitType, isMasterClient, XyCellForProtectRelax);
-                        InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.Relaxed, unitType, isMasterClient, XyCellForProtectRelax);
+                        InfoUnitsWorker.TakeUnitInStandartCondition(ConditionTypes.Protected, unitType, isMasterClient, XyCellForProtectRelax);
+                        InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.Relaxed, unitType, isMasterClient, XyCellForProtectRelax);
 
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
                         CellUnitWorker.SetProtectRelaxType(NeededProtectRelaxType, XyCellForProtectRelax);
@@ -92,7 +92,7 @@ internal sealed class ProtectRelaxMasterSystem : SystemMasterReduction
                     }
                     else
                     {
-                        InfoUnitsWorker.TakeUnitInStandartCondition(ProtectRelaxTypes.None, unitType, isMasterClient, XyCellForProtectRelax);
+                        InfoUnitsWorker.TakeUnitInStandartCondition(ConditionTypes.None, unitType, isMasterClient, XyCellForProtectRelax);
                         InfoUnitsWorker.AddUnitInStandartCondition(NeededProtectRelaxType, unitType, CellUnitWorker.IsMasterClient(XyCellForProtectRelax), XyCellForProtectRelax);
 
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);

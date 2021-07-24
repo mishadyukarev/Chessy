@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.Workers.Game.Else.Fire;
 using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 
@@ -17,24 +17,24 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
             if (CellUnitWorker.HaveMinAmountSteps(FromXyCopy))
             {
-                
 
-                if (CellEffectsWorker.HaveEffect(EffectTypes.Fire, ToXyCopy))
+
+                if (CellFireWorker.HaveEffect(EffectTypes.Fire, ToXyCopy))
                 {
-                    CellEffectsWorker.ResetEffect(EffectTypes.Fire, ToXyCopy);
+                    CellFireWorker.ResetEffect(EffectTypes.Fire, ToXyCopy);
                     CellUnitWorker.TakeAmountSteps(ToXyCopy);
                 }
                 else if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, ToXyCopy))
                 {
                     if (CellUnitWorker.HaveOwner(FromXyCopy))
 
-                        if (InfoResourcesWorker.CanFireSomething(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType, out bool[] haves))
+                        if (InfoResourcesWorker.CanFireSomething(CellUnitWorker.Owner(FromXyCopy), CellUnitWorker.UnitType(FromXyCopy), out bool[] haves))
                         {
                             PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
-                            InfoResourcesWorker.Fire(_eGM.CellUnitEnt_CellOwnerCom(FromXyCopy).Owner, _eGM.CellUnitEnt_UnitTypeCom(FromXyCopy).UnitType);
+                            InfoResourcesWorker.Fire(CellUnitWorker.Owner(FromXyCopy), CellUnitWorker.UnitType(FromXyCopy));
 
-                            CellEffectsWorker.SetEffect(EffectTypes.Fire, ToXyCopy);
+                            CellFireWorker.SetEffect(EffectTypes.Fire, ToXyCopy);
                             CellUnitWorker.TakeAmountSteps(ToXyCopy);
                         }
                         else

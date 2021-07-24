@@ -25,7 +25,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
         else
         {
-            var unitType = _eGM.CellUnitEnt_UnitTypeCom(XyCellForBuilding).UnitType;
+            var unitType = CellUnitWorker.UnitType(XyCellForBuilding);
 
             switch (NeededBuildingTypeForBuilding)
             {
@@ -54,7 +54,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
 
                 case BuildingTypes.Farm:
-                    if(!HaveEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding) && !HaveEnvironment(EnvironmentTypes.YoungForest, XyCellForBuilding))
+                    if (!HaveEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding) && !HaveEnvironment(EnvironmentTypes.YoungForest, XyCellForBuilding))
                     {
                         if (InfoResourcesWorker.CanCreateNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, out bool[] haves))
                         {
@@ -88,7 +88,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                             PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                             PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
                         }
-                    }         
+                    }
                     break;
 
                 case BuildingTypes.Woodcutter:

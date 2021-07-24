@@ -14,7 +14,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         private int[] XyCellForUpgrade => _eMM.UpgradeEnt_XyCellCom.XyCell;
 
 
-        private UnitTypes NeededUnitTypeForUpgrade => _eGM.CellUnitEnt_UnitTypeCom(XyCellForUpgrade).UnitType;
+        private UnitTypes NeededUnitTypeForUpgrade => CellUnitWorker.UnitType(XyCellForUpgrade);
         internal BuildingTypes NeededBuildingTypeForUpgrade => _eMM.UpgradeEnt_BuildingTypeCom.BuildingType;
 
 

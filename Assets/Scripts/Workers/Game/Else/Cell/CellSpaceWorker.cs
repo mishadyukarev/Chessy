@@ -17,7 +17,7 @@ namespace Assets.Scripts.Workers.Cell
                 xyResultCell[X] = xyStartCell[X] + xyDirectCell[X];
                 xyResultCell[Y] = xyStartCell[Y] + xyDirectCell[Y];
 
-                if (EGGM.CellEnt_CellBaseCom(xyResultCell).IsActiveSelfGO)
+                if (CellWorker.IsActiveSelfCell(xyResultCell))
                 {
                     xyAvailableCells.Add((int[])xyResultCell.Clone());
                 }

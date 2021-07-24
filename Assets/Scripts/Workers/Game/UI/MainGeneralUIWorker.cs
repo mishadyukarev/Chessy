@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Workers.UI
 {
-    internal class MainUIWorker
+    internal abstract class MainGeneralUIWorker
     {
         internal static EntitiesGameGeneralUIManager EGGUIM => Main.Instance.EntGGUIM;
     }

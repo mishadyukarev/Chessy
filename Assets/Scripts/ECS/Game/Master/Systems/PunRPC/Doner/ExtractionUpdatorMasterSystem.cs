@@ -1,11 +1,9 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.Workers;
-using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.Workers.Game.Else.Fire;
 using Assets.Scripts.Workers.Info;
 using Photon.Pun;
-using UnityEngine;
 
 internal sealed class ExtractionUpdatorMasterSystem : SystemMasterReduction
 {
@@ -46,8 +44,8 @@ internal sealed class ExtractionUpdatorMasterSystem : SystemMasterReduction
                 InfoBuidlingsWorker.TakeAmountBuildingsInGame(BuildingTypes.Woodcutter, true, xy);
                 CellBuildingWorker.ResetPlayerBuilding(xy);
 
-                if (CellEffectsWorker.HaveEffect(EffectTypes.Fire, xy))
-                    CellEffectsWorker.ResetEffect(EffectTypes.Fire, xy);
+                if (CellFireWorker.HaveEffect(EffectTypes.Fire, xy))
+                    CellFireWorker.ResetEffect(EffectTypes.Fire, xy);
 
             }
         }
@@ -59,25 +57,22 @@ internal sealed class ExtractionUpdatorMasterSystem : SystemMasterReduction
             CellEnvironmentWorker.TakeAmountResources(ResourceTypes.Ore, xy, minus);
             InfoResourcesWorker.AddAmountResources(ResourceTypes.Ore, true, minus);
 
-            if (_eGM.CellBuildEnt_CellBuilCom(xy).TimeStepsBuilding(BuildingTypes.Mine) >= 10
+            if (CellBuildingWorker.TimeStepsBuilding(BuildingTypes.Mine, xy) >= 10
                 || !CellEnvironmentWorker.HaveResources(ResourceTypes.Ore, xy))
             {
 
                 CellBuildingWorker.ResetPlayerBuilding(xy);
                 InfoBuidlingsWorker.TakeAmountBuildingsInGame(BuildingTypes.Mine, true, xy);
 
-                _eGM.CellBuildEnt_CellBuilCom(xy).SetTimeStepsBuilding(BuildingTypes.Mine, 0);
+                CellBuildingWorker.SetTimeStepsBuilding(BuildingTypes.Mine, 0, xy);
             }
             else
             {
-                _eGM.CellBuildEnt_CellBuilCom(xy).AddTimeStepsBuilding(BuildingTypes.Mine, 1);
+                CellBuildingWorker.AddTimeStepsBuilding(BuildingTypes.Mine, xy, 1);
             }
         }
 
-
-        Debug.Log(InfoUnitsWorker.GetAmountUnitsInStandartCondition(ProtectRelaxTypes.Relaxed, UnitTypes.Pawn, true));
-
-        foreach (var xy in InfoUnitsWorker.GetUnitsInStandardCondition(ProtectRelaxTypes.Relaxed, UnitTypes.Pawn, true))
+        foreach (var xy in InfoUnitsWorker.GetUnitsInStandardCondition(ConditionTypes.Relaxed, UnitTypes.Pawn, true))
         {
             if (CellUnitWorker.AmountHealth(xy) < CellUnitWorker.MaxAmountHealth(UnitTypes.Pawn))
             {

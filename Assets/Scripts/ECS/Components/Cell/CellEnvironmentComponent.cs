@@ -1,8 +1,4 @@
-﻿using Assets.Scripts.Abstractions.ValuesConsts;
-using System;
-using UnityEngine;
-using static Assets.Scripts.Main;
-using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
+﻿using UnityEngine;
 
 internal struct CellEnvironmentComponent
 {

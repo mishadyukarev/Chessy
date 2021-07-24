@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using System.Collections.Generic;

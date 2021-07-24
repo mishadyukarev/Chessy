@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using System.Collections.Generic;
 
@@ -35,7 +34,6 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
 
 
         for (int x = 0; x < _eGM.Xamount; x++)
-        {
             for (int y = 0; y < _eGM.Yamount; y++)
             {
                 var xy = new int[] { x, y };
@@ -45,7 +43,6 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                     CellUnitWorker.RefreshAmountSteps(xy);
                 }
             }
-        }
 
 
         _eGGUIM.DonerUIEnt_IsActivatedDictCom.SetActivated(true, false);
@@ -53,39 +50,6 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
 
         _eGGUIM.MotionEnt_AmountCom.Amount += 1;
 
-        //InfoResourcesWorker.AddAmountResources(ResourceTypes.Food, true, 1);
-        //InfoResourcesWorker.AddAmountResources(ResourceTypes.Food, false, 1);
-
-
-        if (0 > InfoResourcesWorker.AmountResources(ResourceTypes.Food, true))
-        {
-            ++_amountMotionsWithoutFoodForTruce[true];
-
-            InfoResourcesWorker.SetAmountResources(ResourceTypes.Food, true, 0);
-        }
-        else
-        {
-            _amountMotionsWithoutFoodForTruce[true] = 0;
-            _amountMotionsWithoutFood[true] = 0;
-            _countForResetUnitMaster = 2;
-        }
-
-
-
-        if (0 > InfoResourcesWorker.AmountResources(ResourceTypes.Food, false))
-        {
-            ++_amountMotionsWithoutFoodForTruce[false];
-
-            InfoResourcesWorker.SetAmountResources(ResourceTypes.Food, false, 0);
-
-
-        }
-        else
-        {
-            _amountMotionsWithoutFoodForTruce[false] = 0;
-            _amountMotionsWithoutFood[false] = 0;
-            _countForResetUnitOther = 2;
-        }
 
         int amountAdultForest = 0;
 
@@ -95,7 +59,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                 var xy = new int[] { x, y };
 
                 if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy)
-                    && CellWorker.IsActiveSelfGO(xy))
+                    && CellWorker.IsActiveSelfCell(xy))
                 {
                     ++amountAdultForest;
                 }
@@ -105,86 +69,6 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
         {
             PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
             _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RpcSystems);
-        }
-
-
-
-        if (_amountMotionsWithoutFoodForTruce[true] >= 2 && _amountMotionsWithoutFoodForTruce[false] >= 2)
-        {
-            PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
-
-            _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RpcSystems);
-
-            _amountMotionsWithoutFoodForTruce[true] = 0;
-            _amountMotionsWithoutFoodForTruce[false] = 0;
-        }
-        else
-        {
-            if (++_amountMotionsWithoutFood[true] >= _countForResetUnitMaster)
-            {
-                var isResetedUnit = false;
-                for (int x = 0; x < _eGM.Xamount; x++)
-                {
-                    for (int y = 0; y < _eGM.Yamount; y++)
-                    {
-                        var xy = new int[] { x, y };
-
-                        if (CellUnitWorker.HaveAnyUnit(xy))
-                        {
-                            if (CellUnitWorker.HaveOwner(xy))
-                            {
-                                if (CellUnitWorker.IsMasterClient(xy))
-                                {
-                                    if (!CellUnitWorker.IsUnitType(UnitTypes.King, xy))
-                                    {
-                                        CellUnitWorker.ResetPlayerUnit(xy);
-                                        isResetedUnit = true;
-                                        _amountMotionsWithoutFood[true] = 0;
-                                        _countForResetUnitMaster = 1;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                    }
-                    if (isResetedUnit) break;
-                }
-            }
-
-            if (++_amountMotionsWithoutFood[false] >= _countForResetUnitOther)
-            {
-                var isResetedUnit = false;
-                for (int x = 0; x < _eGM.Xamount; x++)
-                {
-                    for (int y = 0; y < _eGM.Yamount; y++)
-                    {
-                        var xy = new int[] { x, y };
-
-                        if (CellUnitWorker.HaveAnyUnit(xy))
-                        {
-                            if (CellUnitWorker.HaveOwner(xy))
-                            {
-                                if (!CellUnitWorker.IsMasterClient(xy))
-                                {
-                                    if (!CellUnitWorker.IsUnitType(UnitTypes.King, xy))
-                                    {
-                                        CellUnitWorker.ResetPlayerUnit(xy);
-
-                                        isResetedUnit = true;
-                                        _amountMotionsWithoutFood[false] = 0;
-                                        _countForResetUnitOther = 1;
-                                        break;
-                                    }
-                                }
-                            }
-                        }
-
-                    }
-                    if (isResetedUnit) break;
-                }
-            }
-
         }
     }
 }

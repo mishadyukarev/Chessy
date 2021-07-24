@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using static Assets.Scripts.Workers.CellBaseOperations;
 
@@ -32,8 +33,8 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
             int damageToPrevious = 0;
             int damageToSelelected = 0;
 
-            var unitTypePrevious = _eGM.CellUnitEnt_UnitTypeCom(FromXy).UnitType;
-            var unitTypeSelected = _eGM.CellUnitEnt_UnitTypeCom(ToXy).UnitType;
+            var unitTypePrevious = CellUnitWorker.UnitType(FromXy);
+            var unitTypeSelected = CellUnitWorker.UnitType(ToXy);
 
             damageToSelelected += CellUnitWorker.SimplePowerDamage(unitTypePrevious);
             damageToSelelected -= CellUnitWorker.PowerProtection(ToXy);
@@ -76,7 +77,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
                         PhotonPunRPC.EndGameToMaster(CellUnitWorker.ActorNumber(ToXy));
                     }
 
-                    else if (_eGM.CellUnitEnt_CellOwnerBotCom(ToXy).IsBot)
+                    else if (CellUnitWorker.IsBot(ToXy))
                     {
 
                     }
@@ -84,8 +85,8 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
                 if (CellUnitWorker.HaveOwner(FromXy))
                 {
+                    InfoUnitsWorker.TakeAmountUnitInGame(CellUnitWorker.UnitType(FromXy), CellUnitWorker.IsMasterClient(FromXy), FromXy);
                     CellUnitWorker.ResetPlayerUnit(FromXy);
-
                 }
                 else
                 {
@@ -95,7 +96,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
             if (!CellUnitWorker.HaveAmountHealth(ToXy))
             {
-                if (_eGM.CellUnitEnt_UnitTypeCom(ToXy).UnitType == UnitTypes.King)
+                if (CellUnitWorker.IsUnitType(UnitTypes.King, ToXy))
                     PhotonPunRPC.EndGameToMaster(CellUnitWorker.ActorNumber(FromXy));
 
 
@@ -111,21 +112,11 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
 
 
-                if (_eGM.CellUnitEnt_UnitTypeCom(FromXy).UnitType != UnitTypes.Rook
-                    && _eGM.CellUnitEnt_UnitTypeCom(FromXy).UnitType != UnitTypes.RookCrossbow
-                    && _eGM.CellUnitEnt_UnitTypeCom(FromXy).UnitType != UnitTypes.Bishop
-                    && _eGM.CellUnitEnt_UnitTypeCom(FromXy).UnitType != UnitTypes.BishopCrossbow)
+                if (!CellUnitWorker.IsMelee(FromXy))
                 {
-                    CellUnitWorker.ShiftPlayerUnit(FromXy, ToXy);
-
-                    //if (_eGM.CellUnitEnt_CellOwnerCom(FromXy).HaveOwner)
-                    //{
-                    //    CellUnitWorker.ResetPlayerUnit(false, FromXy);
-                    //}
-                    //else
-                    //{
-                    //    CellUnitWorker.ResetBotUnit(FromXy);
-                    //}
+                    InfoUnitsWorker.TakeAmountUnitInGame(CellUnitWorker.UnitType(FromXy), CellUnitWorker.IsMasterClient(FromXy), FromXy);
+                    InfoUnitsWorker.AddAmountUnitInGame(CellUnitWorker.UnitType(FromXy), CellUnitWorker.IsMasterClient(FromXy), ToXy);
+                    CellUnitWorker.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
                 }
             }
 

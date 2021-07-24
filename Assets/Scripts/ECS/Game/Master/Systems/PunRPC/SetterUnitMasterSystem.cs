@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Game.Else.Cell;
 using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using System;
@@ -17,7 +16,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
         base.Run();
 
         if (!CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Mountain, XyCell) && !CellUnitWorker.HaveAnyUnit(XyCell)
-            && _eGM.CellEnt_CellBaseCom(XyCell).IsStartedCell(InfoFrom.Sender.IsMasterClient))
+            && InfoCellWorker.IsStartedCell(InfoFrom.Sender.IsMasterClient, XyCell))
         {
             switch (UnitType)
             {
@@ -26,8 +25,9 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.King:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
+                    InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                     CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
                     InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
@@ -36,8 +36,9 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.Pawn:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
+                    InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                     CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
                     InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
@@ -45,8 +46,9 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.PawnSword:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
+                    InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                     CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
                     InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
@@ -54,8 +56,9 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.Rook:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
+                    InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                     CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
                     InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
@@ -63,7 +66,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.RookCrossbow:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
                     CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                     CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
@@ -72,8 +75,9 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.Bishop:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
+                    InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                     CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
                     InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
@@ -81,8 +85,9 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.BishopCrossbow:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ProtectRelaxTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
+                    InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                     CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitType), XyCell);
                     InfoUnitsWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);

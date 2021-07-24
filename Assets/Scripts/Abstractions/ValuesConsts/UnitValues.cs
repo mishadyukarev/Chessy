@@ -4,7 +4,21 @@
     {
         #region Health
 
+        public const int STANDART_AMOUNT_HEALTH_KING = 300;
+        public const int STANDART_AMOUNT_HEALTH_PAWN = 100;
+        public const int STANDART_AMOUNT_HEALTH_PAWN_SWORD = 150;
+        public const int STANDART_AMOUNT_HEALTH_ROOK = 100;
+        public const int STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW = 100;
+        public const int STANDART_AMOUNT_HEALTH_BISHOP = 100;
+        public const int STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW = 100;
 
+        public const float PERCENT_FOR_HEALTH_KING = 0.2f;
+        public const float PERCENT_FOR_HEALTH_PAWN = 0.3f;
+        public const float PERCENT_FOR_HEALTH_PAWN_SWORD = 0.2f;
+        public const float PERCENT_FOR_HEALTH_ROOK = 0.3f;
+        public const float PERCENT_FOR_HEALTH_ROOK_CROSSBOW = 0.3f;
+        public const float PERCENT_FOR_HEALTH_BISHOP = 0.3f;
+        public const float PERCENT_FOR_HEALTH_BISHOP_CROSSBOW = 0.3f;
 
         #endregion
 

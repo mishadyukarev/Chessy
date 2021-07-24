@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.Workers.Cell;
-using Photon.Pun;
+﻿using Assets.Scripts.Workers.Cell;
 using Photon.Realtime;
 using System;
 using static Assets.Scripts.Abstractions.ValuesConsts.EconomyValues;
@@ -186,12 +184,12 @@ namespace Assets.Scripts.Workers.Info
                     throw new Exception();
 
                 case ResourceTypes.Food:
-                    return -UnitInfoManager.AmountUnitsInGame(UnitTypes.Pawn, key)
-                        - UnitInfoManager.AmountUnitsInGame(UnitTypes.PawnSword, key)
-                        - UnitInfoManager.AmountUnitsInGame(UnitTypes.Rook, key)
-                        - UnitInfoManager.AmountUnitsInGame(UnitTypes.RookCrossbow, key)
-                        - UnitInfoManager.AmountUnitsInGame(UnitTypes.Bishop, key)
-                        - UnitInfoManager.AmountUnitsInGame(UnitTypes.BishopCrossbow, key);
+                    return -InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Pawn, key)
+                        - InfoUnitsWorker.AmountUnitsInGame(UnitTypes.PawnSword, key)
+                        - InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Rook, key)
+                        - InfoUnitsWorker.AmountUnitsInGame(UnitTypes.RookCrossbow, key)
+                        - InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Bishop, key)
+                        - InfoUnitsWorker.AmountUnitsInGame(UnitTypes.BishopCrossbow, key);
 
                 case ResourceTypes.Wood:
                     throw new Exception();

@@ -18,8 +18,8 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
             {
                 var xy = new int[] { x, y };
 
-                SetIsActivated(true, true, xy);
-                SetIsActivated(false, true, xy);
+                SetIsVisibleUnit(true, true, xy);
+                SetIsVisibleUnit(false, true, xy);
 
 
                 if (HaveAnyUnit(xy))
@@ -30,7 +30,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         {
                             if (HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                             {
-                                SetIsActivated(false, false, xy);
+                                SetIsVisibleUnit(false, false, xy);
 
                                 List<int[]> list = TryGetXYAround(xy);
                                 foreach (var xy1 in list)
@@ -41,7 +41,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                         {
                                             if (!IsHim(Instance.MasterClient, xy1))
                                             {
-                                                SetIsActivated(false, true, xy);
+                                                SetIsVisibleUnit(false, true, xy);
                                                 break;
                                             }
                                         }
@@ -53,7 +53,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         {
                             if (HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                             {
-                                SetIsActivated(true, false, xy);
+                                SetIsVisibleUnit(true, false, xy);
 
                                 List<int[]> list = TryGetXYAround(xy);
                                 foreach (var xy1 in list)
@@ -64,7 +64,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                         {
                                             if (IsHim(Instance.MasterClient, xy1))
                                             {
-                                                SetIsActivated(true, true, xy);
+                                                SetIsVisibleUnit(true, true, xy);
                                                 break;
                                             }
                                         }
@@ -72,7 +72,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                 }
                             }
                         }
-                        var isActivatedVisionCellUnit = IsActivated(Instance.IsMasterClient, xy);
+                        var isActivatedVisionCellUnit = IsVisibleUnit(Instance.IsMasterClient, xy);
 
                         if (isActivatedVisionCellUnit)
                         {
@@ -88,7 +88,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                     {
                         if (HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                         {
-                            SetIsActivated(true, false, xy);
+                            SetIsVisibleUnit(true, false, xy);
 
                             List<int[]> list = TryGetXYAround(xy);
                             foreach (var xy1 in list)
@@ -99,7 +99,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                     {
                                         if (IsHim(Instance.MasterClient, xy1))
                                         {
-                                            SetIsActivated(true, true, xy);
+                                            SetIsVisibleUnit(true, true, xy);
                                             break;
                                         }
                                     }
@@ -107,7 +107,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                             }
                         }
 
-                        var isActivatedVisionCellUnit = IsActivated(Instance.IsMasterClient, xy);
+                        var isActivatedVisionCellUnit = IsVisibleUnit(Instance.IsMasterClient, xy);
 
                         if (isActivatedVisionCellUnit)
                         {

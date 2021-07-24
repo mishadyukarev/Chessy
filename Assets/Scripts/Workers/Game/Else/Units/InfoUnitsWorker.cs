@@ -7,11 +7,213 @@ namespace Assets.Scripts.Workers.Info
 {
     internal abstract class InfoUnitsWorker : MainGeneralWorker
     {
-        internal static int GetAmountUnitsInStandartCondition(ProtectRelaxTypes protectRelaxType, UnitTypes unitType, bool key)
+        #region AmountUnits
+
+        internal static int GetAmountAllUnitsInGame() => GetAmountAllUnitsInGame(true) + GetAmountAllUnitsInGame(false);
+        internal static int GetAmountAllUnitsInGame(bool key)
+        {
+            return AmountUnitsInGame(UnitTypes.King, key)
+                + AmountUnitsInGame(UnitTypes.Pawn, key)
+                + AmountUnitsInGame(UnitTypes.PawnSword, key)
+                + AmountUnitsInGame(UnitTypes.Rook, key)
+                + AmountUnitsInGame(UnitTypes.RookCrossbow, key)
+                + AmountUnitsInGame(UnitTypes.Bishop, key)
+                + AmountUnitsInGame(UnitTypes.BishopCrossbow, key);
+        }
+        internal static int AmountUnitsInGame(UnitTypes unitType, bool key)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    return EGGM.KingInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Count;
+
+                case UnitTypes.Pawn:
+                    return EGGM.PawnInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Count;
+
+                case UnitTypes.PawnSword:
+                    return EGGM.PawnSwordInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Count;
+
+                case UnitTypes.Rook:
+                    return EGGM.RookInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Count;
+
+                case UnitTypes.RookCrossbow:
+                    return EGGM.RookCrossbowInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Count;
+
+                case UnitTypes.Bishop:
+                    return EGGM.BishopInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Count;
+
+                case UnitTypes.BishopCrossbow:
+                    return EGGM.BishopCrossbowInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Count;
+
+                default:
+                    throw new Exception();
+            }
+        }
+        internal static void SetAmountUnitInGame(UnitTypes unitType, bool key, List<int[]> list)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    EGGM.KingInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key] = list.Copy();
+                    break;
+
+                case UnitTypes.Pawn:
+                    EGGM.PawnInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key] = list.Copy();
+                    break;
+
+                case UnitTypes.PawnSword:
+                    EGGM.PawnSwordInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key] = list.Copy();
+                    break;
+
+                case UnitTypes.Rook:
+                    EGGM.RookInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key] = list.Copy();
+                    break;
+
+                case UnitTypes.RookCrossbow:
+                    EGGM.RookCrossbowInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key] = list.Copy();
+                    break;
+
+                case UnitTypes.Bishop:
+                    EGGM.BishopInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key] = list.Copy();
+                    break;
+
+                case UnitTypes.BishopCrossbow:
+                    EGGM.BishopCrossbowInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key] = list.Copy();
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+        }
+        internal static void AddAmountUnitInGame(UnitTypes unitType, bool key, int[] xyAdding)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    EGGM.KingInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Add(xyAdding);
+                    break;
+
+                case UnitTypes.Pawn:
+                    EGGM.PawnInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Add(xyAdding);
+                    break;
+
+                case UnitTypes.PawnSword:
+                    EGGM.PawnSwordInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Add(xyAdding);
+                    break;
+
+                case UnitTypes.Rook:
+                    EGGM.RookInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Add(xyAdding);
+                    break;
+
+                case UnitTypes.RookCrossbow:
+                    EGGM.RookCrossbowInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Add(xyAdding);
+                    break;
+
+                case UnitTypes.Bishop:
+                    EGGM.BishopInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Add(xyAdding);
+                    break;
+
+                case UnitTypes.BishopCrossbow:
+                    EGGM.BishopCrossbowInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Add(xyAdding);
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+        }
+        internal static void TakeAmountUnitInGame(UnitTypes unitType, bool key, int[] xyTaking)
+        {
+            List<int[]> list;
+            switch (unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    list = EGGM.KingInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key];
+                    break;
+
+                case UnitTypes.Pawn:
+                    list = EGGM.PawnInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key];
+                    break;
+
+                case UnitTypes.PawnSword:
+                    list = EGGM.PawnSwordInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key];
+                    break;
+
+                case UnitTypes.Rook:
+                    list = EGGM.RookInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key];
+                    break;
+
+                case UnitTypes.RookCrossbow:
+                    list = EGGM.RookCrossbowInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key];
+                    break;
+
+                case UnitTypes.Bishop:
+                    list = EGGM.BishopInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key];
+                    break;
+
+                case UnitTypes.BishopCrossbow:
+                    list = EGGM.BishopCrossbowInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key];
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+
+            if (!TryFindCellInListAndRemove(xyTaking, list)) throw new Exception();
+        }
+
+        internal static List<int[]> GetLixtXyUnits(UnitTypes unitType, bool key)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    return EGGM.KingInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Copy();
+
+                case UnitTypes.Pawn:
+                    return EGGM.PawnInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Copy();
+
+                case UnitTypes.PawnSword:
+                    return EGGM.PawnSwordInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Copy();
+
+                case UnitTypes.Rook:
+                    return EGGM.RookInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Copy();
+
+                case UnitTypes.RookCrossbow:
+                    return EGGM.RookCrossbowInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Copy();
+
+                case UnitTypes.Bishop:
+                    return EGGM.BishopInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Copy();
+
+                case UnitTypes.BishopCrossbow:
+                    return EGGM.BishopCrossbowInfoEnt_AmountUnitsInGameCom.AmountUnitsInGame[key].Copy();
+
+                default:
+                    throw new Exception();
+            }
+        }
+
+        #endregion
+
+
+        internal static int GetAmountUnitsInStandartCondition(ConditionTypes protectRelaxType, UnitTypes unitType, bool key)
         {
             switch (protectRelaxType)
             {
-                case ProtectRelaxTypes.None:
+                case ConditionTypes.None:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -42,7 +244,7 @@ namespace Assets.Scripts.Workers.Info
                             throw new Exception();
                     }
 
-                case ProtectRelaxTypes.Protected:
+                case ConditionTypes.Protected:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -73,7 +275,7 @@ namespace Assets.Scripts.Workers.Info
                             throw new Exception();
                     }
 
-                case ProtectRelaxTypes.Relaxed:
+                case ConditionTypes.Relaxed:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -108,11 +310,11 @@ namespace Assets.Scripts.Workers.Info
                     throw new Exception();
             }
         }
-        internal static List<int[]> GetUnitsInStandardCondition(ProtectRelaxTypes protectRelaxType, UnitTypes unitType, bool key)
+        internal static List<int[]> GetUnitsInStandardCondition(ConditionTypes protectRelaxType, UnitTypes unitType, bool key)
         {
             switch (protectRelaxType)
             {
-                case ProtectRelaxTypes.None:
+                case ConditionTypes.None:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -143,7 +345,7 @@ namespace Assets.Scripts.Workers.Info
                             throw new Exception();
                     }
 
-                case ProtectRelaxTypes.Protected:
+                case ConditionTypes.Protected:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -174,7 +376,7 @@ namespace Assets.Scripts.Workers.Info
                             throw new Exception();
                     }
 
-                case ProtectRelaxTypes.Relaxed:
+                case ConditionTypes.Relaxed:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -209,11 +411,11 @@ namespace Assets.Scripts.Workers.Info
                     throw new Exception();
             }
         }
-        internal static bool TryFindUnitInStandartCondition(ProtectRelaxTypes protectRelaxType, UnitTypes unitType, bool key, int[] xy)
+        internal static bool TryFindUnitInStandartCondition(ConditionTypes protectRelaxType, UnitTypes unitType, bool key, int[] xy)
         {
             switch (protectRelaxType)
             {
-                case ProtectRelaxTypes.None:
+                case ConditionTypes.None:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -244,7 +446,7 @@ namespace Assets.Scripts.Workers.Info
                             throw new Exception();
                     }
 
-                case ProtectRelaxTypes.Protected:
+                case ConditionTypes.Protected:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -275,7 +477,7 @@ namespace Assets.Scripts.Workers.Info
                             throw new Exception();
                     }
 
-                case ProtectRelaxTypes.Relaxed:
+                case ConditionTypes.Relaxed:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -310,11 +512,11 @@ namespace Assets.Scripts.Workers.Info
                     throw new Exception();
             }
         }
-        internal static void AddUnitInStandartCondition(ProtectRelaxTypes protectRelaxType, UnitTypes unitType, bool key, int[] xy)
+        internal static void AddUnitInStandartCondition(ConditionTypes protectRelaxType, UnitTypes unitType, bool key, int[] xy)
         {
             switch (protectRelaxType)
             {
-                case ProtectRelaxTypes.None:
+                case ConditionTypes.None:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -353,7 +555,7 @@ namespace Assets.Scripts.Workers.Info
                     }
                     break;
 
-                case ProtectRelaxTypes.Protected:
+                case ConditionTypes.Protected:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -392,7 +594,7 @@ namespace Assets.Scripts.Workers.Info
                     }
                     break;
 
-                case ProtectRelaxTypes.Relaxed:
+                case ConditionTypes.Relaxed:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -435,13 +637,13 @@ namespace Assets.Scripts.Workers.Info
                     throw new Exception();
             }
         }
-        internal static void TakeUnitInStandartCondition(ProtectRelaxTypes protectRelaxType, UnitTypes unitType, bool key, int[] xy)
+        internal static void TakeUnitInStandartCondition(ConditionTypes protectRelaxType, UnitTypes unitType, bool key, int[] xy)
         {
             List<int[]> curList;
 
             switch (protectRelaxType)
             {
-                case ProtectRelaxTypes.None:
+                case ConditionTypes.None:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -480,7 +682,7 @@ namespace Assets.Scripts.Workers.Info
                     }
                     break;
 
-                case ProtectRelaxTypes.Protected:
+                case ConditionTypes.Protected:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -519,7 +721,7 @@ namespace Assets.Scripts.Workers.Info
                     }
                     break;
 
-                case ProtectRelaxTypes.Relaxed:
+                case ConditionTypes.Relaxed:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -562,16 +764,7 @@ namespace Assets.Scripts.Workers.Info
                     throw new Exception();
             }
 
-            for (int xyNumber = 0; xyNumber < curList.Count; xyNumber++)
-            {
-                if (curList[xyNumber].Compare(xy))
-                {
-                    curList.RemoveAt(xyNumber);
-                    return;
-                }
-            }
-
-            throw new Exception();
+            if (!TryFindCellInListAndRemove(xy, curList)) throw new Exception();
         }
 
 
@@ -758,6 +951,20 @@ namespace Assets.Scripts.Workers.Info
                 default:
                     throw new Exception();
             }
+        }
+
+        private static bool TryFindCellInListAndRemove(int[] xyTaking, List<int[]> list)
+        {
+            for (int xyNumber = 0; xyNumber < list.Count; xyNumber++)
+            {
+                if (list[xyNumber].Compare(xyTaking))
+                {
+                    list.RemoveAt(xyNumber);
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

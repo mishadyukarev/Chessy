@@ -23,7 +23,7 @@ internal sealed class RaySystem : SystemGeneralReduction
                 {
                     var xy = new int[] { x, y };
 
-                    int one = CellWorker.InstanceIDGO(xy);
+                    int one = CellWorker.GetInstanceIDCell(xy);
                     int two = _eGM.SelectorEnt_RayCom.RaycastHit2D.transform.gameObject.GetInstanceID();
 
                     if (one == two)

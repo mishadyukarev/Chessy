@@ -5,7 +5,7 @@ using Assets.Scripts.Workers;
 internal class StatsUISystem : SystemGeneralReduction
 {
     private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
-    private UnitTypes UnitType => _eGM.CellUnitEnt_UnitTypeCom(XySelectedCell).UnitType;
+    private UnitTypes UnitType => CellUnitWorker.UnitType(XySelectedCell);
 
     public override void Run()
     {
@@ -14,10 +14,10 @@ internal class StatsUISystem : SystemGeneralReduction
         if (CellUnitWorker.HaveAnyUnit(XySelectedCell))
         {
 
-            _eGGUIM.HealthUIEnt_TextMeshProUGUICom.SetText(_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountHealth.ToString());
+            _eGGUIM.HealthUIEnt_TextMeshProUGUICom.SetText(CellUnitWorker.AmountHealth(XySelectedCell).ToString());
             _eGGUIM.PowerAttackUIEnt_TextMeshProUGUICom.SetText(CellUnitWorker.SimplePowerDamage(UnitType).ToString());
             _eGGUIM.PowerProtectionUIEnt_TextMeshProUGUICom.SetText(CellUnitWorker.PowerProtection(XySelectedCell).ToString());
-            _eGGUIM.AmountStepsUIEnt_TextMeshProUGUICom.SetText(_eGM.CellUnitEnt_CellUnitCom(XySelectedCell).AmountSteps.ToString());
+            _eGGUIM.AmountStepsUIEnt_TextMeshProUGUICom.SetText(CellUnitWorker.AmountSteps(XySelectedCell).ToString());
 
             _eGGUIM.StatsEnt_ParentCom.SetActive(true);
         }
