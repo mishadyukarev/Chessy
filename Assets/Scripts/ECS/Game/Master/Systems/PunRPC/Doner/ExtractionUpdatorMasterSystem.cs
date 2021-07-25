@@ -4,6 +4,7 @@ using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else.Fire;
 using Assets.Scripts.Workers.Info;
 using Photon.Pun;
+using UnityEngine;
 
 internal sealed class ExtractionUpdatorMasterSystem : SystemMasterReduction
 {
@@ -17,87 +18,101 @@ internal sealed class ExtractionUpdatorMasterSystem : SystemMasterReduction
 
         foreach (var xy in InfoBuidlingsWorker.GetListXyBuildingsInGame(BuildingTypes.Farm, true))
         {
-            minus = InfoResourcesWorker.GetExtractionBuildingType(BuildingTypes.Farm, true);
+            minus = InfoBuidlingsWorker.GetExtractionBuildingType(BuildingTypes.Farm, true);
 
-            CellEnvironmentWorker.TakeAmountResources(ResourceTypes.Food, xy, minus);
-            InfoResourcesWorker.AddAmountResources(ResourceTypes.Food, true, minus);
+            CellEnvirDataWorker.TakeAmountResources(EnvironmentTypes.Fertilizer, xy, minus);
+            InfoResourcesDataWorker.AddAmountResources(ResourceTypes.Food, true, minus);
 
-            if (!CellEnvironmentWorker.HaveResources(ResourceTypes.Food, xy))
+            if (!CellEnvirDataWorker.HaveResources(EnvironmentTypes.Fertilizer, xy))
             {
-                CellEnvironmentWorker.ResetEnvironment(EnvironmentTypes.Fertilizer, xy);
-                CellBuildingWorker.ResetPlayerBuilding(xy);
-                InfoBuidlingsWorker.TakeAmountBuildingsInGame(BuildingTypes.Farm, true, xy);
+                CellEnvirDataWorker.ResetEnvironment(EnvironmentTypes.Fertilizer, xy);
+                CellBuildingsDataWorker.ResetBuilding(xy);
+                InfoBuidlingsWorker.TakeXyBuildingsInGame(BuildingTypes.Farm, true, xy);
             }
         }
 
         foreach (var xy in InfoBuidlingsWorker.GetListXyBuildingsInGame(BuildingTypes.Woodcutter, true))
         {
-            minus = InfoResourcesWorker.GetExtractionBuildingType(BuildingTypes.Woodcutter, true);
+            minus = InfoBuidlingsWorker.GetExtractionBuildingType(BuildingTypes.Woodcutter, true);
 
-            CellEnvironmentWorker.TakeAmountResources(ResourceTypes.Wood, xy, minus);
-            InfoResourcesWorker.AddAmountResources(ResourceTypes.Wood, true, minus);
+            CellEnvirDataWorker.TakeAmountResources(EnvironmentTypes.AdultForest, xy, minus);
+            InfoResourcesDataWorker.AddAmountResources(ResourceTypes.Wood, true, minus);
 
-            if (!CellEnvironmentWorker.HaveResources(ResourceTypes.Wood, xy))
+            if (!CellEnvirDataWorker.HaveResources(EnvironmentTypes.AdultForest, xy))
             {
-                CellEnvironmentWorker.ResetEnvironment(EnvironmentTypes.AdultForest, xy);
+                CellEnvirDataWorker.ResetEnvironment(EnvironmentTypes.AdultForest, xy);
 
-                InfoBuidlingsWorker.TakeAmountBuildingsInGame(BuildingTypes.Woodcutter, true, xy);
-                CellBuildingWorker.ResetPlayerBuilding(xy);
+                InfoBuidlingsWorker.TakeXyBuildingsInGame(BuildingTypes.Woodcutter, true, xy);
+                CellBuildingsDataWorker.ResetBuilding(xy);
 
-                if (CellFireWorker.HaveEffect(EffectTypes.Fire, xy))
-                    CellFireWorker.ResetEffect(EffectTypes.Fire, xy);
-
+                if (CellFireDataWorker.HaveFire(xy))
+                {
+                    CellFireDataWorker.ResetFire(xy);
+                    CellFireDataWorker.ResetTimeSteps(xy);
+                }
             }
         }
 
+        Debug.Log(InfoBuidlingsWorker.GetAmountAllBuildingsInGame(true));
+
         foreach (var xy in InfoBuidlingsWorker.GetListXyBuildingsInGame(BuildingTypes.Mine, true))
         {
-            minus = InfoResourcesWorker.GetExtractionBuildingType(BuildingTypes.Mine, true);
+            minus = InfoBuidlingsWorker.GetExtractionBuildingType(BuildingTypes.Mine, true);
 
-            CellEnvironmentWorker.TakeAmountResources(ResourceTypes.Ore, xy, minus);
-            InfoResourcesWorker.AddAmountResources(ResourceTypes.Ore, true, minus);
+            CellEnvirDataWorker.TakeAmountResources(EnvironmentTypes.Hill, xy, minus);
+            InfoResourcesDataWorker.AddAmountResources(ResourceTypes.Ore, true, minus);
 
-            if (CellBuildingWorker.TimeStepsBuilding(BuildingTypes.Mine, xy) >= 10
-                || !CellEnvironmentWorker.HaveResources(ResourceTypes.Ore, xy))
+            if (CellBuildingsDataWorker.GetTimeStepsBuilding(BuildingTypes.Mine, xy) >= 9
+                || !CellEnvirDataWorker.HaveResources(EnvironmentTypes.Hill, xy))
             {
 
-                CellBuildingWorker.ResetPlayerBuilding(xy);
-                InfoBuidlingsWorker.TakeAmountBuildingsInGame(BuildingTypes.Mine, true, xy);
+                CellBuildingsDataWorker.ResetBuilding(xy);
+                if (CellBuildingsDataWorker.HaveOwner(xy))
+                {
+                    InfoBuidlingsWorker.TakeXyBuildingsInGame
+                        (CellBuildingsDataWorker.GetBuildingType(xy), CellBuildingsDataWorker.IsMasterBuilding(xy), xy);
+                }
 
-                CellBuildingWorker.SetTimeStepsBuilding(BuildingTypes.Mine, 0, xy);
+
+
+
+
+                InfoBuidlingsWorker.TakeXyBuildingsInGame(BuildingTypes.Mine, true, xy);
+
+                CellBuildingsDataWorker.SetTimeStepsBuilding(BuildingTypes.Mine, 0, xy);
             }
             else
             {
-                CellBuildingWorker.AddTimeStepsBuilding(BuildingTypes.Mine, xy, 1);
+                CellBuildingsDataWorker.AddTimeStepsBuilding(BuildingTypes.Mine, xy, 1);
             }
         }
 
         foreach (var xy in InfoUnitsWorker.GetUnitsInStandardCondition(ConditionTypes.Relaxed, UnitTypes.Pawn, true))
         {
-            if (CellUnitWorker.AmountHealth(xy) < CellUnitWorker.MaxAmountHealth(UnitTypes.Pawn))
+            if (CellUnitsDataWorker.AmountHealth(xy) < CellUnitsDataWorker.MaxAmountHealth(UnitTypes.Pawn))
             {
-                CellUnitWorker.AddStandartHeal(xy);
-                if (CellUnitWorker.AmountHealth(xy) > CellUnitWorker.MaxAmountHealth(xy))
+                CellUnitsDataWorker.AddStandartHeal(xy);
+                if (CellUnitsDataWorker.AmountHealth(xy) > CellUnitsDataWorker.MaxAmountHealth(xy))
                 {
-                    CellUnitWorker.SetAmountHealth(CellUnitWorker.MaxAmountHealth(UnitTypes.Pawn), xy);
+                    CellUnitsDataWorker.SetAmountHealth(CellUnitsDataWorker.MaxAmountHealth(UnitTypes.Pawn), xy);
                 }
             }
             else
             {
-                if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                 {
-                    InfoResourcesWorker.AddAmountResources(ResourceTypes.Wood, true);
-                    CellEnvironmentWorker.TakeAmountResources(ResourceTypes.Wood, xy);
+                    InfoResourcesDataWorker.AddAmountResources(ResourceTypes.Wood, true);
+                    CellEnvirDataWorker.TakeAmountResources(EnvironmentTypes.AdultForest, xy);
 
-                    if (CellBuildingWorker.HaveBuilding(xy))
+                    if (CellBuildingsDataWorker.HaveAnyBuilding(xy))
                     {
 
                     }
                     else
                     {
 
-                        CellBuildingWorker.CreatePlayerBuilding(BuildingTypes.Woodcutter, PhotonNetwork.MasterClient, xy);
-                        InfoBuidlingsWorker.AddAmountBuildingsInGame(BuildingTypes.Woodcutter, true, xy);
+                        CellBuildingsDataWorker.CreatePlayerBuilding(BuildingTypes.Woodcutter, PhotonNetwork.MasterClient, xy);
+                        InfoBuidlingsWorker.AddXyBuildingsInGame(BuildingTypes.Woodcutter, true, xy);
                     }
                 }
             }

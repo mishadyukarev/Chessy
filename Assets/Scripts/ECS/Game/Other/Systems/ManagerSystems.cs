@@ -3,10 +3,15 @@ using Leopotam.Ecs;
 
 public sealed class SystemsGameOtherManager : SystemsManager
 {
-    internal void CreateSystems(EcsWorld ecsWorld)
+    internal SystemsGameOtherManager(EcsWorld gameWorld) : base(gameWorld)
     {
-        RunUpdateSystems = new EcsSystems(ecsWorld);
+
     }
+
+    //internal void CreateSystems(EcsWorld ecsWorld)
+    //{
+    //    RunUpdateSystems = new EcsSystems(ecsWorld);
+    //}
 
     internal override void ProcessInjects()
     {

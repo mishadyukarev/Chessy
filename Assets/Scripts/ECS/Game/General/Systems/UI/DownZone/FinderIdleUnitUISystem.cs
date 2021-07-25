@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
 using System.Collections.Generic;
-using static Assets.Scripts.CellUnitWorker;
+using static Assets.Scripts.CellUnitsDataWorker;
 
 namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
 {
@@ -35,7 +35,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
 
                         if (HaveOwner(xy))
 
-                            if (CellUnitWorker.HaveMaxAmountSteps(xy))
+                            if (CellUnitsDataWorker.HaveMaxAmountSteps(xy))
                             {
                                 _eGM.SelectorEnt_SelectorCom.IsSelected = true;
                                 SelectorWorker.SetXy(SelectorCellTypes.Selected, new int[] { x, y });

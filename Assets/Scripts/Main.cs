@@ -50,7 +50,7 @@ namespace Assets.Scripts
             _instance = this;
 
             _eCSmanager = new ECSManager();
-            _photonManager = new PhotonMainManager(_eCSmanager);
+            _photonManager = new PhotonMainManager();
 
             ToggleScene(_currentSceneType);
         }

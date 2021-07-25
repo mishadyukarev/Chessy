@@ -4,20 +4,17 @@ using Leopotam.Ecs;
 
 public sealed class SystemsGameMasterManager : SystemsManager
 {
-    private EcsSystems _rpcSystems;
+    internal EcsSystems RpcSystems { get; private set; }
+    internal EcsSystems VisibilityUnitsSystems { get; private set; }
 
-    internal EcsSystems RpcSystems => _rpcSystems;
 
-    internal override void CreateSystems(EcsWorld gameWorld)
+    internal SystemsGameMasterManager(EcsWorld gameWorld) : base(gameWorld)
     {
-        base.CreateSystems(gameWorld);
-
-        RunUpdateSystems = new EcsSystems(gameWorld)
+        RunUpdateSystems
             .Add(new EconomyMasterSystem(), nameof(EconomyMasterSystem));
 
-        _rpcSystems = new EcsSystems(gameWorld)
+        RpcSystems = new EcsSystems(gameWorld)
             .Add(new UpdateMotionMasterSystem(), nameof(UpdateMotionMasterSystem))
-            .Add(new VisibilityUnitsMasterSystem(), nameof(VisibilityUnitsMasterSystem))
             .Add(new BuilderMasterSystem(), nameof(BuilderMasterSystem))
             .Add(new DestroyMasterSystem(), nameof(DestroyMasterSystem))
             .Add(new ShiftUnitMasterSystem(), nameof(ShiftUnitMasterSystem))
@@ -35,23 +32,35 @@ public sealed class SystemsGameMasterManager : SystemsManager
             .Add(new UpgradeMasterSystem(), nameof(UpgradeMasterSystem))
             .Add(new FireMasterSystem(), nameof(FireMasterSystem))
             .Add(new SeedingMasterSystem(), nameof(SeedingMasterSystem));
+
+        VisibilityUnitsSystems = new EcsSystems(gameWorld)
+            .Add(new VisibilityUnitsMasterSystem(), nameof(VisibilityUnitsMasterSystem));
     }
 
-    internal override void DestroySystems()
-    {
-        base.DestroySystems();
+    //internal override void CreateSystems(EcsWorld gameWorld)
+    //{
+    //    base.CreateSystems(gameWorld);
 
-        if (!_isStartedFilling)
-        {
-            RpcSystems.Destroy();
-        }
-    }
+
+
+    //}
+
+    //internal override void DestroySystems()
+    //{
+    //    base.DestroySystems();
+
+    //    if (!_isStartedFilling)
+    //    {
+    //        RpcSystems.Destroy();
+    //    }
+    //}
 
     internal override void ProcessInjects()
     {
         base.ProcessInjects();
 
         RpcSystems.ProcessInjects();
+        VisibilityUnitsSystems.ProcessInjects();
     }
 
     internal override void Init()
@@ -59,5 +68,6 @@ public sealed class SystemsGameMasterManager : SystemsManager
         base.Init();
 
         RpcSystems.Init();
+        VisibilityUnitsSystems.Init();
     }
 }

@@ -1,4 +1,4 @@
-﻿using Leopotam.Ecs;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.ECS.Game.General.Entities.Containers
 {
@@ -10,10 +10,10 @@ namespace Assets.Scripts.ECS.Game.General.Entities.Containers
         internal int Xamount { get; private set; }
         internal int Yamount { get; private set; }
 
-        protected CellEntsAbstractContainer(EcsEntity[,] anyCellEnts)
+        protected CellEntsAbstractContainer(GameObject[,] anyCellGOs)
         {
-            Xamount = anyCellEnts.GetUpperBound(X) + 1;
-            Yamount = anyCellEnts.GetUpperBound(Y) + 1;
+            Xamount = anyCellGOs.GetUpperBound(X) + 1;
+            Yamount = anyCellGOs.GetUpperBound(Y) + 1;
         }
     }
 }

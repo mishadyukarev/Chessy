@@ -21,6 +21,12 @@ public class SpritesData : ScriptableObject
     [SerializeField] private Sprite _woodcutterSprite;
     [SerializeField] private Sprite _mineSprite;
 
+    [Space(5)]
+    [SerializeField] private Sprite _cityBackSprite;
+    [SerializeField] private Sprite _farmBackSprite;
+    [SerializeField] private Sprite _woodcutterBackSprite;
+    [SerializeField] private Sprite _mineBackSprite;
+
     [Space(20)]
     [SerializeField] private Sprite _fertilizerSprite;
     [SerializeField] private Sprite _youngForestSprite;
@@ -44,6 +50,11 @@ public class SpritesData : ScriptableObject
     public Sprite Farm => _farmSprite;
     public Sprite Woodcutter => _woodcutterSprite;
     public Sprite Mine => _mineSprite;
+
+    public Sprite CityBack => _cityBackSprite;
+    public Sprite FarmBack => _farmBackSprite;
+    public Sprite WoodcutterBack => _woodcutterBackSprite;
+    public Sprite MineBack => _mineBackSprite;
 
     public Sprite Ferilizer => _fertilizerSprite;
     public Sprite YoungForest => _youngForestSprite;

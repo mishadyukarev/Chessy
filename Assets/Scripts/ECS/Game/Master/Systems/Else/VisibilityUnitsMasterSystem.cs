@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts;
 using System.Collections.Generic;
-using static Assets.Scripts.CellEnvironmentWorker;
-using static Assets.Scripts.CellUnitWorker;
+using static Assets.Scripts.CellEnvirDataWorker;
+using static Assets.Scripts.CellUnitsDataWorker;
 using static Assets.Scripts.Main;
 using static Assets.Scripts.Workers.Cell.CellSpaceWorker;
 
@@ -18,8 +18,8 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
             {
                 var xy = new int[] { x, y };
 
-                SetIsVisibleUnit(true, true, xy);
-                SetIsVisibleUnit(false, true, xy);
+                CellUnitsDataWorker.SetIsVisibleUnit(true, true, xy);
+                CellUnitsDataWorker.SetIsVisibleUnit(false, true, xy);
 
 
                 if (HaveAnyUnit(xy))
@@ -30,7 +30,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         {
                             if (HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                             {
-                                SetIsVisibleUnit(false, false, xy);
+                                CellUnitsDataWorker.SetIsVisibleUnit(false, false, xy);
 
                                 List<int[]> list = TryGetXYAround(xy);
                                 foreach (var xy1 in list)
@@ -41,7 +41,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                         {
                                             if (!IsHim(Instance.MasterClient, xy1))
                                             {
-                                                SetIsVisibleUnit(false, true, xy);
+                                                CellUnitsDataWorker.SetIsVisibleUnit(false, true, xy);
                                                 break;
                                             }
                                         }
@@ -53,7 +53,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                         {
                             if (HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                             {
-                                SetIsVisibleUnit(true, false, xy);
+                                CellUnitsDataWorker.SetIsVisibleUnit(true, false, xy);
 
                                 List<int[]> list = TryGetXYAround(xy);
                                 foreach (var xy1 in list)
@@ -64,7 +64,7 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                         {
                                             if (IsHim(Instance.MasterClient, xy1))
                                             {
-                                                SetIsVisibleUnit(true, true, xy);
+                                                CellUnitsDataWorker.SetIsVisibleUnit(true, true, xy);
                                                 break;
                                             }
                                         }
@@ -72,23 +72,13 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                 }
                             }
                         }
-                        var isActivatedVisionCellUnit = IsVisibleUnit(Instance.IsMasterClient, xy);
-
-                        if (isActivatedVisionCellUnit)
-                        {
-                            SetEnabledUnit(true, xy);
-                        }
-                        else
-                        {
-                            SetEnabledUnit(false, xy);
-                        }
                     }
 
                     else if (IsBot(xy))
                     {
                         if (HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                         {
-                            SetIsVisibleUnit(true, false, xy);
+                            CellUnitsDataWorker.SetIsVisibleUnit(true, false, xy);
 
                             List<int[]> list = TryGetXYAround(xy);
                             foreach (var xy1 in list)
@@ -99,23 +89,12 @@ internal sealed class VisibilityUnitsMasterSystem : SystemGeneralReduction
                                     {
                                         if (IsHim(Instance.MasterClient, xy1))
                                         {
-                                            SetIsVisibleUnit(true, true, xy);
+                                            CellUnitsDataWorker.SetIsVisibleUnit(true, true, xy);
                                             break;
                                         }
                                     }
                                 }
                             }
-                        }
-
-                        var isActivatedVisionCellUnit = IsVisibleUnit(Instance.IsMasterClient, xy);
-
-                        if (isActivatedVisionCellUnit)
-                        {
-                            SetEnabledUnit(true, xy);
-                        }
-                        else
-                        {
-                            SetEnabledUnit(false, xy);
                         }
                     }
                 }

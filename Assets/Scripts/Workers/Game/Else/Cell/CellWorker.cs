@@ -16,7 +16,7 @@ namespace Assets.Scripts
 
         private static GameObject GetCellGO(int[] xy) => _cellContainer.CellEnt_CellGOCom(xy).CellGO;
         internal static int GetInstanceIDCell(int[] xy) => GetCellGO(xy).GetInstanceID();
-        internal static bool IsActiveSelfCell(int[] xy) => GetCellGO(xy).activeSelf;
+        internal static bool IsActiveSelfParentCell(int[] xy) => GetCellGO(xy).transform.parent.gameObject.activeSelf;
 
         internal static float GetEulerAngle(XyzTypes xyzType, int[] xy)
         {

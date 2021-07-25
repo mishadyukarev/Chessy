@@ -206,6 +206,8 @@ namespace Assets.Scripts.Workers.Info
             }
         }
 
+        internal static bool IsSettedKing(bool key) => GetLixtXyUnits(UnitTypes.King, key).Count > 0;
+
         #endregion
 
 
@@ -767,192 +769,6 @@ namespace Assets.Scripts.Workers.Info
             if (!TryFindCellInListAndRemove(xy, curList)) throw new Exception();
         }
 
-
-        internal static bool IsSettedKing(bool key) => EGGM.KingInfoEnt_IsSettedUnitDictCom.IsSettedUnit(key);
-        internal static void SetSettedKing(bool key, bool value) => EGGM.KingInfoEnt_IsSettedUnitDictCom.SetIsSettedUnit(key, value);
-
-        internal static int AmountUnits(UnitTypes unitType, bool isMaster)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    return EGGM.KingInfoEnt_AmountUnitsInInventorDictCom.AmountUnitsInInvetor(isMaster);
-
-                case UnitTypes.Pawn:
-                    return EGGM.PawnInfoEnt_AmountUnitsInInventorDictCom.AmountUnitsInInvetor(isMaster);
-
-                case UnitTypes.PawnSword:
-                    return EGGM.PawnSwordInfoEnt_AmountUnitsInInventorDictCom.AmountUnitsInInvetor(isMaster);
-
-                case UnitTypes.Rook:
-                    return EGGM.RookInfoEnt_AmountUnitsInInventorDictCom.AmountUnitsInInvetor(isMaster);
-
-                case UnitTypes.RookCrossbow:
-                    return EGGM.RookCrossbowInfoEnt_AmountUnitsInInventorDictCom.AmountUnitsInInvetor(isMaster);
-
-                case UnitTypes.Bishop:
-                    return EGGM.BishopInfoEnt_AmountUnitsInInventorDictCom.AmountUnitsInInvetor(isMaster);
-
-                case UnitTypes.BishopCrossbow:
-                    return EGGM.BishopCrossbowInfoEnt_AmountUnitsInInventorDictCom.AmountUnitsInInvetor(isMaster);
-
-                default:
-                    throw new Exception();
-            }
-        }
-        internal static bool HaveUnitInInventor(UnitTypes unitType, bool isMaster)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    return EGGM.KingInfoEnt_AmountUnitsInInventorDictCom.HaveUnitInInventor(isMaster);
-
-                case UnitTypes.Pawn:
-                    return EGGM.PawnInfoEnt_AmountUnitsInInventorDictCom.HaveUnitInInventor(isMaster);
-
-                case UnitTypes.PawnSword:
-                    return EGGM.PawnSwordInfoEnt_AmountUnitsInInventorDictCom.HaveUnitInInventor(isMaster);
-
-                case UnitTypes.Rook:
-                    return EGGM.RookInfoEnt_AmountUnitsInInventorDictCom.HaveUnitInInventor(isMaster);
-
-                case UnitTypes.RookCrossbow:
-                    return EGGM.RookCrossbowInfoEnt_AmountUnitsInInventorDictCom.HaveUnitInInventor(isMaster);
-
-                case UnitTypes.Bishop:
-                    return EGGM.BishopInfoEnt_AmountUnitsInInventorDictCom.HaveUnitInInventor(isMaster);
-
-                case UnitTypes.BishopCrossbow:
-                    return EGGM.BishopCrossbowInfoEnt_AmountUnitsInInventorDictCom.HaveUnitInInventor(isMaster);
-
-                default:
-                    throw new Exception();
-            }
-        }
-        internal static void SetAmountUnitsInInventor(UnitTypes unitType, bool key, int value)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    EGGM.KingInfoEnt_AmountUnitsInInventorDictCom.SetAmountUnitsInInventor(key, value);
-                    break;
-
-                case UnitTypes.Pawn:
-                    EGGM.PawnInfoEnt_AmountUnitsInInventorDictCom.SetAmountUnitsInInventor(key, value);
-                    break;
-
-                case UnitTypes.PawnSword:
-                    EGGM.PawnSwordInfoEnt_AmountUnitsInInventorDictCom.SetAmountUnitsInInventor(key, value);
-                    break;
-
-                case UnitTypes.Rook:
-                    EGGM.RookInfoEnt_AmountUnitsInInventorDictCom.SetAmountUnitsInInventor(key, value);
-                    break;
-
-                case UnitTypes.RookCrossbow:
-                    EGGM.RookCrossbowInfoEnt_AmountUnitsInInventorDictCom.SetAmountUnitsInInventor(key, value);
-                    break;
-
-                case UnitTypes.Bishop:
-                    EGGM.BishopInfoEnt_AmountUnitsInInventorDictCom.SetAmountUnitsInInventor(key, value);
-                    break;
-
-                case UnitTypes.BishopCrossbow:
-                    EGGM.BishopCrossbowInfoEnt_AmountUnitsInInventorDictCom.SetAmountUnitsInInventor(key, value);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
-        internal static void AddUnitsInInventor(UnitTypes unitType, bool isMaster, int adding = 1)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    EGGM.KingInfoEnt_AmountUnitsInInventorDictCom.AddAmountUnitsInInventor(isMaster, adding);
-                    break;
-
-                case UnitTypes.Pawn:
-                    EGGM.PawnInfoEnt_AmountUnitsInInventorDictCom.AddAmountUnitsInInventor(isMaster, adding);
-                    break;
-
-                case UnitTypes.PawnSword:
-                    EGGM.PawnSwordInfoEnt_AmountUnitsInInventorDictCom.AddAmountUnitsInInventor(isMaster, adding);
-                    break;
-
-                case UnitTypes.Rook:
-                    EGGM.RookInfoEnt_AmountUnitsInInventorDictCom.AddAmountUnitsInInventor(isMaster, adding);
-                    break;
-
-                case UnitTypes.RookCrossbow:
-                    EGGM.RookCrossbowInfoEnt_AmountUnitsInInventorDictCom.AddAmountUnitsInInventor(isMaster, adding);
-                    break;
-
-                case UnitTypes.Bishop:
-                    EGGM.BishopInfoEnt_AmountUnitsInInventorDictCom.AddAmountUnitsInInventor(isMaster, adding);
-                    break;
-
-                case UnitTypes.BishopCrossbow:
-                    EGGM.BishopCrossbowInfoEnt_AmountUnitsInInventorDictCom.AddAmountUnitsInInventor(isMaster, adding);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
-        internal static void TakeUnitsInInventor(UnitTypes unitType, bool isMaster, int taking = 1)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    EGGM.KingInfoEnt_AmountUnitsInInventorDictCom.TakeAmountUnitsInInventor(isMaster, taking);
-                    break;
-
-                case UnitTypes.Pawn:
-                    EGGM.PawnInfoEnt_AmountUnitsInInventorDictCom.TakeAmountUnitsInInventor(isMaster, taking);
-                    break;
-
-                case UnitTypes.PawnSword:
-                    EGGM.PawnSwordInfoEnt_AmountUnitsInInventorDictCom.TakeAmountUnitsInInventor(isMaster, taking);
-                    break;
-
-                case UnitTypes.Rook:
-                    EGGM.RookInfoEnt_AmountUnitsInInventorDictCom.TakeAmountUnitsInInventor(isMaster, taking);
-                    break;
-
-                case UnitTypes.RookCrossbow:
-                    EGGM.RookCrossbowInfoEnt_AmountUnitsInInventorDictCom.TakeAmountUnitsInInventor(isMaster, taking);
-                    break;
-
-                case UnitTypes.Bishop:
-                    EGGM.BishopInfoEnt_AmountUnitsInInventorDictCom.TakeAmountUnitsInInventor(isMaster, taking);
-                    break;
-
-                case UnitTypes.BishopCrossbow:
-                    EGGM.BishopCrossbowInfoEnt_AmountUnitsInInventorDictCom.TakeAmountUnitsInInventor(isMaster, taking);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
-
         private static bool TryFindCellInListAndRemove(int[] xyTaking, List<int[]> list)
         {
             for (int xyNumber = 0; xyNumber < list.Count; xyNumber++)
@@ -965,6 +781,38 @@ namespace Assets.Scripts.Workers.Info
             }
 
             return false;
+        }
+
+        internal static int GetAllExtractionUnits(ResourceTypes resourceType, bool key)
+        {
+            switch (resourceType)
+            {
+                case ResourceTypes.None:
+                    throw new Exception();
+
+                case ResourceTypes.Food:
+                    return -AmountUnitsInGame(UnitTypes.Pawn, key)
+                        - AmountUnitsInGame(UnitTypes.PawnSword, key)
+                        - AmountUnitsInGame(UnitTypes.Rook, key)
+                        - AmountUnitsInGame(UnitTypes.RookCrossbow, key)
+                        - AmountUnitsInGame(UnitTypes.Bishop, key)
+                        - AmountUnitsInGame(UnitTypes.BishopCrossbow, key);
+
+                case ResourceTypes.Wood:
+                    throw new Exception();
+
+                case ResourceTypes.Ore:
+                    throw new Exception();
+
+                case ResourceTypes.Iron:
+                    throw new Exception();
+
+                case ResourceTypes.Gold:
+                    throw new Exception();
+
+                default:
+                    throw new Exception();
+            }
         }
     }
 }

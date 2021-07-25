@@ -11,15 +11,15 @@ internal sealed class RightZoneUISystem : SystemGeneralReduction
     {
         base.Run();
 
-        if (CellUnitWorker.IsVisibleUnit(Instance.IsMasterClient, XySelectedCell))
+        if (CellUnitsDataWorker.IsVisibleUnit(Instance.IsMasterClient, XySelectedCell))
         {
-            if (CellUnitWorker.HaveAnyUnit(XySelectedCell))
+            if (CellUnitsDataWorker.HaveAnyUnit(XySelectedCell))
             {
-                if (CellUnitWorker.HaveOwner(XySelectedCell))
+                if (CellUnitsDataWorker.HaveOwner(XySelectedCell))
                 {
                     _eGGUIM.RightZoneEnt_ParentCom.SetActive(true);
                 }
-                else if (CellUnitWorker.IsBot(XySelectedCell))
+                else if (CellUnitsDataWorker.IsBot(XySelectedCell))
                 {
                     _eGGUIM.RightZoneEnt_ParentCom.SetActive(true);
                 }

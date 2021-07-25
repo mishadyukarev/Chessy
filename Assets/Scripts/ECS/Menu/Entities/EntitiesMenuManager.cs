@@ -7,7 +7,7 @@ using static Assets.Scripts.Main;
 
 namespace Assets.Scripts.ECS.Menu.Entities
 {
-    public sealed class EntitiesMenuManager
+    public sealed class EntitiesMenuManager : EntitiesManager
     {
         #region RightZone
 
@@ -67,24 +67,21 @@ namespace Assets.Scripts.ECS.Menu.Entities
         #endregion
 
 
-        internal EntitiesMenuManager(EcsWorld ecsWorld)
+        internal EntitiesMenuManager(EcsWorld menuWorld)
         {
-            _joinOnlineEnt = ecsWorld.NewEntity();
-            _onlineRightZoneEnt = ecsWorld.NewEntity();
-            _stepModeUIEnt = ecsWorld.NewEntity();
+            _joinOnlineEnt = menuWorld.NewEntity();
+            _onlineRightZoneEnt = menuWorld.NewEntity();
+            _stepModeUIEnt = menuWorld.NewEntity();
 
-            _createRoomEnt = ecsWorld.NewEntity();
-            _joinRandomRoomEnt = ecsWorld.NewEntity();
-            _createFriendRoomEnt = ecsWorld.NewEntity();
-            _joinFriendRoomEnt = ecsWorld.NewEntity();
+            _createRoomEnt = menuWorld.NewEntity();
+            _joinRandomRoomEnt = menuWorld.NewEntity();
+            _createFriendRoomEnt = menuWorld.NewEntity();
+            _joinFriendRoomEnt = menuWorld.NewEntity();
 
-            _joinOfflineEnt = ecsWorld.NewEntity();
-            _offlineLeftZoneEnt = ecsWorld.NewEntity();
-            _testSoloGameEnt = ecsWorld.NewEntity();
-        }
+            _joinOfflineEnt = menuWorld.NewEntity();
+            _offlineLeftZoneEnt = menuWorld.NewEntity();
+            _testSoloGameEnt = menuWorld.NewEntity();
 
-        internal void FillEntities()
-        {
             var rightZone = Instance.CanvasManager.FindUnderParent<RectTransform>(SceneTypes.Menu, "OnlineRightZone");
 
             var connectOnlineButton = rightZone.transform.Find("ConnectOnline_Button").GetComponent<Button>();

@@ -5,19 +5,19 @@ using Assets.Scripts.Workers;
 internal class StatsUISystem : SystemGeneralReduction
 {
     private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
-    private UnitTypes UnitType => CellUnitWorker.UnitType(XySelectedCell);
+    private UnitTypes UnitType => CellUnitsDataWorker.UnitType(XySelectedCell);
 
     public override void Run()
     {
         base.Run();
 
-        if (CellUnitWorker.HaveAnyUnit(XySelectedCell))
+        if (CellUnitsDataWorker.HaveAnyUnit(XySelectedCell))
         {
 
-            _eGGUIM.HealthUIEnt_TextMeshProUGUICom.SetText(CellUnitWorker.AmountHealth(XySelectedCell).ToString());
-            _eGGUIM.PowerAttackUIEnt_TextMeshProUGUICom.SetText(CellUnitWorker.SimplePowerDamage(UnitType).ToString());
-            _eGGUIM.PowerProtectionUIEnt_TextMeshProUGUICom.SetText(CellUnitWorker.PowerProtection(XySelectedCell).ToString());
-            _eGGUIM.AmountStepsUIEnt_TextMeshProUGUICom.SetText(CellUnitWorker.AmountSteps(XySelectedCell).ToString());
+            _eGGUIM.HealthUIEnt_TextMeshProUGUICom.SetText(CellUnitsDataWorker.AmountHealth(XySelectedCell).ToString());
+            _eGGUIM.PowerAttackUIEnt_TextMeshProUGUICom.SetText(CellUnitsDataWorker.SimplePowerDamage(UnitType).ToString());
+            _eGGUIM.PowerProtectionUIEnt_TextMeshProUGUICom.SetText(CellUnitsDataWorker.PowerProtection(XySelectedCell).ToString());
+            _eGGUIM.AmountStepsUIEnt_TextMeshProUGUICom.SetText(CellUnitsDataWorker.AmountSteps(XySelectedCell).ToString());
 
             _eGGUIM.StatsEnt_ParentCom.SetActive(true);
         }

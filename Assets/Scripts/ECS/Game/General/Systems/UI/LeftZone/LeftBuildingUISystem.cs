@@ -31,11 +31,11 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
     {
         base.Run();
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected && CellBuildingWorker.BuildingType(XySelectedCell) == BuildingTypes.City)
+        if (_eGM.SelectorEnt_SelectorCom.IsSelected && CellBuildingsDataWorker.GetBuildingType(XySelectedCell) == BuildingTypes.City)
         {
-            if (CellUnitWorker.HaveOwner(XySelectedCell))
+            if (CellUnitsDataWorker.HaveOwner(XySelectedCell))
             {
-                if (CellUnitWorker.IsMine(XySelectedCell))
+                if (CellUnitsDataWorker.IsMine(XySelectedCell))
                 {
                     _eGGUIM.BuildingZoneEnt_ParentCom.SetActive(true);
                 }

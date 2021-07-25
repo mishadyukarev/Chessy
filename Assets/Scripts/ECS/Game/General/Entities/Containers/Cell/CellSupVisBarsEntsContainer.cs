@@ -1,5 +1,7 @@
-﻿using Assets.Scripts.ECS.Components;
+﻿using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.Components;
 using Leopotam.Ecs;
+using UnityEngine;
 
 namespace Assets.Scripts.ECS.Game.General.Entities.Containers
 {
@@ -21,12 +23,34 @@ namespace Assets.Scripts.ECS.Game.General.Entities.Containers
         internal ref SpriteRendererComponent CellOreSupStatEnt_SprRendCom(int[] xy) => ref _cellOreSupStatEnts[xy[X], xy[Y]].Get<SpriteRendererComponent>();
 
 
-        internal CellSupVisBarsEntsContainer((EcsEntity[,], EcsEntity[,], EcsEntity[,], EcsEntity[,]) ents) : base(ents.Item1)
+        internal CellSupVisBarsEntsContainer(GameObject[,] cellParent, EcsWorld gameWorld) : base(cellParent)
         {
-            _cellHpSupStatEnts = ents.Item1;
-            _cellFertilizeSupStatEnts = ents.Item2;
-            _cellForestSupStatEnts = ents.Item3;
-            _cellOreSupStatEnts = ents.Item4;
+            _cellHpSupStatEnts = new EcsEntity[CellValues.CELL_COUNT_X, CellValues.CELL_COUNT_Y];
+            _cellFertilizeSupStatEnts = new EcsEntity[CellValues.CELL_COUNT_X, CellValues.CELL_COUNT_Y];
+            _cellForestSupStatEnts = new EcsEntity[CellValues.CELL_COUNT_X, CellValues.CELL_COUNT_Y];
+            _cellOreSupStatEnts = new EcsEntity[CellValues.CELL_COUNT_X, CellValues.CELL_COUNT_Y];
+
+            for (int x = 0; x < Xamount; x++)
+                for (int y = 0; y < Yamount; y++)
+                {
+                    var parentGO = cellParent[x, y].transform.Find("SupportStatic").gameObject;
+
+                    var sr = parentGO.transform.Find("Hp").GetComponent<SpriteRenderer>();
+                    _cellHpSupStatEnts[x, y] = gameWorld.NewEntity()
+                        .Replace(new SpriteRendererComponent(sr));
+
+                    sr = parentGO.transform.Find("Fertilizer").GetComponent<SpriteRenderer>();
+                    _cellFertilizeSupStatEnts[x, y] = gameWorld.NewEntity()
+                        .Replace(new SpriteRendererComponent(sr));
+
+                    sr = parentGO.transform.Find("Forest").GetComponent<SpriteRenderer>();
+                    _cellForestSupStatEnts[x, y] = gameWorld.NewEntity()
+                        .Replace(new SpriteRendererComponent(sr));
+
+                    sr = parentGO.transform.Find("Ore").GetComponent<SpriteRenderer>();
+                    _cellOreSupStatEnts[x, y] = gameWorld.NewEntity()
+                        .Replace(new SpriteRendererComponent(sr));
+                }
         }
     }
 }

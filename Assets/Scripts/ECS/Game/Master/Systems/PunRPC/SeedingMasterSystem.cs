@@ -2,7 +2,7 @@
 using Assets.Scripts.Workers;
 using Photon.Pun;
 using System;
-using static Assets.Scripts.CellEnvironmentWorker;
+using static Assets.Scripts.CellEnvirDataWorker;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
@@ -27,9 +27,9 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     throw new Exception();
 
                 case EnvironmentTypes.YoungForest:
-                    if (CellUnitWorker.HaveMinAmountSteps(XyCellForSeeding))
+                    if (CellUnitsDataWorker.HaveMinAmountSteps(XyCellForSeeding))
                     {
-                        if (!CellBuildingWorker.HaveBuilding(XyCellForSeeding))
+                        if (!CellBuildingsDataWorker.HaveAnyBuilding(XyCellForSeeding))
                         {
                             if (!HaveEnvironment(EnvironmentTypes.Fertilizer, XyCellForSeeding))
                             {
@@ -40,7 +40,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Seeding);
                                         SetNewEnvironment(EnvironmentTypes.YoungForest, XyCellForSeeding);
 
-                                        CellUnitWorker.TakeAmountSteps(XyCellForSeeding);
+                                        CellUnitsDataWorker.TakeAmountSteps(XyCellForSeeding);
                                     }
                             }
                             else

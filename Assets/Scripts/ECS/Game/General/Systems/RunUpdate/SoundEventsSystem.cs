@@ -18,7 +18,7 @@ internal sealed class SoundEventsSystem : SystemGeneralReduction
         base.Run();
 
 
-        if (_eGM.TruceSoundEnt_AudioSourceCom.IsPlaying)
+        if (_eGM.TruceSoundEnt_AudioSourceCom.AudioSource.isPlaying)
         {
             Main.Instance.ECSmanager.EntitiesCommonManager.SoundEnt_AudioSourceCommCom.Volume = 0;
         }

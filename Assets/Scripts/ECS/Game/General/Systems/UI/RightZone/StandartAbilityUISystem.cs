@@ -12,13 +12,13 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-        if (CellUnitWorker.HaveAnyUnit(XySelectedCell))
+        if (CellUnitsDataWorker.HaveAnyUnit(XySelectedCell))
         {
-            if (CellUnitWorker.HaveOwner(XySelectedCell))
+            if (CellUnitsDataWorker.HaveOwner(XySelectedCell))
             {
-                if (CellUnitWorker.IsMine(XySelectedCell))
+                if (CellUnitsDataWorker.IsMine(XySelectedCell))
                 {
-                    switch (CellUnitWorker.UnitType(XySelectedCell))
+                    switch (CellUnitsDataWorker.UnitType(XySelectedCell))
                     {
                         case UnitTypes.None:
                             ActiveStandartAbilities(false);
@@ -63,7 +63,7 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
                 }
             }
 
-            else if (CellUnitWorker.IsBot(XySelectedCell))
+            else if (CellUnitsDataWorker.IsBot(XySelectedCell))
             {
                 ActiveStandartAbilities(false);
             }
@@ -82,13 +82,13 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
 
             if (isActive)
             {
-                if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Protected, XySelectedCell))
+                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionTypes.Protected, XySelectedCell))
                 {
                     _eGGUIM.StandartFirstAbilityEnt_ButtonCom.SetColor(Color.yellow);
                 }
                 else _eGGUIM.StandartFirstAbilityEnt_ButtonCom.SetColor(Color.white);
 
-                if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Relaxed, XySelectedCell)) _eGGUIM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.green);
+                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionTypes.Relaxed, XySelectedCell)) _eGGUIM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.green);
                 else _eGGUIM.StandartSecondAbilityEnt_ButtonCom.SetColor(Color.white);
             }
         }

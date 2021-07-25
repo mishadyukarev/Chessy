@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.ECS.Menu.Entities;
 using Leopotam.Ecs;
 using System;
+using UnityEngine;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
@@ -53,20 +54,6 @@ namespace Assets.Scripts
 
 
             _entitiesCommonManager = new EntitiesCommonManager(_commonWorld);
-
-
-            _entitiesMenuManager = new EntitiesMenuManager(_menuWorld);
-
-
-            _entitiesGameGeneralManager = new EntitiesGameGeneralManager();
-            _entitiesGameGeneralUIManager = new EntitiesGameGeneralUIManager(_gameWorld);
-            _systemsGameGeneralManager = new SystemsGameGeneralManager();
-
-            _entitiesGameMasterManager = new EntitiesGameMasterManager(_gameWorld);
-            _systemsGameMasterManager = new SystemsGameMasterManager();
-
-            _entitiesGameOtherManager = new EntitiesGameOtherManager(_gameWorld);
-            _systemsGameOtherManager = new SystemsGameOtherManager();
         }
 
         public void OwnUpdate(SceneTypes sceneType)
@@ -103,28 +90,45 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    if (!Instance.IsStarted) _gameWorld.Destroy();
+                    if (_gameWorld != default)
+                    {
+                        _gameWorld.Destroy();
 
-                    _entitiesMenuManager.FillEntities();
+                        _entitiesGameGeneralManager = default;
+                        _entitiesGameGeneralUIManager = default;
+                        _entitiesGameMasterManager = default;
+                        _entitiesGameOtherManager = default;
+
+                        _systemsGameGeneralManager = default;
+                        _systemsGameMasterManager = default;
+                        _systemsGameOtherManager = default;
+                    }
+
+                    _menuWorld = new EcsWorld();
+
+                    _entitiesMenuManager = new EntitiesMenuManager(_menuWorld);
 
                     Instance.IsStarted = false;
                     break;
 
                 case SceneTypes.Game:
+                    _menuWorld.Destroy();
+                    _entitiesMenuManager = default;
+
+
                     _gameWorld = new EcsWorld();
-                    _entitiesGameGeneralManager.FillEntities(_gameWorld);
-                    _entitiesGameGeneralUIManager.FillEntities(_gameWorld);
-                    _entitiesGameMasterManager.FillEntities(_gameWorld);
-                    _entitiesGameOtherManager.FillEntities(_gameWorld);
+
+                    _entitiesGameGeneralManager = new EntitiesGameGeneralManager(_gameWorld);
+                    _entitiesGameGeneralUIManager = new EntitiesGameGeneralUIManager(_gameWorld);
+
+                    _entitiesGameMasterManager = new EntitiesGameMasterManager(_gameWorld);
+
+                    _entitiesGameOtherManager = new EntitiesGameOtherManager(_gameWorld);
 
 
-                    _systemsGameGeneralManager.DestroySystems();
-                    _systemsGameMasterManager.DestroySystems();
-                    _systemsGameOtherManager.DestroySystems();
-
-                    _systemsGameGeneralManager.CreateSystems(_gameWorld);
-                    _systemsGameMasterManager.CreateSystems(_gameWorld);
-                    _systemsGameOtherManager.CreateSystems(_gameWorld);
+                    _systemsGameGeneralManager = new SystemsGameGeneralManager(_gameWorld);
+                    _systemsGameMasterManager = new SystemsGameMasterManager(_gameWorld);
+                    _systemsGameOtherManager = new SystemsGameOtherManager(_gameWorld);
 
                     _systemsGameGeneralManager.ProcessInjects();
                     _systemsGameMasterManager.ProcessInjects();
@@ -133,6 +137,7 @@ namespace Assets.Scripts
                     _systemsGameGeneralManager.Init();
                     _systemsGameMasterManager.Init();
                     _systemsGameOtherManager.Init();
+
                     break;
 
                 default:

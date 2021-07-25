@@ -14,7 +14,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         private int[] XyCellForUpgrade => _eMM.UpgradeEnt_XyCellCom.XyCell;
 
 
-        private UnitTypes NeededUnitTypeForUpgrade => CellUnitWorker.UnitType(XyCellForUpgrade);
+        private UnitTypes NeededUnitTypeForUpgrade => CellUnitsDataWorker.UnitType(XyCellForUpgrade);
         internal BuildingTypes NeededBuildingTypeForUpgrade => _eMM.UpgradeEnt_BuildingTypeCom.BuildingType;
 
 
@@ -30,14 +30,14 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     break;
 
                 case UpgradeModTypes.Unit:
-                    if (CellUnitWorker.HaveAnyUnit(XyCellForUpgrade))
+                    if (CellUnitsDataWorker.HaveAnyUnit(XyCellForUpgrade))
                     {
-                        if (InfoResourcesWorker.CanUpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade, out haves))
+                        if (InfoResourcesDataWorker.CanUpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade, out haves))
                         {
-                            InfoResourcesWorker.UpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade);
-                            CellUnitWorker.ChangePlayerUnit(XyCellForUpgrade, NeededUnitTypeForUpgrade + FOR_NEXT_UPGRADE);
+                            InfoResourcesDataWorker.BuyUpgradeUnit(InfoFrom.Sender, NeededUnitTypeForUpgrade);
+                            CellUnitsDataWorker.ChangePlayerUnit(XyCellForUpgrade, NeededUnitTypeForUpgrade + FOR_NEXT_UPGRADE);
 
-                            if (CellUnitWorker.IsMelee(XyCellForUpgrade))
+                            if (CellUnitsDataWorker.IsMelee(XyCellForUpgrade))
                             {
                                 PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.UpgradeUnitMelee);
                             }
@@ -55,9 +55,9 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     break;
 
                 case UpgradeModTypes.Building:
-                    if (InfoResourcesWorker.CanUpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade, out haves))
+                    if (InfoResourcesDataWorker.CanUpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade, out haves))
                     {
-                        InfoResourcesWorker.UpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade);
+                        InfoResourcesDataWorker.BuyUpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade);
 
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.SoundGoldPack);
                     }

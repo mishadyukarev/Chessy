@@ -6,39 +6,27 @@ using Assets.Scripts.Workers.Game.Else.Cell;
 using Photon.Realtime;
 using System;
 using System.Collections.Generic;
-using UnityEngine;
 using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
 {
-    public class CellUnitWorker
+    public class CellUnitsDataWorker
     {
         private static CellUnitEntsContainer _cellUnitEntsContainer;
 
 
-        internal static SpritesData SpritesData => Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig;
 
-
-
-
-        internal CellUnitWorker(CellUnitEntsContainer cellUnitEntsContainer)
+        internal CellUnitsDataWorker(CellUnitEntsContainer cellUnitEntsContainer)
         {
             _cellUnitEntsContainer = cellUnitEntsContainer;
         }
 
 
 
+        internal static void SetIsVisibleUnit(bool key, bool value, int[] xy) => _cellUnitEntsContainer.CellUnitEnt_IsVisibleDictCom(xy).IsVisibleDict[key] = value;
+        internal static bool IsVisibleUnit(bool key, int[] xy) => _cellUnitEntsContainer.CellUnitEnt_IsVisibleDictCom(xy).IsVisibleDict[key];
 
-
-
-
-
-
-
-
-        #region Else
-        private static SpriteRenderer UnitSR(int[] xy) => _cellUnitEntsContainer.CellUnitEnt_SpriteRendererCom(xy).SpriteRenderer;
 
         private static void SetStandartValuesUnit(UnitTypes unitType, int amountHealth, int amountSteps, ConditionTypes protectRelaxType, params int[] xy)
         {
@@ -47,79 +35,16 @@ namespace Assets.Scripts
             SetAmountSteps(amountSteps, xy);
             SetProtectRelaxType(protectRelaxType, xy);
         }
-        private static void SetSprite(UnitTypes unitType, params int[] xy)
+        private static void ResetStandartValuesUnit(int[] xy)
         {
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
+            UnitTypes unitType = default;
+            int amountHealth = default;
+            int amountSteps = default;
+            ConditionTypes protectRelaxType = default;
 
-                case UnitTypes.King:
-                    _cellUnitEntsContainer.CellUnitEnt_SpriteRendererCom(xy).SpriteRenderer.sprite = SpritesData.KingSprite;
-                    break;
-
-                case UnitTypes.Pawn:
-                    _cellUnitEntsContainer.CellUnitEnt_SpriteRendererCom(xy).SpriteRenderer.sprite = SpritesData.PawnSprite;
-                    break;
-
-                case UnitTypes.PawnSword:
-                    _cellUnitEntsContainer.CellUnitEnt_SpriteRendererCom(xy).SpriteRenderer.sprite = SpritesData.PawnSwordSprite;
-                    break;
-
-                case UnitTypes.Rook:
-                    _cellUnitEntsContainer.CellUnitEnt_SpriteRendererCom(xy).SpriteRenderer.sprite = SpritesData.RookSprite;
-                    break;
-
-                case UnitTypes.RookCrossbow:
-                    _cellUnitEntsContainer.CellUnitEnt_SpriteRendererCom(xy).SpriteRenderer.sprite = SpritesData.RookCrossbowSprite;
-                    break;
-
-                case UnitTypes.Bishop:
-                    _cellUnitEntsContainer.CellUnitEnt_SpriteRendererCom(xy).SpriteRenderer.sprite = SpritesData.BishopSprite;
-                    break;
-
-                case UnitTypes.BishopCrossbow:
-                    _cellUnitEntsContainer.CellUnitEnt_SpriteRendererCom(xy).SpriteRenderer.sprite = SpritesData.BishopCrossbowSprite;
-                    break;
-
-                default:
-                    throw new Exception();
-            }
+            SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
         }
-        internal static void EnableUnitSR(bool isEnabled, int[] xy) => UnitSR(xy).enabled = isEnabled;
-        internal static void SetColorSR(Color color, int[] xy) => UnitSR(xy).color = color;
 
-        internal static void SetIsVisibleUnit(bool key, bool value, int[] xy) => _cellUnitEntsContainer.CellUnitEnt_IsVisibleDictCom(xy).IsVisibleDict[key] = value;
-        internal static bool IsVisibleUnit(bool key, int[] xy) => _cellUnitEntsContainer.CellUnitEnt_IsVisibleDictCom(xy).IsVisibleDict[key];
-
-        internal static void SetEnabledUnit(bool isEnabled, int[] xy) => UnitSR(xy).enabled = isEnabled;
-
-        internal static void Flip(bool isActivated, XyTypes flipType, int[] xy)
-        {
-            switch (flipType)
-            {
-                case XyTypes.X:
-                    UnitSR(xy).flipX = isActivated;
-                    break;
-
-                case XyTypes.Y:
-                    UnitSR(xy).flipY = isActivated;
-                    break;
-
-                default:
-                    break;
-            }
-        }
-        internal void SetRotation(Vector3 rotation, int[] xy) => UnitSR(xy).transform.rotation = Quaternion.Euler(rotation);
-
-        #endregion
-
-
-        #region SupVis
-
-
-
-        #endregion
 
 
         #region UnitType
@@ -448,6 +373,7 @@ namespace Assets.Scripts
 
         internal static bool IsBot(int[] xy) => _cellUnitEntsContainer.CellUnitEnt_CellOwnerBotCom(xy).IsBot;
         internal static void SetIsBot(bool isBot, int[] xy) => _cellUnitEntsContainer.CellUnitEnt_CellOwnerBotCom(xy).IsBot = isBot;
+        private static void ResetIsBot(int[] xy) => SetIsBot(false, xy);
 
         #endregion
 
@@ -599,89 +525,89 @@ namespace Assets.Scripts
             switch (unitType)
             {
                 case UnitTypes.King:
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
                         powerProtection -= PROTECTION_FOOD_FOR_KING;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                         powerProtection += PROTECTION_TREE_FOR_KING;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
                         powerProtection += PROTECTION_HILL_FOR_KING;
                     break;
 
                 case UnitTypes.Pawn:
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
                         powerProtection -= PROTECTION_FOOD_FOR_PAWN;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                         powerProtection += PROTECTION_TREE_FOR_PAWN;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
                         powerProtection += PROTECTION_HILL_FOR_PAWN;
                     break;
 
 
                 case UnitTypes.PawnSword:
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
                         powerProtection -= PROTECTION_FOOD_FOR_PAWN_SWORD;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                         powerProtection += PROTECTION_TREE_FOR_PAWN_SWORD;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
                         powerProtection += PROTECTION_HILL_FOR_PAWN_SWORD;
                     break;
 
 
                 case UnitTypes.Rook:
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
                         powerProtection -= PROTECTION_FOOD_FOR_ROOK;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                         powerProtection += PROTECTION_TREE_FOR_ROOK;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
                         powerProtection += PROTECTION_HILL_FOR_ROOK;
                     break;
 
 
                 case UnitTypes.RookCrossbow:
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
                         powerProtection -= PROTECTION_FOOD_FOR_ROOK_CROSSBOW;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                         powerProtection += PROTECTION_TREE_FOR_ROOK_CROSSBOW;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
                         powerProtection += PROTECTION_HILL_FOR_ROOK_CROSSBOW;
                     break;
 
 
                 case UnitTypes.Bishop:
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
                         powerProtection -= PROTECTION_FOOD_FOR_BISHOP;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                         powerProtection += PROTECTION_TREE_FOR_BISHOP;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
                         powerProtection += PROTECTION_HILL_FOR_BISHOP;
                     break;
 
 
                 case UnitTypes.BishopCrossbow:
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
                         powerProtection -= PROTECTION_FOOD_FOR_BISHOP_CROSSBOW;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                         powerProtection += PROTECTION_TREE_FOR_BISHOP_CROSSBOW;
 
-                    if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
                         powerProtection += PROTECTION_HILL_FOR_BISHOP_CROSSBOW;
                     break;
             }
 
-            switch (CellBuildingWorker.BuildingType(xy))
+            switch (CellBuildingsDataWorker.GetBuildingType(xy))
             {
                 case BuildingTypes.City:
 
@@ -750,35 +676,14 @@ namespace Assets.Scripts
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, toXy);
             SetOwner(player, toXy);
 
-            EnableUnitSR(true, toXy);
-            SetSprite(unitType, toXy);
-
-            if (IsMasterClient(toXy)) CellSupVisBlocksWorker.SetCellSupVisBlocksColor(Color.blue, CellSupVisBlocksTypes.MaxSteps, toXy);
-
-            else CellSupVisBlocksWorker.SetCellSupVisBlocksColor(Color.red, CellSupVisBlocksTypes.MaxSteps, toXy);
-
-
-            EnableUnitSR(false, fromXy);
-
             SetStandartValuesUnit(default, default, default, default, fromXy);
             ResetOwner(fromXy);
-
-            CellSupVisBlocksWorker.EnableCellSupVisBlocksSR(false, CellSupVisBlocksTypes.MaxSteps, fromXy);
-            CellSupVisBarsWorker.ActiveVision(false, SupportStaticTypes.Hp, fromXy);
         }
 
         internal static void SetPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, ConditionTypes protectRelaxType, Player player, int[] xy)
         {
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
             SetOwner(player, xy);
-
-            CellSupVisBlocksWorker.EnableCellSupVisBlocksSR(true, CellSupVisBlocksTypes.MaxSteps, xy);
-
-            if (player.IsMasterClient) CellSupVisBlocksWorker.SetCellSupVisBlocksColor(Color.blue, CellSupVisBlocksTypes.MaxSteps, xy);
-
-            else CellSupVisBlocksWorker.SetCellSupVisBlocksColor(Color.red, CellSupVisBlocksTypes.MaxSteps, xy);
-
-            SetSprite(unitType, xy);
         }
 
         internal static void SetNewPlayerUnit(UnitTypes unitType, Player player, int[] xy)
@@ -833,35 +738,23 @@ namespace Assets.Scripts
             SetPlayerUnit(unitType, amountHealth, amountSteps, ConditionTypes.None, player, xy);
         }
 
-        internal static void ResetPlayerUnit(int[] xy)
+        internal static void ResetUnit(int[] xy)
         {
-            EnableUnitSR(false, xy);
+            ResetStandartValuesUnit(xy);
 
-            UnitTypes unitType = default;
-            int amountHealth = default;
-            int amountSteps = default;
-            ConditionTypes protectRelaxType = default;
-            Player player = default;
-
-            SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
-            SetOwner(player, xy);
+            ResetOwner(xy);
+            ResetIsBot(xy);
         }
 
         internal static void SyncPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, ConditionTypes protectRelaxType, Player player, int[] xy)
         {
-            if (HaveAnyUnit(xy)) EnableUnitSR(false, xy);
-
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
             SetOwner(player, xy);
         }
 
         internal static void ChangePlayerUnit(int[] xy, UnitTypes newUnitType)
         {
-            EnableUnitSR(false, xy);
-
             SetUnitType(newUnitType, xy);
-
-            EnableUnitSR(true, xy);
 
             switch (UnitType(xy))
             {
@@ -897,43 +790,14 @@ namespace Assets.Scripts
             }
         }
 
-        internal static void ActiveSelectorVisionUnit(bool isActive, UnitTypes unitType, int[] xy)
-        {
-            if (isActive)
-            {
-                EnableUnitSR(isActive, xy);
-                SetSprite(unitType, xy);
-            }
-
-            else
-            {
-                EnableUnitSR(isActive, xy);
-            }
-        }
 
         #endregion
 
 
         #region Bot
 
-        internal static void SetBotUnit(UnitTypes unitType, bool haveBot, int amountHealth, int amountSteps, ConditionTypes protectRelaxType, params int[] xy)
+        internal static void SetBotUnit(UnitTypes unitType, bool haveBot, int amountHealth, int amountSteps, ConditionTypes protectRelaxType, int[] xy)
         {
-            SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
-            SetIsBot(haveBot, xy);
-
-            EnableUnitSR(true, xy);
-        }
-
-        internal static void ResetBotUnit(params int[] xy)
-        {
-            if (HaveAnyUnit(xy)) EnableUnitSR(false, xy);
-
-            UnitTypes unitType = default;
-            int amountHealth = default;
-            int amountSteps = default;
-            ConditionTypes protectRelaxType = default;
-            bool haveBot = default;
-
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
             SetIsBot(haveBot, xy);
         }
@@ -951,9 +815,9 @@ namespace Assets.Scripts
 
             foreach (var xy1 in listAvailable)
             {
-                if (!CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy1) && !HaveAnyUnit(xy1))
+                if (!CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy1) && !HaveAnyUnit(xy1))
                 {
-                    if (AmountSteps(xy) >= CellEnvironmentWorker.NeedAmountSteps(xy1) || HaveMaxAmountSteps(xy))
+                    if (AmountSteps(xy) >= CellEnvirDataWorker.NeedAmountSteps(xy1) || HaveMaxAmountSteps(xy))
                     {
                         list.Add(xy1);
                     }
@@ -974,9 +838,9 @@ namespace Assets.Scripts
                     var xy1 = CellSpaceWorker.GetXYCell(xy, directType1);
 
 
-                    if (!CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy1))
+                    if (!CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy1))
                     {
-                        if (CellEnvironmentWorker.NeedAmountSteps(xy1) <= AmountSteps(xy) || HaveMaxAmountSteps(xy))
+                        if (CellEnvirDataWorker.NeedAmountSteps(xy1) <= AmountSteps(xy) || HaveMaxAmountSteps(xy))
                         {
                             if (HaveAnyUnit(xy1))
                             {
@@ -1029,11 +893,11 @@ namespace Assets.Scripts
                 {
                     var xy1 = CellSpaceWorker.GetXYCell(xy, directType1);
 
-                    if (CellWorker.IsActiveSelfCell(xy1))
+                    if (CellWorker.IsActiveSelfParentCell(xy1))
                     {
                         if (HaveMinAmountSteps(xy))
                         {
-                            if (!CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy1))
+                            if (!CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy1))
                             {
                                 if (HaveAnyUnit(xy1))
                                 {
@@ -1088,13 +952,13 @@ namespace Assets.Scripts
 
                         var xy2 = CellSpaceWorker.GetXYCell(xy1, directType1);
 
-                        if (IsVisibleUnit(Instance.IsMasterClient, xy2))
+                        if (CellUnitsDataWorker.IsVisibleUnit(Instance.IsMasterClient, xy2))
                         {
                             if (UnitType(xy) == UnitTypes.Rook || UnitType(xy) == UnitTypes.RookCrossbow)
                             {
                                 if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Down || directType1 == DirectTypes.Up)
                                 {
-                                    if (!CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy2))
+                                    if (!CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy2))
                                     {
                                         if (HaveAnyUnit(xy2))
                                         {
@@ -1116,7 +980,7 @@ namespace Assets.Scripts
 
                                 if (directType1 == DirectTypes.LeftDown || directType1 == DirectTypes.LeftUp || directType1 == DirectTypes.RightDown || directType1 == DirectTypes.RightUp)
                                 {
-                                    if (!CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy2))
+                                    if (!CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy2))
                                     {
                                         if (HaveAnyUnit(xy2))
                                         {
@@ -1142,7 +1006,7 @@ namespace Assets.Scripts
                             {
                                 if (directType1 == DirectTypes.LeftDown || directType1 == DirectTypes.LeftUp || directType1 == DirectTypes.RightDown || directType1 == DirectTypes.RightUp)
                                 {
-                                    if (!CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy2))
+                                    if (!CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy2))
                                     {
                                         if (HaveAnyUnit(xy2))
                                         {
@@ -1164,7 +1028,7 @@ namespace Assets.Scripts
 
                                 if (directType1 == DirectTypes.Left || directType1 == DirectTypes.Right || directType1 == DirectTypes.Down || directType1 == DirectTypes.Up)
                                 {
-                                    if (!CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy2))
+                                    if (!CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy2))
                                     {
                                         if (HaveAnyUnit(xy2))
                                         {
@@ -1198,7 +1062,7 @@ namespace Assets.Scripts
                 {
                     var xy = new int[] { x, y };
 
-                    if (!CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy))
+                    if (!CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy))
                     {
                         if (!HaveAnyUnit(xy))
                         {

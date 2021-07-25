@@ -27,6 +27,11 @@ MonoBehaviour:
   _farmSprite: {fileID: 21300000, guid: 30684e08ddc40714684366a1f3346d97, type: 3}
   _woodcutterSprite: {fileID: 21300000, guid: 43186546374ebcb4c886b904e733aa7d, type: 3}
   _mineSprite: {fileID: 21300000, guid: eb9165ea65648b944966e83670fbbaa5, type: 3}
+  _cityBackSprite: {fileID: 21300000, guid: 7af86d863040d5c40abdbfbdbe2b20f2, type: 3}
+  _farmBackSprite: {fileID: 21300000, guid: 93a44d133fa094e4d82918a31f9b56ed, type: 3}
+  _woodcutterBackSprite: {fileID: 21300000, guid: 0aa277bbc0b52a14a94a3f5281f79ba0,
+    type: 3}
+  _mineBackSprite: {fileID: 21300000, guid: f24c722d94f6cfd49aa8bb7b310867d5, type: 3}
   _fertilizerSprite: {fileID: 21300000, guid: 1b466955a35033b43bebef04fbd3215c, type: 3}
   _youngForestSprite: {fileID: 21300000, guid: 2b439c649c61a0a41b00cbf8d2c9a1d1, type: 3}
   _forestSprite: {fileID: 21300000, guid: 03a8dd28e4d677849bbc736a8e3179d2, type: 3}

@@ -1,26 +1,9 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Photon.Pun;
-using System.Collections.Generic;
 
 internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
 {
-    private Dictionary<bool, int> _amountMotionsWithoutFood = new Dictionary<bool, int>();
-    private int _countForResetUnitMaster = 2;
-    private int _countForResetUnitOther = 2;
-    private Dictionary<bool, int> _amountMotionsWithoutFoodForTruce = new Dictionary<bool, int>();
-
-    public override void Init()
-    {
-        base.Init();
-
-        _amountMotionsWithoutFood.Add(true, 0);
-        _amountMotionsWithoutFood.Add(false, 0);
-
-        _amountMotionsWithoutFoodForTruce.Add(true, 0);
-        _amountMotionsWithoutFoodForTruce.Add(false, 0);
-    }
-
 
     public override void Run()
     {
@@ -38,9 +21,9 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
             {
                 var xy = new int[] { x, y };
 
-                if (CellUnitWorker.HaveAnyUnit(xy))
+                if (CellUnitsDataWorker.HaveAnyUnit(xy))
                 {
-                    CellUnitWorker.RefreshAmountSteps(xy);
+                    CellUnitsDataWorker.RefreshAmountSteps(xy);
                 }
             }
 
@@ -58,8 +41,8 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
             {
                 var xy = new int[] { x, y };
 
-                if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy)
-                    && CellWorker.IsActiveSelfCell(xy))
+                if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy)
+                    && CellWorker.IsActiveSelfParentCell(xy))
                 {
                     ++amountAdultForest;
                 }

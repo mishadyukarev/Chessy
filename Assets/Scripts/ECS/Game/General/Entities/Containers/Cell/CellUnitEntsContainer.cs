@@ -1,7 +1,10 @@
-﻿using Assets.Scripts.ECS.Components;
+﻿using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Assets.Scripts.ECS.Game.General.Entities.Containers
 {
@@ -18,9 +21,23 @@ namespace Assets.Scripts.ECS.Game.General.Entities.Containers
 
 
 
-        internal CellUnitEntsContainer(EcsEntity[,] cellUnitEnts) : base(cellUnitEnts)
+        internal CellUnitEntsContainer(GameObject[,] cellParentGOs, EcsWorld gameWorld) : base(cellParentGOs)
         {
-            _cellUnitEnts = cellUnitEnts;
+            _cellUnitEnts = new EcsEntity[CellValues.CELL_COUNT_X, CellValues.CELL_COUNT_Y];
+
+            for (int x = 0; x < Xamount; x++)
+                for (int y = 0; y < Yamount; y++)
+                {
+                    var sr = cellParentGOs[x, y].transform.Find("Unit").GetComponent<SpriteRenderer>();
+                    _cellUnitEnts[x, y] = gameWorld.NewEntity()
+                        .Replace(new CellUnitComponent())
+                        .Replace(new UnitTypeComponent())
+                        .Replace(new OwnerComponent())
+                        .Replace(new OwnerBotComponent())
+                        .Replace(new IsVisibleDictComponent(new Dictionary<bool, bool>()))
+                        .Replace(new ProtectRelaxComponent())
+                        .Replace(new SpriteRendererComponent(sr));
+                }
         }
     }
 }

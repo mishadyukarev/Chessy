@@ -75,7 +75,7 @@ namespace Assets.Scripts
         {
             if (!IsActivatedDoner)
             {
-                if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Protected, XySelectedCell))
+                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionTypes.Protected, XySelectedCell))
                 {
                     PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionTypes.None, XySelectedCell);
                 }
@@ -90,7 +90,7 @@ namespace Assets.Scripts
         {
             if (!IsActivatedDoner)
             {
-                if (CellUnitWorker.IsProtectRelaxType(ConditionTypes.Relaxed, XySelectedCell))
+                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionTypes.Relaxed, XySelectedCell))
                 {
                     PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionTypes.None, XySelectedCell);
                 }

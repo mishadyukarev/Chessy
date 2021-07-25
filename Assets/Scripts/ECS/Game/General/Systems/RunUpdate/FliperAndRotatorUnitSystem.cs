@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using static Assets.Scripts.CellUnitWorker;
+using static Assets.Scripts.CellUnitsDataWorker;
 using static Assets.Scripts.CellWorker;
 
 namespace Assets.Scripts.ECS.Game.General.Systems

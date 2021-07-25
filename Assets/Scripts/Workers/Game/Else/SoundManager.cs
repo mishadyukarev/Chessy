@@ -16,7 +16,7 @@ namespace Assets.Scripts.Workers
                     throw new Exception();
 
                 case SoundEffectTypes.AttackArcher:
-                    EGGM.AttackArcherEnt_AudioSourceCom.Play();
+                    EGGM.AttackArcherEnt_AudioSourceCom.AudioSource.Play();
                     break;
 
                 case SoundEffectTypes.AttackMelee:
@@ -24,15 +24,15 @@ namespace Assets.Scripts.Workers
                     break;
 
                 case SoundEffectTypes.Building:
-                    EGGM.BuildingSoundEnt_AudioSourceCom.Play();
+                    EGGM.BuildingSoundEnt_AudioSourceCom.AudioSource.Play();
                     break;
 
                 case SoundEffectTypes.Fire:
-                    EGGM.FireSoundEnt_AudioSourceCom.Play();
+                    EGGM.FireSoundEnt_AudioSourceCom.AudioSource.Play();
                     break;
 
                 case SoundEffectTypes.Setting:
-                    EGGM.SettingSoundEnt_AudioSourceCom.Play();
+                    EGGM.SettingSoundEnt_AudioSourceCom.AudioSource.Play();
                     break;
 
                 case SoundEffectTypes.Mistake:
@@ -40,35 +40,35 @@ namespace Assets.Scripts.Workers
                     break;
 
                 case SoundEffectTypes.SoundGoldPack:
-                    EGGM.BuySoundEnt_AudioSourceCom.Play();
+                    EGGM.BuySoundEnt_AudioSourceCom.AudioSource.Play();
                     break;
 
                 case SoundEffectTypes.Melting:
-                    EGGM.MeltingSoundEnt_AudioSourceCom.Play();
+                    EGGM.MeltingSoundEnt_AudioSourceCom.AudioSource.Play();
                     break;
 
                 case SoundEffectTypes.Destroy:
-                    EGGM.DestroySoundEnt_AudioSourceCom.Play();
+                    EGGM.DestroySoundEnt_AudioSourceCom.AudioSource.Play();
                     break;
 
                 case SoundEffectTypes.UpgradeUnitMelee:
-                    EGGM.UpgradeUnitMeleeSoundEnt_AudioSourceCom.Play();
+                    EGGM.UpgradeUnitMeleeSoundEnt_AudioSourceCom.AudioSource.Play();
                     break;
 
                 case SoundEffectTypes.UpgradeUnitArcher:
-                    EGGM.PickArcherEnt_AudioSourceCom.Play();
+                    EGGM.PickArcherEnt_AudioSourceCom.AudioSource.Play();
                     break;
 
                 case SoundEffectTypes.Seeding:
-                    EGGM.SeedingSoundEnt_AudioSourceCom.Play();
+                    EGGM.SeedingSoundEnt_AudioSourceCom.AudioSource.Play();
                     break;
 
                 case SoundEffectTypes.ClickToTable:
-                    EGGM.ShiftUnitSoundEnt_AudioSourceCom.Play();
+                    EGGM.ShiftUnitSoundEnt_AudioSourceCom.AudioSource.Play();
                     break;
 
                 case SoundEffectTypes.Truce:
-                    EGGM.TruceSoundEnt_AudioSourceCom.Play();
+                    EGGM.TruceSoundEnt_AudioSourceCom.AudioSource.Play();
                     break;
 
                 default:

@@ -23,13 +23,13 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-        if (SelectorWorker.IsSelectedCell && CellUnitWorker.HaveAnyUnit(XySelectedCell))
+        if (SelectorWorker.IsSelectedCell && CellUnitsDataWorker.HaveAnyUnit(XySelectedCell))
         {
-            if (CellUnitWorker.HaveOwner(XySelectedCell))
+            if (CellUnitsDataWorker.HaveOwner(XySelectedCell))
             {
-                if (CellUnitWorker.IsMine(XySelectedCell))
+                if (CellUnitsDataWorker.IsMine(XySelectedCell))
                 {
-                    switch (CellUnitWorker.UnitType(XySelectedCell))
+                    switch (CellUnitsDataWorker.UnitType(XySelectedCell))
                     {
                         case UnitTypes.None:
                             break;
@@ -77,7 +77,7 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                 }
             }
 
-            else if (CellUnitWorker.IsBot(XySelectedCell))
+            else if (CellUnitsDataWorker.IsBot(XySelectedCell))
             {
                 _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.SetActive(false);
                 _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.SetActive(false);
@@ -96,13 +96,13 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
 
                 _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.RemoveAllListeners();
 
-                if (CellBuildingWorker.HaveBuilding(XySelectedCell))
+                if (CellBuildingsDataWorker.HaveAnyBuilding(XySelectedCell))
                 {
-                    if (CellUnitWorker.HaveOwner(XySelectedCell))
+                    if (CellUnitsDataWorker.HaveOwner(XySelectedCell))
                     {
-                        if (CellUnitWorker.IsMine(XySelectedCell))
+                        if (CellUnitsDataWorker.IsMine(XySelectedCell))
                         {
-                            if (CellBuildingWorker.IsBuildingType(BuildingTypes.City, XySelectedCell))
+                            if (CellBuildingsDataWorker.IsBuildingType(BuildingTypes.City, XySelectedCell))
                             {
                                 _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
                             }
@@ -145,9 +145,9 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                         //}
                     }
 
-                    else if (CellBuildingWorker.IsBot(XySelectedCell))
+                    else if (CellBuildingsDataWorker.IsBot(XySelectedCell))
                     {
-                        if (CellBuildingWorker.IsBuildingType(BuildingTypes.City, XySelectedCell))
+                        if (CellBuildingsDataWorker.IsBuildingType(BuildingTypes.City, XySelectedCell))
                         {
                             _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
                             _eGGUIM.BuildingFourthAbilityEnt_TextMeshProGUICom.SetText("Destroy");

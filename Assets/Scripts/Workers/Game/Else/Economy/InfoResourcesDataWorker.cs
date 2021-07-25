@@ -5,7 +5,7 @@ using static Assets.Scripts.Abstractions.ValuesConsts.EconomyValues;
 
 namespace Assets.Scripts.Workers.Info
 {
-    internal abstract class InfoResourcesWorker : MainGeneralWorker
+    internal abstract class InfoResourcesDataWorker : MainGeneralWorker
     {
         internal static int AmountResources(ResourceTypes resourceType, bool key)
         {
@@ -15,19 +15,19 @@ namespace Assets.Scripts.Workers.Info
                     throw new Exception();
 
                 case ResourceTypes.Food:
-                    return EGGM.FoodInfoEnt_AmountResourcesDictCom.AmountResources(key);
+                    return EGGM.FoodInfoEnt_AmountResourcesDictCom.AmountResourcesDict[key];
 
                 case ResourceTypes.Wood:
-                    return EGGM.WoodInfoEnt_AmountResourcesDictCom.AmountResources(key);
+                    return EGGM.WoodInfoEnt_AmountResourcesDictCom.AmountResourcesDict[key];
 
                 case ResourceTypes.Ore:
-                    return EGGM.OreInfoEnt_AmountResourcesDictCom.AmountResources(key);
+                    return EGGM.OreInfoEnt_AmountResourcesDictCom.AmountResourcesDict[key];
 
                 case ResourceTypes.Iron:
-                    return EGGM.IronInfoEnt_AmountResourcesDictCom.AmountResources(key);
+                    return EGGM.IronInfoEnt_AmountResourcesDictCom.AmountResourcesDict[key];
 
                 case ResourceTypes.Gold:
-                    return EGGM.GoldInfoEnt_AmountResourcesDictCom.AmountResources(key);
+                    return EGGM.GoldInfoEnt_AmountResourcesDictCom.AmountResourcesDict[key];
 
                 default:
                     throw new Exception();
@@ -41,23 +41,23 @@ namespace Assets.Scripts.Workers.Info
                     throw new Exception();
 
                 case ResourceTypes.Food:
-                    EGGM.FoodInfoEnt_AmountResourcesDictCom.SetAmountResources(key, value);
+                    EGGM.FoodInfoEnt_AmountResourcesDictCom.AmountResourcesDict[key] = value;
                     break;
 
                 case ResourceTypes.Wood:
-                    EGGM.WoodInfoEnt_AmountResourcesDictCom.SetAmountResources(key, value);
+                    EGGM.WoodInfoEnt_AmountResourcesDictCom.AmountResourcesDict[key] = value;
                     break;
 
                 case ResourceTypes.Ore:
-                    EGGM.OreInfoEnt_AmountResourcesDictCom.SetAmountResources(key, value);
+                    EGGM.OreInfoEnt_AmountResourcesDictCom.AmountResourcesDict[key] = value;
                     break;
 
                 case ResourceTypes.Iron:
-                    EGGM.IronInfoEnt_AmountResourcesDictCom.SetAmountResources(key, value);
+                    EGGM.IronInfoEnt_AmountResourcesDictCom.AmountResourcesDict[key] = value;
                     break;
 
                 case ResourceTypes.Gold:
-                    EGGM.GoldInfoEnt_AmountResourcesDictCom.SetAmountResources(key, value);
+                    EGGM.GoldInfoEnt_AmountResourcesDictCom.AmountResourcesDict[key] = value;
                     break;
 
                 default:
@@ -65,148 +65,10 @@ namespace Assets.Scripts.Workers.Info
             }
         }
         internal static void AddAmountResources(ResourceTypes resourceType, bool key, int adding = 1)
-        {
-            switch (resourceType)
-            {
-                case ResourceTypes.None:
-                    throw new Exception();
-
-                case ResourceTypes.Food:
-                    EGGM.FoodInfoEnt_AmountResourcesDictCom.AddAmountResources(key, adding);
-                    break;
-
-                case ResourceTypes.Wood:
-                    EGGM.WoodInfoEnt_AmountResourcesDictCom.AddAmountResources(key, adding);
-                    break;
-
-                case ResourceTypes.Ore:
-                    EGGM.OreInfoEnt_AmountResourcesDictCom.AddAmountResources(key, adding);
-                    break;
-
-                case ResourceTypes.Iron:
-                    EGGM.IronInfoEnt_AmountResourcesDictCom.AddAmountResources(key, adding);
-                    break;
-
-                case ResourceTypes.Gold:
-                    EGGM.GoldInfoEnt_AmountResourcesDictCom.AddAmountResources(key, adding);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
+            => SetAmountResources(resourceType, key, AmountResources(resourceType, key) + adding);
         internal static void TakeAmountResources(ResourceTypes resourceType, bool key, int taking = 1)
-        {
-            switch (resourceType)
-            {
-                case ResourceTypes.None:
-                    throw new Exception();
+            => SetAmountResources(resourceType, key, AmountResources(resourceType, key) - taking);
 
-                case ResourceTypes.Food:
-                    EGGM.FoodInfoEnt_AmountResourcesDictCom.TakeAmountResources(key, taking);
-                    break;
-
-                case ResourceTypes.Wood:
-                    EGGM.WoodInfoEnt_AmountResourcesDictCom.TakeAmountResources(key, taking);
-                    break;
-
-                case ResourceTypes.Ore:
-                    EGGM.OreInfoEnt_AmountResourcesDictCom.TakeAmountResources(key, taking);
-                    break;
-
-                case ResourceTypes.Iron:
-                    EGGM.IronInfoEnt_AmountResourcesDictCom.TakeAmountResources(key, taking);
-                    break;
-
-                case ResourceTypes.Gold:
-                    EGGM.GoldInfoEnt_AmountResourcesDictCom.TakeAmountResources(key, taking);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
-
-        internal static int GetCommonAmountExtraction(ResourceTypes resourceType, bool key)
-        {
-            switch (resourceType)
-            {
-                case ResourceTypes.None:
-                    throw new Exception();
-
-                case ResourceTypes.Food:
-                    return GetExtractionBuildingType(BuildingTypes.Farm, key) + GetAllExtractionUnits(ResourceTypes.Food, key);
-
-                case ResourceTypes.Wood:
-                    return GetExtractionBuildingType(BuildingTypes.Woodcutter, key);
-
-                case ResourceTypes.Ore:
-                    return GetExtractionBuildingType(BuildingTypes.Mine, key);
-
-                case ResourceTypes.Iron:
-                    throw new Exception();
-
-                case ResourceTypes.Gold:
-                    throw new Exception();
-
-                default:
-                    throw new Exception();
-            }
-        }
-        internal static int GetExtractionBuildingType(BuildingTypes buildingType, bool key)
-        {
-            switch (buildingType)
-            {
-                case BuildingTypes.None:
-                    throw new Exception();
-
-                case BuildingTypes.City:
-                    throw new Exception();
-
-                case BuildingTypes.Farm:
-                    return BENEFIT_FOOD_FARM + BENEFIT_FOOD_FARM * InfoBuidlingsWorker.AmountUpgrades(buildingType, key);
-
-                case BuildingTypes.Woodcutter:
-                    return BENEFIT_WOOD_WOODCUTTER + BENEFIT_WOOD_WOODCUTTER * InfoBuidlingsWorker.AmountUpgrades(buildingType, key);
-
-                case BuildingTypes.Mine:
-                    return BENEFIT_ORE_MINE + BENEFIT_ORE_MINE * InfoBuidlingsWorker.AmountUpgrades(buildingType, key);
-
-                default:
-                    throw new Exception();
-            }
-        }
-        internal static int GetAllExtractionUnits(ResourceTypes resourceType, bool key)
-        {
-            switch (resourceType)
-            {
-                case ResourceTypes.None:
-                    throw new Exception();
-
-                case ResourceTypes.Food:
-                    return -InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Pawn, key)
-                        - InfoUnitsWorker.AmountUnitsInGame(UnitTypes.PawnSword, key)
-                        - InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Rook, key)
-                        - InfoUnitsWorker.AmountUnitsInGame(UnitTypes.RookCrossbow, key)
-                        - InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Bishop, key)
-                        - InfoUnitsWorker.AmountUnitsInGame(UnitTypes.BishopCrossbow, key);
-
-                case ResourceTypes.Wood:
-                    throw new Exception();
-
-                case ResourceTypes.Ore:
-                    throw new Exception();
-
-                case ResourceTypes.Iron:
-                    throw new Exception();
-
-                case ResourceTypes.Gold:
-                    throw new Exception();
-
-                default:
-                    throw new Exception();
-            }
-        }
 
         internal static bool CanCreateNewBuilding(BuildingTypes buildingType, Player player, out bool[] haves)
         {
@@ -321,7 +183,7 @@ namespace Assets.Scripts.Workers.Info
 
             return HavedAll(haves);
         }
-        internal static void CreateUnit(UnitTypes unitType, Player player)
+        internal static void BuyCreateUnit(UnitTypes unitType, Player player)
         {
             switch (unitType)
             {
@@ -373,7 +235,7 @@ namespace Assets.Scripts.Workers.Info
 
             return HavedAll(haves);
         }
-        internal static void MeltOre(Player player)
+        internal static void BuyMeltOre(Player player)
         {
             TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, FOOD_FOR_MELTING_ORE);
             TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, WOOD_FOR_MELTING_ORE);
@@ -451,7 +313,7 @@ namespace Assets.Scripts.Workers.Info
 
             return HavedAll(haves);
         }
-        internal static void Fire(Player player, UnitTypes unitType)
+        internal static void BuyFire(Player player, UnitTypes unitType)
         {
             switch (unitType)
             {
@@ -565,7 +427,7 @@ namespace Assets.Scripts.Workers.Info
 
             return HavedAll(haves);
         }
-        internal static void UpgradeUnit(Player player, UnitTypes unitType)
+        internal static void BuyUpgradeUnit(Player player, UnitTypes unitType)
         {
             switch (unitType)
             {
@@ -655,7 +517,7 @@ namespace Assets.Scripts.Workers.Info
 
             return HavedAll(haves);
         }
-        internal static void UpgradeBuildings(Player player, BuildingTypes buildingType)
+        internal static void BuyUpgradeBuildings(Player player, BuildingTypes buildingType)
         {
             switch (buildingType)
             {

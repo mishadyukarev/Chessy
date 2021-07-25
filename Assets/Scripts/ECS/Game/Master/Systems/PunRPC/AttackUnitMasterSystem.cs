@@ -18,7 +18,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        CellUnitWorker.GetCellsForAttack(InfoFrom.Sender,
+        CellUnitsDataWorker.GetCellsForAttack(InfoFrom.Sender,
             out var availableCellsSimpleAttack, out var availableCellsUniqueAttack, FromXy);
 
         var isFindedSimple = availableCellsSimpleAttack.TryFindCell(ToXy);
@@ -27,28 +27,28 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
         if (isFindedSimple || isFindedUnique)
         {
-            CellUnitWorker.ResetAmountSteps(FromXy);
-            CellUnitWorker.ResetProtectedRelaxType(FromXy);
+            CellUnitsDataWorker.ResetAmountSteps(FromXy);
+            CellUnitsDataWorker.ResetProtectedRelaxType(FromXy);
 
             int damageToPrevious = 0;
             int damageToSelelected = 0;
 
-            var unitTypePrevious = CellUnitWorker.UnitType(FromXy);
-            var unitTypeSelected = CellUnitWorker.UnitType(ToXy);
+            var unitTypePrevious = CellUnitsDataWorker.UnitType(FromXy);
+            var unitTypeSelected = CellUnitsDataWorker.UnitType(ToXy);
 
-            damageToSelelected += CellUnitWorker.SimplePowerDamage(unitTypePrevious);
-            damageToSelelected -= CellUnitWorker.PowerProtection(ToXy);
+            damageToSelelected += CellUnitsDataWorker.SimplePowerDamage(unitTypePrevious);
+            damageToSelelected -= CellUnitsDataWorker.PowerProtection(ToXy);
 
 
-            if (CellUnitWorker.IsMelee(FromXy))
+            if (CellUnitsDataWorker.IsMelee(FromXy))
             {
                 PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
-                damageToPrevious += CellUnitWorker.SimplePowerDamage(unitTypeSelected);
+                damageToPrevious += CellUnitsDataWorker.SimplePowerDamage(unitTypeSelected);
 
                 if (isFindedUnique)
                 {
-                    damageToSelelected += CellUnitWorker.UniquePowerDamage(unitTypePrevious);
+                    damageToSelelected += CellUnitsDataWorker.UniquePowerDamage(unitTypePrevious);
                 }
             }
 
@@ -58,65 +58,52 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
                 if (isFindedUnique)
                 {
-                    damageToSelelected += CellUnitWorker.UniquePowerDamage(unitTypePrevious);
+                    damageToSelelected += CellUnitsDataWorker.UniquePowerDamage(unitTypePrevious);
                 }
             }
 
             if (damageToSelelected < 0) damageToSelelected = 0;
 
-            CellUnitWorker.TakeAmountHealth(FromXy, damageToPrevious);
-            CellUnitWorker.TakeAmountHealth(ToXy, damageToSelelected);
+            CellUnitsDataWorker.TakeAmountHealth(FromXy, damageToPrevious);
+            CellUnitsDataWorker.TakeAmountHealth(ToXy, damageToSelelected);
 
 
-            if (!CellUnitWorker.HaveAmountHealth(FromXy))
+            if (!CellUnitsDataWorker.HaveAmountHealth(FromXy))
             {
-                if (CellUnitWorker.IsUnitType(UnitTypes.King, FromXy))
+                if (CellUnitsDataWorker.IsUnitType(UnitTypes.King, FromXy))
                 {
-                    if (CellUnitWorker.HaveOwner(ToXy))
+                    if (CellUnitsDataWorker.HaveOwner(ToXy))
                     {
-                        PhotonPunRPC.EndGameToMaster(CellUnitWorker.ActorNumber(ToXy));
+                        PhotonPunRPC.EndGameToMaster(CellUnitsDataWorker.ActorNumber(ToXy));
                     }
 
-                    else if (CellUnitWorker.IsBot(ToXy))
+                    else if (CellUnitsDataWorker.IsBot(ToXy))
                     {
 
                     }
                 }
 
-                if (CellUnitWorker.HaveOwner(FromXy))
+                CellUnitsDataWorker.ResetUnit(FromXy);
+
+                if (CellUnitsDataWorker.HaveOwner(FromXy))
                 {
-                    InfoUnitsWorker.TakeAmountUnitInGame(CellUnitWorker.UnitType(FromXy), CellUnitWorker.IsMasterClient(FromXy), FromXy);
-                    CellUnitWorker.ResetPlayerUnit(FromXy);
-                }
-                else
-                {
-                    CellUnitWorker.ResetBotUnit(FromXy);
+                    InfoUnitsWorker.TakeAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
                 }
             }
 
-            if (!CellUnitWorker.HaveAmountHealth(ToXy))
+            if (!CellUnitsDataWorker.HaveAmountHealth(ToXy))
             {
-                if (CellUnitWorker.IsUnitType(UnitTypes.King, ToXy))
-                    PhotonPunRPC.EndGameToMaster(CellUnitWorker.ActorNumber(FromXy));
+                if (CellUnitsDataWorker.IsUnitType(UnitTypes.King, ToXy))
+                    PhotonPunRPC.EndGameToMaster(CellUnitsDataWorker.ActorNumber(FromXy));
 
 
-                if (CellUnitWorker.HaveOwner(ToXy))
+                CellUnitsDataWorker.ResetUnit(ToXy);
+
+                if (!CellUnitsDataWorker.IsMelee(FromXy))
                 {
-                    CellUnitWorker.ResetPlayerUnit(ToXy);
-                }
-                else
-                {
-                    CellUnitWorker.ResetBotUnit(ToXy);
-                }
-
-
-
-
-                if (!CellUnitWorker.IsMelee(FromXy))
-                {
-                    InfoUnitsWorker.TakeAmountUnitInGame(CellUnitWorker.UnitType(FromXy), CellUnitWorker.IsMasterClient(FromXy), FromXy);
-                    InfoUnitsWorker.AddAmountUnitInGame(CellUnitWorker.UnitType(FromXy), CellUnitWorker.IsMasterClient(FromXy), ToXy);
-                    CellUnitWorker.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
+                    InfoUnitsWorker.TakeAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
+                    InfoUnitsWorker.AddAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), ToXy);
+                    CellUnitsDataWorker.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
                 }
             }
 

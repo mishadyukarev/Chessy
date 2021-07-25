@@ -1,11 +1,10 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Game.Else;
 using Assets.Scripts.Workers.Game.Else.Fire;
 using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using UnityEngine;
-using static Assets.Scripts.CellEnvironmentWorker;
-using static Assets.Scripts.CellUnitWorker;
 
 internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 {
@@ -22,101 +21,113 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
             {
                 var xy = new int[] { x, y };
 
-                CellFireWorker.ResetEffect(EffectTypes.Fire, xy);
+                CellFireDataWorker.ResetFire(xy);
+                CellFireDataWorker.ResetTimeSteps(xy);
 
-                if (HaveAnyUnit(xy))
+                if (CellUnitsDataWorker.HaveAnyUnit(xy))
                 {
-                    if (HaveOwner(xy))
+                    if (CellUnitsDataWorker.HaveOwner(xy))
                     {
-                        switch (UnitType(xy))
+                        switch (CellUnitsDataWorker.UnitType(xy))
                         {
                             case UnitTypes.None:
                                 break;
 
                             case UnitTypes.King:
-                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.King, IsMasterClient(xy));
-                                InfoUnitsWorker.SetSettedKing(IsMasterClient(xy), false);
+                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.King, CellUnitsDataWorker.IsMasterClient(xy));
+                                InfoUnitsWorker.TakeAmountUnitInGame(UnitTypes.King, CellUnitsDataWorker.IsMasterClient(xy), xy);
                                 break;
 
                             case UnitTypes.Pawn:
-                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.Pawn, IsMasterClient(xy));
+                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.Pawn, CellUnitsDataWorker.IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.PawnSword:
-                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.PawnSword, IsMasterClient(xy));
+                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.PawnSword, CellUnitsDataWorker.IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.Rook:
-                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.Rook, IsMasterClient(xy));
+                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.Rook, CellUnitsDataWorker.IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.RookCrossbow:
-                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.RookCrossbow, IsMasterClient(xy));
+                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.RookCrossbow, CellUnitsDataWorker.IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.Bishop:
-                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.Bishop, IsMasterClient(xy));
+                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.Bishop, CellUnitsDataWorker.IsMasterClient(xy));
                                 break;
 
                             case UnitTypes.BishopCrossbow:
-                                InfoUnitsWorker.AddUnitsInInventor(UnitTypes.BishopCrossbow, IsMasterClient(xy));
+                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.BishopCrossbow, CellUnitsDataWorker.IsMasterClient(xy));
                                 break;
 
                             default:
                                 break;
                         }
 
-                        if (HaveOwner(xy))
+                        CellUnitsDataWorker.ResetUnit(xy);
+                    }
+                }
+
+
+                if (CellBuildingsDataWorker.HaveAnyBuilding(xy))
+                {
+
+                }
+
+                else
+                {
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.YoungForest, xy))
+                    {
+                        CellEnvirDataWorker.ResetEnvironment(EnvironmentTypes.YoungForest, xy);
+                        CellEnvirDataWorker.SetNewEnvironment(EnvironmentTypes.AdultForest, xy);
+                    }
+
+                    if (!CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy)
+                        && !CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy)
+                        && !CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                    {
+                        random = Random.Range(0, 100);
+
+                        if (random <= 20)
                         {
-                            ResetPlayerUnit(xy);
+                            CellEnvirDataWorker.SetNewEnvironment(EnvironmentTypes.Fertilizer, xy);
                         }
                         else
                         {
-                            ResetBotUnit(x, y);
+                            random = Random.Range(0, 100);
+
+                            if (random <= 5)
+                            {
+                                CellEnvirDataWorker.SetNewEnvironment(EnvironmentTypes.AdultForest, xy);
+                            }
                         }
-                    }
-                }
-
-                if (HaveEnvironment(EnvironmentTypes.YoungForest, xy))
-                {
-                    ResetEnvironment(EnvironmentTypes.YoungForest, xy);
-                    SetNewEnvironment(EnvironmentTypes.AdultForest, xy);
-                }
-
-                if (!HaveEnvironment(EnvironmentTypes.Fertilizer, xy)
-                    && !HaveEnvironment(EnvironmentTypes.Mountain, xy) && !HaveEnvironment(EnvironmentTypes.AdultForest, xy)
-                         && !CellBuildingWorker.IsBuildingType(BuildingTypes.City, xy))
-                {
-                    random = Random.Range(0, 100);
-
-                    if (random <= 20)
-                    {
-                        SetNewEnvironment(EnvironmentTypes.Fertilizer, xy);
-                    }
-                }
-
-                if (!HaveEnvironment(EnvironmentTypes.Fertilizer, xy) && !HaveEnvironment(EnvironmentTypes.Mountain, xy)
-                     && !HaveEnvironment(EnvironmentTypes.AdultForest, xy) && CellBuildingWorker.IsBuildingType(BuildingTypes.City, xy))
-                {
-                    random = Random.Range(0, 100);
-
-                    if (random <= 5)
-                    {
-                        SetNewEnvironment(EnvironmentTypes.AdultForest, xy);
                     }
                 }
             }
 
-        InfoResourcesWorker.AddAmountResources(ResourceTypes.Food, true, 15);
-        InfoResourcesWorker.AddAmountResources(ResourceTypes.Food, false, 15);
+        //InfoResourcesWorker.AddAmountResources(ResourceTypes.Food, true, 0);
+        //InfoResourcesWorker.AddAmountResources(ResourceTypes.Food, false, 0);
 
-        InfoResourcesWorker.AddAmountResources(ResourceTypes.Wood, true, 15);
-        InfoResourcesWorker.AddAmountResources(ResourceTypes.Wood, false, 15);
+        //InfoResourcesWorker.AddAmountResources(ResourceTypes.Wood, true, 0);
+        //InfoResourcesWorker.AddAmountResources(ResourceTypes.Wood, false, 0);
 
-        //PhotonPunRPC.DoneToGeneral(RpcTarget.All, false);
+
+        if (InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Pawn, true) <= 0
+            && InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Pawn, true) <= 0)
+        {
+            InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.Pawn, true);
+        }
+
+        if (InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Pawn, false) <= 0
+            && InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Pawn, false) <= 0)
+        {
+            InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.Pawn, false);
+        }
+
         PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGGUIM.MotionEnt_AmountCom.Amount);
         PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
         _eGGUIM.DonerUIEnt_IsActivatedDictCom.ResetAll();
-        //}
     }
 }

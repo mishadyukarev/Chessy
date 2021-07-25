@@ -2,7 +2,7 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
 using UnityEngine;
-using static Assets.Scripts.CellEnvironmentWorker;
+using static Assets.Scripts.CellEnvirDataWorker;
 using static Assets.Scripts.Workers.Cell.CellSupVisBarsWorker;
 
 internal sealed class EnvironmentUISystem : SystemGeneralReduction
@@ -14,7 +14,7 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
     {
         base.Run();
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected && CellBuildingWorker.BuildingType(XySelectedCell) != BuildingTypes.City)
+        if (_eGM.SelectorEnt_SelectorCom.IsSelected && CellBuildingsDataWorker.GetBuildingType(XySelectedCell) != BuildingTypes.City)
         {
             _eGGUIM.EnvironmentZoneEnt_ParentCom.SetActive(true);
         }
@@ -23,9 +23,9 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
             _eGGUIM.EnvironmentZoneEnt_ParentCom.SetActive(false);
         }
 
-        _eGGUIM.EnvFerilizerEnt_TextMeshProUGUICom.SetText("Fertilizer: " + AmountResources(ResourceTypes.Food, XySelectedCell));
-        _eGGUIM.EnvForestEnt_TextMeshProUGUICom.SetText("Forest: " + AmountResources(ResourceTypes.Wood, XySelectedCell));
-        _eGGUIM.EnvOreEnt_TextMeshProUGUICom.SetText("Ore: " + AmountResources(ResourceTypes.Ore, XySelectedCell));
+        _eGGUIM.EnvFerilizerEnt_TextMeshProUGUICom.SetText("Fertilizer: " + GetAmountResources(EnvironmentTypes.Fertilizer, XySelectedCell));
+        _eGGUIM.EnvForestEnt_TextMeshProUGUICom.SetText("Forest: " + GetAmountResources(EnvironmentTypes.AdultForest, XySelectedCell));
+        _eGGUIM.EnvOreEnt_TextMeshProUGUICom.SetText("Ore: " + GetAmountResources(EnvironmentTypes.Hill, XySelectedCell));
 
 
 
@@ -41,7 +41,7 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
                     if (HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
                     {
                         ActiveVision(true, SupportStaticTypes.Fertilizer, xy);
-                        SetScale(SupportStaticTypes.Fertilizer, new Vector3((float)AmountResources(ResourceTypes.Food, xy) / (float)(MaxAmountResources(EnvironmentTypes.Fertilizer) + MaxAmountResources(EnvironmentTypes.Fertilizer)), 0.15f, 1), xy);
+                        SetScale(SupportStaticTypes.Fertilizer, new Vector3((float)GetAmountResources(EnvironmentTypes.Fertilizer, xy) / (float)(MaxAmountResources(EnvironmentTypes.Fertilizer) + MaxAmountResources(EnvironmentTypes.Fertilizer)), 0.15f, 1), xy);
                     }
                     else
                     {
@@ -51,7 +51,7 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
                     if (HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                     {
                         ActiveVision(true, SupportStaticTypes.Wood, xy);
-                        SetScale(SupportStaticTypes.Wood, new Vector3((float)AmountResources(ResourceTypes.Wood, xy) / (float)MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1), xy);
+                        SetScale(SupportStaticTypes.Wood, new Vector3((float)GetAmountResources(EnvironmentTypes.AdultForest, xy) / (float)MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1), xy);
                     }
                     else
                     {
@@ -61,7 +61,7 @@ internal sealed class EnvironmentUISystem : SystemGeneralReduction
                     if (HaveEnvironment(EnvironmentTypes.Hill, xy))
                     {
                         ActiveVision(true, SupportStaticTypes.Ore, xy);
-                        SetScale(SupportStaticTypes.Ore, new Vector3((float)AmountResources(ResourceTypes.Ore, xy) / (float)MaxAmountResources(EnvironmentTypes.Hill), 0.15f, 1), xy);
+                        SetScale(SupportStaticTypes.Ore, new Vector3((float)GetAmountResources(EnvironmentTypes.Hill, xy) / (float)MaxAmountResources(EnvironmentTypes.Hill), 0.15f, 1), xy);
                     }
                     else
                     {

@@ -2,22 +2,22 @@
 using Assets.Scripts.ECS.Game.General.Systems;
 using Assets.Scripts.ECS.Game.General.Systems.RunUpdate.Sound;
 using Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
+using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
+using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
 using Leopotam.Ecs;
 
 public sealed class SystemsGameGeneralManager : SystemsManager
 {
     private EcsSystems _forSelectorSystem;
     private EcsSystems _eventSystems;
+    private EcsSystems _startFillSystems;
 
-    internal EcsSystems ForSelectorRunUpdateSystem => _forSelectorSystem;
-    internal EcsSystems EventSystems => _eventSystems;
+    internal EcsSystems SyncCellVisionSystems { get; private set; }
 
-    internal override void CreateSystems(EcsWorld ecsWorld)
+    internal SystemsGameGeneralManager(EcsWorld gameWorld) : base(gameWorld)
     {
-        base.CreateSystems(ecsWorld);
-
-
-        RunUpdateSystems = new EcsSystems(ecsWorld)
+        RunUpdateSystems
             .Add(new InputSystem(), nameof(InputSystem))
             .Add(new RaySystem(), nameof(RaySystem))
             .Add(new SelectorSystem(), nameof(SelectorSystem))
@@ -43,23 +43,23 @@ public sealed class SystemsGameGeneralManager : SystemsManager
             .Add(new RightZoneUISystem(), nameof(RightZoneUISystem))
             .Add(new FinderIdleUnitUISystem(), nameof(FinderIdleUnitUISystem));
 
-        _forSelectorSystem = new EcsSystems(ecsWorld)
+        _forSelectorSystem = new EcsSystems(gameWorld)
             .Add(new GetterCellSystem(), nameof(GetterCellSystem))
             .Add(new RaySystem(), nameof(RaySystem));
 
-        _eventSystems = new EcsSystems(ecsWorld)
+        _eventSystems = new EcsSystems(gameWorld)
             .Add(new EventGeneralSystem(), nameof(EventGeneralSystem));
-    }
 
-    internal override void DestroySystems()
-    {
-        base.DestroySystems();
+        SyncCellVisionSystems = new EcsSystems(gameWorld)
+            .Add(new SyncCellUnitVisSystem())
+            .Add(new SyncCellUnitSupVisSystem())
+            .Add(new SyncCellBuildingsVisSystem())
+            .Add(new SyncCellEnvirsVisSystem())
+            .Add(new SyncCellEffectsVisSystem());
 
-        if (!_isStartedFilling)
-        {
-            _forSelectorSystem.Destroy();
-            _eventSystems.Destroy();
-        }
+        _startFillSystems = new EcsSystems(gameWorld)
+            .Add(new StartFillSystem());
+
     }
 
     internal override void ProcessInjects()
@@ -68,6 +68,8 @@ public sealed class SystemsGameGeneralManager : SystemsManager
 
         _forSelectorSystem.ProcessInjects();
         _eventSystems.ProcessInjects();
+        SyncCellVisionSystems.ProcessInjects();
+        _startFillSystems.ProcessInjects();
     }
 
     internal override void Init()
@@ -76,5 +78,7 @@ public sealed class SystemsGameGeneralManager : SystemsManager
 
         _forSelectorSystem.Init();
         _eventSystems.Init();
+        SyncCellVisionSystems.Init();
+        _startFillSystems.Init();
     }
 }

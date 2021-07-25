@@ -8,19 +8,10 @@ namespace Assets.Scripts
         protected bool _isStartedFilling = true;
         internal EcsSystems RunUpdateSystems;
 
-        internal virtual void CreateSystems(EcsWorld ecsWorld)
+        protected SystemsManager(EcsWorld gameWorld)
         {
-            _isStartedFilling = false;
+            RunUpdateSystems = new EcsSystems(gameWorld);
         }
-
-        internal virtual void DestroySystems()
-        {
-            if (!_isStartedFilling)
-            {
-                RunUpdateSystems.Destroy();
-            }
-        }
-
 
         internal virtual void ProcessInjects()
         {

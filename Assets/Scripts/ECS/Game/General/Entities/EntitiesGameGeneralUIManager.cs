@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static Assets.Scripts.Main;
 
-public sealed class EntitiesGameGeneralUIManager : EntitiesManager
+public sealed class EntitiesGameGeneralUIManager
 {
 
     #region Center
@@ -300,11 +300,6 @@ public sealed class EntitiesGameGeneralUIManager : EntitiesManager
 
     internal EntitiesGameGeneralUIManager(EcsWorld gameWorld)
     {
-    }
-
-    internal override void FillEntities(EcsWorld gameWorld)
-    {
-        base.FillEntities(gameWorld);
 
 
 
@@ -643,4 +638,5 @@ public sealed class EntitiesGameGeneralUIManager : EntitiesManager
 
         #endregion
     }
+
 }

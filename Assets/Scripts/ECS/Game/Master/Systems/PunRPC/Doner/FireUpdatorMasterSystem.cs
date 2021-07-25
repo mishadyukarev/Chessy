@@ -2,8 +2,6 @@
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Assets.Scripts.Workers.Game.Else.Fire;
-using static Assets.Scripts.CellEnvironmentWorker;
-using static Assets.Scripts.CellUnitWorker;
 
 internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 {
@@ -18,50 +16,36 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
             {
                 var xy = new int[] { x, y };
 
-                if (CellFireWorker.HaveEffect(EffectTypes.Fire, xy))
+                if (CellFireDataWorker.HaveFire(xy))
                 {
-                    CellFireWorker.AddTimeStepsEffect(EffectTypes.Fire, xy);
+                    CellFireDataWorker.AddTimeSteps(xy);
 
-                    TakeAmountHealth(xy, 40);
-                    if (!HaveAmountHealth(xy))
+                    CellUnitsDataWorker.TakeAmountHealth(xy, 40);
+
+                    if (!CellUnitsDataWorker.HaveAmountHealth(xy))
                     {
-                        if (HaveOwner(xy))
-                        {
-                            ResetPlayerUnit(xy);
-                        }
-                        else
-                        {
-                            ResetBotUnit(x, y);
-                        }
-
+                        CellUnitsDataWorker.ResetUnit(xy);
                     }
 
 
-                    if (CellFireWorker.TimeStepsEffect(EffectTypes.Fire, xy) >= 3)
+                    if (CellFireDataWorker.TimeSteps(xy) >= 3)
                     {
-                        if (CellBuildingWorker.HaveBuilding(xy))
-                        {
-                            CellBuildingWorker.ResetPlayerBuilding(x, y);
-                        }
+                        CellBuildingsDataWorker.ResetBuilding(xy);
+                        CellEnvirDataWorker.ResetEnvironment(EnvironmentTypes.AdultForest, xy);
 
-
-                        ResetEnvironment(EnvironmentTypes.AdultForest, xy);
-
-                        CellFireWorker.ResetEffect(EffectTypes.Fire, xy);
+                        CellFireDataWorker.ResetFire(xy);
+                        CellFireDataWorker.ResetTimeSteps(xy);
 
 
                         var aroundXYList = CellSpaceWorker.TryGetXYAround(xy);
                         foreach (var xy1 in aroundXYList)
                         {
-                            if (HaveEnvironment(EnvironmentTypes.AdultForest, xy1))
+                            if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy1))
                             {
-                                CellFireWorker.SetEffect(EffectTypes.Fire, xy1);
+                                CellFireDataWorker.EnableFire(xy1);
                             }
                         }
-
-                        CellFireWorker.SetTimeStepsEffect(EffectTypes.Fire, 0, xy);
                     }
-
                 }
             }
         }

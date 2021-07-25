@@ -16,34 +16,34 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        List<int[]> xyAvailableCellsForShift = CellUnitWorker.GetCellsForShift(FromXy);
+        List<int[]> xyAvailableCellsForShift = CellUnitsDataWorker.GetCellsForShift(FromXy);
 
-        if (CellUnitWorker.IsHim(InfoFrom.Sender, FromXy) && CellUnitWorker.HaveMinAmountSteps(FromXy))
+        if (CellUnitsDataWorker.IsHim(InfoFrom.Sender, FromXy) && CellUnitsDataWorker.HaveMinAmountSteps(FromXy))
         {
             if (xyAvailableCellsForShift.TryFindCell(ToXy))
             {
                 PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
 
-                var fromUnitType = CellUnitWorker.UnitType(FromXy);
-                var fromIsMasterClient = CellUnitWorker.IsMasterClient(FromXy);
+                var fromUnitType = CellUnitsDataWorker.UnitType(FromXy);
+                var fromIsMasterClient = CellUnitsDataWorker.IsMasterClient(FromXy);
 
-                var fromCondition = CellUnitWorker.ProtectRelaxType(FromXy);
+                var fromCondition = CellUnitsDataWorker.ProtectRelaxType(FromXy);
 
 
                 InfoUnitsWorker.TakeUnitInStandartCondition(fromCondition, fromUnitType, fromIsMasterClient, FromXy);
 
-                InfoUnitsWorker.TakeAmountUnitInGame(CellUnitWorker.UnitType(FromXy), CellUnitWorker.IsMasterClient(FromXy), FromXy);
-                InfoUnitsWorker.AddAmountUnitInGame(CellUnitWorker.UnitType(FromXy), CellUnitWorker.IsMasterClient(FromXy), ToXy);
-                CellUnitWorker.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
+                InfoUnitsWorker.TakeAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
+                InfoUnitsWorker.AddAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), ToXy);
+                CellUnitsDataWorker.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
 
                 InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, fromUnitType, fromIsMasterClient, ToXy);
 
 
-                CellUnitWorker.TakeAmountSteps(ToXy, CellEnvironmentWorker.NeedAmountSteps(ToXy));
-                if (CellUnitWorker.AmountSteps(ToXy) < 0) CellUnitWorker.ResetAmountSteps(ToXy);
+                CellUnitsDataWorker.TakeAmountSteps(ToXy, CellEnvirDataWorker.NeedAmountSteps(ToXy));
+                if (CellUnitsDataWorker.AmountSteps(ToXy) < 0) CellUnitsDataWorker.ResetAmountSteps(ToXy);
 
-                CellUnitWorker.ResetProtectedRelaxType(ToXy);
+                CellUnitsDataWorker.ResetProtectedRelaxType(ToXy);
             }
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Workers.Info;
+using Assets.Scripts.Workers.Game.Else;
 using Photon.Pun;
 
 
@@ -22,7 +22,7 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.King:
-                isGetted = InfoUnitsWorker.HaveUnitInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
+                isGetted = InventorUnitsDataWorker.HaveUnitInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                 if (isGetted)
                 {
                     unitType = UnitTypes.King;
@@ -30,12 +30,12 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.Pawn:
-                if (InfoUnitsWorker.HaveUnitInInventor(UnitTypes.PawnSword, InfoFrom.Sender.IsMasterClient))
+                if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.PawnSword, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.PawnSword;
                 }
-                else if (InfoUnitsWorker.HaveUnitInInventor(UnitTypes.Pawn, InfoFrom.Sender.IsMasterClient))
+                else if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.Pawn, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.Pawn;
@@ -46,12 +46,12 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.Rook:
-                if (InfoUnitsWorker.HaveUnitInInventor(UnitTypes.RookCrossbow, InfoFrom.Sender.IsMasterClient))
+                if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.RookCrossbow, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.RookCrossbow;
                 }
-                else if (InfoUnitsWorker.HaveUnitInInventor(UnitTypes.Rook, InfoFrom.Sender.IsMasterClient))
+                else if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.Rook, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.Rook;
@@ -62,12 +62,12 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.Bishop:
-                if (InfoUnitsWorker.HaveUnitInInventor(UnitTypes.BishopCrossbow, InfoFrom.Sender.IsMasterClient))
+                if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.BishopCrossbow, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.BishopCrossbow;
                 }
-                else if (InfoUnitsWorker.HaveUnitInInventor(UnitTypes.Bishop, InfoFrom.Sender.IsMasterClient))
+                else if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.Bishop, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitTypes.Bishop;

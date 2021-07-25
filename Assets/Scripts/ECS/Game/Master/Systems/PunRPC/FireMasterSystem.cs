@@ -15,27 +15,27 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         {
             base.Run();
 
-            if (CellUnitWorker.HaveMinAmountSteps(FromXyCopy))
+            if (CellUnitsDataWorker.HaveMinAmountSteps(FromXyCopy))
             {
-
-
-                if (CellFireWorker.HaveEffect(EffectTypes.Fire, ToXyCopy))
+                if (CellFireDataWorker.HaveFire(ToXyCopy))
                 {
-                    CellFireWorker.ResetEffect(EffectTypes.Fire, ToXyCopy);
-                    CellUnitWorker.TakeAmountSteps(ToXyCopy);
+                    CellFireDataWorker.ResetFire(ToXyCopy);
+                    CellFireDataWorker.ResetTimeSteps(ToXyCopy);
+
+                    CellUnitsDataWorker.TakeAmountSteps(ToXyCopy);
                 }
-                else if (CellEnvironmentWorker.HaveEnvironment(EnvironmentTypes.AdultForest, ToXyCopy))
+                else if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, ToXyCopy))
                 {
-                    if (CellUnitWorker.HaveOwner(FromXyCopy))
+                    if (CellUnitsDataWorker.HaveOwner(FromXyCopy))
 
-                        if (InfoResourcesWorker.CanFireSomething(CellUnitWorker.Owner(FromXyCopy), CellUnitWorker.UnitType(FromXyCopy), out bool[] haves))
+                        if (InfoResourcesDataWorker.CanFireSomething(CellUnitsDataWorker.Owner(FromXyCopy), CellUnitsDataWorker.UnitType(FromXyCopy), out bool[] haves))
                         {
                             PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
-                            InfoResourcesWorker.Fire(CellUnitWorker.Owner(FromXyCopy), CellUnitWorker.UnitType(FromXyCopy));
+                            InfoResourcesDataWorker.BuyFire(CellUnitsDataWorker.Owner(FromXyCopy), CellUnitsDataWorker.UnitType(FromXyCopy));
 
-                            CellFireWorker.SetEffect(EffectTypes.Fire, ToXyCopy);
-                            CellUnitWorker.TakeAmountSteps(ToXyCopy);
+                            CellFireDataWorker.EnableFire(ToXyCopy);
+                            CellUnitsDataWorker.TakeAmountSteps(ToXyCopy);
                         }
                         else
                         {

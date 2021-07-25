@@ -6,6 +6,8 @@ internal struct XyCellComponent
 
     internal int[] XyCell => (int[])_xyCell.Clone();
 
+    internal XyCellComponent(int[] xy) => _xyCell = xy;
+
     internal void StartFill() => _xyCell = new int[XY_FOR_ARRAY];
 
     internal void SetXyCell(int[] xy) => _xyCell = (int[])xy.Clone();

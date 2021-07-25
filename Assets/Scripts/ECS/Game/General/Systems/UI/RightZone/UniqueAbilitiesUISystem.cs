@@ -16,13 +16,13 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
         base.Run();
 
 
-        if (CellUnitWorker.HaveAnyUnit(XySelectedCell))
+        if (CellUnitsDataWorker.HaveAnyUnit(XySelectedCell))
         {
-            if (CellUnitWorker.HaveOwner(XySelectedCell))
+            if (CellUnitsDataWorker.HaveOwner(XySelectedCell))
             {
-                if (CellUnitWorker.IsMine(XySelectedCell))
+                if (CellUnitsDataWorker.IsMine(XySelectedCell))
                 {
-                    switch (CellUnitWorker.UnitType(XySelectedCell))
+                    switch (CellUnitsDataWorker.UnitType(XySelectedCell))
                     {
                         case UnitTypes.None:
                             break;
@@ -65,7 +65,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                     _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
                 }
             }
-            else if (CellUnitWorker.IsBot(XySelectedCell))
+            else if (CellUnitsDataWorker.IsBot(XySelectedCell))
             {
                 _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.SetActive(false);
             }
@@ -79,7 +79,7 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                 _eGGUIM.Unique1AbilityEnt_ButtonCom.RemoveAllListeners();
                 _eGGUIM.Unique1AbilityEnt_ButtonCom.AddListener(delegate { Fire(XySelectedCell, XySelectedCell); });
 
-                if (CellFireWorker.HaveEffect(EffectTypes.Fire, XySelectedCell))
+                if (CellFireDataWorker.HaveFire(XySelectedCell))
                 {
                     _eGGUIM.UniqueFirstAbilityEnt_TextMeshProGUICom.SetText("Put Out FIRE");
                 }

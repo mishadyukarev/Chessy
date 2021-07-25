@@ -2,7 +2,7 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
 using Photon.Pun;
-using static Assets.Scripts.CellEnvironmentWorker;
+using static Assets.Scripts.CellEnvirDataWorker;
 
 internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
 {
@@ -15,31 +15,26 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        //if (_eGM.CellUnitEnt_CellOwnerCom(XyCell).IsHim(Info.Sender))
-        //{
-        var unitType = CellUnitWorker.UnitType(XyCell);
-
-        if (CellUnitWorker.HaveMaxAmountSteps(XyCell))
+        if (CellUnitsDataWorker.HaveMaxAmountSteps(XyCell))
         {
-            var buildingType = CellBuildingWorker.BuildingType(XyCell);
+            var buildingType = CellBuildingsDataWorker.GetBuildingType(XyCell);
 
             PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
 
             if (buildingType == BuildingTypes.City)
             {
-                PhotonPunRPC.EndGameToMaster(CellUnitWorker.ActorNumber(XyCell));
+                PhotonPunRPC.EndGameToMaster(CellUnitsDataWorker.ActorNumber(XyCell));
             }
-            CellUnitWorker.ResetAmountSteps(XyCell);
+            CellUnitsDataWorker.ResetAmountSteps(XyCell);
 
             if (buildingType == BuildingTypes.Farm) ResetEnvironment(EnvironmentTypes.Fertilizer, XyCell);
 
-            InfoBuidlingsWorker.TakeAmountBuildingsInGame(buildingType, CellUnitWorker.IsMasterClient(XyCell), XyCell);
-            CellBuildingWorker.ResetPlayerBuilding(XyCell);
+            InfoBuidlingsWorker.TakeXyBuildingsInGame(buildingType, CellUnitsDataWorker.IsMasterClient(XyCell), XyCell);
+            CellBuildingsDataWorker.ResetBuilding(XyCell);
         }
         else
         {
             PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
         }
-        //}
     }
 }

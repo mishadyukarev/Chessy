@@ -12,9 +12,9 @@ internal sealed class MeltOreMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if (InfoResourcesWorker.CanMeltOre(InfoFrom.Sender, out bool[] haves))
+        if (InfoResourcesDataWorker.CanMeltOre(InfoFrom.Sender, out bool[] haves))
         {
-            InfoResourcesWorker.MeltOre(InfoFrom.Sender);
+            InfoResourcesDataWorker.BuyMeltOre(InfoFrom.Sender);
             PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Melting);
         }
         else

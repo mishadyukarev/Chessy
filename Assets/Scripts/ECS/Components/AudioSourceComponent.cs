@@ -4,11 +4,8 @@ namespace Assets.Scripts.ECS.Game.Components
 {
     internal struct AudioSourceComponent
     {
-        private AudioSource _audioSource;
+        internal AudioSource AudioSource { get; private set; }
 
-        internal bool IsPlaying => _audioSource.isPlaying;
-
-        internal void StartFill(AudioSource audioSource) => _audioSource = audioSource;
-        internal void Play() => _audioSource.Play();
+        internal AudioSourceComponent(AudioSource audioSource) => AudioSource = audioSource;
     }
 }

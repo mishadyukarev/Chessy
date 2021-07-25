@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.ECS.Game.General.Entities.Containers;
 using System;
+using UnityEngine;
 using static Assets.Scripts.Abstractions.ValuesConsts.Colors;
 
 namespace Assets.Scripts.Workers.Cell
@@ -13,38 +14,39 @@ namespace Assets.Scripts.Workers.Cell
             _cellSupVisEntsContainer = cellSupVisEntsContainer;
         }
 
+        internal static SpriteRenderer GetSR(int[] xy) => _cellSupVisEntsContainer.CellSupVisEnt_SpriteRenderer(xy).SpriteRenderer;
 
-        internal static void EnableSupVis(SupportVisionTypes supportVisionType, int[] xy)
+        internal static void ActiveSupVis(bool isEnabled, int[] xy) => GetSR(xy).enabled = isEnabled;
+
+        internal static void SetColor(SupportVisionTypes supportVisionType, int[] xy)
         {
-            _cellSupVisEntsContainer.CellSupVisEnt_SpriteRenderer(xy).SpriteRenderer.enabled = true;
-
             switch (supportVisionType)
             {
                 case SupportVisionTypes.None:
                     throw new Exception();
 
                 case SupportVisionTypes.Selector:
-                    _cellSupVisEntsContainer.CellSupVisEnt_SpriteRenderer(xy).SpriteRenderer.color = Selector_Color;
+                    GetSR(xy).color = Selector_Color;
                     break;
 
                 case SupportVisionTypes.Spawn:
-                    _cellSupVisEntsContainer.CellSupVisEnt_SpriteRenderer(xy).SpriteRenderer.color = UniqueAttack_Color;
+                    GetSR(xy).color = UniqueAttack_Color;
                     break;
 
                 case SupportVisionTypes.Shift:
-                    _cellSupVisEntsContainer.CellSupVisEnt_SpriteRenderer(xy).SpriteRenderer.color = UniqueAttack_Color;
+                    GetSR(xy).color = UniqueAttack_Color;
                     break;
 
                 case SupportVisionTypes.SimpleAttack:
-                    _cellSupVisEntsContainer.CellSupVisEnt_SpriteRenderer(xy).SpriteRenderer.color = UniqueAttack_Color;
+                    GetSR(xy).color = UniqueAttack_Color;
                     break;
 
                 case SupportVisionTypes.UniqueAttack:
-                    _cellSupVisEntsContainer.CellSupVisEnt_SpriteRenderer(xy).SpriteRenderer.color = UniqueAttack_Color;
+                    GetSR(xy).color = UniqueAttack_Color;
                     break;
 
                 case SupportVisionTypes.Upgrade:
-                    _cellSupVisEntsContainer.CellSupVisEnt_SpriteRenderer(xy).SpriteRenderer.color = UniqueAttack_Color;
+                    GetSR(xy).color = UniqueAttack_Color;
                     break;
 
                 default:
@@ -52,6 +54,11 @@ namespace Assets.Scripts.Workers.Cell
             }
         }
 
-        internal static void DisableSupVis(int[] xy) => _cellSupVisEntsContainer.CellSupVisEnt_SpriteRenderer(xy).SpriteRenderer.enabled = false;
+        internal static void EnableSupVis(SupportVisionTypes supportVisionType, int[] xy)
+        {
+            ActiveSupVis(true, xy);
+            SetColor(supportVisionType, xy);
+        }
+        internal static void DisableSupVis(int[] xy) => GetSR(xy).enabled = false;
     }
 }

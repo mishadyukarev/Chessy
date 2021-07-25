@@ -2,14 +2,16 @@
 using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.Game.Components;
-using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.ECS.Game.General.Entities;
 using Assets.Scripts.ECS.Game.General.Entities.Containers;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Assets.Scripts.Workers.Game.Else;
 using Assets.Scripts.Workers.Game.Else.Cell;
+using Assets.Scripts.Workers.Game.Else.CellBuildings;
+using Assets.Scripts.Workers.Game.Else.CellEnvir;
 using Assets.Scripts.Workers.Game.Else.Fire;
+using Assets.Scripts.Workers.Game.Else.Units;
 using Assets.Scripts.Workers.Info;
 using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
@@ -17,7 +19,7 @@ using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
-using static Assets.Scripts.CellEnvironmentWorker;
+using static Assets.Scripts.CellEnvirDataWorker;
 using static Assets.Scripts.Main;
 
 public sealed class EntitiesGameGeneralManager : EntitiesManager
@@ -36,7 +38,7 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
     private CellSupVisEntsContainer _cellSupVisEntsContainer;
     private CellFireEntsContainer _cellFireEntsContainer;
     private CellBuildingEntsContainer _cellBuildingEntsContainer;
-    private CellEnvironmentEntsContainer _cellEnvironmentEntsContainer;
+    private CellEnvirEntsContainer _cellEnvirEntsContainer;
     private CellEntsContainer _cellContainer;
 
     internal int Xamount => _cellContainer.Xamount;
@@ -90,46 +92,44 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
     private EcsEntity _kingInfoEnt;
     internal ref AmountUnitsInGameComponent KingInfoEnt_AmountUnitsInGameCom => ref _kingInfoEnt.Get<AmountUnitsInGameComponent>();
     internal ref AmountUnitsInInventorDictComponent KingInfoEnt_AmountUnitsInInventorDictCom => ref _kingInfoEnt.Get<AmountUnitsInInventorDictComponent>();
-    internal ref IsSettedUnitDictComponent KingInfoEnt_IsSettedUnitDictCom => ref _kingInfoEnt.Get<IsSettedUnitDictComponent>();
-    internal ref XySettedBuildingDictComponent KingInfoEnt_XySettedBuildingDictCom => ref _kingInfoEnt.Get<XySettedBuildingDictComponent>();
-    internal ref AmountUnitsInStandartConditionComponent KingInfoEnt_AmountUnitsInRelaxCom => ref _kingInfoEnt.Get<AmountUnitsInStandartConditionComponent>();
+    internal ref UnitsInStandartConditionComponent KingInfoEnt_AmountUnitsInRelaxCom => ref _kingInfoEnt.Get<UnitsInStandartConditionComponent>();
 
 
     private EcsEntity _pawnInfoEnt;
     internal ref AmountUnitsInGameComponent PawnInfoEnt_AmountUnitsInGameCom => ref _pawnInfoEnt.Get<AmountUnitsInGameComponent>();
     internal ref AmountUnitsInInventorDictComponent PawnInfoEnt_AmountUnitsInInventorDictCom => ref _pawnInfoEnt.Get<AmountUnitsInInventorDictComponent>();
-    internal ref AmountUnitsInStandartConditionComponent PawnInfoEnt_AmountUnitsInRelaxCom => ref _pawnInfoEnt.Get<AmountUnitsInStandartConditionComponent>();
+    internal ref UnitsInStandartConditionComponent PawnInfoEnt_AmountUnitsInRelaxCom => ref _pawnInfoEnt.Get<UnitsInStandartConditionComponent>();
 
 
 
     private EcsEntity _pawnSwordInfoEnt;
     internal ref AmountUnitsInGameComponent PawnSwordInfoEnt_AmountUnitsInGameCom => ref _pawnSwordInfoEnt.Get<AmountUnitsInGameComponent>();
     internal ref AmountUnitsInInventorDictComponent PawnSwordInfoEnt_AmountUnitsInInventorDictCom => ref _pawnSwordInfoEnt.Get<AmountUnitsInInventorDictComponent>();
-    internal ref AmountUnitsInStandartConditionComponent PawnSwordInfoEnt_AmountUnitsInRelaxCom => ref _pawnSwordInfoEnt.Get<AmountUnitsInStandartConditionComponent>();
+    internal ref UnitsInStandartConditionComponent PawnSwordInfoEnt_AmountUnitsInRelaxCom => ref _pawnSwordInfoEnt.Get<UnitsInStandartConditionComponent>();
 
 
     private EcsEntity _rookInfoEnt;
     internal ref AmountUnitsInGameComponent RookInfoEnt_AmountUnitsInGameCom => ref _rookInfoEnt.Get<AmountUnitsInGameComponent>();
     internal ref AmountUnitsInInventorDictComponent RookInfoEnt_AmountUnitsInInventorDictCom => ref _rookInfoEnt.Get<AmountUnitsInInventorDictComponent>();
-    internal ref AmountUnitsInStandartConditionComponent RookInfoEnt_AmountUnitsInRelaxCom => ref _rookInfoEnt.Get<AmountUnitsInStandartConditionComponent>();
+    internal ref UnitsInStandartConditionComponent RookInfoEnt_AmountUnitsInRelaxCom => ref _rookInfoEnt.Get<UnitsInStandartConditionComponent>();
 
 
     private EcsEntity _rookCrossbowInfoEnt;
     internal ref AmountUnitsInGameComponent RookCrossbowInfoEnt_AmountUnitsInGameCom => ref _rookCrossbowInfoEnt.Get<AmountUnitsInGameComponent>();
     internal ref AmountUnitsInInventorDictComponent RookCrossbowInfoEnt_AmountUnitsInInventorDictCom => ref _rookCrossbowInfoEnt.Get<AmountUnitsInInventorDictComponent>();
-    internal ref AmountUnitsInStandartConditionComponent RookCrossbowInfoEnt_AmountUnitsInRelaxCom => ref _rookCrossbowInfoEnt.Get<AmountUnitsInStandartConditionComponent>();
+    internal ref UnitsInStandartConditionComponent RookCrossbowInfoEnt_AmountUnitsInRelaxCom => ref _rookCrossbowInfoEnt.Get<UnitsInStandartConditionComponent>();
 
 
     private EcsEntity _bishopInfoInGameEnt;
     internal ref AmountUnitsInGameComponent BishopInfoEnt_AmountUnitsInGameCom => ref _bishopInfoInGameEnt.Get<AmountUnitsInGameComponent>();
     internal ref AmountUnitsInInventorDictComponent BishopInfoEnt_AmountUnitsInInventorDictCom => ref _bishopInfoInGameEnt.Get<AmountUnitsInInventorDictComponent>();
-    internal ref AmountUnitsInStandartConditionComponent BishopInfoEnt_AmountUnitsInRelaxCom => ref _bishopInfoInGameEnt.Get<AmountUnitsInStandartConditionComponent>();
+    internal ref UnitsInStandartConditionComponent BishopInfoEnt_AmountUnitsInRelaxCom => ref _bishopInfoInGameEnt.Get<UnitsInStandartConditionComponent>();
 
 
     private EcsEntity _bishopCrossbowInfoEnt;
     internal ref AmountUnitsInGameComponent BishopCrossbowInfoEnt_AmountUnitsInGameCom => ref _bishopCrossbowInfoEnt.Get<AmountUnitsInGameComponent>();
     internal ref AmountUnitsInInventorDictComponent BishopCrossbowInfoEnt_AmountUnitsInInventorDictCom => ref _bishopCrossbowInfoEnt.Get<AmountUnitsInInventorDictComponent>();
-    internal ref AmountUnitsInStandartConditionComponent BishopCrossbowInfoEnt_AmountUnitsInStandartCondition => ref _bishopCrossbowInfoEnt.Get<AmountUnitsInStandartConditionComponent>();
+    internal ref UnitsInStandartConditionComponent BishopCrossbowInfoEnt_AmountUnitsInStandartCondition => ref _bishopCrossbowInfoEnt.Get<UnitsInStandartConditionComponent>();
 
     #endregion
 
@@ -251,136 +251,13 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
 
     #endregion
 
-
-    internal override void FillEntities(EcsWorld gameWorld)
+    internal EntitiesGameGeneralManager(EcsWorld gameWorld)
     {
-        base.FillEntities(gameWorld);
 
-
-        #region Selector
-
-        _selectorEnt = gameWorld.NewEntity();
-
-        _xyCurrentCellEnt = gameWorld.NewEntity();
-        _xySelectedCellEnt = gameWorld.NewEntity();
-        _xyPreviousCellEnt = gameWorld.NewEntity();
-        _xyPreviousVisionCellEnt = gameWorld.NewEntity();
-
-        #endregion
-
-
-        _attackArcherSoundEnt = gameWorld.NewEntity();
-        _pickArcherSoundEnt = gameWorld.NewEntity();
-        _pickMeleeSoundEnt = gameWorld.NewEntity();
-        _buildingSoundEnt = gameWorld.NewEntity();
-        _fireSoundEnt = gameWorld.NewEntity();
-        _settingSoundEnt = gameWorld.NewEntity();
-        _buySoundEnt = gameWorld.NewEntity();
-        _meltingSoundEnt = gameWorld.NewEntity();
-        _destroySoundEnt = gameWorld.NewEntity();
-        _upgradeUnitMeleeSoundEnt = gameWorld.NewEntity();
-        _seedingSoundEnt = gameWorld.NewEntity();
-        _shiftUnitSoundEnt = gameWorld.NewEntity();
-        _truceSoundEnt = gameWorld.NewEntity();
-
-        _inputEnt = gameWorld.NewEntity();
-        _fromInfoEnt = gameWorld.NewEntity();
-
-
-
-
-        SpawnAndFillCells(gameWorld);
-        FillInfoEnts(gameWorld);
-        FillSelectorEnts(gameWorld);
-
-
-        var audioSourceParentGO = new GameObject("AudioSource");
-        Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(audioSourceParentGO.transform);
-
-        MistakeAudioSource = audioSourceParentGO.AddComponent<AudioSource>();
-        MistakeAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.MistakeAudioClip;
-
-        AttackAudioSource = audioSourceParentGO.AddComponent<AudioSource>();
-        AttackAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackSwordAudioClip;
-
-
-        var attackAS = audioSourceParentGO.AddComponent<AudioSource>();
-        attackAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackArcherAC;
-        attackAS.volume = 0.6f;
-        AttackArcherEnt_AudioSourceCom.StartFill(attackAS);
-
-
-        var pickArcherAudioSource = audioSourceParentGO.AddComponent<AudioSource>();
-        pickArcherAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.PickArcherAudioClip;
-        pickArcherAudioSource.volume = 0.7f;
-        PickArcherEnt_AudioSourceCom.StartFill(pickArcherAudioSource);
-
-
-        var pickMeleeAS = audioSourceParentGO.AddComponent<AudioSource>();
-        pickMeleeAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.PickMeleeAC;
-        pickMeleeAS.volume = 0.1f;
-        PickMeleeEnt_AudioSourceCom.StartFill(pickMeleeAS);
-
-
-        var buildingAS = audioSourceParentGO.AddComponent<AudioSource>();
-        buildingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.BuildingAC;
-        buildingAS.volume = 0.1f;
-        BuildingSoundEnt_AudioSourceCom.StartFill(buildingAS);
-
-
-        var settingAS = audioSourceParentGO.AddComponent<AudioSource>();
-        settingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.SettingUnitAC;
-        SettingSoundEnt_AudioSourceCom.StartFill(settingAS);
-
-
-        var fireAS = audioSourceParentGO.AddComponent<AudioSource>();
-        fireAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.FireAC;
-        fireAS.volume = 0.2f;
-        FireSoundEnt_AudioSourceCom.StartFill(fireAS);
-
-
-        var buyAS = audioSourceParentGO.AddComponent<AudioSource>();
-        buyAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.BuyAC;
-        buyAS.volume = 0.3f;
-        BuySoundEnt_AudioSourceCom.StartFill(buyAS);
-
-
-        var meltingAS = audioSourceParentGO.AddComponent<AudioSource>();
-        meltingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.Melting_Clip;
-        meltingAS.volume = 0.3f;
-        MeltingSoundEnt_AudioSourceCom.StartFill(meltingAS);
-
-        var destroyAS = audioSourceParentGO.AddComponent<AudioSource>();
-        destroyAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.Destroy_Clip;
-        destroyAS.volume = 0.3f;
-        DestroySoundEnt_AudioSourceCom.StartFill(destroyAS);
-
-
-        var upgradeUnitMeleeAS = audioSourceParentGO.AddComponent<AudioSource>();
-        upgradeUnitMeleeAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.UpgradeUnitMelee_Clip;
-        upgradeUnitMeleeAS.volume = 0.2f;
-        UpgradeUnitMeleeSoundEnt_AudioSourceCom.StartFill(upgradeUnitMeleeAS);
-
-
-        var seedingAS = audioSourceParentGO.AddComponent<AudioSource>();
-        seedingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.Seeding_Clip;
-        seedingAS.volume = 0.2f;
-        SeedingSoundEnt_AudioSourceCom.StartFill(seedingAS);
-
-
-        var shiftUnitAS = audioSourceParentGO.AddComponent<AudioSource>();
-        shiftUnitAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.ShiftUnit_Clip;
-        shiftUnitAS.volume = 0.6f;
-        ShiftUnitSoundEnt_AudioSourceCom.StartFill(shiftUnitAS);
-
-
-        var truceAS = audioSourceParentGO.AddComponent<AudioSource>();
-        truceAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.Truce_Clip;
-        truceAS.volume = 0.6f;
-        TruceSoundEnt_AudioSourceCom.StartFill(truceAS);
-
-
-
+        SpawnAndCreateCellsEnts(gameWorld);
+        CreateInfoEnts(gameWorld);
+        CreateSelectorEnts(gameWorld);
+        CreateSound(gameWorld);
 
         BackGroundGO = GameObject.Instantiate(Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.BackGroundCollider2D,
         Instance.transform.position + new Vector3(7, 5.5f, 2), Instance.transform.rotation);
@@ -390,232 +267,112 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
         BackGroundSR.transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
 
-        SelectorEnt_SelectorCom.StartFill();
-        SelectorEnt_RayCom.StartFill();
-        SelectorEnt_UnitTypeCom.StartFill();
-        SelectorEnt_UpgradeModTypeCom.StartFill();
 
-        InputEnt_InputCom.StartFill();
+        _inputEnt = gameWorld.NewEntity()
+            .Replace(new InputComponent());
 
-        FromInfoEnt_FromInfoCom.StartFill();
+
+
+        _fromInfoEnt = gameWorld.NewEntity()
+            .Replace(new FromInfoComponent());
     }
 
-    private void SpawnAndFillCells(EcsWorld gameWorld)
-    {
 
+    private void SpawnAndCreateCellsEnts(EcsWorld gameWorld)
+    {
         var cellGO = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.PrefabConfig.CellGO;
         var whiteCellSR = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig.WhiteSprite;
         var blackCellSR = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SpritesConfig.BlackSprite;
 
-        var cellsGO = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
+        var cellGOs = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
 
         var supportParentForCells = new GameObject("Cells");
         Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(supportParentForCells.transform);
 
 
-        var cellProtectRelaxEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        var cellMaxStepsEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        var cellUnitEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-
-        var cellHpSupStatEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        var cellFertilizeSupStatEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        var cellForestSupStatEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        var cellOreSupStatEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-
-        var cellSupportVisionEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        var cellFireEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        var cellBuildingEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-
-        var cellFertilizerEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        var cellYoungForestEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        var cellAdultForestEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        var cellHillEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-        var cellMountainEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-
-        var cellEnts = new EcsEntity[CELL_COUNT_X, CELL_COUNT_Y];
-
         for (int x = 0; x < CELL_COUNT_X; x++)
             for (int y = 0; y < CELL_COUNT_Y; y++)
             {
-                int[] xy = new int[] { x, y };
-
                 if (y % 2 == 0)
                 {
                     if (x % 2 == 0)
                     {
-                        cellsGO[x, y] = CreateGameObject(cellGO, blackCellSR, x, y, Instance.gameObject);
-                        SetActive(cellsGO[x, y], x, y);
+                        cellGOs[x, y] = CreateGameObject(cellGO, blackCellSR, x, y, Instance.gameObject);
+                        SetActive(cellGOs[x, y], x, y);
                     }
                     if (x % 2 != 0)
                     {
-                        cellsGO[x, y] = CreateGameObject(cellGO, whiteCellSR, x, y, Instance.gameObject);
-                        SetActive(cellsGO[x, y], x, y);
+                        cellGOs[x, y] = CreateGameObject(cellGO, whiteCellSR, x, y, Instance.gameObject);
+                        SetActive(cellGOs[x, y], x, y);
                     }
                 }
                 if (y % 2 != 0)
                 {
                     if (x % 2 != 0)
                     {
-                        cellsGO[x, y] = CreateGameObject(cellGO, blackCellSR, x, y, Instance.gameObject);
-                        SetActive(cellsGO[x, y], x, y);
+                        cellGOs[x, y] = CreateGameObject(cellGO, blackCellSR, x, y, Instance.gameObject);
+                        SetActive(cellGOs[x, y], x, y);
                     }
                     if (x % 2 == 0)
                     {
-                        cellsGO[x, y] = CreateGameObject(cellGO, whiteCellSR, x, y, Instance.gameObject);
-                        SetActive(cellsGO[x, y], x, y);
+                        cellGOs[x, y] = CreateGameObject(cellGO, whiteCellSR, x, y, Instance.gameObject);
+                        SetActive(cellGOs[x, y], x, y);
                     }
                 }
 
-                cellsGO[x, y].transform.SetParent(supportParentForCells.transform);
+                GameObject CreateGameObject(GameObject cellGOForCreation, Sprite sprite, int xxx, int yyy, GameObject mainGameGO)
+                {
+                    var go = GameObject.Instantiate(cellGOForCreation, mainGameGO.transform.position + new Vector3(xxx, yyy, mainGameGO.transform.position.z), mainGameGO.transform.rotation);
 
+                    go.name = "Cell";
 
+                    go.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
 
-                var sr = cellsGO[x, y].transform.Find("ProtectRelax").GetComponent<SpriteRenderer>();
-                cellProtectRelaxEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr));
+                    return go;
+                }
 
+                void SetActive(GameObject go, int xx, int yy)
+                {
+                    if (xx >= 0 && yy == 0 || xx >= 0 && yy == 10 ||
+                        xx == 1 && yy >= 0 || xx == 13 && yy >= 0 ||
+                    xx == 0 && yy >= 0 || xx == 14 && yy >= 0 ||
+                    xx == 1 && yy == 1 || xx == 2 && yy == 1 || xx == 12 && yy == 1 || xx == 13 && yy == 1 ||
+                    xx == 1 && yy == 9 || xx == 2 && yy == 9 || xx == 12 && yy == 9 || xx == 13 && yy == 9)
+                        go.SetActive(false);
+                }
 
+                cellGOs[x, y].transform.SetParent(supportParentForCells.transform);
 
-                sr = cellsGO[x, y].transform.Find("MaxSteps").GetComponent<SpriteRenderer>();
-                cellMaxStepsEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr));
-
-
-
-                sr = cellsGO[x, y].transform.Find("Unit").GetComponent<SpriteRenderer>();
-                cellUnitEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new CellUnitComponent())
-                    .Replace(new UnitTypeComponent())
-                    .Replace(new OwnerComponent())
-                    .Replace(new OwnerBotComponent())
-                    .Replace(new IsVisibleDictComponent(new Dictionary<bool, bool>()))
-                    .Replace(new ProtectRelaxComponent())
-                    .Replace(new SpriteRendererComponent(sr));
-
-
-
-                var parentGO = cellsGO[x, y].transform.Find("SupportStatic").gameObject;
-
-                sr = parentGO.transform.Find("Hp").GetComponent<SpriteRenderer>();
-                cellHpSupStatEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr));
-
-                sr = parentGO.transform.Find("Fertilizer").GetComponent<SpriteRenderer>();
-                cellFertilizeSupStatEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr));
-
-                sr = parentGO.transform.Find("Forest").GetComponent<SpriteRenderer>();
-                cellForestSupStatEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr));
-
-                sr = parentGO.transform.Find("Ore").GetComponent<SpriteRenderer>();
-                cellOreSupStatEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr));
-
-
-
-                parentGO = cellsGO[x, y].transform.Find("SupportVision").gameObject;
-
-                sr = parentGO.GetComponent<SpriteRenderer>();
-                cellSupportVisionEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr));
-
-
-
-                parentGO = cellsGO[x, y].transform.Find("Fire").gameObject;
-
-                sr = parentGO.GetComponent<SpriteRenderer>();
-                cellFireEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr))
-                    .Replace(new HaverEffectComponent())
-                    .Replace(new TimeStepsComponent());
-
-
-
-                parentGO = cellsGO[x, y].transform.Find("Buildings").gameObject;
-
-                sr = parentGO.GetComponent<SpriteRenderer>();
-
-
-                cellBuildingEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr))
-                    .Replace(new CellBuildingComponent())
-                    .Replace(new BuildingTypeComponent())
-                    .Replace(new OwnerComponent())
-                    .Replace(new OwnerBotComponent());
-
-
-
-                parentGO = cellsGO[x, y].transform.Find("Environments").gameObject;
-
-                sr = parentGO.transform.Find("Fertilizer").GetComponent<SpriteRenderer>();
-
-                cellFertilizerEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr))
-                    .Replace(new AmountResourcesComponent());
-
-
-
-                sr = parentGO.transform.Find("YoungForest").GetComponent<SpriteRenderer>();
-
-                cellYoungForestEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr));
-
-
-
-                sr = parentGO.transform.Find("AdultForest").GetComponent<SpriteRenderer>();
-
-                cellAdultForestEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr))
-                    .Replace(new AmountResourcesComponent());
-
-
-
-                sr = parentGO.transform.Find("Hill").GetComponent<SpriteRenderer>();
-
-                cellHillEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr))
-                    .Replace(new AmountResourcesComponent());
-
-
-
-                sr = parentGO.transform.Find("Mountain").GetComponent<SpriteRenderer>();
-
-                cellMountainEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new SpriteRendererComponent(sr))
-                    .Replace(new AmountResourcesComponent());
-
-
-                parentGO = cellsGO[x, y].transform.Find("Cell").gameObject;
-
-                cellEnts[x, y] = gameWorld.NewEntity()
-                    .Replace(new CellGOComponent(parentGO));
-
-                parentGO.transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
+                cellGOs[x, y].transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
             }
 
-        _cellSupVisBarsContainer = new CellSupVisBarsEntsContainer((cellHpSupStatEnts, cellFertilizeSupStatEnts, cellForestSupStatEnts, cellOreSupStatEnts));
-        new CellSupVisBarsWorker(_cellSupVisBarsContainer);
-
-        _cellSupVisBlocksContainer = new CellSupVisBlocksEntsContainer((cellProtectRelaxEnts, cellMaxStepsEnts));
+        _cellSupVisBlocksContainer = new CellSupVisBlocksEntsContainer(cellGOs, gameWorld);
         new CellSupVisBlocksWorker(_cellSupVisBlocksContainer);
 
-        _cellSupVisEntsContainer = new CellSupVisEntsContainer(cellSupportVisionEnts);
+        _cellSupVisBarsContainer = new CellSupVisBarsEntsContainer(cellGOs, gameWorld);
+        new CellSupVisBarsWorker(_cellSupVisBarsContainer);
+
+
+        _cellSupVisEntsContainer = new CellSupVisEntsContainer(cellGOs, gameWorld);
         new CellSupVisWorker(_cellSupVisEntsContainer);
 
-        _cellFireEntsContainer = new CellFireEntsContainer(cellFireEnts);
-        new CellFireWorker(_cellFireEntsContainer);
+        _cellFireEntsContainer = new CellFireEntsContainer(cellGOs, gameWorld);
+        new CellFireDataWorker(_cellFireEntsContainer);
+        new CellFireVisWorker(_cellFireEntsContainer);
 
-        _cellUnitEntsContainer = new CellUnitEntsContainer(cellUnitEnts);
-        new CellUnitWorker(_cellUnitEntsContainer);
+        _cellUnitEntsContainer = new CellUnitEntsContainer(cellGOs, gameWorld);
+        new CellUnitsDataWorker(_cellUnitEntsContainer);
+        new CellUnitsVisWorker(_cellUnitEntsContainer);
 
-        _cellBuildingEntsContainer = new CellBuildingEntsContainer(cellBuildingEnts);
-        new CellBuildingWorker(_cellBuildingEntsContainer);
+        _cellBuildingEntsContainer = new CellBuildingEntsContainer(cellGOs, gameWorld);
+        new CellBuildingsDataWorker(_cellBuildingEntsContainer);
+        new CellBuildingsVisWorker(_cellBuildingEntsContainer);
 
-        _cellEnvironmentEntsContainer = new CellEnvironmentEntsContainer((cellFertilizerEnts, cellYoungForestEnts, cellAdultForestEnts, cellHillEnts, cellMountainEnts));
-        new CellEnvironmentWorker(_cellEnvironmentEntsContainer);
+        _cellEnvirEntsContainer = new CellEnvirEntsContainer(cellGOs, gameWorld);
+        new CellEnvirDataWorker(_cellEnvirEntsContainer);
+        new CellEnvirVisWorker(_cellEnvirEntsContainer);
 
-        _cellContainer = new CellEntsContainer(cellEnts);
+        _cellContainer = new CellEntsContainer(cellGOs, gameWorld);
         new CellWorker(_cellContainer);
 
         for (int x = 0; x < CELL_COUNT_X; x++)
@@ -664,107 +421,39 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
             }
 
 
-                if (PhotonNetwork.OfflineMode)
+        if (PhotonNetwork.OfflineMode)
         {
-            //int[] xy0 = new int[XY_FOR_ARRAY];
-            //xy0[X] = 8;
-            //xy0[Y] = 8;
-            //var isSettedForest = false;
-            //CellUnitWorker.SetBotUnit(UnitTypes.King, true, 300, 2, ProtectRelaxTypes.Relaxed, xy0);
-            //CellEnvEnt_CellEnvCom(xy0).ResetAll();
-            //var xyAround = CellUnitWorker.TryGetXYAround(xy0);
-
-            //foreach (var xy1 in xyAround)
-            //{
-            //    CellUnitWorker.SetBotUnit(UnitTypes.Pawn, true, 150, 2, ProtectRelaxTypes.Relaxed, xy1);
-            //    CellEnvEnt_CellEnvCom(xy1).ResetAll();
-
-            //    if (!isSettedForest)
-            //    {
-            //        CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.AdultForest, xy1);
-            //        isSettedForest = true;
-            //    }
-            //}
-
-            //xy0[X] = 8;
-            //xy0[Y] = 6;
-            //CellBuildingWorker.SetBotBuilding(BuildingTypes.City, xy0);
-            //CellEnvEnt_CellEnvCom(xy0).ResetAll();
-
-            //int i = 0;
-            //xyAround = CellUnitWorker.TryGetXYAround(xy0);
-            //foreach (var xy1 in xyAround)
-            //{
-            //    CellUnitWorker.SetBotUnit(UnitTypes.PawnSword, true, 150, 2, ProtectRelaxTypes.Relaxed, xy1);
-            //    CellEnvEnt_CellEnvCom(xy1).ResetAll();
-
-            //    if (i == 0)
-            //    {
-            //        CellUnitWorker.ResetBotUnit(xy1);
-            //        CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.Mountain, xy1);
-            //    }
-
-            //    else if (i == 3 || i == 4 || i == 6)
-            //    {
-            //        CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.AdultForest, xy1);
-            //    }
-
-            //    else if (i == 1)
-            //    {
-            //        CellEnvEnt_CellEnvCom(xy1).SetNewEnvironment(EnvironmentTypes.Hill, xy1);
-            //    }
-
-
-            //    i++;
-            //}
-        }
-
-
-        GameObject CreateGameObject(GameObject go, Sprite sprite, int x, int y, GameObject mainGameGO2)
-        {
-            var goo = GameObject.Instantiate(go, mainGameGO2.transform.position + new Vector3(x, y, mainGameGO2.transform.position.z), mainGameGO2.transform.rotation);
-
-            goo.name = "Cell";
-
-            goo.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
-
-            return goo;
-        }
-
-        void SetActive(GameObject go, int x, int y)
-        {
-            if (x >= 0 && y == 0 || x >= 0 && y == 10 ||
-                x == 1 && y >= 0 || x == 13 && y >= 0 ||
-            x == 0 && y >= 0 || x == 14 && y >= 0 ||
-            x == 1 && y == 1 || x == 2 && y == 1 || x == 12 && y == 1 || x == 13 && y == 1 ||
-            x == 1 && y == 9 || x == 2 && y == 9 || x == 12 && y == 9 || x == 13 && y == 9)
-                go.SetActive(false);
+            // Bot
         }
     }
 
-    private void FillSelectorEnts(EcsWorld gameWorld)
+    private void CreateSelectorEnts(EcsWorld gameWorld)
     {
-        XyCurrentCellEnt_XyCellCom.StartFill();
-        XySelectedCellEnt_XyCellCom.StartFill();
-        XyPreviousCellEnt_XyCellCom.StartFill();
-        XyPreviousVisionCellEnt_XyCellCom.StartFill();
+        _selectorEnt = gameWorld.NewEntity()
+            .Replace(new SelectorComponent())
+            .Replace(new RaycastHit2DComponent())
+            .Replace(new UnitTypeComponent())
+            .Replace(new UpgradeModTypeComponent());
 
-        var availableCellsSettingEnt = gameWorld.NewEntity()
-            .Replace(new AvailableCellsComponent(new List<int[]>()));
-        var availableCellsShiftEnt = gameWorld.NewEntity()
-            .Replace(new AvailableCellsComponent(new List<int[]>()));
-        var availableCellsSimpleAttackEnt = gameWorld.NewEntity()
-            .Replace(new AvailableCellsComponent(new List<int[]>()));
-        var availableCellsUniqueAttackEnt = gameWorld.NewEntity()
-            .Replace(new AvailableCellsComponent(new List<int[]>()));
 
-        _availableCellEntsContainer = new AvailableCellEntsContainer
-            ((availableCellsSettingEnt, availableCellsShiftEnt, availableCellsSimpleAttackEnt, availableCellsUniqueAttackEnt));
 
+        _xyCurrentCellEnt = gameWorld.NewEntity()
+            .Replace(new XyCellComponent(new int[2]));
+
+        _xySelectedCellEnt = gameWorld.NewEntity()
+            .Replace(new XyCellComponent(new int[2]));
+
+        _xyPreviousCellEnt = gameWorld.NewEntity()
+            .Replace(new XyCellComponent(new int[2]));
+
+        _xyPreviousVisionCellEnt = gameWorld.NewEntity()
+            .Replace(new XyCellComponent(new int[2]));
+
+        _availableCellEntsContainer = new AvailableCellEntsContainer(gameWorld);
         new AvailableCellsEntsWorker(_availableCellEntsContainer);
     }
 
-    private void FillInfoEnts(EcsWorld gameWorld)
+    private void CreateInfoEnts(EcsWorld gameWorld)
     {
         var listMaster = new List<int[]>();
         var listOther = new List<int[]>();
@@ -790,113 +479,176 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
 
 
 
-
         _kingInfoEnt = gameWorld.NewEntity()
-            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()));
-        KingInfoEnt_AmountUnitsInInventorDictCom.StartFill();
-        KingInfoEnt_IsSettedUnitDictCom.StartFill();
-        KingInfoEnt_XySettedBuildingDictCom.StartFill();
-        KingInfoEnt_AmountUnitsInRelaxCom.StartFill();
-
+            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()))
+            .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
+            .Replace(new UnitsInStandartConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
         _pawnInfoEnt = gameWorld.NewEntity()
-            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()));
-        PawnInfoEnt_AmountUnitsInInventorDictCom.StartFill();
-        PawnInfoEnt_AmountUnitsInRelaxCom.StartFill();
+            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()))
+            .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
+            .Replace(new UnitsInStandartConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
         _pawnSwordInfoEnt = gameWorld.NewEntity()
-            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()));
-        PawnSwordInfoEnt_AmountUnitsInInventorDictCom.StartFill();
-        PawnSwordInfoEnt_AmountUnitsInRelaxCom.StartFill();
+            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()))
+            .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
+            .Replace(new UnitsInStandartConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
         _rookInfoEnt = gameWorld.NewEntity()
-            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()));
-        RookInfoEnt_AmountUnitsInInventorDictCom.StartFill();
-        RookInfoEnt_AmountUnitsInRelaxCom.StartFill();
+            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()))
+            .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
+            .Replace(new UnitsInStandartConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
         _rookCrossbowInfoEnt = gameWorld.NewEntity()
-            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()));
-        RookCrossbowInfoEnt_AmountUnitsInInventorDictCom.StartFill();
-        RookCrossbowInfoEnt_AmountUnitsInRelaxCom.StartFill();
+            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()))
+            .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
+            .Replace(new UnitsInStandartConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
         _bishopInfoInGameEnt = gameWorld.NewEntity()
-            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()));
-        BishopInfoEnt_AmountUnitsInInventorDictCom.StartFill();
-        BishopInfoEnt_AmountUnitsInRelaxCom.StartFill();
+            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()))
+            .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
+            .Replace(new UnitsInStandartConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
         _bishopCrossbowInfoEnt = gameWorld.NewEntity()
-            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()));
-        BishopCrossbowInfoEnt_AmountUnitsInInventorDictCom.StartFill();
-        BishopCrossbowInfoEnt_AmountUnitsInStandartCondition.StartFill();
-
-
-        _cityInfoEnt = gameWorld.NewEntity();
-        _farmsInfoEnt = gameWorld.NewEntity();
-        _woodcuttersInfoEnt = gameWorld.NewEntity();
-        _minesInfoEnt = gameWorld.NewEntity();
-
-        _foodInfoEnt = gameWorld.NewEntity();
-        _woodInfoEnt = gameWorld.NewEntity();
-        _oreInfoEnt = gameWorld.NewEntity();
-        _ironInfoEnt = gameWorld.NewEntity();
-        _goldInfoEnt = gameWorld.NewEntity();
+            .Replace(new AmountUnitsInGameComponent(new Dictionary<bool, List<int[]>>()))
+            .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
+            .Replace(new UnitsInStandartConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
 
 
+        _cityInfoEnt = gameWorld.NewEntity()
+            .Replace(new BuildingsInGameDictComponent(new Dictionary<bool, List<int[]>>()));
+
+        _farmsInfoEnt = gameWorld.NewEntity()
+            .Replace(new BuildingsInGameDictComponent(new Dictionary<bool, List<int[]>>()))
+            .Replace(new AmountUpgradesDictComponent(new Dictionary<bool, int>()));
+
+        _woodcuttersInfoEnt = gameWorld.NewEntity()
+            .Replace(new BuildingsInGameDictComponent(new Dictionary<bool, List<int[]>>()))
+            .Replace(new AmountUpgradesDictComponent(new Dictionary<bool, int>()));
+
+        _minesInfoEnt = gameWorld.NewEntity()
+            .Replace(new BuildingsInGameDictComponent(new Dictionary<bool, List<int[]>>()))
+            .Replace(new AmountUpgradesDictComponent(new Dictionary<bool, int>()));
 
 
 
+        _foodInfoEnt = gameWorld.NewEntity()
+            .Replace(new AmountResourcesDictComponent(new Dictionary<bool, int>()));
+
+        _woodInfoEnt = gameWorld.NewEntity()
+            .Replace(new AmountResourcesDictComponent(new Dictionary<bool, int>()));
+
+        _oreInfoEnt = gameWorld.NewEntity()
+            .Replace(new AmountResourcesDictComponent(new Dictionary<bool, int>()));
+
+        _ironInfoEnt = gameWorld.NewEntity()
+            .Replace(new AmountResourcesDictComponent(new Dictionary<bool, int>()));
+
+        _goldInfoEnt = gameWorld.NewEntity()
+            .Replace(new AmountResourcesDictComponent(new Dictionary<bool, int>()));
+    }
+
+    private void CreateSound(EcsWorld gameWorld)
+    {
+        var audioSourceParentGO = new GameObject("AudioSource");
+        Instance.ECSmanager.EntitiesCommonManager.ToggleSceneParentGOZoneEnt_ParentGOZoneCom.AttachToCurrentParent(audioSourceParentGO.transform);
+
+        MistakeAudioSource = audioSourceParentGO.AddComponent<AudioSource>();
+        MistakeAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.MistakeAudioClip;
+
+        AttackAudioSource = audioSourceParentGO.AddComponent<AudioSource>();
+        AttackAudioSource.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackSwordAudioClip;
+
+
+        var attackAS = audioSourceParentGO.AddComponent<AudioSource>();
+        attackAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.AttackArcherAC;
+        attackAS.volume = 0.6f;
+        _attackArcherSoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(attackAS));
+
+
+        var pickArcherAS = audioSourceParentGO.AddComponent<AudioSource>();
+        pickArcherAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.PickArcherAudioClip;
+        pickArcherAS.volume = 0.7f;
+        _pickArcherSoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(pickArcherAS));
+
+
+        var pickMeleeAS = audioSourceParentGO.AddComponent<AudioSource>();
+        pickMeleeAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.PickMeleeAC;
+        pickMeleeAS.volume = 0.1f;
+        _pickMeleeSoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(pickMeleeAS));
+
+
+        var buildingAS = audioSourceParentGO.AddComponent<AudioSource>();
+        buildingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.BuildingAC;
+        buildingAS.volume = 0.1f;
+        _buildingSoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(buildingAS));
+
+
+        var settingAS = audioSourceParentGO.AddComponent<AudioSource>();
+        settingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.SettingUnitAC;
+        _settingSoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(settingAS));
+
+
+        var fireAS = audioSourceParentGO.AddComponent<AudioSource>();
+        fireAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.FireAC;
+        fireAS.volume = 0.2f;
+        _fireSoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(fireAS));
+
+
+        var buyAS = audioSourceParentGO.AddComponent<AudioSource>();
+        buyAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.BuyAC;
+        buyAS.volume = 0.3f;
+        _buySoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(buyAS));
+
+
+        var meltingAS = audioSourceParentGO.AddComponent<AudioSource>();
+        meltingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.Melting_Clip;
+        meltingAS.volume = 0.3f;
+        _meltingSoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(meltingAS));
 
 
 
-        CityInfoEnt_AmountBuildingsInGameCom.StartFill();
-
-        FarmsInfoEnt_AmountBuildingsInGameCom.StartFill();
-        FarmsInfoEnt_AmountUpgradesCom.StartFill();
-
-        WoodcuttersInfoEnt_AmountBuildingsInGameCom.StartFill();
-        WoodcuttersInfoEnt_AmountUpgradesCom.StartFill();
-
-        MinesInfoEnt_AmountBuildingsInGameCom.StartFill();
-        MinesInfoEnt_AmountUpgradesCom.StartFill();
+        var destroyAS = audioSourceParentGO.AddComponent<AudioSource>();
+        destroyAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.Destroy_Clip;
+        destroyAS.volume = 0.3f;
+        _destroySoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(destroyAS));
 
 
-        FoodInfoEnt_AmountResourcesDictCom.StartFill();
-        WoodInfoEnt_AmountResourcesDictCom.StartFill();
-        OreInfoEnt_AmountResourcesDictCom.StartFill();
-        IronInfoEnt_AmountResourcesDictCom.StartFill();
-        GoldInfoEnt_AmountResourcesDictCom.StartFill();
+        var upgradeUnitMeleeAS = audioSourceParentGO.AddComponent<AudioSource>();
+        upgradeUnitMeleeAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.UpgradeUnitMelee_Clip;
+        upgradeUnitMeleeAS.volume = 0.2f;
+        _upgradeUnitMeleeSoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(upgradeUnitMeleeAS));
 
 
-        if (Instance.IsMasterClient)
-        {
-            InfoUnitsWorker.SetSettedKing(true, false);
-            InfoUnitsWorker.SetSettedKing(false, false);
-
-            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.King, true, EconomyValues.AMOUNT_KING_MASTER);
-            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.King, false, EconomyValues.AMOUNT_KING_OTHER);
-
-            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.Pawn, true, EconomyValues.AMOUNT_PAWN_MASTER);
-            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.Pawn, false, EconomyValues.AMOUNT_PAWN_OTHER);
-
-            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.Rook, true, EconomyValues.AMOUNT_ROOK_MASTER);
-            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.Rook, false, EconomyValues.AMOUNT_ROOK_OTHER);
-
-            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.Bishop, true, EconomyValues.AMOUNT_BISHOP_MASTER);
-            InfoUnitsWorker.SetAmountUnitsInInventor(UnitTypes.Bishop, false, EconomyValues.AMOUNT_BISHOP_OTHER);
+        var seedingAS = audioSourceParentGO.AddComponent<AudioSource>();
+        seedingAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.Seeding_Clip;
+        seedingAS.volume = 0.2f;
+        _seedingSoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(seedingAS));
 
 
-            InfoResourcesWorker.SetAmountResources(ResourceTypes.Food, true, EconomyValues.AMOUNT_FOOD_MASTER);
-            InfoResourcesWorker.SetAmountResources(ResourceTypes.Wood, true, EconomyValues.AMOUNT_WOOD_MASTER);
-            InfoResourcesWorker.SetAmountResources(ResourceTypes.Ore, true, EconomyValues.AMOUNT_ORE_MASTER);
-            InfoResourcesWorker.SetAmountResources(ResourceTypes.Iron, true, EconomyValues.AMOUNT_IRON_MASTER);
-            InfoResourcesWorker.SetAmountResources(ResourceTypes.Gold, true, EconomyValues.AMOUNT_GOLD_MASTER);
+        var shiftUnitAS = audioSourceParentGO.AddComponent<AudioSource>();
+        shiftUnitAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.ShiftUnit_Clip;
+        shiftUnitAS.volume = 0.6f;
+        _shiftUnitSoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(shiftUnitAS));
 
-            InfoResourcesWorker.SetAmountResources(ResourceTypes.Food, false, EconomyValues.AMOUNT_FOOD_OTHER);
-            InfoResourcesWorker.SetAmountResources(ResourceTypes.Wood, false, EconomyValues.AMOUNT_WOOD_OTHER);
-            InfoResourcesWorker.SetAmountResources(ResourceTypes.Ore, false, EconomyValues.AMOUNT_ORE_OTHER);
-            InfoResourcesWorker.SetAmountResources(ResourceTypes.Iron, false, EconomyValues.AMOUNT_IRON_OTHER);
-            InfoResourcesWorker.SetAmountResources(ResourceTypes.Gold, false, EconomyValues.AMOUNT_GOLD_OTHER);
-        }
+
+        var truceAS = audioSourceParentGO.AddComponent<AudioSource>();
+        truceAS.clip = Instance.ECSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.SoundConfig.Truce_Clip;
+        truceAS.volume = 0.6f;
+        _truceSoundEnt = gameWorld.NewEntity()
+            .Replace(new AudioSourceComponent(truceAS));
     }
 }

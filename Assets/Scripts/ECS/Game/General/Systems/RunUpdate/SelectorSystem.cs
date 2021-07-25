@@ -2,7 +2,8 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else;
-using static Assets.Scripts.CellUnitWorker;
+using Assets.Scripts.Workers.Game.Else.Units;
+using static Assets.Scripts.CellUnitsDataWorker;
 using static Assets.Scripts.Main;
 using static Assets.Scripts.PhotonPunRPC;
 using static Assets.Scripts.Workers.CellBaseOperations;
@@ -94,11 +95,11 @@ internal sealed class SelectorSystem : SystemGeneralReduction
                                 {
                                     if (IsMelee(XySelectedCell))
                                     {
-                                        _eGM.PickMeleeEnt_AudioSourceCom.Play();
+                                        _eGM.PickMeleeEnt_AudioSourceCom.AudioSource.Play();
                                     }
                                     else
                                     {
-                                        _eGM.PickArcherEnt_AudioSourceCom.Play();
+                                        _eGM.PickArcherEnt_AudioSourceCom.AudioSource.Play();
                                     }
 
                                     if (HaveMinAmountSteps(XySelectedCell))
@@ -132,11 +133,11 @@ internal sealed class SelectorSystem : SystemGeneralReduction
                                 {
                                     if (IsMelee(XySelectedCell))
                                     {
-                                        _eGM.PickMeleeEnt_AudioSourceCom.Play();
+                                        _eGM.PickMeleeEnt_AudioSourceCom.AudioSource.Play();
                                     }
                                     else
                                     {
-                                        _eGM.PickArcherEnt_AudioSourceCom.Play();
+                                        _eGM.PickArcherEnt_AudioSourceCom.AudioSource.Play();
                                     }
 
                                     if (HaveMinAmountSteps(XySelectedCell))
@@ -224,15 +225,15 @@ internal sealed class SelectorSystem : SystemGeneralReduction
                         if (_eGM.SelectorEnt_SelectorCom.IsStartSelectedDirect)
                         {
                             if (!HaveAnyUnit(XyCurrentCell))
-                                ActiveSelectorVisionUnit(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, XyCurrentCell);
+                                CellUnitsVisWorker.ActiveSelectorVisionUnit(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, XyCurrentCell);
 
                             XyPreviousVisionCell = XyCurrentCell;
                             _eGM.SelectorEnt_SelectorCom.IsStartSelectedDirect = false;
                         }
                         else
                         {
-                            ActiveSelectorVisionUnit(false, _eGM.SelectorEnt_UnitTypeCom.UnitType, XyPreviousVisionCell);
-                            ActiveSelectorVisionUnit(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, XyCurrentCell);
+                            CellUnitsVisWorker.ActiveSelectorVisionUnit(false, _eGM.SelectorEnt_UnitTypeCom.UnitType, XyPreviousVisionCell);
+                            CellUnitsVisWorker.ActiveSelectorVisionUnit(true, _eGM.SelectorEnt_UnitTypeCom.UnitType, XyCurrentCell);
 
                             XyPreviousVisionCell = XyCurrentCell;
                         }
@@ -252,7 +253,7 @@ internal sealed class SelectorSystem : SystemGeneralReduction
 
                 ClearAvailableCells();
 
-                SetEnabledUnit(false, XyPreviousVisionCell);
+                CellUnitsVisWorker.SetEnabledUnit(false, XyPreviousVisionCell);
                 _eGM.SelectorEnt_UnitTypeCom.UnitType = default;
 
                 XyPreviousCell.Clean();
@@ -272,10 +273,10 @@ internal sealed class SelectorSystem : SystemGeneralReduction
 
     private void GetCells()
     {
-        AvailableCellsEntsWorker.SetAllCells(AvailableCellTypes.Shift, GetCellsForShift(XySelectedCell));
+        AvailableCellsEntsWorker.SetAllCellsCopy(AvailableCellTypes.Shift, GetCellsForShift(XySelectedCell));
 
         GetCellsForAttack(Instance.LocalPlayer, out var availableCellsSimpleAttack, out var availableCellsUniqueAttack, XySelectedCell);
-        AvailableCellsEntsWorker.SetAllCells(AvailableCellTypes.SimpleAttack, availableCellsSimpleAttack);
-        AvailableCellsEntsWorker.SetAllCells(AvailableCellTypes.UniqueAttack, availableCellsUniqueAttack);
+        AvailableCellsEntsWorker.SetAllCellsCopy(AvailableCellTypes.SimpleAttack, availableCellsSimpleAttack);
+        AvailableCellsEntsWorker.SetAllCellsCopy(AvailableCellTypes.UniqueAttack, availableCellsUniqueAttack);
     }
 }
