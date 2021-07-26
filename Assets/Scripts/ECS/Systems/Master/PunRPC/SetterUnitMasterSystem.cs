@@ -26,7 +26,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.King:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
                     InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
@@ -37,7 +37,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.Pawn:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
                     InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
@@ -47,7 +47,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.PawnSword:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
                     InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
@@ -57,7 +57,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.Rook:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
                     InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
@@ -67,7 +67,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.RookCrossbow:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
                     CellUnitsDataWorker.SetAmountHealth(CellUnitsDataWorker.MaxAmountHealth(UnitType), XyCell);
@@ -76,7 +76,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.Bishop:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
                     InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
@@ -86,7 +86,7 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.BishopCrossbow:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
                     InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);

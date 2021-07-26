@@ -27,7 +27,7 @@ public sealed class SystemsGameGeneralManager : SystemsManager
 
             .Add(new DonerUISystem(), nameof(DonerUISystem))
             .Add(new TakerUnitsUISystem(), nameof(TakerUnitsUISystem))
-            .Add(new StandartAbilityUISystem(), nameof(StandartAbilityUISystem))
+            .Add(new ConditionAbilitiesUISystem(), nameof(ConditionAbilitiesUISystem))
             .Add(new StatsUISystem(), nameof(StatsUISystem))
             .Add(new TheEndGameUISystem(), nameof(TheEndGameUISystem))
             .Add(new BuildingUISystem(), nameof(BuildingUISystem))

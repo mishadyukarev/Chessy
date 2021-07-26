@@ -28,7 +28,7 @@ namespace Assets.Scripts
         internal static bool IsVisibleUnit(bool key, int[] xy) => _cellUnitEntsContainer.CellUnitEnt_IsVisibleDictCom(xy).IsVisibleDict[key];
 
 
-        private static void SetStandartValuesUnit(UnitTypes unitType, int amountHealth, int amountSteps, ConditionTypes protectRelaxType, params int[] xy)
+        private static void SetStandartValuesUnit(UnitTypes unitType, int amountHealth, int amountSteps, ConditionUnitTypes protectRelaxType, params int[] xy)
         {
             SetUnitType(unitType, xy);
             SetAmountHealth(amountHealth, xy);
@@ -40,7 +40,7 @@ namespace Assets.Scripts
             UnitTypes unitType = default;
             int amountHealth = default;
             int amountSteps = default;
-            ConditionTypes protectRelaxType = default;
+            ConditionUnitTypes protectRelaxType = default;
 
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
         }
@@ -260,45 +260,45 @@ namespace Assets.Scripts
 
 
         #region Condition
-        internal static ConditionTypes ProtectRelaxType(int[] xy) => _cellUnitEntsContainer.CellUnitEnt_ProtectRelaxCom(xy).ProtectRelaxType;
-        internal static void SetProtectRelaxType(ConditionTypes protectRelaxType, int[] xy) => _cellUnitEntsContainer.CellUnitEnt_ProtectRelaxCom(xy).ProtectRelaxType = protectRelaxType;
+        internal static ConditionUnitTypes ProtectRelaxType(int[] xy) => _cellUnitEntsContainer.CellUnitEnt_ProtectRelaxCom(xy).ProtectRelaxType;
+        internal static void SetProtectRelaxType(ConditionUnitTypes protectRelaxType, int[] xy) => _cellUnitEntsContainer.CellUnitEnt_ProtectRelaxCom(xy).ProtectRelaxType = protectRelaxType;
 
-        internal static void ResetProtectedRelaxType(int[] xy) => SetProtectRelaxType(ConditionTypes.None, xy);
-        internal static bool IsProtectRelaxType(ConditionTypes protectRelaxType, int[] xy) => _cellUnitEntsContainer.CellUnitEnt_ProtectRelaxCom(xy).ProtectRelaxType == protectRelaxType;
+        internal static void ResetProtectedRelaxType(int[] xy) => SetProtectRelaxType(ConditionUnitTypes.None, xy);
+        internal static bool IsProtectRelaxType(ConditionUnitTypes protectRelaxType, int[] xy) => _cellUnitEntsContainer.CellUnitEnt_ProtectRelaxCom(xy).ProtectRelaxType == protectRelaxType;
 
 
         #region AmountStepsInCondition
 
-        internal static int AmountStepsInProtectRelax(ConditionTypes protectRelaxType, int[] xy)
+        internal static int AmountStepsInProtectRelax(ConditionUnitTypes protectRelaxType, int[] xy)
         {
             switch (protectRelaxType)
             {
-                case ConditionTypes.None:
+                case ConditionUnitTypes.None:
                     return _cellUnitEntsContainer.CellUnitEnt_CellUnitCom(xy).AmountStepsInNone;
 
-                case ConditionTypes.Protected:
+                case ConditionUnitTypes.Protected:
                     return _cellUnitEntsContainer.CellUnitEnt_CellUnitCom(xy).AmountStepsInProtected;
 
-                case ConditionTypes.Relaxed:
+                case ConditionUnitTypes.Relaxed:
                     return _cellUnitEntsContainer.CellUnitEnt_CellUnitCom(xy).AmountStepsInRelaxed;
 
                 default:
                     throw new Exception();
             }
         }
-        internal static void SetAmountStepsInProtectRelax(ConditionTypes protectRelaxType, int value, int[] xy)
+        internal static void SetAmountStepsInProtectRelax(ConditionUnitTypes protectRelaxType, int value, int[] xy)
         {
             switch (protectRelaxType)
             {
-                case ConditionTypes.None:
+                case ConditionUnitTypes.None:
                     _cellUnitEntsContainer.CellUnitEnt_CellUnitCom(xy).AmountStepsInNone = value;
                     break;
 
-                case ConditionTypes.Protected:
+                case ConditionUnitTypes.Protected:
                     _cellUnitEntsContainer.CellUnitEnt_CellUnitCom(xy).AmountStepsInProtected = value;
                     break;
 
-                case ConditionTypes.Relaxed:
+                case ConditionUnitTypes.Relaxed:
                     _cellUnitEntsContainer.CellUnitEnt_CellUnitCom(xy).AmountStepsInRelaxed = value;
                     break;
 
@@ -306,19 +306,19 @@ namespace Assets.Scripts
                     throw new Exception();
             }
         }
-        internal static void AddAmountStepsInProtectRelax(ConditionTypes protectRelaxType, int[] xy, int adding = 1)
+        internal static void AddAmountStepsInProtectRelax(ConditionUnitTypes protectRelaxType, int[] xy, int adding = 1)
         {
             switch (protectRelaxType)
             {
-                case ConditionTypes.None:
+                case ConditionUnitTypes.None:
                     _cellUnitEntsContainer.CellUnitEnt_CellUnitCom(xy).AmountStepsInNone += adding;
                     break;
 
-                case ConditionTypes.Protected:
+                case ConditionUnitTypes.Protected:
                     _cellUnitEntsContainer.CellUnitEnt_CellUnitCom(xy).AmountStepsInProtected += adding;
                     break;
 
-                case ConditionTypes.Relaxed:
+                case ConditionUnitTypes.Relaxed:
                     _cellUnitEntsContainer.CellUnitEnt_CellUnitCom(xy).AmountStepsInRelaxed += adding;
                     break;
 
@@ -326,19 +326,19 @@ namespace Assets.Scripts
                     throw new Exception();
             }
         }
-        internal static void TakeAmountStepsInProtectRelax(ConditionTypes protectRelaxType, int[] xy, int taking = 1)
+        internal static void TakeAmountStepsInProtectRelax(ConditionUnitTypes protectRelaxType, int[] xy, int taking = 1)
         {
             switch (protectRelaxType)
             {
-                case ConditionTypes.None:
+                case ConditionUnitTypes.None:
                     _cellUnitEntsContainer.CellUnitEnt_CellUnitCom(xy).AmountStepsInNone -= taking;
                     break;
 
-                case ConditionTypes.Protected:
+                case ConditionUnitTypes.Protected:
                     _cellUnitEntsContainer.CellUnitEnt_CellUnitCom(xy).AmountStepsInProtected -= taking;
                     break;
 
-                case ConditionTypes.Relaxed:
+                case ConditionUnitTypes.Relaxed:
                     _cellUnitEntsContainer.CellUnitEnt_CellUnitCom(xy).AmountStepsInRelaxed -= taking;
                     break;
 
@@ -347,7 +347,7 @@ namespace Assets.Scripts
             }
         }
 
-        internal static void ResetAmountStepsInProtectRelax(ConditionTypes protectRelaxType, int[] xy) => SetAmountStepsInProtectRelax(protectRelaxType, default, xy);
+        internal static void ResetAmountStepsInProtectRelax(ConditionUnitTypes protectRelaxType, int[] xy) => SetAmountStepsInProtectRelax(protectRelaxType, default, xy);
 
         #endregion
 
@@ -453,7 +453,7 @@ namespace Assets.Scripts
 
             int powerProtection = 0;
 
-            if (IsProtectRelaxType(ConditionTypes.Protected, xy))
+            if (IsProtectRelaxType(ConditionUnitTypes.Protected, xy))
             {
                 switch (unitType)
                 {
@@ -487,7 +487,7 @@ namespace Assets.Scripts
                 }
             }
 
-            else if (IsProtectRelaxType(ConditionTypes.Relaxed, xy))
+            else if (IsProtectRelaxType(ConditionUnitTypes.Relaxed, xy))
             {
                 switch (unitType)
                 {
@@ -680,7 +680,7 @@ namespace Assets.Scripts
             ResetOwner(fromXy);
         }
 
-        internal static void SetPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, ConditionTypes protectRelaxType, Player player, int[] xy)
+        internal static void SetPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, ConditionUnitTypes protectRelaxType, Player player, int[] xy)
         {
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
             SetOwner(player, xy);
@@ -735,7 +735,7 @@ namespace Assets.Scripts
                     throw new Exception();
             }
 
-            SetPlayerUnit(unitType, amountHealth, amountSteps, ConditionTypes.None, player, xy);
+            SetPlayerUnit(unitType, amountHealth, amountSteps, ConditionUnitTypes.None, player, xy);
         }
 
         internal static void ResetUnit(int[] xy)
@@ -746,7 +746,7 @@ namespace Assets.Scripts
             ResetIsBot(xy);
         }
 
-        internal static void SyncPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, ConditionTypes protectRelaxType, Player player, int[] xy)
+        internal static void SyncPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, ConditionUnitTypes protectRelaxType, Player player, int[] xy)
         {
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
             SetOwner(player, xy);
@@ -796,7 +796,7 @@ namespace Assets.Scripts
 
         #region Bot
 
-        internal static void SetBotUnit(UnitTypes unitType, bool haveBot, int amountHealth, int amountSteps, ConditionTypes protectRelaxType, int[] xy)
+        internal static void SetBotUnit(UnitTypes unitType, bool haveBot, int amountHealth, int amountSteps, ConditionUnitTypes protectRelaxType, int[] xy)
         {
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
             SetIsBot(haveBot, xy);

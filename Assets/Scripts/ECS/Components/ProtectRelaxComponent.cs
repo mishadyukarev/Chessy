@@ -4,6 +4,6 @@ namespace Assets.Scripts.ECS.Game.Components
 {
     internal struct ProtectRelaxComponent
     {
-        internal ConditionTypes ProtectRelaxType { get; set; }
+        internal ConditionUnitTypes ProtectRelaxType { get; set; }
     }
 }

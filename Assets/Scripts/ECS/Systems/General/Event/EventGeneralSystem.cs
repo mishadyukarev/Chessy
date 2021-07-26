@@ -34,8 +34,8 @@ namespace Assets.Scripts
 
             _eGGUIM.LeaveEnt_ButtonCom.Button.onClick.AddListener(_sceneManager.LeaveRoom);
 
-            _eGGUIM.StandartFirstAbilityEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton1);
-            _eGGUIM.StandartSecondAbilityEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton2);
+            _eGGUIM.ProtectConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton1);
+            _eGGUIM.RelaxConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton2);
         }
 
 
@@ -77,13 +77,13 @@ namespace Assets.Scripts
         {
             if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient))
             {
-                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionTypes.Protected, XySelectedCell))
+                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionUnitTypes.Protected, XySelectedCell))
                 {
-                    PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionTypes.None, XySelectedCell);
+                    PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionUnitTypes.None, XySelectedCell);
                 }
                 else
                 {
-                    PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionTypes.Protected, XySelectedCell);
+                    PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionUnitTypes.Protected, XySelectedCell);
                 }
             }
 
@@ -92,13 +92,13 @@ namespace Assets.Scripts
         {
             if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient))
             {
-                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionTypes.Relaxed, XySelectedCell))
+                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionUnitTypes.Relaxed, XySelectedCell))
                 {
-                    PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionTypes.None, XySelectedCell);
+                    PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionUnitTypes.None, XySelectedCell);
                 }
                 else
                 {
-                    PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionTypes.Relaxed, XySelectedCell);
+                    PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionUnitTypes.Relaxed, XySelectedCell);
                 }
             }
         }

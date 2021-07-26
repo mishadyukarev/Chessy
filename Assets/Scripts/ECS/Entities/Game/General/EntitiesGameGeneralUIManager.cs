@@ -157,25 +157,26 @@ public sealed class EntitiesGameGeneralUIManager
 
     #region StandartAbilities
 
-    private EcsEntity _standartAbilitiesZoneEnt;
-    internal ref TextMeshProUGUIComponent StandartAbilitiesZoneEnt_TextMeshProUGUICom => ref _standartAbilitiesZoneEnt.Get<TextMeshProUGUIComponent>();
+    private EcsEntity _conditionZoneEnt;
+    internal ref ParentComponent ConditionZoneEnt_ParentGOCom => ref _conditionZoneEnt.Get<ParentComponent>();
+    internal ref TextMeshProUGUIComponent ConditionZoneEnt_TextMeshProUGUICom => ref _conditionZoneEnt.Get<TextMeshProUGUIComponent>();
 
 
-    private EcsEntity _standartFirstAbilityEnt;
-    internal ref ButtonComponent StandartFirstAbilityEnt_ButtonCom => ref _standartFirstAbilityEnt.Get<ButtonComponent>();
+    private EcsEntity _protectConditionEnt;
+    internal ref ButtonComponent ProtectConditionEnt_ButtonCom => ref _protectConditionEnt.Get<ButtonComponent>();
 
 
-    private EcsEntity _standartSecondAbilityEnt;
-    internal ref ButtonComponent StandartSecondAbilityEnt_ButtonCom => ref _standartSecondAbilityEnt.Get<ButtonComponent>();
+    private EcsEntity _relaxConditionEnt;
+    internal ref ButtonComponent RelaxConditionEnt_ButtonCom => ref _relaxConditionEnt.Get<ButtonComponent>();
 
     #endregion
 
 
     #region UniqueAbilities
 
-    private EcsEntity _uniqueAbilitiesZoneEnt;
-    internal ref TextMeshProUGUIComponent UniqueAbilitiesZoneEnt_TextMeshProUGUICom => ref _uniqueAbilitiesZoneEnt.Get<TextMeshProUGUIComponent>();
-    internal ref ParentComponent UniqueAbilitiesZoneEnt_ParentCom => ref _uniqueAbilitiesZoneEnt.Get<ParentComponent>();
+    private EcsEntity _uniquePareZoneEnt;
+    internal ref TextMeshProUGUIComponent UniquePareZoneEnt_TextMeshProUGUICom => ref _uniquePareZoneEnt.Get<TextMeshProUGUIComponent>();
+    internal ref ParentComponent UniquePareZoneEnt_ParentCom => ref _uniquePareZoneEnt.Get<ParentComponent>();
 
 
     private EcsEntity _uniqueFirstAbilityEnt;
@@ -214,11 +215,6 @@ public sealed class EntitiesGameGeneralUIManager
     private EcsEntity _buildingThirdAbilityEnt;
     internal ref ButtonComponent BuildingThirdAbilityEnt_ButtonCom => ref _buildingThirdAbilityEnt.Get<ButtonComponent>();
     internal ref TextMeshProUGUIComponent BuildingThirdAbilityEnt_TextMeshProGUICom => ref _buildingThirdAbilityEnt.Get<TextMeshProUGUIComponent>();
-
-
-    private EcsEntity _buildingFourthAbilityEnt;
-    internal ref ButtonComponent BuildingFourthAbilityEnt_ButtonCom => ref _buildingFourthAbilityEnt.Get<ButtonComponent>();
-    internal ref TextMeshProUGUIComponent BuildingFourthAbilityEnt_TextMeshProGUICom => ref _buildingFourthAbilityEnt.Get<TextMeshProUGUIComponent>();
 
     #endregion
 
@@ -521,19 +517,21 @@ public sealed class EntitiesGameGeneralUIManager
 
 
 
+        var conditionZoneGO = rightZoneGO.transform.Find("ConditionZone").gameObject;
+        _conditionZoneEnt = gameWorld.NewEntity()
+            .Replace(new ParentComponent(conditionZoneGO))
+            .Replace(new TextMeshProUGUIComponent(conditionZoneGO.transform.Find("StandartAbilityText").GetComponent<TextMeshProUGUI>()));
+
+        _protectConditionEnt = gameWorld.NewEntity()
+            .Replace(new ButtonComponent(conditionZoneGO.transform.Find("StandartAbilityButton1").GetComponent<Button>()));
+
+        _relaxConditionEnt = gameWorld.NewEntity()
+            .Replace(new ButtonComponent(conditionZoneGO.transform.Find("StandartAbilityButton2").GetComponent<Button>()));
 
 
-        _standartAbilitiesZoneEnt = gameWorld.NewEntity()
-            .Replace(new TextMeshProUGUIComponent(rightZoneGO.transform.Find("StandartAbilityText").GetComponent<TextMeshProUGUI>()));
-
-        _standartFirstAbilityEnt = gameWorld.NewEntity()
-            .Replace(new ButtonComponent(rightZoneGO.transform.Find("StandartAbilityButton1").GetComponent<Button>()));
-
-        _standartSecondAbilityEnt = gameWorld.NewEntity()
-            .Replace(new ButtonComponent(rightZoneGO.transform.Find("StandartAbilityButton2").GetComponent<Button>()));
 
         var uniqueAbilitiesZoneGO = rightZoneGO.transform.Find("UniqueAbilitiesZone").gameObject;
-        _uniqueAbilitiesZoneEnt = gameWorld.NewEntity()
+        _uniquePareZoneEnt = gameWorld.NewEntity()
             .Replace(new ParentComponent(uniqueAbilitiesZoneGO))
             .Replace(new TextMeshProUGUIComponent(uniqueAbilitiesZoneGO.transform.Find("UniqueAbilitiesText").GetComponent<TextMeshProUGUI>()));
 
@@ -559,24 +557,23 @@ public sealed class EntitiesGameGeneralUIManager
         _buildingAbilitiesZoneEnt = gameWorld.NewEntity()
             .Replace(new TextMeshProUGUIComponent(rightZoneGO.transform.Find("BuildingAbilitiesText").GetComponent<TextMeshProUGUI>()));
 
+
+
+
         var buildingFirstAbilityButtom = rightZoneGO.transform.Find("BuildingAbilityButton1").GetComponent<Button>();
         _buildingFirstAbilityEnt = gameWorld.NewEntity()
             .Replace(new ButtonComponent(buildingFirstAbilityButtom))
             .Replace(new TextMeshProUGUIComponent(buildingFirstAbilityButtom.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
 
 
-        var buildingFourthAbilityButtom = rightZoneGO.transform.Find("BuildingAbilityButton4").GetComponent<Button>();
-        _buildingFourthAbilityEnt = gameWorld.NewEntity()
-            .Replace(new ButtonComponent(buildingFourthAbilityButtom))
-            .Replace(new TextMeshProUGUIComponent(buildingFourthAbilityButtom.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
-
-
-
         _buildingSecondAbilityEnt = gameWorld.NewEntity()
             .Replace(new ButtonComponent(rightZoneGO.transform.Find("BuildingAbilityButton2").GetComponent<Button>()));
 
+
+        var buildingThirdAbilityButtom = rightZoneGO.transform.Find("BuildingAbilityButton3").GetComponent<Button>();
         _buildingThirdAbilityEnt = gameWorld.NewEntity()
-            .Replace(new ButtonComponent(rightZoneGO.transform.Find("BuildingAbilityButton3").GetComponent<Button>()));
+            .Replace(new ButtonComponent(buildingThirdAbilityButtom))
+            .Replace(new TextMeshProUGUIComponent(buildingThirdAbilityButtom.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()));
 
         #endregion
     }

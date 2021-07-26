@@ -8,6 +8,6 @@ namespace Assets.Scripts.Workers
         internal static PhotonMessageInfo InfoFrom => EGMM.FromInfoEnt_FromInfoCom.FromInfo;
 
         internal static int[] XyCellForProtectRelax => EGMM.ProtectRelaxEnt_XyCellCom.XyCell;
-        internal static ConditionTypes NeededProtectRelaxType => EGMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType;
+        internal static ConditionUnitTypes NeededProtectRelaxType => EGMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType;
     }
 }

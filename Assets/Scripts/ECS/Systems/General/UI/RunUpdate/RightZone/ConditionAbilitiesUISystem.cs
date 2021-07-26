@@ -1,16 +1,16 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Game.UI;
+using Leopotam.Ecs;
 using UnityEngine;
 
-internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
+internal sealed class ConditionAbilitiesUISystem : IEcsRunSystem
 {
     private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
 
-    public override void Run()
+    public void Run()
     {
-        base.Run();
-
 
         if (CellUnitsDataWorker.HaveAnyUnit(XySelectedCell))
         {
@@ -76,20 +76,29 @@ internal sealed class StandartAbilityUISystem : RPCGeneralSystemReduction
 
         void ActiveStandartAbilities(bool isActive)
         {
-            _eGGUIM.StandartAbilitiesZoneEnt_TextMeshProUGUICom.TextMeshProUGUI.gameObject.SetActive(isActive);
-            _eGGUIM.StandartFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(isActive);
-            _eGGUIM.StandartSecondAbilityEnt_ButtonCom.Button.gameObject.SetActive(isActive);
+            UIRightWorker.SetActive(isActive, ConditionUnitTypes.Protected);
+            UIRightWorker.SetActive(isActive, ConditionUnitTypes.Relaxed);
 
             if (isActive)
             {
-                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionTypes.Protected, XySelectedCell))
+                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionUnitTypes.Protected, XySelectedCell))
                 {
-                    _eGGUIM.StandartFirstAbilityEnt_ButtonCom.Button.image.color = Color.yellow;
+                    UIRightWorker.SetConditionColor(ConditionUnitTypes.Protected, Color.yellow);
                 }
-                else _eGGUIM.StandartFirstAbilityEnt_ButtonCom.Button.image.color = Color.white;
 
-                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionTypes.Relaxed, XySelectedCell)) _eGGUIM.StandartSecondAbilityEnt_ButtonCom.Button.image.color = Color.green;
-                else _eGGUIM.StandartSecondAbilityEnt_ButtonCom.Button.image.color = Color.white;
+                else
+                {
+                    UIRightWorker.SetConditionColor(ConditionUnitTypes.Protected, Color.white);
+                }
+
+                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionUnitTypes.Relaxed, XySelectedCell))
+                {
+                    UIRightWorker.SetConditionColor(ConditionUnitTypes.Relaxed, Color.green);
+                }
+                else
+                {
+                    UIRightWorker.SetConditionColor(ConditionUnitTypes.Relaxed, Color.white);
+                }
             }
         }
     }

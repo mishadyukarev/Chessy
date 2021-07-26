@@ -28,31 +28,31 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
                             break;
 
                         case UnitTypes.King:
-                            _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.ParentGO.SetActive(false);
+                            UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Unique);
                             break;
 
                         case UnitTypes.Pawn:
-                            Melee();
+                            PawnAndPawnSword();
                             break;
 
                         case UnitTypes.PawnSword:
-                            Melee();
+                            PawnAndPawnSword();
                             break;
 
                         case UnitTypes.Rook:
-                            _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.ParentGO.SetActive(false);
+                            UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Unique);
                             break;
 
                         case UnitTypes.RookCrossbow:
-                            _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.ParentGO.SetActive(false);
+                            UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Unique);
                             break;
 
                         case UnitTypes.Bishop:
-                            _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.ParentGO.SetActive(false);
+                            UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Unique);
                             break;
 
                         case UnitTypes.BishopCrossbow:
-                            _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.ParentGO.SetActive(false);
+                            UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Unique);
                             break;
 
                         default:
@@ -62,45 +62,68 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
 
                 else
                 {
-                    _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.ParentGO.SetActive(false);
+                    UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Unique);
                 }
             }
             else if (CellUnitsDataWorker.IsBot(XySelectedCell))
             {
-                _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.ParentGO.SetActive(false);
+                UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Unique);
             }
 
-            void Melee()
+            void PawnAndPawnSword()
             {
-                _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.ParentGO.SetActive(true);
+                UIRightWorker.SetActiveParentZone(true, UnitUIZoneTypes.Unique);
 
-                _eGGUIM.UniqueAbilitiesZoneEnt_TextMeshProUGUICom.TextMeshProUGUI.gameObject.SetActive(true);
-                _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
-                _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
-                _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Fire(XySelectedCell, XySelectedCell); });
+                _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
+                _eGGUIM.Unique3AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
 
-                if (CellFireDataWorker.HaveFire(XySelectedCell))
+                if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, XySelectedCell))
                 {
-                    _eGGUIM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Put Out FIRE";
+                    _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
+                    _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
+                    UIRightWorker.AddListener(delegate { Fire(XySelectedCell, XySelectedCell); }, UniqueAbilitiesTypes.First);
+
+                    if (CellFireDataWorker.HaveFire(XySelectedCell))
+                    {
+                        _eGGUIM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Put Out FIRE";
+                    }
+                    else
+                    {
+
+                        _eGGUIM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Fire forest";
+                    }
                 }
+
+                else if (!CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, XySelectedCell)
+                    && !CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.YoungForest, XySelectedCell))
+                {
+                    _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
+                    _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
+                    UIRightWorker.AddListener(delegate { SeedEnvironment(EnvironmentTypes.YoungForest); }, UniqueAbilitiesTypes.First);
+                    _eGGUIM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Seed Forest";
+                }
+
                 else
                 {
 
-                    _eGGUIM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Fire forest";
                 }
+
 
                 _eGGUIM.Unique2AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
 
-                _eGGUIM.Unique3AbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
-                _eGGUIM.Unique3AbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
-                _eGGUIM.Unique3AbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { SeedEnvironment(EnvironmentTypes.YoungForest); });
-                _eGGUIM.Unique3AbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Seed Forest";
+
+
+
+
+
+
+
             }
         }
 
         else
         {
-            _eGGUIM.UniqueAbilitiesZoneEnt_ParentCom.ParentGO.SetActive(false);
+            _eGGUIM.UniquePareZoneEnt_ParentCom.ParentGO.SetActive(false);
         }
     }
 

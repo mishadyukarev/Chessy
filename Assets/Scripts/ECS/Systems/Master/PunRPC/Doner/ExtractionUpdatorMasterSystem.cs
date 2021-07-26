@@ -87,7 +87,7 @@ internal sealed class ExtractionUpdatorMasterSystem : SystemMasterReduction
             }
         }
 
-        foreach (var xy in InfoUnitsWorker.GetUnitsInStandardCondition(ConditionTypes.Relaxed, UnitTypes.Pawn, true))
+        foreach (var xy in InfoUnitsWorker.GetUnitsInStandardCondition(ConditionUnitTypes.Relaxed, UnitTypes.Pawn, true))
         {
             if (CellUnitsDataWorker.AmountHealth(xy) < CellUnitsDataWorker.MaxAmountHealth(UnitTypes.Pawn))
             {

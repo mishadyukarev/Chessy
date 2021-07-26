@@ -46,7 +46,10 @@ internal sealed class RaySystem : IEcsRunSystem
 #if UNITY_ANDROID
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            _eGM.SelectorEnt_RayCom.SetIsUI(EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId));
+            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+            {
+                SelectorWorker.RaycastGettedType = RaycastGettedTypes.UI;
+            }
         }
 #endif
     }

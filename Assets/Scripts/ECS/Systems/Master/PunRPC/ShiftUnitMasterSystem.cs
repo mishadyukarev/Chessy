@@ -37,7 +37,7 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
                 InfoUnitsWorker.AddAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), ToXy);
                 CellUnitsDataWorker.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
 
-                InfoUnitsWorker.AddUnitInStandartCondition(ConditionTypes.None, fromUnitType, fromIsMasterClient, ToXy);
+                InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, fromUnitType, fromIsMasterClient, ToXy);
 
 
                 CellUnitsDataWorker.TakeAmountSteps(ToXy, CellEnvirDataWorker.NeedAmountSteps(ToXy));

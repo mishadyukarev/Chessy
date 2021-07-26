@@ -211,11 +211,11 @@ namespace Assets.Scripts.Workers.Info
         #endregion
 
 
-        internal static int GetAmountUnitsInStandartCondition(ConditionTypes protectRelaxType, UnitTypes unitType, bool key)
+        internal static int GetAmountUnitsInStandartCondition(ConditionUnitTypes protectRelaxType, UnitTypes unitType, bool key)
         {
             switch (protectRelaxType)
             {
-                case ConditionTypes.None:
+                case ConditionUnitTypes.None:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -246,7 +246,7 @@ namespace Assets.Scripts.Workers.Info
                             throw new Exception();
                     }
 
-                case ConditionTypes.Protected:
+                case ConditionUnitTypes.Protected:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -277,7 +277,7 @@ namespace Assets.Scripts.Workers.Info
                             throw new Exception();
                     }
 
-                case ConditionTypes.Relaxed:
+                case ConditionUnitTypes.Relaxed:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -312,11 +312,11 @@ namespace Assets.Scripts.Workers.Info
                     throw new Exception();
             }
         }
-        internal static List<int[]> GetUnitsInStandardCondition(ConditionTypes protectRelaxType, UnitTypes unitType, bool key)
+        internal static List<int[]> GetUnitsInStandardCondition(ConditionUnitTypes protectRelaxType, UnitTypes unitType, bool key)
         {
             switch (protectRelaxType)
             {
-                case ConditionTypes.None:
+                case ConditionUnitTypes.None:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -347,7 +347,7 @@ namespace Assets.Scripts.Workers.Info
                             throw new Exception();
                     }
 
-                case ConditionTypes.Protected:
+                case ConditionUnitTypes.Protected:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -378,7 +378,7 @@ namespace Assets.Scripts.Workers.Info
                             throw new Exception();
                     }
 
-                case ConditionTypes.Relaxed:
+                case ConditionUnitTypes.Relaxed:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -413,11 +413,11 @@ namespace Assets.Scripts.Workers.Info
                     throw new Exception();
             }
         }
-        internal static bool TryFindUnitInStandartCondition(ConditionTypes protectRelaxType, UnitTypes unitType, bool key, int[] xy)
+        internal static bool TryFindUnitInStandartCondition(ConditionUnitTypes protectRelaxType, UnitTypes unitType, bool key, int[] xy)
         {
             switch (protectRelaxType)
             {
-                case ConditionTypes.None:
+                case ConditionUnitTypes.None:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -448,7 +448,7 @@ namespace Assets.Scripts.Workers.Info
                             throw new Exception();
                     }
 
-                case ConditionTypes.Protected:
+                case ConditionUnitTypes.Protected:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -479,7 +479,7 @@ namespace Assets.Scripts.Workers.Info
                             throw new Exception();
                     }
 
-                case ConditionTypes.Relaxed:
+                case ConditionUnitTypes.Relaxed:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -514,11 +514,11 @@ namespace Assets.Scripts.Workers.Info
                     throw new Exception();
             }
         }
-        internal static void AddUnitInStandartCondition(ConditionTypes protectRelaxType, UnitTypes unitType, bool key, int[] xy)
+        internal static void AddUnitInStandartCondition(ConditionUnitTypes protectRelaxType, UnitTypes unitType, bool key, int[] xy)
         {
             switch (protectRelaxType)
             {
-                case ConditionTypes.None:
+                case ConditionUnitTypes.None:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -557,7 +557,7 @@ namespace Assets.Scripts.Workers.Info
                     }
                     break;
 
-                case ConditionTypes.Protected:
+                case ConditionUnitTypes.Protected:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -596,7 +596,7 @@ namespace Assets.Scripts.Workers.Info
                     }
                     break;
 
-                case ConditionTypes.Relaxed:
+                case ConditionUnitTypes.Relaxed:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -639,13 +639,13 @@ namespace Assets.Scripts.Workers.Info
                     throw new Exception();
             }
         }
-        internal static void TakeUnitInStandartCondition(ConditionTypes protectRelaxType, UnitTypes unitType, bool key, int[] xy)
+        internal static void TakeUnitInStandartCondition(ConditionUnitTypes protectRelaxType, UnitTypes unitType, bool key, int[] xy)
         {
             List<int[]> curList;
 
             switch (protectRelaxType)
             {
-                case ConditionTypes.None:
+                case ConditionUnitTypes.None:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -684,7 +684,7 @@ namespace Assets.Scripts.Workers.Info
                     }
                     break;
 
-                case ConditionTypes.Protected:
+                case ConditionUnitTypes.Protected:
                     switch (unitType)
                     {
                         case UnitTypes.None:
@@ -723,7 +723,7 @@ namespace Assets.Scripts.Workers.Info
                     }
                     break;
 
-                case ConditionTypes.Relaxed:
+                case ConditionUnitTypes.Relaxed:
                     switch (unitType)
                     {
                         case UnitTypes.None:

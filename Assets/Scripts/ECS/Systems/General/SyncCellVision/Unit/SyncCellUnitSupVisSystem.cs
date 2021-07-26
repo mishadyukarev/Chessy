@@ -38,13 +38,13 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                                 CellSupVisBlocksWorker.EnableCellSupVisBlocksSR(false, CellSupVisBlocksTypes.MaxSteps, xy);
                             }
 
-                            if (CellUnitsDataWorker.IsProtectRelaxType(ConditionTypes.Protected, xy))
+                            if (CellUnitsDataWorker.IsProtectRelaxType(ConditionUnitTypes.Protected, xy))
                             {
                                 CellSupVisBlocksWorker.EnableCellSupVisBlocksSR(true, CellSupVisBlocksTypes.Condition, xy);
                                 CellSupVisBlocksWorker.SetCellSupVisBlocksColor(Color.yellow, CellSupVisBlocksTypes.Condition, xy);
                             }
 
-                            else if (CellUnitsDataWorker.IsProtectRelaxType(ConditionTypes.Relaxed, xy))
+                            else if (CellUnitsDataWorker.IsProtectRelaxType(ConditionUnitTypes.Relaxed, xy))
                             {
                                 CellSupVisBlocksWorker.EnableCellSupVisBlocksSR(true, CellSupVisBlocksTypes.Condition, xy);
                                 CellSupVisBlocksWorker.SetCellSupVisBlocksColor(Color.green, CellSupVisBlocksTypes.Condition, xy);

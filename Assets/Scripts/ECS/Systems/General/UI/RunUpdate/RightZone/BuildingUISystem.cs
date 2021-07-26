@@ -14,8 +14,8 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
 
         _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Build(BuildingTypes.Farm); });
         //_eGM.BuildingSecondAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.Woodcutter); });
-        _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Build(BuildingTypes.Mine); });
-        _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Build(BuildingTypes.City); });
+        _eGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Build(BuildingTypes.Mine); });
+        _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Build(BuildingTypes.City); });
     }
 
     public override void Run()
@@ -72,8 +72,8 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                     _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.TextMeshProUGUI.gameObject.SetActive(false);
                     _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
                     //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
+                    _eGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
                     _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
-                    _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
                 }
             }
 
@@ -82,8 +82,8 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                 _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.TextMeshProUGUI.gameObject.SetActive(false);
                 _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
                 //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
+                _eGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
                 _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
-                _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
             }
 
             void PawnAndPawnSword()
@@ -91,10 +91,10 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                 _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.TextMeshProUGUI.gameObject.SetActive(true);
                 _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
                 //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(true);
+                _eGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
                 _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
-                _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
 
-                _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
+                _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
 
                 if (CellBuildingsDataWorker.HaveAnyBuilding(XySelectedCell))
                 {
@@ -104,21 +104,21 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                         {
                             if (CellBuildingsDataWorker.IsBuildingType(BuildingTypes.City, XySelectedCell))
                             {
-                                _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
+                                _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
                             }
                             else
                             {
-                                _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Destroy(); });
-                                _eGGUIM.BuildingFourthAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Destroy";
+                                _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Destroy(); });
+                                _eGGUIM.BuildingThirdAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Destroy";
                             }
                         }
 
                         else
                         {
-                            _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
+                            _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
 
-                            _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Destroy(); });
-                            _eGGUIM.BuildingFourthAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Destroy";
+                            _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Destroy(); });
+                            _eGGUIM.BuildingThirdAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Destroy";
                         }
 
 
@@ -149,8 +149,8 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                     {
                         if (CellBuildingsDataWorker.IsBuildingType(BuildingTypes.City, XySelectedCell))
                         {
-                            _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Destroy(); });
-                            _eGGUIM.BuildingFourthAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Destroy";
+                            _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Destroy(); });
+                            _eGGUIM.BuildingThirdAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Destroy";
                         }
                     }
 
@@ -159,12 +159,12 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                 {
                     if (InfoBuidlingsWorker.IsSettedCity(Instance.IsMasterClient))
                     {
-                        _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
+                        _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
                     }
                     else
                     {
-                        _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Build(BuildingTypes.City); });
-                        _eGGUIM.BuildingFourthAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Build City";
+                        _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Build(BuildingTypes.City); });
+                        _eGGUIM.BuildingThirdAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Build City";
                     }
                 }
             }
@@ -175,8 +175,8 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
             _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.TextMeshProUGUI.gameObject.SetActive(false);
             _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
             //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
+            _eGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
             _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
-            _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
         }
     }
 
@@ -185,8 +185,8 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
         _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.TextMeshProUGUI.gameObject.SetActive(isActivated);
         _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(isActivated);
         //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(isActivated);
+        _eGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button.gameObject.SetActive(isActivated);
         _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(isActivated);
-        _eGGUIM.BuildingFourthAbilityEnt_ButtonCom.Button.gameObject.SetActive(isActivated);
     }
 
     private void Build(BuildingTypes buildingType)

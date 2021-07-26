@@ -96,7 +96,7 @@ namespace Assets.Scripts
         public static void BuildToMaster(int[] xyCell, BuildingTypes buildingType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Build, new object[] { xyCell, buildingType });
         public static void DestroyBuildingToMaster(int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Destroy, new object[] { xyCell });
 
-        public static void ProtectRelaxUnitToMaster(ConditionTypes protectRelaxType, int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ProtectRelax, new object[] { protectRelaxType, xyCell });
+        public static void ProtectRelaxUnitToMaster(ConditionUnitTypes protectRelaxType, int[] xyCell) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ProtectRelax, new object[] { protectRelaxType, xyCell });
 
         public static void EndGameToMaster(int actorNumberWinner) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.EndGame, new object[] { actorNumberWinner });
         public static void EndGameToGeneral(RpcTarget rpcTarget, int actorNumberWinner) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
@@ -170,7 +170,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.ProtectRelax:
-                    EMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType = (ConditionTypes)objects[0];
+                    EMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType = (ConditionUnitTypes)objects[0];
                     EMM.ProtectRelaxEnt_XyCellCom.XyCell =(int[])objects[1];
                     SMM.TryInvokeRunSystem(nameof(ProtectRelaxMasterSystem), SMM.RpcSystems);
                     break;
@@ -509,7 +509,7 @@ namespace Assets.Scripts
                                 UnitTypes unitType = (UnitTypes)objects[_currentNumber++];
                                 int amountSteps = (int)objects[_currentNumber++];
                                 int amountHealth = (int)objects[_currentNumber++];
-                                ConditionTypes protectRelaxType = (ConditionTypes)objects[_currentNumber++];
+                                ConditionUnitTypes protectRelaxType = (ConditionUnitTypes)objects[_currentNumber++];
 
                                 haveOwner = (bool)objects[_currentNumber++];
 
