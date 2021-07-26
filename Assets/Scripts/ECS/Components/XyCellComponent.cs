@@ -4,12 +4,12 @@ internal struct XyCellComponent
 {
     private int[] _xyCell;
 
-    internal int[] XyCell => (int[])_xyCell.Clone();
+    internal int[] XyCell
+    {
+        get => (int[])_xyCell.Clone();
+        set => _xyCell = (int[])value.Clone();
+    }
 
     internal XyCellComponent(int[] xy) => _xyCell = xy;
-
-    internal void StartFill() => _xyCell = new int[XY_FOR_ARRAY];
-
-    internal void SetXyCell(int[] xy) => _xyCell = (int[])xy.Clone();
 }
 

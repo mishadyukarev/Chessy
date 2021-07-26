@@ -2,6 +2,8 @@
 {
     internal struct SaverComponent
     {
-        internal float SliderVolume;
+        internal float SliderVolume { get; set; }
+
+        internal SaverComponent(float sliderVolume) => SliderVolume = sliderVolume;
     }
 }

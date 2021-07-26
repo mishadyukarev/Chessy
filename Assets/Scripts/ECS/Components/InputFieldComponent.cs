@@ -4,10 +4,9 @@ namespace Assets.Scripts.ECS.Components
 {
     internal struct InputFieldComponent
     {
-        private TMP_InputField _tMP_InputField;
+       internal TMP_InputField TMP_InputField { get; private set; }
 
-        internal string Text => _tMP_InputField.text;
 
-        internal void StartFill(TMP_InputField tMP_InputField) => _tMP_InputField = tMP_InputField;
+        internal InputFieldComponent(TMP_InputField tMP_InputField) => TMP_InputField = tMP_InputField;
     }
 }

@@ -1,6 +1,4 @@
-﻿using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
-
-namespace Assets.Scripts.ECS.Components
+﻿namespace Assets.Scripts.ECS.Components
 {
     internal struct FromToXyComponent
     {
@@ -19,10 +17,10 @@ namespace Assets.Scripts.ECS.Components
             set => _toXy = (int[])value.Clone();
         }
 
-        internal void StartFill()
+        internal FromToXyComponent(int[] fromXy, int[] toXy)
         {
-            _fromXy = new int[XY_FOR_ARRAY];
-            _toXy = new int[XY_FOR_ARRAY];
+            _fromXy = fromXy;
+            _toXy = toXy;
         }
 
         internal void SetAllXy(int[] fromXy, int[] toXy)

@@ -1,4 +1,5 @@
-﻿using ExitGames.Client.Photon;
+﻿using Assets.Scripts.Workers.Common;
+using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -50,21 +51,21 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    _logTex = Instance.CanvasManager.FindUnderParent<TextMeshProUGUI>(SceneTypes.Menu, "LogText");
-                    Instance.CanvasManager.FindUnderParent<Button>(sceneType, "QuitButton").onClick.AddListener(delegate { Application.Quit(); });
+                    _logTex = CanvasUIWorker.FindUnderParent<TextMeshProUGUI>(SceneTypes.Menu, "LogText");
+                    CanvasUIWorker.FindUnderParent<Button>(sceneType, "QuitButton").onClick.AddListener(delegate { Application.Quit(); });
 
 
-                    Instance.EntMenuM.JoinOnlineEnt_ButtonCom.AddListener(ConnectOnline);
-                    Instance.EntMenuM.JoinOfflineEnt_ButtonCom.AddListener(ConnectOffline);
-                    Instance.EntMenuM.CreateRoomEnt_ButtonCom.AddListener(CreateRoom);
-                    Instance.EntMenuM.JoinRandomRoomEnt_ButtonCom.AddListener(JoinRandomRoom);
-                    Instance.EntMenuM.TestSoloGameEnt_ButtonCom.AddListener(CreateTestSoloGame);
+                    Instance.EntMenuM.JoinOnlineEnt_ButtonCom.Button.onClick.AddListener(ConnectOnline);
+                    Instance.EntMenuM.JoinOfflineEnt_ButtonCom.Button.onClick.AddListener(ConnectOffline);
+                    Instance.EntMenuM.CreateRoomEnt_ButtonCom.Button.onClick.AddListener(CreateRoom);
+                    Instance.EntMenuM.JoinRandomRoomEnt_ButtonCom.Button.onClick.AddListener(JoinRandomRoom);
+                    Instance.EntMenuM.TestSoloGameEnt_ButtonCom.Button.onClick.AddListener(CreateTestSoloGame);
 
                     Instance.EntMenuM.CreateFriendRoomEnt_ButtonCom
-                        .AddListener(delegate { CreateFriendRoom(Instance.EntMenuM.CreateFriendRoomEnt_InputFieldCom.Text); });
+                        .Button.onClick.AddListener(delegate { CreateFriendRoom(Instance.EntMenuM.CreateFriendRoomEnt_InputFieldCom.TMP_InputField.text); });
 
                     Instance.EntMenuM.JoinFriendRoomEnt_ButtonCom
-                        .AddListener(delegate { JoinFriendRoom(Instance.EntMenuM.JoinFriendRoomEnt_InputFieldCom.Text); });
+                        .Button.onClick.AddListener(delegate { JoinFriendRoom(Instance.EntMenuM.JoinFriendRoomEnt_InputFieldCom.TMP_InputField.text); });
                     break;
 
                 case SceneTypes.Game:
@@ -179,23 +180,23 @@ namespace Assets.Scripts
         {
             if (PhotonNetwork.OfflineMode)
             {
-                Instance.EntMenuM.OnlineRightZoneEnt_ImageCom.SetActive(true);
-                Instance.EntMenuM.JoinOnlineEnt_ButtonCom.SetActive(true);
-                Instance.EntMenuM.StepModUIEnt_DropDownTMPCom.SetActive(true);
+                Instance.EntMenuM.OnlineRightZoneEnt_ImageCom.Image.gameObject.SetActive(true);
+                Instance.EntMenuM.JoinOnlineEnt_ButtonCom.Button.gameObject.SetActive(true);
+                Instance.EntMenuM.StepModUIEnt_DropDownTMPCom.TMP_Dropdown.gameObject.SetActive(true);
 
                 SetTextOnUpLog("Offline");
-                Instance.EntMenuM.JoinOfflineEnt_ButtonCom.SetActive(false);
-                Instance.EntMenuM.OfflineLeftZoneEnt_ImageCom.SetActive(false);
+                Instance.EntMenuM.JoinOfflineEnt_ButtonCom.Button.gameObject.SetActive(false);
+                Instance.EntMenuM.OfflineLeftZoneEnt_ImageCom.Image.gameObject.SetActive(false);
             }
             else
             {
-                Instance.EntMenuM.JoinOfflineEnt_ButtonCom.SetActive(true);
-                Instance.EntMenuM.OfflineLeftZoneEnt_ImageCom.SetActive(true);
+                Instance.EntMenuM.JoinOfflineEnt_ButtonCom.Button.gameObject.SetActive(true);
+                Instance.EntMenuM.OfflineLeftZoneEnt_ImageCom.Image.gameObject.SetActive(true);
 
                 SetTextOnUpLog("Online");
-                Instance.EntMenuM.OnlineRightZoneEnt_ImageCom.SetActive(false);
-                Instance.EntMenuM.JoinOnlineEnt_ButtonCom.SetActive(false);
-                Instance.EntMenuM.StepModUIEnt_DropDownTMPCom.SetActive(false);
+                Instance.EntMenuM.OnlineRightZoneEnt_ImageCom.Image.gameObject.SetActive(false);
+                Instance.EntMenuM.JoinOnlineEnt_ButtonCom.Button.gameObject.SetActive(false);
+                Instance.EntMenuM.StepModUIEnt_DropDownTMPCom.TMP_Dropdown.gameObject.SetActive(false);
             }
         }
 

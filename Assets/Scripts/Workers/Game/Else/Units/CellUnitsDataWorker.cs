@@ -893,7 +893,7 @@ namespace Assets.Scripts
                 {
                     var xy1 = CellSpaceWorker.GetXYCell(xy, directType1);
 
-                    if (CellWorker.IsActiveSelfParentCell(xy1))
+                    if (CellGameWorker.IsActiveSelfParentCell(xy1))
                     {
                         if (HaveMinAmountSteps(xy))
                         {

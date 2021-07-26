@@ -4,10 +4,8 @@ namespace Assets.Scripts.ECS.Components
 {
     internal struct CellGOComponent
     {
-        private GameObject _cellGO;
+        internal GameObject CellGO { get; private set; }
 
-        internal GameObject CellGO => _cellGO;
-
-        internal CellGOComponent(GameObject cellGO) => _cellGO = cellGO;
+        internal CellGOComponent(GameObject cellGO) => CellGO = cellGO;
     }
 }

@@ -6,20 +6,24 @@ namespace Assets.Scripts
     public abstract class SystemsManager
     {
         protected bool _isStartedFilling = true;
-        internal EcsSystems RunUpdateSystems;
+        protected EcsSystems StartFillSystems { get; set; }
+        protected EcsSystems RunUpdateSystems { get; set; }
 
         protected SystemsManager(EcsWorld gameWorld)
         {
+            StartFillSystems = new EcsSystems(gameWorld);
             RunUpdateSystems = new EcsSystems(gameWorld);
         }
 
         internal virtual void ProcessInjects()
         {
+            StartFillSystems.ProcessInjects();
             RunUpdateSystems.ProcessInjects();
         }
 
         internal virtual void Init()
         {
+            StartFillSystems.Init();
             RunUpdateSystems.Init();
         }
 

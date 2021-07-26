@@ -2,9 +2,7 @@
 
 internal struct ImageComponent
 {
-    private Image _image;
+    internal Image Image { get; private set; }
 
-    internal void StartFill(Image image) => _image = image;
-
-    internal void SetActive(bool isActive) => _image.gameObject.SetActive(isActive);
+    internal ImageComponent(Image image) => Image = image;
 }

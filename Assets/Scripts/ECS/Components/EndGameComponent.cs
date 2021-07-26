@@ -2,13 +2,7 @@
 
 internal struct EndGameComponent
 {
-    internal bool IsEndGame;
+    internal bool IsEndGame { get; set; }
 
-    internal Player PlayerWinner;
-
-    internal void StartFill()
-    {
-        IsEndGame = default;
-        PlayerWinner = default;
-    }
+    internal Player PlayerWinner { get; set; }
 }

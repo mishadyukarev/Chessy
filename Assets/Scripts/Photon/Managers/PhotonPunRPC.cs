@@ -3,6 +3,7 @@ using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else;
 using Assets.Scripts.Workers.Game.Else.Fire;
+using Assets.Scripts.Workers.Game.UI;
 using Assets.Scripts.Workers.Info;
 using ExitGames.Client.Photon;
 using Photon.Pun;
@@ -126,7 +127,7 @@ namespace Assets.Scripts
         [PunRPC]
         private void MasterRPC(RpcMasterTypes rpcType, object[] objects, PhotonMessageInfo infoFrom)
         {
-            EMM.FromInfoEnt_FromInfoCom.SetFromInfo(infoFrom);
+            EMM.FromInfoEnt_FromInfoCom.FromInfo = infoFrom;
 
             switch (rpcType)
             {
@@ -148,13 +149,13 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.Build:
-                    EMM.BuildEnt_XyCellCom.SetXyCell((int[])objects[0]);
+                    EMM.BuildEnt_XyCellCom.XyCell = (int[])objects[0];
                     EMM.BuildEnt_BuildingTypeCom.BuildingType = (BuildingTypes)objects[1];
                     SMM.TryInvokeRunSystem(nameof(BuilderMasterSystem), SMM.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Destroy:
-                    EMM.DestroyEnt_XyCellCom.SetXyCell((int[])objects[0]);
+                    EMM.DestroyEnt_XyCellCom.XyCell = (int[])objects[0];
                     SMM.TryInvokeRunSystem(nameof(DestroyMasterSystem), SMM.RpcSystems);
                     break;
 
@@ -170,7 +171,7 @@ namespace Assets.Scripts
 
                 case RpcMasterTypes.ProtectRelax:
                     EMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType = (ConditionTypes)objects[0];
-                    EMM.ProtectRelaxEnt_XyCellCom.SetXyCell((int[])objects[1]);
+                    EMM.ProtectRelaxEnt_XyCellCom.XyCell =(int[])objects[1];
                     SMM.TryInvokeRunSystem(nameof(ProtectRelaxMasterSystem), SMM.RpcSystems);
                     break;
 
@@ -189,14 +190,14 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.SetUnit:
-                    EMM.SettingUnitEnt_XyCellCom.SetXyCell((int[])objects[0]);
+                    EMM.SettingUnitEnt_XyCellCom.XyCell = (int[])objects[0];
                     EMM.SettingUnitEnt_UnitTypeCom.UnitType = (UnitTypes)objects[1];
                     SMM.TryInvokeRunSystem(nameof(SetterUnitMasterSystem), SMM.RpcSystems);
                     break;
 
                 case RpcMasterTypes.SeedEnvironment:
-                    EMM.SeedingEnt_XyCellCom.SetXyCell((int[])objects[0]);
-                    EMM.SeedingEnt_EnvironmentTypesCom.SetEnvironmentType((EnvironmentTypes)objects[1]);
+                    EMM.SeedingEnt_XyCellCom.XyCell = (int[])objects[0];
+                    EMM.SeedingEnt_EnvironmentTypesCom.EnvironmentType = (EnvironmentTypes)objects[1];
                     SMM.TryInvokeRunSystem(nameof(SeedingMasterSystem), SMM.RpcSystems);
                     break;
 
@@ -215,7 +216,7 @@ namespace Assets.Scripts
                             throw new Exception();
 
                         case UpgradeModTypes.Unit:
-                            EMM.UpgradeEnt_XyCellCom.SetXyCell((int[])objects[1]);
+                            EMM.UpgradeEnt_XyCellCom.XyCell = (int[])objects[1];
                             break;
 
                         case UpgradeModTypes.Building:
@@ -244,7 +245,7 @@ namespace Assets.Scripts
         private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _currentNumber = 0;
-            EGM.FromInfoEnt_FromInfoCom.SetFromInfo(infoFrom);
+            EGM.FromInfoEnt_FromInfoCom.FromInfo = infoFrom;
 
             switch (rpcGeneralType)
             {
@@ -254,12 +255,12 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.Ready:
                     bool isActivated = (bool)objects[_currentNumber++];
                     bool isStartedGame = (bool)objects[_currentNumber++];
-                    EGGUIM.ReadyEnt_ActivatedDictCom.SetActivated(Instance.IsMasterClient, isActivated);
+                    UIDownWorker.SetDoned(Instance.IsMasterClient, isActivated);
                     EGGUIM.ReadyEnt_StartedGameCom.IsStartedGame = isStartedGame;
                     break;
 
                 case RpcGeneralTypes.SetDonerActiveUI:
-                    EGGUIM.DonerUIEnt_IsActivatedDictCom.SetActivated(Instance.IsMasterClient, (bool)objects[_currentNumber++]);
+                    UIDownWorker.SetDoned(Instance.IsMasterClient, (bool)objects[_currentNumber++]);
                     break;
 
                 case RpcGeneralTypes.ActiveAmountMotionUI:
@@ -295,15 +296,15 @@ namespace Assets.Scripts
                             var haveIron = haves[3];
                             var haveGold = haves[4];
 
-                            if (!haveFood) EGGUIM.FoodInfoUIEnt_MistakeResourcesUICom.Invoke();
-                            if (!haveWood) EGGUIM.WoodInfoUIEnt_MistakeResourcesUICom.Invoke();
-                            if (!haveOre) EGGUIM.OreInfoUIEnt_MistakeResourcesUICom.Invoke();
-                            if (!haveIron) EGGUIM.IronInfoUIEnt_MistakeResourcesUICom.Invoke();
-                            if (!haveGold) EGGUIM.GoldInfoUIEnt_MistakeResourcesUICom.Invoke();
+                            if (!haveFood) EGGUIM.FoodInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
+                            if (!haveWood) EGGUIM.WoodInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
+                            if (!haveOre) EGGUIM.OreInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
+                            if (!haveIron) EGGUIM.IronInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
+                            if (!haveGold) EGGUIM.GoldInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
                             break;
 
                         case MistakeTypes.UnitType:
-                            EGGUIM.DonerUIEnt_MistakeCom.Invoke();
+                            EGGUIM.DonerUIEnt_MistakeCom.MistakeUnityEvent.Invoke();
                             break;
 
                         default:
@@ -325,7 +326,7 @@ namespace Assets.Scripts
 
                 case RpcGeneralTypes.Sound:
                     var soundEffectType = (SoundEffectTypes)objects[_currentNumber++];
-                    SoundManager.PlaySoundEffect(soundEffectType);
+                    SoundGameWorker.PlaySoundEffect(soundEffectType);
                     break;
 
                 default:
@@ -337,7 +338,7 @@ namespace Assets.Scripts
         private void OtherRPC(RpcOtherTypes rpcOtherType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _currentNumber = 0;
-            EntOM.FromInfoEnt_FromInfoCom.SetFromInfo(infoFrom);
+            EntOM.FromInfoEnt_FromInfoCom.FromInfo = infoFrom;
 
             switch (rpcOtherType)
             {
@@ -345,11 +346,11 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case RpcOtherTypes.SetAmountMotion:
-                    EGGUIM.MotionEnt_AmountCom.Amount = (int)objects[_currentNumber++];
+                    EGGUIM.MotionEnt_AmountCom.AmountMotions = (int)objects[_currentNumber++];
                     break;
 
                 case RpcOtherTypes.SetStepModType:
-                    Instance.EntComM.SaverEnt_StepModeTypeCom.SetStepModeType((StepModeTypes)objects[_currentNumber++]);
+                    Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType = (StepModeTypes)objects[_currentNumber++];
                     break;
 
                 default:
@@ -382,7 +383,7 @@ namespace Assets.Scripts
                             var xy = new int[] { x, y };
 
                             listObjects.Add(Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType);
-                            listObjects.Add(EGGUIM.DonerUIEnt_IsActivatedDictCom.IsActivated(false));
+                            listObjects.Add(UIDownWorker.IsDoned(false));
 
 
                             listObjects.Add(HaveAnyUnit(xy));
@@ -493,9 +494,9 @@ namespace Assets.Scripts
                         {
                             var xy = new int[] { x, y };
 
-                            Instance.EntComM.SaverEnt_StepModeTypeCom.SetStepModeType((StepModeTypes)objects[_currentNumber++]);
+                            Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType = (StepModeTypes)objects[_currentNumber++];
                             bool isActivatedDoner = (bool)objects[_currentNumber++];
-                            EGGUIM.DonerUIEnt_IsActivatedDictCom.SetActivated(Instance.IsMasterClient, isActivatedDoner);
+                            UIDownWorker.SetDoned(Instance.IsMasterClient, isActivatedDoner);
 
 
                             Player player;

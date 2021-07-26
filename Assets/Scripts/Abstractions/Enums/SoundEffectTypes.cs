@@ -18,5 +18,7 @@
         Seeding,
         ClickToTable,
         Truce,
+        PickMelee,
+        PickArcher,
     }
 }

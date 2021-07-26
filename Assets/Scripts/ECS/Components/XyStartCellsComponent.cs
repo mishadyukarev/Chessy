@@ -4,11 +4,9 @@ namespace Assets.Scripts.ECS.Components
 {
     internal struct XyStartCellsComponent
     {
-        private Dictionary<bool, List<int[]>> _xyStartCellsDict;
-
-        internal Dictionary<bool, List<int[]>> XyStartCellsDict => _xyStartCellsDict;
+        internal Dictionary<bool, List<int[]>> XyStartCellsDict { get; private set; }
 
 
-        internal XyStartCellsComponent(Dictionary<bool, List<int[]>> dict) => _xyStartCellsDict = dict;
+        internal XyStartCellsComponent(Dictionary<bool, List<int[]>> dict) => XyStartCellsDict = dict;
     }
 }

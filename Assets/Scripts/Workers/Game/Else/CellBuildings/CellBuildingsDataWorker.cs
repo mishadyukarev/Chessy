@@ -71,7 +71,7 @@ namespace Assets.Scripts.Workers
                     throw new Exception();
 
                 case BuildingTypes.Mine:
-                    return _cellBuildingEntsContainer.CellBuildEnt_CellBuilCom(xy).TimeStepsMine;
+                    return _cellBuildingEntsContainer.CellBuildEnt_TimeStepsCom(xy).TimeSteps;
 
                 default:
                     throw new Exception();
@@ -94,7 +94,7 @@ namespace Assets.Scripts.Workers
                     throw new Exception();
 
                 case BuildingTypes.Mine:
-                    _cellBuildingEntsContainer.CellBuildEnt_CellBuilCom(xy).TimeStepsMine = value;
+                    _cellBuildingEntsContainer.CellBuildEnt_TimeStepsCom(xy).TimeSteps = value;
                     break;
 
                 default:

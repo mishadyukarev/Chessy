@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.ECS.Menu.Entities;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -34,7 +35,7 @@ namespace Assets.Scripts
         public ECSManager ECSmanager => _eCSmanager;
         public PhotonMainManager PhotonManager => _photonManager;
 
-        public ref CanvasCommComponent CanvasManager => ref _eCSmanager.EntitiesCommonManager.CanvasEnt_CanvasCommCom;
+        public ref CanvasComponent CanvasManager => ref _eCSmanager.EntitiesCommonManager.CanvasEnt_CanvasCommCom;
         public StartGameValuesConfig StartValuesGameConfig => _eCSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
 
         public EntitiesGameGeneralManager EntGGM => _eCSmanager.EntitiesGameGeneralManager;
@@ -59,6 +60,21 @@ namespace Assets.Scripts
         {
             _eCSmanager.OwnUpdate(_currentSceneType);
             _photonManager.OwnUpdate(_currentSceneType);
+
+            switch (_currentSceneType)
+            {
+                case SceneTypes.None:
+                    throw new Exception();
+
+                case SceneTypes.Menu:
+                    break;
+
+                case SceneTypes.Game:
+                    break;
+
+                default:
+                    throw new Exception();
+            }
         }
 
         private void OnApplicationQuit() { }
@@ -67,8 +83,23 @@ namespace Assets.Scripts
         {
             _currentSceneType = sceneType;
 
-            _eCSmanager.ToggleScene(_currentSceneType);
-            _photonManager.ToggleScene(_currentSceneType);
+            _eCSmanager.ToggleScene(sceneType);
+            _photonManager.ToggleScene(sceneType);
+
+            switch (sceneType)
+            {
+                case SceneTypes.None:
+                    throw new Exception();
+
+                case SceneTypes.Menu:
+                    break;
+
+                case SceneTypes.Game:
+                    break;
+
+                default:
+                    throw new Exception();
+            }
         }
     }
 }

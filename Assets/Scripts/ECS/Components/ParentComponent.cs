@@ -2,9 +2,8 @@
 
 internal struct ParentComponent
 {
-    private GameObject _parentGO;
+    internal GameObject ParentGO { get; set; }
 
-    internal void SetParent(GameObject parentGO) => _parentGO = parentGO;
 
-    internal void SetActive(bool isActive) => _parentGO.SetActive(isActive);
+    internal ParentComponent(GameObject go) => ParentGO = go;
 }

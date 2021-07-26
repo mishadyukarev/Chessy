@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.ECS.Menu.Entities;
+using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
+using Photon.Pun;
 using System;
 using UnityEngine;
 using static Assets.Scripts.Main;
@@ -66,6 +68,7 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
+                    _entitiesCommonManager.SaverEnt_SaverCommCom.SliderVolume = _entitiesMenuManager.SoundEnt_SliderCom.Slider.value;
                     break;
 
                 case SceneTypes.Game:
@@ -106,7 +109,7 @@ namespace Assets.Scripts
 
                     _menuWorld = new EcsWorld();
 
-                    _entitiesMenuManager = new EntitiesMenuManager(_menuWorld);
+                    _entitiesMenuManager = new EntitiesMenuManager(_menuWorld);  
 
                     Instance.IsStarted = false;
                     break;
@@ -120,6 +123,15 @@ namespace Assets.Scripts
 
                     _entitiesGameGeneralManager = new EntitiesGameGeneralManager(_gameWorld);
                     _entitiesGameGeneralUIManager = new EntitiesGameGeneralUIManager(_gameWorld);
+
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        if (Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType == StepModeTypes.ByQueue)
+                        {
+                            UIDownWorker.SetDoned(false, true);
+                        }
+                    }
+
 
                     _entitiesGameMasterManager = new EntitiesGameMasterManager(_gameWorld);
 

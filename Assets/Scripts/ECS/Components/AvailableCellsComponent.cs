@@ -8,9 +8,6 @@ namespace Assets.Scripts.ECS.Components
         internal List<int[]> AvailableCells { get; set; }
 
 
-        internal AvailableCellsComponent(List<int[]> availableCells)
-        {
-            AvailableCells = availableCells;
-        }
+        internal AvailableCellsComponent(List<int[]> availableCells) => AvailableCells = availableCells;
     }
 }

@@ -13,13 +13,5 @@ namespace Assets.Scripts.ECS.Components
             AmountUnitsInInventorDict.Add(true, default);
             AmountUnitsInInventorDict.Add(false, default);
         }
-
-        internal void StartFill()
-        {
-            AmountUnitsInInventorDict = new Dictionary<bool, int>();
-
-            AmountUnitsInInventorDict.Add(true, default);
-            AmountUnitsInInventorDict.Add(false, default);
-        }
     }
 }

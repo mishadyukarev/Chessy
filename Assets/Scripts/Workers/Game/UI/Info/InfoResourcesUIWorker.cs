@@ -1,11 +1,12 @@
 ﻿using System;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.Workers.UI.Info
 {
     internal class InfoResourcesUIWorker : MainGeneralUIWorker
     {
-        internal static void SetMainText(ResourceTypes economyTypes, string text)
+        private static TextMeshProUGUI GetResourceTMP(ResourceTypes economyTypes)
         {
             switch (economyTypes)
             {
@@ -13,60 +14,27 @@ namespace Assets.Scripts.Workers.UI.Info
                     throw new Exception();
 
                 case ResourceTypes.Food:
-                    EGGUIM.FoodInfoUIEnt_TextMeshProUGUICom.Text = text;
-                    break;
+                    return EGGUIM.FoodInfoUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
 
                 case ResourceTypes.Wood:
-                    EGGUIM.WoodInfoUIEnt_TextMeshProUGUICom.Text = text;
-                    break;
+                    return EGGUIM.WoodInfoUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
 
                 case ResourceTypes.Ore:
-                    EGGUIM.OreInfoUIEnt_TextMeshProUGUICom.Text = text;
-                    break;
+                    return EGGUIM.OreInfoUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
 
                 case ResourceTypes.Iron:
-                    EGGUIM.IronInfoUIEnt_TextMeshProUGUICom.Text = text;
-                    break;
+                    return EGGUIM.IronInfoUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
 
                 case ResourceTypes.Gold:
-                    EGGUIM.GoldInfoUIEnt_TextMeshProUGUICom.Text = text;
-                    break;
+                    return EGGUIM.GoldInfoUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
 
                 default:
-                    break;
-            }
-        }
-        internal static void SetMainColor(ResourceTypes economyTypes, Color color)
-        {
-            switch (economyTypes)
-            {
-                case ResourceTypes.None:
                     throw new Exception();
-
-                case ResourceTypes.Food:
-                    EGGUIM.FoodInfoUIEnt_TextMeshProUGUICom.Color = color;
-                    break;
-
-                case ResourceTypes.Wood:
-                    EGGUIM.WoodInfoUIEnt_TextMeshProUGUICom.Color = color;
-                    break;
-
-                case ResourceTypes.Ore:
-                    EGGUIM.OreInfoUIEnt_TextMeshProUGUICom.Color = color;
-                    break;
-
-                case ResourceTypes.Iron:
-                    EGGUIM.IronInfoUIEnt_TextMeshProUGUICom.Color = color;
-                    break;
-
-                case ResourceTypes.Gold:
-                    EGGUIM.GoldInfoUIEnt_TextMeshProUGUICom.Color = color;
-                    break;
-
-                default:
-                    break;
             }
         }
+
+        internal static void SetMainText(ResourceTypes economyType, string text) => GetResourceTMP(economyType).text = text;
+        internal static void SetMainColor(ResourceTypes economyType, Color color) => GetResourceTMP(economyType).color = color;
 
         internal static void SetAddingText(ResourceTypes resourceType, string text)
         {
@@ -76,15 +44,15 @@ namespace Assets.Scripts.Workers.UI.Info
                     throw new Exception();
 
                 case ResourceTypes.Food:
-                    EGGUIM.FoodInfoUIEnt_AddingTMPUICom.Text = text;
+                    EGGUIM.FoodInfoUIEnt_AddingTMPUICom.TextMeshProUGUI.text = text;
                     break;
 
                 case ResourceTypes.Wood:
-                    EGGUIM.WoodInfoUIEnt_AddingTMPUICom.Text = text;
+                    EGGUIM.FoodInfoUIEnt_AddingTMPUICom.TextMeshProUGUI.text = text;
                     break;
 
                 case ResourceTypes.Ore:
-                    EGGUIM.OreInfoUIEnt_AddingTMPUICom.Text = text;
+                    EGGUIM.FoodInfoUIEnt_AddingTMPUICom.TextMeshProUGUI.text = text;
                     break;
 
                 case ResourceTypes.Iron:

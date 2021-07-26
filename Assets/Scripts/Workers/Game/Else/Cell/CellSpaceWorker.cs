@@ -17,7 +17,7 @@ namespace Assets.Scripts.Workers.Cell
                 xyResultCell[X] = xyStartCell[X] + xyDirectCell[X];
                 xyResultCell[Y] = xyStartCell[Y] + xyDirectCell[Y];
 
-                if (CellWorker.IsActiveSelfParentCell(xyResultCell))
+                if (CellGameWorker.IsActiveSelfParentCell(xyResultCell))
                 {
                     xyAvailableCells.Add((int[])xyResultCell.Clone());
                 }
