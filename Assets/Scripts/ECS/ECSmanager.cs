@@ -3,7 +3,6 @@ using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
-using UnityEngine;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
@@ -109,7 +108,7 @@ namespace Assets.Scripts
 
                     _menuWorld = new EcsWorld();
 
-                    _entitiesMenuManager = new EntitiesMenuManager(_menuWorld);  
+                    _entitiesMenuManager = new EntitiesMenuManager(_menuWorld);
 
                     Instance.IsStarted = false;
                     break;
@@ -128,7 +127,7 @@ namespace Assets.Scripts
                     {
                         if (Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType == StepModeTypes.ByQueue)
                         {
-                            UIDownWorker.SetDoned(false, true);
+                            DownDonerUIWorker.SetDoned(false, true);
                         }
                     }
 

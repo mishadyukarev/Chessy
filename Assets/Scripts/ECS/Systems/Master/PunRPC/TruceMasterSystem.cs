@@ -2,8 +2,8 @@
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else;
 using Assets.Scripts.Workers.Game.Else.Fire;
+using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Game.UI;
-using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using UnityEngine;
 
@@ -36,7 +36,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 
                             case UnitTypes.King:
                                 InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.King, CellUnitsDataWorker.IsMasterClient(xy));
-                                InfoUnitsWorker.TakeAmountUnitInGame(UnitTypes.King, CellUnitsDataWorker.IsMasterClient(xy), xy);
+                                InfoAmountUnitsWorker.RemoveAmountUnitsInGame(UnitTypes.King, CellUnitsDataWorker.IsMasterClient(xy), xy);
                                 break;
 
                             case UnitTypes.Pawn:
@@ -115,14 +115,14 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
         //InfoResourcesWorker.AddAmountResources(ResourceTypes.Wood, false, 0);
 
 
-        if (InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Pawn, true) <= 0
-            && InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Pawn, true) <= 0)
+        if (InfoAmountUnitsWorker.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0
+            && InfoAmountUnitsWorker.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0)
         {
             InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.Pawn, true);
         }
 
-        if (InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Pawn, false) <= 0
-            && InfoUnitsWorker.AmountUnitsInGame(UnitTypes.Pawn, false) <= 0)
+        if (InfoAmountUnitsWorker.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0
+            && InfoAmountUnitsWorker.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0)
         {
             InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.Pawn, false);
         }
@@ -130,7 +130,7 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
         PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGGUIM.MotionEnt_AmountCom.AmountMotions);
         PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
-        UIDownWorker.SetDoned(true, default);
-        UIDownWorker.SetDoned(false, default);
+        DownDonerUIWorker.SetDoned(true, default);
+        DownDonerUIWorker.SetDoned(false, default);
     }
 }

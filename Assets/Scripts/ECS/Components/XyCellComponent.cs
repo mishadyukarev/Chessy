@@ -1,6 +1,4 @@
-﻿using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
-
-internal struct XyCellComponent
+﻿internal struct XyCellComponent
 {
     private int[] _xyCell;
 

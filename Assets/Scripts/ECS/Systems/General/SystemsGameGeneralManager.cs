@@ -26,7 +26,7 @@ public sealed class SystemsGameGeneralManager : SystemsManager
             .Add(new SoundEventsSystem(), nameof(SoundEventsSystem))
 
             .Add(new DonerUISystem(), nameof(DonerUISystem))
-            .Add(new TakerUnitsUISystem(), nameof(TakerUnitsUISystem))
+            .Add(new GetterUnitsUISystem(), nameof(GetterUnitsUISystem))
             .Add(new ConditionAbilitiesUISystem(), nameof(ConditionAbilitiesUISystem))
             .Add(new StatsUISystem(), nameof(StatsUISystem))
             .Add(new TheEndGameUISystem(), nameof(TheEndGameUISystem))
@@ -36,7 +36,6 @@ public sealed class SystemsGameGeneralManager : SystemsManager
             .Add(new LeftBuildingUISystem(), nameof(LeftBuildingUISystem))
             .Add(new UpdatedUISystem(), nameof(UpdatedUISystem))
             .Add(new UniqueAbilitiesUISystem(), nameof(UniqueAbilitiesUISystem))
-            .Add(new TruceUISystem(), nameof(TruceUISystem))
             .Add(new EnvironmentUISystem(), nameof(EnvironmentUISystem))
             .Add(new ReadyZoneUISystem(), nameof(ReadyZoneUISystem))
             .Add(new RightZoneUISystem(), nameof(RightZoneUISystem))

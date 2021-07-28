@@ -2,6 +2,7 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers.Game.Else;
 using Assets.Scripts.Workers.Game.Else.Cell;
+using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using System;
@@ -26,71 +27,63 @@ internal sealed class SetterUnitMasterSystem : RPCMasterSystemReduction
 
 
                 case UnitTypes.King:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsConditionWorker.AddUnitInCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoAmountUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                    CellUnitsDataWorker.SetAmountHealth(CellUnitsDataWorker.MaxAmountHealth(UnitType), XyCell);
                     InventorUnitsDataWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
-                    InfoUnitsWorker.AddAmountUnitInGame(UnitTypes.King, InfoFrom.Sender.IsMasterClient, XyCell);
                     break;
 
 
                 case UnitTypes.Pawn:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsConditionWorker.AddUnitInCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoAmountUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                    CellUnitsDataWorker.SetAmountHealth(CellUnitsDataWorker.MaxAmountHealth(UnitType), XyCell);
                     InventorUnitsDataWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.PawnSword:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsConditionWorker.AddUnitInCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoAmountUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                    CellUnitsDataWorker.SetAmountHealth(CellUnitsDataWorker.MaxAmountHealth(UnitType), XyCell);
                     InventorUnitsDataWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.Rook:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsConditionWorker.AddUnitInCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoAmountUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                    CellUnitsDataWorker.SetAmountHealth(CellUnitsDataWorker.MaxAmountHealth(UnitType), XyCell);
                     InventorUnitsDataWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.RookCrossbow:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsConditionWorker.AddUnitInCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                    CellUnitsDataWorker.SetAmountHealth(CellUnitsDataWorker.MaxAmountHealth(UnitType), XyCell);
                     InventorUnitsDataWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.Bishop:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsConditionWorker.AddUnitInCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoAmountUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                    CellUnitsDataWorker.SetAmountHealth(CellUnitsDataWorker.MaxAmountHealth(UnitType), XyCell);
                     InventorUnitsDataWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.BishopCrossbow:
-                    InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoUnitsConditionWorker.AddUnitInCondition(ConditionUnitTypes.None, UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    InfoUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
+                    InfoAmountUnitsWorker.AddAmountUnitInGame(UnitType, InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataWorker.SetNewPlayerUnit(UnitType, InfoFrom.Sender, XyCell);
-                    CellUnitsDataWorker.SetAmountHealth(CellUnitsDataWorker.MaxAmountHealth(UnitType), XyCell);
                     InventorUnitsDataWorker.TakeUnitsInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                     break;
 

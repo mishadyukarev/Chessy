@@ -9,7 +9,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
     {
         private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.FromInfo;
         private int[] FromXyCopy => _eMM.FireEnt_FromToXyCom.FromXy;
-        private int[] ToXyCopy => _eMM.FireEnt_FromToXyCom.ToXy;
+        private int[] ToXy => _eMM.FireEnt_FromToXyCom.ToXy;
 
         public override void Run()
         {
@@ -17,14 +17,14 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
             if (CellUnitsDataWorker.HaveMinAmountSteps(FromXyCopy))
             {
-                if (CellFireDataWorker.HaveFire(ToXyCopy))
+                if (CellFireDataWorker.HaveFire(ToXy))
                 {
-                    CellFireDataWorker.ResetFire(ToXyCopy);
-                    CellFireDataWorker.ResetTimeSteps(ToXyCopy);
+                    CellFireDataWorker.ResetFire(ToXy);
+                    CellFireDataWorker.ResetTimeSteps(ToXy);
 
-                    CellUnitsDataWorker.TakeAmountSteps(ToXyCopy);
+                    CellUnitsDataWorker.TakeAmountSteps(ToXy);
                 }
-                else if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, ToXyCopy))
+                else if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, ToXy))
                 {
                     if (CellUnitsDataWorker.HaveOwner(FromXyCopy))
 
@@ -34,8 +34,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                             InfoResourcesDataWorker.BuyFire(CellUnitsDataWorker.Owner(FromXyCopy), CellUnitsDataWorker.UnitType(FromXyCopy));
 
-                            CellFireDataWorker.EnableFire(ToXyCopy);
-                            CellUnitsDataWorker.TakeAmountSteps(ToXyCopy);
+                            CellFireDataWorker.EnableFire(ToXy);
+                            CellUnitsDataWorker.TakeAmountSteps(ToXy);
                         }
                         else
                         {

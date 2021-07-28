@@ -1,85 +1,83 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.Workers.Game.UI.Left;
+using Leopotam.Ecs;
 using UnityEngine;
-using static Assets.Scripts.CellEnvirDataWorker;
-using static Assets.Scripts.Workers.Cell.CellSupVisBarsWorker;
 
-internal sealed class EnvironmentUISystem : SystemGeneralReduction
+internal sealed class EnvironmentUISystem : IEcsRunSystem
 {
     private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
 
 
-    public override void Run()
+    public void Run()
     {
-        base.Run();
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected && CellBuildingsDataWorker.GetBuildingType(XySelectedCell) != BuildingTypes.City)
+        if (SelectorWorker.IsSelectedCell && CellBuildingsDataWorker.GetBuildingType(XySelectedCell) != BuildingTypes.City)
         {
-            _eGGUIM.EnvironmentZoneEnt_ParentCom.ParentGO.SetActive(true);
+            EnvirZoneLeftUIWorker.SetActiveZone(true);
         }
         else
         {
-            _eGGUIM.EnvironmentZoneEnt_ParentCom.ParentGO.SetActive(false);
+            EnvirZoneLeftUIWorker.SetActiveZone(false);
         }
 
-        _eGGUIM.EnvFerilizerEnt_TextMeshProUGUICom.TextMeshProUGUI.text = "Fertilizer: " + GetAmountResources(EnvironmentTypes.Fertilizer, XySelectedCell);
-        _eGGUIM.EnvForestEnt_TextMeshProUGUICom.TextMeshProUGUI.text = "Forest: " + GetAmountResources(EnvironmentTypes.AdultForest, XySelectedCell);
-        _eGGUIM.EnvOreEnt_TextMeshProUGUICom.TextMeshProUGUI.text = "Ore: " + GetAmountResources(EnvironmentTypes.Hill, XySelectedCell);
+        EnvirZoneLeftUIWorker.SetTextInfoCell(EnvirTextInfoTypes.Fertilizer, "Fertilizer: " + CellEnvirDataWorker.GetAmountResources(EnvironmentTypes.Fertilizer, XySelectedCell));
+        EnvirZoneLeftUIWorker.SetTextInfoCell(EnvirTextInfoTypes.Wood, "Wood: " + CellEnvirDataWorker.GetAmountResources(EnvironmentTypes.AdultForest, XySelectedCell));
+        EnvirZoneLeftUIWorker.SetTextInfoCell(EnvirTextInfoTypes.Ore, "Ore: " + CellEnvirDataWorker.GetAmountResources(EnvironmentTypes.Hill, XySelectedCell));
 
 
 
-        if (_eGGUIM.EnvironmentInfoEnt_IsActivatedCom.IsActivated)
+        if (EnvirZoneLeftUIWorker.IsActivatedEnvrInfo)
         {
-            for (int x = 0; x < _eGM.Xamount; x++)
-            {
-                for (int y = 0; y < _eGM.Yamount; y++)
+            for (int x = 0; x < CellWorker.Xamount; x++)
+                for (int y = 0; y < CellWorker.Yamount; y++)
                 {
                     int[] xy = new int[] { x, y };
 
 
-                    if (HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
                     {
-                        ActiveVision(true, SupportStaticTypes.Fertilizer, xy);
-                        SetScale(SupportStaticTypes.Fertilizer, new Vector3((float)GetAmountResources(EnvironmentTypes.Fertilizer, xy) / (float)(MaxAmountResources(EnvironmentTypes.Fertilizer) + MaxAmountResources(EnvironmentTypes.Fertilizer)), 0.15f, 1), xy);
+                        CellSupVisBarsWorker.ActiveVision(true, SupportStaticTypes.Fertilizer, xy);
+                        CellSupVisBarsWorker.SetScale(SupportStaticTypes.Fertilizer, new Vector3((float)CellEnvirDataWorker.GetAmountResources(EnvironmentTypes.Fertilizer, xy) / (float)(CellEnvirDataWorker.MaxAmountResources(EnvironmentTypes.Fertilizer) + CellEnvirDataWorker.MaxAmountResources(EnvironmentTypes.Fertilizer)), 0.15f, 1), xy);
                     }
                     else
                     {
-                        ActiveVision(false, SupportStaticTypes.Fertilizer, xy);
+                        CellSupVisBarsWorker.ActiveVision(false, SupportStaticTypes.Fertilizer, xy);
                     }
 
-                    if (HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                     {
-                        ActiveVision(true, SupportStaticTypes.Wood, xy);
-                        SetScale(SupportStaticTypes.Wood, new Vector3((float)GetAmountResources(EnvironmentTypes.AdultForest, xy) / (float)MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1), xy);
+                        CellSupVisBarsWorker.ActiveVision(true, SupportStaticTypes.Wood, xy);
+                        CellSupVisBarsWorker.SetScale(SupportStaticTypes.Wood, new Vector3((float)CellEnvirDataWorker.GetAmountResources(EnvironmentTypes.AdultForest, xy) / (float)CellEnvirDataWorker.MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1), xy);
                     }
                     else
                     {
-                        ActiveVision(false, SupportStaticTypes.Wood, xy);
+                        CellSupVisBarsWorker.ActiveVision(false, SupportStaticTypes.Wood, xy);
                     }
 
-                    if (HaveEnvironment(EnvironmentTypes.Hill, xy))
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, xy))
                     {
-                        ActiveVision(true, SupportStaticTypes.Ore, xy);
-                        SetScale(SupportStaticTypes.Ore, new Vector3((float)GetAmountResources(EnvironmentTypes.Hill, xy) / (float)MaxAmountResources(EnvironmentTypes.Hill), 0.15f, 1), xy);
+                        CellSupVisBarsWorker.ActiveVision(true, SupportStaticTypes.Ore, xy);
+                        CellSupVisBarsWorker.SetScale(SupportStaticTypes.Ore, new Vector3((float)CellEnvirDataWorker.GetAmountResources(EnvironmentTypes.Hill, xy) / (float)CellEnvirDataWorker.MaxAmountResources(EnvironmentTypes.Hill), 0.15f, 1), xy);
                     }
                     else
                     {
-                        ActiveVision(false, SupportStaticTypes.Ore, xy);
+                        CellSupVisBarsWorker.ActiveVision(false, SupportStaticTypes.Ore, xy);
                     }
                 }
-            }
         }
         else
         {
-            for (int x = 0; x < _eGM.Xamount; x++)
-                for (int y = 0; y < _eGM.Yamount; y++)
+            for (int x = 0; x < CellWorker.Xamount; x++)
+                for (int y = 0; y < CellWorker.Yamount; y++)
                 {
                     int[] xy = new int[] { x, y };
 
-                    ActiveVision(false, SupportStaticTypes.Fertilizer, xy);
-                    ActiveVision(false, SupportStaticTypes.Wood, xy);
-                    ActiveVision(false, SupportStaticTypes.Ore, xy);
+                    CellSupVisBarsWorker.ActiveVision(false, SupportStaticTypes.Fertilizer, xy);
+                    CellSupVisBarsWorker.ActiveVision(false, SupportStaticTypes.Wood, xy);
+                    CellSupVisBarsWorker.ActiveVision(false, SupportStaticTypes.Ore, xy);
                 }
         }
     }

@@ -54,6 +54,11 @@ namespace Assets.Scripts
                     throw new Exception();
             }
         }
+        internal static bool HaveEnvironments(int[] xy, params EnvironmentTypes[] envirTypes)
+        {
+            foreach (var envrType in envirTypes) if (HaveEnvironment(envrType, xy)) return true;
+            return false;
+        }
         private static void SetHaveEnvironment(bool haveEnvironment, EnvironmentTypes environmentType, int[] xy)
         {
             switch (environmentType)
@@ -241,7 +246,7 @@ namespace Assets.Scripts
         }
         internal static void SetNewEnvironment(EnvironmentTypes environmentType, int[] xy)
         {
-            int randAmountResour = 0;       
+            int randAmountResour = 0;
             switch (environmentType)
             {
                 case EnvironmentTypes.None:

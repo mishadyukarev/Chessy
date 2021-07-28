@@ -1,10 +1,11 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers.Common;
+using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Game.UI;
-using Assets.Scripts.Workers.Info;
 using Photon.Pun;
+using System;
 using System.Collections.Generic;
-using static Assets.Scripts.Main;
 
 internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 {
@@ -27,68 +28,68 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        if (InfoUnitsWorker.IsSettedKing(InfoFrom.Sender.IsMasterClient))
+        if (InfoAmountUnitsWorker.IsSettedKing(InfoFrom.Sender.IsMasterClient))
         {
             PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
             if (PhotonNetwork.OfflineMode)
             {
-                _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
+                _sMM.UpdateMotion.Run();
 
                 PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGGUIM.MotionEnt_AmountCom.AmountMotions);
                 PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-                UIDownWorker.SetDoned(true, default);
-                UIDownWorker.SetDoned(false, default);
+                DownDonerUIWorker.SetDoned(true, default);
+                DownDonerUIWorker.SetDoned(false, default);
             }
             else
             {
-                switch (Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType)
+                switch (SaverComWorker.StepModeType)
                 {
                     case StepModeTypes.None:
-                        throw new System.Exception();
+                        throw new Exception();
 
                     case StepModeTypes.ByQueue:
-                        UIDownWorker.SetDoned(InfoFrom.Sender.IsMasterClient, true);
+                        DownDonerUIWorker.SetDoned(InfoFrom.Sender.IsMasterClient, true);
                         _doneOrNotFromStartAnyUpdate[InfoFrom.Sender.IsMasterClient] = false;
 
                         if (InfoFrom.Sender.IsMasterClient)
                         {
                             if (_doneOrNotFromStartAnyUpdate[false] == true)
                             {
-                                UIDownWorker.SetDoned(false, false);
+                                DownDonerUIWorker.SetDoned(false, false);
                             }
                             else
                             {
-                                _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
+                                _sMM.UpdateMotion.Run();
 
                                 PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGGUIM.MotionEnt_AmountCom.AmountMotions);
                                 PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
-                                UIDownWorker.SetDoned(true, default);
-                                UIDownWorker.SetDoned(false, default);
+                                DownDonerUIWorker.SetDoned(true, default);
+                                DownDonerUIWorker.SetDoned(false, default);
 
                                 _doneOrNotFromStartAnyUpdate[true] = true;
-                                UIDownWorker.SetDoned(true, true);
+                                DownDonerUIWorker.SetDoned(true, true);
                             }
                         }
                         else
                         {
                             if (_doneOrNotFromStartAnyUpdate[true] == true)
                             {
-                                UIDownWorker.SetDoned(true, false);
+                                DownDonerUIWorker.SetDoned(true, false);
                             }
                             else
                             {
-                                _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
+                                _sMM.UpdateMotion.Run();
 
                                 PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGGUIM.MotionEnt_AmountCom.AmountMotions);
                                 PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
-                                UIDownWorker.SetDoned(true, default);
-                                UIDownWorker.SetDoned(false, default);
+                                DownDonerUIWorker.SetDoned(true, default);
+                                DownDonerUIWorker.SetDoned(false, default);
 
                                 _doneOrNotFromStartAnyUpdate[false] = true;
-                                UIDownWorker.SetDoned(false, true);
+                                DownDonerUIWorker.SetDoned(false, true);
                             }
                         }
 
@@ -98,28 +99,28 @@ internal sealed class DonerMasterSystem : RPCMasterSystemReduction
 
                     case StepModeTypes.Together:
                         //PhotonPunRPC.SetDonerActiveToGeneral(InfoFrom.Sender, NeedDoneOrNot);
-                        UIDownWorker.SetDoned(InfoFrom.Sender.IsMasterClient, NeedDoneOrNot);
+                        DownDonerUIWorker.SetDoned(InfoFrom.Sender.IsMasterClient, NeedDoneOrNot);
 
-                        UIDownWorker.SetDoned(InfoFrom.Sender.IsMasterClient, NeedDoneOrNot);
+                        DownDonerUIWorker.SetDoned(InfoFrom.Sender.IsMasterClient, NeedDoneOrNot);
 
                         bool needUpdate = PhotonNetwork.OfflineMode
-                            || UIDownWorker.IsDoned(true)
-                            && UIDownWorker.IsDoned(false);
+                            || DownDonerUIWorker.IsDoned(true)
+                            && DownDonerUIWorker.IsDoned(false);
 
                         if (needUpdate)
                         {
-                            _sMM.TryInvokeRunSystem(nameof(UpdateMotionMasterSystem), _sMM.RpcSystems);
+                            _sMM.UpdateMotion.Run();
 
                             PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGGUIM.MotionEnt_AmountCom.AmountMotions);
                             PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
-                            UIDownWorker.SetDoned(true, default);
-                            UIDownWorker.SetDoned(false, default);
+                            DownDonerUIWorker.SetDoned(true, default);
+                            DownDonerUIWorker.SetDoned(false, default);
                         }
                         break;
 
                     default:
-                        throw new System.Exception();
+                        throw new Exception();
                 }
             }
         }

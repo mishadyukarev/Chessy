@@ -76,8 +76,8 @@ internal sealed class ConditionAbilitiesUISystem : IEcsRunSystem
 
         void ActiveStandartAbilities(bool isActive)
         {
-            UIRightWorker.SetActive(isActive, ConditionUnitTypes.Protected);
-            UIRightWorker.SetActive(isActive, ConditionUnitTypes.Relaxed);
+            UIRightWorker.SetActiveConditionButton(isActive, ConditionUnitTypes.Protected);
+            UIRightWorker.SetActiveConditionButton(isActive, ConditionUnitTypes.Relaxed);
 
             if (isActive)
             {

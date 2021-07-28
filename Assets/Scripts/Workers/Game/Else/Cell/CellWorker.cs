@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public class CellGameWorker
+    public sealed class CellWorker
     {
         private static CellEntsContainer _cellContainer;
 
@@ -12,7 +12,7 @@ namespace Assets.Scripts
         internal static int Yamount => _cellContainer.Yamount;
 
 
-        internal CellGameWorker(CellEntsContainer cellContainer)
+        internal CellWorker(CellEntsContainer cellContainer)
         {
             _cellContainer = cellContainer;
         }

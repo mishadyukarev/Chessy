@@ -17,12 +17,12 @@ internal sealed class RaySystem : IEcsRunSystem
 
         if (SelectorWorker.RaycastHit2D)
         {
-            for (int x = 0; x < CellGameWorker.Xamount; x++)
-                for (int y = 0; y < CellGameWorker.Yamount; y++)
+            for (int x = 0; x < CellWorker.Xamount; x++)
+                for (int y = 0; y < CellWorker.Yamount; y++)
                 {
                     var xy = new int[] { x, y };
 
-                    int one = CellGameWorker.GetInstanceIDCell(xy);
+                    int one = CellWorker.GetInstanceIDCell(xy);
                     int two = SelectorWorker.RaycastHit2D.transform.gameObject.GetInstanceID();
 
                     if (one == two)

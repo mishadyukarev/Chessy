@@ -79,8 +79,7 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
 
     #region Cells
 
-    private EcsEntity _cellsInfoEnt;
-    internal ref XyStartCellsComponent CellsInfoEnt_XyStartCellsCom => ref _cellsInfoEnt.Get<XyStartCellsComponent>();
+
 
     #endregion
 
@@ -132,7 +131,13 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
     #endregion
 
 
-    #region Buildings
+    #region Cells
+
+    private EcsEntity _cellsInfoEnt;
+    internal ref XyStartCellsComponent CellsInfoEnt_XyStartCellsCom => ref _cellsInfoEnt.Get<XyStartCellsComponent>();
+
+
+    #region CellBuildings
 
     private EcsEntity _cityInfoEnt;
     internal ref BuildingsInGameDictComponent CityInfoEnt_AmountBuildingsInGameCom => ref _cityInfoEnt.Get<BuildingsInGameDictComponent>();
@@ -151,6 +156,16 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
     private EcsEntity _minesInfoEnt;
     internal ref BuildingsInGameDictComponent MinesInfoEnt_AmountBuildingsInGameCom => ref _minesInfoEnt.Get<BuildingsInGameDictComponent>();
     internal ref AmountUpgradesDictComponent MinesInfoEnt_AmountUpgradesCom => ref _minesInfoEnt.Get<AmountUpgradesDictComponent>();
+
+    #endregion
+
+
+    #region Fire
+
+    private EcsEntity _cellFireInfoEnt;
+    internal ref XyAmountCellFireInGame CellFireInfoEnt_XyCellFireInfoCom => ref _cellFireInfoEnt.Get<XyAmountCellFireInGame>();
+
+    #endregion
 
     #endregion
 
@@ -372,7 +387,7 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
         new CellEnvirVisWorker(_cellEnvirEntsContainer);
 
         _cellContainer = new CellEntsContainer(cellGOs, gameWorld);
-        new CellGameWorker(_cellContainer);
+        new CellWorker(_cellContainer);
 
         for (int x = 0; x < CELL_COUNT_X; x++)
             for (int y = 0; y < CELL_COUNT_Y; y++)
@@ -454,6 +469,10 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
 
     private void CreateInfoEnts(EcsWorld gameWorld)
     {
+
+
+        #region Cell
+
         var listMaster = new List<int[]>();
         var listOther = new List<int[]>();
 
@@ -476,6 +495,9 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
         _cellsInfoEnt = gameWorld.NewEntity()
             .Replace(new XyStartCellsComponent(dict));
 
+
+        _cellFireInfoEnt = gameWorld.NewEntity()
+            .Replace(new XyAmountCellFireInGame(new List<int[]>()));
 
 
         _kingInfoEnt = gameWorld.NewEntity()
@@ -530,6 +552,7 @@ public sealed class EntitiesGameGeneralManager : EntitiesManager
             .Replace(new BuildingsInGameDictComponent(new Dictionary<bool, List<int[]>>()))
             .Replace(new AmountUpgradesDictComponent(new Dictionary<bool, int>()));
 
+        #endregion
 
 
         _foodInfoEnt = gameWorld.NewEntity()

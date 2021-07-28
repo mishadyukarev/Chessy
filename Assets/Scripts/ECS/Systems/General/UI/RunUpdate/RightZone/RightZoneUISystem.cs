@@ -1,34 +1,34 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Game.UI;
+using Leopotam.Ecs;
 using static Assets.Scripts.Main;
 
-internal sealed class RightZoneUISystem : SystemGeneralReduction
+internal sealed class RightZoneUISystem : IEcsRunSystem
 {
     private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
 
-    public override void Run()
+    public void Run()
     {
-        base.Run();
-
         if (CellUnitsDataWorker.IsVisibleUnit(Instance.IsMasterClient, XySelectedCell))
         {
             if (CellUnitsDataWorker.HaveAnyUnit(XySelectedCell))
             {
                 if (CellUnitsDataWorker.HaveOwner(XySelectedCell))
                 {
-                    _eGGUIM.RightZoneEnt_ParentCom.ParentGO.SetActive(true);
+                    UIRightWorker.SetActiveRightZoneGO(true);
                 }
                 else if (CellUnitsDataWorker.IsBot(XySelectedCell))
                 {
-                    _eGGUIM.RightZoneEnt_ParentCom.ParentGO.SetActive(true);
+                    UIRightWorker.SetActiveRightZoneGO(true);
                 }
             }
-            else _eGGUIM.RightZoneEnt_ParentCom.ParentGO.SetActive(false);
+            else UIRightWorker.SetActiveRightZoneGO(false);
         }
         else
         {
-            _eGGUIM.RightZoneEnt_ParentCom.ParentGO.SetActive(false);
+            UIRightWorker.SetActiveRightZoneGO(false);
         }
     }
 }

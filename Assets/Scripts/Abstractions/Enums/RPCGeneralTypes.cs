@@ -4,7 +4,6 @@
     {
         None,
 
-        Ready,
         SetDonerActiveUI,
         ActiveAmountMotionUI,
         GetAvailableCellsForSetting,

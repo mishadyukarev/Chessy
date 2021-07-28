@@ -4,7 +4,7 @@ using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Assets.Scripts.Workers.Game.Else;
 using Assets.Scripts.Workers.Game.Else.Cell;
-using Assets.Scripts.Workers.Info;
+using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -14,22 +14,30 @@ internal sealed class SupportVisionSystem : IEcsRunSystem
 
     public void Run()
     {
-
         if (SelectorWorker.HaveAnySelectorUnit)
         {
-            foreach (var xy in CellUnitsDataWorker.GetStartCellsForSettingUnit(PhotonNetwork.MasterClient))
-            {
-                if (InfoCellWorker.IsStartedCell(PhotonNetwork.IsMasterClient, xy))
+            //foreach (var xy in CellUnitsDataWorker.GetStartCellsForSettingUnit(PhotonNetwork.MasterClient))
+            //{
+            for (int x = 0; x < CellWorker.Xamount; x++)
+                for (int y = 0; y < CellWorker.Yamount; y++)
                 {
-                    CellSupVisWorker.EnableSupVis(SupportVisionTypes.Spawn, xy);
+                    int[] xy = new int[] { x, y };
+
+                    if (!CellUnitsDataWorker.HaveAnyUnit(xy))
+                    {
+                        if (InfoCellWorker.IsStartedCell(PhotonNetwork.IsMasterClient, xy))
+                        {
+                            CellSupVisWorker.EnableSupVis(SupportVisionTypes.Spawn, xy);
+                        }
+                    }
                 }
-            }
+            //}
         }
 
         else
         {
-            for (int x = 0; x < CellGameWorker.Xamount; x++)
-                for (int y = 0; y < CellGameWorker.Yamount; y++)
+            for (int x = 0; x < CellWorker.Xamount; x++)
+                for (int y = 0; y < CellWorker.Yamount; y++)
                 {
                     int[] xy = new int[] { x, y };
 
@@ -40,7 +48,7 @@ internal sealed class SupportVisionSystem : IEcsRunSystem
 
         if (SelectorWorker.IsUpgradeModType(UpgradeModTypes.Unit))
         {
-            foreach (var xy in InfoUnitsWorker.GetLixtXyUnits(UnitTypes.Pawn, PhotonNetwork.IsMasterClient))
+            foreach (var xy in InfoAmountUnitsWorker.GetLixtXyUnits(UnitTypes.Pawn, PhotonNetwork.IsMasterClient))
             {
                 if (CellUnitsDataWorker.HaveOwner(xy))
                 {
@@ -50,7 +58,7 @@ internal sealed class SupportVisionSystem : IEcsRunSystem
                     }
                 }
             }
-            foreach (var xy in InfoUnitsWorker.GetLixtXyUnits(UnitTypes.Rook, PhotonNetwork.IsMasterClient))
+            foreach (var xy in InfoAmountUnitsWorker.GetLixtXyUnits(UnitTypes.Rook, PhotonNetwork.IsMasterClient))
             {
                 if (CellUnitsDataWorker.HaveOwner(xy))
                 {
@@ -60,7 +68,7 @@ internal sealed class SupportVisionSystem : IEcsRunSystem
                     }
                 }
             }
-            foreach (var xy in InfoUnitsWorker.GetLixtXyUnits(UnitTypes.Bishop, PhotonNetwork.IsMasterClient))
+            foreach (var xy in InfoAmountUnitsWorker.GetLixtXyUnits(UnitTypes.Bishop, PhotonNetwork.IsMasterClient))
             {
                 if (CellUnitsDataWorker.HaveOwner(xy))
                 {

@@ -81,5 +81,18 @@ namespace Assets.Scripts.Workers
 
             //return (from xy in list where  select xy).Count() != 0;
         }
+        internal static bool TryFindCellInListAndRemove(this List<int[]> list, int[] xyTaking)
+        {
+            for (int xyNumber = 0; xyNumber < list.Count; xyNumber++)
+            {
+                if (list[xyNumber].Compare(xyTaking))
+                {
+                    list.RemoveAt(xyNumber);
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

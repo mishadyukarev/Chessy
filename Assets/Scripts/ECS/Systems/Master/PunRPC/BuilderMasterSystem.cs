@@ -36,8 +36,8 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     {
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
 
-                        CellBuildingsDataWorker.CreatePlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
-                        InfoBuidlingsWorker.AddXyBuildingsInGame(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+                        CellBuildingsDataWorker.SetPlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
+                        InfoBuidlingsWorker.AddXyBuild(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
 
                         CellUnitsDataWorker.ResetAmountSteps(XyCellForBuilding);
 
@@ -71,8 +71,8 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
                                 InfoResourcesDataWorker.BuyNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender);
 
-                                CellBuildingsDataWorker.CreatePlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
-                                InfoBuidlingsWorker.AddXyBuildingsInGame(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+                                CellBuildingsDataWorker.SetPlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
+                                InfoBuidlingsWorker.AddXyBuild(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
 
                                 CellUnitsDataWorker.TakeAmountSteps(XyCellForBuilding);
                             }
@@ -103,8 +103,8 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                                 PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
 
                                 InfoResourcesDataWorker.BuyNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender);
-                                InfoBuidlingsWorker.AddXyBuildingsInGame(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
-                                CellBuildingsDataWorker.CreatePlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
+                                InfoBuidlingsWorker.AddXyBuild(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+                                CellBuildingsDataWorker.SetPlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
 
                                 CellUnitsDataWorker.ResetAmountSteps(XyCellForBuilding);
                             }

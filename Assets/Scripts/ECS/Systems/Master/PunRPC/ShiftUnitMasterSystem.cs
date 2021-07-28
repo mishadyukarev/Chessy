@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using System.Collections.Generic;
@@ -28,22 +29,22 @@ internal sealed class ShiftUnitMasterSystem : RPCMasterSystemReduction
                 var fromUnitType = CellUnitsDataWorker.UnitType(FromXy);
                 var fromIsMasterClient = CellUnitsDataWorker.IsMasterClient(FromXy);
 
-                var fromCondition = CellUnitsDataWorker.ProtectRelaxType(FromXy);
+                var fromCondition = CellUnitsDataWorker.ConditionType(FromXy);
 
 
-                InfoUnitsWorker.TakeUnitInStandartCondition(fromCondition, fromUnitType, fromIsMasterClient, FromXy);
+                InfoUnitsConditionWorker.RemoveUnitInCondition(fromCondition, fromUnitType, fromIsMasterClient, FromXy);
 
-                InfoUnitsWorker.TakeAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
-                InfoUnitsWorker.AddAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), ToXy);
+                InfoAmountUnitsWorker.RemoveAmountUnitsInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
+                InfoAmountUnitsWorker.AddAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), ToXy);
                 CellUnitsDataWorker.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
 
-                InfoUnitsWorker.AddUnitInStandartCondition(ConditionUnitTypes.None, fromUnitType, fromIsMasterClient, ToXy);
+                InfoUnitsConditionWorker.AddUnitInCondition(ConditionUnitTypes.None, fromUnitType, fromIsMasterClient, ToXy);
 
 
                 CellUnitsDataWorker.TakeAmountSteps(ToXy, CellEnvirDataWorker.NeedAmountSteps(ToXy));
                 if (CellUnitsDataWorker.AmountSteps(ToXy) < 0) CellUnitsDataWorker.ResetAmountSteps(ToXy);
 
-                CellUnitsDataWorker.ResetProtectedRelaxType(ToXy);
+                CellUnitsDataWorker.ResetConditionType(ToXy);
             }
         }
     }

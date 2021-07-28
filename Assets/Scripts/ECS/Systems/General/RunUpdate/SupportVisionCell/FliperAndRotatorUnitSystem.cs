@@ -7,8 +7,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems
     {
         public void Run()
         {
-            for (int x = 0; x < CellGameWorker.Xamount; x++)
-                for (int y = 0; y < CellGameWorker.Yamount; y++)
+            for (int x = 0; x < CellWorker.Xamount; x++)
+                for (int y = 0; y < CellWorker.Yamount; y++)
                 {
                     var xy = new int[] { x, y };
 
@@ -16,9 +16,9 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                     {
                         var unitType = CellUnitsDataWorker.UnitType(xy);
 
-                        var standartX = CellGameWorker.GetEulerAngle(XyzTypes.X, xy);
-                        var standartY = CellGameWorker.GetEulerAngle(XyzTypes.Y, xy);
-                        var standartZ = CellGameWorker.GetEulerAngle(XyzTypes.Z, xy);
+                        var standartX = CellWorker.GetEulerAngle(XyzTypes.X, xy);
+                        var standartY = CellWorker.GetEulerAngle(XyzTypes.Y, xy);
+                        var standartZ = CellWorker.GetEulerAngle(XyzTypes.Z, xy);
 
                         if (CellUnitsDataWorker.HaveOwner(xy))
                         {

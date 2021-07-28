@@ -29,8 +29,8 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
 
             if (buildingType == BuildingTypes.Farm) ResetEnvironment(EnvironmentTypes.Fertilizer, XyCell);
 
-            InfoBuidlingsWorker.TakeXyBuildingsInGame(buildingType, CellUnitsDataWorker.IsMasterClient(XyCell), XyCell);
-            CellBuildingsDataWorker.ResetBuilding(XyCell);
+            InfoBuidlingsWorker.RemoveXyBuild(buildingType, CellUnitsDataWorker.IsMasterClient(XyCell), XyCell);
+            CellBuildingsDataWorker.ResetBuild(XyCell);
         }
         else
         {

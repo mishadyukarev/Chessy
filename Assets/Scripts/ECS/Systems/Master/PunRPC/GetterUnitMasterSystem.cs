@@ -1,12 +1,10 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Workers.Game.Else;
 using Photon.Pun;
-
+using System;
 
 internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
 {
-    private int _amountForTakingUnit = 1;
-
     internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.FromInfo;
     internal UnitTypes UnitType => _eMM.CreatorEnt_UnitTypeCom.UnitType;
 
@@ -19,13 +17,13 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
         switch (UnitType)
         {
             case UnitTypes.None:
-                break;
+                throw new Exception();
 
             case UnitTypes.King:
                 isGetted = InventorUnitsDataWorker.HaveUnitInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
                 if (isGetted)
                 {
-                    unitType = UnitTypes.King;
+                    unitType = UnitType;
                 }
                 break;
 
@@ -33,52 +31,52 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.PawnSword, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
-                    unitType = UnitTypes.PawnSword;
+                    unitType = UnitType + 1;
                 }
                 else if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.Pawn, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
-                    unitType = UnitTypes.Pawn;
+                    unitType = UnitType;
                 }
                 break;
 
             case UnitTypes.PawnSword:
-                break;
+                throw new Exception();
 
             case UnitTypes.Rook:
                 if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.RookCrossbow, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
-                    unitType = UnitTypes.RookCrossbow;
+                    unitType = UnitType + 1;
                 }
                 else if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.Rook, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
-                    unitType = UnitTypes.Rook;
+                    unitType = UnitType;
                 }
                 break;
 
             case UnitTypes.RookCrossbow:
-                break;
+                throw new Exception();
 
             case UnitTypes.Bishop:
                 if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.BishopCrossbow, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
-                    unitType = UnitTypes.BishopCrossbow;
+                    unitType = UnitType + 1;
                 }
                 else if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.Bishop, InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
-                    unitType = UnitTypes.Bishop;
+                    unitType = UnitType;
                 }
                 break;
 
             case UnitTypes.BishopCrossbow:
-                break;
+                throw new Exception();
 
             default:
-                break;
+                throw new Exception();
         }
         PhotonPunRPC.GetUnitToGeneral(InfoFrom.Sender, isGetted, unitType);
     }

@@ -1,6 +1,6 @@
 ﻿public struct SelectorComponent
 {
-    internal bool IsSelected { get; set; }
+    internal bool IsSelectedCell { get; set; }
 
     internal bool CanShiftUnit { get; set; }
     internal bool CanExecuteStartClick { get; set; }

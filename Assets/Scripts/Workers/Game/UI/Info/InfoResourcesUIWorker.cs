@@ -48,11 +48,11 @@ namespace Assets.Scripts.Workers.UI.Info
                     break;
 
                 case ResourceTypes.Wood:
-                    EGGUIM.FoodInfoUIEnt_AddingTMPUICom.TextMeshProUGUI.text = text;
+                    EGGUIM.WoodInfoUIEnt_AddingTMPUICom.TextMeshProUGUI.text = text;
                     break;
 
                 case ResourceTypes.Ore:
-                    EGGUIM.FoodInfoUIEnt_AddingTMPUICom.TextMeshProUGUI.text = text;
+                    EGGUIM.OreInfoUIEnt_AddingTMPUICom.TextMeshProUGUI.text = text;
                     break;
 
                 case ResourceTypes.Iron:

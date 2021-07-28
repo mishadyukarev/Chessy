@@ -42,7 +42,7 @@ namespace Assets.Scripts
         private void Ready() => PhotonPunRPC.ReadyToMaster(!UIMiddleWorker.IsReady(Instance.IsMasterClient));
         private void GetUnit(UnitTypes unitType)
         {
-            if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient))
+            if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient))
             {
                 PhotonPunRPC.GetUnitToMaster(unitType);
             }
@@ -57,12 +57,12 @@ namespace Assets.Scripts
                     break;
 
                 case StepModeTypes.ByQueue:
-                    if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient)) 
-                        PhotonPunRPC.DoneToMaster(!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient));
+                    if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient))
+                        PhotonPunRPC.DoneToMaster(!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient));
                     break;
 
                 case StepModeTypes.Together:
-                    PhotonPunRPC.DoneToMaster(!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient));
+                    PhotonPunRPC.DoneToMaster(!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient));
                     break;
 
                 default:
@@ -75,7 +75,7 @@ namespace Assets.Scripts
         }
         private void StandartAbilityButton1()
         {
-            if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient))
+            if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient))
             {
                 if (CellUnitsDataWorker.IsProtectRelaxType(ConditionUnitTypes.Protected, XySelectedCell))
                 {
@@ -90,7 +90,7 @@ namespace Assets.Scripts
         }
         private void StandartAbilityButton2()
         {
-            if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient))
+            if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient))
             {
                 if (CellUnitsDataWorker.IsProtectRelaxType(ConditionUnitTypes.Relaxed, XySelectedCell))
                 {

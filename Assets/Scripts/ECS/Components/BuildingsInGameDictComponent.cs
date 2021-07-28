@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Workers;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Components
 {

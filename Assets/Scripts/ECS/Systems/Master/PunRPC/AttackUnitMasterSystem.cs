@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Workers.Info;
+using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Photon.Pun;
 using static Assets.Scripts.Workers.CellBaseOperations;
 
@@ -28,7 +28,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
         if (isFindedSimple || isFindedUnique)
         {
             CellUnitsDataWorker.ResetAmountSteps(FromXy);
-            CellUnitsDataWorker.ResetProtectedRelaxType(FromXy);
+            CellUnitsDataWorker.ResetConditionType(FromXy);
 
             int damageToPrevious = 0;
             int damageToSelelected = 0;
@@ -87,7 +87,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
                 if (CellUnitsDataWorker.HaveOwner(FromXy))
                 {
-                    InfoUnitsWorker.TakeAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
+                    InfoAmountUnitsWorker.RemoveAmountUnitsInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
                 }
             }
 
@@ -101,8 +101,8 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
 
                 if (!CellUnitsDataWorker.IsMelee(FromXy))
                 {
-                    InfoUnitsWorker.TakeAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
-                    InfoUnitsWorker.AddAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), ToXy);
+                    InfoAmountUnitsWorker.RemoveAmountUnitsInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
+                    InfoAmountUnitsWorker.AddAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), ToXy);
                     CellUnitsDataWorker.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
                 }
             }

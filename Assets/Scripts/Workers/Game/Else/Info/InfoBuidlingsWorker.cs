@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Workers.Cell;
 using System;
 using System.Collections.Generic;
-using static Assets.Scripts.Abstractions.ValuesConsts.EconomyValues;
 
 namespace Assets.Scripts.Workers
 {
@@ -66,10 +65,7 @@ namespace Assets.Scripts.Workers
 
         #region Buidings
 
-        internal static bool IsSettedCity(bool key) => AmountBuildingsInGame(BuildingTypes.City, key) > 0;
-
-
-        internal static List<int[]> GetListXyBuildingsInGame(BuildingTypes buildingType, bool key)
+        private static List<int[]> GetListXyBuild(BuildingTypes buildingType, bool key)
         {
             switch (buildingType)
             {
@@ -92,7 +88,10 @@ namespace Assets.Scripts.Workers
                     throw new Exception();
             }
         }
-        internal static void SetListXyBuildingsInGame(BuildingTypes buildingType, bool key, List<int[]> list)
+
+        internal static bool IsSettedCity(bool key) => GetAmountBuild(BuildingTypes.City, key) > 0;
+
+        internal static void SetXyBuildings(BuildingTypes buildingType, bool key, List<int[]> list)
         {
             switch (buildingType)
             {
@@ -100,66 +99,50 @@ namespace Assets.Scripts.Workers
                     throw new Exception();
 
                 case BuildingTypes.City:
-                    EGGM.CityInfoEnt_AmountBuildingsInGameCom.BuildingsInGameDict[key] = list;
+                    EGGM.CityInfoEnt_AmountBuildingsInGameCom.BuildingsInGameDict[key] = list.Copy();
                     break;
 
                 case BuildingTypes.Farm:
-                    EGGM.FarmsInfoEnt_AmountBuildingsInGameCom.BuildingsInGameDict[key] = list;
+                    EGGM.FarmsInfoEnt_AmountBuildingsInGameCom.BuildingsInGameDict[key] = list.Copy();
                     break;
 
                 case BuildingTypes.Woodcutter:
-                    EGGM.WoodcuttersInfoEnt_AmountBuildingsInGameCom.BuildingsInGameDict[key] = list;
+                    EGGM.WoodcuttersInfoEnt_AmountBuildingsInGameCom.BuildingsInGameDict[key] = list.Copy();
                     break;
 
                 case BuildingTypes.Mine:
-                    EGGM.MinesInfoEnt_AmountBuildingsInGameCom.BuildingsInGameDict[key] = list;
+                    EGGM.MinesInfoEnt_AmountBuildingsInGameCom.BuildingsInGameDict[key] = list.Copy();
                     break;
 
                 default:
                     throw new Exception();
             }
         }
-        internal static int AmountBuildingsInGame(BuildingTypes buildingType, bool key) => GetListXyBuildingsInGame(buildingType, key).Count;
 
-        internal static void AddXyBuildingsInGame(BuildingTypes buildingType, bool key, int[] xyAdding) => GetListXyBuildingsInGame(buildingType, key).Add(xyAdding);
-        internal static bool TakeXyBuildingsInGame(BuildingTypes buildingType, bool key, int[] xyTaking) => GetListXyBuildingsInGame(buildingType, key).Remove(xyTaking);
 
-        internal static int GetAmountAllBuildingsInGame(bool key)
+        internal static int[] GetXyBuildByIndex(BuildingTypes buildingType, bool key, int index) => (int[])GetListXyBuild(buildingType, key)[index].Clone();
+        internal static int GetAmountBuild(BuildingTypes buildingType, bool key) => GetListXyBuild(buildingType, key).Count;
+        internal static int GetAmountAllBuild(bool key)
         {
             var amountAllBuildInGame = 0;
 
             for (int curNumberBuilType = 1; curNumberBuilType < Enum.GetNames(typeof(BuildingTypes)).Length; curNumberBuilType++)
             {
-                amountAllBuildInGame += AmountBuildingsInGame((BuildingTypes)curNumberBuilType, key);
+                amountAllBuildInGame += GetAmountBuild((BuildingTypes)curNumberBuilType, key);
             }
 
             return amountAllBuildInGame;
         }
-        internal static int GetAmountAllBuildingsInGame() => GetAmountAllBuildingsInGame(true) + GetAmountAllBuildingsInGame(false);
+        internal static int GetAmountAllBuild() => GetAmountAllBuild(true) + GetAmountAllBuild(false);
 
-        internal static int GetExtractionBuildingType(BuildingTypes buildingType, bool key)
+        internal static void AddXyBuild(BuildingTypes buildingType, bool key, int[] xyAdding) => GetListXyBuild(buildingType, key).Add(xyAdding);
+        internal static void RemoveXyBuild(BuildingTypes buildingType, bool key, int[] xyTaking)
         {
-            switch (buildingType)
-            {
-                case BuildingTypes.None:
-                    throw new Exception();
-
-                case BuildingTypes.City:
-                    throw new Exception();
-
-                case BuildingTypes.Farm:
-                    return BENEFIT_FOOD_FARM + BENEFIT_FOOD_FARM * AmountUpgrades(buildingType, key);
-
-                case BuildingTypes.Woodcutter:
-                    return BENEFIT_WOOD_WOODCUTTER + BENEFIT_WOOD_WOODCUTTER * AmountUpgrades(buildingType, key);
-
-                case BuildingTypes.Mine:
-                    return BENEFIT_ORE_MINE + BENEFIT_ORE_MINE * AmountUpgrades(buildingType, key);
-
-                default:
-                    throw new Exception();
-            }
+            if (!GetListXyBuild(buildingType, key).TryFindCellInListAndRemove(xyTaking)) throw new Exception();
         }
+        internal static void RemoveXyBuild(BuildingTypes buildingType, bool key, int index) => GetListXyBuild(buildingType, key).RemoveAt(index);
+
+
 
         #endregion
     }

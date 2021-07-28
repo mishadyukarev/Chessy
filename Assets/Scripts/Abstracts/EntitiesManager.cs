@@ -1,6 +1,4 @@
-﻿using Leopotam.Ecs;
-
-namespace Assets.Scripts
+﻿namespace Assets.Scripts
 {
     public abstract class EntitiesManager
     {

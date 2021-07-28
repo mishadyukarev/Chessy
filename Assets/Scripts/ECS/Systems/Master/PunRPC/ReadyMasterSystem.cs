@@ -12,12 +12,17 @@ internal sealed class ReadyMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        UIDownWorker.SetDoned(InfoFrom.Sender.IsMasterClient, IsReady);
 
-        if (UIDownWorker.IsDoned(true)
-            && UIDownWorker.IsDoned(false))
-            PhotonPunRPC.ReadyToGeneral(RpcTarget.All, false, true);
+        UIMiddleWorker.SetIsReady(InfoFrom.Sender.IsMasterClient, IsReady);
 
-        else PhotonPunRPC.ReadyToGeneral(InfoFrom.Sender, IsReady, false);
+        if (UIMiddleWorker.IsReady(true) && UIMiddleWorker.IsReady(false))
+        {
+            UIMiddleWorker.IsStartedGame = true;
+        }
+
+        else
+        {
+            UIMiddleWorker.IsStartedGame = false;
+        }
     }
 }

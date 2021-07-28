@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ECS.Menu.Entities;
+using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -70,6 +71,7 @@ namespace Assets.Scripts
                     break;
 
                 case SceneTypes.Game:
+                    Debug.Log(InfoAmountUnitsWorker.GetAmountUnitsInGame(UnitTypes.Pawn, PhotonNetwork.IsMasterClient));
                     break;
 
                 default:

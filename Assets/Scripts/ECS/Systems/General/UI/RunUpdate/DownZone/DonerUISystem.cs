@@ -1,15 +1,25 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Workers.Game.UI;
+﻿using Assets.Scripts.Workers.Game.UI;
+using Assets.Scripts.Workers.Game.UI.Middle;
+using Leopotam.Ecs;
+using Photon.Pun;
 using UnityEngine;
-using static Assets.Scripts.Main;
 
-internal sealed class DonerUISystem : RPCGeneralSystemReduction
+internal sealed class DonerUISystem : IEcsInitSystem, IEcsRunSystem
 {
-    public override void Run()
+    public void Init()
     {
-        base.Run();
+        DownDonerUIWorker.AddListener(MistakeDone);
+    }
 
-        if (UIDownWorker.IsDoned(Instance.IsMasterClient)) _eGGUIM.DonerUIEnt_ButtonCom.Button.image.color = Color.red;
-        else _eGGUIM.DonerUIEnt_ButtonCom.Button.image.color = Color.white;
+    public void Run()
+    {
+        if (DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient))
+            DonerUIWorker.SetColor(Color.red);
+        else DonerUIWorker.SetColor(Color.white);
+    }
+
+    private void MistakeDone()
+    {
+        DownGetterUnitsUIWorker.SetColorKing(Color.red);
     }
 }

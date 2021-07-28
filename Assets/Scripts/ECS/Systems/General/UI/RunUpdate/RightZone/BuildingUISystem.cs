@@ -2,40 +2,37 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.UI;
+using Leopotam.Ecs;
 using Photon.Pun;
-using static Assets.Scripts.Main;
+using System;
 
-internal sealed class BuildingUISystem : RPCGeneralSystemReduction
+internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
 {
     private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
-    public override void Init()
+    public void Init()
     {
-        base.Init();
-
-        _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Build(BuildingTypes.Farm); });
-        //_eGM.BuildingSecondAbilityEnt_ButtonCom.AddListener(delegate { Build(BuildingTypes.Woodcutter); });
-        _eGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Build(BuildingTypes.Mine); });
-        _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Build(BuildingTypes.City); });
+        UIRightWorker.AddListenerBuildButton(delegate { Build(BuildingTypes.Farm); }, BuildingButtonTypes.First);
+        UIRightWorker.AddListenerBuildButton(delegate { Build(BuildingTypes.Mine); }, BuildingButtonTypes.Second);
+        UIRightWorker.AddListenerBuildButton(delegate { Build(BuildingTypes.City); }, BuildingButtonTypes.Third);
     }
 
-    public override void Run()
+    public void Run()
     {
-        base.Run();
-
-
         if (SelectorWorker.IsSelectedCell && CellUnitsDataWorker.HaveAnyUnit(XySelectedCell))
         {
             if (CellUnitsDataWorker.HaveOwner(XySelectedCell))
             {
                 if (CellUnitsDataWorker.IsMine(XySelectedCell))
                 {
+                    UIRightWorker.RemoveAllListenersBuildButton(BuildingButtonTypes.Third);
+
                     switch (CellUnitsDataWorker.UnitType(XySelectedCell))
                     {
                         case UnitTypes.None:
                             break;
 
                         case UnitTypes.King:
-                            Activate(false);
+                            UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Building);
                             break;
 
                         case UnitTypes.Pawn:
@@ -47,124 +44,116 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
                             break;
 
                         case UnitTypes.Rook:
-                            Activate(false);
+                            UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Building);
                             break;
 
                         case UnitTypes.RookCrossbow:
-                            Activate(false);
+                            UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Building);
                             break;
 
                         case UnitTypes.Bishop:
-                            Activate(false);
+                            UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Building);
                             break;
 
                         case UnitTypes.BishopCrossbow:
-                            Activate(false);
+                            UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Building);
                             break;
 
                         default:
-                            break;
+                            throw new Exception();
                     }
                 }
 
                 else
                 {
-                    _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.TextMeshProUGUI.gameObject.SetActive(false);
-                    _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
-                    //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
-                    _eGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
-                    _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
+                    UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Building);
                 }
             }
 
             else if (CellUnitsDataWorker.IsBot(XySelectedCell))
             {
-                _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.TextMeshProUGUI.gameObject.SetActive(false);
-                _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
-                //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
-                _eGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
-                _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
+                UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Building);
             }
 
             void PawnAndPawnSword()
             {
-                _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.TextMeshProUGUI.gameObject.SetActive(true);
-                _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
-                //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(true);
-                _eGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
-                _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
-
-                _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
+                UIRightWorker.SetActiveParentZone(true, UnitUIZoneTypes.Building);
 
                 if (CellBuildingsDataWorker.HaveAnyBuilding(XySelectedCell))
                 {
+                    UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.First);
+                    UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Second);
+
                     if (CellUnitsDataWorker.HaveOwner(XySelectedCell))
                     {
                         if (CellUnitsDataWorker.IsMine(XySelectedCell))
                         {
                             if (CellBuildingsDataWorker.IsBuildingType(BuildingTypes.City, XySelectedCell))
                             {
-                                _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
+                                UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Third);
                             }
                             else
                             {
-                                _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Destroy(); });
-                                _eGGUIM.BuildingThirdAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Destroy";
+                                UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.Third);
+
+                                UIRightWorker.AddListenerBuildButton(delegate { Destroy(); }, BuildingButtonTypes.Third);
+                                UIRightWorker.SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
                             }
                         }
 
                         else
                         {
-                            _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
+                            UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.Third);
 
-                            _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Destroy(); });
-                            _eGGUIM.BuildingThirdAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Destroy";
+                            UIRightWorker.AddListenerBuildButton(delegate { Destroy(); }, BuildingButtonTypes.Third);
+                            UIRightWorker.SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
                         }
-
-
-
-                        //if (_eGM.CellBuildEnt_OwnerCom(XySelectedCell).IsMine)
-                        //{
-                        //    if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
-                        //    {
-                        //        _eGM.BuildingFourthAbilityEnt_ButtonCom.SetActive(false);
-                        //    }
-                        //    else
-                        //    {
-                        //        _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
-                        //        _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Destroy";
-                        //    }
-                        //}
-                        //else
-                        //{
-                        //    if (_eGM.CellBuildEnt_BuilTypeCom(XySelectedCell).BuildingType == BuildingTypes.City)
-                        //    {
-                        //        _eGM.BuildingFourthAbilityEnt_ButtonCom.AddListener(delegate { Destroy(); });
-                        //        _eGM.BuildingFourthAbilityEnt_TextMeshProGUICom.Text = "Destroy";
-                        //    }
-                        //}
                     }
 
                     else if (CellBuildingsDataWorker.IsBot(XySelectedCell))
                     {
                         if (CellBuildingsDataWorker.IsBuildingType(BuildingTypes.City, XySelectedCell))
                         {
-                            _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Destroy(); });
-                            _eGGUIM.BuildingThirdAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Destroy";
+                            UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.Third);
+
+                            UIRightWorker.AddListenerBuildButton(delegate { Destroy(); }, BuildingButtonTypes.Third);
+                            UIRightWorker.SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
                         }
                     }
 
                 }
+
                 else
                 {
-                    if (InfoBuidlingsWorker.IsSettedCity(Instance.IsMasterClient))
+                    if (!CellEnvirDataWorker.HaveEnvironments(XySelectedCell, new[] { EnvironmentTypes.AdultForest, EnvironmentTypes.YoungForest }))
                     {
-                        _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
+                        UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.First);
                     }
                     else
                     {
-                        _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.onClick.AddListener(delegate { Build(BuildingTypes.City); });
-                        _eGGUIM.BuildingThirdAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Build City";
+                        UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.First);
+                    }
+
+
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, XySelectedCell))
+                    {
+                        UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.Second);
+                    }
+
+                    else
+                    {
+                        UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Second);
+                    }
+
+
+                    if (InfoBuidlingsWorker.IsSettedCity(PhotonNetwork.IsMasterClient))
+                    {
+                        UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Third);
+                    }
+                    else
+                    {
+                        UIRightWorker.AddListenerBuildButton(delegate { Build(BuildingTypes.City); }, BuildingButtonTypes.Third);
+                        UIRightWorker.SetTextBuildButton(BuildingButtonTypes.Third, "Build City");
                     }
                 }
             }
@@ -172,29 +161,16 @@ internal sealed class BuildingUISystem : RPCGeneralSystemReduction
 
         else
         {
-            _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.TextMeshProUGUI.gameObject.SetActive(false);
-            _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
-            //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(false);
-            _eGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
-            _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
+            UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Building);
         }
-    }
-
-    private void Activate(bool isActivated)
-    {
-        _eGGUIM.BuildingAbilitiesZoneEnt_TextMeshProUGUICom.TextMeshProUGUI.gameObject.SetActive(isActivated);
-        _eGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button.gameObject.SetActive(isActivated);
-        //_eGM.BuildingSecondAbilityEnt_ButtonCom.SetActive(isActivated);
-        _eGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button.gameObject.SetActive(isActivated);
-        _eGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button.gameObject.SetActive(isActivated);
     }
 
     private void Build(BuildingTypes buildingType)
     {
-        if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient)) PhotonPunRPC.BuildToMaster(XySelectedCell, buildingType);
+        if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient)) PhotonPunRPC.BuildToMaster(XySelectedCell, buildingType);
     }
     private void Destroy()
     {
-        if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient)) PhotonPunRPC.DestroyBuildingToMaster(XySelectedCell);
+        if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient)) PhotonPunRPC.DestroyBuildingToMaster(XySelectedCell);
     }
 }

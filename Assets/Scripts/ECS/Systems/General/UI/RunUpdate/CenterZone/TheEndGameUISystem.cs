@@ -1,21 +1,19 @@
-﻿using Assets.Scripts;
+﻿using Assets.Scripts.Workers.Game.UI.Middle;
+using Leopotam.Ecs;
 
-internal sealed class TheEndGameUISystem : SystemGeneralReduction
+internal sealed class TheEndGameUISystem : IEcsRunSystem
 {
-    public override void Run()
+    public void Run()
     {
-        base.Run();
-
-
-        if (_eGGUIM.EndGameEntEndGameCom.IsEndGame)
+        if (EndGameUIWorker.IsEndGame)
         {
-            _eGGUIM.EndGameEnt_ParentCom.ParentGO.SetActive(true);
-            if (_eGGUIM.EndGameEntEndGameCom.PlayerWinner.IsLocal) _eGGUIM.EndGameEnt_TextMeshProGUICom.TextMeshProUGUI.text = "You're WINNER!";
-            else _eGGUIM.EndGameEnt_TextMeshProGUICom.TextMeshProUGUI.text = "You're loser :(";
+            EndGameUIWorker.SetActiveParent(true);
+            if (EndGameUIWorker.IsLocalWinnet) EndGameUIWorker.Text = "You're WINNER!";
+            else EndGameUIWorker.Text = "You're loser :(";
         }
         else
         {
-            _eGGUIM.EndGameEnt_ParentCom.ParentGO.SetActive(false);
+            EndGameUIWorker.SetActiveParent(false);
         }
     }
 }

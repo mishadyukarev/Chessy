@@ -1,7 +1,10 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Game.UI;
 using Photon.Pun;
+using UnityEngine;
 
 internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
 {
@@ -9,13 +12,6 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
     public override void Run()
     {
         base.Run();
-
-
-        _sMM.TryInvokeRunSystem(nameof(FireUpdatorMasterSystem), _sMM.RpcSystems);
-        _sMM.TryInvokeRunSystem(nameof(ExtractionUpdatorMasterSystem), _sMM.RpcSystems);
-        //_sMM.TryInvokeRunSystem(nameof(FertilizeUpdatorMasterSystem), _sMM.RPCSystems);
-
-
 
         for (int x = 0; x < _eGM.Xamount; x++)
             for (int y = 0; y < _eGM.Yamount; y++)
@@ -29,8 +25,8 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
             }
 
 
-        UIDownWorker.SetDoned(true, false);
-        UIDownWorker.SetDoned(false, false);
+        DownDonerUIWorker.SetDoned(true, false);
+        DownDonerUIWorker.SetDoned(false, false);
 
         _eGGUIM.MotionEnt_AmountCom.AmountMotions += 1;
 
@@ -43,7 +39,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
                 var xy = new int[] { x, y };
 
                 if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy)
-                    && CellGameWorker.IsActiveSelfParentCell(xy))
+                    && CellWorker.IsActiveSelfParentCell(xy))
                 {
                     ++amountAdultForest;
                 }
@@ -54,5 +50,9 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
             PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
             _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RpcSystems);
         }
+
+
+        Debug.Log("Units " + InfoAmountUnitsWorker.GetAmountAllUnitsInGame());
+        Debug.Log("Buildings " + InfoBuidlingsWorker.GetAmountAllBuild());
     }
 }

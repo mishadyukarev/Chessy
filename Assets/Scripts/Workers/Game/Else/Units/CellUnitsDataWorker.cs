@@ -260,10 +260,10 @@ namespace Assets.Scripts
 
 
         #region Condition
-        internal static ConditionUnitTypes ProtectRelaxType(int[] xy) => _cellUnitEntsContainer.CellUnitEnt_ProtectRelaxCom(xy).ProtectRelaxType;
+        internal static ConditionUnitTypes ConditionType(int[] xy) => _cellUnitEntsContainer.CellUnitEnt_ProtectRelaxCom(xy).ProtectRelaxType;
         internal static void SetProtectRelaxType(ConditionUnitTypes protectRelaxType, int[] xy) => _cellUnitEntsContainer.CellUnitEnt_ProtectRelaxCom(xy).ProtectRelaxType = protectRelaxType;
 
-        internal static void ResetProtectedRelaxType(int[] xy) => SetProtectRelaxType(ConditionUnitTypes.None, xy);
+        internal static void ResetConditionType(int[] xy) => SetProtectRelaxType(ConditionUnitTypes.None, xy);
         internal static bool IsProtectRelaxType(ConditionUnitTypes protectRelaxType, int[] xy) => _cellUnitEntsContainer.CellUnitEnt_ProtectRelaxCom(xy).ProtectRelaxType == protectRelaxType;
 
 
@@ -670,7 +670,7 @@ namespace Assets.Scripts
             var unitType = UnitType(fromXy);
             var amountHealth = AmountHealth(fromXy);
             var amountSteps = AmountSteps(fromXy);
-            var protectRelaxType = ProtectRelaxType(fromXy);
+            var protectRelaxType = ConditionType(fromXy);
             var player = Owner(fromXy);
 
             SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, toXy);
@@ -746,12 +746,6 @@ namespace Assets.Scripts
             ResetIsBot(xy);
         }
 
-        internal static void SyncPlayerUnit(UnitTypes unitType, int amountHealth, int amountSteps, ConditionUnitTypes protectRelaxType, Player player, int[] xy)
-        {
-            SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType, xy);
-            SetOwner(player, xy);
-        }
-
         internal static void ChangePlayerUnit(int[] xy, UnitTypes newUnitType)
         {
             SetUnitType(newUnitType, xy);
@@ -803,6 +797,14 @@ namespace Assets.Scripts
         }
 
         #endregion
+
+
+        internal static void SyncAll(UnitTypes unitType, Player owner, bool haveBot, int amountHealth, int amountSteps, ConditionUnitTypes conditionType, int[] xy)
+        {
+            SetStandartValuesUnit(unitType, amountHealth, amountSteps, conditionType, xy);
+            SetOwner(owner, xy);
+            SetIsBot(haveBot, xy);
+        }
 
 
         #region ForMoving
@@ -893,7 +895,7 @@ namespace Assets.Scripts
                 {
                     var xy1 = CellSpaceWorker.GetXYCell(xy, directType1);
 
-                    if (CellGameWorker.IsActiveSelfParentCell(xy1))
+                    if (CellWorker.IsActiveSelfParentCell(xy1))
                     {
                         if (HaveMinAmountSteps(xy))
                         {

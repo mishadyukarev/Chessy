@@ -6,17 +6,17 @@ public sealed class SystemsGameMasterManager : SystemsManager
 {
     internal EcsSystems RpcSystems { get; private set; }
     internal EcsSystems VisibilityUnitsSystems { get; private set; }
+    internal EcsSystems UpdateMotion { get; private set; }
 
 
     internal SystemsGameMasterManager(EcsWorld gameWorld) : base(gameWorld)
     {
         RpcSystems = new EcsSystems(gameWorld)
-            .Add(new UpdateMotionMasterSystem(), nameof(UpdateMotionMasterSystem))
             .Add(new BuilderMasterSystem(), nameof(BuilderMasterSystem))
             .Add(new DestroyMasterSystem(), nameof(DestroyMasterSystem))
             .Add(new ShiftUnitMasterSystem(), nameof(ShiftUnitMasterSystem))
             .Add(new AttackUnitMasterSystem(), nameof(AttackUnitMasterSystem))
-            .Add(new ProtectRelaxMasterSystem(), nameof(ProtectRelaxMasterSystem))
+            .Add(new ConditionMasterSystem(), nameof(ConditionMasterSystem))
             .Add(new ReadyMasterSystem(), nameof(ReadyMasterSystem))
             .Add(new DonerMasterSystem(), nameof(DonerMasterSystem))
             .Add(new CreatorUnitMasterSystem(), nameof(CreatorUnitMasterSystem))
@@ -32,6 +32,11 @@ public sealed class SystemsGameMasterManager : SystemsManager
 
         VisibilityUnitsSystems = new EcsSystems(gameWorld)
             .Add(new VisibilityUnitsMasterSystem(), nameof(VisibilityUnitsMasterSystem));
+
+        UpdateMotion = new EcsSystems(gameWorld)
+            .Add(new ExtractionUpdatorMasterSystem())
+            .Add(new FireUpdatorMasterSystem())
+            .Add(new UpdateMotionMasterSystem());
     }
 
     internal override void ProcessInjects()
@@ -40,6 +45,7 @@ public sealed class SystemsGameMasterManager : SystemsManager
 
         RpcSystems.ProcessInjects();
         VisibilityUnitsSystems.ProcessInjects();
+        UpdateMotion.ProcessInjects();
     }
 
     internal override void Init()
@@ -48,5 +54,6 @@ public sealed class SystemsGameMasterManager : SystemsManager
 
         RpcSystems.Init();
         VisibilityUnitsSystems.Init();
+        UpdateMotion.Init();
     }
 }

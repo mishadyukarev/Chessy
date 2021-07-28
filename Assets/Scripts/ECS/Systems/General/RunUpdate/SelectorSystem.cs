@@ -22,7 +22,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
         {
             if (IsClick)
             {
-               CanShiftUnit = false;
+                CanShiftUnit = false;
 
                 ClearAvailableCells();
 
@@ -34,7 +34,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
         {
             if (IsClick)
             {
-                if (UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient))
+                if (DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient))
                 {
                     if (CanExecuteStartClick)
                     {
@@ -71,9 +71,9 @@ internal sealed class SelectorSystem : IEcsRunSystem
                         }
                     }
 
-                    if (HaveAnySelectorUnit)
+                    else if (HaveAnySelectorUnit)
                     {
-                        PhotonPunRPC.SetUniToMaster(XyCurrentCell, SelectorUnitType);
+                        PhotonPunRPC.SetUniToMaster(XyCurrentCell, SelectedUnitType);
                     }
 
                     else if (CanExecuteStartClick)

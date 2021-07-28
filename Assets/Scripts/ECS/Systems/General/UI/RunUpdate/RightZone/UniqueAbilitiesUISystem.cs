@@ -3,19 +3,16 @@ using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else.Fire;
 using Assets.Scripts.Workers.Game.UI;
+using Leopotam.Ecs;
 using Photon.Pun;
-using static Assets.Scripts.Main;
 
-internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
+internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
 {
     private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
     internal UniqueAbilitiesUISystem() { }
 
-    public override void Run()
+    public void Run()
     {
-        base.Run();
-
-
         if (CellUnitsDataWorker.HaveAnyUnit(XySelectedCell))
         {
             if (CellUnitsDataWorker.HaveOwner(XySelectedCell))
@@ -74,66 +71,77 @@ internal sealed class UniqueAbilitiesUISystem : RPCGeneralSystemReduction
             {
                 UIRightWorker.SetActiveParentZone(true, UnitUIZoneTypes.Unique);
 
-                _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
-                _eGGUIM.Unique3AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
+                UIRightWorker.SetActiveUniqueButton(false, UniqueAbilitiesTypes.First);
+                UIRightWorker.SetActiveUniqueButton(false, UniqueAbilitiesTypes.Second);
+                UIRightWorker.SetActiveUniqueButton(false, UniqueAbilitiesTypes.Third);
 
-                if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, XySelectedCell))
+                UIRightWorker.RemoveAllListenersUniqueButton(UniqueAbilitiesTypes.First);
+
+
+
+                if (CellBuildingsDataWorker.HaveAnyBuilding(XySelectedCell))
                 {
-                    _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
-                    _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
-                    UIRightWorker.AddListener(delegate { Fire(XySelectedCell, XySelectedCell); }, UniqueAbilitiesTypes.First);
-
-                    if (CellFireDataWorker.HaveFire(XySelectedCell))
+                    if (CellBuildingsDataWorker.IsBuildingType(BuildingTypes.Woodcutter, XySelectedCell))
                     {
-                        _eGGUIM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Put Out FIRE";
+                        UIRightWorker.SetActiveUniqueButton(true, UniqueAbilitiesTypes.First);
+                        UIRightWorker.AddListenerUniqueButton(delegate { Fire(XySelectedCell, XySelectedCell); }, UniqueAbilitiesTypes.First);
+                        if (CellFireDataWorker.HaveFire(XySelectedCell))
+                        {
+                            UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Put Out FIRE");
+                        }
+                        else
+                        {
+                            UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Fire forest");
+                        }
                     }
-                    else
-                    {
-
-                        _eGGUIM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Fire forest";
-                    }
-                }
-
-                else if (!CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, XySelectedCell)
-                    && !CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.YoungForest, XySelectedCell))
-                {
-                    _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.gameObject.SetActive(true);
-                    _eGGUIM.Unique1AbilityEnt_ButtonCom.Button.onClick.RemoveAllListeners();
-                    UIRightWorker.AddListener(delegate { SeedEnvironment(EnvironmentTypes.YoungForest); }, UniqueAbilitiesTypes.First);
-                    _eGGUIM.UniqueFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI.text = "Seed Forest";
                 }
 
                 else
                 {
+                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, XySelectedCell))
+                    {
+                        UIRightWorker.SetActiveUniqueButton(true, UniqueAbilitiesTypes.First);
 
+                        UIRightWorker.AddListenerUniqueButton(delegate { Fire(XySelectedCell, XySelectedCell); }, UniqueAbilitiesTypes.First);
+
+                        if (CellFireDataWorker.HaveFire(XySelectedCell))
+                        {
+                            UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Put Out FIRE");
+                        }
+                        else
+                        {
+                            UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Fire forest");
+                        }
+                    }
+
+                    else if (!CellEnvirDataWorker.HaveEnvironments(XySelectedCell, new[] { EnvironmentTypes.Fertilizer, EnvironmentTypes.YoungForest }))
+                    {
+                        UIRightWorker.SetActiveUniqueButton(true, UniqueAbilitiesTypes.First);
+                        UIRightWorker.AddListenerUniqueButton(delegate { SeedEnvironment(EnvironmentTypes.YoungForest); }, UniqueAbilitiesTypes.First);
+                        UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Seed Forest");
+                    }
+
+                    else
+                    {
+
+                    }
                 }
-
-
-                _eGGUIM.Unique2AbilityEnt_ButtonCom.Button.gameObject.SetActive(false);
-
-
-
-
-
-
-
-
             }
         }
 
         else
         {
-            _eGGUIM.UniquePareZoneEnt_ParentCom.ParentGO.SetActive(false);
+            UIRightWorker.SetActiveParentZone(false, UnitUIZoneTypes.Unique);
         }
     }
 
     private void SeedEnvironment(EnvironmentTypes environmentType)
     {
-        if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient)) PhotonPunRPC.SeedEnvironmentToMaster(XySelectedCell, environmentType);
+        if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient)) PhotonPunRPC.SeedEnvironmentToMaster(XySelectedCell, environmentType);
     }
 
     private void Fire(int[] fromXy, int[] toXy)
     {
-        if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient)) PhotonPunRPC.FireToMaster(fromXy, toXy);
+        if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient)) PhotonPunRPC.FireToMaster(fromXy, toXy);
     }
 }

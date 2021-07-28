@@ -67,7 +67,7 @@ namespace Assets.Scripts.Workers.Game.Else
         }
 
         internal static void AddAvailableCell(AvailableCellTypes availableCellType, int[] xy) => GetAllCells(availableCellType).Add(xy);
-        internal static void ClearAvailableCells(AvailableCellTypes availableCellType) => GetAllCells(availableCellType).Clear();       
+        internal static void ClearAvailableCells(AvailableCellTypes availableCellType) => GetAllCells(availableCellType).Clear();
         internal static int[] GetCellByIndex(AvailableCellTypes availableCellType, int index) => GetAllCells(availableCellType)[index];
         internal static void RemoveAt(AvailableCellTypes availableCellType, int index) => GetAllCells(availableCellType).RemoveAt(index);
         internal static bool TryFindCell(AvailableCellTypes availableCellType, int[] xy) => GetAllCells(availableCellType).TryFindCell(xy);

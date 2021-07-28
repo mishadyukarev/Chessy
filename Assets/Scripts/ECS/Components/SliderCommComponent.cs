@@ -6,6 +6,6 @@ namespace Assets.Scripts
     {
         internal Slider Slider { get; private set; }
 
-        internal SliderCommComponent(Slider slider) => Slider = slider; 
+        internal SliderCommComponent(Slider slider) => Slider = slider;
     }
 }

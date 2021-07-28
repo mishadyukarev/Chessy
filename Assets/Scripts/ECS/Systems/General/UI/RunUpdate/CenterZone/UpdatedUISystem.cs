@@ -1,32 +1,30 @@
-﻿using Assets.Scripts;
+﻿using Assets.Scripts.Workers.Game.UI.Middle;
+using Leopotam.Ecs;
 using UnityEngine;
 
-internal sealed class UpdatedUISystem : SystemGeneralReduction
+internal sealed class UpdatedUISystem : IEcsRunSystem
 {
     private float _timer;
 
-    public override void Run()
+    public void Run()
     {
-
-        base.Run();
-
-        if (_eGGUIM.MotionEnt_ActivatedCom.IsActivated)
+        if (UpdatedUIWorker.IsActivated)
         {
-            _eGGUIM.MotionEnt_TextMeshProUGUICom.TextMeshProUGUI.text = "Motion: " + _eGGUIM.MotionEnt_AmountCom.AmountMotions;
-            _eGGUIM.MotionEnt_ParentCom.ParentGO.SetActive(true);
+            UpdatedUIWorker.Text = "Motion: " + UpdatedUIWorker.AmountMotions;
+            UpdatedUIWorker.SetActiveParent(true);
 
             _timer += Time.deltaTime;
 
             if (_timer >= 1)
             {
-                _eGGUIM.MotionEnt_ParentCom.ParentGO.SetActive(false);
-                _eGGUIM.MotionEnt_ActivatedCom.IsActivated = false;
+                UpdatedUIWorker.SetActiveParent(false);
+                UpdatedUIWorker.IsActivated = false;
                 _timer = 0;
             }
         }
         else
         {
-            _eGGUIM.MotionEnt_ParentCom.ParentGO.SetActive(false);
+            UpdatedUIWorker.SetActiveParent(false);
         }
     }
 }

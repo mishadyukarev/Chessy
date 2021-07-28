@@ -2,6 +2,8 @@
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Assets.Scripts.Workers.Game.Else.Fire;
+using Assets.Scripts.Workers.Game.Else.Info.Units;
+using Assets.Scripts.Workers.Info;
 
 internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 {
@@ -20,17 +22,36 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                 {
                     CellFireDataWorker.AddTimeSteps(xy);
 
-                    CellUnitsDataWorker.TakeAmountHealth(xy, 40);
-
-                    if (!CellUnitsDataWorker.HaveAmountHealth(xy))
+                    if (CellUnitsDataWorker.HaveAnyUnit(xy))
                     {
-                        CellUnitsDataWorker.ResetUnit(xy);
+                        CellUnitsDataWorker.TakeAmountHealth(xy, 40);
+
+                        if (!CellUnitsDataWorker.HaveAmountHealth(xy))
+                        {
+                            var conditionType = CellUnitsDataWorker.ConditionType(xy);
+                            var unitType = CellUnitsDataWorker.UnitType(xy);
+                            var key = CellUnitsDataWorker.IsMasterClient(xy);
+
+                            InfoAmountUnitsWorker.RemoveAmountUnitsInGame(unitType, key, xy);
+                            InfoUnitsConditionWorker.RemoveUnitInCondition(conditionType, unitType, key, xy);
+                            CellUnitsDataWorker.ResetUnit(xy);
+                        }
                     }
+
 
 
                     if (CellFireDataWorker.TimeSteps(xy) >= 3)
                     {
-                        CellBuildingsDataWorker.ResetBuilding(xy);
+
+                        if (CellBuildingsDataWorker.HaveAnyBuilding(xy))
+                        {
+                            var buildType = CellBuildingsDataWorker.GetBuildingType(xy);
+                            var key = CellBuildingsDataWorker.IsMasterBuilding(xy);
+
+                            InfoBuidlingsWorker.RemoveXyBuild(buildType, key, xy);
+                            CellBuildingsDataWorker.ResetBuild(xy);
+                        }
+
                         CellEnvirDataWorker.ResetEnvironment(EnvironmentTypes.AdultForest, xy);
 
                         CellFireDataWorker.ResetFire(xy);

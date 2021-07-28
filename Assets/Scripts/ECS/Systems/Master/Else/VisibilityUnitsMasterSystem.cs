@@ -11,8 +11,8 @@ internal sealed class VisibilityUnitsMasterSystem : IEcsRunSystem
 
     public void Run()
     {
-        for (int x = 0; x < CellGameWorker.Xamount; x++)
-            for (int y = 0; y < CellGameWorker.Yamount; y++)
+        for (int x = 0; x < CellWorker.Xamount; x++)
+            for (int y = 0; y < CellWorker.Yamount; y++)
             {
                 var xy = new int[] { x, y };
 

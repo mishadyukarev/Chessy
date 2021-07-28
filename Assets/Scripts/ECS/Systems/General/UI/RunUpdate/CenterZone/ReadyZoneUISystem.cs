@@ -1,31 +1,29 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Workers.Game.UI;
+﻿using Assets.Scripts.Workers.Game.UI;
+using Leopotam.Ecs;
 using Photon.Pun;
 using UnityEngine;
 using static Assets.Scripts.Main;
 
-internal sealed class ReadyZoneUISystem : SystemGeneralReduction
+internal sealed class ReadyZoneUISystem : IEcsRunSystem
 {
-    public override void Run()
+    public void Run()
     {
-        base.Run();
-
         if (UIMiddleWorker.IsReady(Instance.IsMasterClient))
         {
-            _eGGUIM.ReadyEnt_ButtonCom.Button.image.color = Color.red;
+            ReadyZoneUIWorker.SetColorButton(Color.red);
         }
         else
         {
-            _eGGUIM.ReadyEnt_ButtonCom.Button.image.color = Color.white;
+            ReadyZoneUIWorker.SetColorButton(Color.white);
         }
 
-        if (_eGGUIM.ReadyEnt_StartedGameCom.IsStartedGame || PhotonNetwork.OfflineMode/*Instance.GameModeType == GameModTypes.WithBot*/)
+        if (ReadyZoneUIWorker.IsStartedGame || PhotonNetwork.OfflineMode)
         {
-            _eGGUIM.ReadyEnt_ParentCom.ParentGO.SetActive(false);
+            ReadyZoneUIWorker.SetActiveParentGO(false);
         }
         else
         {
-            _eGGUIM.ReadyEnt_ParentCom.ParentGO.SetActive(true);
+            ReadyZoneUIWorker.SetActiveParentGO(true);
         }
     }
 }

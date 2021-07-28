@@ -24,7 +24,7 @@ namespace Assets.Scripts.Workers
 
         internal static bool HaveAnyBuilding(int[] xy) => GetBuildingType(xy) != BuildingTypes.None;
         internal static bool IsBuildingType(BuildingTypes buildingType, int[] xy) => GetBuildingType(xy) == buildingType;
-        internal static void ResetBuildingType(int[] xy) => SetBuildingType(BuildingTypes.None, xy);
+        internal static void ResetBuildingType(int[] xy) => SetBuildingType(default, xy);
 
         #endregion
 
@@ -38,6 +38,7 @@ namespace Assets.Scripts.Workers
         internal static bool IsMasterBuilding(int[] xy) => Owner(xy).IsMasterClient;
         internal static int ActorNumber(int[] xy) => Owner(xy).ActorNumber;
         internal static bool IsHim(Player player, int[] xy) => ActorNumber(xy) == player.ActorNumber;
+        internal static bool IsMine(int[] xy) => Owner(xy).IsLocal;
 
         #endregion
 
@@ -110,7 +111,7 @@ namespace Assets.Scripts.Workers
         #endregion
 
 
-        internal static void CreatePlayerBuilding(BuildingTypes buildingType, Player owner, int[] xy)
+        internal static void SetPlayerBuilding(BuildingTypes buildingType, Player owner, int[] xy)
         {
             SetBuildingType(buildingType, xy);
             SetOwner(owner, xy);
@@ -120,7 +121,7 @@ namespace Assets.Scripts.Workers
             SetBuildingType(buildingType, xy);
             SetIsBot(true, xy);
         }
-        internal static void ResetBuilding(int[] xy)
+        internal static void ResetBuild(int[] xy)
         {
             ResetOwner(xy);
             ResetIsBot(xy);

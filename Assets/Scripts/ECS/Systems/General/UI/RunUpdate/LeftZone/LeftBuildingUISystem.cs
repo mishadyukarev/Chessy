@@ -2,64 +2,60 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.UI;
+using Assets.Scripts.Workers.Game.UI.Left;
+using Leopotam.Ecs;
 using Photon.Pun;
-using static Assets.Scripts.Main;
-using static Assets.Scripts.PhotonPunRPC;
 
-internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
+internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
 {
     private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
-    public override void Init()
+    public void Init()
     {
-        base.Init();
 
-        _eGGUIM.MeltOreEnt_ButtonCom.Button.onClick.AddListener(delegate { MeltOre(); });
+        LeftBuildUIWorker.AddListener(LeftBuildButtonTypes.BuyPawn, delegate { BuyUnit(UnitTypes.Pawn); });
+        LeftBuildUIWorker.AddListener(LeftBuildButtonTypes.BuyRook, delegate { BuyUnit(UnitTypes.Rook); });
+        LeftBuildUIWorker.AddListener(LeftBuildButtonTypes.BuyBishop, delegate { BuyUnit(UnitTypes.Bishop); });
 
-        _eGGUIM.BuyPawnUIEnt_ButtonCom.Button.onClick.AddListener(delegate { BuyUnit(UnitTypes.Pawn); });
-        _eGGUIM.BuyRookUIEnt_ButtonCom.Button.onClick.AddListener(delegate { BuyUnit(UnitTypes.Rook); });
-        _eGGUIM.BuyBishopUIEnt_ButtonCom.Button.onClick.AddListener(delegate { BuyUnit(UnitTypes.Bishop); });
+        LeftBuildUIWorker.AddListener(LeftBuildButtonTypes.Melt, delegate { MeltOre(); });
+        LeftBuildUIWorker.AddListener(LeftBuildButtonTypes.UpgradeUnit, delegate { ToggleUpgradeMod(UpgradeModTypes.Unit); });
 
-        _eGGUIM.UpgradeUnitUIEnt_ButtonCom.Button.onClick.AddListener(delegate { ToggleUpgradeMod(UpgradeModTypes.Unit); });
-
-
-        _eGGUIM.UpgradeFarmUIEnt_ButtonCom.Button.onClick.AddListener(delegate { UpgradeBuilding(BuildingTypes.Farm); });
-        _eGGUIM.UpgradeWoodcutterUIEnt_ButtonCom.Button.onClick.AddListener(delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
-        _eGGUIM.UpgradeMineUIEnt_ButtonCom.Button.onClick.AddListener(delegate { UpgradeBuilding(BuildingTypes.Mine); });
+        LeftBuildUIWorker.AddListener(LeftBuildButtonTypes.UpgradeFarm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
+        LeftBuildUIWorker.AddListener(LeftBuildButtonTypes.UpgradeWoodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
+        LeftBuildUIWorker.AddListener(LeftBuildButtonTypes.UpgradeMine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
     }
 
-    public override void Run()
+    public void Run()
     {
-        base.Run();
 
-        if (_eGM.SelectorEnt_SelectorCom.IsSelected && CellBuildingsDataWorker.GetBuildingType(XySelectedCell) == BuildingTypes.City)
+        if (SelectorWorker.IsSelectedCell && CellBuildingsDataWorker.IsBuildingType(BuildingTypes.City, XySelectedCell))
         {
-            if (CellUnitsDataWorker.HaveOwner(XySelectedCell))
+            if (CellBuildingsDataWorker.HaveOwner(XySelectedCell))
             {
-                if (CellUnitsDataWorker.IsMine(XySelectedCell))
+                if (CellBuildingsDataWorker.IsMine(XySelectedCell))
                 {
-                    _eGGUIM.BuildingZoneEnt_ParentCom.ParentGO.SetActive(true);
+                    LeftBuildUIWorker.SetActiveZone(true);
                 }
-                else _eGGUIM.BuildingZoneEnt_ParentCom.ParentGO.SetActive(false);
+                else LeftBuildUIWorker.SetActiveZone(false);
             }
         }
         else
         {
-            _eGGUIM.BuildingZoneEnt_ParentCom.ParentGO.SetActive(false);
+            LeftBuildUIWorker.SetActiveZone(false);
         }
     }
 
 
     private void BuyUnit(UnitTypes unitType)
     {
-        if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient)) CreateUnitToMaster(unitType);
+        if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient)) PhotonPunRPC.CreateUnitToMaster(unitType);
     }
     private void ToggleUpgradeMod(UpgradeModTypes upgradeModType)
     {
-        if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient))
+        if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient))
         {
             if (SelectorWorker.IsUpgradeModType(UpgradeModTypes.None))
             {
-                _eGM.SelectorEnt_UpgradeModTypeCom.UpgradeModType = upgradeModType;
+                SelectorWorker.UpgradeModType = upgradeModType;
             }
             else
             {
@@ -70,11 +66,11 @@ internal sealed class LeftBuildingUISystem : RPCGeneralSystemReduction
 
     private void UpgradeBuilding(BuildingTypes buildingType)
     {
-        if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient)) UpgradeBuildingToMaster(buildingType);
+        if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient)) PhotonPunRPC.UpgradeBuildingToMaster(buildingType);
     }
 
     private void MeltOre()
     {
-        if (!UIDownWorker.IsDoned(PhotonNetwork.IsMasterClient)) MeltOreToMaster();
+        if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient)) PhotonPunRPC.MeltOreToMaster();
     }
 }

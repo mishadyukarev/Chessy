@@ -91,7 +91,7 @@ namespace Assets.Scripts
             audioSource.Play();
 
 
-            
+
             var canvas = GameObject.Instantiate(ResourcesEnt_ResourcesCommonCom.PrefabConfig.Canvas);
             canvas.name = "Canvas";
             _canvasEnt = commonWorld.NewEntity()

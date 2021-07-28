@@ -15,11 +15,10 @@ namespace Assets.Scripts.Workers
 
         internal static bool IsSelectedCell
         {
-            get => EGGM.SelectorEnt_SelectorCom.IsSelected;
-            set => EGGM.SelectorEnt_SelectorCom.IsSelected = value;
+            get => EGGM.SelectorEnt_SelectorCom.IsSelectedCell;
+            set => EGGM.SelectorEnt_SelectorCom.IsSelectedCell = value;
         }
-        internal static bool HaveAnySelectorUnit => EGGM.SelectorEnt_UnitTypeCom.UnitType != UnitTypes.None;
-        internal static UnitTypes SelectorUnitType => EGGM.SelectorEnt_UnitTypeCom.UnitType;
+        internal static bool HaveAnySelectorUnit => SelectedUnitType != UnitTypes.None;
 
         internal static UpgradeModTypes UpgradeModType
         {
