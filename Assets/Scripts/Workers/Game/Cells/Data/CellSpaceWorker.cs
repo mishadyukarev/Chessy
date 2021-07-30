@@ -17,10 +17,10 @@ namespace Assets.Scripts.Workers.Cell
                 xyResultCell[X] = xyStartCell[X] + xyDirectCell[X];
                 xyResultCell[Y] = xyStartCell[Y] + xyDirectCell[Y];
 
-                if (CellViewWorker.IsActiveSelfParentCell(xyResultCell))
-                {
+                //if (CellViewWorker.IsActiveSelfParentCell(xyResultCell))
+                //{
                     xyAvailableCells.Add((int[])xyResultCell.Clone());
-                }
+                //}
             }
 
             return xyAvailableCells;

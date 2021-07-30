@@ -39,10 +39,15 @@ namespace Assets.Scripts.Workers.Game.Else.Data
                     throw new Exception();
             }
         }
+        private static UnityEvent UnityEventStepsMistake => _container.MistakeStepsEnt_UnityEventCom.UnityEvent;
+        private static UnityEvent NeedOtherPlaceUnityEventMistake => _container.MistakeNeedOtherPlaceEnt_UnityEventCom.UnityEvent;
 
-        internal static void AddListenerEconomyMistake(ResourceTypes resourceType, UnityAction unityAction)
-            => GetUnityEventEconomyMistake(resourceType).AddListener(unityAction);
+        internal static void AddListenerEconomyMistake(ResourceTypes resourceType, UnityAction unityAction) => GetUnityEventEconomyMistake(resourceType).AddListener(unityAction);
+        internal static void AddListenerStepMistake(UnityAction unityAction) => UnityEventStepsMistake.AddListener(unityAction);
+        internal static void AddListenerNeedOtherPlaceMistake(UnityAction unityAction) => NeedOtherPlaceUnityEventMistake.AddListener(unityAction);
 
         internal static void InvokeEconomyMistake(ResourceTypes resourceType) => GetUnityEventEconomyMistake(resourceType).Invoke();
+        internal static void InvokeStepsMistake() => UnityEventStepsMistake.Invoke();
+        internal static void InvokeNeedOtherPlace() => NeedOtherPlaceUnityEventMistake.Invoke();
     }
 }

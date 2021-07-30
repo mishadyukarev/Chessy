@@ -2,6 +2,8 @@
 {
     None,
 
-    EconomyType,
-    UnitType
+    Economy,
+    NeedKing,
+    NeedSteps,
+    NeedOtherPlace
 }

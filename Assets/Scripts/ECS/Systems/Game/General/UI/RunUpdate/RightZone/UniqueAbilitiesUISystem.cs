@@ -71,61 +71,31 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
             {
                 UIRightWorker.SetActiveParentZone(true, UnitUIZoneTypes.Unique);
 
-                UIRightWorker.SetActiveUniqueButton(false, UniqueAbilitiesTypes.First);
                 UIRightWorker.SetActiveUniqueButton(false, UniqueAbilitiesTypes.Second);
                 UIRightWorker.SetActiveUniqueButton(false, UniqueAbilitiesTypes.Third);
+
 
                 UIRightWorker.RemoveAllListenersUniqueButton(UniqueAbilitiesTypes.First);
 
 
 
-                if (CellBuildingsDataWorker.HaveAnyBuilding(XySelectedCell))
+                if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, XySelectedCell))
                 {
-                    if (CellBuildingsDataWorker.IsBuildingType(BuildingTypes.Woodcutter, XySelectedCell))
+                    UIRightWorker.AddListenerUniqueButton(delegate { Fire(XySelectedCell, XySelectedCell); }, UniqueAbilitiesTypes.First);
+                    if (CellFireDataWorker.HaveFire(XySelectedCell))
                     {
-                        UIRightWorker.SetActiveUniqueButton(true, UniqueAbilitiesTypes.First);
-                        UIRightWorker.AddListenerUniqueButton(delegate { Fire(XySelectedCell, XySelectedCell); }, UniqueAbilitiesTypes.First);
-                        if (CellFireDataWorker.HaveFire(XySelectedCell))
-                        {
-                            UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Put Out FIRE");
-                        }
-                        else
-                        {
-                            UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Fire forest");
-                        }
+                        UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Put Out FIRE");
                     }
-                }
-
-                else
-                {
-
-                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, XySelectedCell))
-                    {
-                        UIRightWorker.SetActiveUniqueButton(true, UniqueAbilitiesTypes.First);
-
-                        UIRightWorker.AddListenerUniqueButton(delegate { Fire(XySelectedCell, XySelectedCell); }, UniqueAbilitiesTypes.First);
-
-                        if (CellFireDataWorker.HaveFire(XySelectedCell))
-                        {
-                            UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Put Out FIRE");
-                        }
-                        else
-                        {
-                            UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Fire forest");
-                        }
-                    }
-
-                    else if (!CellEnvirDataWorker.HaveEnvironments(XySelectedCell, new[] { EnvironmentTypes.Fertilizer, EnvironmentTypes.YoungForest }))
-                    {
-                        UIRightWorker.SetActiveUniqueButton(true, UniqueAbilitiesTypes.First);
-                        UIRightWorker.AddListenerUniqueButton(delegate { SeedEnvironment(EnvironmentTypes.YoungForest); }, UniqueAbilitiesTypes.First);
-                        UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Seed Forest");
-                    }
-
                     else
                     {
-
+                        UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Fire forest");
                     }
+
+                }
+                else
+                {
+                    UIRightWorker.AddListenerUniqueButton(delegate { SeedEnvironment(EnvironmentTypes.YoungForest); }, UniqueAbilitiesTypes.First);
+                    UIRightWorker.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Seed Forest");
                 }
             }
         }

@@ -95,8 +95,10 @@ namespace Assets.Scripts
         public static void EndGameToMaster(int actorNumberWinner) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.EndGame, new object[] { actorNumberWinner });
         public static void EndGameToGeneral(RpcTarget rpcTarget, int actorNumberWinner) => _photonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
 
-        public static void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.EconomyType, haves });
-        public static void MistakeUnitToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.UnitType });
+        public static void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.Economy, haves });
+        public static void MistakeUnitToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedKing });
+        public static void MistakeStepsUnitToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedSteps });
+        public static void MistakeNeedOthePlaceToGeneral(Player playerTo) => _photonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedOtherPlace });
 
         public static void FireToMaster(int[] fromXy, int[] toXy) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromXy, toXy });
         public static void SeedEnvironmentToMaster(int[] xy, EnvironmentTypes environmentType) => _photonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { xy, environmentType });
@@ -276,7 +278,7 @@ namespace Assets.Scripts
                         case MistakeTypes.None:
                             throw new Exception();
 
-                        case MistakeTypes.EconomyType:
+                        case MistakeTypes.Economy:
                             var haves = (bool[])objects[_currentNumber++];
                             var haveFood = haves[0];
                             var haveWood = haves[1];
@@ -291,8 +293,16 @@ namespace Assets.Scripts
                             if (!haveGold) MistakeEconomyEventDataWorker.InvokeEconomyMistake(ResourceTypes.Gold);
                             break;
 
-                        case MistakeTypes.UnitType:
+                        case MistakeTypes.NeedKing:
                             EGGUIM.DonerUIEnt_MistakeCom.MistakeUnityEvent.Invoke();
+                            break;
+
+                        case MistakeTypes.NeedSteps:
+                            MistakeEconomyEventDataWorker.InvokeStepsMistake();
+                            break;
+
+                        case MistakeTypes.NeedOtherPlace:
+                            MistakeEconomyEventDataWorker.InvokeNeedOtherPlace();
                             break;
 
                         default:

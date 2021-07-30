@@ -19,8 +19,8 @@ namespace Assets.Scripts
 
         internal const int START_FERTILIZER_PERCENT = 30;
         internal const int START_FOREST_PERCENT = 40;
-        internal const int START_HILL_PERCENT = 25;
-        internal const int START_MOUNTAIN_PERCENT = 15;
+        internal const int START_HILL_PERCENT = 40;
+        internal const int START_MOUNTAIN_PERCENT = 25;
 
 
         internal CellEnvirDataWorker(CellEnvirDataContainerEnts cellEnvironmentEntsContainer)

@@ -30,43 +30,8 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
                 {
                     if (CellUnitsDataWorker.HaveOwner(xy))
                     {
-                        switch (CellUnitsDataWorker.UnitType(xy))
-                        {
-                            case UnitTypes.None:
-                                break;
-
-                            case UnitTypes.King:
-                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.King, CellUnitsDataWorker.IsMasterClient(xy));
-                                InfoAmountUnitsWorker.RemoveAmountUnitsInGame(UnitTypes.King, CellUnitsDataWorker.IsMasterClient(xy), xy);
-                                break;
-
-                            case UnitTypes.Pawn:
-                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.Pawn, CellUnitsDataWorker.IsMasterClient(xy));
-                                break;
-
-                            case UnitTypes.PawnSword:
-                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.PawnSword, CellUnitsDataWorker.IsMasterClient(xy));
-                                break;
-
-                            case UnitTypes.Rook:
-                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.Rook, CellUnitsDataWorker.IsMasterClient(xy));
-                                break;
-
-                            case UnitTypes.RookCrossbow:
-                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.RookCrossbow, CellUnitsDataWorker.IsMasterClient(xy));
-                                break;
-
-                            case UnitTypes.Bishop:
-                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.Bishop, CellUnitsDataWorker.IsMasterClient(xy));
-                                break;
-
-                            case UnitTypes.BishopCrossbow:
-                                InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.BishopCrossbow, CellUnitsDataWorker.IsMasterClient(xy));
-                                break;
-
-                            default:
-                                break;
-                        }
+                        InventorUnitsDataWorker.AddUnitsInInventor(CellUnitsDataWorker.UnitType(xy), CellUnitsDataWorker.IsMasterClient(xy));
+                        InfoAmountUnitsWorker.RemoveAmountUnitsInGame(CellUnitsDataWorker.UnitType(xy), CellUnitsDataWorker.IsMasterClient(xy), xy);
 
                         CellUnitsDataWorker.ResetUnit(xy);
                     }

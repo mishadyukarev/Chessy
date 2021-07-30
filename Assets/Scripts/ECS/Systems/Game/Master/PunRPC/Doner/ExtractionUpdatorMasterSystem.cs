@@ -7,6 +7,7 @@ using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Info;
 using Leopotam.Ecs;
 using Photon.Pun;
+using System;
 
 internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
 {
@@ -149,6 +150,37 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
 
             ResourcesDataUIWorker.TakeAmountResources(ResourceTypes.Food, isMasterKey, amountUnits);
             ResourcesDataUIWorker.AddAmountResources(ResourceTypes.Food, isMasterKey);
+        }
+
+
+
+        TryRemoveUnit(true);
+        TryRemoveUnit(false);
+    }
+
+
+    private void TryRemoveUnit(bool isMaster)
+    {
+        if (ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Food, isMaster) < 0)
+        {
+            for (UnitTypes unitType = (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length - 1; unitType != UnitTypes.None; unitType--)
+            {
+                var amountUnits = InfoAmountUnitsWorker.GetAmountUnitsInGame(unitType, isMaster);
+
+                if (amountUnits > 0)
+                {
+                    var xyUnit = InfoAmountUnitsWorker.GetXyUnitInGame(unitType, isMaster, amountUnits - 1);
+
+
+                    InfoAmountUnitsWorker.RemoveAmountUnitsInGame(unitType, isMaster, xyUnit);
+                    InfoUnitsConditionWorker.RemoveUnitInCondition(CellUnitsDataWorker.ConditionType(xyUnit), unitType, isMaster, xyUnit);
+
+                    CellUnitsDataWorker.ResetUnit(xyUnit);
+                    break;
+                }
+            }
+
+            ResourcesDataUIWorker.SetAmountResources(ResourceTypes.Food, isMaster, 0);
         }
     }
 }

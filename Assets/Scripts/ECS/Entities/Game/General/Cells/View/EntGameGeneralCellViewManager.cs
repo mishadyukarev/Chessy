@@ -138,38 +138,34 @@ namespace Assets.Scripts.ECS.Entities.Game.General.Cells.View
 
                         int random;
 
-                        if (y >= 4 && y <= 6)
+                        random = Random.Range(1, 100);
+                        if (random <= START_FOREST_PERCENT)
+                        {
+                            SetNewEnvironment(EnvironmentTypes.AdultForest, xy);
+                        }
+                        else
+                        {
+                            random = Random.Range(1, 100);
+                            if (random <= START_FERTILIZER_PERCENT)
+                            {
+                                SetNewEnvironment(EnvironmentTypes.Fertilizer, xy);
+                            }
+                        }
+
+
+                        if (y == 5)
+                        {
+
+                            random = Random.Range(1, 100);
+                            if (random <= START_HILL_PERCENT)
+                                SetNewEnvironment(EnvironmentTypes.Hill, xy);
+
+                        }
+                        else if (y == 4 || y == 6)
                         {
                             random = Random.Range(1, 100);
                             if (random <= START_MOUNTAIN_PERCENT)
                                 SetNewEnvironment(EnvironmentTypes.Mountain, xy);
-                        }
-
-                        if (!HaveEnvironment(EnvironmentTypes.Mountain, xy))
-                        {
-                            random = Random.Range(1, 100);
-                            if (random <= START_FOREST_PERCENT)
-                            {
-                                SetNewEnvironment(EnvironmentTypes.AdultForest, xy);
-                            }
-
-                            if (!HaveEnvironment(EnvironmentTypes.AdultForest, xy))
-                            {
-                                random = Random.Range(1, 100);
-                                if (random <= START_FERTILIZER_PERCENT)
-                                {
-                                    SetNewEnvironment(EnvironmentTypes.Fertilizer, xy);
-                                }
-                            }
-
-
-                            if (y >= 4 && y <= 6)
-                            {
-                                random = Random.Range(1, 100);
-                                if (random <= START_HILL_PERCENT)
-                                    SetNewEnvironment(EnvironmentTypes.Hill, xy);
-
-                            }
                         }
                     }
             }

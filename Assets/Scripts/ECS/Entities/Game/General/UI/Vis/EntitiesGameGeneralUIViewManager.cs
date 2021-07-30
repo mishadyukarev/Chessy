@@ -38,7 +38,7 @@ public sealed class EntitiesGameGeneralUIViewManager
     internal ref TextMeshProUGUIComponent MotionEnt_TextMeshProUGUICom => ref _motionEnt.Get<TextMeshProUGUIComponent>();
 
 
-    private MistakeInfoVisUIContainer _mistakeVisUICont;
+    private CenterSupTextUIViewContainer _mistakeVisUICont;
 
 
 
@@ -319,8 +319,8 @@ public sealed class EntitiesGameGeneralUIViewManager
 
 
 
-        _mistakeVisUICont = new MistakeInfoVisUIContainer(middleZone, gameWorld);
-        new MistakeInfoVisUIWorker(_mistakeVisUICont);
+        _mistakeVisUICont = new CenterSupTextUIViewContainer(middleZone, gameWorld);
+        new CenterSupTextUIViewWorker(_mistakeVisUICont);
 
 
         #endregion

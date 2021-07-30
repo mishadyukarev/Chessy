@@ -62,9 +62,12 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                         var aroundXYList = CellSpaceWorker.TryGetXYAround(xy);
                         foreach (var xy1 in aroundXYList)
                         {
-                            if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy1))
+                            if (CellViewWorker.IsActiveSelfParentCell(xy1))
                             {
-                                CellFireDataWorker.EnableFire(xy1);
+                                if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy1))
+                                {
+                                    CellFireDataWorker.EnableFire(xy1);
+                                }
                             }
                         }
                     }

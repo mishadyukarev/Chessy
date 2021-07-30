@@ -34,6 +34,7 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
         }
         else
         {
+            PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
             PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
         }
     }

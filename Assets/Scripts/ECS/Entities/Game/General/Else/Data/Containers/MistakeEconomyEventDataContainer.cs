@@ -26,6 +26,14 @@ namespace Assets.Scripts.ECS.Entities.Game.General.Else.Data.Containers
         internal ref UnityEventComponent MistakeGoldEventEnt_UnityEventCom => ref _mistakeGoldEnt.Get<UnityEventComponent>();
 
 
+        private EcsEntity _mistakeStepsEnt;
+        internal ref UnityEventComponent MistakeStepsEnt_UnityEventCom => ref _mistakeStepsEnt.Get<UnityEventComponent>();
+
+
+        private EcsEntity _mistakeNeedOtherPlaceEnt;
+        internal ref UnityEventComponent MistakeNeedOtherPlaceEnt_UnityEventCom => ref _mistakeNeedOtherPlaceEnt.Get<UnityEventComponent>();
+
+
         internal MistakeEconomyEventDataContainer(EcsWorld gameWorld)
         {
             _mistakeFoodEnt = gameWorld.NewEntity()
@@ -41,6 +49,12 @@ namespace Assets.Scripts.ECS.Entities.Game.General.Else.Data.Containers
                 .Replace(new UnityEventComponent(new UnityEvent()));
 
             _mistakeGoldEnt = gameWorld.NewEntity()
+                .Replace(new UnityEventComponent(new UnityEvent()));
+
+            _mistakeStepsEnt = gameWorld.NewEntity()
+                .Replace(new UnityEventComponent(new UnityEvent()));
+
+            _mistakeNeedOtherPlaceEnt = gameWorld.NewEntity()
                 .Replace(new UnityEventComponent(new UnityEvent()));
         }
     }

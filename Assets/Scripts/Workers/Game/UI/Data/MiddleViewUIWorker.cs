@@ -12,11 +12,6 @@ namespace Assets.Scripts.Workers.Game.UI
             get => EGGUIM.ReadyEnt_StartedGameCom.IsStartedGame;
             set => EGGUIM.ReadyEnt_StartedGameCom.IsStartedGame = value;
         }
-        //internal static MistakeTypes MistakeTypeBar
-        //{
-        //    get => EGGUIM.MistakeBarEnt_MistakeTypesCom.MistakeType;
-        //    set => EGGUIM.MistakeBarEnt_MistakeTypesCom.MistakeType = value;
-        //}
         //internal static void SetActiveMistakeBar(bool isActive) => EGGUIM.MistakeBarVisUIEnt_ParentCom.ParentGO.SetActive(isActive);
         //internal static string TextMistakeBar
         //{

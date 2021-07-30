@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.Workers.Game.Else.Cell;
 using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using System;
@@ -20,6 +22,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
         if (CellBuildingsDataWorker.HaveAnyBuilding(XyCellForBuilding))
         {
+            PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
             PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
         }
 
@@ -32,32 +35,53 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
 
                 case BuildingTypes.City:
-                    if (CellUnitsDataWorker.HaveMaxAmountSteps(XyCellForBuilding))
+                    if (CellUnitsDataWorker.HaveMinAmountSteps(XyCellForBuilding))
                     {
-                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
+                        bool canSetCity = true;
 
-                        CellBuildingsDataWorker.SetPlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
-                        InfoBuidlingsWorker.AddXyBuild(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+                        foreach (var xy in CellSpaceWorker.TryGetXYAround(XyCellForBuilding))
+                        {
+                            if (!CellViewWorker.IsActiveSelfParentCell(xy))
+                            {
+                                canSetCity = false;
+                            }
+                        }
 
-                        CellUnitsDataWorker.ResetAmountSteps(XyCellForBuilding);
+                        if (canSetCity)
+                        {
+                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
 
-                        if (HaveEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding)) ResetEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding);
-                        if (HaveEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding)) ResetEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding);
+                            CellBuildingsDataWorker.SetPlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
+                            InfoBuidlingsWorker.AddXyBuild(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+
+                            CellUnitsDataWorker.ResetAmountSteps(XyCellForBuilding);
+
+                            if (HaveEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding)) ResetEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding);
+                            if (HaveEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding)) ResetEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding);
+                        }
+
+                        else
+                        {
+                            PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
+                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        }
                     }
                     else
                     {
+                        PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                     }
                     break;
 
 
                 case BuildingTypes.Farm:
-                    if (!HaveEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding) && !HaveEnvironment(EnvironmentTypes.YoungForest, XyCellForBuilding))
+                    if (CellUnitsDataWorker.HaveMinAmountSteps(XyCellForBuilding))
                     {
-                        if (ResourcesDataUIWorker.CanCreateNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, out bool[] haves))
+                        if (!HaveEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding) && !HaveEnvironment(EnvironmentTypes.YoungForest, XyCellForBuilding))
                         {
-                            if (CellUnitsDataWorker.HaveMinAmountSteps(XyCellForBuilding))
+                            if (ResourcesDataUIWorker.CanCreateNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, out bool[] haves))
                             {
+
                                 PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
 
                                 if (HaveEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding))
@@ -75,17 +99,24 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                                 InfoBuidlingsWorker.AddXyBuild(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
 
                                 CellUnitsDataWorker.TakeAmountSteps(XyCellForBuilding);
+
                             }
                             else
                             {
                                 PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                                PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
                             }
                         }
                         else
                         {
+                            PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
                             PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                            PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
                         }
+                    }
+                    else
+                    {
+                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
                     }
                     break;
 
@@ -111,6 +142,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                             else
                             {
                                 PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                                PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
                             }
                         }
                         else
@@ -118,6 +150,11 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                             PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                             PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
                         }
+                    }
+                    else
+                    {
+                        PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
+                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                     }
                     break;
 

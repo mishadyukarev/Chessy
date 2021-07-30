@@ -23,8 +23,6 @@ public sealed class SystemsGameMasterManager : SystemsManager
             .Add(new GetterUnitMasterSystem(), nameof(GetterUnitMasterSystem))
             .Add(new MeltOreMasterSystem(), nameof(MeltOreMasterSystem))
             .Add(new SetterUnitMasterSystem(), nameof(SetterUnitMasterSystem))
-            .Add(new FireUpdatorMasterSystem(), nameof(FireUpdatorMasterSystem))
-            .Add(new ExtractionUpdatorMasterSystem(), nameof(ExtractionUpdatorMasterSystem))
             .Add(new TruceMasterSystem(), nameof(TruceMasterSystem))
             .Add(new UpgradeMasterSystem(), nameof(UpgradeMasterSystem))
             .Add(new FireMasterSystem(), nameof(FireMasterSystem))

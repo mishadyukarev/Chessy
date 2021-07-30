@@ -51,9 +51,5 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
             PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
             _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RpcSystems);
         }
-
-
-        Debug.Log("Units " + InfoAmountUnitsWorker.GetAmountAllUnitsInGame());
-        Debug.Log("Buildings " + InfoBuidlingsWorker.GetAmountAllBuild());
     }
 }

@@ -29,7 +29,12 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                 case EnvironmentTypes.YoungForest:
                     if (CellUnitsDataWorker.HaveMinAmountSteps(XyCellForSeeding))
                     {
-                        if (!CellBuildingsDataWorker.HaveAnyBuilding(XyCellForSeeding))
+                        if (CellBuildingsDataWorker.HaveAnyBuilding(XyCellForSeeding))
+                        {
+                            PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
+                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        }
+                        else
                         {
                             if (!HaveEnvironment(EnvironmentTypes.Fertilizer, XyCellForSeeding))
                             {
@@ -42,16 +47,30 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                                         CellUnitsDataWorker.TakeAmountSteps(XyCellForSeeding);
                                     }
+                                    else
+                                    {
+                                        PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
+                                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                                    }
+                                else
+                                {
+                                    PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
+                                    PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                                }
                             }
                             else
                             {
+                                PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
                                 PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                             }
+
                         }
-                        else
-                        {
-                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                        }
+                    }
+
+                    else
+                    {
+                        PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
+                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                     }
                     break;
 

@@ -65,6 +65,7 @@ internal sealed class ConditionMasterSystem : SystemMasterReduction
 
                 else
                 {
+                    PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
                     PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                 }
                 break;
@@ -103,6 +104,7 @@ internal sealed class ConditionMasterSystem : SystemMasterReduction
 
                 else
                 {
+                    PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
                     PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                 }
                 break;

@@ -5,6 +5,7 @@ using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
 using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
 using Assets.Scripts.ECS.Systems.Game.General.UI.View;
+using Assets.Scripts.ECS.Systems.Game.General.UI.View.Down;
 using Assets.Scripts.ECS.Systems.General.UI.RunUpdate.CenterZone;
 using Leopotam.Ecs;
 
@@ -42,7 +43,8 @@ public sealed class SystemsGameGeneralManager : SystemsManager
             .Add(new RightZoneUISystem(), nameof(RightZoneUISystem))
             .Add(new FinderIdleUnitUISystem(), nameof(FinderIdleUnitUISystem))
             .Add(new MistakeBarUISystem())
-            .Add(new MistakeUISystem());
+            .Add(new MistakeUISystem())
+            .Add(new CenterSupTextUISystem());
 
         _forSelectorSystem = new EcsSystems(gameWorld)
             .Add(new RaySystem(), nameof(RaySystem));

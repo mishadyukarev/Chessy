@@ -48,8 +48,10 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
                 }
             }
+
             else
             {
+                PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
                 PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
             }
         }

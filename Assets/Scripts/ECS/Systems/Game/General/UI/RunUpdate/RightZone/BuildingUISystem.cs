@@ -81,8 +81,8 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
 
                 if (CellBuildingsDataWorker.HaveAnyBuilding(XySelectedCell))
                 {
-                    UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.First);
-                    UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Second);
+                    //UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.First);
+                    //UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Second);
 
                     if (CellUnitsDataWorker.HaveOwner(XySelectedCell))
                     {
@@ -125,25 +125,25 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
 
                 else
                 {
-                    if (!CellEnvirDataWorker.HaveEnvironments(XySelectedCell, new[] { EnvironmentTypes.AdultForest, EnvironmentTypes.YoungForest }))
-                    {
-                        UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.First);
-                    }
-                    else
-                    {
-                        UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.First);
-                    }
+                    //if (!CellEnvirDataWorker.HaveEnvironments(XySelectedCell, new[] { EnvironmentTypes.AdultForest, EnvironmentTypes.YoungForest }))
+                    //{
+                    //    UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.First);
+                    //}
+                    //else
+                    //{
+                    //    UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.First);
+                    //}
 
 
-                    if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, XySelectedCell))
-                    {
-                        UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.Second);
-                    }
+                    //if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, XySelectedCell))
+                    //{
+                    //    UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.Second);
+                    //}
 
-                    else
-                    {
-                        UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Second);
-                    }
+                    //else
+                    //{
+                    //    UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Second);
+                    //}
 
 
                     if (InfoBuidlingsWorker.IsSettedCity(PhotonNetwork.IsMasterClient))
