@@ -5,8 +5,8 @@ namespace Assets.Scripts
 {
     internal abstract class SystemGeneralReduction : IEcsInitSystem, IEcsRunSystem
     {
-        protected EntitiesGameGeneralManager _eGM;
-        protected EntitiesGameGeneralUIManager _eGGUIM;
+        protected EntGameGeneralElseDataManager _eGM;
+        protected EntitiesGameGeneralUIViewManager _eGGUIM;
         protected SystemsGameGeneralManager _sGM;
 
         protected SystemGeneralReduction()
@@ -16,9 +16,9 @@ namespace Assets.Scripts
 
         public virtual void Init()
         {
-            _eGM = Instance.ECSmanager.EntitiesGameGeneralManager;
-            _eGGUIM = Instance.ECSmanager.EntitiesGameGeneralUIManager;
-            _sGM = Instance.ECSmanager.SystemsGameGeneralManager;
+            _eGM = Instance.ECSmanager.EntGameGeneralElseDataManager;
+            _eGGUIM = Instance.ECSmanager.EntGameGeneralUIViewManager;
+            _sGM = Instance.ECSmanager.SysGameGeneralManager;
         }
 
         public virtual void Run()

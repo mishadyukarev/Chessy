@@ -6,7 +6,7 @@ namespace Assets.Scripts.Workers.Common
 {
     internal sealed class SoundComWorker
     {
-        private static EntitiesCommonManager ECM => Main.Instance.ECSmanager.EntitiesCommonManager;
+        private static EntCommonManager ECM => Main.Instance.ECSmanager.EntCommonManager;
 
 
         private static AudioSource GetAS(SoundComTypes soundComType)

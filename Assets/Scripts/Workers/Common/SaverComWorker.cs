@@ -2,7 +2,7 @@
 {
     internal sealed class SaverComWorker
     {
-        private static EntitiesCommonManager ECM => Main.Instance.ECSmanager.EntitiesCommonManager;
+        private static EntCommonManager ECM => Main.Instance.ECSmanager.EntCommonManager;
 
         internal static float SliderVolume => ECM.SaverEnt_SaverCommCom.SliderVolume;
         internal static StepModeTypes StepModeType

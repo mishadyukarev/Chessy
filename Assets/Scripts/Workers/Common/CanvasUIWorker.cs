@@ -5,7 +5,7 @@ namespace Assets.Scripts.Workers.Common
 {
     internal sealed class CanvasUIWorker
     {
-        private static EntitiesCommonManager ECM => Main.Instance.ECSmanager.EntitiesCommonManager;
+        private static EntCommonManager ECM => Main.Instance.ECSmanager.EntCommonManager;
 
         internal static void SetZoneUI(SceneTypes sceneType, ResourcesComponent resourcesCommComponent)
         {

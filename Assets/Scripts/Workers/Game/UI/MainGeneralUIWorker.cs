@@ -2,6 +2,6 @@
 {
     internal abstract class MainGeneralUIWorker
     {
-        protected static EntitiesGameGeneralUIManager EGGUIM => Main.Instance.EntGGUIM;
+        protected static EntitiesGameGeneralUIViewManager EGGUIM => Main.Instance.EntGGUIM;
     }
 }

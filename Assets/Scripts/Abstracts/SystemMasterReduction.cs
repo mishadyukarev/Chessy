@@ -11,8 +11,8 @@ namespace Assets.Scripts
         {
             base.Init();
 
-            _eMM = Instance.ECSmanager.EntitiesGameMasterManager;
-            _sMM = Instance.ECSmanager.SystemsGameMasterManager;
+            _eMM = Instance.ECSmanager.EntGameMasterManager;
+            _sMM = Instance.ECSmanager.SysGameMasterManager;
         }
     }
 }

@@ -9,60 +9,49 @@ namespace Assets.Scripts
 {
     public sealed class Main : MonoBehaviour
     {
-        #region Variables
-
-        private SceneTypes _currentSceneType = SceneTypes.Menu;
-        private static Main _instance;
-        private PhotonMainManager _photonManager;
-        private ECSManager _eCSmanager;
-
         public const string VERSION_PHOTON_GAME = "0.1i";
-
-        #endregion
 
 
         #region Properties
 
-        public static Main Instance => _instance;
+        public static Main Instance { get; private set; }
 
-        public SceneTypes CurrentSceneType => _currentSceneType;
-
-        internal bool IsStarted { get; set; } = true;
+        public SceneTypes CurrentSceneType { get; private set; } = SceneTypes.Menu;
 
         public bool IsMasterClient => PhotonNetwork.IsMasterClient;
         public Player MasterClient => PhotonNetwork.MasterClient;
         public Player LocalPlayer => PhotonNetwork.LocalPlayer;
 
-        public ECSManager ECSmanager => _eCSmanager;
-        public PhotonMainManager PhotonManager => _photonManager;
+        public ECSManager ECSmanager { get; private set; }
+        public PhotonMainManager PhotonManager { get; private set; }
 
-        public ref CanvasComponent CanvasManager => ref _eCSmanager.EntitiesCommonManager.CanvasEnt_CanvasCommCom;
-        public StartGameValuesConfig StartValuesGameConfig => _eCSmanager.EntitiesCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
+        public ref CanvasComponent CanvasManager => ref ECSmanager.EntCommonManager.CanvasEnt_CanvasCommCom;
+        public StartGameValuesConfig StartValuesGameConfig => ECSmanager.EntCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
 
-        public EntitiesGameGeneralManager EntGGM => _eCSmanager.EntitiesGameGeneralManager;
-        public EntitiesGameGeneralUIManager EntGGUIM => _eCSmanager.EntitiesGameGeneralUIManager;
-        public EntitiesMenuManager EntMenuM => _eCSmanager.EntitiesMenuManager;
-        public EntitiesCommonManager EntComM => _eCSmanager.EntitiesCommonManager;
+        public EntGameGeneralElseDataManager EntGGM => ECSmanager.EntGameGeneralElseDataManager;
+        public EntitiesGameGeneralUIViewManager EntGGUIM => ECSmanager.EntGameGeneralUIViewManager;
+        public EntMenuManager EntMenuM => ECSmanager.EntMenuManager;
+        public EntCommonManager EntComM => ECSmanager.EntCommonManager;
 
         #endregion
 
 
         private void Start()
         {
-            _instance = this;
+            Instance = this;
 
-            _eCSmanager = new ECSManager();
-            _photonManager = new PhotonMainManager();
+            ECSmanager = new ECSManager();
+            PhotonManager = new PhotonMainManager();
 
-            ToggleScene(_currentSceneType);
+            ToggleScene(CurrentSceneType);
         }
 
         private void Update()
         {
-            _eCSmanager.OwnUpdate(_currentSceneType);
-            _photonManager.OwnUpdate(_currentSceneType);
+            ECSmanager.OwnUpdate(CurrentSceneType);
+            PhotonManager.OwnUpdate(CurrentSceneType);
 
-            switch (_currentSceneType)
+            switch (CurrentSceneType)
             {
                 case SceneTypes.None:
                     throw new Exception();
@@ -83,10 +72,10 @@ namespace Assets.Scripts
 
         public void ToggleScene(SceneTypes sceneType)
         {
-            _currentSceneType = sceneType;
+            CurrentSceneType = sceneType;
 
-            _eCSmanager.ToggleScene(sceneType);
-            _photonManager.ToggleScene(sceneType);
+            ECSmanager.ToggleScene(sceneType);
+            PhotonManager.ToggleScene(sceneType);
 
             switch (sceneType)
             {

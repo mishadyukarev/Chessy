@@ -1,4 +1,8 @@
-﻿using Assets.Scripts.ECS.Menu.Entities;
+﻿using Assets.Scripts.ECS.Entities.Game.General;
+using Assets.Scripts.ECS.Entities.Game.General.Cell;
+using Assets.Scripts.ECS.Entities.Game.General.Cells.View;
+using Assets.Scripts.ECS.Entities.Game.General.Else.Vis;
+using Assets.Scripts.ECS.Menu.Entities;
 using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 using Photon.Pun;
@@ -13,39 +17,29 @@ namespace Assets.Scripts
         private EcsWorld _menuWorld;
         private EcsWorld _gameWorld;
 
-        private EntitiesCommonManager _entitiesCommonManager;
+
+        #region Entities
+
+        public EntCommonManager EntCommonManager { get; private set; }
+
+        public EntMenuManager EntMenuManager { get; private set; }
+
+        public EntGameGeneralElseDataManager EntGameGeneralElseDataManager { get; private set; }
+        public EntGameGeneralElseViewManager EntGameGeneralElseViewManager { get; private set; }
+        public EntGameGeneralCellDataManager EntGameGeneralCellDataManager { get; private set; }
+        public EntGameGeneralCellViewManager EntGameGeneralCellViewManager { get; private set; }
+        public EntGameGeneralUIDataManager EntGameGeneralUIDataManager { get; private set; }
+        public EntitiesGameGeneralUIViewManager EntGameGeneralUIViewManager { get; private set; }
+        public EntitiesGameMasterManager EntGameMasterManager { get; private set; }
+        public EntitiesGameOtherManager EntGameOtherManager { get; private set; }
+
+        #endregion
 
 
-        private EntitiesMenuManager _entitiesMenuManager;
 
-
-        private EntitiesGameGeneralManager _entitiesGameGeneralManager;
-        private EntitiesGameGeneralUIManager _entitiesGameGeneralUIManager;
-        private SystemsGameGeneralManager _systemsGameGeneralManager;
-
-        private EntitiesGameMasterManager _entitiesGameMasterManager;
-        private SystemsGameMasterManager _systemsGameMasterManager;
-
-        private EntitiesGameOtherManager _entitiesGameOtherManager;
-        private SystemsGameOtherManager _systemsGameOtherManager;
-
-
-
-        public EntitiesCommonManager EntitiesCommonManager => _entitiesCommonManager;
-
-
-        public EntitiesMenuManager EntitiesMenuManager => _entitiesMenuManager;
-
-
-        public EntitiesGameGeneralManager EntitiesGameGeneralManager => _entitiesGameGeneralManager;
-        public EntitiesGameGeneralUIManager EntitiesGameGeneralUIManager => _entitiesGameGeneralUIManager;
-        public SystemsGameGeneralManager SystemsGameGeneralManager => _systemsGameGeneralManager;
-
-        public EntitiesGameMasterManager EntitiesGameMasterManager => _entitiesGameMasterManager;
-        public SystemsGameMasterManager SystemsGameMasterManager => _systemsGameMasterManager;
-
-        public EntitiesGameOtherManager EntitiesGameOtherManager => _entitiesGameOtherManager;
-        public SystemsGameOtherManager SystemsGameOtherManager => _systemsGameOtherManager;
+        public SystemsGameMasterManager SysGameMasterManager { get; private set; }
+        public SystemsGameGeneralManager SysGameGeneralManager { get; private set; }
+        public SystemsGameOtherManager SysGameOtherManager { get; private set; }
 
         public ECSManager()
         {
@@ -54,12 +48,12 @@ namespace Assets.Scripts
             _gameWorld = new EcsWorld();
 
 
-            _entitiesCommonManager = new EntitiesCommonManager(_commonWorld);
+            EntCommonManager = new EntCommonManager(_commonWorld);
         }
 
         public void OwnUpdate(SceneTypes sceneType)
         {
-            _entitiesCommonManager.OwnUpdate(sceneType);
+            EntCommonManager.OwnUpdate(sceneType);
 
             switch (sceneType)
             {
@@ -67,14 +61,14 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    _entitiesCommonManager.SaverEnt_SaverCommCom.SliderVolume = _entitiesMenuManager.SoundEnt_SliderCom.Slider.value;
+                    EntCommonManager.SaverEnt_SaverCommCom.SliderVolume = EntMenuManager.SoundEnt_SliderCom.Slider.value;
                     break;
 
                 case SceneTypes.Game:
-                    _systemsGameGeneralManager.Update();
+                    SysGameGeneralManager.Update();
 
-                    if (Instance.IsMasterClient) _systemsGameMasterManager.Update();
-                    else _systemsGameOtherManager.Update();
+                    if (Instance.IsMasterClient) SysGameMasterManager.Update();
+                    else SysGameOtherManager.Update();
                     break;
 
                 default:
@@ -84,7 +78,7 @@ namespace Assets.Scripts
 
         public void ToggleScene(SceneTypes sceneType)
         {
-            _entitiesCommonManager.ToggleScene(sceneType);
+            EntCommonManager.ToggleScene(sceneType);
 
             switch (sceneType)
             {
@@ -96,32 +90,38 @@ namespace Assets.Scripts
                     {
                         _gameWorld.Destroy();
 
-                        _entitiesGameGeneralManager = default;
-                        _entitiesGameGeneralUIManager = default;
-                        _entitiesGameMasterManager = default;
-                        _entitiesGameOtherManager = default;
+                        EntGameGeneralElseDataManager = default;
+                        EntGameGeneralElseViewManager = default;
+                        EntGameGeneralCellDataManager = default;
+                        EntGameGeneralCellViewManager = default;
+                        EntGameGeneralUIViewManager = default;
+                        EntGameMasterManager = default;
+                        EntGameOtherManager = default;
 
-                        _systemsGameGeneralManager = default;
-                        _systemsGameMasterManager = default;
-                        _systemsGameOtherManager = default;
+                        SysGameGeneralManager = default;
+                        SysGameMasterManager = default;
+                        SysGameOtherManager = default;
                     }
 
                     _menuWorld = new EcsWorld();
-
-                    _entitiesMenuManager = new EntitiesMenuManager(_menuWorld);
-
-                    Instance.IsStarted = false;
+                    EntMenuManager = new EntMenuManager(_menuWorld);
                     break;
 
                 case SceneTypes.Game:
                     _menuWorld.Destroy();
-                    _entitiesMenuManager = default;
+                    EntMenuManager = default;
 
 
                     _gameWorld = new EcsWorld();
 
-                    _entitiesGameGeneralManager = new EntitiesGameGeneralManager(_gameWorld);
-                    _entitiesGameGeneralUIManager = new EntitiesGameGeneralUIManager(_gameWorld);
+                    EntGameGeneralElseDataManager = new EntGameGeneralElseDataManager(_gameWorld);
+                    EntGameGeneralElseViewManager = new EntGameGeneralElseViewManager(_gameWorld);
+                    EntGameGeneralCellDataManager = new EntGameGeneralCellDataManager(_gameWorld);
+                    EntGameGeneralCellViewManager = new EntGameGeneralCellViewManager(_gameWorld);
+                    EntGameGeneralUIViewManager = new EntitiesGameGeneralUIViewManager(_gameWorld);
+                    EntGameGeneralUIDataManager = new EntGameGeneralUIDataManager(_gameWorld);
+                    EntGameMasterManager = new EntitiesGameMasterManager(_gameWorld);
+                    EntGameOtherManager = new EntitiesGameOtherManager(_gameWorld);
 
                     if (PhotonNetwork.IsMasterClient)
                     {
@@ -132,22 +132,19 @@ namespace Assets.Scripts
                     }
 
 
-                    _entitiesGameMasterManager = new EntitiesGameMasterManager(_gameWorld);
-
-                    _entitiesGameOtherManager = new EntitiesGameOtherManager(_gameWorld);
 
 
-                    _systemsGameGeneralManager = new SystemsGameGeneralManager(_gameWorld);
-                    _systemsGameMasterManager = new SystemsGameMasterManager(_gameWorld);
-                    _systemsGameOtherManager = new SystemsGameOtherManager(_gameWorld);
+                    SysGameGeneralManager = new SystemsGameGeneralManager(_gameWorld);
+                    SysGameMasterManager = new SystemsGameMasterManager(_gameWorld);
+                    SysGameOtherManager = new SystemsGameOtherManager(_gameWorld);
 
-                    _systemsGameGeneralManager.ProcessInjects();
-                    _systemsGameMasterManager.ProcessInjects();
-                    _systemsGameOtherManager.ProcessInjects();
+                    SysGameGeneralManager.ProcessInjects();
+                    SysGameMasterManager.ProcessInjects();
+                    SysGameOtherManager.ProcessInjects();
 
-                    _systemsGameGeneralManager.Init();
-                    _systemsGameMasterManager.Init();
-                    _systemsGameOtherManager.Init();
+                    SysGameGeneralManager.Init();
+                    SysGameMasterManager.Init();
+                    SysGameOtherManager.Init();
 
                     break;
 

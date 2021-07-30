@@ -21,15 +21,15 @@ namespace Assets.Scripts
     {
         private static PhotonView _photonView;
 
-        private EntitiesGameGeneralManager EGM => Instance.ECSmanager.EntitiesGameGeneralManager;
-        private EntitiesGameGeneralUIManager EGGUIM => Instance.ECSmanager.EntitiesGameGeneralUIManager;
-        private EntitiesGameMasterManager EMM => Instance.ECSmanager.EntitiesGameMasterManager;
+        private EntGameGeneralElseDataManager EGM => Instance.ECSmanager.EntGameGeneralElseDataManager;
+        private EntitiesGameGeneralUIViewManager EGGUIM => Instance.ECSmanager.EntGameGeneralUIViewManager;
+        private EntitiesGameMasterManager EMM => Instance.ECSmanager.EntGameMasterManager;
 
-        private SystemsGameGeneralManager SGM => Instance.ECSmanager.SystemsGameGeneralManager;
-        private SystemsGameMasterManager SMM => Instance.ECSmanager.SystemsGameMasterManager;
+        private SystemsGameGeneralManager SGM => Instance.ECSmanager.SysGameGeneralManager;
+        private SystemsGameMasterManager SMM => Instance.ECSmanager.SysGameMasterManager;
 
-        private EntitiesGameOtherManager EntOM => Instance.ECSmanager.EntitiesGameOtherManager;
-        private SystemsGameOtherManager SysOM => Instance.ECSmanager.SystemsGameOtherManager;
+        private EntitiesGameOtherManager EntOM => Instance.ECSmanager.EntGameOtherManager;
+        private SystemsGameOtherManager SysOM => Instance.ECSmanager.SysGameOtherManager;
 
         private static string MasterRPCName => nameof(MasterRPC);
         private static string GeneralRPCName => nameof(GeneralRPC);
@@ -269,8 +269,12 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.Mistake:
-                    switch ((MistakeTypes)objects[_currentNumber++])
+                    var mistakeType = (MistakeTypes)objects[_currentNumber++];
+                    switch (mistakeType)
                     {
+                        case MistakeTypes.None:
+                            throw new Exception();
+
                         case MistakeTypes.EconomyType:
                             var haves = (bool[])objects[_currentNumber++];
                             var haveFood = haves[0];
@@ -279,11 +283,13 @@ namespace Assets.Scripts
                             var haveIron = haves[3];
                             var haveGold = haves[4];
 
-                            if (!haveFood) EGGUIM.FoodInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
-                            if (!haveWood) EGGUIM.WoodInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
-                            if (!haveOre) EGGUIM.OreInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
-                            if (!haveIron) EGGUIM.IronInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
-                            if (!haveGold) EGGUIM.GoldInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
+                            //if (!haveFood) EGGUIM.FoodInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
+                            //if (!haveWood) EGGUIM.WoodInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
+                            //if (!haveOre) EGGUIM.OreInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
+                            //if (!haveIron) EGGUIM.IronInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
+                            //if (!haveGold) EGGUIM.GoldInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
+
+                            //MiddleVisUIWorker.MistakeTypeBar = mistakeType;
                             break;
 
                         case MistakeTypes.UnitType:
@@ -312,7 +318,7 @@ namespace Assets.Scripts
 
                 case RpcGeneralTypes.Sound:
                     var soundEffectType = (SoundEffectTypes)objects[_currentNumber++];
-                    SoundGameWorker.PlaySoundEffect(soundEffectType);
+                    SoundGameGeneralViewWorker.PlaySoundEffect(soundEffectType);
                     break;
 
                 default:
@@ -358,8 +364,8 @@ namespace Assets.Scripts
 
 
 
-            for (int x = 0; x < CellWorker.Xamount; x++)
-                for (int y = 0; y < CellWorker.Yamount; y++)
+            for (int x = 0; x < CellViewWorker.Xamount; x++)
+                for (int y = 0; y < CellViewWorker.Yamount; y++)
                 {
                     var xy = new int[] { x, y };
 
@@ -399,20 +405,20 @@ namespace Assets.Scripts
 
 
             listObjects.Add(SaverComWorker.StepModeType);
-            listObjects.Add(UIMiddleWorker.IsStartedGame);
+            listObjects.Add(MiddleVisUIWorker.IsStartedGame);
 
 
 
-            listObjects.Add(UIMiddleWorker.IsReady(false));
+            listObjects.Add(MiddleVisUIWorker.IsReady(false));
             listObjects.Add(DownDonerUIWorker.IsDoned(false));
 
 
 
-            listObjects.Add(InfoResourcesDataWorker.GetAmountResources(ResourceTypes.Food, false));
-            listObjects.Add(InfoResourcesDataWorker.GetAmountResources(ResourceTypes.Wood, false));
-            listObjects.Add(InfoResourcesDataWorker.GetAmountResources(ResourceTypes.Ore, false));
-            listObjects.Add(InfoResourcesDataWorker.GetAmountResources(ResourceTypes.Iron, false));
-            listObjects.Add(InfoResourcesDataWorker.GetAmountResources(ResourceTypes.Gold, false));
+            listObjects.Add(ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Food, false));
+            listObjects.Add(ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Wood, false));
+            listObjects.Add(ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Ore, false));
+            listObjects.Add(ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Iron, false));
+            listObjects.Add(ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Gold, false));
 
 
 
@@ -459,8 +465,8 @@ namespace Assets.Scripts
         {
             _currentNumber = 0;
 
-            for (int x = 0; x < CellWorker.Xamount; x++)
-                for (int y = 0; y < CellWorker.Yamount; y++)
+            for (int x = 0; x < CellViewWorker.Xamount; x++)
+                for (int y = 0; y < CellViewWorker.Yamount; y++)
                 {
                     var xy = new int[] { x, y };
 
@@ -551,12 +557,12 @@ namespace Assets.Scripts
 
 
             bool isStartedGame = (bool)objects[_currentNumber++];
-            UIMiddleWorker.IsStartedGame = isStartedGame;
+            MiddleVisUIWorker.IsStartedGame = isStartedGame;
 
 
 
             bool isActivatedReadyButton = (bool)objects[_currentNumber++];
-            UIMiddleWorker.SetIsReady(Instance.IsMasterClient, isActivatedReadyButton);
+            MiddleVisUIWorker.SetIsReady(Instance.IsMasterClient, isActivatedReadyButton);
 
 
 
@@ -570,11 +576,11 @@ namespace Assets.Scripts
             var ore = (int)objects[_currentNumber++];
             var iron = (int)objects[_currentNumber++];
             var gold = (int)objects[_currentNumber++];
-            InfoResourcesDataWorker.SetAmountResources(ResourceTypes.Food, Instance.IsMasterClient, food);
-            InfoResourcesDataWorker.SetAmountResources(ResourceTypes.Wood, Instance.IsMasterClient, wood);
-            InfoResourcesDataWorker.SetAmountResources(ResourceTypes.Ore, Instance.IsMasterClient, ore);
-            InfoResourcesDataWorker.SetAmountResources(ResourceTypes.Iron, Instance.IsMasterClient, iron);
-            InfoResourcesDataWorker.SetAmountResources(ResourceTypes.Gold, Instance.IsMasterClient, gold);
+            ResourcesDataUIWorker.SetAmountResources(ResourceTypes.Food, Instance.IsMasterClient, food);
+            ResourcesDataUIWorker.SetAmountResources(ResourceTypes.Wood, Instance.IsMasterClient, wood);
+            ResourcesDataUIWorker.SetAmountResources(ResourceTypes.Ore, Instance.IsMasterClient, ore);
+            ResourcesDataUIWorker.SetAmountResources(ResourceTypes.Iron, Instance.IsMasterClient, iron);
+            ResourcesDataUIWorker.SetAmountResources(ResourceTypes.Gold, Instance.IsMasterClient, gold);
 
 
 
