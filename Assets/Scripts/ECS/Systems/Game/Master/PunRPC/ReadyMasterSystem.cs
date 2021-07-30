@@ -13,16 +13,16 @@ internal sealed class ReadyMasterSystem : RPCMasterSystemReduction
         base.Run();
 
 
-        MiddleVisUIWorker.SetIsReady(InfoFrom.Sender.IsMasterClient, IsReady);
+        MiddleViewUIWorker.SetIsReady(InfoFrom.Sender.IsMasterClient, IsReady);
 
-        if (MiddleVisUIWorker.IsReady(true) && MiddleVisUIWorker.IsReady(false))
+        if (MiddleViewUIWorker.IsReady(true) && MiddleViewUIWorker.IsReady(false))
         {
-            MiddleVisUIWorker.IsStartedGame = true;
+            MiddleViewUIWorker.IsStartedGame = true;
         }
 
         else
         {
-            MiddleVisUIWorker.IsStartedGame = false;
+            MiddleViewUIWorker.IsStartedGame = false;
         }
     }
 }

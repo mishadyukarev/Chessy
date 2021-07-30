@@ -1,8 +1,10 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.ECS.Components;
+using Assets.Scripts.ECS.Entities.Game.General.Else.Data.Containers;
 using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Entities.Containers;
 using Assets.Scripts.Workers.Game.Else;
+using Assets.Scripts.Workers.Game.Else.Data;
 using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
 using System.Collections.Generic;
@@ -15,6 +17,8 @@ public sealed class EntGameGeneralElseDataManager : EntitiesManager
     internal GameObject BackGroundGO;
     internal SpriteRenderer BackGroundSR;
 
+
+    private MistakeEconomyEventDataContainer _mistakeEconomyEventDataContainer;
 
 
     #region Selector
@@ -158,14 +162,17 @@ public sealed class EntGameGeneralElseDataManager : EntitiesManager
         BackGroundSR.transform.rotation = Instance.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
 
-
         _inputEnt = gameWorld.NewEntity()
             .Replace(new InputComponent());
 
 
-
         _fromInfoEnt = gameWorld.NewEntity()
             .Replace(new FromInfoComponent());
+
+
+
+        _mistakeEconomyEventDataContainer = new MistakeEconomyEventDataContainer(gameWorld);
+        new MistakeEconomyEventDataWorker(_mistakeEconomyEventDataContainer);
     }
 
 

@@ -78,35 +78,6 @@ namespace Assets.Scripts.Workers.Info
             => SetAmountResources(resourceType, key, GetAmountResources(resourceType, key) - taking);
 
 
-        private static UnityEvent GetUnityEvent(ResourceTypes resourceType)
-        {
-            switch (resourceType)
-            {
-                case ResourceTypes.None:
-                    throw new Exception();
-
-                case ResourceTypes.Food:
-                    return _myContainer.FoodInfoUIEnt_MistakeResourcesUICom.UnityEvent;
-
-                case ResourceTypes.Wood:
-                    return _myContainer.WoodInfoUIEnt_MistakeResourcesUICom.UnityEvent;
-
-                case ResourceTypes.Ore:
-                    return _myContainer.OreInfoUIEnt_MistakeResourcesUICom.UnityEvent;
-
-                case ResourceTypes.Iron:
-                    return _myContainer.IronInfoUIEnt_MistakeResourcesUICom.UnityEvent;
-
-                case ResourceTypes.Gold:
-                    return _myContainer.GoldInfoUIEnt_MistakeResourcesUICom.UnityEvent;
-
-                default:
-                    throw new Exception();
-            }
-        }
-
-        internal static void AddListener(ResourceTypes resourceType, UnityAction unityAction) => GetUnityEvent(resourceType).AddListener(unityAction);
-
 
         internal static bool CanCreateNewBuilding(BuildingTypes buildingType, Player player, out bool[] haves)
         {

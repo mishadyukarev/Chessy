@@ -4,6 +4,7 @@ using Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone;
 using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
 using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
+using Assets.Scripts.ECS.Systems.Game.General.UI.View;
 using Assets.Scripts.ECS.Systems.General.UI.RunUpdate.CenterZone;
 using Leopotam.Ecs;
 
@@ -33,7 +34,6 @@ public sealed class SystemsGameGeneralManager : SystemsManager
             .Add(new TheEndGameUISystem(), nameof(TheEndGameUISystem))
             .Add(new BuildingUISystem(), nameof(BuildingUISystem))
             .Add(new EconomyUISystem(), nameof(EconomyUISystem))
-            .Add(new MistakeUISystem(), nameof(MistakeUISystem))
             .Add(new LeftBuildingUISystem(), nameof(LeftBuildingUISystem))
             .Add(new UpdatedUISystem(), nameof(UpdatedUISystem))
             .Add(new UniqueAbilitiesUISystem(), nameof(UniqueAbilitiesUISystem))
@@ -41,7 +41,8 @@ public sealed class SystemsGameGeneralManager : SystemsManager
             .Add(new ReadyZoneUISystem(), nameof(ReadyZoneUISystem))
             .Add(new RightZoneUISystem(), nameof(RightZoneUISystem))
             .Add(new FinderIdleUnitUISystem(), nameof(FinderIdleUnitUISystem))
-            .Add(new MistakeBarUISystem());
+            .Add(new MistakeBarUISystem())
+            .Add(new MistakeUISystem());
 
         _forSelectorSystem = new EcsSystems(gameWorld)
             .Add(new RaySystem(), nameof(RaySystem));

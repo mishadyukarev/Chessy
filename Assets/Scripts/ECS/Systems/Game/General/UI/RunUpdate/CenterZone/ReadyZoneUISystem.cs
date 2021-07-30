@@ -8,7 +8,7 @@ internal sealed class ReadyZoneUISystem : IEcsRunSystem
 {
     public void Run()
     {
-        if (MiddleVisUIWorker.IsReady(Instance.IsMasterClient))
+        if (MiddleViewUIWorker.IsReady(Instance.IsMasterClient))
         {
             ReadyZoneUIWorker.SetColorButton(Color.red);
         }

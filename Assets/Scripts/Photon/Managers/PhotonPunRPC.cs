@@ -3,6 +3,7 @@ using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Common;
 using Assets.Scripts.Workers.Game.Else;
+using Assets.Scripts.Workers.Game.Else.Data;
 using Assets.Scripts.Workers.Game.Else.Fire;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Game.UI;
@@ -283,13 +284,11 @@ namespace Assets.Scripts
                             var haveIron = haves[3];
                             var haveGold = haves[4];
 
-                            //if (!haveFood) EGGUIM.FoodInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
-                            //if (!haveWood) EGGUIM.WoodInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
-                            //if (!haveOre) EGGUIM.OreInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
-                            //if (!haveIron) EGGUIM.IronInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
-                            //if (!haveGold) EGGUIM.GoldInfoUIEnt_MistakeResourcesUICom.MistakeResourcesUI.Invoke();
-
-                            //MiddleVisUIWorker.MistakeTypeBar = mistakeType;
+                            if (!haveFood) MistakeEconomyEventDataWorker.InvokeEconomyMistake(ResourceTypes.Food);
+                            if (!haveWood) MistakeEconomyEventDataWorker.InvokeEconomyMistake(ResourceTypes.Wood);
+                            if (!haveOre) MistakeEconomyEventDataWorker.InvokeEconomyMistake(ResourceTypes.Ore);
+                            if (!haveIron) MistakeEconomyEventDataWorker.InvokeEconomyMistake(ResourceTypes.Iron);
+                            if (!haveGold) MistakeEconomyEventDataWorker.InvokeEconomyMistake(ResourceTypes.Gold);
                             break;
 
                         case MistakeTypes.UnitType:
@@ -405,11 +404,11 @@ namespace Assets.Scripts
 
 
             listObjects.Add(SaverComWorker.StepModeType);
-            listObjects.Add(MiddleVisUIWorker.IsStartedGame);
+            listObjects.Add(MiddleViewUIWorker.IsStartedGame);
 
 
 
-            listObjects.Add(MiddleVisUIWorker.IsReady(false));
+            listObjects.Add(MiddleViewUIWorker.IsReady(false));
             listObjects.Add(DownDonerUIWorker.IsDoned(false));
 
 
@@ -557,12 +556,12 @@ namespace Assets.Scripts
 
 
             bool isStartedGame = (bool)objects[_currentNumber++];
-            MiddleVisUIWorker.IsStartedGame = isStartedGame;
+            MiddleViewUIWorker.IsStartedGame = isStartedGame;
 
 
 
             bool isActivatedReadyButton = (bool)objects[_currentNumber++];
-            MiddleVisUIWorker.SetIsReady(Instance.IsMasterClient, isActivatedReadyButton);
+            MiddleViewUIWorker.SetIsReady(Instance.IsMasterClient, isActivatedReadyButton);
 
 
 

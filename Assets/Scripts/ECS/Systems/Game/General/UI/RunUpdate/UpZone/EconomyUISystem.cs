@@ -28,8 +28,8 @@ internal sealed class EconomyUISystem : IEcsRunSystem
             });
 
         if (amountAddingFood < 0)
-            ResourcesVisUIWorker.SetAddingText(ResourceTypes.Food, amountAddingFood.ToString());
-        else ResourcesVisUIWorker.SetAddingText(ResourceTypes.Food, "+ " + amountAddingFood.ToString());
+            ResourcesViewUIWorker.SetAddingText(ResourceTypes.Food, amountAddingFood.ToString());
+        else ResourcesViewUIWorker.SetAddingText(ResourceTypes.Food, "+ " + amountAddingFood.ToString());
 
 
 
@@ -56,7 +56,7 @@ internal sealed class EconomyUISystem : IEcsRunSystem
             }
         }
 
-        ResourcesVisUIWorker.SetAddingText(ResourceTypes.Wood, "+ " + amountAddingWood);
+        ResourcesViewUIWorker.SetAddingText(ResourceTypes.Wood, "+ " + amountAddingWood);
 
 
 
@@ -64,12 +64,12 @@ internal sealed class EconomyUISystem : IEcsRunSystem
         var amountAddingOre = InfoBuidlingsWorker.GetAmountBuild(BuildingTypes.Mine, isMasterClient)
             * InfoExtractionWorker.GetExtractionOneBuilding(BuildingTypes.Mine, amountUpgradesMine);
 
-        ResourcesVisUIWorker.SetAddingText(ResourceTypes.Ore, "+ " + amountAddingOre);
+        ResourcesViewUIWorker.SetAddingText(ResourceTypes.Ore, "+ " + amountAddingOre);
 
-        ResourcesVisUIWorker.SetMainText(ResourceTypes.Food, ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Food, Instance.IsMasterClient).ToString());
-        ResourcesVisUIWorker.SetMainText(ResourceTypes.Wood, ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Wood, Instance.IsMasterClient).ToString());
-        ResourcesVisUIWorker.SetMainText(ResourceTypes.Ore, ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Ore, Instance.IsMasterClient).ToString());
-        ResourcesVisUIWorker.SetMainText(ResourceTypes.Iron, ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Iron, Instance.IsMasterClient).ToString());
-        ResourcesVisUIWorker.SetMainText(ResourceTypes.Gold, ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Gold, Instance.IsMasterClient).ToString());
+        ResourcesViewUIWorker.SetMainText(ResourceTypes.Food, ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Food, Instance.IsMasterClient).ToString());
+        ResourcesViewUIWorker.SetMainText(ResourceTypes.Wood, ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Wood, Instance.IsMasterClient).ToString());
+        ResourcesViewUIWorker.SetMainText(ResourceTypes.Ore, ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Ore, Instance.IsMasterClient).ToString());
+        ResourcesViewUIWorker.SetMainText(ResourceTypes.Iron, ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Iron, Instance.IsMasterClient).ToString());
+        ResourcesViewUIWorker.SetMainText(ResourceTypes.Gold, ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Gold, Instance.IsMasterClient).ToString());
     }
 }

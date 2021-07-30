@@ -331,7 +331,7 @@ public sealed class EntitiesGameGeneralUIViewManager
         var upZoneGO = CanvasUIWorker.FindUnderParent(SceneTypes.Game, "UpZone");
 
         _resourcesVisUIContainer = new ResourcesVisUIContainer(gameWorld, upZoneGO);
-        new ResourcesVisUIWorker(_resourcesVisUIContainer);
+        new ResourcesViewUIWorker(_resourcesVisUIContainer);
 
 
         #endregion
