@@ -1,9 +1,8 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.ECS.Game.Components;
+﻿using Assets.Scripts.ECS.Game.Components;
 using Leopotam.Ecs;
 
 
-public class EntitiesGameOtherManager : EntitiesManager
+public sealed class EntitiesGameOtherManager
 {
     private EcsEntity _fromInfoEnt;
     internal ref FromInfoComponent FromInfoEnt_FromInfoCom => ref _fromInfoEnt.Get<FromInfoComponent>();
@@ -13,5 +12,4 @@ public class EntitiesGameOtherManager : EntitiesManager
         _fromInfoEnt = gameWorld.NewEntity()
             .Replace(new FromInfoComponent());
     }
-
 }

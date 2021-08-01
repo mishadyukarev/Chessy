@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.ECS.Game.General.Systems;
-using Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone;
 using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
 using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
@@ -14,7 +13,7 @@ public sealed class SystemsGameGeneralManager : SystemsManager
     private EcsSystems _forSelectorSystem;
     private EcsSystems _eventSystems;
 
-    internal EcsSystems SyncCellVisionSystems { get; private set; }
+    internal static EcsSystems SyncCellVisionSystems { get; private set; }
 
     internal SystemsGameGeneralManager(EcsWorld gameWorld) : base(gameWorld)
     {
@@ -41,7 +40,6 @@ public sealed class SystemsGameGeneralManager : SystemsManager
             .Add(new EnvironmentUISystem(), nameof(EnvironmentUISystem))
             .Add(new ReadyZoneUISystem(), nameof(ReadyZoneUISystem))
             .Add(new RightZoneUISystem(), nameof(RightZoneUISystem))
-            .Add(new FinderIdleUnitUISystem(), nameof(FinderIdleUnitUISystem))
             .Add(new MistakeBarUISystem())
             .Add(new MistakeUISystem())
             .Add(new CenterSupTextUISystem());

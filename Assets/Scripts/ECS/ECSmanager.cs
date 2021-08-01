@@ -3,26 +3,32 @@ using Assets.Scripts.ECS.Entities.Game.General.Cell;
 using Assets.Scripts.ECS.Entities.Game.General.Cells.View;
 using Assets.Scripts.ECS.Entities.Game.General.Else.Vis;
 using Assets.Scripts.ECS.Menu.Entities;
+using Assets.Scripts.Workers.Common;
 using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
-using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
 {
     public sealed class ECSManager
     {
+        #region Worlds
+
         private EcsWorld _commonWorld;
         private EcsWorld _menuWorld;
         private EcsWorld _gameWorld;
+
+        #endregion
 
 
         #region Entities
 
         public EntCommonManager EntCommonManager { get; private set; }
-
         public EntMenuManager EntMenuManager { get; private set; }
+
+
+        #region Game
 
         public EntGameGeneralElseDataManager EntGameGeneralElseDataManager { get; private set; }
         public EntGameGeneralElseViewManager EntGameGeneralElseViewManager { get; private set; }
@@ -35,25 +41,27 @@ namespace Assets.Scripts
 
         #endregion
 
+        #endregion
 
+
+        #region Systems
 
         public SystemsGameMasterManager SysGameMasterManager { get; private set; }
         public SystemsGameGeneralManager SysGameGeneralManager { get; private set; }
-        public SystemsGameOtherManager SysGameOtherManager { get; private set; }
+        public SystemGameOtherManager SysGameOtherManager { get; private set; }
+
+        #endregion
+
 
         public ECSManager()
         {
             _commonWorld = new EcsWorld();
-            _menuWorld = new EcsWorld();
-            _gameWorld = new EcsWorld();
-
-
             EntCommonManager = new EntCommonManager(_commonWorld);
         }
 
         public void OwnUpdate(SceneTypes sceneType)
         {
-            EntCommonManager.OwnUpdate(sceneType);
+            EntCommonManager.OwnUpdate(sceneType, EntMenuManager);
 
             switch (sceneType)
             {
@@ -67,7 +75,7 @@ namespace Assets.Scripts
                 case SceneTypes.Game:
                     SysGameGeneralManager.Update();
 
-                    if (Instance.IsMasterClient) SysGameMasterManager.Update();
+                    if (PhotonNetwork.IsMasterClient) SysGameMasterManager.Update();
                     else SysGameOtherManager.Update();
                     break;
 
@@ -104,7 +112,7 @@ namespace Assets.Scripts
                     }
 
                     _menuWorld = new EcsWorld();
-                    EntMenuManager = new EntMenuManager(_menuWorld);
+                    EntMenuManager = new EntMenuManager(_menuWorld, EntCommonManager);
                     break;
 
                 case SceneTypes.Game:
@@ -114,10 +122,10 @@ namespace Assets.Scripts
 
                     _gameWorld = new EcsWorld();
 
-                    EntGameGeneralElseDataManager = new EntGameGeneralElseDataManager(_gameWorld);
-                    EntGameGeneralElseViewManager = new EntGameGeneralElseViewManager(_gameWorld);
+                    EntGameGeneralElseDataManager = new EntGameGeneralElseDataManager(_gameWorld, EntCommonManager);
+                    EntGameGeneralElseViewManager = new EntGameGeneralElseViewManager(_gameWorld, EntCommonManager);
                     EntGameGeneralCellDataManager = new EntGameGeneralCellDataManager(_gameWorld);
-                    EntGameGeneralCellViewManager = new EntGameGeneralCellViewManager(_gameWorld);
+                    EntGameGeneralCellViewManager = new EntGameGeneralCellViewManager(_gameWorld, EntCommonManager);
                     EntGameGeneralUIViewManager = new EntitiesGameGeneralUIViewManager(_gameWorld);
                     EntGameGeneralUIDataManager = new EntGameGeneralUIDataManager(_gameWorld);
                     EntGameMasterManager = new EntitiesGameMasterManager(_gameWorld);
@@ -125,7 +133,7 @@ namespace Assets.Scripts
 
                     if (PhotonNetwork.IsMasterClient)
                     {
-                        if (Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType == StepModeTypes.ByQueue)
+                        if (SaverComWorker.StepModeType == StepModeTypes.ByQueue)
                         {
                             DownDonerUIWorker.SetDoned(false, true);
                         }
@@ -136,7 +144,7 @@ namespace Assets.Scripts
 
                     SysGameGeneralManager = new SystemsGameGeneralManager(_gameWorld);
                     SysGameMasterManager = new SystemsGameMasterManager(_gameWorld);
-                    SysGameOtherManager = new SystemsGameOtherManager(_gameWorld);
+                    SysGameOtherManager = new SystemGameOtherManager(_gameWorld);
 
                     SysGameGeneralManager.ProcessInjects();
                     SysGameMasterManager.ProcessInjects();

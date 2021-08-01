@@ -1,37 +1,19 @@
-﻿using Assets.Scripts.ECS.Menu.Entities;
-using Assets.Scripts.Workers.Game.Else.Info.Units;
-using Photon.Pun;
-using Photon.Realtime;
-using System;
+﻿using System;
 using UnityEngine;
 
 namespace Assets.Scripts
 {
     public sealed class Main : MonoBehaviour
     {
+        private PhotonMainManager _photonManager;
         public const string VERSION_PHOTON_GAME = "0.1i";
 
 
         #region Properties
 
         public static Main Instance { get; private set; }
-
         public SceneTypes CurrentSceneType { get; private set; } = SceneTypes.Menu;
-
-        public bool IsMasterClient => PhotonNetwork.IsMasterClient;
-        public Player MasterClient => PhotonNetwork.MasterClient;
-        public Player LocalPlayer => PhotonNetwork.LocalPlayer;
-
         public ECSManager ECSmanager { get; private set; }
-        public PhotonMainManager PhotonManager { get; private set; }
-
-        public ref CanvasComponent CanvasManager => ref ECSmanager.EntCommonManager.CanvasEnt_CanvasCommCom;
-        public StartGameValuesConfig StartValuesGameConfig => ECSmanager.EntCommonManager.ResourcesEnt_ResourcesCommonCom.StartValuesGameConfig;
-
-        public EntGameGeneralElseDataManager EntGGM => ECSmanager.EntGameGeneralElseDataManager;
-        public EntitiesGameGeneralUIViewManager EntGGUIM => ECSmanager.EntGameGeneralUIViewManager;
-        public EntMenuManager EntMenuM => ECSmanager.EntMenuManager;
-        public EntCommonManager EntComM => ECSmanager.EntCommonManager;
 
         #endregion
 
@@ -41,7 +23,7 @@ namespace Assets.Scripts
             Instance = this;
 
             ECSmanager = new ECSManager();
-            PhotonManager = new PhotonMainManager();
+            _photonManager = new PhotonMainManager();
 
             ToggleScene(CurrentSceneType);
         }
@@ -49,7 +31,7 @@ namespace Assets.Scripts
         private void Update()
         {
             ECSmanager.OwnUpdate(CurrentSceneType);
-            PhotonManager.OwnUpdate(CurrentSceneType);
+            _photonManager.OwnUpdate(CurrentSceneType);
 
             switch (CurrentSceneType)
             {
@@ -60,7 +42,6 @@ namespace Assets.Scripts
                     break;
 
                 case SceneTypes.Game:
-                    Debug.Log(InfoAmountUnitsWorker.GetAmountUnitsInGame(UnitTypes.Pawn, PhotonNetwork.IsMasterClient));
                     break;
 
                 default:
@@ -75,7 +56,7 @@ namespace Assets.Scripts
             CurrentSceneType = sceneType;
 
             ECSmanager.ToggleScene(sceneType);
-            PhotonManager.ToggleScene(sceneType);
+            _photonManager.ToggleScene(sceneType, ECSmanager);
 
             switch (sceneType)
             {

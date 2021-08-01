@@ -59,7 +59,12 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                 else
                 {
-                    if (IsUpgradeModType(UpgradeModTypes.Unit))
+                    if (HaveAnySelectorUnit)
+                    {
+                        PhotonPunRPC.SetUniToMaster(XyCurrentCell, SelectedUnitType);
+                    }
+
+                    else if (SelectorWorker.SelectorType == SelectorTypes.UpgradeUnit)
                     {
                         if (CellUnitsDataWorker.HaveAnyUnit(XyCurrentCell))
                         {
@@ -67,13 +72,14 @@ internal sealed class SelectorSystem : IEcsRunSystem
                         }
                         else
                         {
-                            ResetUpgradeModType();
+                            SelectorWorker.SelectorType = SelectorTypes.Other;
                         }
                     }
 
-                    else if (HaveAnySelectorUnit)
+                    else if (SelectorWorker.SelectorType == SelectorTypes.PickFire)
                     {
-                        PhotonPunRPC.SetUniToMaster(XyCurrentCell, SelectedUnitType);
+                        PhotonPunRPC.FireToMaster(XySelectedCell, XyCurrentCell);
+                        SelectorWorker.SelectorType = SelectorTypes.Other;
                     }
 
                     else if (CanExecuteStartClick)
@@ -154,12 +160,12 @@ internal sealed class SelectorSystem : IEcsRunSystem
                                 {
                                     CanShiftUnit = false;
 
-                                    if (AvailableCellsEntsWorker.TryFindCell(AvailableCellTypes.SimpleAttack, XySelectedCell))
+                                    if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.SimpleAttack, XySelectedCell))
                                     {
                                         PhotonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
                                     }
 
-                                    else if (AvailableCellsEntsWorker.TryFindCell(AvailableCellTypes.UniqueAttack, XySelectedCell))
+                                    else if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.UniqueAttack, XySelectedCell))
                                     {
                                         PhotonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
                                     }
@@ -170,12 +176,12 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                             else if (CellUnitsDataWorker.IsBot(XySelectedCell))
                             {
-                                if (AvailableCellsEntsWorker.TryFindCell(AvailableCellTypes.SimpleAttack, XySelectedCell))
+                                if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.SimpleAttack, XySelectedCell))
                                 {
                                     PhotonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
                                 }
 
-                                else if (AvailableCellsEntsWorker.TryFindCell(AvailableCellTypes.UniqueAttack, XySelectedCell))
+                                else if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.UniqueAttack, XySelectedCell))
                                 {
                                     PhotonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
                                 }
@@ -196,7 +202,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                                         {
                                             if (CellUnitsDataWorker.HaveMinAmountSteps(XyPreviousCell))
                                             {
-                                                if (AvailableCellsEntsWorker.TryFindCell(AvailableCellTypes.Shift, XySelectedCell))
+                                                if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.Shift, XySelectedCell))
                                                 {
                                                     PhotonPunRPC.ShiftUnitToMaster(XyPreviousCell, XySelectedCell);
                                                 }
@@ -249,12 +255,15 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                 ClearAvailableCells();
 
-                CellUnitsViewWorker.SetEnabledUnit(false, XyPreviousVisionCell);
-                SelectedUnitType = default;
+                if (SelectedUnitType != default)
+                {
+                    CellUnitsViewWorker.SetEnabledUnit(false, XyPreviousVisionCell);
+                    SelectedUnitType = default;
+                    //XyPreviousCell.Clean();
+                }
 
-                XyPreviousCell.Clean();
 
-                SelectorWorker.ResetUpgradeModType();
+                SelectorWorker.SelectorType = SelectorTypes.Other;
             }
         }
     }
@@ -262,17 +271,17 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
     private void ClearAvailableCells()
     {
-        AvailableCellsEntsWorker.ClearAvailableCells(AvailableCellTypes.Shift);
-        AvailableCellsEntsWorker.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
-        AvailableCellsEntsWorker.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
+        AvailableCellsContainer.ClearAvailableCells(AvailableCellTypes.Shift);
+        AvailableCellsContainer.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
+        AvailableCellsContainer.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
     }
 
     private void GetCells()
     {
-        AvailableCellsEntsWorker.SetAllCellsCopy(AvailableCellTypes.Shift, CellUnitsDataWorker.GetCellsForShift(XySelectedCell));
+        AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.Shift, CellUnitsDataWorker.GetCellsForShift(XySelectedCell));
 
         CellUnitsDataWorker.GetCellsForAttack(PhotonNetwork.LocalPlayer, out var availableCellsSimpleAttack, out var availableCellsUniqueAttack, XySelectedCell);
-        AvailableCellsEntsWorker.SetAllCellsCopy(AvailableCellTypes.SimpleAttack, availableCellsSimpleAttack);
-        AvailableCellsEntsWorker.SetAllCellsCopy(AvailableCellTypes.UniqueAttack, availableCellsUniqueAttack);
+        AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.SimpleAttack, availableCellsSimpleAttack);
+        AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.UniqueAttack, availableCellsUniqueAttack);
     }
 }

@@ -1,15 +1,12 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
-using Photon.Pun;
 using System;
 using static Assets.Scripts.CellEnvirDataWorker;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
-    internal sealed class SeedingMasterSystem : RPCMasterSystemReduction
+    internal sealed class SeedingMasterSystem : SystemMasterReduction
     {
-        private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.FromInfo;
-
         private int[] XyCellForSeeding => _eMM.SeedingEnt_XyCellCom.XyCell;
         private EnvironmentTypes EnvTypeForSeeding => _eMM.SeedingEnt_EnvironmentTypesCom.EnvironmentType;
 
@@ -31,8 +28,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     {
                         if (CellBuildingsDataWorker.HaveAnyBuilding(XyCellForSeeding))
                         {
-                            PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
-                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            PhotonPunRPC.MistakeNeedOthePlaceToGeneral(RpcWorker.InfoFrom.Sender);
+                            PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
                         }
                         else
                         {
@@ -42,26 +39,26 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                                     if (!HaveEnvironment(EnvironmentTypes.YoungForest, XyCellForSeeding))
                                     {
-                                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Seeding);
+                                        PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Seeding);
                                         SetNewEnvironment(EnvironmentTypes.YoungForest, XyCellForSeeding);
 
                                         CellUnitsDataWorker.TakeAmountSteps(XyCellForSeeding);
                                     }
                                     else
                                     {
-                                        PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
-                                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                                        PhotonPunRPC.MistakeNeedOthePlaceToGeneral(RpcWorker.InfoFrom.Sender);
+                                        PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
                                     }
                                 else
                                 {
-                                    PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
-                                    PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                                    PhotonPunRPC.MistakeNeedOthePlaceToGeneral(RpcWorker.InfoFrom.Sender);
+                                    PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
                                 }
                             }
                             else
                             {
-                                PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
-                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                                PhotonPunRPC.MistakeNeedOthePlaceToGeneral(RpcWorker.InfoFrom.Sender);
+                                PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
                             }
 
                         }
@@ -69,8 +66,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                     else
                     {
-                        PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
-                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        PhotonPunRPC.MistakeStepsUnitToGeneral(RpcWorker.InfoFrom.Sender);
+                        PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
                     }
                     break;
 

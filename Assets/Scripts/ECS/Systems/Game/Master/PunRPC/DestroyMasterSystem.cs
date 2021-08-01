@@ -4,10 +4,8 @@ using Assets.Scripts.Workers;
 using Photon.Pun;
 using static Assets.Scripts.CellEnvirDataWorker;
 
-internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
+internal sealed class DestroyMasterSystem : SystemMasterReduction
 {
-    private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.FromInfo;
-
     private int[] XyCell => _eMM.DestroyEnt_XyCellCom.XyCell;
 
 
@@ -34,8 +32,8 @@ internal sealed class DestroyMasterSystem : RPCMasterSystemReduction
         }
         else
         {
-            PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
-            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+            PhotonPunRPC.MistakeStepsUnitToGeneral(RpcWorker.InfoFrom.Sender);
+            PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
         }
     }
 }

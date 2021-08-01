@@ -1,15 +1,13 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Info;
-using Photon.Pun;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
-    internal class UpgradeMasterSystem : RPCMasterSystemReduction
+    internal class UpgradeMasterSystem : SystemMasterReduction
     {
         private const byte FOR_NEXT_UPGRADE = 1;
-
-        private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.FromInfo;
 
         private UpgradeModTypes UpgradeModType => _eMM.UpgradeEnt_UpgradeTypeCom.UpgradeModType;
         private int[] XyCellForUpgrade => _eMM.UpgradeEnt_XyCellCom.XyCell;
@@ -34,59 +32,65 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                 case UpgradeModTypes.Unit:
                     if (CellUnitsDataWorker.HaveAnyUnit(XyCellForUpgrade))
                     {
-                        if (ResourcesDataUIWorker.CanUpgradeUnit(InfoFrom.Sender, CurrentUnitType, out haves))
+                        if (CellUnitsDataWorker.HaveOwner(XyCellForUpgrade))
                         {
-                            ResourcesDataUIWorker.BuyUpgradeUnit(InfoFrom.Sender, CurrentUnitType);
-
-
-                            var preConditionType = CellUnitsDataWorker.ConditionType(XyCellForUpgrade);
-                            var preUnitType = CellUnitsDataWorker.UnitType(XyCellForUpgrade);
-                            var preKey = CellUnitsDataWorker.IsMasterClient(XyCellForUpgrade);
-                            var preMaxHealth = CellUnitsDataWorker.MaxAmountHealth(preUnitType);
-
-                            InfoUnitsConditionWorker.RemoveUnitInCondition(preConditionType, preUnitType, preKey, XyCellForUpgrade);
-                            InfoAmountUnitsWorker.RemoveAmountUnitsInGame(preUnitType, preKey, XyCellForUpgrade);
-
-
-                            CellUnitsDataWorker.SetUnitType(NeededUnitTypeForUpgrade, XyCellForUpgrade);
-
-                            var newUnitType = CellUnitsDataWorker.UnitType(XyCellForUpgrade);
-                            var newMaxHealth = CellUnitsDataWorker.MaxAmountHealth(newUnitType);
-
-                            CellUnitsDataWorker.AddAmountHealth(XyCellForUpgrade, newMaxHealth - preMaxHealth);
-
-                            InfoAmountUnitsWorker.AddAmountUnitInGame(newUnitType, preKey, XyCellForUpgrade);
-                            InfoUnitsConditionWorker.AddUnitInCondition(preConditionType, newUnitType, preKey, XyCellForUpgrade);
-
-
-                            if (CellUnitsDataWorker.IsMelee(XyCellForUpgrade))
+                            if (CellUnitsDataWorker.IsHim(RpcWorker.InfoFrom.Sender, XyCellForUpgrade))
                             {
-                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.UpgradeUnitMelee);
+                                if (ResourcesDataUIWorker.CanUpgradeUnit(RpcWorker.InfoFrom.Sender, CurrentUnitType, out haves))
+                                {
+                                    ResourcesDataUIWorker.BuyUpgradeUnit(RpcWorker.InfoFrom.Sender, CurrentUnitType);
+
+
+                                    var preConditionType = CellUnitsDataWorker.ConditionType(XyCellForUpgrade);
+                                    var preUnitType = CellUnitsDataWorker.UnitType(XyCellForUpgrade);
+                                    var preKey = CellUnitsDataWorker.IsMasterClient(XyCellForUpgrade);
+                                    var preMaxHealth = CellUnitsDataWorker.MaxAmountHealth(preUnitType);
+
+                                    InfoUnitsContainer.RemoveUnitInCondition(preConditionType, preUnitType, preKey, XyCellForUpgrade);
+                                    InfoUnitsContainer.RemoveAmountUnitsInGame(preUnitType, preKey, XyCellForUpgrade);
+
+
+                                    CellUnitsDataWorker.SetUnitType(NeededUnitTypeForUpgrade, XyCellForUpgrade);
+
+                                    var newUnitType = CellUnitsDataWorker.UnitType(XyCellForUpgrade);
+                                    var newMaxHealth = CellUnitsDataWorker.MaxAmountHealth(newUnitType);
+
+                                    CellUnitsDataWorker.AddAmountHealth(XyCellForUpgrade, newMaxHealth - preMaxHealth);
+
+                                    InfoUnitsContainer.AddAmountUnitInGame(newUnitType, preKey, XyCellForUpgrade);
+                                    InfoUnitsContainer.AddUnitInCondition(preConditionType, newUnitType, preKey, XyCellForUpgrade);
+
+
+                                    if (CellUnitsDataWorker.IsMelee(XyCellForUpgrade))
+                                    {
+                                        PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.UpgradeUnitMelee);
+                                    }
+                                    else
+                                    {
+                                        PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.UpgradeUnitArcher);
+                                    }
+                                }
+                                else
+                                {
+                                    PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
+                                    PhotonPunRPC.MistakeEconomyToGeneral(RpcWorker.InfoFrom.Sender, haves);
+                                }
                             }
-                            else
-                            {
-                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.UpgradeUnitArcher);
-                            }
-                        }
-                        else
-                        {
-                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                            PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
                         }
                     }
                     break;
 
                 case UpgradeModTypes.Building:
-                    if (ResourcesDataUIWorker.CanUpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade, out haves))
+                    if (ResourcesDataUIWorker.CanUpgradeBuildings(RpcWorker.InfoFrom.Sender, NeededBuildingTypeForUpgrade, out haves))
                     {
-                        ResourcesDataUIWorker.BuyUpgradeBuildings(InfoFrom.Sender, NeededBuildingTypeForUpgrade);
+                        ResourcesDataUIWorker.BuyUpgradeBuildings(RpcWorker.InfoFrom.Sender, NeededBuildingTypeForUpgrade);
 
-                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.SoundGoldPack);
+                        PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.SoundGoldPack);
                     }
                     else
                     {
-                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                        PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
+                        PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        PhotonPunRPC.MistakeEconomyToGeneral(RpcWorker.InfoFrom.Sender, haves);
                     }
                     break;
 

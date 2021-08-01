@@ -1,9 +1,8 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.ECS.Components;
+﻿using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.Game.Components;
 using Leopotam.Ecs;
 
-public sealed class EntitiesGameMasterManager : EntitiesManager
+public sealed class EntitiesGameMasterManager
 {
     private EcsEntity _fromInfoEnt;
     internal ref FromInfoComponent FromInfoEnt_FromInfoCom => ref _fromInfoEnt.Get<FromInfoComponent>();
@@ -65,6 +64,10 @@ public sealed class EntitiesGameMasterManager : EntitiesManager
     private EcsEntity _settingUnitEnt;
     internal ref XyCellComponent SettingUnitEnt_XyCellCom => ref _settingUnitEnt.Get<XyCellComponent>();
     internal ref UnitTypeComponent SettingUnitEnt_UnitTypeCom => ref _settingUnitEnt.Get<UnitTypeComponent>();
+
+
+    private EcsEntity _circularAttackKingEnt;
+    internal ref XyCellComponent CircularAttackKingEnt_XyCellCom => ref _settingUnitEnt.Get<XyCellComponent>();
 
 
     public EntitiesGameMasterManager(EcsWorld gameWorld)

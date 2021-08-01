@@ -1,7 +1,9 @@
 ﻿using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.Workers.Game.Else;
+using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Info;
 using Leopotam.Ecs;
+using Photon.Pun;
 
 namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 {
@@ -9,19 +11,19 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
     {
         public void Init()
         {
-            if (Main.Instance.IsMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
-                InventorUnitsDataWorker.SetAmountUnitsInInventor(UnitTypes.King, true, EconomyValues.AMOUNT_KING_MASTER);
-                InventorUnitsDataWorker.SetAmountUnitsInInventor(UnitTypes.King, false, EconomyValues.AMOUNT_KING_OTHER);
+                InfoUnitsContainer.SetAmountUnitsInInventor(UnitTypes.King, true, EconomyValues.AMOUNT_KING_MASTER);
+                InfoUnitsContainer.SetAmountUnitsInInventor(UnitTypes.King, false, EconomyValues.AMOUNT_KING_OTHER);
 
-                InventorUnitsDataWorker.SetAmountUnitsInInventor(UnitTypes.Pawn, true, EconomyValues.AMOUNT_PAWN_MASTER);
-                InventorUnitsDataWorker.SetAmountUnitsInInventor(UnitTypes.Pawn, false, EconomyValues.AMOUNT_PAWN_OTHER);
+                InfoUnitsContainer.SetAmountUnitsInInventor(UnitTypes.Pawn, true, EconomyValues.AMOUNT_PAWN_MASTER);
+                InfoUnitsContainer.SetAmountUnitsInInventor(UnitTypes.Pawn, false, EconomyValues.AMOUNT_PAWN_OTHER);
 
-                InventorUnitsDataWorker.SetAmountUnitsInInventor(UnitTypes.Rook, true, EconomyValues.AMOUNT_ROOK_MASTER);
-                InventorUnitsDataWorker.SetAmountUnitsInInventor(UnitTypes.Rook, false, EconomyValues.AMOUNT_ROOK_OTHER);
+                InfoUnitsContainer.SetAmountUnitsInInventor(UnitTypes.Rook, true, EconomyValues.AMOUNT_ROOK_MASTER);
+                InfoUnitsContainer.SetAmountUnitsInInventor(UnitTypes.Rook, false, EconomyValues.AMOUNT_ROOK_OTHER);
 
-                InventorUnitsDataWorker.SetAmountUnitsInInventor(UnitTypes.Bishop, true, EconomyValues.AMOUNT_BISHOP_MASTER);
-                InventorUnitsDataWorker.SetAmountUnitsInInventor(UnitTypes.Bishop, false, EconomyValues.AMOUNT_BISHOP_OTHER);
+                InfoUnitsContainer.SetAmountUnitsInInventor(UnitTypes.Bishop, true, EconomyValues.AMOUNT_BISHOP_MASTER);
+                InfoUnitsContainer.SetAmountUnitsInInventor(UnitTypes.Bishop, false, EconomyValues.AMOUNT_BISHOP_OTHER);
 
 
                 ResourcesDataUIWorker.SetAmountResources(ResourceTypes.Food, true, EconomyValues.AMOUNT_FOOD_MASTER);

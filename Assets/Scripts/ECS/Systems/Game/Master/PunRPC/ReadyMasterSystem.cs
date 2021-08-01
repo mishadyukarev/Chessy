@@ -1,11 +1,9 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.UI;
-using Photon.Pun;
 
-internal sealed class ReadyMasterSystem : RPCMasterSystemReduction
+internal sealed class ReadyMasterSystem : SystemMasterReduction
 {
-    private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.FromInfo;
-
     private bool IsReady => _eMM.ReadyEnt_IsActivatedCom.IsActivated;
 
     public override void Run()
@@ -13,7 +11,7 @@ internal sealed class ReadyMasterSystem : RPCMasterSystemReduction
         base.Run();
 
 
-        MiddleViewUIWorker.SetIsReady(InfoFrom.Sender.IsMasterClient, IsReady);
+        MiddleViewUIWorker.SetIsReady(RpcWorker.InfoFrom.Sender.IsMasterClient, IsReady);
 
         if (MiddleViewUIWorker.IsReady(true) && MiddleViewUIWorker.IsReady(false))
         {

@@ -18,6 +18,7 @@
     SeedEnvironment,
     Fire,
     Sound,
+    CircularAttackKing,
 
     Upgrade,
 }

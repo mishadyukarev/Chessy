@@ -27,6 +27,11 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                             CellUnitsViewWorker.EnableUnitSR(false, xy);
                         }
                     }
+
+                    else
+                    {
+                        CellUnitsViewWorker.EnableUnitSR(false, xy);
+                    }
                 }
         }
     }

@@ -1,45 +1,41 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Common;
 using Assets.Scripts.Workers.Game.UI;
 using Photon.Pun;
+using System;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts
 {
-    internal sealed class EventGeneralSystem : RPCGeneralSystemReduction
+    internal sealed class EventGeneralSystem : SystemGeneralReduction
     {
-        private PhotonSceneManager _sceneManager;
-
         private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
 
-        internal EventGeneralSystem()
-        {
-            _sceneManager = Instance.PhotonManager.SceneManager;
-        }
 
         public override void Init()
         {
             base.Init();
 
-            _eGGUIM.ReadyEnt_ButtonCom.Button.onClick.AddListener(Ready);
+            Instance.ECSmanager.EntGameGeneralUIViewManager.ReadyEnt_ButtonCom.Button.onClick.AddListener(Ready);
 
-            _eGGUIM.TakerKingEnt_ButtonCom.Button.onClick.AddListener(delegate { GetUnit(_eGGUIM.TakerKingEnt_UnitTypeCom.UnitType); });
-            _eGGUIM.TakerPawnEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(_eGGUIM.TakerPawnEntityUnitTypeComponent.UnitType); });
-            _eGGUIM.TakerRookEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(_eGGUIM.TakerRookEntityUnitTypeComponent.UnitType); });
-            _eGGUIM.TakerBishopEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(_eGGUIM.TakerBishopEntityUnitTypeComponent.UnitType); });
+            Instance.ECSmanager.EntGameGeneralUIViewManager.TakerKingEnt_ButtonCom.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.EntGameGeneralUIViewManager.TakerKingEnt_UnitTypeCom.UnitType); });
+            Instance.ECSmanager.EntGameGeneralUIViewManager.TakerPawnEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.EntGameGeneralUIViewManager.TakerPawnEntityUnitTypeComponent.UnitType); });
+            Instance.ECSmanager.EntGameGeneralUIViewManager.TakerRookEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.EntGameGeneralUIViewManager.TakerRookEntityUnitTypeComponent.UnitType); });
+            Instance.ECSmanager.EntGameGeneralUIViewManager.TakerBishopEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.EntGameGeneralUIViewManager.TakerBishopEntityUnitTypeComponent.UnitType); });
 
-            _eGGUIM.DonerUIEnt_ButtonCom.Button.onClick.AddListener(delegate { Done(); });
+            Instance.ECSmanager.EntGameGeneralUIViewManager.DonerUIEnt_ButtonCom.Button.onClick.AddListener(delegate { Done(); });
 
-            _eGGUIM.EnvironmentInfoEnt_ButtonCom.Button.onClick.AddListener(EnvironmentInfo);
+            Instance.ECSmanager.EntGameGeneralUIViewManager.EnvironmentInfoEnt_ButtonCom.Button.onClick.AddListener(EnvironmentInfo);
 
-            _eGGUIM.LeaveEnt_ButtonCom.Button.onClick.AddListener(_sceneManager.LeaveRoom);
+            Instance.ECSmanager.EntGameGeneralUIViewManager.LeaveEnt_ButtonCom.Button.onClick.AddListener(PhotonScene.LeaveRoom);
 
-            _eGGUIM.ProtectConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton1);
-            _eGGUIM.RelaxConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton2);
+            Instance.ECSmanager.EntGameGeneralUIViewManager.ProtectConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton1);
+            Instance.ECSmanager.EntGameGeneralUIViewManager.RelaxConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton2);
         }
 
 
-        private void Ready() => PhotonPunRPC.ReadyToMaster(!MiddleViewUIWorker.IsReady(Instance.IsMasterClient));
+        private void Ready() => PhotonPunRPC.ReadyToMaster(!MiddleViewUIWorker.IsReady(PhotonNetwork.IsMasterClient));
         private void GetUnit(UnitTypes unitType)
         {
             if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient))
@@ -49,12 +45,12 @@ namespace Assets.Scripts
         }
         private void Done()
         {
-            SelectorWorker.ResetUpgradeModType();
+            SelectorWorker.SelectorType = SelectorTypes.Other;
 
-            switch (Instance.EntComM.SaverEnt_StepModeTypeCom.StepModeType)
+            switch (SaverComWorker.StepModeType)
             {
                 case StepModeTypes.None:
-                    break;
+                    throw new Exception();
 
                 case StepModeTypes.ByQueue:
                     if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient))
@@ -66,18 +62,18 @@ namespace Assets.Scripts
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
         }
         private void EnvironmentInfo()
         {
-            _eGGUIM.EnvironmentInfoEnt_IsActivatedCom.IsActivated = !_eGGUIM.EnvironmentInfoEnt_IsActivatedCom.IsActivated;
+            Instance.ECSmanager.EntGameGeneralUIViewManager.EnvironmentInfoEnt_IsActivatedCom.IsActivated = !Instance.ECSmanager.EntGameGeneralUIViewManager.EnvironmentInfoEnt_IsActivatedCom.IsActivated;
         }
         private void StandartAbilityButton1()
         {
             if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient))
             {
-                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionUnitTypes.Protected, XySelectedCell))
+                if (CellUnitsDataWorker.IsConditionType(ConditionUnitTypes.Protected, XySelectedCell))
                 {
                     PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionUnitTypes.None, XySelectedCell);
                 }
@@ -92,7 +88,7 @@ namespace Assets.Scripts
         {
             if (!DownDonerUIWorker.IsDoned(PhotonNetwork.IsMasterClient))
             {
-                if (CellUnitsDataWorker.IsProtectRelaxType(ConditionUnitTypes.Relaxed, XySelectedCell))
+                if (CellUnitsDataWorker.IsConditionType(ConditionUnitTypes.Relaxed, XySelectedCell))
                 {
                     PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionUnitTypes.None, XySelectedCell);
                 }

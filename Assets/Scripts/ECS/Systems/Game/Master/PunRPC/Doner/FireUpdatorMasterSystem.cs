@@ -33,8 +33,8 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                             var unitType = CellUnitsDataWorker.UnitType(xy);
                             var key = CellUnitsDataWorker.IsMasterClient(xy);
 
-                            InfoAmountUnitsWorker.RemoveAmountUnitsInGame(unitType, key, xy);
-                            InfoUnitsConditionWorker.RemoveUnitInCondition(conditionType, unitType, key, xy);
+                            InfoUnitsContainer.RemoveAmountUnitsInGame(unitType, key, xy);
+                            InfoUnitsContainer.RemoveUnitInCondition(conditionType, unitType, key, xy);
                             CellUnitsDataWorker.ResetUnit(xy);
                         }
                     }
@@ -59,7 +59,7 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                         CellFireDataWorker.ResetTimeSteps(xy);
 
 
-                        var aroundXYList = CellSpaceWorker.TryGetXYAround(xy);
+                        var aroundXYList = CellSpaceWorker.TryGetXyAround(xy);
                         foreach (var xy1 in aroundXYList)
                         {
                             if (CellViewWorker.IsActiveSelfParentCell(xy1))

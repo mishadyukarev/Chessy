@@ -1,12 +1,15 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
+using Assets.Scripts.ECS.Systems.Game.Master.PunRPC;
 using Leopotam.Ecs;
 
 public sealed class SystemsGameMasterManager : SystemsManager
 {
-    internal EcsSystems RpcSystems { get; private set; }
-    internal EcsSystems VisibilityUnitsSystems { get; private set; }
-    internal EcsSystems UpdateMotion { get; private set; }
+    internal static EcsSystems RpcSystems { get; private set; }
+    internal static EcsSystems VisibilityUnitsSystems { get; private set; }
+    internal static EcsSystems UpdateMotion { get; private set; }
+
+    internal static EcsSystems CircularAttackKingSystems { get; private set; }
 
 
     internal SystemsGameMasterManager(EcsWorld gameWorld) : base(gameWorld)
@@ -35,6 +38,11 @@ public sealed class SystemsGameMasterManager : SystemsManager
             .Add(new ExtractionUpdatorMasterSystem())
             .Add(new FireUpdatorMasterSystem())
             .Add(new UpdateMotionMasterSystem());
+
+
+        CircularAttackKingSystems = new EcsSystems(gameWorld)
+            .Add(new CircularAttackKingSystem(), nameof(CircularAttackKingSystem));
+
     }
 
     internal override void ProcessInjects()
@@ -44,6 +52,7 @@ public sealed class SystemsGameMasterManager : SystemsManager
         RpcSystems.ProcessInjects();
         VisibilityUnitsSystems.ProcessInjects();
         UpdateMotion.ProcessInjects();
+        CircularAttackKingSystems.ProcessInjects();
     }
 
     internal override void Init()
@@ -53,5 +62,6 @@ public sealed class SystemsGameMasterManager : SystemsManager
         RpcSystems.Init();
         VisibilityUnitsSystems.Init();
         UpdateMotion.Init();
+        CircularAttackKingSystems.Init();
     }
 }

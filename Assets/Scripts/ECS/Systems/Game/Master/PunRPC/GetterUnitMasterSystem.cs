@@ -1,11 +1,11 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else;
-using Photon.Pun;
+using Assets.Scripts.Workers.Game.Else.Info.Units;
 using System;
 
-internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
+internal sealed class GetterUnitMasterSystem : SystemMasterReduction
 {
-    internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.FromInfo;
     internal UnitTypes UnitType => _eMM.CreatorEnt_UnitTypeCom.UnitType;
 
     public override void Run()
@@ -20,7 +20,7 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 throw new Exception();
 
             case UnitTypes.King:
-                isGetted = InventorUnitsDataWorker.HaveUnitInInventor(UnitType, InfoFrom.Sender.IsMasterClient);
+                isGetted = InfoUnitsContainer.HaveUnitInInventor(UnitType, RpcWorker.InfoFrom.Sender.IsMasterClient);
                 if (isGetted)
                 {
                     unitType = UnitType;
@@ -28,12 +28,12 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 break;
 
             case UnitTypes.Pawn:
-                if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.PawnSword, InfoFrom.Sender.IsMasterClient))
+                if (InfoUnitsContainer.HaveUnitInInventor(UnitTypes.PawnSword, RpcWorker.InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType + 1;
                 }
-                else if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.Pawn, InfoFrom.Sender.IsMasterClient))
+                else if (InfoUnitsContainer.HaveUnitInInventor(UnitTypes.Pawn, RpcWorker.InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType;
@@ -44,12 +44,12 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 throw new Exception();
 
             case UnitTypes.Rook:
-                if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.RookCrossbow, InfoFrom.Sender.IsMasterClient))
+                if (InfoUnitsContainer.HaveUnitInInventor(UnitTypes.RookCrossbow, RpcWorker.InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType + 1;
                 }
-                else if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.Rook, InfoFrom.Sender.IsMasterClient))
+                else if (InfoUnitsContainer.HaveUnitInInventor(UnitTypes.Rook, RpcWorker.InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType;
@@ -60,12 +60,12 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
                 throw new Exception();
 
             case UnitTypes.Bishop:
-                if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.BishopCrossbow, InfoFrom.Sender.IsMasterClient))
+                if (InfoUnitsContainer.HaveUnitInInventor(UnitTypes.BishopCrossbow, RpcWorker.InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType + 1;
                 }
-                else if (InventorUnitsDataWorker.HaveUnitInInventor(UnitTypes.Bishop, InfoFrom.Sender.IsMasterClient))
+                else if (InfoUnitsContainer.HaveUnitInInventor(UnitTypes.Bishop, RpcWorker.InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType;
@@ -78,6 +78,6 @@ internal sealed class GetterUnitMasterSystem : RPCMasterSystemReduction
             default:
                 throw new Exception();
         }
-        PhotonPunRPC.GetUnitToGeneral(InfoFrom.Sender, isGetted, unitType);
+        PhotonPunRPC.GetUnitToGeneral(RpcWorker.InfoFrom.Sender, isGetted, unitType);
     }
 }

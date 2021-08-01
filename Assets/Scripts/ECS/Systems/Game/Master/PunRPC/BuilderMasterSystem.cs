@@ -2,16 +2,12 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
-using Assets.Scripts.Workers.Game.Else.Cell;
 using Assets.Scripts.Workers.Info;
-using Photon.Pun;
 using System;
 using static Assets.Scripts.CellEnvirDataWorker;
 
-internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
+internal sealed class BuilderMasterSystem : SystemMasterReduction
 {
-    private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.FromInfo;
-
     private int[] XyCellForBuilding => _eMM.BuildEnt_XyCellCom.XyCell;
     private BuildingTypes NeededBuildingTypeForBuilding => _eMM.BuildEnt_BuildingTypeCom.BuildingType;
 
@@ -22,8 +18,8 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
         if (CellBuildingsDataWorker.HaveAnyBuilding(XyCellForBuilding))
         {
-            PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
-            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+            PhotonPunRPC.MistakeNeedOthePlaceToGeneral(RpcWorker.InfoFrom.Sender);
+            PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
         }
 
         else
@@ -39,7 +35,7 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     {
                         bool canSetCity = true;
 
-                        foreach (var xy in CellSpaceWorker.TryGetXYAround(XyCellForBuilding))
+                        foreach (var xy in CellSpaceWorker.TryGetXyAround(XyCellForBuilding))
                         {
                             if (!CellViewWorker.IsActiveSelfParentCell(xy))
                             {
@@ -49,10 +45,10 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
                         if (canSetCity)
                         {
-                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
+                            PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Building);
 
-                            CellBuildingsDataWorker.SetPlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
-                            InfoBuidlingsWorker.AddXyBuild(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+                            CellBuildingsDataWorker.SetPlayerBuilding(NeededBuildingTypeForBuilding, RpcWorker.InfoFrom.Sender, XyCellForBuilding);
+                            InfoBuidlingsWorker.AddXyBuild(NeededBuildingTypeForBuilding, RpcWorker.InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
 
                             CellUnitsDataWorker.ResetAmountSteps(XyCellForBuilding);
 
@@ -62,14 +58,14 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
 
                         else
                         {
-                            PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
-                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            PhotonPunRPC.MistakeNeedOthePlaceToGeneral(RpcWorker.InfoFrom.Sender);
+                            PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
                         }
                     }
                     else
                     {
-                        PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
-                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        PhotonPunRPC.MistakeStepsUnitToGeneral(RpcWorker.InfoFrom.Sender);
+                        PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
                     }
                     break;
 
@@ -79,10 +75,10 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                     {
                         if (!HaveEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding) && !HaveEnvironment(EnvironmentTypes.YoungForest, XyCellForBuilding))
                         {
-                            if (ResourcesDataUIWorker.CanCreateNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, out bool[] haves))
+                            if (ResourcesDataUIWorker.CanCreateNewBuilding(NeededBuildingTypeForBuilding, RpcWorker.InfoFrom.Sender, out bool[] haves))
                             {
 
-                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
+                                PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Building);
 
                                 if (HaveEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding))
                                 {
@@ -93,30 +89,30 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                                     SetNewEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding);
                                 }
 
-                                ResourcesDataUIWorker.BuyNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender);
+                                ResourcesDataUIWorker.BuyNewBuilding(NeededBuildingTypeForBuilding, RpcWorker.InfoFrom.Sender);
 
-                                CellBuildingsDataWorker.SetPlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
-                                InfoBuidlingsWorker.AddXyBuild(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+                                CellBuildingsDataWorker.SetPlayerBuilding(NeededBuildingTypeForBuilding, RpcWorker.InfoFrom.Sender, XyCellForBuilding);
+                                InfoBuidlingsWorker.AddXyBuild(NeededBuildingTypeForBuilding, RpcWorker.InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
 
                                 CellUnitsDataWorker.TakeAmountSteps(XyCellForBuilding);
 
                             }
                             else
                             {
-                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                                PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
+                                PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
+                                PhotonPunRPC.MistakeEconomyToGeneral(RpcWorker.InfoFrom.Sender, haves);
                             }
                         }
                         else
                         {
-                            PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
-                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            PhotonPunRPC.MistakeNeedOthePlaceToGeneral(RpcWorker.InfoFrom.Sender);
+                            PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
                         }
                     }
                     else
                     {
-                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                        PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
+                        PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        PhotonPunRPC.MistakeStepsUnitToGeneral(RpcWorker.InfoFrom.Sender);
                     }
                     break;
 
@@ -127,34 +123,34 @@ internal sealed class BuilderMasterSystem : RPCMasterSystemReduction
                 case BuildingTypes.Mine:
                     if (HaveEnvironment(EnvironmentTypes.Hill, XyCellForBuilding) && HaveResources(EnvironmentTypes.Hill, XyCellForBuilding))
                     {
-                        if (ResourcesDataUIWorker.CanCreateNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, out bool[] haves))
+                        if (ResourcesDataUIWorker.CanCreateNewBuilding(NeededBuildingTypeForBuilding, RpcWorker.InfoFrom.Sender, out bool[] haves))
                         {
                             if (CellUnitsDataWorker.HaveMaxAmountSteps(XyCellForBuilding))
                             {
-                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Building);
+                                PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Building);
 
-                                ResourcesDataUIWorker.BuyNewBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender);
-                                InfoBuidlingsWorker.AddXyBuild(NeededBuildingTypeForBuilding, InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
-                                CellBuildingsDataWorker.SetPlayerBuilding(NeededBuildingTypeForBuilding, InfoFrom.Sender, XyCellForBuilding);
+                                ResourcesDataUIWorker.BuyNewBuilding(NeededBuildingTypeForBuilding, RpcWorker.InfoFrom.Sender);
+                                InfoBuidlingsWorker.AddXyBuild(NeededBuildingTypeForBuilding, RpcWorker.InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+                                CellBuildingsDataWorker.SetPlayerBuilding(NeededBuildingTypeForBuilding, RpcWorker.InfoFrom.Sender, XyCellForBuilding);
 
                                 CellUnitsDataWorker.ResetAmountSteps(XyCellForBuilding);
                             }
                             else
                             {
-                                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                                PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
+                                PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
+                                PhotonPunRPC.MistakeStepsUnitToGeneral(RpcWorker.InfoFrom.Sender);
                             }
                         }
                         else
                         {
-                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                            PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
+                            PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
+                            PhotonPunRPC.MistakeEconomyToGeneral(RpcWorker.InfoFrom.Sender, haves);
                         }
                     }
                     else
                     {
-                        PhotonPunRPC.MistakeNeedOthePlaceToGeneral(InfoFrom.Sender);
-                        PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                        PhotonPunRPC.MistakeNeedOthePlaceToGeneral(RpcWorker.InfoFrom.Sender);
+                        PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
                     }
                     break;
 

@@ -1,14 +1,14 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
+using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using static Assets.Scripts.Workers.CellBaseOperations;
 
-internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
+internal sealed class AttackUnitMasterSystem : SystemMasterReduction
 {
     private bool _isAttacked;
-
-    internal PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.FromInfo;
 
     internal int[] FromXy => _eMM.AttackEnt_FromToXyCom.FromXy;
     internal int[] ToXy => _eMM.AttackEnt_FromToXyCom.ToXy;
@@ -18,7 +18,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
     {
         base.Run();
 
-        CellUnitsDataWorker.GetCellsForAttack(InfoFrom.Sender,
+        CellUnitsDataWorker.GetCellsForAttack(RpcWorker.InfoFrom.Sender,
             out var availableCellsSimpleAttack, out var availableCellsUniqueAttack, FromXy);
 
         var isFindedSimple = availableCellsSimpleAttack.TryFindCell(ToXy);
@@ -83,11 +83,15 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
                     }
                 }
 
+                var isMasterFromUnit = CellUnitsDataWorker.IsMasterClient(FromXy);
+
+                InfoUnitsContainer.RemoveAmountUnitsInGame(CellUnitsDataWorker.UnitType(FromXy), isMasterFromUnit, FromXy);
+                InfoUnitsContainer.RemoveUnitInCondition(CellUnitsDataWorker.ConditionType(FromXy), CellUnitsDataWorker.UnitType(FromXy), isMasterFromUnit, FromXy);
                 CellUnitsDataWorker.ResetUnit(FromXy);
 
                 if (CellUnitsDataWorker.HaveOwner(FromXy))
                 {
-                    InfoAmountUnitsWorker.RemoveAmountUnitsInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
+                    InfoUnitsContainer.RemoveAmountUnitsInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
                 }
             }
 
@@ -96,13 +100,16 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
                 if (CellUnitsDataWorker.IsUnitType(UnitTypes.King, ToXy))
                     PhotonPunRPC.EndGameToMaster(CellUnitsDataWorker.ActorNumber(FromXy));
 
+                var isMasterToUnit = CellUnitsDataWorker.IsMasterClient(ToXy);
 
+                InfoUnitsContainer.RemoveAmountUnitsInGame(CellUnitsDataWorker.UnitType(ToXy), isMasterToUnit, ToXy);
+                InfoUnitsContainer.RemoveUnitInCondition(CellUnitsDataWorker.ConditionType(ToXy), CellUnitsDataWorker.UnitType(ToXy), isMasterToUnit, ToXy);
                 CellUnitsDataWorker.ResetUnit(ToXy);
 
-                if (!CellUnitsDataWorker.IsMelee(FromXy))
+                if (CellUnitsDataWorker.IsMelee(FromXy))
                 {
-                    InfoAmountUnitsWorker.RemoveAmountUnitsInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
-                    InfoAmountUnitsWorker.AddAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), ToXy);
+                    InfoUnitsContainer.RemoveAmountUnitsInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), FromXy);
+                    InfoUnitsContainer.AddAmountUnitInGame(CellUnitsDataWorker.UnitType(FromXy), CellUnitsDataWorker.IsMasterClient(FromXy), ToXy);
                     CellUnitsDataWorker.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
                 }
             }
@@ -112,7 +119,7 @@ internal sealed class AttackUnitMasterSystem : RPCMasterSystemReduction
         else _isAttacked = false;
 
 
-        PhotonPunRPC.AttackUnitToGeneral(InfoFrom.Sender, _isAttacked);
+        PhotonPunRPC.AttackUnitToGeneral(RpcWorker.InfoFrom.Sender, _isAttacked);
         PhotonPunRPC.AttackUnitToGeneral(RpcTarget.All, false, _isAttacked, FromXy, ToXy);
     }
 }

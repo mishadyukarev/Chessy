@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Workers.Game.Else.Data;
-using Assets.Scripts.Workers.Game.UI;
 using Assets.Scripts.Workers.Game.UI.Vis.Up;
 using Leopotam.Ecs;
 using UnityEngine;
@@ -14,7 +13,7 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View
         private float _timer;
         private bool _isStartedMistake;
 
-        public void Init()  
+        public void Init()
         {
             MistakeEconomyEventDataWorker.AddListenerEconomyMistake(ResourceTypes.Food, delegate { MistakeEnvironment(ResourceTypes.Food); });
             MistakeEconomyEventDataWorker.AddListenerEconomyMistake(ResourceTypes.Wood, delegate { MistakeEnvironment(ResourceTypes.Wood); });

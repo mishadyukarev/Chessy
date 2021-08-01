@@ -1,58 +1,82 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Cell;
 using Assets.Scripts.Workers.Game.Else.Fire;
 using Assets.Scripts.Workers.Info;
 using Photon.Pun;
+using System;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
-    internal sealed class FireMasterSystem : RPCMasterSystemReduction
+    internal sealed class FireMasterSystem : SystemMasterReduction
     {
-        private PhotonMessageInfo InfoFrom => _eMM.FromInfoEnt_FromInfoCom.FromInfo;
-        private int[] FromXyCopy => _eMM.FireEnt_FromToXyCom.FromXy;
+        private int[] FromXy => _eMM.FireEnt_FromToXyCom.FromXy;
         private int[] ToXy => _eMM.FireEnt_FromToXyCom.ToXy;
 
         public override void Run()
         {
             base.Run();
 
-            if (CellUnitsDataWorker.HaveMinAmountSteps(FromXyCopy))
+            if (CellUnitsDataWorker.IsMelee(FromXy))
             {
-                if (CellFireDataWorker.HaveFire(ToXy))
+                if (CellUnitsDataWorker.HaveMinAmountSteps(FromXy))
                 {
-                    CellFireDataWorker.ResetFire(ToXy);
-                    CellFireDataWorker.ResetTimeSteps(ToXy);
+                    if (CellFireDataWorker.HaveFire(ToXy))
+                    {
+                        CellFireDataWorker.ResetFire(ToXy);
+                        CellFireDataWorker.ResetTimeSteps(ToXy);
 
-                    CellUnitsDataWorker.TakeAmountSteps(ToXy);
-                }
-                else if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, ToXy))
-                {
-                    if (CellUnitsDataWorker.HaveOwner(FromXyCopy))
-
-                        if (ResourcesDataUIWorker.CanFireSomething(CellUnitsDataWorker.Owner(FromXyCopy), CellUnitsDataWorker.UnitType(FromXyCopy), out bool[] haves))
+                        CellUnitsDataWorker.TakeAmountSteps(ToXy);
+                    }
+                    else if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, ToXy))
+                    {
+                        if (CellUnitsDataWorker.HaveOwner(FromXy))
                         {
                             PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
-
-                            ResourcesDataUIWorker.BuyFire(CellUnitsDataWorker.Owner(FromXyCopy), CellUnitsDataWorker.UnitType(FromXyCopy));
 
                             CellFireDataWorker.EnableFire(ToXy);
                             CellUnitsDataWorker.TakeAmountSteps(ToXy);
                         }
-                        else
-                        {
-                            PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
-                            PhotonPunRPC.MistakeEconomyToGeneral(InfoFrom.Sender, haves);
-                        }
+
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
                 }
+
                 else
                 {
-                    PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                    PhotonPunRPC.MistakeStepsUnitToGeneral(RpcWorker.InfoFrom.Sender);
+                    PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
                 }
             }
 
             else
             {
-                PhotonPunRPC.MistakeStepsUnitToGeneral(InfoFrom.Sender);
-                PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.Mistake);
+                if (CellUnitsDataWorker.HaveMaxAmountSteps(FromXy))
+                {
+                    if (!CellFireDataWorker.HaveFire(ToXy))
+                    {
+                        foreach (var xy1 in CellSpaceWorker.TryGetXyAround(FromXy))
+                        {
+                            if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy1))
+                            {
+                                if (xy1.Compare(ToXy))
+                                {
+                                    CellUnitsDataWorker.ResetAmountSteps(FromXy);
+                                    CellFireDataWorker.EnableFire(ToXy);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                else
+                {
+                    PhotonPunRPC.MistakeStepsUnitToGeneral(RpcWorker.InfoFrom.Sender);
+                    PhotonPunRPC.SoundToGeneral(RpcWorker.InfoFrom.Sender, SoundEffectTypes.Mistake);
+                }
             }
         }
     }

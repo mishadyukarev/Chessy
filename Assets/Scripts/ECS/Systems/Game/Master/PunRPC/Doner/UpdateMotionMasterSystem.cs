@@ -1,13 +1,10 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.Workers;
-using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Game.UI;
 using Photon.Pun;
-using UnityEngine;
 
-internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
+internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
 {
 
     public override void Run()
@@ -29,7 +26,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
         DownDonerUIWorker.SetDoned(true, false);
         DownDonerUIWorker.SetDoned(false, false);
 
-        _eGGUIM.MotionEnt_AmountCom.AmountMotions += 1;
+        Main.Instance.ECSmanager.EntGameGeneralUIViewManager.MotionEnt_AmountCom.AmountMotions += 1;
 
 
         int amountAdultForest = 0;
@@ -49,7 +46,7 @@ internal sealed class UpdateMotionMasterSystem : RPCMasterSystemReduction
         if (amountAdultForest <= 3)
         {
             PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
-            _sMM.TryInvokeRunSystem(nameof(TruceMasterSystem), _sMM.RpcSystems);
+            SystemsGameMasterManager.TryInvokeRunSystem(nameof(TruceMasterSystem), SystemsGameMasterManager.RpcSystems);
         }
     }
 }

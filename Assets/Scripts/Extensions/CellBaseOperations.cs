@@ -6,17 +6,6 @@ namespace Assets.Scripts.Workers
 {
     public static class CellBaseOperations
     {
-        //internal static int[] CopyXy(int[] inArray)
-        //{
-        //    int[] array = new int[XY_FOR_ARRAY];
-        //    Array.Copy(inArray, array, array.Length);
-        //    return array;
-        //}
-        //internal static void CopyXyInTo(in int[] InXYCell, int[] ToXYCell)
-        //{
-        //    ToXYCell[X] = InXYCell[X];
-        //    ToXYCell[Y] = InXYCell[Y];
-        //}
         internal static void Clean(this int[] xy)
         {
             xy[X] = default;

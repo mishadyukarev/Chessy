@@ -72,10 +72,6 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
             }
 
 
-
-
-
-
             for (int xyIndex = 0; xyIndex < InfoBuidlingsWorker.GetAmountBuild(BuildingTypes.Mine, isMasterKey); xyIndex++)
             {
                 var xy = InfoBuidlingsWorker.GetXyBuildByIndex(BuildingTypes.Mine, isMasterKey, xyIndex);
@@ -104,44 +100,91 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
 
 
 
-            for (byte unitTypeByte = 2; unitTypeByte <= 3; unitTypeByte++)
+            for (UnitTypes unitType = UnitTypes.King; (byte)unitType < Enum.GetNames(typeof(UnitTypes)).Length; unitType++)
             {
-                var curUnitType = (UnitTypes)unitTypeByte;
+                var curConditionType = ConditionUnitTypes.Relaxed;
 
-                for (int xyIndex = 0; xyIndex < InfoUnitsConditionWorker.GetAmountUnitsInCondition(ConditionUnitTypes.Relaxed, curUnitType, isMasterKey); xyIndex++)
+                for (int xyIndex = 0; xyIndex < InfoUnitsContainer.GetAmountUnitsInCondition(curConditionType, unitType, isMasterKey); xyIndex++)
                 {
-                    var xy = InfoUnitsConditionWorker.GetXyInConditionByIndex(ConditionUnitTypes.Relaxed, curUnitType, isMasterKey, xyIndex);
+                    var xy = InfoUnitsContainer.GetXyInConditionByIndex(curConditionType, unitType, isMasterKey, xyIndex);
 
-                    if (CellUnitsDataWorker.AmountHealth(xy) < CellUnitsDataWorker.MaxAmountHealth(curUnitType))
+                    if (CellFireDataWorker.HaveFire(xy))
                     {
-                        CellUnitsDataWorker.AddStandartHeal(xy);
-                        if (CellUnitsDataWorker.AmountHealth(xy) > CellUnitsDataWorker.MaxAmountHealth(xy))
-                        {
-                            CellUnitsDataWorker.SetAmountHealth(CellUnitsDataWorker.MaxAmountHealth(curUnitType), xy);
-                        }
+                        InfoUnitsContainer.ReplaceCondition(curConditionType, ConditionUnitTypes.None, unitType, isMasterKey, xy);
+                        CellUnitsDataWorker.SetConditionType(ConditionUnitTypes.None, xy);
                     }
+
                     else
                     {
-                        if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                        if (CellUnitsDataWorker.AmountHealth(xy) == CellUnitsDataWorker.MaxAmountHealth(unitType))
                         {
-                            ResourcesDataUIWorker.AddAmountResources(ResourceTypes.Wood, isMasterKey);
-                            CellEnvirDataWorker.TakeAmountResources(EnvironmentTypes.AdultForest, xy);
-
-                            if (CellBuildingsDataWorker.HaveAnyBuilding(xy))
+                            if (unitType == UnitTypes.Pawn || unitType == UnitTypes.PawnSword)
                             {
+                                if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                                {
+                                    ResourcesDataUIWorker.AddAmountResources(ResourceTypes.Wood, isMasterKey);
+                                    CellEnvirDataWorker.TakeAmountResources(EnvironmentTypes.AdultForest, xy);
 
+                                    if (CellBuildingsDataWorker.HaveAnyBuilding(xy))
+                                    {
+                                        if (CellBuildingsDataWorker.IsBuildingType(BuildingTypes.Woodcutter, xy))
+                                        {
+
+                                        }
+                                        else
+                                        {
+                                            InfoUnitsContainer.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, unitType, isMasterKey, xy);
+                                            CellUnitsDataWorker.SetConditionType(ConditionUnitTypes.Protected, xy);
+                                        }
+                                    }
+                                    else
+                                    {
+                                        CellBuildingsDataWorker.SetPlayerBuilding(BuildingTypes.Woodcutter, PhotonNetwork.MasterClient, xy);
+                                        InfoBuidlingsWorker.AddXyBuild(BuildingTypes.Woodcutter, isMasterKey, xy);
+                                    }
+                                }
+                                else
+                                {
+                                    InfoUnitsContainer.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, unitType, isMasterKey, xy);
+                                    CellUnitsDataWorker.SetConditionType(ConditionUnitTypes.Protected, xy);
+                                }
                             }
+
                             else
                             {
-                                CellBuildingsDataWorker.SetPlayerBuilding(BuildingTypes.Woodcutter, PhotonNetwork.MasterClient, xy);
-                                InfoBuidlingsWorker.AddXyBuild(BuildingTypes.Woodcutter, isMasterKey, xy);
+                                InfoUnitsContainer.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, unitType, isMasterKey, xy);
+                                CellUnitsDataWorker.SetConditionType(ConditionUnitTypes.Protected, xy);
+                            }
+                        }
+
+                        else
+                        {
+                            CellUnitsDataWorker.AddStandartHeal(xy);
+                            if (CellUnitsDataWorker.AmountHealth(xy) > CellUnitsDataWorker.MaxAmountHealth(xy))
+                            {
+                                CellUnitsDataWorker.SetAmountHealth(CellUnitsDataWorker.MaxAmountHealth(unitType), xy);
                             }
                         }
                     }
                 }
+
+
+                curConditionType = ConditionUnitTypes.None;
+
+                for (int xyIndex = 0; xyIndex < InfoUnitsContainer.GetAmountUnitsInCondition(curConditionType, unitType, isMasterKey); xyIndex++)
+                {
+                    var xy = InfoUnitsContainer.GetXyInConditionByIndex(curConditionType, unitType, isMasterKey, xyIndex);
+
+                    if (CellUnitsDataWorker.HaveMaxAmountSteps(xy))
+                    {
+                        InfoUnitsContainer.RemoveUnitInCondition(curConditionType, unitType, isMasterKey, xy);
+                        InfoUnitsContainer.AddUnitInCondition(ConditionUnitTypes.Protected, unitType, isMasterKey, xy);
+                        CellUnitsDataWorker.SetConditionType(ConditionUnitTypes.Protected, xy);
+                    }
+                }
             }
 
-            var amountUnits = InfoAmountUnitsWorker.GetAmountUnitsInGame(isMasterKey, new[]
+            var amountUnits = InfoUnitsContainer.GetAmountUnitsInGame(isMasterKey, new[]
             {
                 UnitTypes.Pawn, UnitTypes.PawnSword,
                 UnitTypes.Rook, UnitTypes.RookCrossbow,
@@ -165,15 +208,15 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
         {
             for (UnitTypes unitType = (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length - 1; unitType != UnitTypes.None; unitType--)
             {
-                var amountUnits = InfoAmountUnitsWorker.GetAmountUnitsInGame(unitType, isMaster);
+                var amountUnits = InfoUnitsContainer.GetAmountUnitsInGame(unitType, isMaster);
 
                 if (amountUnits > 0)
                 {
-                    var xyUnit = InfoAmountUnitsWorker.GetXyUnitInGame(unitType, isMaster, amountUnits - 1);
+                    var xyUnit = InfoUnitsContainer.GetXyUnitInGame(unitType, isMaster, amountUnits - 1);
 
 
-                    InfoAmountUnitsWorker.RemoveAmountUnitsInGame(unitType, isMaster, xyUnit);
-                    InfoUnitsConditionWorker.RemoveUnitInCondition(CellUnitsDataWorker.ConditionType(xyUnit), unitType, isMaster, xyUnit);
+                    InfoUnitsContainer.RemoveAmountUnitsInGame(unitType, isMaster, xyUnit);
+                    InfoUnitsContainer.RemoveUnitInCondition(CellUnitsDataWorker.ConditionType(xyUnit), unitType, isMaster, xyUnit);
 
                     CellUnitsDataWorker.ResetUnit(xyUnit);
                     break;

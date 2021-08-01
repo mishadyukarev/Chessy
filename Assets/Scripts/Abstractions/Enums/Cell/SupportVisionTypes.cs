@@ -9,4 +9,5 @@ public enum SupportVisionTypes
     SimpleAttack,
     UniqueAttack,
     Upgrade,
+    FireSelector,
 }

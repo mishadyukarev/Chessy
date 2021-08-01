@@ -9,25 +9,20 @@ namespace Assets.Scripts
     {
         private PhotonView _photonView;
         private PhotonPunRPC _photonPunRPC;
-        private PhotonSceneManager _sceneManager;
-
-        public PhotonSceneManager SceneManager => _sceneManager;
-        public PhotonPunRPC PhotonPunRPC => _photonPunRPC;
-        public PhotonView PhotonView => _photonView;
-
+        private PhotonScene _sceneManager;
 
         public PhotonMainManager()
         {
             _photonView = Instance.gameObject.AddComponent<PhotonView>();
-            _sceneManager = Instance.gameObject.AddComponent<PhotonSceneManager>();
+            _sceneManager = Instance.gameObject.AddComponent<PhotonScene>();
             _photonPunRPC = Instance.gameObject.AddComponent<PhotonPunRPC>();
 
-            PhotonPunRPC.Constructor(_photonView);
+            _photonPunRPC.Constructor(_photonView);
             _sceneManager.Constructor();
 
             _photonView.FindObservables(true);
 
-            if (Instance.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
+            if (PhotonNetwork.IsMasterClient) PhotonNetwork.AllocateViewID(_photonView);
             else _photonView.ViewID = ValuesConst.NUMBER_PHOTON_VIEW;
         }
 
@@ -51,7 +46,7 @@ namespace Assets.Scripts
             }
         }
 
-        internal void ToggleScene(SceneTypes sceneType)
+        internal void ToggleScene(SceneTypes sceneType, ECSManager eCSManager)
         {
             switch (sceneType)
             {
@@ -59,12 +54,12 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    _sceneManager.ToggleScene(sceneType);
+                    _sceneManager.ToggleScene(sceneType, eCSManager.EntMenuManager);
                     _photonPunRPC.ToggleScene(sceneType);
                     break;
 
                 case SceneTypes.Game:
-                    _sceneManager.ToggleScene(sceneType);
+                    _sceneManager.ToggleScene(sceneType, eCSManager.EntMenuManager);
                     _photonPunRPC.ToggleScene(sceneType);
                     break;
 

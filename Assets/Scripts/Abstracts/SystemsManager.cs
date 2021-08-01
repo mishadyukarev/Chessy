@@ -5,7 +5,6 @@ namespace Assets.Scripts
 {
     public abstract class SystemsManager
     {
-        protected bool _isStartedFilling = true;
         protected EcsSystems StartFillSystems { get; set; }
         protected EcsSystems RunUpdateSystems { get; set; }
 
@@ -31,7 +30,7 @@ namespace Assets.Scripts
 
 
 
-        internal bool TryInvokeRunSystem(string namedSystem, EcsSystems currentSystems)
+        internal static bool TryInvokeRunSystem(string namedSystem, EcsSystems currentSystems)
         {
             var numberOfNamedSystem = currentSystems.GetNamedRunSystem(namedSystem);
 

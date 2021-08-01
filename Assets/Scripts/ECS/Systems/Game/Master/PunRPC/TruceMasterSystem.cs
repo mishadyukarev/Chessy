@@ -5,16 +5,15 @@ using Assets.Scripts.Workers.Game.Else;
 using Assets.Scripts.Workers.Game.Else.Fire;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Game.UI;
+using Assets.Scripts.Workers.Info;
 using Photon.Pun;
 using UnityEngine;
 
-internal sealed class TruceMasterSystem : RPCMasterSystemReduction
+internal sealed class TruceMasterSystem : SystemMasterReduction
 {
     public override void Run()
     {
         base.Run();
-
-        _eGGUIM.MotionEnt_AmountCom.AmountMotions += Random.Range(4500, 5500);
 
         int random;
 
@@ -28,10 +27,16 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
 
                 if (CellUnitsDataWorker.HaveAnyUnit(xy))
                 {
+                    var unitType = CellUnitsDataWorker.UnitType(xy);
+
                     if (CellUnitsDataWorker.HaveOwner(xy))
                     {
-                        InventorUnitsDataWorker.AddUnitsInInventor(CellUnitsDataWorker.UnitType(xy), CellUnitsDataWorker.IsMasterClient(xy));
-                        InfoAmountUnitsWorker.RemoveAmountUnitsInGame(CellUnitsDataWorker.UnitType(xy), CellUnitsDataWorker.IsMasterClient(xy), xy);
+                        var isMasterKey = CellUnitsDataWorker.IsMasterClient(xy);
+
+                        InfoUnitsContainer.AddUnitsInInventor(unitType, isMasterKey);
+
+                        InfoUnitsContainer.RemoveUnitInCondition(CellUnitsDataWorker.ConditionType(xy), unitType, isMasterKey, xy);
+                        InfoUnitsContainer.RemoveAmountUnitsInGame(unitType, isMasterKey, xy);
 
                         CellUnitsDataWorker.ResetUnit(xy);
                     }
@@ -81,19 +86,19 @@ internal sealed class TruceMasterSystem : RPCMasterSystemReduction
         //InfoResourcesWorker.AddAmountResources(ResourceTypes.Wood, false, 0);
 
 
-        if (InfoAmountUnitsWorker.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0
-            && InfoAmountUnitsWorker.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0)
+        if (InfoUnitsContainer.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0
+            && InfoUnitsContainer.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0)
         {
-            InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.Pawn, true);
+            InfoUnitsContainer.AddUnitsInInventor(UnitTypes.Pawn, true);
         }
 
-        if (InfoAmountUnitsWorker.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0
-            && InfoAmountUnitsWorker.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0)
+        if (InfoUnitsContainer.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0
+            && InfoUnitsContainer.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0)
         {
-            InventorUnitsDataWorker.AddUnitsInInventor(UnitTypes.Pawn, false);
+            InfoUnitsContainer.AddUnitsInInventor(UnitTypes.Pawn, false);
         }
 
-        PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, _eGGUIM.MotionEnt_AmountCom.AmountMotions);
+        PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, Main.Instance.ECSmanager.EntGameGeneralUIViewManager.MotionEnt_AmountCom.AmountMotions);
         PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
         DownDonerUIWorker.SetDoned(true, default);
