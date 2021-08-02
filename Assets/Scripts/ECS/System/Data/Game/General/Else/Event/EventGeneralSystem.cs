@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Common;
 using Assets.Scripts.Workers.Game.UI;
@@ -10,28 +11,28 @@ namespace Assets.Scripts
 {
     internal sealed class EventGeneralSystem : SystemGeneralReduction
     {
-        private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
+        private int[] XySelectedCell => SelectorSystem.XySelectedCell;
 
 
         public override void Init()
         {
             base.Init();
 
-            Instance.ECSmanager.EntGameGeneralUIViewManager.ReadyEnt_ButtonCom.Button.onClick.AddListener(Ready);
+            Instance.ECSmanager.EntViewGameGeneralUIManager.ReadyEnt_ButtonCom.Button.onClick.AddListener(Ready);
 
-            Instance.ECSmanager.EntGameGeneralUIViewManager.TakerKingEnt_ButtonCom.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.EntGameGeneralUIViewManager.TakerKingEnt_UnitTypeCom.UnitType); });
-            Instance.ECSmanager.EntGameGeneralUIViewManager.TakerPawnEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.EntGameGeneralUIViewManager.TakerPawnEntityUnitTypeComponent.UnitType); });
-            Instance.ECSmanager.EntGameGeneralUIViewManager.TakerRookEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.EntGameGeneralUIViewManager.TakerRookEntityUnitTypeComponent.UnitType); });
-            Instance.ECSmanager.EntGameGeneralUIViewManager.TakerBishopEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.EntGameGeneralUIViewManager.TakerBishopEntityUnitTypeComponent.UnitType); });
+            Instance.ECSmanager.EntViewGameGeneralUIManager.TakerKingEnt_ButtonCom.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.EntViewGameGeneralUIManager.TakerKingEnt_UnitTypeCom.UnitType); });
+            Instance.ECSmanager.EntViewGameGeneralUIManager.TakerPawnEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.EntViewGameGeneralUIManager.TakerPawnEntityUnitTypeComponent.UnitType); });
+            Instance.ECSmanager.EntViewGameGeneralUIManager.TakerRookEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.EntViewGameGeneralUIManager.TakerRookEntityUnitTypeComponent.UnitType); });
+            Instance.ECSmanager.EntViewGameGeneralUIManager.TakerBishopEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.EntViewGameGeneralUIManager.TakerBishopEntityUnitTypeComponent.UnitType); });
 
-            Instance.ECSmanager.EntGameGeneralUIViewManager.DonerUIEnt_ButtonCom.Button.onClick.AddListener(delegate { Done(); });
+            Instance.ECSmanager.EntViewGameGeneralUIManager.DonerUIEnt_ButtonCom.Button.onClick.AddListener(delegate { Done(); });
 
-            Instance.ECSmanager.EntGameGeneralUIViewManager.EnvironmentInfoEnt_ButtonCom.Button.onClick.AddListener(EnvironmentInfo);
+            Instance.ECSmanager.EntViewGameGeneralUIManager.EnvironmentInfoEnt_ButtonCom.Button.onClick.AddListener(EnvironmentInfo);
 
-            Instance.ECSmanager.EntGameGeneralUIViewManager.LeaveEnt_ButtonCom.Button.onClick.AddListener(PhotonScene.LeaveRoom);
+            Instance.ECSmanager.EntViewGameGeneralUIManager.LeaveEnt_ButtonCom.Button.onClick.AddListener(PhotonScene.LeaveRoom);
 
-            Instance.ECSmanager.EntGameGeneralUIViewManager.ProtectConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton1);
-            Instance.ECSmanager.EntGameGeneralUIViewManager.RelaxConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton2);
+            Instance.ECSmanager.EntViewGameGeneralUIManager.ProtectConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton1);
+            Instance.ECSmanager.EntViewGameGeneralUIManager.RelaxConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton2);
         }
 
 
@@ -45,9 +46,9 @@ namespace Assets.Scripts
         }
         private void Done()
         {
-            SelectorWorker.SelectorType = SelectorTypes.Other;
+            SelectorSystem.SelectorType = SelectorTypes.Other;
 
-            switch (SaverComWorker.StepModeType)
+            switch (DataCommContainerElseSaver.StepModeType)
             {
                 case StepModeTypes.None:
                     throw new Exception();
@@ -67,13 +68,13 @@ namespace Assets.Scripts
         }
         private void EnvironmentInfo()
         {
-            Instance.ECSmanager.EntGameGeneralUIViewManager.EnvironmentInfoEnt_IsActivatedCom.IsActivated = !Instance.ECSmanager.EntGameGeneralUIViewManager.EnvironmentInfoEnt_IsActivatedCom.IsActivated;
+            Instance.ECSmanager.EntViewGameGeneralUIManager.EnvironmentInfoEnt_IsActivatedCom.IsActivated = !Instance.ECSmanager.EntViewGameGeneralUIManager.EnvironmentInfoEnt_IsActivatedCom.IsActivated;
         }
         private void StandartAbilityButton1()
         {
             if (!DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient))
             {
-                if (CellUnitsDataContainer.IsConditionType(ConditionUnitTypes.Protected, XySelectedCell))
+                if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Protected, XySelectedCell))
                 {
                     PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionUnitTypes.None, XySelectedCell);
                 }
@@ -88,7 +89,7 @@ namespace Assets.Scripts
         {
             if (!DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient))
             {
-                if (CellUnitsDataContainer.IsConditionType(ConditionUnitTypes.Relaxed, XySelectedCell))
+                if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Relaxed, XySelectedCell))
                 {
                     PhotonPunRPC.ProtectRelaxUnitToMaster(ConditionUnitTypes.None, XySelectedCell);
                 }

@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
+using Assets.Scripts.ECS.System.View.Game.General.Cell;
 using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Game.General.Systems
@@ -13,17 +15,17 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                 {
                     var xy = new int[] { x, y };
 
-                    if (CellUnitsDataContainer.HaveAnyUnit(xy))
+                    if (CellUnitsDataSystem.HaveAnyUnit(xy))
                     {
-                        var unitType = CellUnitsDataContainer.UnitType(xy);
+                        var unitType = CellUnitsDataSystem.UnitType(xy);
 
-                        var standartX = CellViewContainer.GetEulerAngle(XyzTypes.X, xy);
-                        var standartY = CellViewContainer.GetEulerAngle(XyzTypes.Y, xy);
-                        var standartZ = CellViewContainer.GetEulerAngle(XyzTypes.Z, xy);
+                        var standartX = CellViewSystem.GetEulerAngle(XyzTypes.X, xy);
+                        var standartY = CellViewSystem.GetEulerAngle(XyzTypes.Y, xy);
+                        var standartZ = CellViewSystem.GetEulerAngle(XyzTypes.Z, xy);
 
-                        if (CellUnitsDataContainer.HaveOwner(xy))
+                        if (CellUnitsDataSystem.HaveOwner(xy))
                         {
-                            if (CellUnitsDataContainer.IsMine(xy))
+                            if (CellUnitsDataSystem.IsMine(xy))
                             {
                                 //if (_eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected).Compare(new int[] { x, y }))
                                 //{

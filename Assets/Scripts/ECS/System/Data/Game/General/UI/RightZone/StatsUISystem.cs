@@ -1,23 +1,23 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 
 internal class StatsUISystem : IEcsRunSystem
 {
-    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorSystem.XySelectedCell;
 
     public void Run()
     {
-        if (CellUnitsDataContainer.HaveAnyUnit(XySelectedCell))
+        if (CellUnitsDataSystem.HaveAnyUnit(XySelectedCell))
         {
             RightUIViewContainer.SetActiveParentZone(true, UnitUIZoneTypes.Stats);
 
-            RightUIViewContainer.SetStatText(StatUITypes.Health, CellUnitsDataContainer.AmountHealth(XySelectedCell).ToString());
-            RightUIViewContainer.SetStatText(StatUITypes.Damage, CellUnitsDataContainer.SimplePowerDamage(XySelectedCell).ToString());
-            RightUIViewContainer.SetStatText(StatUITypes.Protiction, CellUnitsDataContainer.PowerProtection(XySelectedCell).ToString());
-            RightUIViewContainer.SetStatText(StatUITypes.Steps, CellUnitsDataContainer.AmountSteps(XySelectedCell).ToString());
+            RightUIViewContainer.SetStatText(StatUITypes.Health, CellUnitsDataSystem.AmountHealth(XySelectedCell).ToString());
+            RightUIViewContainer.SetStatText(StatUITypes.Damage, CellUnitsDataSystem.SimplePowerDamage(XySelectedCell).ToString());
+            RightUIViewContainer.SetStatText(StatUITypes.Protiction, CellUnitsDataSystem.PowerProtection(XySelectedCell).ToString());
+            RightUIViewContainer.SetStatText(StatUITypes.Steps, CellUnitsDataSystem.AmountSteps(XySelectedCell).ToString());
         }
         else
         {

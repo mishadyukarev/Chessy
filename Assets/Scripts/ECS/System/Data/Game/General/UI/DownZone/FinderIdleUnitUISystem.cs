@@ -16,7 +16,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
         {
             //_eGM.CellEnt_CellBaseCom(xy).IsSelected = false;
             //_eGM.SelectorEnt_SelectorCom.IsSelected = false;
-            //SelectorWorker.SetXy(SelectorCellTypes.Selected, new int[] { 0, 0 });
+            //SelectorSystem.SetXy(SelectorCellTypes.Selected, new int[] { 0, 0 });
 
 
             //for (int x = 0; x < _eGM.Xamount; x++)
@@ -33,7 +33,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.RunUpdate.UI.DownZone
             //                if (CellUnitsDataWorker.HaveMaxAmountSteps(xy))
             //                {
             //                    _eGM.SelectorEnt_SelectorCom.IsSelected = true;
-            //                    SelectorWorker.SetXy(SelectorCellTypes.Selected, new int[] { x, y });
+            //                    SelectorSystem.SetXy(SelectorCellTypes.Selected, new int[] { x, y });
             //                }
             //        }
             //    }

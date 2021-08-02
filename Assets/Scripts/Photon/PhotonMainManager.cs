@@ -54,12 +54,12 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    _sceneManager.ToggleScene(sceneType, eCSManager.EntMenuManager);
+                    _sceneManager.ToggleScene(sceneType, eCSManager.EntViewMenuElseManager);
                     _photonPunRPC.ToggleScene(sceneType);
                     break;
 
                 case SceneTypes.Game:
-                    _sceneManager.ToggleScene(sceneType, eCSManager.EntMenuManager);
+                    _sceneManager.ToggleScene(sceneType, eCSManager.EntViewMenuElseManager);
                     _photonPunRPC.ToggleScene(sceneType);
                     break;
 

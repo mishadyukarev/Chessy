@@ -1,5 +1,5 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else.Economy;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
@@ -42,7 +42,7 @@ internal sealed class EconomyUISystem : IEcsRunSystem
         {
             var xy = InfoUnitsDataContainer.GetXyInConditionByIndex(ConditionUnitTypes.Relaxed, UnitTypes.Pawn, isMasterClient, xyIndex);
 
-            if (CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+            if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
             {
                 amountAddingWood += 1;
             }
@@ -51,7 +51,7 @@ internal sealed class EconomyUISystem : IEcsRunSystem
         {
             var xy = InfoUnitsDataContainer.GetXyInConditionByIndex(ConditionUnitTypes.Relaxed, UnitTypes.PawnSword, isMasterClient, xyIndex);
 
-            if (CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+            if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
             {
                 amountAddingWood += 1;
             }

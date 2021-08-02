@@ -1,8 +1,15 @@
 ﻿using Assets.Scripts.ECS.Entities.Game.General;
-using Assets.Scripts.ECS.Entities.Game.General.Cell;
-using Assets.Scripts.ECS.Entities.Game.General.Cells.View;
 using Assets.Scripts.ECS.Entities.Game.General.Else.Vis;
+using Assets.Scripts.ECS.Entity.Data.Common.UI;
+using Assets.Scripts.ECS.Entity.View.Common;
+using Assets.Scripts.ECS.Entity.View.Common.UI;
 using Assets.Scripts.ECS.Menu.Entities;
+using Assets.Scripts.ECS.System.Common;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
+using Assets.Scripts.ECS.System.Data.Game.General.UI;
+using Assets.Scripts.ECS.System.View.Game.General;
+using Assets.Scripts.ECS.System.View.Game.General.Cell;
+using Assets.Scripts.ECS.System.View.Game.General.UI;
 using Assets.Scripts.Workers.Common;
 using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
@@ -24,20 +31,31 @@ namespace Assets.Scripts
 
         #region Entities
 
-        public EntCommonManager EntCommonManager { get; private set; }
-        public EntMenuManager EntMenuManager { get; private set; }
+        #region Common
+
+        public EntDataCommonElseManager EntDataCommElseManager { get; private set; }
+        public EntViewCommonElseManager EntViewCommElseManager { get; private set; }
+        public EntDataCommonUIManager EntDataCommUIManager { get; private set; }
+        public EntViewCommonUIManager EntViewCommUIManager { get; private set; }
+
+        #endregion
+
+
+        #region Menu
+
+        public EntViewMenuElseManager EntViewMenuElseManager { get; private set; }
+
+        #endregion
 
 
         #region Game
 
-        public EntGameGeneralElseDataManager EntGameGeneralElseDataManager { get; private set; }
-        public EntGameGeneralElseViewManager EntGameGeneralElseViewManager { get; private set; }
-        public EntGameGeneralCellDataManager EntGameGeneralCellDataManager { get; private set; }
-        public EntGameGeneralCellViewManager EntGameGeneralCellViewManager { get; private set; }
-        public EntGameGeneralUIDataManager EntGameGeneralUIDataManager { get; private set; }
-        public EntGameGeneralUIViewManager EntGameGeneralUIViewManager { get; private set; }
-        public EntGameMasterManager EntGameMasterManager { get; private set; }
-        public EntGameOtherManager EntGameOtherManager { get; private set; }
+        public EntDataGameGeneralElseManager EntDataGameGeneralElseManager { get; private set; }
+        public EntViewGameGeneralElseManager EntViewGameGeneralElseManager { get; private set; }
+        public EntDataGameGeneralUIManager EntDataGameGeneralUIManager { get; private set; }
+        public EntViewGameGeneralUIManager EntViewGameGeneralUIManager { get; private set; }
+        public EntDataGameMasterElseManager EntDataGameMasterElseManager { get; private set; }
+        public EntDataGameOtherElseManager EntDataGameOtherElseManager { get; private set; }
 
         #endregion
 
@@ -46,9 +64,24 @@ namespace Assets.Scripts
 
         #region Systems
 
+        #region Common
+
+        public SysDataCommonManager SysCommManager { get; private set; }
+
+        #endregion
+
+
+        #region Game
+        public SysDataGameGeneralElseManager SysDataGameGeneralElseManager { get; private set; }
+        public SysViewGameGeneralElseManager SysViewGameGeneralElseManager { get; private set; }
+        public SysDataGameGeneralCellManager SysDataGameGeneralCellManager { get; private set; }
+        public SysViewGameGeneralCellManager SysViewGameGeneralCellManager { get; private set; }
+        public SysDataGameGeneralUIManager SysDataGameGeneralUIManager { get; private set; }
+        public SysViewGameGeneralUIManager SysViewGameGeneralUIManager { get; private set; }
         public SysGameMasterManager SysGameMasterManager { get; private set; }
-        public SysGameGeneralManager SysGameGeneralManager { get; private set; }
         public SysGameOtherManager SysGameOtherManager { get; private set; }
+
+        #endregion
 
         #endregion
 
@@ -56,12 +89,22 @@ namespace Assets.Scripts
         public ECSManager()
         {
             _commonWorld = new EcsWorld();
-            EntCommonManager = new EntCommonManager(_commonWorld);
+            EntDataCommElseManager = new EntDataCommonElseManager(_commonWorld);
+            EntViewCommElseManager = new EntViewCommonElseManager(_commonWorld, EntDataCommElseManager);
+            EntDataCommUIManager = new EntDataCommonUIManager(_commonWorld);
+            EntViewCommUIManager = new EntViewCommonUIManager(_commonWorld, EntDataCommElseManager);
+
+            SysCommManager = new SysDataCommonManager(_commonWorld);
+            SysCommManager.ProcessInjects();
+            SysCommManager.Init();
         }
 
         public void OwnUpdate(SceneTypes sceneType)
         {
-            EntCommonManager.OwnUpdate(sceneType, EntMenuManager);
+            EntDataCommElseManager.OwnUpdate(sceneType, EntViewMenuElseManager);
+            EntViewCommElseManager.OwnUpdate(sceneType);
+
+            SysCommManager.RunUpdate();
 
             switch (sceneType)
             {
@@ -69,14 +112,14 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    EntCommonManager.SaverEnt_SaverCommCom.SliderVolume = EntMenuManager.SoundEnt_SliderCom.Slider.value;
+                    DataCommContainerElseSaver.SliderVolume = EntViewMenuElseManager.SoundEnt_SliderCom.Slider.value;
                     break;
 
                 case SceneTypes.Game:
-                    SysGameGeneralManager.Update();
+                    SysDataGameGeneralElseManager.RunUpdate();
 
-                    if (PhotonNetwork.IsMasterClient) SysGameMasterManager.Update();
-                    else SysGameOtherManager.Update();
+                    if (PhotonNetwork.IsMasterClient) SysGameMasterManager.RunUpdate();
+                    else SysGameOtherManager.RunUpdate();
                     break;
 
                 default:
@@ -86,7 +129,7 @@ namespace Assets.Scripts
 
         public void ToggleScene(SceneTypes sceneType)
         {
-            EntCommonManager.ToggleScene(sceneType);
+            EntDataCommElseManager.ToggleScene(sceneType);
 
             switch (sceneType)
             {
@@ -98,42 +141,38 @@ namespace Assets.Scripts
                     {
                         _gameWorld.Destroy();
 
-                        EntGameGeneralElseDataManager = default;
-                        EntGameGeneralElseViewManager = default;
-                        EntGameGeneralCellDataManager = default;
-                        EntGameGeneralCellViewManager = default;
-                        EntGameGeneralUIViewManager = default;
-                        EntGameMasterManager = default;
-                        EntGameOtherManager = default;
+                        EntDataGameGeneralElseManager = default;
+                        EntViewGameGeneralElseManager = default;
+                        EntViewGameGeneralUIManager = default;
+                        EntDataGameMasterElseManager = default;
+                        EntDataGameOtherElseManager = default;
 
-                        SysGameGeneralManager = default;
+                        SysDataGameGeneralElseManager = default;
                         SysGameMasterManager = default;
                         SysGameOtherManager = default;
                     }
 
                     _menuWorld = new EcsWorld();
-                    EntMenuManager = new EntMenuManager(_menuWorld, EntCommonManager);
+                    EntViewMenuElseManager = new EntViewMenuElseManager(_menuWorld);
                     break;
 
                 case SceneTypes.Game:
                     _menuWorld.Destroy();
-                    EntMenuManager = default;
+                    EntViewMenuElseManager = default;
 
 
                     _gameWorld = new EcsWorld();
 
-                    EntGameGeneralElseDataManager = new EntGameGeneralElseDataManager(_gameWorld, EntCommonManager);
-                    EntGameGeneralElseViewManager = new EntGameGeneralElseViewManager(_gameWorld, EntCommonManager);
-                    EntGameGeneralCellDataManager = new EntGameGeneralCellDataManager(_gameWorld);
-                    EntGameGeneralCellViewManager = new EntGameGeneralCellViewManager(_gameWorld, EntCommonManager);
-                    EntGameGeneralUIViewManager = new EntGameGeneralUIViewManager(_gameWorld);
-                    EntGameGeneralUIDataManager = new EntGameGeneralUIDataManager(_gameWorld);
-                    EntGameMasterManager = new EntGameMasterManager(_gameWorld);
-                    EntGameOtherManager = new EntGameOtherManager(_gameWorld);
+                    EntDataGameGeneralElseManager = new EntDataGameGeneralElseManager(_gameWorld, EntDataCommElseManager);
+                    EntViewGameGeneralElseManager = new EntViewGameGeneralElseManager(_gameWorld, EntDataCommElseManager);
+                    EntDataGameGeneralUIManager = new EntDataGameGeneralUIManager(_gameWorld);
+                    EntViewGameGeneralUIManager = new EntViewGameGeneralUIManager(_gameWorld);
+                    EntDataGameMasterElseManager = new EntDataGameMasterElseManager(_gameWorld);
+                    EntDataGameOtherElseManager = new EntDataGameOtherElseManager(_gameWorld);
 
                     if (PhotonNetwork.IsMasterClient)
                     {
-                        if (SaverComWorker.StepModeType == StepModeTypes.ByQueue)
+                        if (DataCommContainerElseSaver.StepModeType == StepModeTypes.ByQueue)
                         {
                             DownDonerUIDataContainer.SetDoned(false, true);
                         }
@@ -142,15 +181,25 @@ namespace Assets.Scripts
 
 
 
-                    SysGameGeneralManager = new SysGameGeneralManager(_gameWorld);
+                    SysDataGameGeneralElseManager = new SysDataGameGeneralElseManager(_gameWorld);
+                    SysViewGameGeneralElseManager = new SysViewGameGeneralElseManager(_gameWorld);
+                    SysDataGameGeneralCellManager = new SysDataGameGeneralCellManager(_gameWorld);
+                    SysViewGameGeneralCellManager = new SysViewGameGeneralCellManager(_gameWorld);
+
                     SysGameMasterManager = new SysGameMasterManager(_gameWorld);
                     SysGameOtherManager = new SysGameOtherManager(_gameWorld);
 
-                    SysGameGeneralManager.ProcessInjects();
+                    SysDataGameGeneralElseManager.ProcessInjects();
+                    SysViewGameGeneralElseManager.ProcessInjects();
+                    SysDataGameGeneralCellManager.ProcessInjects();
+                    SysViewGameGeneralCellManager.ProcessInjects();
                     SysGameMasterManager.ProcessInjects();
                     SysGameOtherManager.ProcessInjects();
 
-                    SysGameGeneralManager.Init();
+                    SysDataGameGeneralElseManager.Init();
+                    SysViewGameGeneralElseManager.Init();
+                    SysDataGameGeneralCellManager.Init();
+                    SysViewGameGeneralCellManager.Init();
                     SysGameMasterManager.Init();
                     SysGameOtherManager.Init();
 

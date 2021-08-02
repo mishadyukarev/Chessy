@@ -1,11 +1,11 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Common;
 using Assets.Scripts.Workers.Game.Else;
 using Assets.Scripts.Workers.Game.Else.Data;
-using Assets.Scripts.Workers.Game.Else.Fire;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Game.UI;
 using Assets.Scripts.Workers.Info;
@@ -23,11 +23,11 @@ namespace Assets.Scripts
     {
         private static PhotonView _photonView;
 
-        private EntGameGeneralElseDataManager EGM => Instance.ECSmanager.EntGameGeneralElseDataManager;
-        private EntGameGeneralUIViewManager EGGUIM => Instance.ECSmanager.EntGameGeneralUIViewManager;
-        private EntGameMasterManager EMM => Instance.ECSmanager.EntGameMasterManager;
+        private EntDataGameGeneralElseManager EGM => Instance.ECSmanager.EntDataGameGeneralElseManager;
+        private EntViewGameGeneralUIManager EGGUIM => Instance.ECSmanager.EntViewGameGeneralUIManager;
+        private EntDataGameMasterElseManager EMM => Instance.ECSmanager.EntDataGameMasterElseManager;
 
-        private EntGameOtherManager EntOM => Instance.ECSmanager.EntGameOtherManager;
+        private EntDataGameOtherElseManager EntOM => Instance.ECSmanager.EntDataGameOtherElseManager;
 
         private static string MasterRPCName => nameof(MasterRPC);
         private static string GeneralRPCName => nameof(GeneralRPC);
@@ -259,7 +259,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.GetAvailableCellsForSetting:
-                    AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.SettingUnit, CellUnitsDataContainer.GetStartCellsForSettingUnit(PhotonNetwork.LocalPlayer));
+                    AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.SettingUnit, CellUnitsDataSystem.GetStartCellsForSettingUnit(PhotonNetwork.LocalPlayer));
                     break;
 
                 case RpcGeneralTypes.EndGame:
@@ -318,15 +318,15 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.GetUnit:
                     if ((bool)objects[_currentNumber++])
                     {
-                        SelectorWorker.SelectedUnitType = (UnitTypes)objects[_currentNumber++];
+                        SelectorSystem.SelectedUnitType = (UnitTypes)objects[_currentNumber++];
                     }
                     break;
 
                 case RpcGeneralTypes.SetUnit:
                     if ((bool)objects[_currentNumber++])
                     {
-                        EGM.SelectorEnt_SelectorCom.IsStartSelectedDirect = true;
-                        EGM.SelectorEnt_UnitTypeCom.UnitType = default;
+                        SelectorSystem.IsStartSelectedDirect = true;
+                        SelectorSystem.SelectedUnitType = default;
                     }
                     break;
 
@@ -356,7 +356,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcOtherTypes.SetStepModType:
-                    SaverComWorker.StepModeType = (StepModeTypes)objects[_currentNumber++];
+                    DataCommContainerElseSaver.StepModeType = (StepModeTypes)objects[_currentNumber++];
                     break;
 
                 default:
@@ -383,41 +383,41 @@ namespace Assets.Scripts
                 {
                     var xy = new int[] { x, y };
 
-                    listObjects.Add(CellUnitsDataContainer.UnitType(xy));
-                    listObjects.Add(CellUnitsDataContainer.IsVisibleUnit(false, xy));
-                    listObjects.Add(CellUnitsDataContainer.AmountSteps(xy));
-                    listObjects.Add(CellUnitsDataContainer.AmountHealth(xy));
-                    listObjects.Add(CellUnitsDataContainer.ConditionType(xy));
-                    if (CellUnitsDataContainer.HaveOwner(xy)) listObjects.Add(CellUnitsDataContainer.ActorNumber(xy));
+                    listObjects.Add(CellUnitsDataSystem.UnitType(xy));
+                    listObjects.Add(CellUnitsDataSystem.IsVisibleUnit(false, xy));
+                    listObjects.Add(CellUnitsDataSystem.AmountSteps(xy));
+                    listObjects.Add(CellUnitsDataSystem.AmountHealth(xy));
+                    listObjects.Add(CellUnitsDataSystem.ConditionType(xy));
+                    if (CellUnitsDataSystem.HaveOwner(xy)) listObjects.Add(CellUnitsDataSystem.ActorNumber(xy));
                     else listObjects.Add(-2);
-                    listObjects.Add(CellUnitsDataContainer.IsBot(xy));
+                    listObjects.Add(CellUnitsDataSystem.IsBot(xy));
 
 
 
-                    listObjects.Add(CellBuildDataContainer.GetBuildingType(xy));
-                    if (CellBuildDataContainer.HaveOwner(xy)) listObjects.Add(CellBuildDataContainer.ActorNumber(xy));
+                    listObjects.Add(CellBuildDataSystem.BuildTypeCom(xy).BuildingType);
+                    if (CellBuildDataSystem.OwnerCom(xy).HaveOwner) listObjects.Add(CellBuildDataSystem.OwnerCom(xy).ActorNumber);
                     else listObjects.Add(-2);
-                    listObjects.Add(CellBuildDataContainer.IsBot(xy));
+                    listObjects.Add(CellBuildDataSystem.OwnerBotCom(xy).IsBot);
 
 
 
-                    listObjects.Add(CellEnvirDataContainer.GetAmountResources(EnvironmentTypes.Fertilizer, xy));
-                    listObjects.Add(CellEnvirDataContainer.GetAmountResources(EnvironmentTypes.AdultForest, xy));
-                    listObjects.Add(CellEnvirDataContainer.GetAmountResources(EnvironmentTypes.Hill, xy));
+                    listObjects.Add(CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Fertilizer, xy));
+                    listObjects.Add(CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.AdultForest, xy));
+                    listObjects.Add(CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Hill, xy));
 
-                    listObjects.Add(CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.Fertilizer, xy));
-                    listObjects.Add(CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.YoungForest, xy));
-                    listObjects.Add(CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.AdultForest, xy));
-                    listObjects.Add(CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.Hill, xy));
-                    listObjects.Add(CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.Mountain, xy));
+                    listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy));
+                    listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.YoungForest, xy));
+                    listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy));
+                    listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy));
+                    listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Mountain, xy));
 
 
-                    listObjects.Add(CellFireDataContainer.HaveFire(xy));
+                    listObjects.Add(CellFireDataSystem.HaveFireCom(xy).HaveFire);
                 }
 
 
 
-            listObjects.Add(SaverComWorker.StepModeType);
+            listObjects.Add(DataCommContainerElseSaver.StepModeType);
             listObjects.Add(MiddleUIDataContainer.IsStartedGame);
 
 
@@ -470,7 +470,7 @@ namespace Assets.Scripts
             _photonView.RPC(SyncOtherRPCName, RpcTarget.Others, objects);
 
 
-            SysGameGeneralManager.SyncCellVisionSystems.Run();
+            SysDataGameGeneralElseManager.SyncCellVisionSystems.Run();
         }
 
         [PunRPC]
@@ -498,19 +498,19 @@ namespace Assets.Scripts
                         if (actorNumber != -2)
                         {
                             owner = PhotonNetwork.PlayerList[actorNumber - 1];
-                            CellUnitsDataContainer.SetPlayerUnit(unitType, amountHealth, amountSteps, conditionType, owner, xy);
+                            CellUnitsDataSystem.SetPlayerUnit(unitType, amountHealth, amountSteps, conditionType, owner, xy);
                         }
                         else
                         {
-                            CellUnitsDataContainer.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, conditionType, xy);
+                            CellUnitsDataSystem.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, conditionType, xy);
                         }
 
-                        CellUnitsDataContainer.SetIsVisibleUnit(PhotonNetwork.IsMasterClient, isVisibleUnit, xy);
+                        CellUnitsDataSystem.SetIsVisibleUnit(PhotonNetwork.IsMasterClient, isVisibleUnit, xy);
                     }
 
                     else
                     {
-                        CellUnitsDataContainer.ResetUnit(xy);
+                        CellUnitsDataSystem.ResetUnit(xy);
                     }
 
 
@@ -524,17 +524,17 @@ namespace Assets.Scripts
                         if (actorNumber != -2)
                         {
                             owner = PhotonNetwork.PlayerList[actorNumber - 1];
-                            CellBuildDataContainer.SetPlayerBuilding(buildingType, owner, xy);
+                            CellBuildDataSystem.SetPlayerBuilding(buildingType, owner, xy);
                         }
                         else
                         {
-                            CellBuildDataContainer.SetBotBuilding(buildingType, xy);
+                            CellBuildDataSystem.SetBotBuilding(buildingType, xy);
                         }
                     }
 
                     else
                     {
-                        CellBuildDataContainer.ResetBuild(xy);
+                        CellBuildDataSystem.ResetBuild(xy);
                     }
 
 
@@ -549,22 +549,22 @@ namespace Assets.Scripts
                     bool haveHill = (bool)objects[_currentNumber++];
                     bool haveMountain = (bool)objects[_currentNumber++];
 
-                    CellEnvirDataContainer.SetEnvironment(EnvironmentTypes.Fertilizer, haveFertilizer, amountResourcesFertilizer, xy);
-                    CellEnvirDataContainer.SetEnvironment(EnvironmentTypes.YoungForest, haveYoungTree, default, xy);
-                    CellEnvirDataContainer.SetEnvironment(EnvironmentTypes.AdultForest, haveAdultForest, amountResourcesAdultForest, xy);
-                    CellEnvirDataContainer.SetEnvironment(EnvironmentTypes.Hill, haveHill, amountResourcesOre, xy);
-                    CellEnvirDataContainer.SetEnvironment(EnvironmentTypes.Mountain, haveMountain, default, xy);
+                    CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.Fertilizer, haveFertilizer, amountResourcesFertilizer, xy);
+                    CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.YoungForest, haveYoungTree, default, xy);
+                    CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.AdultForest, haveAdultForest, amountResourcesAdultForest, xy);
+                    CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.Hill, haveHill, amountResourcesOre, xy);
+                    CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.Mountain, haveMountain, default, xy);
 
 
 
                     bool haveFire = (bool)objects[_currentNumber++];
 
-                    CellFireDataContainer.SetFire(haveFire, xy);
+                    CellFireDataSystem.HaveFireCom(xy).HaveFire = haveFire;
                 }
 
 
 
-            SaverComWorker.StepModeType = (StepModeTypes)objects[_currentNumber++];
+            DataCommContainerElseSaver.StepModeType = (StepModeTypes)objects[_currentNumber++];
 
 
 
@@ -633,7 +633,7 @@ namespace Assets.Scripts
 
 
 
-            SysGameGeneralManager.SyncCellVisionSystems.Run();
+            SysDataGameGeneralElseManager.SyncCellVisionSystems.Run();
         }
 
         #endregion

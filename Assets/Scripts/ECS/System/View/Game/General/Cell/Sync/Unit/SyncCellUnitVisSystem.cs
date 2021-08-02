@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.Workers.Game.Else.Units;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
+using Assets.Scripts.ECS.System.View.Game.General.Cell;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -14,24 +15,24 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                 {
                     int[] xy = new int[] { x, y };
 
-                    if (CellUnitsDataContainer.IsVisibleUnit(PhotonNetwork.IsMasterClient, xy))
+                    if (CellUnitsDataSystem.IsVisibleUnit(PhotonNetwork.IsMasterClient, xy))
                     {
-                        if (CellUnitsDataContainer.HaveAnyUnit(xy))
+                        if (CellUnitsDataSystem.HaveAnyUnit(xy))
                         {
-                            CellUnitViewContainer.EnableUnitSR(true, xy);
-                            CellUnitViewContainer.SetSprite(CellUnitsDataContainer.UnitType(xy), xy);
+                            CellUnitViewSystem.EnableUnitSR(true, xy);
+                            CellUnitViewSystem.SetSprite(CellUnitsDataSystem.UnitType(xy), xy);
 
                         }
 
                         else
                         {
-                            CellUnitViewContainer.EnableUnitSR(false, xy);
+                            CellUnitViewSystem.EnableUnitSR(false, xy);
                         }
                     }
 
                     else
                     {
-                        CellUnitViewContainer.EnableUnitSR(false, xy);
+                        CellUnitViewSystem.EnableUnitSR(false, xy);
                     }
                 }
         }

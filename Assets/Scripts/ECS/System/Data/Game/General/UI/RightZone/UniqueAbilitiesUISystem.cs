@@ -1,22 +1,22 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
-using Assets.Scripts.Workers.Game.Else.Fire;
 using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 using Photon.Pun;
 
 internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
 {
-    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorSystem.XySelectedCell;
 
     public void Run()
     {
-        if (CellUnitsDataContainer.HaveAnyUnit(XySelectedCell))
+        if (CellUnitsDataSystem.HaveAnyUnit(XySelectedCell))
         {
-            if (CellUnitsDataContainer.HaveOwner(XySelectedCell))
+            if (CellUnitsDataSystem.HaveOwner(XySelectedCell))
             {
-                if (CellUnitsDataContainer.IsMine(XySelectedCell))
+                if (CellUnitsDataSystem.IsMine(XySelectedCell))
                 {
                     RightUIViewContainer.RemoveAllListenersUniqueButton(UniqueAbilitiesTypes.First);
                     RightUIViewContainer.RemoveAllListenersUniqueButton(UniqueAbilitiesTypes.Second);
@@ -26,7 +26,7 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
                     RightUIViewContainer.SetActiveUniqueButton(false, UniqueAbilitiesTypes.Third);
 
 
-                    if (CellUnitsDataContainer.IsUnitType(UnitTypes.King, XySelectedCell))
+                    if (CellUnitsDataSystem.IsUnitType(UnitTypes.King, XySelectedCell))
                     {
                         RightUIViewContainer.SetActiveParentZone(true, UnitUIZoneTypes.Unique);
                         RightUIViewContainer.SetActiveUniqueButton(true, UniqueAbilitiesTypes.First);
@@ -35,17 +35,17 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
                     }
                     else
                     {
-                        if (CellUnitsDataContainer.IsMelee(XySelectedCell))
+                        if (CellUnitsDataSystem.IsMelee(XySelectedCell))
                         {
                             RightUIViewContainer.SetActiveUniqueButton(true, UniqueAbilitiesTypes.First);
 
                             RightUIViewContainer.SetActiveParentZone(true, UnitUIZoneTypes.Unique);
                             RightUIViewContainer.SetActiveUniqueButton(true, UniqueAbilitiesTypes.First);
 
-                            if (CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.AdultForest, XySelectedCell))
+                            if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, XySelectedCell))
                             {
                                 RightUIViewContainer.AddListenerUniqueButton(delegate { Fire(XySelectedCell, XySelectedCell); }, UniqueAbilitiesTypes.First);
-                                if (CellFireDataContainer.HaveFire(XySelectedCell))
+                                if (CellFireDataSystem.HaveFireCom(XySelectedCell).HaveFire)
                                 {
                                     RightUIViewContainer.SetUniqueButtonText(UniqueAbilitiesTypes.First, "Put Out FIRE");
                                 }
@@ -76,7 +76,7 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
                     RightUIViewContainer.SetActiveParentZone(false, UnitUIZoneTypes.Unique);
                 }
             }
-            else if (CellUnitsDataContainer.IsBot(XySelectedCell))
+            else if (CellUnitsDataSystem.IsBot(XySelectedCell))
             {
                 RightUIViewContainer.SetActiveParentZone(false, UnitUIZoneTypes.Unique);
             }
@@ -105,13 +105,13 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
 
     private void ActiveFireSelector()
     {
-        if (SelectorWorker.SelectorType == SelectorTypes.PickFire)
+        if (SelectorSystem.SelectorType == SelectorTypes.PickFire)
         {
-            SelectorWorker.SelectorType = SelectorTypes.Other;
+            SelectorSystem.SelectorType = SelectorTypes.Other;
         }
         else
         {
-            SelectorWorker.SelectorType = SelectorTypes.PickFire;
+            SelectorSystem.SelectorType = SelectorTypes.PickFire;
         }
     }
 }

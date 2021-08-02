@@ -3,5 +3,7 @@
     internal struct OwnerBotComponent
     {
         internal bool IsBot { get; set; }
+
+        internal void Reset() => IsBot = default;
     }
 }

@@ -15,7 +15,7 @@ namespace Assets.Scripts
     {
         #region Menu
 
-        private EntMenuManager _entMenuManager;
+        private EntViewMenuElseManager _entMenuManager;
 
         private TextMeshProUGUI _logTex;
         private const byte MAX_PLAYERS = 2;
@@ -46,7 +46,7 @@ namespace Assets.Scripts
         }
 
 
-        internal void ToggleScene(SceneTypes sceneType, EntMenuManager entMenuManager)
+        internal void ToggleScene(SceneTypes sceneType, EntViewMenuElseManager entMenuManager)
         {
             _entMenuManager = entMenuManager;
 
@@ -56,8 +56,8 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    _logTex = CanvasUIViewContainer.FindUnderParent<TextMeshProUGUI>(SceneTypes.Menu, "LogText");
-                    CanvasUIViewContainer.FindUnderParent<Button>(sceneType, "QuitButton").onClick.AddListener(delegate { Application.Quit(); });
+                    _logTex = ViewCommonContainerUICanvas.FindUnderParent<TextMeshProUGUI>(SceneTypes.Menu, "LogText");
+                    ViewCommonContainerUICanvas.FindUnderParent<Button>(sceneType, "QuitButton").onClick.AddListener(delegate { Application.Quit(); });
 
 
                     _entMenuManager.JoinOnlineEnt_ButtonCom.Button.onClick.AddListener(ConnectOnline);

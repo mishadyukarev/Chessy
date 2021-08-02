@@ -1,33 +1,33 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
+﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
+using Assets.Scripts.ECS.System.View.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Assets.Scripts.Workers.Game.Else;
 using Assets.Scripts.Workers.Game.Else.Cell;
-using Assets.Scripts.Workers.Game.Else.Fire;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Leopotam.Ecs;
 using Photon.Pun;
 
 internal sealed class SupportVisionSystem : IEcsRunSystem
 {
-    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorSystem.XySelectedCell;
 
     public void Run()
     {
-        if (SelectorWorker.HaveAnySelectorUnit)
+        if (SelectorSystem.HaveAnySelectorUnit)
         {
             for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
                 for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
                 {
                     int[] xy = new int[] { x, y };
 
-                    if (!CellUnitsDataContainer.HaveAnyUnit(xy))
+                    if (!CellUnitsDataSystem.HaveAnyUnit(xy))
                     {
                         if (InfoCellWorker.IsStartedCell(PhotonNetwork.IsMasterClient, xy))
                         {
-                            CellSupVisViewContainer.EnableSupVis(SupportVisionTypes.Spawn, xy);
+                            CellSupViewSystem.EnableSupVis(SupportVisionTypes.Spawn, xy);
                         }
                     }
                 }
@@ -40,60 +40,60 @@ internal sealed class SupportVisionSystem : IEcsRunSystem
                 {
                     int[] xy = new int[] { x, y };
 
-                    CellSupVisViewContainer.DisableSupVis(xy);
+                    CellSupViewSystem.DisableSupVis(xy);
                 }
         }
 
 
-        if (SelectorWorker.SelectorType == SelectorTypes.UpgradeUnit)
+        if (SelectorSystem.SelectorType == SelectorTypes.UpgradeUnit)
         {
             foreach (var xy in InfoUnitsDataContainer.GetLixtXyUnits(UnitTypes.Pawn, PhotonNetwork.IsMasterClient))
             {
-                if (CellUnitsDataContainer.HaveOwner(xy))
+                if (CellUnitsDataSystem.HaveOwner(xy))
                 {
-                    if (CellUnitsDataContainer.IsMine(xy))
+                    if (CellUnitsDataSystem.IsMine(xy))
                     {
-                        CellSupVisViewContainer.EnableSupVis(SupportVisionTypes.Upgrade, xy);
+                        CellSupViewSystem.EnableSupVis(SupportVisionTypes.Upgrade, xy);
                     }
                 }
             }
             foreach (var xy in InfoUnitsDataContainer.GetLixtXyUnits(UnitTypes.Rook, PhotonNetwork.IsMasterClient))
             {
-                if (CellUnitsDataContainer.HaveOwner(xy))
+                if (CellUnitsDataSystem.HaveOwner(xy))
                 {
-                    if (CellUnitsDataContainer.IsMine(xy))
+                    if (CellUnitsDataSystem.IsMine(xy))
                     {
-                        CellSupVisViewContainer.EnableSupVis(SupportVisionTypes.Upgrade, xy);
+                        CellSupViewSystem.EnableSupVis(SupportVisionTypes.Upgrade, xy);
                     }
                 }
             }
             foreach (var xy in InfoUnitsDataContainer.GetLixtXyUnits(UnitTypes.Bishop, PhotonNetwork.IsMasterClient))
             {
-                if (CellUnitsDataContainer.HaveOwner(xy))
+                if (CellUnitsDataSystem.HaveOwner(xy))
                 {
-                    if (CellUnitsDataContainer.IsMine(xy))
+                    if (CellUnitsDataSystem.IsMine(xy))
                     {
-                        CellSupVisViewContainer.EnableSupVis(SupportVisionTypes.Upgrade, xy);
+                        CellSupViewSystem.EnableSupVis(SupportVisionTypes.Upgrade, xy);
                     }
                 }
             }
         }
 
-        if (SelectorWorker.IsSelectedCell)
+        if (SelectorSystem.IsSelectedCell)
         {
-            CellSupVisViewContainer.ActiveSupVis(true, XySelectedCell);
-            CellSupVisViewContainer.SetColor(SupportVisionTypes.Selector, XySelectedCell);
+            CellSupViewSystem.ActiveSupVis(true, XySelectedCell);
+            CellSupViewSystem.SetColor(SupportVisionTypes.Selector, XySelectedCell);
 
 
-            if (SelectorWorker.SelectorType == SelectorTypes.PickFire)
+            if (SelectorSystem.SelectorType == SelectorTypes.PickFire)
             {
                 foreach (var xy1 in CellSpaceWorker.TryGetXyAround(XySelectedCell))
                 {
-                    if (CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.AdultForest, xy1))
+                    if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy1))
                     {
-                        if (!CellFireDataContainer.HaveFire(xy1))
+                        if (!CellFireDataSystem.HaveFireCom(xy1).HaveFire)
                         {
-                            CellSupVisViewContainer.EnableSupVis(SupportVisionTypes.FireSelector, xy1);
+                            CellSupViewSystem.EnableSupVis(SupportVisionTypes.FireSelector, xy1);
                         }
                     }
                 }
@@ -101,8 +101,8 @@ internal sealed class SupportVisionSystem : IEcsRunSystem
         }
 
 
-        AvailableCellsContainer.GetAllCellsCopy(AvailableCellTypes.Shift).ForEach((xy) => CellSupVisViewContainer.EnableSupVis(SupportVisionTypes.Shift, xy));
-        AvailableCellsContainer.GetAllCellsCopy(AvailableCellTypes.SimpleAttack).ForEach((xy) => CellSupVisViewContainer.EnableSupVis(SupportVisionTypes.SimpleAttack, xy));
-        AvailableCellsContainer.GetAllCellsCopy(AvailableCellTypes.UniqueAttack).ForEach((xy) => CellSupVisViewContainer.EnableSupVis(SupportVisionTypes.UniqueAttack, xy));
+        AvailableCellsContainer.GetAllCellsCopy(AvailableCellTypes.Shift).ForEach((xy) => CellSupViewSystem.EnableSupVis(SupportVisionTypes.Shift, xy));
+        AvailableCellsContainer.GetAllCellsCopy(AvailableCellTypes.SimpleAttack).ForEach((xy) => CellSupViewSystem.EnableSupVis(SupportVisionTypes.SimpleAttack, xy));
+        AvailableCellsContainer.GetAllCellsCopy(AvailableCellTypes.UniqueAttack).ForEach((xy) => CellSupViewSystem.EnableSupVis(SupportVisionTypes.UniqueAttack, xy));
     }
 }

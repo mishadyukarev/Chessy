@@ -1,6 +1,7 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
+﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
+using Assets.Scripts.ECS.System.View.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Assets.Scripts.Workers.Game.UI.Left;
@@ -9,13 +10,13 @@ using UnityEngine;
 
 internal sealed class EnvironmentUISystem : IEcsRunSystem
 {
-    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorSystem.XySelectedCell;
 
 
     public void Run()
     {
 
-        if (SelectorWorker.IsSelectedCell && CellBuildDataContainer.GetBuildingType(XySelectedCell) != BuildingTypes.City)
+        if (SelectorSystem.IsSelectedCell && !CellBuildDataSystem.BuildTypeCom(XySelectedCell).Is(BuildingTypes.City))
         {
             EnvirZoneLeftUIViewContainer.SetActiveZone(true);
         }
@@ -24,9 +25,9 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
             EnvirZoneLeftUIViewContainer.SetActiveZone(false);
         }
 
-        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Fertilizer, "Fertilizer: " + CellEnvirDataContainer.GetAmountResources(EnvironmentTypes.Fertilizer, XySelectedCell));
-        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Wood, "Wood: " + CellEnvirDataContainer.GetAmountResources(EnvironmentTypes.AdultForest, XySelectedCell));
-        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Ore, "Ore: " + CellEnvirDataContainer.GetAmountResources(EnvironmentTypes.Hill, XySelectedCell));
+        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Fertilizer, "Fertilizer: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Fertilizer, XySelectedCell));
+        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Wood, "Wood: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.AdultForest, XySelectedCell));
+        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Ore, "Ore: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Hill, XySelectedCell));
 
 
 
@@ -38,34 +39,34 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
                     int[] xy = new int[] { x, y };
 
 
-                    if (CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+                    if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
                     {
-                        CellSupVisBarsContainer.ActiveVision(true, SupportStaticTypes.Fertilizer, xy);
-                        CellSupVisBarsContainer.SetScale(SupportStaticTypes.Fertilizer, new Vector3((float)CellEnvirDataContainer.GetAmountResources(EnvironmentTypes.Fertilizer, xy) / (float)(CellEnvirDataContainer.MaxAmountResources(EnvironmentTypes.Fertilizer) + CellEnvirDataContainer.MaxAmountResources(EnvironmentTypes.Fertilizer)), 0.15f, 1), xy);
+                        CellSupVisBarsViewSystem.ActiveVision(true, SupportStaticTypes.Fertilizer, xy);
+                        CellSupVisBarsViewSystem.SetScale(SupportStaticTypes.Fertilizer, new Vector3((float)CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Fertilizer, xy) / (float)(CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.Fertilizer) + CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.Fertilizer)), 0.15f, 1), xy);
                     }
                     else
                     {
-                        CellSupVisBarsContainer.ActiveVision(false, SupportStaticTypes.Fertilizer, xy);
+                        CellSupVisBarsViewSystem.ActiveVision(false, SupportStaticTypes.Fertilizer, xy);
                     }
 
-                    if (CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                    if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                     {
-                        CellSupVisBarsContainer.ActiveVision(true, SupportStaticTypes.Wood, xy);
-                        CellSupVisBarsContainer.SetScale(SupportStaticTypes.Wood, new Vector3((float)CellEnvirDataContainer.GetAmountResources(EnvironmentTypes.AdultForest, xy) / (float)CellEnvirDataContainer.MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1), xy);
+                        CellSupVisBarsViewSystem.ActiveVision(true, SupportStaticTypes.Wood, xy);
+                        CellSupVisBarsViewSystem.SetScale(SupportStaticTypes.Wood, new Vector3((float)CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.AdultForest, xy) / (float)CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1), xy);
                     }
                     else
                     {
-                        CellSupVisBarsContainer.ActiveVision(false, SupportStaticTypes.Wood, xy);
+                        CellSupVisBarsViewSystem.ActiveVision(false, SupportStaticTypes.Wood, xy);
                     }
 
-                    if (CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.Hill, xy))
+                    if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
                     {
-                        CellSupVisBarsContainer.ActiveVision(true, SupportStaticTypes.Ore, xy);
-                        CellSupVisBarsContainer.SetScale(SupportStaticTypes.Ore, new Vector3((float)CellEnvirDataContainer.GetAmountResources(EnvironmentTypes.Hill, xy) / (float)CellEnvirDataContainer.MaxAmountResources(EnvironmentTypes.Hill), 0.15f, 1), xy);
+                        CellSupVisBarsViewSystem.ActiveVision(true, SupportStaticTypes.Ore, xy);
+                        CellSupVisBarsViewSystem.SetScale(SupportStaticTypes.Ore, new Vector3((float)CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Hill, xy) / (float)CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.Hill), 0.15f, 1), xy);
                     }
                     else
                     {
-                        CellSupVisBarsContainer.ActiveVision(false, SupportStaticTypes.Ore, xy);
+                        CellSupVisBarsViewSystem.ActiveVision(false, SupportStaticTypes.Ore, xy);
                     }
                 }
         }
@@ -76,9 +77,9 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
                 {
                     int[] xy = new int[] { x, y };
 
-                    CellSupVisBarsContainer.ActiveVision(false, SupportStaticTypes.Fertilizer, xy);
-                    CellSupVisBarsContainer.ActiveVision(false, SupportStaticTypes.Wood, xy);
-                    CellSupVisBarsContainer.ActiveVision(false, SupportStaticTypes.Ore, xy);
+                    CellSupVisBarsViewSystem.ActiveVision(false, SupportStaticTypes.Fertilizer, xy);
+                    CellSupVisBarsViewSystem.ActiveVision(false, SupportStaticTypes.Wood, xy);
+                    CellSupVisBarsViewSystem.ActiveVision(false, SupportStaticTypes.Ore, xy);
                 }
         }
     }

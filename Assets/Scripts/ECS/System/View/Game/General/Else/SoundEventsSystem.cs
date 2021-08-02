@@ -13,7 +13,7 @@ internal sealed class SoundEventsSystem : IEcsRunSystem
         }
         else
         {
-            SoundComWorker.SetVolume(SoundComTypes.StandartMusic, SaverComWorker.SliderVolume);
+            SoundComWorker.SetVolume(SoundComTypes.StandartMusic, DataCommContainerElseSaver.SliderVolume);
         }
     }
 }

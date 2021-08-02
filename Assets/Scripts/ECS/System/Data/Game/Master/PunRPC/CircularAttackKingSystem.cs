@@ -1,0 +1,56 @@
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Cell;
+using Assets.Scripts.Workers.Game.Else.Info.Units;
+using Leopotam.Ecs;
+using Photon.Pun;
+
+namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
+{
+    internal sealed class CircularAttackKingSystem : IEcsRunSystem
+    {
+        public void Run()
+        {
+            if (CellUnitsDataSystem.HaveMaxAmountSteps(RpcMasterDataContainer.XyCellForCircularAttack))
+            {
+                foreach (var xy1 in CellSpaceWorker.TryGetXyAround(RpcMasterDataContainer.XyCellForCircularAttack))
+                {
+                    if (CellUnitsDataSystem.HaveAnyUnit(xy1))
+                    {
+                        CellUnitsDataSystem.TakeAmountHealth(xy1, CellUnitsDataSystem.SimplePowerDamage(RpcMasterDataContainer.XyCellForCircularAttack) / 2);
+
+                        if (!CellUnitsDataSystem.HaveAmountHealth(xy1))
+                        {
+                            var unitTypeXy1 = CellUnitsDataSystem.UnitType(xy1);
+                            var isMasterXy1 = CellUnitsDataSystem.IsMasterClient(xy1);
+
+                            if (CellUnitsDataSystem.IsUnitType(UnitTypes.King, xy1)) PhotonPunRPC.EndGameToMaster(CellUnitsDataSystem.Owner(RpcMasterDataContainer.XyCellForCircularAttack).ActorNumber);
+                            InfoUnitsDataContainer.RemoveAmountUnitsInGame(unitTypeXy1, isMasterXy1, xy1);
+                            CellUnitsDataSystem.ResetUnit(xy1);
+
+                        }
+
+                        PhotonPunRPC.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+                    }
+                }
+                CellUnitsDataSystem.TakeAmountSteps(RpcMasterDataContainer.XyCellForCircularAttack);
+
+                PhotonPunRPC.SoundToGeneral(RpcMasterDataContainer.InfoFrom.Sender, SoundEffectTypes.AttackMelee);
+
+
+                var conditionType = CellUnitsDataSystem.ConditionType(RpcMasterDataContainer.XyCellForCircularAttack);
+                if (conditionType == ConditionUnitTypes.Protected || conditionType == ConditionUnitTypes.Relaxed)
+                {
+                    InfoUnitsDataContainer.ReplaceCondition(conditionType, ConditionUnitTypes.None, UnitTypes.King, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, RpcMasterDataContainer.XyCellForCircularAttack);
+                    CellUnitsDataSystem.ResetConditionType(RpcMasterDataContainer.XyCellForCircularAttack);
+                }
+            }
+            else
+            {
+                PhotonPunRPC.MistakeStepsUnitToGeneral(RpcMasterDataContainer.InfoFrom.Sender);
+                PhotonPunRPC.SoundToGeneral(RpcMasterDataContainer.InfoFrom.Sender, SoundEffectTypes.Mistake);
+            }
+        }
+    }
+}

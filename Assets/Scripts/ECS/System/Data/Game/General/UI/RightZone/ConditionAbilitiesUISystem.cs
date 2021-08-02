@@ -1,5 +1,5 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
@@ -7,18 +7,18 @@ using UnityEngine;
 
 internal sealed class ConditionAbilitiesUISystem : IEcsRunSystem
 {
-    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorSystem.XySelectedCell;
 
     public void Run()
     {
 
-        if (CellUnitsDataContainer.HaveAnyUnit(XySelectedCell))
+        if (CellUnitsDataSystem.HaveAnyUnit(XySelectedCell))
         {
-            if (CellUnitsDataContainer.HaveOwner(XySelectedCell))
+            if (CellUnitsDataSystem.HaveOwner(XySelectedCell))
             {
-                if (CellUnitsDataContainer.IsMine(XySelectedCell))
+                if (CellUnitsDataSystem.IsMine(XySelectedCell))
                 {
-                    switch (CellUnitsDataContainer.UnitType(XySelectedCell))
+                    switch (CellUnitsDataSystem.UnitType(XySelectedCell))
                     {
                         case UnitTypes.None:
                             ActiveStandartAbilities(false);
@@ -63,7 +63,7 @@ internal sealed class ConditionAbilitiesUISystem : IEcsRunSystem
                 }
             }
 
-            else if (CellUnitsDataContainer.IsBot(XySelectedCell))
+            else if (CellUnitsDataSystem.IsBot(XySelectedCell))
             {
                 ActiveStandartAbilities(false);
             }
@@ -81,7 +81,7 @@ internal sealed class ConditionAbilitiesUISystem : IEcsRunSystem
 
             if (isActive)
             {
-                if (CellUnitsDataContainer.IsConditionType(ConditionUnitTypes.Protected, XySelectedCell))
+                if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Protected, XySelectedCell))
                 {
                     RightUIViewContainer.SetConditionColor(ConditionUnitTypes.Protected, Color.yellow);
                 }
@@ -91,7 +91,7 @@ internal sealed class ConditionAbilitiesUISystem : IEcsRunSystem
                     RightUIViewContainer.SetConditionColor(ConditionUnitTypes.Protected, Color.white);
                 }
 
-                if (CellUnitsDataContainer.IsConditionType(ConditionUnitTypes.Relaxed, XySelectedCell))
+                if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Relaxed, XySelectedCell))
                 {
                     RightUIViewContainer.SetConditionColor(ConditionUnitTypes.Relaxed, Color.green);
                 }

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.Workers.Game.Else.CellEnvir;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
+using Assets.Scripts.ECS.System.View.Game.General.Cell;
 using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Game.General.Systems.SyncCellVision
@@ -16,13 +17,13 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SyncCellVision
 
                     for (int curNumberEnvirType = 1; curNumberEnvirType <= (int)EnvironmentTypes.Mountain; curNumberEnvirType++)
                     {
-                        if (CellEnvirDataContainer.HaveEnvironment((EnvironmentTypes)curNumberEnvirType, xy))
+                        if (CellEnvrDataSystem.HaveEnvironment((EnvironmentTypes)curNumberEnvirType, xy))
                         {
-                            CellEnvirViewContainer.ActiveEnvirVis(true, (EnvironmentTypes)curNumberEnvirType, xy);
+                            CellEnvViewSystem.ActiveEnvirVis(true, (EnvironmentTypes)curNumberEnvirType, xy);
                         }
                         else
                         {
-                            CellEnvirViewContainer.ActiveEnvirVis(false, (EnvironmentTypes)curNumberEnvirType, xy);
+                            CellEnvViewSystem.ActiveEnvirVis(false, (EnvironmentTypes)curNumberEnvirType, xy);
                         }
                     }
                 }

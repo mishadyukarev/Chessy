@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
+using Assets.Scripts.ECS.System.View.Game.General.Cell;
 using Assets.Scripts.Workers.Game.Else.Fire;
 using Leopotam.Ecs;
 
@@ -13,13 +15,13 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SyncCellVision
                 {
                     var xy = new int[] { x, y };
 
-                    if (CellFireDataContainer.HaveFire(xy))
+                    if (CellFireDataSystem.HaveFireCom(xy).HaveFire)
                     {
-                        CellFireViewContainer.EnableSR(xy);
+                        CellFireViewSystem.EnableSR(xy);
                     }
                     else
                     {
-                        CellFireViewContainer.DisableSR(xy);
+                        CellFireViewSystem.DisableSR(xy);
                     }
                 }
         }

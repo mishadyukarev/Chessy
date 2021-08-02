@@ -1,6 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.Workers;
-using Assets.Scripts.Workers.Game.Else.CellBuildings;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
+using Assets.Scripts.ECS.System.View.Game.General.Cell;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -15,36 +15,36 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SyncCellVision
                 {
                     var xy = new int[] { x, y };
 
-                    if (CellBuildDataContainer.HaveAnyBuilding(xy))
+                    if (CellBuildDataSystem.BuildTypeCom(xy).HaveBuild)
                     {
-                        CellBuildingViewContainer.SetSpriteFront(CellBuildDataContainer.GetBuildingType(xy), xy);
-                        CellBuildingViewContainer.SetEnabledFrontSR(true, xy);
+                        CellBuildViewSystem.SetSpriteFront(CellBuildDataSystem.BuildTypeCom(xy).BuildingType, xy);
+                        CellBuildViewSystem.SetEnabledFrontSR(true, xy);
 
-                        CellBuildingViewContainer.SetEnabledBackSR(true, xy);
-                        CellBuildingViewContainer.SetSpriteBack(CellBuildDataContainer.GetBuildingType(xy), xy);
+                        CellBuildViewSystem.SetEnabledBackSR(true, xy);
+                        CellBuildViewSystem.SetSpriteBack(CellBuildDataSystem.BuildTypeCom(xy).BuildingType, xy);
 
-                        if (CellBuildDataContainer.HaveOwner(xy))
+                        if (CellBuildDataSystem.OwnerCom(xy).HaveOwner)
                         {
-                            if (CellBuildDataContainer.IsMasterBuilding(xy))
+                            if (CellBuildDataSystem.OwnerCom(xy).IsMasterClient)
                             {
-                                CellBuildingViewContainer.SetBackColor(Color.blue, xy);
+                                CellBuildViewSystem.SetBackColor(Color.blue, xy);
                             }
 
                             else
                             {
-                                CellBuildingViewContainer.SetBackColor(Color.red, xy);
+                                CellBuildViewSystem.SetBackColor(Color.red, xy);
                             }
                         }
 
-                        else if (CellBuildDataContainer.IsBot(xy))
+                        else if (CellBuildDataSystem.OwnerBotCom(xy).IsBot)
                         {
-                            CellBuildingViewContainer.SetBackColor(Color.red, xy);
+                            CellBuildViewSystem.SetBackColor(Color.red, xy);
                         }
                     }
                     else
                     {
-                        CellBuildingViewContainer.SetEnabledFrontSR(false, xy);
-                        CellBuildingViewContainer.SetEnabledBackSR(false, xy);
+                        CellBuildViewSystem.SetEnabledFrontSR(false, xy);
+                        CellBuildViewSystem.SetEnabledBackSR(false, xy);
                     }
                 }
         }

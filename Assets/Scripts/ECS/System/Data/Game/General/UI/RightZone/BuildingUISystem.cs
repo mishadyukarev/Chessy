@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
@@ -8,7 +9,7 @@ using System;
 
 internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
 {
-    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorSystem.XySelectedCell;
     public void Init()
     {
         RightUIViewContainer.AddListenerBuildButton(delegate { Build(BuildingTypes.Farm); }, BuildingButtonTypes.First);
@@ -18,15 +19,15 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
 
     public void Run()
     {
-        if (SelectorWorker.IsSelectedCell && CellUnitsDataContainer.HaveAnyUnit(XySelectedCell))
+        if (SelectorSystem.IsSelectedCell && CellUnitsDataSystem.HaveAnyUnit(XySelectedCell))
         {
-            if (CellUnitsDataContainer.HaveOwner(XySelectedCell))
+            if (CellUnitsDataSystem.HaveOwner(XySelectedCell))
             {
-                if (CellUnitsDataContainer.IsMine(XySelectedCell))
+                if (CellUnitsDataSystem.IsMine(XySelectedCell))
                 {
                     RightUIViewContainer.RemoveAllListenersBuildButton(BuildingButtonTypes.Third);
 
-                    switch (CellUnitsDataContainer.UnitType(XySelectedCell))
+                    switch (CellUnitsDataSystem.UnitType(XySelectedCell))
                     {
                         case UnitTypes.None:
                             break;
@@ -70,7 +71,7 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
                 }
             }
 
-            else if (CellUnitsDataContainer.IsBot(XySelectedCell))
+            else if (CellUnitsDataSystem.IsBot(XySelectedCell))
             {
                 RightUIViewContainer.SetActiveParentZone(false, UnitUIZoneTypes.Building);
             }
@@ -79,16 +80,16 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
             {
                 RightUIViewContainer.SetActiveParentZone(true, UnitUIZoneTypes.Building);
 
-                if (CellBuildDataContainer.HaveAnyBuilding(XySelectedCell))
+                if (CellBuildDataSystem.BuildTypeCom(XySelectedCell).HaveBuild)
                 {
                     //UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.First);
                     //UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Second);
 
-                    if (CellUnitsDataContainer.HaveOwner(XySelectedCell))
+                    if (CellUnitsDataSystem.HaveOwner(XySelectedCell))
                     {
-                        if (CellUnitsDataContainer.IsMine(XySelectedCell))
+                        if (CellUnitsDataSystem.IsMine(XySelectedCell))
                         {
-                            if (CellBuildDataContainer.IsBuildingType(BuildingTypes.City, XySelectedCell))
+                            if (CellBuildDataSystem.BuildTypeCom(XySelectedCell).Is(BuildingTypes.City))
                             {
                                 RightUIViewContainer.SetActiveBuildingButton(false, BuildingButtonTypes.Third);
                             }
@@ -110,9 +111,9 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
                         }
                     }
 
-                    else if (CellBuildDataContainer.IsBot(XySelectedCell))
+                    else if (CellBuildDataSystem.OwnerBotCom(XySelectedCell).IsBot)
                     {
-                        if (CellBuildDataContainer.IsBuildingType(BuildingTypes.City, XySelectedCell))
+                        if (CellBuildDataSystem.BuildTypeCom(XySelectedCell).Is(BuildingTypes.City))
                         {
                             RightUIViewContainer.SetActiveBuildingButton(true, BuildingButtonTypes.Third);
 

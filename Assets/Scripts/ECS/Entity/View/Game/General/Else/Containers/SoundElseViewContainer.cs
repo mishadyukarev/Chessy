@@ -62,7 +62,7 @@ namespace Assets.Scripts.ECS.Entities.Game.General.Else.View.Containers
         internal ref AudioSourceComponent TruceSoundEnt_AudioSourceCom => ref _truceSoundEnt.Get<AudioSourceComponent>();
 
 
-        internal SoundElseViewContainer(EcsWorld gameWorld, EntCommonManager entCommonManager)
+        internal SoundElseViewContainer(EcsWorld gameWorld, EntDataCommonElseManager entCommonManager)
         {
             var audioSourceParentGO = new GameObject("AudioSource");
             audioSourceParentGO.transform.SetParent(entCommonManager.ToggleSceneParentGOZoneEnt_ParentCom.ParentGO.transform);

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.UI;
 using Assets.Scripts.Workers.Game.UI.Left;
@@ -8,7 +9,7 @@ using Photon.Pun;
 
 internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
 {
-    private int[] XySelectedCell => SelectorWorker.GetXy(SelectorCellTypes.Selected);
+    private int[] XySelectedCell => SelectorSystem.XySelectedCell;
     public void Init()
     {
 
@@ -27,11 +28,11 @@ internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
     public void Run()
     {
 
-        if (SelectorWorker.IsSelectedCell && CellBuildDataContainer.IsBuildingType(BuildingTypes.City, XySelectedCell))
+        if (SelectorSystem.IsSelectedCell && CellBuildDataSystem.BuildTypeCom(XySelectedCell).Is(BuildingTypes.City))
         {
-            if (CellBuildDataContainer.HaveOwner(XySelectedCell))
+            if (CellBuildDataSystem.OwnerCom(XySelectedCell).HaveOwner)
             {
-                if (CellBuildDataContainer.IsMine(XySelectedCell))
+                if (CellBuildDataSystem.OwnerCom(XySelectedCell).IsMine)
                 {
                     LeftBuildUIViewContainer.SetActiveZone(true);
                 }
@@ -53,13 +54,13 @@ internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
     {
         if (!DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient))
         {
-            if (SelectorWorker.SelectorType == SelectorTypes.UpgradeUnit)
+            if (SelectorSystem.SelectorType == SelectorTypes.UpgradeUnit)
             {
-                SelectorWorker.SelectorType = SelectorTypes.Other;
+                SelectorSystem.SelectorType = SelectorTypes.Other;
             }
             else
             {
-                SelectorWorker.SelectorType = SelectorTypes.UpgradeUnit;
+                SelectorSystem.SelectorType = SelectorTypes.UpgradeUnit;
             }
         }
     }
