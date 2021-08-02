@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Common;
@@ -23,10 +24,10 @@ namespace Assets.Scripts
         private static PhotonView _photonView;
 
         private EntGameGeneralElseDataManager EGM => Instance.ECSmanager.EntGameGeneralElseDataManager;
-        private EntitiesGameGeneralUIViewManager EGGUIM => Instance.ECSmanager.EntGameGeneralUIViewManager;
-        private EntitiesGameMasterManager EMM => Instance.ECSmanager.EntGameMasterManager;
+        private EntGameGeneralUIViewManager EGGUIM => Instance.ECSmanager.EntGameGeneralUIViewManager;
+        private EntGameMasterManager EMM => Instance.ECSmanager.EntGameMasterManager;
 
-        private EntitiesGameOtherManager EntOM => Instance.ECSmanager.EntGameOtherManager;
+        private EntGameOtherManager EntOM => Instance.ECSmanager.EntGameOtherManager;
 
         private static string MasterRPCName => nameof(MasterRPC);
         private static string GeneralRPCName => nameof(GeneralRPC);
@@ -121,7 +122,7 @@ namespace Assets.Scripts
         [PunRPC]
         private void MasterRPC(RpcMasterTypes rpcType, object[] objects, PhotonMessageInfo infoFrom)
         {
-            RpcWorker.InfoFrom = infoFrom;
+            RpcMasterDataContainer.InfoFrom = infoFrom;
             EMM.FromInfoEnt_FromInfoCom.FromInfo = infoFrom;
 
             switch (rpcType)
@@ -131,12 +132,12 @@ namespace Assets.Scripts
 
                 case RpcMasterTypes.Ready:
                     EMM.ReadyEnt_IsActivatedCom.IsActivated = (bool)objects[0];
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(ReadyMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(ReadyMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Done:
                     EMM.DonerEnt_IsActivatedCom.IsActivated = (bool)objects[0];
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(DonerMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(DonerMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.EndGame:
@@ -146,60 +147,60 @@ namespace Assets.Scripts
                 case RpcMasterTypes.Build:
                     EMM.BuildEnt_XyCellCom.XyCell = (int[])objects[0];
                     EMM.BuildEnt_BuildingTypeCom.BuildingType = (BuildingTypes)objects[1];
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(BuilderMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(BuilderMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Destroy:
                     EMM.DestroyEnt_XyCellCom.XyCell = (int[])objects[0];
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(DestroyMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(DestroyMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Shift:
                     EMM.ShiftEnt_FromToXyCom.SetAllXy((int[])objects[0], (int[])objects[1]);
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(ShiftUnitMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(ShiftUnitMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Attack:
                     EMM.AttackEnt_FromToXyCom.SetAllXy((int[])objects[0], (int[])objects[1]);
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(AttackUnitMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(AttackUnitMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.ProtectRelax:
                     EMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType = (ConditionUnitTypes)objects[0];
                     EMM.ProtectRelaxEnt_XyCellCom.XyCell = (int[])objects[1];
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(ConditionMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(ConditionMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.CreateUnit:
                     EMM.CreatorEnt_UnitTypeCom.UnitType = (UnitTypes)objects[0];
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(CreatorUnitMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(CreatorUnitMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.MeltOre:
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(MeltOreMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(MeltOreMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.GetUnit:
                     EMM.CreatorEnt_UnitTypeCom.UnitType = (UnitTypes)objects[0];
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(GetterUnitMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(GetterUnitMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.SetUnit:
                     EMM.SettingUnitEnt_XyCellCom.XyCell = (int[])objects[0];
                     EMM.SettingUnitEnt_UnitTypeCom.UnitType = (UnitTypes)objects[1];
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(SetterUnitMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(SetterUnitMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.SeedEnvironment:
                     EMM.SeedingEnt_XyCellCom.XyCell = (int[])objects[0];
                     EMM.SeedingEnt_EnvironmentTypesCom.EnvironmentType = (EnvironmentTypes)objects[1];
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(SeedingMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(SeedingMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Fire:
                     EMM.FireEnt_FromToXyCom.FromXy = (int[])objects[0];
                     EMM.FireEnt_FromToXyCom.ToXy = (int[])objects[1];
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(FireMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(FireMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Upgrade:
@@ -221,19 +222,19 @@ namespace Assets.Scripts
                         default:
                             throw new Exception();
                     }
-                    SystemsGameMasterManager.TryInvokeRunSystem(nameof(UpgradeMasterSystem), SystemsGameMasterManager.RpcSystems);
+                    SysGameMasterManager.TryInvokeRunSystem(nameof(UpgradeMasterSystem), SysGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.CircularAttackKing:
-                    RpcWorker.XyCellForCircularAttack = (int[])objects[0];
-                    SystemsGameMasterManager.CircularAttackKingSystems.Run();
+                    RpcMasterDataContainer.XyCellForCircularAttack = (int[])objects[0];
+                    SysGameMasterManager.CircularAttackKingSystems.Run();
                     break;
 
                 default:
                     break;
             }
 
-            SystemsGameMasterManager.VisibilityUnitsSystems.Run();
+            SysGameMasterManager.VisibilityUnitsSystems.Run();
 
             SyncAllToMaster();
         }
@@ -250,7 +251,7 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case RpcGeneralTypes.SetDonerActiveUI:
-                    DownDonerUIWorker.SetDoned(PhotonNetwork.IsMasterClient, (bool)objects[_currentNumber++]);
+                    DownDonerUIDataContainer.SetDoned(PhotonNetwork.IsMasterClient, (bool)objects[_currentNumber++]);
                     break;
 
                 case RpcGeneralTypes.ActiveAmountMotionUI:
@@ -258,7 +259,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.GetAvailableCellsForSetting:
-                    AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.SettingUnit, CellUnitsDataWorker.GetStartCellsForSettingUnit(PhotonNetwork.LocalPlayer));
+                    AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.SettingUnit, CellUnitsDataContainer.GetStartCellsForSettingUnit(PhotonNetwork.LocalPlayer));
                     break;
 
                 case RpcGeneralTypes.EndGame:
@@ -377,87 +378,86 @@ namespace Assets.Scripts
 
 
 
-            for (int x = 0; x < CellViewWorker.Xamount; x++)
-                for (int y = 0; y < CellViewWorker.Yamount; y++)
+            for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
+                for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
                 {
                     var xy = new int[] { x, y };
 
-                    listObjects.Add(CellUnitsDataWorker.UnitType(xy));
-                    listObjects.Add(CellUnitsDataWorker.IsVisibleUnit(false, xy));
-                    listObjects.Add(CellUnitsDataWorker.AmountSteps(xy));
-                    listObjects.Add(CellUnitsDataWorker.AmountHealth(xy));
-                    listObjects.Add(CellUnitsDataWorker.ConditionType(xy));
-                    if (CellUnitsDataWorker.HaveOwner(xy)) listObjects.Add(CellUnitsDataWorker.ActorNumber(xy));
+                    listObjects.Add(CellUnitsDataContainer.UnitType(xy));
+                    listObjects.Add(CellUnitsDataContainer.IsVisibleUnit(false, xy));
+                    listObjects.Add(CellUnitsDataContainer.AmountSteps(xy));
+                    listObjects.Add(CellUnitsDataContainer.AmountHealth(xy));
+                    listObjects.Add(CellUnitsDataContainer.ConditionType(xy));
+                    if (CellUnitsDataContainer.HaveOwner(xy)) listObjects.Add(CellUnitsDataContainer.ActorNumber(xy));
                     else listObjects.Add(-2);
-                    listObjects.Add(CellUnitsDataWorker.IsBot(xy));
+                    listObjects.Add(CellUnitsDataContainer.IsBot(xy));
 
 
 
-                    listObjects.Add(CellBuildingsDataWorker.GetBuildingType(xy));
-                    if (CellBuildingsDataWorker.HaveOwner(xy)) listObjects.Add(CellBuildingsDataWorker.ActorNumber(xy));
+                    listObjects.Add(CellBuildDataContainer.GetBuildingType(xy));
+                    if (CellBuildDataContainer.HaveOwner(xy)) listObjects.Add(CellBuildDataContainer.ActorNumber(xy));
                     else listObjects.Add(-2);
-                    listObjects.Add(CellBuildingsDataWorker.IsBot(xy));
+                    listObjects.Add(CellBuildDataContainer.IsBot(xy));
 
 
 
-                    listObjects.Add(CellEnvirDataWorker.GetAmountResources(EnvironmentTypes.Fertilizer, xy));
-                    listObjects.Add(CellEnvirDataWorker.GetAmountResources(EnvironmentTypes.AdultForest, xy));
-                    listObjects.Add(CellEnvirDataWorker.GetAmountResources(EnvironmentTypes.Hill, xy));
+                    listObjects.Add(CellEnvirDataContainer.GetAmountResources(EnvironmentTypes.Fertilizer, xy));
+                    listObjects.Add(CellEnvirDataContainer.GetAmountResources(EnvironmentTypes.AdultForest, xy));
+                    listObjects.Add(CellEnvirDataContainer.GetAmountResources(EnvironmentTypes.Hill, xy));
 
-                    listObjects.Add(CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Fertilizer, xy));
-                    listObjects.Add(CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.YoungForest, xy));
-                    listObjects.Add(CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.AdultForest, xy));
-                    listObjects.Add(CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, xy));
-                    listObjects.Add(CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Mountain, xy));
+                    listObjects.Add(CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.Fertilizer, xy));
+                    listObjects.Add(CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.YoungForest, xy));
+                    listObjects.Add(CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.AdultForest, xy));
+                    listObjects.Add(CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.Hill, xy));
+                    listObjects.Add(CellEnvirDataContainer.HaveEnvironment(EnvironmentTypes.Mountain, xy));
 
 
-                    listObjects.Add(CellFireDataWorker.HaveFire(xy));
-                    listObjects.Add(CellFireDataWorker.TimeSteps(xy));
+                    listObjects.Add(CellFireDataContainer.HaveFire(xy));
                 }
 
 
 
             listObjects.Add(SaverComWorker.StepModeType);
-            listObjects.Add(MiddleViewUIWorker.IsStartedGame);
+            listObjects.Add(MiddleUIDataContainer.IsStartedGame);
 
 
 
-            listObjects.Add(MiddleViewUIWorker.IsReady(false));
-            listObjects.Add(DownDonerUIWorker.IsDoned(false));
+            listObjects.Add(MiddleUIDataContainer.IsReady(false));
+            listObjects.Add(DownDonerUIDataContainer.IsDoned(false));
 
 
 
-            listObjects.Add(ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Food, false));
-            listObjects.Add(ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Wood, false));
-            listObjects.Add(ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Ore, false));
-            listObjects.Add(ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Iron, false));
-            listObjects.Add(ResourcesDataUIWorker.GetAmountResources(ResourceTypes.Gold, false));
+            listObjects.Add(ResourcesUIDataContainer.GetAmountResources(ResourceTypes.Food, false));
+            listObjects.Add(ResourcesUIDataContainer.GetAmountResources(ResourceTypes.Wood, false));
+            listObjects.Add(ResourcesUIDataContainer.GetAmountResources(ResourceTypes.Ore, false));
+            listObjects.Add(ResourcesUIDataContainer.GetAmountResources(ResourceTypes.Iron, false));
+            listObjects.Add(ResourcesUIDataContainer.GetAmountResources(ResourceTypes.Gold, false));
 
 
 
             for (UnitTypes unitTypeType = (UnitTypes)1; (byte)unitTypeType < Enum.GetNames(typeof(UnitTypes)).Length; unitTypeType++)
             {
-                var amountUnitsInGame = InfoUnitsContainer.GetAmountUnitsInGame(unitTypeType, false);
+                var amountUnitsInGame = InfoUnitsDataContainer.GetAmountUnitsInGame(unitTypeType, false);
                 listObjects.Add(amountUnitsInGame);
                 for (int indexXy = 0; indexXy < amountUnitsInGame; indexXy++)
                 {
-                    listObjects.Add(InfoUnitsContainer.GetXyUnitInGame(unitTypeType, false, indexXy));
+                    listObjects.Add(InfoUnitsDataContainer.GetXyUnitInGame(unitTypeType, false, indexXy));
                 }
             }
 
 
 
-            listObjects.Add(InfoBuidlingsWorker.AmountUpgrades(BuildingTypes.Farm, false));
-            listObjects.Add(InfoBuidlingsWorker.AmountUpgrades(BuildingTypes.Woodcutter, false));
-            listObjects.Add(InfoBuidlingsWorker.AmountUpgrades(BuildingTypes.Mine, false));
+            listObjects.Add(InfoBuidlingsDataContainer.AmountUpgrades(BuildingTypes.Farm, false));
+            listObjects.Add(InfoBuidlingsDataContainer.AmountUpgrades(BuildingTypes.Woodcutter, false));
+            listObjects.Add(InfoBuidlingsDataContainer.AmountUpgrades(BuildingTypes.Mine, false));
 
             for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
             {
-                var amountBuildingsInGame = InfoBuidlingsWorker.GetAmountBuild(buildingType, false);
+                var amountBuildingsInGame = InfoBuidlingsDataContainer.GetAmountBuild(buildingType, false);
                 listObjects.Add(amountBuildingsInGame);
                 for (int indexXy = 0; indexXy < amountBuildingsInGame; indexXy++)
                 {
-                    listObjects.Add(InfoBuidlingsWorker.GetXyBuildByIndex(buildingType, false, indexXy));
+                    listObjects.Add(InfoBuidlingsDataContainer.GetXyBuildByIndex(buildingType, false, indexXy));
                 }
             }
 
@@ -470,7 +470,7 @@ namespace Assets.Scripts
             _photonView.RPC(SyncOtherRPCName, RpcTarget.Others, objects);
 
 
-            SystemsGameGeneralManager.SyncCellVisionSystems.Run();
+            SysGameGeneralManager.SyncCellVisionSystems.Run();
         }
 
         [PunRPC]
@@ -478,8 +478,8 @@ namespace Assets.Scripts
         {
             _currentNumber = 0;
 
-            for (int x = 0; x < CellViewWorker.Xamount; x++)
-                for (int y = 0; y < CellViewWorker.Yamount; y++)
+            for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
+                for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
                 {
                     var xy = new int[] { x, y };
 
@@ -498,19 +498,19 @@ namespace Assets.Scripts
                         if (actorNumber != -2)
                         {
                             owner = PhotonNetwork.PlayerList[actorNumber - 1];
-                            CellUnitsDataWorker.SetPlayerUnit(unitType, amountHealth, amountSteps, conditionType, owner, xy);
+                            CellUnitsDataContainer.SetPlayerUnit(unitType, amountHealth, amountSteps, conditionType, owner, xy);
                         }
                         else
                         {
-                            CellUnitsDataWorker.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, conditionType, xy);
+                            CellUnitsDataContainer.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, conditionType, xy);
                         }
 
-                        CellUnitsDataWorker.SetIsVisibleUnit(PhotonNetwork.IsMasterClient, isVisibleUnit, xy);
+                        CellUnitsDataContainer.SetIsVisibleUnit(PhotonNetwork.IsMasterClient, isVisibleUnit, xy);
                     }
 
                     else
                     {
-                        CellUnitsDataWorker.ResetUnit(xy);
+                        CellUnitsDataContainer.ResetUnit(xy);
                     }
 
 
@@ -524,17 +524,17 @@ namespace Assets.Scripts
                         if (actorNumber != -2)
                         {
                             owner = PhotonNetwork.PlayerList[actorNumber - 1];
-                            CellBuildingsDataWorker.SetPlayerBuilding(buildingType, owner, xy);
+                            CellBuildDataContainer.SetPlayerBuilding(buildingType, owner, xy);
                         }
                         else
                         {
-                            CellBuildingsDataWorker.SetBotBuilding(buildingType, xy);
+                            CellBuildDataContainer.SetBotBuilding(buildingType, xy);
                         }
                     }
 
                     else
                     {
-                        CellBuildingsDataWorker.ResetBuild(xy);
+                        CellBuildDataContainer.ResetBuild(xy);
                     }
 
 
@@ -549,18 +549,17 @@ namespace Assets.Scripts
                     bool haveHill = (bool)objects[_currentNumber++];
                     bool haveMountain = (bool)objects[_currentNumber++];
 
-                    CellEnvirDataWorker.SetEnvironment(EnvironmentTypes.Fertilizer, haveFertilizer, amountResourcesFertilizer, xy);
-                    CellEnvirDataWorker.SetEnvironment(EnvironmentTypes.YoungForest, haveYoungTree, default, xy);
-                    CellEnvirDataWorker.SetEnvironment(EnvironmentTypes.AdultForest, haveAdultForest, amountResourcesAdultForest, xy);
-                    CellEnvirDataWorker.SetEnvironment(EnvironmentTypes.Hill, haveHill, amountResourcesOre, xy);
-                    CellEnvirDataWorker.SetEnvironment(EnvironmentTypes.Mountain, haveMountain, default, xy);
+                    CellEnvirDataContainer.SetEnvironment(EnvironmentTypes.Fertilizer, haveFertilizer, amountResourcesFertilizer, xy);
+                    CellEnvirDataContainer.SetEnvironment(EnvironmentTypes.YoungForest, haveYoungTree, default, xy);
+                    CellEnvirDataContainer.SetEnvironment(EnvironmentTypes.AdultForest, haveAdultForest, amountResourcesAdultForest, xy);
+                    CellEnvirDataContainer.SetEnvironment(EnvironmentTypes.Hill, haveHill, amountResourcesOre, xy);
+                    CellEnvirDataContainer.SetEnvironment(EnvironmentTypes.Mountain, haveMountain, default, xy);
 
 
 
                     bool haveFire = (bool)objects[_currentNumber++];
-                    int timeStepsFire = (int)objects[_currentNumber++];
 
-                    CellFireDataWorker.SyncFireData(haveFire, timeStepsFire, xy);
+                    CellFireDataContainer.SetFire(haveFire, xy);
                 }
 
 
@@ -570,17 +569,17 @@ namespace Assets.Scripts
 
 
             bool isStartedGame = (bool)objects[_currentNumber++];
-            MiddleViewUIWorker.IsStartedGame = isStartedGame;
+            MiddleUIDataContainer.IsStartedGame = isStartedGame;
 
 
 
             bool isActivatedReadyButton = (bool)objects[_currentNumber++];
-            MiddleViewUIWorker.SetIsReady(PhotonNetwork.IsMasterClient, isActivatedReadyButton);
+            MiddleUIDataContainer.SetIsReady(PhotonNetwork.IsMasterClient, isActivatedReadyButton);
 
 
 
             bool isActivatedDoner = (bool)objects[_currentNumber++];
-            DownDonerUIWorker.SetDoned(PhotonNetwork.IsMasterClient, isActivatedDoner);
+            DownDonerUIDataContainer.SetDoned(PhotonNetwork.IsMasterClient, isActivatedDoner);
 
 
 
@@ -589,11 +588,11 @@ namespace Assets.Scripts
             var ore = (int)objects[_currentNumber++];
             var iron = (int)objects[_currentNumber++];
             var gold = (int)objects[_currentNumber++];
-            ResourcesDataUIWorker.SetAmountResources(ResourceTypes.Food, PhotonNetwork.IsMasterClient, food);
-            ResourcesDataUIWorker.SetAmountResources(ResourceTypes.Wood, PhotonNetwork.IsMasterClient, wood);
-            ResourcesDataUIWorker.SetAmountResources(ResourceTypes.Ore, PhotonNetwork.IsMasterClient, ore);
-            ResourcesDataUIWorker.SetAmountResources(ResourceTypes.Iron, PhotonNetwork.IsMasterClient, iron);
-            ResourcesDataUIWorker.SetAmountResources(ResourceTypes.Gold, PhotonNetwork.IsMasterClient, gold);
+            ResourcesUIDataContainer.SetAmountResources(ResourceTypes.Food, PhotonNetwork.IsMasterClient, food);
+            ResourcesUIDataContainer.SetAmountResources(ResourceTypes.Wood, PhotonNetwork.IsMasterClient, wood);
+            ResourcesUIDataContainer.SetAmountResources(ResourceTypes.Ore, PhotonNetwork.IsMasterClient, ore);
+            ResourcesUIDataContainer.SetAmountResources(ResourceTypes.Iron, PhotonNetwork.IsMasterClient, iron);
+            ResourcesUIDataContainer.SetAmountResources(ResourceTypes.Gold, PhotonNetwork.IsMasterClient, gold);
 
 
 
@@ -607,7 +606,7 @@ namespace Assets.Scripts
                     var xyUnit = (int[])objects[_currentNumber++];
                     xyUnits.Add(xyUnit);
                 }
-                InfoUnitsContainer.SetAmountUnitInGame(unitTypeType, PhotonNetwork.IsMasterClient, xyUnits);
+                InfoUnitsDataContainer.SetAmountUnitInGame(unitTypeType, PhotonNetwork.IsMasterClient, xyUnits);
             }
 
 
@@ -615,9 +614,9 @@ namespace Assets.Scripts
             var amountFarmUpgrades = (int)objects[_currentNumber++];
             var amountWoodcutterUpgrades = (int)objects[_currentNumber++];
             var amountMineUpgrades = (int)objects[_currentNumber++];
-            InfoBuidlingsWorker.SetAmountUpgrades(BuildingTypes.Farm, PhotonNetwork.IsMasterClient, amountFarmUpgrades);
-            InfoBuidlingsWorker.SetAmountUpgrades(BuildingTypes.Woodcutter, PhotonNetwork.IsMasterClient, amountWoodcutterUpgrades);
-            InfoBuidlingsWorker.SetAmountUpgrades(BuildingTypes.Mine, PhotonNetwork.IsMasterClient, amountMineUpgrades);
+            InfoBuidlingsDataContainer.SetAmountUpgrades(BuildingTypes.Farm, PhotonNetwork.IsMasterClient, amountFarmUpgrades);
+            InfoBuidlingsDataContainer.SetAmountUpgrades(BuildingTypes.Woodcutter, PhotonNetwork.IsMasterClient, amountWoodcutterUpgrades);
+            InfoBuidlingsDataContainer.SetAmountUpgrades(BuildingTypes.Mine, PhotonNetwork.IsMasterClient, amountMineUpgrades);
 
             for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
             {
@@ -629,12 +628,12 @@ namespace Assets.Scripts
                     var xyBuilding = (int[])objects[_currentNumber++];
                     xyBuildings.Add(xyBuilding);
                 }
-                InfoBuidlingsWorker.SetXyBuildings(buildingType, PhotonNetwork.IsMasterClient, xyBuildings);
+                InfoBuidlingsDataContainer.SetXyBuildings(buildingType, PhotonNetwork.IsMasterClient, xyBuildings);
             }
 
 
 
-            SystemsGameGeneralManager.SyncCellVisionSystems.Run();
+            SysGameGeneralManager.SyncCellVisionSystems.Run();
         }
 
         #endregion

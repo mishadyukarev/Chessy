@@ -4,7 +4,7 @@ namespace Assets.Scripts
 {
     internal abstract class SystemMasterReduction : SystemGeneralReduction
     {
-        protected EntitiesGameMasterManager _eMM;
+        protected EntGameMasterManager _eMM;
 
         public override void Init()
         {

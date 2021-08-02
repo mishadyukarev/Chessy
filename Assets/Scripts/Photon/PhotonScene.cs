@@ -56,8 +56,8 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    _logTex = CanvasUIWorker.FindUnderParent<TextMeshProUGUI>(SceneTypes.Menu, "LogText");
-                    CanvasUIWorker.FindUnderParent<Button>(sceneType, "QuitButton").onClick.AddListener(delegate { Application.Quit(); });
+                    _logTex = CanvasUIViewContainer.FindUnderParent<TextMeshProUGUI>(SceneTypes.Menu, "LogText");
+                    CanvasUIViewContainer.FindUnderParent<Button>(sceneType, "QuitButton").onClick.AddListener(delegate { Application.Quit(); });
 
 
                     _entMenuManager.JoinOnlineEnt_ButtonCom.Button.onClick.AddListener(ConnectOnline);

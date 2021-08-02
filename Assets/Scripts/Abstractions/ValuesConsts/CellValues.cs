@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Abstractions.ValuesConsts
 {
-    public static class CellValues
+    public readonly struct CellValues
     {
         public const int CELL_COUNT_X = 15;
         public const int CELL_COUNT_Y = 11;

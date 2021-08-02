@@ -35,9 +35,9 @@ namespace Assets.Scripts
         public EntGameGeneralCellDataManager EntGameGeneralCellDataManager { get; private set; }
         public EntGameGeneralCellViewManager EntGameGeneralCellViewManager { get; private set; }
         public EntGameGeneralUIDataManager EntGameGeneralUIDataManager { get; private set; }
-        public EntitiesGameGeneralUIViewManager EntGameGeneralUIViewManager { get; private set; }
-        public EntitiesGameMasterManager EntGameMasterManager { get; private set; }
-        public EntitiesGameOtherManager EntGameOtherManager { get; private set; }
+        public EntGameGeneralUIViewManager EntGameGeneralUIViewManager { get; private set; }
+        public EntGameMasterManager EntGameMasterManager { get; private set; }
+        public EntGameOtherManager EntGameOtherManager { get; private set; }
 
         #endregion
 
@@ -46,9 +46,9 @@ namespace Assets.Scripts
 
         #region Systems
 
-        public SystemsGameMasterManager SysGameMasterManager { get; private set; }
-        public SystemsGameGeneralManager SysGameGeneralManager { get; private set; }
-        public SystemGameOtherManager SysGameOtherManager { get; private set; }
+        public SysGameMasterManager SysGameMasterManager { get; private set; }
+        public SysGameGeneralManager SysGameGeneralManager { get; private set; }
+        public SysGameOtherManager SysGameOtherManager { get; private set; }
 
         #endregion
 
@@ -126,25 +126,25 @@ namespace Assets.Scripts
                     EntGameGeneralElseViewManager = new EntGameGeneralElseViewManager(_gameWorld, EntCommonManager);
                     EntGameGeneralCellDataManager = new EntGameGeneralCellDataManager(_gameWorld);
                     EntGameGeneralCellViewManager = new EntGameGeneralCellViewManager(_gameWorld, EntCommonManager);
-                    EntGameGeneralUIViewManager = new EntitiesGameGeneralUIViewManager(_gameWorld);
+                    EntGameGeneralUIViewManager = new EntGameGeneralUIViewManager(_gameWorld);
                     EntGameGeneralUIDataManager = new EntGameGeneralUIDataManager(_gameWorld);
-                    EntGameMasterManager = new EntitiesGameMasterManager(_gameWorld);
-                    EntGameOtherManager = new EntitiesGameOtherManager(_gameWorld);
+                    EntGameMasterManager = new EntGameMasterManager(_gameWorld);
+                    EntGameOtherManager = new EntGameOtherManager(_gameWorld);
 
                     if (PhotonNetwork.IsMasterClient)
                     {
                         if (SaverComWorker.StepModeType == StepModeTypes.ByQueue)
                         {
-                            DownDonerUIWorker.SetDoned(false, true);
+                            DownDonerUIDataContainer.SetDoned(false, true);
                         }
                     }
 
 
 
 
-                    SysGameGeneralManager = new SystemsGameGeneralManager(_gameWorld);
-                    SysGameMasterManager = new SystemsGameMasterManager(_gameWorld);
-                    SysGameOtherManager = new SystemGameOtherManager(_gameWorld);
+                    SysGameGeneralManager = new SysGameGeneralManager(_gameWorld);
+                    SysGameMasterManager = new SysGameMasterManager(_gameWorld);
+                    SysGameOtherManager = new SysGameOtherManager(_gameWorld);
 
                     SysGameGeneralManager.ProcessInjects();
                     SysGameMasterManager.ProcessInjects();
