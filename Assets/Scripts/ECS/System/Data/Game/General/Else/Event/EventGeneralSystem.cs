@@ -46,7 +46,7 @@ namespace Assets.Scripts
         }
         private void Done()
         {
-            SelectorSystem.SelectorType = SelectorTypes.Other;
+            SelectorSystem.SelectorType = SelectorTypes.StartClick;
 
             switch (DataCommContainerElseSaver.StepModeType)
             {

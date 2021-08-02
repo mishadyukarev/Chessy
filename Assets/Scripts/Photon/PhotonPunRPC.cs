@@ -325,7 +325,7 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.SetUnit:
                     if ((bool)objects[_currentNumber++])
                     {
-                        SelectorSystem.IsStartSelectedDirect = true;
+                        SelectorSystem.SelectorType = SelectorTypes.StartClick;// IsStartSelectedDirect = true;
                         SelectorSystem.SelectedUnitType = default;
                     }
                     break;

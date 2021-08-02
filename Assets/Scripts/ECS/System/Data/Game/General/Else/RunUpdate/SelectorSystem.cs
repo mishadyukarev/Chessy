@@ -54,18 +54,18 @@ internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
         get => _selectorEnt.Get<SelectorComponent>().CanShiftUnit;
         set => _selectorEnt.Get<SelectorComponent>().CanShiftUnit = value;
     }
-    internal static bool CanExecuteStartClick
-    {
-        get => _selectorEnt.Get<SelectorComponent>().CanExecuteStartClick;
-        set => _selectorEnt.Get<SelectorComponent>().CanExecuteStartClick = value;
-    }
-    internal static bool IsStartSelectedDirect
+    //internal static bool CanExecuteStartClick
+    //{
+    //    get => _selectorEnt.Get<SelectorComponent>().CanExecuteStartClick;
+    //    set => _selectorEnt.Get<SelectorComponent>().CanExecuteStartClick = value;
+    //}
+    private static bool IsStartSelectedDirect
     {
         get => _selectorEnt.Get<SelectorComponent>().IsStartSelectedDirect;
         set => _selectorEnt.Get<SelectorComponent>().IsStartSelectedDirect = value;
     }
 
-    internal static int[] XyPreviousCell
+    private static int[] XyPreviousCell
     {
         get => _selectorEnt.Get<SelectorComponent>().XyPreviousCell;
         set => _selectorEnt.Get<SelectorComponent>().XyPreviousCell = value;
@@ -95,25 +95,20 @@ internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
 
     public void Run()
     {
-        if (RaycastGettedType == RaycastGettedTypes.UI)
+        if (InputSystem.IsClick)
         {
-            if (InputSystem.IsClick)
+            if (RaycastGettedType == RaycastGettedTypes.UI)
             {
                 CanShiftUnit = false;
-
                 ClearAvailableCells();
-
                 XyPreviousCell.Clean();
             }
-        }
 
-        else if (RaycastGettedType == RaycastGettedTypes.Cell)
-        {
-            if (InputSystem.IsClick)
+            else if (RaycastGettedType == RaycastGettedTypes.Cell)
             {
                 if (DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient))
                 {
-                    if (CanExecuteStartClick)
+                    if (SelectorType == SelectorTypes.StartClick)
                     {
                         XySelectedCell = XyCurrentCell;
 
@@ -121,7 +116,7 @@ internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
                             IsSelectedCell = true;
 
                         XyPreviousCell = XySelectedCell;
-                        CanExecuteStartClick = false;
+                        SelectorType = SelectorTypes.NotStartClick;
                     }
 
                     else
@@ -149,17 +144,17 @@ internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
                         }
                         else
                         {
-                            SelectorType = SelectorTypes.Other;
+                            SelectorType = SelectorTypes.StartClick;
                         }
                     }
 
                     else if (SelectorType == SelectorTypes.PickFire)
                     {
                         PhotonPunRPC.FireToMaster(XySelectedCell, XyCurrentCell);
-                        SelectorType = SelectorTypes.Other;
+                        SelectorType = SelectorTypes.StartClick;
                     }
 
-                    else if (CanExecuteStartClick)
+                    else if (SelectorType == SelectorTypes.StartClick)
                     {
                         XySelectedCell = XyCurrentCell;
 
@@ -191,10 +186,10 @@ internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
                             }
                         }
                         XyPreviousCell = XySelectedCell;
-                        CanExecuteStartClick = false;
+                        SelectorType = SelectorTypes.NotStartClick;
                     }
 
-                    else
+                    else if (SelectorType == SelectorTypes.NotStartClick)
                     {
                         if (!XySelectedCell.Compare(XyCurrentCell))
                             XyPreviousCell = XySelectedCell;
@@ -297,6 +292,31 @@ internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
 
             else
             {
+                CanShiftUnit = false;
+
+                IsSelectedCell = false;
+
+                ClearAvailableCells();
+
+                if (SelectedUnitType != default)
+                {
+                    CellUnitViewSystem.SetEnabledUnit(false, XyPreviousVisionCell);
+                    SelectedUnitType = default;
+                    //XyPreviousCell.Clean();
+                }
+
+                SelectorType = SelectorTypes.StartClick;
+            }
+        }
+
+        else
+        {
+            if (RaycastGettedType == RaycastGettedTypes.UI)
+            {
+            }
+
+            else if (RaycastGettedType == RaycastGettedTypes.Cell)
+            {
                 if (HaveAnySelectorUnit)
                 {
                     if (!CellUnitsDataSystem.HaveAnyUnit(XyCurrentCell) || !CellUnitsDataSystem.IsVisibleUnit(PhotonNetwork.IsMasterClient, XyCurrentCell))
@@ -319,28 +339,10 @@ internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
                     }
                 }
             }
-        }
 
-        else
-        {
-            if (InputSystem.IsClick)
+            else
             {
-                CanShiftUnit = false;
-                CanExecuteStartClick = true;
 
-                IsSelectedCell = false;
-
-                ClearAvailableCells();
-
-                if (SelectedUnitType != default)
-                {
-                    CellUnitViewSystem.SetEnabledUnit(false, XyPreviousVisionCell);
-                    SelectedUnitType = default;
-                    //XyPreviousCell.Clean();
-                }
-
-
-                SelectorType = SelectorTypes.Other;
             }
         }
     }

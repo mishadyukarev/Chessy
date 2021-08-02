@@ -56,7 +56,7 @@ internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
         {
             if (SelectorSystem.SelectorType == SelectorTypes.UpgradeUnit)
             {
-                SelectorSystem.SelectorType = SelectorTypes.Other;
+                SelectorSystem.SelectorType = SelectorTypes.StartClick;
             }
             else
             {

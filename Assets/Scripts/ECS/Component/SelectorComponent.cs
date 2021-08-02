@@ -18,7 +18,7 @@ public struct SelectorComponent
     internal bool IsActPickingFire { get; set; }
 
     internal bool CanShiftUnit { get; set; }
-    internal bool CanExecuteStartClick { get; set; }
+    //internal bool CanExecuteStartClick { get; set; }
     internal bool IsStartSelectedDirect { get; set; }
 
 
@@ -59,15 +59,15 @@ public struct SelectorComponent
         RaycastHit2D = default;
         RaycastGettedType = default;
 
-        SelectorType = SelectorTypes.Other;
+        SelectorType = SelectorTypes.StartClick;
 
         SelectedUnitType = default;
 
         IsSelectedCell = default;
         IsActPickingFire = default;
         CanShiftUnit = default;
-        CanExecuteStartClick = default;
-        IsStartSelectedDirect = default;
+        //CanExecuteStartClick = default;
+        IsStartSelectedDirect =true;
 
         _xyCurrentCell = (int[])xy.Clone();
         _xySelectedCell = (int[])xy.Clone();

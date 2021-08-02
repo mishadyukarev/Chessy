@@ -6,6 +6,7 @@
 
         UpgradeUnit,
         PickFire,
-        Other,
+        StartClick,
+        NotStartClick,
     }
 }

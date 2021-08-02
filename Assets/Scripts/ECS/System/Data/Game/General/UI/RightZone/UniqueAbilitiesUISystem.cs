@@ -107,7 +107,7 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
     {
         if (SelectorSystem.SelectorType == SelectorTypes.PickFire)
         {
-            SelectorSystem.SelectorType = SelectorTypes.Other;
+            SelectorSystem.SelectorType = SelectorTypes.StartClick;
         }
         else
         {
