@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
@@ -10,8 +11,12 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
 {
     internal sealed class CircularAttackKingSystem : IEcsRunSystem
     {
+        private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
+
         public void Run()
         {
+            ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
+
             if (CellUnitsDataSystem.HaveMaxAmountSteps(RpcMasterDataContainer.XyCellForCircularAttack))
             {
                 foreach (var xy1 in CellSpaceWorker.TryGetXyAround(RpcMasterDataContainer.XyCellForCircularAttack))
@@ -26,7 +31,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
                             var isMasterXy1 = CellUnitsDataSystem.IsMasterClient(xy1);
 
                             if (CellUnitsDataSystem.IsUnitType(UnitTypes.King, xy1)) PhotonPunRPC.EndGameToMaster(CellUnitsDataSystem.Owner(RpcMasterDataContainer.XyCellForCircularAttack).ActorNumber);
-                            InfoUnitsDataContainer.RemoveAmountUnitsInGame(unitTypeXy1, isMasterXy1, xy1);
+                            xyUnitsCom.RemoveAmountUnitsInGame(unitTypeXy1, isMasterXy1, xy1);
                             CellUnitsDataSystem.ResetUnit(xy1);
 
                         }

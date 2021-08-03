@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.ECS.System.View.Game.General.Cell;
 using Assets.Scripts.Workers;
@@ -12,11 +13,15 @@ using Photon.Pun;
 
 internal sealed class SupportVisionSystem : IEcsRunSystem
 {
-    private int[] XySelectedCell => SelectorSystem.XySelectedCell;
+    private EcsFilter<SelectorComponent> _selectorFilter;
+    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
 
     public void Run()
     {
-        if (SelectorSystem.HaveAnySelectorUnit)
+        ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
+        ref var selCom = ref _selectorFilter.Get1(0);
+
+        if (selCom.HaveAnySelectorUnit)
         {
             for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
                 for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
@@ -45,9 +50,9 @@ internal sealed class SupportVisionSystem : IEcsRunSystem
         }
 
 
-        if (SelectorSystem.SelectorType == SelectorTypes.UpgradeUnit)
+        if (selCom.SelectorType == SelectorTypes.UpgradeUnit)
         {
-            foreach (var xy in InfoUnitsDataContainer.GetLixtXyUnits(UnitTypes.Pawn, PhotonNetwork.IsMasterClient))
+            foreach (var xy in xyUnitsCom.GetLixtXyUnits(UnitTypes.Pawn, PhotonNetwork.IsMasterClient))
             {
                 if (CellUnitsDataSystem.HaveOwner(xy))
                 {
@@ -57,7 +62,7 @@ internal sealed class SupportVisionSystem : IEcsRunSystem
                     }
                 }
             }
-            foreach (var xy in InfoUnitsDataContainer.GetLixtXyUnits(UnitTypes.Rook, PhotonNetwork.IsMasterClient))
+            foreach (var xy in xyUnitsCom.GetLixtXyUnits(UnitTypes.Rook, PhotonNetwork.IsMasterClient))
             {
                 if (CellUnitsDataSystem.HaveOwner(xy))
                 {
@@ -67,7 +72,7 @@ internal sealed class SupportVisionSystem : IEcsRunSystem
                     }
                 }
             }
-            foreach (var xy in InfoUnitsDataContainer.GetLixtXyUnits(UnitTypes.Bishop, PhotonNetwork.IsMasterClient))
+            foreach (var xy in xyUnitsCom.GetLixtXyUnits(UnitTypes.Bishop, PhotonNetwork.IsMasterClient))
             {
                 if (CellUnitsDataSystem.HaveOwner(xy))
                 {
@@ -79,15 +84,15 @@ internal sealed class SupportVisionSystem : IEcsRunSystem
             }
         }
 
-        if (SelectorSystem.IsSelectedCell)
+        if (selCom.IsSelectedCell)
         {
-            CellSupViewSystem.ActiveSupVis(true, XySelectedCell);
-            CellSupViewSystem.SetColor(SupportVisionTypes.Selector, XySelectedCell);
+            CellSupViewSystem.ActiveSupVis(true, selCom.XySelectedCell);
+            CellSupViewSystem.SetColor(SupportVisionTypes.Selector, selCom.XySelectedCell);
 
 
-            if (SelectorSystem.SelectorType == SelectorTypes.PickFire)
+            if (selCom.SelectorType == SelectorTypes.PickFire)
             {
-                foreach (var xy1 in CellSpaceWorker.TryGetXyAround(XySelectedCell))
+                foreach (var xy1 in CellSpaceWorker.TryGetXyAround(selCom.XySelectedCell))
                 {
                     if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy1))
                     {

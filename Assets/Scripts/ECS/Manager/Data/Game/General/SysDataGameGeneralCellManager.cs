@@ -15,13 +15,6 @@ namespace Assets.Scripts.ECS.System.Data.Game.General.Cell
                 .Add(new CellBuildDataSystem());
         }
 
-        internal override void ProcessInjects()
-        {
-            base.ProcessInjects();
-
-            CellSystems.ProcessInjects();
-        }
-
         internal override void Init()
         {
             base.Init();

@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
@@ -10,6 +12,7 @@ using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Game.UI;
 using Assets.Scripts.Workers.Info;
 using ExitGames.Client.Photon;
+using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -437,11 +440,11 @@ namespace Assets.Scripts
 
             for (UnitTypes unitTypeType = (UnitTypes)1; (byte)unitTypeType < Enum.GetNames(typeof(UnitTypes)).Length; unitTypeType++)
             {
-                var amountUnitsInGame = InfoUnitsDataContainer.GetAmountUnitsInGame(unitTypeType, false);
+                var amountUnitsInGame = InitSystem.XyUnitsCom.GetAmountUnitsInGame(unitTypeType, false);
                 listObjects.Add(amountUnitsInGame);
                 for (int indexXy = 0; indexXy < amountUnitsInGame; indexXy++)
                 {
-                    listObjects.Add(InfoUnitsDataContainer.GetXyUnitInGame(unitTypeType, false, indexXy));
+                    listObjects.Add(InitSystem.XyUnitsCom.GetXyUnitInGame(unitTypeType, false, indexXy));
                 }
             }
 
@@ -606,7 +609,7 @@ namespace Assets.Scripts
                     var xyUnit = (int[])objects[_currentNumber++];
                     xyUnits.Add(xyUnit);
                 }
-                InfoUnitsDataContainer.SetAmountUnitInGame(unitTypeType, PhotonNetwork.IsMasterClient, xyUnits);
+                InitSystem.XyUnitsCom.SetAmountUnitInGame(unitTypeType, PhotonNetwork.IsMasterClient, xyUnits);
             }
 
 

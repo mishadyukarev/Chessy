@@ -1,17 +1,22 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.ECS.System.View.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
+using Leopotam.Ecs;
 
 internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
 {
+    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
 
     public override void Run()
     {
         base.Run();
+
+        ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
 
         for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
         {
@@ -33,7 +38,7 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                             var unitType = CellUnitsDataSystem.UnitType(xy);
                             var key = CellUnitsDataSystem.IsMasterClient(xy);
 
-                            InfoUnitsDataContainer.RemoveAmountUnitsInGame(unitType, key, xy);
+                            xyUnitsCom.RemoveAmountUnitsInGame(unitType, key, xy);
                             InfoUnitsDataContainer.RemoveUnitInCondition(conditionType, unitType, key, xy);
                             CellUnitsDataSystem.ResetUnit(xy);
                         }

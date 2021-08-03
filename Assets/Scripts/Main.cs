@@ -8,14 +8,9 @@ namespace Assets.Scripts
         private PhotonMainManager _photonManager;
         public const string VERSION_PHOTON_GAME = "0.1i";
 
-
-        #region Properties
-
         public static Main Instance { get; private set; }
-        public SceneTypes CurrentSceneType { get; private set; } = SceneTypes.Menu;
+        public SceneTypes SceneType { get; private set; } = SceneTypes.Menu;
         public ECSManager ECSmanager { get; private set; }
-
-        #endregion
 
 
         private void Start()
@@ -25,15 +20,15 @@ namespace Assets.Scripts
             ECSmanager = new ECSManager();
             _photonManager = new PhotonMainManager();
 
-            ToggleScene(CurrentSceneType);
+            ToggleScene(SceneType);
         }
 
         private void Update()
         {
-            ECSmanager.OwnUpdate(CurrentSceneType);
-            _photonManager.OwnUpdate(CurrentSceneType);
+            ECSmanager.OwnUpdate(SceneType);
+            _photonManager.OwnUpdate(SceneType);
 
-            switch (CurrentSceneType)
+            switch (SceneType)
             {
                 case SceneTypes.None:
                     throw new Exception();
@@ -49,11 +44,9 @@ namespace Assets.Scripts
             }
         }
 
-        private void OnApplicationQuit() { }
-
         public void ToggleScene(SceneTypes sceneType)
         {
-            CurrentSceneType = sceneType;
+            SceneType = sceneType;
 
             ECSmanager.ToggleScene(sceneType);
             _photonManager.ToggleScene(sceneType, ECSmanager);

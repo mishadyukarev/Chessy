@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Info;
@@ -15,7 +16,7 @@ internal sealed class CreatorUnitMasterSystem : SystemMasterReduction
         if (ResourcesUIDataContainer.CanCreateUnit(UnitType, RpcMasterDataContainer.InfoFrom.Sender, out bool[] haves))
         {
             ResourcesUIDataContainer.BuyCreateUnit(UnitType, RpcMasterDataContainer.InfoFrom.Sender);
-            InfoUnitsDataContainer.AddUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
+            InitSystem.UnitInventorCom.AddUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
 
             PhotonPunRPC.SoundToGeneral(RpcMasterDataContainer.InfoFrom.Sender, SoundEffectTypes.SoundGoldPack);
         }

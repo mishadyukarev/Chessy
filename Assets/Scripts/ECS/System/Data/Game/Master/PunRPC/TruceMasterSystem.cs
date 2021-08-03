@@ -1,17 +1,24 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Game.UI;
+using Leopotam.Ecs;
 using Photon.Pun;
 using UnityEngine;
 
 internal sealed class TruceMasterSystem : SystemMasterReduction
 {
+    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
+
     public override void Run()
     {
         base.Run();
+
+        ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
 
         int random;
 
@@ -30,10 +37,10 @@ internal sealed class TruceMasterSystem : SystemMasterReduction
                     {
                         var isMasterKey = CellUnitsDataSystem.IsMasterClient(xy);
 
-                        InfoUnitsDataContainer.AddUnitsInInventor(unitType, isMasterKey);
+                        InitSystem.UnitInventorCom.AddUnitsInInventor(unitType, isMasterKey);
 
                         InfoUnitsDataContainer.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(xy), unitType, isMasterKey, xy);
-                        InfoUnitsDataContainer.RemoveAmountUnitsInGame(unitType, isMasterKey, xy);
+                        xyUnitsCom.RemoveAmountUnitsInGame(unitType, isMasterKey, xy);
 
                         CellUnitsDataSystem.ResetUnit(xy);
                     }
@@ -83,16 +90,16 @@ internal sealed class TruceMasterSystem : SystemMasterReduction
         //InfoResourcesWorker.AddAmountResources(ResourceTypes.Wood, false, 0);
 
 
-        if (InfoUnitsDataContainer.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0
-            && InfoUnitsDataContainer.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0)
+        if (xyUnitsCom.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0
+            && xyUnitsCom.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0)
         {
-            InfoUnitsDataContainer.AddUnitsInInventor(UnitTypes.Pawn, true);
+            InitSystem.UnitInventorCom.AddUnitsInInventor(UnitTypes.Pawn, true);
         }
 
-        if (InfoUnitsDataContainer.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0
-            && InfoUnitsDataContainer.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0)
+        if (xyUnitsCom.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0
+            && xyUnitsCom.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0)
         {
-            InfoUnitsDataContainer.AddUnitsInInventor(UnitTypes.Pawn, false);
+            InitSystem.UnitInventorCom.AddUnitsInInventor(UnitTypes.Pawn, false);
         }
 
         PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, Main.Instance.ECSmanager.EntViewGameGeneralUIManager.MotionEnt_AmountCom.AmountMotions);

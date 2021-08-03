@@ -18,12 +18,11 @@ public struct SelectorComponent
     internal bool IsActPickingFire { get; set; }
 
     internal bool CanShiftUnit { get; set; }
-    //internal bool CanExecuteStartClick { get; set; }
     internal bool IsStartSelectedDirect { get; set; }
 
 
     private int[] _xyCurrentCell;
-    internal int[] XyCurrenCell
+    internal int[] XyCurrentCell
     {
         get => (int[])_xyCurrentCell.Clone();
         set => _xyCurrentCell = (int[])value.Clone();
@@ -66,7 +65,6 @@ public struct SelectorComponent
         IsSelectedCell = default;
         IsActPickingFire = default;
         CanShiftUnit = default;
-        //CanExecuteStartClick = default;
         IsStartSelectedDirect =true;
 
         _xyCurrentCell = (int[])xy.Clone();

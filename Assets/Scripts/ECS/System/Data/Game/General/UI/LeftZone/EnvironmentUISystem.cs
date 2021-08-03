@@ -10,13 +10,13 @@ using UnityEngine;
 
 internal sealed class EnvironmentUISystem : IEcsRunSystem
 {
-    private int[] XySelectedCell => SelectorSystem.XySelectedCell;
-
+    private EcsFilter<SelectorComponent> _selectorFilter;
 
     public void Run()
     {
+        ref var selCom = ref _selectorFilter.Get1(0);
 
-        if (SelectorSystem.IsSelectedCell && !CellBuildDataSystem.BuildTypeCom(XySelectedCell).Is(BuildingTypes.City))
+        if (selCom.IsSelectedCell && !CellBuildDataSystem.BuildTypeCom(selCom.XySelectedCell).Is(BuildingTypes.City))
         {
             EnvirZoneLeftUIViewContainer.SetActiveZone(true);
         }
@@ -25,9 +25,9 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
             EnvirZoneLeftUIViewContainer.SetActiveZone(false);
         }
 
-        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Fertilizer, "Fertilizer: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Fertilizer, XySelectedCell));
-        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Wood, "Wood: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.AdultForest, XySelectedCell));
-        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Ore, "Ore: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Hill, XySelectedCell));
+        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Fertilizer, "Fertilizer: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Fertilizer, selCom.XySelectedCell));
+        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Wood, "Wood: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.AdultForest, selCom.XySelectedCell));
+        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Ore, "Ore: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Hill, selCom.XySelectedCell));
 
 
 

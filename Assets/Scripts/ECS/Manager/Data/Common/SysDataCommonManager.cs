@@ -10,12 +10,6 @@ namespace Assets.Scripts.ECS.System.Common
             RunUpdateSystems.Add(new SyncComDataSystem());
         }
 
-        internal override void ProcessInjects()
-        {
-            base.ProcessInjects();
-
-        }
-
         internal override void Init()
         {
             base.Init();

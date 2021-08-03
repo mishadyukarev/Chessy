@@ -1,13 +1,17 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
+using Leopotam.Ecs;
 using Photon.Pun;
 using static Assets.Scripts.Workers.CellBaseOperations;
 
 internal sealed class AttackUnitMasterSystem : SystemMasterReduction
 {
+    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
+
     private bool _isAttacked;
 
     internal int[] FromXy => _eMM.AttackEnt_FromToXyCom.FromXy;
@@ -17,6 +21,9 @@ internal sealed class AttackUnitMasterSystem : SystemMasterReduction
     public override void Run()
     {
         base.Run();
+
+        ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
+
 
         CellUnitsDataSystem.GetCellsForAttack(RpcMasterDataContainer.InfoFrom.Sender,
             out var availableCellsSimpleAttack, out var availableCellsUniqueAttack, FromXy);
@@ -85,13 +92,13 @@ internal sealed class AttackUnitMasterSystem : SystemMasterReduction
 
                 var isMasterFromUnit = CellUnitsDataSystem.IsMasterClient(FromXy);
 
-                InfoUnitsDataContainer.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(FromXy), isMasterFromUnit, FromXy);
+                xyUnitsCom.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(FromXy), isMasterFromUnit, FromXy);
                 InfoUnitsDataContainer.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(FromXy), CellUnitsDataSystem.UnitType(FromXy), isMasterFromUnit, FromXy);
                 CellUnitsDataSystem.ResetUnit(FromXy);
 
                 if (CellUnitsDataSystem.HaveOwner(FromXy))
                 {
-                    InfoUnitsDataContainer.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), FromXy);
+                    xyUnitsCom.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), FromXy);
                 }
             }
 
@@ -102,14 +109,14 @@ internal sealed class AttackUnitMasterSystem : SystemMasterReduction
 
                 var isMasterToUnit = CellUnitsDataSystem.IsMasterClient(ToXy);
 
-                InfoUnitsDataContainer.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(ToXy), isMasterToUnit, ToXy);
+                xyUnitsCom.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(ToXy), isMasterToUnit, ToXy);
                 InfoUnitsDataContainer.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(ToXy), CellUnitsDataSystem.UnitType(ToXy), isMasterToUnit, ToXy);
                 CellUnitsDataSystem.ResetUnit(ToXy);
 
                 if (CellUnitsDataSystem.IsMelee(FromXy))
                 {
-                    InfoUnitsDataContainer.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), FromXy);
-                    InfoUnitsDataContainer.AddAmountUnitInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), ToXy);
+                    xyUnitsCom.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), FromXy);
+                    xyUnitsCom.AddAmountUnitInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), ToXy);
                     CellUnitsDataSystem.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
                 }
             }

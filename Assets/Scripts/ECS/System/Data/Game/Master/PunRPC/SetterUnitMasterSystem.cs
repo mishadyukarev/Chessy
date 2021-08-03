@@ -1,19 +1,26 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else.Cell;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
+using Leopotam.Ecs;
 using System;
 
 internal sealed class SetterUnitMasterSystem : SystemMasterReduction
 {
+    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
+
     internal UnitTypes UnitType => _eMM.SettingUnitEnt_UnitTypeCom.UnitType;
     private int[] XyCell => _eMM.SettingUnitEnt_XyCellCom.XyCell;
 
     public override void Run()
     {
         base.Run();
+
+        ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
 
         if (!CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Mountain, XyCell) && !CellUnitsDataSystem.HaveAnyUnit(XyCell)
             && InfoCellWorker.IsStartedCell(RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell))
@@ -27,36 +34,36 @@ internal sealed class SetterUnitMasterSystem : SystemMasterReduction
                 case UnitTypes.King:
                     InfoUnitsDataContainer.AddUnitInCondition(ConditionUnitTypes.None, UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    InfoUnitsDataContainer.AddAmountUnitInGame(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
+                    xyUnitsCom.AddAmountUnitInGame(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataSystem.SetNewPlayerUnit(UnitType, RpcMasterDataContainer.InfoFrom.Sender, XyCell);
-                    InfoUnitsDataContainer.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
+                    InitSystem.UnitInventorCom.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.Pawn:
                     InfoUnitsDataContainer.AddUnitInCondition(ConditionUnitTypes.None, UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    InfoUnitsDataContainer.AddAmountUnitInGame(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
+                    xyUnitsCom.AddAmountUnitInGame(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataSystem.SetNewPlayerUnit(UnitType, RpcMasterDataContainer.InfoFrom.Sender, XyCell);
-                    InfoUnitsDataContainer.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
+                    InitSystem.UnitInventorCom.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.PawnSword:
                     InfoUnitsDataContainer.AddUnitInCondition(ConditionUnitTypes.None, UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    InfoUnitsDataContainer.AddAmountUnitInGame(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
+                    xyUnitsCom.AddAmountUnitInGame(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataSystem.SetNewPlayerUnit(UnitType, RpcMasterDataContainer.InfoFrom.Sender, XyCell);
-                    InfoUnitsDataContainer.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
+                    InitSystem.UnitInventorCom.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.Rook:
                     InfoUnitsDataContainer.AddUnitInCondition(ConditionUnitTypes.None, UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    InfoUnitsDataContainer.AddAmountUnitInGame(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
+                    xyUnitsCom.AddAmountUnitInGame(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataSystem.SetNewPlayerUnit(UnitType, RpcMasterDataContainer.InfoFrom.Sender, XyCell);
-                    InfoUnitsDataContainer.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
+                    InitSystem.UnitInventorCom.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
                     break;
 
 
@@ -64,25 +71,25 @@ internal sealed class SetterUnitMasterSystem : SystemMasterReduction
                     InfoUnitsDataContainer.AddUnitInCondition(ConditionUnitTypes.None, UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
 
                     CellUnitsDataSystem.SetNewPlayerUnit(UnitType, RpcMasterDataContainer.InfoFrom.Sender, XyCell);
-                    InfoUnitsDataContainer.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
+                    InitSystem.UnitInventorCom.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.Bishop:
                     InfoUnitsDataContainer.AddUnitInCondition(ConditionUnitTypes.None, UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    InfoUnitsDataContainer.AddAmountUnitInGame(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
+                    xyUnitsCom.AddAmountUnitInGame(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataSystem.SetNewPlayerUnit(UnitType, RpcMasterDataContainer.InfoFrom.Sender, XyCell);
-                    InfoUnitsDataContainer.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
+                    InitSystem.UnitInventorCom.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
                     break;
 
 
                 case UnitTypes.BishopCrossbow:
                     InfoUnitsDataContainer.AddUnitInCondition(ConditionUnitTypes.None, UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
 
-                    InfoUnitsDataContainer.AddAmountUnitInGame(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
+                    xyUnitsCom.AddAmountUnitInGame(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCell);
                     CellUnitsDataSystem.SetNewPlayerUnit(UnitType, RpcMasterDataContainer.InfoFrom.Sender, XyCell);
-                    InfoUnitsDataContainer.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
+                    InitSystem.UnitInventorCom.TakeUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
                     break;
 
                 default:

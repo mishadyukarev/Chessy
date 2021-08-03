@@ -45,16 +45,6 @@ public sealed class SysGameMasterManager : SystemAbstManager
 
     }
 
-    internal override void ProcessInjects()
-    {
-        base.ProcessInjects();
-
-        RpcSystems.ProcessInjects();
-        VisibilityUnitsSystems.ProcessInjects();
-        UpdateMotion.ProcessInjects();
-        CircularAttackKingSystems.ProcessInjects();
-    }
-
     internal override void Init()
     {
         base.Init();

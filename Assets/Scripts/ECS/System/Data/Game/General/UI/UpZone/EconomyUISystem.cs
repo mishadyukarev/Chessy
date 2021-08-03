@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else.Economy;
@@ -10,8 +11,12 @@ using Photon.Pun;
 
 internal sealed class EconomyUISystem : IEcsRunSystem
 {
+    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
+
     public void Run()
     {
+        ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
+
         var isMasterClient = PhotonNetwork.IsMasterClient;
 
         var amountFarm = InfoBuidlingsDataContainer.GetAmountBuild(BuildingTypes.Farm, isMasterClient);
@@ -19,7 +24,7 @@ internal sealed class EconomyUISystem : IEcsRunSystem
         var extractionOneFarm = InfoExtractionWorker.GetExtractionOneBuilding(BuildingTypes.Farm, amountUpgradesFarm);
 
         var amountAddingFood = 1 + amountFarm * extractionOneFarm
-            - InfoUnitsDataContainer.GetAmountUnitsInGame(isMasterClient, new UnitTypes[]
+            - xyUnitsCom.GetAmountUnitsInGame(isMasterClient, new UnitTypes[]
             {
                 UnitTypes.Pawn, UnitTypes.PawnSword,
                 UnitTypes.Rook, UnitTypes.RookCrossbow,

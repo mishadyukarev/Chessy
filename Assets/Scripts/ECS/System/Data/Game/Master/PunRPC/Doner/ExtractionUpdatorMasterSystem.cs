@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else.Economy;
@@ -10,8 +11,12 @@ using System;
 
 internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
 {
+    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
+
+
     public void Run()
     {
+        ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
 
         int minus;
         bool isMasterKey;
@@ -182,7 +187,7 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
                 }
             }
 
-            var amountUnits = InfoUnitsDataContainer.GetAmountUnitsInGame(isMasterKey, new[]
+            var amountUnits = xyUnitsCom.GetAmountUnitsInGame(isMasterKey, new[]
             {
                 UnitTypes.Pawn, UnitTypes.PawnSword,
                 UnitTypes.Rook, UnitTypes.RookCrossbow,
@@ -195,25 +200,27 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
 
 
 
-        TryRemoveUnit(true);
-        TryRemoveUnit(false);
+
+
+        TryRemoveUnit(true, ref xyUnitsCom);
+        TryRemoveUnit(false, ref xyUnitsCom);
     }
 
 
-    private void TryRemoveUnit(bool isMaster)
+    private void TryRemoveUnit(bool isMaster, ref XyUnitsComponent xyUnitsCom)
     {
         if (ResourcesUIDataContainer.GetAmountResources(ResourceTypes.Food, isMaster) < 0)
         {
             for (UnitTypes unitType = (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length - 1; unitType != UnitTypes.None; unitType--)
             {
-                var amountUnits = InfoUnitsDataContainer.GetAmountUnitsInGame(unitType, isMaster);
+                var amountUnits = xyUnitsCom.GetAmountUnitsInGame(unitType, isMaster);
 
                 if (amountUnits > 0)
                 {
-                    var xyUnit = InfoUnitsDataContainer.GetXyUnitInGame(unitType, isMaster, amountUnits - 1);
+                    var xyUnit = xyUnitsCom.GetXyUnitInGame(unitType, isMaster, amountUnits - 1);
 
 
-                    InfoUnitsDataContainer.RemoveAmountUnitsInGame(unitType, isMaster, xyUnit);
+                    xyUnitsCom.RemoveAmountUnitsInGame(unitType, isMaster, xyUnit);
                     InfoUnitsDataContainer.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(xyUnit), unitType, isMaster, xyUnit);
 
                     CellUnitsDataSystem.ResetUnit(xyUnit);

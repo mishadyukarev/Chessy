@@ -1,13 +1,17 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Info;
+using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
     internal class UpgradeMasterSystem : SystemMasterReduction
     {
+        private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
+
         private const byte FOR_NEXT_UPGRADE = 1;
 
         private UpgradeModTypes UpgradeModType => _eMM.UpgradeEnt_UpgradeTypeCom.UpgradeModType;
@@ -22,6 +26,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         public override void Run()
         {
             base.Run();
+
+            ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
 
             bool[] haves;
 
@@ -48,7 +54,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                     var preMaxHealth = CellUnitsDataSystem.MaxAmountHealth(preUnitType);
 
                                     InfoUnitsDataContainer.RemoveUnitInCondition(preConditionType, preUnitType, preKey, XyCellForUpgrade);
-                                    InfoUnitsDataContainer.RemoveAmountUnitsInGame(preUnitType, preKey, XyCellForUpgrade);
+                                    xyUnitsCom.RemoveAmountUnitsInGame(preUnitType, preKey, XyCellForUpgrade);
 
 
                                     CellUnitsDataSystem.SetUnitType(NeededUnitTypeForUpgrade, XyCellForUpgrade);
@@ -58,7 +64,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                                     CellUnitsDataSystem.AddAmountHealth(XyCellForUpgrade, newMaxHealth - preMaxHealth);
 
-                                    InfoUnitsDataContainer.AddAmountUnitInGame(newUnitType, preKey, XyCellForUpgrade);
+                                    xyUnitsCom.AddAmountUnitInGame(newUnitType, preKey, XyCellForUpgrade);
                                     InfoUnitsDataContainer.AddUnitInCondition(preConditionType, newUnitType, preKey, XyCellForUpgrade);
 
 

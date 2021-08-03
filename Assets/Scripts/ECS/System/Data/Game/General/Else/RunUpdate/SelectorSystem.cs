@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.ECS.System.View.Game.General.Cell;
 using Assets.Scripts.Workers;
@@ -8,166 +7,122 @@ using Assets.Scripts.Workers.Game.Else;
 using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 using Photon.Pun;
-using UnityEngine;
 
 internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
 {
-    private EcsWorld _currentWorld;
+    private EcsWorld _world;
 
+    private EcsFilter<SelectorComponent> _selectorFilter;
 
-    private static EcsEntity _selectorEnt;
-
+    private static EcsEntity _selEnt;
 
     internal static SelectorTypes SelectorType
     {
-        get => _selectorEnt.Get<SelectorComponent>().SelectorType;
-        set => _selectorEnt.Get<SelectorComponent>().SelectorType = value;
+        get => _selEnt.Get<SelectorComponent>().SelectorType;
+        set => _selEnt.Get<SelectorComponent>().SelectorType = value;
     }
 
     internal static UnitTypes SelectedUnitType
     {
-        get => _selectorEnt.Get<SelectorComponent>().SelectedUnitType;
-        set => _selectorEnt.Get<SelectorComponent>().SelectedUnitType = value;
+        get => _selEnt.Get<SelectorComponent>().SelectedUnitType;
+        set => _selEnt.Get<SelectorComponent>().SelectedUnitType = value;
     }
-    internal static bool HaveAnySelectorUnit => SelectedUnitType != UnitTypes.None;
-
 
     internal static bool IsSelectedCell
     {
-        get => _selectorEnt.Get<SelectorComponent>().IsSelectedCell;
-        set => _selectorEnt.Get<SelectorComponent>().IsSelectedCell = value;
-    }
-
-    internal static RaycastHit2D RaycastHit2D
-    {
-        get => _selectorEnt.Get<SelectorComponent>().RaycastHit2D;
-        set => _selectorEnt.Get<SelectorComponent>().RaycastHit2D = value;
-    }
-    internal static RaycastGettedTypes RaycastGettedType
-    {
-        get => _selectorEnt.Get<SelectorComponent>().RaycastGettedType;
-        set => _selectorEnt.Get<SelectorComponent>().RaycastGettedType = value;
-    }
-
-    internal static bool CanShiftUnit
-    {
-        get => _selectorEnt.Get<SelectorComponent>().CanShiftUnit;
-        set => _selectorEnt.Get<SelectorComponent>().CanShiftUnit = value;
-    }
-    //internal static bool CanExecuteStartClick
-    //{
-    //    get => _selectorEnt.Get<SelectorComponent>().CanExecuteStartClick;
-    //    set => _selectorEnt.Get<SelectorComponent>().CanExecuteStartClick = value;
-    //}
-    private static bool IsStartSelectedDirect
-    {
-        get => _selectorEnt.Get<SelectorComponent>().IsStartSelectedDirect;
-        set => _selectorEnt.Get<SelectorComponent>().IsStartSelectedDirect = value;
-    }
-
-    private static int[] XyPreviousCell
-    {
-        get => _selectorEnt.Get<SelectorComponent>().XyPreviousCell;
-        set => _selectorEnt.Get<SelectorComponent>().XyPreviousCell = value;
+        get => _selEnt.Get<SelectorComponent>().IsSelectedCell;
+        set => _selEnt.Get<SelectorComponent>().IsSelectedCell = value;
     }
     internal static int[] XySelectedCell
     {
-        get => _selectorEnt.Get<SelectorComponent>().XySelectedCell; 
-        set => _selectorEnt.Get<SelectorComponent>().XySelectedCell = value;
+        get => _selEnt.Get<SelectorComponent>().XySelectedCell;
+        set => _selEnt.Get<SelectorComponent>().XySelectedCell = value;
     }
-    private static int[] XyCurrentCell
-    {
-        get => _selectorEnt.Get<SelectorComponent>().XyCurrenCell;
-        set => _selectorEnt.Get<SelectorComponent>().XyCurrenCell = value;
-    }
-    private int[] XyPreviousVisionCell
-    {
-        get => _selectorEnt.Get<SelectorComponent>().XyPreviousVisionCell;
-        set => _selectorEnt.Get<SelectorComponent>().XyPreviousVisionCell = value;
-    }
+
 
     public void Init()
     {
-        _selectorEnt = _currentWorld.NewEntity()
-            .Replace(new SelectorComponent(new int[2]))
-            .Replace(new UnitTypeComponent());
+        _selEnt = _world.NewEntity()
+            .Replace(new SelectorComponent(new int[2]));
     }
 
     public void Run()
     {
+        ref var selectorCom = ref _selectorFilter.Get1(0);
+
         if (InputSystem.IsClick)
         {
-            if (RaycastGettedType == RaycastGettedTypes.UI)
+            if (selectorCom.RaycastGettedType == RaycastGettedTypes.UI)
             {
-                CanShiftUnit = false;
+                selectorCom.CanShiftUnit = false;
                 ClearAvailableCells();
-                XyPreviousCell.Clean();
+                selectorCom.XyPreviousCell.Clean();
             }
 
-            else if (RaycastGettedType == RaycastGettedTypes.Cell)
+            else if (selectorCom.RaycastGettedType == RaycastGettedTypes.Cell)
             {
                 if (DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient))
                 {
-                    if (SelectorType == SelectorTypes.StartClick)
+                    if (selectorCom.SelectorType == SelectorTypes.StartClick)
                     {
-                        XySelectedCell = XyCurrentCell;
+                        selectorCom.XySelectedCell = selectorCom.XyCurrentCell;
 
-                        if (!XyPreviousCell.Compare(XySelectedCell))
-                            IsSelectedCell = true;
+                        if (!selectorCom.XyPreviousCell.Compare(selectorCom.XySelectedCell))
+                            selectorCom.IsSelectedCell = true;
 
-                        XyPreviousCell = XySelectedCell;
-                        SelectorType = SelectorTypes.NotStartClick;
+                        selectorCom.XyPreviousCell = selectorCom.XySelectedCell;
+                        selectorCom.SelectorType = SelectorTypes.NotStartClick;
                     }
 
                     else
                     {
-                        if (!XySelectedCell.Compare(XyCurrentCell))
-                            XyPreviousCell = XySelectedCell;
+                        if (!selectorCom.XySelectedCell.Compare(selectorCom.XyCurrentCell))
+                            selectorCom.XyPreviousCell = selectorCom.XySelectedCell;
 
-                        XySelectedCell = XyCurrentCell;
-                        IsSelectedCell = true;
+                        selectorCom.XySelectedCell = selectorCom.XyCurrentCell;
+                        selectorCom.IsSelectedCell = true;
                     }
                 }
 
                 else
                 {
-                    if (HaveAnySelectorUnit)
+                    if (selectorCom.HaveAnySelectorUnit)
                     {
-                        PhotonPunRPC.SetUniToMaster(XyCurrentCell, SelectedUnitType);
+                        PhotonPunRPC.SetUniToMaster(selectorCom.XyCurrentCell, selectorCom.SelectedUnitType);
                     }
 
-                    else if (SelectorType == SelectorTypes.UpgradeUnit)
+                    else if (selectorCom.SelectorType == SelectorTypes.UpgradeUnit)
                     {
-                        if (CellUnitsDataSystem.HaveAnyUnit(XyCurrentCell))
+                        if (CellUnitsDataSystem.HaveAnyUnit(selectorCom.XyCurrentCell))
                         {
-                            PhotonPunRPC.UpgradeUnitToMaster(XyCurrentCell);
+                            PhotonPunRPC.UpgradeUnitToMaster(selectorCom.XyCurrentCell);
                         }
                         else
                         {
-                            SelectorType = SelectorTypes.StartClick;
+                            selectorCom.SelectorType = SelectorTypes.StartClick;
                         }
                     }
 
-                    else if (SelectorType == SelectorTypes.PickFire)
+                    else if (selectorCom.SelectorType == SelectorTypes.PickFire)
                     {
-                        PhotonPunRPC.FireToMaster(XySelectedCell, XyCurrentCell);
-                        SelectorType = SelectorTypes.StartClick;
+                        PhotonPunRPC.FireToMaster(selectorCom.XySelectedCell, selectorCom.XyCurrentCell);
+                        selectorCom.SelectorType = SelectorTypes.StartClick;
                     }
 
-                    else if (SelectorType == SelectorTypes.StartClick)
+                    else if (selectorCom.SelectorType == SelectorTypes.StartClick)
                     {
-                        XySelectedCell = XyCurrentCell;
+                        selectorCom.XySelectedCell = selectorCom.XyCurrentCell;
 
-                        if (!XyPreviousCell.Compare(XySelectedCell))
-                            IsSelectedCell = true;
+                        if (!selectorCom.XyPreviousCell.Compare(selectorCom.XySelectedCell))
+                            selectorCom.IsSelectedCell = true;
 
-                        if (CellUnitsDataSystem.HaveAnyUnit(XySelectedCell))
+                        if (CellUnitsDataSystem.HaveAnyUnit(selectorCom.XySelectedCell))
                         {
-                            if (CellUnitsDataSystem.HaveOwner(XySelectedCell))
+                            if (CellUnitsDataSystem.HaveOwner(selectorCom.XySelectedCell))
                             {
-                                if (CellUnitsDataSystem.IsMine(XySelectedCell))
+                                if (CellUnitsDataSystem.IsMine(selectorCom.XySelectedCell))
                                 {
-                                    if (CellUnitsDataSystem.IsMelee(XySelectedCell))
+                                    if (CellUnitsDataSystem.IsMelee(selectorCom.XySelectedCell))
                                     {
                                         SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickMelee);
                                     }
@@ -176,36 +131,40 @@ internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
                                         SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickArcher);
                                     }
 
-                                    if (CellUnitsDataSystem.HaveMinAmountSteps(XySelectedCell))
+                                    if (CellUnitsDataSystem.HaveMinAmountSteps(selectorCom.XySelectedCell))
                                     {
-                                        GetCells();
+                                        AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.Shift, CellUnitsDataSystem.GetCellsForShift(selectorCom.XySelectedCell));
 
-                                        CanShiftUnit = true;
+                                        CellUnitsDataSystem.GetCellsForAttack(PhotonNetwork.LocalPlayer, out var availableCellsSimpleAttack, out var availableCellsUniqueAttack, selectorCom.XySelectedCell);
+                                        AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.SimpleAttack, availableCellsSimpleAttack);
+                                        AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.UniqueAttack, availableCellsUniqueAttack);
+
+                                        selectorCom.CanShiftUnit = true;
                                     }
                                 }
                             }
                         }
-                        XyPreviousCell = XySelectedCell;
-                        SelectorType = SelectorTypes.NotStartClick;
+                        selectorCom.XyPreviousCell = selectorCom.XySelectedCell;
+                        selectorCom.SelectorType = SelectorTypes.NotStartClick;
                     }
 
-                    else if (SelectorType == SelectorTypes.NotStartClick)
+                    else if (selectorCom.SelectorType == SelectorTypes.NotStartClick)
                     {
-                        if (!XySelectedCell.Compare(XyCurrentCell))
-                            XyPreviousCell = XySelectedCell;
+                        if (!selectorCom.XySelectedCell.Compare(selectorCom.XyCurrentCell))
+                            selectorCom.XyPreviousCell = selectorCom.XySelectedCell;
 
 
-                        XySelectedCell = XyCurrentCell;
-                        IsSelectedCell = true;
+                        selectorCom.XySelectedCell = selectorCom.XyCurrentCell;
+                        selectorCom.IsSelectedCell = true;
 
 
-                        if (CellUnitsDataSystem.HaveAnyUnit(XySelectedCell))
+                        if (CellUnitsDataSystem.HaveAnyUnit(selectorCom.XySelectedCell))
                         {
-                            if (CellUnitsDataSystem.HaveOwner(XySelectedCell))
+                            if (CellUnitsDataSystem.HaveOwner(selectorCom.XySelectedCell))
                             {
-                                if (CellUnitsDataSystem.IsMine(XySelectedCell))
+                                if (CellUnitsDataSystem.IsMine(selectorCom.XySelectedCell))
                                 {
-                                    if (CellUnitsDataSystem.IsMelee(XySelectedCell))
+                                    if (CellUnitsDataSystem.IsMelee(selectorCom.XySelectedCell))
                                     {
                                         SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickMelee);
                                     }
@@ -214,48 +173,52 @@ internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
                                         SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickArcher);
                                     }
 
-                                    if (CellUnitsDataSystem.HaveMinAmountSteps(XySelectedCell))
+                                    if (CellUnitsDataSystem.HaveMinAmountSteps(selectorCom.XySelectedCell))
                                     {
-                                        GetCells();
+                                        AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.Shift, CellUnitsDataSystem.GetCellsForShift(selectorCom.XySelectedCell));
 
-                                        CanShiftUnit = true;
+                                        CellUnitsDataSystem.GetCellsForAttack(PhotonNetwork.LocalPlayer, out var availableCellsSimpleAttack, out var availableCellsUniqueAttack, selectorCom.XySelectedCell);
+                                        AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.SimpleAttack, availableCellsSimpleAttack);
+                                        AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.UniqueAttack, availableCellsUniqueAttack);
+
+                                        selectorCom.CanShiftUnit = true;
                                     }
 
                                     else
                                     {
                                         ClearAvailableCells();
-                                        CanShiftUnit = false;
+                                        selectorCom.CanShiftUnit = false;
                                     }
                                 }
 
                                 else
                                 {
-                                    CanShiftUnit = false;
+                                    selectorCom.CanShiftUnit = false;
 
-                                    if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.SimpleAttack, XySelectedCell))
+                                    if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.SimpleAttack, selectorCom.XySelectedCell))
                                     {
-                                        PhotonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
+                                        PhotonPunRPC.AttackUnitToMaster(selectorCom.XyPreviousCell, selectorCom.XySelectedCell);
                                     }
 
-                                    else if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.UniqueAttack, XySelectedCell))
+                                    else if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.UniqueAttack, selectorCom.XySelectedCell))
                                     {
-                                        PhotonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
+                                        PhotonPunRPC.AttackUnitToMaster(selectorCom.XyPreviousCell, selectorCom.XySelectedCell);
                                     }
 
                                     ClearAvailableCells();
                                 }
                             }
 
-                            else if (CellUnitsDataSystem.IsBot(XySelectedCell))
+                            else if (CellUnitsDataSystem.IsBot(selectorCom.XySelectedCell))
                             {
-                                if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.SimpleAttack, XySelectedCell))
+                                if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.SimpleAttack, selectorCom.XySelectedCell))
                                 {
-                                    PhotonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
+                                    PhotonPunRPC.AttackUnitToMaster(selectorCom.XyPreviousCell, selectorCom.XySelectedCell);
                                 }
 
-                                else if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.UniqueAttack, XySelectedCell))
+                                else if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.UniqueAttack, selectorCom.XySelectedCell))
                                 {
-                                    PhotonPunRPC.AttackUnitToMaster(XyPreviousCell, XySelectedCell);
+                                    PhotonPunRPC.AttackUnitToMaster(selectorCom.XyPreviousCell, selectorCom.XySelectedCell);
                                 }
 
                                 ClearAvailableCells();
@@ -264,26 +227,26 @@ internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
 
                         else
                         {
-                            if (CanShiftUnit)
+                            if (selectorCom.CanShiftUnit)
                             {
-                                if (CellUnitsDataSystem.HaveAnyUnit(XyPreviousCell))
+                                if (CellUnitsDataSystem.HaveAnyUnit(selectorCom.XyPreviousCell))
                                 {
-                                    if (CellUnitsDataSystem.HaveOwner(XyPreviousCell))
+                                    if (CellUnitsDataSystem.HaveOwner(selectorCom.XyPreviousCell))
                                     {
-                                        if (CellUnitsDataSystem.IsMine(XyPreviousCell))
+                                        if (CellUnitsDataSystem.IsMine(selectorCom.XyPreviousCell))
                                         {
-                                            if (CellUnitsDataSystem.HaveMinAmountSteps(XyPreviousCell))
+                                            if (CellUnitsDataSystem.HaveMinAmountSteps(selectorCom.XyPreviousCell))
                                             {
-                                                if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.Shift, XySelectedCell))
+                                                if (AvailableCellsContainer.TryFindCell(AvailableCellTypes.Shift, selectorCom.XySelectedCell))
                                                 {
-                                                    PhotonPunRPC.ShiftUnitToMaster(XyPreviousCell, XySelectedCell);
+                                                    PhotonPunRPC.ShiftUnitToMaster(selectorCom.XyPreviousCell, selectorCom.XySelectedCell);
                                                 }
                                             }
                                         }
                                     }
                                 }
                                 ClearAvailableCells();
-                                CanShiftUnit = false;
+                                selectorCom.CanShiftUnit = false;
                             }
                         }
                     }
@@ -292,49 +255,49 @@ internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
 
             else
             {
-                CanShiftUnit = false;
+                selectorCom.CanShiftUnit = false;
 
-                IsSelectedCell = false;
+                selectorCom.IsSelectedCell = false;
 
                 ClearAvailableCells();
 
-                if (SelectedUnitType != default)
+                if (selectorCom.SelectedUnitType != default)
                 {
-                    CellUnitViewSystem.SetEnabledUnit(false, XyPreviousVisionCell);
-                    SelectedUnitType = default;
-                    //XyPreviousCell.Clean();
+                    CellUnitViewSystem.SetEnabledUnit(false, selectorCom.XyPreviousVisionCell);
+                    selectorCom.SelectedUnitType = default;
+                    //selectorCom.XyPreviousCell.Clean();
                 }
 
-                SelectorType = SelectorTypes.StartClick;
+                selectorCom.SelectorType = SelectorTypes.StartClick;
             }
         }
 
         else
         {
-            if (RaycastGettedType == RaycastGettedTypes.UI)
+            if (selectorCom.RaycastGettedType == RaycastGettedTypes.UI)
             {
             }
 
-            else if (RaycastGettedType == RaycastGettedTypes.Cell)
+            else if (selectorCom.RaycastGettedType == RaycastGettedTypes.Cell)
             {
-                if (HaveAnySelectorUnit)
+                if (selectorCom.HaveAnySelectorUnit)
                 {
-                    if (!CellUnitsDataSystem.HaveAnyUnit(XyCurrentCell) || !CellUnitsDataSystem.IsVisibleUnit(PhotonNetwork.IsMasterClient, XyCurrentCell))
+                    if (!CellUnitsDataSystem.HaveAnyUnit(selectorCom.XyCurrentCell) || !CellUnitsDataSystem.IsVisibleUnit(PhotonNetwork.IsMasterClient, selectorCom.XyCurrentCell))
                     {
-                        if (IsStartSelectedDirect)
+                        if (selectorCom.IsStartSelectedDirect)
                         {
-                            if (!CellUnitsDataSystem.HaveAnyUnit(XyCurrentCell))
-                                CellUnitViewSystem.ActiveSelectorVisionUnit(true, SelectedUnitType, XyCurrentCell);
+                            if (!CellUnitsDataSystem.HaveAnyUnit(selectorCom.XyCurrentCell))
+                                CellUnitViewSystem.ActiveSelectorVisionUnit(true, selectorCom.SelectedUnitType, selectorCom.XyCurrentCell);
 
-                            XyPreviousVisionCell = XyCurrentCell;
-                            IsStartSelectedDirect = false;
+                            selectorCom.XyPreviousVisionCell = selectorCom.XyCurrentCell;
+                            selectorCom.IsStartSelectedDirect = false;
                         }
                         else
                         {
-                            CellUnitViewSystem.ActiveSelectorVisionUnit(false, SelectedUnitType, XyPreviousVisionCell);
-                            CellUnitViewSystem.ActiveSelectorVisionUnit(true, SelectedUnitType, XyCurrentCell);
+                            CellUnitViewSystem.ActiveSelectorVisionUnit(false, selectorCom.SelectedUnitType, selectorCom.XyPreviousVisionCell);
+                            CellUnitViewSystem.ActiveSelectorVisionUnit(true, selectorCom.SelectedUnitType, selectorCom.XyCurrentCell);
 
-                            XyPreviousVisionCell = XyCurrentCell;
+                            selectorCom.XyPreviousVisionCell = selectorCom.XyCurrentCell;
                         }
                     }
                 }
@@ -355,12 +318,4 @@ internal sealed class SelectorSystem : IEcsInitSystem, IEcsRunSystem
         AvailableCellsContainer.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
     }
 
-    private void GetCells()
-    {
-        AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.Shift, CellUnitsDataSystem.GetCellsForShift(XySelectedCell));
-
-        CellUnitsDataSystem.GetCellsForAttack(PhotonNetwork.LocalPlayer, out var availableCellsSimpleAttack, out var availableCellsUniqueAttack, XySelectedCell);
-        AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.SimpleAttack, availableCellsSimpleAttack);
-        AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.UniqueAttack, availableCellsUniqueAttack);
-    }
 }

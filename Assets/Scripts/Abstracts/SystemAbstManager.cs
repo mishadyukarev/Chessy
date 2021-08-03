@@ -14,12 +14,6 @@ namespace Assets.Scripts
             RunUpdateSystems = new EcsSystems(gameWorld);
         }
 
-        internal virtual void ProcessInjects()
-        {
-            InitSystems.ProcessInjects();
-            RunUpdateSystems.ProcessInjects();
-        }
-
         internal virtual void Init()
         {
             InitSystems.Init();

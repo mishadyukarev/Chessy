@@ -1,15 +1,19 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Common;
 using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Game.UI;
+using Leopotam.Ecs;
 using Photon.Pun;
 using System;
 using System.Collections.Generic;
 
 internal sealed class DonerMasterSystem : SystemMasterReduction
 {
+    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
+
     private Dictionary<bool, bool> _doneOrNotFromStartAnyUpdate = new Dictionary<bool, bool>();
 
     internal bool NeedDoneOrNot => _eMM.DonerEnt_IsActivatedCom.IsActivated;
@@ -26,7 +30,9 @@ internal sealed class DonerMasterSystem : SystemMasterReduction
     {
         base.Run();
 
-        if (InfoUnitsDataContainer.IsSettedKing(RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
+        ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
+
+        if (xyUnitsCom.IsSettedKing(RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
         {
             PhotonPunRPC.SoundToGeneral(RpcMasterDataContainer.InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 

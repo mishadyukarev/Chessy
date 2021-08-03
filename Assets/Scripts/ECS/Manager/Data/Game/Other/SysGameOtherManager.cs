@@ -13,11 +13,6 @@ public sealed class SysGameOtherManager : SystemAbstManager
     //    RunUpdateSystems = new EcsSystems(ecsWorld);
     //}
 
-    internal override void ProcessInjects()
-    {
-        base.ProcessInjects();
-
-    }
 
     internal override void Init()
     {

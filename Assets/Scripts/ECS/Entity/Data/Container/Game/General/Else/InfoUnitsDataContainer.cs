@@ -19,146 +19,26 @@ namespace Assets.Scripts.Workers.Game.Else.Info.Units
         internal InfoUnitsDataContainer(EcsWorld gameWorld)
         {
             _kingInfoEnt = gameWorld.NewEntity()
-                    .Replace(new XyUnitsInGameDictComponent(new Dictionary<bool, List<int[]>>()))
-                    .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
-                    .Replace(new XyUnitsInConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
+                .Replace(new XyUnitsInConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
             _pawnInfoEnt = gameWorld.NewEntity()
-                .Replace(new XyUnitsInGameDictComponent(new Dictionary<bool, List<int[]>>()))
-                .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
                 .Replace(new XyUnitsInConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
             _pawnSwordInfoEnt = gameWorld.NewEntity()
-                .Replace(new XyUnitsInGameDictComponent(new Dictionary<bool, List<int[]>>()))
-                .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
                 .Replace(new XyUnitsInConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
             _rookInfoEnt = gameWorld.NewEntity()
-                .Replace(new XyUnitsInGameDictComponent(new Dictionary<bool, List<int[]>>()))
-                .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
                 .Replace(new XyUnitsInConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
             _rookCrossbowInfoEnt = gameWorld.NewEntity()
-                .Replace(new XyUnitsInGameDictComponent(new Dictionary<bool, List<int[]>>()))
-                .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
                 .Replace(new XyUnitsInConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
             _bishopInfoInGameEnt = gameWorld.NewEntity()
-                .Replace(new XyUnitsInGameDictComponent(new Dictionary<bool, List<int[]>>()))
-                .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
                 .Replace(new XyUnitsInConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
 
             _bishopCrossbowInfoEnt = gameWorld.NewEntity()
-                .Replace(new XyUnitsInGameDictComponent(new Dictionary<bool, List<int[]>>()))
-                .Replace(new AmountUnitsInInventorDictComponent(new Dictionary<bool, int>()))
                 .Replace(new XyUnitsInConditionComponent((new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>(), new Dictionary<bool, List<int[]>>())));
         }
-
-        private static List<int[]> GetListAmountUnits(UnitTypes unitType, bool key)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    return _kingInfoEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key];
-
-                case UnitTypes.Pawn:
-                    return _pawnInfoEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key];
-
-                case UnitTypes.PawnSword:
-                    return _pawnSwordInfoEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key];
-
-                case UnitTypes.Rook:
-                    return _rookInfoEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key];
-
-                case UnitTypes.RookCrossbow:
-                    return _rookCrossbowInfoEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key];
-
-                case UnitTypes.Bishop:
-                    return _bishopInfoInGameEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key];
-
-                case UnitTypes.BishopCrossbow:
-                    return _bishopCrossbowInfoEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key];
-
-                default:
-                    throw new Exception();
-            }
-        }
-
-
-
-        internal static int[] GetXyUnitInGame(UnitTypes unitType, bool key, int index) => GetListAmountUnits(unitType, key)[index];
-        internal static List<int[]> GetLixtXyUnits(UnitTypes unitType, bool key) => GetListAmountUnits(unitType, key).Copy();
-        internal static void SetAmountUnitInGame(UnitTypes unitType, bool key, List<int[]> list)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    _kingInfoEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key] = list.Copy();
-                    break;
-
-                case UnitTypes.Pawn:
-                    _pawnInfoEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key] = list.Copy();
-                    break;
-
-                case UnitTypes.PawnSword:
-                    _pawnSwordInfoEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key] = list.Copy();
-                    break;
-
-                case UnitTypes.Rook:
-                    _rookInfoEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key] = list.Copy();
-                    break;
-
-                case UnitTypes.RookCrossbow:
-                    _rookCrossbowInfoEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key] = list.Copy();
-                    break;
-
-                case UnitTypes.Bishop:
-                    _bishopInfoInGameEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key] = list.Copy();
-                    break;
-
-                case UnitTypes.BishopCrossbow:
-                    _bishopCrossbowInfoEnt.Get<XyUnitsInGameDictComponent>().AmountUnitsInGame[key] = list.Copy();
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
-        internal static void AddAmountUnitInGame(UnitTypes unitType, bool key, int[] xyAdding) => GetListAmountUnits(unitType, key).Add(xyAdding);
-        internal static void RemoveAmountUnitsInGame(UnitTypes unitType, bool key, int[] xyTaking)
-        {
-            if (!GetListAmountUnits(unitType, key).TryFindCellInListAndRemove(xyTaking)) throw new Exception();
-        }
-
-
-        internal static int GetAmountUnitsInGame(UnitTypes unitType, bool key) => GetListAmountUnits(unitType, key).Count;
-        internal static int GetAmountUnitsInGame(bool key, params UnitTypes[] unitTypes)
-        {
-            int amountUnits = default;
-            foreach (var unitType in unitTypes) amountUnits += GetAmountUnitsInGame(unitType, key);
-            return amountUnits;
-        }
-        internal static int GetAmountAllUnitsInGame() => GetAmountAllUnitsInGame(true) + GetAmountAllUnitsInGame(false);
-        internal static int GetAmountAllUnitsInGame(bool key)
-        {
-            return GetAmountUnitsInGame(UnitTypes.King, key)
-                + GetAmountUnitsInGame(UnitTypes.Pawn, key)
-                + GetAmountUnitsInGame(UnitTypes.PawnSword, key)
-                + GetAmountUnitsInGame(UnitTypes.Rook, key)
-                + GetAmountUnitsInGame(UnitTypes.RookCrossbow, key)
-                + GetAmountUnitsInGame(UnitTypes.Bishop, key)
-                + GetAmountUnitsInGame(UnitTypes.BishopCrossbow, key);
-        }
-
-        internal static bool IsSettedKing(bool key) => GetLixtXyUnits(UnitTypes.King, key).Count > 0;
-
-
 
         #region Condition
 
@@ -281,90 +161,6 @@ namespace Assets.Scripts.Workers.Game.Else.Info.Units
 
         internal static void RemoveUnitInConditionByIndex(ConditionUnitTypes protectRelaxType, UnitTypes unitType, bool key, int index)
             => GetUnitsInStandardCondition(protectRelaxType, unitType, key).RemoveAt(index);
-
-        #endregion
-
-
-        #region Inventor
-
-        internal static int AmountUnitsInInventor(UnitTypes unitType, bool key)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    return _kingInfoEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key];
-
-                case UnitTypes.Pawn:
-                    return _pawnInfoEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key];
-
-                case UnitTypes.PawnSword:
-                    return _pawnSwordInfoEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key];
-
-                case UnitTypes.Rook:
-                    return _rookInfoEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key];
-
-                case UnitTypes.RookCrossbow:
-                    return _rookCrossbowInfoEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key];
-
-                case UnitTypes.Bishop:
-                    return _bishopInfoInGameEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key];
-
-                case UnitTypes.BishopCrossbow:
-                    return _bishopCrossbowInfoEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key];
-
-                default:
-                    throw new Exception();
-            }
-        }
-        internal static void SetAmountUnitsInInventor(UnitTypes unitType, bool key, int value)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    _kingInfoEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key] = value;
-                    break;
-
-                case UnitTypes.Pawn:
-                    _pawnInfoEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key] = value;
-                    break;
-
-                case UnitTypes.PawnSword:
-                    _pawnSwordInfoEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key] = value;
-                    break;
-
-                case UnitTypes.Rook:
-                    _rookInfoEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key] = value;
-                    break;
-
-                case UnitTypes.RookCrossbow:
-                    _rookCrossbowInfoEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key] = value;
-                    break;
-
-                case UnitTypes.Bishop:
-                    _bishopInfoInGameEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key] = value;
-                    break;
-
-                case UnitTypes.BishopCrossbow:
-                    _bishopCrossbowInfoEnt.Get<AmountUnitsInInventorDictComponent>().AmountUnitsInInventorDict[key] = value;
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
-
-        internal static void AddUnitsInInventor(UnitTypes unitType, bool key, int adding = 1)
-            => SetAmountUnitsInInventor(unitType, key, AmountUnitsInInventor(unitType, key) + adding);
-        internal static void TakeUnitsInInventor(UnitTypes unitType, bool key, int taking = 1)
-            => SetAmountUnitsInInventor(unitType, key, AmountUnitsInInventor(unitType, key) - taking);
-
-        internal static bool HaveUnitInInventor(UnitTypes unitType, bool key) => AmountUnitsInInventor(unitType, key) > 0;
 
         #endregion
     }

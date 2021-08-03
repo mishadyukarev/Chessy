@@ -10,18 +10,19 @@ using Leopotam.Ecs;
 
 public sealed class SysDataGameGeneralElseManager : SystemAbstManager
 {
-    private EcsSystems _forSelectorSystem;
     private EcsSystems _eventSystems;
 
     internal static EcsSystems SyncCellVisionSystems { get; private set; }
 
     internal SysDataGameGeneralElseManager(EcsWorld gameWorld) : base(gameWorld)
     {
+        InitSystems
+            .Add(new InitSystem());
 
         RunUpdateSystems
-            .Add(new InputSystem(), nameof(InputSystem))
-            .Add(new RaySystem(), nameof(RaySystem))
-            .Add(new SelectorSystem(), nameof(SelectorSystem))
+            .Add(new InputSystem())
+            .Add(new RaySystem())
+            .Add(new SelectorSystem())
 
             .Add(new SupportVisionSystem(), nameof(SupportVisionSystem))
             .Add(new FliperAndRotatorUnitSystem(), nameof(FliperAndRotatorUnitSystem))
@@ -45,9 +46,6 @@ public sealed class SysDataGameGeneralElseManager : SystemAbstManager
             .Add(new MistakeUISystem())
             .Add(new CenterSupTextUISystem());
 
-        _forSelectorSystem = new EcsSystems(gameWorld)
-            .Add(new RaySystem(), nameof(RaySystem));
-
         _eventSystems = new EcsSystems(gameWorld)
             .Add(new EventGeneralSystem(), nameof(EventGeneralSystem));
 
@@ -57,25 +55,12 @@ public sealed class SysDataGameGeneralElseManager : SystemAbstManager
             .Add(new SyncCellBuildingsVisSystem())
             .Add(new SyncCellEnvirsVisSystem())
             .Add(new SyncCellEffectsVisSystem());
-
-        InitSystems
-            .Add(new StartFillSystem());
-    }
-
-    internal override void ProcessInjects()
-    {
-        base.ProcessInjects();
-
-        _forSelectorSystem.ProcessInjects();
-        _eventSystems.ProcessInjects();
-        SyncCellVisionSystems.ProcessInjects();
     }
 
     internal override void Init()
     {
         base.Init();
 
-        _forSelectorSystem.Init();
         _eventSystems.Init();
         SyncCellVisionSystems.Init();
     }

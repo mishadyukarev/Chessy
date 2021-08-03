@@ -95,7 +95,6 @@ namespace Assets.Scripts
             EntViewCommUIManager = new EntViewCommonUIManager(_commonWorld, EntDataCommElseManager);
 
             SysCommManager = new SysDataCommonManager(_commonWorld);
-            SysCommManager.ProcessInjects();
             SysCommManager.Init();
         }
 
@@ -188,13 +187,6 @@ namespace Assets.Scripts
 
                     SysGameMasterManager = new SysGameMasterManager(_gameWorld);
                     SysGameOtherManager = new SysGameOtherManager(_gameWorld);
-
-                    SysDataGameGeneralElseManager.ProcessInjects();
-                    SysViewGameGeneralElseManager.ProcessInjects();
-                    SysDataGameGeneralCellManager.ProcessInjects();
-                    SysViewGameGeneralCellManager.ProcessInjects();
-                    SysGameMasterManager.ProcessInjects();
-                    SysGameOtherManager.ProcessInjects();
 
                     SysDataGameGeneralElseManager.Init();
                     SysViewGameGeneralElseManager.Init();

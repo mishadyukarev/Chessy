@@ -9,10 +9,11 @@ using Photon.Pun;
 
 internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
 {
-    private int[] XySelectedCell => SelectorSystem.XySelectedCell;
+    private EcsFilter<SelectorComponent> _selectorFilter;
+    internal EcsComponentRef<SelectorComponent> SelComRef => _selectorFilter.Get1Ref(0);
+
     public void Init()
     {
-
         LeftBuildUIViewContainer.AddListener(LeftBuildButtonTypes.BuyPawn, delegate { BuyUnit(UnitTypes.Pawn); });
         LeftBuildUIViewContainer.AddListener(LeftBuildButtonTypes.BuyRook, delegate { BuyUnit(UnitTypes.Rook); });
         LeftBuildUIViewContainer.AddListener(LeftBuildButtonTypes.BuyBishop, delegate { BuyUnit(UnitTypes.Bishop); });
@@ -25,14 +26,17 @@ internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
         LeftBuildUIViewContainer.AddListener(LeftBuildButtonTypes.UpgradeMine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
     }
 
+
+
     public void Run()
     {
+        ref var selCom = ref _selectorFilter.Get1(0);
 
-        if (SelectorSystem.IsSelectedCell && CellBuildDataSystem.BuildTypeCom(XySelectedCell).Is(BuildingTypes.City))
+        if (selCom.IsSelectedCell && CellBuildDataSystem.BuildTypeCom(selCom.XySelectedCell).Is(BuildingTypes.City))
         {
-            if (CellBuildDataSystem.OwnerCom(XySelectedCell).HaveOwner)
+            if (CellBuildDataSystem.OwnerCom(selCom.XySelectedCell).HaveOwner)
             {
-                if (CellBuildDataSystem.OwnerCom(XySelectedCell).IsMine)
+                if (CellBuildDataSystem.OwnerCom(selCom.XySelectedCell).IsMine)
                 {
                     LeftBuildUIViewContainer.SetActiveZone(true);
                 }
@@ -54,13 +58,13 @@ internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
     {
         if (!DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient))
         {
-            if (SelectorSystem.SelectorType == SelectorTypes.UpgradeUnit)
+            if (SelComRef.Unref().SelectorType == SelectorTypes.UpgradeUnit)
             {
-                SelectorSystem.SelectorType = SelectorTypes.StartClick;
+                SelComRef.Unref().SelectorType = SelectorTypes.StartClick;
             }
             else
             {
-                SelectorSystem.SelectorType = SelectorTypes.UpgradeUnit;
+                SelComRef.Unref().SelectorType = SelectorTypes.UpgradeUnit;
             }
         }
     }
