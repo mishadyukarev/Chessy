@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.ValuesConsts;
 using Photon.Pun;
-using System;
 using static Assets.Scripts.Main;
 
 namespace Assets.Scripts

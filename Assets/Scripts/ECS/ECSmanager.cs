@@ -1,74 +1,36 @@
-﻿using Assets.Scripts.Abstractions;
-using Assets.Scripts.ECS.Entities.Game.General;
-using Assets.Scripts.ECS.Manager.View.Common;
-using Assets.Scripts.ECS.Manager.View.Menu;
-using Assets.Scripts.ECS.Managers.Data.Common;
+﻿using Assets.Scripts.ECS.Manager.View.Menu;
 using Assets.Scripts.ECS.System.Common;
 using Assets.Scripts.ECS.System.Data.Common;
-using Assets.Scripts.ECS.System.Data.Game.General.Cell;
-using Assets.Scripts.ECS.System.Data.Game.General.UI;
-using Assets.Scripts.ECS.System.View.Common;
-using Assets.Scripts.ECS.System.View.Game.General;
-using Assets.Scripts.ECS.System.View.Game.General.Cell;
-using Assets.Scripts.ECS.System.View.Game.General.UI;
 using Assets.Scripts.ECS.System.View.Menu;
-using Assets.Scripts.Workers.Common;
 using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
     public sealed class ECSManager
     {
-        internal EcsWorld CommonWorld { get; private set; }
-        internal EcsWorld MenuWorld { get; private set; }
-        internal EcsWorld GameWorld { get; private set; }
+        private EcsWorld _commonWorld;
+        private EcsWorld _menuWorld;
+        private EcsWorld _gameWorld;
 
+        private CommonSystemManager _commonSystemManager;
 
-        #region Common
+        private MenuSystemManager _menuSystemManager;
 
-        public CommonElseViewSysManager CommElseViewSysManag { get; private set; }
-        public CommonElseDataSysManager CommElseDataSysManag { get; private set; }
-
-        #endregion
-
-
-        #region Menu
-
-        public MenuDataPhotonSceneSysManager PhotonSceneSysDataMenuManager { get; private set; }
-
-        public UIMenuViewSysManager UIMenuViewSysMan { get; private set; }
-
-        #endregion
-
-
-        #region Game
-
-        public ElseGameGeneralDataSysManager ElseGameGeneralDataSysManager { get; private set; }
-        public SysViewGameGeneralElseManager SysViewGameGeneralElseManager { get; private set; }
-        public SysDataGameGeneralCellManager SysDataGameGeneralCellManager { get; private set; }
-        public SysViewGameGeneralCellManager SysViewGameGeneralCellManager { get; private set; }
-        public SysDataGameGeneralUIManager SysDataGameGeneralUIManager { get; private set; }
-        public SysViewGameGeneralUIManager SysViewGameGeneralUIManager { get; private set; }
-        public SysDataGameMasterManager SysDataGameMasterManager { get; private set; }
-        public SysDataGameOtherManager SysDataGameOtherManager { get; private set; }
-
-        #endregion
+        public GameGeneralSystemManager GameGeneralSystemManager { get; private set; }
+        public GameMasterSystemManager GameMasterSystemManager { get; private set; }
+        public GameOtherSystemManager GameOtherSystemManager { get; private set; }
 
 
         public ECSManager()
         {
-            CommonWorld = new EcsWorld();
+            _commonWorld = new EcsWorld();
 
-            CommElseDataSysManag = new CommonElseDataSysManager(CommonWorld);
-            CommElseViewSysManag = new CommonElseViewSysManager(CommonWorld);
-
-            CommElseDataSysManag.Init();
-            CommElseViewSysManag.Init();
+            _commonSystemManager = new CommonSystemManager(_commonWorld);
+            _commonSystemManager.Init();
         }
 
         public void ToggleScene(SceneTypes sceneType)
@@ -79,45 +41,43 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    if (GameWorld != default)
+                    if (_gameWorld != default)
                     {
-                        GameWorld.Destroy();
+                        _gameWorld.Destroy();
 
-                        ElseGameGeneralDataSysManager = default;
-                        SysDataGameMasterManager = default;
-                        SysDataGameOtherManager = default;
+                        GameGeneralSystemManager = default;
+                        GameMasterSystemManager = default;
+                        GameOtherSystemManager = default;
                     }
 
-                    MenuWorld = new EcsWorld();
-                    UIMenuViewSysMan = new UIMenuViewSysManager(MenuWorld);
-                    PhotonSceneSysDataMenuManager = new MenuDataPhotonSceneSysManager(MenuWorld);
-                    UIMenuViewSysMan.Init();
-                    PhotonSceneSysDataMenuManager.Init();
-
-
-
-                    MainDataCommSys.ToggleZoneEnt_ParentCom.DestroyCurrentZone();
-                    MainDataCommSys.ToggleZoneEnt_ParentCom.CreateZone(sceneType);
-
-                    MainCommonViewSys.CanvasEnt_CanvasCom.DestroyZoneUI(SceneTypes.Game);
-
-                    MainCommonViewSys.CanvasEnt_CanvasCom.SetZoneUI(SceneTypes.Menu, MainDataCommSys.ResourcesEnt_ResourcesCommonCom);
-
-                    var slider = MainCommonViewSys.CanvasEnt_CanvasCom.FindUnderParent<Slider>(SceneTypes.Menu, "Slider");
-
-
-
-
+                    _menuWorld = new EcsWorld();
+                    _menuSystemManager = new MenuSystemManager(_menuWorld, _commonWorld);
+                    _menuSystemManager.Init();
                     break;
 
                 case SceneTypes.Game:
-                    MenuWorld.Destroy();
+                    if (_menuWorld != default)
+                    {
+                        _menuWorld.Destroy();
 
-                    GameWorld = new EcsWorld();
+                        GameGeneralSystemManager = default;
+                        GameMasterSystemManager = default;
+                        GameOtherSystemManager = default;
+                    }
+
+                    _gameWorld = new EcsWorld();
+
+                    GameGeneralSystemManager = new GameGeneralSystemManager(_gameWorld);
+                    GameMasterSystemManager = new GameMasterSystemManager(_gameWorld);
+                    GameOtherSystemManager = new GameOtherSystemManager(_gameWorld);
+                    GameGeneralSystemManager.Init();
+                    GameMasterSystemManager.Init();
+                    GameOtherSystemManager.Init();
+
 
                     if (PhotonNetwork.IsMasterClient)
                     {
-                        if (MainDataCommSys.CommonZoneEnt_SaverCom.StepModeType == StepModeTypes.ByQueue)
+                        if (MainCommonSystem.CommonZoneEnt_SaverCom.StepModeType == StepModeTypes.ByQueue)
                         {
                             DownDonerUIDataContainer.SetDoned(false, true);
                         }
@@ -125,43 +85,20 @@ namespace Assets.Scripts
 
 
 
-
-                    ElseGameGeneralDataSysManager = new ElseGameGeneralDataSysManager(GameWorld);
-                    SysViewGameGeneralElseManager = new SysViewGameGeneralElseManager(GameWorld);
-                    SysDataGameGeneralCellManager = new SysDataGameGeneralCellManager(GameWorld);
-                    SysViewGameGeneralCellManager = new SysViewGameGeneralCellManager(GameWorld);
-                    SysDataGameGeneralUIManager = new SysDataGameGeneralUIManager(GameWorld);
-                    SysViewGameGeneralUIManager = new SysViewGameGeneralUIManager(GameWorld);
-
-                    SysDataGameMasterManager = new SysDataGameMasterManager(GameWorld);
-                    SysDataGameOtherManager = new SysDataGameOtherManager(GameWorld);
-
-                    ElseGameGeneralDataSysManager.Init();
-                    SysViewGameGeneralElseManager.Init();
-                    SysDataGameGeneralCellManager.Init();
-                    SysViewGameGeneralCellManager.Init();
-
-                    SysDataGameMasterManager.Init();
-                    SysDataGameOtherManager.Init();
+                    MainCommonSystem.ToggleZoneEnt_ParentCom.ReplaceZone(sceneType);
 
 
-
-                    MainDataCommSys.ToggleZoneEnt_ParentCom.DestroyCurrentZone();
-                    MainDataCommSys.ToggleZoneEnt_ParentCom.CreateZone(sceneType);
-
-                    MainCommonViewSys.CanvasEnt_CanvasCom.DestroyZoneUI(SceneTypes.Menu);
-
-                    MainCommonViewSys.CanvasEnt_CanvasCom.SetZoneUI(SceneTypes.Game, MainDataCommSys.ResourcesEnt_ResourcesCommonCom);
+                    MainCommonSystem.CanvasEnt_CanvasCom.ReplaceZone(sceneType, MainCommonSystem.ResourcesEnt_ResourcesCommonCom);
 
                     if (PhotonNetwork.IsMasterClient)
                     {
-                        MainDataCommSys.CameraEnt_CameraCom.Camera.transform.rotation = new Quaternion(0, 0, 0, 0);
-                        MainDataCommSys.CameraEnt_CameraCom.Camera.transform.position = Main.Instance.transform.position + MainDataCommSys.CameraEnt_CameraCom.PosForCamera;
+                        MainCommonSystem.CameraEnt_CameraCom.Camera.transform.rotation = new Quaternion(0, 0, 0, 0);
+                        MainCommonSystem.CameraEnt_CameraCom.Camera.transform.position = Main.Instance.transform.position + MainCommonSystem.CameraEnt_CameraCom.PosForCamera;
                     }
                     else
                     {
-                        MainDataCommSys.CameraEnt_CameraCom.Camera.transform.rotation = new Quaternion(0, 0, 180, 0);
-                        MainDataCommSys.CameraEnt_CameraCom.Camera.transform.position = Main.Instance.transform.position + MainDataCommSys.CameraEnt_CameraCom.PosForCamera + new Vector3(0, 0.5f, 0);
+                        MainCommonSystem.CameraEnt_CameraCom.Camera.transform.rotation = new Quaternion(0, 0, 180, 0);
+                        MainCommonSystem.CameraEnt_CameraCom.Camera.transform.position = Main.Instance.transform.position + MainCommonSystem.CameraEnt_CameraCom.PosForCamera + new Vector3(0, 0.5f, 0);
                     }
 
                     break;
@@ -174,8 +111,7 @@ namespace Assets.Scripts
 
         public void OwnUpdate(SceneTypes sceneType)
         {
-            CommElseDataSysManag.RunUpdate();
-            CommElseViewSysManag.RunUpdate();
+            _commonSystemManager.RunUpdate();
 
             switch (sceneType)
             {
@@ -183,17 +119,15 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    PhotonSceneSysDataMenuManager.RunUpdate();
-
-                    UIMenuViewSysMan.RunUpdate();
-                    MainDataCommSys.CommonZoneEnt_SaverCom.SliderVolume = UIMenuMainViewSys.SoundEnt_SliderCom.Slider.value;
+                    _menuSystemManager.RunUpdate();
+                    MainCommonSystem.CommonZoneEnt_SaverCom.SliderVolume = MainMenuSystem.SoundEnt_SliderCom.Slider.value;
                     break;
 
                 case SceneTypes.Game:
-                    ElseGameGeneralDataSysManager.RunUpdate();
+                    GameGeneralSystemManager.RunUpdate();
 
-                    if (PhotonNetwork.IsMasterClient) SysDataGameMasterManager.RunUpdate();
-                    else SysDataGameOtherManager.RunUpdate();
+                    if (PhotonNetwork.IsMasterClient) GameMasterSystemManager.RunUpdate();
+                    else GameOtherSystemManager.RunUpdate();
                     break;
 
                 default:

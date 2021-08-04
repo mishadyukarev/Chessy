@@ -1,9 +1,6 @@
 ﻿using Assets.Scripts.Workers;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Assets.Scripts.ECS.Component
 {
@@ -11,7 +8,7 @@ namespace Assets.Scripts.ECS.Component
     {
         private Dictionary<BuildingTypes, Dictionary<bool, List<int[]>>> _buildingsInGameDict;
 
-        internal XyBuildingsComponent(Dictionary<BuildingTypes,Dictionary<bool, List<int[]>>> dict)
+        internal XyBuildingsComponent(Dictionary<BuildingTypes, Dictionary<bool, List<int[]>>> dict)
         {
             _buildingsInGameDict = dict;
 
@@ -30,7 +27,7 @@ namespace Assets.Scripts.ECS.Component
 
         internal bool IsSettedCity(bool key) => GetAmountBuild(BuildingTypes.City, key) > 0;
 
-        internal  void SetXyBuildings(BuildingTypes buildingType, bool key, List<int[]> list) => _buildingsInGameDict[buildingType][key] = list.Copy();
+        internal void SetXyBuildings(BuildingTypes buildingType, bool key, List<int[]> list) => _buildingsInGameDict[buildingType][key] = list.Copy();
 
 
         internal int[] GetXyBuildByIndex(BuildingTypes buildingType, bool key, int index) => (int[])GetListXyBuild(buildingType, key)[index].Clone();

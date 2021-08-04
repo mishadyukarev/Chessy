@@ -10,9 +10,10 @@ namespace Assets.Scripts.ECS.Component
 
         internal ToggleZoneComponent(GameObject toggleZoneGO) => _toggleZoneGO = toggleZoneGO;
 
-        internal void DestroyCurrentZone() => GameObject.Destroy(_toggleZoneGO);
-        internal void CreateZone(SceneTypes sceneType)
+
+        internal void ReplaceZone(SceneTypes sceneType)
         {
+            GameObject.Destroy(_toggleZoneGO);
 
             switch (sceneType)
             {

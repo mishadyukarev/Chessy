@@ -5,18 +5,15 @@ namespace Assets.Scripts
 {
     public abstract class SystemAbstManager
     {
-        protected EcsSystems InitSystems { get; private set; }
         protected EcsSystems UpdateSystems { get; private set; }
 
         protected SystemAbstManager(EcsWorld world)
         {
-            InitSystems = new EcsSystems(world);
             UpdateSystems = new EcsSystems(world);
         }
 
         internal virtual void Init()
         {
-            InitSystems.Init();
             UpdateSystems.Init();
         }
 

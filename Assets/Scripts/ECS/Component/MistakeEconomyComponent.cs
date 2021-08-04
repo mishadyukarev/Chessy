@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.ECS.Components;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine.Events;
 

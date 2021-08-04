@@ -4,13 +4,13 @@ namespace Assets.Scripts
 {
     internal abstract class SystemMasterReduction : SystemGeneralReduction
     {
-        protected SysDataGameMasterManager _eMM;
+        protected GameMasterSystemManager _eMM;
 
         public override void Init()
         {
             base.Init();
 
-            _eMM = Instance.ECSmanager.SysDataGameMasterManager;
+            _eMM = Instance.ECSmanager.GameMasterSystemManager;
         }
     }
 }
