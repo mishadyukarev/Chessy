@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.ECS.System.View.Game.General.UI;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Workers.Game.UI
 {
     internal sealed class ReadyZoneUIWorker
     {
-        private static EntViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.EntViewGameGeneralUIManager;
+        private static SysViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.SysViewGameGeneralUIManager;
 
         private static GameObject ReadyParentGO => EGGUIM.ReadyEnt_ParentCom.ParentGO;
         private static Button ReadyButton => EGGUIM.ReadyEnt_ButtonCom.Button;

@@ -1,11 +1,12 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.System.View.Game.General.UI;
 using System;
 
 namespace Assets.Scripts.Workers.Game.UI.Left
 {
     internal class EnvirZoneLeftUIViewContainer
     {
-        private static EntViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.EntViewGameGeneralUIManager;
+        private static SysViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.SysViewGameGeneralUIManager;
 
         internal static bool IsActivatedEnvrInfo => EGGUIM.EnvironmentInfoEnt_IsActivatedCom.IsActivated;
 

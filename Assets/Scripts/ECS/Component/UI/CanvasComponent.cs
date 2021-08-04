@@ -1,20 +1,40 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
     public struct CanvasComponent
     {
-        internal Canvas Canvas { get; private set; }
-        internal GameObject InMenuZoneGO { get; set; }
-        internal GameObject InGameZoneGO { get; set; }
+        private Canvas _canvas;
+        private GameObject _currentZoneGO;
 
-        internal CanvasComponent(Canvas canvas)
+        internal CanvasComponent(ResourcesComponent resourcesComponent, SceneTypes neededSceneType)
         {
-            Canvas = canvas;
-            InMenuZoneGO = Canvas.transform.Find("InMenuZone").gameObject;
-            InGameZoneGO = Canvas.transform.Find("InGameZone").gameObject;
-            UnityEngine.Object.Destroy(InMenuZoneGO);
-            UnityEngine.Object.Destroy(InGameZoneGO);
+            _canvas = GameObject.Instantiate(resourcesComponent.PrefabConfig.Canvas);
+
+            GameObject.Destroy(_canvas.transform.Find("InGameZone").gameObject);
+            GameObject.Destroy(_canvas.transform.Find("InMenuZone").gameObject);
+
+
+            switch (neededSceneType)
+            {
+                case SceneTypes.None:
+                    throw new Exception();
+
+                case SceneTypes.Menu:
+                    _currentZoneGO = GameObject.Instantiate(resourcesComponent.InMenuZoneGO);
+                    break;
+
+                case SceneTypes.Game:
+                    _currentZoneGO = GameObject.Instantiate(resourcesComponent.InGameZoneGO);
+                    break;
+
+                default:
+                    throw new Exception();
+            }
         }
+
+        internal T FindUnderParent<T>(string name) => _currentZoneGO.transform.Find(name).GetComponent<T>();
+        internal GameObject FindUnderParent(string name) => _currentZoneGO.transform.Find(name).gameObject;
     }
 }

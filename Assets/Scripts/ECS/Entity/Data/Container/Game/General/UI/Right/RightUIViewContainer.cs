@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.System.View.Game.General.UI;
 using System;
 using TMPro;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Assets.Scripts.Workers.Game.UI
 {
     internal sealed class RightUIViewContainer
     {
-        private static EntViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.EntViewGameGeneralUIManager;
+        private static SysViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.SysViewGameGeneralUIManager;
 
         #region Parent
 

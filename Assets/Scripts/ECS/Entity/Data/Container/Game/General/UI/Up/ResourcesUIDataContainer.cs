@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ECS.Entities.Game.General.UI.Data.Containers;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Photon.Realtime;
 using System;
 using static Assets.Scripts.Abstractions.ValuesConsts.EconomyValues;
@@ -436,7 +437,7 @@ namespace Assets.Scripts.Workers.Info
             }
 
 
-            InfoBuidlingsDataContainer.AddAmountUpgrades(buildingType, player.IsMasterClient);
+            InitSystem.UpgradesBuildingsCom.AddAmountUpgrades(buildingType, player.IsMasterClient);
         }
 
         private static bool HavedAll(bool[] haves) => haves[FOOD_NUMBER] && haves[WOOD_NUMBER] && haves[ORE_NUMBER] && haves[IRON_NUMBER] && haves[GOLD_NUMBER];

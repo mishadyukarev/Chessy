@@ -1,12 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Workers;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Components
 {
     internal struct XyStartCellsComponent
     {
-        internal Dictionary<bool, List<int[]>> XyStartCellsDict { get; private set; }
+        private Dictionary<bool, List<int[]>> _xyStartCellsDict;
 
 
-        internal XyStartCellsComponent(Dictionary<bool, List<int[]>> dict) => XyStartCellsDict = dict;
+        internal XyStartCellsComponent(Dictionary<bool, List<int[]>> dict) => _xyStartCellsDict = dict;
+
+
+        internal bool IsStartedCell(bool key, int[] xy) => _xyStartCellsDict[key].TryFindCell(xy);
     }
 }

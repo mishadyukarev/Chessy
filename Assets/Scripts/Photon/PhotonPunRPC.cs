@@ -1,18 +1,17 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
+using Assets.Scripts.ECS.System.Data.Common;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
+using Assets.Scripts.ECS.System.View.Game.General.UI;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Common;
 using Assets.Scripts.Workers.Game.Else;
 using Assets.Scripts.Workers.Game.Else.Data;
-using Assets.Scripts.Workers.Game.Else.Info.Units;
 using Assets.Scripts.Workers.Game.UI;
 using Assets.Scripts.Workers.Info;
 using ExitGames.Client.Photon;
-using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -26,11 +25,10 @@ namespace Assets.Scripts
     {
         private static PhotonView _photonView;
 
-        private EntDataGameGeneralElseManager EGM => Instance.ECSmanager.EntDataGameGeneralElseManager;
-        private EntViewGameGeneralUIManager EGGUIM => Instance.ECSmanager.EntViewGameGeneralUIManager;
-        private EntDataGameMasterElseManager EMM => Instance.ECSmanager.EntDataGameMasterElseManager;
+        private SysViewGameGeneralUIManager EGGUIM => Instance.ECSmanager.SysViewGameGeneralUIManager;
+        private SysDataGameMasterManager EMM => Instance.ECSmanager.SysDataGameMasterManager;
 
-        private EntDataGameOtherElseManager EntOM => Instance.ECSmanager.EntDataGameOtherElseManager;
+        private SysDataGameOtherManager EntOM => Instance.ECSmanager.SysDataGameOtherManager;
 
         private static string MasterRPCName => nameof(MasterRPC);
         private static string GeneralRPCName => nameof(GeneralRPC);
@@ -135,12 +133,12 @@ namespace Assets.Scripts
 
                 case RpcMasterTypes.Ready:
                     EMM.ReadyEnt_IsActivatedCom.IsActivated = (bool)objects[0];
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(ReadyMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(ReadyMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Done:
                     EMM.DonerEnt_IsActivatedCom.IsActivated = (bool)objects[0];
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(DonerMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(DonerMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.EndGame:
@@ -150,60 +148,60 @@ namespace Assets.Scripts
                 case RpcMasterTypes.Build:
                     EMM.BuildEnt_XyCellCom.XyCell = (int[])objects[0];
                     EMM.BuildEnt_BuildingTypeCom.BuildingType = (BuildingTypes)objects[1];
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(BuilderMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(BuilderMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Destroy:
                     EMM.DestroyEnt_XyCellCom.XyCell = (int[])objects[0];
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(DestroyMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(DestroyMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Shift:
                     EMM.ShiftEnt_FromToXyCom.SetAllXy((int[])objects[0], (int[])objects[1]);
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(ShiftUnitMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(ShiftUnitMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Attack:
                     EMM.AttackEnt_FromToXyCom.SetAllXy((int[])objects[0], (int[])objects[1]);
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(AttackUnitMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(AttackUnitMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.ProtectRelax:
                     EMM.ProtectRelaxEnt_ProtectRelaxCom.ProtectRelaxType = (ConditionUnitTypes)objects[0];
                     EMM.ProtectRelaxEnt_XyCellCom.XyCell = (int[])objects[1];
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(ConditionMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(ConditionMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.CreateUnit:
                     EMM.CreatorEnt_UnitTypeCom.UnitType = (UnitTypes)objects[0];
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(CreatorUnitMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(CreatorUnitMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.MeltOre:
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(MeltOreMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(MeltOreMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.GetUnit:
                     EMM.CreatorEnt_UnitTypeCom.UnitType = (UnitTypes)objects[0];
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(GetterUnitMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(GetterUnitMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.SetUnit:
                     EMM.SettingUnitEnt_XyCellCom.XyCell = (int[])objects[0];
                     EMM.SettingUnitEnt_UnitTypeCom.UnitType = (UnitTypes)objects[1];
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(SetterUnitMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(SetterUnitMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.SeedEnvironment:
                     EMM.SeedingEnt_XyCellCom.XyCell = (int[])objects[0];
                     EMM.SeedingEnt_EnvironmentTypesCom.EnvironmentType = (EnvironmentTypes)objects[1];
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(SeedingMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(SeedingMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Fire:
                     EMM.FireEnt_FromToXyCom.FromXy = (int[])objects[0];
                     EMM.FireEnt_FromToXyCom.ToXy = (int[])objects[1];
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(FireMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(FireMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.Upgrade:
@@ -225,19 +223,19 @@ namespace Assets.Scripts
                         default:
                             throw new Exception();
                     }
-                    SysGameMasterManager.TryInvokeRunSystem(nameof(UpgradeMasterSystem), SysGameMasterManager.RpcSystems);
+                    SysDataGameMasterManager.TryInvokeRunSystem(nameof(UpgradeMasterSystem), SysDataGameMasterManager.RpcSystems);
                     break;
 
                 case RpcMasterTypes.CircularAttackKing:
                     RpcMasterDataContainer.XyCellForCircularAttack = (int[])objects[0];
-                    SysGameMasterManager.CircularAttackKingSystems.Run();
+                    SysDataGameMasterManager.CircularAttackKingSystems.Run();
                     break;
 
                 default:
                     break;
             }
 
-            SysGameMasterManager.VisibilityUnitsSystems.Run();
+            SysDataGameMasterManager.VisibilityUnitsSystems.Run();
 
             SyncAllToMaster();
         }
@@ -246,7 +244,7 @@ namespace Assets.Scripts
         private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _currentNumber = 0;
-            EGM.FromInfoEnt_FromInfoCom.FromInfo = infoFrom;
+            InitSystem.FromInfoCom.FromInfo = infoFrom;
 
             switch (rpcGeneralType)
             {
@@ -262,7 +260,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.GetAvailableCellsForSetting:
-                    AvailableCellsContainer.SetAllCellsCopy(AvailableCellTypes.SettingUnit, CellUnitsDataSystem.GetStartCellsForSettingUnit(PhotonNetwork.LocalPlayer));
+                    SelectorSystem.AvailableCellsCom.SetAllCellsCopy(AvailableCellTypes.SettingUnit, CellUnitsDataSystem.GetStartCellsForSettingUnit(PhotonNetwork.LocalPlayer));
                     break;
 
                 case RpcGeneralTypes.EndGame:
@@ -273,9 +271,9 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.Attack:
                     if ((bool)objects[_currentNumber++])
                     {
-                        AvailableCellsContainer.ClearAvailableCells(AvailableCellTypes.Shift);
-                        AvailableCellsContainer.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
-                        AvailableCellsContainer.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
+                        SelectorSystem.AvailableCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);
+                        SelectorSystem.AvailableCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
+                        SelectorSystem.AvailableCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
                     }
                     break;
 
@@ -294,11 +292,11 @@ namespace Assets.Scripts
                             var haveIron = haves[3];
                             var haveGold = haves[4];
 
-                            if (!haveFood) MistakeEconomyEventDataWorker.InvokeEconomyMistake(ResourceTypes.Food);
-                            if (!haveWood) MistakeEconomyEventDataWorker.InvokeEconomyMistake(ResourceTypes.Wood);
-                            if (!haveOre) MistakeEconomyEventDataWorker.InvokeEconomyMistake(ResourceTypes.Ore);
-                            if (!haveIron) MistakeEconomyEventDataWorker.InvokeEconomyMistake(ResourceTypes.Iron);
-                            if (!haveGold) MistakeEconomyEventDataWorker.InvokeEconomyMistake(ResourceTypes.Gold);
+                            if (!haveFood) InitSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Food);
+                            if (!haveWood) InitSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Wood);
+                            if (!haveOre) InitSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Ore);
+                            if (!haveIron) InitSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Iron);
+                            if (!haveGold) InitSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Gold);
                             break;
 
                         case MistakeTypes.NeedKing:
@@ -359,7 +357,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcOtherTypes.SetStepModType:
-                    DataCommContainerElseSaver.StepModeType = (StepModeTypes)objects[_currentNumber++];
+                    MainDataCommSys.CommonZoneEnt_SaverCom.StepModeType = (StepModeTypes)objects[_currentNumber++];
                     break;
 
                 default:
@@ -420,7 +418,7 @@ namespace Assets.Scripts
 
 
 
-            listObjects.Add(DataCommContainerElseSaver.StepModeType);
+            listObjects.Add(MainDataCommSys.CommonZoneEnt_SaverCom.StepModeType);
             listObjects.Add(MiddleUIDataContainer.IsStartedGame);
 
 
@@ -450,17 +448,17 @@ namespace Assets.Scripts
 
 
 
-            listObjects.Add(InfoBuidlingsDataContainer.AmountUpgrades(BuildingTypes.Farm, false));
-            listObjects.Add(InfoBuidlingsDataContainer.AmountUpgrades(BuildingTypes.Woodcutter, false));
-            listObjects.Add(InfoBuidlingsDataContainer.AmountUpgrades(BuildingTypes.Mine, false));
+            listObjects.Add(InitSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Farm, false));
+            listObjects.Add(InitSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, false));
+            listObjects.Add(InitSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Mine, false));
 
             for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
             {
-                var amountBuildingsInGame = InfoBuidlingsDataContainer.GetAmountBuild(buildingType, false);
+                var amountBuildingsInGame = InitSystem.XyBuildingsCom.GetAmountBuild(buildingType, false);
                 listObjects.Add(amountBuildingsInGame);
                 for (int indexXy = 0; indexXy < amountBuildingsInGame; indexXy++)
                 {
-                    listObjects.Add(InfoBuidlingsDataContainer.GetXyBuildByIndex(buildingType, false, indexXy));
+                    listObjects.Add(InitSystem.XyBuildingsCom.GetXyBuildByIndex(buildingType, false, indexXy));
                 }
             }
 
@@ -473,7 +471,7 @@ namespace Assets.Scripts
             _photonView.RPC(SyncOtherRPCName, RpcTarget.Others, objects);
 
 
-            SysDataGameGeneralElseManager.SyncCellVisionSystems.Run();
+            ElseGameGeneralDataSysManager.SyncCellVisionSystems.Run();
         }
 
         [PunRPC]
@@ -567,7 +565,7 @@ namespace Assets.Scripts
 
 
 
-            DataCommContainerElseSaver.StepModeType = (StepModeTypes)objects[_currentNumber++];
+            MainDataCommSys.CommonZoneEnt_SaverCom.StepModeType = (StepModeTypes)objects[_currentNumber++];
 
 
 
@@ -617,9 +615,9 @@ namespace Assets.Scripts
             var amountFarmUpgrades = (int)objects[_currentNumber++];
             var amountWoodcutterUpgrades = (int)objects[_currentNumber++];
             var amountMineUpgrades = (int)objects[_currentNumber++];
-            InfoBuidlingsDataContainer.SetAmountUpgrades(BuildingTypes.Farm, PhotonNetwork.IsMasterClient, amountFarmUpgrades);
-            InfoBuidlingsDataContainer.SetAmountUpgrades(BuildingTypes.Woodcutter, PhotonNetwork.IsMasterClient, amountWoodcutterUpgrades);
-            InfoBuidlingsDataContainer.SetAmountUpgrades(BuildingTypes.Mine, PhotonNetwork.IsMasterClient, amountMineUpgrades);
+            InitSystem.UpgradesBuildingsCom.SetAmountUpgrades(BuildingTypes.Farm, PhotonNetwork.IsMasterClient, amountFarmUpgrades);
+            InitSystem.UpgradesBuildingsCom.SetAmountUpgrades(BuildingTypes.Woodcutter, PhotonNetwork.IsMasterClient, amountWoodcutterUpgrades);
+            InitSystem.UpgradesBuildingsCom.SetAmountUpgrades(BuildingTypes.Mine, PhotonNetwork.IsMasterClient, amountMineUpgrades);
 
             for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
             {
@@ -631,12 +629,12 @@ namespace Assets.Scripts
                     var xyBuilding = (int[])objects[_currentNumber++];
                     xyBuildings.Add(xyBuilding);
                 }
-                InfoBuidlingsDataContainer.SetXyBuildings(buildingType, PhotonNetwork.IsMasterClient, xyBuildings);
+                InitSystem.XyBuildingsCom.SetXyBuildings(buildingType, PhotonNetwork.IsMasterClient, xyBuildings);
             }
 
 
 
-            SysDataGameGeneralElseManager.SyncCellVisionSystems.Run();
+            ElseGameGeneralDataSysManager.SyncCellVisionSystems.Run();
         }
 
         #endregion

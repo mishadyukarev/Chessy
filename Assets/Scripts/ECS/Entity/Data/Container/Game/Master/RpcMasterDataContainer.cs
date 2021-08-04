@@ -5,7 +5,7 @@ namespace Assets.Scripts.Workers
 {
     internal class RpcMasterDataContainer
     {
-        private static EntDataGameMasterElseManager EGMM => Main.Instance.ECSmanager.EntDataGameMasterElseManager;
+        private static SysDataGameMasterManager EGMM => Main.Instance.ECSmanager.SysDataGameMasterManager;
 
         internal static PhotonMessageInfo InfoFrom
         {

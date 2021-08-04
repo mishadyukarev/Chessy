@@ -26,46 +26,9 @@ namespace Assets.Scripts
             else _photonView.ViewID = ValuesConst.NUMBER_PHOTON_VIEW;
         }
 
-        internal void OwnUpdate(SceneTypes sceneType)
+        internal void ToggleScene(SceneTypes sceneType)
         {
-            switch (sceneType)
-            {
-                case SceneTypes.None:
-                    throw new Exception();
-
-                case SceneTypes.Menu:
-                    _sceneManager.OwnUpdate(sceneType);
-                    break;
-
-                case SceneTypes.Game:
-                    _sceneManager.OwnUpdate(sceneType);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
-
-        internal void ToggleScene(SceneTypes sceneType, ECSManager eCSManager)
-        {
-            switch (sceneType)
-            {
-                case SceneTypes.None:
-                    throw new Exception();
-
-                case SceneTypes.Menu:
-                    _sceneManager.ToggleScene(sceneType, eCSManager.EntViewMenuElseManager);
-                    _photonPunRPC.ToggleScene(sceneType);
-                    break;
-
-                case SceneTypes.Game:
-                    _sceneManager.ToggleScene(sceneType, eCSManager.EntViewMenuElseManager);
-                    _photonPunRPC.ToggleScene(sceneType);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
+            _photonPunRPC.ToggleScene(sceneType);
         }
     }
 }

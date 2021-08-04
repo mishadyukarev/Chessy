@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.ECS.System.View.Game.General.UI;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.Workers.Game.UI.Middle
 {
     internal sealed class DownGetterUnitsUIWorker
     {
-        private static EntViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.EntViewGameGeneralUIManager;
+        private static SysViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.SysViewGameGeneralUIManager;
 
         private static Button KingButton => EGGUIM.TakerKingEnt_ButtonCom.Button;
 

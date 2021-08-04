@@ -26,7 +26,6 @@ namespace Assets.Scripts
         private void Update()
         {
             ECSmanager.OwnUpdate(SceneType);
-            _photonManager.OwnUpdate(SceneType);
 
             switch (SceneType)
             {
@@ -49,7 +48,7 @@ namespace Assets.Scripts
             SceneType = sceneType;
 
             ECSmanager.ToggleScene(sceneType);
-            _photonManager.ToggleScene(sceneType, ECSmanager);
+            _photonManager.ToggleScene(sceneType);
 
             switch (sceneType)
             {

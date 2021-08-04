@@ -1,8 +1,10 @@
-﻿namespace Assets.Scripts.Workers.Game.UI.Middle
+﻿using Assets.Scripts.ECS.System.View.Game.General.UI;
+
+namespace Assets.Scripts.Workers.Game.UI.Middle
 {
     internal sealed class UpdatedUIWorker
     {
-        private static EntViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.EntViewGameGeneralUIManager;
+        private static SysViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.SysViewGameGeneralUIManager;
 
         internal static bool IsActivated
         {

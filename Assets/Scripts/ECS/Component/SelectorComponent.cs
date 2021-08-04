@@ -65,7 +65,7 @@ public struct SelectorComponent
         IsSelectedCell = default;
         IsActPickingFire = default;
         CanShiftUnit = default;
-        IsStartSelectedDirect =true;
+        IsStartSelectedDirect = true;
 
         _xyCurrentCell = (int[])xy.Clone();
         _xySelectedCell = (int[])xy.Clone();

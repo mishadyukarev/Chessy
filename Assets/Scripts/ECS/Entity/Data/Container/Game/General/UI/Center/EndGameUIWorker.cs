@@ -1,11 +1,12 @@
-﻿using TMPro;
+﻿using Assets.Scripts.ECS.System.View.Game.General.UI;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.Workers.Game.UI.Middle
 {
     internal sealed class EndGameUIWorker
     {
-        private static EntViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.EntViewGameGeneralUIManager;
+        private static SysViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.SysViewGameGeneralUIManager;
 
         private static GameObject ParentGO => EGGUIM.EndGameEnt_ParentCom.ParentGO;
         private static TextMeshProUGUI TMP => EGGUIM.EndGameEnt_TextMeshProGUICom.TextMeshProUGUI;

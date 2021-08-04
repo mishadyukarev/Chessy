@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Entity.View.Common;
+using Assets.Scripts.ECS.System.View.Common;
 using System;
 using UnityEngine;
 
@@ -7,9 +7,6 @@ namespace Assets.Scripts.Workers.Common
 {
     internal sealed class SoundComWorker
     {
-        private static EntViewCommonElseManager EntManager => Main.Instance.ECSmanager.EntViewCommElseManager;
-
-
         private static AudioSource GetAS(SoundComTypes soundComType)
         {
             switch (soundComType)
@@ -18,7 +15,7 @@ namespace Assets.Scripts.Workers.Common
                     throw new Exception();
 
                 case SoundComTypes.StandartMusic:
-                    return EntManager.StandartMusicEnt_AudioSourceCom.AudioSource;
+                    return MainCommonViewSys.StandartMusicEnt_AudioSourceCom.AudioSource;
 
                 default:
                     throw new Exception();

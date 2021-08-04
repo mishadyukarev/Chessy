@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.System.View.Game.General.UI;
 using System;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -7,7 +8,7 @@ namespace Assets.Scripts.Workers.Game.UI.Left
 {
     internal sealed class LeftBuildUIViewContainer
     {
-        private static EntViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.EntViewGameGeneralUIManager;
+        private static SysViewGameGeneralUIManager EGGUIM => Main.Instance.ECSmanager.SysViewGameGeneralUIManager;
 
         private static Button GetButton(LeftBuildButtonTypes leftBuildButtonType)
         {
