@@ -18,8 +18,8 @@ internal sealed class EconomyUISystem : IEcsRunSystem
 
         var isMasterClient = PhotonNetwork.IsMasterClient;
 
-        var amountFarm = InitSystem.XyBuildingsCom.GetAmountBuild(BuildingTypes.Farm, isMasterClient);
-        var amountUpgradesFarm = InitSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Farm, isMasterClient);
+        var amountFarm = MainGameSystem.XyBuildingsCom.GetAmountBuild(BuildingTypes.Farm, isMasterClient);
+        var amountUpgradesFarm = MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Farm, isMasterClient);
         var extractionOneFarm = InfoExtractionWorker.GetExtractionOneBuilding(BuildingTypes.Farm, amountUpgradesFarm);
 
         var amountAddingFood = 1 + amountFarm * extractionOneFarm
@@ -38,22 +38,22 @@ internal sealed class EconomyUISystem : IEcsRunSystem
 
 
 
-        var amountUpgradesWoodcutter = InitSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, isMasterClient);
-        var amountAddingWood = InitSystem.XyBuildingsCom.GetAmountBuild(BuildingTypes.Woodcutter, isMasterClient)
+        var amountUpgradesWoodcutter = MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, isMasterClient);
+        var amountAddingWood = MainGameSystem.XyBuildingsCom.GetAmountBuild(BuildingTypes.Woodcutter, isMasterClient)
             * InfoExtractionWorker.GetExtractionOneBuilding(BuildingTypes.Woodcutter, amountUpgradesWoodcutter);
 
-        for (int xyIndex = 0; xyIndex < InitSystem.XyUnitsContitionCom.GetAmountUnitsInCondition(ConditionUnitTypes.Relaxed, UnitTypes.Pawn, isMasterClient); xyIndex++)
+        for (int xyIndex = 0; xyIndex < MainGameSystem.XyUnitsContitionCom.GetAmountUnitsInCondition(ConditionUnitTypes.Relaxed, UnitTypes.Pawn, isMasterClient); xyIndex++)
         {
-            var xy = InitSystem.XyUnitsContitionCom.GetXyInConditionByIndex(ConditionUnitTypes.Relaxed, UnitTypes.Pawn, isMasterClient, xyIndex);
+            var xy = MainGameSystem.XyUnitsContitionCom.GetXyInConditionByIndex(ConditionUnitTypes.Relaxed, UnitTypes.Pawn, isMasterClient, xyIndex);
 
             if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
             {
                 amountAddingWood += 1;
             }
         }
-        for (int xyIndex = 0; xyIndex < InitSystem.XyUnitsContitionCom.GetAmountUnitsInCondition(ConditionUnitTypes.Relaxed, UnitTypes.PawnSword, isMasterClient); xyIndex++)
+        for (int xyIndex = 0; xyIndex < MainGameSystem.XyUnitsContitionCom.GetAmountUnitsInCondition(ConditionUnitTypes.Relaxed, UnitTypes.PawnSword, isMasterClient); xyIndex++)
         {
-            var xy = InitSystem.XyUnitsContitionCom.GetXyInConditionByIndex(ConditionUnitTypes.Relaxed, UnitTypes.PawnSword, isMasterClient, xyIndex);
+            var xy = MainGameSystem.XyUnitsContitionCom.GetXyInConditionByIndex(ConditionUnitTypes.Relaxed, UnitTypes.PawnSword, isMasterClient, xyIndex);
 
             if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
             {
@@ -65,8 +65,8 @@ internal sealed class EconomyUISystem : IEcsRunSystem
 
 
 
-        var amountUpgradesMine = InitSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Mine, isMasterClient);
-        var amountAddingOre = InitSystem.XyBuildingsCom.GetAmountBuild(BuildingTypes.Mine, isMasterClient)
+        var amountUpgradesMine = MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Mine, isMasterClient);
+        var amountAddingOre = MainGameSystem.XyBuildingsCom.GetAmountBuild(BuildingTypes.Mine, isMasterClient)
             * InfoExtractionWorker.GetExtractionOneBuilding(BuildingTypes.Mine, amountUpgradesMine);
 
         ResourcesViewUIWorker.SetAddingText(ResourceTypes.Ore, "+ " + amountAddingOre);

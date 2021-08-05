@@ -1,15 +1,14 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using System;
 
 namespace Assets.Scripts.Workers.Game.UI.Left
 {
     internal class EnvirZoneLeftUIViewContainer
     {
-        private static GameGeneralSystemManager EGGUIM => Main.Instance.ECSmanager.GameGeneralSystemManager;
+        internal static bool IsActivatedEnvrInfo => MainGameSystem.EnvironmentInfoEnt_IsActivatedCom.IsActivated;
 
-        internal static bool IsActivatedEnvrInfo => EGGUIM.EnvironmentInfoEnt_IsActivatedCom.IsActivated;
-
-        internal static void SetActiveZone(bool isActive) => EGGUIM.EnvironmentZoneEnt_ParentCom.ParentGO.SetActive(isActive);
+        internal static void SetActiveZone(bool isActive) => MainGameSystem.EnvironmentZoneEnt_ParentCom.ParentGO.SetActive(isActive);
         internal static void SetTextInfoCell(EnvirTextInfoTypes envirTextInfoTypes, string text)
         {
             switch (envirTextInfoTypes)
@@ -18,15 +17,15 @@ namespace Assets.Scripts.Workers.Game.UI.Left
                     throw new Exception();
 
                 case EnvirTextInfoTypes.Fertilizer:
-                    EGGUIM.EnvFerilizerEnt_TextMeshProUGUICom.TextMeshProUGUI.text = text;
+                    MainGameSystem.EnvFerilizerEnt_TextMeshProUGUICom.TextMeshProUGUI.text = text;
                     break;
 
                 case EnvirTextInfoTypes.Wood:
-                    EGGUIM.EnvForestEnt_TextMeshProUGUICom.TextMeshProUGUI.text = text;
+                    MainGameSystem.EnvForestEnt_TextMeshProUGUICom.TextMeshProUGUI.text = text;
                     break;
 
                 case EnvirTextInfoTypes.Ore:
-                    EGGUIM.EnvOreEnt_TextMeshProUGUICom.TextMeshProUGUI.text = text;
+                    MainGameSystem.EnvOreEnt_TextMeshProUGUICom.TextMeshProUGUI.text = text;
                     break;
 
                 default:

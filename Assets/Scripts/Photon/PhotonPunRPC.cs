@@ -22,7 +22,6 @@ namespace Assets.Scripts
     {
         private static PhotonView _photonView;
 
-        private GameGeneralSystemManager EGGUIM => Instance.ECSmanager.GameGeneralSystemManager;
         private GameMasterSystemManager EMM => Instance.ECSmanager.GameMasterSystemManager;
 
         private GameOtherSystemManager EntOM => Instance.ECSmanager.GameOtherSystemManager;
@@ -241,7 +240,7 @@ namespace Assets.Scripts
         private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _currentNumber = 0;
-            InitSystem.FromInfoCom.FromInfo = infoFrom;
+            MainGameSystem.FromInfoCom.FromInfo = infoFrom;
 
             switch (rpcGeneralType)
             {
@@ -253,7 +252,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.ActiveAmountMotionUI:
-                    EGGUIM.MotionEnt_ActivatedCom.IsActivated = true;
+                    MainGameSystem.MotionEnt_ActivatedCom.IsActivated = true;
                     break;
 
                 case RpcGeneralTypes.GetAvailableCellsForSetting:
@@ -261,8 +260,8 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.EndGame:
-                    EGGUIM.EndGameEnt_EndGameCom.IsEndGame = true;
-                    EGGUIM.EndGameEnt_EndGameCom.PlayerWinner = PhotonNetwork.PlayerList[(int)objects[_currentNumber++] - 1];
+                    MainGameSystem.EndGameEnt_EndGameCom.IsEndGame = true;
+                    MainGameSystem.EndGameEnt_EndGameCom.PlayerWinner = PhotonNetwork.PlayerList[(int)objects[_currentNumber++] - 1];
                     break;
 
                 case RpcGeneralTypes.Attack:
@@ -289,15 +288,15 @@ namespace Assets.Scripts
                             var haveIron = haves[3];
                             var haveGold = haves[4];
 
-                            if (!haveFood) InitSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Food);
-                            if (!haveWood) InitSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Wood);
-                            if (!haveOre) InitSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Ore);
-                            if (!haveIron) InitSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Iron);
-                            if (!haveGold) InitSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Gold);
+                            if (!haveFood) MainGameSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Food);
+                            if (!haveWood) MainGameSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Wood);
+                            if (!haveOre) MainGameSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Ore);
+                            if (!haveIron) MainGameSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Iron);
+                            if (!haveGold) MainGameSystem.MistakeEconomyCom.InvokeEconomyMistake(ResourceTypes.Gold);
                             break;
 
                         case MistakeTypes.NeedKing:
-                            EGGUIM.DonerUIEnt_MistakeCom.MistakeUnityEvent.Invoke();
+                            MainGameSystem.DonerUIEnt_MistakeCom.MistakeUnityEvent.Invoke();
                             break;
 
                         case MistakeTypes.NeedSteps:
@@ -350,11 +349,11 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case RpcOtherTypes.SetAmountMotion:
-                    EGGUIM.MotionEnt_AmountCom.AmountMotions = (int)objects[_currentNumber++];
+                     MainGameSystem.MotionEnt_AmountCom.AmountMotions = (int)objects[_currentNumber++];
                     break;
 
                 case RpcOtherTypes.SetStepModType:
-                    MainCommonSystem.CommonZoneEnt_SaverCom.StepModeType = (StepModeTypes)objects[_currentNumber++];
+                    MainCommonSystem.CommonEnt_SaverCom.StepModeType = (StepModeTypes)objects[_currentNumber++];
                     break;
 
                 default:
@@ -415,7 +414,7 @@ namespace Assets.Scripts
 
 
 
-            listObjects.Add(MainCommonSystem.CommonZoneEnt_SaverCom.StepModeType);
+            listObjects.Add(MainCommonSystem.CommonEnt_SaverCom.StepModeType);
             listObjects.Add(MiddleUIDataContainer.IsStartedGame);
 
 
@@ -435,27 +434,27 @@ namespace Assets.Scripts
 
             for (UnitTypes unitTypeType = (UnitTypes)1; (byte)unitTypeType < Enum.GetNames(typeof(UnitTypes)).Length; unitTypeType++)
             {
-                var amountUnitsInGame = InitSystem.XyUnitsCom.GetAmountUnitsInGame(unitTypeType, false);
+                var amountUnitsInGame = MainGameSystem.XyUnitsCom.GetAmountUnitsInGame(unitTypeType, false);
                 listObjects.Add(amountUnitsInGame);
                 for (int indexXy = 0; indexXy < amountUnitsInGame; indexXy++)
                 {
-                    listObjects.Add(InitSystem.XyUnitsCom.GetXyUnitInGame(unitTypeType, false, indexXy));
+                    listObjects.Add(MainGameSystem.XyUnitsCom.GetXyUnitInGame(unitTypeType, false, indexXy));
                 }
             }
 
 
 
-            listObjects.Add(InitSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Farm, false));
-            listObjects.Add(InitSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, false));
-            listObjects.Add(InitSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Mine, false));
+            listObjects.Add(MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Farm, false));
+            listObjects.Add(MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, false));
+            listObjects.Add(MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Mine, false));
 
             for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
             {
-                var amountBuildingsInGame = InitSystem.XyBuildingsCom.GetAmountBuild(buildingType, false);
+                var amountBuildingsInGame = MainGameSystem.XyBuildingsCom.GetAmountBuild(buildingType, false);
                 listObjects.Add(amountBuildingsInGame);
                 for (int indexXy = 0; indexXy < amountBuildingsInGame; indexXy++)
                 {
-                    listObjects.Add(InitSystem.XyBuildingsCom.GetXyBuildByIndex(buildingType, false, indexXy));
+                    listObjects.Add(MainGameSystem.XyBuildingsCom.GetXyBuildByIndex(buildingType, false, indexXy));
                 }
             }
 
@@ -562,7 +561,7 @@ namespace Assets.Scripts
 
 
 
-            MainCommonSystem.CommonZoneEnt_SaverCom.StepModeType = (StepModeTypes)objects[_currentNumber++];
+            MainCommonSystem.CommonEnt_SaverCom.StepModeType = (StepModeTypes)objects[_currentNumber++];
 
 
 
@@ -604,7 +603,7 @@ namespace Assets.Scripts
                     var xyUnit = (int[])objects[_currentNumber++];
                     xyUnits.Add(xyUnit);
                 }
-                InitSystem.XyUnitsCom.SetAmountUnitInGame(unitTypeType, PhotonNetwork.IsMasterClient, xyUnits);
+                MainGameSystem.XyUnitsCom.SetAmountUnitInGame(unitTypeType, PhotonNetwork.IsMasterClient, xyUnits);
             }
 
 
@@ -612,9 +611,9 @@ namespace Assets.Scripts
             var amountFarmUpgrades = (int)objects[_currentNumber++];
             var amountWoodcutterUpgrades = (int)objects[_currentNumber++];
             var amountMineUpgrades = (int)objects[_currentNumber++];
-            InitSystem.UpgradesBuildingsCom.SetAmountUpgrades(BuildingTypes.Farm, PhotonNetwork.IsMasterClient, amountFarmUpgrades);
-            InitSystem.UpgradesBuildingsCom.SetAmountUpgrades(BuildingTypes.Woodcutter, PhotonNetwork.IsMasterClient, amountWoodcutterUpgrades);
-            InitSystem.UpgradesBuildingsCom.SetAmountUpgrades(BuildingTypes.Mine, PhotonNetwork.IsMasterClient, amountMineUpgrades);
+            MainGameSystem.UpgradesBuildingsCom.SetAmountUpgrades(BuildingTypes.Farm, PhotonNetwork.IsMasterClient, amountFarmUpgrades);
+            MainGameSystem.UpgradesBuildingsCom.SetAmountUpgrades(BuildingTypes.Woodcutter, PhotonNetwork.IsMasterClient, amountWoodcutterUpgrades);
+            MainGameSystem.UpgradesBuildingsCom.SetAmountUpgrades(BuildingTypes.Mine, PhotonNetwork.IsMasterClient, amountMineUpgrades);
 
             for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
             {
@@ -626,7 +625,7 @@ namespace Assets.Scripts
                     var xyBuilding = (int[])objects[_currentNumber++];
                     xyBuildings.Add(xyBuilding);
                 }
-                InitSystem.XyBuildingsCom.SetXyBuildings(buildingType, PhotonNetwork.IsMasterClient, xyBuildings);
+                MainGameSystem.XyBuildingsCom.SetXyBuildings(buildingType, PhotonNetwork.IsMasterClient, xyBuildings);
             }
 
 

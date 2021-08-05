@@ -14,14 +14,14 @@ namespace Assets.Scripts.ECS.System.View.Game.General.Cell
 
         public void Init()
         {
-            var cellGO = MainCommonSystem.ResourcesEnt_ResourcesCommonCom.PrefabConfig.CellGO;
-            var whiteCellSR = MainCommonSystem.ResourcesEnt_ResourcesCommonCom.SpritesConfig.WhiteSprite;
-            var blackCellSR = MainCommonSystem.ResourcesEnt_ResourcesCommonCom.SpritesConfig.BlackSprite;
+            var cellGO = MainCommonSystem.CommonEnt_ResourcesCommonCom.PrefabConfig.CellGO;
+            var whiteCellSR = MainCommonSystem.CommonEnt_ResourcesCommonCom.SpritesConfig.WhiteSprite;
+            var blackCellSR = MainCommonSystem.CommonEnt_ResourcesCommonCom.SpritesConfig.BlackSprite;
 
             CellGOs = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
 
             var supportParentForCells = new GameObject("Cells");
-            MainCommonSystem.ToggleZoneEnt_ParentCom.Attach(supportParentForCells.transform);
+            MainCommonSystem.CommonEnt_ParentCom.Attach(supportParentForCells.transform);
 
 
             for (int x = 0; x < CELL_COUNT_X; x++)

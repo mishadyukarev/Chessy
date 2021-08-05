@@ -15,7 +15,7 @@ namespace Assets.Scripts.Workers.Common
                     throw new Exception();
 
                 case SoundComTypes.StandartMusic:
-                    return MainCommonSystem.StandartMusicEnt_AudioSourceCom.AudioSource;
+                    return MainCommonSystem.CommonEnt_AudioSourceCom.AudioSource;
 
                 default:
                     throw new Exception();

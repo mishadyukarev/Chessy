@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.ECS.System.View.Game.General.Cell;
 using Assets.Scripts.Workers.Game.UI;
@@ -28,7 +29,7 @@ internal sealed class UpdateMotionMasterSystem : SystemMasterReduction
         DownDonerUIDataContainer.SetDoned(true, false);
         DownDonerUIDataContainer.SetDoned(false, false);
 
-        Main.Instance.ECSmanager.GameGeneralSystemManager.MotionEnt_AmountCom.AmountMotions += 1;
+        MainGameSystem.MotionEnt_AmountCom.AmountMotions += 1;
 
 
         int amountAdultForest = 0;

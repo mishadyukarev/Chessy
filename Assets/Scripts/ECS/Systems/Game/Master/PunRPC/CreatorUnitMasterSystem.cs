@@ -15,7 +15,7 @@ internal sealed class CreatorUnitMasterSystem : SystemMasterReduction
         if (ResourcesUIDataContainer.CanCreateUnit(UnitType, RpcMasterDataContainer.InfoFrom.Sender, out bool[] haves))
         {
             ResourcesUIDataContainer.BuyCreateUnit(UnitType, RpcMasterDataContainer.InfoFrom.Sender);
-            InitSystem.UnitInventorCom.AddUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
+            MainGameSystem.UnitInventorCom.AddUnitsInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
 
             PhotonPunRPC.SoundToGeneral(RpcMasterDataContainer.InfoFrom.Sender, SoundEffectTypes.SoundGoldPack);
         }

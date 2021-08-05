@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using System;
 using TMPro;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace Assets.Scripts.Workers.Game.UI
 
         #region Parent
 
-        internal static void SetActiveRightZoneGO(bool isActive) => EGGUIM.RightZoneEnt_ParentCom.ParentGO.SetActive(isActive);
+        internal static void SetActiveRightZoneGO(bool isActive) => MainGameSystem.RightZoneEnt_ParentCom.ParentGO.SetActive(isActive);
 
         private static GameObject GetParentZoneGO(UnitUIZoneTypes unitUIZoneType)
         {
@@ -23,16 +24,16 @@ namespace Assets.Scripts.Workers.Game.UI
                     throw new Exception();
 
                 case UnitUIZoneTypes.Stats:
-                    return EGGUIM.StatsEnt_ParentCom.ParentGO;
+                    return MainGameSystem.StatsEnt_ParentCom.ParentGO;
 
                 case UnitUIZoneTypes.Condition:
-                    return EGGUIM.ConditionZoneEnt_ParentGOCom.ParentGO;
+                    return MainGameSystem.ConditionZoneEnt_ParentGOCom.ParentGO;
 
                 case UnitUIZoneTypes.Unique:
-                    return EGGUIM.UniquePareZoneEnt_ParentCom.ParentGO;
+                    return MainGameSystem.UniquePareZoneEnt_ParentCom.ParentGO;
 
                 case UnitUIZoneTypes.Building:
-                    return EGGUIM.BuildingAbilitiesZoneEnt_ParentCom.ParentGO;
+                    return MainGameSystem.BuildingAbilitiesZoneEnt_ParentCom.ParentGO;
 
                 default:
                     throw new Exception();
@@ -48,7 +49,7 @@ namespace Assets.Scripts.Workers.Game.UI
                     throw new Exception();
 
                 case UnitUIZoneTypes.Condition:
-                    return EGGUIM.ConditionZoneEnt_TextMeshProUGUICom.TextMeshProUGUI;
+                    return MainGameSystem.ConditionZoneEnt_TextMeshProUGUICom.TextMeshProUGUI;
 
                 case UnitUIZoneTypes.Unique:
                     throw new Exception();
@@ -75,16 +76,16 @@ namespace Assets.Scripts.Workers.Game.UI
                     throw new Exception();
 
                 case StatUITypes.Health:
-                    return EGGUIM.HealthUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
+                    return MainGameSystem.HealthUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
 
                 case StatUITypes.Damage:
-                    return EGGUIM.DamageUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
+                    return MainGameSystem.DamageUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
 
                 case StatUITypes.Protiction:
-                    return EGGUIM.PowerProtectionUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
+                    return MainGameSystem.PowerProtectionUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
 
                 case StatUITypes.Steps:
-                    return EGGUIM.AmountStepsUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
+                    return MainGameSystem.AmountStepsUIEnt_TextMeshProUGUICom.TextMeshProUGUI;
 
                 default:
                     throw new Exception();
@@ -106,10 +107,10 @@ namespace Assets.Scripts.Workers.Game.UI
                     throw new Exception();
 
                 case ConditionUnitTypes.Protected:
-                    return EGGUIM.ProtectConditionEnt_ButtonCom.Button;
+                    return MainGameSystem.ProtectConditionEnt_ButtonCom.Button;
 
                 case ConditionUnitTypes.Relaxed:
-                    return EGGUIM.RelaxConditionEnt_ButtonCom.Button;
+                    return MainGameSystem.RelaxConditionEnt_ButtonCom.Button;
 
                 default:
                     throw new Exception();
@@ -131,13 +132,13 @@ namespace Assets.Scripts.Workers.Game.UI
                     throw new Exception();
 
                 case UniqueAbilitiesTypes.First:
-                    return EGGUIM.Unique1AbilityEnt_ButtonCom.Button;
+                    return MainGameSystem.Unique1AbilityEnt_ButtonCom.Button;
 
                 case UniqueAbilitiesTypes.Second:
-                    return EGGUIM.Unique2AbilityEnt_ButtonCom.Button;
+                    return MainGameSystem.Unique2AbilityEnt_ButtonCom.Button;
 
                 case UniqueAbilitiesTypes.Third:
-                    return EGGUIM.Unique3AbilityEnt_ButtonCom.Button;
+                    return MainGameSystem.Unique3AbilityEnt_ButtonCom.Button;
 
                 default:
                     throw new Exception();
@@ -151,13 +152,13 @@ namespace Assets.Scripts.Workers.Game.UI
                     throw new Exception();
 
                 case UniqueAbilitiesTypes.First:
-                    return EGGUIM.Unique1AbilityEnt_TextMeshProGUICom.TextMeshProUGUI;
+                    return MainGameSystem.Unique1AbilityEnt_TextMeshProGUICom.TextMeshProUGUI;
 
                 case UniqueAbilitiesTypes.Second:
-                    return EGGUIM.Unique2AbilityEnt_TextMeshProGUICom.TextMeshProUGUI;
+                    return MainGameSystem.Unique2AbilityEnt_TextMeshProGUICom.TextMeshProUGUI;
 
                 case UniqueAbilitiesTypes.Third:
-                    return EGGUIM.Unique3AbilityEnt_TextMeshProGUICom.TextMeshProUGUI;
+                    return MainGameSystem.Unique3AbilityEnt_TextMeshProGUICom.TextMeshProUGUI;
 
                 default:
                     throw new Exception();
@@ -182,13 +183,13 @@ namespace Assets.Scripts.Workers.Game.UI
                     throw new Exception();
 
                 case BuildingButtonTypes.First:
-                    return EGGUIM.BuildingFirstAbilityEnt_ButtonCom.Button;
+                    return MainGameSystem.BuildingFirstAbilityEnt_ButtonCom.Button;
 
                 case BuildingButtonTypes.Second:
-                    return EGGUIM.BuildingSecondAbilityEnt_ButtonCom.Button;
+                    return MainGameSystem.BuildingSecondAbilityEnt_ButtonCom.Button;
 
                 case BuildingButtonTypes.Third:
-                    return EGGUIM.BuildingThirdAbilityEnt_ButtonCom.Button;
+                    return MainGameSystem.BuildingThirdAbilityEnt_ButtonCom.Button;
 
                 default:
                     throw new Exception();
@@ -202,13 +203,13 @@ namespace Assets.Scripts.Workers.Game.UI
                     throw new Exception();
 
                 case BuildingButtonTypes.First:
-                    return EGGUIM.BuildingFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI;
+                    return MainGameSystem.BuildingFirstAbilityEnt_TextMeshProGUICom.TextMeshProUGUI;
 
                 case BuildingButtonTypes.Second:
-                    return EGGUIM.BuildingSecondAbilityEnt_TextMeshProGUICom.TextMeshProUGUI;
+                    return MainGameSystem.BuildingSecondAbilityEnt_TextMeshProGUICom.TextMeshProUGUI;
 
                 case BuildingButtonTypes.Third:
-                    return EGGUIM.BuildingThirdAbilityEnt_TextMeshProGUICom.TextMeshProUGUI;
+                    return MainGameSystem.BuildingThirdAbilityEnt_TextMeshProGUICom.TextMeshProUGUI;
 
                 default:
                     throw new Exception();

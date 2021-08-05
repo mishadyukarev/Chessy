@@ -1,17 +1,16 @@
-﻿using TMPro;
+﻿using Assets.Scripts.ECS.Game.General.Systems.StartFill;
+using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.Workers.Game.UI.Middle
 {
     internal sealed class EndGameUIWorker
     {
-        private static GameGeneralSystemManager EGGUIM => Main.Instance.ECSmanager.GameGeneralSystemManager;
+        private static GameObject ParentGO =>  MainGameSystem.EndGameEnt_ParentCom.ParentGO;
+        private static TextMeshProUGUI TMP =>  MainGameSystem.EndGameEnt_TextMeshProGUICom.TextMeshProUGUI;
 
-        private static GameObject ParentGO => EGGUIM.EndGameEnt_ParentCom.ParentGO;
-        private static TextMeshProUGUI TMP => EGGUIM.EndGameEnt_TextMeshProGUICom.TextMeshProUGUI;
-
-        internal static bool IsLocalWinnet => EGGUIM.EndGameEnt_EndGameCom.PlayerWinner.IsLocal;
-        internal static bool IsEndGame => EGGUIM.EndGameEnt_EndGameCom.IsEndGame;
+        internal static bool IsLocalWinnet =>  MainGameSystem.EndGameEnt_EndGameCom.PlayerWinner.IsLocal;
+        internal static bool IsEndGame =>  MainGameSystem.EndGameEnt_EndGameCom.IsEndGame;
         internal static string Text
         {
             get => TMP.text;

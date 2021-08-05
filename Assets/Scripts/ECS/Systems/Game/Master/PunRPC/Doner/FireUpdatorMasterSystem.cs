@@ -38,7 +38,7 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                             var key = CellUnitsDataSystem.IsMasterClient(xy);
 
                             xyUnitsCom.RemoveAmountUnitsInGame(unitType, key, xy);
-                            InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(conditionType, unitType, key, xy);
+                            MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(conditionType, unitType, key, xy);
                             CellUnitsDataSystem.ResetUnit(xy);
                         }
                     }
@@ -52,7 +52,7 @@ internal sealed class FireUpdatorMasterSystem : SystemMasterReduction
                             var buildType = CellBuildDataSystem.BuildTypeCom(xy).BuildingType;
                             var key = CellBuildDataSystem.OwnerCom(xy).IsMasterClient;
 
-                            InitSystem.XyBuildingsCom.RemoveXyBuild(buildType, key, xy);
+                            MainGameSystem.XyBuildingsCom.RemoveXyBuild(buildType, key, xy);
                             CellBuildDataSystem.ResetBuild(xy);
                         }
 

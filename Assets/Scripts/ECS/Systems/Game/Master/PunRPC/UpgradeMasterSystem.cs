@@ -53,7 +53,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                     var preKey = CellUnitsDataSystem.IsMasterClient(XyCellForUpgrade);
                                     var preMaxHealth = CellUnitsDataSystem.MaxAmountHealth(preUnitType);
 
-                                    InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(preConditionType, preUnitType, preKey, XyCellForUpgrade);
+                                    MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(preConditionType, preUnitType, preKey, XyCellForUpgrade);
                                     xyUnitsCom.RemoveAmountUnitsInGame(preUnitType, preKey, XyCellForUpgrade);
 
 
@@ -65,7 +65,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                     CellUnitsDataSystem.AddAmountHealth(XyCellForUpgrade, newMaxHealth - preMaxHealth);
 
                                     xyUnitsCom.AddAmountUnitInGame(newUnitType, preKey, XyCellForUpgrade);
-                                    InitSystem.XyUnitsContitionCom.AddUnitInCondition(preConditionType, newUnitType, preKey, XyCellForUpgrade);
+                                    MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(preConditionType, newUnitType, preKey, XyCellForUpgrade);
 
 
                                     if (CellUnitsDataSystem.IsMelee(XyCellForUpgrade))

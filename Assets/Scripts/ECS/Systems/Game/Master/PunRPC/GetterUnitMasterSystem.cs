@@ -19,7 +19,7 @@ internal sealed class GetterUnitMasterSystem : SystemMasterReduction
                 throw new Exception();
 
             case UnitTypes.King:
-                isGetted = InitSystem.UnitInventorCom.HaveUnitInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
+                isGetted = MainGameSystem.UnitInventorCom.HaveUnitInInventor(UnitType, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient);
                 if (isGetted)
                 {
                     unitType = UnitType;
@@ -27,12 +27,12 @@ internal sealed class GetterUnitMasterSystem : SystemMasterReduction
                 break;
 
             case UnitTypes.Pawn:
-                if (InitSystem.UnitInventorCom.HaveUnitInInventor(UnitTypes.PawnSword, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
+                if (MainGameSystem.UnitInventorCom.HaveUnitInInventor(UnitTypes.PawnSword, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType + 1;
                 }
-                else if (InitSystem.UnitInventorCom.HaveUnitInInventor(UnitTypes.Pawn, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
+                else if (MainGameSystem.UnitInventorCom.HaveUnitInInventor(UnitTypes.Pawn, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType;
@@ -43,12 +43,12 @@ internal sealed class GetterUnitMasterSystem : SystemMasterReduction
                 throw new Exception();
 
             case UnitTypes.Rook:
-                if (InitSystem.UnitInventorCom.HaveUnitInInventor(UnitTypes.RookCrossbow, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
+                if (MainGameSystem.UnitInventorCom.HaveUnitInInventor(UnitTypes.RookCrossbow, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType + 1;
                 }
-                else if (InitSystem.UnitInventorCom.HaveUnitInInventor(UnitTypes.Rook, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
+                else if (MainGameSystem.UnitInventorCom.HaveUnitInInventor(UnitTypes.Rook, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType;
@@ -59,12 +59,12 @@ internal sealed class GetterUnitMasterSystem : SystemMasterReduction
                 throw new Exception();
 
             case UnitTypes.Bishop:
-                if (InitSystem.UnitInventorCom.HaveUnitInInventor(UnitTypes.BishopCrossbow, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
+                if (MainGameSystem.UnitInventorCom.HaveUnitInInventor(UnitTypes.BishopCrossbow, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType + 1;
                 }
-                else if (InitSystem.UnitInventorCom.HaveUnitInInventor(UnitTypes.Bishop, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
+                else if (MainGameSystem.UnitInventorCom.HaveUnitInInventor(UnitTypes.Bishop, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType;

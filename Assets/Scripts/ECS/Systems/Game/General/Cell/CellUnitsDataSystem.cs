@@ -1084,7 +1084,7 @@ namespace Assets.Scripts.ECS.System.Data.Game.General.Cell
                     {
                         if (!HaveAnyUnit(xy))
                         {
-                            if (InitSystem.XyStartCellsCom.IsStartedCell(player.IsMasterClient, xy))
+                            if (MainGameSystem.XyStartCellsCom.IsStartedCell(player.IsMasterClient, xy))
                             {
                                 list.Add(new int[] { x, y });
                             }

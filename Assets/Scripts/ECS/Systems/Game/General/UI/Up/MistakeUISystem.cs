@@ -15,11 +15,11 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View
 
         public void Init()
         {
-            InitSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Food, delegate { MistakeEnvironment(ResourceTypes.Food); });
-            InitSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Wood, delegate { MistakeEnvironment(ResourceTypes.Wood); });
-            InitSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Ore, delegate { MistakeEnvironment(ResourceTypes.Ore); });
-            InitSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Iron, delegate { MistakeEnvironment(ResourceTypes.Iron); });
-            InitSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Gold, delegate { MistakeEnvironment(ResourceTypes.Gold); });
+            MainGameSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Food, delegate { MistakeEnvironment(ResourceTypes.Food); });
+            MainGameSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Wood, delegate { MistakeEnvironment(ResourceTypes.Wood); });
+            MainGameSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Ore, delegate { MistakeEnvironment(ResourceTypes.Ore); });
+            MainGameSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Iron, delegate { MistakeEnvironment(ResourceTypes.Iron); });
+            MainGameSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Gold, delegate { MistakeEnvironment(ResourceTypes.Gold); });
         }
 
         public void Run()

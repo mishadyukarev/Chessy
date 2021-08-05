@@ -28,11 +28,11 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
 
 
 
-            for (int xyIndex = 0; xyIndex < InitSystem.XyBuildingsCom.GetAmountBuild(BuildingTypes.Farm, isMasterKey); xyIndex++)
+            for (int xyIndex = 0; xyIndex < MainGameSystem.XyBuildingsCom.GetAmountBuild(BuildingTypes.Farm, isMasterKey); xyIndex++)
             {
-                var xy = InitSystem.XyBuildingsCom.GetXyBuildByIndex(BuildingTypes.Farm, isMasterKey, xyIndex);
+                var xy = MainGameSystem.XyBuildingsCom.GetXyBuildByIndex(BuildingTypes.Farm, isMasterKey, xyIndex);
 
-                minus = InfoExtractionWorker.GetExtractionOneBuilding(BuildingTypes.Farm, InitSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Farm, isMasterKey));
+                minus = InfoExtractionWorker.GetExtractionOneBuilding(BuildingTypes.Farm, MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Farm, isMasterKey));
 
                 CellEnvrDataSystem.TakeAmountResources(EnvironmentTypes.Fertilizer, xy, minus);
                 ResourcesUIDataContainer.AddAmountResources(ResourceTypes.Food, isMasterKey, minus);
@@ -41,7 +41,7 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
                 {
                     CellEnvrDataSystem.ResetEnvironment(EnvironmentTypes.Fertilizer, xy);
 
-                    InitSystem.XyBuildingsCom.RemoveXyBuild(BuildingTypes.Farm, isMasterKey, xyIndex);
+                    MainGameSystem.XyBuildingsCom.RemoveXyBuild(BuildingTypes.Farm, isMasterKey, xyIndex);
                     CellBuildDataSystem.ResetBuild(xy);
                 }
             }
@@ -50,11 +50,11 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
 
 
 
-            for (int xyIndex = 0; xyIndex < InitSystem.XyBuildingsCom.GetAmountBuild(BuildingTypes.Woodcutter, isMasterKey); xyIndex++)
+            for (int xyIndex = 0; xyIndex < MainGameSystem.XyBuildingsCom.GetAmountBuild(BuildingTypes.Woodcutter, isMasterKey); xyIndex++)
             {
-                var xy = InitSystem.XyBuildingsCom.GetXyBuildByIndex(BuildingTypes.Woodcutter, isMasterKey, xyIndex);
+                var xy = MainGameSystem.XyBuildingsCom.GetXyBuildByIndex(BuildingTypes.Woodcutter, isMasterKey, xyIndex);
 
-                minus = InfoExtractionWorker.GetExtractionOneBuilding(BuildingTypes.Woodcutter, InitSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, isMasterKey));
+                minus = InfoExtractionWorker.GetExtractionOneBuilding(BuildingTypes.Woodcutter, MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, isMasterKey));
 
                 CellEnvrDataSystem.TakeAmountResources(EnvironmentTypes.AdultForest, xy, minus);
                 ResourcesUIDataContainer.AddAmountResources(ResourceTypes.Wood, isMasterKey, minus);
@@ -63,7 +63,7 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
                 {
                     CellEnvrDataSystem.ResetEnvironment(EnvironmentTypes.AdultForest, xy);
 
-                    InitSystem.XyBuildingsCom.RemoveXyBuild(BuildingTypes.Woodcutter, isMasterKey, xyIndex);
+                    MainGameSystem.XyBuildingsCom.RemoveXyBuild(BuildingTypes.Woodcutter, isMasterKey, xyIndex);
                     CellBuildDataSystem.ResetBuild(xy);
 
                     if (CellFireDataSystem.HaveFireCom(xy).HaveFire)
@@ -74,11 +74,11 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
             }
 
 
-            for (int xyIndex = 0; xyIndex < InitSystem.XyBuildingsCom.GetAmountBuild(BuildingTypes.Mine, isMasterKey); xyIndex++)
+            for (int xyIndex = 0; xyIndex < MainGameSystem.XyBuildingsCom.GetAmountBuild(BuildingTypes.Mine, isMasterKey); xyIndex++)
             {
-                var xy = InitSystem.XyBuildingsCom.GetXyBuildByIndex(BuildingTypes.Mine, isMasterKey, xyIndex);
+                var xy = MainGameSystem.XyBuildingsCom.GetXyBuildByIndex(BuildingTypes.Mine, isMasterKey, xyIndex);
 
-                minus = InfoExtractionWorker.GetExtractionOneBuilding(BuildingTypes.Mine, InitSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Mine, isMasterKey));
+                minus = InfoExtractionWorker.GetExtractionOneBuilding(BuildingTypes.Mine, MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Mine, isMasterKey));
 
                 CellEnvrDataSystem.TakeAmountResources(EnvironmentTypes.Hill, xy, minus);
                 ResourcesUIDataContainer.AddAmountResources(ResourceTypes.Ore, isMasterKey, minus);
@@ -91,7 +91,7 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
                 {
                     if (CellBuildDataSystem.OwnerCom(xy).HaveOwner)
                     {
-                        InitSystem.XyBuildingsCom.RemoveXyBuild(BuildingTypes.Mine, isMasterKey, xyIndex);
+                        MainGameSystem.XyBuildingsCom.RemoveXyBuild(BuildingTypes.Mine, isMasterKey, xyIndex);
                     }
                     CellBuildDataSystem.ResetBuild(xy);
 
@@ -106,13 +106,13 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
             {
                 var curConditionType = ConditionUnitTypes.Relaxed;
 
-                for (int xyIndex = 0; xyIndex < InitSystem.XyUnitsContitionCom.GetAmountUnitsInCondition(curConditionType, unitType, isMasterKey); xyIndex++)
+                for (int xyIndex = 0; xyIndex < MainGameSystem.XyUnitsContitionCom.GetAmountUnitsInCondition(curConditionType, unitType, isMasterKey); xyIndex++)
                 {
-                    var xy = InitSystem.XyUnitsContitionCom.GetXyInConditionByIndex(curConditionType, unitType, isMasterKey, xyIndex);
+                    var xy = MainGameSystem.XyUnitsContitionCom.GetXyInConditionByIndex(curConditionType, unitType, isMasterKey, xyIndex);
 
                     if (CellFireDataSystem.HaveFireCom(xy).HaveFire)
                     {
-                        InitSystem.XyUnitsContitionCom.ReplaceCondition(curConditionType, ConditionUnitTypes.None, unitType, isMasterKey, xy);
+                        MainGameSystem.XyUnitsContitionCom.ReplaceCondition(curConditionType, ConditionUnitTypes.None, unitType, isMasterKey, xy);
                         CellUnitsDataSystem.SetConditionType(ConditionUnitTypes.None, xy);
                     }
 
@@ -135,26 +135,26 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
                                         }
                                         else
                                         {
-                                            InitSystem.XyUnitsContitionCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, unitType, isMasterKey, xy);
+                                            MainGameSystem.XyUnitsContitionCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, unitType, isMasterKey, xy);
                                             CellUnitsDataSystem.SetConditionType(ConditionUnitTypes.Protected, xy);
                                         }
                                     }
                                     else
                                     {
                                         CellBuildDataSystem.SetPlayerBuilding(BuildingTypes.Woodcutter, PhotonNetwork.MasterClient, xy);
-                                        InitSystem.XyBuildingsCom.AddXyBuild(BuildingTypes.Woodcutter, isMasterKey, xy);
+                                        MainGameSystem.XyBuildingsCom.AddXyBuild(BuildingTypes.Woodcutter, isMasterKey, xy);
                                     }
                                 }
                                 else
                                 {
-                                    InitSystem.XyUnitsContitionCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, unitType, isMasterKey, xy);
+                                    MainGameSystem.XyUnitsContitionCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, unitType, isMasterKey, xy);
                                     CellUnitsDataSystem.SetConditionType(ConditionUnitTypes.Protected, xy);
                                 }
                             }
 
                             else
                             {
-                                InitSystem.XyUnitsContitionCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, unitType, isMasterKey, xy);
+                                MainGameSystem.XyUnitsContitionCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, unitType, isMasterKey, xy);
                                 CellUnitsDataSystem.SetConditionType(ConditionUnitTypes.Protected, xy);
                             }
                         }
@@ -173,14 +173,14 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
 
                 curConditionType = ConditionUnitTypes.None;
 
-                for (int xyIndex = 0; xyIndex < InitSystem.XyUnitsContitionCom.GetAmountUnitsInCondition(curConditionType, unitType, isMasterKey); xyIndex++)
+                for (int xyIndex = 0; xyIndex < MainGameSystem.XyUnitsContitionCom.GetAmountUnitsInCondition(curConditionType, unitType, isMasterKey); xyIndex++)
                 {
-                    var xy = InitSystem.XyUnitsContitionCom.GetXyInConditionByIndex(curConditionType, unitType, isMasterKey, xyIndex);
+                    var xy = MainGameSystem.XyUnitsContitionCom.GetXyInConditionByIndex(curConditionType, unitType, isMasterKey, xyIndex);
 
                     if (CellUnitsDataSystem.HaveMaxAmountSteps(xy))
                     {
-                        InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(curConditionType, unitType, isMasterKey, xy);
-                        InitSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.Protected, unitType, isMasterKey, xy);
+                        MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(curConditionType, unitType, isMasterKey, xy);
+                        MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.Protected, unitType, isMasterKey, xy);
                         CellUnitsDataSystem.SetConditionType(ConditionUnitTypes.Protected, xy);
                     }
                 }
@@ -220,7 +220,7 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
 
 
                     xyUnitsCom.RemoveAmountUnitsInGame(unitType, isMaster, xyUnit);
-                    InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(xyUnit), unitType, isMaster, xyUnit);
+                    MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(xyUnit), unitType, isMaster, xyUnit);
 
                     CellUnitsDataSystem.ResetUnit(xyUnit);
                     break;

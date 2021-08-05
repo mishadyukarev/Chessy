@@ -437,7 +437,7 @@ namespace Assets.Scripts.Workers.Info
             }
 
 
-            InitSystem.UpgradesBuildingsCom.AddAmountUpgrades(buildingType, player.IsMasterClient);
+            MainGameSystem.UpgradesBuildingsCom.AddAmountUpgrades(buildingType, player.IsMasterClient);
         }
 
         private static bool HavedAll(bool[] haves) => haves[FOOD_NUMBER] && haves[WOOD_NUMBER] && haves[ORE_NUMBER] && haves[IRON_NUMBER] && haves[GOLD_NUMBER];

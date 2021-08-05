@@ -14,7 +14,7 @@ internal sealed class SoundEventsSystem : IEcsRunSystem
         }
         else
         {
-            SoundComWorker.SetVolume(SoundComTypes.StandartMusic, MainCommonSystem.CommonZoneEnt_SaverCom.SliderVolume);
+            SoundComWorker.SetVolume(SoundComTypes.StandartMusic, MainCommonSystem.CommonEnt_SaverCom.SliderVolume);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.System.Data.Common;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Game.UI;
@@ -46,7 +47,7 @@ internal sealed class DonerMasterSystem : SystemMasterReduction
             }
             else
             {
-                switch (MainCommonSystem.CommonZoneEnt_SaverCom.StepModeType)
+                switch (MainCommonSystem.CommonEnt_SaverCom.StepModeType)
                 {
                     case StepModeTypes.None:
                         throw new Exception();
@@ -65,7 +66,7 @@ internal sealed class DonerMasterSystem : SystemMasterReduction
                             {
                                 GameMasterSystemManager.UpdateMotion.Run();
 
-                                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, Main.Instance.ECSmanager.GameGeneralSystemManager.MotionEnt_AmountCom.AmountMotions);
+                                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, MainGameSystem.MotionEnt_AmountCom.AmountMotions);
                                 PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
                                 DownDonerUIDataContainer.SetDoned(true, default);
@@ -85,7 +86,7 @@ internal sealed class DonerMasterSystem : SystemMasterReduction
                             {
                                 GameMasterSystemManager.UpdateMotion.Run();
 
-                                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, Main.Instance.ECSmanager.GameGeneralSystemManager.MotionEnt_AmountCom.AmountMotions);
+                                PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, MainGameSystem.MotionEnt_AmountCom.AmountMotions);
                                 PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
                                 DownDonerUIDataContainer.SetDoned(true, default);
@@ -108,7 +109,7 @@ internal sealed class DonerMasterSystem : SystemMasterReduction
                         {
                             GameMasterSystemManager.UpdateMotion.Run();
 
-                            PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, Main.Instance.ECSmanager.GameGeneralSystemManager.MotionEnt_AmountCom.AmountMotions);
+                            PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, MainGameSystem.MotionEnt_AmountCom.AmountMotions);
                             PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
                             DownDonerUIDataContainer.SetDoned(true, default);

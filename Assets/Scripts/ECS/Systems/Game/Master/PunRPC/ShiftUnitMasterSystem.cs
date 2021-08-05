@@ -36,13 +36,13 @@ internal sealed class ShiftUnitMasterSystem : SystemMasterReduction
                 var fromCondition = CellUnitsDataSystem.ConditionType(FromXy);
 
 
-                InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(fromCondition, fromUnitType, fromIsMasterClient, FromXy);
+                MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(fromCondition, fromUnitType, fromIsMasterClient, FromXy);
 
                 xyUnitsCom.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), FromXy);
                 xyUnitsCom.AddAmountUnitInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), ToXy);
                 CellUnitsDataSystem.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
 
-                InitSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, fromUnitType, fromIsMasterClient, ToXy);
+                MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, fromUnitType, fromIsMasterClient, ToXy);
 
 
                 CellUnitsDataSystem.TakeAmountSteps(ToXy, CellEnvrDataSystem.NeedAmountSteps(ToXy));

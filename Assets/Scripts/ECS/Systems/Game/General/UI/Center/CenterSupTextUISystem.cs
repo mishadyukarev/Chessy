@@ -16,11 +16,11 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
 
         public void Init()
         {
-            InitSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Food, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
-            InitSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Wood, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
-            InitSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Ore, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
-            InitSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Iron, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
-            InitSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Gold, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
+            MainGameSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Food, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
+            MainGameSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Wood, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
+            MainGameSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Ore, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
+            MainGameSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Iron, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
+            MainGameSystem.MistakeEconomyCom.AddListenerEconomyMistake(ResourceTypes.Gold, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
 
             MistakeEconomyEventDataWorker.AddListenerStepMistake(delegate { ExecuteMistakeText(MistakeTypes.NeedSteps); });
 

@@ -50,7 +50,7 @@ internal sealed class BuilderMasterSystem : SystemMasterReduction
                             PhotonPunRPC.SoundToGeneral(RpcMasterDataContainer.InfoFrom.Sender, SoundEffectTypes.Building);
 
                             CellBuildDataSystem.SetPlayerBuilding(NeededBuildingTypeForBuilding, RpcMasterDataContainer.InfoFrom.Sender, XyCellForBuilding);
-                            InitSystem.XyBuildingsCom.AddXyBuild(NeededBuildingTypeForBuilding, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+                            MainGameSystem.XyBuildingsCom.AddXyBuild(NeededBuildingTypeForBuilding, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
 
                             CellUnitsDataSystem.ResetAmountSteps(XyCellForBuilding);
 
@@ -94,7 +94,7 @@ internal sealed class BuilderMasterSystem : SystemMasterReduction
                                 ResourcesUIDataContainer.BuyNewBuilding(NeededBuildingTypeForBuilding, RpcMasterDataContainer.InfoFrom.Sender);
 
                                 CellBuildDataSystem.SetPlayerBuilding(NeededBuildingTypeForBuilding, RpcMasterDataContainer.InfoFrom.Sender, XyCellForBuilding);
-                                InitSystem.XyBuildingsCom.AddXyBuild(NeededBuildingTypeForBuilding, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+                                MainGameSystem.XyBuildingsCom.AddXyBuild(NeededBuildingTypeForBuilding, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
 
                                 CellUnitsDataSystem.TakeAmountSteps(XyCellForBuilding);
 
@@ -132,7 +132,7 @@ internal sealed class BuilderMasterSystem : SystemMasterReduction
                                 PhotonPunRPC.SoundToGeneral(RpcMasterDataContainer.InfoFrom.Sender, SoundEffectTypes.Building);
 
                                 ResourcesUIDataContainer.BuyNewBuilding(NeededBuildingTypeForBuilding, RpcMasterDataContainer.InfoFrom.Sender);
-                                InitSystem.XyBuildingsCom.AddXyBuild(NeededBuildingTypeForBuilding, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
+                                MainGameSystem.XyBuildingsCom.AddXyBuild(NeededBuildingTypeForBuilding, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, XyCellForBuilding);
                                 CellBuildDataSystem.SetPlayerBuilding(NeededBuildingTypeForBuilding, RpcMasterDataContainer.InfoFrom.Sender, XyCellForBuilding);
 
                                 CellUnitsDataSystem.ResetAmountSteps(XyCellForBuilding);

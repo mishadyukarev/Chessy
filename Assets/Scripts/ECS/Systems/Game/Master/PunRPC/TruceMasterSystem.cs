@@ -35,9 +35,9 @@ internal sealed class TruceMasterSystem : SystemMasterReduction
                     {
                         var isMasterKey = CellUnitsDataSystem.IsMasterClient(xy);
 
-                        InitSystem.UnitInventorCom.AddUnitsInInventor(unitType, isMasterKey);
+                        MainGameSystem.UnitInventorCom.AddUnitsInInventor(unitType, isMasterKey);
 
-                        InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(xy), unitType, isMasterKey, xy);
+                        MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(xy), unitType, isMasterKey, xy);
                         xyUnitsCom.RemoveAmountUnitsInGame(unitType, isMasterKey, xy);
 
                         CellUnitsDataSystem.ResetUnit(xy);
@@ -91,16 +91,16 @@ internal sealed class TruceMasterSystem : SystemMasterReduction
         if (xyUnitsCom.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0
             && xyUnitsCom.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0)
         {
-            InitSystem.UnitInventorCom.AddUnitsInInventor(UnitTypes.Pawn, true);
+            MainGameSystem.UnitInventorCom.AddUnitsInInventor(UnitTypes.Pawn, true);
         }
 
         if (xyUnitsCom.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0
             && xyUnitsCom.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0)
         {
-            InitSystem.UnitInventorCom.AddUnitsInInventor(UnitTypes.Pawn, false);
+            MainGameSystem.UnitInventorCom.AddUnitsInInventor(UnitTypes.Pawn, false);
         }
 
-        PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, Main.Instance.ECSmanager.GameGeneralSystemManager.MotionEnt_AmountCom.AmountMotions);
+        PhotonPunRPC.SetAmountMotionToOther(RpcTarget.All, MainGameSystem.MotionEnt_AmountCom.AmountMotions);
         PhotonPunRPC.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
         DownDonerUIDataContainer.SetDoned(true, default);

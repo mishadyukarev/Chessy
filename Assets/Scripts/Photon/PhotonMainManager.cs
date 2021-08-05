@@ -8,16 +8,16 @@ namespace Assets.Scripts
     {
         private PhotonView _photonView;
         private PhotonPunRPC _photonPunRPC;
-        private PhotonScene _sceneManager;
+        //private PhotonScene _sceneManager;
 
         public PhotonMainManager()
         {
             _photonView = Instance.gameObject.AddComponent<PhotonView>();
-            _sceneManager = Instance.gameObject.AddComponent<PhotonScene>();
+            //_sceneManager = Instance.gameObject.AddComponent<PhotonScene>();
             _photonPunRPC = Instance.gameObject.AddComponent<PhotonPunRPC>();
 
             _photonPunRPC.Constructor(_photonView);
-            _sceneManager.Constructor();
+            //_sceneManager.Constructor();
 
             _photonView.FindObservables(true);
 

@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.ECS.Manager.View.Menu;
 using Assets.Scripts.ECS.System.Common;
 using Assets.Scripts.ECS.System.Data.Common;
-using Assets.Scripts.ECS.System.View.Menu;
 using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 using Photon.Pun;
@@ -44,7 +43,6 @@ namespace Assets.Scripts
                     if (_gameWorld != default)
                     {
                         _gameWorld.Destroy();
-
                         GameGeneralSystemManager = default;
                         GameMasterSystemManager = default;
                         GameOtherSystemManager = default;
@@ -59,15 +57,11 @@ namespace Assets.Scripts
                     if (_menuWorld != default)
                     {
                         _menuWorld.Destroy();
-
-                        GameGeneralSystemManager = default;
-                        GameMasterSystemManager = default;
-                        GameOtherSystemManager = default;
+                        _menuSystemManager = default;
                     }
 
                     _gameWorld = new EcsWorld();
-
-                    GameGeneralSystemManager = new GameGeneralSystemManager(_gameWorld);
+                    GameGeneralSystemManager = new GameGeneralSystemManager(_gameWorld, _commonWorld);
                     GameMasterSystemManager = new GameMasterSystemManager(_gameWorld);
                     GameOtherSystemManager = new GameOtherSystemManager(_gameWorld);
                     GameGeneralSystemManager.Init();
@@ -77,28 +71,22 @@ namespace Assets.Scripts
 
                     if (PhotonNetwork.IsMasterClient)
                     {
-                        if (MainCommonSystem.CommonZoneEnt_SaverCom.StepModeType == StepModeTypes.ByQueue)
+                        if (MainCommonSystem.CommonEnt_SaverCom.StepModeType == StepModeTypes.ByQueue)
                         {
                             DownDonerUIDataContainer.SetDoned(false, true);
                         }
                     }
 
 
-
-                    MainCommonSystem.ToggleZoneEnt_ParentCom.ReplaceZone(sceneType);
-
-
-                    MainCommonSystem.CanvasEnt_CanvasCom.ReplaceZone(sceneType, MainCommonSystem.ResourcesEnt_ResourcesCommonCom);
-
                     if (PhotonNetwork.IsMasterClient)
                     {
-                        MainCommonSystem.CameraEnt_CameraCom.Camera.transform.rotation = new Quaternion(0, 0, 0, 0);
-                        MainCommonSystem.CameraEnt_CameraCom.Camera.transform.position = Main.Instance.transform.position + MainCommonSystem.CameraEnt_CameraCom.PosForCamera;
+                        MainCommonSystem.CommonEnt_CameraCom.Camera.transform.rotation = new Quaternion(0, 0, 0, 0);
+                        MainCommonSystem.CommonEnt_CameraCom.Camera.transform.position = Main.Instance.transform.position + MainCommonSystem.CommonEnt_CameraCom.PosForCamera;
                     }
                     else
                     {
-                        MainCommonSystem.CameraEnt_CameraCom.Camera.transform.rotation = new Quaternion(0, 0, 180, 0);
-                        MainCommonSystem.CameraEnt_CameraCom.Camera.transform.position = Main.Instance.transform.position + MainCommonSystem.CameraEnt_CameraCom.PosForCamera + new Vector3(0, 0.5f, 0);
+                        MainCommonSystem.CommonEnt_CameraCom.Camera.transform.rotation = new Quaternion(0, 0, 180, 0);
+                        MainCommonSystem.CommonEnt_CameraCom.Camera.transform.position = Main.Instance.transform.position + MainCommonSystem.CommonEnt_CameraCom.PosForCamera + new Vector3(0, 0.5f, 0);
                     }
 
                     break;
@@ -120,7 +108,6 @@ namespace Assets.Scripts
 
                 case SceneTypes.Menu:
                     _menuSystemManager.RunUpdate();
-                    MainCommonSystem.CommonZoneEnt_SaverCom.SliderVolume = MainMenuSystem.SoundEnt_SliderCom.Slider.value;
                     break;
 
                 case SceneTypes.Game:

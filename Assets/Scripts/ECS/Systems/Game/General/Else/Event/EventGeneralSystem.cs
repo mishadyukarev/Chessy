@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.System.Data.Common;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers.Game.UI;
@@ -17,21 +18,21 @@ namespace Assets.Scripts
         {
             base.Init();
 
-            Instance.ECSmanager.GameGeneralSystemManager.ReadyEnt_ButtonCom.Button.onClick.AddListener(Ready);
+             MainGameSystem.ReadyEnt_ButtonCom.Button.onClick.AddListener(Ready);
 
-            Instance.ECSmanager.GameGeneralSystemManager.TakerKingEnt_ButtonCom.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.GameGeneralSystemManager.TakerKingEnt_UnitTypeCom.UnitType); });
-            Instance.ECSmanager.GameGeneralSystemManager.TakerPawnEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.GameGeneralSystemManager.TakerPawnEntityUnitTypeComponent.UnitType); });
-            Instance.ECSmanager.GameGeneralSystemManager.TakerRookEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.GameGeneralSystemManager.TakerRookEntityUnitTypeComponent.UnitType); });
-            Instance.ECSmanager.GameGeneralSystemManager.TakerBishopEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(Instance.ECSmanager.GameGeneralSystemManager.TakerBishopEntityUnitTypeComponent.UnitType); });
+             MainGameSystem.TakerKingEnt_ButtonCom.Button.onClick.AddListener(delegate { GetUnit(MainGameSystem.TakerKingEnt_UnitTypeCom.UnitType); });
+             MainGameSystem.TakerPawnEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(MainGameSystem.TakerPawnEntityUnitTypeComponent.UnitType); });
+             MainGameSystem.TakerRookEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(MainGameSystem.TakerRookEntityUnitTypeComponent.UnitType); });
+             MainGameSystem.TakerBishopEntityButtonComponent.Button.onClick.AddListener(delegate { GetUnit(MainGameSystem.TakerBishopEntityUnitTypeComponent.UnitType); });
 
-            Instance.ECSmanager.GameGeneralSystemManager.DonerUIEnt_ButtonCom.Button.onClick.AddListener(delegate { Done(); });
+             MainGameSystem.DonerUIEnt_ButtonCom.Button.onClick.AddListener(delegate { Done(); });
 
-            Instance.ECSmanager.GameGeneralSystemManager.EnvironmentInfoEnt_ButtonCom.Button.onClick.AddListener(EnvironmentInfo);
+             MainGameSystem.EnvironmentInfoEnt_ButtonCom.Button.onClick.AddListener(EnvironmentInfo);
 
-            Instance.ECSmanager.GameGeneralSystemManager.LeaveEnt_ButtonCom.Button.onClick.AddListener(PhotonScene.LeaveRoom);
+             MainGameSystem.LeaveEnt_ButtonCom.Button.onClick.AddListener(PhotonScene.LeaveRoom);
 
-            Instance.ECSmanager.GameGeneralSystemManager.ProtectConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton1);
-            Instance.ECSmanager.GameGeneralSystemManager.RelaxConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton2);
+             MainGameSystem.ProtectConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton1);
+             MainGameSystem.RelaxConditionEnt_ButtonCom.Button.onClick.AddListener(StandartAbilityButton2);
         }
 
 
@@ -47,7 +48,7 @@ namespace Assets.Scripts
         {
             SelectorSystem.SelectorType = SelectorTypes.StartClick;
 
-            switch (MainCommonSystem.CommonZoneEnt_SaverCom.StepModeType)
+            switch (MainCommonSystem.CommonEnt_SaverCom.StepModeType)
             {
                 case StepModeTypes.None:
                     throw new Exception();
@@ -67,7 +68,7 @@ namespace Assets.Scripts
         }
         private void EnvironmentInfo()
         {
-            Instance.ECSmanager.GameGeneralSystemManager.EnvironmentInfoEnt_IsActivatedCom.IsActivated = !Instance.ECSmanager.GameGeneralSystemManager.EnvironmentInfoEnt_IsActivatedCom.IsActivated;
+            MainGameSystem.EnvironmentInfoEnt_IsActivatedCom.IsActivated = !MainGameSystem.EnvironmentInfoEnt_IsActivatedCom.IsActivated;
         }
         private void StandartAbilityButton1()
         {

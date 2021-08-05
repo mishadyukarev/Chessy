@@ -147,7 +147,7 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
                     //}
 
 
-                    if (InitSystem.XyBuildingsCom.IsSettedCity(PhotonNetwork.IsMasterClient))
+                    if (MainGameSystem.XyBuildingsCom.IsSettedCity(PhotonNetwork.IsMasterClient))
                     {
                         RightUIViewContainer.SetActiveBuildingButton(false, BuildingButtonTypes.Third);
                     }

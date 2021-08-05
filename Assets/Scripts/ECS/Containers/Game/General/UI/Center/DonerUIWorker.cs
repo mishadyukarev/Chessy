@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.ECS.Game.General.Systems.StartFill;
+using UnityEngine;
 
 namespace Assets.Scripts.Workers.Game.UI.Middle
 {
     internal sealed class DonerUIWorker
     {
-        private static GameGeneralSystemManager EGGUIM => Main.Instance.ECSmanager.GameGeneralSystemManager;
-
-        internal static void SetColor(Color color) => EGGUIM.DonerUIEnt_ButtonCom.Button.image.color = color;
+        internal static void SetColor(Color color) => MainGameSystem.DonerUIEnt_ButtonCom.Button.image.color = color;
     }
 }

@@ -93,7 +93,7 @@ internal sealed class AttackUnitMasterSystem : SystemMasterReduction
                 var isMasterFromUnit = CellUnitsDataSystem.IsMasterClient(FromXy);
 
                 xyUnitsCom.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(FromXy), isMasterFromUnit, FromXy);
-                InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(FromXy), CellUnitsDataSystem.UnitType(FromXy), isMasterFromUnit, FromXy);
+                MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(FromXy), CellUnitsDataSystem.UnitType(FromXy), isMasterFromUnit, FromXy);
                 CellUnitsDataSystem.ResetUnit(FromXy);
 
                 if (CellUnitsDataSystem.HaveOwner(FromXy))
@@ -110,7 +110,7 @@ internal sealed class AttackUnitMasterSystem : SystemMasterReduction
                 var isMasterToUnit = CellUnitsDataSystem.IsMasterClient(ToXy);
 
                 xyUnitsCom.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(ToXy), isMasterToUnit, ToXy);
-                InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(ToXy), CellUnitsDataSystem.UnitType(ToXy), isMasterToUnit, ToXy);
+                MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(ToXy), CellUnitsDataSystem.UnitType(ToXy), isMasterToUnit, ToXy);
                 CellUnitsDataSystem.ResetUnit(ToXy);
 
                 if (CellUnitsDataSystem.IsMelee(FromXy))

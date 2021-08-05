@@ -47,7 +47,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
                 var conditionType = CellUnitsDataSystem.ConditionType(RpcMasterDataContainer.XyCellForCircularAttack);
                 if (conditionType == ConditionUnitTypes.Protected || conditionType == ConditionUnitTypes.Relaxed)
                 {
-                    InitSystem.XyUnitsContitionCom.ReplaceCondition(conditionType, ConditionUnitTypes.None, UnitTypes.King, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, RpcMasterDataContainer.XyCellForCircularAttack);
+                    MainGameSystem.XyUnitsContitionCom.ReplaceCondition(conditionType, ConditionUnitTypes.None, UnitTypes.King, RpcMasterDataContainer.InfoFrom.Sender.IsMasterClient, RpcMasterDataContainer.XyCellForCircularAttack);
                     CellUnitsDataSystem.ResetConditionType(RpcMasterDataContainer.XyCellForCircularAttack);
                 }
             }

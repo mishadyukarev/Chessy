@@ -1,20 +1,20 @@
-﻿namespace Assets.Scripts.Workers.Game.UI
+﻿using Assets.Scripts.ECS.Game.General.Systems.StartFill;
+
+namespace Assets.Scripts.Workers.Game.UI
 {
     internal sealed class MiddleUIDataContainer
     {
-        private static GameGeneralSystemManager EGGUIM => Main.Instance.ECSmanager.GameGeneralSystemManager;
-
-        internal static bool IsReady(bool key) => EGGUIM.ReadyEnt_ActivatedDictCom.IsActivatedButtonDict[key];
-        internal static void SetIsReady(bool key, bool value) => EGGUIM.ReadyEnt_ActivatedDictCom.IsActivatedButtonDict[key] = value;
+        internal static bool IsReady(bool key) => MainGameSystem.ReadyEnt_ActivatedDictCom.IsActivatedButtonDict[key];
+        internal static void SetIsReady(bool key, bool value) => MainGameSystem.ReadyEnt_ActivatedDictCom.IsActivatedButtonDict[key] = value;
         internal static bool IsStartedGame
         {
-            get => EGGUIM.ReadyEnt_StartedGameCom.IsStartedGame;
-            set => EGGUIM.ReadyEnt_StartedGameCom.IsStartedGame = value;
+            get => MainGameSystem.ReadyEnt_StartedGameCom.IsStartedGame;
+            set => MainGameSystem.ReadyEnt_StartedGameCom.IsStartedGame = value;
         }
         internal static int AmountMotions
         {
-            get => EGGUIM.MotionEnt_AmountCom.AmountMotions;
-            set => EGGUIM.MotionEnt_AmountCom.AmountMotions = value;
+            get => MainGameSystem.MotionEnt_AmountCom.AmountMotions;
+            set => MainGameSystem.MotionEnt_AmountCom.AmountMotions = value;
         }
     }
 }

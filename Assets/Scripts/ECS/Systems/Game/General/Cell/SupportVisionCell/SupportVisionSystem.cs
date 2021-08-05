@@ -27,7 +27,7 @@ internal sealed class SupportVisionSystem : IEcsRunSystem
 
                     if (!CellUnitsDataSystem.HaveAnyUnit(xy))
                     {
-                        if (InitSystem.XyStartCellsCom.IsStartedCell(PhotonNetwork.IsMasterClient, xy))
+                        if (MainGameSystem.XyStartCellsCom.IsStartedCell(PhotonNetwork.IsMasterClient, xy))
                         {
                             CellSupViewSystem.EnableSupVis(SupportVisionTypes.Spawn, xy);
                         }

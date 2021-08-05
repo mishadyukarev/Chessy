@@ -24,18 +24,7 @@ namespace Assets.Scripts
         }
 
 
-        public override void OnJoinRandomFailed(short returnCode, string message)
-        {
-            Debug.Log(message);
-            PhotonNetwork.PhotonServerSettings.StartInOfflineMode = true;
-        }
 
-
-
-        public override void OnJoinedRoom()
-        {
-            Instance.ToggleScene(SceneTypes.Game);
-        }
         public override void OnLeftRoom()
         {
             base.OnLeftRoom();

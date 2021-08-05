@@ -19,14 +19,14 @@ internal sealed class ConditionMasterSystem : SystemMasterReduction
             case ConditionUnitTypes.None:
                 if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Protected, XyCellForCondition))
                 {
-                    InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Protected, unitType, isMasterClient, XyCellForCondition);
+                    MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Protected, unitType, isMasterClient, XyCellForCondition);
                 }
                 else if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Relaxed, XyCellForCondition))
                 {
-                    InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Relaxed, unitType, isMasterClient, XyCellForCondition);
+                    MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Relaxed, unitType, isMasterClient, XyCellForCondition);
                 }
 
-                InitSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, unitType, isMasterClient, XyCellForCondition);
+                MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, unitType, isMasterClient, XyCellForCondition);
                 CellUnitsDataSystem.ResetConditionType(XyCellForCondition);
                 break;
 
@@ -36,7 +36,7 @@ internal sealed class ConditionMasterSystem : SystemMasterReduction
                     PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
                     CellUnitsDataSystem.ResetConditionType(XyCellForCondition);
-                    InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(NeededConditionType, unitType, isMasterClient, XyCellForCondition);
+                    MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(NeededConditionType, unitType, isMasterClient, XyCellForCondition);
                 }
 
                 else if (CellUnitsDataSystem.HaveMaxAmountSteps(XyCellForCondition))
@@ -45,8 +45,8 @@ internal sealed class ConditionMasterSystem : SystemMasterReduction
                     {
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
-                        InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Relaxed, unitType, isMasterClient, XyCellForCondition);
-                        InitSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.Protected, unitType, isMasterClient, XyCellForCondition);
+                        MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Relaxed, unitType, isMasterClient, XyCellForCondition);
+                        MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.Protected, unitType, isMasterClient, XyCellForCondition);
 
                         CellUnitsDataSystem.SetConditionType(NeededConditionType, XyCellForCondition);
 
@@ -57,8 +57,8 @@ internal sealed class ConditionMasterSystem : SystemMasterReduction
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
 
                         CellUnitsDataSystem.SetConditionType(NeededConditionType, XyCellForCondition);
-                        InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.None, unitType, isMasterClient, XyCellForCondition);
-                        InitSystem.XyUnitsContitionCom.AddUnitInCondition(NeededConditionType, unitType, isMasterClient, XyCellForCondition);
+                        MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.None, unitType, isMasterClient, XyCellForCondition);
+                        MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(NeededConditionType, unitType, isMasterClient, XyCellForCondition);
 
                         CellUnitsDataSystem.ResetAmountSteps(XyCellForCondition);
                     }
@@ -78,15 +78,15 @@ internal sealed class ConditionMasterSystem : SystemMasterReduction
                     PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
                     CellUnitsDataSystem.ResetConditionType(XyCellForCondition);
 
-                    InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Relaxed, unitType, isMasterClient, XyCellForCondition);
+                    MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Relaxed, unitType, isMasterClient, XyCellForCondition);
                 }
 
                 else if (CellUnitsDataSystem.HaveMaxAmountSteps(XyCellForCondition))
                 {
                     if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Protected, XyCellForCondition))
                     {
-                        InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Protected, unitType, isMasterClient, XyCellForCondition);
-                        InitSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.Relaxed, unitType, isMasterClient, XyCellForCondition);
+                        MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Protected, unitType, isMasterClient, XyCellForCondition);
+                        MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.Relaxed, unitType, isMasterClient, XyCellForCondition);
 
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
                         CellUnitsDataSystem.SetConditionType(NeededConditionType, XyCellForCondition);
@@ -94,8 +94,8 @@ internal sealed class ConditionMasterSystem : SystemMasterReduction
                     }
                     else
                     {
-                        InitSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.None, unitType, isMasterClient, XyCellForCondition);
-                        InitSystem.XyUnitsContitionCom.AddUnitInCondition(NeededConditionType, unitType, isMasterClient, XyCellForCondition);
+                        MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.None, unitType, isMasterClient, XyCellForCondition);
+                        MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(NeededConditionType, unitType, isMasterClient, XyCellForCondition);
 
                         PhotonPunRPC.SoundToGeneral(InfoFrom.Sender, SoundEffectTypes.ClickToTable);
                         CellUnitsDataSystem.SetConditionType(NeededConditionType, XyCellForCondition);

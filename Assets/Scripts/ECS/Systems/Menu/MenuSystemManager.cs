@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.ECS.System.View.Menu;
+﻿using Assets.Scripts.ECS.Managers.Event;
+using Assets.Scripts.ECS.System.View.Menu;
 using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Manager.View.Menu
@@ -7,7 +8,9 @@ namespace Assets.Scripts.ECS.Manager.View.Menu
     {
         internal MenuSystemManager(EcsWorld menuWorld, EcsWorld commonWorld) : base(menuWorld)
         {
-            UpdateSystems.Add(new MainMenuSystem(commonWorld));
+            UpdateSystems
+                .Add(new MainMenuSystem(commonWorld))
+                .Add(Main.Instance.gameObject.AddComponent<PhotonSceneMenuSystem>());
         }
     }
 }

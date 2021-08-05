@@ -14,7 +14,7 @@ namespace Assets.Scripts.ECS.System.View.Game.General.Cell
 
         private static EcsEntity[,] _cellUnitEnts;
 
-        private static SpritesData SpritesData => MainCommonSystem.ResourcesEnt_ResourcesCommonCom.SpritesConfig;
+        private static SpritesData SpritesData => MainCommonSystem.CommonEnt_ResourcesCommonCom.SpritesConfig;
 
 
         public void Init()

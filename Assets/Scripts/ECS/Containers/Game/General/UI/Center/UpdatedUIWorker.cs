@@ -1,24 +1,24 @@
-﻿namespace Assets.Scripts.Workers.Game.UI.Middle
+﻿using Assets.Scripts.ECS.Game.General.Systems.StartFill;
+
+namespace Assets.Scripts.Workers.Game.UI.Middle
 {
     internal sealed class UpdatedUIWorker
     {
-        private static GameGeneralSystemManager EGGUIM => Main.Instance.ECSmanager.GameGeneralSystemManager;
-
         internal static bool IsActivated
         {
-            get => EGGUIM.MotionEnt_ActivatedCom.IsActivated;
-            set => EGGUIM.MotionEnt_ActivatedCom.IsActivated = value;
+            get => MainGameSystem.MotionEnt_ActivatedCom.IsActivated;
+            set => MainGameSystem.MotionEnt_ActivatedCom.IsActivated = value;
         }
         internal static string Text
         {
-            get => EGGUIM.MotionEnt_TextMeshProUGUICom.TextMeshProUGUI.text;
-            set => EGGUIM.MotionEnt_TextMeshProUGUICom.TextMeshProUGUI.text = value;
+            get => MainGameSystem.MotionEnt_TextMeshProUGUICom.TextMeshProUGUI.text;
+            set => MainGameSystem.MotionEnt_TextMeshProUGUICom.TextMeshProUGUI.text = value;
         }
         internal static int AmountMotions
         {
-            get => EGGUIM.MotionEnt_AmountCom.AmountMotions;
-            set => EGGUIM.MotionEnt_AmountCom.AmountMotions = value;
+            get => MainGameSystem.MotionEnt_AmountCom.AmountMotions;
+            set => MainGameSystem.MotionEnt_AmountCom.AmountMotions = value;
         }
-        internal static void SetActiveParent(bool isActive) => EGGUIM.MotionEnt_ParentCom.ParentGO.SetActive(isActive);
+        internal static void SetActiveParent(bool isActive) => MainGameSystem.MotionEnt_ParentCom.ParentGO.SetActive(isActive);
     }
 }

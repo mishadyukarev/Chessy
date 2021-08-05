@@ -9,7 +9,7 @@ namespace Assets.Scripts
         public const string VERSION_PHOTON_GAME = "0.1i";
 
         public static Main Instance { get; private set; }
-        public SceneTypes SceneType { get; private set; } = SceneTypes.Menu;
+        public static SceneTypes SceneType { get; private set; } = SceneTypes.Menu;
         public ECSManager ECSmanager { get; private set; }
 
 
@@ -65,5 +65,7 @@ namespace Assets.Scripts
                     throw new Exception();
             }
         }
+
+        //internal void Attach(Transform transform) => transform.SetParent(this.transform);
     }
 }
