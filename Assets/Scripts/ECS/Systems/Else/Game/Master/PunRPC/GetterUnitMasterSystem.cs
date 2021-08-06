@@ -1,0 +1,95 @@
+﻿using Assets.Scripts;
+using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Game.Master;
+using Leopotam.Ecs;
+using System;
+
+internal sealed class GetterUnitMasterSystem : IEcsInitSystem, IEcsRunSystem
+{
+    private EcsWorld _currentGameWorld;
+    private EcsFilter<InfoMasCom> _infoFilter;
+    private EcsFilter<ForGettingUnitMasCom> _getterUnitFilter;
+    private EcsFilter<InventorUnitsComponent> _unitsInventorFilter;
+
+    internal UnitTypes UnitType => _getterUnitFilter.Get1(0).UnitTypeForGetting;
+
+    public void Init()
+    {
+        _currentGameWorld.NewEntity()
+            .Replace(new ForGettingUnitMasCom());
+    }
+
+    public void Run()
+    {
+        ref var infoCom = ref _infoFilter.Get1(0);
+        ref var unitInventorCom = ref _unitsInventorFilter.Get1(0);
+
+        bool isGetted = false; //= _eGM.UnitInventorEnt_UnitInventorCom.AmountUnits(UnitType, Info.Sender.IsMasterClient) >= _amountForTakingUnit;
+        UnitTypes unitType = UnitTypes.None;
+        switch (UnitType)
+        {
+            case UnitTypes.None:
+                throw new Exception();
+
+            case UnitTypes.King:
+                isGetted = unitInventorCom.HaveUnitInInventor(UnitType, infoCom.FromInfo.Sender.IsMasterClient);
+                if (isGetted)
+                {
+                    unitType = UnitType;
+                }
+                break;
+
+            case UnitTypes.Pawn:
+                if (unitInventorCom.HaveUnitInInventor(UnitTypes.PawnSword, infoCom.FromInfo.Sender.IsMasterClient))
+                {
+                    isGetted = true;
+                    unitType = UnitType + 1;
+                }
+                else if (unitInventorCom.HaveUnitInInventor(UnitTypes.Pawn, infoCom.FromInfo.Sender.IsMasterClient))
+                {
+                    isGetted = true;
+                    unitType = UnitType;
+                }
+                break;
+
+            case UnitTypes.PawnSword:
+                throw new Exception();
+
+            case UnitTypes.Rook:
+                if (unitInventorCom.HaveUnitInInventor(UnitTypes.RookCrossbow, infoCom.FromInfo.Sender.IsMasterClient))
+                {
+                    isGetted = true;
+                    unitType = UnitType + 1;
+                }
+                else if (unitInventorCom.HaveUnitInInventor(UnitTypes.Rook, infoCom.FromInfo.Sender.IsMasterClient))
+                {
+                    isGetted = true;
+                    unitType = UnitType;
+                }
+                break;
+
+            case UnitTypes.RookCrossbow:
+                throw new Exception();
+
+            case UnitTypes.Bishop:
+                if (unitInventorCom.HaveUnitInInventor(UnitTypes.BishopCrossbow, infoCom.FromInfo.Sender.IsMasterClient))
+                {
+                    isGetted = true;
+                    unitType = UnitType + 1;
+                }
+                else if (unitInventorCom.HaveUnitInInventor(UnitTypes.Bishop, infoCom.FromInfo.Sender.IsMasterClient))
+                {
+                    isGetted = true;
+                    unitType = UnitType;
+                }
+                break;
+
+            case UnitTypes.BishopCrossbow:
+                throw new Exception();
+
+            default:
+                throw new Exception();
+        }
+        RPCGameSystem.GetUnitToGeneral(infoCom.FromInfo.Sender, isGetted, unitType);
+    }
+}

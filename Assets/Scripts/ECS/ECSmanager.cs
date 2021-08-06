@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.ECS.Manager.View.Menu;
 using Assets.Scripts.ECS.System.Common;
 using Assets.Scripts.ECS.System.Data.Common;
+using Assets.Scripts.ECS.Systems.UI.Game.General.UI;
 using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 using Photon.Pun;
@@ -11,7 +12,7 @@ namespace Assets.Scripts
 {
     public sealed class ECSManager
     {
-        private EcsWorld _commonWorld;
+        private static EcsWorld _commonWorld;
         private EcsWorld _menuWorld;
         private EcsWorld _gameWorld;
 
@@ -19,9 +20,10 @@ namespace Assets.Scripts
 
         private MenuSystemManager _menuSystemManager;
 
-        public GameGeneralSystemManager GameGeneralSystemManager { get; private set; }
-        public GameMasterSystemManager GameMasterSystemManager { get; private set; }
-        public GameOtherSystemManager GameOtherSystemManager { get; private set; }
+        private GameGeneralSystemManager _gameGeneralSystemManager;
+        private GameGeneralUISystemManager _gameGeneralUISystemManager;
+        private GameMasterSystemManager _gameMasterSystemManager;
+        private GameOtherSystemManager _gameOtherSystemManager;
 
 
         public ECSManager()
@@ -43,9 +45,9 @@ namespace Assets.Scripts
                     if (_gameWorld != default)
                     {
                         _gameWorld.Destroy();
-                        GameGeneralSystemManager = default;
-                        GameMasterSystemManager = default;
-                        GameOtherSystemManager = default;
+                        _gameGeneralSystemManager = default;
+                        _gameMasterSystemManager = default;
+                        _gameOtherSystemManager = default;
                     }
 
                     _menuWorld = new EcsWorld();
@@ -61,17 +63,19 @@ namespace Assets.Scripts
                     }
 
                     _gameWorld = new EcsWorld();
-                    GameGeneralSystemManager = new GameGeneralSystemManager(_gameWorld, _commonWorld);
-                    GameMasterSystemManager = new GameMasterSystemManager(_gameWorld);
-                    GameOtherSystemManager = new GameOtherSystemManager(_gameWorld);
-                    GameGeneralSystemManager.Init();
-                    GameMasterSystemManager.Init();
-                    GameOtherSystemManager.Init();
+                    _gameGeneralSystemManager = new GameGeneralSystemManager(_gameWorld, _commonWorld);
+                    _gameGeneralUISystemManager = new GameGeneralUISystemManager(_gameWorld);
+                    _gameMasterSystemManager = new GameMasterSystemManager(_gameWorld);
+                    _gameOtherSystemManager = new GameOtherSystemManager(_gameWorld);
+                    _gameGeneralSystemManager.Init();
+                    _gameGeneralUISystemManager.Init();
+                    _gameMasterSystemManager.Init();
+                    _gameOtherSystemManager.Init();
 
 
                     if (PhotonNetwork.IsMasterClient)
                     {
-                        if (MainCommonSystem.CommonEnt_SaverCom.StepModeType == StepModeTypes.ByQueue)
+                        if (SaverComponent.StepModeType == StepModeTypes.ByQueue)
                         {
                             DownDonerUIDataContainer.SetDoned(false, true);
                         }
@@ -111,10 +115,11 @@ namespace Assets.Scripts
                     break;
 
                 case SceneTypes.Game:
-                    GameGeneralSystemManager.RunUpdate();
+                    _gameGeneralSystemManager.RunUpdate();
+                    _gameGeneralUISystemManager.RunUpdate();
 
-                    if (PhotonNetwork.IsMasterClient) GameMasterSystemManager.RunUpdate();
-                    else GameOtherSystemManager.RunUpdate();
+                    if (PhotonNetwork.IsMasterClient) _gameMasterSystemManager.RunUpdate();
+                    else _gameOtherSystemManager.RunUpdate();
                     break;
 
                 default:

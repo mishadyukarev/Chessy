@@ -5,8 +5,8 @@ namespace Assets.Scripts
 {
     public struct CanvasComponent
     {
-        private Canvas _canvas;
-        private GameObject _currentZoneGO;
+        private static Canvas _canvas;
+        private static GameObject _currentZoneGO;
 
         internal CanvasComponent(Canvas canvas)
         {
@@ -17,7 +17,7 @@ namespace Assets.Scripts
             GameObject.Destroy(_canvas.transform.Find("InMenuZone").gameObject);
         }
 
-        internal void ReplaceZone(SceneTypes sceneType, ResourcesComponent resourcesComponent)
+        internal static void ReplaceZone(SceneTypes sceneType, ResourcesComponent resourcesComponent)
         {
             GameObject.Destroy(_currentZoneGO);
 
@@ -38,7 +38,7 @@ namespace Assets.Scripts
                     throw new Exception();
             }
         }
-        internal T FindUnderParent<T>(string name) => _currentZoneGO.transform.Find(name).GetComponent<T>();
-        internal GameObject FindUnderParent(string name) => _currentZoneGO.transform.Find(name).gameObject;
+        internal static T FindUnderParent<T>(string name) => _currentZoneGO.transform.Find(name).GetComponent<T>();
+        internal static GameObject FindUnderParent(string name) => _currentZoneGO.transform.Find(name).gameObject;
     }
 }

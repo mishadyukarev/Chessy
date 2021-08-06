@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using System.Collections.Generic;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 
 namespace Assets.Scripts.ECS.Component.UI
 {
@@ -13,10 +11,10 @@ namespace Assets.Scripts.ECS.Component.UI
             get => _musicSlider.value;
         }
 
-        internal CenterMenuUIComponent(CanvasComponent canvasComponent, SaverComponent saverComponent)
+        internal CenterMenuUIComponent(Slider slider, float sliderVolume)
         {
-            _musicSlider = canvasComponent.FindUnderParent<Slider>("Slider");
-            _musicSlider.value = saverComponent.SliderVolume;
+            _musicSlider = slider;
+            _musicSlider.value = sliderVolume;
         }
     }
 }

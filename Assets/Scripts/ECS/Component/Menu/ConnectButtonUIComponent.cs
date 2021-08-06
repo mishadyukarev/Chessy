@@ -10,7 +10,7 @@ namespace Assets.Scripts.ECS.Component
 
         internal ConnectButtonUIComponent(bool isOnline, RectTransform zoneRectTrans)
         {
-            if (isOnline)_connectButton = zoneRectTrans.transform.Find("ConnectOnline_Button").GetComponent<Button>();
+            if (isOnline) _connectButton = zoneRectTrans.transform.Find("ConnectOnline_Button").GetComponent<Button>();
             else _connectButton = zoneRectTrans.transform.Find("ConnectOffline_Button").GetComponent<Button>();
         }
 

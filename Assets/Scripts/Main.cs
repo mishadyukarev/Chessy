@@ -5,27 +5,23 @@ namespace Assets.Scripts
 {
     public sealed class Main : MonoBehaviour
     {
-        private PhotonMainManager _photonManager;
+        private static ECSManager _eCSmanager;
+
         public const string VERSION_PHOTON_GAME = "0.1i";
 
         public static Main Instance { get; private set; }
         public static SceneTypes SceneType { get; private set; } = SceneTypes.Menu;
-        public ECSManager ECSmanager { get; private set; }
-
 
         private void Start()
         {
             Instance = this;
-
-            ECSmanager = new ECSManager();
-            _photonManager = new PhotonMainManager();
-
+            _eCSmanager = new ECSManager();
             ToggleScene(SceneType);
         }
 
         private void Update()
         {
-            ECSmanager.OwnUpdate(SceneType);
+            _eCSmanager.OwnUpdate(SceneType);
 
             switch (SceneType)
             {
@@ -43,12 +39,10 @@ namespace Assets.Scripts
             }
         }
 
-        public void ToggleScene(SceneTypes sceneType)
+        public static void ToggleScene(SceneTypes sceneType)
         {
             SceneType = sceneType;
-
-            ECSmanager.ToggleScene(sceneType);
-            _photonManager.ToggleScene(sceneType);
+            _eCSmanager.ToggleScene(sceneType);
 
             switch (sceneType)
             {
@@ -65,7 +59,5 @@ namespace Assets.Scripts
                     throw new Exception();
             }
         }
-
-        //internal void Attach(Transform transform) => transform.SetParent(this.transform);
     }
 }

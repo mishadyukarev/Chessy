@@ -10,7 +10,6 @@ namespace Assets.Scripts.Workers.Game.UI
 {
     internal sealed class RightUIViewContainer
     {
-        private static GameGeneralSystemManager EGGUIM => Main.Instance.ECSmanager.GameGeneralSystemManager;
 
         #region Parent
 

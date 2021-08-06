@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.ECS.Components;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
