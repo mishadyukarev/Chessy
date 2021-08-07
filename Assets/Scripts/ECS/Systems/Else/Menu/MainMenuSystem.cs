@@ -10,25 +10,14 @@ namespace Assets.Scripts.ECS.System.View.Menu
     internal sealed class MainMenuSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsWorld _menuWorld;
-        [EcsIgnoreInject] private EcsWorld _commonWorld;
 
         private EcsFilter<OnlineZoneUIComponent> _onlineFilter;
         private EcsFilter<CenterMenuUIComponent> _centerFilter;
 
-        internal MainMenuSystem(EcsWorld commonWorld)
-        {
-            _commonWorld = commonWorld;
-        }
-
         public void Init()
         {
-            ref var canvasCom = ref _commonWorld.GetPool<CanvasComponent>().GetItem(0);
-            ref var toggleZoneCom = ref _commonWorld.GetPool<ToggleZoneComponent>().GetItem(0);
-            ref var resourcesCom = ref _commonWorld.GetPool<ResourcesComponent>().GetItem(0);
-            ref var saverCom = ref _commonWorld.GetPool<SaverComponent>().GetItem(0);
-
-            CanvasComponent.ReplaceZone(Main.SceneType, resourcesCom);
-            toggleZoneCom.ReplaceZone(Main.SceneType);
+            CanvasComponent.ReplaceZone(Main.SceneType);
+            ToggleZoneComponent.ReplaceZone(Main.SceneType);
 
             _menuWorld.NewEntity()
                 .Replace(new CenterMenuUIComponent(CanvasComponent.FindUnderParent<Slider>("Slider"), SaverComponent.SliderVolume));

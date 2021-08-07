@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ECS.Components;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Leopotam.Ecs;
 using System;
 using UnityEngine;
@@ -23,7 +24,7 @@ namespace Assets.Scripts.ECS.System.View.Game.General.Cell
             for (int x = 0; x < CELL_COUNT_X; x++)
                 for (int y = 0; y < CELL_COUNT_Y; y++)
                 {
-                    var parentGO = StartSpawnCellsViewSystem.CellGOs[x, y].transform.Find("SupportVision").gameObject;
+                    var parentGO = MainGameSystem.CellGOs[x, y].transform.Find("SupportVision").gameObject;
 
                     var sr = parentGO.GetComponent<SpriteRenderer>();
                     _cellSupportVisionEnts[x, y] = gameWorld.NewEntity()

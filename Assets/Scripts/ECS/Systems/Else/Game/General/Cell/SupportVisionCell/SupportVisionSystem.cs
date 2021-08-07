@@ -11,9 +11,9 @@ using Photon.Pun;
 
 internal sealed class SupportVisionSystem : IEcsRunSystem
 {
-    private EcsFilter<AvailableCellsComponent> _availCellsFilter;
-    private EcsFilter<SelectorComponent> _selectorFilter;
-    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
+    private EcsFilter<AvailableCellsComponent> _availCellsFilter = default;
+    private EcsFilter<SelectorComponent> _selectorFilter = default;
+    private EcsFilter<XyUnitsComponent> _xyUnitsFilter = default;
 
     public void Run()
     {

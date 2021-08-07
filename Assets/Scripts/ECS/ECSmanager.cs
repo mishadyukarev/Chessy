@@ -1,20 +1,18 @@
 ﻿using Assets.Scripts.ECS.Manager.View.Menu;
 using Assets.Scripts.ECS.System.Common;
-using Assets.Scripts.ECS.System.Data.Common;
 using Assets.Scripts.ECS.Systems.UI.Game.General.UI;
-using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
-using UnityEngine;
 
 namespace Assets.Scripts
 {
     public sealed class ECSManager
     {
-        private static EcsWorld _commonWorld;
+        private EcsWorld _commonWorld;
         private EcsWorld _menuWorld;
         private EcsWorld _gameWorld;
+
 
         private CommonSystemManager _commonSystemManager;
 
@@ -46,12 +44,13 @@ namespace Assets.Scripts
                     {
                         _gameWorld.Destroy();
                         _gameGeneralSystemManager = default;
+                        _gameGeneralUISystemManager = default;
                         _gameMasterSystemManager = default;
                         _gameOtherSystemManager = default;
                     }
 
                     _menuWorld = new EcsWorld();
-                    _menuSystemManager = new MenuSystemManager(_menuWorld, _commonWorld);
+                    _menuSystemManager = new MenuSystemManager(_menuWorld);
                     _menuSystemManager.Init();
                     break;
 
@@ -63,7 +62,7 @@ namespace Assets.Scripts
                     }
 
                     _gameWorld = new EcsWorld();
-                    _gameGeneralSystemManager = new GameGeneralSystemManager(_gameWorld, _commonWorld);
+                    _gameGeneralSystemManager = new GameGeneralSystemManager(_gameWorld);
                     _gameGeneralUISystemManager = new GameGeneralUISystemManager(_gameWorld);
                     _gameMasterSystemManager = new GameMasterSystemManager(_gameWorld);
                     _gameOtherSystemManager = new GameOtherSystemManager(_gameWorld);
@@ -71,27 +70,6 @@ namespace Assets.Scripts
                     _gameGeneralUISystemManager.Init();
                     _gameMasterSystemManager.Init();
                     _gameOtherSystemManager.Init();
-
-
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        if (SaverComponent.StepModeType == StepModeTypes.ByQueue)
-                        {
-                            DownDonerUIDataContainer.SetDoned(false, true);
-                        }
-                    }
-
-
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        MainCommonSystem.CommonEnt_CameraCom.Camera.transform.rotation = new Quaternion(0, 0, 0, 0);
-                        MainCommonSystem.CommonEnt_CameraCom.Camera.transform.position = Main.Instance.transform.position + MainCommonSystem.CommonEnt_CameraCom.PosForCamera;
-                    }
-                    else
-                    {
-                        MainCommonSystem.CommonEnt_CameraCom.Camera.transform.rotation = new Quaternion(0, 0, 180, 0);
-                        MainCommonSystem.CommonEnt_CameraCom.Camera.transform.position = Main.Instance.transform.position + MainCommonSystem.CommonEnt_CameraCom.PosForCamera + new Vector3(0, 0.5f, 0);
-                    }
 
                     break;
 

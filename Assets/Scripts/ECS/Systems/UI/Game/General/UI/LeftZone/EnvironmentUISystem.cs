@@ -1,14 +1,16 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.ECS.System.View.Game.General.Cell;
-using Assets.Scripts.Workers.Game.UI.Left;
 using Leopotam.Ecs;
 using UnityEngine;
 
 internal sealed class EnvironmentUISystem : IEcsRunSystem
 {
-    private EcsFilter<SelectorComponent> _selectorFilter;
+    private EcsFilter<SelectorComponent> _selectorFilter = default;
+    private EcsFilter<EnvirZoneDataUICom, EnvirZoneViewUICom> _envirZoneUIFilter;
 
     public void Run()
     {
@@ -16,20 +18,20 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
 
         if (selCom.IsSelectedCell && !CellBuildDataSystem.BuildTypeCom(selCom.XySelectedCell).Is(BuildingTypes.City))
         {
-            EnvirZoneLeftUIViewContainer.SetActiveZone(true);
+            _envirZoneUIFilter.Get2(0).SetActiveParent(true);
         }
         else
         {
-            EnvirZoneLeftUIViewContainer.SetActiveZone(false);
+            _envirZoneUIFilter.Get2(0).SetActiveParent(false);
         }
 
-        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Fertilizer, "Fertilizer: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Fertilizer, selCom.XySelectedCell));
-        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Wood, "Wood: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.AdultForest, selCom.XySelectedCell));
-        EnvirZoneLeftUIViewContainer.SetTextInfoCell(EnvirTextInfoTypes.Ore, "Ore: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Hill, selCom.XySelectedCell));
+        _envirZoneUIFilter.Get2(0).SetText(ResourceTypes.Food, "Fertilizer: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Fertilizer, selCom.XySelectedCell));
+        _envirZoneUIFilter.Get2(0).SetText(ResourceTypes.Wood, "Wood: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.AdultForest, selCom.XySelectedCell));
+        _envirZoneUIFilter.Get2(0).SetText(ResourceTypes.Ore, "Ore: " + CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Hill, selCom.XySelectedCell));
 
 
 
-        if (EnvirZoneLeftUIViewContainer.IsActivatedEnvrInfo)
+        if (_envirZoneUIFilter.Get1(0).IsActivatedInfo)
         {
             for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
                 for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Components;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Leopotam.Ecs;
 using System;
 using UnityEngine;
@@ -20,7 +21,7 @@ namespace Assets.Scripts.ECS.System.View.Game.General.Cell
             for (int x = 0; x < CELL_COUNT_X; x++)
                 for (int y = 0; y < CELL_COUNT_Y; y++)
                 {
-                    var parentGO = StartSpawnCellsViewSystem.CellGOs[x, y].transform.Find("Cell").gameObject;
+                    var parentGO = MainGameSystem.CellGOs[x, y].transform.Find("Cell").gameObject;
 
                     _cellEnts[x, y] = _gameWorld.NewEntity()
                         .Replace(new CellGOComponent(parentGO));
@@ -28,8 +29,9 @@ namespace Assets.Scripts.ECS.System.View.Game.General.Cell
         }
 
         private static GameObject GetCellGO(int[] xy) => _cellEnts[xy[X], xy[Y]].Get<CellGOComponent>().CellGO;
+        private static GameObject GetCellGO(byte[] xy) => _cellEnts[xy[X], xy[Y]].Get<CellGOComponent>().CellGO;
 
-        internal static int GetInstanceIDCell(int[] xy) => GetCellGO(xy).GetInstanceID();
+        internal static int GetInstanceIDCell(byte[] xy) => GetCellGO(xy).GetInstanceID();
         internal static bool IsActiveSelfParentCell(int[] xy) => GetCellGO(xy).transform.parent.gameObject.activeSelf;
 
         internal static float GetEulerAngle(XyzTypes xyzType, int[] xy)

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Components;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.System.Data.Common;
 using Leopotam.Ecs;
 using System;
@@ -14,7 +15,7 @@ namespace Assets.Scripts.ECS.System.View.Game.General.Cell
 
         private static EcsEntity[,] _cellUnitEnts;
 
-        private static SpritesData SpritesData => MainCommonSystem.CommonEnt_ResourcesCommonCom.SpritesConfig;
+        private static SpritesData SpritesData => ResourcesComponent.SpritesConfig;
 
 
         public void Init()
@@ -24,7 +25,7 @@ namespace Assets.Scripts.ECS.System.View.Game.General.Cell
             for (int x = 0; x < CELL_COUNT_X; x++)
                 for (int y = 0; y < CELL_COUNT_Y; y++)
                 {
-                    var sr = StartSpawnCellsViewSystem.CellGOs[x, y].transform.Find("Unit").GetComponent<SpriteRenderer>();
+                    var sr = MainGameSystem.CellGOs[x, y].transform.Find("Unit").GetComponent<SpriteRenderer>();
                     _cellUnitEnts[x, y] = _gameWorld.NewEntity()
                         .Replace(new SpriteRendererComponent(sr));
                 }

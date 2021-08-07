@@ -1,10 +1,9 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Game.General.Systems.StartFill;
-using Assets.Scripts.ECS.System.Data.Common;
-using Assets.Scripts.Workers.Game.UI;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
@@ -12,10 +11,12 @@ using System.Collections.Generic;
 
 internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
 {
-    private EcsWorld _currentGameWorld;
-    private EcsFilter<InfoMasCom> _infoFilter;
-    private EcsFilter<DonerMasCom, NeedActiveSomethingMasCom> _donerFilter;
-    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
+    private EcsWorld _currentGameWorld = default;
+    private EcsFilter<InfoMasCom> _infoFilter = default;
+    private EcsFilter<DonerMasCom, NeedActiveSomethingMasCom> _donerFilter = default;
+    private EcsFilter<XyUnitsComponent> _xyUnitsFilter = default;
+    private EcsFilter<MotionsDataUIComponent> _motionsFilter = default;
+    private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
 
     private Dictionary<bool, bool> _doneOrNotFromStartAnyUpdate = new Dictionary<bool, bool>();
 
@@ -45,10 +46,10 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
             {
                 GameMasterSystemManager.UpdateMotion.Run();
 
-                RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, MiddleUIDataContainer.AmountMotions);
+                RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, _motionsFilter.Get1(0).AmountMotions);
                 RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-                DownDonerUIDataContainer.SetDoned(true, default);
-                DownDonerUIDataContainer.SetDoned(false, default);
+                _donerUIFilter.Get1(0).SetDoned(true, default);
+                _donerUIFilter.Get1(0).SetDoned(false, default);
             }
             else
             {
@@ -58,67 +59,67 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
                         throw new Exception();
 
                     case StepModeTypes.ByQueue:
-                        DownDonerUIDataContainer.SetDoned(sender.IsMasterClient, true);
+                        _donerUIFilter.Get1(0).SetDoned(sender.IsMasterClient, true);
                         _doneOrNotFromStartAnyUpdate[sender.IsMasterClient] = false;
 
                         if (sender.IsMasterClient)
                         {
                             if (_doneOrNotFromStartAnyUpdate[false] == true)
                             {
-                                DownDonerUIDataContainer.SetDoned(false, false);
+                                _donerUIFilter.Get1(0).SetDoned(false, false);
                             }
                             else
                             {
                                 GameMasterSystemManager.UpdateMotion.Run();
 
-                                RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, MainGameSystem.MotionEnt_AmountCom.AmountMotions);
+                                RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, _motionsFilter.Get1(0).AmountMotions);
                                 RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
-                                DownDonerUIDataContainer.SetDoned(true, default);
-                                DownDonerUIDataContainer.SetDoned(false, default);
+                                _donerUIFilter.Get1(0).SetDoned(true, default);
+                                _donerUIFilter.Get1(0).SetDoned(false, default);
 
                                 _doneOrNotFromStartAnyUpdate[true] = true;
-                                DownDonerUIDataContainer.SetDoned(true, true);
+                                _donerUIFilter.Get1(0).SetDoned(true, true);
                             }
                         }
                         else
                         {
                             if (_doneOrNotFromStartAnyUpdate[true] == true)
                             {
-                                DownDonerUIDataContainer.SetDoned(true, false);
+                                _donerUIFilter.Get1(0).SetDoned(true, false);
                             }
                             else
                             {
                                 GameMasterSystemManager.UpdateMotion.Run();
 
-                                RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, MainGameSystem.MotionEnt_AmountCom.AmountMotions);
+                                RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, _motionsFilter.Get1(0).AmountMotions);
                                 RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
-                                DownDonerUIDataContainer.SetDoned(true, default);
-                                DownDonerUIDataContainer.SetDoned(false, default);
+                                _donerUIFilter.Get1(0).SetDoned(true, default);
+                                _donerUIFilter.Get1(0).SetDoned(false, default);
 
                                 _doneOrNotFromStartAnyUpdate[false] = true;
-                                DownDonerUIDataContainer.SetDoned(false, true);
+                                _donerUIFilter.Get1(0).SetDoned(false, true);
                             }
                         }
                         break;
 
                     case StepModeTypes.Together:
-                        DownDonerUIDataContainer.SetDoned(sender.IsMasterClient, needActiveDoner);
+                        _donerUIFilter.Get1(0).SetDoned(sender.IsMasterClient, needActiveDoner);
 
                         bool needUpdate = PhotonNetwork.OfflineMode
-                            || DownDonerUIDataContainer.IsDoned(true)
-                            && DownDonerUIDataContainer.IsDoned(false);
+                            || _donerUIFilter.Get1(0).IsDoned(true)
+                            && _donerUIFilter.Get1(0).IsDoned(false);
 
                         if (needUpdate)
                         {
                             GameMasterSystemManager.UpdateMotion.Run();
 
-                            RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, MainGameSystem.MotionEnt_AmountCom.AmountMotions);
+                            RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, _motionsFilter.Get1(0).AmountMotions);
                             RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
-                            DownDonerUIDataContainer.SetDoned(true, default);
-                            DownDonerUIDataContainer.SetDoned(false, default);
+                            _donerUIFilter.Get1(0).SetDoned(true, default);
+                            _donerUIFilter.Get1(0).SetDoned(false, default);
                         }
                         break;
 

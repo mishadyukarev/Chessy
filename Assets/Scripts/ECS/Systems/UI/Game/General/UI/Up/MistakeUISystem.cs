@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.ECS.Game.General.Systems.StartFill;
-using Assets.Scripts.Workers.Game.UI.Vis.Up;
+﻿using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -7,6 +7,7 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View
 {
     internal sealed class MistakeUISystem : IEcsInitSystem, IEcsRunSystem
     {
+        private EcsFilter<EconomyViewUICom> _economyViewUIFilter = default;
 
         private const float TIMER_MISTAKE = 1;
 
@@ -24,17 +25,19 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View
 
         public void Run()
         {
+            ref var economyViewUICom = ref _economyViewUIFilter.Get1(0);
+
             if (_isStartedMistake)
             {
                 _timer += Time.deltaTime;
 
                 if (_timer >= TIMER_MISTAKE)
                 {
-                    ResourcesViewUIWorker.SetMainColor(ResourceTypes.Food, Color.white);
-                    ResourcesViewUIWorker.SetMainColor(ResourceTypes.Wood, Color.white);
-                    ResourcesViewUIWorker.SetMainColor(ResourceTypes.Ore, Color.white);
-                    ResourcesViewUIWorker.SetMainColor(ResourceTypes.Iron, Color.white);
-                    ResourcesViewUIWorker.SetMainColor(ResourceTypes.Gold, Color.white);
+                    economyViewUICom.SetMainColor(ResourceTypes.Food, Color.white);
+                    economyViewUICom.SetMainColor(ResourceTypes.Wood, Color.white);
+                    economyViewUICom.SetMainColor(ResourceTypes.Ore, Color.white);
+                    economyViewUICom.SetMainColor(ResourceTypes.Iron, Color.white);
+                    economyViewUICom.SetMainColor(ResourceTypes.Gold, Color.white);
 
                     _isStartedMistake = false;
                     _timer = 0;
@@ -44,7 +47,7 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View
 
         private void MistakeEnvironment(ResourceTypes economyType)
         {
-            ResourcesViewUIWorker.SetMainColor(economyType, Color.red);
+            _economyViewUIFilter.Get1(0).SetMainColor(economyType, Color.red);
             _isStartedMistake = true;
             _timer = 0;
         }

@@ -16,10 +16,6 @@ namespace Assets.Scripts.ECS.System.Data.Common
 
 
         private static EcsEntity _commonZoneEnt;
-        internal static ref SaverComponent CommonEnt_SaverCom => ref _commonZoneEnt.Get<SaverComponent>();
-        internal static ref CameraComponent CommonEnt_CameraCom => ref _commonZoneEnt.Get<CameraComponent>();
-        internal static ref ResourcesComponent CommonEnt_ResourcesCommonCom => ref _commonZoneEnt.Get<ResourcesComponent>();
-        internal static ref ToggleZoneComponent CommonEnt_ParentCom => ref _commonZoneEnt.Get<ToggleZoneComponent>();
         internal static ref AudioSourceComponent CommonEnt_AudioSourceCom => ref _commonZoneEnt.Get<AudioSourceComponent>();
 
 
@@ -29,19 +25,18 @@ namespace Assets.Scripts.ECS.System.Data.Common
                 .Replace(new ResourcesComponent(true));
 
 
-            ref var resourcesCom = ref _commonZoneEnt.Get<ResourcesComponent>();
 
-            var camera = UnityEngine.Object.Instantiate(resourcesCom.PrefabConfig.Camera, Main.Instance.transform.position, Main.Instance.transform.rotation);
+            var camera = UnityEngine.Object.Instantiate(ResourcesComponent.PrefabConfig.Camera, Main.Instance.transform.position, Main.Instance.transform.rotation);
             camera.name = "Camera";
             camera.orthographicSize = 5.7f;
 
             var goES = new GameObject("EventSystem");
 
-            var canvas = GameObject.Instantiate(resourcesCom.PrefabConfig.Canvas);
+            var canvas = GameObject.Instantiate(ResourcesComponent.PrefabConfig.Canvas);
             canvas.name = "Canvas";
 
             var audioSource = new GameObject("AudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
-            audioSource.clip = resourcesCom.SoundConfig.MusicAudioClip;
+            audioSource.clip = ResourcesComponent.SoundConfig.MusicAudioClip;
             audioSource.volume = SaverComponent.SliderVolume;
             audioSource.loop = true;
             audioSource.Play();
@@ -53,7 +48,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
                 .Replace(new SaverComponent(0.15f))
                 .Replace(new CanvasComponent(canvas))
                 .Replace(new ToggleZoneComponent(new GameObject()))
-                .Replace(new AudioSourceComponent(audioSource))
+                .Replace(new SoundCommonCom(audioSource))
                 .Replace(new PhotonViewComponent(Main.Instance.gameObject.AddComponent<PhotonView>()));
 
 
@@ -64,9 +59,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
             commZoneCom.Attach(canvas.transform);
 
 
-
-            ref var cameraCom = ref _commonZoneEnt.Get<CameraComponent>();
-            camera.transform.position += cameraCom.PosForCamera;
+            camera.transform.position += CameraComponent.PosForCamera;
 
 
             ref var commonZoneCom = ref _commonZoneEnt.Get<CommonZoneComponent>();
@@ -77,7 +70,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
 
         public void Run()
         {
-            CommonEnt_AudioSourceCom.AudioSource.volume = SaverComponent.SliderVolume;
+            SoundCommonCom.Volume = SaverComponent.SliderVolume;
 
             switch (Main.SceneType)
             {

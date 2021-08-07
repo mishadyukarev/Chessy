@@ -8,9 +8,9 @@ namespace Assets.Scripts.Workers
 {
     public static class CellBaseOperat
     {
-        internal static int GetIndexCell(this EcsFilter<XyCellComponent> xyCellFilter, int[] xy)
+        internal static byte GetIndexCell(this EcsFilter<XyCellComponent> xyCellFilter, byte[] xy)
         {
-            for (int idx = 0; idx < xyCellFilter.GetEntitiesCount(); idx++)
+            for (byte idx = 0; idx < xyCellFilter.GetEntitiesCount(); idx++)
             {
                 if (xyCellFilter.Get1(idx).XyCell.Compare(xy))
                 {
@@ -20,7 +20,7 @@ namespace Assets.Scripts.Workers
             throw new Exception();
         }
 
-        internal static int[] GetXyCell(this EcsFilter<XyCellComponent> xyCellFilter, int idx)
+        internal static byte[] GetXyCell(this EcsFilter<XyCellComponent> xyCellFilter, int idx)
         {
             for (int curIdx = 0; curIdx < xyCellFilter.GetEntitiesCount(); curIdx++)
             {
@@ -37,7 +37,17 @@ namespace Assets.Scripts.Workers
             xy[X] = default;
             xy[Y] = default;
         }
+
         internal static bool Compare(this int[] xyLeft, in int[] xyRight)
+        {
+            if (xyLeft[X] == xyRight[X]
+                && xyLeft[Y] == xyRight[Y])
+            {
+                return true;
+            }
+            else return false;
+        }
+        internal static bool Compare(this byte[] xyLeft, in byte[] xyRight)
         {
             if (xyLeft[X] == xyRight[X]
                 && xyLeft[Y] == xyRight[Y])

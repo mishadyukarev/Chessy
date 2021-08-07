@@ -1,12 +1,13 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
-using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 using UnityEngine;
 
 internal sealed class ConditionAbilitiesUISystem : IEcsRunSystem
 {
-    private EcsFilter<SelectorComponent> _selectorFilter;
+    private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
+    private EcsFilter<SelectorComponent> _selectorFilter = default;
     private int[] XySelectedCell => _selectorFilter.Get1(0).XySelectedCell;
 
     public void Run()
@@ -76,28 +77,27 @@ internal sealed class ConditionAbilitiesUISystem : IEcsRunSystem
 
         void ActiveStandartAbilities(bool isActive)
         {
-            RightUIViewContainer.SetActiveConditionButton(isActive, ConditionUnitTypes.Protected);
-            RightUIViewContainer.SetActiveConditionButton(isActive, ConditionUnitTypes.Relaxed);
+            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Condition, isActive);
 
             if (isActive)
             {
                 if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Protected, XySelectedCell))
                 {
-                    RightUIViewContainer.SetConditionColor(ConditionUnitTypes.Protected, Color.yellow);
+                    _unitZoneUIFilter.Get1(0).SetColorToConditionButton(ConditionUnitTypes.Protected, Color.yellow);
                 }
 
                 else
                 {
-                    RightUIViewContainer.SetConditionColor(ConditionUnitTypes.Protected, Color.white);
+                    _unitZoneUIFilter.Get1(0).SetColorToConditionButton(ConditionUnitTypes.Protected, Color.white);
                 }
 
                 if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Relaxed, XySelectedCell))
                 {
-                    RightUIViewContainer.SetConditionColor(ConditionUnitTypes.Relaxed, Color.green);
+                    _unitZoneUIFilter.Get1(0).SetColorToConditionButton(ConditionUnitTypes.Relaxed, Color.green);
                 }
                 else
                 {
-                    RightUIViewContainer.SetConditionColor(ConditionUnitTypes.Relaxed, Color.white);
+                    _unitZoneUIFilter.Get1(0).SetColorToConditionButton(ConditionUnitTypes.Relaxed, Color.white);
                 }
             }
         }

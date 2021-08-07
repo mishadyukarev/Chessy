@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.Workers.Game.UI;
@@ -10,8 +12,10 @@ using UnityEngine;
 
 internal sealed class TruceMasterSystem : IEcsRunSystem
 {
-    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
-    private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter;
+    private EcsFilter<XyUnitsComponent> _xyUnitsFilter = default;
+    private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
+    private EcsFilter<MotionsDataUIComponent> _motionsUIFilter = default;
+    private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
 
     public void Run()
     {
@@ -94,10 +98,10 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
             inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn, false);
         }
 
-        RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, MainGameSystem.MotionEnt_AmountCom.AmountMotions);
+        RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, _motionsUIFilter.Get1(0).AmountMotions);
         RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
-        DownDonerUIDataContainer.SetDoned(true, default);
-        DownDonerUIDataContainer.SetDoned(false, default);
+        _donerUIFilter.Get1(0).SetDoned(true, default);
+        _donerUIFilter.Get1(0).SetDoned(false, default);
     }
 }

@@ -1,10 +1,14 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
+using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.Game.Other;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Components;
+using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.System.Data.Common;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
@@ -22,11 +26,18 @@ namespace Assets.Scripts
 {
     public sealed class RPCGameSystem : MonoBehaviour, IEcsInitSystem
     {
+        private EcsFilter<FromInfoComponent> _fromInfoFilter = default;
         private EcsFilter<SelectorComponent, AvailableCellsComponent> _selectorFilter = default;
         private EcsFilter<InventorResourcesComponent> _inventorFilter = default;
+        private EcsFilter<XyUnitsComponent> _xyUnitsFilter = default;
+        private EcsFilter<UpgradesBuildingsComponent> _upgradesBuildFilter = default;
+        private EcsFilter<EndGameDataUIComponent> _endGameFilter = default;
+        private EcsFilter<ReadyDataUICom> _readyUIFilter = default;
+        private EcsFilter<MotionsDataUIComponent, MotionsViewUIComponent> _motionsFilter= default;
+        private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
 
         private EcsFilter<InfoMasCom> _infoMasterComFilter = default;
-        private EcsFilter<ReadyMasCom, NeedActiveSomethingMasCom> _readyFilter = default;
+        private EcsFilter<ForReadyMasCom, NeedActiveSomethingMasCom> _readyFilter = default;
         private EcsFilter<DonerMasCom, NeedActiveSomethingMasCom> _donerFilter = default;
         private EcsFilter<ForBuildingMasCom, XyCellForDoingMasCom> _buildFilter = default;
         private EcsFilter<DestroyMasCom, XyCellForDoingMasCom> _destroyFilter = default;
@@ -237,7 +248,7 @@ namespace Assets.Scripts
         private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _currentNumber = 0;
-            MainGameSystem.FromInfoCom.FromInfo = infoFrom;
+            _fromInfoFilter.Get1(0).FromInfo = infoFrom;
 
             ref var selectorCom = ref _selectorFilter.Get1(0);
             ref var availCellsCom = ref _selectorFilter.Get2(0);
@@ -248,11 +259,11 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case RpcGeneralTypes.SetDonerActiveUI:
-                    DownDonerUIDataContainer.SetDoned(PhotonNetwork.IsMasterClient, (bool)objects[_currentNumber++]);
+                    _donerUIFilter.Get1(0) .SetDoned(PhotonNetwork.IsMasterClient, (bool)objects[_currentNumber++]);
                     break;
 
                 case RpcGeneralTypes.ActiveAmountMotionUI:
-                    MainGameSystem.MotionEnt_ActivatedCom.IsActivated = true;
+                    _motionsFilter.Get1(0).IsActivatedUI = true;
                     break;
 
                 case RpcGeneralTypes.GetAvailableCellsForSetting:
@@ -260,8 +271,8 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.EndGame:
-                    MainGameSystem.EndGameEnt_EndGameCom.IsEndGame = true;
-                    MainGameSystem.EndGameEnt_EndGameCom.PlayerWinner = PhotonNetwork.PlayerList[(int)objects[_currentNumber++] - 1];
+                    _endGameFilter.Get1(0).IsEndGame = true;
+                    _endGameFilter.Get1(0).PlayerWinner = PhotonNetwork.PlayerList[(int)objects[_currentNumber++] - 1];
                     break;
 
                 case RpcGeneralTypes.Attack:
@@ -296,7 +307,7 @@ namespace Assets.Scripts
                             break;
 
                         case MistakeTypes.NeedKing:
-                            MainGameSystem.DonerUIEnt_MistakeCom.MistakeUnityEvent.Invoke();
+                            //MainGameSystem.DonerUIEnt_MistakeCom.MistakeUnityEvent.Invoke();
                             break;
 
                         case MistakeTypes.NeedSteps:
@@ -349,7 +360,7 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case RpcOtherTypes.SetAmountMotion:
-                    MainGameSystem.MotionEnt_AmountCom.AmountMotions = (int)objects[_currentNumber++];
+                    _motionsFilter.Get1(0).AmountMotions = (int)objects[_currentNumber++];
                     break;
 
                 case RpcOtherTypes.SetStepModType:
@@ -415,12 +426,12 @@ namespace Assets.Scripts
 
 
             listObjects.Add(SaverComponent.StepModeType);
-            listObjects.Add(MiddleUIDataContainer.IsStartedGame);
+            listObjects.Add(_readyUIFilter.Get1(0).IsStartedGame);
 
 
 
-            listObjects.Add(MiddleUIDataContainer.IsReady(false));
-            listObjects.Add(DownDonerUIDataContainer.IsDoned(false));
+            listObjects.Add(_readyUIFilter.Get1(0).IsReady(false));
+            listObjects.Add(_donerUIFilter.Get1(0).IsDoned(false));
 
 
             ref var invResCom = ref _inventorFilter.Get1(0);
@@ -434,19 +445,21 @@ namespace Assets.Scripts
 
             for (UnitTypes unitTypeType = (UnitTypes)1; (byte)unitTypeType < Enum.GetNames(typeof(UnitTypes)).Length; unitTypeType++)
             {
-                var amountUnitsInGame = MainGameSystem.XyUnitsCom.GetAmountUnitsInGame(unitTypeType, false);
+                ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
+
+                var amountUnitsInGame = xyUnitsCom.GetAmountUnitsInGame(unitTypeType, false);
                 listObjects.Add(amountUnitsInGame);
                 for (int indexXy = 0; indexXy < amountUnitsInGame; indexXy++)
                 {
-                    listObjects.Add(MainGameSystem.XyUnitsCom.GetXyUnitInGame(unitTypeType, false, indexXy));
+                    listObjects.Add(xyUnitsCom.GetXyUnitInGame(unitTypeType, false, indexXy));
                 }
             }
 
+            
 
-
-            listObjects.Add(MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Farm, false));
-            listObjects.Add(MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, false));
-            listObjects.Add(MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Mine, false));
+            listObjects.Add(_upgradesBuildFilter.Get1(0).GetAmountUpgrades(BuildingTypes.Farm, false));
+            listObjects.Add(_upgradesBuildFilter.Get1(0).GetAmountUpgrades(BuildingTypes.Woodcutter, false));
+            listObjects.Add(_upgradesBuildFilter.Get1(0).GetAmountUpgrades(BuildingTypes.Mine, false));
 
             for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
             {
@@ -566,17 +579,17 @@ namespace Assets.Scripts
 
 
             bool isStartedGame = (bool)objects[_currentNumber++];
-            MiddleUIDataContainer.IsStartedGame = isStartedGame;
+            _readyUIFilter.Get1(0).IsStartedGame = isStartedGame;
 
 
 
             bool isActivatedReadyButton = (bool)objects[_currentNumber++];
-            MiddleUIDataContainer.SetIsReady(PhotonNetwork.IsMasterClient, isActivatedReadyButton);
+            _readyUIFilter.Get1(0).SetIsReady(PhotonNetwork.IsMasterClient, isActivatedReadyButton);
 
 
 
             bool isActivatedDoner = (bool)objects[_currentNumber++];
-            DownDonerUIDataContainer.SetDoned(PhotonNetwork.IsMasterClient, isActivatedDoner);
+            _donerUIFilter.Get1(0).SetDoned(PhotonNetwork.IsMasterClient, isActivatedDoner);
 
 
             ref var invResCom = ref _inventorFilter.Get1(0);
@@ -597,13 +610,15 @@ namespace Assets.Scripts
             {
                 var amountUnits = (int)objects[_currentNumber++];
 
+                ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
+
                 List<int[]> xyUnits = new List<int[]>();
                 for (int i = 0; i < amountUnits; i++)
                 {
                     var xyUnit = (int[])objects[_currentNumber++];
                     xyUnits.Add(xyUnit);
                 }
-                MainGameSystem.XyUnitsCom.SetAmountUnitInGame(unitTypeType, PhotonNetwork.IsMasterClient, xyUnits);
+                xyUnitsCom.SetAmountUnitInGame(unitTypeType, PhotonNetwork.IsMasterClient, xyUnits);
             }
 
 
@@ -611,9 +626,9 @@ namespace Assets.Scripts
             var amountFarmUpgrades = (int)objects[_currentNumber++];
             var amountWoodcutterUpgrades = (int)objects[_currentNumber++];
             var amountMineUpgrades = (int)objects[_currentNumber++];
-            MainGameSystem.UpgradesBuildingsCom.SetAmountUpgrades(BuildingTypes.Farm, PhotonNetwork.IsMasterClient, amountFarmUpgrades);
-            MainGameSystem.UpgradesBuildingsCom.SetAmountUpgrades(BuildingTypes.Woodcutter, PhotonNetwork.IsMasterClient, amountWoodcutterUpgrades);
-            MainGameSystem.UpgradesBuildingsCom.SetAmountUpgrades(BuildingTypes.Mine, PhotonNetwork.IsMasterClient, amountMineUpgrades);
+            _upgradesBuildFilter.Get1(0).SetAmountUpgrades(BuildingTypes.Farm, PhotonNetwork.IsMasterClient, amountFarmUpgrades);
+            _upgradesBuildFilter.Get1(0).SetAmountUpgrades(BuildingTypes.Woodcutter, PhotonNetwork.IsMasterClient, amountWoodcutterUpgrades);
+            _upgradesBuildFilter.Get1(0).SetAmountUpgrades(BuildingTypes.Mine, PhotonNetwork.IsMasterClient, amountMineUpgrades);
 
             for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
             {

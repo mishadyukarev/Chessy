@@ -1,30 +1,33 @@
-﻿using Assets.Scripts.Workers.Game.UI.Middle;
+﻿using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.Workers.Game.UI.Middle;
 using Leopotam.Ecs;
 using UnityEngine;
 
 internal sealed class UpdatedUISystem : IEcsRunSystem
 {
+    private EcsFilter<MotionsDataUIComponent, MotionsViewUIComponent> _motionsUIFilter = default;
     private float _timer;
 
     public void Run()
     {
-        if (UpdatedUIWorker.IsActivated)
+        if (_motionsUIFilter.Get1(0).IsActivatedUI)
         {
-            UpdatedUIWorker.Text = "Motion: " + UpdatedUIWorker.AmountMotions;
-            UpdatedUIWorker.SetActiveParent(true);
+            _motionsUIFilter.Get2(0).Text = "Motion: " + _motionsUIFilter.Get1(0).AmountMotions;
+            _motionsUIFilter.Get2(0).SetActiveParent(true);
 
             _timer += Time.deltaTime;
 
             if (_timer >= 1)
             {
-                UpdatedUIWorker.SetActiveParent(false);
-                UpdatedUIWorker.IsActivated = false;
+                _motionsUIFilter.Get2(0).SetActiveParent(false);
+                _motionsUIFilter.Get1(0).IsActivatedUI = false;
                 _timer = 0;
             }
         }
         else
         {
-            UpdatedUIWorker.SetActiveParent(false);
+            _motionsUIFilter.Get2(0).SetActiveParent(false);
         }
     }
 }

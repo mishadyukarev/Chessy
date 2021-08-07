@@ -1,19 +1,21 @@
-﻿using Assets.Scripts.Workers.Game.UI.Middle;
+﻿using Assets.Scripts.ECS.Component.UI.Game.General;
 using Leopotam.Ecs;
 
 internal sealed class TheEndGameUISystem : IEcsRunSystem
 {
+    private EcsFilter<EndGameDataUIComponent, EndGameViewUIComponent> _endGameFilter;
+
     public void Run()
     {
-        if (EndGameUIWorker.IsEndGame)
+        if (_endGameFilter.Get1(0).IsEndGame)
         {
-            EndGameUIWorker.SetActiveParent(true);
-            if (EndGameUIWorker.IsLocalWinnet) EndGameUIWorker.Text = "You're WINNER!";
-            else EndGameUIWorker.Text = "You're loser :(";
+            _endGameFilter.Get2(0).SetActiveZone(true);
+            if (_endGameFilter.Get1(0).PlayerWinner.IsLocal) _endGameFilter.Get2(0).Text = "You're WINNER!";
+            else _endGameFilter.Get2(0).Text = "You're loser :(";
         }
         else
         {
-            EndGameUIWorker.SetActiveParent(false);
+            _endGameFilter.Get2(0).SetActiveZone(false);
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game.General;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.ECS.System.View.Game.General.Cell;
@@ -11,9 +13,10 @@ using Photon.Pun;
 
 internal sealed class SelectorSystem : IEcsRunSystem
 {
-    private EcsFilter<XyCellComponent> _cellFilter;
+    private EcsFilter<XyCellComponent> _cellFilter = default;
     private EcsFilter<SelectorComponent, AvailableCellsComponent> _selectorFilter = default;
     private EcsFilter<InputComponent> _inputFilter = default;
+    private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
 
     private bool IsClicked => _inputFilter.Get1(0).IsClicked;
 
@@ -42,7 +45,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
             else if (selectorCom.RaycastGettedType == RaycastGettedTypes.Cell)
             {
-                if (DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient))
+                if (_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
                 {
                     if (selectorCom.SelectorType == SelectorTypes.StartClick)
                     {

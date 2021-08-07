@@ -1,28 +1,34 @@
-﻿using Assets.Scripts.Workers.Game.UI;
+﻿using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 using Photon.Pun;
 using UnityEngine;
 
 internal sealed class ReadyZoneUISystem : IEcsRunSystem
 {
+    private EcsFilter<ReadyDataUICom, ReadyViewUICom> _readyUIFilter = default;
+
     public void Run()
     {
-        if (MiddleUIDataContainer.IsReady(PhotonNetwork.IsMasterClient))
+        ref var readyDataUICom = ref _readyUIFilter.Get1(0);
+        ref var readyViewUICom = ref _readyUIFilter.Get2(0);
+
+        if (readyDataUICom.IsReady(PhotonNetwork.IsMasterClient))
         {
-            ReadyZoneUIWorker.SetColorButton(Color.red);
+            readyViewUICom.SetColorReadyButton(Color.red);
         }
         else
         {
-            ReadyZoneUIWorker.SetColorButton(Color.white);
+            readyViewUICom.SetColorReadyButton(Color.white);
         }
 
-        if (ReadyZoneUIWorker.IsStartedGame || PhotonNetwork.OfflineMode)
+        if (readyDataUICom.IsStartedGame || PhotonNetwork.OfflineMode)
         {
-            ReadyZoneUIWorker.SetActiveParentGO(false);
+            readyViewUICom.SetActiveParent(false);
         }
         else
         {
-            ReadyZoneUIWorker.SetActiveParentGO(true);
+            readyViewUICom.SetActiveParent(true);
         }
     }
 }

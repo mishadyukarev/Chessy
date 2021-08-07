@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.ECS.Game.Components;
+﻿using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.System.Data.Common;
 using Leopotam.Ecs;
 using UnityEngine;
@@ -66,66 +67,66 @@ namespace Assets.Scripts.ECS.Entities.Game.General.Else.View.Containers
         internal SoundElseViewContainer(EcsWorld gameWorld)
         {
             var audioSourceParentGO = new GameObject("AudioSource");
-            MainCommonSystem.CommonEnt_ParentCom.Attach(audioSourceParentGO.transform);
+            ToggleZoneComponent.Attach(audioSourceParentGO.transform);
 
             MistakeAudioSource = audioSourceParentGO.AddComponent<AudioSource>();
-            MistakeAudioSource.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.MistakeAudioClip;
+            MistakeAudioSource.clip = ResourcesComponent.SoundConfig.MistakeAudioClip;
 
             AttackAudioSource = audioSourceParentGO.AddComponent<AudioSource>();
-            AttackAudioSource.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.AttackSwordAudioClip;
+            AttackAudioSource.clip = ResourcesComponent.SoundConfig.AttackSwordAudioClip;
 
 
 
             var attackAS = audioSourceParentGO.AddComponent<AudioSource>();
-            attackAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.AttackArcherAC;
+            attackAS.clip = ResourcesComponent.SoundConfig.AttackArcherAC;
             attackAS.volume = 0.6f;
             _attackArcherSoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(attackAS));
 
 
             var pickArcherAS = audioSourceParentGO.AddComponent<AudioSource>();
-            pickArcherAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.PickArcherAudioClip;
+            pickArcherAS.clip = ResourcesComponent.SoundConfig.PickArcherAudioClip;
             pickArcherAS.volume = 0.7f;
             _pickArcherSoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(pickArcherAS));
 
 
             var pickMeleeAS = audioSourceParentGO.AddComponent<AudioSource>();
-            pickMeleeAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.PickMeleeAC;
+            pickMeleeAS.clip = ResourcesComponent.SoundConfig.PickMeleeAC;
             pickMeleeAS.volume = 0.1f;
             _pickMeleeSoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(pickMeleeAS));
 
 
             var buildingAS = audioSourceParentGO.AddComponent<AudioSource>();
-            buildingAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.BuildingAC;
+            buildingAS.clip = ResourcesComponent.SoundConfig.BuildingAC;
             buildingAS.volume = 0.1f;
             _buildingSoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(buildingAS));
 
 
             var settingAS = audioSourceParentGO.AddComponent<AudioSource>();
-            settingAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.SettingUnitAC;
+            settingAS.clip = ResourcesComponent.SoundConfig.SettingUnitAC;
             _settingSoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(settingAS));
 
 
             var fireAS = audioSourceParentGO.AddComponent<AudioSource>();
-            fireAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.FireAC;
+            fireAS.clip = ResourcesComponent.SoundConfig.FireAC;
             fireAS.volume = 0.2f;
             _fireSoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(fireAS));
 
 
             var buyAS = audioSourceParentGO.AddComponent<AudioSource>();
-            buyAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.BuyAC;
+            buyAS.clip = ResourcesComponent.SoundConfig.BuyAC;
             buyAS.volume = 0.3f;
             _buySoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(buyAS));
 
 
             var meltingAS = audioSourceParentGO.AddComponent<AudioSource>();
-            meltingAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.Melting_Clip;
+            meltingAS.clip = ResourcesComponent.SoundConfig.Melting_Clip;
             meltingAS.volume = 0.3f;
             _meltingSoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(meltingAS));
@@ -133,35 +134,35 @@ namespace Assets.Scripts.ECS.Entities.Game.General.Else.View.Containers
 
 
             var destroyAS = audioSourceParentGO.AddComponent<AudioSource>();
-            destroyAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.Destroy_Clip;
+            destroyAS.clip = ResourcesComponent.SoundConfig.Destroy_Clip;
             destroyAS.volume = 0.3f;
             _destroySoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(destroyAS));
 
 
             var upgradeUnitMeleeAS = audioSourceParentGO.AddComponent<AudioSource>();
-            upgradeUnitMeleeAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.UpgradeUnitMelee_Clip;
+            upgradeUnitMeleeAS.clip = ResourcesComponent.SoundConfig.UpgradeUnitMelee_Clip;
             upgradeUnitMeleeAS.volume = 0.2f;
             _upgradeUnitMeleeSoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(upgradeUnitMeleeAS));
 
 
             var seedingAS = audioSourceParentGO.AddComponent<AudioSource>();
-            seedingAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.Seeding_Clip;
+            seedingAS.clip = ResourcesComponent.SoundConfig.Seeding_Clip;
             seedingAS.volume = 0.2f;
             _seedingSoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(seedingAS));
 
 
             var shiftUnitAS = audioSourceParentGO.AddComponent<AudioSource>();
-            shiftUnitAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.ShiftUnit_Clip;
+            shiftUnitAS.clip = ResourcesComponent.SoundConfig.ShiftUnit_Clip;
             shiftUnitAS.volume = 0.6f;
             _shiftUnitSoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(shiftUnitAS));
 
 
             var truceAS = audioSourceParentGO.AddComponent<AudioSource>();
-            truceAS.clip = MainCommonSystem.CommonEnt_ResourcesCommonCom.SoundConfig.Truce_Clip;
+            truceAS.clip = ResourcesComponent.SoundConfig.Truce_Clip;
             truceAS.volume = 0.6f;
             _truceSoundEnt = gameWorld.NewEntity()
                 .Replace(new AudioSourceComponent(truceAS));

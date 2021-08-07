@@ -31,10 +31,6 @@ namespace Assets.Scripts.ECS.System.Data.Game.General.Cell
             for (int x = 0; x < CELL_COUNT_X; x++)
                 for (int y = 0; y < CELL_COUNT_Y; y++)
                 {
-                    _currentGameWorld.NewEntity()
-                        .Replace(new XyCellComponent(new int[] { x, y }));
-
-
                     _cellUnitEnts[x, y] = _currentGameWorld.NewEntity()
                         .Replace(new CellUnitComponent())
                         .Replace(new UnitTypeComponent())

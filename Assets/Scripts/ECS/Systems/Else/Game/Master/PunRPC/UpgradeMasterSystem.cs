@@ -12,6 +12,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
     internal class UpgradeMasterSystem : IEcsInitSystem, IEcsRunSystem
     {
         private EcsWorld _currentGameWorld;
+        private EcsFilter<UpgradesBuildingsComponent> _upgradeBuildsFilter;
         private EcsFilter<InfoMasCom> _infoFilter;
         private EcsFilter<UpgradeMasCom, XyCellForDoingMasCom> _upgradeFilter;
         private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
@@ -39,9 +40,6 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
         public void Run()
         {
-
-
-
             ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
             ref var invResCom = ref _inventResFilt.Get1(0);
 
@@ -107,6 +105,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     if (invResCom.CanUpgradeBuildings(Sender, NeededBuildingTypeForUpgrade, out haves))
                     {
                         invResCom.BuyUpgradeBuildings(Sender, NeededBuildingTypeForUpgrade);
+                        _upgradeBuildsFilter.Get1(0).AddAmountUpgrades(NeededBuildingTypeForUpgrade, Sender.IsMasterClient);
 
                         RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.SoundGoldPack);
                     }

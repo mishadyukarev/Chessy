@@ -2,7 +2,9 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Assets.Scripts.ECS.System.View.Game.General.Cell;
@@ -15,9 +17,13 @@ using System;
 
 internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
 {
-    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
-    private EcsFilter<InventorResourcesComponent> _invResFilt;
+    private EcsFilter<UpgradesBuildingsComponent> _upgradeBuildsFilter = default;
+    private EcsFilter<XyUnitsComponent> _xyUnitsFilter = default;
+    private EcsFilter<InventorResourcesComponent> _invResFilt = default;
+    private EcsFilter<MotionsDataUIComponent> _motionsUIFilter = default;
+    private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
 
+    private int GetAmountUpgrades(BuildingTypes buildingType, bool key) => _upgradeBuildsFilter.Get1(0).GetAmountUpgrades(buildingType, key);
 
     public void Run()
     {
@@ -39,7 +45,7 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
             {
                 var xy = MainGameSystem.XyBuildingsCom.GetXyBuildByIndex(BuildingTypes.Farm, isMasterKey, xyIndex);
 
-                minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Farm, MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Farm, isMasterKey));
+                minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Farm, GetAmountUpgrades(BuildingTypes.Farm, isMasterKey));
 
                 CellEnvrDataSystem.TakeAmountResources(EnvironmentTypes.Fertilizer, xy, minus);
                 inventorResCom.AddAmountResources(ResourceTypes.Food, isMasterKey, minus);
@@ -61,7 +67,7 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
             {
                 var xy = MainGameSystem.XyBuildingsCom.GetXyBuildByIndex(BuildingTypes.Woodcutter, isMasterKey, xyIndex);
 
-                minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Woodcutter, MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Woodcutter, isMasterKey));
+                minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Woodcutter, GetAmountUpgrades(BuildingTypes.Woodcutter, isMasterKey));
 
                 CellEnvrDataSystem.TakeAmountResources(EnvironmentTypes.AdultForest, xy, minus);
                 inventorResCom.AddAmountResources(ResourceTypes.Wood, isMasterKey, minus);
@@ -85,7 +91,7 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
             {
                 var xy = MainGameSystem.XyBuildingsCom.GetXyBuildByIndex(BuildingTypes.Mine, isMasterKey, xyIndex);
 
-                minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Mine, MainGameSystem.UpgradesBuildingsCom.AmountUpgrades(BuildingTypes.Mine, isMasterKey));
+                minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Mine, GetAmountUpgrades(BuildingTypes.Mine, isMasterKey));
 
                 CellEnvrDataSystem.TakeAmountResources(EnvironmentTypes.Hill, xy, minus);
                 inventorResCom.AddAmountResources(ResourceTypes.Ore, isMasterKey, minus);
@@ -291,10 +297,10 @@ internal sealed class ExtractionUpdatorMasterSystem : IEcsRunSystem
             }
 
 
-        DownDonerUIDataContainer.SetDoned(true, false);
-        DownDonerUIDataContainer.SetDoned(false, false);
+        _donerUIFilter.Get1(0).SetDoned(true, false);
+        _donerUIFilter.Get1(0).SetDoned(false, false);
 
-        MainGameSystem.MotionEnt_AmountCom.AmountMotions += 1;
+        _motionsUIFilter.Get1(0).AmountMotions += 1;
 
 
         int amountAdultForest = 0;

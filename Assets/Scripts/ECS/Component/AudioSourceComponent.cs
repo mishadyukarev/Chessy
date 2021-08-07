@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.ECS.Game.Components
+namespace Assets.Scripts.ECS.Game.Components.Else
 {
     internal struct AudioSourceComponent
     {

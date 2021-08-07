@@ -7,8 +7,8 @@ using UnityEngine.EventSystems;
 
 internal sealed class RaySystem : IEcsRunSystem
 {
-    private EcsFilter<XyCellComponent> _xyCellFilter;
-    private EcsFilter<SelectorComponent> _selectorFilter;
+    private EcsFilter<XyCellComponent> _xyCellFilter = default;
+    private EcsFilter<SelectorComponent> _selectorFilter = default;
 
     private Ray _ray;
     private const float RAY_DISTANCE = 100;
@@ -27,7 +27,7 @@ internal sealed class RaySystem : IEcsRunSystem
             {
                 var xy = _xyCellFilter.GetXyCell(idx);
 
-                int one = CellViewSystem.GetInstanceIDCell(xy);
+                int one =  CellViewSystem.GetInstanceIDCell(xy);
                 int two = selectorCom.RaycastHit2D.transform.gameObject.GetInstanceID();
 
                 if (one == two)

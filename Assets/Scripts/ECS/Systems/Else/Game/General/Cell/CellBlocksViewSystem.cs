@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Components;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Leopotam.Ecs;
 using System;
 using UnityEngine;
@@ -23,15 +24,7 @@ namespace Assets.Scripts.ECS.System.View.Game.General.Cell
             for (int x = 0; x < CELL_COUNT_X; x++)
                 for (int y = 0; y < CELL_COUNT_Y; y++)
                 {
-                    var sr = StartSpawnCellsViewSystem.CellGOs[x, y].transform.Find("ProtectRelax").GetComponent<SpriteRenderer>();
-                    _cellProtectRelaxEnts[x, y] = _gameWorld.NewEntity()
-                        .Replace(new SpriteRendererComponent(sr));
 
-
-
-                    sr = StartSpawnCellsViewSystem.CellGOs[x, y].transform.Find("MaxSteps").GetComponent<SpriteRenderer>();
-                    _cellMaxStepsEnts[x, y] = _gameWorld.NewEntity()
-                        .Replace(new SpriteRendererComponent(sr));
                 }
         }
 

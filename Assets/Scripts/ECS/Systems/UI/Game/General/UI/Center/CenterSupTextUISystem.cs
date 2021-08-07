@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.ECS.Game.General.Systems.StartFill;
-using Assets.Scripts.Workers.Game.UI.Middle.MistakeInfo;
+﻿using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Leopotam.Ecs;
 using System;
 using UnityEngine;
@@ -8,6 +8,8 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
 {
     internal sealed class CenterSupTextUISystem : IEcsInitSystem, IEcsRunSystem
     {
+        private EcsFilter<MistakeViewUICom> _mistakeUIFilter = default;
+
         private MistakeTypes _mistakeType;
 
         private float _neededTimeForFading = 1.3f;
@@ -28,22 +30,24 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
 
         public void Run()
         {
+            ref var mistakeViewUICom = ref _mistakeUIFilter.Get1(0);
+
             switch (_mistakeType)
             {
                 case MistakeTypes.None:
-                    CenterSupTextUIViewWorker.SetActiveCenterBlock(false);
+                    mistakeViewUICom.SetActiveParent(false);
                     break;
 
                 case MistakeTypes.Economy:
-                    CenterSupTextUIViewWorker.Text = "Need more resources";
-                    CenterSupTextUIViewWorker.SetActiveCenterBlock(true);
+                    mistakeViewUICom.Text = "Need more resources";
+                    mistakeViewUICom.SetActiveParent(true);
 
                     _currentTime += Time.deltaTime;
 
                     if (_currentTime >= _neededTimeForFading)
                     {
                         _currentTime = 0;
-                        CenterSupTextUIViewWorker.SetActiveCenterBlock(false);
+                        mistakeViewUICom.SetActiveParent(false);
                         _mistakeType = default;
                     }
                     break;
@@ -52,29 +56,29 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                     break;
 
                 case MistakeTypes.NeedSteps:
-                    CenterSupTextUIViewWorker.Text = "Need more steps";
-                    CenterSupTextUIViewWorker.SetActiveCenterBlock(true);
+                    mistakeViewUICom.Text = "Need more steps";
+                    mistakeViewUICom.SetActiveParent(true);
 
                     _currentTime += Time.deltaTime;
 
                     if (_currentTime >= _neededTimeForFading)
                     {
                         _currentTime = 0;
-                        CenterSupTextUIViewWorker.SetActiveCenterBlock(false);
+                        mistakeViewUICom.SetActiveParent(false);
                         _mistakeType = default;
                     }
                     break;
 
                 case MistakeTypes.NeedOtherPlace:
-                    CenterSupTextUIViewWorker.Text = "Need other place";
-                    CenterSupTextUIViewWorker.SetActiveCenterBlock(true);
+                    mistakeViewUICom.Text = "Need other place";
+                    mistakeViewUICom.SetActiveParent(true);
 
                     _currentTime += Time.deltaTime;
 
                     if (_currentTime >= _neededTimeForFading)
                     {
                         _currentTime = 0;
-                        CenterSupTextUIViewWorker.SetActiveCenterBlock(false);
+                        mistakeViewUICom.SetActiveParent(false);
                         _mistakeType = default;
                     }
                     break;

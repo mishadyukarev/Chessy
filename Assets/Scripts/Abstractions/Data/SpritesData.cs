@@ -3,36 +3,36 @@
 [CreateAssetMenu(menuName = "Sprites", fileName = "Sprites")]
 public class SpritesData : ScriptableObject
 {
-    [SerializeField] private Sprite _black_Sprite;
-    [SerializeField] private Sprite _white_Sprite;
+    [SerializeField] private Sprite _black_Sprite = default;
+    [SerializeField] private Sprite _white_Sprite = default;
 
     [Space(20)]
-    [SerializeField] private Sprite _kingSprite;
-    [SerializeField] private Sprite _pawnSprite;
-    [SerializeField] private Sprite _pawnSwordSprite;
-    [SerializeField] private Sprite _rookSprite;
-    [SerializeField] private Sprite _rookCrossbowSprite;
-    [SerializeField] private Sprite _bishopSprite;
-    [SerializeField] private Sprite _bishopCrossbowSprite;
+    [SerializeField] private Sprite _kingSprite = default;
+    [SerializeField] private Sprite _pawnSprite = default;
+    [SerializeField] private Sprite _pawnSwordSprite = default;
+    [SerializeField] private Sprite _rookSprite = default;
+    [SerializeField] private Sprite _rookCrossbowSprite = default;
+    [SerializeField] private Sprite _bishopSprite = default;
+    [SerializeField] private Sprite _bishopCrossbowSprite = default;
 
     [Space(20)]
-    [SerializeField] private Sprite _citySprite;
-    [SerializeField] private Sprite _farmSprite;
-    [SerializeField] private Sprite _woodcutterSprite;
-    [SerializeField] private Sprite _mineSprite;
+    [SerializeField] private Sprite _citySprite = default;
+    [SerializeField] private Sprite _farmSprite = default;
+    [SerializeField] private Sprite _woodcutterSprite = default;
+    [SerializeField] private Sprite _mineSprite = default;
 
     [Space(5)]
-    [SerializeField] private Sprite _cityBackSprite;
-    [SerializeField] private Sprite _farmBackSprite;
-    [SerializeField] private Sprite _woodcutterBackSprite;
-    [SerializeField] private Sprite _mineBackSprite;
+    [SerializeField] private Sprite _cityBackSprite = default;
+    [SerializeField] private Sprite _farmBackSprite = default;
+    [SerializeField] private Sprite _woodcutterBackSprite = default;
+    [SerializeField] private Sprite _mineBackSprite = default;
 
     [Space(20)]
-    [SerializeField] private Sprite _fertilizerSprite;
-    [SerializeField] private Sprite _youngForestSprite;
-    [SerializeField] private Sprite _forestSprite;
-    [SerializeField] private Sprite _hillSprite;
-    [SerializeField] private Sprite _mountainSprite;
+    [SerializeField] private Sprite _fertilizerSprite = default;
+    [SerializeField] private Sprite _youngForestSprite = default;
+    [SerializeField] private Sprite _forestSprite = default;
+    [SerializeField] private Sprite _hillSprite = default;
+    [SerializeField] private Sprite _mountainSprite = default;
 
 
     public Sprite BlackSprite => _black_Sprite;

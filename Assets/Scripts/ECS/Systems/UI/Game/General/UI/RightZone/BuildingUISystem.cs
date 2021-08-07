@@ -1,23 +1,26 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
-using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
 
 internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
 {
-    private EcsFilter<SelectorComponent> _selectorFilter;
+    private EcsFilter<SelectorComponent> _selectorFilter = default;
+    private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
+    private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
 
     private int[] XySelectedCell => _selectorFilter.Get1(0).XySelectedCell;
 
     public void Init()
     {
-        RightUIViewContainer.AddListenerBuildButton(delegate { Build(BuildingTypes.Farm); }, BuildingButtonTypes.First);
-        RightUIViewContainer.AddListenerBuildButton(delegate { Build(BuildingTypes.Mine); }, BuildingButtonTypes.Second);
-        RightUIViewContainer.AddListenerBuildButton(delegate { Build(BuildingTypes.City); }, BuildingButtonTypes.Third);
+        _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.First, delegate { Build(BuildingTypes.Farm); });
+        _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Second, delegate { Build(BuildingTypes.Mine); });
+        _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Build(BuildingTypes.City); });
     }
 
     public void Run()
@@ -28,7 +31,7 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
             {
                 if (CellUnitsDataSystem.IsMine(XySelectedCell))
                 {
-                    RightUIViewContainer.RemoveAllListenersBuildButton(BuildingButtonTypes.Third);
+                    _unitZoneUIFilter.Get1(0).RemoveAllListenersInBuildButton(BuildingButtonTypes.Third);
 
                     switch (CellUnitsDataSystem.UnitType(XySelectedCell))
                     {
@@ -36,7 +39,7 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
                             break;
 
                         case UnitTypes.King:
-                            RightUIViewContainer.SetActiveParentZone(false, UnitUIZoneTypes.Building);
+                            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                             break;
 
                         case UnitTypes.Pawn:
@@ -48,19 +51,19 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
                             break;
 
                         case UnitTypes.Rook:
-                            RightUIViewContainer.SetActiveParentZone(false, UnitUIZoneTypes.Building);
+                            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                             break;
 
                         case UnitTypes.RookCrossbow:
-                            RightUIViewContainer.SetActiveParentZone(false, UnitUIZoneTypes.Building);
+                            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                             break;
 
                         case UnitTypes.Bishop:
-                            RightUIViewContainer.SetActiveParentZone(false, UnitUIZoneTypes.Building);
+                            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                             break;
 
                         case UnitTypes.BishopCrossbow:
-                            RightUIViewContainer.SetActiveParentZone(false, UnitUIZoneTypes.Building);
+                            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                             break;
 
                         default:
@@ -70,18 +73,18 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
 
                 else
                 {
-                    RightUIViewContainer.SetActiveParentZone(false, UnitUIZoneTypes.Building);
+                    _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                 }
             }
 
             else if (CellUnitsDataSystem.IsBot(XySelectedCell))
             {
-                RightUIViewContainer.SetActiveParentZone(false, UnitUIZoneTypes.Building);
+                _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
             }
 
             void PawnAndPawnSword()
             {
-                RightUIViewContainer.SetActiveParentZone(true, UnitUIZoneTypes.Building);
+                _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, true);
 
                 if (CellBuildDataSystem.BuildTypeCom(XySelectedCell).HaveBuild)
                 {
@@ -94,23 +97,24 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
                         {
                             if (CellBuildDataSystem.BuildTypeCom(XySelectedCell).Is(BuildingTypes.City))
                             {
-                                RightUIViewContainer.SetActiveBuildingButton(false, BuildingButtonTypes.Third);
+                                ///
+                                _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, false);
                             }
                             else
                             {
-                                RightUIViewContainer.SetActiveBuildingButton(true, BuildingButtonTypes.Third);
+                                _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
 
-                                RightUIViewContainer.AddListenerBuildButton(delegate { Destroy(); }, BuildingButtonTypes.Third);
-                                RightUIViewContainer.SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
+                                _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
+                                _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
                             }
                         }
 
                         else
                         {
-                            RightUIViewContainer.SetActiveBuildingButton(true, BuildingButtonTypes.Third);
+                            _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
 
-                            RightUIViewContainer.AddListenerBuildButton(delegate { Destroy(); }, BuildingButtonTypes.Third);
-                            RightUIViewContainer.SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
+                            _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
+                            _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
                         }
                     }
 
@@ -118,10 +122,10 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
                     {
                         if (CellBuildDataSystem.BuildTypeCom(XySelectedCell).Is(BuildingTypes.City))
                         {
-                            RightUIViewContainer.SetActiveBuildingButton(true, BuildingButtonTypes.Third);
+                            _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
 
-                            RightUIViewContainer.AddListenerBuildButton(delegate { Destroy(); }, BuildingButtonTypes.Third);
-                            RightUIViewContainer.SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
+                            _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
+                            _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
                         }
                     }
 
@@ -152,12 +156,12 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
 
                     if (MainGameSystem.XyBuildingsCom.IsSettedCity(PhotonNetwork.IsMasterClient))
                     {
-                        RightUIViewContainer.SetActiveBuildingButton(false, BuildingButtonTypes.Third);
+                        _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, false);
                     }
                     else
                     {
-                        RightUIViewContainer.AddListenerBuildButton(delegate { Build(BuildingTypes.City); }, BuildingButtonTypes.Third);
-                        RightUIViewContainer.SetTextBuildButton(BuildingButtonTypes.Third, "Build City");
+                        _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Build(BuildingTypes.City); });
+                        _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Build City");
                     }
                 }
             }
@@ -165,16 +169,16 @@ internal sealed class BuildingUISystem : IEcsInitSystem, IEcsRunSystem
 
         else
         {
-            RightUIViewContainer.SetActiveParentZone(false, UnitUIZoneTypes.Building);
+            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
         }
     }
 
     private void Build(BuildingTypes buildingType)
     {
-        if (!DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.BuildToMaster(XySelectedCell, buildingType);
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.BuildToMaster(XySelectedCell, buildingType);
     }
     private void Destroy()
     {
-        if (!DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.DestroyBuildingToMaster(XySelectedCell);
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.DestroyBuildingToMaster(XySelectedCell);
     }
 }

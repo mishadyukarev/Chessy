@@ -14,10 +14,10 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
     private EcsSystems _rpcSystems;
     internal static EcsSystems SyncCellVisionSystems { get; private set; }
 
-    internal GameGeneralSystemManager(EcsWorld gameWorld, EcsWorld commonWorld) : base(gameWorld)
+    internal GameGeneralSystemManager(EcsWorld gameWorld) : base(gameWorld)
     {
         InitSystems
-            .Add(new MainGameSystem(commonWorld))
+            .Add(new MainGameSystem())
             .Add(new PhotonSceneGameGeneralSystem());
 
 
@@ -31,19 +31,14 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
 
             .Add(new SoundEventsSystem())
 
-            .Add(new CellEnvrDataSystem())
-            .Add(new CellFireDataSystem())
-            .Add(new CellUnitsDataSystem())
-            .Add(new CellBuildDataSystem())
 
-            .Add(new StartSpawnCellsViewSystem())
+            .Add(new CellUnitsDataSystem())
+
             .Add(new CellBlocksViewSystem())
             .Add(new CellUnitViewSystem())
             .Add(new CellSupVisBarsViewSystem())
             .Add(new CellSupViewSystem())
-            .Add(new CellFireViewSystem())
             .Add(new CellBuildViewSystem())
-            .Add(new CellEnvViewSystem())
             .Add(new CellViewSystem());
 
 

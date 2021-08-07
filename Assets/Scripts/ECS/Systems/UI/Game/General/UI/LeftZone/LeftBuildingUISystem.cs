@@ -1,28 +1,30 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
-using Assets.Scripts.Workers.Game.UI;
-using Assets.Scripts.Workers.Game.UI.Left;
 using Leopotam.Ecs;
 using Photon.Pun;
 
 internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
 {
-    private EcsFilter<SelectorComponent> _selectorFilter;
+    private EcsFilter<SelectorComponent> _selectorFilter = default;
+    private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
+    private EcsFilter<BuildZoneViewUICom> _buildZoneUIFilter = default;
     internal EcsComponentRef<SelectorComponent> SelComRef => _selectorFilter.Get1Ref(0);
 
     public void Init()
     {
-        LeftBuildUIViewContainer.AddListener(LeftBuildButtonTypes.BuyPawn, delegate { BuyUnit(UnitTypes.Pawn); });
-        LeftBuildUIViewContainer.AddListener(LeftBuildButtonTypes.BuyRook, delegate { BuyUnit(UnitTypes.Rook); });
-        LeftBuildUIViewContainer.AddListener(LeftBuildButtonTypes.BuyBishop, delegate { BuyUnit(UnitTypes.Bishop); });
+        _buildZoneUIFilter.Get1(0).AddListenerToCreateUnit(UnitTypes.Pawn, delegate { BuyUnit(UnitTypes.Pawn); });
+        _buildZoneUIFilter.Get1(0).AddListenerToCreateUnit(UnitTypes.Rook, delegate { BuyUnit(UnitTypes.Rook); });
+        _buildZoneUIFilter.Get1(0).AddListenerToCreateUnit(UnitTypes.Bishop, delegate { BuyUnit(UnitTypes.Bishop); });
 
-        LeftBuildUIViewContainer.AddListener(LeftBuildButtonTypes.Melt, delegate { MeltOre(); });
-        LeftBuildUIViewContainer.AddListener(LeftBuildButtonTypes.UpgradeUnit, ToggleSelectorUpgradeUnit);
+        _buildZoneUIFilter.Get1(0).AddListenerToMelt(delegate { MeltOre(); });
+        _buildZoneUIFilter.Get1(0).AddListenerToUpgradeUnits(ToggleSelectorUpgradeUnit);
 
-        LeftBuildUIViewContainer.AddListener(LeftBuildButtonTypes.UpgradeFarm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
-        LeftBuildUIViewContainer.AddListener(LeftBuildButtonTypes.UpgradeWoodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
-        LeftBuildUIViewContainer.AddListener(LeftBuildButtonTypes.UpgradeMine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
+        _buildZoneUIFilter.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
+        _buildZoneUIFilter.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
+        _buildZoneUIFilter.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Mine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
     }
 
 
@@ -37,25 +39,25 @@ internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
             {
                 if (CellBuildDataSystem.OwnerCom(selCom.XySelectedCell).IsMine)
                 {
-                    LeftBuildUIViewContainer.SetActiveZone(true);
+                    _buildZoneUIFilter.Get1(0).SetActiveZone(true);
                 }
-                else LeftBuildUIViewContainer.SetActiveZone(false);
+                else _buildZoneUIFilter.Get1(0).SetActiveZone(false);
             }
         }
         else
         {
-            LeftBuildUIViewContainer.SetActiveZone(false);
+            _buildZoneUIFilter.Get1(0).SetActiveZone(false);
         }
     }
 
 
     private void BuyUnit(UnitTypes unitType)
     {
-        if (!DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.CreateUnitToMaster(unitType);
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.CreateUnitToMaster(unitType);
     }
     private void ToggleSelectorUpgradeUnit()
     {
-        if (!DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient))
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
         {
             if (SelComRef.Unref().SelectorType == SelectorTypes.UpgradeUnit)
             {
@@ -70,11 +72,11 @@ internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
 
     private void UpgradeBuilding(BuildingTypes buildingType)
     {
-        if (!DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.UpgradeBuildingToMaster(buildingType);
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.UpgradeBuildingToMaster(buildingType);
     }
 
     private void MeltOre()
     {
-        if (!DownDonerUIDataContainer.IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.MeltOreToMaster();
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.MeltOreToMaster();
     }
 }
