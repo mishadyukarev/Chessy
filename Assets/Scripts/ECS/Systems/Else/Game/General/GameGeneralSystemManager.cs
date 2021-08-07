@@ -1,12 +1,8 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.ECS.Entities.Game.General.Else.View.Containers;
 using Assets.Scripts.ECS.Game.General.Systems;
 using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
 using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
-using Assets.Scripts.ECS.System.Data.Game.General.Cell;
-using Assets.Scripts.ECS.System.View.Game.General.Cell;
-using Assets.Scripts.Workers;
 using Leopotam.Ecs;
 
 public sealed class GameGeneralSystemManager : SystemAbstManager
@@ -29,17 +25,7 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(new SupportVisionSystem())
             .Add(new FliperAndRotatorUnitSystem())
 
-            .Add(new SoundEventsSystem())
-
-
-            .Add(new CellUnitsDataSystem())
-
-            .Add(new CellBlocksViewSystem())
-            .Add(new CellUnitViewSystem())
-            .Add(new CellSupVisBarsViewSystem())
-            .Add(new CellSupViewSystem())
-            .Add(new CellBuildViewSystem())
-            .Add(new CellViewSystem());
+            .Add(new SoundEventsSystem());
 
 
         _rpcSystems = new EcsSystems(gameWorld)
@@ -52,10 +38,6 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(new SyncCellBuildingsVisSystem())
             .Add(new SyncCellEnvirsVisSystem())
             .Add(new SyncCellEffectsVisSystem());
-
-
-        new SoundGameGeneralViewWorker(new SoundElseViewContainer(gameWorld));
-
     }
 
     internal override void Init()

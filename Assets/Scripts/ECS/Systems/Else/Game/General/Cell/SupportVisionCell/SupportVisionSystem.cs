@@ -4,7 +4,6 @@ using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.System.Data.Game.General.Cell;
-using Assets.Scripts.ECS.System.View.Game.General.Cell;
 using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
 using Photon.Pun;

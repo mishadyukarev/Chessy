@@ -41,32 +41,32 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
 
                     if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
                     {
-                        CellSupVisBarsViewSystem.ActiveVision(true, SupportStaticTypes.Fertilizer, xy);
-                        CellSupVisBarsViewSystem.SetScale(SupportStaticTypes.Fertilizer, new Vector3((float)CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Fertilizer, xy) / (float)(CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.Fertilizer) + CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.Fertilizer)), 0.15f, 1), xy);
+                        CellSupVisBarsViewSystem.ActiveVision(true, CellBarTypes.Food, xy);
+                        CellSupVisBarsViewSystem.SetScale(CellBarTypes.Food, new Vector3((float)CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Fertilizer, xy) / (float)(CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.Fertilizer) + CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.Fertilizer)), 0.15f, 1), xy);
                     }
                     else
                     {
-                        CellSupVisBarsViewSystem.ActiveVision(false, SupportStaticTypes.Fertilizer, xy);
+                        CellSupVisBarsViewSystem.ActiveVision(false, CellBarTypes.Food, xy);
                     }
 
                     if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
                     {
-                        CellSupVisBarsViewSystem.ActiveVision(true, SupportStaticTypes.Wood, xy);
-                        CellSupVisBarsViewSystem.SetScale(SupportStaticTypes.Wood, new Vector3((float)CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.AdultForest, xy) / (float)CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1), xy);
+                        CellSupVisBarsViewSystem.ActiveVision(true, CellBarTypes.Wood, xy);
+                        CellSupVisBarsViewSystem.SetScale(CellBarTypes.Wood, new Vector3((float)CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.AdultForest, xy) / (float)CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1), xy);
                     }
                     else
                     {
-                        CellSupVisBarsViewSystem.ActiveVision(false, SupportStaticTypes.Wood, xy);
+                        CellSupVisBarsViewSystem.ActiveVision(false, CellBarTypes.Wood, xy);
                     }
 
                     if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
                     {
-                        CellSupVisBarsViewSystem.ActiveVision(true, SupportStaticTypes.Ore, xy);
-                        CellSupVisBarsViewSystem.SetScale(SupportStaticTypes.Ore, new Vector3((float)CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Hill, xy) / (float)CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.Hill), 0.15f, 1), xy);
+                        CellSupVisBarsViewSystem.ActiveVision(true, CellBarTypes.Ore, xy);
+                        CellSupVisBarsViewSystem.SetScale(CellBarTypes.Ore, new Vector3((float)CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Hill, xy) / (float)CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.Hill), 0.15f, 1), xy);
                     }
                     else
                     {
-                        CellSupVisBarsViewSystem.ActiveVision(false, SupportStaticTypes.Ore, xy);
+                        CellSupVisBarsViewSystem.ActiveVision(false, CellBarTypes.Ore, xy);
                     }
                 }
         }
@@ -77,9 +77,9 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
                 {
                     int[] xy = new int[] { x, y };
 
-                    CellSupVisBarsViewSystem.ActiveVision(false, SupportStaticTypes.Fertilizer, xy);
-                    CellSupVisBarsViewSystem.ActiveVision(false, SupportStaticTypes.Wood, xy);
-                    CellSupVisBarsViewSystem.ActiveVision(false, SupportStaticTypes.Ore, xy);
+                    CellSupVisBarsViewSystem.ActiveVision(false, CellBarTypes.Food, xy);
+                    CellSupVisBarsViewSystem.ActiveVision(false, CellBarTypes.Wood, xy);
+                    CellSupVisBarsViewSystem.ActiveVision(false, CellBarTypes.Ore, xy);
                 }
         }
     }

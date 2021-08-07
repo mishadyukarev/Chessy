@@ -5,6 +5,7 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.UI.Game.General;
+using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Components;
@@ -25,8 +26,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
     {
         private EcsWorld _currentGameWorld;
 
-        internal static GameObject[,] CellGOs;
-
 
         private static EcsEntity _infoEnt;
         internal static ref XyUnitsContitionComponent XyUnitsContitionCom => ref _infoEnt.Get<XyUnitsContitionComponent>();
@@ -46,7 +45,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             var whiteCellSR = ResourcesComponent.SpritesConfig.WhiteSprite;
             var blackCellSR = ResourcesComponent.SpritesConfig.BlackSprite;
 
-            CellGOs = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
+            var cell_GOs = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
 
             var supportParentForCells = new GameObject("Cells");
             ToggleZoneComponent.Attach(supportParentForCells.transform);
@@ -61,26 +60,26 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                     {
                         if (x % 2 == 0)
                         {
-                            CellGOs[x, y] = CreateGameObject(cellGO, blackCellSR, x, y, Main.Instance.gameObject);
-                            SetActive(CellGOs[x, y], x, y);
+                            cell_GOs[x, y] = CreateGameObject(cellGO, blackCellSR, x, y, Main.Instance.gameObject);
+                            SetActive(cell_GOs[x, y], x, y);
                         }
                         if (x % 2 != 0)
                         {
-                            CellGOs[x, y] = CreateGameObject(cellGO, whiteCellSR, x, y, Main.Instance.gameObject);
-                            SetActive(CellGOs[x, y], x, y);
+                            cell_GOs[x, y] = CreateGameObject(cellGO, whiteCellSR, x, y, Main.Instance.gameObject);
+                            SetActive(cell_GOs[x, y], x, y);
                         }
                     }
                     if (y % 2 != 0)
                     {
                         if (x % 2 != 0)
                         {
-                            CellGOs[x, y] = CreateGameObject(cellGO, blackCellSR, x, y, Main.Instance.gameObject);
-                            SetActive(CellGOs[x, y], x, y);
+                            cell_GOs[x, y] = CreateGameObject(cellGO, blackCellSR, x, y, Main.Instance.gameObject);
+                            SetActive(cell_GOs[x, y], x, y);
                         }
                         if (x % 2 == 0)
                         {
-                            CellGOs[x, y] = CreateGameObject(cellGO, whiteCellSR, x, y, Main.Instance.gameObject);
-                            SetActive(CellGOs[x, y], x, y);
+                            cell_GOs[x, y] = CreateGameObject(cellGO, whiteCellSR, x, y, Main.Instance.gameObject);
+                            SetActive(cell_GOs[x, y], x, y);
                         }
                     }
 
@@ -105,42 +104,37 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                             go.SetActive(false);
                     }
 
-                    CellGOs[x, y].transform.SetParent(supportParentForCells.transform);
+                    cell_GOs[x, y].transform.SetParent(supportParentForCells.transform);
 
-                    CellGOs[x, y].transform.rotation = PhotonNetwork.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
+                    cell_GOs[x, y].transform.rotation = PhotonNetwork.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
 
 
                     var cellEnt = _currentGameWorld.NewEntity()
                         .Replace(new XyCellComponent(new byte[] { x, y }))
-
+                        .Replace(new CellViewComponent(cell_GOs[x, y]))
                         .Replace(new CellEnvironDataCom(new Dictionary<EnvironmentTypes, bool>()))
-                        .Replace(new CellEnvironViewCom(CellGOs[x, y]))
-
+                        .Replace(new CellEnvironViewCom(cell_GOs[x, y]))
                         .Replace(new CellFireDataComponent())
-                        .Replace(new CellFireViewComponent(CellGOs[x, y]))
-                        
-                        
-                        
-                        ;
-
-                    var sr = MainGameSystem.CellGOs[x, y].transform.Find("ProtectRelax").GetComponent<SpriteRenderer>();
-                    _cellProtectRelaxEnts[x, y] = _gameWorld.NewEntity()
-                        .Replace(new SpriteRendererComponent(sr));
-
-
-
-                    sr = MainGameSystem.CellGOs[x, y].transform.Find("MaxSteps").GetComponent<SpriteRenderer>();
-                    _cellMaxStepsEnts[x, y] = _gameWorld.NewEntity()
-                        .Replace(new SpriteRendererComponent(sr));
+                        .Replace(new CellFireViewComponent(cell_GOs[x, y]))
+                        .Replace(new CellBlocksViewComponent(cell_GOs[x, y]))
+                        .Replace(new CellBarsViewComponent(cell_GOs[x, y]))
+                        .Replace(new CellSupViewComponent(cell_GOs[x, y]));
 
 
                     _currentGameWorld.NewEntity()
-                         .Replace(new BuildingTypeComponent())
+                         .Replace(new CellBuildDataComponent())
+                         .Replace(new CellBuildViewComponent(cell_GOs[x, y]))
                          .Replace(new OwnerComponent())
-                         .Replace(new OwnerBotComponent())
-                         .Replace(new TimeStepsComponent());
+                         .Replace(new OwnerBotComponent());
 
+
+                    _currentGameWorld.NewEntity()
+                         .Replace(new CellUnitDataComponent(new Dictionary<bool, bool>()))
+                         .Replace(new CellUnitViewComponent(cell_GOs[x, y]))
+                         .Replace(new UnitTypeComponent())
+                         .Replace(new OwnerComponent())
+                         .Replace(new OwnerBotComponent());
 
 
                     if (PhotonNetwork.IsMasterClient)
@@ -225,6 +219,10 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             dict.Add(false, listOther);
 
 
+            var audioSourceParentGO = new GameObject("AudioSource");
+            ToggleZoneComponent.Attach(audioSourceParentGO.transform);
+
+
             _infoEnt = _currentGameWorld.NewEntity()
                 .Replace(new InputComponent())
 
@@ -243,7 +241,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new InventorUnitsComponent(new Dictionary<UnitTypes, Dictionary<bool, int>>()))
                 .Replace(new InventorResourcesComponent(new Dictionary<ResourceTypes, Dictionary<bool, int>>()))
                 .Replace(new FromInfoComponent())
-                .Replace(new MistakeUEComponent(new Dictionary<ResourceTypes, UnityEvent>()));
+                .Replace(new MistakeUEComponent(new Dictionary<ResourceTypes, UnityEvent>()))
+                .Replace(new SoundViewComponent(audioSourceParentGO));
 
 
             _infoEnt.Get<GeneralZoneViewComponent>().Attach(backGroundGO.transform);
@@ -282,7 +281,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                 ///Right
                 .Replace(new UnitZoneViewUICom(rightZone_GO));
-
 
 
             if (PhotonNetwork.IsMasterClient)
@@ -331,7 +329,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 CameraComponent.SetRotation(new Quaternion(0, 0, 180, 0));
                 CameraComponent.SetPosition(Main.Instance.transform.position + CameraComponent.PosForCamera + new Vector3(0, 0.5f, 0));
             }
-
         }
     }
 }
