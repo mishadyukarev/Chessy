@@ -16,5 +16,20 @@ namespace Assets.Scripts.ECS.Component.Common
             if (PhotonNetwork.IsMasterClient) PhotonNetwork.AllocateViewID(PhotonView);
             else PhotonView.ViewID = ValuesConst.NUMBER_PHOTON_VIEW;
         }
+
+
+        ///For Checking
+
+        //internal readonly static PhotonView PhotonView;
+
+        //static PhotonViewComponent()
+        //{
+        //    PhotonView = Main.Instance.gameObject.AddComponent<PhotonView>();
+
+        //    PhotonView.FindObservables(true);
+
+        //    if (PhotonNetwork.IsMasterClient) PhotonNetwork.AllocateViewID(PhotonView);
+        //    else PhotonView.ViewID = ValuesConst.NUMBER_PHOTON_VIEW;
+        //}
     }
 }
