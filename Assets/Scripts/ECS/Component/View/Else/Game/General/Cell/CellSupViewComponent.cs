@@ -14,8 +14,6 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
             _supVis_SR = parentGO.GetComponent<SpriteRenderer>();
         }
 
-        internal void SetActiveSR(bool isEnabled) => _supVis_SR.enabled = isEnabled;
-
         internal void SetColor(SupportVisionTypes supportVisionType)
         {
             switch (supportVisionType)
@@ -56,11 +54,7 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
             }
         }
 
-        internal void EnableSupVis(SupportVisionTypes supportVisionType, int[] xy)
-        {
-            SetActiveSR(true);
-            SetColor(supportVisionType);
-        }
-        internal void DisableSupVis() => SetActiveSR(false);
+        internal void EnableSR() => _supVis_SR.enabled = true;
+        internal void DisableSR() => _supVis_SR.enabled = false;
     }
 }

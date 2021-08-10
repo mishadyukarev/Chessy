@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.ECS.Game.General.Systems.StartFill;
-using Photon.Realtime;
+﻿using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 using static Assets.Scripts.Abstractions.ValuesConsts.EconomyValues;

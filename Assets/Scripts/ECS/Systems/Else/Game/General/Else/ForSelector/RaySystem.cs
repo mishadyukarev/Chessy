@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.System.View.Game.General.Cell;
-using Assets.Scripts.Workers;
+using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -8,11 +7,11 @@ using UnityEngine.EventSystems;
 internal sealed class RaySystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
+    private EcsFilter<CellViewComponent> _cellViewFilter = default;
     private EcsFilter<SelectorComponent> _selectorFilter = default;
 
     private Ray _ray;
     private const float RAY_DISTANCE = 100;
-
 
     public void Run()
     {
@@ -23,16 +22,14 @@ internal sealed class RaySystem : IEcsRunSystem
 
         if (selectorCom.RaycastHit2D)
         {
-            foreach (var idx in _xyCellFilter)
+            foreach (byte idx in _xyCellFilter)
             {
-                var xy = _xyCellFilter.GetXyCell(idx);
-
-                int one =  CellViewSystem.GetInstanceIDCell(xy);
+                int one = _cellViewFilter.Get1(idx).InstanceID;
                 int two = selectorCom.RaycastHit2D.transform.gameObject.GetInstanceID();
 
                 if (one == two)
                 {
-                    selectorCom.XyCurrentCell = (int[])xy.Clone();
+                    selectorCom.IdxCurrentCell = idx;
                     selectorCom.RaycastGettedType = RaycastGettedTypes.Cell;
                     return;
                 }

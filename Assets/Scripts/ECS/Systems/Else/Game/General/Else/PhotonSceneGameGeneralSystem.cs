@@ -8,7 +8,7 @@ namespace Assets.Scripts
     {
         public void Init()
         {
-            
+
         }
 
 

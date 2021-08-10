@@ -5,10 +5,10 @@
         internal static float SliderVolume { get; set; }
         internal static StepModeTypes StepModeType { get; set; }
 
-        internal SaverComponent(float sliderVolume)
+        internal SaverComponent(StepModeTypes stepModeType, float sliderVolume)
         {
             SliderVolume = sliderVolume;
-            StepModeType = default;
+            StepModeType = stepModeType;
         }
     }
 }

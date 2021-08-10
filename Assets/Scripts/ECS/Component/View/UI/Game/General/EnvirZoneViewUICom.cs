@@ -26,6 +26,6 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 
         internal void SetActiveParent(bool isActive) => _info_Button.transform.parent.gameObject.SetActive(isActive);
         internal void AddListenerToEnvInfo(UnityAction unityAction) => _info_Button.onClick.AddListener(unityAction);
-        internal void SetText(ResourceTypes resourceType, string text) => _environment_TextMPs[resourceType].text = text; 
+        internal void SetText(ResourceTypes resourceType, string text) => _environment_TextMPs[resourceType].text = text;
     }
 }

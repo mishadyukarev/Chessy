@@ -1,61 +1,70 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Game.General.Systems.StartFill;
-using Assets.Scripts.ECS.System.Data.Game.General.Cell;
-using Assets.Scripts.ECS.System.View.Game.General.Cell;
+using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
+using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
-using Photon.Realtime;
 using System;
 
-internal sealed class BuilderMasterSystem : IEcsInitSystem, IEcsRunSystem
+internal sealed class BuilderMasterSystem : IEcsRunSystem
 {
-    private EcsWorld _gameWorld;
-    private EcsFilter<InfoMasCom> _infoMasterFilter;
-    private EcsFilter<ForBuildingMasCom, XyCellForDoingMasCom> _builderFilter;
-    private EcsFilter<InventorResourcesComponent> _amountResFilt;
+    private EcsFilter<InfoMasCom> _infoFilter = default;
+    private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
 
-    private Player Sender => _infoMasterFilter.Get1(0).FromInfo.Sender;
-    private int[] XyCellForBuilding => _builderFilter.Get2(0).XyCellForDoing;
-    private BuildingTypes NeededBuildingTypeForBuilding => _builderFilter.Get1(0).BuildingTypeForBuidling;
+    private EcsFilter<XyCellComponent> _xyCellFilter = default;
+    private EcsFilter<CellViewComponent> _cellViewFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildFilter = default;
+    private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
+    private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
-    public void Init()
-    {
-        _gameWorld.NewEntity()
-            .Replace(new ForBuildingMasCom())
-            .Replace(new XyCellForDoingMasCom(new int[2]));
-    }
+    private EcsFilter<InventorResourcesComponent> _amountResFilt = default;
+    private EcsFilter<IdxBuildingsComponent> _idxBuildFilter = default;
 
     public void Run()
     {
+        ref var infoMasCom = ref _infoFilter.Get1(0);
+        ref var inventorResCom = ref _amountResFilt.Get1(0);
+        ref var forBuildMasCom = ref _forBuilderFilter.Get1(0);
+        ref var idxBuildsCom = ref _idxBuildFilter.Get1(0);
 
-        ref var amountResCom = ref _amountResFilt.Get1(0);
+        var sender = infoMasCom.FromInfo.Sender;
+        var idxCellForBuild = forBuildMasCom.IdxForBuild;
+        var buildTypeForBuild = forBuildMasCom.BuildingTypeForBuidling;
+
+        ref var curCellBuildDataCom = ref _cellBuildFilter.Get1(idxCellForBuild);
+        ref var curOwnerCellBuildCom = ref _cellBuildFilter.Get2(idxCellForBuild);
+        ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCellForBuild);
+        ref var curCellEnvCom = ref _cellEnvFilter.Get1(idxCellForBuild);
 
 
-        if (CellBuildDataSystem.BuildTypeCom(XyCellForBuilding).HaveBuild)
+        if (curCellBuildDataCom.HaveBuild)
         {
-            RPCGameSystem.MistakeNeedOthePlaceToGeneral(Sender);
-            RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
+            //RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
+            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
         }
 
         else
         {
-            switch (NeededBuildingTypeForBuilding)
+            switch (buildTypeForBuild)
             {
                 case BuildingTypes.None:
                     throw new Exception();
 
 
                 case BuildingTypes.City:
-                    if (CellUnitsDataSystem.HaveMinAmountSteps(XyCellForBuilding))
+                    if (curCellUnitDataCom.HaveMinAmountSteps)
                     {
                         bool canSetCity = true;
 
-                        foreach (var xy in CellSpaceSupport.TryGetXyAround(XyCellForBuilding))
+                        foreach (var xy in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(idxCellForBuild)))
                         {
-                            if (!CellViewSystem.IsActiveSelfParentCell(xy))
+                            var curIdx = _xyCellFilter.GetIndexCell(xy);
+
+                            if (!_cellViewFilter.Get1(curIdx).IsActiveParent)
                             {
                                 canSetCity = false;
                             }
@@ -63,74 +72,77 @@ internal sealed class BuilderMasterSystem : IEcsInitSystem, IEcsRunSystem
 
                         if (canSetCity)
                         {
-                            RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Building);
+                            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                            CellBuildDataSystem.SetPlayerBuilding(NeededBuildingTypeForBuilding, Sender, XyCellForBuilding);
-                            MainGameSystem.XyBuildingsCom.AddXyBuild(NeededBuildingTypeForBuilding, Sender.IsMasterClient, XyCellForBuilding);
+                            curCellBuildDataCom.BuildingType = buildTypeForBuild;
+                            curOwnerCellBuildCom.Owner = sender;
 
-                            CellUnitsDataSystem.ResetAmountSteps(XyCellForBuilding);
+                            idxBuildsCom.AddIdxBuild(buildTypeForBuild, sender.IsMasterClient, idxCellForBuild);
 
-                            if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding)) CellEnvrDataSystem.ResetEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding);
-                            if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding)) CellEnvrDataSystem.ResetEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding);
+                            curCellUnitDataCom.ResetAmountSteps();
+
+                            if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.AdultForest)) curCellEnvCom.ResetEnvironment(EnvironmentTypes.AdultForest);
+                            if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.Fertilizer)) curCellEnvCom.ResetEnvironment(EnvironmentTypes.Fertilizer);
                         }
 
                         else
                         {
-                            RPCGameSystem.MistakeNeedOthePlaceToGeneral(Sender);
-                            RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
+                            //RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
+                            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         }
                     }
                     else
                     {
-                        RPCGameSystem.MistakeStepsUnitToGeneral(Sender);
-                        RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
+                        //RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                        //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
                     break;
 
 
                 case BuildingTypes.Farm:
-                    if (CellUnitsDataSystem.HaveMinAmountSteps(XyCellForBuilding))
+                    if (curCellUnitDataCom.HaveMinAmountSteps)
                     {
-                        if (!CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, XyCellForBuilding) && !CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.YoungForest, XyCellForBuilding))
+                        if (!curCellEnvCom.HaveEnvironment(EnvironmentTypes.AdultForest) && !curCellEnvCom.HaveEnvironment(EnvironmentTypes.YoungForest))
                         {
-                            if (amountResCom.CanCreateNewBuilding(NeededBuildingTypeForBuilding, Sender, out bool[] haves))
+                            if (inventorResCom.CanCreateNewBuilding(buildTypeForBuild, sender, out bool[] haves))
                             {
 
-                                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Building);
+                                //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding))
+                                if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.Fertilizer))
                                 {
-                                    CellEnvrDataSystem.AddAmountResources(EnvironmentTypes.Fertilizer, XyCellForBuilding, CellEnvrDataSystem.MaxAmountResources(EnvironmentTypes.Fertilizer));
+                                    curCellEnvCom.AddAmountResources(EnvironmentTypes.Fertilizer, curCellEnvCom.MaxAmountResources(EnvironmentTypes.Fertilizer));
                                 }
                                 else
                                 {
-                                    CellEnvrDataSystem.SetNewEnvironment(EnvironmentTypes.Fertilizer, XyCellForBuilding);
+                                    curCellEnvCom.SetNewEnvironment(EnvironmentTypes.Fertilizer);
                                 }
 
-                                amountResCom.BuyNewBuilding(NeededBuildingTypeForBuilding, Sender);
+                                inventorResCom.BuyNewBuilding(buildTypeForBuild, sender);
 
-                                CellBuildDataSystem.SetPlayerBuilding(NeededBuildingTypeForBuilding, Sender, XyCellForBuilding);
-                                MainGameSystem.XyBuildingsCom.AddXyBuild(NeededBuildingTypeForBuilding, Sender.IsMasterClient, XyCellForBuilding);
+                                curCellBuildDataCom.BuildingType = buildTypeForBuild;
+                                curOwnerCellBuildCom.Owner = sender;
+                                idxBuildsCom.AddIdxBuild(buildTypeForBuild, sender.IsMasterClient, idxCellForBuild);
 
-                                CellUnitsDataSystem.TakeAmountSteps(XyCellForBuilding);
+                                curCellUnitDataCom.TakeAmountSteps();
 
                             }
                             else
                             {
-                                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
-                                RPCGameSystem.MistakeEconomyToGeneral(Sender, haves);
+                                //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                                //RPCGameSystem.MistakeEconomyToGeneral(sender, haves);
                             }
                         }
                         else
                         {
-                            RPCGameSystem.MistakeNeedOthePlaceToGeneral(Sender);
-                            RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
+                            //RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
+                            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         }
                     }
                     else
                     {
-                        RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
-                        RPCGameSystem.MistakeStepsUnitToGeneral(Sender);
+                        //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                        //RPCGameSystem.MistakeStepsUnitToGeneral(sender);
                     }
                     break;
 
@@ -139,36 +151,38 @@ internal sealed class BuilderMasterSystem : IEcsInitSystem, IEcsRunSystem
 
 
                 case BuildingTypes.Mine:
-                    if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, XyCellForBuilding) && CellEnvrDataSystem.HaveResources(EnvironmentTypes.Hill, XyCellForBuilding))
+                    if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.Hill) && curCellEnvCom.HaveResources(EnvironmentTypes.Hill))
                     {
-                        if (amountResCom.CanCreateNewBuilding(NeededBuildingTypeForBuilding, Sender, out bool[] haves))
+                        if (inventorResCom.CanCreateNewBuilding(buildTypeForBuild, sender, out bool[] haves))
                         {
-                            if (CellUnitsDataSystem.HaveMaxAmountSteps(XyCellForBuilding))
+                            if (curCellUnitDataCom.HaveMaxAmountSteps)
                             {
-                                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Building);
+                                //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                                amountResCom.BuyNewBuilding(NeededBuildingTypeForBuilding, Sender);
-                                MainGameSystem.XyBuildingsCom.AddXyBuild(NeededBuildingTypeForBuilding, Sender.IsMasterClient, XyCellForBuilding);
-                                CellBuildDataSystem.SetPlayerBuilding(NeededBuildingTypeForBuilding, Sender, XyCellForBuilding);
+                                inventorResCom.BuyNewBuilding(buildTypeForBuild, sender);
+                                idxBuildsCom.AddIdxBuild(buildTypeForBuild, sender.IsMasterClient, idxCellForBuild);
 
-                                CellUnitsDataSystem.ResetAmountSteps(XyCellForBuilding);
+                                curCellBuildDataCom.BuildingType = buildTypeForBuild;
+                                curOwnerCellBuildCom.Owner = sender;
+
+                                curCellUnitDataCom.ResetAmountSteps();
                             }
                             else
                             {
-                                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
-                                RPCGameSystem.MistakeStepsUnitToGeneral(Sender);
+                                //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                                //RPCGameSystem.MistakeStepsUnitToGeneral(sender);
                             }
                         }
                         else
                         {
-                            RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
-                            RPCGameSystem.MistakeEconomyToGeneral(Sender, haves);
+                            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                            //RPCGameSystem.MistakeEconomyToGeneral(sender, haves);
                         }
                     }
                     else
                     {
-                        RPCGameSystem.MistakeNeedOthePlaceToGeneral(Sender);
-                        RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
+                        //RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
+                        //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
                     break;
 

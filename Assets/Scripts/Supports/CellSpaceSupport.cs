@@ -1,45 +1,49 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
 
 namespace Assets.Scripts.Workers.Cell
 {
     internal static class CellSpaceSupport
     {
-        internal static List<int[]> TryGetXyAround(int[] xyStartCell)
+        internal static List<byte[]> TryGetXyAround(byte[] xyStartCell)
         {
-            var xyAvailableCells = new List<int[]>();
-            var xyResultCell = new int[XY_FOR_ARRAY];
+            var xyAvailableCells = new List<byte[]>();
+            var xyResultCell = new byte[XY_FOR_ARRAY];
 
-            for (int i = 0; i < (int)DirectTypes.LeftDown + 1; i++)
+            for (byte i = 1; i < (byte)DirectTypes.LeftDown + 1; i++)
             {
                 var xyDirectCell = GetXYDirect((DirectTypes)i);
 
-                xyResultCell[X] = xyStartCell[X] + xyDirectCell[X];
-                xyResultCell[Y] = xyStartCell[Y] + xyDirectCell[Y];
+                xyResultCell[X] = (byte)(xyStartCell[X] + xyDirectCell[X]);
+                xyResultCell[Y] = (byte)(xyStartCell[Y] + xyDirectCell[Y]);
 
-                xyAvailableCells.Add((int[])xyResultCell.Clone());
+                xyAvailableCells.Add((byte[])xyResultCell.Clone());
             }
 
             return xyAvailableCells;
 
         }
-        internal static int[] GetXYCell(int[] xyStartCell, DirectTypes directType)
+        internal static byte[] GetXyCellByDirect(byte[] xyStartCell, DirectTypes directType)
         {
-            var xyResultCell = new int[XY_FOR_ARRAY];
+            var xyResultCell = new byte[XY_FOR_ARRAY];
 
             var xyDirectCell = GetXYDirect(directType);
 
-            xyResultCell[0] = xyStartCell[0] + xyDirectCell[0];
-            xyResultCell[1] = xyStartCell[1] + xyDirectCell[1];
+            xyResultCell[0] = (byte)(xyStartCell[0] + xyDirectCell[0]);
+            xyResultCell[1] = (byte)(xyStartCell[1] + xyDirectCell[1]);
 
             return xyResultCell;
         }
-        internal static int[] GetXYDirect(DirectTypes direct)
+        internal static sbyte[] GetXYDirect(DirectTypes direct)
         {
-            var xyDirectCell = new int[XY_FOR_ARRAY];
+            var xyDirectCell = new sbyte[XY_FOR_ARRAY];
 
             switch (direct)
             {
+                case DirectTypes.None:
+                    throw new Exception();
+
                 case DirectTypes.Right:
                     xyDirectCell[X] = 1;
                     xyDirectCell[Y] = 0;
@@ -81,7 +85,7 @@ namespace Assets.Scripts.Workers.Cell
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
 
             return xyDirectCell;

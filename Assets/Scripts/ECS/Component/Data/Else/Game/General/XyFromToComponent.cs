@@ -2,28 +2,28 @@
 {
     internal struct XyFromToComponent
     {
-        private int[] _fromXy;
-        private int[] _toXy;
+        private byte[] _fromXy;
+        private byte[] _toXy;
 
-        internal int[] FromXy
+        internal byte[] FromXy
         {
-            get => (int[])_fromXy.Clone();
-            set => _fromXy = (int[])value.Clone();
+            get => (byte[])_fromXy.Clone();
+            set => _fromXy = (byte[])value.Clone();
         }
 
-        internal int[] ToXy
+        internal byte[] ToXy
         {
-            get => (int[])_toXy.Clone();
-            set => _toXy = (int[])value.Clone();
+            get => (byte[])_toXy.Clone();
+            set => _toXy = (byte[])value.Clone();
         }
 
-        internal XyFromToComponent(int[] fromXy, int[] toXy)
+        internal XyFromToComponent(byte[] fromXy, byte[] toXy)
         {
             _fromXy = fromXy;
             _toXy = toXy;
         }
 
-        internal void SetAllXy(int[] fromXy, int[] toXy)
+        internal void SetAllXy(byte[] fromXy, byte[] toXy)
         {
             FromXy = fromXy;
             ToXy = toXy;

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 {
@@ -23,14 +22,14 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
                     _amountResources_TextMP.Add(resourcesType, upZone_GO.transform.Find("FoodAmount").GetComponent<TextMeshProUGUI>());
                     _amountAddingResources_TextMP.Add(resourcesType, upZone_GO.transform.Find("FoodAdding_TMP").GetComponent<TextMeshProUGUI>());
                 }
-                    
-                else if(resourcesType == ResourceTypes.Wood)
+
+                else if (resourcesType == ResourceTypes.Wood)
                 {
                     _amountResources_TextMP.Add(resourcesType, upZone_GO.transform.Find("WoodAmount").GetComponent<TextMeshProUGUI>());
                     _amountAddingResources_TextMP.Add(resourcesType, upZone_GO.transform.Find("WoodAdding_TMP").GetComponent<TextMeshProUGUI>());
                 }
 
-                else if(resourcesType == ResourceTypes.Ore)
+                else if (resourcesType == ResourceTypes.Ore)
                 {
                     _amountResources_TextMP.Add(resourcesType, upZone_GO.transform.Find("OreAmount").GetComponent<TextMeshProUGUI>());
                     _amountAddingResources_TextMP.Add(resourcesType, upZone_GO.transform.Find("OreAdding_TMP").GetComponent<TextMeshProUGUI>());

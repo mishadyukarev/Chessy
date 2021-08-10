@@ -4,15 +4,8 @@ using Leopotam.Ecs;
 
 public sealed class GameOtherSystemManager : SystemAbstManager
 {
-    internal GameOtherSystemManager(EcsWorld gameWorld) : base(gameWorld)
+    internal GameOtherSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld)
     {
         gameWorld.NewEntity().Replace(new FromInfoComponent());
-    }
-
-
-    internal override void Init()
-    {
-        base.Init();
-
     }
 }

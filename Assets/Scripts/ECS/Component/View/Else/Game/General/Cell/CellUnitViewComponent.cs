@@ -14,6 +14,10 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
         }
 
 
+
+        internal void EnableSR() => _cellUnit_SR.enabled = true;
+        internal void DisableSR() => _cellUnit_SR.enabled = false;
+
         internal void SetSprite(UnitTypes unitType)
         {
             switch (unitType)
@@ -53,7 +57,7 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
                     throw new Exception();
             }
         }
-        internal void EnableUnitSR(bool isEnabled) => _cellUnit_SR.enabled = isEnabled;
+
         internal void SetColorSR(Color color) => _cellUnit_SR.color = color;
 
         internal void SetEnabledUnit(bool isEnabled) => _cellUnit_SR.enabled = isEnabled;
@@ -75,21 +79,6 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
             }
         }
         internal void SetRotation(Vector3 rotation) => _cellUnit_SR.transform.rotation = Quaternion.Euler(rotation);
-
-
-        internal void ActiveSelectorVisionUnit(bool isActive, UnitTypes unitType)
-        {
-            if (isActive)
-            {
-                EnableUnitSR(isActive);
-                SetSprite(unitType);
-            }
-
-            else
-            {
-                EnableUnitSR(isActive);
-            }
-        }
     }
 }
 

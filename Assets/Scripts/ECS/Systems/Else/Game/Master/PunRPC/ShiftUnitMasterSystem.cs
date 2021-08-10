@@ -1,66 +1,71 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
+﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Components;
-using Assets.Scripts.ECS.Game.General.Systems.StartFill;
-using Assets.Scripts.ECS.System.Data.Game.General.Cell;
-using Assets.Scripts.Workers;
 using Leopotam.Ecs;
-using Photon.Realtime;
-using System.Collections.Generic;
-using static Assets.Scripts.Workers.CellBaseOperat;
 
-internal sealed class ShiftUnitMasterSystem : IEcsInitSystem, IEcsRunSystem
+internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 {
-    private EcsWorld _currentGameWorld;
-    private EcsFilter<InfoMasCom> _infoFilter;
-    private EcsFilter<ShiftMasCom, XyFromToComponent> _shiftFilter;
-    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
+    private EcsFilter<InfoMasCom> _infoFilter = default;
 
-    private Player Sender => _infoFilter.Get1(0).FromInfo.Sender;
-    private int[] FromXy => _shiftFilter.Get2(0).FromXy;
-    private int[] ToXy => _shiftFilter.Get2(0).ToXy;
+    private EcsFilter<ForShiftMasCom> _forShiftFilter = default;
 
-    public void Init()
-    {
-        _currentGameWorld.NewEntity()
-            .Replace(new ShiftMasCom())
-            .Replace(new XyFromToComponent(new int[2], new int[2]));
-    }
+    private EcsFilter<IdxUnitsInConditionCom> _idxUnitsInCondFilter = default;
+    private EcsFilter<IdxUnitsComponent> _idxUnitsFilter = default;
+
+    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+    private EcsFilter<CellEnvironDataCom> _cellEnvrDataFilter = default;
 
     public void Run()
     {
-        ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
+        var fromInfo = _infoFilter.Get1(0).FromInfo;
 
-        List<int[]> xyAvailableCellsForShift = CellUnitsDataSystem.GetCellsForShift(FromXy);
+        var fromIdx = _forShiftFilter.Get1(0).IdxFrom;
+        var toIdx = _forShiftFilter.Get1(0).IdxTo;
 
-        if (CellUnitsDataSystem.IsHim(Sender, FromXy) && CellUnitsDataSystem.HaveMinAmountSteps(FromXy))
+        ref var forShiftMasCom = ref _forShiftFilter.Get1(0);
+        ref var idxUnitsInCondCom = ref _idxUnitsInCondFilter.Get1(0);
+        ref var idxUnitsCom = ref _idxUnitsFilter.Get1(0);
+
+        ref var fromCellUnitDataCom = ref _cellUnitFilter.Get1(fromIdx);
+        ref var fromOwnerCellUnitCom = ref _cellUnitFilter.Get2(fromIdx);
+
+        ref var toCellUnitDataCom = ref _cellUnitFilter.Get1(toIdx);
+        ref var toOwnerCellUnitCom = ref _cellUnitFilter.Get2(toIdx);
+
+        ref var toCellEnvDataCom = ref _cellEnvrDataFilter.Get1(toIdx);
+
+
+        if (fromOwnerCellUnitCom.IsHim(fromInfo.Sender) && fromCellUnitDataCom.HaveMinAmountSteps)
         {
-            if (xyAvailableCellsForShift.TryFindCell(ToXy))
+            var neededAmountStepsForShift = toCellEnvDataCom.NeedAmountSteps;
+
+            if (fromCellUnitDataCom.AmountSteps >= neededAmountStepsForShift || fromCellUnitDataCom.HaveMaxAmountSteps)
             {
-                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.ClickToTable);
+                fromCellUnitDataCom.TakeAmountSteps(neededAmountStepsForShift);
+                if (fromCellUnitDataCom.AmountSteps < 0) fromCellUnitDataCom.ResetAmountSteps();
 
 
-                var fromUnitType = CellUnitsDataSystem.UnitType(FromXy);
-                var fromIsMasterClient = CellUnitsDataSystem.IsMasterClient(FromXy);
+                idxUnitsInCondCom.RemoveUnitInCondition(fromCellUnitDataCom.ConditionType, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
+                idxUnitsInCondCom.AddUnitInCondition(ConditionUnitTypes.None, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, toIdx);
 
-                var fromCondition = CellUnitsDataSystem.ConditionType(FromXy);
-
-
-                MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(fromCondition, fromUnitType, fromIsMasterClient, FromXy);
-
-                xyUnitsCom.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), FromXy);
-                xyUnitsCom.AddAmountUnitInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), ToXy);
-                CellUnitsDataSystem.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
-
-                MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, fromUnitType, fromIsMasterClient, ToXy);
+                idxUnitsCom.RemoveAmountUnitsInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
+                idxUnitsCom.AddAmountUnitInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, toIdx);
 
 
-                CellUnitsDataSystem.TakeAmountSteps(ToXy, CellEnvrDataSystem.NeedAmountSteps(ToXy));
-                if (CellUnitsDataSystem.AmountSteps(ToXy) < 0) CellUnitsDataSystem.ResetAmountSteps(ToXy);
+                toCellUnitDataCom.UnitType = fromCellUnitDataCom.UnitType;
+                toCellUnitDataCom.AmountHealth = fromCellUnitDataCom.AmountHealth;
+                toCellUnitDataCom.AmountSteps = fromCellUnitDataCom.AmountSteps;
+                toCellUnitDataCom.ConditionType = default;
+                toOwnerCellUnitCom.SetOwner(fromInfo.Sender);
 
-                CellUnitsDataSystem.ResetConditionType(ToXy);
+                fromCellUnitDataCom.UnitType = default;
+                fromCellUnitDataCom.AmountHealth = default;
+                fromCellUnitDataCom.AmountSteps = default;
+                fromCellUnitDataCom.ConditionType = default;
+                fromOwnerCellUnitCom.ResetOwner();
+
+                //RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.ClickToTable);
             }
         }
     }

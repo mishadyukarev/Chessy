@@ -8,15 +8,15 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
     {
         private GameObject _cell_GO;
 
+        internal int InstanceID => _cell_GO.GetInstanceID();
+        internal bool IsActiveParent => _cell_GO.transform.parent.gameObject.activeSelf;
+
         internal CellViewComponent(GameObject cell_GO)
         {
             _cell_GO = cell_GO.transform.Find("Cell").gameObject;
         }
 
-        internal int GetInstanceIDCell() => _cell_GO.GetInstanceID();
-        internal bool IsActiveSelfParentCell() => _cell_GO.transform.parent.gameObject.activeSelf;
-
-        internal float GetEulerAngle(XyzTypes xyzType, int[] xy)
+        internal float GetEulerAngle(XyzTypes xyzType)
         {
             switch (xyzType)
             {

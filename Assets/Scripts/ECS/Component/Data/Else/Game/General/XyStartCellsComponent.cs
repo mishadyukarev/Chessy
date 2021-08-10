@@ -5,12 +5,12 @@ namespace Assets.Scripts.ECS.Components
 {
     internal struct XyStartCellsComponent
     {
-        private Dictionary<bool, List<int[]>> _xyStartCellsDict;
+        private Dictionary<bool, List<byte[]>> _xyStartCellsDict;
 
 
-        internal XyStartCellsComponent(Dictionary<bool, List<int[]>> dict) => _xyStartCellsDict = dict;
+        internal XyStartCellsComponent(Dictionary<bool, List<byte[]>> dict) => _xyStartCellsDict = dict;
 
 
-        internal bool IsStartedCell(bool key, int[] xy) => _xyStartCellsDict[key].TryFindCell(xy);
+        internal bool IsStartedCell(bool key, byte[] xy) => _xyStartCellsDict[key].TryFindCell(xy);
     }
 }

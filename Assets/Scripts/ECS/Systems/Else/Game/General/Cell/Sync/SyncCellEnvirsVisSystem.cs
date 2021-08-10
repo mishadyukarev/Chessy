@@ -1,33 +1,33 @@
-﻿using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.ECS.System.Data.Game.General.Cell;
-using Assets.Scripts.ECS.System.View.Game.General.Cell;
+﻿using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Leopotam.Ecs;
+using System;
 
 namespace Assets.Scripts.ECS.Game.General.Systems.SyncCellVision
 {
     internal sealed class SyncCellEnvirsVisSystem : IEcsRunSystem
     {
+        private EcsFilter<CellEnvironDataCom, CellEnvironViewCom> _cellEnvFilter = default;
+
         public void Run()
         {
-            for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
-                for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
+            foreach (var idx in _cellEnvFilter)
+            {
+                ref var cellEnvrDataCom = ref _cellEnvFilter.Get1(idx);
+                ref var cellEnvrViewCom = ref _cellEnvFilter.Get2(idx);
+
+                for (EnvironmentTypes curEnvirType = (EnvironmentTypes)1; curEnvirType < (EnvironmentTypes)Enum.GetNames(typeof(EnvironmentTypes)).Length; curEnvirType++)
                 {
-                    var xy = new int[] { x, y };
-
-
-                    for (int curNumberEnvirType = 1; curNumberEnvirType <= (int)EnvironmentTypes.Mountain; curNumberEnvirType++)
+                    if (cellEnvrDataCom.HaveEnvironment(curEnvirType))
                     {
-                        if (CellEnvrDataSystem.HaveEnvironment((EnvironmentTypes)curNumberEnvirType, xy))
-                        {
-                            CellEnvViewSystem.ActiveEnvirVis(true, (EnvironmentTypes)curNumberEnvirType, xy);
-                        }
-                        else
-                        {
-                            CellEnvViewSystem.ActiveEnvirVis(false, (EnvironmentTypes)curNumberEnvirType, xy);
-                        }
+                        cellEnvrViewCom.EnableSR(curEnvirType);
+                    }
+                    else
+                    {
+                        cellEnvrViewCom.DisableSR(curEnvirType);
                     }
                 }
+            }
         }
-
     }
 }

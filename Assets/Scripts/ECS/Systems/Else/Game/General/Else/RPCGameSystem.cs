@@ -1,25 +1,17 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.Game.Other;
-using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.Game.Components;
-using Assets.Scripts.ECS.Game.General.Systems.StartFill;
-using Assets.Scripts.ECS.System.Data.Common;
-using Assets.Scripts.ECS.System.Data.Game.General.Cell;
-using Assets.Scripts.Workers;
-using Assets.Scripts.Workers.Game.UI;
 using ExitGames.Client.Photon;
 using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Assets.Scripts
@@ -27,22 +19,23 @@ namespace Assets.Scripts
     public sealed class RPCGameSystem : MonoBehaviour, IEcsInitSystem
     {
         private EcsFilter<FromInfoComponent> _fromInfoFilter = default;
-        private EcsFilter<SelectorComponent, AvailableCellsComponent> _selectorFilter = default;
+        private EcsFilter<SelectorComponent> _selectorFilter = default;
+        private EcsFilter<IdxAvailableCellsComponent> _idxAvailCellsFilter = default;
         private EcsFilter<InventorResourcesComponent> _inventorFilter = default;
-        private EcsFilter<XyUnitsComponent> _xyUnitsFilter = default;
+        private EcsFilter<IdxUnitsComponent> _xyUnitsFilter = default;
         private EcsFilter<UpgradesBuildingsComponent> _upgradesBuildFilter = default;
         private EcsFilter<EndGameDataUIComponent> _endGameFilter = default;
         private EcsFilter<ReadyDataUICom> _readyUIFilter = default;
-        private EcsFilter<MotionsDataUIComponent, MotionsViewUIComponent> _motionsFilter= default;
-        private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
+        private EcsFilter<MotionsDataUIComponent> _motionsFilter = default;
+        private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
 
         private EcsFilter<InfoMasCom> _infoMasterComFilter = default;
         private EcsFilter<ForReadyMasCom, NeedActiveSomethingMasCom> _readyFilter = default;
-        private EcsFilter<DonerMasCom, NeedActiveSomethingMasCom> _donerFilter = default;
+        private EcsFilter<ForDonerMasCom> _donerFilter = default;
         private EcsFilter<ForBuildingMasCom, XyCellForDoingMasCom> _buildFilter = default;
         private EcsFilter<DestroyMasCom, XyCellForDoingMasCom> _destroyFilter = default;
-        private EcsFilter<ShiftMasCom, XyFromToComponent> _shiftFilter = default;
-        private EcsFilter<AttackMasCom, XyFromToComponent> _attackFilter = default;
+        private EcsFilter<ForShiftMasCom> _shiftFilter = default;
+        private EcsFilter<ForAttackMasCom> _attackFilter = default;
         private EcsFilter<ConditionMasCom, XyCellForDoingMasCom> _conditionFilter = default;
         private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
         private EcsFilter<ForGettingUnitMasCom> _gettingUnitFilter = default;
@@ -79,34 +72,34 @@ namespace Assets.Scripts
         public static void DoneToMaster(bool isDone) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[] { isDone });
         public static void ActiveAmountMotionUIToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
         public static void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
-        public static void SetAmountMotionToOther(Player playerTo, int numberMotion) => PhotonView.RPC(OtherRPCName, playerTo, RpcOtherTypes.SetAmountMotion, new object[] { numberMotion });
-        public static void SetAmountMotionToOther(RpcTarget rpcTarget, int numberMotion) => PhotonView.RPC(OtherRPCName, rpcTarget, RpcOtherTypes.SetAmountMotion, new object[] { numberMotion });
+        public static void SetAmountMotionToOther(Player playerTo, byte numberMotion) => PhotonView.RPC(OtherRPCName, playerTo, RpcOtherTypes.SetAmountMotion, new object[] { numberMotion });
+        public static void SetAmountMotionToOther(RpcTarget rpcTarget, byte numberMotion) => PhotonView.RPC(OtherRPCName, rpcTarget, RpcOtherTypes.SetAmountMotion, new object[] { numberMotion });
 
-        public static void UpgradeUnitToMaster(int[] xyCellForUpgrade, UpgradeModTypes upgradeModType = UpgradeModTypes.Unit) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, xyCellForUpgrade });
+        public static void UpgradeUnitToMaster(ushort xyCellForUpgrade, UpgradeModTypes upgradeModType = UpgradeModTypes.Unit) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, xyCellForUpgrade });
         public static void UpgradeBuildingToMaster(BuildingTypes buildingTypeForUpgrade, UpgradeModTypes upgradeModType = UpgradeModTypes.Building) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, buildingTypeForUpgrade });
 
-        public static void ShiftUnitToMaster(in int[] xyPreviousCell, in int[] xySelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { xyPreviousCell, xySelectedCell });
-        public static void AttackUnitToMaster(int[] xyPreviousCell, int[] xySelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Attack, new object[] { xyPreviousCell, xySelectedCell });
+        public static void ShiftUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { idxPreviousCell, idxSelectedCell });
+        public static void AttackUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Attack, new object[] { idxPreviousCell, idxSelectedCell });
         public static void AttackUnitToGeneral(Player playerTo, bool isAttacked) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Attack, new object[] { isAttacked });
-        public static void AttackUnitToGeneral(RpcTarget rpcTarget, bool isAttacked, bool isActivatedSound, int[] xyStart, int[] xyEnd) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Attack, new object[] { isAttacked, isActivatedSound, xyStart, xyEnd });
+        public static void AttackUnitToGeneral(RpcTarget rpcTarget, bool isAttacked, bool isActivatedSound, byte[] xyStart, byte[] xyEnd) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Attack, new object[] { isAttacked, isActivatedSound, xyStart, xyEnd });
 
-        public static void BuildToMaster(int[] xyCell, BuildingTypes buildingType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Build, new object[] { xyCell, buildingType });
-        public static void DestroyBuildingToMaster(int[] xyCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Destroy, new object[] { xyCell });
+        public static void BuildToMaster(byte idxCellForBuild, BuildingTypes buildingType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Build, new object[] { idxCellForBuild, buildingType });
+        public static void DestroyBuildingToMaster(byte xyCellForDestroy) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Destroy, new object[] { xyCellForDestroy });
 
-        public static void ProtectRelaxUnitToMaster(ConditionUnitTypes protectRelaxType, int[] xyCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ProtectRelax, new object[] { protectRelaxType, xyCell });
+        public static void ProtectRelaxUnitToMaster(ConditionUnitTypes protectRelaxType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ProtectRelax, new object[] { protectRelaxType, idxCell });
 
-        public static void EndGameToMaster(int actorNumberWinner) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.EndGame, new object[] { actorNumberWinner });
-        public static void EndGameToGeneral(RpcTarget rpcTarget, int actorNumberWinner) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
+        public static void EndGameToMaster(byte actorNumberWinner) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.EndGame, new object[] { actorNumberWinner });
+        public static void EndGameToGeneral(RpcTarget rpcTarget, byte actorNumberWinner) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
 
         public static void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.Economy, haves });
         public static void MistakeUnitToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedKing });
         public static void MistakeStepsUnitToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedSteps });
         public static void MistakeNeedOthePlaceToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedOtherPlace });
 
-        public static void FireToMaster(int[] fromXy, int[] toXy) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromXy, toXy });
-        public static void SeedEnvironmentToMaster(int[] xy, EnvironmentTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { xy, environmentType });
+        public static void FireToMaster(ushort fromXy, ushort toXy) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromXy, toXy });
+        public static void SeedEnvironmentToMaster(byte[] xy, EnvironmentTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { xy, environmentType });
 
-        public static void CircularAttackKingToMaster(int[] xyKing) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { xyKing });
+        public static void CircularAttackKingToMaster(byte[] xyKing) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { xyKing });
 
         public static void CreateUnitToMaster(UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CreateUnit, new object[] { unitType });
 
@@ -116,7 +109,7 @@ namespace Assets.Scripts
         public static void GetUnitToGeneral(Player playerTo, bool isGetted, UnitTypes unitType) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.GetUnit, new object[] { isGetted, unitType });
 
 
-        public static void SetUniToMaster(int[] xyCell, UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SetUnit, new object[] { xyCell, unitType });
+        public static void SetUniToMaster(byte idxCell, UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SetUnit, new object[] { idxCell, unitType });
         public static void SetUnitToGeneral(Player playerTo, bool isSetted) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SetUnit, new object[] { isSetted });
 
         public static void SoundToGeneral(RpcTarget rpcTarget, SoundEffectTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Sound, new object[] { soundEffectType });
@@ -133,7 +126,7 @@ namespace Assets.Scripts
             switch (rpcType)
             {
                 case RpcMasterTypes.None:
-                    break;
+                    throw new Exception();
 
                 case RpcMasterTypes.Ready:
                     _readyFilter.Get2(0).NeedActiveSomething = (bool)objects[0];
@@ -141,38 +134,40 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.Done:
-                    _donerFilter.Get2(0).NeedActiveSomething = (bool)objects[0];
+                    _donerFilter.Get1(0).NeedActiveDoner = (bool)objects[0];
                     GameMasterSystemManager.DonerSystems.Run();
                     break;
 
                 case RpcMasterTypes.EndGame:
-                    EndGameToGeneral(RpcTarget.All, (int)objects[0]);
+                    EndGameToGeneral(RpcTarget.All, (byte)objects[0]);
                     break;
 
                 case RpcMasterTypes.Build:
                     _buildFilter.Get1(0).BuildingTypeForBuidling = (BuildingTypes)objects[1];
-                    _buildFilter.Get2(0).XyCellForDoing = (int[])objects[0];
+                    _buildFilter.Get1(0).IdxForBuild = (byte)objects[0];
                     GameMasterSystemManager.BuilderSystems.Run();
                     break;
 
                 case RpcMasterTypes.Destroy:
-                    _destroyFilter.Get2(0).XyCellForDoing = (int[])objects[0];
+                    _destroyFilter.Get2(0).XyCellForDoing = (byte[])objects[0];
                     GameMasterSystemManager.DestroySystems.Run();
                     break;
 
                 case RpcMasterTypes.Shift:
-                    _shiftFilter.Get2(0).SetAllXy((int[])objects[0], (int[])objects[1]);
+                    _shiftFilter.Get1(0).IdxFrom = (byte)objects[0];
+                    _shiftFilter.Get1(0).IdxTo = (byte)objects[1];
                     GameMasterSystemManager.ShiftUnitSystems.Run();
                     break;
 
                 case RpcMasterTypes.Attack:
-                    _attackFilter.Get2(0).SetAllXy((int[])objects[0], (int[])objects[1]);
+                    _attackFilter.Get1(0).IdxFromCell = (byte)objects[0];
+                    _attackFilter.Get1(0).IdxToCell = (byte)objects[1];
                     GameMasterSystemManager.AttackUnitSystems.Run();
                     break;
 
                 case RpcMasterTypes.ProtectRelax:
                     _conditionFilter.Get1(0).NeededConditionUnitType = (ConditionUnitTypes)objects[0];
-                    _conditionFilter.Get2(0).XyCellForDoing = (int[])objects[1];
+                    _conditionFilter.Get1(0).IdxForCondition = (byte)objects[1];
                     GameMasterSystemManager.ConditionUnitSystems.Run();
                     break;
 
@@ -191,20 +186,20 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.SetUnit:
-                    _settingUnitFilter.Get2(0).XyCellForDoing = (int[])objects[0];
+                    _settingUnitFilter.Get1(0).IdxCellForSetting = (byte)objects[0];
                     _settingUnitFilter.Get1(0).UnitTypeForSetting = (UnitTypes)objects[1];
                     GameMasterSystemManager.SetterUnitSystems.Run();
                     break;
 
                 case RpcMasterTypes.SeedEnvironment:
-                    _seedingFilter.Get2(0).XyCellForDoing = (int[])objects[0];
+                    _seedingFilter.Get2(0).XyCellForDoing = (byte[])objects[0];
                     _seedingFilter.Get1(0).EnvTypeForSeeding = (EnvironmentTypes)objects[1];
                     GameMasterSystemManager.SeedingSystems.Run();
                     break;
 
                 case RpcMasterTypes.Fire:
-                    _fireFilter.Get2(0).FromXy = (int[])objects[0];
-                    _fireFilter.Get2(0).ToXy = (int[])objects[1];
+                    _fireFilter.Get2(0).FromXy = (byte[])objects[0];
+                    _fireFilter.Get2(0).ToXy = (byte[])objects[1];
                     GameMasterSystemManager.FireSystems.Run();
                     break;
 
@@ -217,7 +212,7 @@ namespace Assets.Scripts
                             throw new Exception();
 
                         case UpgradeModTypes.Unit:
-                            _upgradorFilter.Get2(0).XyCellForDoing = (int[])objects[1];
+                            _upgradorFilter.Get2(0).XyCellForDoing = (byte[])objects[1];
                             break;
 
                         case UpgradeModTypes.Building:
@@ -231,7 +226,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.CircularAttackKing:
-                    _upgradorFilter.Get2(0).XyCellForDoing = (int[])objects[0];
+                    _upgradorFilter.Get2(0).XyCellForDoing = (byte[])objects[0];
                     GameMasterSystemManager.CircularAttackKingSystems.Run();
                     break;
 
@@ -251,77 +246,77 @@ namespace Assets.Scripts
             _fromInfoFilter.Get1(0).FromInfo = infoFrom;
 
             ref var selectorCom = ref _selectorFilter.Get1(0);
-            ref var availCellsCom = ref _selectorFilter.Get2(0);
+            ref var availCellsCom = ref _idxAvailCellsFilter.Get1(0);
 
             switch (rpcGeneralType)
             {
                 case RpcGeneralTypes.None:
                     throw new Exception();
 
-                case RpcGeneralTypes.SetDonerActiveUI:
-                    _donerUIFilter.Get1(0) .SetDoned(PhotonNetwork.IsMasterClient, (bool)objects[_currentNumber++]);
-                    break;
+                //case RpcGeneralTypes.SetDonerActiveUI:
+                //    _donerUIFilter.Get1(0).SetDoned(PhotonNetwork.IsMasterClient, (bool)objects[_currentNumber++]);
+                //    break;
 
-                case RpcGeneralTypes.ActiveAmountMotionUI:
-                    _motionsFilter.Get1(0).IsActivatedUI = true;
-                    break;
+                //case RpcGeneralTypes.ActiveAmountMotionUI:
+                //    _motionsFilter.Get1(0).IsActivatedUI = true;
+                //    break;
 
-                case RpcGeneralTypes.GetAvailableCellsForSetting:
-                    availCellsCom.SetAllCellsCopy(AvailableCellTypes.SettingUnit, CellUnitsDataSystem.GetStartCellsForSettingUnit(PhotonNetwork.LocalPlayer));
-                    break;
+                //case RpcGeneralTypes.GetAvailableCellsForSetting:
+                //    availCellsCom.SetAllCellsCopy(AvailableCellTypes.SettingUnit, CellUnitsDataSystem.GetStartCellsForSettingUnit(PhotonNetwork.LocalPlayer));
+                //    break;
 
-                case RpcGeneralTypes.EndGame:
-                    _endGameFilter.Get1(0).IsEndGame = true;
-                    _endGameFilter.Get1(0).PlayerWinner = PhotonNetwork.PlayerList[(int)objects[_currentNumber++] - 1];
-                    break;
+                //case RpcGeneralTypes.EndGame:
+                //    _endGameFilter.Get1(0).IsEndGame = true;
+                //    _endGameFilter.Get1(0).PlayerWinner = PhotonNetwork.PlayerList[(byte)objects[_currentNumber++] - 1];
+                //    break;
 
-                case RpcGeneralTypes.Attack:
-                    if ((bool)objects[_currentNumber++])
-                    {
-                        availCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);
-                        availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
-                        availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
-                    }
-                    break;
+                //case RpcGeneralTypes.Attack:
+                //    if ((bool)objects[_currentNumber++])
+                //    {
+                //        availCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);
+                //        availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
+                //        availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
+                //    }
+                //    break;
 
-                case RpcGeneralTypes.Mistake:
-                    var mistakeType = (MistakeTypes)objects[_currentNumber++];
-                    switch (mistakeType)
-                    {
-                        case MistakeTypes.None:
-                            throw new Exception();
+                //case RpcGeneralTypes.Mistake:
+                //    var mistakeType = (MistakeTypes)objects[_currentNumber++];
+                //    switch (mistakeType)
+                //    {
+                //        case MistakeTypes.None:
+                //            throw new Exception();
 
-                        case MistakeTypes.Economy:
-                            var haves = (bool[])objects[_currentNumber++];
-                            var haveFood = haves[0];
-                            var haveWood = haves[1];
-                            var haveOre = haves[2];
-                            var haveIron = haves[3];
-                            var haveGold = haves[4];
+                //        case MistakeTypes.Economy:
+                //            var haves = (bool[])objects[_currentNumber++];
+                //            var haveFood = haves[0];
+                //            var haveWood = haves[1];
+                //            var haveOre = haves[2];
+                //            var haveIron = haves[3];
+                //            var haveGold = haves[4];
 
-                            if (!haveFood) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Food);
-                            if (!haveWood) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Wood);
-                            if (!haveOre) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Ore);
-                            if (!haveIron) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Iron);
-                            if (!haveGold) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Gold);
-                            break;
+                //            if (!haveFood) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Food);
+                //            if (!haveWood) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Wood);
+                //            if (!haveOre) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Ore);
+                //            if (!haveIron) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Iron);
+                //            if (!haveGold) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Gold);
+                //            break;
 
-                        case MistakeTypes.NeedKing:
-                            //MainGameSystem.DonerUIEnt_MistakeCom.MistakeUnityEvent.Invoke();
-                            break;
+                //        case MistakeTypes.NeedKing:
+                //            //MainGameSystem.DonerUIEnt_MistakeCom.MistakeUnityEvent.Invoke();
+                //            break;
 
-                        case MistakeTypes.NeedSteps:
-                            MainGameSystem.MistakeCom.InvokeStepsMistake();
-                            break;
+                //        case MistakeTypes.NeedSteps:
+                //            MainGameSystem.MistakeCom.InvokeStepsMistake();
+                //            break;
 
-                        case MistakeTypes.NeedOtherPlace:
-                            MainGameSystem.MistakeCom.InvokeNeedOtherPlace();
-                            break;
+                //        case MistakeTypes.NeedOtherPlace:
+                //            MainGameSystem.MistakeCom.InvokeNeedOtherPlace();
+                //            break;
 
-                        default:
-                            break;
-                    }
-                    break;
+                //        default:
+                //            break;
+                //    }
+                //    break;
 
                 case RpcGeneralTypes.GetUnit:
                     if ((bool)objects[_currentNumber++])
@@ -333,15 +328,15 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.SetUnit:
                     if ((bool)objects[_currentNumber++])
                     {
-                        selectorCom.SelectorType = SelectorTypes.StartClick;// IsStartSelectedDirect = true;
+                        selectorCom.CellClickType = CellClickTypes.Start;
                         selectorCom.SelectedUnitType = default;
                     }
                     break;
 
-                case RpcGeneralTypes.Sound:
-                    var soundEffectType = (SoundEffectTypes)objects[_currentNumber++];
-                    SoundGameGeneralViewWorker.PlaySoundEffect(soundEffectType);
-                    break;
+                //case RpcGeneralTypes.Sound:
+                //    var soundEffectType = (SoundEffectTypes)objects[_currentNumber++];
+                //    SoundGameGeneralViewWorker.PlaySoundEffect(soundEffectType);
+                //    break;
 
                 default:
                     throw new Exception();
@@ -360,7 +355,7 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case RpcOtherTypes.SetAmountMotion:
-                    _motionsFilter.Get1(0).AmountMotions = (int)objects[_currentNumber++];
+                    _motionsFilter.Get1(0).AmountMotions = (byte)objects[_currentNumber++];
                     break;
 
                 case RpcOtherTypes.SetStepModType:
@@ -382,270 +377,270 @@ namespace Assets.Scripts
         [PunRPC]
         private void SyncAllMaster()
         {
-            List<object> listObjects = new List<object>();
+            //List<object> listObjects = new List<object>();
 
 
 
-            for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
-                for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
-                {
-                    var xy = new int[] { x, y };
+            //for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
+            //    for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
+            //    {
+            //        var xy = new int[] { x, y };
 
-                    listObjects.Add(CellUnitsDataSystem.UnitType(xy));
-                    listObjects.Add(CellUnitsDataSystem.IsVisibleUnit(false, xy));
-                    listObjects.Add(CellUnitsDataSystem.AmountSteps(xy));
-                    listObjects.Add(CellUnitsDataSystem.AmountHealth(xy));
-                    listObjects.Add(CellUnitsDataSystem.ConditionType(xy));
-                    if (CellUnitsDataSystem.HaveOwner(xy)) listObjects.Add(CellUnitsDataSystem.ActorNumber(xy));
-                    else listObjects.Add(-2);
-                    listObjects.Add(CellUnitsDataSystem.IsBot(xy));
-
-
-
-                    listObjects.Add(CellBuildDataSystem.BuildTypeCom(xy).BuildingType);
-                    if (CellBuildDataSystem.OwnerCom(xy).HaveOwner) listObjects.Add(CellBuildDataSystem.OwnerCom(xy).ActorNumber);
-                    else listObjects.Add(-2);
-                    listObjects.Add(CellBuildDataSystem.OwnerBotCom(xy).IsBot);
+            //        listObjects.Add(CellUnitsDataSystem.UnitType(xy));
+            //        listObjects.Add(CellUnitsDataSystem.IsVisibleUnit(false, xy));
+            //        listObjects.Add(CellUnitsDataSystem.AmountSteps(xy));
+            //        listObjects.Add(CellUnitsDataSystem.AmountHealth(xy));
+            //        listObjects.Add(CellUnitsDataSystem.ConditionType(xy));
+            //        if (CellUnitsDataSystem.HaveOwner(xy)) listObjects.Add(CellUnitsDataSystem.ActorNumber(xy));
+            //        else listObjects.Add(-2);
+            //        listObjects.Add(CellUnitsDataSystem.IsBot(xy));
 
 
 
-                    listObjects.Add(CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Fertilizer, xy));
-                    listObjects.Add(CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.AdultForest, xy));
-                    listObjects.Add(CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Hill, xy));
-
-                    listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy));
-                    listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.YoungForest, xy));
-                    listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy));
-                    listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy));
-                    listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Mountain, xy));
-
-
-                    listObjects.Add(CellFireDataSystem.HaveFireCom(xy).HaveFire);
-                }
+            //        listObjects.Add(CellBuildDataSystem.BuildTypeCom(xy).BuildingType);
+            //        if (CellBuildDataSystem.OwnerCom(xy).HaveOwner) listObjects.Add(CellBuildDataSystem.OwnerCom(xy).ActorNumber);
+            //        else listObjects.Add(-2);
+            //        listObjects.Add(CellBuildDataSystem.OwnerBotCom(xy).IsBot);
 
 
 
-            listObjects.Add(SaverComponent.StepModeType);
-            listObjects.Add(_readyUIFilter.Get1(0).IsStartedGame);
+            //        listObjects.Add(CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Fertilizer, xy));
+            //        listObjects.Add(CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.AdultForest, xy));
+            //        listObjects.Add(CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Hill, xy));
+
+            //        listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy));
+            //        listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.YoungForest, xy));
+            //        listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy));
+            //        listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy));
+            //        listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Mountain, xy));
+
+
+            //        listObjects.Add(CellFireDataSystem.HaveFireCom(xy).HaveFire);
+            //    }
 
 
 
-            listObjects.Add(_readyUIFilter.Get1(0).IsReady(false));
-            listObjects.Add(_donerUIFilter.Get1(0).IsDoned(false));
-
-
-            ref var invResCom = ref _inventorFilter.Get1(0);
-            listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Food, false));
-            listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Wood, false));
-            listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Ore, false));
-            listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Iron, false));
-            listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Gold, false));
+            //listObjects.Add(SaverComponent.StepModeType);
+            //listObjects.Add(_readyUIFilter.Get1(0).IsStartedGame);
 
 
 
-            for (UnitTypes unitTypeType = (UnitTypes)1; (byte)unitTypeType < Enum.GetNames(typeof(UnitTypes)).Length; unitTypeType++)
-            {
-                ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
+            //listObjects.Add(_readyUIFilter.Get1(0).IsReady(false));
+            //listObjects.Add(_donerUIFilter.Get1(0).IsDoned(false));
 
-                var amountUnitsInGame = xyUnitsCom.GetAmountUnitsInGame(unitTypeType, false);
-                listObjects.Add(amountUnitsInGame);
-                for (int indexXy = 0; indexXy < amountUnitsInGame; indexXy++)
-                {
-                    listObjects.Add(xyUnitsCom.GetXyUnitInGame(unitTypeType, false, indexXy));
-                }
-            }
 
-            
-
-            listObjects.Add(_upgradesBuildFilter.Get1(0).GetAmountUpgrades(BuildingTypes.Farm, false));
-            listObjects.Add(_upgradesBuildFilter.Get1(0).GetAmountUpgrades(BuildingTypes.Woodcutter, false));
-            listObjects.Add(_upgradesBuildFilter.Get1(0).GetAmountUpgrades(BuildingTypes.Mine, false));
-
-            for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
-            {
-                var amountBuildingsInGame = MainGameSystem.XyBuildingsCom.GetAmountBuild(buildingType, false);
-                listObjects.Add(amountBuildingsInGame);
-                for (int indexXy = 0; indexXy < amountBuildingsInGame; indexXy++)
-                {
-                    listObjects.Add(MainGameSystem.XyBuildingsCom.GetXyBuildByIndex(buildingType, false, indexXy));
-                }
-            }
+            //ref var invResCom = ref _inventorFilter.Get1(0);
+            //listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Food, false));
+            //listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Wood, false));
+            //listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Ore, false));
+            //listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Iron, false));
+            //listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Gold, false));
 
 
 
+            //for (UnitTypes unitTypeType = (UnitTypes)1; (byte)unitTypeType < Enum.GetNames(typeof(UnitTypes)).Length; unitTypeType++)
+            //{
+            //    ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
 
-            var objects = new object[listObjects.Count];
-            for (int i = 0; i < objects.Length; i++) objects[i] = listObjects[i];
+            //    var amountUnitsInGame = xyUnitsCom.GetAmountUnitsInGame(unitTypeType, false);
+            //    listObjects.Add(amountUnitsInGame);
+            //    for (int indexXy = 0; indexXy < amountUnitsInGame; indexXy++)
+            //    {
+            //        listObjects.Add(xyUnitsCom.GetXyUnitInGame(unitTypeType, false, indexXy));
+            //    }
+            //}
 
-            PhotonView.RPC(SyncOtherRPCName, RpcTarget.Others, objects);
 
 
-            GameGeneralSystemManager.SyncCellVisionSystems.Run();
+            //listObjects.Add(_upgradesBuildFilter.Get1(0).GetAmountUpgrades(BuildingTypes.Farm, false));
+            //listObjects.Add(_upgradesBuildFilter.Get1(0).GetAmountUpgrades(BuildingTypes.Woodcutter, false));
+            //listObjects.Add(_upgradesBuildFilter.Get1(0).GetAmountUpgrades(BuildingTypes.Mine, false));
+
+            //for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
+            //{
+            //    var amountBuildingsInGame = MainGameSystem.XyBuildingsCom.GetAmountBuild(buildingType, false);
+            //    listObjects.Add(amountBuildingsInGame);
+            //    for (int indexXy = 0; indexXy < amountBuildingsInGame; indexXy++)
+            //    {
+            //        listObjects.Add(MainGameSystem.XyBuildingsCom.GetXyBuildByIndex(buildingType, false, indexXy));
+            //    }
+            //}
+
+
+
+
+            //var objects = new object[listObjects.Count];
+            //for (int i = 0; i < objects.Length; i++) objects[i] = listObjects[i];
+
+            //PhotonView.RPC(SyncOtherRPCName, RpcTarget.Others, objects);
+
+
+            //GameGeneralSystemManager.SyncCellVisionSystems.Run();
         }
 
         [PunRPC]
         private void SyncAllOther(object[] objects)
         {
-            _currentNumber = 0;
+            //_currentNumber = 0;
 
-            for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
-                for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
-                {
-                    var xy = new int[] { x, y };
+            //for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
+            //    for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
+            //    {
+            //        var xy = new int[] { x, y };
 
-                    Player owner;
+            //        Player owner;
 
-                    UnitTypes unitType = (UnitTypes)objects[_currentNumber++];
-                    bool isVisibleUnit = (bool)objects[_currentNumber++];
-                    int amountSteps = (int)objects[_currentNumber++];
-                    int amountHealth = (int)objects[_currentNumber++];
-                    ConditionUnitTypes conditionType = (ConditionUnitTypes)objects[_currentNumber++];
-                    int actorNumber = (int)objects[_currentNumber++];
-                    bool haveBot = (bool)objects[_currentNumber++];
+            //        UnitTypes unitType = (UnitTypes)objects[_currentNumber++];
+            //        bool isVisibleUnit = (bool)objects[_currentNumber++];
+            //        int amountSteps = (int)objects[_currentNumber++];
+            //        int amountHealth = (int)objects[_currentNumber++];
+            //        ConditionUnitTypes conditionType = (ConditionUnitTypes)objects[_currentNumber++];
+            //        int actorNumber = (int)objects[_currentNumber++];
+            //        bool haveBot = (bool)objects[_currentNumber++];
 
-                    if (unitType != UnitTypes.None)
-                    {
-                        if (actorNumber != -2)
-                        {
-                            owner = PhotonNetwork.PlayerList[actorNumber - 1];
-                            CellUnitsDataSystem.SetPlayerUnit(unitType, amountHealth, amountSteps, conditionType, owner, xy);
-                        }
-                        else
-                        {
-                            CellUnitsDataSystem.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, conditionType, xy);
-                        }
+            //        if (unitType != UnitTypes.None)
+            //        {
+            //            if (actorNumber != -2)
+            //            {
+            //                owner = PhotonNetwork.PlayerList[actorNumber - 1];
+            //                CellUnitsDataSystem.SetPlayerUnit(unitType, amountHealth, amountSteps, conditionType, owner, xy);
+            //            }
+            //            else
+            //            {
+            //                CellUnitsDataSystem.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, conditionType, xy);
+            //            }
 
-                        CellUnitsDataSystem.SetIsVisibleUnit(PhotonNetwork.IsMasterClient, isVisibleUnit, xy);
-                    }
+            //            CellUnitsDataSystem.SetIsVisibleUnit(PhotonNetwork.IsMasterClient, isVisibleUnit, xy);
+            //        }
 
-                    else
-                    {
-                        CellUnitsDataSystem.ResetUnit(xy);
-                    }
-
-
-
-                    BuildingTypes buildingType = (BuildingTypes)objects[_currentNumber++];
-                    actorNumber = (int)objects[_currentNumber++];
-                    haveBot = (bool)objects[_currentNumber++];
-
-                    if (buildingType != BuildingTypes.None)
-                    {
-                        if (actorNumber != -2)
-                        {
-                            owner = PhotonNetwork.PlayerList[actorNumber - 1];
-                            CellBuildDataSystem.SetPlayerBuilding(buildingType, owner, xy);
-                        }
-                        else
-                        {
-                            CellBuildDataSystem.SetBotBuilding(buildingType, xy);
-                        }
-                    }
-
-                    else
-                    {
-                        CellBuildDataSystem.ResetBuild(xy);
-                    }
+            //        else
+            //        {
+            //            CellUnitsDataSystem.ResetUnit(xy);
+            //        }
 
 
 
-                    int amountResourcesFertilizer = (int)objects[_currentNumber++];
-                    int amountResourcesAdultForest = (int)objects[_currentNumber++];
-                    int amountResourcesOre = (int)objects[_currentNumber++];
+            //        BuildingTypes buildingType = (BuildingTypes)objects[_currentNumber++];
+            //        actorNumber = (int)objects[_currentNumber++];
+            //        haveBot = (bool)objects[_currentNumber++];
 
-                    bool haveFertilizer = (bool)objects[_currentNumber++];
-                    bool haveYoungTree = (bool)objects[_currentNumber++];
-                    bool haveAdultForest = (bool)objects[_currentNumber++];
-                    bool haveHill = (bool)objects[_currentNumber++];
-                    bool haveMountain = (bool)objects[_currentNumber++];
+            //        if (buildingType != BuildingTypes.None)
+            //        {
+            //            if (actorNumber != -2)
+            //            {
+            //                owner = PhotonNetwork.PlayerList[actorNumber - 1];
+            //                CellBuildDataSystem.SetPlayerBuilding(buildingType, owner, xy);
+            //            }
+            //            else
+            //            {
+            //                CellBuildDataSystem.SetBotBuilding(buildingType, xy);
+            //            }
+            //        }
 
-                    CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.Fertilizer, haveFertilizer, amountResourcesFertilizer, xy);
-                    CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.YoungForest, haveYoungTree, default, xy);
-                    CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.AdultForest, haveAdultForest, amountResourcesAdultForest, xy);
-                    CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.Hill, haveHill, amountResourcesOre, xy);
-                    CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.Mountain, haveMountain, default, xy);
-
-
-
-                    bool haveFire = (bool)objects[_currentNumber++];
-
-                    CellFireDataSystem.HaveFireCom(xy).HaveFire = haveFire;
-                }
-
-
-
-            SaverComponent.StepModeType = (StepModeTypes)objects[_currentNumber++];
+            //        else
+            //        {
+            //            CellBuildDataSystem.ResetBuild(xy);
+            //        }
 
 
 
-            bool isStartedGame = (bool)objects[_currentNumber++];
-            _readyUIFilter.Get1(0).IsStartedGame = isStartedGame;
+            //        int amountResourcesFertilizer = (int)objects[_currentNumber++];
+            //        int amountResourcesAdultForest = (int)objects[_currentNumber++];
+            //        int amountResourcesOre = (int)objects[_currentNumber++];
+
+            //        bool haveFertilizer = (bool)objects[_currentNumber++];
+            //        bool haveYoungTree = (bool)objects[_currentNumber++];
+            //        bool haveAdultForest = (bool)objects[_currentNumber++];
+            //        bool haveHill = (bool)objects[_currentNumber++];
+            //        bool haveMountain = (bool)objects[_currentNumber++];
+
+            //        CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.Fertilizer, haveFertilizer, amountResourcesFertilizer, xy);
+            //        CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.YoungForest, haveYoungTree, default, xy);
+            //        CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.AdultForest, haveAdultForest, amountResourcesAdultForest, xy);
+            //        CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.Hill, haveHill, amountResourcesOre, xy);
+            //        CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.Mountain, haveMountain, default, xy);
 
 
 
-            bool isActivatedReadyButton = (bool)objects[_currentNumber++];
-            _readyUIFilter.Get1(0).SetIsReady(PhotonNetwork.IsMasterClient, isActivatedReadyButton);
+            //        bool haveFire = (bool)objects[_currentNumber++];
+
+            //        CellFireDataSystem.HaveFireCom(xy).HaveFire = haveFire;
+            //    }
 
 
 
-            bool isActivatedDoner = (bool)objects[_currentNumber++];
-            _donerUIFilter.Get1(0).SetDoned(PhotonNetwork.IsMasterClient, isActivatedDoner);
-
-
-            ref var invResCom = ref _inventorFilter.Get1(0);
-            var food = (int)objects[_currentNumber++];
-            var wood = (int)objects[_currentNumber++];
-            var ore = (int)objects[_currentNumber++];
-            var iron = (int)objects[_currentNumber++];
-            var gold = (int)objects[_currentNumber++];
-            invResCom.SetAmountResources(ResourceTypes.Food, PhotonNetwork.IsMasterClient, food);
-            invResCom.SetAmountResources(ResourceTypes.Wood, PhotonNetwork.IsMasterClient, wood);
-            invResCom.SetAmountResources(ResourceTypes.Ore, PhotonNetwork.IsMasterClient, ore);
-            invResCom.SetAmountResources(ResourceTypes.Iron, PhotonNetwork.IsMasterClient, iron);
-            invResCom.SetAmountResources(ResourceTypes.Gold, PhotonNetwork.IsMasterClient, gold);
+            //SaverComponent.StepModeType = (StepModeTypes)objects[_currentNumber++];
 
 
 
-            for (UnitTypes unitTypeType = (UnitTypes)1; (byte)unitTypeType < Enum.GetNames(typeof(UnitTypes)).Length; unitTypeType++)
-            {
-                var amountUnits = (int)objects[_currentNumber++];
-
-                ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
-
-                List<int[]> xyUnits = new List<int[]>();
-                for (int i = 0; i < amountUnits; i++)
-                {
-                    var xyUnit = (int[])objects[_currentNumber++];
-                    xyUnits.Add(xyUnit);
-                }
-                xyUnitsCom.SetAmountUnitInGame(unitTypeType, PhotonNetwork.IsMasterClient, xyUnits);
-            }
+            //bool isStartedGame = (bool)objects[_currentNumber++];
+            //_readyUIFilter.Get1(0).IsStartedGame = isStartedGame;
 
 
 
-            var amountFarmUpgrades = (int)objects[_currentNumber++];
-            var amountWoodcutterUpgrades = (int)objects[_currentNumber++];
-            var amountMineUpgrades = (int)objects[_currentNumber++];
-            _upgradesBuildFilter.Get1(0).SetAmountUpgrades(BuildingTypes.Farm, PhotonNetwork.IsMasterClient, amountFarmUpgrades);
-            _upgradesBuildFilter.Get1(0).SetAmountUpgrades(BuildingTypes.Woodcutter, PhotonNetwork.IsMasterClient, amountWoodcutterUpgrades);
-            _upgradesBuildFilter.Get1(0).SetAmountUpgrades(BuildingTypes.Mine, PhotonNetwork.IsMasterClient, amountMineUpgrades);
-
-            for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
-            {
-                var amountBuildings = (int)objects[_currentNumber++];
-
-                List<int[]> xyBuildings = new List<int[]>();
-                for (int i = 0; i < amountBuildings; i++)
-                {
-                    var xyBuilding = (int[])objects[_currentNumber++];
-                    xyBuildings.Add(xyBuilding);
-                }
-                MainGameSystem.XyBuildingsCom.SetXyBuildings(buildingType, PhotonNetwork.IsMasterClient, xyBuildings);
-            }
+            //bool isActivatedReadyButton = (bool)objects[_currentNumber++];
+            //_readyUIFilter.Get1(0).SetIsReady(PhotonNetwork.IsMasterClient, isActivatedReadyButton);
 
 
 
-            GameGeneralSystemManager.SyncCellVisionSystems.Run();
+            //bool isActivatedDoner = (bool)objects[_currentNumber++];
+            //_donerUIFilter.Get1(0).SetDoned(PhotonNetwork.IsMasterClient, isActivatedDoner);
+
+
+            //ref var invResCom = ref _inventorFilter.Get1(0);
+            //var food = (int)objects[_currentNumber++];
+            //var wood = (int)objects[_currentNumber++];
+            //var ore = (int)objects[_currentNumber++];
+            //var iron = (int)objects[_currentNumber++];
+            //var gold = (int)objects[_currentNumber++];
+            //invResCom.SetAmountResources(ResourceTypes.Food, PhotonNetwork.IsMasterClient, food);
+            //invResCom.SetAmountResources(ResourceTypes.Wood, PhotonNetwork.IsMasterClient, wood);
+            //invResCom.SetAmountResources(ResourceTypes.Ore, PhotonNetwork.IsMasterClient, ore);
+            //invResCom.SetAmountResources(ResourceTypes.Iron, PhotonNetwork.IsMasterClient, iron);
+            //invResCom.SetAmountResources(ResourceTypes.Gold, PhotonNetwork.IsMasterClient, gold);
+
+
+
+            //for (UnitTypes unitTypeType = (UnitTypes)1; (byte)unitTypeType < Enum.GetNames(typeof(UnitTypes)).Length; unitTypeType++)
+            //{
+            //    var amountUnits = (int)objects[_currentNumber++];
+
+            //    ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
+
+            //    List<int[]> xyUnits = new List<int[]>();
+            //    for (int i = 0; i < amountUnits; i++)
+            //    {
+            //        var xyUnit = (int[])objects[_currentNumber++];
+            //        xyUnits.Add(xyUnit);
+            //    }
+            //    xyUnitsCom.SetAmountUnitInGame(unitTypeType, PhotonNetwork.IsMasterClient, xyUnits);
+            //}
+
+
+
+            //var amountFarmUpgrades = (int)objects[_currentNumber++];
+            //var amountWoodcutterUpgrades = (int)objects[_currentNumber++];
+            //var amountMineUpgrades = (int)objects[_currentNumber++];
+            //_upgradesBuildFilter.Get1(0).SetAmountUpgrades(BuildingTypes.Farm, PhotonNetwork.IsMasterClient, amountFarmUpgrades);
+            //_upgradesBuildFilter.Get1(0).SetAmountUpgrades(BuildingTypes.Woodcutter, PhotonNetwork.IsMasterClient, amountWoodcutterUpgrades);
+            //_upgradesBuildFilter.Get1(0).SetAmountUpgrades(BuildingTypes.Mine, PhotonNetwork.IsMasterClient, amountMineUpgrades);
+
+            //for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
+            //{
+            //    var amountBuildings = (int)objects[_currentNumber++];
+
+            //    List<int[]> xyBuildings = new List<int[]>();
+            //    for (int i = 0; i < amountBuildings; i++)
+            //    {
+            //        var xyBuilding = (int[])objects[_currentNumber++];
+            //        xyBuildings.Add(xyBuilding);
+            //    }
+            //    MainGameSystem.XyBuildingsCom.SetXyBuildings(buildingType, PhotonNetwork.IsMasterClient, xyBuildings);
+            //}
+
+
+
+            //GameGeneralSystemManager.SyncCellVisionSystems.Run();
         }
 
         #endregion

@@ -17,6 +17,36 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
             _cellBuildBack_SR = parentGO.transform.Find("BackBuilding").GetComponent<SpriteRenderer>();
         }
 
+        internal void SetSpriteFront(BuildingTypes buildingType)
+        {
+            switch (buildingType)
+            {
+                case BuildingTypes.None:
+                    throw new Exception();
+
+                case BuildingTypes.City:
+                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.City;
+                    break;
+
+                case BuildingTypes.Farm:
+                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.Farm;
+                    break;
+
+                case BuildingTypes.Woodcutter:
+                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.Woodcutter;
+                    break;
+
+                case BuildingTypes.Mine:
+                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.Mine;
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+        }
+        internal void EnableFrontSR() => _cellBuildFront_SR.enabled = true;
+        internal void DisableFrontSR() => _cellBuildFront_SR.enabled = false;
+
         internal void SetBackColor(Color color) => _cellBuildBack_SR.color = color;
         internal void SetSpriteBack(BuildingTypes buildingType)
         {
@@ -45,34 +75,7 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
                     throw new Exception();
             }
         }
-
-        internal void SetSpriteFront(BuildingTypes buildingType)
-        {
-            switch (buildingType)
-            {
-                case BuildingTypes.None:
-                    throw new Exception();
-
-                case BuildingTypes.City:
-                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.City;
-                    break;
-
-                case BuildingTypes.Farm:
-                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.Farm;
-                    break;
-
-                case BuildingTypes.Woodcutter:
-                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.Woodcutter;
-                    break;
-
-                case BuildingTypes.Mine:
-                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.Mine;
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
-        internal void SetEnabledFrontSR(bool isEnabled) => _cellBuildFront_SR.enabled = isEnabled;
+        internal void EnableBackSR() => _cellBuildBack_SR.enabled = true;
+        internal void DisableBackSR() => _cellBuildBack_SR.enabled = false;
     }
 }

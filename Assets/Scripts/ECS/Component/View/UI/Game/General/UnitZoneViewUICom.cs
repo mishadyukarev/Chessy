@@ -42,12 +42,12 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 
             for (StatTypes statType = 0; statType < (StatTypes)Enum.GetNames(typeof(StatTypes)).Length; statType++)
             {
-                if(statType == StatTypes.Health)
+                if (statType == StatTypes.Health)
                 {
                     _stat_TextMP[statType] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("HpCurrentUnitText").GetComponent<TextMeshProUGUI>();
                 }
 
-                else if(statType == StatTypes.Damage)
+                else if (statType == StatTypes.Damage)
                 {
                     _stat_TextMP[statType] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("DamageCurrentUnitText").GetComponent<TextMeshProUGUI>();
                 }

@@ -4,20 +4,13 @@ using Assets.Scripts.ECS.Component.Game.Master;
 using Leopotam.Ecs;
 using System;
 
-internal sealed class GetterUnitMasterSystem : IEcsInitSystem, IEcsRunSystem
+internal sealed class GetterUnitMasterSystem : IEcsRunSystem
 {
-    private EcsWorld _currentGameWorld;
-    private EcsFilter<InfoMasCom> _infoFilter;
-    private EcsFilter<ForGettingUnitMasCom> _getterUnitFilter;
-    private EcsFilter<InventorUnitsComponent> _unitsInventorFilter;
+    private EcsFilter<InfoMasCom> _infoFilter = default;
+    private EcsFilter<ForGettingUnitMasCom> _getterUnitFilter = default;
+    private EcsFilter<InventorUnitsComponent> _unitsInventorFilter = default;
 
     internal UnitTypes UnitType => _getterUnitFilter.Get1(0).UnitTypeForGetting;
-
-    public void Init()
-    {
-        _currentGameWorld.NewEntity()
-            .Replace(new ForGettingUnitMasCom());
-    }
 
     public void Run()
     {
@@ -25,7 +18,7 @@ internal sealed class GetterUnitMasterSystem : IEcsInitSystem, IEcsRunSystem
         ref var unitInventorCom = ref _unitsInventorFilter.Get1(0);
 
         bool isGetted = false; //= _eGM.UnitInventorEnt_UnitInventorCom.AmountUnits(UnitType, Info.Sender.IsMasterClient) >= _amountForTakingUnit;
-        UnitTypes unitType = UnitTypes.None;
+        UnitTypes unitType = default;
         switch (UnitType)
         {
             case UnitTypes.None:

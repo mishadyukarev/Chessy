@@ -45,7 +45,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
                 .Replace(new CommonZoneComponent(new GameObject(NameConst.COMMON_ZONE)))
                 .Replace(new CameraComponent(camera, new Vector3(7, 4.8f, -2)))
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
-                .Replace(new SaverComponent(0.15f))
+                .Replace(new SaverComponent(StepModeTypes.ByQueue, 0.15f))
                 .Replace(new CanvasComponent(canvas))
                 .Replace(new ToggleZoneComponent(new GameObject()))
                 .Replace(new SoundCommonCom(audioSource))

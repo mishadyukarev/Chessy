@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.ECS.Manager.View.Menu;
 using Assets.Scripts.ECS.System.Common;
-using Assets.Scripts.ECS.Systems.UI.Game.General.UI;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
@@ -18,8 +17,8 @@ namespace Assets.Scripts
 
         private MenuSystemManager _menuSystemManager;
 
+        private EcsSystems _allGameSystems;
         private GameGeneralSystemManager _gameGeneralSystemManager;
-        private GameGeneralUISystemManager _gameGeneralUISystemManager;
         private GameMasterSystemManager _gameMasterSystemManager;
         private GameOtherSystemManager _gameOtherSystemManager;
 
@@ -29,7 +28,7 @@ namespace Assets.Scripts
             _commonWorld = new EcsWorld();
 
             _commonSystemManager = new CommonSystemManager(_commonWorld);
-            _commonSystemManager.Init();
+            _commonSystemManager.AllSystems.Init();
         }
 
         public void ToggleScene(SceneTypes sceneType)
@@ -44,14 +43,13 @@ namespace Assets.Scripts
                     {
                         _gameWorld.Destroy();
                         _gameGeneralSystemManager = default;
-                        _gameGeneralUISystemManager = default;
                         _gameMasterSystemManager = default;
                         _gameOtherSystemManager = default;
                     }
 
                     _menuWorld = new EcsWorld();
                     _menuSystemManager = new MenuSystemManager(_menuWorld);
-                    _menuSystemManager.Init();
+                    _menuSystemManager.AllSystems.Init();
                     break;
 
                 case SceneTypes.Game:
@@ -62,15 +60,11 @@ namespace Assets.Scripts
                     }
 
                     _gameWorld = new EcsWorld();
-                    _gameGeneralSystemManager = new GameGeneralSystemManager(_gameWorld);
-                    _gameGeneralUISystemManager = new GameGeneralUISystemManager(_gameWorld);
-                    _gameMasterSystemManager = new GameMasterSystemManager(_gameWorld);
-                    _gameOtherSystemManager = new GameOtherSystemManager(_gameWorld);
-                    _gameGeneralSystemManager.Init();
-                    _gameGeneralUISystemManager.Init();
-                    _gameMasterSystemManager.Init();
-                    _gameOtherSystemManager.Init();
-
+                    _allGameSystems = new EcsSystems(_gameWorld);
+                    _gameGeneralSystemManager = new GameGeneralSystemManager(_gameWorld, _allGameSystems);
+                    _gameMasterSystemManager = new GameMasterSystemManager(_gameWorld, _allGameSystems);
+                    _gameOtherSystemManager = new GameOtherSystemManager(_gameWorld, _allGameSystems);
+                    _allGameSystems.Init();
                     break;
 
                 default:
@@ -94,7 +88,6 @@ namespace Assets.Scripts
 
                 case SceneTypes.Game:
                     _gameGeneralSystemManager.RunUpdate();
-                    _gameGeneralUISystemManager.RunUpdate();
 
                     if (PhotonNetwork.IsMasterClient) _gameMasterSystemManager.RunUpdate();
                     else _gameOtherSystemManager.RunUpdate();

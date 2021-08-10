@@ -1,6 +1,8 @@
 ﻿
-public enum DirectTypes
+public enum DirectTypes : byte
 {
+    None,
+
     Right,
     Left,
     Up,

@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.ECS.System.Data.Game.General.Cell;
-using Assets.Scripts.ECS.System.View.Game.General.Cell;
+using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using Photon.Pun;
 using UnityEngine;
@@ -10,91 +9,99 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 {
     internal sealed class SyncCellUnitSupVisSystem : IEcsRunSystem
     {
+        private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent, CellUnitViewComponent> _cellUnitFilter = default;
+        private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
+        private EcsFilter<CellBlocksViewComponent> _cellBlocksFilter = default;
 
         public void Run()
         {
+            foreach (byte idx in _cellUnitFilter)
+            {
+                ref var cellUnitDataCom = ref _cellUnitFilter.Get1(idx);
+                ref var ownerCellUnitCom = ref _cellUnitFilter.Get2(idx);
+                ref var botOwnerCellUnitCom = ref _cellUnitFilter.Get3(idx);
+                ref var cellUnitViewCom = ref _cellUnitFilter.Get3(idx);
 
-            for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
-                for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
+                ref var cellBarsViewCom = ref _cellBarsFilter.Get1(idx);
+                ref var cellBlocksViewCom = ref _cellBlocksFilter.Get1(idx);
+
+
+                if (cellUnitDataCom.IsVisibleUnit(PhotonNetwork.IsMasterClient))
                 {
-                    int[] xy = new int[] { x, y };
-
-                    if (CellUnitsDataSystem.IsVisibleUnit(PhotonNetwork.IsMasterClient, xy))
+                    if (cellUnitDataCom.HaveUnit)
                     {
-                        if (CellUnitsDataSystem.HaveAnyUnit(xy))
+                        cellBarsViewCom.EnableSR(CellBarTypes.Hp);
+                        cellBarsViewCom.SetColor(CellBarTypes.Hp, Color.red);
+
+                        float xCordinate = (float)cellUnitDataCom.AmountHealth / cellUnitDataCom.MaxAmountHealth;
+                        cellBarsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
+
+
+                        if (cellUnitDataCom.HaveMaxAmountSteps)
                         {
-                            CellSupVisBarsViewSystem.ActiveVision(true, CellBarTypes.Hp, xy);
-                            CellSupVisBarsViewSystem.SetColor(CellBarTypes.Hp, Color.red, xy);
+                            cellBlocksViewCom.EnableBlockSR(CellBlockTypes.MaxSteps);
+                        }
+                        else
+                        {
+                            cellBlocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
+                        }
 
-                            float xCordinate = (float)CellUnitsDataSystem.AmountHealth(xy) / CellUnitsDataSystem.MaxAmountHealth(xy);
-                            CellSupVisBarsViewSystem.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1), xy);
+                        if (cellUnitDataCom.IsConditionType(ConditionUnitTypes.Protected))
+                        {
+                            cellBlocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
+                            cellBlocksViewCom.SetColor(CellBlockTypes.Condition, Color.yellow);
+                        }
 
-
-                            if (CellUnitsDataSystem.HaveMaxAmountSteps(xy))
-                            {
-                                CellBlocksViewSystem.EnableCellSupVisBlocksSR(true, CellBlockTypes.MaxSteps, xy);
-                            }
-                            else
-                            {
-                                CellBlocksViewSystem.EnableCellSupVisBlocksSR(false, CellBlockTypes.MaxSteps, xy);
-                            }
-
-                            if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Protected, xy))
-                            {
-                                CellBlocksViewSystem.EnableCellSupVisBlocksSR(true, CellBlockTypes.Condition, xy);
-                                CellBlocksViewSystem.SetCellSupVisBlocksColor(Color.yellow, CellBlockTypes.Condition, xy);
-                            }
-
-                            else if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Relaxed, xy))
-                            {
-                                CellBlocksViewSystem.EnableCellSupVisBlocksSR(true, CellBlockTypes.Condition, xy);
-                                CellBlocksViewSystem.SetCellSupVisBlocksColor(Color.green, CellBlockTypes.Condition, xy);
-                            }
-
-                            else
-                            {
-                                CellBlocksViewSystem.EnableCellSupVisBlocksSR(false, CellBlockTypes.Condition, xy);
-                            }
-
-                            if (CellUnitsDataSystem.HaveOwner(xy))
-                            {
-                                if (CellUnitsDataSystem.IsMasterClient(xy))
-                                {
-                                    CellSupVisBarsViewSystem.SetColor(CellBarTypes.Hp, Color.blue, xy);
-                                    CellBlocksViewSystem.SetCellSupVisBlocksColor(Color.blue, CellBlockTypes.MaxSteps, xy);
-                                }
-                                else
-                                {
-                                    CellSupVisBarsViewSystem.SetColor(CellBarTypes.Hp, Color.red, xy);
-                                    CellBlocksViewSystem.SetCellSupVisBlocksColor(Color.red, CellBlockTypes.MaxSteps, xy);
-                                }
-                            }
-
-                            else if (CellUnitsDataSystem.IsBot(xy))
-                            {
-                                CellSupVisBarsViewSystem.SetColor(CellBarTypes.Hp, Color.red, xy);
-                            }
+                        else if (cellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
+                        {
+                            cellBlocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
+                            cellBlocksViewCom.SetColor(CellBlockTypes.Condition, Color.green);
                         }
 
                         else
                         {
-                            CellSupVisBarsViewSystem.ActiveVision(false, CellBarTypes.Hp, xy);
+                            cellBlocksViewCom.DisableBlockSR(CellBlockTypes.Condition);
+                        }
 
-                            CellBlocksViewSystem.EnableCellSupVisBlocksSR(false, CellBlockTypes.Condition, xy);
-                            CellBlocksViewSystem.EnableCellSupVisBlocksSR(false, CellBlockTypes.MaxSteps, xy);
-                            CellSupVisBarsViewSystem.ActiveVision(false, CellBarTypes.Hp, xy);
+                        if (ownerCellUnitCom.HaveOwner)
+                        {
+                            if (ownerCellUnitCom.IsMasterClient)
+                            {
+                                cellBarsViewCom.SetColor(CellBarTypes.Hp, Color.blue);
+                                cellBlocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.blue);
+                            }
+                            else
+                            {
+                                cellBarsViewCom.SetColor(CellBarTypes.Hp, Color.red);
+                                cellBlocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.red);
+                            }
+                        }
+
+                        else if (botOwnerCellUnitCom.IsBot)
+                        {
+                            cellBarsViewCom.SetColor(CellBarTypes.Hp, Color.red);
                         }
                     }
 
                     else
                     {
-                        CellSupVisBarsViewSystem.ActiveVision(false, CellBarTypes.Hp, xy);
+                        cellBarsViewCom.DisableSR(CellBarTypes.Hp);
 
-                        CellBlocksViewSystem.EnableCellSupVisBlocksSR(false, CellBlockTypes.Condition, xy);
-                        CellBlocksViewSystem.EnableCellSupVisBlocksSR(false, CellBlockTypes.MaxSteps, xy);
-                        CellSupVisBarsViewSystem.ActiveVision(false, CellBarTypes.Hp, xy);
+                        cellBlocksViewCom.DisableBlockSR(CellBlockTypes.Condition);
+                        cellBlocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
+                        cellBarsViewCom.DisableSR(CellBarTypes.Hp);
                     }
                 }
+
+                else
+                {
+                    cellBarsViewCom.DisableSR(CellBarTypes.Hp);
+
+                    cellBlocksViewCom.DisableBlockSR(CellBlockTypes.Condition);
+                    cellBlocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
+                    cellBarsViewCom.DisableSR(CellBarTypes.Hp);
+                }
+            }
         }
     }
 }

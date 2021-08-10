@@ -52,8 +52,8 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
         internal int GetAmountResources(EnvironmentTypes environmentType) => _amountResourcesOnCell[environmentType];
         internal void SetAmountResources(EnvironmentTypes environmentType, int value) => _amountResourcesOnCell[environmentType] = value;
 
-        internal void AddAmountResources(EnvironmentTypes environmentType, int adding = 1) => SetAmountResources(environmentType, GetAmountResources(environmentType, xy) + adding, xy);
-        internal void TakeAmountResources(EnvironmentTypes environmentType, int taking = 1) => SetAmountResources(environmentType, GetAmountResources(environmentType, xy) - taking, xy);
+        internal void AddAmountResources(EnvironmentTypes environmentType, int adding = 1) => SetAmountResources(environmentType, GetAmountResources(environmentType) + adding);
+        internal void TakeAmountResources(EnvironmentTypes environmentType, int taking = 1) => SetAmountResources(environmentType, GetAmountResources(environmentType) - taking);
 
         internal bool HaveResources(EnvironmentTypes environmentType) => GetAmountResources(environmentType) > 0;
         internal int MaxAmountResources(EnvironmentTypes environmentTypes)

@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,9 +16,9 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
             _block_SRs.Add(CellBlockTypes.MaxSteps, cell.transform.Find("MaxSteps").GetComponent<SpriteRenderer>());
         }
 
-        private void ActiveBlockSR(CellBlockTypes cellBlockType, bool isActive) => _block_SRs[cellBlockType].enabled = isActive;
+        internal void EnableBlockSR(CellBlockTypes cellBlockType) => _block_SRs[cellBlockType].enabled = true;
+        internal void DisableBlockSR(CellBlockTypes cellBlockType) => _block_SRs[cellBlockType].enabled = false;
 
-        internal void EnableBlockSR(CellBlockTypes cellBlockType) => ActiveBlockSR(cellBlockType, true);
-        internal void DisableBlockSR(CellBlockTypes cellBlockType) => ActiveBlockSR(cellBlockType, false);
+        internal void SetColor(CellBlockTypes cellBlockType, Color color) => _block_SRs[cellBlockType].color = color;
     }
 }

@@ -29,9 +29,9 @@ public sealed class GameMasterSystemManager : SystemAbstManager
     internal static EcsSystems CircularAttackKingSystems { get; private set; }
 
 
-    internal GameMasterSystemManager(EcsWorld gameWorld) : base(gameWorld)
+    internal GameMasterSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld)
     {
-        UpdateSystems
+        InitSystems
             .Add(new MainMasterSystem());
 
 
@@ -101,36 +101,34 @@ public sealed class GameMasterSystemManager : SystemAbstManager
 
 
         UpdateMotion = new EcsSystems(gameWorld)
-            .Add(new ExtractionUpdatorMasterSystem());
+            .Add(new UpdatorMasterSystem());
 
 
         CircularAttackKingSystems = new EcsSystems(gameWorld)
             .Add(new CircularAttackKingSystem());
 
-    }
 
-    internal override void Init()
-    {
-        base.Init();
+        allGameSystems
+            .Add(InitSystems)
+            .Add(RunSystems)
 
-        BuilderSystems.Init();
-        DestroySystems.Init();
-        ShiftUnitSystems.Init();
-        AttackUnitSystems.Init();
-        ConditionUnitSystems.Init();
-        ReadySystems.Init();
-        DonerSystems.Init();
-        CreatorUnitSystems.Init();
-        GetterUnitSystems.Init();
-        MeltOreSystems.Init();
-        SetterUnitSystems.Init();
-        TruceSystems.Init();
-        UpgradeSystems.Init();
-        FireSystems.Init();
-        SeedingSystems.Init();
-
-        VisibilityUnitsSystems.Init();
-        UpdateMotion.Init();
-        CircularAttackKingSystems.Init();
+            .Add(BuilderSystems)
+            .Add(DestroySystems)
+            .Add(ShiftUnitSystems)
+            .Add(AttackUnitSystems)
+            .Add(ConditionUnitSystems)
+            .Add(ReadySystems)
+            .Add(DonerSystems)
+            .Add(CreatorUnitSystems)
+            .Add(GetterUnitSystems)
+            .Add(MeltOreSystems)
+            .Add(SetterUnitSystems)
+            .Add(TruceSystems)
+            .Add(UpgradeSystems)
+            .Add(FireSystems)
+            .Add(SeedingSystems)
+            .Add(VisibilityUnitsSystems)
+            .Add(UpdateMotion)
+            .Add(CircularAttackKingSystems);
     }
 }

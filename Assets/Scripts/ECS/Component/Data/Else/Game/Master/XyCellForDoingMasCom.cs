@@ -2,14 +2,14 @@
 {
     internal struct XyCellForDoingMasCom
     {
-        private int[] _xyCellForDoing;
+        private byte[] _xyCellForDoing;
 
-        internal int[] XyCellForDoing
+        internal byte[] XyCellForDoing
         {
-            get => (int[])_xyCellForDoing.Clone();
-            set => _xyCellForDoing = (int[])value.Clone();
+            get => (byte[])_xyCellForDoing.Clone();
+            set => _xyCellForDoing = (byte[])value.Clone();
         }
 
-        internal XyCellForDoingMasCom(int[] xy) => _xyCellForDoing = xy;
+        internal XyCellForDoingMasCom(byte[] xy) => _xyCellForDoing = xy;
     }
 }

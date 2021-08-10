@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
-using Assets.Scripts.Workers.Game.UI;
 using Leopotam.Ecs;
 
 internal sealed class ReadyMasterSystem : IEcsInitSystem, IEcsRunSystem

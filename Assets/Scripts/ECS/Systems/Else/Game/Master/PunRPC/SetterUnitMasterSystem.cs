@@ -1,114 +1,104 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Game.General.Systems.StartFill;
-using Assets.Scripts.ECS.System.Data.Game.General.Cell;
 using Leopotam.Ecs;
 using System;
 
-internal sealed class SetterUnitMasterSystem : IEcsInitSystem, IEcsRunSystem
+internal sealed class SetterUnitMasterSystem : IEcsRunSystem
 {
-    private EcsWorld _currentGameWorld;
-    private EcsFilter<InfoMasCom> _infoFilter;
-    private EcsFilter<ForSettingUnitMasCom, XyCellForDoingMasCom> _setterFilter;
-    private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
-    private EcsFilter<InventorUnitsComponent> _unitInventorFilter;
+    private EcsFilter<InfoMasCom> _infoFilter = default;
 
-    public void Init()
-    {
-        _currentGameWorld.NewEntity()
-            .Replace(new ForSettingUnitMasCom())
-            .Replace(new XyCellForDoingMasCom(new int[2]));
-    }
+    private EcsFilter<ForSettingUnitMasCom> _setterFilter = default;
+    private EcsFilter<InventorUnitsComponent> _unitInventorFilter = default;
+    private EcsFilter<IdxUnitsComponent> _idxUnitsFilter = default;
+    private EcsFilter<IdxUnitsInConditionCom> _idxUnitsInCondFilter = default;
+
+    private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+    private EcsFilter<CellDataComponent> _cellDataFilter = default;
 
     public void Run()
     {
         var sender = _infoFilter.Get1(0).FromInfo.Sender;
         var unitTypeForSetting = _setterFilter.Get1(0).UnitTypeForSetting;
-        var xyForSetting = _setterFilter.Get2(0).XyCellForDoing;
+        var idxCellForSetting = _setterFilter.Get1(0).IdxCellForSetting;
 
-        ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
-        ref var inventorUnitsCom = ref _unitInventorFilter.Get1(0);
+        ref var unitInventrorCom = ref _unitInventorFilter.Get1(0);
+        ref var unitsInGameCom = ref _idxUnitsFilter.Get1(0);
+
+        ref var cellEnvrDataCom = ref _cellEnvirDataFilter.Get1(idxCellForSetting);
+        ref var cellUnitDataCom = ref _cellUnitFilter.Get1(idxCellForSetting);
+        ref var ownerCellCom = ref _cellUnitFilter.Get2(idxCellForSetting);
 
 
-
-        if (!CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Mountain, xyForSetting) && !CellUnitsDataSystem.HaveAnyUnit(xyForSetting)
-            && MainGameSystem.XyStartCellsCom.IsStartedCell(sender.IsMasterClient, xyForSetting))
+        if (!cellEnvrDataCom.HaveEnvironment(EnvironmentTypes.Mountain)
+            && !cellUnitDataCom.HaveUnit
+            && _cellDataFilter.Get1(idxCellForSetting).IsStartedCell(sender.IsMasterClient))
         {
+            int newAmountHealth;
+            int newAmountSteps;
+
             switch (unitTypeForSetting)
             {
                 case UnitTypes.None:
                     throw new Exception();
 
-
                 case UnitTypes.King:
-                    MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-
-                    xyUnitsCom.AddAmountUnitInGame(unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-                    CellUnitsDataSystem.SetNewPlayerUnit(unitTypeForSetting, sender, xyForSetting);
-                    inventorUnitsCom.TakeUnitsInInventor(unitTypeForSetting, sender.IsMasterClient);
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_KING;
+                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_KING;
                     break;
-
 
                 case UnitTypes.Pawn:
-                    MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-
-                    xyUnitsCom.AddAmountUnitInGame(unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-                    CellUnitsDataSystem.SetNewPlayerUnit(unitTypeForSetting, sender, xyForSetting);
-                    inventorUnitsCom.TakeUnitsInInventor(unitTypeForSetting, sender.IsMasterClient);
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN;
+                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN;
                     break;
-
 
                 case UnitTypes.PawnSword:
-                    MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-
-                    xyUnitsCom.AddAmountUnitInGame(unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-                    CellUnitsDataSystem.SetNewPlayerUnit(unitTypeForSetting, sender, xyForSetting);
-                    inventorUnitsCom.TakeUnitsInInventor(unitTypeForSetting, sender.IsMasterClient);
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN_SWORD;
+                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN_SWORD;
                     break;
-
 
                 case UnitTypes.Rook:
-                    MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-
-                    xyUnitsCom.AddAmountUnitInGame(unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-                    CellUnitsDataSystem.SetNewPlayerUnit(unitTypeForSetting, sender, xyForSetting);
-                    inventorUnitsCom.TakeUnitsInInventor(unitTypeForSetting, sender.IsMasterClient);
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK;
+                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK;
                     break;
-
 
                 case UnitTypes.RookCrossbow:
-                    MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-
-                    CellUnitsDataSystem.SetNewPlayerUnit(unitTypeForSetting, sender, xyForSetting);
-                    inventorUnitsCom.TakeUnitsInInventor(unitTypeForSetting, sender.IsMasterClient);
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW;
+                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK_CROSSBOW;
                     break;
-
 
                 case UnitTypes.Bishop:
-                    MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-
-                    xyUnitsCom.AddAmountUnitInGame(unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-                    CellUnitsDataSystem.SetNewPlayerUnit(unitTypeForSetting, sender, xyForSetting);
-                    inventorUnitsCom.TakeUnitsInInventor(unitTypeForSetting, sender.IsMasterClient);
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP;
+                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
                     break;
 
-
                 case UnitTypes.BishopCrossbow:
-                    MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-
-                    xyUnitsCom.AddAmountUnitInGame(unitTypeForSetting, sender.IsMasterClient, xyForSetting);
-                    CellUnitsDataSystem.SetNewPlayerUnit(unitTypeForSetting, sender, xyForSetting);
-                    inventorUnitsCom.TakeUnitsInInventor(unitTypeForSetting, sender.IsMasterClient);
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW;
+                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW;
                     break;
 
                 default:
                     throw new Exception();
             }
 
+            cellUnitDataCom.UnitType = unitTypeForSetting;
+            cellUnitDataCom.AmountHealth = newAmountHealth;
+            cellUnitDataCom.AmountSteps = newAmountSteps;
+            cellUnitDataCom.ConditionType = default;
+            ownerCellCom.SetOwner(sender);
+
+
+            unitInventrorCom.TakeUnitsInInventor(unitTypeForSetting, sender.IsMasterClient);
+            unitsInGameCom.AddAmountUnitInGame(unitTypeForSetting, sender.IsMasterClient, idxCellForSetting);
+            _idxUnitsInCondFilter.Get1(0).AddUnitInCondition(ConditionUnitTypes.None, unitTypeForSetting, sender.IsMasterClient, idxCellForSetting);
+
+
             RPCGameSystem.SetUnitToGeneral(sender, true);
-            RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
         }
 
         else

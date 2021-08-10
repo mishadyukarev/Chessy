@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.ECS.Component.Game.General;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using System;
 using System.Collections.Generic;
 using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
@@ -20,9 +19,9 @@ namespace Assets.Scripts.Workers
             throw new Exception();
         }
 
-        internal static byte[] GetXyCell(this EcsFilter<XyCellComponent> xyCellFilter, int idx)
+        internal static byte[] GetXyCell(this EcsFilter<XyCellComponent> xyCellFilter, byte idx)
         {
-            for (int curIdx = 0; curIdx < xyCellFilter.GetEntitiesCount(); curIdx++)
+            for (byte curIdx = 0; curIdx < xyCellFilter.GetEntitiesCount(); curIdx++)
             {
                 if (curIdx == idx)
                 {
@@ -32,21 +31,6 @@ namespace Assets.Scripts.Workers
             throw new Exception();
         }
 
-        internal static void Clean(this int[] xy)
-        {
-            xy[X] = default;
-            xy[Y] = default;
-        }
-
-        internal static bool Compare(this int[] xyLeft, in int[] xyRight)
-        {
-            if (xyLeft[X] == xyRight[X]
-                && xyLeft[Y] == xyRight[Y])
-            {
-                return true;
-            }
-            else return false;
-        }
         internal static bool Compare(this byte[] xyLeft, in byte[] xyRight)
         {
             if (xyLeft[X] == xyRight[X]
@@ -57,15 +41,15 @@ namespace Assets.Scripts.Workers
             else return false;
         }
 
-        internal static List<int[]> Copy(this List<int[]> inList)
+        internal static List<byte[]> Copy(this List<byte[]> inList)
         {
             if (inList == default) throw new Exception();
 
-            var toList = new List<int[]>();
+            var toList = new List<byte[]>();
 
-            for (int i = 0; i < inList.Count; i++)
+            for (ushort i = 0; i < inList.Count; i++)
             {
-                var array = new int[XY_FOR_ARRAY];
+                var array = new byte[XY_FOR_ARRAY];
 
                 var inArray = inList[i];
 
@@ -77,13 +61,27 @@ namespace Assets.Scripts.Workers
 
             return toList;
         }
-        internal static void CopyListXYinTo(this List<int[]> inList, List<int[]> toList)
+        internal static List<byte> Copy(this List<byte> inList)
+        {
+            if (inList == default) throw new Exception();
+
+            var toList = new List<byte>();
+
+            for (var i = 0; i < inList.Count; i++)
+            {
+                toList.Add(inList[i]);
+            }
+
+            return toList;
+        }
+
+        internal static void CopyListXYinTo(this List<byte[]> inList, List<byte[]> toList)
         {
             toList.Clear();
 
-            for (int i = 0; i < inList.Count; i++)
+            for (ushort i = 0; i < inList.Count; i++)
             {
-                var array = new int[XY_FOR_ARRAY];
+                var array = new byte[XY_FOR_ARRAY];
 
                 var inArray = inList[i];
 
@@ -93,9 +91,9 @@ namespace Assets.Scripts.Workers
                 toList.Add(array);
             }
         }
-        internal static bool TryFindCell(this List<int[]> list, int[] xyCell)
+        internal static bool TryFindCell(this List<byte[]> list, byte[] xyCell)
         {
-            foreach (var xy in list)
+            foreach (byte[] xy in list)
             {
                 if (Compare(xy, xyCell))
                 {
@@ -103,12 +101,22 @@ namespace Assets.Scripts.Workers
                 }
             }
             return false;
-
-            //return (from xy in list where  select xy).Count() != 0;
         }
-        internal static bool TryFindCellInListAndRemove(this List<int[]> list, int[] xyTaking)
+        internal static bool TryFindCell(this List<byte> list, byte idxCell)
         {
-            for (int xyNumber = 0; xyNumber < list.Count; xyNumber++)
+            foreach (byte curIdx in list)
+            {
+                if (curIdx == idxCell)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        internal static bool TryFindCellInListAndRemove(this List<byte[]> list, byte[] xyTaking)
+        {
+            for (byte xyNumber = 0; xyNumber < list.Count; xyNumber++)
             {
                 if (list[xyNumber].Compare(xyTaking))
                 {
@@ -117,6 +125,18 @@ namespace Assets.Scripts.Workers
                 }
             }
 
+            return false;
+        }
+        internal static bool TryFindCellInListAndRemove(this List<byte> list, byte idxCellForTaking)
+        {
+            foreach (var idx in list)
+            {
+                if (idx == idxCellForTaking)
+                {
+                    list.RemoveAt(idx);
+                    return true;
+                }
+            }
             return false;
         }
     }
