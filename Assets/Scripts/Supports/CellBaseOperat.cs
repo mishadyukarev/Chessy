@@ -133,7 +133,7 @@ namespace Assets.Scripts.Workers
             {
                 if (idx == idxCellForTaking)
                 {
-                    list.RemoveAt(idx);
+                    list.Remove(idx);
                     return true;
                 }
             }

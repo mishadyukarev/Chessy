@@ -2,6 +2,6 @@
 {
     internal struct ForCircularAttackMasCom
     {
-
+        internal byte IdxUnitForCirculAttack;
     }
 }

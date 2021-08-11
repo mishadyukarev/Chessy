@@ -30,6 +30,24 @@ namespace Assets.Scripts.ECS.Systems.Game.Master
 
             _currentGameWorld.NewEntity()
                 .Replace(new ForBuildingMasCom());
+
+            _currentGameWorld.NewEntity()
+                .Replace(new ForSeedingMasCom());
+
+            _currentGameWorld.NewEntity()
+                .Replace(new ConditionMasCom());
+
+            _currentGameWorld.NewEntity()
+                .Replace(new ForCircularAttackMasCom());
+
+            _currentGameWorld.NewEntity()
+                .Replace(new ForCreatingUnitMasCom());
+
+            _currentGameWorld.NewEntity()
+                .Replace(new ForDestroyMasCom());
+
+            _currentGameWorld.NewEntity()
+                .Replace(new ForFireMasCom());
         }
     }
 }

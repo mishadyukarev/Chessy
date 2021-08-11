@@ -1,88 +1,103 @@
-﻿using Leopotam.Ecs;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Cell;
+using Leopotam.Ecs;
+using Photon.Pun;
+using System;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
-    internal sealed class FireMasterSystem : IEcsInitSystem, IEcsRunSystem
+    internal sealed class FireMasterSystem : IEcsRunSystem
     {
-        //private EcsWorld _currentGameWorld;
+        private EcsFilter<InfoMasCom> _infoFilter = default;
+        private EcsFilter<ForFireMasCom> _fireFilter = default;
 
-        //private EcsFilter<InfoMasCom> _infoFilter;
-        //private EcsFilter<FireMasCom, XyFromToComponent> _fireFilter;
+        private EcsFilter<XyCellComponent> _xyCellFilter = default;
+        private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+        private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
+        private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
-        public void Init()
-        {
-            //_currentGameWorld.NewEntity()
-            //    .Replace(new FireMasCom())
-            //    .Replace(new XyFromToComponent(new int[2], new int[2]));
-        }
 
         public void Run()
         {
-            //var sender = _infoFilter.Get1(0).FromInfo.Sender;
-            //var fromXy = _fireFilter.Get2(0).FromXy;
-            //var toXy = _fireFilter.Get2(0).ToXy;
+            var sender = _infoFilter.Get1(0).FromInfo.Sender;
+            var fromIdx = _fireFilter.Get1(0).FromIdx;
+            var toIdx = _fireFilter.Get1(0).ToIdx;
+
+            ref var fromCellUnitDataCom = ref _cellUnitFilter.Get1(fromIdx);
+            ref var fromOwnerCellUnitCom = ref _cellUnitFilter.Get2(fromIdx);
+
+            ref var toCellUnitDataCom = ref _cellUnitFilter.Get1(toIdx);
+            ref var toCellFireDataCom = ref _cellFireFilter.Get1(toIdx);
+            ref var toCellEnvDataCom = ref _cellEnvFilter.Get1(toIdx);
 
 
-            //if (CellUnitsDataSystem.IsMelee(fromXy))
-            //{
-            //    if (CellUnitsDataSystem.HaveMinAmountSteps(fromXy))
-            //    {
-            //        if (CellFireDataSystem.HaveFireCom(toXy).HaveFire)
-            //        {
-            //            CellFireDataSystem.HaveFireCom(toXy).Disable();
+            if (fromCellUnitDataCom.IsMelee)
+            {
+                if (fromCellUnitDataCom.HaveMinAmountSteps)
+                {
+                    if (toCellFireDataCom.HaveFire)
+                    {
+                        toCellFireDataCom.HaveFire = default;
 
-            //            CellUnitsDataSystem.TakeAmountSteps(toXy);
-            //        }
-            //        else if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, toXy))
-            //        {
-            //            if (CellUnitsDataSystem.HaveOwner(fromXy))
-            //            {
-            //                RPCGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
+                        toCellUnitDataCom.TakeAmountSteps();
+                    }
+                    else if (toCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                    {
+                        if (fromOwnerCellUnitCom.HaveOwner)
+                        {
+                            //RPCGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
-            //                CellFireDataSystem.HaveFireCom(toXy).Enable();
-            //                CellUnitsDataSystem.TakeAmountSteps(toXy);
-            //            }
+                            toCellFireDataCom.HaveFire = true;
+                            toCellUnitDataCom.TakeAmountSteps();
+                        }
 
-            //        }
-            //        else
-            //        {
-            //            throw new Exception();
-            //        }
-            //    }
+                    }
+                    else
+                    {
+                        throw new Exception();
+                    }
+                }
 
-            //    else
-            //    {
-            //        RPCGameSystem.MistakeStepsUnitToGeneral(sender);
-            //        RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-            //    }
-            //}
+                else
+                {
+                    RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                    RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                }
+            }
 
-            //else
-            //{
-            //    if (CellUnitsDataSystem.HaveMaxAmountSteps(fromXy))
-            //    {
-            //        if (!CellFireDataSystem.HaveFireCom(toXy).HaveFire)
-            //        {
-            //            foreach (var xy1 in CellSpaceSupport.TryGetXyAround(fromXy))
-            //            {
-            //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy1))
-            //                {
-            //                    if (xy1.Compare(toXy))
-            //                    {
-            //                        CellUnitsDataSystem.ResetAmountSteps(fromXy);
-            //                        CellFireDataSystem.HaveFireCom(toXy).Enable();
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
+            else
+            {
+                if (fromCellUnitDataCom.HaveMaxAmountSteps)
+                {
+                    if (!toCellFireDataCom.HaveFire)
+                    {
+                        foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(fromIdx)))
+                        {
+                            var curIdx = _xyCellFilter.GetIndexCell(xy1);
 
-            //    else
-            //    {
-            //        RPCGameSystem.MistakeStepsUnitToGeneral(sender);
-            //        RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-            //    }
-            //}
+                            ref var curCellEnvDataCom = ref _cellEnvFilter.Get1(curIdx);
+
+                            if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                            {
+                                if (curIdx == toIdx)
+                                {
+                                    fromCellUnitDataCom.ResetAmountSteps();
+                                    toCellFireDataCom.HaveFire = true;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                else
+                {
+                    RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                    RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                }
+            }
         }
     }
 }

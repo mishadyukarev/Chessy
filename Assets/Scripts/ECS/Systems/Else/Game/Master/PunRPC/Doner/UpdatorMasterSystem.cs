@@ -26,7 +26,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
     private EcsFilter<IdxUnitsComponent> _idxUnitsFilter = default;
     private EcsFilter<IdxUnitsInConditionCom> _idxUnitsInCondFilter = default;
-    private EcsFilter<IdxBuildingsComponent> _idxBuildsFilter = default;
+    private EcsFilter<BuildsInGameComponent> _idxBuildsFilter = default;
 
     public void Run()
     {

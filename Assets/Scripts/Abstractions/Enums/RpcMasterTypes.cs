@@ -9,7 +9,7 @@
     Destroy,
     Shift,
     Attack,
-    ProtectRelax,
+    ConditionUnit,
     Mistake,
     CreateUnit,
     MeltOre,

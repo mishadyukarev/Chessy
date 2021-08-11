@@ -22,7 +22,7 @@ internal sealed class BuilderMasterSystem : IEcsRunSystem
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
     private EcsFilter<InventorResourcesComponent> _amountResFilt = default;
-    private EcsFilter<IdxBuildingsComponent> _idxBuildFilter = default;
+    private EcsFilter<BuildsInGameComponent> _idxBuildFilter = default;
 
     public void Run()
     {

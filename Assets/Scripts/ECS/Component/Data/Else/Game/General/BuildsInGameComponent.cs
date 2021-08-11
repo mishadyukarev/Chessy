@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Component
 {
-    internal struct IdxBuildingsComponent
+    internal struct BuildsInGameComponent
     {
         private Dictionary<BuildingTypes, Dictionary<bool, List<byte>>> _buildingsInGameDict;
 
-        internal IdxBuildingsComponent(Dictionary<BuildingTypes, Dictionary<bool, List<byte>>> dict)
+        internal BuildsInGameComponent(Dictionary<BuildingTypes, Dictionary<bool, List<byte>>> dict)
         {
             _buildingsInGameDict = dict;
 

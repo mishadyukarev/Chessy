@@ -1,127 +1,123 @@
-﻿using Leopotam.Ecs;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Game.Master;
+using Leopotam.Ecs;
+using System;
 
-internal sealed class ConditionMasterSystem : IEcsInitSystem, IEcsRunSystem
+internal sealed class ConditionMasterSystem : IEcsRunSystem
 {
-    //private EcsWorld _currentGameWorld;
-    //private EcsFilter<InfoMasCom> _infoFilter;
-    //private EcsFilter<ConditionMasCom, XyCellForDoingMasCom> _conditionFilter;
+    private EcsFilter<InfoMasCom> _infoFilter;
+    private EcsFilter<ConditionMasCom> _conditionFilter;
 
-    //private Player Sender => _infoFilter.Get1(0).FromInfo.Sender;
-    //private ConditionUnitTypes NeededConditionUnitType => _conditionFilter.Get1(0).NeededConditionUnitType;
-    //private int[] XyCellForCondition => _conditionFilter.Get2(0).XyCellForDoing;
+    private EcsFilter<IdxUnitsInConditionCom> _idxUnitsInCondFilter = default;
 
-
-    public void Init()
-    {
-        //_currentGameWorld.NewEntity()
-        //    .Replace(new ConditionMasCom())
-        //    .Replace(new XyCellForDoingMasCom(new int[2]));
-    }
+    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
 
     public void Run()
     {
-        //var unitType = CellUnitsDataSystem.UnitType(XyCellForCondition);
-        //var isMasterClient = CellUnitsDataSystem.IsMasterClient(XyCellForCondition);
+        var neededCondType = _conditionFilter.Get1(0).NeededConditionUnitType;
+        var idxForCondit = _conditionFilter.Get1(0).IdxForCondition;
+        ref var idxUnitsInCondCom = ref _idxUnitsInCondFilter.Get1(0);
 
-        //switch (NeededConditionUnitType)
-        //{
-        //    case ConditionUnitTypes.None:
-        //        if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Protected, XyCellForCondition))
-        //        {
-        //            MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Protected, unitType, isMasterClient, XyCellForCondition);
-        //        }
-        //        else if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Relaxed, XyCellForCondition))
-        //        {
-        //            MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Relaxed, unitType, isMasterClient, XyCellForCondition);
-        //        }
-
-        //        MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.None, unitType, isMasterClient, XyCellForCondition);
-        //        CellUnitsDataSystem.ResetConditionType(XyCellForCondition);
-        //        break;
-
-        //    case ConditionUnitTypes.Protected:
-        //        if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Protected, XyCellForCondition))
-        //        {
-        //            RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.ClickToTable);
-
-        //            CellUnitsDataSystem.ResetConditionType(XyCellForCondition);
-        //            MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(NeededConditionUnitType, unitType, isMasterClient, XyCellForCondition);
-        //        }
-
-        //        else if (CellUnitsDataSystem.HaveMaxAmountSteps(XyCellForCondition))
-        //        {
-        //            if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Relaxed, XyCellForCondition))
-        //            {
-        //                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.ClickToTable);
-
-        //                MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Relaxed, unitType, isMasterClient, XyCellForCondition);
-        //                MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.Protected, unitType, isMasterClient, XyCellForCondition);
-
-        //                CellUnitsDataSystem.SetConditionType(NeededConditionUnitType, XyCellForCondition);
-
-        //                CellUnitsDataSystem.ResetAmountSteps(XyCellForCondition);
-        //            }
-        //            else
-        //            {
-        //                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.ClickToTable);
-
-        //                CellUnitsDataSystem.SetConditionType(NeededConditionUnitType, XyCellForCondition);
-        //                MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.None, unitType, isMasterClient, XyCellForCondition);
-        //                MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(NeededConditionUnitType, unitType, isMasterClient, XyCellForCondition);
-
-        //                CellUnitsDataSystem.ResetAmountSteps(XyCellForCondition);
-        //            }
-        //        }
-
-        //        else
-        //        {
-        //            RPCGameSystem.MistakeStepsUnitToGeneral(Sender);
-        //            RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
-        //        }
-        //        break;
+        ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxForCondit);
+        ref var curOwnerCellUnitDataCom = ref _cellUnitFilter.Get2(idxForCondit);
 
 
-        //    case ConditionUnitTypes.Relaxed:
-        //        if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Relaxed, XyCellForCondition))
-        //        {
-        //            RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.ClickToTable);
-        //            CellUnitsDataSystem.ResetConditionType(XyCellForCondition);
+        switch (neededCondType)
+        {
+            case ConditionUnitTypes.None:
+                if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Protected))
+                {
+                    idxUnitsInCondCom.RemoveUnitInCondition(ConditionUnitTypes.Protected, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
+                }
+                else if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
+                {
+                    idxUnitsInCondCom.RemoveUnitInCondition(ConditionUnitTypes.Relaxed, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
+                }
 
-        //            MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Relaxed, unitType, isMasterClient, XyCellForCondition);
-        //        }
+                idxUnitsInCondCom.AddUnitInCondition(ConditionUnitTypes.None, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
+                curCellUnitDataCom.ResetConditionType();
+                break;
 
-        //        else if (CellUnitsDataSystem.HaveMaxAmountSteps(XyCellForCondition))
-        //        {
-        //            if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Protected, XyCellForCondition))
-        //            {
-        //                MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.Protected, unitType, isMasterClient, XyCellForCondition);
-        //                MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(ConditionUnitTypes.Relaxed, unitType, isMasterClient, XyCellForCondition);
+            case ConditionUnitTypes.Protected:
+                if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Protected))
+                {
+                    //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-        //                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.ClickToTable);
-        //                CellUnitsDataSystem.SetConditionType(NeededConditionUnitType, XyCellForCondition);
-        //                CellUnitsDataSystem.ResetAmountSteps(XyCellForCondition);
-        //            }
-        //            else
-        //            {
-        //                MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(ConditionUnitTypes.None, unitType, isMasterClient, XyCellForCondition);
-        //                MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(NeededConditionUnitType, unitType, isMasterClient, XyCellForCondition);
+                    curCellUnitDataCom.ResetConditionType();
+                    idxUnitsInCondCom.RemoveUnitInCondition(neededCondType, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
+                }
 
-        //                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.ClickToTable);
-        //                CellUnitsDataSystem.SetConditionType(NeededConditionUnitType, XyCellForCondition);
-        //                CellUnitsDataSystem.ResetAmountSteps(XyCellForCondition);
-        //            }
-        //        }
+                else if (curCellUnitDataCom.HaveMaxAmountSteps)
+                {
+                    if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
+                    {
+                        //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-        //        else
-        //        {
-        //            RPCGameSystem.MistakeStepsUnitToGeneral(Sender);
-        //            RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
-        //        }
-        //        break;
+                        idxUnitsInCondCom.ReplaceCondition(ConditionUnitTypes.Relaxed, ConditionUnitTypes.Protected, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
+
+                        curCellUnitDataCom.ConditionType = neededCondType;
+
+                        curCellUnitDataCom.ResetAmountSteps();
+                    }
+                    else
+                    {
+                        //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+
+                        curCellUnitDataCom.ConditionType = neededCondType;
+                        idxUnitsInCondCom.ReplaceCondition(ConditionUnitTypes.None, neededCondType, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
+
+                        curCellUnitDataCom.ResetAmountSteps();
+                    }
+                }
+
+                else
+                {
+                    //RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                    //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                }
+                break;
 
 
-        //    default:
-        //        throw new Exception();
-        //}
+            case ConditionUnitTypes.Relaxed:
+                if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
+                {
+                    //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                    curCellUnitDataCom.ResetConditionType();
+
+                    idxUnitsInCondCom.RemoveUnitInCondition(ConditionUnitTypes.Relaxed, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
+                }
+
+                else if (curCellUnitDataCom.HaveMaxAmountSteps)
+                {
+                    if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Protected))
+                    {
+                        idxUnitsInCondCom.ReplaceCondition(ConditionUnitTypes.Protected, ConditionUnitTypes.Relaxed, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
+
+                        //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                        curCellUnitDataCom.ConditionType = neededCondType;
+                        curCellUnitDataCom.ResetAmountSteps();
+                    }
+                    else
+                    {
+                        idxUnitsInCondCom.ReplaceCondition(ConditionUnitTypes.None, neededCondType, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
+
+                        //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                        curCellUnitDataCom.ConditionType = neededCondType;
+                        curCellUnitDataCom.ResetAmountSteps();
+                    }
+                }
+
+                else
+                {
+                    //RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                    //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                }
+                break;
+
+
+            default:
+                throw new Exception();
+        }
     }
 }

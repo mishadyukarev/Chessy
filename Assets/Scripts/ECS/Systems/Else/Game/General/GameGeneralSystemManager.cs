@@ -42,7 +42,7 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(new ConditionAbilitiesUISystem())
             .Add(new StatsUISystem())
             .Add(new TheEndGameUISystem())
-            .Add(new SyncBuildRighUISystem())
+            .Add(new BuildRighUISystem())
             .Add(new SyncEconomyUpUISystem())
             .Add(new LeftBuildingUISystem())
             .Add(new UpdatedUISystem())

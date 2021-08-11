@@ -1,101 +1,69 @@
-﻿using Leopotam.Ecs;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Game.General.Components;
+using Leopotam.Ecs;
+using System;
+using UnityEngine;
 
 internal sealed class ConditionAbilitiesUISystem : IEcsRunSystem
 {
-    //private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
-    //private EcsFilter<SelectorComponent> _selectorFilter = default;
-    //private int[] XySelectedCell => _selectorFilter.Get1(0).XySelectedCell;
+    private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
+    private EcsFilter<SelectorComponent> _selectorFilter = default;
+
+    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
 
     public void Run()
     {
+        var idxSelectedCell = _selectorFilter.Get1(0).IdxSelectedCell;
+        ref var unitZoneUICom = ref _unitZoneUIFilter.Get1(0);
 
-        //if (CellUnitsDataSystem.HaveAnyUnit(XySelectedCell))
-        //{
-        //    if (CellUnitsDataSystem.HaveOwner(XySelectedCell))
-        //    {
-        //        if (CellUnitsDataSystem.IsMine(XySelectedCell))
-        //        {
-        //            switch (CellUnitsDataSystem.UnitType(XySelectedCell))
-        //            {
-        //                case UnitTypes.None:
-        //                    ActiveStandartAbilities(false);
-        //                    break;
+        ref var selCellUnitDataCom = ref _cellUnitFilter.Get1(idxSelectedCell);
+        ref var selOwnerCellUnitCom = ref _cellUnitFilter.Get2(idxSelectedCell);
+        ref var selBotOwnerCellUnitCom = ref _cellUnitFilter.Get3(idxSelectedCell);
 
-        //                case UnitTypes.King:
-        //                    ActiveStandartAbilities(true);
-        //                    break;
 
-        //                case UnitTypes.Pawn:
-        //                    ActiveStandartAbilities(true);
-        //                    break;
+        if (selCellUnitDataCom.HaveUnit)
+        {
+            if (selOwnerCellUnitCom.HaveOwner)
+            {
+                if (selOwnerCellUnitCom.IsMine)
+                {
+                    unitZoneUICom.SetActiveUnitZone(UnitUIZoneTypes.Condition, true);
 
-        //                case UnitTypes.PawnSword:
-        //                    ActiveStandartAbilities(true);
-        //                    break;
+                    if (selCellUnitDataCom.IsConditionType(ConditionUnitTypes.Protected))
+                    {
+                        unitZoneUICom.SetColorToConditionButton(ConditionUnitTypes.Protected, Color.yellow);
+                    }
 
-        //                case UnitTypes.Rook:
-        //                    ActiveStandartAbilities(true);
-        //                    break;
+                    else
+                    {
+                        unitZoneUICom.SetColorToConditionButton(ConditionUnitTypes.Protected, Color.white);
+                    }
 
-        //                case UnitTypes.RookCrossbow:
-        //                    ActiveStandartAbilities(true);
-        //                    break;
+                    if (selCellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
+                    {
+                        unitZoneUICom.SetColorToConditionButton(ConditionUnitTypes.Relaxed, Color.green);
+                    }
+                    else
+                    {
+                        unitZoneUICom.SetColorToConditionButton(ConditionUnitTypes.Relaxed, Color.white);
+                    }
+                }
 
-        //                case UnitTypes.Bishop:
-        //                    ActiveStandartAbilities(true);
-        //                    break;
+                else
+                {
+                    unitZoneUICom.SetActiveUnitZone(UnitUIZoneTypes.Condition, false);
+                }
+            }
 
-        //                case UnitTypes.BishopCrossbow:
-        //                    ActiveStandartAbilities(true);
-        //                    break;
-
-        //                default:
-        //                    break;
-        //            }
-        //        }
-
-        //        else
-        //        {
-        //            ActiveStandartAbilities(false);
-        //        }
-        //    }
-
-        //    else if (CellUnitsDataSystem.IsBot(XySelectedCell))
-        //    {
-        //        ActiveStandartAbilities(false);
-        //    }
-
-        //}
-        //else
-        //{
-        //    ActiveStandartAbilities(false);
-        //}
-
-        //void ActiveStandartAbilities(bool isActive)
-        //{
-        //    _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Condition, isActive);
-
-        //    if (isActive)
-        //    {
-        //        if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Protected, XySelectedCell))
-        //        {
-        //            _unitZoneUIFilter.Get1(0).SetColorToConditionButton(ConditionUnitTypes.Protected, Color.yellow);
-        //        }
-
-        //        else
-        //        {
-        //            _unitZoneUIFilter.Get1(0).SetColorToConditionButton(ConditionUnitTypes.Protected, Color.white);
-        //        }
-
-        //        if (CellUnitsDataSystem.IsConditionType(ConditionUnitTypes.Relaxed, XySelectedCell))
-        //        {
-        //            _unitZoneUIFilter.Get1(0).SetColorToConditionButton(ConditionUnitTypes.Relaxed, Color.green);
-        //        }
-        //        else
-        //        {
-        //            _unitZoneUIFilter.Get1(0).SetColorToConditionButton(ConditionUnitTypes.Relaxed, Color.white);
-        //        }
-        //    }
-        //}
+            else if (selBotOwnerCellUnitCom.IsBot)
+            {
+                unitZoneUICom.SetActiveUnitZone(UnitUIZoneTypes.Condition, false);
+            }
+        }
+        else
+        {
+            unitZoneUICom.SetActiveUnitZone(UnitUIZoneTypes.Condition, false);
+        }
     }
 }

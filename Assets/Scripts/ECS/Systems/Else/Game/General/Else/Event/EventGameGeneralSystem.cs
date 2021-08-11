@@ -26,10 +26,6 @@ namespace Assets.Scripts
 
         public void Init()
         {
-            _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.First, delegate { Build(BuildingTypes.Farm); });
-            _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Second, delegate { Build(BuildingTypes.Mine); });
-            _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Build(BuildingTypes.City); });
-
             //_readyFilter.Get2(0).AddListenerToReadyButton(Ready);
 
             _takerUIFilter.Get1(0).AddListener(UnitTypes.King, delegate { GetUnit(UnitTypes.King); });
@@ -58,7 +54,8 @@ namespace Assets.Scripts
         }
         private void Done()
         {
-            _selectorFilter.Get1(0).CellClickType = CellClickTypes.Start;
+            //_selectorFilter.Get1(0).ResetSelectedCell();
+            //_selectorFilter.Get1(0).CellClickType = CellClickTypes.Start;
 
             switch (SaverComponent.StepModeType)
             {
@@ -109,14 +106,6 @@ namespace Assets.Scripts
                     RPCGameSystem.ProtectRelaxUnitToMaster(ConditionUnitTypes.Relaxed, IdxSelectedCell);
                 }
             }
-        }
-        private void Build(BuildingTypes buildingType)
-        {
-            if (!IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.BuildToMaster(IdxSelectedCell, buildingType);
-        }
-        private void Destroy()
-        {
-            if (!IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.DestroyBuildingToMaster(IdxSelectedCell);
         }
     }
 }

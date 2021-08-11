@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Leopotam.Ecs;
@@ -15,7 +16,6 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
     private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvrDataFilter = default;
-
     public void Run()
     {
         var fromInfo = _infoFilter.Get1(0).FromInfo;
@@ -36,7 +36,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
         ref var toCellEnvDataCom = ref _cellEnvrDataFilter.Get1(toIdx);
 
 
-        if (fromOwnerCellUnitCom.IsHim(fromInfo.Sender) && fromCellUnitDataCom.HaveMinAmountSteps)
+        if (fromOwnerCellUnitCom.IsHim(fromInfo.Sender) && fromCellUnitDataCom.HaveMinAmountSteps && !toCellUnitDataCom.HaveUnit)
         {
             var neededAmountStepsForShift = toCellEnvDataCom.NeedAmountSteps;
 

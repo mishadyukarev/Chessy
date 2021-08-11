@@ -31,7 +31,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                     if (cellUnitDataCom.HaveUnit)
                     {
                         cellBarsViewCom.EnableSR(CellBarTypes.Hp);
-                        cellBarsViewCom.SetColor(CellBarTypes.Hp, Color.red);
+                        cellBarsViewCom.SetColorHp(Color.red);
 
                         float xCordinate = (float)cellUnitDataCom.AmountHealth / cellUnitDataCom.MaxAmountHealth;
                         cellBarsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
@@ -67,19 +67,19 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                         {
                             if (ownerCellUnitCom.IsMasterClient)
                             {
-                                cellBarsViewCom.SetColor(CellBarTypes.Hp, Color.blue);
+                                cellBarsViewCom.SetColorHp(Color.blue);
                                 cellBlocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.blue);
                             }
                             else
                             {
-                                cellBarsViewCom.SetColor(CellBarTypes.Hp, Color.red);
+                                cellBarsViewCom.SetColorHp(Color.red);
                                 cellBlocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.red);
                             }
                         }
 
                         else if (botOwnerCellUnitCom.IsBot)
                         {
-                            cellBarsViewCom.SetColor(CellBarTypes.Hp, Color.red);
+                            cellBarsViewCom.SetColorHp(Color.red);
                         }
                     }
 

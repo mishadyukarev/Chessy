@@ -256,7 +256,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new XyStartCellsComponent(dict))
                 .Replace(new IdxUnitsComponent(new Dictionary<UnitTypes, Dictionary<bool, List<byte>>>()))
                 .Replace(new IdxUnitsInConditionCom(new Dictionary<ConditionUnitTypes, Dictionary<UnitTypes, Dictionary<bool, List<byte>>>>()))
-                .Replace(new IdxBuildingsComponent(new Dictionary<BuildingTypes, Dictionary<bool, List<byte>>>()))
+                .Replace(new BuildsInGameComponent(new Dictionary<BuildingTypes, Dictionary<bool, List<byte>>>()))
 
                 .Replace(new UpgradesBuildingsComponent(new Dictionary<BuildingTypes, Dictionary<bool, int>>()))
                 .Replace(new InventorUnitsComponent(new Dictionary<UnitTypes, Dictionary<bool, int>>()))

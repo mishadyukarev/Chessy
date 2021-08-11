@@ -113,6 +113,7 @@ internal struct CellUnitDataComponent
 
     internal UnitTypes UnitType { get; set; }
     internal bool HaveUnit => UnitType != UnitTypes.None;
+    internal void ResetUnitType() => UnitType = default;
     internal bool IsUnitType(UnitTypes unitType) => UnitType == unitType;
     internal bool IsUnitType(UnitTypes[] unitTypes)
     {

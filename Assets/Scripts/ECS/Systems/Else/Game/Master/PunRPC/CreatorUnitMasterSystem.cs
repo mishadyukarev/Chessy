@@ -5,7 +5,7 @@ using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Leopotam.Ecs;
 
-internal sealed class CreatorUnitMasterSystem : IEcsInitSystem, IEcsRunSystem
+internal sealed class CreatorUnitMasterSystem : IEcsRunSystem
 {
     private EcsWorld _gameWorld;
     private EcsFilter<InfoMasCom> _mastInfoFilter = default;
@@ -13,12 +13,6 @@ internal sealed class CreatorUnitMasterSystem : IEcsInitSystem, IEcsRunSystem
     private EcsFilter<InventorUnitsComponent, InventorResourcesComponent> _inventorFilter = default;
 
     private UnitTypes UnitType => _creatorUnitFilter.Get1(0).UnitTypeForCreating;
-
-    public void Init()
-    {
-        _gameWorld.NewEntity()
-            .Replace(new ForCreatingUnitMasCom());
-    }
 
     public void Run()
     {

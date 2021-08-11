@@ -53,8 +53,6 @@ internal sealed class SelectorSystem : IEcsRunSystem
                 {
                     if (selectorCom.CellClickType == CellClickTypes.Start)
                     {
-
-
                         if (selectorCom.IdxPreviousCell != selectorCom.IdxSelectedCell)
                         {
                             selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
@@ -230,7 +228,10 @@ internal sealed class SelectorSystem : IEcsRunSystem
                         {
                             if (selectorCom.CanShiftUnit)
                             {
-                                RPCGameSystem.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
+                                if (availCellsCom.TryFindCell(AvailableCellTypes.Shift, selectorCom.IdxSelectedCell))
+                                {
+                                    RPCGameSystem.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
+                                }
 
                                 availCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);
                                 availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);

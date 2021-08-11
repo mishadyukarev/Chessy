@@ -11,7 +11,7 @@ internal sealed class SyncEconomyUpUISystem : IEcsRunSystem
 {
     private EcsFilter<EconomyViewUICom> _economyUIFilter = default;
 
-    private EcsFilter<IdxBuildingsComponent> _idxBuildsFilter = default;
+    private EcsFilter<BuildsInGameComponent> _idxBuildsFilter = default;
     private EcsFilter<IdxUnitsComponent> _idxUnitsFilter = default;
     private EcsFilter<IdxUnitsInConditionCom> _idxUnitsInCondFilter = default;
 
