@@ -43,8 +43,8 @@ internal sealed class BuilderMasterSystem : IEcsRunSystem
 
         if (curCellBuildDataCom.HaveBuild)
         {
-            //RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
-            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+            RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
+            RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
         }
 
         else
@@ -72,7 +72,7 @@ internal sealed class BuilderMasterSystem : IEcsRunSystem
 
                         if (canSetCity)
                         {
-                            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
+                            RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
 
                             curCellBuildDataCom.BuildingType = buildTypeForBuild;
                             curOwnerCellBuildCom.Owner = sender;
@@ -87,14 +87,14 @@ internal sealed class BuilderMasterSystem : IEcsRunSystem
 
                         else
                         {
-                            //RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
-                            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                            RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
+                            RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         }
                     }
                     else
                     {
-                        //RPCGameSystem.MistakeStepsUnitToGeneral(sender);
-                        //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                        RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                        RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
                     break;
 
@@ -107,7 +107,7 @@ internal sealed class BuilderMasterSystem : IEcsRunSystem
                             if (inventorResCom.CanCreateNewBuilding(buildTypeForBuild, sender, out bool[] haves))
                             {
 
-                                //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
+                                RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
 
                                 if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.Fertilizer))
                                 {
@@ -129,20 +129,20 @@ internal sealed class BuilderMasterSystem : IEcsRunSystem
                             }
                             else
                             {
-                                //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                                //RPCGameSystem.MistakeEconomyToGeneral(sender, haves);
+                                RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                                RPCGameSystem.MistakeEconomyToGeneral(sender, haves);
                             }
                         }
                         else
                         {
-                            //RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
-                            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                            RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
+                            RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         }
                     }
                     else
                     {
-                        //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                        //RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                        RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                        RPCGameSystem.MistakeStepsUnitToGeneral(sender);
                     }
                     break;
 
@@ -157,7 +157,7 @@ internal sealed class BuilderMasterSystem : IEcsRunSystem
                         {
                             if (curCellUnitDataCom.HaveMaxAmountSteps)
                             {
-                                //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
+                                RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
 
                                 inventorResCom.BuyNewBuilding(buildTypeForBuild, sender);
                                 idxBuildsCom.AddIdxBuild(buildTypeForBuild, sender.IsMasterClient, idxCellForBuild);
@@ -169,20 +169,20 @@ internal sealed class BuilderMasterSystem : IEcsRunSystem
                             }
                             else
                             {
-                                //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                                //RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                                RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                                RPCGameSystem.MistakeStepsUnitToGeneral(sender);
                             }
                         }
                         else
                         {
-                            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                            //RPCGameSystem.MistakeEconomyToGeneral(sender, haves);
+                            RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                            RPCGameSystem.MistakeEconomyToGeneral(sender, haves);
                         }
                     }
                     else
                     {
-                        //RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
-                        //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                        RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
+                        RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
                     break;
 

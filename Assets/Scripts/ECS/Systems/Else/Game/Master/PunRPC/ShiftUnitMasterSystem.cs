@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Abstractions.Enums;
+﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
@@ -65,7 +66,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
                 fromCellUnitDataCom.ConditionType = default;
                 fromOwnerCellUnitCom.ResetOwner();
 
-                //RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.ClickToTable);
+                RPCGameSystem.SoundToGeneral(fromInfo.Sender, SoundEffectTypes.ClickToTable);
             }
         }
     }

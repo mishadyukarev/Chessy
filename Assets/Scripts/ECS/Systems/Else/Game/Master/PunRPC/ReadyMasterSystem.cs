@@ -2,20 +2,11 @@
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Leopotam.Ecs;
 
-internal sealed class ReadyMasterSystem : IEcsInitSystem, IEcsRunSystem
+internal sealed class ReadyMasterSystem : IEcsRunSystem
 {
-    private EcsWorld _currentGameWorld = default;
-
     private EcsFilter<InfoMasCom> _infoFilter = default;
     private EcsFilter<ForReadyMasCom, NeedActiveSomethingMasCom> _forReadyFilter = default;
-    private EcsFilter<ReadyDataUICom, ReadyViewUICom> _readyUIFilter;
-
-    public void Init()
-    {
-        _currentGameWorld.NewEntity()
-            .Replace(new ForReadyMasCom())
-            .Replace(new NeedActiveSomethingMasCom());
-    }
+    private EcsFilter<ReadyDataUICom, ReadyViewUICom> _readyUIFilter = default;
 
     public void Run()
     {

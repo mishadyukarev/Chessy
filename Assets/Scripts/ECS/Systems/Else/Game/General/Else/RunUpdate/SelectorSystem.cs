@@ -56,7 +56,6 @@ internal sealed class SelectorSystem : IEcsRunSystem
                         if (selectorCom.IdxPreviousCell != selectorCom.IdxSelectedCell)
                         {
                             selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                            //selectorCom.IsSelectedCell = true;
                         }
                         else
                         {
@@ -74,7 +73,6 @@ internal sealed class SelectorSystem : IEcsRunSystem
                             selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
 
                         selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                        //selectorCom.IsSelectedCell = true;
                     }
                 }
 
@@ -239,7 +237,6 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                                 selectorCom.CanShiftUnit = false;
                                 selectorCom.CellClickType = CellClickTypes.Start;
-                                selectorCom.IdxSelectedCell = 0;
                             }
                         }
                     }

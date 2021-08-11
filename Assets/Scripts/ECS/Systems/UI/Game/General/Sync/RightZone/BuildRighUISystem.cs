@@ -28,7 +28,7 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
     public void Run()
     {
         ref var buildInGameCom = ref _idxBuildFilter.Get1(0);
-        ref var unitZoneViewUICom = ref _unitZoneUIFilter.Get1(0);
+        //ref var 
 
         ref var selCellUnitDataCom = ref _cellUnitFilter.Get1(IdxSelCell);
         ref var selOwnerCellUnitCom = ref _cellUnitFilter.Get2(IdxSelCell);
@@ -43,11 +43,11 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
             {
                 if (selOwnerCellUnitCom.IsMine)
                 {
-                    unitZoneViewUICom.RemoveAllListenersInBuildButton(BuildingButtonTypes.Third);
+                    _unitZoneUIFilter.Get1(0).RemoveAllListenersInBuildButton(BuildingButtonTypes.Third);
 
                     if (selCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.PawnSword }))
                     {
-                        unitZoneViewUICom.SetActiveUnitZone(UnitUIZoneTypes.Building, true);
+                        _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, true);
 
                         if (selCellBuildDataCom.HaveBuild)
                         {
@@ -61,23 +61,23 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
                                     if (selCellBuildDataCom.IsBuildType(BuildingTypes.City))
                                     {
                                         ///
-                                        unitZoneViewUICom.SetActiveBuilButton(BuildingButtonTypes.Third, false);
+                                        _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, false);
                                     }
                                     else
                                     {
-                                        unitZoneViewUICom.SetActiveBuilButton(BuildingButtonTypes.Third, true);
+                                        _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
 
-                                        unitZoneViewUICom.AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
-                                        unitZoneViewUICom.SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
+                                        _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
+                                        _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
                                     }
                                 }
 
                                 else
                                 {
-                                    unitZoneViewUICom.SetActiveBuilButton(BuildingButtonTypes.Third, true);
+                                    _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
 
-                                    unitZoneViewUICom.AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
-                                    unitZoneViewUICom.SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
+                                    _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
+                                    _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
                                 }
                             }
 
@@ -85,10 +85,10 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
                             {
                                 if (selCellBuildDataCom.IsBuildType(BuildingTypes.City))
                                 {
-                                    unitZoneViewUICom.SetActiveBuilButton(BuildingButtonTypes.Third, true);
+                                    _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
 
-                                    unitZoneViewUICom.AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
-                                    unitZoneViewUICom.SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
+                                    _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
+                                    _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
                                 }
                             }
 
@@ -119,53 +119,45 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
 
                             if (buildInGameCom.IsSettedCity(PhotonNetwork.IsMasterClient))
                             {
-                                unitZoneViewUICom.SetActiveBuilButton(BuildingButtonTypes.Third, false);
+                                _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, false);
                             }
                             else
                             {
-                                unitZoneViewUICom.AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Build(BuildingTypes.City); });
-                                unitZoneViewUICom.SetTextBuildButton(BuildingButtonTypes.Third, "Build City");
+                                _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Build(BuildingTypes.City); });
+                                _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Build City");
                             }
                         }
                     }
                     else
                     {
-                        unitZoneViewUICom.SetActiveUnitZone(UnitUIZoneTypes.Building, false);
+                        _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                     }
                 }
 
                 else
                 {
-                    unitZoneViewUICom.SetActiveUnitZone(UnitUIZoneTypes.Building, false);
+                    _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                 }
             }
 
             else if (selBotOnwerCellUnitCom.IsBot)
             {
-                unitZoneViewUICom.SetActiveUnitZone(UnitUIZoneTypes.Building, false);
+                _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
             }
         }
 
         else
         {
-            unitZoneViewUICom.SetActiveUnitZone(UnitUIZoneTypes.Building, false);
+            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
         }
     }
 
     private void Build(BuildingTypes buildingType)
     {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
-        {
-            //_selectorFilter.Get1(0).ResetSelectedCell();
-            RPCGameSystem.BuildToMaster(IdxSelCell, buildingType);
-        }
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.BuildToMaster(IdxSelCell, buildingType);
     }
     private void Destroy()
     {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
-        {
-            //_selectorFilter.Get1(0).ResetSelectedCell();
-            RPCGameSystem.DestroyBuildingToMaster(IdxSelCell);
-        }
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.DestroyBuildingToMaster(IdxSelCell);
     }
 }

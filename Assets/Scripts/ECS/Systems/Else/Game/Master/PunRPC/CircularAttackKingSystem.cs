@@ -45,19 +45,19 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
                         {
                             if (cellUnitDataComDirect.IsUnitType(UnitTypes.King))
                             {
-                                //RPCGameSystem.EndGameToMaster((byte)curOwnerCellUnitCom.ActorNumber);
+                                RPCGameSystem.EndGameToMaster((byte)curOwnerCellUnitCom.ActorNumber);
                             }
                             idxUnitsCom.RemoveAmountUnitsInGame(cellUnitDataComDirect.UnitType, curOwnerCellUnitCom.IsMasterClient, idxCellCurDirect);
                             cellUnitDataComDirect.ResetUnitType();
                         }
 
-                        //RPCGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+                        RPCGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
                     }
                 }
 
                 curCellUnitDataCom.TakeAmountSteps();
 
-                //RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.AttackMelee);
+                RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.AttackMelee);
 
 
                 if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Protected) || curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
@@ -69,8 +69,8 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
             }
             else
             {
-                //RPCGameSystem.MistakeStepsUnitToGeneral(sender);
-                //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
             }
         }
     }

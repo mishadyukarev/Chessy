@@ -17,11 +17,6 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
             _bar_SRs.Add(CellBarTypes.Wood, parentGO.transform.Find("Forest").GetComponent<SpriteRenderer>());
             _bar_SRs.Add(CellBarTypes.Ore, parentGO.transform.Find("Ore").GetComponent<SpriteRenderer>());
             _bar_SRs.Add(CellBarTypes.Hp, parentGO.transform.Find("Hp").GetComponent<SpriteRenderer>());
-
-            _bar_SRs[CellBarTypes.Food].color = Color.yellow;
-            _bar_SRs[CellBarTypes.Wood].color = Color.green;
-            _bar_SRs[CellBarTypes.Ore].color = Color.grey;
-            _bar_SRs[CellBarTypes.Hp].color = Color.red;
         }
 
         private void ActiveVision(CellBarTypes supportStaticType, bool isActive) => _bar_SRs[supportStaticType].enabled = isActive;

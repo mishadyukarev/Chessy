@@ -98,7 +98,7 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
 
 
             RPCGameSystem.SetUnitToGeneral(sender, true);
-            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+            RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
         }
 
         else

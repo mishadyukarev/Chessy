@@ -7,8 +7,8 @@ using Photon.Realtime;
 
 internal sealed class MeltOreMasterSystem : IEcsRunSystem
 {
-    private EcsFilter<InfoMasCom> _infoMasFilter;
-    private EcsFilter<InventorResourcesComponent> _invResFilt;
+    private EcsFilter<InfoMasCom> _infoMasFilter = default;
+    private EcsFilter<InventorResourcesComponent> _invResFilt = default;
 
     private Player Sender => _infoMasFilter.Get1(0).FromInfo.Sender;
 

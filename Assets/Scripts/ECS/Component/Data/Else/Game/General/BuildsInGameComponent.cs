@@ -42,6 +42,7 @@ namespace Assets.Scripts.ECS.Component
             return amountAllBuildInGame;
         }
         internal int GetAmountAllBuild() => GetAmountAllBuild(true) + GetAmountAllBuild(false);
+        internal byte GetIdxCellByIndexList(BuildingTypes buildingType, bool key, byte idxList) => _buildingsInGameDict[buildingType][key][idxList];
 
         internal void AddIdxBuild(BuildingTypes buildingType, bool key, byte idxAdding) => GetListIdxBuild(buildingType, key).Add(idxAdding);
         internal void RemoveIdxBuild(BuildingTypes buildingType, bool key, byte idxTaking)

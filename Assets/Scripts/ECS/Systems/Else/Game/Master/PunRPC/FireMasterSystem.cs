@@ -48,7 +48,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     {
                         if (fromOwnerCellUnitCom.HaveOwner)
                         {
-                            //RPCGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
+                            RPCGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
                             toCellFireDataCom.HaveFire = true;
                             toCellUnitDataCom.TakeAmountSteps();

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game.Master;
@@ -35,14 +36,13 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
 
         if (idxUnitsCom.IsSettedKing(sender.IsMasterClient))
         {
-            //RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+            RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
             if (PhotonNetwork.OfflineMode)
             {
                 GameMasterSystemManager.UpdateMotion.Run();
 
-                //RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, _motionsFilter.Get1(0).AmountMotions);
-                //RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
+                RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
                 donerDataUICom.SetDoned(true, default);
                 donerDataUICom.SetDoned(false, default);
             }
@@ -67,7 +67,6 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
                             {
                                 GameMasterSystemManager.UpdateMotion.Run();
 
-                                //RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, _motionsFilter.Get1(0).AmountMotions);
                                 RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
                                 donerDataUICom.SetDoned(true, default);
@@ -86,8 +85,6 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
                             else
                             {
                                 GameMasterSystemManager.UpdateMotion.Run();
-
-                                //RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, _motionsFilter.Get1(0).AmountMotions);
                                 RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
                                 donerDataUICom.SetDoned(true, default);
@@ -109,8 +106,6 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
                         if (needUpdate)
                         {
                             GameMasterSystemManager.UpdateMotion.Run();
-
-                            //RPCGameSystem.SetAmountMotionToOther(RpcTarget.All, _motionsFilter.Get1(0).AmountMotions);
                             RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
                             donerDataUICom.SetDoned(true, default);

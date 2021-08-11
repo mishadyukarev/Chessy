@@ -17,7 +17,7 @@ namespace Assets.Scripts
         //private EcsFilter<LeaveViewUIComponent> _leaveUIFilter = default;
         private EcsFilter<TakerUnitsViewUICom> _takerUIFilter = default;
         private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
-        //private EcsFilter<EnvirZoneDataUICom, EnvirZoneViewUICom> _envirZoneUIFilter = default;
+        private EcsFilter<EnvirZoneDataUICom, EnvirZoneViewUICom> _envirZoneUIFilter = default;
         private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
 
         private byte IdxSelectedCell => _selectorFilter.Get1(0).IdxSelectedCell;
@@ -35,7 +35,7 @@ namespace Assets.Scripts
 
             _donerUIFilter.Get2(0).AddListener(delegate { Done(); });
 
-            //_envirZoneUIFilter.Get2(0).AddListenerToEnvInfo(EnvironmentInfo);
+            _envirZoneUIFilter.Get2(0).AddListenerToEnvInfo(EnvironmentInfo);
 
             //_leaveUIFilter.Get1(0).AddListener(PhotonSceneGameGeneralSystem.LeaveRoom);
 
@@ -75,10 +75,10 @@ namespace Assets.Scripts
                     throw new Exception();
             }
         }
-        //private void EnvironmentInfo()
-        //{
-        //    _envirZoneUIFilter.Get1(0).IsActivatedInfo = !_envirZoneUIFilter.Get1(0).IsActivatedInfo;
-        //}
+        private void EnvironmentInfo()
+        {
+            _envirZoneUIFilter.Get1(0).IsActivatedInfo = !_envirZoneUIFilter.Get1(0).IsActivatedInfo;
+        }
         private void StandartAbilityButton1()
         {
             if (!IsDoned(PhotonNetwork.IsMasterClient))

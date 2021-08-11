@@ -48,6 +48,10 @@ namespace Assets.Scripts.ECS.Systems.Game.Master
 
             _currentGameWorld.NewEntity()
                 .Replace(new ForFireMasCom());
+
+            _currentGameWorld.NewEntity()
+                .Replace(new ForReadyMasCom())
+                .Replace(new NeedActiveSomethingMasCom());
         }
     }
 }

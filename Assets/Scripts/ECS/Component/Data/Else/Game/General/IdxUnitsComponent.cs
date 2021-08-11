@@ -23,7 +23,7 @@ namespace Assets.Scripts.ECS.Component
             }
         }
 
-        internal byte GetXyUnitInGame(UnitTypes unitType, bool key, int index) => _amountUnitsInGame[unitType][key][index];
+        internal byte GetIdxUnitInGameByIndexList(UnitTypes unitType, bool key, int index) => _amountUnitsInGame[unitType][key][index];
         internal List<byte> GetLixtXyUnits(UnitTypes unitType, bool key) => _amountUnitsInGame[unitType][key].Copy();
         internal void SetAmountUnitInGame(UnitTypes unitType, bool key, List<byte> list) => _amountUnitsInGame[unitType][key] = list.Copy();
         internal void AddAmountUnitInGame(UnitTypes unitType, bool key, byte idxAdding) => _amountUnitsInGame[unitType][key].Add(idxAdding);

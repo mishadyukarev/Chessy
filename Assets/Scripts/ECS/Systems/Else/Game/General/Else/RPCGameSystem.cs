@@ -80,8 +80,6 @@ namespace Assets.Scripts
 
         public static void ShiftUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { idxPreviousCell, idxSelectedCell });
         public static void AttackUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Attack, new object[] { idxPreviousCell, idxSelectedCell });
-        public static void AttackUnitToGeneral(Player playerTo, bool isAttacked) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Attack, new object[] { isAttacked });
-        public static void AttackUnitToGeneral(RpcTarget rpcTarget, bool isAttacked, bool isActivatedSound, byte[] xyStart, byte[] xyEnd) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Attack, new object[] { isAttacked, isActivatedSound, xyStart, xyEnd });
 
         public static void BuildToMaster(byte idxCellForBuild, BuildingTypes buildingType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Build, new object[] { idxCellForBuild, buildingType });
         public static void DestroyBuildingToMaster(byte xyCellForDestroy) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Destroy, new object[] { xyCellForDestroy });
@@ -257,66 +255,57 @@ namespace Assets.Scripts
                 //    _donerUIFilter.Get1(0).SetDoned(PhotonNetwork.IsMasterClient, (bool)objects[_currentNumber++]);
                 //    break;
 
-                //case RpcGeneralTypes.ActiveAmountMotionUI:
-                //    _motionsFilter.Get1(0).IsActivatedUI = true;
-                //    break;
+                case RpcGeneralTypes.ActiveAmountMotionUI:
+                    _motionsFilter.Get1(0).IsActivatedUI = true;
+                    break;
 
                 //case RpcGeneralTypes.GetAvailableCellsForSetting:
                 //    availCellsCom.SetAllCellsCopy(AvailableCellTypes.SettingUnit, CellUnitsDataSystem.GetStartCellsForSettingUnit(PhotonNetwork.LocalPlayer));
                 //    break;
 
-                //case RpcGeneralTypes.EndGame:
-                //    _endGameFilter.Get1(0).IsEndGame = true;
-                //    _endGameFilter.Get1(0).PlayerWinner = PhotonNetwork.PlayerList[(byte)objects[_currentNumber++] - 1];
-                //    break;
+                case RpcGeneralTypes.EndGame:
+                    _endGameFilter.Get1(0).IsEndGame = true;
+                    _endGameFilter.Get1(0).PlayerWinner = PhotonNetwork.PlayerList[(byte)objects[_currentNumber++] - 1];
+                    break;
 
-                //case RpcGeneralTypes.Attack:
-                //    if ((bool)objects[_currentNumber++])
-                //    {
-                //        availCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);
-                //        availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
-                //        availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
-                //    }
-                //    break;
+                case RpcGeneralTypes.Mistake:
+                    var mistakeType = (MistakeTypes)objects[_currentNumber++];
+                    switch (mistakeType)
+                    {
+                        case MistakeTypes.None:
+                            throw new Exception();
 
-                //case RpcGeneralTypes.Mistake:
-                //    var mistakeType = (MistakeTypes)objects[_currentNumber++];
-                //    switch (mistakeType)
-                //    {
-                //        case MistakeTypes.None:
-                //            throw new Exception();
+                        case MistakeTypes.Economy:
+                            //var haves = (bool[])objects[_currentNumber++];
+                            //var haveFood = haves[0];
+                            //var haveWood = haves[1];
+                            //var haveOre = haves[2];
+                            //var haveIron = haves[3];
+                            //var haveGold = haves[4];
 
-                //        case MistakeTypes.Economy:
-                //            var haves = (bool[])objects[_currentNumber++];
-                //            var haveFood = haves[0];
-                //            var haveWood = haves[1];
-                //            var haveOre = haves[2];
-                //            var haveIron = haves[3];
-                //            var haveGold = haves[4];
+                            //if (!haveFood) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Food);
+                            //if (!haveWood) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Wood);
+                            //if (!haveOre) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Ore);
+                            //if (!haveIron) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Iron);
+                            //if (!haveGold) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Gold);
+                            break;
 
-                //            if (!haveFood) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Food);
-                //            if (!haveWood) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Wood);
-                //            if (!haveOre) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Ore);
-                //            if (!haveIron) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Iron);
-                //            if (!haveGold) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Gold);
-                //            break;
+                        case MistakeTypes.NeedKing:
+                            //MainGameSystem.DonerUIEnt_MistakeCom.MistakeUnityEvent.Invoke();
+                            break;
 
-                //        case MistakeTypes.NeedKing:
-                //            //MainGameSystem.DonerUIEnt_MistakeCom.MistakeUnityEvent.Invoke();
-                //            break;
+                        case MistakeTypes.NeedSteps:
+                            //MainGameSystem.MistakeCom.InvokeStepsMistake();
+                            break;
 
-                //        case MistakeTypes.NeedSteps:
-                //            MainGameSystem.MistakeCom.InvokeStepsMistake();
-                //            break;
+                        case MistakeTypes.NeedOtherPlace:
+                            //MainGameSystem.MistakeCom.InvokeNeedOtherPlace();
+                            break;
 
-                //        case MistakeTypes.NeedOtherPlace:
-                //            MainGameSystem.MistakeCom.InvokeNeedOtherPlace();
-                //            break;
-
-                //        default:
-                //            break;
-                //    }
-                //    break;
+                        default:
+                            break;
+                    }
+                    break;
 
                 case RpcGeneralTypes.GetUnit:
                     if ((bool)objects[_currentNumber++])
@@ -333,10 +322,10 @@ namespace Assets.Scripts
                     }
                     break;
 
-                //case RpcGeneralTypes.Sound:
-                //    var soundEffectType = (SoundEffectTypes)objects[_currentNumber++];
-                //    SoundGameGeneralViewWorker.PlaySoundEffect(soundEffectType);
-                //    break;
+                case RpcGeneralTypes.Sound:
+                    var soundEffectType = (SoundEffectTypes)objects[_currentNumber++];
+                    //SoundGameGeneralViewWorker.PlaySoundEffect(soundEffectType);
+                    break;
 
                 default:
                     throw new Exception();

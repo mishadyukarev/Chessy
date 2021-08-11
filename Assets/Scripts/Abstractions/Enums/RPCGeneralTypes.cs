@@ -8,7 +8,7 @@
         ActiveAmountMotionUI,
         GetAvailableCellsForSetting,
         EndGame,
-        Attack,
+        //Attack,
         Mistake,
         GetUnit,
         SetUnit,
