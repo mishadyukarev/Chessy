@@ -56,11 +56,6 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN;
                     break;
 
-                case UnitTypes.PawnSword:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN_SWORD;
-                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN_SWORD;
-                    break;
-
                 case UnitTypes.Rook:
                     newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK;

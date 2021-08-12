@@ -41,8 +41,7 @@ internal sealed class SyncEconomyUpUISystem : IEcsRunSystem
         var amountAddingFood = 1 + amountFarm * extractionOneFarm
             - idxUnitsCom.GetAmountUnitsInGame(PhotonNetwork.IsMasterClient, new UnitTypes[]
             {
-                UnitTypes.Pawn, UnitTypes.PawnSword,
-                UnitTypes.Rook, UnitTypes.RookCrossbow,
+                UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.RookCrossbow,
                 UnitTypes.Bishop, UnitTypes.BishopCrossbow
             });
 
@@ -60,15 +59,6 @@ internal sealed class SyncEconomyUpUISystem : IEcsRunSystem
         for (int xyIndex = 0; xyIndex < idxUnitsInCondCom.GetAmountUnitsInCondition(ConditionUnitTypes.Relaxed, UnitTypes.Pawn, PhotonNetwork.IsMasterClient); xyIndex++)
         {
             var idx = idxUnitsInCondCom.GetIdxInConditionByIndex(ConditionUnitTypes.Relaxed, UnitTypes.Pawn, PhotonNetwork.IsMasterClient, xyIndex);
-
-            if (_cellEnvDataFilter.Get1(idx).HaveEnvironment(EnvironmentTypes.AdultForest))
-            {
-                amountAddingWood += 1;
-            }
-        }
-        for (int xyIndex = 0; xyIndex < idxUnitsInCondCom.GetAmountUnitsInCondition(ConditionUnitTypes.Relaxed, UnitTypes.PawnSword, PhotonNetwork.IsMasterClient); xyIndex++)
-        {
-            var idx = idxUnitsInCondCom.GetIdxInConditionByIndex(ConditionUnitTypes.Relaxed, UnitTypes.PawnSword, PhotonNetwork.IsMasterClient, xyIndex);
 
             if (_cellEnvDataFilter.Get1(idx).HaveEnvironment(EnvironmentTypes.AdultForest))
             {

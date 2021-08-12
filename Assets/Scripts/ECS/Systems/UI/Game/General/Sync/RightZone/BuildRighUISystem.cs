@@ -45,7 +45,7 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
                 {
                     _unitZoneUIFilter.Get1(0).RemoveAllListenersInBuildButton(BuildingButtonTypes.Third);
 
-                    if (selCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.PawnSword }))
+                    if (selCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn }))
                     {
                         _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, true);
 

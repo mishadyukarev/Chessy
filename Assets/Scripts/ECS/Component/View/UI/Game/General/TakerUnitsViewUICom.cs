@@ -10,6 +10,8 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
     {
         private Dictionary<UnitTypes, Button> _taker_Buttons;
 
+        private Dictionary<UnitTypes, Button> _createUnit_Buttons;
+
         internal TakerUnitsViewUICom(GameObject downZone_GO)
         {
             _taker_Buttons = new Dictionary<UnitTypes, Button>();
@@ -38,9 +40,15 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
                     _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit3Button").GetComponent<Button>());
                 }
             }
+
+            _createUnit_Buttons = new Dictionary<UnitTypes, Button>();
+            _createUnit_Buttons.Add(UnitTypes.Pawn, takeUnitZone_GO.transform.Find("CreatePawn_Button").GetComponent<Button>());
+            _createUnit_Buttons.Add(UnitTypes.Rook, takeUnitZone_GO.transform.Find("CreateRook_Button").GetComponent<Button>());
+            _createUnit_Buttons.Add(UnitTypes.Bishop, takeUnitZone_GO.transform.Find("CreateBishop_Button").GetComponent<Button>());
         }
 
         internal void AddListener(UnitTypes unitType, UnityAction unityAction) => _taker_Buttons[unitType].onClick.AddListener(unityAction);
+        internal void AddListenerToCreateUnit(UnitTypes unitType, UnityAction unityAction) => _createUnit_Buttons[unitType].onClick.AddListener(unityAction);
         internal void SetColorButton(UnitTypes unitType, Color color) => _taker_Buttons[unitType].image.color = color;
         internal void SetActiveButton(UnitTypes unitType, bool isActive) => _taker_Buttons[unitType].gameObject.SetActive(isActive);
     }

@@ -10,22 +10,24 @@ internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
     private EcsFilter<SelectorComponent> _selectorFilter = default;
     private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
     private EcsFilter<BuildZoneViewUICom> _buildZoneUIFilter = default;
+    private EcsFilter<TakerUnitsViewUICom> _takerUIFilter = default;
+
     internal EcsComponentRef<SelectorComponent> SelComRef => _selectorFilter.Get1Ref(0);
 
     private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildFilter = default;
 
     public void Init()
     {
-        _buildZoneUIFilter.Get1(0).AddListenerToCreateUnit(UnitTypes.Pawn, delegate { BuyUnit(UnitTypes.Pawn); });
-        _buildZoneUIFilter.Get1(0).AddListenerToCreateUnit(UnitTypes.Rook, delegate { BuyUnit(UnitTypes.Rook); });
-        _buildZoneUIFilter.Get1(0).AddListenerToCreateUnit(UnitTypes.Bishop, delegate { BuyUnit(UnitTypes.Bishop); });
+        _takerUIFilter.Get1(0).AddListenerToCreateUnit(UnitTypes.Pawn, delegate { BuyUnit(UnitTypes.Pawn); });
+        _takerUIFilter.Get1(0).AddListenerToCreateUnit(UnitTypes.Rook, delegate { BuyUnit(UnitTypes.Rook); });
+        _takerUIFilter.Get1(0).AddListenerToCreateUnit(UnitTypes.Bishop, delegate { BuyUnit(UnitTypes.Bishop); });
 
         _buildZoneUIFilter.Get1(0).AddListenerToMelt(delegate { MeltOre(); });
-        _buildZoneUIFilter.Get1(0).AddListenerToUpgradeUnits(ToggleSelectorUpgradeUnit);
+        //_buildZoneUIFilter.Get1(0).AddListenerToUpgradeUnits(ToggleSelectorUpgradeUnit);
 
-        _buildZoneUIFilter.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
-        _buildZoneUIFilter.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
-        _buildZoneUIFilter.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Mine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
+        //_buildZoneUIFilter.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
+        //_buildZoneUIFilter.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
+        //_buildZoneUIFilter.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Mine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
     }
 
 

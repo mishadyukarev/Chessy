@@ -24,13 +24,13 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                 {
                     if (curCellUnitDataCom.HaveUnit)
                     {
-                        curCellUnitViewCom.EnableSR();
-                        curCellUnitViewCom.SetSprite(curCellUnitDataCom.UnitType);
+                        curCellUnitViewCom.EnableMain_SR();
+                        curCellUnitViewCom.SetMainUnit_Sprite(curCellUnitDataCom.UnitType);
                     }
 
                     else
                     {
-                        curCellUnitViewCom.DisableSR();
+                        curCellUnitViewCom.DisableMain_SR();
                     }
                 }
 
@@ -38,15 +38,15 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                 {
                     if (curCellUnitDataCom.HaveUnit)
                     {
-                        _cellUnitFilter.Get2(selectorCom.IdxPreviousVisionCell).SetSprite(selectorCom.SelectedUnitType);
-                        _cellUnitFilter.Get2(selectorCom.IdxPreviousVisionCell).EnableSR();
+                        _cellUnitFilter.Get2(selectorCom.IdxPreviousVisionCell).SetMainUnit_Sprite(selectorCom.SelectedUnitType);
+                        _cellUnitFilter.Get2(selectorCom.IdxPreviousVisionCell).EnableMain_SR();
                     }
                     else
                     {
                         if (selectorCom.IdxCurrentCell == idxCurCell)
                         {
-                            curCellUnitViewCom.SetSprite(selectorCom.SelectedUnitType);
-                            curCellUnitViewCom.EnableSR();
+                            curCellUnitViewCom.SetMainUnit_Sprite(selectorCom.SelectedUnitType);
+                            curCellUnitViewCom.EnableMain_SR();
                         }
                     }
                 }

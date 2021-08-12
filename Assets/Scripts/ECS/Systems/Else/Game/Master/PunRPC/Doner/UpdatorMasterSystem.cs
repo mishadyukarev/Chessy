@@ -151,7 +151,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                     {
                         if (curCellUnitDataCom.AmountHealth == curCellUnitDataCom.MaxAmountHealth)
                         {
-                            if (curUnitType == UnitTypes.Pawn || curUnitType == UnitTypes.PawnSword)
+                            if (curUnitType == UnitTypes.Pawn)
                             {
                                 if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
                                 {
@@ -249,8 +249,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
             var amountUnits = idxUnitsCom.GetAmountUnitsInGame(isMasterKey, new[]
             {
-                UnitTypes.Pawn, UnitTypes.PawnSword,
-                UnitTypes.Rook, UnitTypes.RookCrossbow,
+                UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.RookCrossbow,
                 UnitTypes.Bishop, UnitTypes.BishopCrossbow
             });
 
