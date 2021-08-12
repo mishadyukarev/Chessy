@@ -22,12 +22,13 @@ namespace Assets.Scripts
         private EcsFilter<SelectorComponent> _selectorFilter = default;
         private EcsFilter<IdxAvailableCellsComponent> _idxAvailCellsFilter = default;
         private EcsFilter<InventorResourcesComponent> _inventorFilter = default;
-        private EcsFilter<IdxUnitsComponent> _xyUnitsFilter = default;
+        private EcsFilter<UnitsInGameInfoComponent> _xyUnitsFilter = default;
         private EcsFilter<UpgradesBuildingsComponent> _upgradesBuildFilter = default;
         private EcsFilter<EndGameDataUIComponent> _endGameFilter = default;
         private EcsFilter<ReadyDataUICom> _readyUIFilter = default;
         private EcsFilter<MotionsDataUIComponent> _motionsFilter = default;
         private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
+        private EcsFilter<MistakeDataUICom> _mistakeUIFilter = default;
 
         private EcsFilter<InfoMasCom> _infoMasterComFilter = default;
         private EcsFilter<ForReadyMasCom, NeedActiveSomethingMasCom> _readyFilter = default;
@@ -42,7 +43,7 @@ namespace Assets.Scripts
         private EcsFilter<ForSettingUnitMasCom, XyCellForDoingMasCom> _settingUnitFilter = default;
         private EcsFilter<ForSeedingMasCom, XyCellForDoingMasCom> _seedingFilter = default;
         private EcsFilter<ForFireMasCom> _fireFilter = default;
-        private EcsFilter<UpgradeMasCom, XyCellForDoingMasCom> _upgradorFilter = default;
+        private EcsFilter<ForUpgradeMasCom> _upgradorFilter = default;
         private EcsFilter<ForCircularAttackMasCom, XyCellForDoingMasCom> _circularAttackFilter = default;
 
         private EcsFilter<InfoOtherCom> _infoOtherFilter = default;
@@ -72,10 +73,8 @@ namespace Assets.Scripts
         public static void DoneToMaster(bool isDone) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[] { isDone });
         public static void ActiveAmountMotionUIToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
         public static void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
-        public static void SetAmountMotionToOther(Player playerTo, byte numberMotion) => PhotonView.RPC(OtherRPCName, playerTo, RpcOtherTypes.SetAmountMotion, new object[] { numberMotion });
-        public static void SetAmountMotionToOther(RpcTarget rpcTarget, byte numberMotion) => PhotonView.RPC(OtherRPCName, rpcTarget, RpcOtherTypes.SetAmountMotion, new object[] { numberMotion });
 
-        public static void UpgradeUnitToMaster(ushort xyCellForUpgrade, UpgradeModTypes upgradeModType = UpgradeModTypes.Unit) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, xyCellForUpgrade });
+        public static void UpgradeUnitToMaster(byte idxCellForUpgrade, UpgradeModTypes upgradeModType = UpgradeModTypes.Unit) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, idxCellForUpgrade });
         public static void UpgradeBuildingToMaster(BuildingTypes buildingTypeForUpgrade, UpgradeModTypes upgradeModType = UpgradeModTypes.Building) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, buildingTypeForUpgrade });
 
         public static void ShiftUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { idxPreviousCell, idxSelectedCell });
@@ -86,7 +85,7 @@ namespace Assets.Scripts
 
         public static void ProtectRelaxUnitToMaster(ConditionUnitTypes neededCondtionType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ConditionUnit, new object[] { neededCondtionType, idxCell });
 
-        public static void EndGameToMaster(byte actorNumberWinner) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.EndGame, new object[] { actorNumberWinner });
+        public static void EndGameToMaster(int actorNumberWinner) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.EndGame, new object[] { actorNumberWinner });
         public static void EndGameToGeneral(RpcTarget rpcTarget, byte actorNumberWinner) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
 
         public static void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.Economy, haves });
@@ -210,7 +209,7 @@ namespace Assets.Scripts
                             throw new Exception();
 
                         case UpgradeModTypes.Unit:
-                            _upgradorFilter.Get2(0).XyCellForDoing = (byte[])objects[1];
+                            _upgradorFilter.Get1(0).IdxForUpgradeUnit = (byte)objects[1];
                             break;
 
                         case UpgradeModTypes.Building:
@@ -270,24 +269,25 @@ namespace Assets.Scripts
 
                 case RpcGeneralTypes.Mistake:
                     var mistakeType = (MistakeTypes)objects[_currentNumber++];
+                    _mistakeUIFilter.Get1(0).MistakeTypes = mistakeType;
                     switch (mistakeType)
                     {
                         case MistakeTypes.None:
                             throw new Exception();
 
                         case MistakeTypes.Economy:
-                            //var haves = (bool[])objects[_currentNumber++];
-                            //var haveFood = haves[0];
-                            //var haveWood = haves[1];
-                            //var haveOre = haves[2];
-                            //var haveIron = haves[3];
-                            //var haveGold = haves[4];
+                            var haves = (bool[])objects[_currentNumber++];
+                            var haveFood = haves[0];
+                            var haveWood = haves[1];
+                            var haveOre = haves[2];
+                            var haveIron = haves[3];
+                            var haveGold = haves[4];
 
-                            //if (!haveFood) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Food);
-                            //if (!haveWood) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Wood);
-                            //if (!haveOre) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Ore);
-                            //if (!haveIron) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Iron);
-                            //if (!haveGold) MainGameSystem.MistakeCom.InvokeEconomyMistake(ResourceTypes.Gold);
+                            if (!haveFood) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Food);
+                            if (!haveWood) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Wood);
+                            if (!haveOre) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Ore);
+                            if (!haveIron) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Iron);
+                            if (!haveGold) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Gold);
                             break;
 
                         case MistakeTypes.NeedKing:

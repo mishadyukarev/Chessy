@@ -6,7 +6,6 @@ using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Systems.Game.General.UI.View;
 using Assets.Scripts.ECS.Systems.Game.General.UI.View.Down;
-using Assets.Scripts.ECS.Systems.General.UI.RunUpdate.CenterZone;
 using Leopotam.Ecs;
 
 public sealed class GameGeneralSystemManager : SystemAbstManager
@@ -19,7 +18,7 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
     internal GameGeneralSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld)
     {
         var spawnerAndCreatorEntSystems = new EcsSystems(gameWorld)
-            .Add(new MainGameGeneralSystem());
+            .Add(new InitGameGeneralSystem());
 
 
         _photonSceneGameGeneralSystem = Main.Instance.gameObject.AddComponent<PhotonSceneGameGeneralSystem>();
@@ -45,13 +44,11 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(new BuildRighUISystem())
             .Add(new SyncEconomyUpUISystem())
             .Add(new LeftBuildingUISystem())
-            .Add(new UpdatedUISystem())
+            .Add(new MotionCenterUISystem())
             .Add(new UniqueAbilitiesUISystem())
             .Add(new EnvironmentUISystem())
             .Add(new ReadyZoneUISystem())
             .Add(new RightZoneUISystem())
-            .Add(new MistakeBarUISystem())
-            .Add(new MistakeUISystem())
             .Add(new CenterSupTextUISystem());
 
 

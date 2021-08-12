@@ -3,7 +3,7 @@ using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Leopotam.Ecs;
 using UnityEngine;
 
-internal sealed class UpdatedUISystem : IEcsRunSystem
+internal sealed class MotionCenterUISystem : IEcsRunSystem
 {
     private EcsFilter<MotionsDataUIComponent, MotionsViewUIComponent> _motionsUIFilter = default;
     private float _timer;

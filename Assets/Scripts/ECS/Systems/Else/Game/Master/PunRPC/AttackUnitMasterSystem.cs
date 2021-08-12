@@ -1,125 +1,125 @@
-﻿using Assets.Scripts.ECS.Component;
+﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
+using Photon.Pun;
 
 internal sealed class AttackUnitMasterSystem : IEcsRunSystem
 {
-    private EcsFilter<InfoMasCom> _infoMasterFilter;
-    private EcsFilter<ForAttackMasCom> _forAttackFilter;
-    private EcsFilter<IdxUnitsComponent> _idxUnitsFilter;
+    private EcsFilter<InfoMasCom> _infoMasterFilter = default;
+    private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
+    private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
+    private EcsFilter<UnitsInConditionInGameCom> _unitsInCondFilter = default;
 
-    //private bool _isAttacked;
-
-    //private Player Sender => _infoMasterFilter.Get1(0).FromInfo.Sender;
-
-    //internal int[] FromXy => _attackFilter.Get2(0).FromXy;
-    //internal int[] ToXy => _attackFilter.Get2(0).ToXy;
+    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
 
     public void Run()
     {
+        ref var infoCom = ref _infoMasterFilter.Get1(0);
         ref var forAttackMasCom = ref _forAttackFilter.Get1(0);
-        ref var idxUnitsCom = ref _idxUnitsFilter.Get1(0);
+        ref var unitsInGameCom = ref _idxUnitsFilter.Get1(0);
+        ref var unitsInCondCom = ref _unitsInCondFilter.Get1(0);
+
+        var sender = infoCom.FromInfo.Sender;
+        var fromIdx = forAttackMasCom.IdxFromCell;
+        var toIdxForAttack = forAttackMasCom.IdxToCell;
+
+        ref var fromCellUnitDataCom = ref _cellUnitFilter.Get1(fromIdx);
+        ref var fromOwnerCellUnitCom = ref _cellUnitFilter.Get2(fromIdx);
+
+        ref var toCellUnitDataCom = ref _cellUnitFilter.Get1(toIdxForAttack);
+        ref var toOwnerCellUnitCom = ref _cellUnitFilter.Get2(toIdxForAttack);
+        ref var toBotOwnerCellUnitCom = ref _cellUnitFilter.Get3(toIdxForAttack);
 
 
-        //CellUnitsDataSystem.GetCellsForAttack(Sender, out var availableCellsSimpleAttack, out var availableCellsUniqueAttack, FromXy);
+        if (fromOwnerCellUnitCom.ActorNumber != toOwnerCellUnitCom.ActorNumber)
+        {
+            unitsInCondCom.ReplaceCondition(fromCellUnitDataCom.ConditionType, ConditionUnitTypes.None, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
 
-        //var isFindedSimple = availableCellsSimpleAttack.TryFindCell(ToXy);
-        //var isFindedUnique = availableCellsUniqueAttack.TryFindCell(ToXy);
-
-
-        //if (isFindedSimple || isFindedUnique)
-        //{
-        //    CellUnitsDataSystem.ResetAmountSteps(FromXy);
-        //    CellUnitsDataSystem.ResetConditionType(FromXy);
-
-        //    int damageToPrevious = 0;
-        //    int damageToSelelected = 0;
-
-        //    var unitTypePrevious = CellUnitsDataSystem.UnitType(FromXy);
-        //    var unitTypeSelected = CellUnitsDataSystem.UnitType(ToXy);
-
-        //    damageToSelelected += CellUnitsDataSystem.SimplePowerDamage(unitTypePrevious);
-        //    damageToSelelected -= CellUnitsDataSystem.PowerProtection(ToXy);
+            fromCellUnitDataCom.ResetAmountSteps();
+            fromCellUnitDataCom.ResetConditionType();
 
 
-        //    if (CellUnitsDataSystem.IsMelee(FromXy))
-        //    {
-        //        RPCGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+            int damageFrom = 0;
+            int damageTo = 0;
 
-        //        damageToPrevious += CellUnitsDataSystem.SimplePowerDamage(unitTypeSelected);
-
-        //        if (isFindedUnique)
-        //        {
-        //            damageToSelelected += CellUnitsDataSystem.UniquePowerDamage(unitTypePrevious);
-        //        }
-        //    }
-
-        //    else
-        //    {
-        //        RPCGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
-
-        //        if (isFindedUnique)
-        //        {
-        //            damageToSelelected += CellUnitsDataSystem.UniquePowerDamage(unitTypePrevious);
-        //        }
-        //    }
-
-        //    if (damageToSelelected < 0) damageToSelelected = 0;
-
-        //    CellUnitsDataSystem.TakeAmountHealth(FromXy, damageToPrevious);
-        //    CellUnitsDataSystem.TakeAmountHealth(ToXy, damageToSelelected);
+            damageTo += fromCellUnitDataCom.SimplePowerDamage;
+            damageTo -= toCellUnitDataCom.PowerProtection;
 
 
-        //    if (!CellUnitsDataSystem.HaveAmountHealth(FromXy))
-        //    {
-        //        if (CellUnitsDataSystem.IsUnitType(UnitTypes.King, FromXy))
-        //        {
-        //            if (CellUnitsDataSystem.HaveOwner(ToXy))
-        //            {
-        //                RPCGameSystem.EndGameToMaster(CellUnitsDataSystem.ActorNumber(ToXy));
-        //            }
+            if (fromCellUnitDataCom.IsMelee)
+            {
+                RPCGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
-        //            else if (CellUnitsDataSystem.IsBot(ToXy))
-        //            {
+                damageFrom += toCellUnitDataCom.SimplePowerDamage;
 
-        //            }
-        //        }
+                //if (isFindedUnique)
+                //{
+                //    damageToSelelected += CellUnitsDataSystem.UniquePowerDamage(fromUnitType);
+                //}
+            }
 
-        //        var isMasterFromUnit = CellUnitsDataSystem.IsMasterClient(FromXy);
+            else
+            {
+                RPCGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
 
-        //        xyUnitsCom.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(FromXy), isMasterFromUnit, FromXy);
-        //        MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(FromXy), CellUnitsDataSystem.UnitType(FromXy), isMasterFromUnit, FromXy);
-        //        CellUnitsDataSystem.ResetUnit(FromXy);
+                //if (isFindedUnique)
+                //{
+                //    damageToSelelected += CellUnitsDataSystem.UniquePowerDamage(fromUnitType);
+                //}
+            }
 
-        //        if (CellUnitsDataSystem.HaveOwner(FromXy))
-        //        {
-        //            xyUnitsCom.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), FromXy);
-        //        }
-        //    }
+            if (damageTo < 0) damageTo = 0;
 
-        //    if (!CellUnitsDataSystem.HaveAmountHealth(ToXy))
-        //    {
-        //        if (CellUnitsDataSystem.IsUnitType(UnitTypes.King, ToXy))
-        //            RPCGameSystem.EndGameToMaster(CellUnitsDataSystem.ActorNumber(FromXy));
+            fromCellUnitDataCom.TakeAmountHealth(damageFrom);
+            toCellUnitDataCom.TakeAmountHealth(damageTo);
 
-        //        var isMasterToUnit = CellUnitsDataSystem.IsMasterClient(ToXy);
 
-        //        xyUnitsCom.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(ToXy), isMasterToUnit, ToXy);
-        //        MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(CellUnitsDataSystem.ConditionType(ToXy), CellUnitsDataSystem.UnitType(ToXy), isMasterToUnit, ToXy);
-        //        CellUnitsDataSystem.ResetUnit(ToXy);
+            if (!fromCellUnitDataCom.HaveAmountHealth)
+            {
+                if (fromCellUnitDataCom.IsUnitType(UnitTypes.King))
+                {
+                    if (toOwnerCellUnitCom.HaveOwner)
+                    {
+                        RPCGameSystem.EndGameToMaster(toOwnerCellUnitCom.ActorNumber);
+                    }
 
-        //        if (CellUnitsDataSystem.IsMelee(FromXy))
-        //        {
-        //            xyUnitsCom.RemoveAmountUnitsInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), FromXy);
-        //            xyUnitsCom.AddAmountUnitInGame(CellUnitsDataSystem.UnitType(FromXy), CellUnitsDataSystem.IsMasterClient(FromXy), ToXy);
-        //            CellUnitsDataSystem.ShiftPlayerUnitToBaseCell(FromXy, ToXy);
-        //        }
-        //    }
+                    else if (toBotOwnerCellUnitCom.IsBot)
+                    {
 
-        //    _isAttacked = true;
-        //}
-        //else _isAttacked = false;
+                    }
+                }
 
+                unitsInGameCom.RemoveAmountUnitsInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
+                unitsInCondCom.RemoveUnitInCondition(fromCellUnitDataCom.ConditionType, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
+                fromCellUnitDataCom.ResetUnitType();
+
+                if (fromOwnerCellUnitCom.HaveOwner)
+                {
+                    unitsInGameCom.RemoveAmountUnitsInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
+                }
+            }
+
+            if (!toCellUnitDataCom.HaveAmountHealth)
+            {
+                if (toCellUnitDataCom.IsUnitType(UnitTypes.King))
+                    RPCGameSystem.EndGameToMaster(fromOwnerCellUnitCom.ActorNumber);
+
+                unitsInGameCom.RemoveAmountUnitsInGame(toCellUnitDataCom.UnitType, toOwnerCellUnitCom.IsMasterClient, toIdxForAttack);
+                unitsInCondCom.RemoveUnitInCondition(toCellUnitDataCom.ConditionType, toCellUnitDataCom.UnitType, toOwnerCellUnitCom.IsMasterClient, toIdxForAttack);
+                toCellUnitDataCom.ResetUnitType();
+
+                if (fromCellUnitDataCom.IsMelee)
+                {
+                    unitsInGameCom.RemoveAmountUnitsInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
+                    unitsInGameCom.AddAmountUnitInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, toIdxForAttack);
+
+                    toCellUnitDataCom.ReplaceUnit(fromCellUnitDataCom);
+                }
+            }
+        }
 
         //RPCGameSystem.AttackUnitToGeneral(Sender, _isAttacked);
         //RPCGameSystem.AttackUnitToGeneral(RpcTarget.All, false, _isAttacked, FromXy, ToXy);

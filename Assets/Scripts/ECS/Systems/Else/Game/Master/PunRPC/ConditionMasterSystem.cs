@@ -7,10 +7,10 @@ using System;
 
 internal sealed class ConditionMasterSystem : IEcsRunSystem
 {
-    private EcsFilter<InfoMasCom> _infoFilter;
-    private EcsFilter<ConditionMasCom> _conditionFilter;
+    private EcsFilter<InfoMasCom> _infoFilter = default;
+    private EcsFilter<ConditionMasCom> _conditionFilter = default;
 
-    private EcsFilter<IdxUnitsInConditionCom> _idxUnitsInCondFilter = default;
+    private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
 
     private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
 

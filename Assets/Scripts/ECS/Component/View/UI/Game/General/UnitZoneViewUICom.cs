@@ -119,6 +119,7 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
         internal void SetActiveUnitZone(UnitUIZoneTypes unitUIZoneType, bool isActive) => _unitZone_GOs[unitUIZoneType].SetActive(isActive);
 
         internal void SetColorToConditionButton(ConditionUnitTypes conditionUnitType, Color color) => _condition_Buttons[conditionUnitType].image.color = color;
+        internal void SetColoToUniqueAbilityButton(UniqueButtonTypes uniqueButtonType, Color color) => _uniqueAbilit_Buttons[uniqueButtonType].image.color = color;
 
         internal void SetTextToStat(StatTypes statType, string text) => _stat_TextMP[statType].text = text;
         internal void SetTextToUnique(UniqueButtonTypes uniqueButtonType, string text) => _uniqueAbilit_TextMPs[uniqueButtonType].text = text;

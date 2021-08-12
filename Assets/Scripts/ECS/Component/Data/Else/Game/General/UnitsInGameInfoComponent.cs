@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Component
 {
-    internal struct IdxUnitsComponent
+    internal struct UnitsInGameInfoComponent
     {
         private Dictionary<UnitTypes, Dictionary<bool, List<byte>>> _amountUnitsInGame;
 
-        internal IdxUnitsComponent(Dictionary<UnitTypes, Dictionary<bool, List<byte>>> dict)
+        internal UnitsInGameInfoComponent(Dictionary<UnitTypes, Dictionary<bool, List<byte>>> dict)
         {
             _amountUnitsInGame = dict;
 

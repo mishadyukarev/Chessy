@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Component
 {
-    internal struct IdxUnitsInConditionCom
+    internal struct UnitsInConditionInGameCom
     {
         private Dictionary<ConditionUnitTypes, Dictionary<UnitTypes, Dictionary<bool, List<byte>>>> _idxUnitsInConditionDict;
 
-        internal IdxUnitsInConditionCom(Dictionary<ConditionUnitTypes, Dictionary<UnitTypes, Dictionary<bool, List<byte>>>> dict)
+        internal UnitsInConditionInGameCom(Dictionary<ConditionUnitTypes, Dictionary<UnitTypes, Dictionary<bool, List<byte>>>> dict)
         {
             _idxUnitsInConditionDict = dict;
 

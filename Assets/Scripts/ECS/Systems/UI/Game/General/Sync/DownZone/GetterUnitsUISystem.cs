@@ -5,7 +5,7 @@ using Photon.Pun;
 
 internal sealed class GetterUnitsUISystem : IEcsRunSystem
 {
-    private EcsFilter<IdxUnitsComponent> _xyUnitsFilter = default;
+    private EcsFilter<UnitsInGameInfoComponent> _xyUnitsFilter = default;
     private EcsFilter<TakerUnitsViewUICom> _takerUnitsUIFilter = default;
 
     public void Run()

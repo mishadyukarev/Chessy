@@ -12,7 +12,7 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
 {
     private EcsFilter<InfoMasCom> _infoFilter = default;
     private EcsFilter<ForDonerMasCom> _donerFilter = default;
-    private EcsFilter<IdxUnitsComponent> _idxUnitsFilter = default;
+    private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
     private EcsFilter<MotionsDataUIComponent> _motionsFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerDataUIFilter = default;
 

@@ -61,9 +61,17 @@ namespace Assets.Scripts
 
                     _gameWorld = new EcsWorld();
                     _allGameSystems = new EcsSystems(_gameWorld);
+
                     _gameGeneralSystemManager = new GameGeneralSystemManager(_gameWorld, _allGameSystems);
-                    _gameMasterSystemManager = new GameMasterSystemManager(_gameWorld, _allGameSystems);
-                    _gameOtherSystemManager = new GameOtherSystemManager(_gameWorld, _allGameSystems);
+                    if (PhotonNetwork.IsMasterClient)
+                    {
+                        _gameMasterSystemManager = new GameMasterSystemManager(_gameWorld, _allGameSystems);
+                    }
+                    else
+                    {
+                        _gameOtherSystemManager = new GameOtherSystemManager(_gameWorld, _allGameSystems);
+                    }
+
                     _allGameSystems.Init();
                     break;
 

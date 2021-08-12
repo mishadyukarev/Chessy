@@ -23,21 +23,9 @@ using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
 
 namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 {
-    internal sealed class MainGameGeneralSystem : IEcsInitSystem
+    internal sealed class InitGameGeneralSystem : IEcsInitSystem
     {
         private EcsWorld _currentGameWorld = default;
-
-
-        //private EcsFilter<SelectorComponent> _selectorFilter = default;
-        //private EcsFilter<AvailableCellsComponent> _availCellsFilter = default;
-
-        //private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
-        //private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        //private EcsFilter<CellEnvironDataCom> _cellEnvrDataFilter = default;
-
-        //private EcsFilter<CellViewComponent> _cellViewFilter = default;
-
-
 
         public void Init()
         {
@@ -124,7 +112,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                     }
 
 
-                    var cellEnt = _currentGameWorld.NewEntity()
+                    _currentGameWorld.NewEntity()
                         .Replace(new XyCellComponent(new byte[] { x, y }))
 
                         .Replace(new CellDataComponent(dictStartCell))
@@ -152,54 +140,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                          .Replace(new UnitTypeComponent())
                          .Replace(new OwnerComponent())
                          .Replace(new OwnerBotComponent());
-
-
-                    if (PhotonNetwork.IsMasterClient)
-                    {
-                        int random;
-
-                        if (y == 4 || y == 6)
-                        {
-                            random = UnityEngine.Random.Range(1, 100);
-                            if (random <= START_MOUNTAIN_PERCENT)
-                                cellEnt.Get<CellEnvironDataCom>().SetNewEnvironment(EnvironmentTypes.Mountain);
-                            else
-                            {
-                                random = UnityEngine.Random.Range(1, 100);
-                                if (random <= START_FOREST_PERCENT)
-                                {
-                                    cellEnt.Get<CellEnvironDataCom>().SetNewEnvironment(EnvironmentTypes.AdultForest);
-                                }
-                            }
-                        }
-                        else
-                        {
-
-                            random = UnityEngine.Random.Range(1, 100);
-                            if (random <= START_FOREST_PERCENT)
-                            {
-                                cellEnt.Get<CellEnvironDataCom>().SetNewEnvironment(EnvironmentTypes.AdultForest);
-                            }
-                            else
-                            {
-                                random = UnityEngine.Random.Range(1, 100);
-                                if (random <= START_FERTILIZER_PERCENT)
-                                {
-                                    cellEnt.Get<CellEnvironDataCom>().SetNewEnvironment(EnvironmentTypes.Fertilizer);
-                                }
-                            }
-
-
-                            if (y == 5)
-                            {
-
-                                random = UnityEngine.Random.Range(1, 100);
-                                if (random <= START_HILL_PERCENT)
-                                    cellEnt.Get<CellEnvironDataCom>().SetNewEnvironment(EnvironmentTypes.Hill);
-
-                            }
-                        }
-                    }
 
                     if (PhotonNetwork.OfflineMode)
                     {
@@ -254,8 +194,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new ForFillAvailCellsCom())
 
                 .Replace(new XyStartCellsComponent(dict))
-                .Replace(new IdxUnitsComponent(new Dictionary<UnitTypes, Dictionary<bool, List<byte>>>()))
-                .Replace(new IdxUnitsInConditionCom(new Dictionary<ConditionUnitTypes, Dictionary<UnitTypes, Dictionary<bool, List<byte>>>>()))
+                .Replace(new UnitsInGameInfoComponent(new Dictionary<UnitTypes, Dictionary<bool, List<byte>>>()))
+                .Replace(new UnitsInConditionInGameCom(new Dictionary<ConditionUnitTypes, Dictionary<UnitTypes, Dictionary<bool, List<byte>>>>()))
                 .Replace(new BuildsInGameComponent(new Dictionary<BuildingTypes, Dictionary<bool, List<byte>>>()))
 
                 .Replace(new UpgradesBuildingsComponent(new Dictionary<BuildingTypes, Dictionary<bool, int>>()))
@@ -267,56 +207,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
 
             infoEnt.Get<GeneralZoneViewComponent>().Attach(backGroundGO.transform);
-
-            if (PhotonNetwork.IsMasterClient)
-            {
-                CameraComponent.ResetRotation();
-                CameraComponent.SetPosition(Main.Instance.transform.position + CameraComponent.PosForCamera);
-
-                ref var unitInventorCom = ref infoEnt.Get<InventorUnitsComponent>();
-                ref var inventorResCom = ref infoEnt.Get<InventorResourcesComponent>();
-
-
-                unitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, true, EconomyValues.AMOUNT_KING_MASTER);
-                unitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, false, EconomyValues.AMOUNT_KING_OTHER);
-
-                unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, true, EconomyValues.AMOUNT_PAWN_MASTER);
-                unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, false, EconomyValues.AMOUNT_PAWN_OTHER);
-
-                unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, true, EconomyValues.AMOUNT_ROOK_MASTER);
-                unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, false, EconomyValues.AMOUNT_ROOK_OTHER);
-
-                unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, true, EconomyValues.AMOUNT_BISHOP_MASTER);
-                unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, false, EconomyValues.AMOUNT_BISHOP_OTHER);
-
-
-                inventorResCom.SetAmountResources(ResourceTypes.Food, true, EconomyValues.AMOUNT_FOOD_MASTER);
-                inventorResCom.SetAmountResources(ResourceTypes.Wood, true, EconomyValues.AMOUNT_WOOD_MASTER);
-                inventorResCom.SetAmountResources(ResourceTypes.Ore, true, EconomyValues.AMOUNT_ORE_MASTER);
-                inventorResCom.SetAmountResources(ResourceTypes.Iron, true, EconomyValues.AMOUNT_IRON_MASTER);
-                inventorResCom.SetAmountResources(ResourceTypes.Gold, true, EconomyValues.AMOUNT_GOLD_MASTER);
-
-                inventorResCom.SetAmountResources(ResourceTypes.Food, false, EconomyValues.AMOUNT_FOOD_OTHER);
-                inventorResCom.SetAmountResources(ResourceTypes.Wood, false, EconomyValues.AMOUNT_WOOD_OTHER);
-                inventorResCom.SetAmountResources(ResourceTypes.Ore, false, EconomyValues.AMOUNT_ORE_OTHER);
-                inventorResCom.SetAmountResources(ResourceTypes.Iron, false, EconomyValues.AMOUNT_IRON_OTHER);
-                inventorResCom.SetAmountResources(ResourceTypes.Gold, false, EconomyValues.AMOUNT_GOLD_OTHER);
-
-            }
-
-            else
-            {
-                CameraComponent.SetRotation(new Quaternion(0, 0, 180, 0));
-                CameraComponent.SetPosition(Main.Instance.transform.position + CameraComponent.PosForCamera + new Vector3(0, 0.5f, 0));
-            }
-
-
-
-
-
-
-
-
 
 
 
@@ -331,7 +221,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             var leftZone_GO = CanvasComponent.FindUnderParent("LeftZone");
             var rightZone_GO = CanvasComponent.FindUnderParent("RightZone");
 
-            var uIEnt = _currentGameWorld.NewEntity()
+            _currentGameWorld.NewEntity()
                 ///Up
                 //.Replace(new EconomyDataUICom(new Dictionary<ResourceTypes, Dictionary<bool, int>>()))
                 .Replace(new EconomyViewUICom(upZone_GO))
@@ -342,9 +232,10 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new EndGameViewUIComponent(centerZone_GO))
                 .Replace(new ReadyViewUICom(centerZone_GO.transform.Find("ReadyZone").gameObject))
                 .Replace(new ReadyDataUICom(new Dictionary<bool, bool>()))
-                .Replace(new MotionsViewUIComponent(centerZone_GO.transform.Find("MotionZone").transform.Find("MotionText").GetComponent<TextMeshProUGUI>()))
+                .Replace(new MotionsViewUIComponent(centerZone_GO))
                 .Replace(new MotionsDataUIComponent())
-                .Replace(new MistakeViewUICom(centerZone_GO.transform.Find("MistakeZone").transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>()))
+                .Replace(new MistakeViewUICom(centerZone_GO))
+                .Replace(new MistakeDataUICom(new Dictionary<ResourceTypes, bool>()))
 
                 ///Down
                 .Replace(new TakerUnitsViewUICom(downZone_GO))
@@ -358,15 +249,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                 ///Right
                 .Replace(new UnitZoneViewUICom(rightZone_GO));
-
-
-            if (PhotonNetwork.IsMasterClient)
-            {
-                if (SaverComponent.StepModeType == StepModeTypes.ByQueue)
-                {
-                    uIEnt.Get<DonerDataUIComponent>().SetDoned(false, true);
-                }
-            }
         }
     }
 }

@@ -13,8 +13,8 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
 
     private EcsFilter<ForSettingUnitMasCom> _setterFilter = default;
     private EcsFilter<InventorUnitsComponent> _unitInventorFilter = default;
-    private EcsFilter<IdxUnitsComponent> _idxUnitsFilter = default;
-    private EcsFilter<IdxUnitsInConditionCom> _idxUnitsInCondFilter = default;
+    private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
+    private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
 
     private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
     private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;

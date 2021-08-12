@@ -1,50 +1,50 @@
-﻿using Leopotam.Ecs;
+﻿//using Leopotam.Ecs;
 
-namespace Assets.Scripts.ECS.Systems.General.UI.RunUpdate.CenterZone
-{
-    internal sealed class MistakeBarUISystem : IEcsInitSystem, IEcsRunSystem
-    {
-        private float _neededTimeForFading = 1.3f;
-        private float _currentTime;
+//namespace Assets.Scripts.ECS.Systems.General.UI.RunUpdate.CenterZone
+//{
+//    internal sealed class MistakeBarUISystem : IEcsInitSystem, IEcsRunSystem
+//    {
+//        private float _neededTimeForFading = 1.3f;
+//        private float _currentTime;
 
-        public void Init()
-        {
-            //MiddleVisUIWorker.AddListenerMistakeBar(ActiveBar);
-        }
+//        public void Init()
+//        {
+//            //MiddleVisUIWorker.AddListenerMistakeBar(ActiveBar);
+//        }
 
-        public void Run()
-        {
-            //switch (MiddleVisUIWorker.MistakeTypeBar)
-            //{
-            //    case MistakeTypes.None:
-            //        MiddleVisUIWorker.SetActiveMistakeBar(false);
-            //        break;
+//        public void Run()
+//        {
+//            //switch (MiddleVisUIWorker.MistakeTypeBar)
+//            //{
+//            //    case MistakeTypes.None:
+//            //        MiddleVisUIWorker.SetActiveMistakeBar(false);
+//            //        break;
 
-            //    case MistakeTypes.EconomyType:
-            //        MiddleVisUIWorker.TextMistakeBar = "Need more resources";
-            //        MiddleVisUIWorker.SetActiveMistakeBar(true);
+//            //    case MistakeTypes.EconomyType:
+//            //        MiddleVisUIWorker.TextMistakeBar = "Need more resources";
+//            //        MiddleVisUIWorker.SetActiveMistakeBar(true);
 
-            //        _currentTime += Time.deltaTime;
+//            //        _currentTime += Time.deltaTime;
 
-            //        if (_currentTime >= _neededTimeForFading)
-            //        {
-            //            _currentTime = 0;
-            //            MiddleVisUIWorker.SetActiveMistakeBar(false);
-            //            MiddleVisUIWorker.MistakeTypeBar = default;
-            //        }
-            //        break;
+//            //        if (_currentTime >= _neededTimeForFading)
+//            //        {
+//            //            _currentTime = 0;
+//            //            MiddleVisUIWorker.SetActiveMistakeBar(false);
+//            //            MiddleVisUIWorker.MistakeTypeBar = default;
+//            //        }
+//            //        break;
 
-            //    case MistakeTypes.UnitType:
-            //        break;
+//            //    case MistakeTypes.UnitType:
+//            //        break;
 
-            //    default:
-            //        throw new Exception();
-            //}
-        }
+//            //    default:
+//            //        throw new Exception();
+//            //}
+//        }
 
-        private void ActiveBar()
-        {
+//        private void ActiveBar()
+//        {
 
-        }
-    }
-}
+//        }
+//    }
+//}

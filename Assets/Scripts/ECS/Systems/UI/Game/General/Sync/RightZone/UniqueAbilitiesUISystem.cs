@@ -6,6 +6,7 @@ using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using Photon.Pun;
+using UnityEngine;
 
 internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
 {
@@ -21,6 +22,8 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
 
     public void Run()
     {
+        ref var unitZoneViewCom = ref _unitZoneUIFilter.Get1(0);
+
         ref var selCellUnitDataCom = ref _cellUnitFilter.Get1(IdxSelCell);
         ref var selOwnerCellUnitCom = ref _cellUnitFilter.Get2(IdxSelCell);
         ref var selBotOnwerCellUnitCom = ref _cellUnitFilter.Get3(IdxSelCell);
@@ -36,73 +39,80 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
             {
                 if (selOwnerCellUnitCom.IsMine)
                 {
-                    _unitZoneUIFilter.Get1(0).RemoveAllListenersInUniqueButton(UniqueButtonTypes.First);
-                    _unitZoneUIFilter.Get1(0).RemoveAllListenersInUniqueButton(UniqueButtonTypes.Second);
-                    _unitZoneUIFilter.Get1(0).RemoveAllListenersInUniqueButton(UniqueButtonTypes.Third);
+                    unitZoneViewCom.RemoveAllListenersInUniqueButton(UniqueButtonTypes.First);
+                    unitZoneViewCom.RemoveAllListenersInUniqueButton(UniqueButtonTypes.Second);
+                    unitZoneViewCom.RemoveAllListenersInUniqueButton(UniqueButtonTypes.Third);
 
-                    _unitZoneUIFilter.Get1(0).SetActiveUniqeButton(UniqueButtonTypes.Second, false);
-                    _unitZoneUIFilter.Get1(0).SetActiveUniqeButton(UniqueButtonTypes.Third, false);
+                    unitZoneViewCom.SetActiveUniqeButton(UniqueButtonTypes.Second, false);
+                    unitZoneViewCom.SetActiveUniqeButton(UniqueButtonTypes.Third, false);
 
 
                     if (selCellUnitDataCom.IsUnitType(UnitTypes.King))
                     {
-                        _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Unique, true);
-                        _unitZoneUIFilter.Get1(0).SetActiveUniqeButton(UniqueButtonTypes.First, true);
+                        unitZoneViewCom.SetActiveUnitZone(UnitUIZoneTypes.Unique, true);
+                        unitZoneViewCom.SetActiveUniqeButton(UniqueButtonTypes.First, true);
 
-                        _unitZoneUIFilter.Get1(0).AddListenerToUniqueButton(UniqueButtonTypes.First, CircularAttackKing);
+                        unitZoneViewCom.AddListenerToUniqueButton(UniqueButtonTypes.First, CircularAttackKing);
+
+                        unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, "Circular Attack");
+
+                        unitZoneViewCom.SetColoToUniqueAbilityButton(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
                     }
                     else
                     {
                         if (selCellUnitDataCom.IsMelee)
                         {
-                            _unitZoneUIFilter.Get1(0).SetActiveUniqeButton(UniqueButtonTypes.First, true);
+                            unitZoneViewCom.SetActiveUniqeButton(UniqueButtonTypes.First, true);
 
-                            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Unique, true);
-                            _unitZoneUIFilter.Get1(0).SetActiveUniqeButton(UniqueButtonTypes.First, true);
+                            unitZoneViewCom.SetActiveUnitZone(UnitUIZoneTypes.Unique, true);
+                            unitZoneViewCom.SetActiveUniqeButton(UniqueButtonTypes.First, true);
 
                             if (selCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
                             {
-                                _unitZoneUIFilter.Get1(0).AddListenerToUniqueButton(UniqueButtonTypes.First, delegate { Fire(IdxSelCell, IdxSelCell); });
+                                unitZoneViewCom.AddListenerToUniqueButton(UniqueButtonTypes.First, delegate { Fire(IdxSelCell, IdxSelCell); });
                                 if (selCellFireDataCom.HaveFire)
                                 {
-                                    _unitZoneUIFilter.Get1(0).SetTextToUnique(UniqueButtonTypes.First, "Put Out FIRE");
+                                    unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, "Put Out FIRE");
                                 }
                                 else
                                 {
-                                    _unitZoneUIFilter.Get1(0).SetTextToUnique(UniqueButtonTypes.First, "Fire forest");
+                                    unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, "Fire forest");
                                 }
-
+                                unitZoneViewCom.SetColoToUniqueAbilityButton(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
                             }
                             else
                             {
-                                _unitZoneUIFilter.Get1(0).AddListenerToUniqueButton(UniqueButtonTypes.First, delegate { SeedEnvironment(EnvironmentTypes.YoungForest); });
-                                _unitZoneUIFilter.Get1(0).SetTextToUnique(UniqueButtonTypes.First, "Seed Forest");
+                                unitZoneViewCom.AddListenerToUniqueButton(UniqueButtonTypes.First, delegate { SeedEnvironment(EnvironmentTypes.YoungForest); });
+                                unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, "Seed Forest");
+                                unitZoneViewCom.SetColoToUniqueAbilityButton(UniqueButtonTypes.First, new Color(0.5f, 1, 0.5f, 1));
                             }
                         }
 
                         else
                         {
-                            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Unique, true);
-                            _unitZoneUIFilter.Get1(0).SetActiveUniqeButton(UniqueButtonTypes.First, true);
-                            _unitZoneUIFilter.Get1(0).AddListenerToUniqueButton(UniqueButtonTypes.First, ActiveFireSelector);
+                            unitZoneViewCom.SetActiveUnitZone(UnitUIZoneTypes.Unique, true);
+                            unitZoneViewCom.SetActiveUniqeButton(UniqueButtonTypes.First, true);
+                            unitZoneViewCom.AddListenerToUniqueButton(UniqueButtonTypes.First, ActiveFireSelector);
+                            unitZoneViewCom.SetColoToUniqueAbilityButton(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
+                            unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, "Fire forest");
                         }
                     }
                 }
 
                 else
                 {
-                    _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Unique, false);
+                    unitZoneViewCom.SetActiveUnitZone(UnitUIZoneTypes.Unique, false);
                 }
             }
             else if (selBotOnwerCellUnitCom.IsBot)
             {
-                _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Unique, false);
+                unitZoneViewCom.SetActiveUnitZone(UnitUIZoneTypes.Unique, false);
             }
         }
 
         else
         {
-            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Unique, false);
+            unitZoneViewCom.SetActiveUnitZone(UnitUIZoneTypes.Unique, false);
         }
     }
 

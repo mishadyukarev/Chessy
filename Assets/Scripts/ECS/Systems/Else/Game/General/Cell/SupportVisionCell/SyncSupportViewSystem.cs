@@ -2,6 +2,8 @@
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Components;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -9,8 +11,10 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellDataComponent> _cellDataFilter = default;
-    private EcsFilter<CellUnitDataComponent, CellUnitViewComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerComponent, CellUnitViewComponent> _cellUnitFilter = default;
     private EcsFilter<CellSupViewComponent> _cellSupViewFilter = default;
+    private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+    private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
     private EcsFilter<SelectorComponent> _selectorFilter = default;
     private EcsFilter<IdxAvailableCellsComponent> _idxAvailCellsFilter = default;
@@ -23,7 +27,8 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
         foreach (var idxCurCell in _xyCellFilter)
         {
             ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
-            ref var curCellUnitViewCom = ref _cellUnitFilter.Get2(idxCurCell);
+            ref var curOwnerCellUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
+            ref var curCellUnitViewCom = ref _cellUnitFilter.Get3(idxCurCell);
             ref var curCellDataCom = ref _cellDataFilter.Get1(idxCurCell);
             ref var curCellSupViewCom = ref _cellSupViewFilter.Get1(idxCurCell);
 
@@ -47,21 +52,6 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                 {
                     curCellSupViewCom.EnableSR();
                     curCellSupViewCom.SetColor(SupportVisionTypes.Selector);
-
-
-                    //if (selCom.SelectorType == SelectorTypes.PickFire)
-                    //{
-                    //    foreach (var xy1 in CellSpaceSupport.TryGetXyAround(selCom.XySelectedCell))
-                    //    {
-                    //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy1))
-                    //        {
-                    //            if (!CellFireDataSystem.HaveFireCom(xy1).HaveFire)
-                    //            {
-                    //                CellSupViewSystem.EnableSupVis(SupportVisionTypes.FireSelector, xy1);
-                    //            }
-                    //        }
-                    //    }
-                    //}
                 }
                 else
                 {
@@ -73,42 +63,46 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
             {
                 curCellSupViewCom.DisableSR();
             }
-        }
 
 
-        if (selCom.CellClickType == CellClickTypes.UpgradeUnit)
-        {
-            //foreach (var xy in xyUnitsCom.GetLixtXyUnits(UnitTypes.Pawn, PhotonNetwork.IsMasterClient))
-            //{
-            //    if (CellUnitsDataSystem.HaveOwner(xy))
-            //    {
-            //        if (CellUnitsDataSystem.IsMine(xy))
-            //        {
-            //            CellSupViewSystem.EnableSupVis(SupportVisionTypes.Upgrade, xy);
-            //        }
-            //    }
-            //}
-            //foreach (var xy in xyUnitsCom.GetLixtXyUnits(UnitTypes.Rook, PhotonNetwork.IsMasterClient))
-            //{
-            //    if (CellUnitsDataSystem.HaveOwner(xy))
-            //    {
-            //        if (CellUnitsDataSystem.IsMine(xy))
-            //        {
-            //            CellSupViewSystem.EnableSupVis(SupportVisionTypes.Upgrade, xy);
-            //        }
-            //    }
-            //}
-            //foreach (var xy in xyUnitsCom.GetLixtXyUnits(UnitTypes.Bishop, PhotonNetwork.IsMasterClient))
-            //{
-            //    if (CellUnitsDataSystem.HaveOwner(xy))
-            //    {
-            //        if (CellUnitsDataSystem.IsMine(xy))
-            //        {
-            //            CellSupViewSystem.EnableSupVis(SupportVisionTypes.Upgrade, xy);
-            //        }
-            //    }
-            //}
+            if (selCom.CellClickType == CellClickTypes.PickFire)
+            {
+                foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(selCom.IdxSelectedCell)))
+                {
+                    var curIdxCell = _xyCellFilter.GetIndexCell(xy1);
+
+                    ref var idx1CellEnvDataCom = ref _cellEnvFilter.Get1(curIdxCell);
+                    ref var idx1CellFireDataCom = ref _cellFireFilter.Get1(curIdxCell);
+                    ref var idx1CellSupViewCom = ref _cellSupViewFilter.Get1(curIdxCell);
+
+                    if (idx1CellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                    {
+                        if (!idx1CellFireDataCom.HaveFire)
+                        {
+                            idx1CellSupViewCom.EnableSR();
+                            idx1CellSupViewCom.SetColor(SupportVisionTypes.FireSelector);
+                        }
+                    }
+                }
+            }
+
+
+            if (selCom.CellClickType == CellClickTypes.UpgradeUnit)
+            {
+                if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
+                {
+                    if (curOwnerCellUnitCom.HaveOwner)
+                    {
+                        if (curOwnerCellUnitCom.IsMine)
+                        {
+                            curCellSupViewCom.EnableSR();
+                            curCellSupViewCom.SetColor(SupportVisionTypes.Upgrade);
+                        }
+                    }
+                }
+            }
         }
+        
 
 
         foreach (var curIdxCell in _idxAvailCellsFilter.Get1(0).GetAllCellsCopy(AvailableCellTypes.Shift))

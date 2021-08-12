@@ -1,117 +1,123 @@
-﻿using Leopotam.Ecs;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Game;
+using Assets.Scripts.ECS.Component.Game.Master;
+using Leopotam.Ecs;
+using System;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
-    internal class UpgradeMasterSystem : IEcsInitSystem, IEcsRunSystem
+    internal class UpgradeMasterSystem : IEcsRunSystem
     {
-        //private EcsWorld _currentGameWorld;
-        //private EcsFilter<UpgradesBuildingsComponent> _upgradeBuildsFilter;
-        //private EcsFilter<InfoMasCom> _infoFilter;
-        //private EcsFilter<UpgradeMasCom, XyCellForDoingMasCom> _upgradeFilter;
-        //private EcsFilter<XyUnitsComponent> _xyUnitsFilter;
-        //private EcsFilter<InventorResourcesComponent> _inventResFilt;
+        private EcsFilter<InfoMasCom> _infoFilter = default;
+        private EcsFilter<ForUpgradeMasCom> _forUpgradeFilter = default;
 
-        //private const byte FOR_NEXT_UPGRADE = 1;
+        private EcsFilter<UpgradesBuildingsComponent> _upgradeBuildsFilter = default;
+        private EcsFilter<UnitsInGameInfoComponent> _unitsInGameFilter = default;
+        private EcsFilter<UnitsInConditionInGameCom> _unitsInCondFilter = default;
+        private EcsFilter<InventorResourcesComponent> _inventResFilt = default;
 
-        //private Player Sender => _infoFilter.Get1(0).FromInfo.Sender;
+        private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
 
-        //private UpgradeModTypes UpgradeModType => _upgradeFilter.Get1(0).UpgradeModType;
-        //private int[] XyCellForUpgrade => _upgradeFilter.Get2(0).XyCellForDoing;
-
-
-        //private UnitTypes CurrentUnitType => CellUnitsDataSystem.UnitType(XyCellForUpgrade);
-        //private UnitTypes NeededUnitTypeForUpgrade => CellUnitsDataSystem.UnitType(XyCellForUpgrade) + FOR_NEXT_UPGRADE;
-        //private BuildingTypes NeededBuildingTypeForUpgrade => _upgradeFilter.Get1(0).BuildingType;
-
-
-        public void Init()
-        {
-            //_currentGameWorld.NewEntity()
-            //    .Replace(new UpgradeMasCom())
-            //    .Replace(new XyCellForDoingMasCom(new int[2]));
-        }
+        private const byte FOR_NEXT_UPGRADE = 1;
 
         public void Run()
         {
-            //    ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
-            //    ref var invResCom = ref _inventResFilt.Get1(0);
+            ref var infoCom = ref _infoFilter.Get1(0);
+            var forUpgradeCom = _forUpgradeFilter.Get1(0);
 
-            //    bool[] haves;
+            var sender = infoCom.FromInfo.Sender;
+            var idxForUpgradeUnit = forUpgradeCom.IdxForUpgradeUnit;
 
-            //    switch (UpgradeModType)
-            //    {
-            //        case UpgradeModTypes.None:
-            //            break;
+            ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxForUpgradeUnit);
+            ref var curOwnerCellUnitDataCom = ref _cellUnitFilter.Get2(idxForUpgradeUnit);
 
-            //        case UpgradeModTypes.Unit:
-            //            if (CellUnitsDataSystem.HaveAnyUnit(XyCellForUpgrade))
-            //            {
-            //                if (CellUnitsDataSystem.HaveOwner(XyCellForUpgrade))
-            //                {
-            //                    if (CellUnitsDataSystem.IsHim(Sender, XyCellForUpgrade))
-            //                    {
-            //                        if (invResCom.CanUpgradeUnit(Sender, CurrentUnitType, out haves))
-            //                        {
-            //                            invResCom.BuyUpgradeUnit(Sender, CurrentUnitType);
+            ref var unitsInGameCom = ref _unitsInGameFilter.Get1(0);
+            ref var unitsInCondCom = ref _unitsInCondFilter.Get1(0);
+            ref var inventResCom = ref _inventResFilt.Get1(0);
 
 
-            //                            var preConditionType = CellUnitsDataSystem.ConditionType(XyCellForUpgrade);
-            //                            var preUnitType = CellUnitsDataSystem.UnitType(XyCellForUpgrade);
-            //                            var preKey = CellUnitsDataSystem.IsMasterClient(XyCellForUpgrade);
-            //                            var preMaxHealth = CellUnitsDataSystem.MaxAmountHealth(preUnitType);
 
-            //                            MainGameSystem.XyUnitsContitionCom.RemoveUnitInCondition(preConditionType, preUnitType, preKey, XyCellForUpgrade);
-            //                            xyUnitsCom.RemoveAmountUnitsInGame(preUnitType, preKey, XyCellForUpgrade);
+            bool[] haves;
+
+            switch (forUpgradeCom.UpgradeModType)
+            {
+                case UpgradeModTypes.None:
+                    throw new Exception();
+
+                case UpgradeModTypes.Unit:
+                    if (curCellUnitDataCom.HaveUnit)
+                    {
+                        if (curOwnerCellUnitDataCom.HaveOwner)
+                        {
+                            if (curOwnerCellUnitDataCom.IsHim(sender))
+                            {
+                                if (inventResCom.CanUpgradeUnit(sender, curCellUnitDataCom.UnitType, out haves))
+                                {
+                                    inventResCom.BuyUpgradeUnit(sender, curCellUnitDataCom.UnitType);
 
 
-            //                            CellUnitsDataSystem.SetUnitType(NeededUnitTypeForUpgrade, XyCellForUpgrade);
+                                    var preConditionType = curCellUnitDataCom.ConditionType;
+                                    var preUnitType = curCellUnitDataCom.UnitType;
+                                    var preKey = curOwnerCellUnitDataCom.IsMasterClient;
+                                    var preMaxHealth = curCellUnitDataCom.MaxAmountHealth;
 
-            //                            var newUnitType = CellUnitsDataSystem.UnitType(XyCellForUpgrade);
-            //                            var newMaxHealth = CellUnitsDataSystem.MaxAmountHealth(newUnitType);
-
-            //                            CellUnitsDataSystem.AddAmountHealth(XyCellForUpgrade, newMaxHealth - preMaxHealth);
-
-            //                            xyUnitsCom.AddAmountUnitInGame(newUnitType, preKey, XyCellForUpgrade);
-            //                            MainGameSystem.XyUnitsContitionCom.AddUnitInCondition(preConditionType, newUnitType, preKey, XyCellForUpgrade);
+                                    unitsInCondCom.RemoveUnitInCondition(preConditionType, preUnitType, preKey, idxForUpgradeUnit);
+                                    unitsInGameCom.RemoveAmountUnitsInGame(preUnitType, preKey, idxForUpgradeUnit);
 
 
-            //                            if (CellUnitsDataSystem.IsMelee(XyCellForUpgrade))
-            //                            {
-            //                                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.UpgradeUnitMelee);
-            //                            }
-            //                            else
-            //                            {
-            //                                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.UpgradeUnitArcher);
-            //                            }
-            //                        }
-            //                        else
-            //                        {
-            //                            RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
-            //                            RPCGameSystem.MistakeEconomyToGeneral(Sender, haves);
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //            break;
+                                    curCellUnitDataCom.ChangePlayerUnit(curCellUnitDataCom.UnitType + FOR_NEXT_UPGRADE);
 
-            //        case UpgradeModTypes.Building:
-            //            if (invResCom.CanUpgradeBuildings(Sender, NeededBuildingTypeForUpgrade, out haves))
-            //            {
-            //                invResCom.BuyUpgradeBuildings(Sender, NeededBuildingTypeForUpgrade);
-            //                _upgradeBuildsFilter.Get1(0).AddAmountUpgrades(NeededBuildingTypeForUpgrade, Sender.IsMasterClient);
 
-            //                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.SoundGoldPack);
-            //            }
-            //            else
-            //            {
-            //                RPCGameSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
-            //                RPCGameSystem.MistakeEconomyToGeneral(Sender, haves);
-            //            }
-            //            break;
+                                    var newUnitType = curCellUnitDataCom.UnitType;
+                                    var newMaxHealth = curCellUnitDataCom.MaxAmountHealth;
 
-            //        default:
-            //            break;
-            //    }
+                                    //curCellUnitDataCom.AddAmountHealth(newMaxHealth - preMaxHealth);
+
+                                    unitsInGameCom.AddAmountUnitInGame(newUnitType, preKey, idxForUpgradeUnit);
+                                    unitsInCondCom.AddUnitInCondition(preConditionType, newUnitType, preKey, idxForUpgradeUnit);
+
+
+                                    if (curCellUnitDataCom.IsMelee)
+                                    {
+                                        RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitMelee);
+                                    }
+                                    else
+                                    {
+                                        RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitArcher);
+                                    }
+                                }
+                                else
+                                {
+                                    RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                                    RPCGameSystem.MistakeEconomyToGeneral(sender, haves);
+                                }
+                            }
+                        }
+                    }
+                    break;
+
+                case UpgradeModTypes.Building:
+
+                    var buildTypeForUpgrade = _forUpgradeFilter.Get1(0).BuildingType;
+
+                    if (inventResCom.CanUpgradeBuildings(sender, buildTypeForUpgrade, out haves))
+                    {
+                        inventResCom.BuyUpgradeBuildings(sender, buildTypeForUpgrade);
+                        _upgradeBuildsFilter.Get1(0).AddAmountUpgrades(buildTypeForUpgrade, sender.IsMasterClient);
+
+                        RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
+                    }
+                    else
+                    {
+                        RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                        RPCGameSystem.MistakeEconomyToGeneral(sender, haves);
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
     }
 }

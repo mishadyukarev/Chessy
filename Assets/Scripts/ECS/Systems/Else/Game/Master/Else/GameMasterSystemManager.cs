@@ -32,7 +32,7 @@ public sealed class GameMasterSystemManager : SystemAbstManager
     internal GameMasterSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld)
     {
         InitSystems
-            .Add(new MainMasterSystem());
+            .Add(new InitGameMasterSystem());
 
 
         BuilderSystems = new EcsSystems(gameWorld)

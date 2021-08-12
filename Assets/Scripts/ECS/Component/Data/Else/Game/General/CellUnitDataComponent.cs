@@ -5,6 +5,52 @@ using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
 
 internal struct CellUnitDataComponent
 {
+    internal UnitTypes UnitType { get; set; }
+    internal bool HaveUnit => UnitType != UnitTypes.None;
+    internal void ResetUnitType() => UnitType = default;
+    internal bool IsUnitType(UnitTypes unitType) => UnitType == unitType;
+    internal bool IsUnitType(UnitTypes[] unitTypes)
+    {
+        foreach (var curUnitType in unitTypes) if (IsUnitType(curUnitType)) return true;
+        return false;
+    }
+    internal bool IsMelee
+    {
+        get
+        {
+            switch (UnitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    return true;
+
+                case UnitTypes.Pawn:
+                    return true;
+
+                case UnitTypes.PawnSword:
+                    return true;
+
+                case UnitTypes.Rook:
+                    return false;
+
+                case UnitTypes.RookCrossbow:
+                    return false;
+
+                case UnitTypes.Bishop:
+                    return false;
+
+                case UnitTypes.BishopCrossbow:
+                    return false;
+
+                default:
+                    throw new Exception();
+            }
+        }
+    }
+
+
     private Dictionary<bool, bool> _isVisibleDict;
     internal bool IsVisibleUnit(bool key) => _isVisibleDict[key];
     internal void SetIsVisibleUnit(bool key, bool value) => _isVisibleDict[key] = value;
@@ -13,8 +59,6 @@ internal struct CellUnitDataComponent
     internal ConditionUnitTypes ConditionType { get; set; }
     internal void ResetConditionType() => ConditionType = default;
     internal bool IsConditionType(ConditionUnitTypes conditionUnitType) => ConditionType == conditionUnitType;
-
-
 
 
     internal Dictionary<ConditionUnitTypes, int> _amountStepsInCondition;
@@ -26,11 +70,10 @@ internal struct CellUnitDataComponent
     internal void ResetAmountStepsInProtectRelax(ConditionUnitTypes conditionUnitType) => _amountStepsInCondition[conditionUnitType] = default;
 
 
-
-
     internal int AmountSteps { get; set; }
     internal void AddAmountSteps(int adding = 1) => AmountSteps += adding;
     internal void TakeAmountSteps(int taking = 1) => AmountSteps -= taking;
+
 
     internal bool HaveMaxAmountSteps
     {
@@ -110,56 +153,10 @@ internal struct CellUnitDataComponent
     }
 
 
-
-    internal UnitTypes UnitType { get; set; }
-    internal bool HaveUnit => UnitType != UnitTypes.None;
-    internal void ResetUnitType() => UnitType = default;
-    internal bool IsUnitType(UnitTypes unitType) => UnitType == unitType;
-    internal bool IsUnitType(UnitTypes[] unitTypes)
-    {
-        foreach (var curUnitType in unitTypes) if (IsUnitType(curUnitType)) return true;
-        return false;
-    }
-    internal bool IsMelee
-    {
-        get
-        {
-            switch (UnitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    return true;
-
-                case UnitTypes.Pawn:
-                    return true;
-
-                case UnitTypes.PawnSword:
-                    return true;
-
-                case UnitTypes.Rook:
-                    return false;
-
-                case UnitTypes.RookCrossbow:
-                    return false;
-
-                case UnitTypes.Bishop:
-                    return false;
-
-                case UnitTypes.BishopCrossbow:
-                    return false;
-
-                default:
-                    throw new Exception();
-            }
-        }
-    }
-
-
     internal int AmountHealth { get; set; }
     internal void AddAmountHealth(int adding = 1) => AmountHealth += adding;
     internal void TakeAmountHealth(int taking = 1) => AmountHealth -= taking;
+
 
     internal int MaxAmountHealth
     {
@@ -239,7 +236,6 @@ internal struct CellUnitDataComponent
     }
 
 
-
     internal int SimplePowerDamage
     {
         get
@@ -310,220 +306,220 @@ internal struct CellUnitDataComponent
             }
         }
     }
-    //internal int PowerProtection
-    //{
-    //    get
-    //    {
-    //        int powerProtection = 0;
+    internal int PowerProtection
+    {
+        get
+        {
+            return default;
+            //int powerProtection = 0;
 
-    //        if (IsConditionType(ConditionUnitTypes.Protected))
-    //        {
-    //            switch (UnitType)
-    //            {
-    //                case UnitTypes.King:
-    //                    powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_KING);
-    //                    break;
+            //if (IsConditionType(ConditionUnitTypes.Protected))
+            //{
+            //    switch (UnitType)
+            //    {
+            //        case UnitTypes.King:
+            //            powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_KING);
+            //            break;
 
-    //                case UnitTypes.Pawn:
-    //                    powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_PAWN);
-    //                    break;
+            //        case UnitTypes.Pawn:
+            //            powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_PAWN);
+            //            break;
 
-    //                case UnitTypes.PawnSword:
-    //                    powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_PAWN_SWORD);
-    //                    break;
+            //        case UnitTypes.PawnSword:
+            //            powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_PAWN_SWORD);
+            //            break;
 
-    //                case UnitTypes.Rook:
-    //                    powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK);
-    //                    break;
+            //        case UnitTypes.Rook:
+            //            powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK);
+            //            break;
 
-    //                case UnitTypes.RookCrossbow:
-    //                    powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK_CROSSBOW);
-    //                    break;
+            //        case UnitTypes.RookCrossbow:
+            //            powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK_CROSSBOW);
+            //            break;
 
-    //                case UnitTypes.Bishop:
-    //                    powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP);
-    //                    break;
+            //        case UnitTypes.Bishop:
+            //            powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP);
+            //            break;
 
-    //                case UnitTypes.BishopCrossbow:
-    //                    powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP_CROSSBOW);
-    //                    break;
-    //            }
-    //        }
+            //        case UnitTypes.BishopCrossbow:
+            //            powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP_CROSSBOW);
+            //            break;
+            //    }
+            //}
 
-    //        else if (IsConditionType(ConditionUnitTypes.Relaxed))
-    //        {
-    //            switch (UnitType)
-    //            {
-    //                case UnitTypes.King:
-    //                    powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_KING);
-    //                    break;
+            //else if (IsConditionType(ConditionUnitTypes.Relaxed))
+            //{
+            //    switch (UnitType)
+            //    {
+            //        case UnitTypes.King:
+            //            powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_KING);
+            //            break;
 
-    //                case UnitTypes.Pawn:
-    //                    powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_PAWN);
-    //                    break;
+            //        case UnitTypes.Pawn:
+            //            powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_PAWN);
+            //            break;
 
-    //                case UnitTypes.PawnSword:
-    //                    powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_PAWN_SWORD);
-    //                    break;
+            //        case UnitTypes.PawnSword:
+            //            powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_PAWN_SWORD);
+            //            break;
 
-    //                case UnitTypes.Rook:
-    //                    powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK);
-    //                    break;
+            //        case UnitTypes.Rook:
+            //            powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK);
+            //            break;
 
-    //                case UnitTypes.RookCrossbow:
-    //                    powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK_CROSSBOW);
-    //                    break;
+            //        case UnitTypes.RookCrossbow:
+            //            powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK_CROSSBOW);
+            //            break;
 
-    //                case UnitTypes.Bishop:
-    //                    powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP);
-    //                    break;
+            //        case UnitTypes.Bishop:
+            //            powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP);
+            //            break;
 
-    //                case UnitTypes.BishopCrossbow:
-    //                    powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP_CROSSBOW);
-    //                    break;
-    //            }
-    //        }
-
-
-    //        switch (UnitType)
-    //        {
-    //            case UnitTypes.King:
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
-    //                    powerProtection -= PROTECTION_FOOD_FOR_KING;
-
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
-    //                    powerProtection += PROTECTION_TREE_FOR_KING;
-
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
-    //                    powerProtection += PROTECTION_HILL_FOR_KING;
-    //                break;
-
-    //            case UnitTypes.Pawn:
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
-    //                    powerProtection -= PROTECTION_FOOD_FOR_PAWN;
-
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
-    //                    powerProtection += PROTECTION_TREE_FOR_PAWN;
-
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
-    //                    powerProtection += PROTECTION_HILL_FOR_PAWN;
-    //                break;
+            //        case UnitTypes.BishopCrossbow:
+            //            powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP_CROSSBOW);
+            //            break;
+            //    }
+            //}
 
 
-    //            case UnitTypes.PawnSword:
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
-    //                    powerProtection -= PROTECTION_FOOD_FOR_PAWN_SWORD;
+            //switch (UnitType)
+            //{
+            //    case UnitTypes.King:
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+            //            powerProtection -= PROTECTION_FOOD_FOR_KING;
 
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
-    //                    powerProtection += PROTECTION_TREE_FOR_PAWN_SWORD;
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+            //            powerProtection += PROTECTION_TREE_FOR_KING;
 
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
-    //                    powerProtection += PROTECTION_HILL_FOR_PAWN_SWORD;
-    //                break;
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
+            //            powerProtection += PROTECTION_HILL_FOR_KING;
+            //        break;
 
+            //    case UnitTypes.Pawn:
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+            //            powerProtection -= PROTECTION_FOOD_FOR_PAWN;
 
-    //            case UnitTypes.Rook:
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
-    //                    powerProtection -= PROTECTION_FOOD_FOR_ROOK;
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+            //            powerProtection += PROTECTION_TREE_FOR_PAWN;
 
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
-    //                    powerProtection += PROTECTION_TREE_FOR_ROOK;
-
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
-    //                    powerProtection += PROTECTION_HILL_FOR_ROOK;
-    //                break;
-
-
-    //            case UnitTypes.RookCrossbow:
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
-    //                    powerProtection -= PROTECTION_FOOD_FOR_ROOK_CROSSBOW;
-
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
-    //                    powerProtection += PROTECTION_TREE_FOR_ROOK_CROSSBOW;
-
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
-    //                    powerProtection += PROTECTION_HILL_FOR_ROOK_CROSSBOW;
-    //                break;
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
+            //            powerProtection += PROTECTION_HILL_FOR_PAWN;
+            //        break;
 
 
-    //            case UnitTypes.Bishop:
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
-    //                    powerProtection -= PROTECTION_FOOD_FOR_BISHOP;
+            //    case UnitTypes.PawnSword:
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+            //            powerProtection -= PROTECTION_FOOD_FOR_PAWN_SWORD;
 
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
-    //                    powerProtection += PROTECTION_TREE_FOR_BISHOP;
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+            //            powerProtection += PROTECTION_TREE_FOR_PAWN_SWORD;
 
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
-    //                    powerProtection += PROTECTION_HILL_FOR_BISHOP;
-    //                break;
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
+            //            powerProtection += PROTECTION_HILL_FOR_PAWN_SWORD;
+            //        break;
 
 
-    //            case UnitTypes.BishopCrossbow:
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
-    //                    powerProtection -= PROTECTION_FOOD_FOR_BISHOP_CROSSBOW;
+            //    case UnitTypes.Rook:
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+            //            powerProtection -= PROTECTION_FOOD_FOR_ROOK;
 
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
-    //                    powerProtection += PROTECTION_TREE_FOR_BISHOP_CROSSBOW;
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+            //            powerProtection += PROTECTION_TREE_FOR_ROOK;
 
-    //                if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
-    //                    powerProtection += PROTECTION_HILL_FOR_BISHOP_CROSSBOW;
-    //                break;
-    //        }
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
+            //            powerProtection += PROTECTION_HILL_FOR_ROOK;
+            //        break;
 
-    //        switch (CellBuildDataSystem.BuildTypeCom(xy).BuildingType)
-    //        {
-    //            case BuildingTypes.City:
 
-    //                switch (UnitType)
-    //                {
-    //                    case UnitTypes.King:
-    //                        powerProtection += PROTECTION_CITY_KING;
-    //                        break;
+            //    case UnitTypes.RookCrossbow:
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+            //            powerProtection -= PROTECTION_FOOD_FOR_ROOK_CROSSBOW;
 
-    //                    case UnitTypes.Pawn:
-    //                        powerProtection += PROTECTION_CITY_PAWN;
-    //                        break;
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+            //            powerProtection += PROTECTION_TREE_FOR_ROOK_CROSSBOW;
 
-    //                    case UnitTypes.PawnSword:
-    //                        powerProtection += PROTECTION_CITY_PAWN_SWORD;
-    //                        break;
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
+            //            powerProtection += PROTECTION_HILL_FOR_ROOK_CROSSBOW;
+            //        break;
 
-    //                    case UnitTypes.Rook:
-    //                        powerProtection += PROTECTION_CITY_ROOK;
-    //                        break;
 
-    //                    case UnitTypes.RookCrossbow:
-    //                        powerProtection += PROTECTION_CITY_ROOK_CROSSBOW;
-    //                        break;
+            //    case UnitTypes.Bishop:
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+            //            powerProtection -= PROTECTION_FOOD_FOR_BISHOP;
 
-    //                    case UnitTypes.Bishop:
-    //                        powerProtection += PROTECTION_CITY_BISHOP;
-    //                        break;
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+            //            powerProtection += PROTECTION_TREE_FOR_BISHOP;
 
-    //                    case UnitTypes.BishopCrossbow:
-    //                        powerProtection += PROTECTION_CITY_BISHOP_CROSSBOW;
-    //                        break;
-    //                }
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
+            //            powerProtection += PROTECTION_HILL_FOR_BISHOP;
+            //        break;
 
-    //                break;
 
-    //            case BuildingTypes.Farm:
-    //                powerProtection += 5;
-    //                break;
+            //    case UnitTypes.BishopCrossbow:
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy))
+            //            powerProtection -= PROTECTION_FOOD_FOR_BISHOP_CROSSBOW;
 
-    //            case BuildingTypes.Woodcutter:
-    //                powerProtection += 5;
-    //                break;
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+            //            powerProtection += PROTECTION_TREE_FOR_BISHOP_CROSSBOW;
 
-    //            case BuildingTypes.Mine:
-    //                break;
-    //        }
+            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy))
+            //            powerProtection += PROTECTION_HILL_FOR_BISHOP_CROSSBOW;
+            //        break;
+            //}
 
-    //        return powerProtection;
+            //switch (CellBuildDataSystem.BuildTypeCom(xy).BuildingType)
+            //{
+            //    case BuildingTypes.City:
 
-    //    }
-    //}
+            //        switch (UnitType)
+            //        {
+            //            case UnitTypes.King:
+            //                powerProtection += PROTECTION_CITY_KING;
+            //                break;
 
+            //            case UnitTypes.Pawn:
+            //                powerProtection += PROTECTION_CITY_PAWN;
+            //                break;
+
+            //            case UnitTypes.PawnSword:
+            //                powerProtection += PROTECTION_CITY_PAWN_SWORD;
+            //                break;
+
+            //            case UnitTypes.Rook:
+            //                powerProtection += PROTECTION_CITY_ROOK;
+            //                break;
+
+            //            case UnitTypes.RookCrossbow:
+            //                powerProtection += PROTECTION_CITY_ROOK_CROSSBOW;
+            //                break;
+
+            //            case UnitTypes.Bishop:
+            //                powerProtection += PROTECTION_CITY_BISHOP;
+            //                break;
+
+            //            case UnitTypes.BishopCrossbow:
+            //                powerProtection += PROTECTION_CITY_BISHOP_CROSSBOW;
+            //                break;
+            //        }
+
+            //        break;
+
+            //    case BuildingTypes.Farm:
+            //        powerProtection += 5;
+            //        break;
+
+            //    case BuildingTypes.Woodcutter:
+            //        powerProtection += 5;
+            //        break;
+
+            //    case BuildingTypes.Mine:
+            //        break;
+            //}
+
+            //return powerProtection;
+
+        }
+    }
 
 
     internal void SetStandartValuesUnit(UnitTypes unitType, int amountHealth, int amountSteps, ConditionUnitTypes protectRelaxType)
@@ -533,14 +529,12 @@ internal struct CellUnitDataComponent
         AmountSteps = amountSteps;
         ConditionType = protectRelaxType;
     }
-    internal void ResetStandartValuesUnit()
+    internal void ResetUnit()
     {
-        UnitTypes unitType = default;
-        int amountHealth = default;
-        int amountSteps = default;
-        ConditionUnitTypes protectRelaxType = default;
-
-        SetStandartValuesUnit(unitType, amountHealth, amountSteps, protectRelaxType);
+        UnitType = default;
+        AmountHealth = default;
+        AmountSteps = default;
+        ConditionType = default;
     }
     internal void ChangePlayerUnit(UnitTypes newUnitType)
     {
@@ -579,7 +573,13 @@ internal struct CellUnitDataComponent
                 throw new Exception();
         }
     }
-
+    internal void ReplaceUnit(CellUnitDataComponent newCellUnitDataCom)
+    {
+        UnitType = newCellUnitDataCom.UnitType;
+        ConditionType = newCellUnitDataCom.ConditionType;
+        AmountSteps = newCellUnitDataCom.AmountSteps;
+        AmountHealth = newCellUnitDataCom.AmountHealth;
+    }
 
     internal CellUnitDataComponent(Dictionary<bool, bool> isVisibleDict) : this()
     {

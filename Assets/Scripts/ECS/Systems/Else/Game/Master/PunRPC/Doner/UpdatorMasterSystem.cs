@@ -26,8 +26,8 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
     private EcsFilter<MotionsDataUIComponent> _motionsUIFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
 
-    private EcsFilter<IdxUnitsComponent> _idxUnitsFilter = default;
-    private EcsFilter<IdxUnitsInConditionCom> _idxUnitsInCondFilter = default;
+    private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
+    private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
     private EcsFilter<BuildsInGameComponent> _idxBuildsFilter = default;
 
     public void Run()
@@ -115,18 +115,13 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                 curCellEnvDataCom.TakeAmountResources(EnvironmentTypes.Hill, minus);
                 inventorResCom.AddAmountResources(ResourceTypes.Ore, isMasterKey, minus);
 
-                curCellBuildDataCom.AddTimeSteps(minus);
-
-                if (curCellBuildDataCom.TimeSteps > 9
-                    || !curCellEnvDataCom.HaveResources(EnvironmentTypes.Hill))
+                if (!curCellEnvDataCom.HaveResources(EnvironmentTypes.Hill))
                 {
                     if (curOwnerCellBuildCom.HaveOwner)
                     {
                         idxBuildsCom.RemoveIdxBuild(BuildingTypes.Mine, isMasterKey, curIdxCell);
                     }
                     curCellBuildDataCom.ResetBuildType();
-
-                    curCellBuildDataCom.ResetTimeSteps();
                 }
             }
 
@@ -163,8 +158,6 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                     inventorResCom.AddAmountResources(ResourceTypes.Wood, isMasterKey);
                                     curCellEnvDataCom.TakeAmountResources(EnvironmentTypes.AdultForest);
 
-
-
                                     if (curCellBuildDataCom.HaveBuild)
                                     {
                                         if (curCellBuildDataCom.IsBuildType(BuildingTypes.Woodcutter))
@@ -197,6 +190,20 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                         }
                                     }
                                 }
+
+                                else if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.Hill))
+                                {
+                                    if (curCellEnvDataCom.GetAmountResources(EnvironmentTypes.Hill) < curCellEnvDataCom.MaxAmountResources(EnvironmentTypes.Hill))
+                                    {
+                                        curCellEnvDataCom.AddAmountResources(EnvironmentTypes.Hill);
+                                    }
+                                    else
+                                    {
+                                        curCellUnitDataCom.ConditionType = ConditionUnitTypes.Protected;
+                                        idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
+                                    }
+                                }
+
                                 else
                                 {
                                     curCellUnitDataCom.ConditionType = ConditionUnitTypes.Protected;
@@ -298,11 +305,11 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
                     if (!curCellUnitDataCom.HaveAmountHealth)
                     {
-                        curCellUnitDataCom.ResetStandartValuesUnit();
-                        curOwnerCellUnitDataCom.ResetOwner();
-
                         idxUnitsCom.RemoveAmountUnitsInGame(curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, curIdxCell);
                         idxUnitsInCondCom.RemoveUnitInCondition(curCellUnitDataCom.ConditionType, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, curIdxCell);
+
+                        curCellUnitDataCom.ResetUnit();
+                        curOwnerCellUnitDataCom.ResetOwner();
                     }
                 }
 

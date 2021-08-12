@@ -1,43 +1,40 @@
 ﻿using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Leopotam.Ecs;
 using System;
 using UnityEngine;
 
 namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
 {
-    internal sealed class CenterSupTextUISystem : IEcsInitSystem, IEcsRunSystem
+    internal sealed class CenterSupTextUISystem : IEcsRunSystem
     {
-        private EcsFilter<MistakeViewUICom> _mistakeUIFilter = default;
-
-        private MistakeTypes _mistakeType;
+        private EcsFilter<MistakeViewUICom, MistakeDataUICom> _mistakeUIFilter = default;
+        private EcsFilter<EconomyViewUICom> _economyUIFilter = default;
 
         private float _neededTimeForFading = 1.3f;
         private float _currentTime;
-
-        public void Init()
-        {
-            //MainGameSystem.MistakeCom.AddListenerEconomyMistake(ResourceTypes.Food, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
-            //MainGameSystem.MistakeCom.AddListenerEconomyMistake(ResourceTypes.Wood, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
-            //MainGameSystem.MistakeCom.AddListenerEconomyMistake(ResourceTypes.Ore, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
-            //MainGameSystem.MistakeCom.AddListenerEconomyMistake(ResourceTypes.Iron, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
-            //MainGameSystem.MistakeCom.AddListenerEconomyMistake(ResourceTypes.Gold, delegate { ExecuteMistakeText(MistakeTypes.Economy); });
-
-            //MainGameSystem.MistakeCom.AddListenerStepMistake(delegate { ExecuteMistakeText(MistakeTypes.NeedSteps); });
-
-            //MainGameSystem.MistakeCom.AddListenerNeedOtherPlaceMistake(delegate { ExecuteMistakeText(MistakeTypes.NeedOtherPlace); });
-        }
+        private bool _isStartedMistake = true;
 
         public void Run()
         {
             ref var mistakeViewUICom = ref _mistakeUIFilter.Get1(0);
+            ref var mistakeDataUICom = ref _mistakeUIFilter.Get2(0);
 
-            switch (_mistakeType)
+            switch (mistakeDataUICom.MistakeTypes)
             {
                 case MistakeTypes.None:
                     mistakeViewUICom.SetActiveParent(false);
                     break;
 
                 case MistakeTypes.Economy:
+                    for (ResourceTypes resourceType = (ResourceTypes)1; resourceType < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resourceType++)
+                    {
+                        if (mistakeDataUICom.GetNeedResources(resourceType))
+                        {
+                            _economyUIFilter.Get1(0).SetMainColor(resourceType, Color.red);
+                        }
+                    }
+
                     mistakeViewUICom.Text = "Need more resources";
                     mistakeViewUICom.SetActiveParent(true);
 
@@ -47,7 +44,13 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                     {
                         _currentTime = 0;
                         mistakeViewUICom.SetActiveParent(false);
-                        _mistakeType = default;
+                        mistakeDataUICom.ResetMistakeType();
+                        mistakeDataUICom.ClearAllNeeds();
+
+                        for (ResourceTypes resourceType = (ResourceTypes)1; resourceType < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resourceType++)
+                        {
+                            _economyUIFilter.Get1(0).SetMainColor(resourceType, Color.white);
+                        }
                     }
                     break;
 
@@ -64,7 +67,7 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                     {
                         _currentTime = 0;
                         mistakeViewUICom.SetActiveParent(false);
-                        _mistakeType = default;
+                        mistakeDataUICom.ResetMistakeType();
                     }
                     break;
 
@@ -78,7 +81,7 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                     {
                         _currentTime = 0;
                         mistakeViewUICom.SetActiveParent(false);
-                        _mistakeType = default;
+                        mistakeDataUICom.ResetMistakeType();
                     }
                     break;
 
@@ -86,12 +89,6 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                     throw new Exception();
 
             }
-        }
-
-        private void ExecuteMistakeText(MistakeTypes mistakeType)
-        {
-            _currentTime = default;
-            _mistakeType = mistakeType;
         }
     }
 }

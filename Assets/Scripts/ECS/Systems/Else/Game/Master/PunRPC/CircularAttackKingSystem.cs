@@ -10,10 +10,10 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
 {
     internal sealed class CircularAttackKingSystem : IEcsRunSystem
     {
-        private EcsFilter<InfoMasCom> _infoMastFilter;
-        private EcsFilter<ForCircularAttackMasCom> _forCircAttackFilter;
-        private EcsFilter<IdxUnitsComponent> _idxUnitsFilter;
-        private EcsFilter<IdxUnitsInConditionCom> _idxUnitsInCondFilter = default;
+        private EcsFilter<InfoMasCom> _infoMastFilter = default;
+        private EcsFilter<ForCircularAttackMasCom> _forCircAttackFilter = default;
+        private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
+        private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;

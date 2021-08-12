@@ -3,19 +3,19 @@ using Leopotam.Ecs;
 
 internal sealed class TheEndGameUISystem : IEcsRunSystem
 {
-    private EcsFilter<EndGameDataUIComponent, EndGameViewUIComponent> _endGameFilter;
+    private EcsFilter<EndGameDataUIComponent, EndGameViewUIComponent> _endGameUIFilter = default;
 
     public void Run()
     {
-        if (_endGameFilter.Get1(0).IsEndGame)
+        if (_endGameUIFilter.Get1(0).IsEndGame)
         {
-            _endGameFilter.Get2(0).SetActiveZone(true);
-            if (_endGameFilter.Get1(0).PlayerWinner.IsLocal) _endGameFilter.Get2(0).Text = "You're WINNER!";
-            else _endGameFilter.Get2(0).Text = "You're loser :(";
+            _endGameUIFilter.Get2(0).SetActiveZone(true);
+            if (_endGameUIFilter.Get1(0).PlayerWinner.IsLocal) _endGameUIFilter.Get2(0).Text = "You're WINNER!";
+            else _endGameUIFilter.Get2(0).Text = "You're loser :(";
         }
         else
         {
-            _endGameFilter.Get2(0).SetActiveZone(false);
+            _endGameUIFilter.Get2(0).SetActiveZone(false);
         }
     }
 }
