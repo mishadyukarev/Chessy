@@ -240,9 +240,6 @@ namespace Assets.Scripts.ECS.Component.Game
                     haves[GOLD_NUMBER] = GOLD_FOR_UPGRADE_ROOK == NULL_RESOURCES ? true : GetAmountResources(ResourceTypes.Gold, player.IsMasterClient) >= GOLD_FOR_UPGRADE_ROOK;
                     break;
 
-                case UnitTypes.RookCrossbow:
-                    throw new Exception();
-
                 case UnitTypes.Bishop:
                     haves[FOOD_NUMBER] = FOOD_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : GetAmountResources(ResourceTypes.Food, player.IsMasterClient) >= FOOD_FOR_UPGRADE_BISHOP;
                     haves[WOOD_NUMBER] = WOOD_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : GetAmountResources(ResourceTypes.Wood, player.IsMasterClient) >= WOOD_FOR_UPGRADE_BISHOP;
@@ -250,9 +247,6 @@ namespace Assets.Scripts.ECS.Component.Game
                     haves[IRON_NUMBER] = IRON_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : GetAmountResources(ResourceTypes.Iron, player.IsMasterClient) >= IRON_FOR_UPGRADE_BISHOP;
                     haves[GOLD_NUMBER] = GOLD_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : GetAmountResources(ResourceTypes.Gold, player.IsMasterClient) >= GOLD_FOR_UPGRADE_BISHOP;
                     break;
-
-                case UnitTypes.BishopCrossbow:
-                    throw new Exception();
 
                 default:
                     throw new Exception();
@@ -286,9 +280,6 @@ namespace Assets.Scripts.ECS.Component.Game
                     TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, GOLD_FOR_UPGRADE_ROOK);
                     break;
 
-                case UnitTypes.RookCrossbow:
-                    throw new Exception();
-
                 case UnitTypes.Bishop:
                     TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, FOOD_FOR_UPGRADE_BISHOP);
                     TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, WOOD_FOR_UPGRADE_BISHOP);
@@ -296,9 +287,6 @@ namespace Assets.Scripts.ECS.Component.Game
                     TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, IRON_FOR_UPGRADE_BISHOP);
                     TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, GOLD_FOR_UPGRADE_BISHOP);
                     break;
-
-                case UnitTypes.BishopCrossbow:
-                    throw new Exception();
 
                 default:
                     throw new Exception();

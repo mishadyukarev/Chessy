@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.Enums.Cell;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
@@ -54,7 +55,6 @@ namespace Assets.Scripts
         private static string GeneralRPCName => nameof(GeneralRPC);
         private static string OtherRPCName => nameof(OtherRPC);
         private static string SyncMasterRPCName => nameof(SyncAllMaster);
-        private static string SyncOtherRPCName => nameof(SyncAllOther);
 
         private int _currentNumber;
 
@@ -83,7 +83,7 @@ namespace Assets.Scripts
         public static void BuildToMaster(byte idxCellForBuild, BuildingTypes buildingType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Build, new object[] { idxCellForBuild, buildingType });
         public static void DestroyBuildingToMaster(byte xyCellForDestroy) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Destroy, new object[] { xyCellForDestroy });
 
-        public static void ProtectRelaxUnitToMaster(ConditionUnitTypes neededCondtionType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ConditionUnit, new object[] { neededCondtionType, idxCell });
+        public static void ConditionUnitToMaster(ConditionUnitTypes neededCondtionType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ConditionUnit, new object[] { neededCondtionType, idxCell });
 
         public static void EndGameToMaster(int actorNumberWinner) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.EndGame, new object[] { actorNumberWinner });
         public static void EndGameToGeneral(RpcTarget rpcTarget, byte actorNumberWinner) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
@@ -95,6 +95,8 @@ namespace Assets.Scripts
 
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
         public static void SeedEnvironmentToMaster(byte idxCell, EnvironmentTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
+
+        public static void GiveToolPawn(byte idxCell, PawnSecondToolTypes pawnSecondToolType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveSecondToolToPawn, new object[] { idxCell, pawnSecondToolType });
 
         public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { idxCell });
 
@@ -127,12 +129,10 @@ namespace Assets.Scripts
 
                 case RpcMasterTypes.Ready:
                     _readyFilter.Get2(0).NeedActiveSomething = (bool)objects[0];
-                    GameMasterSystemManager.ReadySystems.Run();
                     break;
 
                 case RpcMasterTypes.Done:
                     _donerFilter.Get1(0).NeedActiveDoner = (bool)objects[0];
-                    GameMasterSystemManager.DonerSystems.Run();
                     break;
 
                 case RpcMasterTypes.EndGame:
@@ -142,62 +142,51 @@ namespace Assets.Scripts
                 case RpcMasterTypes.Build:
                     _buildFilter.Get1(0).BuildingTypeForBuidling = (BuildingTypes)objects[1];
                     _buildFilter.Get1(0).IdxForBuild = (byte)objects[0];
-                    GameMasterSystemManager.BuilderSystems.Run();
                     break;
 
                 case RpcMasterTypes.Destroy:
                     _destroyFilter.Get1(0).IdxForDestroy = (byte)objects[0];
-                    GameMasterSystemManager.DestroySystems.Run();
                     break;
 
                 case RpcMasterTypes.Shift:
                     _shiftFilter.Get1(0).IdxFrom = (byte)objects[0];
                     _shiftFilter.Get1(0).IdxTo = (byte)objects[1];
-                    GameMasterSystemManager.ShiftUnitSystems.Run();
                     break;
 
                 case RpcMasterTypes.Attack:
                     _attackFilter.Get1(0).IdxFromCell = (byte)objects[0];
                     _attackFilter.Get1(0).IdxToCell = (byte)objects[1];
-                    GameMasterSystemManager.AttackUnitSystems.Run();
                     break;
 
                 case RpcMasterTypes.ConditionUnit:
                     _conditionFilter.Get1(0).NeededConditionUnitType = (ConditionUnitTypes)objects[0];
                     _conditionFilter.Get1(0).IdxForCondition = (byte)objects[1];
-                    GameMasterSystemManager.ConditionUnitSystems.Run();
                     break;
 
                 case RpcMasterTypes.CreateUnit:
                     _creatorUnitFilter.Get1(0).UnitTypeForCreating = (UnitTypes)objects[0];
-                    GameMasterSystemManager.CreatorUnitSystems.Run();
                     break;
 
                 case RpcMasterTypes.MeltOre:
-                    GameMasterSystemManager.MeltOreSystems.Run();
                     break;
 
                 case RpcMasterTypes.GetUnit:
                     _gettingUnitFilter.Get1(0).UnitTypeForGetting = (UnitTypes)objects[0];
-                    GameMasterSystemManager.GetterUnitSystems.Run();
                     break;
 
                 case RpcMasterTypes.SetUnit:
                     _settingUnitFilter.Get1(0).IdxCellForSetting = (byte)objects[0];
                     _settingUnitFilter.Get1(0).UnitTypeForSetting = (UnitTypes)objects[1];
-                    GameMasterSystemManager.SetterUnitSystems.Run();
                     break;
 
                 case RpcMasterTypes.SeedEnvironment:
                     _seedingFilter.Get1(0).IdxForSeeding = (byte)objects[0];
                     _seedingFilter.Get1(0).EnvTypeForSeeding = (EnvironmentTypes)objects[1];
-                    GameMasterSystemManager.SeedingSystems.Run();
                     break;
 
                 case RpcMasterTypes.Fire:
                     _fireFilter.Get1(0).FromIdx = (byte)objects[0];
                     _fireFilter.Get1(0).ToIdx = (byte)objects[1];
-                    GameMasterSystemManager.FireSystems.Run();
                     break;
 
                 case RpcMasterTypes.Upgrade:
@@ -219,17 +208,20 @@ namespace Assets.Scripts
                         default:
                             throw new Exception();
                     }
-                    GameMasterSystemManager.UpgradeSystems.Run();
                     break;
 
                 case RpcMasterTypes.CircularAttackKing:
                     _circularAttackFilter.Get1(0).IdxUnitForCirculAttack = (byte)objects[0];
-                    GameMasterSystemManager.CircularAttackKingSystems.Run();
+                    break;
+
+                case RpcMasterTypes.GiveSecondToolToPawn:
                     break;
 
                 default:
-                    break;
+                    throw new Exception();
             }
+
+            GameMasterSystemManager.RunRpcSystem(rpcType);
 
             GameMasterSystemManager.VisibilityUnitsSystems.Run();
 
@@ -250,17 +242,9 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.None:
                     throw new Exception();
 
-                //case RpcGeneralTypes.SetDonerActiveUI:
-                //    _donerUIFilter.Get1(0).SetDoned(PhotonNetwork.IsMasterClient, (bool)objects[_currentNumber++]);
-                //    break;
-
                 case RpcGeneralTypes.ActiveAmountMotionUI:
                     _motionsFilter.Get1(0).IsActivatedUI = true;
                     break;
-
-                //case RpcGeneralTypes.GetAvailableCellsForSetting:
-                //    availCellsCom.SetAllCellsCopy(AvailableCellTypes.SettingUnit, CellUnitsDataSystem.GetStartCellsForSettingUnit(PhotonNetwork.LocalPlayer));
-                //    break;
 
                 case RpcGeneralTypes.EndGame:
                     _endGameFilter.Get1(0).IsEndGame = true;

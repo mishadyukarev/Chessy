@@ -16,7 +16,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
         private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitComponent, OwnerComponent> _cellUnitFilter = default;
 
         public void Run()
         {

@@ -41,8 +41,7 @@ internal sealed class SyncEconomyUpUISystem : IEcsRunSystem
         var amountAddingFood = 1 + amountFarm * extractionOneFarm
             - idxUnitsCom.GetAmountUnitsInGame(PhotonNetwork.IsMasterClient, new UnitTypes[]
             {
-                UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.RookCrossbow,
-                UnitTypes.Bishop, UnitTypes.BishopCrossbow
+                UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop
             });
 
 

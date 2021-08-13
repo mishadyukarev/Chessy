@@ -17,7 +17,7 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
     private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
 
     private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
-    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitComponent, OwnerComponent> _cellUnitFilter = default;
     private EcsFilter<CellDataComponent> _cellDataFilter = default;
 
     public void Run()
@@ -61,19 +61,9 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK;
                     break;
 
-                case UnitTypes.RookCrossbow:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW;
-                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK_CROSSBOW;
-                    break;
-
                 case UnitTypes.Bishop:
                     newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
-                    break;
-
-                case UnitTypes.BishopCrossbow:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW;
-                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW;
                     break;
 
                 default:

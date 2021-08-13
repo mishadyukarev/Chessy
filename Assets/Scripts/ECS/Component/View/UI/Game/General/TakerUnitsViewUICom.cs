@@ -51,5 +51,7 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
         internal void AddListenerToCreateUnit(UnitTypes unitType, UnityAction unityAction) => _createUnit_Buttons[unitType].onClick.AddListener(unityAction);
         internal void SetColorButton(UnitTypes unitType, Color color) => _taker_Buttons[unitType].image.color = color;
         internal void SetActiveButton(UnitTypes unitType, bool isActive) => _taker_Buttons[unitType].gameObject.SetActive(isActive);
+
+        internal void SetActiveCreateButton(UnitTypes unitType, bool isActive) => _createUnit_Buttons[unitType].gameObject.SetActive(isActive);
     }
 }

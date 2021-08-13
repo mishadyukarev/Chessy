@@ -13,7 +13,7 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
 
     private EcsFilter<BuildsInGameComponent> _buildsInGameFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitComponent, OwnerComponent> _cellUnitFilter = default;
     private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 

@@ -17,7 +17,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Cell
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
 
         public void Run()
         {

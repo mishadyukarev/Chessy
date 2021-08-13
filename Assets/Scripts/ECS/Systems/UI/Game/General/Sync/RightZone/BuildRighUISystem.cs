@@ -14,7 +14,7 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
     private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
     private EcsFilter<BuildsInGameComponent> _idxBuildFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
     private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
     private byte IdxSelCell => _selectorFilter.Get1(0).IdxSelectedCell;
 

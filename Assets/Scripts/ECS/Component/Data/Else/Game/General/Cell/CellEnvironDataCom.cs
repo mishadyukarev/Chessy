@@ -188,18 +188,6 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
                     break;
 
 
-                case UnitTypes.RookCrossbow:
-                    if (HaveEnvironment(EnvironmentTypes.Fertilizer))
-                        powerProtection -= PROTECTION_FOOD_FOR_ROOK_CROSSBOW;
-
-                    if (HaveEnvironment(EnvironmentTypes.AdultForest))
-                        powerProtection += PROTECTION_TREE_FOR_ROOK_CROSSBOW;
-
-                    if (HaveEnvironment(EnvironmentTypes.Hill))
-                        powerProtection += PROTECTION_HILL_FOR_ROOK_CROSSBOW;
-                    break;
-
-
                 case UnitTypes.Bishop:
                     if (HaveEnvironment(EnvironmentTypes.Fertilizer))
                         powerProtection -= PROTECTION_FOOD_FOR_BISHOP;
@@ -209,18 +197,6 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
 
                     if (HaveEnvironment(EnvironmentTypes.Hill))
                         powerProtection += PROTECTION_HILL_FOR_BISHOP;
-                    break;
-
-
-                case UnitTypes.BishopCrossbow:
-                    if (HaveEnvironment(EnvironmentTypes.Fertilizer))
-                        powerProtection -= PROTECTION_FOOD_FOR_BISHOP_CROSSBOW;
-
-                    if (HaveEnvironment(EnvironmentTypes.AdultForest))
-                        powerProtection += PROTECTION_TREE_FOR_BISHOP_CROSSBOW;
-
-                    if (HaveEnvironment(EnvironmentTypes.Hill))
-                        powerProtection += PROTECTION_HILL_FOR_BISHOP_CROSSBOW;
                     break;
             }
 

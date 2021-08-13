@@ -41,36 +41,20 @@ internal sealed class GetterUnitMasterSystem : IEcsRunSystem
                 break;
 
             case UnitTypes.Rook:
-                if (unitInventorCom.HaveUnitInInventor(UnitTypes.RookCrossbow, infoCom.FromInfo.Sender.IsMasterClient))
-                {
-                    isGetted = true;
-                    unitType = UnitType + 1;
-                }
-                else if (unitInventorCom.HaveUnitInInventor(UnitTypes.Rook, infoCom.FromInfo.Sender.IsMasterClient))
+                if (unitInventorCom.HaveUnitInInventor(UnitTypes.Rook, infoCom.FromInfo.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType;
                 }
                 break;
-
-            case UnitTypes.RookCrossbow:
-                throw new Exception();
 
             case UnitTypes.Bishop:
-                if (unitInventorCom.HaveUnitInInventor(UnitTypes.BishopCrossbow, infoCom.FromInfo.Sender.IsMasterClient))
-                {
-                    isGetted = true;
-                    unitType = UnitType + 1;
-                }
-                else if (unitInventorCom.HaveUnitInInventor(UnitTypes.Bishop, infoCom.FromInfo.Sender.IsMasterClient))
+                if (unitInventorCom.HaveUnitInInventor(UnitTypes.Bishop, infoCom.FromInfo.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType;
                 }
                 break;
-
-            case UnitTypes.BishopCrossbow:
-                throw new Exception();
 
             default:
                 throw new Exception();

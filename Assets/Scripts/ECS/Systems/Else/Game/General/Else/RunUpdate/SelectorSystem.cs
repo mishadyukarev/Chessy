@@ -12,7 +12,7 @@ using UnityEngine;
 internal sealed class SelectorSystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
-    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvironDataFilter = default;
 
     private EcsFilter<SelectorComponent> _selectorFilter = default;
@@ -23,7 +23,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
     public void Run()
     {
-        CellUnitDataComponent CellUnitDataCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
+        CellUnitComponent CellUnitDataCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
         OwnerComponent OwnerCellUnitCom(byte idxCell) => _cellUnitFilter.Get2(idxCell);
         OwnerBotComponent OwnerBotCellUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
         CellEnvironDataCom CellEnvironDataCom(byte idxCell) => _cellEnvironDataFilter.Get1(idxCell);
@@ -99,6 +99,11 @@ internal sealed class SelectorSystem : IEcsRunSystem
                     {
                         RPCGameSystem.FireToMaster(selectorCom.IdxSelectedCell, selectorCom.IdxCurrentCell);
                         selectorCom.CellClickType = CellClickTypes.Start;
+                    }
+
+                    else if (selectorCom.IsCellClickType(CellClickTypes.GiveToolToPawn))
+                    {
+
                     }
 
                     else if (selectorCom.CellClickType == CellClickTypes.Start)

@@ -29,16 +29,8 @@ internal struct CellBuildDataComponent
                         powerProtection += PROTECTION_CITY_ROOK;
                         break;
 
-                    case UnitTypes.RookCrossbow:
-                        powerProtection += PROTECTION_CITY_ROOK_CROSSBOW;
-                        break;
-
                     case UnitTypes.Bishop:
                         powerProtection += PROTECTION_CITY_BISHOP;
-                        break;
-
-                    case UnitTypes.BishopCrossbow:
-                        powerProtection += PROTECTION_CITY_BISHOP_CROSSBOW;
                         break;
                 }
 

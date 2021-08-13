@@ -10,7 +10,7 @@ internal sealed class ConditionAbilitiesUISystem : IEcsRunSystem
     private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
     private EcsFilter<SelectorComponent> _selectorFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
 
     public void Run()
     {

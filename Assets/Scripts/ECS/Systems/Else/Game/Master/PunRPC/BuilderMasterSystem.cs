@@ -18,7 +18,7 @@ internal sealed class BuilderMasterSystem : IEcsRunSystem
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellViewComponent> _cellViewFilter = default;
     private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildFilter = default;
-    private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitComponent> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
     private EcsFilter<InventorResourcesComponent> _amountResFilt = default;

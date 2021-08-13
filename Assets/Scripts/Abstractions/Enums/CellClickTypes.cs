@@ -6,6 +6,7 @@
 
         UpgradeUnit,
         PickFire,
+        GiveToolToPawn,
         Start,
         NotStart,
     }

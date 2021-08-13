@@ -13,7 +13,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
     private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
     private EcsFilter<UnitsInConditionInGameCom> _unitsInCondFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
 
     public void Run()
     {

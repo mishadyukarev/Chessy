@@ -9,8 +9,8 @@ internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
 {
     private EcsFilter<SelectorComponent> _selectorFilter = default;
     private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
-    private EcsFilter<BuildZoneViewUICom> _buildZoneUIFilter = default;
-    private EcsFilter<TakerUnitsViewUICom> _takerUIFilter = default;
+    private EcsFilter<BuildLeftZoneViewUICom> _buildZoneUIFilter = default;
+    private EcsFilter<TakerUnitsDataUICom, TakerUnitsViewUICom> _takerUIFilter = default;
 
     internal EcsComponentRef<SelectorComponent> SelComRef => _selectorFilter.Get1Ref(0);
 
@@ -18,10 +18,6 @@ internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
 
     public void Init()
     {
-        _takerUIFilter.Get1(0).AddListenerToCreateUnit(UnitTypes.Pawn, delegate { BuyUnit(UnitTypes.Pawn); });
-        _takerUIFilter.Get1(0).AddListenerToCreateUnit(UnitTypes.Rook, delegate { BuyUnit(UnitTypes.Rook); });
-        _takerUIFilter.Get1(0).AddListenerToCreateUnit(UnitTypes.Bishop, delegate { BuyUnit(UnitTypes.Bishop); });
-
         _buildZoneUIFilter.Get1(0).AddListenerToMelt(delegate { MeltOre(); });
         //_buildZoneUIFilter.Get1(0).AddListenerToUpgradeUnits(ToggleSelectorUpgradeUnit);
 
@@ -57,10 +53,7 @@ internal sealed class LeftBuildingUISystem : IEcsInitSystem, IEcsRunSystem
     }
 
 
-    private void BuyUnit(UnitTypes unitType)
-    {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.CreateUnitToMaster(unitType);
-    }
+
     private void ToggleSelectorUpgradeUnit()
     {
         if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))

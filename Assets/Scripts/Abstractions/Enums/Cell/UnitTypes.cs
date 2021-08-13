@@ -6,7 +6,5 @@ public enum UnitTypes
     King,
     Pawn,
     Rook,
-    RookCrossbow,
     Bishop,
-    BishopCrossbow,
 }

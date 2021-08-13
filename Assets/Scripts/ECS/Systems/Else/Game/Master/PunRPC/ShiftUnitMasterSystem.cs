@@ -15,7 +15,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
     private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
     private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitComponent, OwnerComponent> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvrDataFilter = default;
     public void Run()
     {

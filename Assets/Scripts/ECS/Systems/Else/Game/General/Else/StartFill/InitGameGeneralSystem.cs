@@ -134,12 +134,46 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                          .Replace(new OwnerBotComponent());
 
 
-                    _currentGameWorld.NewEntity()
-                         .Replace(new CellUnitDataComponent(new Dictionary<bool, bool>()))
-                         .Replace(new CellUnitViewComponent(cell_GOs[x, y]))
-                         .Replace(new UnitTypeComponent())
-                         .Replace(new OwnerComponent())
-                         .Replace(new OwnerBotComponent());
+                    //_currentGameWorld.NewEntity()
+                    //     .Replace(new CellUnitComponent(new Dictionary<bool, bool>()))
+                    //     .Replace(new CellUnitViewComponent(cell_GOs[x, y]))
+                    //     .Replace(new OwnerComponent())
+                    //     .Replace(new OwnerBotComponent());
+
+
+                    //_currentGameWorld.NewEntity()
+                    //    .Replace(new CellKingDataComponent())
+                    //    .Replace(new CellKingViewComponent())
+                    //    .Replace(new CellUnitComponent(new Dictionary<bool, bool>()))         
+                    //    .Replace(new OwnerComponent())
+                    //    .Replace(new OwnerBotComponent());
+
+
+                    //_currentGameWorld.NewEntity()
+                    //    .Replace(new CellPawnDataComponent())
+                    //    .Replace(new CellPawnViewComponent())
+                    //    .Replace(new CellUnitComponent(new Dictionary<bool, bool>()))
+                    //    .Replace(new OwnerComponent())
+                    //    .Replace(new OwnerBotComponent());
+
+
+                    //_currentGameWorld.NewEntity()
+                    //    .Replace(new CellRookDataComponent())
+                    //    .Replace(new CellRookViewComponent())
+                    //    .Replace(new CellUnitComponent(new Dictionary<bool, bool>()))
+                    //    .Replace(new OwnerComponent())
+                    //    .Replace(new OwnerBotComponent());
+
+
+                    //_currentGameWorld.NewEntity()
+                    //    .Replace(new CellBishopDataComponent())
+                    //    .Replace(new CellBishopViewComponent())
+                    //    .Replace(new CellUnitComponent(new Dictionary<bool, bool>()))
+                    //    .Replace(new OwnerComponent())
+                    //    .Replace(new OwnerBotComponent());
+
+
+
 
                     if (PhotonNetwork.OfflineMode)
                     {
@@ -238,12 +272,13 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new MistakeDataUICom(new Dictionary<ResourceTypes, bool>()))
 
                 ///Down
+                .Replace(new TakerUnitsDataUICom(new Dictionary<UnitTypes, bool>()))
                 .Replace(new TakerUnitsViewUICom(downZone_GO))
                 .Replace(new DonerViewUIComponent(downZone_GO))
                 .Replace(new DonerDataUIComponent(new Dictionary<bool, bool>()))
 
                 ///Left
-                .Replace(new BuildZoneViewUICom(leftZone_GO))
+                .Replace(new BuildLeftZoneViewUICom(leftZone_GO))
                 .Replace(new EnvirZoneDataUICom())
                 .Replace(new EnvirZoneViewUICom(leftZone_GO))
 

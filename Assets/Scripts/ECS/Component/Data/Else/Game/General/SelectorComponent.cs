@@ -7,6 +7,7 @@ public struct SelectorComponent
     internal RaycastGettedTypes RaycastGettedType { get; set; }
 
     internal CellClickTypes CellClickType { get; set; }
+    internal bool IsCellClickType(CellClickTypes cellClickType) => cellClickType == CellClickType;
 
 
     internal UnitTypes SelectedUnitType { get; set; }

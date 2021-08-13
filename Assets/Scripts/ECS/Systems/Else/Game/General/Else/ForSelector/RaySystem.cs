@@ -20,6 +20,16 @@ internal sealed class RaySystem : IEcsRunSystem
         _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         selectorCom.RaycastHit2D = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
 
+#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            selectorCom.RaycastGettedType = RaycastGettedTypes.UI;
+            return;
+        }
+
+#endif
+
         if (selectorCom.RaycastHit2D)
         {
             foreach (byte idx in _xyCellFilter)
@@ -38,12 +48,7 @@ internal sealed class RaySystem : IEcsRunSystem
             selectorCom.RaycastGettedType = default;
         }
 
-#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
 
-        if (EventSystem.current.IsPointerOverGameObject())
-            selectorCom.RaycastGettedType = RaycastGettedTypes.UI;
-
-#endif
 
 #if UNITY_ANDROID
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
