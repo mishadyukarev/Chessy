@@ -8,7 +8,7 @@ public class SpritesData : ScriptableObject
 
     [Space(20)]
     [SerializeField] private Sprite _kingSprite = default;
-    [SerializeField] private Sprite _axePawnSecondTool_Sprite = default;
+    [SerializeField] private Sprite _pawnMainAxe_Sprite = default;
     [SerializeField] private Sprite _hoe_Sprite = default;
     [SerializeField] private Sprite _pick_Sprite = default;
     [SerializeField] private Sprite _sword_Sprite = default;
@@ -40,25 +40,31 @@ public class SpritesData : ScriptableObject
     public Sprite BlackSprite => _black_Sprite;
     public Sprite WhiteSprite => _white_Sprite;
 
+
     public Sprite KingSprite => _kingSprite;
-    public Sprite AxePawnSecondTool_Sprite => _axePawnSecondTool_Sprite;
-    public Sprite Hoe_Sprite => _hoe_Sprite;
-    public Sprite Pick_Sprite => _pick_Sprite;
-    public Sprite Sword_Sprite => _sword_Sprite;
+
+    public Sprite PawnMainAxe_Sprite => _pawnMainAxe_Sprite;
+    public Sprite PawnExtraHoe_Sprite => _hoe_Sprite;
+    public Sprite PawnExtraPick_Sprite => _pick_Sprite;
+    public Sprite PawnExtraSword_Sprite => _sword_Sprite;
+
     public Sprite RookSprite => _rookSprite;
     public Sprite RookCrossbowSprite => _rookCrossbowSprite;
     public Sprite BishopSprite => _bishopSprite;
     public Sprite BishopCrossbowSprite => _bishopCrossbowSprite;
+
 
     public Sprite City => _citySprite;
     public Sprite Farm => _farmSprite;
     public Sprite Woodcutter => _woodcutterSprite;
     public Sprite Mine => _mineSprite;
 
+
     public Sprite CityBack => _cityBackSprite;
     public Sprite FarmBack => _farmBackSprite;
     public Sprite WoodcutterBack => _woodcutterBackSprite;
     public Sprite MineBack => _mineBackSprite;
+
 
     public Sprite Ferilizer => _fertilizerSprite;
     public Sprite YoungForest => _youngForestSprite;

@@ -17,7 +17,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         private EcsFilter<UnitsInConditionInGameCom> _unitsInCondFilter = default;
         private EcsFilter<InventorResourcesComponent> _inventResFilt = default;
 
-        private EcsFilter<CellUnitComponent, OwnerComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
 
         private const byte FOR_NEXT_UPGRADE = 1;
 
@@ -67,6 +67,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
 
                                     curCellUnitDataCom.ChangePlayerUnit(curCellUnitDataCom.UnitType + FOR_NEXT_UPGRADE);
+
 
 
                                     var newUnitType = curCellUnitDataCom.UnitType;

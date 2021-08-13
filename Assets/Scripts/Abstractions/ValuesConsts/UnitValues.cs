@@ -5,19 +5,19 @@
         #region Health
 
         public const int STANDART_AMOUNT_HEALTH_KING = 300;
-        public const int STANDART_AMOUNT_HEALTH_PAWN = 100;
+        public const int STANDART_AMOUNT_HEALTH_PAWN_AXE = 100;
         public const int STANDART_AMOUNT_HEALTH_PAWN_SWORD = 150;
-        public const int STANDART_AMOUNT_HEALTH_ROOK = 100;
+        public const int STANDART_AMOUNT_HEALTH_ROOK_BOW = 100;
         public const int STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW = 100;
-        public const int STANDART_AMOUNT_HEALTH_BISHOP = 100;
+        public const int STANDART_AMOUNT_HEALTH_BISHOP_BOW = 100;
         public const int STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW = 100;
 
         public const float PERCENT_FOR_HEALTH_KING = 0.2f;
-        public const float PERCENT_FOR_HEALTH_PAWN = 0.3f;
+        public const float PERCENT_FOR_HEALTH_PAWN_AXE = 0.3f;
         public const float PERCENT_FOR_HEALTH_PAWN_SWORD = 0.2f;
-        public const float PERCENT_FOR_HEALTH_ROOK = 0.3f;
+        public const float PERCENT_FOR_HEALTH_ROOK_BOW = 0.3f;
         public const float PERCENT_FOR_HEALTH_ROOK_CROSSBOW = 0.3f;
-        public const float PERCENT_FOR_HEALTH_BISHOP = 0.3f;
+        public const float PERCENT_FOR_HEALTH_BISHOP_BOW = 0.3f;
         public const float PERCENT_FOR_HEALTH_BISHOP_CROSSBOW = 0.3f;
 
         #endregion
@@ -38,7 +38,7 @@
         public const float RATION_UNIQUE_POWER_DAMAGE_PAWN_SWORD = 0.4f;
         public const float RATION_UNIQUE_POWER_DAMAGE_ROOK = 0.4f;
         public const float RATION_UNIQUE_POWER_DAMAGE_ROOK_CROSSBOW = 0.4f;
-        public const float RATION_UNIQUE_POWER_DAMAGE_BISHOP = 0.4f;
+        public const float RATION_UNIQUE_POWER_DAMAGE_BISHOP_BOW = 0.4f;
         public const float RATION_UNIQUE_POWER_DAMAGE_BISHOP_CROSSBOW = 0.4f;
 
         #endregion
@@ -145,9 +145,9 @@
         public const int STANDART_AMOUNT_STEPS_KING = 1;
         public const int STANDART_AMOUNT_STEPS_PAWN = 2;
         public const int STANDART_AMOUNT_STEPS_PAWN_SWORD = 2;
-        public const int STANDART_AMOUNT_STEPS_ROOK = 2;
+        public const int STANDART_AMOUNT_STEPS_ROOK_BOW = 2;
         public const int STANDART_AMOUNT_STEPS_ROOK_CROSSBOW = 2;
-        public const int STANDART_AMOUNT_STEPS_BISHOP = 2;
+        public const int STANDART_AMOUNT_STEPS_BISHOP_BOW = 2;
         public const int STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW = 2;
 
         #endregion

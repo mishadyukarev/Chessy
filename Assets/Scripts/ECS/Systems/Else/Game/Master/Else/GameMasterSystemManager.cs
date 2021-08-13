@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
+using Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC;
 using Assets.Scripts.ECS.Systems.Game.Master;
 using Assets.Scripts.ECS.Systems.Game.Master.PunRPC;
 using Leopotam.Ecs;
@@ -37,7 +38,7 @@ public sealed class GameMasterSystemManager : SystemAbstManager
         _rpcSystems.Add(RpcMasterTypes.Fire, new EcsSystems(gameWorld).Add(new FireMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.SeedEnvironment, new EcsSystems(gameWorld).Add(new SeedingMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.CircularAttackKing, new EcsSystems(gameWorld).Add(new CircularAttackKingSystem()));
-
+        _rpcSystems.Add(RpcMasterTypes.GiveExtraPawnTool, new EcsSystems(gameWorld).Add(new GiveExtraPawnToolMastSys()));
 
 
         VisibilityUnitsSystems = new EcsSystems(gameWorld)

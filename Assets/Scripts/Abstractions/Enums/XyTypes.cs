@@ -2,6 +2,8 @@
 {
     public enum XyTypes
     {
+        None,
+
         X,
         Y,
     }

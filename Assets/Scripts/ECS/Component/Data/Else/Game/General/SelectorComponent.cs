@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.Enums.Cell;
 using UnityEngine;
 
 public struct SelectorComponent
@@ -13,6 +14,9 @@ public struct SelectorComponent
     internal UnitTypes SelectedUnitType { get; set; }
     internal bool IsSelectedUnit => SelectedUnitType != default;
     internal void ResetSelectedUnit() => SelectedUnitType = default;
+
+
+    internal PawnToolTypes PawnToolTypeForUpgrade { get; set; }
 
 
     internal bool IsActPickingFire { get; set; }

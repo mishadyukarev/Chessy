@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Abstractions.Enums.Cell
 {
-    public enum PawnSecondToolTypes
+    public enum PawnToolTypes
     {
         None,
 

@@ -41,7 +41,7 @@ internal sealed class SyncEconomyUpUISystem : IEcsRunSystem
         var amountAddingFood = 1 + amountFarm * extractionOneFarm
             - idxUnitsCom.GetAmountUnitsInGame(PhotonNetwork.IsMasterClient, new UnitTypes[]
             {
-                UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop
+                UnitTypes.Pawn_Axe, UnitTypes.Rook_Bow, UnitTypes.Bishop_Bow
             });
 
 
@@ -55,9 +55,9 @@ internal sealed class SyncEconomyUpUISystem : IEcsRunSystem
         var amountAddingWood = idxBuildsCom.GetAmountBuild(BuildingTypes.Woodcutter, PhotonNetwork.IsMasterClient)
             * ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Woodcutter, amountUpgradesWoodcutter);
 
-        for (int xyIndex = 0; xyIndex < idxUnitsInCondCom.GetAmountUnitsInCondition(ConditionUnitTypes.Relaxed, UnitTypes.Pawn, PhotonNetwork.IsMasterClient); xyIndex++)
+        for (int xyIndex = 0; xyIndex < idxUnitsInCondCom.GetAmountUnitsInCondition(ConditionUnitTypes.Relaxed, UnitTypes.Pawn_Axe, PhotonNetwork.IsMasterClient); xyIndex++)
         {
-            var idx = idxUnitsInCondCom.GetIdxInConditionByIndex(ConditionUnitTypes.Relaxed, UnitTypes.Pawn, PhotonNetwork.IsMasterClient, xyIndex);
+            var idx = idxUnitsInCondCom.GetIdxInConditionByIndex(ConditionUnitTypes.Relaxed, UnitTypes.Pawn_Axe, PhotonNetwork.IsMasterClient, xyIndex);
 
             if (_cellEnvDataFilter.Get1(idx).HaveEnvironment(EnvironmentTypes.AdultForest))
             {

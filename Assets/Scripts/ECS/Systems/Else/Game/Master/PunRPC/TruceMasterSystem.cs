@@ -15,7 +15,7 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
 
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
-    private EcsFilter<CellUnitComponent, OwnerComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
     private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
@@ -93,16 +93,16 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
         }
 
 
-        if (unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0
-            && unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0)
+        if (unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn_Axe, true) <= 0
+            && unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn_Axe, true) <= 0)
         {
-            inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn, true);
+            inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn_Axe, true);
         }
 
-        if (unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0
-            && unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0)
+        if (unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn_Axe, false) <= 0
+            && unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn_Axe, false) <= 0)
         {
-            inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn, false);
+            inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn_Axe, false);
         }
 
         RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);

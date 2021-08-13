@@ -25,7 +25,7 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
 
 
         var syncCellVisionSystems = new EcsSystems(gameWorld)
-            .Add(new SyncCellUnitVisSystem())
+            .Add(new SyncCellUnitViewSystem())
             .Add(new SyncCellUnitSupVisSystem())
             .Add(new SyncCellBuildViewSystem())
             .Add(new SyncCellEnvirsVisSystem())

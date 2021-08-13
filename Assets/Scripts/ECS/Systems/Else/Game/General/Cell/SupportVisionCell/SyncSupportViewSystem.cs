@@ -11,7 +11,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellDataComponent> _cellDataFilter = default;
-    private EcsFilter<CellUnitComponent, OwnerComponent, CellUnitViewComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerComponent, CellUnitViewComponent> _cellUnitFilter = default;
     private EcsFilter<CellSupViewComponent> _cellSupViewFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
@@ -89,7 +89,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
 
             if (selCom.CellClickType == CellClickTypes.UpgradeUnit)
             {
-                if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
+                if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn_Axe, UnitTypes.Rook_Bow, UnitTypes.Bishop_Bow }))
                 {
                     if (curOwnerCellUnitCom.HaveOwner)
                     {

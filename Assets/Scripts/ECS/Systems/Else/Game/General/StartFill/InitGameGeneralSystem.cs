@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.Enums.Cell;
 using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General;
@@ -134,45 +135,11 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                          .Replace(new OwnerBotComponent());
 
 
-                    //_currentGameWorld.NewEntity()
-                    //     .Replace(new CellUnitComponent(new Dictionary<bool, bool>()))
-                    //     .Replace(new CellUnitViewComponent(cell_GOs[x, y]))
-                    //     .Replace(new OwnerComponent())
-                    //     .Replace(new OwnerBotComponent());
-
-
-                    //_currentGameWorld.NewEntity()
-                    //    .Replace(new CellKingDataComponent())
-                    //    .Replace(new CellKingViewComponent())
-                    //    .Replace(new CellUnitComponent(new Dictionary<bool, bool>()))         
-                    //    .Replace(new OwnerComponent())
-                    //    .Replace(new OwnerBotComponent());
-
-
-                    //_currentGameWorld.NewEntity()
-                    //    .Replace(new CellPawnDataComponent())
-                    //    .Replace(new CellPawnViewComponent())
-                    //    .Replace(new CellUnitComponent(new Dictionary<bool, bool>()))
-                    //    .Replace(new OwnerComponent())
-                    //    .Replace(new OwnerBotComponent());
-
-
-                    //_currentGameWorld.NewEntity()
-                    //    .Replace(new CellRookDataComponent())
-                    //    .Replace(new CellRookViewComponent())
-                    //    .Replace(new CellUnitComponent(new Dictionary<bool, bool>()))
-                    //    .Replace(new OwnerComponent())
-                    //    .Replace(new OwnerBotComponent());
-
-
-                    //_currentGameWorld.NewEntity()
-                    //    .Replace(new CellBishopDataComponent())
-                    //    .Replace(new CellBishopViewComponent())
-                    //    .Replace(new CellUnitComponent(new Dictionary<bool, bool>()))
-                    //    .Replace(new OwnerComponent())
-                    //    .Replace(new OwnerBotComponent());
-
-
+                    _currentGameWorld.NewEntity()
+                         .Replace(new CellUnitDataComponent(new Dictionary<bool, bool>()))
+                         .Replace(new CellUnitViewComponent(cell_GOs[x, y]))
+                         .Replace(new OwnerComponent())
+                         .Replace(new OwnerBotComponent());
 
 
                     if (PhotonNetwork.OfflineMode)
@@ -233,8 +200,11 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new BuildsInGameComponent(new Dictionary<BuildingTypes, Dictionary<bool, List<byte>>>()))
 
                 .Replace(new UpgradesBuildingsComponent(new Dictionary<BuildingTypes, Dictionary<bool, int>>()))
+
                 .Replace(new InventorUnitsComponent(new Dictionary<UnitTypes, Dictionary<bool, int>>()))
                 .Replace(new InventorResourcesComponent(new Dictionary<ResourceTypes, Dictionary<bool, int>>()))
+                .Replace(new InventorToolsComponent(new Dictionary<PawnToolTypes, byte>()))
+
                 .Replace(new FromInfoComponent())
                 .Replace(new MistakeUEComponent(new Dictionary<ResourceTypes, UnityEvent>()))
                 .Replace(new SoundViewComponent(audioSourceParentGO));

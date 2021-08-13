@@ -8,7 +8,7 @@ internal sealed class RightZoneUISystem : IEcsRunSystem
     private EcsFilter<SelectorComponent> _selectorFilter = default;
     private EcsFilter<UnitZoneViewUICom> _unitZoneFilter = default;
 
-    private EcsFilter<CellUnitComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
 
     public void Run()
     {

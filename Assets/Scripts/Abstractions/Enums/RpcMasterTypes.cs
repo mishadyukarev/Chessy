@@ -19,7 +19,7 @@
     Fire,
     Sound,
     CircularAttackKing,
-    GiveSecondToolToPawn,
+    GiveExtraPawnTool,
 
     Upgrade,
 }

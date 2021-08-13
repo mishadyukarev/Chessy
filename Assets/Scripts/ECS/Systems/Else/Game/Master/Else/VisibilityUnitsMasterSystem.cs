@@ -3,7 +3,7 @@ using Leopotam.Ecs;
 
 internal sealed class VisibilityUnitsMasterSystem : IEcsRunSystem
 {
-    private EcsFilter<CellUnitComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter;
+    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter;
 
     public void Run()
     {

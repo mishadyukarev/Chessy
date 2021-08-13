@@ -12,7 +12,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
 
     private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
 
-    private EcsFilter<CellUnitComponent, OwnerComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
 
     public void Run()
     {

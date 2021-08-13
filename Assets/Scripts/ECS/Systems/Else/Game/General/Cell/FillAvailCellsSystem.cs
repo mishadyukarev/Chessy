@@ -17,7 +17,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Cell
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -73,7 +73,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Cell
                             {
                                 if (curOwnerCellUnitCom.HaveOwner || curBotOwnerCellUnitCom.IsBot)
                                 {
-                                    if (startCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn }))
+                                    if (startCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn_Axe }))
                                     {
                                         if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
                                             || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)

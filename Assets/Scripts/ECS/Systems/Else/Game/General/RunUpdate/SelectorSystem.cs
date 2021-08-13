@@ -12,7 +12,7 @@ using UnityEngine;
 internal sealed class SelectorSystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
-    private EcsFilter<CellUnitComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvironDataFilter = default;
 
     private EcsFilter<SelectorComponent> _selectorFilter = default;
@@ -23,7 +23,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
     public void Run()
     {
-        CellUnitComponent CellUnitDataCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
+        CellUnitDataComponent CellUnitDataCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
         OwnerComponent OwnerCellUnitCom(byte idxCell) => _cellUnitFilter.Get2(idxCell);
         OwnerBotComponent OwnerBotCellUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
         CellEnvironDataCom CellEnvironDataCom(byte idxCell) => _cellEnvironDataFilter.Get1(idxCell);
@@ -95,7 +95,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                         }
                     }
 
-                    else if (selectorCom.CellClickType == CellClickTypes.PickFire)
+                    else if (selectorCom.IsCellClickType(CellClickTypes.PickFire))
                     {
                         RPCGameSystem.FireToMaster(selectorCom.IdxSelectedCell, selectorCom.IdxCurrentCell);
                         selectorCom.CellClickType = CellClickTypes.Start;
@@ -103,7 +103,14 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                     else if (selectorCom.IsCellClickType(CellClickTypes.GiveToolToPawn))
                     {
-
+                        if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(UnitTypes.Pawn_Axe))
+                        {
+                            RPCGameSystem.GiveToolPawn(selectorCom.IdxCurrentCell, selectorCom.PawnToolTypeForUpgrade);
+                        }
+                        else
+                        {
+                            selectorCom.CellClickType = CellClickTypes.Start;
+                        }
                     }
 
                     else if (selectorCom.CellClickType == CellClickTypes.Start)
@@ -168,8 +175,6 @@ internal sealed class SelectorSystem : IEcsRunSystem
                                     {
                                         //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickArcher);
                                     }
-
-                                    Debug.Log(CellUnitDataCom(selectorCom.IdxSelectedCell).AmountSteps);
 
                                     if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveMinAmountSteps)
                                     {

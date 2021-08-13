@@ -25,26 +25,26 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
                     _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit0Button").GetComponent<Button>());
                 }
 
-                else if (unitType == UnitTypes.Pawn)
+                else if (unitType == UnitTypes.Pawn_Axe)
                 {
                     _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit1Button").GetComponent<Button>());
                 }
 
-                else if (unitType == UnitTypes.Rook)
+                else if (unitType == UnitTypes.Rook_Bow)
                 {
                     _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit2Button").GetComponent<Button>());
                 }
 
-                else if (unitType == UnitTypes.Bishop)
+                else if (unitType == UnitTypes.Bishop_Bow)
                 {
                     _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit3Button").GetComponent<Button>());
                 }
             }
 
             _createUnit_Buttons = new Dictionary<UnitTypes, Button>();
-            _createUnit_Buttons.Add(UnitTypes.Pawn, takeUnitZone_GO.transform.Find("CreatePawn_Button").GetComponent<Button>());
-            _createUnit_Buttons.Add(UnitTypes.Rook, takeUnitZone_GO.transform.Find("CreateRook_Button").GetComponent<Button>());
-            _createUnit_Buttons.Add(UnitTypes.Bishop, takeUnitZone_GO.transform.Find("CreateBishop_Button").GetComponent<Button>());
+            _createUnit_Buttons.Add(UnitTypes.Pawn_Axe, takeUnitZone_GO.transform.Find("CreatePawn_Button").GetComponent<Button>());
+            _createUnit_Buttons.Add(UnitTypes.Rook_Bow, takeUnitZone_GO.transform.Find("CreateRook_Button").GetComponent<Button>());
+            _createUnit_Buttons.Add(UnitTypes.Bishop_Bow, takeUnitZone_GO.transform.Find("CreateBishop_Button").GetComponent<Button>());
         }
 
         internal void AddListener(UnitTypes unitType, UnityAction unityAction) => _taker_Buttons[unitType].onClick.AddListener(unityAction);

@@ -12,7 +12,7 @@ namespace Assets.Scripts
     internal sealed class EventGameGeneralSystem : IEcsInitSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
 
         private EcsFilter<ReadyDataUICom, ReadyViewUICom> _readyFilter = default;
         private EcsFilter<SelectorComponent> _selectorFilter = default;
@@ -33,13 +33,13 @@ namespace Assets.Scripts
             _readyFilter.Get2(0).AddListenerToReadyButton(Ready);
 
             _takerUIFilter.Get2(0).AddListener(UnitTypes.King, delegate { GetUnit(UnitTypes.King); });
-            _takerUIFilter.Get2(0).AddListener(UnitTypes.Pawn, delegate { GetUnit(UnitTypes.Pawn); });
-            _takerUIFilter.Get2(0).AddListener(UnitTypes.Rook, delegate { GetUnit(UnitTypes.Rook); });
-            _takerUIFilter.Get2(0).AddListener(UnitTypes.Bishop, delegate { GetUnit(UnitTypes.Bishop); });
+            _takerUIFilter.Get2(0).AddListener(UnitTypes.Pawn_Axe, delegate { GetUnit(UnitTypes.Pawn_Axe); });
+            _takerUIFilter.Get2(0).AddListener(UnitTypes.Rook_Bow, delegate { GetUnit(UnitTypes.Rook_Bow); });
+            _takerUIFilter.Get2(0).AddListener(UnitTypes.Bishop_Bow, delegate { GetUnit(UnitTypes.Bishop_Bow); });
 
-            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Pawn, delegate { CreateUnit(UnitTypes.Pawn); });
-            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Rook, delegate { CreateUnit(UnitTypes.Rook); });
-            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Bishop, delegate { CreateUnit(UnitTypes.Bishop); });
+            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Pawn_Axe, delegate { CreateUnit(UnitTypes.Pawn_Axe); });
+            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Rook_Bow, delegate { CreateUnit(UnitTypes.Rook_Bow); });
+            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Bishop_Bow, delegate { CreateUnit(UnitTypes.Bishop_Bow); });
 
             _donerUIFilter.Get2(0).AddListener(delegate { Done(); });
 
@@ -50,11 +50,23 @@ namespace Assets.Scripts
             _unitZoneUIFilter.Get1(0).AddListenerToCondtionButton(ConditionUnitTypes.Protected, delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
             _unitZoneUIFilter.Get1(0).AddListenerToCondtionButton(ConditionUnitTypes.Relaxed, delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
 
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnSecondToolTypes.Hoe, delegate { SetCellClickSelector(CellClickTypes.GiveToolToPawn); });
+
+
+            _buildLeftZoneViewUICom.Get1(0).AddListenerToMelt(delegate { MeltOre(); });
+
+            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnToolTypes.Hoe, delegate { SetCellClickSelector(PawnToolTypes.Hoe); });
+            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnToolTypes.Pick, delegate { SetCellClickSelector(PawnToolTypes.Pick); });
+            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnToolTypes.Sword, delegate { SetCellClickSelector(PawnToolTypes.Sword); });
+
+            _buildLeftZoneViewUICom.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
+            _buildLeftZoneViewUICom.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
+            _buildLeftZoneViewUICom.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Mine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
         }
 
 
+
         private void Ready() => RPCGameSystem.ReadyToMaster(!_readyFilter.Get1(0).IsReady(PhotonNetwork.IsMasterClient));
+
         private void GetUnit(UnitTypes unitType)
         {
             _selectorFilter.Get1(0).IdxCurrentCell = default;
@@ -74,6 +86,7 @@ namespace Assets.Scripts
                 }
             }
         }
+
         private void Done()
         {
             switch (SaverComponent.StepModeType)
@@ -94,10 +107,12 @@ namespace Assets.Scripts
                     throw new Exception();
             }
         }
+
         private void EnvironmentInfo()
         {
             _envirZoneUIFilter.Get1(0).IsActivatedInfo = !_envirZoneUIFilter.Get1(0).IsActivatedInfo;
         }
+
         private void ConditionAbilityButton(ConditionUnitTypes conditionUnitType)
         {
             if (!IsDoned(PhotonNetwork.IsMasterClient))
@@ -113,9 +128,10 @@ namespace Assets.Scripts
             }
         }
 
-        private void SetCellClickSelector(CellClickTypes cellClickType)
+        private void SetCellClickSelector(PawnToolTypes toolType)
         {
-            _selectorFilter.Get1(0).CellClickType = cellClickType;
+            _selectorFilter.Get1(0).PawnToolTypeForUpgrade = toolType;
+            _selectorFilter.Get1(0).CellClickType = CellClickTypes.GiveToolToPawn;
         }
 
         private void CreateUnit(UnitTypes unitType)
@@ -123,6 +139,16 @@ namespace Assets.Scripts
             _takerUIFilter.Get1(0).ResetCurTimer(unitType);
 
             if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.CreateUnitToMaster(unitType);
+        }
+
+        private void MeltOre()
+        {
+            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.MeltOreToMaster();
+        }
+
+        private void UpgradeBuilding(BuildingTypes buildingType)
+        {
+            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.UpgradeBuildingToMaster(buildingType);
         }
     }
 }

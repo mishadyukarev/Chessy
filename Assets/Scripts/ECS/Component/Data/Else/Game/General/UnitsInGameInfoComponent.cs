@@ -44,9 +44,9 @@ namespace Assets.Scripts.ECS.Component
         internal int GetAmountAllUnitsInGame(bool key)
         {
             return GetAmountUnitsInGame(UnitTypes.King, key)
-                + GetAmountUnitsInGame(UnitTypes.Pawn, key)
-                + GetAmountUnitsInGame(UnitTypes.Rook, key)
-                + GetAmountUnitsInGame(UnitTypes.Bishop, key);
+                + GetAmountUnitsInGame(UnitTypes.Pawn_Axe, key)
+                + GetAmountUnitsInGame(UnitTypes.Rook_Bow, key)
+                + GetAmountUnitsInGame(UnitTypes.Bishop_Bow, key);
         }
 
         internal bool IsSettedKing(bool key) => GetLixtXyUnits(UnitTypes.King, key).Count > 0;

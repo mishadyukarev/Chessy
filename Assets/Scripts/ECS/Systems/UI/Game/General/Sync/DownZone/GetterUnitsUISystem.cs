@@ -13,7 +13,7 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
     private EcsFilter<TakerUnitsDataUICom, TakerUnitsViewUICom> _takerUnitsUIFilter = default;
 
 
-    private const float NEEDED_TIME = 2;
+    private const float NEEDED_TIME = 1;
 
     public void Run()
     {
@@ -23,7 +23,7 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
 
         for (UnitTypes curUnitType = 0; curUnitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; curUnitType++)
         {
-            if (curUnitType == UnitTypes.Pawn || curUnitType == UnitTypes.Rook || curUnitType == UnitTypes.Bishop)
+            if (curUnitType == UnitTypes.Pawn_Axe || curUnitType == UnitTypes.Rook_Bow || curUnitType == UnitTypes.Bishop_Bow)
             {
                 if (takerUnitsDataUICom.IsActivatedButton(curUnitType))
                 {

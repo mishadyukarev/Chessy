@@ -11,16 +11,16 @@ namespace Assets.Scripts.ECS.Component.Data.UI.Game.General
         {
             _needCreateButtons = needCreateButtons;
 
-            _needCreateButtons.Add(UnitTypes.Pawn, default);
-            _needCreateButtons.Add(UnitTypes.Rook, default);
-            _needCreateButtons.Add(UnitTypes.Bishop, default);
+            _needCreateButtons.Add(UnitTypes.Pawn_Axe, default);
+            _needCreateButtons.Add(UnitTypes.Rook_Bow, default);
+            _needCreateButtons.Add(UnitTypes.Bishop_Bow, default);
 
 
             _curTimers = new Dictionary<UnitTypes, float>();
 
-            _curTimers.Add(UnitTypes.Pawn, default);
-            _curTimers.Add(UnitTypes.Rook, default);
-            _curTimers.Add(UnitTypes.Bishop, default);
+            _curTimers.Add(UnitTypes.Pawn_Axe, default);
+            _curTimers.Add(UnitTypes.Rook_Bow, default);
+            _curTimers.Add(UnitTypes.Bishop_Bow, default);
         }
 
         internal void ActiveNeedCreateButton(UnitTypes unitType, bool isActive) => _needCreateButtons[unitType] = isActive;

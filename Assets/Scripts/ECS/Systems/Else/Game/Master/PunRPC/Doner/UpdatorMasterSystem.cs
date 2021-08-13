@@ -16,7 +16,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellViewComponent> _cellViewFilter = default;
-    private EcsFilter<CellUnitComponent, OwnerComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
     private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildDataFilter = default;
@@ -151,7 +151,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                     {
                         if (curCellUnitDataCom.AmountHealth == curCellUnitDataCom.MaxAmountHealth)
                         {
-                            if (curUnitType == UnitTypes.Pawn)
+                            if (curUnitType == UnitTypes.Pawn_Axe)
                             {
                                 if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
                                 {
@@ -249,7 +249,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
             var amountUnits = idxUnitsCom.GetAmountUnitsInGame(isMasterKey, new[]
             {
-                UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop
+                UnitTypes.Pawn_Axe, UnitTypes.Rook_Bow, UnitTypes.Bishop_Bow
             });
 
             inventorResCom.TakeAmountResources(ResourceTypes.Food, isMasterKey, amountUnits);

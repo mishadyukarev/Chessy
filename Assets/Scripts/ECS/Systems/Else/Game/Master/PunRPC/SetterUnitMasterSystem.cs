@@ -17,7 +17,7 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
     private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
 
     private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
-    private EcsFilter<CellUnitComponent, OwnerComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
     private EcsFilter<CellDataComponent> _cellDataFilter = default;
 
     public void Run()
@@ -51,19 +51,19 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_KING;
                     break;
 
-                case UnitTypes.Pawn:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN;
+                case UnitTypes.Pawn_Axe:
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN_AXE;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN;
                     break;
 
-                case UnitTypes.Rook:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK;
-                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK;
+                case UnitTypes.Rook_Bow:
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK_BOW;
+                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK_BOW;
                     break;
 
-                case UnitTypes.Bishop:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP;
-                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
+                case UnitTypes.Bishop_Bow:
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP_BOW;
+                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP_BOW;
                     break;
 
                 default:

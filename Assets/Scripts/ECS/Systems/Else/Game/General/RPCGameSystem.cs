@@ -2,6 +2,7 @@
 using Assets.Scripts.Abstractions.Enums.Cell;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
+using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
@@ -46,6 +47,7 @@ namespace Assets.Scripts
         private EcsFilter<ForFireMasCom> _fireFilter = default;
         private EcsFilter<ForUpgradeMasCom> _upgradorFilter = default;
         private EcsFilter<ForCircularAttackMasCom, XyCellForDoingMasCom> _circularAttackFilter = default;
+        private EcsFilter<ForGivePawnToolComponent> _forGivePawnToolFilter = default;
 
         private EcsFilter<InfoOtherCom> _infoOtherFilter = default;
 
@@ -96,7 +98,7 @@ namespace Assets.Scripts
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
         public static void SeedEnvironmentToMaster(byte idxCell, EnvironmentTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
-        public static void GiveToolPawn(byte idxCell, PawnSecondToolTypes pawnSecondToolType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveSecondToolToPawn, new object[] { idxCell, pawnSecondToolType });
+        public static void GiveToolPawn(byte idxCell, PawnToolTypes extraPawnToolType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveExtraPawnTool, new object[] { idxCell, extraPawnToolType });
 
         public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { idxCell });
 
@@ -214,7 +216,9 @@ namespace Assets.Scripts
                     _circularAttackFilter.Get1(0).IdxUnitForCirculAttack = (byte)objects[0];
                     break;
 
-                case RpcMasterTypes.GiveSecondToolToPawn:
+                case RpcMasterTypes.GiveExtraPawnTool:
+                    _forGivePawnToolFilter.Get1(0).IdxForGivePawnTool = (byte)objects[0];
+                    _forGivePawnToolFilter.Get1(0).PawnToolType = (PawnToolTypes)objects[1];
                     break;
 
                 default:
