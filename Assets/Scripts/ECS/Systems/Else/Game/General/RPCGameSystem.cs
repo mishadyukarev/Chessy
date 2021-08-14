@@ -48,6 +48,7 @@ namespace Assets.Scripts
         private EcsFilter<ForUpgradeMasCom> _upgradorFilter = default;
         private EcsFilter<ForCircularAttackMasCom, XyCellForDoingMasCom> _circularAttackFilter = default;
         private EcsFilter<ForGivePawnToolComponent> _forGivePawnToolFilter = default;
+        private EcsFilter<ForTakePawnExtraToolMastCom> _forTakePawnExtraToolFilter = default;
 
         private EcsFilter<InfoOtherCom> _infoOtherFilter = default;
 
@@ -92,13 +93,17 @@ namespace Assets.Scripts
 
         public static void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.Economy, haves });
         public static void MistakeUnitToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedKing });
-        public static void MistakeStepsUnitToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedSteps });
+        public static void MistakeNeedMoreStepsToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedSteps });
         public static void MistakeNeedOthePlaceToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedOtherPlace });
+        public static void MistakeNeedMoreHealthToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedMoreHealth });
+        public static void MistakeNeedToolInPawnToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.PawnMustHaveTool });
+        public static void MistakePawnHaveToolToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.PawnHaveTool });
 
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
         public static void SeedEnvironmentToMaster(byte idxCell, EnvironmentTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
-        public static void GiveToolPawn(byte idxCell, PawnToolTypes extraPawnToolType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveExtraPawnTool, new object[] { idxCell, extraPawnToolType });
+        public static void TakePawnExtraTool(byte idxCellForTake) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.TakePawnExtraTool, new object[] { idxCellForTake });
+        public static void GiveToolPawn(byte idxCell, PawnExtraToolTypes extraPawnToolType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveExtraPawnTool, new object[] { idxCell, extraPawnToolType });
 
         public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { idxCell });
 
@@ -216,9 +221,13 @@ namespace Assets.Scripts
                     _circularAttackFilter.Get1(0).IdxUnitForCirculAttack = (byte)objects[0];
                     break;
 
+                case RpcMasterTypes.TakePawnExtraTool:
+                    _forTakePawnExtraToolFilter.Get1(0).IdxCellForTakePawnExtraTool = (byte)objects[0];
+                    break;
+
                 case RpcMasterTypes.GiveExtraPawnTool:
                     _forGivePawnToolFilter.Get1(0).IdxForGivePawnTool = (byte)objects[0];
-                    _forGivePawnToolFilter.Get1(0).PawnToolType = (PawnToolTypes)objects[1];
+                    _forGivePawnToolFilter.Get1(0).PawnToolType = (PawnExtraToolTypes)objects[1];
                     break;
 
                 default:
@@ -258,6 +267,7 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.Mistake:
                     var mistakeType = (MistakeTypes)objects[_currentNumber++];
                     _mistakeUIFilter.Get1(0).MistakeTypes = mistakeType;
+                    _mistakeUIFilter.Get1(0).CurrentTime = default;
                     switch (mistakeType)
                     {
                         case MistakeTypes.None:
@@ -290,8 +300,18 @@ namespace Assets.Scripts
                             //MainGameSystem.MistakeCom.InvokeNeedOtherPlace();
                             break;
 
-                        default:
+                        case MistakeTypes.NeedMoreHealth:
+                            //MainGameSystem.MistakeCom.InvokeNeedOtherPlace();
                             break;
+
+                        case MistakeTypes.PawnMustHaveTool:
+                            break;
+
+                        case MistakeTypes.PawnHaveTool:
+                            break;
+
+                        default:
+                            throw new Exception();
                     }
                     break;
 

@@ -61,23 +61,23 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
             }       
         }
 
-        internal void SetExtraTool_Sprite(PawnToolTypes pawnSecondToolType)
+        internal void SetExtraTool_Sprite(PawnExtraToolTypes pawnExtraToolType)
         {
-            switch (pawnSecondToolType)
+            switch (pawnExtraToolType)
             {
-                case PawnToolTypes.None:
+                case PawnExtraToolTypes.None:
                     throw new Exception();
 
-                case PawnToolTypes.Hoe:
-                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.PawnExtraHoe_Sprite;
+                case PawnExtraToolTypes.Hoe:
+                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.HoePawnExtra_Sprite;
                     break;
 
-                case PawnToolTypes.Pick:
-                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.PawnExtraPick_Sprite;
+                case PawnExtraToolTypes.Pick:
+                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.PickPawnExtra_Sprite;
                     break;
 
-                case PawnToolTypes.Sword:
-                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.PawnExtraSword_Sprite;
+                case PawnExtraToolTypes.Sword:
+                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.SwordPawnExtra_Sprite;
                     break;
 
                 default:

@@ -47,7 +47,7 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
         }
         else
         {
-            RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+            RPCGameSystem.MistakeNeedMoreStepsToGeneral(sender);
             RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
         }
     }

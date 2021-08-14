@@ -36,7 +36,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
 
         if (fromOwnerCellUnitCom.ActorNumber != toOwnerCellUnitCom.ActorNumber)
         {
-            unitsInCondCom.ReplaceCondition(fromCellUnitDataCom.ConditionType, ConditionUnitTypes.None, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
+            unitsInCondCom.ReplaceCondition(fromCellUnitDataCom.ConditionUnitType, ConditionUnitTypes.None, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
 
             fromCellUnitDataCom.ResetAmountSteps();
             fromCellUnitDataCom.ResetConditionType();
@@ -93,7 +93,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
                 }
 
                 unitsInGameCom.RemoveAmountUnitsInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
-                unitsInCondCom.RemoveUnitInCondition(fromCellUnitDataCom.ConditionType, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
+                unitsInCondCom.RemoveUnitInCondition(fromCellUnitDataCom.ConditionUnitType, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
                 fromCellUnitDataCom.ResetUnitType();
 
                 if (fromOwnerCellUnitCom.HaveOwner)
@@ -108,7 +108,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
                     RPCGameSystem.EndGameToMaster(fromOwnerCellUnitCom.ActorNumber);
 
                 unitsInGameCom.RemoveAmountUnitsInGame(toCellUnitDataCom.UnitType, toOwnerCellUnitCom.IsMasterClient, toIdxForAttack);
-                unitsInCondCom.RemoveUnitInCondition(toCellUnitDataCom.ConditionType, toCellUnitDataCom.UnitType, toOwnerCellUnitCom.IsMasterClient, toIdxForAttack);
+                unitsInCondCom.RemoveUnitInCondition(toCellUnitDataCom.ConditionUnitType, toCellUnitDataCom.UnitType, toOwnerCellUnitCom.IsMasterClient, toIdxForAttack);
                 toCellUnitDataCom.ResetUnitType();
 
                 if (fromCellUnitDataCom.IsMelee)

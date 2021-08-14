@@ -9,6 +9,7 @@ namespace Assets.Scripts.ECS.Component.Data.UI.Game.General
         private Dictionary<ResourceTypes, bool> _needResources;
 
         internal MistakeTypes MistakeTypes { get; set; }
+        internal float CurrentTime { get; set; }
 
         internal MistakeDataUICom(Dictionary<ResourceTypes, bool> needResources) : this()
         {

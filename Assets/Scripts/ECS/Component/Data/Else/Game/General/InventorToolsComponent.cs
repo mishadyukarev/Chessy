@@ -9,23 +9,23 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General
 {
     internal struct InventorToolsComponent
     {
-        private Dictionary<PawnToolTypes, byte> _inventorTools;
+        private Dictionary<PawnExtraToolTypes, byte> _inventorTools;
 
-        internal InventorToolsComponent(Dictionary<PawnToolTypes, byte> inventorTools)
+        internal InventorToolsComponent(Dictionary<PawnExtraToolTypes, byte> inventorTools)
         {
             _inventorTools = inventorTools;
 
-            for (PawnToolTypes toolType = 0; toolType < (PawnToolTypes)Enum.GetNames(typeof(PawnToolTypes)).Length; toolType++)
+            for (PawnExtraToolTypes toolType = 0; toolType < (PawnExtraToolTypes)Enum.GetNames(typeof(PawnExtraToolTypes)).Length; toolType++)
             {
                 _inventorTools.Add(toolType, default);
             }
         }
 
-        internal bool HaveTool(PawnToolTypes toolType) => _inventorTools[toolType] > 0;
+        internal bool HaveTool(PawnExtraToolTypes toolType) => _inventorTools[toolType] > 0;
 
-        internal void SetAmountTools(PawnToolTypes toolType, byte value) => _inventorTools[toolType] = value;
-        internal byte GetAmountTools(PawnToolTypes toolType) => _inventorTools[toolType];
-        internal void AddAmountTools(PawnToolTypes toolType, byte adding = 1) => _inventorTools[toolType] += adding;
-        internal void TakeAmountTools(PawnToolTypes toolType, byte taking = 1) => _inventorTools[toolType] -= taking;
+        internal void SetAmountTools(PawnExtraToolTypes toolType, byte value) => _inventorTools[toolType] = value;
+        internal byte GetAmountTools(PawnExtraToolTypes toolType) => _inventorTools[toolType];
+        internal void AddAmountTools(PawnExtraToolTypes toolType, byte adding = 1) => _inventorTools[toolType] += adding;
+        internal void TakeAmountTools(PawnExtraToolTypes toolType, byte taking = 1) => _inventorTools[toolType] -= taking;
     }
 }

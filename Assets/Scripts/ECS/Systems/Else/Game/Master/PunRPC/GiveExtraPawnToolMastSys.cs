@@ -16,6 +16,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
         {
             ref var forGivePawnToolCom = ref _forGivePawnToolFilter.Get1(0);
 
+            var sender = _infoFilter.Get1(0).FromInfo.Sender;
             var neededIdx = forGivePawnToolCom.IdxForGivePawnTool;
 
             ref var neededCellUnitDataCom = ref _cellUnitFilter.Get1(neededIdx);
@@ -25,7 +26,29 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
             {
                 if (!neededCellUnitDataCom.HaveExtraPawnTool)
                 {
-                    neededCellUnitDataCom.ExtraPawnToolType = forGivePawnToolCom.PawnToolType;
+                    if (neededCellUnitDataCom.HaveMaxAmountHealth)
+                    {
+                        if (neededCellUnitDataCom.HaveMaxAmountSteps)
+                        {
+                            neededCellUnitDataCom.ExtraPawnToolType = forGivePawnToolCom.PawnToolType;
+                            neededCellUnitDataCom.ResetAmountSteps();
+                        }
+
+                        else
+                        {
+                            RPCGameSystem.MistakeNeedMoreStepsToGeneral(sender);
+                        }
+                    }
+
+                    else
+                    {
+                        RPCGameSystem.MistakeNeedMoreHealthToGeneral(sender);
+                    }
+                }
+
+                else
+                {
+                    RPCGameSystem.MistakePawnHaveToolToGeneral(sender);
                 }
             }
         }

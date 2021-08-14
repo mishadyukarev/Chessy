@@ -34,10 +34,19 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                             if (curCellUnitDataCom.HaveExtraPawnTool)
                             {
                                 curCellUnitViewCom.EnableExtraTool_SR();
-
                                 curCellUnitViewCom.SetExtraTool_Sprite(curCellUnitDataCom.ExtraPawnToolType);
                             }
-                        }        
+
+                            else
+                            {
+                                curCellUnitViewCom.DisableExtraTool_SR();
+                            }
+                        }
+
+                        else
+                        {
+                            curCellUnitViewCom.DisableExtraTool_SR();
+                        }
                     }
                     else
                     {
@@ -47,6 +56,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                 else
                 {
                     curCellUnitViewCom.DisableMainTool_SR();
+                    curCellUnitViewCom.DisableExtraTool_SR();
                 }
 
                 if (selectorCom.IsSelectedUnit)

@@ -109,8 +109,23 @@ internal sealed class SelectorSystem : IEcsRunSystem
                         }
                         else
                         {
-                            selectorCom.CellClickType = CellClickTypes.Start;
+                            selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                            selectorCom.CellClickType = CellClickTypes.NotStart;
                         }
+                    }
+
+                    else if (selectorCom.IsCellClickType(CellClickTypes.TakePawnExtraTool))
+                    {
+                        if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(UnitTypes.Pawn_Axe))
+                        {
+                            RPCGameSystem.TakePawnExtraTool(selectorCom.IdxCurrentCell);
+                        }
+                        else
+                        {
+                            selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                            selectorCom.CellClickType = CellClickTypes.NotStart;
+                        }
+                       
                     }
 
                     else if (selectorCom.CellClickType == CellClickTypes.Start)

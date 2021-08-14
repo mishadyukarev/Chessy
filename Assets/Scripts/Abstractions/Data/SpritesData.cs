@@ -44,9 +44,9 @@ public class SpritesData : ScriptableObject
     public Sprite KingSprite => _kingSprite;
 
     public Sprite PawnMainAxe_Sprite => _pawnMainAxe_Sprite;
-    public Sprite PawnExtraHoe_Sprite => _hoe_Sprite;
-    public Sprite PawnExtraPick_Sprite => _pick_Sprite;
-    public Sprite PawnExtraSword_Sprite => _sword_Sprite;
+    public Sprite HoePawnExtra_Sprite => _hoe_Sprite;
+    public Sprite PickPawnExtra_Sprite => _pick_Sprite;
+    public Sprite SwordPawnExtra_Sprite => _sword_Sprite;
 
     public Sprite RookSprite => _rookSprite;
     public Sprite RookCrossbowSprite => _rookCrossbowSprite;

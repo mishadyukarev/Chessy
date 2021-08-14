@@ -48,7 +48,7 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
                 {
                     inventorUnitsCom.AddUnitsInInventor(curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient);
 
-                    unitsInCondInGameCom.RemoveUnitInCondition(curCellUnitDataCom.ConditionType, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, curIdxCell);
+                    unitsInCondInGameCom.RemoveUnitInCondition(curCellUnitDataCom.ConditionUnitType, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, curIdxCell);
                     unitsInGameCom.RemoveAmountUnitsInGame(curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, curIdxCell);
 
                     curCellUnitDataCom.ResetUnitType();

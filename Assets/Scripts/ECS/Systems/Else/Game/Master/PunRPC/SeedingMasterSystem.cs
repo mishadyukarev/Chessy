@@ -77,7 +77,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                     else
                     {
-                        RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                        RPCGameSystem.MistakeNeedMoreStepsToGeneral(sender);
                         RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
                     break;

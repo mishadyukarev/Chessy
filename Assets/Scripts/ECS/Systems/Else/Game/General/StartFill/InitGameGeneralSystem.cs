@@ -203,7 +203,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                 .Replace(new InventorUnitsComponent(new Dictionary<UnitTypes, Dictionary<bool, int>>()))
                 .Replace(new InventorResourcesComponent(new Dictionary<ResourceTypes, Dictionary<bool, int>>()))
-                .Replace(new InventorToolsComponent(new Dictionary<PawnToolTypes, byte>()))
+                .Replace(new InventorToolsComponent(new Dictionary<PawnExtraToolTypes, byte>()))
 
                 .Replace(new FromInfoComponent())
                 .Replace(new MistakeUEComponent(new Dictionary<ResourceTypes, UnityEvent>()))

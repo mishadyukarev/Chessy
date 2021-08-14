@@ -16,7 +16,7 @@ public struct SelectorComponent
     internal void ResetSelectedUnit() => SelectedUnitType = default;
 
 
-    internal PawnToolTypes PawnToolTypeForUpgrade { get; set; }
+    internal PawnExtraToolTypes PawnToolTypeForUpgrade { get; set; }
 
 
     internal bool IsActPickingFire { get; set; }

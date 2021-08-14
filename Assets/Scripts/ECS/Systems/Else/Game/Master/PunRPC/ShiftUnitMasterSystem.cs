@@ -47,7 +47,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
                 if (fromCellUnitDataCom.AmountSteps < 0) fromCellUnitDataCom.ResetAmountSteps();
 
 
-                idxUnitsInCondCom.RemoveUnitInCondition(fromCellUnitDataCom.ConditionType, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
+                idxUnitsInCondCom.RemoveUnitInCondition(fromCellUnitDataCom.ConditionUnitType, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
                 idxUnitsInCondCom.AddUnitInCondition(ConditionUnitTypes.None, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, toIdx);
 
                 idxUnitsCom.RemoveAmountUnitsInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
@@ -57,13 +57,11 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
                 toCellUnitDataCom.UnitType = fromCellUnitDataCom.UnitType;
                 toCellUnitDataCom.AmountHealth = fromCellUnitDataCom.AmountHealth;
                 toCellUnitDataCom.AmountSteps = fromCellUnitDataCom.AmountSteps;
-                toCellUnitDataCom.ConditionType = default;
+                toCellUnitDataCom.ConditionUnitType = default;
+                toCellUnitDataCom.ExtraPawnToolType = fromCellUnitDataCom.ExtraPawnToolType;
                 toOwnerCellUnitCom.SetOwner(fromInfo.Sender);
 
-                fromCellUnitDataCom.UnitType = default;
-                fromCellUnitDataCom.AmountHealth = default;
-                fromCellUnitDataCom.AmountSteps = default;
-                fromCellUnitDataCom.ConditionType = default;
+                fromCellUnitDataCom.ResetUnit();
                 fromOwnerCellUnitCom.ResetOwner();
 
                 RPCGameSystem.SoundToGeneral(fromInfo.Sender, SoundEffectTypes.ClickToTable);

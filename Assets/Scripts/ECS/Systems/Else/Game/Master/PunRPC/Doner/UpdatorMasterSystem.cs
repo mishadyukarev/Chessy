@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.Enums.Cell;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
@@ -144,7 +145,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                     if (curCellFireDataCom.HaveFire)
                     {
                         idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.None, curUnitType, isMasterKey, curIdxCell);
-                        curCellUnitDataCom.ConditionType = ConditionUnitTypes.None;
+                        curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.None;
                     }
 
                     else
@@ -173,7 +174,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                         else
                                         {
                                             idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
-                                            curCellUnitDataCom.ConditionType = ConditionUnitTypes.Protected;
+                                            curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
                                         }
                                     }
                                     else
@@ -191,30 +192,32 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                     }
                                 }
 
-                                else if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.Hill))
+                                else if (curCellUnitDataCom.IsPawnExtraTool(PawnExtraToolTypes.Pick))
                                 {
-                                    if (curCellEnvDataCom.GetAmountResources(EnvironmentTypes.Hill) < curCellEnvDataCom.MaxAmountResources(EnvironmentTypes.Hill))
+                                    if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.Hill))
                                     {
-                                        curCellEnvDataCom.AddAmountResources(EnvironmentTypes.Hill);
-                                    }
-                                    else
-                                    {
-                                        curCellUnitDataCom.ConditionType = ConditionUnitTypes.Protected;
-                                        idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
+                                        if (curCellEnvDataCom.GetAmountResources(EnvironmentTypes.Hill) < curCellEnvDataCom.MaxAmountResources(EnvironmentTypes.Hill))
+                                        {
+                                            curCellEnvDataCom.AddAmountResources(EnvironmentTypes.Hill);
+                                        }
+                                        else
+                                        {
+                                            curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
+                                            idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
+                                        }
                                     }
                                 }
 
                                 else
                                 {
-                                    curCellUnitDataCom.ConditionType = ConditionUnitTypes.Protected;
+                                    curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
                                     idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
                                 }
                             }
-
                             else
                             {
                                 idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
-                                curCellUnitDataCom.ConditionType = ConditionUnitTypes.Protected;
+                                curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
                             }
                         }
 
@@ -241,7 +244,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
                     if (curCellUnitDataCom.HaveMaxAmountSteps)
                     {
-                        curCellUnitDataCom.ConditionType = ConditionUnitTypes.Protected;
+                        curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
                         idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, idxUnitInCond);
                     }
                 }
@@ -271,7 +274,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                         ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(curIdxCell);
 
                         idxUnitsCom.RemoveAmountUnitsInGame(unitType, isMasterKey, curIdxCell);
-                        idxUnitsInCondCom.RemoveUnitInCondition(curCellUnitDataCom.ConditionType, unitType, isMasterKey, curIdxCell);
+                        idxUnitsInCondCom.RemoveUnitInCondition(curCellUnitDataCom.ConditionUnitType, unitType, isMasterKey, curIdxCell);
                         curCellUnitDataCom.UnitType = default;
                         break;
                     }
@@ -304,7 +307,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                     if (!curCellUnitDataCom.HaveAmountHealth)
                     {
                         idxUnitsCom.RemoveAmountUnitsInGame(curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, curIdxCell);
-                        idxUnitsInCondCom.RemoveUnitInCondition(curCellUnitDataCom.ConditionType, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, curIdxCell);
+                        idxUnitsInCondCom.RemoveUnitInCondition(curCellUnitDataCom.ConditionUnitType, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, curIdxCell);
 
                         curCellUnitDataCom.ResetUnit();
                         curOwnerCellUnitDataCom.ResetOwner();

@@ -58,7 +58,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
 
                         idxUnitsInCondCom.ReplaceCondition(ConditionUnitTypes.Relaxed, ConditionUnitTypes.Protected, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
 
-                        curCellUnitDataCom.ConditionType = neededCondType;
+                        curCellUnitDataCom.ConditionUnitType = neededCondType;
 
                         curCellUnitDataCom.ResetAmountSteps();
                     }
@@ -66,7 +66,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
                     {
                         RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-                        curCellUnitDataCom.ConditionType = neededCondType;
+                        curCellUnitDataCom.ConditionUnitType = neededCondType;
                         idxUnitsInCondCom.ReplaceCondition(ConditionUnitTypes.None, neededCondType, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
 
                         curCellUnitDataCom.ResetAmountSteps();
@@ -75,7 +75,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
 
                 else
                 {
-                    RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                    RPCGameSystem.MistakeNeedMoreStepsToGeneral(sender);
                     RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                 }
                 break;
@@ -97,7 +97,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
                         idxUnitsInCondCom.ReplaceCondition(ConditionUnitTypes.Protected, ConditionUnitTypes.Relaxed, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
 
                         RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-                        curCellUnitDataCom.ConditionType = neededCondType;
+                        curCellUnitDataCom.ConditionUnitType = neededCondType;
                         curCellUnitDataCom.ResetAmountSteps();
                     }
                     else
@@ -105,14 +105,14 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
                         idxUnitsInCondCom.ReplaceCondition(ConditionUnitTypes.None, neededCondType, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, idxForCondit);
 
                         RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-                        curCellUnitDataCom.ConditionType = neededCondType;
+                        curCellUnitDataCom.ConditionUnitType = neededCondType;
                         curCellUnitDataCom.ResetAmountSteps();
                     }
                 }
 
                 else
                 {
-                    RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                    RPCGameSystem.MistakeNeedMoreStepsToGeneral(sender);
                     RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                 }
                 break;

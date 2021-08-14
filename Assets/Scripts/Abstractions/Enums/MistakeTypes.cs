@@ -5,5 +5,8 @@
     Economy,
     NeedKing,
     NeedSteps,
-    NeedOtherPlace
+    NeedOtherPlace,
+    NeedMoreHealth,
+    PawnMustHaveTool,
+    PawnHaveTool,
 }

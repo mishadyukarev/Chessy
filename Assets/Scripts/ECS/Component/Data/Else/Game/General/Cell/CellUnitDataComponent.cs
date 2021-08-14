@@ -12,7 +12,8 @@ internal struct CellUnitDataComponent
     internal bool IsUnitType(UnitTypes unitType) => UnitType == unitType;
     internal bool IsUnitType(UnitTypes[] unitTypes)
     {
-        foreach (var curUnitType in unitTypes) if (IsUnitType(curUnitType)) return true;
+        foreach (var curUnitType in unitTypes) 
+            if (IsUnitType(curUnitType)) return true;
         return false;
     }
     internal bool IsMelee
@@ -49,10 +50,10 @@ internal struct CellUnitDataComponent
     }
 
 
-    internal PawnToolTypes ExtraPawnToolType;
-    internal bool HaveExtraPawnTool => ExtraPawnToolType != PawnToolTypes.None;
-    internal bool IsPawnSecondTool(PawnToolTypes pawnSecondToolType) => ExtraPawnToolType == pawnSecondToolType;
-    internal void ResetPawnSecondTool() => ExtraPawnToolType = default;
+    internal PawnExtraToolTypes ExtraPawnToolType;
+    internal bool HaveExtraPawnTool => ExtraPawnToolType != PawnExtraToolTypes.None;
+    internal bool IsPawnExtraTool(PawnExtraToolTypes pawnSecondToolType) => ExtraPawnToolType == pawnSecondToolType;
+    internal void ResetPawnExtraTool() => ExtraPawnToolType = default;
 
 
     private Dictionary<bool, bool> _isVisibleDict;
@@ -60,9 +61,9 @@ internal struct CellUnitDataComponent
     internal void SetIsVisibleUnit(bool key, bool value) => _isVisibleDict[key] = value;
 
 
-    internal ConditionUnitTypes ConditionType { get; set; }
-    internal void ResetConditionType() => ConditionType = default;
-    internal bool IsConditionType(ConditionUnitTypes conditionUnitType) => ConditionType == conditionUnitType;
+    internal ConditionUnitTypes ConditionUnitType { get; set; }
+    internal void ResetConditionType() => ConditionUnitType = default;
+    internal bool IsConditionType(ConditionUnitTypes conditionUnitType) => ConditionUnitType == conditionUnitType;
 
 
     internal Dictionary<ConditionUnitTypes, int> _amountStepsInCondition;
@@ -359,61 +360,21 @@ internal struct CellUnitDataComponent
             return powerProtection;
         }
     }
-
-
-    internal void SetStandartValuesUnit(UnitTypes unitType, int amountHealth, int amountSteps, ConditionUnitTypes protectRelaxType)
-    {
-        UnitType = unitType;
-        AmountHealth = amountHealth;
-        AmountSteps = amountSteps;
-        ConditionType = protectRelaxType;
-    }
     internal void ResetUnit()
     {
         UnitType = default;
         AmountHealth = default;
         AmountSteps = default;
-        ConditionType = default;
-    }
-    internal void ChangePlayerUnit(UnitTypes newUnitType)
-    {
-        UnitType = newUnitType;
-
-        switch (UnitType)
-        {
-            case UnitTypes.None:
-                throw new Exception();
-
-            case UnitTypes.King:
-                throw new Exception();
-
-            case UnitTypes.Pawn_Axe:
-                throw new Exception();
-
-            case UnitTypes.Rook_Bow:
-                throw new Exception();
-
-            case UnitTypes.Rook_Crossbow:
-                AmountHealth += MaxAmountHealth - STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW;
-                break;
-
-            case UnitTypes.Bishop_Bow:
-                throw new Exception();
-
-            case UnitTypes.Bishop_Crossbow:
-                AmountHealth += MaxAmountHealth - STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW;
-                break;
-
-            default:
-                throw new Exception();
-        }
+        ConditionUnitType = default;
+        ExtraPawnToolType = default;
     }
     internal void ReplaceUnit(CellUnitDataComponent newCellUnitDataCom)
     {
         UnitType = newCellUnitDataCom.UnitType;
-        ConditionType = newCellUnitDataCom.ConditionType;
+        ConditionUnitType = newCellUnitDataCom.ConditionUnitType;
         AmountSteps = newCellUnitDataCom.AmountSteps;
         AmountHealth = newCellUnitDataCom.AmountHealth;
+        ExtraPawnToolType = newCellUnitDataCom.ExtraPawnToolType;
     }
 
     internal CellUnitDataComponent(Dictionary<bool, bool> isVisibleDict) : this()

@@ -63,13 +63,13 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
                 if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Protected) || curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
                 {
 
-                    idxUnitsInCondCom.ReplaceCondition(curCellUnitDataCom.ConditionType, ConditionUnitTypes.None, UnitTypes.King, sender.IsMasterClient, idxCellCurculAttack);
+                    idxUnitsInCondCom.ReplaceCondition(curCellUnitDataCom.ConditionUnitType, ConditionUnitTypes.None, UnitTypes.King, sender.IsMasterClient, idxCellCurculAttack);
                     curCellUnitDataCom.ResetConditionType();
                 }
             }
             else
             {
-                RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                RPCGameSystem.MistakeNeedMoreStepsToGeneral(sender);
                 RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
             }
         }

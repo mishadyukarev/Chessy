@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums.Cell;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,7 +10,8 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
     internal struct BuildLeftZoneViewUICom
     {
         private Button _melt_Button;
-        private Dictionary<PawnToolTypes, Button> _giveTool_Buttons;
+        private Button _takePawnExtraTool_Button;
+        private Dictionary<PawnExtraToolTypes, Button> _giveTool_Buttons;
         private Dictionary<BuildingTypes, Button> _upgradeBuild_Buttons;
 
         internal BuildLeftZoneViewUICom(GameObject leftZone_GO)
@@ -18,10 +20,12 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 
             _melt_Button = buildingZone_GO.transform.Find("MeltOreButton").GetComponent<Button>();
 
-            _giveTool_Buttons = new Dictionary<PawnToolTypes, Button>();
-            _giveTool_Buttons.Add(PawnToolTypes.Hoe, buildingZone_GO.transform.Find("GiveHoe_Button").GetComponent<Button>());
-            _giveTool_Buttons.Add(PawnToolTypes.Pick, buildingZone_GO.transform.Find("GivePick_Button").GetComponent<Button>());
-            _giveTool_Buttons.Add(PawnToolTypes.Sword, buildingZone_GO.transform.Find("GiveSword_Button").GetComponent<Button>());
+            _takePawnExtraTool_Button = buildingZone_GO.transform.Find("TakeTool_Button").GetComponent<Button>();
+
+            _giveTool_Buttons = new Dictionary<PawnExtraToolTypes, Button>();
+            //_giveTool_Buttons.Add(PawnToolTypes.Hoe, buildingZone_GO.transform.Find("GiveHoe_Button").GetComponent<Button>());
+            _giveTool_Buttons.Add(PawnExtraToolTypes.Pick, buildingZone_GO.transform.Find("GivePick_Button").GetComponent<Button>());
+            _giveTool_Buttons.Add(PawnExtraToolTypes.Sword, buildingZone_GO.transform.Find("GiveSword_Button").GetComponent<Button>());
 
             _upgradeBuild_Buttons = new Dictionary<BuildingTypes, Button>();
             _upgradeBuild_Buttons.Add(BuildingTypes.Farm, buildingZone_GO.transform.Find("UpgradeFarm_Button").GetComponent<Button>());
@@ -32,9 +36,13 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 
         internal void SetActiveZone(bool isActive) => _melt_Button.transform.parent.gameObject.SetActive(isActive);
         internal void AddListenerToMelt(UnityAction unityAction) => _melt_Button.onClick.AddListener(unityAction);
-
+        internal void AddListenerToTakePawnTool(UnityAction unityAction) => _takePawnExtraTool_Button.onClick.AddListener(unityAction);
         internal void AddListenerToBuildUpgrade(BuildingTypes buildingType, UnityAction unityAction) => _upgradeBuild_Buttons[buildingType].onClick.AddListener(unityAction);
+        internal void AddListenerToGiveTool(PawnExtraToolTypes secondToolType, UnityAction unityAction)
+        {
+            if (secondToolType == PawnExtraToolTypes.Hoe) throw new Exception();
 
-        internal void AddListenerToGiveTool(PawnToolTypes secondToolType, UnityAction unityAction) => _giveTool_Buttons[secondToolType].onClick.AddListener(unityAction);
+            _giveTool_Buttons[secondToolType].onClick.AddListener(unityAction);
+        }
     }
 }

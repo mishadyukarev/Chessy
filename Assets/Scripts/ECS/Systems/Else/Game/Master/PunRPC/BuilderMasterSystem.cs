@@ -93,7 +93,7 @@ internal sealed class BuilderMasterSystem : IEcsRunSystem
                     }
                     else
                     {
-                        RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                        RPCGameSystem.MistakeNeedMoreStepsToGeneral(sender);
                         RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
                     break;
@@ -142,7 +142,7 @@ internal sealed class BuilderMasterSystem : IEcsRunSystem
                     else
                     {
                         RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                        RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                        RPCGameSystem.MistakeNeedMoreStepsToGeneral(sender);
                     }
                     break;
 
@@ -170,7 +170,7 @@ internal sealed class BuilderMasterSystem : IEcsRunSystem
                             else
                             {
                                 RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                                RPCGameSystem.MistakeStepsUnitToGeneral(sender);
+                                RPCGameSystem.MistakeNeedMoreStepsToGeneral(sender);
                             }
                         }
                         else

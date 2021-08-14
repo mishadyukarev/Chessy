@@ -38,6 +38,7 @@ public sealed class GameMasterSystemManager : SystemAbstManager
         _rpcSystems.Add(RpcMasterTypes.Fire, new EcsSystems(gameWorld).Add(new FireMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.SeedEnvironment, new EcsSystems(gameWorld).Add(new SeedingMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.CircularAttackKing, new EcsSystems(gameWorld).Add(new CircularAttackKingSystem()));
+        _rpcSystems.Add(RpcMasterTypes.TakePawnExtraTool, new EcsSystems(gameWorld).Add(new TakePawnExtraToolMastSys()));
         _rpcSystems.Add(RpcMasterTypes.GiveExtraPawnTool, new EcsSystems(gameWorld).Add(new GiveExtraPawnToolMastSys()));
 
 

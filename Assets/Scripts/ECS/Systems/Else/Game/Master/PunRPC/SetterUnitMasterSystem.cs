@@ -73,7 +73,7 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
             cellUnitDataCom.UnitType = unitTypeForSetting;
             cellUnitDataCom.AmountHealth = newAmountHealth;
             cellUnitDataCom.AmountSteps = newAmountSteps;
-            cellUnitDataCom.ConditionType = default;
+            cellUnitDataCom.ConditionUnitType = default;
             ownerCellCom.SetOwner(sender);
 
 

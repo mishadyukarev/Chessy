@@ -54,9 +54,11 @@ namespace Assets.Scripts
 
             _buildLeftZoneViewUICom.Get1(0).AddListenerToMelt(delegate { MeltOre(); });
 
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnToolTypes.Hoe, delegate { SetCellClickSelector(PawnToolTypes.Hoe); });
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnToolTypes.Pick, delegate { SetCellClickSelector(PawnToolTypes.Pick); });
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnToolTypes.Sword, delegate { SetCellClickSelector(PawnToolTypes.Sword); });
+            _buildLeftZoneViewUICom.Get1(0).AddListenerToTakePawnTool(delegate { SetCellClickType(CellClickTypes.TakePawnExtraTool); });
+
+            //_buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnToolTypes.Hoe, delegate { SetCellClickSelector(PawnToolTypes.Hoe); });
+            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnExtraToolTypes.Pick, delegate { SetCellClickSelector(PawnExtraToolTypes.Pick); });
+            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnExtraToolTypes.Sword, delegate { SetCellClickSelector(PawnExtraToolTypes.Sword); });
 
             _buildLeftZoneViewUICom.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
             _buildLeftZoneViewUICom.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
@@ -128,11 +130,13 @@ namespace Assets.Scripts
             }
         }
 
-        private void SetCellClickSelector(PawnToolTypes toolType)
+        private void SetCellClickSelector(PawnExtraToolTypes toolType)
         {
             _selectorFilter.Get1(0).PawnToolTypeForUpgrade = toolType;
             _selectorFilter.Get1(0).CellClickType = CellClickTypes.GiveToolToPawn;
         }
+
+        private void SetCellClickType(CellClickTypes cellClickType) => _selectorFilter.Get1(0).CellClickType = cellClickType;
 
         private void CreateUnit(UnitTypes unitType)
         {

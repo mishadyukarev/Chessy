@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
@@ -57,7 +58,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                     inventResCom.BuyUpgradeUnit(sender, curCellUnitDataCom.UnitType);
 
 
-                                    var preConditionType = curCellUnitDataCom.ConditionType;
+                                    var preConditionType = curCellUnitDataCom.ConditionUnitType;
                                     var preUnitType = curCellUnitDataCom.UnitType;
                                     var preKey = curOwnerCellUnitDataCom.IsMasterClient;
                                     var preMaxHealth = curCellUnitDataCom.MaxAmountHealth;
@@ -65,9 +66,35 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                     unitsInCondCom.RemoveUnitInCondition(preConditionType, preUnitType, preKey, idxForUpgradeUnit);
                                     unitsInGameCom.RemoveAmountUnitsInGame(preUnitType, preKey, idxForUpgradeUnit);
 
+                                    curCellUnitDataCom.UnitType = curCellUnitDataCom.UnitType + FOR_NEXT_UPGRADE;
+                                    switch (curCellUnitDataCom.UnitType)
+                                    {
+                                        case UnitTypes.None:
+                                            throw new Exception();
 
-                                    curCellUnitDataCom.ChangePlayerUnit(curCellUnitDataCom.UnitType + FOR_NEXT_UPGRADE);
+                                        case UnitTypes.King:
+                                            throw new Exception();
 
+                                        case UnitTypes.Pawn_Axe:
+                                            throw new Exception();
+
+                                        case UnitTypes.Rook_Bow:
+                                            throw new Exception();
+
+                                        case UnitTypes.Rook_Crossbow:
+                                            curCellUnitDataCom.AmountHealth += curCellUnitDataCom.MaxAmountHealth - UnitValues.STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW;
+                                            break;
+
+                                        case UnitTypes.Bishop_Bow:
+                                            throw new Exception();
+
+                                        case UnitTypes.Bishop_Crossbow:
+                                            curCellUnitDataCom.AmountHealth += curCellUnitDataCom.MaxAmountHealth - UnitValues.STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW;
+                                            break;
+
+                                        default:
+                                            throw new Exception();
+                                    }
 
 
                                     var newUnitType = curCellUnitDataCom.UnitType;
