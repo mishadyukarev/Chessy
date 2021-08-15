@@ -10,44 +10,49 @@ using UnityEngine;
 internal sealed class GetterUnitsUISystem : IEcsRunSystem
 {
     private EcsFilter<UnitsInGameInfoComponent> _xyUnitsFilter = default;
-    private EcsFilter<TakerUnitsDataUICom, TakerUnitsViewUICom> _takerUnitsUIFilter = default;
+    private EcsFilter<GetterUnitsDataUICom, GetterUnitsViewUICom> _takerUnitsUIFilter = default;
 
+    private EcsFilter<InventorUnitsComponent> _inventUnitsFilter = default;
 
     private const float NEEDED_TIME = 1;
 
     public void Run()
     {
         ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
-        ref var takerUnitsDataUICom = ref _takerUnitsUIFilter.Get1(0);
-        ref var takerUnitsViewUICom = ref _takerUnitsUIFilter.Get2(0);
+        ref var getterUnitsDataUICom = ref _takerUnitsUIFilter.Get1(0);
+        ref var getterUnitsViewUICom = ref _takerUnitsUIFilter.Get2(0);
+        ref var inventUnitsComp = ref _inventUnitsFilter.Get1(0);
 
         for (UnitTypes curUnitType = 0; curUnitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; curUnitType++)
         {
             if (curUnitType == UnitTypes.Pawn_Axe || curUnitType == UnitTypes.Rook_Bow || curUnitType == UnitTypes.Bishop_Bow)
             {
-                if (takerUnitsDataUICom.IsActivatedButton(curUnitType))
+                if (getterUnitsDataUICom.IsActivatedButton(curUnitType))
                 {
-                    takerUnitsViewUICom.SetActiveCreateButton(curUnitType, true);
-                    takerUnitsDataUICom.AddTimer(curUnitType, Time.deltaTime);
+                    getterUnitsViewUICom.SetActiveCreateButton(curUnitType, true);
+                    getterUnitsDataUICom.AddTimer(curUnitType, Time.deltaTime);
 
-                    if (takerUnitsDataUICom.GetTimer(curUnitType) >= NEEDED_TIME)
+                    if (getterUnitsDataUICom.GetTimer(curUnitType) >= NEEDED_TIME)
                     {
-                        takerUnitsViewUICom.SetActiveCreateButton(curUnitType, false);
-                        takerUnitsDataUICom.ActiveNeedCreateButton(curUnitType, false);
-                        takerUnitsDataUICom.ResetCurTimer(curUnitType);
+                        getterUnitsViewUICom.SetActiveCreateButton(curUnitType, false);
+                        getterUnitsDataUICom.ActiveNeedCreateButton(curUnitType, false);
+                        getterUnitsDataUICom.ResetCurTimer(curUnitType);
                     }
                 }
 
                 else
                 {
-                    takerUnitsViewUICom.SetActiveCreateButton(curUnitType, false);
+                    getterUnitsViewUICom.SetActiveCreateButton(curUnitType, false);
                 }
             }
         }
 
+        getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Pawn_Axe, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Pawn_Axe, PhotonNetwork.IsMasterClient).ToString());
+        getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Rook_Bow, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Rook_Bow, PhotonNetwork.IsMasterClient).ToString());
+        getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Bishop_Bow, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Bishop_Bow, PhotonNetwork.IsMasterClient).ToString());
 
         if (xyUnitsCom.IsSettedKing(PhotonNetwork.IsMasterClient))
-            takerUnitsViewUICom.SetActiveButton(UnitTypes.King, false);
-        else takerUnitsViewUICom.SetActiveButton(UnitTypes.King, true);
+            getterUnitsViewUICom.SetActiveButton(UnitTypes.King, false);
+        else getterUnitsViewUICom.SetActiveButton(UnitTypes.King, true);
     }
 }

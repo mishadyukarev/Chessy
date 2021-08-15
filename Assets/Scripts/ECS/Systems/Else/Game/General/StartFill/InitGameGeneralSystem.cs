@@ -206,7 +206,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new InventorToolsComponent(new Dictionary<PawnExtraToolTypes, byte>()))
 
                 .Replace(new FromInfoComponent())
-                .Replace(new MistakeUEComponent(new Dictionary<ResourceTypes, UnityEvent>()))
                 .Replace(new SoundViewComponent(audioSourceParentGO));
 
 
@@ -227,8 +226,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
             _currentGameWorld.NewEntity()
                 ///Up
-                //.Replace(new EconomyDataUICom(new Dictionary<ResourceTypes, Dictionary<bool, int>>()))
                 .Replace(new EconomyViewUICom(upZone_GO))
+                .Replace(new ToolsViewUIComp(upZone_GO))
                 .Replace(new LeaveViewUIComponent(CanvasComponent.FindUnderParent<Button>("ButtonLeave")))
 
                 ///Center
@@ -240,10 +239,11 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new MotionsDataUIComponent())
                 .Replace(new MistakeViewUICom(centerZone_GO))
                 .Replace(new MistakeDataUICom(new Dictionary<ResourceTypes, bool>()))
+                .Replace(new SelectorTypeViewUIComp(centerZone_GO))
 
                 ///Down
-                .Replace(new TakerUnitsDataUICom(new Dictionary<UnitTypes, bool>()))
-                .Replace(new TakerUnitsViewUICom(downZone_GO))
+                .Replace(new GetterUnitsDataUICom(new Dictionary<UnitTypes, bool>()))
+                .Replace(new GetterUnitsViewUICom(downZone_GO))
                 .Replace(new DonerViewUIComponent(downZone_GO))
                 .Replace(new DonerDataUIComponent(new Dictionary<bool, bool>()))
 

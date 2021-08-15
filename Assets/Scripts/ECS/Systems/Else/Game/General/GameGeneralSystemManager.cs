@@ -5,6 +5,8 @@ using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
 using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Systems.Game.General.UI.View.Down;
+using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone;
+using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.UpZone;
 using Leopotam.Ecs;
 
 public sealed class GameGeneralSystemManager : SystemAbstManager
@@ -35,19 +37,30 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
 
 
         var syncCanvasSystems = new EcsSystems(gameWorld)
+           //left
+           .Add(new LeftBuildingUISystem())
+           .Add(new EnvironmentUISystem())
+
+            //right
+            .Add(new RightZoneUISystem())
+            .Add(new StatsUISystem())
+            .Add(new ConditionAbilitiesUISystem())
+            .Add(new UniqueAbilitiesUISystem())
+            .Add(new BuildRighUISystem())
+            
+            //down
             .Add(new DonerUISystem())
             .Add(new GetterUnitsUISystem())
-            .Add(new ConditionAbilitiesUISystem())
-            .Add(new StatsUISystem())
-            .Add(new TheEndGameUISystem())
-            .Add(new BuildRighUISystem())
+
+            //up
             .Add(new SyncEconomyUpUISystem())
-            .Add(new LeftBuildingUISystem())
-            .Add(new MotionCenterUISystem())
-            .Add(new UniqueAbilitiesUISystem())
-            .Add(new EnvironmentUISystem())
+            .Add(new SyncToolsUpUISystem())
+
+            //center
+            .Add(new SelectorTypeUISystem()) 
+            .Add(new TheEndGameUISystem())
+            .Add(new MotionCenterUISystem())  
             .Add(new ReadyZoneUISystem())
-            .Add(new RightZoneUISystem())
             .Add(new CenterSupTextUISystem());
 
 
@@ -57,7 +70,7 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
 
 
         EventSystems
-            .Add(new EventGameGeneralSystem())
+            .Add(new StaticEventsGameSys())
             .Add(_photonSceneGameGeneralSystem);
 
 

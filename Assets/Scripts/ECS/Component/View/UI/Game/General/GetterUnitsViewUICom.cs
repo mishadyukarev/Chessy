@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 {
-    internal struct TakerUnitsViewUICom
+    internal struct GetterUnitsViewUICom
     {
         private Dictionary<UnitTypes, Button> _taker_Buttons;
-
         private Dictionary<UnitTypes, Button> _createUnit_Buttons;
+        private Dictionary<UnitTypes, TextMeshProUGUI> _amountUnits_TextMPs;
 
-        internal TakerUnitsViewUICom(GameObject downZone_GO)
+        internal GetterUnitsViewUICom(GameObject downZone_GO)
         {
             _taker_Buttons = new Dictionary<UnitTypes, Button>();
 
@@ -45,13 +46,22 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
             _createUnit_Buttons.Add(UnitTypes.Pawn_Axe, takeUnitZone_GO.transform.Find("CreatePawn_Button").GetComponent<Button>());
             _createUnit_Buttons.Add(UnitTypes.Rook_Bow, takeUnitZone_GO.transform.Find("CreateRook_Button").GetComponent<Button>());
             _createUnit_Buttons.Add(UnitTypes.Bishop_Bow, takeUnitZone_GO.transform.Find("CreateBishop_Button").GetComponent<Button>());
+
+
+            _amountUnits_TextMPs = new Dictionary<UnitTypes, TextMeshProUGUI>();
+            _amountUnits_TextMPs.Add(UnitTypes.Pawn_Axe, takeUnitZone_GO.transform.Find("AmountPawnZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+            _amountUnits_TextMPs.Add(UnitTypes.Rook_Bow, takeUnitZone_GO.transform.Find("AmountRookZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+            _amountUnits_TextMPs.Add(UnitTypes.Bishop_Bow, takeUnitZone_GO.transform.Find("AmountBishopZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
         }
 
         internal void AddListener(UnitTypes unitType, UnityAction unityAction) => _taker_Buttons[unitType].onClick.AddListener(unityAction);
         internal void AddListenerToCreateUnit(UnitTypes unitType, UnityAction unityAction) => _createUnit_Buttons[unitType].onClick.AddListener(unityAction);
-        internal void SetColorButton(UnitTypes unitType, Color color) => _taker_Buttons[unitType].image.color = color;
-        internal void SetActiveButton(UnitTypes unitType, bool isActive) => _taker_Buttons[unitType].gameObject.SetActive(isActive);
 
+        internal void SetColorButton(UnitTypes unitType, Color color) => _taker_Buttons[unitType].image.color = color;
+
+        internal void SetActiveButton(UnitTypes unitType, bool isActive) => _taker_Buttons[unitType].gameObject.SetActive(isActive);
         internal void SetActiveCreateButton(UnitTypes unitType, bool isActive) => _createUnit_Buttons[unitType].gameObject.SetActive(isActive);
+
+        internal void SetTextToAmountUnits(UnitTypes unitType, string text) => _amountUnits_TextMPs[unitType].text = text;
     }
 }

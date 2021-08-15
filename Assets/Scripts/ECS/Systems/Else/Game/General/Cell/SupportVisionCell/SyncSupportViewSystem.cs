@@ -86,8 +86,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                 }
             }
 
-
-            if (selCom.CellClickType == CellClickTypes.UpgradeUnit)
+            else if (selCom.CellClickType == CellClickTypes.UpgradeUnit)
             {
                 if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn_Axe, UnitTypes.Rook_Bow, UnitTypes.Bishop_Bow }))
                 {
@@ -97,6 +96,34 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                         {
                             curCellSupViewCom.EnableSR();
                             curCellSupViewCom.SetColor(SupportVisionTypes.Upgrade);
+                        }
+                    }
+                }
+            }
+
+
+            else if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn_Axe))
+            {
+                if (curOwnerCellUnitCom.HaveOwner)
+                {
+                    if (curOwnerCellUnitCom.IsMine)
+                    {
+                        if (selCom.IsCellClickType(CellClickTypes.GiveToolToPawn))
+                        {
+                            if (!curCellUnitDataCom.HaveExtraPawnTool)
+                            {
+                                curCellSupViewCom.EnableSR();
+                                curCellSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
+                            }
+                        }
+
+                        else if (selCom.IsCellClickType(CellClickTypes.TakePawnExtraTool))
+                        {
+                            if (curCellUnitDataCom.HaveExtraPawnTool)
+                            {
+                                curCellSupViewCom.EnableSR();
+                                curCellSupViewCom.SetColor(SupportVisionTypes.TakePawnTool);
+                            }
                         }
                     }
                 }

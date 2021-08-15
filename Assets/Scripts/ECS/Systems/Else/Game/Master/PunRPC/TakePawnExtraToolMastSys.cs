@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
+﻿using Assets.Scripts.Abstractions.Enums.Cell;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General;
+using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Leopotam.Ecs;
 
@@ -8,6 +10,8 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
     {
         private EcsFilter<InfoMasCom> _infoFilter = default;
         private EcsFilter<ForTakePawnExtraToolMastCom> _forTakePawnExtraToolFilter = default;
+
+        private EcsFilter<InventorToolsComponent> _inventToolsFilter = default;
 
         private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
 
@@ -29,6 +33,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                     {
                         if (cellUnitDataComForTake.HaveMaxAmountSteps)
                         {
+                            _inventToolsFilter.Get1(0).AddAmountTools(cellUnitDataComForTake.ExtraPawnToolType);
                             cellUnitDataComForTake.ResetPawnExtraTool();
                             cellUnitDataComForTake.ResetAmountSteps();
                         }

@@ -2,12 +2,12 @@
 
 namespace Assets.Scripts.ECS.Component.Data.UI.Game.General
 {
-    internal struct TakerUnitsDataUICom
+    internal struct GetterUnitsDataUICom
     {
         private Dictionary<UnitTypes, bool> _needCreateButtons;
         private Dictionary<UnitTypes, float> _curTimers;
 
-        internal TakerUnitsDataUICom(Dictionary<UnitTypes, bool> needCreateButtons)
+        internal GetterUnitsDataUICom(Dictionary<UnitTypes, bool> needCreateButtons)
         {
             _needCreateButtons = needCreateButtons;
 

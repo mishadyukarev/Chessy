@@ -7,7 +7,7 @@ internal sealed class LeftBuildingUISystem : IEcsRunSystem
     private EcsFilter<SelectorComponent> _selectorFilter = default;
     private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
     private EcsFilter<BuildLeftZoneViewUICom> _buildZoneUIFilter = default;
-    private EcsFilter<TakerUnitsDataUICom, TakerUnitsViewUICom> _takerUIFilter = default;
+    private EcsFilter<GetterUnitsDataUICom, GetterUnitsViewUICom> _takerUIFilter = default;
     private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildFilter = default;
 
     public void Run()

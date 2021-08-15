@@ -10,4 +10,6 @@ public enum SupportVisionTypes
     UniqueAttack,
     Upgrade,
     FireSelector,
+    TakePawnTool,
+    GivePawnTool,
 }

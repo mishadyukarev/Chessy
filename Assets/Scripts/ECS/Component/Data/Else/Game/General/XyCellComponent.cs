@@ -8,9 +8,6 @@
         set => _xyCell = (byte[])value.Clone();
     }
 
-    internal XyCellComponent(byte[] xy)
-    {
-        _xyCell = xy;
-    }
+    internal XyCellComponent(byte[] xy) => _xyCell = xy;
 }
 

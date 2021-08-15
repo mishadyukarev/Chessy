@@ -49,6 +49,14 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
                     _supVis_SR.color = FireSelectorColor;
                     break;
 
+                case SupportVisionTypes.GivePawnTool:
+                    _supVis_SR.color = UpgradeColor;
+                    break;
+
+                case SupportVisionTypes.TakePawnTool:
+                    _supVis_SR.color = UpgradeColor;
+                    break;
+
                 default:
                     throw new Exception();
             }

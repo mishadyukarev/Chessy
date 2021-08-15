@@ -9,7 +9,7 @@ using System;
 
 namespace Assets.Scripts
 {
-    internal sealed class EventGameGeneralSystem : IEcsInitSystem
+    internal sealed class StaticEventsGameSys : IEcsInitSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
@@ -17,7 +17,7 @@ namespace Assets.Scripts
         private EcsFilter<ReadyDataUICom, ReadyViewUICom> _readyFilter = default;
         private EcsFilter<SelectorComponent> _selectorFilter = default;
         private EcsFilter<LeaveViewUIComponent> _leaveUIFilter = default;
-        private EcsFilter<TakerUnitsDataUICom, TakerUnitsViewUICom> _takerUIFilter = default;
+        private EcsFilter<GetterUnitsDataUICom, GetterUnitsViewUICom> _takerUIFilter = default;
         private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
         private EcsFilter<EnvirZoneDataUICom, EnvirZoneViewUICom> _envirZoneUIFilter = default;
         private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
