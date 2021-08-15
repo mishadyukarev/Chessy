@@ -1,11 +1,10 @@
 ﻿namespace Assets.Scripts.Abstractions.Enums.Cell
 {
-    public enum PawnExtraToolTypes
+    public enum BishopMainWeaponTypes
     {
         None,
 
-        Hoe,
-        Pick,
-        Sword,
+        Bow,
+        Crossbow,
     }
 }

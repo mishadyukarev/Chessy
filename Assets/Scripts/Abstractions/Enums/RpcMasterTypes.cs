@@ -6,7 +6,7 @@
     Done,
     EndGame,
     Build,
-    Destroy,
+    DestroyBuild,
     Shift,
     Attack,
     ConditionUnit,
@@ -19,8 +19,10 @@
     Fire,
     Sound,
     CircularAttackKing,
+
     TakePawnExtraTool,
     GiveExtraPawnTool,
+    GiveExtraPawnWeapon,
 
     Upgrade,
 }

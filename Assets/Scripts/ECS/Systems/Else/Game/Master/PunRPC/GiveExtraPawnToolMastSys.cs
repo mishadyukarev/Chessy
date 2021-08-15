@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums.Cell;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
@@ -13,12 +14,12 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
         private byte _ironCostForSword = 1;
 
         private EcsFilter<InfoMasCom> _infoFilter = default;
-        private EcsFilter<ForGivePawnToolComponent> _forGivePawnToolFilter = default;
+        private EcsFilter<ForGiveExtraPawnToolComp> _forGivePawnToolFilter = default;
 
         private EcsFilter<InventorResourcesComponent> _inventResFilter = default;
         private EcsFilter<InventorToolsComponent> _inventToolsFilter = default;
 
-        private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataComponent, CellPawnDataComp, OwnerComponent> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -28,15 +29,16 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 
             var sender = _infoFilter.Get1(0).FromInfo.Sender;
             var neededIdx = forGivePawnToolCom.IdxForGivePawnTool;
-            var toolTypeForGive = forGivePawnToolCom.PawnToolType;
+            var toolTypeForGive = forGivePawnToolCom.PawnExtraToolType;
 
             ref var neededCellUnitDataCom = ref _cellUnitFilter.Get1(neededIdx);
-            ref var neededOwnerCellUnitCom = ref _cellUnitFilter.Get2(neededIdx);
+            ref var cellPawnDataCompForGive = ref _cellUnitFilter.Get2(neededIdx);
+            ref var neededOwnerCellUnitCom = ref _cellUnitFilter.Get3(neededIdx);
 
 
-            if (neededCellUnitDataCom.IsUnitType(UnitTypes.Pawn_Axe))
+            if (neededCellUnitDataCom.IsUnitType(UnitTypes.Pawn))
             {
-                if (!neededCellUnitDataCom.HaveExtraPawnTool)
+                if (!cellPawnDataCompForGive.HaveExtraTool)
                 {
                     if (neededCellUnitDataCom.HaveMaxAmountHealth)
                     {
@@ -46,7 +48,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                             {
                                 inventToolsCom.TakeAmountTools(toolTypeForGive);
 
-                                neededCellUnitDataCom.ExtraPawnToolType = toolTypeForGive;
+                                cellPawnDataCompForGive.ExtraToolType = toolTypeForGive;
                                 neededCellUnitDataCom.ResetAmountSteps();
                             }
                             else if (toolTypeForGive == PawnExtraToolTypes.Pick)
@@ -55,7 +57,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                                 {
                                     inventResCom.TakeAmountResources(ResourceTypes.Wood, neededOwnerCellUnitCom.IsMasterClient, _woodCostForPick);
 
-                                    neededCellUnitDataCom.ExtraPawnToolType = toolTypeForGive;
+                                    cellPawnDataCompForGive.ExtraToolType = toolTypeForGive;
                                     neededCellUnitDataCom.ResetAmountSteps();
                                 }
                                 else
@@ -63,20 +65,20 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                                     RPCGameSystem.MistakeEconomyToGeneral(sender, new[] { true, false, true, true, true });
                                 }
                             }
-                            else if (toolTypeForGive == PawnExtraToolTypes.Sword)
-                            {
-                                if (inventResCom.GetAmountResources(ResourceTypes.Iron, neededOwnerCellUnitCom.IsMasterClient) >= _ironCostForSword)
-                                {
-                                    inventResCom.TakeAmountResources(ResourceTypes.Iron, neededOwnerCellUnitCom.IsMasterClient, _ironCostForSword);
+                            //else if (toolTypeForGive == PawnExtra)
+                            //{
+                            //    if (inventResCom.GetAmountResources(ResourceTypes.Iron, neededOwnerCellUnitCom.IsMasterClient) >= _ironCostForSword)
+                            //    {
+                            //        inventResCom.TakeAmountResources(ResourceTypes.Iron, neededOwnerCellUnitCom.IsMasterClient, _ironCostForSword);
 
-                                    neededCellUnitDataCom.ExtraPawnToolType = toolTypeForGive;
-                                    neededCellUnitDataCom.ResetAmountSteps();
-                                }
-                                else
-                                {
-                                    RPCGameSystem.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
-                                }
-                            }
+                            //        cellPawnDataCompForGive.ExtraWeaponType = toolTypeForGive;
+                            //        neededCellUnitDataCom.ResetAmountSteps();
+                            //    }
+                            //    else
+                            //    {
+                            //        RPCGameSystem.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
+                            //    }
+                            //}
                         }
 
                         else

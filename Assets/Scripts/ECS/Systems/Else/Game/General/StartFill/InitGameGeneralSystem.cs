@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.Cell;
+using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General;
@@ -137,7 +138,11 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                     _currentGameWorld.NewEntity()
                          .Replace(new CellUnitDataComponent(new Dictionary<bool, bool>()))
-                         .Replace(new CellUnitViewComponent(cell_GOs[x, y]))
+                         .Replace(new CellPawnDataComp())
+                         .Replace(new CellRookDataComp())
+                         .Replace(new CellBishopDataComp())
+                         .Replace(new CellUnitMainViewComp(cell_GOs[x, y]))
+                         .Replace(new CellUnitExtraViewComp(cell_GOs[x, y]))
                          .Replace(new OwnerComponent())
                          .Replace(new OwnerBotComponent());
 
@@ -188,7 +193,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
             var infoEnt = _currentGameWorld.NewEntity()
                 .Replace(new InputComponent())
-                .Replace(new SelectorComponent(CellClickTypes.Start))
+                .Replace(new SelectorComponent())
                 .Replace(new IdxAvailableCellsComponent(new Dictionary<AvailableCellTypes, List<byte>>()))
                 .Replace(new GeneralZoneViewComponent(generalZoneGO))
                 .Replace(new BackgroundComponent(backGroundGO))
@@ -203,7 +208,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                 .Replace(new InventorUnitsComponent(new Dictionary<UnitTypes, Dictionary<bool, int>>()))
                 .Replace(new InventorResourcesComponent(new Dictionary<ResourceTypes, Dictionary<bool, int>>()))
-                .Replace(new InventorToolsComponent(new Dictionary<PawnExtraToolTypes, byte>()))
+                .Replace(new InventorToolsComponent(new Dictionary<ToolTypes, byte>()))
 
                 .Replace(new FromInfoComponent())
                 .Replace(new SoundViewComponent(audioSourceParentGO));

@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Abstractions.Enums.Unit
 {
-    internal enum RookMainWeaponTypes
+    public enum RookMainWeaponTypes
     {
         None,
 

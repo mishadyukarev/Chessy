@@ -2,9 +2,9 @@
 
 namespace Assets.Scripts.ECS.Component.Data.Else.Game.Master
 {
-    internal struct ForGivePawnToolComponent
+    internal struct ForGiveExtraPawnToolComp
     {
         internal byte IdxForGivePawnTool { get; set; }
-        internal PawnExtraToolTypes PawnToolType { get; set; }
+        internal PawnExtraToolTypes PawnExtraToolType { get; set; }
     }
 }

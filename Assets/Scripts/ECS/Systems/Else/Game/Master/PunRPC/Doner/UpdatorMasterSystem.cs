@@ -18,6 +18,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellViewComponent> _cellViewFilter = default;
     private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+    private EcsFilter<CellPawnDataComp> _cellPawnFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
     private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildDataFilter = default;
@@ -136,6 +137,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                     var curIdxCell = idxUnitsInCondCom.GetIdxInConditionByIndex(curConditionType, curUnitType, isMasterKey, idxCell);
 
                     ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(curIdxCell);
+                    ref var curCellPawnDataComp = ref _cellPawnFilter.Get1(curIdxCell);
                     ref var curOwnerCellUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
                     ref var curCellBuildDataCom = ref _cellBuildDataFilter.Get1(curIdxCell);
                     ref var curOwnerCellBuildCom = ref _cellBuildDataFilter.Get2(curIdxCell);
@@ -152,7 +154,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                     {
                         if (curCellUnitDataCom.AmountHealth == curCellUnitDataCom.MaxAmountHealth)
                         {
-                            if (curUnitType == UnitTypes.Pawn_Axe)
+                            if (curUnitType == UnitTypes.Pawn)
                             {
                                 if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
                                 {
@@ -192,7 +194,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                     }
                                 }
 
-                                else if (curCellUnitDataCom.IsPawnExtraTool(PawnExtraToolTypes.Pick))
+                                else if (curCellPawnDataComp.IsExtraTool(PawnExtraToolTypes.Pick))
                                 {
                                     if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.Hill))
                                     {
@@ -252,7 +254,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
             var amountUnits = idxUnitsCom.GetAmountUnitsInGame(isMasterKey, new[]
             {
-                UnitTypes.Pawn_Axe, UnitTypes.Rook_Bow, UnitTypes.Bishop_Bow
+                UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop
             });
 
             inventorResCom.TakeAmountResources(ResourceTypes.Food, isMasterKey, amountUnits);

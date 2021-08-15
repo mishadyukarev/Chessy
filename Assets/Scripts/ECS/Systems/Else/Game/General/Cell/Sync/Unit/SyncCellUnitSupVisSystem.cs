@@ -9,7 +9,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 {
     internal sealed class SyncCellUnitSupVisSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent, CellUnitViewComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent, CellUnitMainViewComp> _cellUnitFilter = default;
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
         private EcsFilter<CellBlocksViewComponent> _cellBlocksFilter = default;
 

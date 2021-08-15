@@ -67,34 +67,34 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                     unitsInGameCom.RemoveAmountUnitsInGame(preUnitType, preKey, idxForUpgradeUnit);
 
                                     curCellUnitDataCom.UnitType = curCellUnitDataCom.UnitType + FOR_NEXT_UPGRADE;
-                                    switch (curCellUnitDataCom.UnitType)
-                                    {
-                                        case UnitTypes.None:
-                                            throw new Exception();
+                                    //switch (curCellUnitDataCom.UnitType)
+                                    //{
+                                    //    case UnitTypes.None:
+                                    //        throw new Exception();
 
-                                        case UnitTypes.King:
-                                            throw new Exception();
+                                    //    case UnitTypes.King:
+                                    //        throw new Exception();
 
-                                        case UnitTypes.Pawn_Axe:
-                                            throw new Exception();
+                                    //    case UnitTypes.Pawn:
+                                    //        throw new Exception();
 
-                                        case UnitTypes.Rook_Bow:
-                                            throw new Exception();
+                                    //    case UnitTypes.Rook:
+                                    //        throw new Exception();
 
-                                        case UnitTypes.Rook_Crossbow:
-                                            curCellUnitDataCom.AmountHealth += curCellUnitDataCom.MaxAmountHealth - UnitValues.STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW;
-                                            break;
+                                    //    case UnitTypes.Rook_Crossbow:
+                                    //        curCellUnitDataCom.AmountHealth += curCellUnitDataCom.MaxAmountHealth - UnitValues.STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW;
+                                    //        break;
 
-                                        case UnitTypes.Bishop_Bow:
-                                            throw new Exception();
+                                    //    case UnitTypes.Bishop:
+                                    //        throw new Exception();
 
-                                        case UnitTypes.Bishop_Crossbow:
-                                            curCellUnitDataCom.AmountHealth += curCellUnitDataCom.MaxAmountHealth - UnitValues.STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW;
-                                            break;
+                                    //    case UnitTypes.Bishop_Crossbow:
+                                    //        curCellUnitDataCom.AmountHealth += curCellUnitDataCom.MaxAmountHealth - UnitValues.STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW;
+                                    //        break;
 
-                                        default:
-                                            throw new Exception();
-                                    }
+                                    //    default:
+                                    //        throw new Exception();
+                                    //}
 
 
                                     var newUnitType = curCellUnitDataCom.UnitType;

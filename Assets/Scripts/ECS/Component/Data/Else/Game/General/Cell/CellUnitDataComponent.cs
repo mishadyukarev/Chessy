@@ -28,19 +28,13 @@ internal struct CellUnitDataComponent
                 case UnitTypes.King:
                     return true;
 
-                case UnitTypes.Pawn_Axe:
+                case UnitTypes.Pawn:
                     return true;
 
-                case UnitTypes.Rook_Bow:
+                case UnitTypes.Rook:
                     return false;
 
-                case UnitTypes.Rook_Crossbow:
-                    return false;
-
-                case UnitTypes.Bishop_Bow:
-                    return false;
-
-                case UnitTypes.Bishop_Crossbow:
+                case UnitTypes.Bishop:
                     return false;
 
                 default:
@@ -48,12 +42,6 @@ internal struct CellUnitDataComponent
             }
         }
     }
-
-
-    internal PawnExtraToolTypes ExtraPawnToolType;
-    internal bool HaveExtraPawnTool => ExtraPawnToolType != PawnExtraToolTypes.None;
-    internal bool IsPawnExtraTool(PawnExtraToolTypes pawnSecondToolType) => ExtraPawnToolType == pawnSecondToolType;
-    internal void ResetPawnExtraTool() => ExtraPawnToolType = default;
 
 
     private Dictionary<bool, bool> _isVisibleDict;
@@ -66,7 +54,7 @@ internal struct CellUnitDataComponent
     internal bool IsConditionType(ConditionUnitTypes conditionUnitType) => ConditionUnitType == conditionUnitType;
 
 
-    internal Dictionary<ConditionUnitTypes, int> _amountStepsInCondition;
+    private Dictionary<ConditionUnitTypes, int> _amountStepsInCondition;
     internal int AmountStepsInProtectRelax(ConditionUnitTypes conditionUnitType) => _amountStepsInCondition[conditionUnitType];
     internal void SetAmountStepsInProtectRelax(ConditionUnitTypes conditionUnitType, int value) => _amountStepsInCondition[conditionUnitType] = value;
     internal void AddAmountStepsInProtectRelax(ConditionUnitTypes conditionUnitType, int adding = 1) => _amountStepsInCondition[conditionUnitType] += adding;
@@ -92,20 +80,14 @@ internal struct CellUnitDataComponent
                 case UnitTypes.King:
                     return AmountSteps == STANDART_AMOUNT_STEPS_KING;
 
-                case UnitTypes.Pawn_Axe:
+                case UnitTypes.Pawn:
                     return AmountSteps == STANDART_AMOUNT_STEPS_PAWN;
 
-                case UnitTypes.Rook_Bow:
+                case UnitTypes.Rook:
                     return AmountSteps == STANDART_AMOUNT_STEPS_ROOK_BOW;
 
-                case UnitTypes.Rook_Crossbow:
-                    return AmountSteps == STANDART_AMOUNT_STEPS_ROOK_CROSSBOW;
-
-                case UnitTypes.Bishop_Bow:
+                case UnitTypes.Bishop:
                     return AmountSteps == STANDART_AMOUNT_STEPS_BISHOP_BOW;
-
-                case UnitTypes.Bishop_Crossbow:
-                    return AmountSteps == STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW;
 
                 default:
                     throw new Exception();
@@ -125,24 +107,16 @@ internal struct CellUnitDataComponent
                 AmountSteps = STANDART_AMOUNT_STEPS_KING;
                 break;
 
-            case UnitTypes.Pawn_Axe:
+            case UnitTypes.Pawn:
                 AmountSteps = STANDART_AMOUNT_STEPS_PAWN;
                 break;
 
-            case UnitTypes.Rook_Bow:
+            case UnitTypes.Rook:
                 AmountSteps = STANDART_AMOUNT_STEPS_ROOK_BOW;
                 break;
 
-            case UnitTypes.Rook_Crossbow:
-                AmountSteps = STANDART_AMOUNT_STEPS_ROOK_CROSSBOW;
-                break;
-
-            case UnitTypes.Bishop_Bow:
+            case UnitTypes.Bishop:
                 AmountSteps = STANDART_AMOUNT_STEPS_BISHOP_BOW;
-                break;
-
-            case UnitTypes.Bishop_Crossbow:
-                AmountSteps = STANDART_AMOUNT_STEPS_BISHOP_CROSSBOW;
                 break;
 
             default:
@@ -168,20 +142,14 @@ internal struct CellUnitDataComponent
                 case UnitTypes.King:
                     return STANDART_AMOUNT_HEALTH_KING;
 
-                case UnitTypes.Pawn_Axe:
+                case UnitTypes.Pawn:
                     return STANDART_AMOUNT_HEALTH_PAWN_AXE;
 
-                case UnitTypes.Rook_Bow:
+                case UnitTypes.Rook:
                     return STANDART_AMOUNT_HEALTH_ROOK_BOW;
 
-                case UnitTypes.Rook_Crossbow:
-                    return STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW;
-
-                case UnitTypes.Bishop_Bow:
+                case UnitTypes.Bishop:
                     return STANDART_AMOUNT_HEALTH_BISHOP_BOW;
-
-                case UnitTypes.Bishop_Crossbow:
-                    return STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW;
 
                 default:
                     return default;
@@ -201,24 +169,16 @@ internal struct CellUnitDataComponent
                 AddAmountHealth((int)(STANDART_AMOUNT_HEALTH_KING * PERCENT_FOR_HEALTH_KING));
                 break;
 
-            case UnitTypes.Pawn_Axe:
+            case UnitTypes.Pawn:
                 AddAmountHealth((int)(STANDART_AMOUNT_HEALTH_PAWN_AXE * PERCENT_FOR_HEALTH_PAWN_AXE));
                 break;
 
-            case UnitTypes.Rook_Bow:
+            case UnitTypes.Rook:
                 AddAmountHealth((int)(STANDART_AMOUNT_HEALTH_ROOK_BOW * PERCENT_FOR_HEALTH_ROOK_BOW));
                 break;
 
-            case UnitTypes.Rook_Crossbow:
-                AddAmountHealth((int)(STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW * PERCENT_FOR_HEALTH_ROOK_CROSSBOW));
-                break;
-
-            case UnitTypes.Bishop_Bow:
+            case UnitTypes.Bishop:
                 AddAmountHealth((int)(STANDART_AMOUNT_HEALTH_BISHOP_BOW * PERCENT_FOR_HEALTH_BISHOP_BOW));
-                break;
-
-            case UnitTypes.Bishop_Crossbow:
-                AddAmountHealth((int)(STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW * PERCENT_FOR_HEALTH_BISHOP_CROSSBOW));
                 break;
 
             default:
@@ -239,20 +199,14 @@ internal struct CellUnitDataComponent
                 case UnitTypes.King:
                     return SIMPLE_POWER_DAMAGE_KING;
 
-                case UnitTypes.Pawn_Axe:
+                case UnitTypes.Pawn:
                     return SIMPLE_POWER_DAMAGE_PAWN;
 
-                case UnitTypes.Rook_Bow:
+                case UnitTypes.Rook:
                     return SIMPLE_POWER_DAMAGE_ROOK;
 
-                case UnitTypes.Rook_Crossbow:
-                    return SIMPLE_POWER_DAMAGE_ROOK_CROSSBOW;
-
-                case UnitTypes.Bishop_Bow:
+                case UnitTypes.Bishop:
                     return SIMPLE_POWER_DAMAGE_BISHOP;
-
-                case UnitTypes.Bishop_Crossbow:
-                    return SIMPLE_POWER_DAMAGE_BISHOP_CROSSBOW;
 
                 default:
                     return default;
@@ -271,20 +225,14 @@ internal struct CellUnitDataComponent
                 case UnitTypes.King:
                     return SimplePowerDamage;
 
-                case UnitTypes.Pawn_Axe:
+                case UnitTypes.Pawn:
                     return (int)(SimplePowerDamage * RATION_UNIQUE_POWER_DAMAGE_PAWN);
 
-                case UnitTypes.Rook_Bow:
+                case UnitTypes.Rook:
                     return (int)(SimplePowerDamage * RATION_UNIQUE_POWER_DAMAGE_ROOK);
 
-                case UnitTypes.Rook_Crossbow:
-                    return (int)(SimplePowerDamage * RATION_UNIQUE_POWER_DAMAGE_ROOK_CROSSBOW);
-
-                case UnitTypes.Bishop_Bow:
+                case UnitTypes.Bishop:
                     return (int)(SimplePowerDamage * RATION_UNIQUE_POWER_DAMAGE_BISHOP_BOW);
-
-                case UnitTypes.Bishop_Crossbow:
-                    return (int)(SimplePowerDamage * RATION_UNIQUE_POWER_DAMAGE_BISHOP_CROSSBOW);
 
                 default:
                     return default;
@@ -305,24 +253,16 @@ internal struct CellUnitDataComponent
                         powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_KING);
                         break;
 
-                    case UnitTypes.Pawn_Axe:
+                    case UnitTypes.Pawn:
                         powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_PAWN);
                         break;
 
-                    case UnitTypes.Rook_Bow:
+                    case UnitTypes.Rook:
                         powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK);
                         break;
 
-                    case UnitTypes.Rook_Crossbow:
-                        powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK_CROSSBOW);
-                        break;
-
-                    case UnitTypes.Bishop_Bow:
+                    case UnitTypes.Bishop:
                         powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP);
-                        break;
-
-                    case UnitTypes.Bishop_Crossbow:
-                        powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP_CROSSBOW);
                         break;
                 }
             }
@@ -335,24 +275,16 @@ internal struct CellUnitDataComponent
                         powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_KING);
                         break;
 
-                    case UnitTypes.Pawn_Axe:
+                    case UnitTypes.Pawn:
                         powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_PAWN);
                         break;
 
-                    case UnitTypes.Rook_Bow:
+                    case UnitTypes.Rook:
                         powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK);
                         break;
 
-                    case UnitTypes.Rook_Crossbow:
-                        powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK_CROSSBOW);
-                        break;
-
-                    case UnitTypes.Bishop_Bow:
+                    case UnitTypes.Bishop:
                         powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP);
-                        break;
-
-                    case UnitTypes.Bishop_Crossbow:
-                        powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP_CROSSBOW);
                         break;
                 }
             }
@@ -360,13 +292,14 @@ internal struct CellUnitDataComponent
             return powerProtection;
         }
     }
+
+
     internal void ResetUnit()
     {
         UnitType = default;
         AmountHealth = default;
         AmountSteps = default;
         ConditionUnitType = default;
-        ExtraPawnToolType = default;
     }
     internal void ReplaceUnit(CellUnitDataComponent newCellUnitDataCom)
     {
@@ -374,7 +307,6 @@ internal struct CellUnitDataComponent
         ConditionUnitType = newCellUnitDataCom.ConditionUnitType;
         AmountSteps = newCellUnitDataCom.AmountSteps;
         AmountHealth = newCellUnitDataCom.AmountHealth;
-        ExtraPawnToolType = newCellUnitDataCom.ExtraPawnToolType;
     }
 
     internal CellUnitDataComponent(Dictionary<bool, bool> isVisibleDict) : this()

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.Cell;
+using Assets.Scripts.Abstractions.Enums.Cell.Pawn;
 using UnityEngine;
 
 public struct SelectorComponent
@@ -16,13 +17,10 @@ public struct SelectorComponent
     internal void ResetSelectedUnit() => SelectedUnitType = default;
 
 
-    internal PawnExtraToolTypes PawnToolTypeForUpgrade { get; set; }
-
-
-    internal bool IsActPickingFire { get; set; }
-
-    internal bool CanShiftUnit { get; set; }
-    internal bool IsStartSelectedDirect { get; set; }
+    internal PawnMainWeaponTypes PawnMainWeaponTypeForGive { get; set; }
+    internal PawnMainToolTypes PawnMainToolTypesForGive { get; set; }
+    internal PawnExtraToolTypes PawnExtraToolTypeForGive { get; set; }
+    internal PawnExtraWeaponTypes PawnExtraWeaponTypeForGive { get; set; }
 
 
     internal byte IdxCurrentCell { get; set; }
@@ -31,10 +29,6 @@ public struct SelectorComponent
     internal byte IdxPreviousVisionCell { get; set; }
 
     internal bool IsSelectedCell => IdxSelectedCell != 0;
+    internal bool IsStartDirectToCell => IdxCurrentCell == default;
     internal void ResetSelectedCell() => IdxSelectedCell = 0;
-
-    internal SelectorComponent(CellClickTypes selectorType) : this()
-    {
-        CellClickType = selectorType;
-    }
 }

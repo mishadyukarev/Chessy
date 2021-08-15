@@ -21,15 +21,15 @@ internal struct CellBuildDataComponent
                         powerProtection += PROTECTION_CITY_KING;
                         break;
 
-                    case UnitTypes.Pawn_Axe:
+                    case UnitTypes.Pawn:
                         powerProtection += PROTECTION_CITY_PAWN;
                         break;
 
-                    case UnitTypes.Rook_Bow:
+                    case UnitTypes.Rook:
                         powerProtection += PROTECTION_CITY_ROOK;
                         break;
 
-                    case UnitTypes.Bishop_Bow:
+                    case UnitTypes.Bishop:
                         powerProtection += PROTECTION_CITY_BISHOP;
                         break;
                 }

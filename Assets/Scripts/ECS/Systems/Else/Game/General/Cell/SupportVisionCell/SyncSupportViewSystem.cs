@@ -11,7 +11,8 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellDataComponent> _cellDataFilter = default;
-    private EcsFilter<CellUnitDataComponent, OwnerComponent, CellUnitViewComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerComponent, CellUnitMainViewComp> _cellUnitFilter = default;
+    private EcsFilter<CellPawnDataComp> _cellPawnFilter = default;
     private EcsFilter<CellSupViewComponent> _cellSupViewFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
@@ -27,6 +28,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
         foreach (var idxCurCell in _xyCellFilter)
         {
             ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
+            ref var curCellPawnDataComp =ref _cellPawnFilter.Get1(idxCurCell);
             ref var curOwnerCellUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
             ref var curCellUnitViewCom = ref _cellUnitFilter.Get3(idxCurCell);
             ref var curCellDataCom = ref _cellDataFilter.Get1(idxCurCell);
@@ -88,7 +90,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
 
             else if (selCom.CellClickType == CellClickTypes.UpgradeUnit)
             {
-                if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn_Axe, UnitTypes.Rook_Bow, UnitTypes.Bishop_Bow }))
+                if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
                 {
                     if (curOwnerCellUnitCom.HaveOwner)
                     {
@@ -102,24 +104,24 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
             }
 
 
-            else if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn_Axe))
+            else if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn))
             {
                 if (curOwnerCellUnitCom.HaveOwner)
                 {
                     if (curOwnerCellUnitCom.IsMine)
                     {
-                        if (selCom.IsCellClickType(CellClickTypes.GiveToolToPawn))
+                        if (selCom.IsCellClickType(CellClickTypes.GiveExtraThing))
                         {
-                            if (!curCellUnitDataCom.HaveExtraPawnTool)
+                            if (!curCellPawnDataComp.HaveExtraTool)
                             {
                                 curCellSupViewCom.EnableSR();
                                 curCellSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
                             }
                         }
 
-                        else if (selCom.IsCellClickType(CellClickTypes.TakePawnExtraTool))
+                        else if (selCom.IsCellClickType(CellClickTypes.TakeExtraThing))
                         {
-                            if (curCellUnitDataCom.HaveExtraPawnTool)
+                            if (curCellPawnDataComp.HaveExtraTool)
                             {
                                 curCellSupViewCom.EnableSR();
                                 curCellSupViewCom.SetColor(SupportVisionTypes.TakePawnTool);

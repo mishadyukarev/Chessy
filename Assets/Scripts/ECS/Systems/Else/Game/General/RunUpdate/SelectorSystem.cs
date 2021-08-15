@@ -38,7 +38,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
             if (selectorCom.RaycastGettedType == RaycastGettedTypes.UI)
             {
                 selectorCom.ResetSelectedUnit();
-                selectorCom.CanShiftUnit = false;
+                //selectorCom.CanShiftUnit = false;
 
                 availCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);
                 availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
@@ -51,7 +51,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
             {
                 if (_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
                 {
-                    if (selectorCom.CellClickType == CellClickTypes.Start)
+                    if (!selectorCom.IsSelectedCell)
                     {
                         if (selectorCom.IdxPreviousCell != selectorCom.IdxSelectedCell)
                         {
@@ -64,7 +64,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
 
                         selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
-                        selectorCom.CellClickType = CellClickTypes.NotStart;
+                        selectorCom.ResetSelectedCell();
                     }
 
                     else
@@ -91,44 +91,56 @@ internal sealed class SelectorSystem : IEcsRunSystem
                         }
                         else
                         {
-                            selectorCom.CellClickType = CellClickTypes.Start;
+                            selectorCom.ResetSelectedCell();
                         }
                     }
 
                     else if (selectorCom.IsCellClickType(CellClickTypes.PickFire))
                     {
                         RPCGameSystem.FireToMaster(selectorCom.IdxSelectedCell, selectorCom.IdxCurrentCell);
-                        selectorCom.CellClickType = CellClickTypes.Start;
+                        selectorCom.ResetSelectedCell();
                     }
 
-                    else if (selectorCom.IsCellClickType(CellClickTypes.GiveToolToPawn))
+                    else if (selectorCom.IsCellClickType(CellClickTypes.GiveExtraThing))
                     {
-                        if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(UnitTypes.Pawn_Axe))
+                        if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(UnitTypes.Pawn))
                         {
-                            RPCGameSystem.GiveToolPawn(selectorCom.IdxCurrentCell, selectorCom.PawnToolTypeForUpgrade);
+                            if(selectorCom.PawnExtraToolTypeForGive != default)
+                            {
+                                RPCGameSystem.GivePawnExtraTool(selectorCom.IdxCurrentCell, selectorCom.PawnExtraToolTypeForGive);
+                            }
+                            else if(selectorCom.PawnExtraWeaponTypeForGive != default)
+                            {
+                                RPCGameSystem.GivePawnExtraWeapon(selectorCom.IdxCurrentCell, selectorCom.PawnExtraWeaponTypeForGive);
+                            }
+                            else
+                            {
+                                selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                                selectorCom.CellClickType = default;
+                            }                        
                         }
                         else
                         {
                             selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                            selectorCom.CellClickType = CellClickTypes.NotStart;
+                            selectorCom.CellClickType = default;
                         }
                     }
 
-                    else if (selectorCom.IsCellClickType(CellClickTypes.TakePawnExtraTool))
+                    else if (selectorCom.IsCellClickType(CellClickTypes.TakeExtraThing))
                     {
-                        if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(UnitTypes.Pawn_Axe))
+                        if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(UnitTypes.Pawn))
                         {
                             RPCGameSystem.TakePawnExtraTool(selectorCom.IdxCurrentCell);
                         }
                         else
                         {
                             selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                            selectorCom.CellClickType = CellClickTypes.NotStart;
+                            selectorCom.CellClickType = default;
                         }
                        
                     }
 
-                    else if (selectorCom.CellClickType == CellClickTypes.Start)
+                    else if (!selectorCom.IsSelectedCell)
                     {
                         if (selectorCom.IdxPreviousCell != selectorCom.IdxSelectedCell || selectorCom.IdxPreviousCell == 0)
                         {
@@ -159,16 +171,15 @@ internal sealed class SelectorSystem : IEcsRunSystem
                                         _forFillAvailCellsFilter.Get1(0).IdxUnitCell = selectorCom.IdxSelectedCell;
                                         GameGeneralSystemManager.GetUnitWaySystems.Run();
 
-                                        selectorCom.CanShiftUnit = true;
+                                        //selectorCom.CanShiftUnit = true;
                                     }
                                 }
                             }
                         }
                         selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
-                        selectorCom.CellClickType = CellClickTypes.NotStart;
                     }
 
-                    else if (selectorCom.CellClickType == CellClickTypes.NotStart)
+                    else
                     {
                         if (selectorCom.IdxSelectedCell != selectorCom.IdxCurrentCell)
                             selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
@@ -196,7 +207,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                                         _forFillAvailCellsFilter.Get1(0).IdxUnitCell = selectorCom.IdxSelectedCell;
                                         GameGeneralSystemManager.GetUnitWaySystems.Run();
 
-                                        selectorCom.CanShiftUnit = true;
+                                        //selectorCom.CanShiftUnit = true;
                                     }
 
                                     else
@@ -205,13 +216,13 @@ internal sealed class SelectorSystem : IEcsRunSystem
                                         availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
                                         availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
 
-                                        selectorCom.CanShiftUnit = false;
+                                        //selectorCom.CanShiftUnit = false;
                                     }
                                 }
 
                                 else
                                 {
-                                    selectorCom.CanShiftUnit = false;
+                                    //selectorCom.CanShiftUnit = false;
 
                                     //if (availCellsCom.TryFindCell(AvailableCellTypes.SimpleAttack, selectorCom.IdxSelectedCell))
                                     //{
@@ -249,7 +260,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                         else
                         {
-                            if (selectorCom.CanShiftUnit)
+                            if (CellUnitDataCom(selectorCom.IdxPreviousCell).HaveUnit && OwnerCellUnitCom(selectorCom.IdxPreviousCell).HaveOwner && OwnerCellUnitCom(selectorCom.IdxPreviousCell).IsMine)
                             {
                                 if (availCellsCom.TryFindCell(AvailableCellTypes.Shift, selectorCom.IdxSelectedCell))
                                 {
@@ -260,8 +271,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                                 availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
                                 availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
 
-                                selectorCom.CanShiftUnit = false;
-                                selectorCom.CellClickType = CellClickTypes.Start;
+                               //selectorCom.CanShiftUnit = false;
                             }
                         }
                     }
@@ -270,7 +280,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
             else
             {
-                selectorCom.CanShiftUnit = false;
+                //selectorCom.CanShiftUnit = false;
 
                 selectorCom.IdxSelectedCell = 0;
                 selectorCom.ResetSelectedUnit();
@@ -279,7 +289,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                 availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
                 availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
 
-                selectorCom.CellClickType = CellClickTypes.Start;
+                selectorCom.ResetSelectedCell();// CellClickType = CellClickTypes.Start;
             }
         }
 
@@ -295,13 +305,13 @@ internal sealed class SelectorSystem : IEcsRunSystem
                 {
                     if (!CellUnitDataCom(selectorCom.IdxCurrentCell).HaveUnit || !CellUnitDataCom(selectorCom.IdxCurrentCell).IsVisibleUnit(PhotonNetwork.IsMasterClient))
                     {
-                        if (selectorCom.IsStartSelectedDirect)
+                        if (selectorCom.IsStartDirectToCell)
                         {
                             //if (!CellUnitDataCom(selectorCom.IdxCurrentCell).HaveAnyUnit)
                             //    CellUnitViewSystem.ActiveSelectorVisionUnit(true, selectorCom.SelectedUnitType, selectorCom.XyCurrentCell);
 
                             selectorCom.IdxPreviousVisionCell = selectorCom.IdxCurrentCell;
-                            selectorCom.IsStartSelectedDirect = false;
+                            selectorCom.IdxCurrentCell = default;// IsStartSelectedDirect = false;
                         }
                         else
                         {

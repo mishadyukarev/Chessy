@@ -164,7 +164,7 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
                         powerProtection += PROTECTION_HILL_FOR_KING;
                     break;
 
-                case UnitTypes.Pawn_Axe:
+                case UnitTypes.Pawn:
                     if (HaveEnvironment(EnvironmentTypes.Fertilizer))
                         powerProtection -= PROTECTION_FOOD_FOR_PAWN;
 
@@ -176,7 +176,7 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
                     break;
 
 
-                case UnitTypes.Rook_Bow:
+                case UnitTypes.Rook:
                     if (HaveEnvironment(EnvironmentTypes.Fertilizer))
                         powerProtection -= PROTECTION_FOOD_FOR_ROOK;
 
@@ -188,7 +188,7 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
                     break;
 
 
-                case UnitTypes.Bishop_Bow:
+                case UnitTypes.Bishop:
                     if (HaveEnvironment(EnvironmentTypes.Fertilizer))
                         powerProtection -= PROTECTION_FOOD_FOR_BISHOP;
 

@@ -5,7 +5,6 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC;
 using Assets.Scripts.Workers;
 using Leopotam.Ecs;
 using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
@@ -73,7 +72,10 @@ namespace Assets.Scripts.ECS.Systems.Game.Master
                 .Replace(new ForUpgradeMasCom());
 
             _currentGameWorld.NewEntity()
-                .Replace(new ForGivePawnToolComponent());
+                .Replace(new ForGiveExtraPawnToolComp());
+
+            _currentGameWorld.NewEntity()
+                .Replace(new ForGiveExtraPawnWeaponComp());
 
 
             _donerFilter.Get1(0).SetDoned(false, true);
@@ -134,14 +136,14 @@ namespace Assets.Scripts.ECS.Systems.Game.Master
             unitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, true, EconomyValues.AMOUNT_KING_MASTER);
             unitInventorCom.SetAmountUnitsInInventor(UnitTypes.King, false, EconomyValues.AMOUNT_KING_OTHER);
 
-            unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn_Axe, true, EconomyValues.AMOUNT_PAWN_MASTER);
-            unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn_Axe, false, EconomyValues.AMOUNT_PAWN_OTHER);
+            unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, true, EconomyValues.AMOUNT_PAWN_MASTER);
+            unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Pawn, false, EconomyValues.AMOUNT_PAWN_OTHER);
 
-            unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook_Bow, true, EconomyValues.AMOUNT_ROOK_MASTER);
-            unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook_Bow, false, EconomyValues.AMOUNT_ROOK_OTHER);
+            unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, true, EconomyValues.AMOUNT_ROOK_MASTER);
+            unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Rook, false, EconomyValues.AMOUNT_ROOK_OTHER);
 
-            unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop_Bow, true, EconomyValues.AMOUNT_BISHOP_MASTER);
-            unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop_Bow, false, EconomyValues.AMOUNT_BISHOP_OTHER);
+            unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, true, EconomyValues.AMOUNT_BISHOP_MASTER);
+            unitInventorCom.SetAmountUnitsInInventor(UnitTypes.Bishop, false, EconomyValues.AMOUNT_BISHOP_OTHER);
 
 
             inventorResCom.SetAmountResources(ResourceTypes.Food, true, EconomyValues.AMOUNT_FOOD_MASTER);

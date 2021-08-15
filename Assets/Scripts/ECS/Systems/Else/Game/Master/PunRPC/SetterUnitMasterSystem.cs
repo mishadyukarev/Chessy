@@ -51,17 +51,17 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_KING;
                     break;
 
-                case UnitTypes.Pawn_Axe:
+                case UnitTypes.Pawn:
                     newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN_AXE;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN;
                     break;
 
-                case UnitTypes.Rook_Bow:
+                case UnitTypes.Rook:
                     newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK_BOW;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK_BOW;
                     break;
 
-                case UnitTypes.Bishop_Bow:
+                case UnitTypes.Bishop:
                     newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP_BOW;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP_BOW;
                     break;

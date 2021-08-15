@@ -25,7 +25,7 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
 
         for (UnitTypes curUnitType = 0; curUnitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; curUnitType++)
         {
-            if (curUnitType == UnitTypes.Pawn_Axe || curUnitType == UnitTypes.Rook_Bow || curUnitType == UnitTypes.Bishop_Bow)
+            if (curUnitType == UnitTypes.Pawn || curUnitType == UnitTypes.Rook || curUnitType == UnitTypes.Bishop)
             {
                 if (getterUnitsDataUICom.IsActivatedButton(curUnitType))
                 {
@@ -47,9 +47,9 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
             }
         }
 
-        getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Pawn_Axe, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Pawn_Axe, PhotonNetwork.IsMasterClient).ToString());
-        getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Rook_Bow, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Rook_Bow, PhotonNetwork.IsMasterClient).ToString());
-        getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Bishop_Bow, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Bishop_Bow, PhotonNetwork.IsMasterClient).ToString());
+        getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Pawn, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Pawn, PhotonNetwork.IsMasterClient).ToString());
+        getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Rook, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Rook, PhotonNetwork.IsMasterClient).ToString());
+        getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Bishop, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Bishop, PhotonNetwork.IsMasterClient).ToString());
 
         if (xyUnitsCom.IsSettedKing(PhotonNetwork.IsMasterClient))
             getterUnitsViewUICom.SetActiveButton(UnitTypes.King, false);

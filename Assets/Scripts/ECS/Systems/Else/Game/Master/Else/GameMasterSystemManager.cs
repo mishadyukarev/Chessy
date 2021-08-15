@@ -24,7 +24,7 @@ public sealed class GameMasterSystemManager : SystemAbstManager
         _rpcSystems = new Dictionary<RpcMasterTypes, EcsSystems>();
 
         _rpcSystems.Add(RpcMasterTypes.Build, new EcsSystems(gameWorld).Add(new BuilderMasterSystem()));
-        _rpcSystems.Add(RpcMasterTypes.Destroy, new EcsSystems(gameWorld).Add(new DestroyMasterSystem()));
+        _rpcSystems.Add(RpcMasterTypes.DestroyBuild, new EcsSystems(gameWorld).Add(new DestroyMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.Shift, new EcsSystems(gameWorld).Add(new ShiftUnitMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.Attack, new EcsSystems(gameWorld).Add(new AttackUnitMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.ConditionUnit, new EcsSystems(gameWorld).Add(new ConditionMasterSystem()));
@@ -40,6 +40,7 @@ public sealed class GameMasterSystemManager : SystemAbstManager
         _rpcSystems.Add(RpcMasterTypes.CircularAttackKing, new EcsSystems(gameWorld).Add(new CircularAttackKingSystem()));
         _rpcSystems.Add(RpcMasterTypes.TakePawnExtraTool, new EcsSystems(gameWorld).Add(new TakePawnExtraToolMastSys()));
         _rpcSystems.Add(RpcMasterTypes.GiveExtraPawnTool, new EcsSystems(gameWorld).Add(new GiveExtraPawnToolMastSys()));
+        _rpcSystems.Add(RpcMasterTypes.GiveExtraPawnWeapon, new EcsSystems(gameWorld).Add(new GiveExtraPawnWeaponMasSys()));
 
 
         VisibilityUnitsSystems = new EcsSystems(gameWorld)

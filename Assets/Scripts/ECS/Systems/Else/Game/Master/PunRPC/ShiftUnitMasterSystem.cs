@@ -5,6 +5,7 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Leopotam.Ecs;
+using System;
 
 internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 {
@@ -17,6 +18,10 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
     private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvrDataFilter = default;
+    private EcsFilter<CellPawnDataComp> _cellPawnFilter = default;
+    private EcsFilter<CellRookDataComp> _cellRookFilter = default;
+    private EcsFilter<CellBishopDataComp> _cellBishopFilter = default;
+
     public void Run()
     {
         var fromInfo = _infoFilter.Get1(0).FromInfo;
@@ -30,9 +35,15 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
         ref var fromCellUnitDataCom = ref _cellUnitFilter.Get1(fromIdx);
         ref var fromOwnerCellUnitCom = ref _cellUnitFilter.Get2(fromIdx);
+        ref var fromCellPawnDataComp = ref _cellPawnFilter.Get1(fromIdx);
+        ref var fromCellRookDataComp = ref _cellRookFilter.Get1(fromIdx);
+        ref var fromCellBishopDataComp = ref _cellBishopFilter.Get1(fromIdx);
 
         ref var toCellUnitDataCom = ref _cellUnitFilter.Get1(toIdx);
         ref var toOwnerCellUnitCom = ref _cellUnitFilter.Get2(toIdx);
+        ref var toCellPawnDataComp = ref _cellPawnFilter.Get1(toIdx);
+        ref var toCellRookDataComp = ref _cellRookFilter.Get1(toIdx);
+        ref var toCellBishopDataComp = ref _cellBishopFilter.Get1(toIdx);
 
         ref var toCellEnvDataCom = ref _cellEnvrDataFilter.Get1(toIdx);
 
@@ -54,12 +65,42 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
                 idxUnitsCom.AddAmountUnitInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, toIdx);
 
 
+                switch (fromCellUnitDataCom.UnitType)
+                {
+                    case UnitTypes.None:
+                        throw new Exception();
+
+                    case UnitTypes.King:
+                        break;
+
+                    case UnitTypes.Pawn:
+                        toCellPawnDataComp.MainToolType = fromCellPawnDataComp.MainToolType;
+                        toCellPawnDataComp.MainWeaponType = fromCellPawnDataComp.MainWeaponType;
+
+                        toCellPawnDataComp.ExtraToolType = fromCellPawnDataComp.ExtraToolType;
+                        toCellPawnDataComp.ExtraWeaponType = fromCellPawnDataComp.ExtraWeaponType;
+                        break;
+
+                    case UnitTypes.Rook:
+                        toCellRookDataComp.MainWeaponType = fromCellRookDataComp.MainWeaponType;
+                        break;
+
+                    case UnitTypes.Bishop:
+                        toCellBishopDataComp.MainWeaponType = fromCellBishopDataComp.MainWeaponType;
+                        break;
+
+                    default:
+                        throw new Exception();
+                }
+
                 toCellUnitDataCom.UnitType = fromCellUnitDataCom.UnitType;
                 toCellUnitDataCom.AmountHealth = fromCellUnitDataCom.AmountHealth;
                 toCellUnitDataCom.AmountSteps = fromCellUnitDataCom.AmountSteps;
                 toCellUnitDataCom.ConditionUnitType = default;
-                toCellUnitDataCom.ExtraPawnToolType = fromCellUnitDataCom.ExtraPawnToolType;
                 toOwnerCellUnitCom.SetOwner(fromInfo.Sender);
+
+
+
 
                 fromCellUnitDataCom.ResetUnit();
                 fromOwnerCellUnitCom.ResetOwner();

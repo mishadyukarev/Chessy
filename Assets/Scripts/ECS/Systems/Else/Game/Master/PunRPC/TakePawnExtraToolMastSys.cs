@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums.Cell;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Leopotam.Ecs;
@@ -13,7 +14,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 
         private EcsFilter<InventorToolsComponent> _inventToolsFilter = default;
 
-        private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataComponent, CellPawnDataComp> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -23,18 +24,19 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
             var sender = infoMasCom.FromInfo.Sender;
 
             ref var cellUnitDataComForTake = ref _cellUnitFilter.Get1(forTakePawnExtraToolCom.IdxCellForTakePawnExtraTool);
+            ref var cellPawnDataCompForTake = ref _cellUnitFilter.Get2(forTakePawnExtraToolCom.IdxCellForTakePawnExtraTool);
 
 
-            if (cellUnitDataComForTake.IsUnitType(UnitTypes.Pawn_Axe))
+            if (cellUnitDataComForTake.IsUnitType(UnitTypes.Pawn))
             {
-                if (cellUnitDataComForTake.HaveExtraPawnTool)
+                if (cellPawnDataCompForTake.HaveExtraTool)
                 {
                     if (cellUnitDataComForTake.HaveMaxAmountHealth)
                     {
                         if (cellUnitDataComForTake.HaveMaxAmountSteps)
                         {
-                            _inventToolsFilter.Get1(0).AddAmountTools(cellUnitDataComForTake.ExtraPawnToolType);
-                            cellUnitDataComForTake.ResetPawnExtraTool();
+                            _inventToolsFilter.Get1(0).AddAmountTools(cellPawnDataCompForTake.ExtraToolType);
+                            cellPawnDataCompForTake.ResetExtraTool();
                             cellUnitDataComForTake.ResetAmountSteps();
                         }
 

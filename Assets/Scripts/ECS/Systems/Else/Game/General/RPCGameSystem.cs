@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.Cell;
+using Assets.Scripts.Abstractions.Enums.Cell.Pawn;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
@@ -47,7 +48,7 @@ namespace Assets.Scripts
         private EcsFilter<ForFireMasCom> _fireFilter = default;
         private EcsFilter<ForUpgradeMasCom> _upgradorFilter = default;
         private EcsFilter<ForCircularAttackMasCom, XyCellForDoingMasCom> _circularAttackFilter = default;
-        private EcsFilter<ForGivePawnToolComponent> _forGivePawnToolFilter = default;
+        private EcsFilter<ForGiveExtraPawnToolComp> _forGivePawnToolFilter = default;
         private EcsFilter<ForTakePawnExtraToolMastCom> _forTakePawnExtraToolFilter = default;
 
         private EcsFilter<InfoOtherCom> _infoOtherFilter = default;
@@ -84,7 +85,7 @@ namespace Assets.Scripts
         public static void AttackUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Attack, new object[] { idxPreviousCell, idxSelectedCell });
 
         public static void BuildToMaster(byte idxCellForBuild, BuildingTypes buildingType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Build, new object[] { idxCellForBuild, buildingType });
-        public static void DestroyBuildingToMaster(byte xyCellForDestroy) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Destroy, new object[] { xyCellForDestroy });
+        public static void DestroyBuildingToMaster(byte xyCellForDestroy) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.DestroyBuild, new object[] { xyCellForDestroy });
 
         public static void ConditionUnitToMaster(ConditionUnitTypes neededCondtionType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ConditionUnit, new object[] { neededCondtionType, idxCell });
 
@@ -103,7 +104,8 @@ namespace Assets.Scripts
         public static void SeedEnvironmentToMaster(byte idxCell, EnvironmentTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
         public static void TakePawnExtraTool(byte idxCellForTake) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.TakePawnExtraTool, new object[] { idxCellForTake });
-        public static void GiveToolPawn(byte idxCell, PawnExtraToolTypes extraPawnToolType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveExtraPawnTool, new object[] { idxCell, extraPawnToolType });
+        public static void GivePawnExtraTool(byte idxCell, PawnExtraToolTypes extraPawnToolType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveExtraPawnTool, new object[] { idxCell, extraPawnToolType });
+        public static void GivePawnExtraWeapon(byte idxCell, PawnExtraWeaponTypes pawnExtraWeaponType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveExtraPawnWeapon, new object[] { idxCell, pawnExtraWeaponType });
 
         public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { idxCell });
 
@@ -151,7 +153,7 @@ namespace Assets.Scripts
                     _buildFilter.Get1(0).IdxForBuild = (byte)objects[0];
                     break;
 
-                case RpcMasterTypes.Destroy:
+                case RpcMasterTypes.DestroyBuild:
                     _destroyFilter.Get1(0).IdxForDestroy = (byte)objects[0];
                     break;
 
@@ -227,7 +229,11 @@ namespace Assets.Scripts
 
                 case RpcMasterTypes.GiveExtraPawnTool:
                     _forGivePawnToolFilter.Get1(0).IdxForGivePawnTool = (byte)objects[0];
-                    _forGivePawnToolFilter.Get1(0).PawnToolType = (PawnExtraToolTypes)objects[1];
+                    _forGivePawnToolFilter.Get1(0).PawnExtraToolType = (PawnExtraToolTypes)objects[1];
+                    break;
+
+                case RpcMasterTypes.GiveExtraPawnWeapon:
+
                     break;
 
                 default:
@@ -325,7 +331,7 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.SetUnit:
                     if ((bool)objects[_currentNumber++])
                     {
-                        selectorCom.CellClickType = CellClickTypes.Start;
+                        selectorCom.ResetSelectedCell();// CellClickType = CellClickTypes.Start;
                         selectorCom.SelectedUnitType = default;
                     }
                     break;

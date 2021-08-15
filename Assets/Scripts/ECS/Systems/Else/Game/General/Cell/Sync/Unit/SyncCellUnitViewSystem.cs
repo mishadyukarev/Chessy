@@ -1,15 +1,15 @@
-﻿using Assets.Scripts.Abstractions.Enums.Cell;
+﻿using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Leopotam.Ecs;
 using Photon.Pun;
-using System;
 
 namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 {
     internal sealed class SyncCellUnitViewSystem : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataComponent, CellUnitViewComponent> _cellUnitFilter = default;
+        private EcsFilter<CellPawnDataComp> _cellPawnFilter = default;
+
+        private EcsFilter<CellUnitDataComponent, CellUnitMainViewComp, CellUnitExtraViewComp> _cellUnitFilter = default;
         private EcsFilter<SelectorComponent> _selectorFilter = default;
 
         public void Run()
@@ -19,59 +19,62 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
             foreach (byte idxCurCell in _cellUnitFilter)
             {
                 ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
-                ref var curCellUnitViewCom = ref _cellUnitFilter.Get2(idxCurCell);
+                ref var curMainCellUnitViewCom = ref _cellUnitFilter.Get2(idxCurCell);
+                ref var curExtraCellUnitViewCom = ref _cellUnitFilter.Get3(idxCurCell);
+                ref var curCellPawnDataCom = ref _cellPawnFilter.Get1(idxCurCell);
 
 
                 if (curCellUnitDataCom.HaveUnit)
                 {
                     if (curCellUnitDataCom.IsVisibleUnit(PhotonNetwork.IsMasterClient))
                     {
-                        curCellUnitViewCom.EnableUnitTool_SR();
-                        curCellUnitViewCom.SetMainUnit_Sprite(curCellUnitDataCom.UnitType);
+                        curMainCellUnitViewCom.Enable_SR();
+                        curMainCellUnitViewCom.Set_Sprite(curCellUnitDataCom.UnitType);
 
-                        if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn_Axe))
+                        if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn))
                         {
-                            if (curCellUnitDataCom.HaveExtraPawnTool)
+                            if (curCellPawnDataCom.HaveExtraTool)
                             {
-                                curCellUnitViewCom.EnableExtraTool_SR();
-                                curCellUnitViewCom.SetExtraTool_Sprite(curCellUnitDataCom.ExtraPawnToolType);
+                                curExtraCellUnitViewCom.Enable_SR();
+                                curExtraCellUnitViewCom.SetExtraPawnTool_Sprite(curCellPawnDataCom.ExtraToolType);
                             }
 
                             else
                             {
-                                curCellUnitViewCom.DisableExtraTool_SR();
+                                curExtraCellUnitViewCom.Disable_SR();
                             }
                         }
 
                         else
                         {
-                            curCellUnitViewCom.DisableExtraTool_SR();
+                            curExtraCellUnitViewCom.Disable_SR();
                         }
                     }
                     else
                     {
-                        curCellUnitViewCom.DisableMainTool_SR();
+                        curMainCellUnitViewCom.Disable_SR();
+                        curExtraCellUnitViewCom.Disable_SR();
                     }
                 }
                 else
                 {
-                    curCellUnitViewCom.DisableMainTool_SR();
-                    curCellUnitViewCom.DisableExtraTool_SR();
+                    curMainCellUnitViewCom.Disable_SR();
+                    curExtraCellUnitViewCom.Disable_SR();
                 }
 
                 if (selectorCom.IsSelectedUnit)
                 {
                     if (curCellUnitDataCom.HaveUnit)
                     {
-                        _cellUnitFilter.Get2(selectorCom.IdxPreviousVisionCell).SetMainUnit_Sprite(selectorCom.SelectedUnitType);
-                        _cellUnitFilter.Get2(selectorCom.IdxPreviousVisionCell).EnableUnitTool_SR();
+                        _cellUnitFilter.Get2(selectorCom.IdxPreviousVisionCell).Set_Sprite(selectorCom.SelectedUnitType);
+                        _cellUnitFilter.Get2(selectorCom.IdxPreviousVisionCell).Enable_SR();
                     }
                     else
                     {
                         if (selectorCom.IdxCurrentCell == idxCurCell)
                         {
-                            curCellUnitViewCom.SetMainUnit_Sprite(selectorCom.SelectedUnitType);
-                            curCellUnitViewCom.EnableUnitTool_SR();
+                            curMainCellUnitViewCom.Set_Sprite(selectorCom.SelectedUnitType);
+                            curMainCellUnitViewCom.Enable_SR();
                         }
                     }
                 }

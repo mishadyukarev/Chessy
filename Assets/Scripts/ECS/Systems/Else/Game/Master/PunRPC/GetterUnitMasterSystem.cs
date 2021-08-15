@@ -32,24 +32,24 @@ internal sealed class GetterUnitMasterSystem : IEcsRunSystem
                 }
                 break;
 
-            case UnitTypes.Pawn_Axe:
-                if (unitInventorCom.HaveUnitInInventor(UnitTypes.Pawn_Axe, infoCom.FromInfo.Sender.IsMasterClient))
+            case UnitTypes.Pawn:
+                if (unitInventorCom.HaveUnitInInventor(UnitTypes.Pawn, infoCom.FromInfo.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType;
                 }
                 break;
 
-            case UnitTypes.Rook_Bow:
-                if (unitInventorCom.HaveUnitInInventor(UnitTypes.Rook_Bow, infoCom.FromInfo.Sender.IsMasterClient))
+            case UnitTypes.Rook:
+                if (unitInventorCom.HaveUnitInInventor(UnitTypes.Rook, infoCom.FromInfo.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType;
                 }
                 break;
 
-            case UnitTypes.Bishop_Bow:
-                if (unitInventorCom.HaveUnitInInventor(UnitTypes.Bishop_Bow, infoCom.FromInfo.Sender.IsMasterClient))
+            case UnitTypes.Bishop:
+                if (unitInventorCom.HaveUnitInInventor(UnitTypes.Bishop, infoCom.FromInfo.Sender.IsMasterClient))
                 {
                     isGetted = true;
                     unitType = UnitType;

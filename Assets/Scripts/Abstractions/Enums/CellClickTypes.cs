@@ -6,9 +6,8 @@
 
         UpgradeUnit,
         PickFire,
-        GiveToolToPawn,
-        TakePawnExtraTool,
-        Start,
-        NotStart,
+
+        GiveExtraThing,
+        TakeExtraThing,
     }
 }

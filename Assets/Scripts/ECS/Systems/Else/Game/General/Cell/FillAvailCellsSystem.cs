@@ -73,7 +73,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Cell
                             {
                                 if (curOwnerCellUnitCom.HaveOwner || curBotOwnerCellUnitCom.IsBot)
                                 {
-                                    if (startCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn_Axe }))
+                                    if (startCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn }))
                                     {
                                         if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
                                             || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)

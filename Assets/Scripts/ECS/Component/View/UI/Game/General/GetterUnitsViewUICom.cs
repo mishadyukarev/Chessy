@@ -26,32 +26,32 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
                     _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit0Button").GetComponent<Button>());
                 }
 
-                else if (unitType == UnitTypes.Pawn_Axe)
+                else if (unitType == UnitTypes.Pawn)
                 {
                     _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit1Button").GetComponent<Button>());
                 }
 
-                else if (unitType == UnitTypes.Rook_Bow)
+                else if (unitType == UnitTypes.Rook)
                 {
                     _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit2Button").GetComponent<Button>());
                 }
 
-                else if (unitType == UnitTypes.Bishop_Bow)
+                else if (unitType == UnitTypes.Bishop)
                 {
                     _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit3Button").GetComponent<Button>());
                 }
             }
 
             _createUnit_Buttons = new Dictionary<UnitTypes, Button>();
-            _createUnit_Buttons.Add(UnitTypes.Pawn_Axe, takeUnitZone_GO.transform.Find("CreatePawn_Button").GetComponent<Button>());
-            _createUnit_Buttons.Add(UnitTypes.Rook_Bow, takeUnitZone_GO.transform.Find("CreateRook_Button").GetComponent<Button>());
-            _createUnit_Buttons.Add(UnitTypes.Bishop_Bow, takeUnitZone_GO.transform.Find("CreateBishop_Button").GetComponent<Button>());
+            _createUnit_Buttons.Add(UnitTypes.Pawn, takeUnitZone_GO.transform.Find("CreatePawn_Button").GetComponent<Button>());
+            _createUnit_Buttons.Add(UnitTypes.Rook, takeUnitZone_GO.transform.Find("CreateRook_Button").GetComponent<Button>());
+            _createUnit_Buttons.Add(UnitTypes.Bishop, takeUnitZone_GO.transform.Find("CreateBishop_Button").GetComponent<Button>());
 
 
             _amountUnits_TextMPs = new Dictionary<UnitTypes, TextMeshProUGUI>();
-            _amountUnits_TextMPs.Add(UnitTypes.Pawn_Axe, takeUnitZone_GO.transform.Find("AmountPawnZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
-            _amountUnits_TextMPs.Add(UnitTypes.Rook_Bow, takeUnitZone_GO.transform.Find("AmountRookZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
-            _amountUnits_TextMPs.Add(UnitTypes.Bishop_Bow, takeUnitZone_GO.transform.Find("AmountBishopZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+            _amountUnits_TextMPs.Add(UnitTypes.Pawn, takeUnitZone_GO.transform.Find("AmountPawnZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+            _amountUnits_TextMPs.Add(UnitTypes.Rook, takeUnitZone_GO.transform.Find("AmountRookZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+            _amountUnits_TextMPs.Add(UnitTypes.Bishop, takeUnitZone_GO.transform.Find("AmountBishopZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
         }
 
         internal void AddListener(UnitTypes unitType, UnityAction unityAction) => _taker_Buttons[unitType].onClick.AddListener(unityAction);

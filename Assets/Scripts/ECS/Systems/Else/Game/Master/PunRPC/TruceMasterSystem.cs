@@ -93,16 +93,16 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
         }
 
 
-        if (unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn_Axe, true) <= 0
-            && unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn_Axe, true) <= 0)
+        if (unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0
+            && unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0)
         {
-            inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn_Axe, true);
+            inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn, true);
         }
 
-        if (unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn_Axe, false) <= 0
-            && unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn_Axe, false) <= 0)
+        if (unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0
+            && unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0)
         {
-            inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn_Axe, false);
+            inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn, false);
         }
 
         RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);

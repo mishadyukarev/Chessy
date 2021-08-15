@@ -135,7 +135,7 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
     {
         if (_selectorFilter.Get1(0).CellClickType == CellClickTypes.PickFire)
         {
-            _selectorFilter.Get1(0).CellClickType = CellClickTypes.Start;
+            _selectorFilter.Get1(0).ResetSelectedCell(); //CellClickType = CellClickTypes.Start;
         }
         else
         {

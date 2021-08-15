@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums.Cell;
+﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Leopotam.Ecs;
@@ -15,8 +15,8 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.UpZone
             ref var toolsViewUICom = ref _toolUpUIFilter.Get1(0);
             ref var inventToolsCom = ref _inventToolsFilter.Get1(0);
 
-            toolsViewUICom.SetTextPawnExtraTool(PawnExtraToolTypes.Pick, inventToolsCom.GetAmountTools(PawnExtraToolTypes.Pick).ToString());
-            toolsViewUICom.SetTextPawnExtraTool(PawnExtraToolTypes.Sword, inventToolsCom.GetAmountTools(PawnExtraToolTypes.Sword).ToString());
+            toolsViewUICom.TextAmountPicks = inventToolsCom.GetAmountTools(ToolTypes.Pick).ToString();
+            toolsViewUICom.TextAmountSwords = inventToolsCom.GetAmountWeapons(WeaponTypes.Sword).ToString();
         }
     }
 }

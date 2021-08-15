@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.Cell;
+using Assets.Scripts.Abstractions.Enums.Cell.Pawn;
+using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
@@ -11,7 +13,6 @@ namespace Assets.Scripts
 {
     internal sealed class StaticEventsGameSys : IEcsInitSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
 
         private EcsFilter<ReadyDataUICom, ReadyViewUICom> _readyFilter = default;
@@ -33,13 +34,13 @@ namespace Assets.Scripts
             _readyFilter.Get2(0).AddListenerToReadyButton(Ready);
 
             _takerUIFilter.Get2(0).AddListener(UnitTypes.King, delegate { GetUnit(UnitTypes.King); });
-            _takerUIFilter.Get2(0).AddListener(UnitTypes.Pawn_Axe, delegate { GetUnit(UnitTypes.Pawn_Axe); });
-            _takerUIFilter.Get2(0).AddListener(UnitTypes.Rook_Bow, delegate { GetUnit(UnitTypes.Rook_Bow); });
-            _takerUIFilter.Get2(0).AddListener(UnitTypes.Bishop_Bow, delegate { GetUnit(UnitTypes.Bishop_Bow); });
+            _takerUIFilter.Get2(0).AddListener(UnitTypes.Pawn, delegate { GetUnit(UnitTypes.Pawn); });
+            _takerUIFilter.Get2(0).AddListener(UnitTypes.Rook, delegate { GetUnit(UnitTypes.Rook); });
+            _takerUIFilter.Get2(0).AddListener(UnitTypes.Bishop, delegate { GetUnit(UnitTypes.Bishop); });
 
-            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Pawn_Axe, delegate { CreateUnit(UnitTypes.Pawn_Axe); });
-            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Rook_Bow, delegate { CreateUnit(UnitTypes.Rook_Bow); });
-            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Bishop_Bow, delegate { CreateUnit(UnitTypes.Bishop_Bow); });
+            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Pawn, delegate { CreateUnit(UnitTypes.Pawn); });
+            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Rook, delegate { CreateUnit(UnitTypes.Rook); });
+            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Bishop, delegate { CreateUnit(UnitTypes.Bishop); });
 
             _donerUIFilter.Get2(0).AddListener(delegate { Done(); });
 
@@ -54,11 +55,11 @@ namespace Assets.Scripts
 
             _buildLeftZoneViewUICom.Get1(0).AddListenerToMelt(delegate { MeltOre(); });
 
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToTakePawnTool(delegate { SetCellClickType(CellClickTypes.TakePawnExtraTool); });
+            _buildLeftZoneViewUICom.Get1(0).AddListenerToTakePawnTool(delegate { SetCellClickType(CellClickTypes.TakeExtraThing); });
 
             //_buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnToolTypes.Hoe, delegate { SetCellClickSelector(PawnToolTypes.Hoe); });
             _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnExtraToolTypes.Pick, delegate { SetCellClickSelector(PawnExtraToolTypes.Pick); });
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnExtraToolTypes.Sword, delegate { SetCellClickSelector(PawnExtraToolTypes.Sword); });
+            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveWeapon(delegate { SetCellClickSelector(PawnExtraWeaponTypes.Sword); });
 
             _buildLeftZoneViewUICom.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
             _buildLeftZoneViewUICom.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
@@ -132,8 +133,13 @@ namespace Assets.Scripts
 
         private void SetCellClickSelector(PawnExtraToolTypes toolType)
         {
-            _selectorFilter.Get1(0).PawnToolTypeForUpgrade = toolType;
-            _selectorFilter.Get1(0).CellClickType = CellClickTypes.GiveToolToPawn;
+            _selectorFilter.Get1(0).PawnExtraToolTypeForGive = toolType;
+            _selectorFilter.Get1(0).CellClickType = CellClickTypes.GiveExtraThing;
+        }
+        private void SetCellClickSelector(PawnExtraWeaponTypes weaponType)
+        {
+            _selectorFilter.Get1(0).PawnExtraWeaponTypeForGive = weaponType;
+            _selectorFilter.Get1(0).CellClickType = CellClickTypes.TakeExtraThing;
         }
 
         private void SetCellClickType(CellClickTypes cellClickType) => _selectorFilter.Get1(0).CellClickType = cellClickType;
