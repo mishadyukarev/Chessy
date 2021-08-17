@@ -36,8 +36,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             ///Cells
             ///
             var cellGO = ResourcesComponent.PrefabConfig.CellGO;
-            var whiteCellSR = ResourcesComponent.SpritesConfig.WhiteSprite;
-            var blackCellSR = ResourcesComponent.SpritesConfig.BlackSprite;
+            var whiteCellSR = ResourcesComponent.SpritesConfig.WhiteCell_Sprite;
+            var blackCellSR = ResourcesComponent.SpritesConfig.BlackCell_Sprite;
 
             var cell_GOs = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
 
@@ -249,7 +249,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new GetterUnitsViewUICom(downZone_GO))
                 .Replace(new DonerViewUIComponent(downZone_GO))
                 .Replace(new DonerDataUIComponent(new Dictionary<bool, bool>()))
-                .Replace(new GiveThingZoneViewUIComp(downZone_GO))
+                .Replace(new GiveTakeZoneViewUIComp(downZone_GO))
 
                 ///Left
                 .Replace(new BuildLeftZoneViewUICom(leftZone_GO))

@@ -1,7 +1,8 @@
-﻿using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
+﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Leopotam.Ecs;
 using Photon.Pun;
+using System;
 
 namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 {
@@ -26,52 +27,86 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                     if (curCellUnitDataCom.IsVisibleUnit(PhotonNetwork.IsMasterClient))
                     {
                         curMainCellUnitViewCom.Enable_SR();
-                        curMainCellUnitViewCom.Set_Sprite(curCellUnitDataCom.UnitType);
 
-                        if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn))
+                        if (curCellUnitDataCom.IsUnitType(UnitTypes.King))
                         {
-                            if (curCellUnitDataCom.HaveExtraThing)
+                            curMainCellUnitViewCom.SetKing_Sprite();
+                        }
+
+                        else if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn))
+                        {
+                            curMainCellUnitViewCom.SetToolWeapon_Sprite(curCellUnitDataCom.MainToolWeaponType);
+
+
+                            if (curCellUnitDataCom.HaveExtraToolWeapon)
                             {
                                 curExtraCellUnitViewCom.Enable_SR();
-                                curExtraCellUnitViewCom.SetToolOrWeapon_Sprite(curCellUnitDataCom.ExtraToolAndWeaponType);
+                                curExtraCellUnitViewCom.SetToolWeapon_Sprite(curCellUnitDataCom.ExtraToolWeaponType);
                             }
-
                             else
                             {
                                 curExtraCellUnitViewCom.Disable_SR();
                             }
                         }
 
+                        else if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                        {
+                            if (curCellUnitDataCom.HaveMainToolWeapon)
+                            {
+                                curMainCellUnitViewCom.SetArcher_Sprite(curCellUnitDataCom.UnitType, curCellUnitDataCom.MainToolWeaponType);
+                            }
+                            else
+                            {
+                                throw new Exception();
+                            }
+
+                            if (curCellUnitDataCom.HaveExtraToolWeapon)
+                            {
+                                curExtraCellUnitViewCom.Enable_SR();
+                                curExtraCellUnitViewCom.SetToolWeapon_Sprite(curCellUnitDataCom.ExtraToolWeaponType);
+                            }
+                        }
+
                         else
                         {
-                            curExtraCellUnitViewCom.Disable_SR();
+                            throw new Exception();
                         }
                     }
+
                     else
                     {
                         curMainCellUnitViewCom.Disable_SR();
                         curExtraCellUnitViewCom.Disable_SR();
                     }
+
+                    if (selectorCom.IsSelectedUnit)
+                    {
+                    }
                 }
+
                 else
                 {
                     curMainCellUnitViewCom.Disable_SR();
                     curExtraCellUnitViewCom.Disable_SR();
-                }
 
-                if (selectorCom.IsSelectedUnit)
-                {
-                    if (curCellUnitDataCom.HaveUnit)
-                    {
-                        _cellUnitFilter.Get2(selectorCom.IdxPreviousVisionCell).Set_Sprite(selectorCom.SelectedUnitType);
-                        _cellUnitFilter.Get2(selectorCom.IdxPreviousVisionCell).Enable_SR();
-                    }
-                    else
+                    if (selectorCom.IsSelectedUnit)
                     {
                         if (selectorCom.IdxCurrentCell == idxCurCell)
                         {
-                            curMainCellUnitViewCom.Set_Sprite(selectorCom.SelectedUnitType);
-                            curMainCellUnitViewCom.Enable_SR();
+                            _cellUnitFilter.Get2(idxCurCell).Enable_SR();
+
+                            if (selectorCom.SelectedUnitType == UnitTypes.King)
+                            {
+                                _cellUnitFilter.Get2(idxCurCell).SetKing_Sprite();
+                            }
+                            else if (selectorCom.SelectedUnitType == UnitTypes.Pawn)
+                            {
+                                _cellUnitFilter.Get2(idxCurCell).SetToolWeapon_Sprite(ToolWeaponTypes.Axe);
+                            }
+                            else if (selectorCom.SelectedUnitType == UnitTypes.Rook || selectorCom.SelectedUnitType == UnitTypes.Bishop)
+                            {
+                                _cellUnitFilter.Get2(idxCurCell).SetArcher_Sprite(selectorCom.SelectedUnitType, ToolWeaponTypes.Bow);
+                            }
                         }
                     }
                 }

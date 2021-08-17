@@ -25,7 +25,7 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
                     throw new Exception();
 
                 case BuildingTypes.City:
-                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.City;
+                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.City_Sprite;
                     break;
 
                 case BuildingTypes.Farm:

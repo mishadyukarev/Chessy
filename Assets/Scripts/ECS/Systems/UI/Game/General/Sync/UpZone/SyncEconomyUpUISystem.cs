@@ -45,7 +45,7 @@ internal sealed class SyncEconomyUpUISystem : IEcsRunSystem
             });
 
 
-        if (amountAddingFood < 0)economyViewUICom.SetAddingText(ResourceTypes.Food, amountAddingFood.ToString());
+        if (amountAddingFood < 0) economyViewUICom.SetAddingText(ResourceTypes.Food, amountAddingFood.ToString());
 
         else economyViewUICom.SetAddingText(ResourceTypes.Food, "+ " + amountAddingFood.ToString());
 

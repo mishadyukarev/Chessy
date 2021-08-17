@@ -72,7 +72,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master
                 .Replace(new ForUpgradeMasCom());
 
             _currentGameWorld.NewEntity()
-                .Replace(new ForGiveExtraPawnToolComp());
+                .Replace(new ForGiveToolWeaponComp());
 
 
             _donerFilter.Get1(0).SetDoned(false, true);

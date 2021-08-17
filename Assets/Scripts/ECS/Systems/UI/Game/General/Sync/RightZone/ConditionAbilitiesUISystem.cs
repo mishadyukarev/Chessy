@@ -2,7 +2,6 @@
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
-using System;
 using UnityEngine;
 
 internal sealed class ConditionAbilitiesUISystem : IEcsRunSystem

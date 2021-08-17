@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Game.General.Systems;
 using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
@@ -48,20 +47,20 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(new ConditionAbilitiesUISystem())
             .Add(new UniqueAbilitiesUISystem())
             .Add(new BuildRighUISystem())
-            
+
             ///down
             .Add(new DonerUISystem())
             .Add(new GetterUnitsUISystem())
-            .Add(new GiveThingUISystem())
+            .Add(new GiveTakeUISystem())
 
             ///up
             .Add(new SyncEconomyUpUISystem())
             .Add(new SyncToolsUpUISystem())
 
             ///center
-            .Add(new SelectorTypeUISystem()) 
+            .Add(new SelectorTypeUISystem())
             .Add(new TheEndGameUISystem())
-            .Add(new MotionCenterUISystem())  
+            .Add(new MotionCenterUISystem())
             .Add(new ReadyZoneUISystem())
             .Add(new CenterSupTextUISystem())
             .Add(new KingZoneUISys());

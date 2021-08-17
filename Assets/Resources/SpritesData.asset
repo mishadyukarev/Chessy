@@ -12,20 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1d97971e1854c41ba1139108a09a30, type: 3}
   m_Name: SpritesData
   m_EditorClassIdentifier: 
-  _black_Sprite: {fileID: 21300000, guid: 132a18fad4c6e8242b60291675fc6707, type: 3}
-  _white_Sprite: {fileID: 21300000, guid: d39bc426ea1289b4fb42736ee7024730, type: 3}
+  _blackCell_Sprite: {fileID: 21300000, guid: 132a18fad4c6e8242b60291675fc6707, type: 3}
+  _whiteCell_Sprite: {fileID: 21300000, guid: d39bc426ea1289b4fb42736ee7024730, type: 3}
   _kingSprite: {fileID: 21300000, guid: e278817bd01bd7443ad388289b53d404, type: 3}
-  _pawnMainAxe_Sprite: {fileID: 21300000, guid: 87f546d910797b1468d0d9e548ec2031,
-    type: 3}
-  _hoe_Sprite: {fileID: 21300000, guid: 936345f7fc3934efa8119a8700d904c7, type: 3}
+  _axe_Sprite: {fileID: 21300000, guid: 87f546d910797b1468d0d9e548ec2031, type: 3}
+  _hoe_Sprite: {fileID: 21300000, guid: bc2edf55982e6344aa444fa1bbc7aba7, type: 3}
   _pick_Sprite: {fileID: 21300000, guid: 0fb45b8e745f1ee47a08409de5167148, type: 3}
   _sword_Sprite: {fileID: 21300000, guid: bd11474ee435cff4d92239fde7597993, type: 3}
-  _rookSprite: {fileID: 21300000, guid: 06d236349ef0fd2429458a733d58e2b0, type: 3}
-  _rookCrossbowSprite: {fileID: 21300000, guid: 2306cfca972ebfc4983cba8cf8ad8cd5,
-    type: 3}
-  _bishopSprite: {fileID: 21300000, guid: 8e42c635d6cb5cd448a763a3022874e4, type: 3}
-  _bishopCrossbowSprite: {fileID: 21300000, guid: 989abdbbfbc32a148ba4fe92160cf1e9,
-    type: 3}
+  _bowRook_Sprite: {fileID: 21300000, guid: 06d236349ef0fd2429458a733d58e2b0, type: 3}
+  _bowBishop_Sprite: {fileID: 21300000, guid: 8e42c635d6cb5cd448a763a3022874e4, type: 3}
   _citySprite: {fileID: 21300000, guid: f4ea07c0b3ace6b4880a3ce7e469d41f, type: 3}
   _farmSprite: {fileID: 21300000, guid: 30684e08ddc40714684366a1f3346d97, type: 3}
   _woodcutterSprite: {fileID: 21300000, guid: 43186546374ebcb4c886b904e733aa7d, type: 3}

@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.Cell;
-using Assets.Scripts.Abstractions.Enums.Cell.Pawn;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using UnityEngine;
 
@@ -11,6 +10,7 @@ public struct SelectorComponent
 
     internal CellClickTypes CellClickType { get; set; }
     internal bool IsCellClickType(CellClickTypes cellClickType) => cellClickType == CellClickType;
+    internal void DefCellClickType() => CellClickType = default;
 
 
     internal UnitTypes SelectedUnitType { get; set; }
@@ -18,11 +18,11 @@ public struct SelectorComponent
     internal void ResetSelectedUnit() => SelectedUnitType = default;
 
 
-    internal GiveTakeTypes GiveTakeType { get; set; }
-    internal bool IsActivatedGiveTakeMod => GiveTakeType != default;
+    //internal GiveTakeTypes GiveTakeType { get; set; }
+    //internal bool IsActivatedGiveTakeMod => GiveTakeType != default;
 
-    internal UnitSlotTypes UnitSlotTypeForGiveTake { get; set; }
     internal ToolWeaponTypes ToolWeaponTypeForGiveTake { get; set; }
+
 
 
     internal byte IdxCurrentCell { get; set; }

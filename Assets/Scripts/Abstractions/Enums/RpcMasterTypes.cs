@@ -20,7 +20,8 @@
     Sound,
     CircularAttackKing,
 
-    GiveOrTakeToolOrWeapon,
+    GiveTakeToolWeapon,
+    SwapToolWeapon,
 
     Upgrade,
 }

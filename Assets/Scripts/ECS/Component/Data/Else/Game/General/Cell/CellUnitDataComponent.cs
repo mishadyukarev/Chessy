@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.Cell;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using System;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ internal struct CellUnitDataComponent
     internal bool IsUnitType(UnitTypes unitType) => UnitType == unitType;
     internal bool IsUnitType(UnitTypes[] unitTypes)
     {
-        foreach (var curUnitType in unitTypes) 
+        foreach (var curUnitType in unitTypes)
             if (IsUnitType(curUnitType)) return true;
         return false;
     }
@@ -55,10 +54,11 @@ internal struct CellUnitDataComponent
     internal bool IsConditionType(ConditionUnitTypes conditionUnitType) => ConditionUnitType == conditionUnitType;
 
 
-    internal ToolWeaponTypes MainToolAndWeaponType { get; set; }
-    internal bool HaveExtraThing => MainToolAndWeaponType != default;
+    internal ToolWeaponTypes MainToolWeaponType { get; set; }
+    internal bool HaveMainToolWeapon => MainToolWeaponType != default;
 
-    internal ToolWeaponTypes ExtraToolAndWeaponType { get; set; }
+    internal ToolWeaponTypes ExtraToolWeaponType { get; set; }
+    internal bool HaveExtraToolWeapon => ExtraToolWeaponType != default;
 
 
     private Dictionary<ConditionUnitTypes, int> _amountStepsInCondition;
@@ -198,26 +198,63 @@ internal struct CellUnitDataComponent
     {
         get
         {
+            float simplePowerDamege = 0;
+
             switch (UnitType)
             {
                 case UnitTypes.None:
-                    return default;
+                    throw new Exception();
 
                 case UnitTypes.King:
-                    return SIMPLE_POWER_DAMAGE_KING;
+                    simplePowerDamege += SIMPLE_POWER_DAMAGE_KING;
+                    break;
 
                 case UnitTypes.Pawn:
-                    return SIMPLE_POWER_DAMAGE_PAWN;
+                    simplePowerDamege += SIMPLE_POWER_DAMAGE_PAWN;
+                    break;
 
                 case UnitTypes.Rook:
-                    return SIMPLE_POWER_DAMAGE_ROOK;
+                    simplePowerDamege += SIMPLE_POWER_DAMAGE_ROOK;
+                    break;
 
                 case UnitTypes.Bishop:
-                    return SIMPLE_POWER_DAMAGE_BISHOP;
+                    simplePowerDamege += SIMPLE_POWER_DAMAGE_BISHOP;
+                    break;
 
                 default:
-                    return default;
+                    throw new Exception();
             }
+
+            switch (ExtraToolWeaponType)
+            {
+                case ToolWeaponTypes.None:
+                    break;
+
+                case ToolWeaponTypes.Hoe:
+                    throw new Exception();
+
+                case ToolWeaponTypes.Axe:
+                    throw new Exception();
+
+                case ToolWeaponTypes.Pick:
+                    simplePowerDamege += simplePowerDamege * -0.2f;
+                    break;
+
+                case ToolWeaponTypes.Sword:
+                    simplePowerDamege += simplePowerDamege * 0.3f;
+                    break;
+
+                case ToolWeaponTypes.Bow:
+                    break;
+
+                case ToolWeaponTypes.Crossbow:
+                    break;
+
+                default:
+                    throw new Exception();
+            }
+
+            return (int)simplePowerDamege;
         }
     }
     internal int UniquePowerDamage
@@ -304,6 +341,8 @@ internal struct CellUnitDataComponent
     internal void ResetUnit()
     {
         UnitType = default;
+        MainToolWeaponType = default;
+        ExtraToolWeaponType = default;
         AmountHealth = default;
         AmountSteps = default;
         ConditionUnitType = default;

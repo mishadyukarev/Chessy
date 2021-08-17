@@ -3,19 +3,17 @@
 [CreateAssetMenu(menuName = "Sprites", fileName = "Sprites")]
 public class SpritesData : ScriptableObject
 {
-    [SerializeField] private Sprite _black_Sprite = default;
-    [SerializeField] private Sprite _white_Sprite = default;
+    [SerializeField] private Sprite _blackCell_Sprite = default;
+    [SerializeField] private Sprite _whiteCell_Sprite = default;
 
     [Space(20)]
     [SerializeField] private Sprite _kingSprite = default;
-    [SerializeField] private Sprite _pawnMainAxe_Sprite = default;
+    [SerializeField] private Sprite _axe_Sprite = default;
     [SerializeField] private Sprite _hoe_Sprite = default;
     [SerializeField] private Sprite _pick_Sprite = default;
     [SerializeField] private Sprite _sword_Sprite = default;
-    [SerializeField] private Sprite _rookSprite = default;
-    [SerializeField] private Sprite _rookCrossbowSprite = default;
-    [SerializeField] private Sprite _bishopSprite = default;
-    [SerializeField] private Sprite _bishopCrossbowSprite = default;
+    [SerializeField] private Sprite _bowRook_Sprite = default;
+    [SerializeField] private Sprite _bowBishop_Sprite = default;
 
     [Space(20)]
     [SerializeField] private Sprite _citySprite = default;
@@ -37,24 +35,22 @@ public class SpritesData : ScriptableObject
     [SerializeField] private Sprite _mountainSprite = default;
 
 
-    public Sprite BlackSprite => _black_Sprite;
-    public Sprite WhiteSprite => _white_Sprite;
+    public Sprite BlackCell_Sprite => _blackCell_Sprite;
+    public Sprite WhiteCell_Sprite => _whiteCell_Sprite;
 
 
-    public Sprite KingSprite => _kingSprite;
+    public Sprite King_Sprite => _kingSprite;
 
-    public Sprite CellAxe_Sprite => _pawnMainAxe_Sprite;
-    public Sprite HoePawnExtra_Sprite => _hoe_Sprite;
-    public Sprite PickPawnExtra_Sprite => _pick_Sprite;
-    public Sprite SwordPawnExtra_Sprite => _sword_Sprite;
+    public Sprite Axe_Sprite => _axe_Sprite;
+    public Sprite Hoe_Sprite => _hoe_Sprite;
+    public Sprite Pick_Sprite => _pick_Sprite;
+    public Sprite Sword_Sprite => _sword_Sprite;
 
-    public Sprite RookSprite => _rookSprite;
-    public Sprite RookCrossbowSprite => _rookCrossbowSprite;
-    public Sprite BishopSprite => _bishopSprite;
-    public Sprite BishopCrossbowSprite => _bishopCrossbowSprite;
+    public Sprite BowRook_Sprite => _bowRook_Sprite;
+    public Sprite BowBishop_Sprite => _bowBishop_Sprite;
 
 
-    public Sprite City => _citySprite;
+    public Sprite City_Sprite => _citySprite;
     public Sprite Farm => _farmSprite;
     public Sprite Woodcutter => _woodcutterSprite;
     public Sprite Mine => _mineSprite;

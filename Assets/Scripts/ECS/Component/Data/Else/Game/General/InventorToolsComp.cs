@@ -34,6 +34,7 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General
         internal byte GetAmountTools(bool key, ToolTypes toolType) => _inventorTools[key][toolType];
 
         internal void AddAmountTools(bool key, ToolTypes toolType, byte adding = 1) => _inventorTools[key][toolType] += adding;
+        internal void AddAmountTools(bool key, ToolWeaponTypes toolWeaponType, byte adding = 1) => _inventorTools[key][toolWeaponType.TransInTool()] += adding;
         internal void TakeAmountTools(bool key, ToolTypes toolType, byte taking = 1) => _inventorTools[key][toolType] -= taking;
         internal void TakeAmountTools(bool key, ToolWeaponTypes toolWeaponType, byte taking = 1) => _inventorTools[key][ToolWeaponTranslator.TransInTool(toolWeaponType)] -= taking;
     }

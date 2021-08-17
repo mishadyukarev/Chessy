@@ -37,13 +37,10 @@ internal sealed class SelectorSystem : IEcsRunSystem
             if (selectorCom.RaycastGettedType == RaycastGettedTypes.UI)
             {
                 selectorCom.ResetSelectedUnit();
-                //selectorCom.CanShiftUnit = false;
 
                 availCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);
                 availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
                 availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
-
-                //selectorCom.XyPreviousCell.Clean();
             }
 
             else if (selectorCom.RaycastGettedType == RaycastGettedTypes.Cell)
@@ -75,163 +72,156 @@ internal sealed class SelectorSystem : IEcsRunSystem
                     }
                 }
 
-                else
+                else if (selectorCom.IsSelectedUnit)
                 {
-                    if (selectorCom.IsSelectedUnit)
-                    {
-                        RPCGameSystem.SetUniToMaster(selectorCom.IdxCurrentCell, selectorCom.SelectedUnitType);
-                    }
+                    RPCGameSystem.SetUniToMaster(selectorCom.IdxCurrentCell, selectorCom.SelectedUnitType);
+                }
 
-                    else if (selectorCom.CellClickType == CellClickTypes.UpgradeUnit)
+                else if (selectorCom.CellClickType == CellClickTypes.UpgradeUnit)
+                {
+                    if (CellUnitDataCom(selectorCom.IdxCurrentCell).HaveUnit)
                     {
-                        if (CellUnitDataCom(selectorCom.IdxCurrentCell).HaveUnit)
-                        {
-                            RPCGameSystem.UpgradeUnitToMaster(selectorCom.IdxCurrentCell);
-                        }
-                        else
-                        {
-                            selectorCom.ResetSelectedCell();
-                        }
+                        RPCGameSystem.UpgradeUnitToMaster(selectorCom.IdxCurrentCell);
                     }
-
-                    else if (selectorCom.IsCellClickType(CellClickTypes.PickFire))
+                    else
                     {
-                        RPCGameSystem.FireToMaster(selectorCom.IdxSelectedCell, selectorCom.IdxCurrentCell);
+                        selectorCom.ResetSelectedCell();
+                    }
+                }
+
+                else if (selectorCom.IsCellClickType(CellClickTypes.PickFire))
+                {
+                    RPCGameSystem.FireToMaster(selectorCom.IdxSelectedCell, selectorCom.IdxCurrentCell);
+                    selectorCom.ResetSelectedCell();
+                }
+
+                else if (selectorCom.IsCellClickType(CellClickTypes.GiveTakeToolWeapon))
+                {
+                    if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
+                    {
+                        RPCGameSystem.GiveTakeToolWeapon(selectorCom.ToolWeaponTypeForGiveTake, selectorCom.IdxCurrentCell);
+                    }
+                    else
+                    {
+                        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                        selectorCom.DefCellClickType();
+                    }
+                }
+
+                else if (selectorCom.IsCellClickType(CellClickTypes.SwapToolWeapon))
+                {
+                    if (CellUnitDataCom(selectorCom.IdxCurrentCell).HaveUnit)
+                    {
+                        RPCGameSystem.SwapToolWeapon(selectorCom.IdxCurrentCell);
+                    }
+                    else
+                    {
+                        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                        selectorCom.DefCellClickType();
+                    }
+                }
+
+                //else if (selectorCom.IsCellClickType(CellClickTypes.TakeToolOrWeapon))
+                //{
+                //    if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(UnitTypes.Pawn))
+                //    {
+                //        RPCGameSystem.TakePawnExtraTool(selectorCom.IdxCurrentCell);
+                //    }
+                //    else
+                //    {
+                //        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                //        selectorCom.CellClickType = default;
+                //    }
+
+                //}
+
+                else if (!selectorCom.IsSelectedCell)
+                {
+                    if (selectorCom.IdxPreviousCell != selectorCom.IdxSelectedCell || selectorCom.IdxPreviousCell == 0)
+                    {
+                        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                    }
+                    else
+                    {
                         selectorCom.ResetSelectedCell();
                     }
 
-                    else if (selectorCom.IsActivatedGiveTakeMod)
+                    if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveUnit)
                     {
-                        if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }) )
+                        if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).HaveOwner)
                         {
-                            RPCGameSystem.GivePawnExtraTool(selectorCom.GiveTakeType, selectorCom.UnitSlotTypeForGiveTake, selectorCom.ToolWeaponTypeForGiveTake, selectorCom.IdxCurrentCell);
-                        }
-                        else
-                        {
-                            selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                            selectorCom.GiveTakeType = default;
-                        }
-                    }
-
-                    //else if (selectorCom.IsCellClickType(CellClickTypes.TakeToolOrWeapon))
-                    //{
-                    //    if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(UnitTypes.Pawn))
-                    //    {
-                    //        RPCGameSystem.TakePawnExtraTool(selectorCom.IdxCurrentCell);
-                    //    }
-                    //    else
-                    //    {
-                    //        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                    //        selectorCom.CellClickType = default;
-                    //    }
-
-                    //}
-
-                    else if (!selectorCom.IsSelectedCell)
-                    {
-                        if (selectorCom.IdxPreviousCell != selectorCom.IdxSelectedCell || selectorCom.IdxPreviousCell == 0)
-                        {
-                            selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                        }
-                        else
-                        {
-                            selectorCom.ResetSelectedCell();
-                        }
-
-                        if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveUnit)
-                        {
-                            if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).HaveOwner)
+                            if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).IsMine)
                             {
-                                if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).IsMine)
+                                if (CellUnitDataCom(selectorCom.IdxSelectedCell).IsMelee)
                                 {
-                                    if (CellUnitDataCom(selectorCom.IdxSelectedCell).IsMelee)
-                                    {
-                                        //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickMelee);
-                                    }
-                                    else
-                                    {
-                                        //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickArcher);
-                                    }
+                                    //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickMelee);
+                                }
+                                else
+                                {
+                                    //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickArcher);
+                                }
 
-                                    if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveMinAmountSteps)
-                                    {
-                                        _forFillAvailCellsFilter.Get1(0).IdxUnitCell = selectorCom.IdxSelectedCell;
-                                        //GameGeneralSystemManager.GetUnitWaySystems.Run();
+                                if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveMinAmountSteps)
+                                {
+                                    _forFillAvailCellsFilter.Get1(0).IdxUnitCell = selectorCom.IdxSelectedCell;
+                                    //GameGeneralSystemManager.GetUnitWaySystems.Run();
 
-                                        //selectorCom.CanShiftUnit = true;
-                                    }
+                                    //selectorCom.CanShiftUnit = true;
                                 }
                             }
                         }
-                        selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
                     }
+                    selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
+                }
 
-                    else
+                else
+                {
+                    if (selectorCom.IdxSelectedCell != selectorCom.IdxCurrentCell)
+                        selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
+
+                    selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+
+
+                    if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveUnit)
                     {
-                        if (selectorCom.IdxSelectedCell != selectorCom.IdxCurrentCell)
-                            selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
-
-                        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-
-
-                        if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveUnit)
+                        if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).HaveOwner)
                         {
-                            if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).HaveOwner)
+                            if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).IsMine)
                             {
-                                if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).IsMine)
+                                if (CellUnitDataCom(selectorCom.IdxSelectedCell).IsMelee)
                                 {
-                                    if (CellUnitDataCom(selectorCom.IdxSelectedCell).IsMelee)
-                                    {
-                                        //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickMelee);
-                                    }
-                                    else
-                                    {
-                                        //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickArcher);
-                                    }
+                                    //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickMelee);
+                                }
+                                else
+                                {
+                                    //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickArcher);
+                                }
 
-                                    if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveMinAmountSteps)
-                                    {
-                                        _forFillAvailCellsFilter.Get1(0).IdxUnitCell = selectorCom.IdxSelectedCell;
-                                        //GameGeneralSystemManager.GetUnitWaySystems.Run();
+                                if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveMinAmountSteps)
+                                {
+                                    _forFillAvailCellsFilter.Get1(0).IdxUnitCell = selectorCom.IdxSelectedCell;
+                                    //GameGeneralSystemManager.GetUnitWaySystems.Run();
 
-                                        //selectorCom.CanShiftUnit = true;
-                                    }
-
-                                    else
-                                    {
-                                        availCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);
-                                        availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
-                                        availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
-
-                                        //selectorCom.CanShiftUnit = false;
-                                    }
+                                    //selectorCom.CanShiftUnit = true;
                                 }
 
                                 else
                                 {
-                                    //selectorCom.CanShiftUnit = false;
-
-                                    //if (availCellsCom.TryFindCell(AvailableCellTypes.SimpleAttack, selectorCom.IdxSelectedCell))
-                                    //{
-                                    RPCGameSystem.AttackUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
-                                    //}
-
-                                    //else if (availCellsCom.TryFindCell(AvailableCellTypes.UniqueAttack, selectorCom.XySelectedCell))
-                                    //{
-                                    //    RPCGameSystem.AttackUnitToMaster(selectorCom.XyPreviousCell, selectorCom.XySelectedCell);
-                                    //}
-
                                     availCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);
                                     availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
                                     availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
+
+                                    //selectorCom.CanShiftUnit = false;
                                 }
                             }
 
-                            else if (OwnerBotCellUnitCom(selectorCom.IdxSelectedCell).IsBot)
+                            else
                             {
-                                //if (availCellsCom.TryFindCell(AvailableCellTypes.SimpleAttack, selectorCom.XySelectedCell))
+                                //selectorCom.CanShiftUnit = false;
+
+                                //if (availCellsCom.TryFindCell(AvailableCellTypes.SimpleAttack, selectorCom.IdxSelectedCell))
                                 //{
-                                //    RPCGameSystem.AttackUnitToMaster(selectorCom.XyPreviousCell, selectorCom.XySelectedCell);
+                                RPCGameSystem.AttackUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
                                 //}
 
                                 //else if (availCellsCom.TryFindCell(AvailableCellTypes.UniqueAttack, selectorCom.XySelectedCell))
@@ -245,30 +235,46 @@ internal sealed class SelectorSystem : IEcsRunSystem
                             }
                         }
 
-                        else
+                        else if (OwnerBotCellUnitCom(selectorCom.IdxSelectedCell).IsBot)
                         {
-                            if (CellUnitDataCom(selectorCom.IdxPreviousCell).HaveUnit && OwnerCellUnitCom(selectorCom.IdxPreviousCell).HaveOwner && OwnerCellUnitCom(selectorCom.IdxPreviousCell).IsMine)
+                            //if (availCellsCom.TryFindCell(AvailableCellTypes.SimpleAttack, selectorCom.XySelectedCell))
+                            //{
+                            //    RPCGameSystem.AttackUnitToMaster(selectorCom.XyPreviousCell, selectorCom.XySelectedCell);
+                            //}
+
+                            //else if (availCellsCom.TryFindCell(AvailableCellTypes.UniqueAttack, selectorCom.XySelectedCell))
+                            //{
+                            //    RPCGameSystem.AttackUnitToMaster(selectorCom.XyPreviousCell, selectorCom.XySelectedCell);
+                            //}
+
+                            availCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);
+                            availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
+                            availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
+                        }
+                    }
+
+                    else
+                    {
+                        if (CellUnitDataCom(selectorCom.IdxPreviousCell).HaveUnit && OwnerCellUnitCom(selectorCom.IdxPreviousCell).HaveOwner && OwnerCellUnitCom(selectorCom.IdxPreviousCell).IsMine)
+                        {
+                            if (availCellsCom.TryFindCell(AvailableCellTypes.Shift, selectorCom.IdxSelectedCell))
                             {
-                                if (availCellsCom.TryFindCell(AvailableCellTypes.Shift, selectorCom.IdxSelectedCell))
-                                {
-                                    RPCGameSystem.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
-                                }
-
-                                availCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);
-                                availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
-                                availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
-
-                                //selectorCom.CanShiftUnit = false;
+                                RPCGameSystem.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
                             }
+
+                            availCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);
+                            availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
+                            availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
+
+                            //selectorCom.CanShiftUnit = false;
                         }
                     }
                 }
+
             }
 
             else
             {
-                //selectorCom.CanShiftUnit = false;
-
                 selectorCom.IdxSelectedCell = 0;
                 selectorCom.ResetSelectedUnit();
 
@@ -276,7 +282,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                 availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
                 availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
 
-                selectorCom.ResetSelectedCell();// CellClickType = CellClickTypes.Start;
+                selectorCom.ResetSelectedCell();
             }
         }
 

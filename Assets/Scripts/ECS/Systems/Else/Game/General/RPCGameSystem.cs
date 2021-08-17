@@ -1,6 +1,4 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.Cell;
-using Assets.Scripts.Abstractions.Enums.Cell.Pawn;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
@@ -49,8 +47,9 @@ namespace Assets.Scripts
         private EcsFilter<ForFireMasCom> _fireFilter = default;
         private EcsFilter<ForUpgradeMasCom> _upgradorFilter = default;
         private EcsFilter<ForCircularAttackMasCom, XyCellForDoingMasCom> _circularAttackFilter = default;
-        private EcsFilter<ForGiveExtraPawnToolComp> _forGivePawnToolFilter = default;
+        private EcsFilter<ForGiveToolWeaponComp> _forGivePawnToolFilter = default;
         private EcsFilter<ForTakePawnExtraToolMastCom> _forTakePawnExtraToolFilter = default;
+        private EcsFilter<ForSwapToolWeaponComp> _forSwapToolWeapFilter = default;
 
         private EcsFilter<InfoOtherCom> _infoOtherFilter = default;
 
@@ -61,7 +60,7 @@ namespace Assets.Scripts
         private static string OtherRPCName => nameof(OtherRPC);
         private static string SyncMasterRPCName => nameof(SyncAllMaster);
 
-        private int _currentNumber;
+        private int _curNumber;
 
         public void Init()
         {
@@ -104,7 +103,8 @@ namespace Assets.Scripts
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
         public static void SeedEnvironmentToMaster(byte idxCell, EnvironmentTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
-        public static void GivePawnExtraTool(GiveTakeTypes takeGiveType, UnitSlotTypes unitSlotType, ToolWeaponTypes toolAndWeaponType, byte idxCell) =>PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveOrTakeToolOrWeapon, new object[] { takeGiveType, unitSlotType, toolAndWeaponType, idxCell });
+        public static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, idxCell });
+        public static void SwapToolWeapon(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SwapToolWeapon, new object[] { idxCell });
 
         public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { idxCell });
 
@@ -128,8 +128,8 @@ namespace Assets.Scripts
         [PunRPC]
         private void MasterRPC(RpcMasterTypes rpcType, object[] objects, PhotonMessageInfo infoFrom)
         {
-            _currentNumber = default;
-            
+            _curNumber = default;
+
             _infoMasterComFilter.Get1(0).FromInfo = infoFrom;
 
             switch (rpcType)
@@ -224,11 +224,13 @@ namespace Assets.Scripts
                     _circularAttackFilter.Get1(0).IdxUnitForCirculAttack = (byte)objects[0];
                     break;
 
-                case RpcMasterTypes.GiveOrTakeToolOrWeapon:
-                    _forGivePawnToolFilter.Get1(0).TakeGiveType = (GiveTakeTypes)objects[_currentNumber++];
-                    _forGivePawnToolFilter.Get1(0).UnitSlotType = (UnitSlotTypes)objects[_currentNumber++];
-                    _forGivePawnToolFilter.Get1(0).ToolAndWeaponType = (ToolWeaponTypes)objects[_currentNumber++];
-                    _forGivePawnToolFilter.Get1(0).IdxCell = (byte)objects[_currentNumber++];
+                case RpcMasterTypes.GiveTakeToolWeapon:
+                    _forGivePawnToolFilter.Get1(0).ToolAndWeaponType = (ToolWeaponTypes)objects[_curNumber++];
+                    _forGivePawnToolFilter.Get1(0).IdxCell = (byte)objects[_curNumber++];
+                    break;
+
+                case RpcMasterTypes.SwapToolWeapon:
+                    _forSwapToolWeapFilter.Get1(0).IdxCellForSwap = (byte)objects[_curNumber++];
                     break;
 
                 default:
@@ -245,7 +247,7 @@ namespace Assets.Scripts
         [PunRPC]
         private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
         {
-            _currentNumber = 0;
+            _curNumber = 0;
             _fromInfoFilter.Get1(0).FromInfo = infoFrom;
 
             ref var selectorCom = ref _selectorFilter.Get1(0);
@@ -262,11 +264,11 @@ namespace Assets.Scripts
 
                 case RpcGeneralTypes.EndGame:
                     _endGameFilter.Get1(0).IsEndGame = true;
-                    _endGameFilter.Get1(0).PlayerWinner = PhotonNetwork.PlayerList[(byte)objects[_currentNumber++] - 1];
+                    _endGameFilter.Get1(0).PlayerWinner = PhotonNetwork.PlayerList[(byte)objects[_curNumber++] - 1];
                     break;
 
                 case RpcGeneralTypes.Mistake:
-                    var mistakeType = (MistakeTypes)objects[_currentNumber++];
+                    var mistakeType = (MistakeTypes)objects[_curNumber++];
                     _mistakeUIFilter.Get1(0).MistakeTypes = mistakeType;
                     _mistakeUIFilter.Get1(0).CurrentTime = default;
                     switch (mistakeType)
@@ -275,7 +277,7 @@ namespace Assets.Scripts
                             throw new Exception();
 
                         case MistakeTypes.Economy:
-                            var haves = (bool[])objects[_currentNumber++];
+                            var haves = (bool[])objects[_curNumber++];
                             var haveFood = haves[0];
                             var haveWood = haves[1];
                             var haveOre = haves[2];
@@ -317,14 +319,14 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.GetUnit:
-                    if ((bool)objects[_currentNumber++])
+                    if ((bool)objects[_curNumber++])
                     {
-                        selectorCom.SelectedUnitType = (UnitTypes)objects[_currentNumber++];
+                        selectorCom.SelectedUnitType = (UnitTypes)objects[_curNumber++];
                     }
                     break;
 
                 case RpcGeneralTypes.SetUnit:
-                    if ((bool)objects[_currentNumber++])
+                    if ((bool)objects[_curNumber++])
                     {
                         selectorCom.ResetSelectedCell();// CellClickType = CellClickTypes.Start;
                         selectorCom.SelectedUnitType = default;
@@ -332,7 +334,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcGeneralTypes.Sound:
-                    var soundEffectType = (SoundEffectTypes)objects[_currentNumber++];
+                    var soundEffectType = (SoundEffectTypes)objects[_curNumber++];
                     //SoundGameGeneralViewWorker.PlaySoundEffect(soundEffectType);
                     break;
 
@@ -344,7 +346,7 @@ namespace Assets.Scripts
         [PunRPC]
         private void OtherRPC(RpcOtherTypes rpcOtherType, object[] objects, PhotonMessageInfo infoFrom)
         {
-            _currentNumber = 0;
+            _curNumber = 0;
             _infoOtherFilter.Get1(0).FromInfo = infoFrom;
 
             switch (rpcOtherType)
@@ -353,11 +355,11 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case RpcOtherTypes.SetAmountMotion:
-                    _motionsFilter.Get1(0).AmountMotions = (byte)objects[_currentNumber++];
+                    _motionsFilter.Get1(0).AmountMotions = (byte)objects[_curNumber++];
                     break;
 
                 case RpcOtherTypes.SetStepModType:
-                    SaverComponent.StepModeType = (StepModeTypes)objects[_currentNumber++];
+                    SaverComponent.StepModeType = (StepModeTypes)objects[_curNumber++];
                     break;
 
                 default:

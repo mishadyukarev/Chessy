@@ -6,7 +6,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
     {
         public void Init()
         {
-            
+
         }
 
         public void Run()

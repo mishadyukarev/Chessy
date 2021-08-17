@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums.Cell;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;

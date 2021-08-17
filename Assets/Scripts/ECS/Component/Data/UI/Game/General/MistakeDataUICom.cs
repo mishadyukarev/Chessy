@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Component.Data.UI.Game.General

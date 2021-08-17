@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums.Cell;
-using Assets.Scripts.Abstractions.Enums.Cell.Pawn;
-using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
+﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using System;
 using UnityEngine;
 
@@ -18,7 +16,7 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
         internal void Enable_SR() => _extraUnit_SR.enabled = true;
         internal void Disable_SR() => _extraUnit_SR.enabled = false;
 
-        internal void SetToolOrWeapon_Sprite(ToolWeaponTypes toolAndWeaponType)
+        internal void SetToolWeapon_Sprite(ToolWeaponTypes toolAndWeaponType)
         {
             switch (toolAndWeaponType)
             {
@@ -26,17 +24,19 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
                     throw new Exception();
 
                 case ToolWeaponTypes.Hoe:
-                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.HoePawnExtra_Sprite;
+                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.Hoe_Sprite;
                     break;
 
                 case ToolWeaponTypes.Axe:
+                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.Axe_Sprite;
                     break;
 
                 case ToolWeaponTypes.Pick:
-                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.PickPawnExtra_Sprite;
+                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.Pick_Sprite;
                     break;
 
                 case ToolWeaponTypes.Sword:
+                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.Sword_Sprite;
                     break;
 
                 case ToolWeaponTypes.Bow:

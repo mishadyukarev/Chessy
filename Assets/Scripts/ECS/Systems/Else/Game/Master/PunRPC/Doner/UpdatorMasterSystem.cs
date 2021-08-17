@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.Cell;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
@@ -128,7 +127,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
             }
 
 
-            for (UnitTypes curUnitType = UnitTypes.King; (byte)curUnitType < Enum.GetNames(typeof(UnitTypes)).Length; curUnitType++)
+            for (UnitTypes curUnitType = (UnitTypes)1; (byte)curUnitType < Enum.GetNames(typeof(UnitTypes)).Length; curUnitType++)
             {
                 var curConditionType = ConditionUnitTypes.Relaxed;
 
@@ -193,18 +192,26 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                     }
                                 }
 
-                                else if (curCellUnitDataCom.ExtraToolAndWeaponType == ToolWeaponTypes.Pick)
+                                else if (curCellUnitDataCom.ExtraToolWeaponType == ToolWeaponTypes.Pick)
                                 {
                                     if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.Hill))
                                     {
-                                        if (curCellEnvDataCom.GetAmountResources(EnvironmentTypes.Hill) < curCellEnvDataCom.MaxAmountResources(EnvironmentTypes.Hill))
-                                        {
-                                            curCellEnvDataCom.AddAmountResources(EnvironmentTypes.Hill);
-                                        }
-                                        else
+                                        if (curCellBuildDataCom.HaveBuild)
                                         {
                                             curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
                                             idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
+                                        }
+                                        else
+                                        {
+                                            if (curCellEnvDataCom.GetAmountResources(EnvironmentTypes.Hill) < curCellEnvDataCom.MaxAmountResources(EnvironmentTypes.Hill))
+                                            {
+                                                curCellEnvDataCom.AddAmountResources(EnvironmentTypes.Hill);
+                                            }
+                                            else
+                                            {
+                                                curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
+                                                idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
+                                            }
                                         }
                                     }
                                 }
@@ -366,7 +373,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
         foreach (var curIdxCell in _xyCellFilter)
         {
             ref var curCellEnvDataCom = ref _cellEnvDataFilter.Get1(curIdxCell);
-            ref var curCellViewCom =ref _cellViewFilter.Get1(curIdxCell);
+            ref var curCellViewCom = ref _cellViewFilter.Get1(curIdxCell);
 
             if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest) && curCellViewCom.IsActiveParent)
             {

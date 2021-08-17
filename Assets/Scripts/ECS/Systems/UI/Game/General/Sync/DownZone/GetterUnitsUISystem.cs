@@ -4,7 +4,6 @@ using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 internal sealed class GetterUnitsUISystem : IEcsRunSystem

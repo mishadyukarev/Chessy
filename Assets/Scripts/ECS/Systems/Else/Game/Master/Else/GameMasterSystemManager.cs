@@ -20,7 +20,7 @@ public sealed class GameMasterSystemManager : SystemAbstManager
         InitOnlySystems
             .Add(new InitGameMasterSystem());
 
-       
+
         _rpcSystems = new Dictionary<RpcMasterTypes, EcsSystems>();
 
         _rpcSystems.Add(RpcMasterTypes.Build, new EcsSystems(gameWorld).Add(new BuilderMasterSystem()));
@@ -38,7 +38,8 @@ public sealed class GameMasterSystemManager : SystemAbstManager
         _rpcSystems.Add(RpcMasterTypes.Fire, new EcsSystems(gameWorld).Add(new FireMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.SeedEnvironment, new EcsSystems(gameWorld).Add(new SeedingMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.CircularAttackKing, new EcsSystems(gameWorld).Add(new CircularAttackKingSystem()));
-        _rpcSystems.Add(RpcMasterTypes.GiveOrTakeToolOrWeapon, new EcsSystems(gameWorld).Add(new TakeGiveToolWeaponMastSys()));
+        _rpcSystems.Add(RpcMasterTypes.GiveTakeToolWeapon, new EcsSystems(gameWorld).Add(new GiveTakeToolWeaponMastSys()));
+        _rpcSystems.Add(RpcMasterTypes.SwapToolWeapon, new EcsSystems(gameWorld).Add(new SwapToolWeaponMastSys()));
 
 
         VisibilityUnitsSystems = new EcsSystems(gameWorld)

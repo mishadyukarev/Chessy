@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using System;
 using UnityEngine;
 
@@ -19,48 +20,59 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
 
 
 
-        internal void SetKing_Sprite() => _main_SR.sprite = ResourcesComponent.SpritesConfig.KingSprite;
-        internal void Set_Sprite(UnitTypes unitType)
+        internal void SetKing_Sprite() => _main_SR.sprite = ResourcesComponent.SpritesConfig.King_Sprite;
+        internal void SetToolWeapon_Sprite(ToolWeaponTypes toolWeaponType)
         {
-            switch (unitType)
+            switch (toolWeaponType)
             {
-                case UnitTypes.None:
+                case ToolWeaponTypes.None:
                     throw new Exception();
 
-                case UnitTypes.King:
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.KingSprite;
+                case ToolWeaponTypes.Hoe:
                     break;
 
-                case UnitTypes.Pawn:
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.CellAxe_Sprite;
+                case ToolWeaponTypes.Axe:
+                    _main_SR.sprite = ResourcesComponent.SpritesConfig.Axe_Sprite;
                     break;
 
-                case UnitTypes.Rook:
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.RookSprite;
+                case ToolWeaponTypes.Pick:
+                    _main_SR.sprite = ResourcesComponent.SpritesConfig.Pick_Sprite;
                     break;
 
-                case UnitTypes.Bishop:
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.BishopSprite;
+                case ToolWeaponTypes.Sword:
+                    _main_SR.sprite = ResourcesComponent.SpritesConfig.Sword_Sprite;
+                    break;
+
+                case ToolWeaponTypes.Bow:
+                    _main_SR.sprite = ResourcesComponent.SpritesConfig.BowBishop_Sprite;
+                    break;
+
+                case ToolWeaponTypes.Crossbow:
                     break;
 
                 default:
                     throw new Exception();
             }
         }
-
-        internal void SetMainPawnTool_Sprite(PawnMainThingTypes pawnMainToolType)
+        internal void SetArcher_Sprite(UnitTypes unitType, ToolWeaponTypes toolWeaponType)
         {
-            switch (pawnMainToolType)
+            if(unitType == UnitTypes.Rook)
             {
-                case PawnMainThingTypes.None:
-                    throw new Exception();
-
-                case PawnMainThingTypes.Axe:
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.CellAxe_Sprite;
-                    break;
-
-                default:
-                    throw new Exception();
+                if(toolWeaponType== ToolWeaponTypes.Bow)
+                {
+                    _main_SR.sprite = ResourcesComponent.SpritesConfig.BowRook_Sprite;
+                }
+            }
+            else if (unitType == UnitTypes.Bishop)
+            {
+                if (toolWeaponType == ToolWeaponTypes.Bow)
+                {
+                    _main_SR.sprite = ResourcesComponent.SpritesConfig.BowBishop_Sprite;
+                }
+            }
+            else
+            {
+                throw new Exception();
             }
         }
 

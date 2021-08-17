@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.View.UI.Game.General;
+﻿using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone

@@ -129,7 +129,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                 }
             }
         }
-        
+
 
 
         foreach (var curIdxCell in _idxAvailCellsFilter.Get1(0).GetAllCellsCopy(AvailableCellTypes.Shift))

@@ -1,11 +1,9 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Leopotam.Ecs;
-using System;
 
 internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 {
@@ -56,8 +54,8 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
                 idxUnitsCom.AddAmountUnitInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, toIdx);
 
 
-                toCellUnitDataCom.MainToolAndWeaponType = fromCellUnitDataCom.MainToolAndWeaponType;
-                toCellUnitDataCom.ExtraToolAndWeaponType = fromCellUnitDataCom.ExtraToolAndWeaponType;
+                toCellUnitDataCom.MainToolWeaponType = fromCellUnitDataCom.MainToolWeaponType;
+                toCellUnitDataCom.ExtraToolWeaponType = fromCellUnitDataCom.ExtraToolWeaponType;
                 toCellUnitDataCom.UnitType = fromCellUnitDataCom.UnitType;
                 toCellUnitDataCom.AmountHealth = fromCellUnitDataCom.AmountHealth;
                 toCellUnitDataCom.AmountSteps = fromCellUnitDataCom.AmountSteps;

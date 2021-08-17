@@ -25,7 +25,7 @@ namespace Assets.Scripts
 
 
         public ECSManager()
-        {         
+        {
             _commonWorld = new EcsWorld();
             _allCommSystems = new EcsSystems(_commonWorld);
 
@@ -48,7 +48,7 @@ namespace Assets.Scripts
                         _gameMasterSystemManager = default;
                         _gameOtherSystemManager = default;
                     }
-   
+
                     _menuWorld = new EcsWorld();
                     _allMenuSystems = new EcsSystems(_menuWorld);
 
@@ -61,6 +61,7 @@ namespace Assets.Scripts
                     {
                         _menuWorld.Destroy();
                         _menuSystemManager = default;
+                        _allMenuSystems.Destroy();
                     }
 
                     _gameWorld = new EcsWorld();

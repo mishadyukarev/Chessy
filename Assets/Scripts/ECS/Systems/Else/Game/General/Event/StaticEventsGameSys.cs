@@ -24,7 +24,7 @@ namespace Assets.Scripts
         private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
         private EcsFilter<BuildLeftZoneViewUICom> _buildLeftZoneViewUICom = default;
         private EcsFilter<KingZoneViewUIComp> _kingZoneUIFilter = default;
-        private EcsFilter<GiveThingZoneViewUIComp> _giveThingZoneUIFilter = default;
+        private EcsFilter<GiveTakeZoneViewUIComp> _giveTakeZoneUIFilter = default;
 
         private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
 
@@ -58,12 +58,13 @@ namespace Assets.Scripts
 
 
 
+            _giveTakeZoneUIFilter.Get1(0).AddListenerToGive_Button(ActiveGiveTakeButton);
+            _giveTakeZoneUIFilter.Get1(0).AddListenerToSwap_Button(SwapButton);
 
-            _giveThingZoneUIFilter.Get1(0).AddListenerToGive_Button(SetActiveGiveButton);
-
-            _giveThingZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Pick, delegate { Testtttt(ToolWeaponTypes.Pick); });
-            _giveThingZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Sword, delegate { Testtttt(ToolWeaponTypes.Sword); });
-            _giveThingZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Crossbow, delegate { Testtttt(ToolWeaponTypes.Crossbow); });
+            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Axe, delegate { Testtttt(ToolWeaponTypes.Axe); });
+            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Pick, delegate { Testtttt(ToolWeaponTypes.Pick); });
+            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Sword, delegate { Testtttt(ToolWeaponTypes.Sword); });
+            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Crossbow, delegate { Testtttt(ToolWeaponTypes.Crossbow); });
 
 
 
@@ -155,9 +156,52 @@ namespace Assets.Scripts
             }
         }
 
-        private void SetActiveGiveButton()
+        private void ActiveGiveTakeButton()
         {
-            _selectorFilter.Get1(0).GiveTakeType = GiveTakeTypes.Give;
+            ref var selecComp = ref _selectorFilter.Get1(0);
+
+            if(selecComp.CellClickType == CellClickTypes.GiveTakeToolWeapon)
+            {
+                selecComp.CellClickType = default;
+            }
+
+            else
+            {
+                selecComp.CellClickType = CellClickTypes.GiveTakeToolWeapon;
+            }
+
+            //if (selecComp.IsActivatedGiveTakeMod)
+            //{
+            //    if (selecComp.GiveTakeType == GiveTakeTypes.Give)
+            //    {
+            //        selecComp.GiveTakeType = GiveTakeTypes.Take;
+            //    }
+            //    else if (selecComp.GiveTakeType == GiveTakeTypes.Take)
+            //    {
+            //        selecComp.GiveTakeType = GiveTakeTypes.Give;
+            //    }
+            //    else
+            //    {
+            //        throw new Exception();
+            //    }
+            //}
+
+            //else
+            //{
+            //    selecComp.GiveTakeType = GiveTakeTypes.Give;
+            //}
+        }
+
+        private void SwapButton()
+        {
+            if (_selectorFilter.Get1(0).IsCellClickType(CellClickTypes.SwapToolWeapon))
+            {
+                _selectorFilter.Get1(0).CellClickType = default;
+            }
+            else
+            {
+                _selectorFilter.Get1(0).CellClickType = CellClickTypes.SwapToolWeapon;
+            }
         }
 
         private void CreateUnit(UnitTypes unitType)
