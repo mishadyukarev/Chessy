@@ -74,9 +74,6 @@ namespace Assets.Scripts.ECS.Systems.Game.Master
             _currentGameWorld.NewEntity()
                 .Replace(new ForGiveExtraPawnToolComp());
 
-            _currentGameWorld.NewEntity()
-                .Replace(new ForGiveExtraPawnWeaponComp());
-
 
             _donerFilter.Get1(0).SetDoned(false, true);
 

@@ -20,9 +20,7 @@
     Sound,
     CircularAttackKing,
 
-    TakePawnExtraTool,
-    GiveExtraPawnTool,
-    GiveExtraPawnWeapon,
+    GiveOrTakeToolOrWeapon,
 
     Upgrade,
 }

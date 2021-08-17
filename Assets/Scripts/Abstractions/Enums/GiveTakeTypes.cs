@@ -1,9 +1,10 @@
 ﻿namespace Assets.Scripts.Abstractions.Enums
 {
-    public enum PawnMainToolTypes
+    public enum GiveTakeTypes
     {
         None,
 
-        Axe,
+        Give,
+        Take,
     }
 }

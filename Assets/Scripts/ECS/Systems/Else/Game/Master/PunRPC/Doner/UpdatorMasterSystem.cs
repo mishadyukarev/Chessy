@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.Cell;
+using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
@@ -18,7 +19,6 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellViewComponent> _cellViewFilter = default;
     private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
-    private EcsFilter<CellPawnDataComp> _cellPawnFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
     private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildDataFilter = default;
@@ -137,7 +137,6 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                     var curIdxCell = idxUnitsInCondCom.GetIdxInConditionByIndex(curConditionType, curUnitType, isMasterKey, idxCell);
 
                     ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(curIdxCell);
-                    ref var curCellPawnDataComp = ref _cellPawnFilter.Get1(curIdxCell);
                     ref var curOwnerCellUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
                     ref var curCellBuildDataCom = ref _cellBuildDataFilter.Get1(curIdxCell);
                     ref var curOwnerCellBuildCom = ref _cellBuildDataFilter.Get2(curIdxCell);
@@ -194,7 +193,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                     }
                                 }
 
-                                else if (curCellPawnDataComp.IsExtraTool(PawnExtraToolTypes.Pick))
+                                else if (curCellUnitDataCom.ExtraToolAndWeaponType == ToolWeaponTypes.Pick)
                                 {
                                     if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.Hill))
                                     {

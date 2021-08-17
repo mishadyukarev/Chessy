@@ -17,7 +17,7 @@ public sealed class GameMasterSystemManager : SystemAbstManager
 
     internal GameMasterSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld)
     {
-        InitSystems
+        InitOnlySystems
             .Add(new InitGameMasterSystem());
 
        
@@ -38,9 +38,7 @@ public sealed class GameMasterSystemManager : SystemAbstManager
         _rpcSystems.Add(RpcMasterTypes.Fire, new EcsSystems(gameWorld).Add(new FireMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.SeedEnvironment, new EcsSystems(gameWorld).Add(new SeedingMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.CircularAttackKing, new EcsSystems(gameWorld).Add(new CircularAttackKingSystem()));
-        _rpcSystems.Add(RpcMasterTypes.TakePawnExtraTool, new EcsSystems(gameWorld).Add(new TakePawnExtraToolMastSys()));
-        _rpcSystems.Add(RpcMasterTypes.GiveExtraPawnTool, new EcsSystems(gameWorld).Add(new GiveExtraPawnToolMastSys()));
-        _rpcSystems.Add(RpcMasterTypes.GiveExtraPawnWeapon, new EcsSystems(gameWorld).Add(new GiveExtraPawnWeaponMasSys()));
+        _rpcSystems.Add(RpcMasterTypes.GiveOrTakeToolOrWeapon, new EcsSystems(gameWorld).Add(new TakeGiveToolWeaponMastSys()));
 
 
         VisibilityUnitsSystems = new EcsSystems(gameWorld)
@@ -55,8 +53,9 @@ public sealed class GameMasterSystemManager : SystemAbstManager
 
 
         allGameSystems
-            .Add(InitSystems)
-            .Add(RunSystems)
+            .Add(InitOnlySystems)
+            .Add(RunOnlySystems)
+            .Add(InitRunSystems)
 
             .Add(TruceSystems)
             .Add(VisibilityUnitsSystems)

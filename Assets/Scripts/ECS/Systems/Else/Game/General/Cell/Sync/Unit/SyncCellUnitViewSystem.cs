@@ -7,8 +7,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 {
     internal sealed class SyncCellUnitViewSystem : IEcsRunSystem
     {
-        private EcsFilter<CellPawnDataComp> _cellPawnFilter = default;
-
         private EcsFilter<CellUnitDataComponent, CellUnitMainViewComp, CellUnitExtraViewComp> _cellUnitFilter = default;
         private EcsFilter<SelectorComponent> _selectorFilter = default;
 
@@ -21,7 +19,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                 ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
                 ref var curMainCellUnitViewCom = ref _cellUnitFilter.Get2(idxCurCell);
                 ref var curExtraCellUnitViewCom = ref _cellUnitFilter.Get3(idxCurCell);
-                ref var curCellPawnDataCom = ref _cellPawnFilter.Get1(idxCurCell);
 
 
                 if (curCellUnitDataCom.HaveUnit)
@@ -33,10 +30,10 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 
                         if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn))
                         {
-                            if (curCellPawnDataCom.HaveExtraTool)
+                            if (curCellUnitDataCom.HaveExtraThing)
                             {
                                 curExtraCellUnitViewCom.Enable_SR();
-                                curExtraCellUnitViewCom.SetExtraPawnTool_Sprite(curCellPawnDataCom.ExtraToolType);
+                                curExtraCellUnitViewCom.SetToolOrWeapon_Sprite(curCellUnitDataCom.ExtraToolAndWeaponType);
                             }
 
                             else

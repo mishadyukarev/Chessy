@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.Cell;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Component;
@@ -11,15 +10,15 @@ using Assets.Scripts.ECS.Component.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
+using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
 using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
 
@@ -138,9 +137,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                     _currentGameWorld.NewEntity()
                          .Replace(new CellUnitDataComponent(new Dictionary<bool, bool>()))
-                         .Replace(new CellPawnDataComp())
-                         .Replace(new CellRookDataComp())
-                         .Replace(new CellBishopDataComp())
                          .Replace(new CellUnitMainViewComp(cell_GOs[x, y]))
                          .Replace(new CellUnitExtraViewComp(cell_GOs[x, y]))
                          .Replace(new OwnerComponent())
@@ -193,7 +189,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
             var infoEnt = _currentGameWorld.NewEntity()
                 .Replace(new InputComponent())
-                .Replace(new SelectorComponent())
+                .Replace(new SelectorComponent(ToolWeaponTypes.Pick))
                 .Replace(new IdxAvailableCellsComponent(new Dictionary<AvailableCellTypes, List<byte>>()))
                 .Replace(new GeneralZoneViewComponent(generalZoneGO))
                 .Replace(new BackgroundComponent(backGroundGO))
@@ -208,7 +204,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                 .Replace(new InventorUnitsComponent(new Dictionary<UnitTypes, Dictionary<bool, int>>()))
                 .Replace(new InventorResourcesComponent(new Dictionary<ResourceTypes, Dictionary<bool, int>>()))
-                .Replace(new InventorToolsComponent(new Dictionary<ToolTypes, byte>()))
+                .Replace(new InventorToolsComp(new Dictionary<bool, Dictionary<ToolTypes, byte>>()))
+                .Replace(new InventorWeaponsComp(new Dictionary<bool, Dictionary<WeaponTypes, byte>>()))
 
                 .Replace(new FromInfoComponent())
                 .Replace(new SoundViewComponent(audioSourceParentGO));
@@ -245,12 +242,14 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new MistakeViewUICom(centerZone_GO))
                 .Replace(new MistakeDataUICom(new Dictionary<ResourceTypes, bool>()))
                 .Replace(new SelectorTypeViewUIComp(centerZone_GO))
+                .Replace(new KingZoneViewUIComp(centerZone_GO))
 
                 ///Down
                 .Replace(new GetterUnitsDataUICom(new Dictionary<UnitTypes, bool>()))
                 .Replace(new GetterUnitsViewUICom(downZone_GO))
                 .Replace(new DonerViewUIComponent(downZone_GO))
                 .Replace(new DonerDataUIComponent(new Dictionary<bool, bool>()))
+                .Replace(new GiveThingZoneViewUIComp(downZone_GO))
 
                 ///Left
                 .Replace(new BuildLeftZoneViewUICom(leftZone_GO))

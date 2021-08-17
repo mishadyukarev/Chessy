@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Abstractions.Enums;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -12,35 +13,18 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
         private Dictionary<UnitTypes, Button> _taker_Buttons;
         private Dictionary<UnitTypes, Button> _createUnit_Buttons;
         private Dictionary<UnitTypes, TextMeshProUGUI> _amountUnits_TextMPs;
+        private Dictionary<GiveTakeTypes, Button> _giveTake_Buttons;
 
         internal GetterUnitsViewUICom(GameObject downZone_GO)
-        {
-            _taker_Buttons = new Dictionary<UnitTypes, Button>();
-
+        {       
             var takeUnitZone_GO = downZone_GO.transform.Find("TakeUnitZone");
 
-            for (UnitTypes unitType = 0; unitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; unitType++)
-            {
-                if (unitType == UnitTypes.King)
-                {
-                    _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit0Button").GetComponent<Button>());
-                }
 
-                else if (unitType == UnitTypes.Pawn)
-                {
-                    _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit1Button").GetComponent<Button>());
-                }
+            _taker_Buttons = new Dictionary<UnitTypes, Button>();
+            _taker_Buttons.Add(UnitTypes.Pawn, takeUnitZone_GO.transform.Find("TakeUnit1Button").GetComponent<Button>());
+            _taker_Buttons.Add(UnitTypes.Rook, takeUnitZone_GO.transform.Find("TakeUnit2Button").GetComponent<Button>());
+            _taker_Buttons.Add(UnitTypes.Bishop, takeUnitZone_GO.transform.Find("TakeUnit3Button").GetComponent<Button>());
 
-                else if (unitType == UnitTypes.Rook)
-                {
-                    _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit2Button").GetComponent<Button>());
-                }
-
-                else if (unitType == UnitTypes.Bishop)
-                {
-                    _taker_Buttons.Add(unitType, takeUnitZone_GO.transform.Find("TakeUnit3Button").GetComponent<Button>());
-                }
-            }
 
             _createUnit_Buttons = new Dictionary<UnitTypes, Button>();
             _createUnit_Buttons.Add(UnitTypes.Pawn, takeUnitZone_GO.transform.Find("CreatePawn_Button").GetComponent<Button>());
@@ -49,15 +33,18 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 
 
             _amountUnits_TextMPs = new Dictionary<UnitTypes, TextMeshProUGUI>();
-            _amountUnits_TextMPs.Add(UnitTypes.Pawn, takeUnitZone_GO.transform.Find("AmountPawnZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
-            _amountUnits_TextMPs.Add(UnitTypes.Rook, takeUnitZone_GO.transform.Find("AmountRookZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
-            _amountUnits_TextMPs.Add(UnitTypes.Bishop, takeUnitZone_GO.transform.Find("AmountBishopZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+            _amountUnits_TextMPs.Add(UnitTypes.Pawn, _taker_Buttons[UnitTypes.Pawn].transform.Find("AmountPawnZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+            _amountUnits_TextMPs.Add(UnitTypes.Rook, _taker_Buttons[UnitTypes.Rook].transform.Find("AmountRookZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+            _amountUnits_TextMPs.Add(UnitTypes.Bishop, _taker_Buttons[UnitTypes.Bishop].transform.Find("AmountBishopZone").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+
+
+            _giveTake_Buttons = new Dictionary<GiveTakeTypes, Button>();
+            //_giveTake_Buttons.Add(GiveTakeTypes.Give, takeUnitZone_GO.transform.Find("GiveExtraThing_Button").GetComponent<Button>());
+            _giveTake_Buttons.Add(GiveTakeTypes.Take, takeUnitZone_GO.transform.Find("TakeExtraThing_Button").GetComponent<Button>());
         }
 
         internal void AddListener(UnitTypes unitType, UnityAction unityAction) => _taker_Buttons[unitType].onClick.AddListener(unityAction);
         internal void AddListenerToCreateUnit(UnitTypes unitType, UnityAction unityAction) => _createUnit_Buttons[unitType].onClick.AddListener(unityAction);
-
-        internal void SetColorButton(UnitTypes unitType, Color color) => _taker_Buttons[unitType].image.color = color;
 
         internal void SetActiveButton(UnitTypes unitType, bool isActive) => _taker_Buttons[unitType].gameObject.SetActive(isActive);
         internal void SetActiveCreateButton(UnitTypes unitType, bool isActive) => _createUnit_Buttons[unitType].gameObject.SetActive(isActive);

@@ -12,7 +12,6 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellDataComponent> _cellDataFilter = default;
     private EcsFilter<CellUnitDataComponent, OwnerComponent, CellUnitMainViewComp> _cellUnitFilter = default;
-    private EcsFilter<CellPawnDataComp> _cellPawnFilter = default;
     private EcsFilter<CellSupViewComponent> _cellSupViewFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
@@ -28,7 +27,6 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
         foreach (var idxCurCell in _xyCellFilter)
         {
             ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
-            ref var curCellPawnDataComp =ref _cellPawnFilter.Get1(idxCurCell);
             ref var curOwnerCellUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
             ref var curCellUnitViewCom = ref _cellUnitFilter.Get3(idxCurCell);
             ref var curCellDataCom = ref _cellDataFilter.Get1(idxCurCell);
@@ -110,23 +108,23 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                 {
                     if (curOwnerCellUnitCom.IsMine)
                     {
-                        if (selCom.IsCellClickType(CellClickTypes.GiveExtraThing))
-                        {
-                            if (!curCellPawnDataComp.HaveExtraTool)
-                            {
-                                curCellSupViewCom.EnableSR();
-                                curCellSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
-                            }
-                        }
+                        //if (selCom.IsCellClickType(CellClickTypes.GiveToolOrWeapon))
+                        //{
+                        //    if (!curCellPawnDataComp.HaveExtraThing)
+                        //    {
+                        //        curCellSupViewCom.EnableSR();
+                        //        curCellSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
+                        //    }
+                        //}
 
-                        else if (selCom.IsCellClickType(CellClickTypes.TakeExtraThing))
-                        {
-                            if (curCellPawnDataComp.HaveExtraTool)
-                            {
-                                curCellSupViewCom.EnableSR();
-                                curCellSupViewCom.SetColor(SupportVisionTypes.TakePawnTool);
-                            }
-                        }
+                        //else if (selCom.IsCellClickType(CellClickTypes.TakeToolOrWeapon))
+                        //{
+                        //    if (curCellPawnDataComp.HaveExtraThing)
+                        //    {
+                        //        curCellSupViewCom.EnableSR();
+                        //        curCellSupViewCom.SetColor(SupportVisionTypes.TakePawnTool);
+                        //    }
+                        //}
                     }
                 }
             }

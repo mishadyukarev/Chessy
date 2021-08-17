@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.Cell;
+using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using System;
 using System.Collections.Generic;
 using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
@@ -52,6 +53,12 @@ internal struct CellUnitDataComponent
     internal ConditionUnitTypes ConditionUnitType { get; set; }
     internal void ResetConditionType() => ConditionUnitType = default;
     internal bool IsConditionType(ConditionUnitTypes conditionUnitType) => ConditionUnitType == conditionUnitType;
+
+
+    internal ToolWeaponTypes MainToolAndWeaponType { get; set; }
+    internal bool HaveExtraThing => MainToolAndWeaponType != default;
+
+    internal ToolWeaponTypes ExtraToolAndWeaponType { get; set; }
 
 
     private Dictionary<ConditionUnitTypes, int> _amountStepsInCondition;

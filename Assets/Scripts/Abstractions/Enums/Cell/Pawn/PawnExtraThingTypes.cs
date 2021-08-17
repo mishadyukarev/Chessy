@@ -1,10 +1,11 @@
 ﻿namespace Assets.Scripts.Abstractions.Enums.Cell
 {
-    public enum PawnExtraToolTypes
+    public enum PawnExtraThingTypes
     {
         None,
 
         Hoe,
         Pick,
+        Sword,
     }
 }

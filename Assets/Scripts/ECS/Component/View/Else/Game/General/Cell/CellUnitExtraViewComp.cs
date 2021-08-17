@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums.Cell;
 using Assets.Scripts.Abstractions.Enums.Cell.Pawn;
+using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using System;
 using UnityEngine;
 
@@ -17,33 +18,31 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
         internal void Enable_SR() => _extraUnit_SR.enabled = true;
         internal void Disable_SR() => _extraUnit_SR.enabled = false;
 
-        internal void SetExtraPawnTool_Sprite(PawnExtraToolTypes pawnExtraToolType)
+        internal void SetToolOrWeapon_Sprite(ToolWeaponTypes toolAndWeaponType)
         {
-            switch (pawnExtraToolType)
+            switch (toolAndWeaponType)
             {
-                case PawnExtraToolTypes.None:
+                case ToolWeaponTypes.None:
                     throw new Exception();
 
-                case PawnExtraToolTypes.Hoe:
+                case ToolWeaponTypes.Hoe:
                     _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.HoePawnExtra_Sprite;
                     break;
 
-                case PawnExtraToolTypes.Pick:
+                case ToolWeaponTypes.Axe:
+                    break;
+
+                case ToolWeaponTypes.Pick:
                     _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.PickPawnExtra_Sprite;
                     break;
 
-                default:
-                    throw new Exception();
-            }
-        }
-        internal void SetPawnWeapon_Spriter(PawnExtraWeaponTypes pawnExtraWeaponType)
-        {
-            switch (pawnExtraWeaponType)
-            {
-                case PawnExtraWeaponTypes.None:
-                    throw new Exception();
+                case ToolWeaponTypes.Sword:
+                    break;
 
-                case PawnExtraWeaponTypes.Sword:
+                case ToolWeaponTypes.Bow:
+                    break;
+
+                case ToolWeaponTypes.Crossbow:
                     break;
 
                 default:

@@ -1,10 +1,10 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.Cell;
-using Assets.Scripts.Abstractions.Enums.Cell.Pawn;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
+using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
@@ -23,6 +23,8 @@ namespace Assets.Scripts
         private EcsFilter<EnvirZoneDataUICom, EnvirZoneViewUICom> _envirZoneUIFilter = default;
         private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
         private EcsFilter<BuildLeftZoneViewUICom> _buildLeftZoneViewUICom = default;
+        private EcsFilter<KingZoneViewUIComp> _kingZoneUIFilter = default;
+        private EcsFilter<GiveThingZoneViewUIComp> _giveThingZoneUIFilter = default;
 
         private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
 
@@ -33,7 +35,7 @@ namespace Assets.Scripts
         {
             _readyFilter.Get2(0).AddListenerToReadyButton(Ready);
 
-            _takerUIFilter.Get2(0).AddListener(UnitTypes.King, delegate { GetUnit(UnitTypes.King); });
+            _kingZoneUIFilter.Get1(0).AddListenerToSetKing_Button(delegate { GetUnit(UnitTypes.King); });
             _takerUIFilter.Get2(0).AddListener(UnitTypes.Pawn, delegate { GetUnit(UnitTypes.Pawn); });
             _takerUIFilter.Get2(0).AddListener(UnitTypes.Rook, delegate { GetUnit(UnitTypes.Rook); });
             _takerUIFilter.Get2(0).AddListener(UnitTypes.Bishop, delegate { GetUnit(UnitTypes.Bishop); });
@@ -53,17 +55,39 @@ namespace Assets.Scripts
 
 
 
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToMelt(delegate { MeltOre(); });
 
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToTakePawnTool(delegate { SetCellClickType(CellClickTypes.TakeExtraThing); });
 
-            //_buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnToolTypes.Hoe, delegate { SetCellClickSelector(PawnToolTypes.Hoe); });
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveTool(PawnExtraToolTypes.Pick, delegate { SetCellClickSelector(PawnExtraToolTypes.Pick); });
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToGiveWeapon(delegate { SetCellClickSelector(PawnExtraWeaponTypes.Sword); });
 
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
-            _buildLeftZoneViewUICom.Get1(0).AddListenerToBuildUpgrade(BuildingTypes.Mine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
+
+            _giveThingZoneUIFilter.Get1(0).AddListenerToGive_Button(SetActiveGiveButton);
+
+            _giveThingZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Pick, delegate { Testtttt(ToolWeaponTypes.Pick); });
+            _giveThingZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Sword, delegate { Testtttt(ToolWeaponTypes.Sword); });
+            _giveThingZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Crossbow, delegate { Testtttt(ToolWeaponTypes.Crossbow); });
+
+
+
+
+
+
+
+
+            ref var buildLeftZoneViewUIComp = ref _buildLeftZoneViewUICom.Get1(0);
+
+            buildLeftZoneViewUIComp.AddListenerToMelt(delegate { MeltOre(); });
+
+            //buildLeftZoneViewUIComp.AddListenerToTakePawnTool(delegate { SetCellClickType(CellClickTypes.TakeToolOrWeapon); });
+
+            //buildLeftZoneViewUIComp.AddListenerToGiveTool(PawnToolTypes.Hoe, delegate { SetCellClickSelector(PawnToolTypes.Hoe); });
+            //buildLeftZoneViewUIComp.AddListenerToGiveTool(PawnExtraThingTypes.Pick, delegate { SetCellClickType(CellClickTypes.GiveToolOrWeapon); });
+            //buildLeftZoneViewUIComp.AddListenerToGiveTool(PawnExtraThingTypes.Pick, delegate { () => _selectorFilter.Get1(0).TakeGiveType = TakeGiveTypes.Give/*SetExtraToolOrWeaponType(ToolAndWeaponTypes.Pick)*/; });
+
+            //buildLeftZoneViewUIComp.AddListenerToGiveWeapon(delegate { SetExtraToolOrWeaponType(ToolAndWeaponTypes.Sword); });
+            //buildLeftZoneViewUIComp.AddListenerToGiveWeapon(delegate { SetCellClickType(CellClickTypes.GiveToolOrWeapon); });
+
+            buildLeftZoneViewUIComp.AddListenerToBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
+            buildLeftZoneViewUIComp.AddListenerToBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
+            buildLeftZoneViewUIComp.AddListenerToBuildUpgrade(BuildingTypes.Mine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
         }
 
 
@@ -79,7 +103,7 @@ namespace Assets.Scripts
 
             if (!IsDoned(PhotonNetwork.IsMasterClient))
             {
-                if(_inventorUnitsFilter.Get1(0).HaveUnitInInventor(unitType, PhotonNetwork.IsMasterClient))
+                if (_inventorUnitsFilter.Get1(0).HaveUnitInInventor(unitType, PhotonNetwork.IsMasterClient))
                 {
                     RPCGameSystem.GetUnitToMaster(unitType);
                 }
@@ -131,18 +155,10 @@ namespace Assets.Scripts
             }
         }
 
-        private void SetCellClickSelector(PawnExtraToolTypes toolType)
+        private void SetActiveGiveButton()
         {
-            _selectorFilter.Get1(0).PawnExtraToolTypeForGive = toolType;
-            _selectorFilter.Get1(0).CellClickType = CellClickTypes.GiveExtraThing;
+            _selectorFilter.Get1(0).GiveTakeType = GiveTakeTypes.Give;
         }
-        private void SetCellClickSelector(PawnExtraWeaponTypes weaponType)
-        {
-            _selectorFilter.Get1(0).PawnExtraWeaponTypeForGive = weaponType;
-            _selectorFilter.Get1(0).CellClickType = CellClickTypes.TakeExtraThing;
-        }
-
-        private void SetCellClickType(CellClickTypes cellClickType) => _selectorFilter.Get1(0).CellClickType = cellClickType;
 
         private void CreateUnit(UnitTypes unitType)
         {
@@ -159,6 +175,11 @@ namespace Assets.Scripts
         private void UpgradeBuilding(BuildingTypes buildingType)
         {
             if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.UpgradeBuildingToMaster(buildingType);
+        }
+
+        private void Testtttt(ToolWeaponTypes toolAndWeaponType)
+        {
+            _selectorFilter.Get1(0).ToolWeaponTypeForGiveTake = toolAndWeaponType;
         }
     }
 }

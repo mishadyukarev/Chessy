@@ -6,16 +6,16 @@ namespace Assets.Scripts.ECS.Manager.View.Menu
 {
     public sealed class MenuSystemManager : SystemAbstManager
     {
-        internal EcsSystems AllSystems { get; private set; }
-        internal MenuSystemManager(EcsWorld menuWorld) : base(menuWorld)
+        internal MenuSystemManager(EcsWorld menuWorld, EcsSystems allMenuSystems) : base(menuWorld)
         {
-            InitSystems
+            InitOnlySystems
                 .Add(new MainMenuSystem())
                 .Add(Main.Instance.gameObject.AddComponent<PhotonSceneMenuSystem>());
 
-            AllSystems = new EcsSystems(menuWorld)
-                .Add(InitSystems)
-                .Add(RunSystems);
+            allMenuSystems
+                .Add(InitOnlySystems)
+                .Add(RunOnlySystems)
+                .Add(InitRunSystems);
         }
     }
 }

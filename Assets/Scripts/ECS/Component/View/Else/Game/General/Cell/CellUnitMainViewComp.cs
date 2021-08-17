@@ -48,14 +48,14 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
             }
         }
 
-        internal void SetMainPawnTool_Sprite(PawnMainToolTypes pawnMainToolType)
+        internal void SetMainPawnTool_Sprite(PawnMainThingTypes pawnMainToolType)
         {
             switch (pawnMainToolType)
             {
-                case PawnMainToolTypes.None:
+                case PawnMainThingTypes.None:
                     throw new Exception();
 
-                case PawnMainToolTypes.Axe:
+                case PawnMainThingTypes.Axe:
                     _main_SR.sprite = ResourcesComponent.SpritesConfig.CellAxe_Sprite;
                     break;
 

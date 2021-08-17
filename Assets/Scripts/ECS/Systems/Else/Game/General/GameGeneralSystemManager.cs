@@ -1,11 +1,14 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Game.General.Systems;
 using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
 using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Systems.Else.Game.General.Event;
 using Assets.Scripts.ECS.Systems.Game.General.UI.View.Down;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone;
+using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.UpZone;
 using Leopotam.Ecs;
 
@@ -13,8 +16,6 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
 {
     private PhotonSceneGameGeneralSystem _photonSceneGameGeneralSystem;
     private RPCGameSystem _rPCGameSystem;
-
-    internal static EcsSystems GetUnitWaySystems { get; private set; }
 
     internal GameGeneralSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld)
     {
@@ -37,50 +38,43 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
 
 
         var syncCanvasSystems = new EcsSystems(gameWorld)
-           //left
+           ///left
            .Add(new LeftBuildingUISystem())
            .Add(new EnvironmentUISystem())
 
-            //right
+            ///right
             .Add(new RightZoneUISystem())
             .Add(new StatsUISystem())
             .Add(new ConditionAbilitiesUISystem())
             .Add(new UniqueAbilitiesUISystem())
             .Add(new BuildRighUISystem())
             
-            //down
+            ///down
             .Add(new DonerUISystem())
             .Add(new GetterUnitsUISystem())
+            .Add(new GiveThingUISystem())
 
-            //up
+            ///up
             .Add(new SyncEconomyUpUISystem())
             .Add(new SyncToolsUpUISystem())
 
-            //center
+            ///center
             .Add(new SelectorTypeUISystem()) 
             .Add(new TheEndGameUISystem())
             .Add(new MotionCenterUISystem())  
             .Add(new ReadyZoneUISystem())
-            .Add(new CenterSupTextUISystem());
+            .Add(new CenterSupTextUISystem())
+            .Add(new KingZoneUISys());
 
 
-        GetUnitWaySystems = new EcsSystems(gameWorld)
-            .Add(new FillAvailCellsSystem());
-
-
-
-        EventSystems
-            .Add(new StaticEventsGameSys())
-            .Add(_photonSceneGameGeneralSystem);
-
-
-        InitSystems
+        InitOnlySystems
             .Add(spawnerAndCreatorEntSystems)
-            .Add(EventSystems)
+            .Add(new StaticEventsGameSys())
+            .Add(_photonSceneGameGeneralSystem)
             .Add(_rPCGameSystem);
 
 
-        RunSystems
+        RunOnlySystems
             .Add(new InputSystem())
             .Add(new RaySystem())
             .Add(new SelectorSystem())
@@ -88,14 +82,18 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(syncCellVisionSystems)
             .Add(syncCanvasSystems)
 
-            .Add(new SoundSystem());
+            .Add(new SoundSystem())
+            .Add(new FillAvailCellsSystem());
+
+
+        InitRunSystems
+            .Add(new DinamicEventsGameSys());
 
 
 
         allGameSystems
-            .Add(InitSystems)
-            .Add(RunSystems)
-            .Add(GetUnitWaySystems);
-
+            .Add(InitOnlySystems)
+            .Add(RunOnlySystems)
+            .Add(InitRunSystems);
     }
 }

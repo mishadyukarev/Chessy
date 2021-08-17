@@ -6,8 +6,5 @@
 
         UpgradeUnit,
         PickFire,
-
-        GiveExtraThing,
-        TakeExtraThing,
     }
 }

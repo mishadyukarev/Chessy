@@ -12,9 +12,10 @@ namespace Assets.Scripts
         private EcsWorld _menuWorld;
         private EcsWorld _gameWorld;
 
-
+        private EcsSystems _allCommSystems;
         private CommonSystemManager _commonSystemManager;
 
+        private EcsSystems _allMenuSystems;
         private MenuSystemManager _menuSystemManager;
 
         private EcsSystems _allGameSystems;
@@ -24,11 +25,12 @@ namespace Assets.Scripts
 
 
         public ECSManager()
-        {
+        {         
             _commonWorld = new EcsWorld();
+            _allCommSystems = new EcsSystems(_commonWorld);
 
-            _commonSystemManager = new CommonSystemManager(_commonWorld);
-            _commonSystemManager.AllSystems.Init();
+            _commonSystemManager = new CommonSystemManager(_commonWorld, _allCommSystems);
+            _allCommSystems.Init();
         }
 
         public void ToggleScene(SceneTypes sceneType)
@@ -46,10 +48,12 @@ namespace Assets.Scripts
                         _gameMasterSystemManager = default;
                         _gameOtherSystemManager = default;
                     }
-
+   
                     _menuWorld = new EcsWorld();
-                    _menuSystemManager = new MenuSystemManager(_menuWorld);
-                    _menuSystemManager.AllSystems.Init();
+                    _allMenuSystems = new EcsSystems(_menuWorld);
+
+                    _menuSystemManager = new MenuSystemManager(_menuWorld, _allMenuSystems);
+                    _allMenuSystems.Init();
                     break;
 
                 case SceneTypes.Game:

@@ -5,15 +5,15 @@ namespace Assets.Scripts.ECS.System.Common
 {
     public sealed class CommonSystemManager : SystemAbstManager
     {
-        internal EcsSystems AllSystems { get; private set; }
-        internal CommonSystemManager(EcsWorld commonWorld) : base(commonWorld)
+        internal CommonSystemManager(EcsWorld commonWorld, EcsSystems allCommSystems) : base(commonWorld)
         {
-            InitSystems
+            InitOnlySystems
                 .Add(new MainCommonSystem());
 
-            AllSystems = new EcsSystems(commonWorld)
-                .Add(InitSystems)
-                .Add(RunSystems);
+            allCommSystems
+                .Add(InitOnlySystems)
+                .Add(RunOnlySystems)
+                .Add(InitRunSystems);
         }
     }
 }

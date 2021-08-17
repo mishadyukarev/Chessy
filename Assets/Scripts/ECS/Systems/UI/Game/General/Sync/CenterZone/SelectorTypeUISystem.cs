@@ -14,22 +14,22 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
             ref var selectTypeViewUIComp = ref _selectorTypeUIFilter.Get1(0);
             ref var selectCom = ref _selectorFilter.Get1(0);
 
-            if (selectCom.IsCellClickType(CellClickTypes.TakeExtraThing))
-            {
-                selectTypeViewUIComp.Text = "Take Tool From Pawn";
-                selectTypeViewUIComp.EnableZone();
-            }
+            //if (selectCom.IsCellClickType(CellClickTypes.TakeToolOrWeapon))
+            //{
+            //    selectTypeViewUIComp.Text = "Take Tool From Pawn";
+            //    selectTypeViewUIComp.EnableZone();
+            //}
 
-            else if (selectCom.IsCellClickType(CellClickTypes.GiveExtraThing))
-            {
-                selectTypeViewUIComp.Text = "Give Tool To Pawn";
-                selectTypeViewUIComp.EnableZone();
-            }
+            //else if (selectCom.IsCellClickType(CellClickTypes.GiveToolOrWeapon))
+            //{
+            //    selectTypeViewUIComp.Text = "Give Tool To Pawn";
+            //    selectTypeViewUIComp.EnableZone();
+            //}
 
-            else
-            {
-                selectTypeViewUIComp.DisableZone();
-            }
+            //else
+            //{
+            //    selectTypeViewUIComp.DisableZone();
+            //}
         }
     }
 }

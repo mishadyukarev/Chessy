@@ -7,7 +7,6 @@ using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using Photon.Pun;
-using UnityEngine;
 
 internal sealed class SelectorSystem : IEcsRunSystem
 {
@@ -101,44 +100,32 @@ internal sealed class SelectorSystem : IEcsRunSystem
                         selectorCom.ResetSelectedCell();
                     }
 
-                    else if (selectorCom.IsCellClickType(CellClickTypes.GiveExtraThing))
+                    else if (selectorCom.IsActivatedGiveTakeMod)
                     {
-                        if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(UnitTypes.Pawn))
+                        if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }) )
                         {
-                            if(selectorCom.PawnExtraToolTypeForGive != default)
-                            {
-                                RPCGameSystem.GivePawnExtraTool(selectorCom.IdxCurrentCell, selectorCom.PawnExtraToolTypeForGive);
-                            }
-                            else if(selectorCom.PawnExtraWeaponTypeForGive != default)
-                            {
-                                RPCGameSystem.GivePawnExtraWeapon(selectorCom.IdxCurrentCell, selectorCom.PawnExtraWeaponTypeForGive);
-                            }
-                            else
-                            {
-                                selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                                selectorCom.CellClickType = default;
-                            }                        
+                            RPCGameSystem.GivePawnExtraTool(selectorCom.GiveTakeType, selectorCom.UnitSlotTypeForGiveTake, selectorCom.ToolWeaponTypeForGiveTake, selectorCom.IdxCurrentCell);
                         }
                         else
                         {
                             selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                            selectorCom.CellClickType = default;
+                            selectorCom.GiveTakeType = default;
                         }
                     }
 
-                    else if (selectorCom.IsCellClickType(CellClickTypes.TakeExtraThing))
-                    {
-                        if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(UnitTypes.Pawn))
-                        {
-                            RPCGameSystem.TakePawnExtraTool(selectorCom.IdxCurrentCell);
-                        }
-                        else
-                        {
-                            selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                            selectorCom.CellClickType = default;
-                        }
-                       
-                    }
+                    //else if (selectorCom.IsCellClickType(CellClickTypes.TakeToolOrWeapon))
+                    //{
+                    //    if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(UnitTypes.Pawn))
+                    //    {
+                    //        RPCGameSystem.TakePawnExtraTool(selectorCom.IdxCurrentCell);
+                    //    }
+                    //    else
+                    //    {
+                    //        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                    //        selectorCom.CellClickType = default;
+                    //    }
+
+                    //}
 
                     else if (!selectorCom.IsSelectedCell)
                     {
@@ -169,7 +156,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                                     if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveMinAmountSteps)
                                     {
                                         _forFillAvailCellsFilter.Get1(0).IdxUnitCell = selectorCom.IdxSelectedCell;
-                                        GameGeneralSystemManager.GetUnitWaySystems.Run();
+                                        //GameGeneralSystemManager.GetUnitWaySystems.Run();
 
                                         //selectorCom.CanShiftUnit = true;
                                     }
@@ -205,7 +192,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                                     if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveMinAmountSteps)
                                     {
                                         _forFillAvailCellsFilter.Get1(0).IdxUnitCell = selectorCom.IdxSelectedCell;
-                                        GameGeneralSystemManager.GetUnitWaySystems.Run();
+                                        //GameGeneralSystemManager.GetUnitWaySystems.Run();
 
                                         //selectorCom.CanShiftUnit = true;
                                     }
@@ -271,7 +258,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                                 availCellsCom.ClearAvailableCells(AvailableCellTypes.SimpleAttack);
                                 availCellsCom.ClearAvailableCells(AvailableCellTypes.UniqueAttack);
 
-                               //selectorCom.CanShiftUnit = false;
+                                //selectorCom.CanShiftUnit = false;
                             }
                         }
                     }

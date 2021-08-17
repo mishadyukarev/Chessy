@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.Cell;
 using Assets.Scripts.Abstractions.Enums.Cell.Pawn;
+using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
@@ -103,9 +104,7 @@ namespace Assets.Scripts
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
         public static void SeedEnvironmentToMaster(byte idxCell, EnvironmentTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
-        public static void TakePawnExtraTool(byte idxCellForTake) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.TakePawnExtraTool, new object[] { idxCellForTake });
-        public static void GivePawnExtraTool(byte idxCell, PawnExtraToolTypes extraPawnToolType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveExtraPawnTool, new object[] { idxCell, extraPawnToolType });
-        public static void GivePawnExtraWeapon(byte idxCell, PawnExtraWeaponTypes pawnExtraWeaponType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveExtraPawnWeapon, new object[] { idxCell, pawnExtraWeaponType });
+        public static void GivePawnExtraTool(GiveTakeTypes takeGiveType, UnitSlotTypes unitSlotType, ToolWeaponTypes toolAndWeaponType, byte idxCell) =>PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveOrTakeToolOrWeapon, new object[] { takeGiveType, unitSlotType, toolAndWeaponType, idxCell });
 
         public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { idxCell });
 
@@ -129,6 +128,8 @@ namespace Assets.Scripts
         [PunRPC]
         private void MasterRPC(RpcMasterTypes rpcType, object[] objects, PhotonMessageInfo infoFrom)
         {
+            _currentNumber = default;
+            
             _infoMasterComFilter.Get1(0).FromInfo = infoFrom;
 
             switch (rpcType)
@@ -223,17 +224,11 @@ namespace Assets.Scripts
                     _circularAttackFilter.Get1(0).IdxUnitForCirculAttack = (byte)objects[0];
                     break;
 
-                case RpcMasterTypes.TakePawnExtraTool:
-                    _forTakePawnExtraToolFilter.Get1(0).IdxCellForTakePawnExtraTool = (byte)objects[0];
-                    break;
-
-                case RpcMasterTypes.GiveExtraPawnTool:
-                    _forGivePawnToolFilter.Get1(0).IdxForGivePawnTool = (byte)objects[0];
-                    _forGivePawnToolFilter.Get1(0).PawnExtraToolType = (PawnExtraToolTypes)objects[1];
-                    break;
-
-                case RpcMasterTypes.GiveExtraPawnWeapon:
-
+                case RpcMasterTypes.GiveOrTakeToolOrWeapon:
+                    _forGivePawnToolFilter.Get1(0).TakeGiveType = (GiveTakeTypes)objects[_currentNumber++];
+                    _forGivePawnToolFilter.Get1(0).UnitSlotType = (UnitSlotTypes)objects[_currentNumber++];
+                    _forGivePawnToolFilter.Get1(0).ToolAndWeaponType = (ToolWeaponTypes)objects[_currentNumber++];
+                    _forGivePawnToolFilter.Get1(0).IdxCell = (byte)objects[_currentNumber++];
                     break;
 
                 default:

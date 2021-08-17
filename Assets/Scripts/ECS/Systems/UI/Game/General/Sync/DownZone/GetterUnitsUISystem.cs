@@ -51,8 +51,8 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
         getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Rook, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Rook, PhotonNetwork.IsMasterClient).ToString());
         getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Bishop, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Bishop, PhotonNetwork.IsMasterClient).ToString());
 
-        if (xyUnitsCom.IsSettedKing(PhotonNetwork.IsMasterClient))
-            getterUnitsViewUICom.SetActiveButton(UnitTypes.King, false);
-        else getterUnitsViewUICom.SetActiveButton(UnitTypes.King, true);
+        //if (xyUnitsCom.IsSettedKing(PhotonNetwork.IsMasterClient))
+        //    getterUnitsViewUICom.SetActiveButton(UnitTypes.King, false);
+        //else getterUnitsViewUICom.SetActiveButton(UnitTypes.King, true);
     }
 }
