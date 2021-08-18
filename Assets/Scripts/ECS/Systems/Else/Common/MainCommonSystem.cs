@@ -72,7 +72,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
         {
             SoundCommonCom.Volume = SaverComponent.SliderVolume;
 
-            switch (Main.SceneType)
+            switch (Main.CurrentSceneType)
             {
                 case SceneTypes.None:
                     throw new Exception();

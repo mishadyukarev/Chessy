@@ -16,8 +16,8 @@ namespace Assets.Scripts.ECS.System.View.Menu
 
         public void Init()
         {
-            CanvasComponent.ReplaceZone(Main.SceneType);
-            ToggleZoneComponent.ReplaceZone(Main.SceneType);
+            CanvasComponent.ReplaceZone(Main.CurrentSceneType);
+            ToggleZoneComponent.ReplaceZone(Main.CurrentSceneType);
 
             _menuWorld.NewEntity()
                 .Replace(new CenterMenuUIComponent(CanvasComponent.FindUnderParent<Slider>("Slider"), SaverComponent.SliderVolume));

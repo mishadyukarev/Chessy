@@ -30,7 +30,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
         public void Init()
         {
-            ToggleZoneComponent.ReplaceZone(Main.SceneType);
+            ToggleZoneComponent.ReplaceZone(Main.CurrentSceneType);
 
 
             ///Cells
@@ -218,7 +218,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             ///Canvas
             ///
 
-            CanvasComponent.ReplaceZone(Main.SceneType);
+            CanvasComponent.ReplaceZone(Main.CurrentSceneType);
 
             var upZone_GO = CanvasComponent.FindUnderParent("UpZone");
             var centerZone_GO = CanvasComponent.FindUnderParent("CenterZone");
