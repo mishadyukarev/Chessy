@@ -118,17 +118,17 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
 
     private void SeedEnvironment(EnvironmentTypes environmentType)
     {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.SeedEnvironmentToMaster(IdxSelCell, environmentType);
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGameSystem.SeedEnvironmentToMaster(IdxSelCell, environmentType);
     }
 
     private void Fire(byte fromIdx, byte toIdx)
     {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.FireToMaster(fromIdx, toIdx);
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGameSystem.FireToMaster(fromIdx, toIdx);
     }
 
     private void CircularAttackKing()
     {
-        RPCGameSystem.CircularAttackKingToMaster(IdxSelCell);
+        RpcGameSystem.CircularAttackKingToMaster(IdxSelCell);
     }
 
     private void ActiveFireSelector()

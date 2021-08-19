@@ -14,6 +14,8 @@ public class SpritesData : ScriptableObject
     [SerializeField] private Sprite _sword_Sprite = default;
     [SerializeField] private Sprite _bowRook_Sprite = default;
     [SerializeField] private Sprite _bowBishop_Sprite = default;
+    [SerializeField] private Sprite _crossbowRook_Sprite = default;
+    [SerializeField] private Sprite _crossbowBishop_Sprite = default;
 
     [Space(20)]
     [SerializeField] private Sprite _citySprite = default;
@@ -48,6 +50,8 @@ public class SpritesData : ScriptableObject
 
     public Sprite BowRook_Sprite => _bowRook_Sprite;
     public Sprite BowBishop_Sprite => _bowBishop_Sprite;
+    public Sprite CrossbowRook_Sprite => _crossbowRook_Sprite;
+    public Sprite CrossbowBishop_Sprite => _crossbowBishop_Sprite;
 
 
     public Sprite City_Sprite => _citySprite;

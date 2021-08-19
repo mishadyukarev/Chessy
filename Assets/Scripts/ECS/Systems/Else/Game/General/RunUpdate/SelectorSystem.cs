@@ -74,32 +74,21 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                 else if (selectorCom.IsSelectedUnit)
                 {
-                    RPCGameSystem.SetUniToMaster(selectorCom.IdxCurrentCell, selectorCom.SelectedUnitType);
-                }
-
-                else if (selectorCom.CellClickType == CellClickTypes.UpgradeUnit)
-                {
-                    if (CellUnitDataCom(selectorCom.IdxCurrentCell).HaveUnit)
-                    {
-                        RPCGameSystem.UpgradeUnitToMaster(selectorCom.IdxCurrentCell);
-                    }
-                    else
-                    {
-                        selectorCom.ResetSelectedCell();
-                    }
+                    RpcGameSystem.SetUniToMaster(selectorCom.IdxCurrentCell, selectorCom.SelectedUnitType);
                 }
 
                 else if (selectorCom.IsCellClickType(CellClickTypes.PickFire))
                 {
-                    RPCGameSystem.FireToMaster(selectorCom.IdxSelectedCell, selectorCom.IdxCurrentCell);
+                    RpcGameSystem.FireToMaster(selectorCom.IdxSelectedCell, selectorCom.IdxCurrentCell);
                     selectorCom.ResetSelectedCell();
+                    selectorCom.CellClickType = default;
                 }
 
                 else if (selectorCom.IsCellClickType(CellClickTypes.GiveTakeToolWeapon))
                 {
                     if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
                     {
-                        RPCGameSystem.GiveTakeToolWeapon(selectorCom.ToolWeaponTypeForGiveTake, selectorCom.IdxCurrentCell);
+                        RpcGameSystem.GiveTakeToolWeapon(selectorCom.ToolWeaponTypeForGiveTake, selectorCom.IdxCurrentCell);
                     }
                     else
                     {
@@ -107,33 +96,6 @@ internal sealed class SelectorSystem : IEcsRunSystem
                         selectorCom.DefCellClickType();
                     }
                 }
-
-                else if (selectorCom.IsCellClickType(CellClickTypes.SwapToolWeapon))
-                {
-                    if (CellUnitDataCom(selectorCom.IdxCurrentCell).HaveUnit)
-                    {
-                        RPCGameSystem.SwapToolWeapon(selectorCom.IdxCurrentCell);
-                    }
-                    else
-                    {
-                        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                        selectorCom.DefCellClickType();
-                    }
-                }
-
-                //else if (selectorCom.IsCellClickType(CellClickTypes.TakeToolOrWeapon))
-                //{
-                //    if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(UnitTypes.Pawn))
-                //    {
-                //        RPCGameSystem.TakePawnExtraTool(selectorCom.IdxCurrentCell);
-                //    }
-                //    else
-                //    {
-                //        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                //        selectorCom.CellClickType = default;
-                //    }
-
-                //}
 
                 else if (!selectorCom.IsSelectedCell)
                 {
@@ -221,7 +183,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                                 //if (availCellsCom.TryFindCell(AvailableCellTypes.SimpleAttack, selectorCom.IdxSelectedCell))
                                 //{
-                                RPCGameSystem.AttackUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
+                                RpcGameSystem.AttackUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
                                 //}
 
                                 //else if (availCellsCom.TryFindCell(AvailableCellTypes.UniqueAttack, selectorCom.XySelectedCell))
@@ -259,7 +221,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                         {
                             if (availCellsCom.TryFindCell(AvailableCellTypes.Shift, selectorCom.IdxSelectedCell))
                             {
-                                RPCGameSystem.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
+                                RpcGameSystem.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
                             }
 
                             availCellsCom.ClearAvailableCells(AvailableCellTypes.Shift);

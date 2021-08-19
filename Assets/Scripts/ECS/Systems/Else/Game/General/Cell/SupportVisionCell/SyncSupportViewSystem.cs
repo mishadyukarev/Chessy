@@ -86,22 +86,6 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                 }
             }
 
-            else if (selCom.CellClickType == CellClickTypes.UpgradeUnit)
-            {
-                if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
-                {
-                    if (curOwnerCellUnitCom.HaveOwner)
-                    {
-                        if (curOwnerCellUnitCom.IsMine)
-                        {
-                            curCellSupViewCom.EnableSR();
-                            curCellSupViewCom.SetColor(SupportVisionTypes.Upgrade);
-                        }
-                    }
-                }
-            }
-
-
             else if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn))
             {
                 if (curOwnerCellUnitCom.HaveOwner)

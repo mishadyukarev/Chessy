@@ -18,7 +18,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public sealed class RPCGameSystem : MonoBehaviour, IEcsInitSystem
+    public sealed class RpcGameSystem : MonoBehaviour, IEcsInitSystem
     {
         private EcsFilter<FromInfoComponent> _fromInfoFilter = default;
         private EcsFilter<SelectorComponent> _selectorFilter = default;
@@ -47,7 +47,7 @@ namespace Assets.Scripts
         private EcsFilter<ForFireMasCom> _fireFilter = default;
         private EcsFilter<ForUpgradeMasCom> _upgradorFilter = default;
         private EcsFilter<ForCircularAttackMasCom, XyCellForDoingMasCom> _circularAttackFilter = default;
-        private EcsFilter<ForGiveToolWeaponComp> _forGivePawnToolFilter = default;
+        private EcsFilter<ForGiveTakeToolWeaponComp> _forGivePawnToolFilter = default;
         private EcsFilter<ForTakePawnExtraToolMastCom> _forTakePawnExtraToolFilter = default;
         private EcsFilter<ForSwapToolWeaponComp> _forSwapToolWeapFilter = default;
 
@@ -78,7 +78,6 @@ namespace Assets.Scripts
         public static void ActiveAmountMotionUIToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
         public static void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
 
-        public static void UpgradeUnitToMaster(byte idxCellForUpgrade, UpgradeModTypes upgradeModType = UpgradeModTypes.Unit) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, idxCellForUpgrade });
         public static void UpgradeBuildingToMaster(BuildingTypes buildingTypeForUpgrade, UpgradeModTypes upgradeModType = UpgradeModTypes.Building) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, buildingTypeForUpgrade });
 
         public static void ShiftUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { idxPreviousCell, idxSelectedCell });
@@ -93,18 +92,12 @@ namespace Assets.Scripts
         public static void EndGameToGeneral(RpcTarget rpcTarget, byte actorNumberWinner) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
 
         public static void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.Economy, haves });
-        public static void MistakeUnitToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedKing });
-        public static void MistakeNeedMoreStepsToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedSteps });
-        public static void MistakeNeedOthePlaceToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedOtherPlace });
-        public static void MistakeNeedMoreHealthToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.NeedMoreHealth });
-        public static void MistakeNeedToolInPawnToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.PawnMustHaveTool });
-        public static void MistakePawnHaveToolToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.PawnHaveTool });
+        public static void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { mistakeType });
 
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
         public static void SeedEnvironmentToMaster(byte idxCell, EnvironmentTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
         public static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, idxCell });
-        public static void SwapToolWeapon(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SwapToolWeapon, new object[] { idxCell });
 
         public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { idxCell });
 
@@ -225,12 +218,8 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.GiveTakeToolWeapon:
-                    _forGivePawnToolFilter.Get1(0).ToolAndWeaponType = (ToolWeaponTypes)objects[_curNumber++];
+                    _forGivePawnToolFilter.Get1(0).ToolWeapType = (ToolWeaponTypes)objects[_curNumber++];
                     _forGivePawnToolFilter.Get1(0).IdxCell = (byte)objects[_curNumber++];
-                    break;
-
-                case RpcMasterTypes.SwapToolWeapon:
-                    _forSwapToolWeapFilter.Get1(0).IdxCellForSwap = (byte)objects[_curNumber++];
                     break;
 
                 default:
@@ -292,25 +281,27 @@ namespace Assets.Scripts
                             break;
 
                         case MistakeTypes.NeedKing:
-                            //MainGameSystem.DonerUIEnt_MistakeCom.MistakeUnityEvent.Invoke();
                             break;
 
-                        case MistakeTypes.NeedSteps:
-                            //MainGameSystem.MistakeCom.InvokeStepsMistake();
+                        case MistakeTypes.NeedMoreSteps:
                             break;
 
                         case MistakeTypes.NeedOtherPlace:
-                            //MainGameSystem.MistakeCom.InvokeNeedOtherPlace();
                             break;
 
                         case MistakeTypes.NeedMoreHealth:
-                            //MainGameSystem.MistakeCom.InvokeNeedOtherPlace();
                             break;
 
                         case MistakeTypes.PawnMustHaveTool:
                             break;
 
                         case MistakeTypes.PawnHaveTool:
+                            break;
+
+                        case MistakeTypes.NeedCity:
+                            break;
+
+                        case MistakeTypes.ThisIsForOtherUnit:
                             break;
 
                         default:

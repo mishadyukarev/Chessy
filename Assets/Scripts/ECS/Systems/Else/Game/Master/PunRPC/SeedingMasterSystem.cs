@@ -39,8 +39,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     {
                         if (curCellBuildDataCom.HaveBuild)
                         {
-                            RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
-                            RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                            RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                            RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         }
                         else
                         {
@@ -50,26 +50,26 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                                     if (!curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.YoungForest))
                                     {
-                                        RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Seeding);
+                                        RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.Seeding);
                                         curCellEnvDataCom.SetNewEnvironment(EnvironmentTypes.YoungForest);
 
                                         curCellUnitDataCom.TakeAmountSteps();
                                     }
                                     else
                                     {
-                                        RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
-                                        RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                                        RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                        RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                     }
                                 else
                                 {
-                                    RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
-                                    RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                                    RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                    RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                 }
                             }
                             else
                             {
-                                RPCGameSystem.MistakeNeedOthePlaceToGeneral(sender);
-                                RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                                RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                                RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                             }
 
                         }
@@ -77,8 +77,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                     else
                     {
-                        RPCGameSystem.MistakeNeedMoreStepsToGeneral(sender);
-                        RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                        RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
                     break;
 

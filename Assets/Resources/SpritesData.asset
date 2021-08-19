@@ -21,6 +21,10 @@ MonoBehaviour:
   _sword_Sprite: {fileID: 21300000, guid: bd11474ee435cff4d92239fde7597993, type: 3}
   _bowRook_Sprite: {fileID: 21300000, guid: 06d236349ef0fd2429458a733d58e2b0, type: 3}
   _bowBishop_Sprite: {fileID: 21300000, guid: 8e42c635d6cb5cd448a763a3022874e4, type: 3}
+  _crossbowRook_Sprite: {fileID: 21300000, guid: 2306cfca972ebfc4983cba8cf8ad8cd5,
+    type: 3}
+  _crossbowBishop_Sprite: {fileID: 21300000, guid: 989abdbbfbc32a148ba4fe92160cf1e9,
+    type: 3}
   _citySprite: {fileID: 21300000, guid: f4ea07c0b3ace6b4880a3ce7e469d41f, type: 3}
   _farmSprite: {fileID: 21300000, guid: 30684e08ddc40714684366a1f3346d97, type: 3}
   _woodcutterSprite: {fileID: 21300000, guid: 43186546374ebcb4c886b904e733aa7d, type: 3}

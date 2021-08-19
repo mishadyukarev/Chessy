@@ -229,7 +229,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             _currentGameWorld.NewEntity()
                 ///Up
                 .Replace(new EconomyViewUICom(upZone_GO))
-                .Replace(new ToolsViewUIComp(upZone_GO))
                 .Replace(new LeaveViewUIComponent(CanvasComponent.FindUnderParent<Button>("ButtonLeave")))
 
                 ///Center

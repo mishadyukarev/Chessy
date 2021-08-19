@@ -32,11 +32,11 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
 
         if (curCellUnitDataCom.HaveMaxAmountSteps)
         {
-            RPCGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
+            RpcGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
 
             if (curCellBuildDataCom.IsBuildType(BuildingTypes.City))
             {
-                RPCGameSystem.EndGameToMaster((byte)curOnwerCellUnitCom.ActorNumber);
+                RpcGameSystem.EndGameToMaster((byte)curOnwerCellUnitCom.ActorNumber);
             }
             curCellUnitDataCom.ResetAmountSteps();
 
@@ -47,8 +47,8 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
         }
         else
         {
-            RPCGameSystem.MistakeNeedMoreStepsToGeneral(sender);
-            RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+            RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+            RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
         }
     }
 }

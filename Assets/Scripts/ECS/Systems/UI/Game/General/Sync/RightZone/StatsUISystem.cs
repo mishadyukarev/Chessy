@@ -23,8 +23,8 @@ internal sealed class StatsUISystem : IEcsRunSystem
         if (selCellUnitDataCom.HaveUnit)
         {
             var comPowerProtection = selCellUnitDataCom.PowerProtection
-                + selCellBuildDataCom.PowerProtection(selCellUnitDataCom.UnitType)
-                + selCellEnvDataCom.PowerProtection(selCellUnitDataCom.UnitType);
+                + selCellBuildDataCom.PowerProtectionUnit(selCellUnitDataCom.UnitType)
+                + selCellEnvDataCom.PowerProtectionUnit(selCellUnitDataCom.UnitType);
 
             _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Stats, true);
 

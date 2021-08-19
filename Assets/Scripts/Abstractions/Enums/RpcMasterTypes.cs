@@ -21,7 +21,6 @@
     CircularAttackKing,
 
     GiveTakeToolWeapon,
-    SwapToolWeapon,
 
     Upgrade,
 }

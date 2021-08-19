@@ -15,6 +15,7 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General.Down
         private TextMeshProUGUI _giveTake_TextMP;
         private Button _swap_Button;
         private Dictionary<ToolWeaponTypes, Button> _toolAndWeapon_Buttons;
+        private Dictionary<ToolWeaponTypes, TextMeshProUGUI> _toolWeapon_texsMPs;
 
         internal GiveTakeZoneViewUIComp(GameObject downZone_GO)
         {
@@ -28,6 +29,13 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General.Down
             _toolAndWeapon_Buttons.Add(ToolWeaponTypes.Pick, _giveTakeZone_GO.transform.Find("Pick_Button").GetComponent<Button>());
             _toolAndWeapon_Buttons.Add(ToolWeaponTypes.Sword, _giveTakeZone_GO.transform.Find("Sword_Button").GetComponent<Button>());
             _toolAndWeapon_Buttons.Add(ToolWeaponTypes.Crossbow, _giveTakeZone_GO.transform.Find("Crossbow_Button").GetComponent<Button>());
+
+
+            _toolWeapon_texsMPs = new Dictionary<ToolWeaponTypes, TextMeshProUGUI>();
+
+            _toolWeapon_texsMPs.Add(ToolWeaponTypes.Pick, _toolAndWeapon_Buttons[ToolWeaponTypes.Pick].transform.Find("AmountPicks_TextMP").GetComponent<TextMeshProUGUI>());
+            _toolWeapon_texsMPs.Add(ToolWeaponTypes.Sword, _toolAndWeapon_Buttons[ToolWeaponTypes.Sword].transform.Find("AmountSwords_TextMP").GetComponent<TextMeshProUGUI>());
+            _toolWeapon_texsMPs.Add(ToolWeaponTypes.Crossbow, _toolAndWeapon_Buttons[ToolWeaponTypes.Crossbow].transform.Find("AmountCrossbows_TextMP").GetComponent<TextMeshProUGUI>());
 
 
             _swap_Button = _giveTakeZone_GO.transform.Find("Swap_Button").GetComponent<Button>();
@@ -44,5 +52,6 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General.Down
         internal void SetColorToSwap_Button(Color color) => _swap_Button.image.color = color; 
 
         internal void SetTextToGiveTake_Button(string text) => _giveTake_TextMP.text = text;
+        internal void SetText(ToolWeaponTypes toolWeaponType, string text) => _toolWeapon_texsMPs[toolWeaponType].text = text;
     }
 }

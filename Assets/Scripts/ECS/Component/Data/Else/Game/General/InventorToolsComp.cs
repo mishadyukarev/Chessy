@@ -27,7 +27,7 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General
         }
 
         internal bool HaveTool(bool key, ToolTypes toolType) => _inventorTools[key][toolType] > 0;
-        internal bool HaveTool(bool key, ToolWeaponTypes toolWeaponType) => _inventorTools[key][ToolWeaponTranslator.TransInTool(toolWeaponType)] > 0;
+        internal bool HaveTool(bool key, ToolWeaponTypes toolWeaponType) => _inventorTools[key][Support.TransInTool(toolWeaponType)] > 0;
 
         internal void SetAmountTools(bool key, ToolTypes toolType, byte value) => _inventorTools[key][toolType] = value;
 
@@ -36,6 +36,6 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General
         internal void AddAmountTools(bool key, ToolTypes toolType, byte adding = 1) => _inventorTools[key][toolType] += adding;
         internal void AddAmountTools(bool key, ToolWeaponTypes toolWeaponType, byte adding = 1) => _inventorTools[key][toolWeaponType.TransInTool()] += adding;
         internal void TakeAmountTools(bool key, ToolTypes toolType, byte taking = 1) => _inventorTools[key][toolType] -= taking;
-        internal void TakeAmountTools(bool key, ToolWeaponTypes toolWeaponType, byte taking = 1) => _inventorTools[key][ToolWeaponTranslator.TransInTool(toolWeaponType)] -= taking;
+        internal void TakeAmountTools(bool key, ToolWeaponTypes toolWeaponType, byte taking = 1) => _inventorTools[key][Support.TransInTool(toolWeaponType)] -= taking;
     }
 }

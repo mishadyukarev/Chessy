@@ -56,23 +56,35 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
         }
         internal void SetArcher_Sprite(UnitTypes unitType, ToolWeaponTypes toolWeaponType)
         {
-            if(unitType == UnitTypes.Rook)
+            if (toolWeaponType == ToolWeaponTypes.Bow)
             {
-                if(toolWeaponType== ToolWeaponTypes.Bow)
+                if (unitType == UnitTypes.Rook)
                 {
                     _main_SR.sprite = ResourcesComponent.SpritesConfig.BowRook_Sprite;
                 }
-            }
-            else if (unitType == UnitTypes.Bishop)
-            {
-                if (toolWeaponType == ToolWeaponTypes.Bow)
+                else if (unitType == UnitTypes.Bishop)
                 {
                     _main_SR.sprite = ResourcesComponent.SpritesConfig.BowBishop_Sprite;
                 }
+                else
+                {
+                    throw new Exception();
+                }
             }
-            else
+            else if (toolWeaponType ==ToolWeaponTypes.Crossbow)
             {
-                throw new Exception();
+                if (unitType == UnitTypes.Rook)
+                {
+                    _main_SR.sprite = ResourcesComponent.SpritesConfig.CrossbowRook_Sprite;
+                }
+                else if (unitType == UnitTypes.Bishop)
+                {
+                    _main_SR.sprite = ResourcesComponent.SpritesConfig.CrossbowBishop_Sprite;
+                }
+                else
+                {
+                    throw new Exception();
+                }
             }
         }
 

@@ -87,13 +87,13 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
             _idxUnitsInCondFilter.Get1(0).AddUnitInCondition(ConditionUnitTypes.None, unitTypeForSetting, sender.IsMasterClient, idxCellForSetting);
 
 
-            RPCGameSystem.SetUnitToGeneral(sender, true);
-            RPCGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+            RpcGameSystem.SetUnitToGeneral(sender, true);
+            RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
         }
 
         else
         {
-            RPCGameSystem.SetUnitToGeneral(sender, false);
+            RpcGameSystem.SetUnitToGeneral(sender, false);
         }
     }
 }

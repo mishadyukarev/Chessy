@@ -19,13 +19,6 @@
 
         /// Need Replace
         /// 
-        public const int MAX_AMOUNT_FOOD = 10;
-        public const int MAX_AMOUNT_WOOD = 10;
-        public const int MAX_AMOUNT_ORE = 6;
-
-        public const int MIN_AMOUNT_FOOD = 5;
-        public const int MIN_AMOUNT_WOOD = 5;
-        public const int MIN_AMOUNT_ORE = 3;
 
         public const int START_FERTILIZER_PERCENT = 30;
         public const int START_FOREST_PERCENT = 40;

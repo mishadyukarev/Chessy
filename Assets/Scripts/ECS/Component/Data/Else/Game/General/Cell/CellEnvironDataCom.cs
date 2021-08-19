@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.ValuesConsts;
 using System;
 using System.Collections.Generic;
-using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
 using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
 
 namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
@@ -10,6 +9,14 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
     {
         private Dictionary<EnvironmentTypes, bool> _haveCellEnvironmentOnCell;
         private Dictionary<EnvironmentTypes, int> _amountResourcesOnCell;
+
+        private const int MAX_AMOUNT_FOOD = 10;
+        private const int MAX_AMOUNT_FOREST = 10;
+        private const int MAX_AMOUNT_ORE = 6;
+
+        private const int MIN_AMOUNT_FOOD = 5;
+        private const int MIN_AMOUNT_WOOD = 5;
+        private const int MIN_AMOUNT_ORE = 3;
 
         internal int NeedAmountSteps
         {
@@ -42,12 +49,12 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
             }
         }
 
+
         private void SetHaveEnvironment(EnvironmentTypes environmentType, bool haveEnvironment) => _haveCellEnvironmentOnCell[environmentType] = haveEnvironment;
 
         internal bool HaveEnvironment(EnvironmentTypes environmentType) => _haveCellEnvironmentOnCell[environmentType];
         internal void SetEnvironment(EnvironmentTypes environmentType) => SetHaveEnvironment(environmentType, true);
         internal void ResetEnvironment(EnvironmentTypes environmentType) => SetHaveEnvironment(environmentType, default);
-
 
 
         internal int GetAmountResources(EnvironmentTypes environmentType) => _amountResourcesOnCell[environmentType];
@@ -71,7 +78,7 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
                     throw new Exception();
 
                 case EnvironmentTypes.AdultForest:
-                    return MAX_AMOUNT_WOOD;
+                    return MAX_AMOUNT_FOREST;
 
                 case EnvironmentTypes.Hill:
                     return MAX_AMOUNT_ORE;
@@ -122,18 +129,18 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
                     throw new Exception();
 
                 case EnvironmentTypes.Fertilizer:
-                    randAmountResour = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType));
+                    randAmountResour = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType) + 1);
                     break;
 
                 case EnvironmentTypes.YoungForest:
                     break;
 
                 case EnvironmentTypes.AdultForest:
-                    randAmountResour = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType));
+                    randAmountResour = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType) + 1);
                     break;
 
                 case EnvironmentTypes.Hill:
-                    randAmountResour = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType));
+                    randAmountResour = UnityEngine.Random.Range(MinAmountResources(environmentType), MaxAmountResources(environmentType) + 1);
                     break;
 
                 case EnvironmentTypes.Mountain:
@@ -147,12 +154,15 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
         }
 
 
-        internal int PowerProtection(UnitTypes unitType)
+        internal int PowerProtectionUnit(UnitTypes unitType)
         {
             var powerProtection = 0;
 
             switch (unitType)
             {
+                case UnitTypes.None:
+                    throw new Exception();
+
                 case UnitTypes.King:
                     if (HaveEnvironment(EnvironmentTypes.Fertilizer))
                         powerProtection -= PROTECTION_FOOD_FOR_KING;
@@ -178,26 +188,28 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
 
                 case UnitTypes.Rook:
                     if (HaveEnvironment(EnvironmentTypes.Fertilizer))
-                        powerProtection -= PROTECTION_FOOD_FOR_ROOK;
+                        powerProtection -= PROTECTION_FOOD_FOR_ROOK_AND_BISHOP;
 
                     if (HaveEnvironment(EnvironmentTypes.AdultForest))
-                        powerProtection += PROTECTION_TREE_FOR_ROOK;
+                        powerProtection += PROTECTION_TREE_FOR_ROOK_AND_BISHOP;
 
                     if (HaveEnvironment(EnvironmentTypes.Hill))
-                        powerProtection += PROTECTION_HILL_FOR_ROOK;
+                        powerProtection += PROTECTION_HILL_FOR_ROOK_AND_BISHOP;
                     break;
 
 
                 case UnitTypes.Bishop:
                     if (HaveEnvironment(EnvironmentTypes.Fertilizer))
-                        powerProtection -= PROTECTION_FOOD_FOR_BISHOP;
+                        powerProtection -= PROTECTION_FOOD_FOR_ROOK_AND_BISHOP;
 
                     if (HaveEnvironment(EnvironmentTypes.AdultForest))
-                        powerProtection += PROTECTION_TREE_FOR_BISHOP;
+                        powerProtection += PROTECTION_TREE_FOR_ROOK_AND_BISHOP;
 
                     if (HaveEnvironment(EnvironmentTypes.Hill))
-                        powerProtection += PROTECTION_HILL_FOR_BISHOP;
+                        powerProtection += PROTECTION_HILL_FOR_ROOK_AND_BISHOP;
+
                     break;
+                        throw new Exception();
             }
 
 

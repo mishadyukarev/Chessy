@@ -19,14 +19,14 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
             ref var mistakeViewUICom = ref _mistakeUIFilter.Get2(0);
 
 
-            switch (mistakeDataUICom.MistakeTypes)
+            if(mistakeDataUICom.MistakeTypes == MistakeTypes.None)
             {
-                case MistakeTypes.None:
-                    mistakeViewUICom.SetActiveParent(false);
-                    break;
-
-
-                case MistakeTypes.Economy:
+                mistakeViewUICom.SetActiveParent(false);
+            }
+            else
+            {
+                if (mistakeDataUICom.MistakeTypes == MistakeTypes.Economy)
+                {
                     for (ResourceTypes resourceType = (ResourceTypes)1; resourceType < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resourceType++)
                     {
                         if (mistakeDataUICom.GetNeedResources(resourceType))
@@ -52,14 +52,10 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                             _economyUIFilter.Get1(0).SetMainColor(resourceType, Color.white);
                         }
                     }
-                    break;
+                }
 
-                case MistakeTypes.NeedKing:
-                    break;
-
-
-                case MistakeTypes.NeedSteps:
-                    mistakeViewUICom.Text = "Need more steps";
+                else
+                {
                     mistakeViewUICom.SetActiveParent(true);
 
                     mistakeDataUICom.CurrentTime += Time.deltaTime;
@@ -70,72 +66,51 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                         mistakeViewUICom.SetActiveParent(false);
                         mistakeDataUICom.ResetMistakeType();
                     }
-                    break;
 
-
-                case MistakeTypes.NeedOtherPlace:
-                    mistakeViewUICom.Text = "Need other place";
-                    mistakeViewUICom.SetActiveParent(true);
-
-                    mistakeDataUICom.CurrentTime += Time.deltaTime;
-
-                    if (mistakeDataUICom.CurrentTime >= _neededTimeForFading)
+                    switch (mistakeDataUICom.MistakeTypes)
                     {
-                        mistakeDataUICom.CurrentTime = 0;
-                        mistakeViewUICom.SetActiveParent(false);
-                        mistakeDataUICom.ResetMistakeType();
+                        case MistakeTypes.None:
+                            break;
+
+                        case MistakeTypes.Economy:
+                            throw new Exception();
+
+                        case MistakeTypes.NeedKing:
+                            mistakeViewUICom.Text = "Need set king";
+                            break;
+
+                        case MistakeTypes.NeedMoreSteps:
+                            mistakeViewUICom.Text = "Need more steps";
+                            break;
+
+                        case MistakeTypes.NeedOtherPlace:
+                            mistakeViewUICom.Text = "Need other place";
+                            break;
+
+                        case MistakeTypes.NeedMoreHealth:
+                            mistakeViewUICom.Text = "Need more health";
+                            break;
+
+                        case MistakeTypes.PawnMustHaveTool:
+                            mistakeViewUICom.Text = "Pawn must have tool";
+                            break;
+
+                        case MistakeTypes.PawnHaveTool:
+                            mistakeViewUICom.Text = "Pawn have tool";
+                            break;
+
+                        case MistakeTypes.NeedCity:
+                            mistakeViewUICom.Text = "Need set city";
+                            break;
+
+                        case MistakeTypes.ThisIsForOtherUnit:
+                            mistakeViewUICom.Text = "This is for other unit";
+                            break;
+
+                        default:
+                            throw new Exception();
                     }
-                    break;
-
-
-                case MistakeTypes.NeedMoreHealth:
-                    mistakeViewUICom.Text = "Need more health";
-                    mistakeViewUICom.SetActiveParent(true);
-
-                    mistakeDataUICom.CurrentTime += Time.deltaTime;
-
-                    if (mistakeDataUICom.CurrentTime >= _neededTimeForFading)
-                    {
-                        mistakeDataUICom.CurrentTime = 0;
-                        mistakeViewUICom.SetActiveParent(false);
-                        mistakeDataUICom.ResetMistakeType();
-                    }
-                    break;
-
-
-                case MistakeTypes.PawnMustHaveTool:
-                    mistakeViewUICom.Text = "Pawn must have tool";
-                    mistakeViewUICom.SetActiveParent(true);
-
-                    mistakeDataUICom.CurrentTime += Time.deltaTime;
-
-                    if (mistakeDataUICom.CurrentTime >= _neededTimeForFading)
-                    {
-                        mistakeDataUICom.CurrentTime = 0;
-                        mistakeViewUICom.SetActiveParent(false);
-                        mistakeDataUICom.ResetMistakeType();
-                    }
-                    break;
-
-
-                case MistakeTypes.PawnHaveTool:
-                    mistakeViewUICom.Text = "Pawn have tool";
-                    mistakeViewUICom.SetActiveParent(true);
-
-                    mistakeDataUICom.CurrentTime += Time.deltaTime;
-
-                    if (mistakeDataUICom.CurrentTime >= _neededTimeForFading)
-                    {
-                        mistakeDataUICom.CurrentTime = 0;
-                        mistakeViewUICom.SetActiveParent(false);
-                        mistakeDataUICom.ResetMistakeType();
-                    }
-                    break;
-
-
-                default:
-                    throw new Exception();
-
+                }
             }
         }
     }

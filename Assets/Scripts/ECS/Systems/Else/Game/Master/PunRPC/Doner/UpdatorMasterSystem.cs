@@ -150,7 +150,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
                     else
                     {
-                        if (curCellUnitDataCom.AmountHealth == curCellUnitDataCom.MaxAmountHealth)
+                        if (curCellUnitDataCom.HaveMaxAmountHealth)
                         {
                             if (curUnitType == UnitTypes.Pawn)
                             {
@@ -213,6 +213,11 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                                 idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
                                             }
                                         }
+                                    }
+                                    else
+                                    {
+                                        curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
+                                        idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
                                     }
                                 }
 
@@ -383,7 +388,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
         if (amountAdultForest <= 3)
         {
-            RPCGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
+            RpcGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
             GameMasterSystemManager.TruceSystems.Run();
         }
     }

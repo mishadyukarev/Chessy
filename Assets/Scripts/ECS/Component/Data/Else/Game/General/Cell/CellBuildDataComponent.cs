@@ -1,4 +1,5 @@
-﻿using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
+﻿using System;
+using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
 
 internal struct CellBuildDataComponent
 {
@@ -8,7 +9,7 @@ internal struct CellBuildDataComponent
     internal bool IsBuildType(BuildingTypes buildingType) => BuildingType == buildingType;
     internal void ResetBuildType() => BuildingType = default;
 
-    internal int PowerProtection(UnitTypes unitType)
+    internal int PowerProtectionUnit(UnitTypes unitType)
     {
         var powerProtection = 0;
         switch (BuildingType)
@@ -17,21 +18,27 @@ internal struct CellBuildDataComponent
 
                 switch (unitType)
                 {
+                    case UnitTypes.None:
+                        throw new Exception();
+
                     case UnitTypes.King:
-                        powerProtection += PROTECTION_CITY_KING;
+                        powerProtection += 10;
                         break;
 
                     case UnitTypes.Pawn:
-                        powerProtection += PROTECTION_CITY_PAWN;
+                        powerProtection += 10;
                         break;
 
                     case UnitTypes.Rook:
-                        powerProtection += PROTECTION_CITY_ROOK;
+                        powerProtection += 10;
                         break;
 
                     case UnitTypes.Bishop:
-                        powerProtection += PROTECTION_CITY_BISHOP;
+                        powerProtection += 10;
                         break;
+
+                    default:
+                        throw new Exception();
                 }
 
                 break;

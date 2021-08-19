@@ -105,7 +105,7 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
             inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn, false);
         }
 
-        RPCGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
+        RpcGameSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
         _donerUIFilter.Get1(0).SetDoned(true, default);
         _donerUIFilter.Get1(0).SetDoned(false, default);

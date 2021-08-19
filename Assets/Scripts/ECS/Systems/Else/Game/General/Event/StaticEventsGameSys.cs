@@ -93,7 +93,7 @@ namespace Assets.Scripts
 
 
 
-        private void Ready() => RPCGameSystem.ReadyToMaster(!_readyFilter.Get1(0).IsReady(PhotonNetwork.IsMasterClient));
+        private void Ready() => RpcGameSystem.ReadyToMaster(!_readyFilter.Get1(0).IsReady(PhotonNetwork.IsMasterClient));
 
         private void GetUnit(UnitTypes unitType)
         {
@@ -106,7 +106,7 @@ namespace Assets.Scripts
             {
                 if (_inventorUnitsFilter.Get1(0).HaveUnitInInventor(unitType, PhotonNetwork.IsMasterClient))
                 {
-                    RPCGameSystem.GetUnitToMaster(unitType);
+                    RpcGameSystem.GetUnitToMaster(unitType);
                 }
                 else
                 {
@@ -124,11 +124,11 @@ namespace Assets.Scripts
 
                 case StepModeTypes.ByQueue:
                     if (!IsDoned(PhotonNetwork.IsMasterClient))
-                        RPCGameSystem.DoneToMaster(!IsDoned(PhotonNetwork.IsMasterClient));
+                        RpcGameSystem.DoneToMaster(!IsDoned(PhotonNetwork.IsMasterClient));
                     break;
 
                 case StepModeTypes.Together:
-                    RPCGameSystem.DoneToMaster(!IsDoned(PhotonNetwork.IsMasterClient));
+                    RpcGameSystem.DoneToMaster(!IsDoned(PhotonNetwork.IsMasterClient));
                     break;
 
                 default:
@@ -147,11 +147,11 @@ namespace Assets.Scripts
             {
                 if (_cellUnitFilter.Get1(IdxSelectedCell).IsConditionType(conditionUnitType))
                 {
-                    RPCGameSystem.ConditionUnitToMaster(ConditionUnitTypes.None, IdxSelectedCell);
+                    RpcGameSystem.ConditionUnitToMaster(ConditionUnitTypes.None, IdxSelectedCell);
                 }
                 else
                 {
-                    RPCGameSystem.ConditionUnitToMaster(conditionUnitType, IdxSelectedCell);
+                    RpcGameSystem.ConditionUnitToMaster(conditionUnitType, IdxSelectedCell);
                 }
             }
         }
@@ -208,17 +208,17 @@ namespace Assets.Scripts
         {
             _takerUIFilter.Get1(0).ResetCurTimer(unitType);
 
-            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.CreateUnitToMaster(unitType);
+            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGameSystem.CreateUnitToMaster(unitType);
         }
 
         private void MeltOre()
         {
-            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.MeltOreToMaster();
+            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGameSystem.MeltOreToMaster();
         }
 
         private void UpgradeBuilding(BuildingTypes buildingType)
         {
-            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RPCGameSystem.UpgradeBuildingToMaster(buildingType);
+            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGameSystem.UpgradeBuildingToMaster(buildingType);
         }
 
         private void Testtttt(ToolWeaponTypes toolAndWeaponType)

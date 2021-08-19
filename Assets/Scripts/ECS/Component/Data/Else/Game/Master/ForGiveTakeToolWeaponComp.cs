@@ -2,9 +2,9 @@
 
 namespace Assets.Scripts.ECS.Component.Data.Else.Game.Master
 {
-    internal struct ForGiveToolWeaponComp
+    internal struct ForGiveTakeToolWeaponComp
     {
-        internal ToolWeaponTypes ToolAndWeaponType { get; set; }
+        internal ToolWeaponTypes ToolWeapType { get; set; }
         internal byte IdxCell { get; set; }
     }
 }

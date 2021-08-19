@@ -3,7 +3,7 @@ using System;
 
 namespace Assets.Scripts.Supports
 {
-    internal static class ToolWeaponTranslator
+    internal static class Support
     {
         internal static ToolTypes TransInTool(this ToolWeaponTypes toolAndWeaponType)
         {
@@ -34,7 +34,6 @@ namespace Assets.Scripts.Supports
                     throw new Exception();
             }
         }
-
         internal static WeaponTypes TransInWeapon(this ToolWeaponTypes toolAndWeaponType)
         {
             switch (toolAndWeaponType)
@@ -64,7 +63,6 @@ namespace Assets.Scripts.Supports
                     throw new Exception();
             }
         }
-
         internal static bool IsTool(this ToolWeaponTypes toolWeaponType)
         {
             switch (toolWeaponType)
@@ -93,6 +91,74 @@ namespace Assets.Scripts.Supports
                 default:
                     throw new Exception();
             }
+        }
+        internal static bool Is(this ToolWeaponTypes leftToolWeaponType, ToolWeaponTypes rightToolWeaponType) => leftToolWeaponType == rightToolWeaponType;
+        internal static bool IsForArcher(this ToolWeaponTypes toolWeaponType)
+        {
+            switch (toolWeaponType)
+            {
+                case ToolWeaponTypes.None:
+                    throw new Exception();
+
+                case ToolWeaponTypes.Hoe:
+                    return false;
+
+                case ToolWeaponTypes.Axe:
+                    return false;
+
+                case ToolWeaponTypes.Pick:
+                    return false;
+
+                case ToolWeaponTypes.Sword:
+                    return false;
+
+                case ToolWeaponTypes.Bow:
+                    return true;
+
+                case ToolWeaponTypes.Crossbow:
+                    return true;
+
+                default:
+                    throw new Exception();
+            }
+        }
+        internal static bool IsForPawn(this ToolWeaponTypes toolWeaponType)
+        {
+            switch (toolWeaponType)
+            {
+                case ToolWeaponTypes.None:
+                    throw new Exception();
+
+                case ToolWeaponTypes.Hoe:
+                    throw new Exception();
+
+                case ToolWeaponTypes.Axe:
+                    return true;
+
+                case ToolWeaponTypes.Pick:
+                    return true;
+
+                case ToolWeaponTypes.Sword:
+                    return true;
+
+                case ToolWeaponTypes.Bow:
+                    return false;
+
+                case ToolWeaponTypes.Crossbow:
+                    return false;
+
+                default:
+                    throw new Exception();
+            }
+        }
+
+
+        internal static bool Is(this UnitTypes leftUnitType, UnitTypes rightUnitType) => leftUnitType == rightUnitType;
+        internal static bool Is(this UnitTypes leftUnitType, UnitTypes[] rightUnitTypes)
+        {
+            foreach (var curUnitType in rightUnitTypes)
+                if (Is(leftUnitType, curUnitType)) return true;
+            return false;
         }
     }
 }

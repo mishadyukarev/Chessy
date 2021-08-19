@@ -4,9 +4,11 @@
 
     Economy,
     NeedKing,
-    NeedSteps,
+    NeedMoreSteps,
     NeedOtherPlace,
     NeedMoreHealth,
     PawnMustHaveTool,
     PawnHaveTool,
+    NeedCity,
+    ThisIsForOtherUnit,
 }
