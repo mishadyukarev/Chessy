@@ -44,7 +44,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
 
                 if (cellUnitDataComForGive.IsUnitType(UnitTypes.Pawn))
                 {
-                    if (toolWeapTypeForGive.IsForPawn())
+                    if (cellUnitDataComForGive.HaveExtraToolWeapon)
                     {
                         if (cellUnitDataComForGive.HaveMaxAmountHealth)
                         {
@@ -58,25 +58,39 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                                     cellUnitDataComForGive.ConditionUnitType = default;
                                 }
 
-                                if (cellUnitDataComForGive.HaveExtraToolWeapon)
+                                if (cellUnitDataComForGive.ExtraToolWeaponType.IsTool())
                                 {
-                                    if (cellUnitDataComForGive.ExtraToolWeaponType != ToolWeaponTypes.Axe)
-                                    {
-                                        if (cellUnitDataComForGive.ExtraToolWeaponType.IsTool())
-                                        {
-                                            inventToolsCom.AddAmountTools(ownerCellUnitComForGive.IsMasterClient, cellUnitDataComForGive.ExtraToolWeaponType);
-                                        }
-                                        else
-                                        {
-                                            inventWeaponsComp.AddAmountWeapons(ownerCellUnitComForGive.IsMasterClient, cellUnitDataComForGive.ExtraToolWeaponType);
-                                        }
-                                    }
-
-                                    cellUnitDataComForGive.ResetAmountSteps();
-                                    cellUnitDataComForGive.ExtraToolWeaponType = default;
+                                    inventToolsCom.AddAmountTools(ownerCellUnitComForGive.IsMasterClient, cellUnitDataComForGive.ExtraToolWeaponType);
+                                }
+                                else
+                                {
+                                    inventWeaponsComp.AddAmountWeapons(ownerCellUnitComForGive.IsMasterClient, cellUnitDataComForGive.ExtraToolWeaponType);
                                 }
 
-                                else
+                                cellUnitDataComForGive.ResetAmountSteps();
+                                cellUnitDataComForGive.ExtraToolWeaponType = default;
+                            }
+
+                            else
+                            {
+                                RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            }
+                        }
+
+                        else
+                        {
+                            RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
+                        }
+
+                    }
+
+                    else
+                    {
+                        if (toolWeapTypeForGive.IsForPawn())
+                        {
+                            if (cellUnitDataComForGive.HaveMaxAmountHealth)
+                            {
+                                if (cellUnitDataComForGive.HaveMaxAmountSteps)
                                 {
                                     if (cellUnitDataComForGive.MainToolWeaponType != toolWeapTypeForGive)
                                     {
@@ -101,7 +115,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                                                 }
                                                 else
                                                 {
-                                                    RpcGameSystem.MistakeEconomyToGeneral(sender, new[] { true, false, true, true, true });
+                                                    RpcGeneralSystem.MistakeEconomyToGeneral(sender, new[] { true, false, true, true, true });
                                                 }
                                             }
 
@@ -133,28 +147,29 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                                                 }
                                                 else
                                                 {
-                                                    RpcGameSystem.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
+                                                    RpcGeneralSystem.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
                                                 }
                                             }
                                         }
                                     }
                                 }
+
+                                else
+                                {
+                                    RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                }
                             }
+
                             else
                             {
-                                RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                             }
                         }
 
                         else
                         {
-                            RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
+                            RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.ThisIsForOtherUnit, sender);
                         }
-                    }
-
-                    else
-                    {
-                        RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.ThisIsForOtherUnit, sender);
                     }
                 }
             }

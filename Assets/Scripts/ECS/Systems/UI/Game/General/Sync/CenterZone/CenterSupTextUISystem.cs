@@ -107,6 +107,10 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                             mistakeViewUICom.Text = "This is for other unit";
                             break;
 
+                        case MistakeTypes.NearTheDesert:
+                            mistakeViewUICom.Text = "Near the desert";
+                            break;
+
                         default:
                             throw new Exception();
                     }

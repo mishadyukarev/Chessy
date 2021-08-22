@@ -7,7 +7,7 @@ using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.Workers;
 using Leopotam.Ecs;
-using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
+using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
 
 namespace Assets.Scripts.ECS.Systems.Game.Master
 {

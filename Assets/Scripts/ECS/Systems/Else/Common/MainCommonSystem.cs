@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Abstractions;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
-using Assets.Scripts.ECS.Game.Components;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
@@ -12,16 +11,11 @@ namespace Assets.Scripts.ECS.System.Data.Common
 {
     internal class MainCommonSystem : IEcsInitSystem, IEcsRunSystem
     {
-        private EcsWorld _commonWorld;
-
-
-        private static EcsEntity _commonZoneEnt;
-        internal static ref AudioSourceComponent CommonEnt_AudioSourceCom => ref _commonZoneEnt.Get<AudioSourceComponent>();
-
+        private EcsWorld _curCommonWorld = default;
 
         public void Init()
         {
-            _commonZoneEnt = _commonWorld.NewEntity()
+            var commonZoneEnt = _curCommonWorld.NewEntity()
                 .Replace(new ResourcesComponent(true));
 
 
@@ -41,18 +35,18 @@ namespace Assets.Scripts.ECS.System.Data.Common
             audioSource.loop = true;
             audioSource.Play();
 
-            _commonZoneEnt
+            commonZoneEnt
                 .Replace(new CommonZoneComponent(new GameObject(NameConst.COMMON_ZONE)))
                 .Replace(new CameraComponent(camera, new Vector3(7, 4.8f, -2)))
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
                 .Replace(new SaverComponent(StepModeTypes.ByQueue, 0.15f))
                 .Replace(new CanvasComponent(canvas))
                 .Replace(new ToggleZoneComponent(new GameObject()))
-                .Replace(new SoundCommonCom(audioSource))
+                .Replace(new SoundCommComp(audioSource))
                 .Replace(new PhotonViewComponent(Main.Instance.gameObject.AddComponent<PhotonView>()));
 
 
-            ref var commZoneCom = ref _commonZoneEnt.Get<CommonZoneComponent>();
+            ref var commZoneCom = ref commonZoneEnt.Get<CommonZoneComponent>();
             commZoneCom.Attach(camera.transform);
             commZoneCom.Attach(Main.Instance.transform);
             commZoneCom.Attach(goES.transform);
@@ -62,7 +56,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
             camera.transform.position += CameraComponent.PosForCamera;
 
 
-            ref var commonZoneCom = ref _commonZoneEnt.Get<CommonZoneComponent>();
+            ref var commonZoneCom = ref commonZoneEnt.Get<CommonZoneComponent>();
             commonZoneCom.Attach(audioSource.transform);
 
 
@@ -70,7 +64,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
 
         public void Run()
         {
-            SoundCommonCom.Volume = SaverComponent.SliderVolume;
+            SoundCommComp.Volume = SaverComponent.SliderVolume;
 
             switch (Main.CurrentSceneType)
             {

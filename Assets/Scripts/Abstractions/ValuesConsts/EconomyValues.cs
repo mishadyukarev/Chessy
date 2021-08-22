@@ -128,8 +128,8 @@
         #region Melting
 
         public const int FOOD_FOR_MELTING_ORE = 0;
-        public const int WOOD_FOR_MELTING_ORE = 10;
-        public const int ORE_FOR_MELTING_ORE = 4;
+        public const int WOOD_FOR_MELTING_ORE = 5;
+        public const int ORE_FOR_MELTING_ORE = 5;
         public const int IRON_FOR_MELTING_ORE = 0;
         public const int GOLD_FOR_MELTING_ORE = 0;
 
@@ -187,7 +187,7 @@
         public const int GOLD_FOR_BUILDING_FARM = 0;
 
         public const int FOOD_FOR_BUILDING_MINE = 0;
-        public const int WOOD_FOR_BUILDING_MINE = 10;
+        public const int WOOD_FOR_BUILDING_MINE = 5;
         public const int ORE_FOR_BUILDING_MINE = 0;
         public const int IRON_FOR_BUILDING_MINE = 0;
         public const int GOLD_FOR_BUILDING_MINE = 0;

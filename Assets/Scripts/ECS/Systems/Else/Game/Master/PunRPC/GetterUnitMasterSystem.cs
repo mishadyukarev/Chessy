@@ -59,6 +59,6 @@ internal sealed class GetterUnitMasterSystem : IEcsRunSystem
             default:
                 throw new Exception();
         }
-        RpcGameSystem.GetUnitToGeneral(infoCom.FromInfo.Sender, isGetted, unitType);
+        RpcGeneralSystem.GetUnitToGeneral(infoCom.FromInfo.Sender, isGetted, unitType);
     }
 }

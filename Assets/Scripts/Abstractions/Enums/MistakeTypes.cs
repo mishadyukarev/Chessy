@@ -11,4 +11,5 @@
     PawnHaveTool,
     NeedCity,
     ThisIsForOtherUnit,
+    NearTheDesert,
 }

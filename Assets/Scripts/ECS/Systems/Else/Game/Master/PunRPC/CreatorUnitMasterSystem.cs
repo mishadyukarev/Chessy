@@ -28,17 +28,17 @@ internal sealed class CreatorUnitMasterSystem : IEcsRunSystem
                 amountResCom.BuyCreateUnit(UnitType, infoCom.FromInfo.Sender);
                 unitInventorCom.AddUnitsInInventor(UnitType, infoCom.FromInfo.Sender.IsMasterClient);
 
-                RpcGameSystem.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.SoundGoldPack);
+                RpcGeneralSystem.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.SoundGoldPack);
             }
             else
             {
-                RpcGameSystem.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.Mistake);
-                RpcGameSystem.MistakeEconomyToGeneral(infoCom.FromInfo.Sender, haves);
+                RpcGeneralSystem.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.Mistake);
+                RpcGeneralSystem.MistakeEconomyToGeneral(infoCom.FromInfo.Sender, haves);
             }
         }
         else
         {
-            RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedCity, infoCom.FromInfo.Sender);
+            RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedCity, infoCom.FromInfo.Sender);
         }
     }
 }

@@ -13,6 +13,9 @@ using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
 using Assets.Scripts.ECS.Components;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
+using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
@@ -99,24 +102,9 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                     cell_GOs[x, y].transform.rotation = PhotonNetwork.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
 
 
-                    var dictStartCell = new Dictionary<bool, bool>();
-                    dictStartCell.Add(true, default);
-                    dictStartCell.Add(false, default);
-
-                    if (y < 3 && x > 2 && x < 12)
-                    {
-                        dictStartCell[true] = true;
-                    }
-                    else if (y > 7 && x > 2 && x < 12)
-                    {
-                        dictStartCell[false] = true;
-                    }
-
-
                     _currentGameWorld.NewEntity()
                         .Replace(new XyCellComponent(new byte[] { x, y }))
 
-                        .Replace(new CellDataComponent(dictStartCell))
                         .Replace(new CellViewComponent(cell_GOs[x, y]))
 
                         .Replace(new CellEnvironDataCom(new Dictionary<EnvironmentTypes, bool>()))
@@ -162,25 +150,38 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 Main.Instance.transform.position + new Vector3(7, 5.5f, 2), Main.Instance.transform.rotation);
 
 
-            var listMaster = new List<byte[]>();
-            var listOther = new List<byte[]>();
 
+            var dictStartCell = new Dictionary<bool,List<byte>>();
+            dictStartCell.Add(true, new List<byte>());
+            dictStartCell.Add(false, new List<byte>());
+
+            var dictForShift = new Dictionary<bool, Dictionary<byte, List<byte>>>();
+            var dict1 = new Dictionary<byte, List<byte>>();
+            var dict2 = new Dictionary<byte, List<byte>>();
+
+            byte curIdx = 0;
             for (byte x = 0; x < CellValues.CELL_COUNT_X; x++)
                 for (byte y = 0; y < CellValues.CELL_COUNT_Y; y++)
                 {
+                    dict1.Add(curIdx, new List<byte>());
+                    dict2.Add(curIdx, new List<byte>());
+
                     if (y < 3 && x > 2 && x < 12)
                     {
-                        listMaster.Add(new byte[] { x, y });
+                        dictStartCell[true].Add(curIdx);
                     }
                     else if (y > 7 && x > 2 && x < 12)
                     {
-                        listOther.Add(new byte[] { x, y });
+                        dictStartCell[false].Add(curIdx);
                     }
+
+                    curIdx++;
                 }
 
-            var dict = new Dictionary<bool, List<byte[]>>();
-            dict.Add(true, listMaster);
-            dict.Add(false, listOther);
+            dictForShift.Add(true, dict1);
+            dictForShift.Add(false, dict2);
+
+
 
 
             var audioSourceParentGO = new GameObject("AudioSource");
@@ -190,12 +191,15 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             var infoEnt = _currentGameWorld.NewEntity()
                 .Replace(new InputComponent())
                 .Replace(new SelectorComponent(ToolWeaponTypes.Pick))
-                .Replace(new IdxAvailableCellsComponent(new Dictionary<AvailableCellTypes, List<byte>>()))
                 .Replace(new GeneralZoneViewComponent(generalZoneGO))
                 .Replace(new BackgroundComponent(backGroundGO))
-                .Replace(new ForFillAvailCellsCom())
 
-                .Replace(new XyStartCellsComponent(dict))
+                .Replace(new AvailCellsForSetUnitComp(dictStartCell))
+                .Replace(new AvailCellsForShiftComp(dictForShift))
+                .Replace(new AvailCellsForArcherArsonComp(new Dictionary<bool, List<byte>>()))
+                .Replace(new AvailCellsForUniqueAttackComp(new Dictionary<bool, List<byte>>()))
+                .Replace(new AvailCellsForSimpleAttackComp(new Dictionary<bool, List<byte>>()))
+
                 .Replace(new UnitsInGameInfoComponent(new Dictionary<UnitTypes, Dictionary<bool, List<byte>>>()))
                 .Replace(new UnitsInConditionInGameCom(new Dictionary<ConditionUnitTypes, Dictionary<UnitTypes, Dictionary<bool, List<byte>>>>()))
                 .Replace(new BuildsInGameComponent(new Dictionary<BuildingTypes, Dictionary<bool, List<byte>>>()))
@@ -208,7 +212,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new InventorWeaponsComp(new Dictionary<bool, Dictionary<WeaponTypes, byte>>()))
 
                 .Replace(new FromInfoComponent())
-                .Replace(new SoundViewComponent(audioSourceParentGO));
+                .Replace(new SoundViewComp(audioSourceParentGO));
 
 
             infoEnt.Get<GeneralZoneViewComponent>().Attach(backGroundGO.transform);
@@ -240,8 +244,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new MotionsDataUIComponent())
                 .Replace(new MistakeViewUICom(centerZone_GO))
                 .Replace(new MistakeDataUICom(new Dictionary<ResourceTypes, bool>()))
-                .Replace(new SelectorTypeViewUIComp(centerZone_GO))
                 .Replace(new KingZoneViewUIComp(centerZone_GO))
+                .Replace(new SelectorTypeViewUIComp(centerZone_GO))
 
                 ///Down
                 .Replace(new GetterUnitsDataUICom(new Dictionary<UnitTypes, bool>()))

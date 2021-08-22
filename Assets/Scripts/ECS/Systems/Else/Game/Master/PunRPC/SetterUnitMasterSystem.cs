@@ -5,6 +5,7 @@ using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
 using System;
 
@@ -16,10 +17,10 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
     private EcsFilter<InventorUnitsComponent> _unitInventorFilter = default;
     private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
     private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
+    private EcsFilter<AvailCellsForSetUnitComp> _availCellsForSetUnitFilter = default;
 
     private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
     private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
-    private EcsFilter<CellDataComponent> _cellDataFilter = default;
 
     public void Run()
     {
@@ -35,9 +36,7 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
         ref var ownerCellCom = ref _cellUnitFilter.Get2(idxCellForSetting);
 
 
-        if (!curCellEnvrDataCom.HaveEnvironment(EnvironmentTypes.Mountain)
-            && !curCellUnitDataCom.HaveUnit
-            && _cellDataFilter.Get1(idxCellForSetting).IsStartedCell(sender.IsMasterClient))
+        if (_availCellsForSetUnitFilter.Get1(0).HaveIdxCell(sender.IsMasterClient, idxCellForSetting))
         {
             int newAmountHealth;
             int newAmountSteps;
@@ -87,13 +86,13 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
             _idxUnitsInCondFilter.Get1(0).AddUnitInCondition(ConditionUnitTypes.None, unitTypeForSetting, sender.IsMasterClient, idxCellForSetting);
 
 
-            RpcGameSystem.SetUnitToGeneral(sender, true);
-            RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+            RpcGeneralSystem.SetUnitToGeneral(sender, true);
+            RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
         }
-
         else
         {
-            RpcGameSystem.SetUnitToGeneral(sender, false);
+            RpcGeneralSystem.SetUnitToGeneral(sender, false);
         }
+
     }
 }

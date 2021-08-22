@@ -51,7 +51,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
 
             if (fromCellUnitDataCom.IsMelee)
             {
-                RpcGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+                RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
                 damageFrom += toCellUnitDataCom.SimplePowerDamage;
 
@@ -63,7 +63,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
 
             else
             {
-                RpcGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
+                RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
 
                 //if (isFindedUnique)
                 //{
@@ -83,7 +83,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
                 {
                     if (toOwnerCellUnitCom.HaveOwner)
                     {
-                        RpcGameSystem.EndGameToMaster(toOwnerCellUnitCom.ActorNumber);
+                        RpcGeneralSystem.EndGameToMaster(toOwnerCellUnitCom.ActorNumber);
                     }
 
                     else if (toBotOwnerCellUnitCom.IsBot)
@@ -105,7 +105,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
             if (!toCellUnitDataCom.HaveAmountHealth)
             {
                 if (toCellUnitDataCom.IsUnitType(UnitTypes.King))
-                    RpcGameSystem.EndGameToMaster(fromOwnerCellUnitCom.ActorNumber);
+                    RpcGeneralSystem.EndGameToMaster(fromOwnerCellUnitCom.ActorNumber);
 
                 unitsInGameCom.RemoveAmountUnitsInGame(toCellUnitDataCom.UnitType, toOwnerCellUnitCom.IsMasterClient, toIdxForAttack);
                 unitsInCondCom.RemoveUnitInCondition(toCellUnitDataCom.ConditionUnitType, toCellUnitDataCom.UnitType, toOwnerCellUnitCom.IsMasterClient, toIdxForAttack);

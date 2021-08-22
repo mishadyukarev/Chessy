@@ -8,6 +8,8 @@ namespace Assets.Scripts
 {
     public sealed class ECSManager
     {
+        #region 
+
         private EcsWorld _commonWorld;
         private EcsWorld _menuWorld;
         private EcsWorld _gameWorld;
@@ -22,6 +24,8 @@ namespace Assets.Scripts
         private GameGeneralSystemManager _gameGeneralSystemManager;
         private GameMasterSystemManager _gameMasterSystemManager;
         private GameOtherSystemManager _gameOtherSystemManager;
+
+        #endregion
 
 
         public ECSManager()

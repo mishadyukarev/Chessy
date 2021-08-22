@@ -43,7 +43,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 
             if (cellUnitDataComForGive.IsUnitType(new[] { UnitTypes.Bishop, UnitTypes.Rook }))
             {
-                if (toolWeaponTypeForGive.IsForArcher())
+                if (cellUnitDataComForGive.MainToolWeaponType.Is(ToolWeaponTypes.Crossbow))
                 {
                     if (cellUnitDataComForGive.HaveMaxAmountHealth)
                     {
@@ -57,14 +57,39 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                                 cellUnitDataComForGive.ConditionUnitType = default;
                             }
 
-                            if (cellUnitDataComForGive.MainToolWeaponType.Is(ToolWeaponTypes.Crossbow))
-                            {
-                                inventWeaponsComp.AddAmountWeapons(ownerCellUnitComForGive.IsMasterClient, ToolWeaponTypes.Crossbow);
-                                cellUnitDataComForGive.MainToolWeaponType = ToolWeaponTypes.Bow;
-                            }
+                            inventWeaponsComp.AddAmountWeapons(ownerCellUnitComForGive.IsMasterClient, ToolWeaponTypes.Crossbow);
+                            cellUnitDataComForGive.MainToolWeaponType = ToolWeaponTypes.Bow;
 
-                            else if (!cellUnitDataComForGive.MainToolWeaponType.Is(toolWeaponTypeForGive))
+                            cellUnitDataComForGive.ResetAmountSteps();
+                        }
+                        else
+                        {
+                            RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        }
+                    }
+                    else
+                    {
+                        RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
+                    }
+
+                }
+
+                else
+                {
+                    if (toolWeaponTypeForGive.IsForArcher())
+                    {
+                        if (cellUnitDataComForGive.HaveMaxAmountHealth)
+                        {
+                            if (cellUnitDataComForGive.HaveMaxAmountSteps)
                             {
+                                if (cellUnitDataComForGive.IsConditionType(new[] { ConditionUnitTypes.Protected, ConditionUnitTypes.Relaxed }))
+                                {
+                                    unitsInCondInGameCom.ReplaceCondition(cellUnitDataComForGive.ConditionUnitType, default,
+                                        cellUnitDataComForGive.UnitType, ownerCellUnitComForGive.IsMasterClient, neededIdx);
+
+                                    cellUnitDataComForGive.ConditionUnitType = default;
+                                }
+
                                 if (inventWeaponsComp.HaveWeapon(ownerCellUnitComForGive.IsMasterClient, toolWeaponTypeForGive))
                                 {
                                     inventWeaponsComp.TakeAmountWeapons(ownerCellUnitComForGive.IsMasterClient, toolWeaponTypeForGive);
@@ -84,28 +109,31 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                                     }
                                     else
                                     {
-                                        RpcGameSystem.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
+                                        RpcGeneralSystem.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
                                     }
                                 }
+
+                            }
+
+                            else
+                            {
+                                RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
 
                         else
                         {
-                            RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                         }
                     }
 
                     else
                     {
-                        RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
+                        RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.ThisIsForOtherUnit, sender);
                     }
                 }
 
-                else
-                {
-                    RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.ThisIsForOtherUnit, sender);
-                }
+                
             }     
         }
     }

@@ -107,17 +107,17 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                                     if (curCellUnitDataCom.IsMelee)
                                     {
-                                        RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitMelee);
+                                        RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitMelee);
                                     }
                                     else
                                     {
-                                        RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitArcher);
+                                        RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitArcher);
                                     }
                                 }
                                 else
                                 {
-                                    RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                                    RpcGameSystem.MistakeEconomyToGeneral(sender, haves);
+                                    RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                                    RpcGeneralSystem.MistakeEconomyToGeneral(sender, haves);
                                 }
                             }
                         }
@@ -133,12 +133,12 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                         inventResCom.BuyUpgradeBuildings(sender, buildTypeForUpgrade);
                         _upgradeBuildsFilter.Get1(0).AddAmountUpgrades(buildTypeForUpgrade, sender.IsMasterClient);
 
-                        RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
+                        RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
                     }
                     else
                     {
-                        RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                        RpcGameSystem.MistakeEconomyToGeneral(sender, haves);
+                        RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                        RpcGeneralSystem.MistakeEconomyToGeneral(sender, haves);
                     }
                     break;
 

@@ -75,11 +75,11 @@ namespace Assets.Scripts.Workers
             return toList;
         }
 
-        internal static void CopyListXYinTo(this List<byte[]> inList, List<byte[]> toList)
+        internal static void CopyListXyInTo(this List<byte[]> inList, List<byte[]> toList)
         {
             toList.Clear();
 
-            for (ushort i = 0; i < inList.Count; i++)
+            for (byte i = 0; i < inList.Count; i++)
             {
                 var array = new byte[XY_FOR_ARRAY];
 
@@ -102,17 +102,6 @@ namespace Assets.Scripts.Workers
             }
             return false;
         }
-        internal static bool TryFindCell(this List<byte> list, byte idxCell)
-        {
-            foreach (byte curIdx in list)
-            {
-                if (curIdx == idxCell)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
 
         internal static bool TryFindCellInListAndRemove(this List<byte[]> list, byte[] xyTaking)
         {
@@ -125,18 +114,6 @@ namespace Assets.Scripts.Workers
                 }
             }
 
-            return false;
-        }
-        internal static bool TryFindCellInListAndRemove(this List<byte> list, byte idxCellForTaking)
-        {
-            foreach (var idx in list)
-            {
-                if (idx == idxCellForTaking)
-                {
-                    list.Remove(idx);
-                    return true;
-                }
-            }
             return false;
         }
     }

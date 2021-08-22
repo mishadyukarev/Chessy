@@ -14,7 +14,7 @@ using Leopotam.Ecs;
 public sealed class GameGeneralSystemManager : SystemAbstManager
 {
     private PhotonSceneGameGeneralSystem _photonSceneGameGeneralSystem;
-    private RpcGameSystem _rPCGameSystem;
+    private RpcGeneralSystem _rPCGameSystem;
 
     internal GameGeneralSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld)
     {
@@ -23,7 +23,7 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
 
 
         _photonSceneGameGeneralSystem = Main.Instance.gameObject.AddComponent<PhotonSceneGameGeneralSystem>();
-        _rPCGameSystem = Main.Instance.gameObject.AddComponent<RpcGameSystem>();
+        _rPCGameSystem = Main.Instance.gameObject.AddComponent<RpcGeneralSystem>();
 
 
         var syncCellVisionSystems = new EcsSystems(gameWorld)
@@ -78,11 +78,14 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(new RaySystem())
             .Add(new SelectorSystem())
 
+            .Add(new FillAvailCellsSystem())
+
             .Add(syncCellVisionSystems)
             .Add(syncCanvasSystems)
 
             .Add(new SoundSystem())
-            .Add(new FillAvailCellsSystem());
+
+            .Add(new VisibilityUnitsMasterSystem());
 
 
         InitRunSystems

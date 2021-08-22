@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.ECS.Component.View.UI.Game.General;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
 using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
@@ -13,22 +14,16 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
             ref var selectTypeViewUIComp = ref _selectorTypeUIFilter.Get1(0);
             ref var selectCom = ref _selectorFilter.Get1(0);
 
-            //if (selectCom.IsCellClickType(CellClickTypes.TakeToolOrWeapon))
-            //{
-            //    selectTypeViewUIComp.Text = "Take Tool From Pawn";
-            //    selectTypeViewUIComp.EnableZone();
-            //}
+            if (selectCom.IsCellClickType(CellClickTypes.GiveTakeToolWeapon))
+            {
+                selectTypeViewUIComp.Text = "Give or Take Tool";
+                selectTypeViewUIComp.EnableParent();
+            }
 
-            //else if (selectCom.IsCellClickType(CellClickTypes.GiveToolOrWeapon))
-            //{
-            //    selectTypeViewUIComp.Text = "Give Tool To Pawn";
-            //    selectTypeViewUIComp.EnableZone();
-            //}
-
-            //else
-            //{
-            //    selectTypeViewUIComp.DisableZone();
-            //}
+            else
+            {
+                selectTypeViewUIComp.DisableParent();
+            }
         }
     }
 }

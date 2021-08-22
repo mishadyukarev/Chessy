@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
@@ -18,6 +19,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+
+        private EcsFilter<AvailCellsForArcherArsonComp> _availCellsForArcherArsonFilter = default;
 
 
         public void Run()
@@ -48,7 +51,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     {
                         if (fromOwnerCellUnitCom.HaveOwner)
                         {
-                            RpcGameSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
+                            RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
                             toCellFireDataCom.HaveFire = true;
                             toCellUnitDataCom.TakeAmountSteps();
@@ -63,8 +66,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                 else
                 {
-                    RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                    RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                    RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                 }
             }
 
@@ -72,30 +75,33 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
             {
                 if (fromCellUnitDataCom.HaveMaxAmountSteps)
                 {
-                    if (!toCellFireDataCom.HaveFire)
+                    if(_availCellsForArcherArsonFilter.Get1(0).HaveIdxCell(sender.IsMasterClient, toIdx))
                     {
-                        foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(fromIdx)))
-                        {
-                            var curIdx = _xyCellFilter.GetIndexCell(xy1);
-
-                            ref var curCellEnvDataCom = ref _cellEnvFilter.Get1(curIdx);
-
-                            if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
-                            {
-                                if (curIdx == toIdx)
-                                {
-                                    fromCellUnitDataCom.ResetAmountSteps();
-                                    toCellFireDataCom.HaveFire = true;
-                                }
-                            }
-                        }
+                        fromCellUnitDataCom.ResetAmountSteps();
+                        toCellFireDataCom.HaveFire = true;
                     }
+
+                        //foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(fromIdx)))
+                        //{
+                        //    var curIdx = _xyCellFilter.GetIndexCell(xy1);
+
+                        //    ref var curCellEnvDataCom = ref _cellEnvFilter.Get1(curIdx);
+
+                        //    if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                        //    {
+                        //        if (curIdx == toIdx)
+                        //        {
+                        //            fromCellUnitDataCom.ResetAmountSteps();
+                        //            toCellFireDataCom.HaveFire = true;
+                        //        }
+                        //    }
+                        //}
                 }
 
                 else
                 {
-                    RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                    RpcGameSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                    RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                 }
             }
         }

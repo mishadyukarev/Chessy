@@ -154,10 +154,10 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
 
     private void Build(BuildingTypes buildingType)
     {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGameSystem.BuildToMaster(IdxSelCell, buildingType);
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGeneralSystem.BuildToMaster(IdxSelCell, buildingType);
     }
     private void Destroy()
     {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGameSystem.DestroyBuildingToMaster(IdxSelCell);
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGeneralSystem.DestroyBuildingToMaster(IdxSelCell);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
+using Assets.Scripts.ECS.Systems.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC;
 using Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake;
 using Assets.Scripts.ECS.Systems.Game.Master;
@@ -13,18 +14,13 @@ public sealed class GameMasterSystemManager : SystemAbstManager
 
     internal static EcsSystems TruceSystems { get; private set; }
 
-    internal static EcsSystems VisibilityUnitsSystems { get; private set; }
     internal static EcsSystems UpdateMotion { get; private set; }
 
     internal GameMasterSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld)
     {
-        InitOnlySystems
-            .Add(new InitGameMasterSystem());
-
-
         _rpcSystems = new Dictionary<RpcMasterTypes, EcsSystems>();
 
-        _rpcSystems.Add(RpcMasterTypes.Build, new EcsSystems(gameWorld).Add(new BuilderMasterSystem()));
+        _rpcSystems.Add(RpcMasterTypes.Build, new EcsSystems(gameWorld).Add(new BuilderMastSys()));
         _rpcSystems.Add(RpcMasterTypes.DestroyBuild, new EcsSystems(gameWorld).Add(new DestroyMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.Shift, new EcsSystems(gameWorld).Add(new ShiftUnitMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.Attack, new EcsSystems(gameWorld).Add(new AttackUnitMasterSystem()));
@@ -38,16 +34,12 @@ public sealed class GameMasterSystemManager : SystemAbstManager
         _rpcSystems.Add(RpcMasterTypes.Upgrade, new EcsSystems(gameWorld).Add(new UpgradeMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.Fire, new EcsSystems(gameWorld).Add(new FireMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.SeedEnvironment, new EcsSystems(gameWorld).Add(new SeedingMasterSystem()));
-        _rpcSystems.Add(RpcMasterTypes.CircularAttackKing, new EcsSystems(gameWorld).Add(new CircularAttackKingSystem()));
+        _rpcSystems.Add(RpcMasterTypes.CircularAttackKing, new EcsSystems(gameWorld).Add(new CircularAttackKingMastSys()));
 
         var giveTakeSystems = new EcsSystems(gameWorld)
             .Add(new ArcherGiveTakeToolWeapMastSys())
             .Add(new PawnGiveTakeToolWeapMastSys());
         _rpcSystems.Add(RpcMasterTypes.GiveTakeToolWeapon, giveTakeSystems);
-
-
-        VisibilityUnitsSystems = new EcsSystems(gameWorld)
-            .Add(new VisibilityUnitsMasterSystem());
 
 
         UpdateMotion = new EcsSystems(gameWorld)
@@ -57,13 +49,16 @@ public sealed class GameMasterSystemManager : SystemAbstManager
             .Add(new TruceMasterSystem());
 
 
+        InitOnlySystems
+            .Add(new InitGameMasterSystem());
+
+
         allGameSystems
             .Add(InitOnlySystems)
             .Add(RunOnlySystems)
             .Add(InitRunSystems)
 
             .Add(TruceSystems)
-            .Add(VisibilityUnitsSystems)
             .Add(UpdateMotion);
 
         foreach (var system in _rpcSystems.Values) allGameSystems.Add(system);
