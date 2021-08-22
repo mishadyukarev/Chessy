@@ -8,8 +8,6 @@ using UnityEngine;
 
 internal sealed class TruceMasterSystem : IEcsRunSystem
 {
-    private EcsFilter<UnitsInGameInfoComponent> _unitsInGameFilter = default;
-    private EcsFilter<UnitsInConditionInGameCom> _unitsInCondFilter = default;
     private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
     private EcsFilter<MotionsDataUIComponent> _motionsUIFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
@@ -22,8 +20,6 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
 
     public void Run()
     {
-        ref var unitsInGameCom = ref _unitsInGameFilter.Get1(0);
-        ref var unitsInCondInGameCom = ref _unitsInCondFilter.Get1(0);
         ref var inventorUnitsCom = ref _inventorUnitsFilter.Get1(0);
 
         int random;
@@ -47,9 +43,6 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
                 if (curOwnerCellUnitDataCom.HaveOwner)
                 {
                     inventorUnitsCom.AddUnitsInInventor(curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient);
-
-                    unitsInCondInGameCom.RemoveUnitInCondition(curCellUnitDataCom.ConditionUnitType, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, curIdxCell);
-                    unitsInGameCom.RemoveAmountUnitsInGame(curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, curIdxCell);
 
                     curCellUnitDataCom.ResetUnitType();
                 }
@@ -92,18 +85,17 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
             }
         }
 
+        //if (unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0
+        //    && unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0)
+        //{
+        //    inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn, true);
+        //}
 
-        if (unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0
-            && unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, true) <= 0)
-        {
-            inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn, true);
-        }
-
-        if (unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0
-            && unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0)
-        {
-            inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn, false);
-        }
+        //if (unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0
+        //    && unitsInGameCom.GetAmountUnitsInGame(UnitTypes.Pawn, false) <= 0)
+        //{
+        //    inventorUnitsCom.AddUnitsInInventor(UnitTypes.Pawn, false);
+        //}
 
         RpcGeneralSystem.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 

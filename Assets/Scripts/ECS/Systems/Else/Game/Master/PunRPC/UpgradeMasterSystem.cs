@@ -13,8 +13,6 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         private EcsFilter<ForUpgradeMasCom> _forUpgradeFilter = default;
 
         private EcsFilter<UpgradesBuildingsComponent> _upgradeBuildsFilter = default;
-        private EcsFilter<UnitsInGameInfoComponent> _unitsInGameFilter = default;
-        private EcsFilter<UnitsInConditionInGameCom> _unitsInCondFilter = default;
         private EcsFilter<InventorResourcesComponent> _inventResFilt = default;
 
         private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
@@ -32,8 +30,6 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
             ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxForUpgradeUnit);
             ref var curOwnerCellUnitDataCom = ref _cellUnitFilter.Get2(idxForUpgradeUnit);
 
-            ref var unitsInGameCom = ref _unitsInGameFilter.Get1(0);
-            ref var unitsInCondCom = ref _unitsInCondFilter.Get1(0);
             ref var inventResCom = ref _inventResFilt.Get1(0);
 
 
@@ -61,9 +57,6 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                     var preUnitType = curCellUnitDataCom.UnitType;
                                     var preKey = curOwnerCellUnitDataCom.IsMasterClient;
                                     var preMaxHealth = curCellUnitDataCom.MaxAmountHealth;
-
-                                    unitsInCondCom.RemoveUnitInCondition(preConditionType, preUnitType, preKey, idxForUpgradeUnit);
-                                    unitsInGameCom.RemoveAmountUnitsInGame(preUnitType, preKey, idxForUpgradeUnit);
 
                                     curCellUnitDataCom.UnitType = curCellUnitDataCom.UnitType + FOR_NEXT_UPGRADE;
                                     //switch (curCellUnitDataCom.UnitType)
@@ -100,9 +93,6 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                                     var newMaxHealth = curCellUnitDataCom.MaxAmountHealth;
 
                                     //curCellUnitDataCom.AddAmountHealth(newMaxHealth - preMaxHealth);
-
-                                    unitsInGameCom.AddAmountUnitInGame(newUnitType, preKey, idxForUpgradeUnit);
-                                    unitsInCondCom.AddUnitInCondition(preConditionType, newUnitType, preKey, idxForUpgradeUnit);
 
 
                                     if (curCellUnitDataCom.IsMelee)

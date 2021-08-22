@@ -5,6 +5,7 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.Workers;
 using Leopotam.Ecs;
 using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
@@ -21,6 +22,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+        private EcsFilter<CellViewComponent> _cellViewFilter = default;
 
         public void Init()
         {
@@ -85,42 +87,44 @@ namespace Assets.Scripts.ECS.Systems.Game.Master
 
                 ref var curCellEnvDataCom = ref _cellEnvFilter.Get1(curIdxCell);
 
-
-                if (curXyCell[1] >= 4 && curXyCell[1] <= 6)
+                if (_cellViewFilter.Get1(curIdxCell).IsActiveParent)
                 {
-                    random = UnityEngine.Random.Range(1, 100);
-                    if (random <= START_MOUNTAIN_PERCENT)
-                        curCellEnvDataCom.SetNewEnvironment(EnvironmentTypes.Mountain);
+                    if (curXyCell[1] >= 4 && curXyCell[1] <= 6)
+                    {
+                        random = UnityEngine.Random.Range(1, 100);
+                        if (random <= START_MOUNTAIN_PERCENT)
+                            curCellEnvDataCom.SetNewEnvironment(EnvironmentTypes.Mountain);
+                        else
+                        {
+                            random = UnityEngine.Random.Range(1, 100);
+                            if (random <= START_FOREST_PERCENT)
+                            {
+                                curCellEnvDataCom.SetNewEnvironment(EnvironmentTypes.AdultForest);
+                            }
+
+                            random = UnityEngine.Random.Range(1, 100);
+                            if (random <= START_HILL_PERCENT)
+                                curCellEnvDataCom.SetNewEnvironment(EnvironmentTypes.Hill);
+                        }
+                    }
                     else
                     {
+
                         random = UnityEngine.Random.Range(1, 100);
                         if (random <= START_FOREST_PERCENT)
                         {
                             curCellEnvDataCom.SetNewEnvironment(EnvironmentTypes.AdultForest);
                         }
-
-                        random = UnityEngine.Random.Range(1, 100);
-                        if (random <= START_HILL_PERCENT)
-                            curCellEnvDataCom.SetNewEnvironment(EnvironmentTypes.Hill);
-                    }
-                }
-                else
-                {
-
-                    random = UnityEngine.Random.Range(1, 100);
-                    if (random <= START_FOREST_PERCENT)
-                    {
-                        curCellEnvDataCom.SetNewEnvironment(EnvironmentTypes.AdultForest);
-                    }
-                    else
-                    {
-                        random = UnityEngine.Random.Range(1, 100);
-                        if (random <= START_FERTILIZER_PERCENT)
+                        else
                         {
-                            curCellEnvDataCom.SetNewEnvironment(EnvironmentTypes.Fertilizer);
+                            random = UnityEngine.Random.Range(1, 100);
+                            if (random <= START_FERTILIZER_PERCENT)
+                            {
+                                curCellEnvDataCom.SetNewEnvironment(EnvironmentTypes.Fertilizer);
+                            }
                         }
                     }
-                }
+                }   
             }
 
             CameraComponent.ResetRotation();

@@ -200,10 +200,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new AvailCellsForUniqueAttackComp(new Dictionary<bool, List<byte>>()))
                 .Replace(new AvailCellsForSimpleAttackComp(new Dictionary<bool, List<byte>>()))
 
-                .Replace(new UnitsInGameInfoComponent(new Dictionary<UnitTypes, Dictionary<bool, List<byte>>>()))
-                .Replace(new UnitsInConditionInGameCom(new Dictionary<ConditionUnitTypes, Dictionary<UnitTypes, Dictionary<bool, List<byte>>>>()))
-                .Replace(new BuildsInGameComponent(new Dictionary<BuildingTypes, Dictionary<bool, List<byte>>>()))
-
                 .Replace(new UpgradesBuildingsComponent(new Dictionary<BuildingTypes, Dictionary<bool, int>>()))
 
                 .Replace(new InventorUnitsComponent(new Dictionary<UnitTypes, Dictionary<bool, int>>()))

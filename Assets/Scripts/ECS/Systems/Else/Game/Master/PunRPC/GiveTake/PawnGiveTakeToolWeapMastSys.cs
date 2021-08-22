@@ -18,7 +18,6 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
         private EcsFilter<InfoMasCom> _infoFilter = default;
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGiveTakeToolWeapFilter = default;
 
-        private EcsFilter<UnitsInConditionInGameCom> _unitsInCondInGameFilter = default;
         private EcsFilter<InventorResourcesComponent> _inventResFilter = default;
         private EcsFilter<InventorToolsComp, InventorWeaponsComp> _inventToolWeapFilter = default;
 
@@ -31,7 +30,6 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
             if (neededIdxCell != default)
             {
                 var toolWeapTypeForGive = _forGiveTakeToolWeapFilter.Get1(0).ToolWeapType;
-                ref var unitsInCondInGameCom = ref _unitsInCondInGameFilter.Get1(0);
 
                 ref var inventToolsCom = ref _inventToolWeapFilter.Get1(0);
                 ref var inventWeaponsComp = ref _inventToolWeapFilter.Get2(0);
@@ -52,9 +50,6 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                             {
                                 if (cellUnitDataComForGive.IsConditionType(new[] { ConditionUnitTypes.Protected, ConditionUnitTypes.Relaxed }))
                                 {
-                                    unitsInCondInGameCom.ReplaceCondition(cellUnitDataComForGive.ConditionUnitType, default,
-                                        cellUnitDataComForGive.UnitType, ownerCellUnitComForGive.IsMasterClient, neededIdxCell);
-
                                     cellUnitDataComForGive.ConditionUnitType = default;
                                 }
 

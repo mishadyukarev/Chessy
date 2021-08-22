@@ -11,8 +11,6 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
     private EcsFilter<InfoMasCom> _infoFilter = default;
     private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
 
-    private EcsFilter<BuildsInGameComponent> _buildsInGameFilter = default;
-
     private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
     private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
@@ -21,8 +19,6 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
     {
         var sender = _infoFilter.Get1(0).FromInfo.Sender;
         var idxCellForDestory = _destroyFilter.Get1(0).IdxForDestroy;
-
-        ref var buildsInGameCom = ref _buildsInGameFilter.Get1(0);
 
         ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCellForDestory);
         ref var curOnwerCellUnitCom = ref _cellUnitFilter.Get2(idxCellForDestory);
@@ -41,8 +37,7 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
             curCellUnitDataCom.ResetAmountSteps();
 
             if (curCellBuildDataCom.IsBuildType(BuildingTypes.Farm)) curCellEnvDataCom.ResetEnvironment(EnvironmentTypes.Fertilizer);
-
-            buildsInGameCom.RemoveIdxBuild(curCellBuildDataCom.BuildingType, curOnwerCellUnitCom.IsMasterClient, idxCellForDestory);
+ 
             curCellBuildDataCom.ResetBuildType();
         }
         else

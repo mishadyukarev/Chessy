@@ -10,7 +10,8 @@ internal sealed class CreatorUnitMasterSystem : IEcsRunSystem
     private EcsFilter<InfoMasCom> _mastInfoFilter = default;
     private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
     private EcsFilter<InventorUnitsComponent, InventorResourcesComponent> _inventorFilter = default;
-    private EcsFilter<BuildsInGameComponent> _buildsInGameFilter = default;
+
+    private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildFilter = default;
 
     private UnitTypes UnitType => _creatorUnitFilter.Get1(0).UnitTypeForCreating;
 
@@ -19,26 +20,31 @@ internal sealed class CreatorUnitMasterSystem : IEcsRunSystem
         ref var infoCom = ref _mastInfoFilter.Get1(0);
         ref var amountResCom = ref _inventorFilter.Get2(0);
         ref var unitInventorCom = ref _inventorFilter.Get1(0);
-        ref var buildsInGameComp = ref _buildsInGameFilter.Get1(0);
 
-        if (buildsInGameComp.IsSettedCity(infoCom.FromInfo.Sender.IsMasterClient))
+        foreach (var idxCell in _cellBuildFilter)
         {
-            if (amountResCom.CanCreateUnit(UnitType, infoCom.FromInfo.Sender, out bool[] haves))
+            if (_cellBuildFilter.Get1(idxCell).IsBuildType(BuildingTypes.City))
             {
-                amountResCom.BuyCreateUnit(UnitType, infoCom.FromInfo.Sender);
-                unitInventorCom.AddUnitsInInventor(UnitType, infoCom.FromInfo.Sender.IsMasterClient);
+                if (_cellBuildFilter.Get2(idxCell).IsHim(infoCom.FromInfo.Sender))
+                {
+                    if (amountResCom.CanCreateUnit(UnitType, infoCom.FromInfo.Sender, out bool[] haves))
+                    {
+                        amountResCom.BuyCreateUnit(UnitType, infoCom.FromInfo.Sender);
+                        unitInventorCom.AddUnitsInInventor(UnitType, infoCom.FromInfo.Sender.IsMasterClient);
 
-                RpcGeneralSystem.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.SoundGoldPack);
-            }
-            else
-            {
-                RpcGeneralSystem.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.Mistake);
-                RpcGeneralSystem.MistakeEconomyToGeneral(infoCom.FromInfo.Sender, haves);
+                        RpcGeneralSystem.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.SoundGoldPack);
+                    }
+                    else
+                    {
+                        RpcGeneralSystem.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.Mistake);
+                        RpcGeneralSystem.MistakeEconomyToGeneral(infoCom.FromInfo.Sender, haves);
+                    }
+
+                    return;
+                }
             }
         }
-        else
-        {
-            RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedCity, infoCom.FromInfo.Sender);
-        }
+
+        RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedCity, infoCom.FromInfo.Sender);
     }
 }

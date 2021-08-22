@@ -23,14 +23,12 @@ internal sealed class BuilderMastSys : IEcsRunSystem
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
     private EcsFilter<InventorResourcesComponent> _amountResFilt = default;
-    private EcsFilter<BuildsInGameComponent> _idxBuildFilter = default;
 
     public void Run()
     {
         ref var infoMasCom = ref _infoFilter.Get1(0);
         ref var inventorResCom = ref _amountResFilt.Get1(0);
         ref var forBuildMasCom = ref _forBuilderFilter.Get1(0);
-        ref var idxBuildsCom = ref _idxBuildFilter.Get1(0);
 
         var sender = infoMasCom.FromInfo.Sender;
         var idxCellForBuild = forBuildMasCom.IdxForBuild;
@@ -78,8 +76,6 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                             curCellBuildDataCom.BuildingType = buildTypeForBuild;
                             curOwnerCellBuildCom.Owner = sender;
 
-                            idxBuildsCom.AddIdxBuild(buildTypeForBuild, sender.IsMasterClient, idxCellForBuild);
-
                             curCellUnitDataCom.ResetAmountSteps();
 
                             if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.AdultForest)) curCellEnvCom.ResetEnvironment(EnvironmentTypes.AdultForest);
@@ -123,7 +119,6 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
                                 curCellBuildDataCom.BuildingType = buildTypeForBuild;
                                 curOwnerCellBuildCom.Owner = sender;
-                                idxBuildsCom.AddIdxBuild(buildTypeForBuild, sender.IsMasterClient, idxCellForBuild);
 
                                 curCellUnitDataCom.TakeAmountSteps();
 
@@ -161,7 +156,6 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                                 RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
 
                                 inventorResCom.BuyNewBuilding(buildTypeForBuild, sender);
-                                idxBuildsCom.AddIdxBuild(buildTypeForBuild, sender.IsMasterClient, idxCellForBuild);
 
                                 curCellBuildDataCom.BuildingType = buildTypeForBuild;
                                 curOwnerCellBuildCom.Owner = sender;

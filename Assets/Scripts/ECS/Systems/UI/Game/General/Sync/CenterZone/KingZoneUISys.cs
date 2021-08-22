@@ -7,18 +7,18 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
 {
     internal sealed class KingZoneUISys : IEcsRunSystem
     {
-        private EcsFilter<UnitsInGameInfoComponent> _unitsInGameInfoFilter = default;
         private EcsFilter<KingZoneViewUIComp> _kingZoneFilter = default;
+        private EcsFilter<InventorUnitsComponent> _inventUnitsFilter = default;
 
         public void Run()
         {
-            if (_unitsInGameInfoFilter.Get1(0).IsSettedKing(PhotonNetwork.IsMasterClient))
+            if (_inventUnitsFilter.Get1(0).HaveUnitInInventor(UnitTypes.King, PhotonNetwork.IsMasterClient))
             {
-                _kingZoneFilter.Get1(0).DisableZone();
+                _kingZoneFilter.Get1(0).EnableZone();     
             }
             else
             {
-                _kingZoneFilter.Get1(0).EnableZone();
+                _kingZoneFilter.Get1(0).DisableZone();
             }
         }
     }

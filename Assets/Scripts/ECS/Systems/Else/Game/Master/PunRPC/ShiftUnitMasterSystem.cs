@@ -12,8 +12,6 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
     private EcsFilter<InfoMasCom> _infoFilter = default;
     private EcsFilter<ForShiftMasCom> _forShiftFilter = default;
 
-    private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
-    private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
     private EcsFilter<AvailCellsForShiftComp> _availCellsForShiftFilter = default;
 
     private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
@@ -30,8 +28,6 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
         if (_availCellsForShiftFilter.Get1(0).HaveIdxCell(fromInfo.Sender.IsMasterClient, fromIdx, toIdx))
         {
             ref var forShiftMasCom = ref _forShiftFilter.Get1(0);
-            ref var idxUnitsInCondCom = ref _idxUnitsInCondFilter.Get1(0);
-            ref var idxUnitsCom = ref _idxUnitsFilter.Get1(0);
 
             ref var fromCellUnitDataCom = ref _cellUnitFilter.Get1(fromIdx);
             ref var fromOwnerCellUnitCom = ref _cellUnitFilter.Get2(fromIdx);
@@ -51,13 +47,6 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
                 {
                     fromCellUnitDataCom.TakeAmountSteps(neededAmountStepsForShift);
                     if (fromCellUnitDataCom.AmountSteps < 0) fromCellUnitDataCom.ResetAmountSteps();
-
-
-                    idxUnitsInCondCom.RemoveUnitInCondition(fromCellUnitDataCom.ConditionUnitType, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
-                    idxUnitsInCondCom.AddUnitInCondition(ConditionUnitTypes.None, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, toIdx);
-
-                    idxUnitsCom.RemoveAmountUnitsInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
-                    idxUnitsCom.AddAmountUnitInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, toIdx);
 
 
                     toCellUnitDataCom.MainToolWeaponType = fromCellUnitDataCom.MainToolWeaponType;

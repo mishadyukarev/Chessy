@@ -1,53 +1,53 @@
-﻿using Assets.Scripts.Workers;
-using System;
-using System.Collections.Generic;
+﻿//using Assets.Scripts.Workers;
+//using System;
+//using System.Collections.Generic;
 
-namespace Assets.Scripts.ECS.Component
-{
-    internal struct BuildsInGameComponent
-    {
-        private Dictionary<BuildingTypes, Dictionary<bool, List<byte>>> _buildingsInGameDict;
+//namespace Assets.Scripts.ECS.Component
+//{
+//    internal struct BuildsInGameComponent
+//    {
+//        private Dictionary<BuildingTypes, Dictionary<bool, List<byte>>> _buildingsInGameDict;
 
-        internal BuildsInGameComponent(Dictionary<BuildingTypes, Dictionary<bool, List<byte>>> dict)
-        {
-            _buildingsInGameDict = dict;
+//        internal BuildsInGameComponent(Dictionary<BuildingTypes, Dictionary<bool, List<byte>>> dict)
+//        {
+//            _buildingsInGameDict = dict;
 
-            for (BuildingTypes buildingType = 0; buildingType < (BuildingTypes)Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
-            {
-                var dict1 = new Dictionary<bool, List<byte>>();
+//            for (BuildingTypes buildingType = 0; buildingType < (BuildingTypes)Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
+//            {
+//                var dict1 = new Dictionary<bool, List<byte>>();
 
-                dict1.Add(true, new List<byte>());
-                dict1.Add(false, new List<byte>());
+//                dict1.Add(true, new List<byte>());
+//                dict1.Add(false, new List<byte>());
 
-                dict.Add(buildingType, dict1);
-            }
-        }
+//                dict.Add(buildingType, dict1);
+//            }
+//        }
 
-        internal List<byte> GetListIdxBuild(BuildingTypes buildingType, bool key) => _buildingsInGameDict[buildingType][key];
+//        internal List<byte> GetListIdxBuild(BuildingTypes buildingType, bool key) => _buildingsInGameDict[buildingType][key];
 
-        internal bool IsSettedCity(bool key) => GetAmountBuild(BuildingTypes.City, key) > 0;
+//        internal bool IsSettedCity(bool key) => GetAmountBuild(BuildingTypes.City, key) > 0;
 
-        internal void SetXyBuildings(BuildingTypes buildingType, bool key, List<byte> list) => _buildingsInGameDict[buildingType][key] = list.Copy();
+//        internal void SetXyBuildings(BuildingTypes buildingType, bool key, List<byte> list) => _buildingsInGameDict[buildingType][key] = list.Copy();
 
-        internal int GetAmountBuild(BuildingTypes buildingType, bool key) => GetListIdxBuild(buildingType, key).Count;
-        internal int GetAmountAllBuild(bool key)
-        {
-            var amountAllBuildInGame = 0;
+//        internal int GetAmountBuild(BuildingTypes buildingType, bool key) => GetListIdxBuild(buildingType, key).Count;
+//        internal int GetAmountAllBuild(bool key)
+//        {
+//            var amountAllBuildInGame = 0;
 
-            for (int curNumberBuilType = 1; curNumberBuilType < Enum.GetNames(typeof(BuildingTypes)).Length; curNumberBuilType++)
-            {
-                amountAllBuildInGame += GetAmountBuild((BuildingTypes)curNumberBuilType, key);
-            }
+//            for (int curNumberBuilType = 1; curNumberBuilType < Enum.GetNames(typeof(BuildingTypes)).Length; curNumberBuilType++)
+//            {
+//                amountAllBuildInGame += GetAmountBuild((BuildingTypes)curNumberBuilType, key);
+//            }
 
-            return amountAllBuildInGame;
-        }
-        internal int GetAmountAllBuild() => GetAmountAllBuild(true) + GetAmountAllBuild(false);
-        internal byte GetIdxCellByIndexList(BuildingTypes buildingType, bool key, byte idxList) => _buildingsInGameDict[buildingType][key][idxList];
+//            return amountAllBuildInGame;
+//        }
+//        internal int GetAmountAllBuild() => GetAmountAllBuild(true) + GetAmountAllBuild(false);
+//        internal byte GetIdxCellByIndexList(BuildingTypes buildingType, bool key, byte idxList) => _buildingsInGameDict[buildingType][key][idxList];
 
-        internal void AddIdxBuild(BuildingTypes buildingType, bool key, byte idxAdding) => GetListIdxBuild(buildingType, key).Add(idxAdding);
-        internal void RemoveIdxBuild(BuildingTypes buildingType, bool key, byte idxTaking)
-        {
-            if (!GetListIdxBuild(buildingType, key).Remove(idxTaking)) throw new Exception();
-        }
-    }
-}
+//        internal void AddIdxBuild(BuildingTypes buildingType, bool key, byte idxAdding) => GetListIdxBuild(buildingType, key).Add(idxAdding);
+//        internal void RemoveIdxBuild(BuildingTypes buildingType, bool key, byte idxTaking)
+//        {
+//            if (!GetListIdxBuild(buildingType, key).Remove(idxTaking)) throw new Exception();
+//        }
+//    }
+//}

@@ -10,8 +10,6 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
 {
     private EcsFilter<InfoMasCom> _infoMasterFilter = default;
     private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
-    private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
-    private EcsFilter<UnitsInConditionInGameCom> _unitsInCondFilter = default;
 
     private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
 
@@ -19,8 +17,6 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
     {
         ref var infoCom = ref _infoMasterFilter.Get1(0);
         ref var forAttackMasCom = ref _forAttackFilter.Get1(0);
-        ref var unitsInGameCom = ref _idxUnitsFilter.Get1(0);
-        ref var unitsInCondCom = ref _unitsInCondFilter.Get1(0);
 
         var sender = infoCom.FromInfo.Sender;
         var fromIdx = forAttackMasCom.IdxFromCell;
@@ -36,8 +32,6 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
 
         if (fromOwnerCellUnitCom.ActorNumber != toOwnerCellUnitCom.ActorNumber)
         {
-            unitsInCondCom.ReplaceCondition(fromCellUnitDataCom.ConditionUnitType, ConditionUnitTypes.None, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
-
             fromCellUnitDataCom.ResetAmountSteps();
             fromCellUnitDataCom.ResetConditionType();
 
@@ -92,14 +86,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
                     }
                 }
 
-                unitsInGameCom.RemoveAmountUnitsInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
-                unitsInCondCom.RemoveUnitInCondition(fromCellUnitDataCom.ConditionUnitType, fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
                 fromCellUnitDataCom.ResetUnitType();
-
-                if (fromOwnerCellUnitCom.HaveOwner)
-                {
-                    unitsInGameCom.RemoveAmountUnitsInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
-                }
             }
 
             if (!toCellUnitDataCom.HaveAmountHealth)
@@ -107,15 +94,10 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
                 if (toCellUnitDataCom.IsUnitType(UnitTypes.King))
                     RpcGeneralSystem.EndGameToMaster(fromOwnerCellUnitCom.ActorNumber);
 
-                unitsInGameCom.RemoveAmountUnitsInGame(toCellUnitDataCom.UnitType, toOwnerCellUnitCom.IsMasterClient, toIdxForAttack);
-                unitsInCondCom.RemoveUnitInCondition(toCellUnitDataCom.ConditionUnitType, toCellUnitDataCom.UnitType, toOwnerCellUnitCom.IsMasterClient, toIdxForAttack);
                 toCellUnitDataCom.ResetUnitType();
 
                 if (fromCellUnitDataCom.IsMelee)
                 {
-                    unitsInGameCom.RemoveAmountUnitsInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, fromIdx);
-                    unitsInGameCom.AddAmountUnitInGame(fromCellUnitDataCom.UnitType, fromOwnerCellUnitCom.IsMasterClient, toIdxForAttack);
-
                     toCellUnitDataCom.ReplaceUnit(fromCellUnitDataCom);
                 }
             }

@@ -12,8 +12,6 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
     {
         private EcsFilter<InfoMasCom> _infoMastFilter = default;
         private EcsFilter<ForCircularAttackMasCom> _forCircAttackFilter = default;
-        private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
-        private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
@@ -22,8 +20,6 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
         {
             var sender = _infoMastFilter.Get1(0).FromInfo.Sender;
             var idxCellCurculAttack = _forCircAttackFilter.Get1(0).IdxUnitForCirculAttack;
-            ref var idxUnitsCom = ref _idxUnitsFilter.Get1(0);
-            ref var idxUnitsInCondCom = ref _idxUnitsInCondFilter.Get1(0);
 
             ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCellCurculAttack);
             ref var curOwnerCellUnitCom = ref _cellUnitFilter.Get2(idxCellCurculAttack);
@@ -47,7 +43,6 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
                             {
                                 RpcGeneralSystem.EndGameToMaster((byte)curOwnerCellUnitCom.ActorNumber);
                             }
-                            idxUnitsCom.RemoveAmountUnitsInGame(cellUnitDataComDirect.UnitType, curOwnerCellUnitCom.IsMasterClient, idxCellCurDirect);
                             cellUnitDataComDirect.ResetUnitType();
                         }
 
@@ -62,8 +57,6 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
 
                 if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Protected) || curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
                 {
-
-                    idxUnitsInCondCom.ReplaceCondition(curCellUnitDataCom.ConditionUnitType, ConditionUnitTypes.None, UnitTypes.King, sender.IsMasterClient, idxCellCurculAttack);
                     curCellUnitDataCom.ResetConditionType();
                 }
             }

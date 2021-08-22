@@ -12,9 +12,9 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
 {
     private EcsFilter<InfoMasCom> _infoFilter = default;
     private EcsFilter<ForDonerMasCom> _donerFilter = default;
-    private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
     private EcsFilter<MotionsDataUIComponent> _motionsFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerDataUIFilter = default;
+    private EcsFilter<InventorUnitsComponent> _inventUnitsFilter = default;
 
     private Dictionary<bool, bool> _doneOrNotFromStartAnyUpdate = new Dictionary<bool, bool>();
 
@@ -29,12 +29,11 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
     {
         ref var infoMasCom = ref _infoFilter.Get1(0);
         ref var forDonerMasCom = ref _donerFilter.Get1(0);
-        ref var idxUnitsCom = ref _idxUnitsFilter.Get1(0);
         ref var donerDataUICom = ref _donerDataUIFilter.Get1(0);
 
         var sender = infoMasCom.FromInfo.Sender;
 
-        if (idxUnitsCom.IsSettedKing(sender.IsMasterClient))
+        if (!_inventUnitsFilter.Get1(0).HaveUnitInInventor(UnitTypes.King, sender.IsMasterClient))
         {
             RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 

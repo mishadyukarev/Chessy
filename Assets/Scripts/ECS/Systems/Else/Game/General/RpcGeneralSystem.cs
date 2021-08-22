@@ -33,11 +33,8 @@ namespace Assets.Scripts
         private EcsFilter<InventorToolsComp> _invToolsFilter = default;
         private EcsFilter<InventorWeaponsComp> _invWeaponsFilter = default;
 
-        private EcsFilter<UnitsInGameInfoComponent> _unitsInGameInfoComp = default;
-
         private EcsFilter<FromInfoComponent> _fromInfoFilter = default;
         private EcsFilter<SelectorComponent> _selectorFilter = default;
-        private EcsFilter<UnitsInGameInfoComponent> _unitsInGameFilter = default;
         private EcsFilter<UpgradesBuildingsComponent> _upgradesBuildFilter = default;
         private EcsFilter<EndGameDataUIComponent> _endGameFilter = default;
         private EcsFilter<ReadyDataUICom> _readyUIFilter = default;

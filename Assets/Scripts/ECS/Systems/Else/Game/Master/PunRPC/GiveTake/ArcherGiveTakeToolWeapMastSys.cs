@@ -20,8 +20,6 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
         private EcsFilter<InventorResourcesComponent> _inventResFilter = default;
         private EcsFilter<InventorToolsComp, InventorWeaponsComp> _inventToolWeapFilter = default;
 
-        private EcsFilter<UnitsInConditionInGameCom> _unitsInCondInGameFilter = default;
-
         private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
 
         public void Run()
@@ -30,7 +28,6 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
             ref var inventToolsCom = ref _inventToolWeapFilter.Get1(0);
             ref var inventWeaponsComp = ref _inventToolWeapFilter.Get2(0);
             ref var inventResCom = ref _inventResFilter.Get1(0);
-            ref var unitsInCondInGameCom = ref _unitsInCondInGameFilter.Get1(0);
 
             var sender = _infoFilter.Get1(0).FromInfo.Sender;
             var neededIdx = forGiveToolOrWeaponCom.IdxCell;
@@ -51,9 +48,6 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                         {
                             if (cellUnitDataComForGive.IsConditionType(new[] { ConditionUnitTypes.Protected, ConditionUnitTypes.Relaxed }))
                             {
-                                unitsInCondInGameCom.ReplaceCondition(cellUnitDataComForGive.ConditionUnitType, default,
-                                    cellUnitDataComForGive.UnitType, ownerCellUnitComForGive.IsMasterClient, neededIdx);
-
                                 cellUnitDataComForGive.ConditionUnitType = default;
                             }
 
@@ -84,9 +78,6 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                             {
                                 if (cellUnitDataComForGive.IsConditionType(new[] { ConditionUnitTypes.Protected, ConditionUnitTypes.Relaxed }))
                                 {
-                                    unitsInCondInGameCom.ReplaceCondition(cellUnitDataComForGive.ConditionUnitType, default,
-                                        cellUnitDataComForGive.UnitType, ownerCellUnitComForGive.IsMasterClient, neededIdx);
-
                                     cellUnitDataComForGive.ConditionUnitType = default;
                                 }
 

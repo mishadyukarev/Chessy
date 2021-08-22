@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
+using Leopotam.Ecs;
 using System;
 
 namespace Assets.Scripts.Supports
@@ -158,6 +159,23 @@ namespace Assets.Scripts.Supports
         {
             foreach (var curUnitType in rightUnitTypes)
                 if (Is(leftUnitType, curUnitType)) return true;
+            return false;
+        }
+
+
+        internal static bool IsSettedCity(this EcsFilter<CellBuildDataComponent, OwnerComponent> cellBuildDataFilter, bool isMasterKey)
+        {
+            foreach (var idx in cellBuildDataFilter)
+            {
+                if (cellBuildDataFilter.Get1(idx).IsBuildType(BuildingTypes.City))
+                {
+                    if (cellBuildDataFilter.Get2(idx).IsMasterClient == isMasterKey)
+                    {
+                        return true;
+                    }
+                }
+            }
+
             return false;
         }
     }

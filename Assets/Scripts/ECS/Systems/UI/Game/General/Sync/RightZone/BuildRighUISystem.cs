@@ -4,6 +4,7 @@ using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Game.General.Components;
+using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -12,10 +13,9 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
     private EcsFilter<SelectorComponent> _selectorFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
     private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
-    private EcsFilter<BuildsInGameComponent> _idxBuildFilter = default;
 
     private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
-    private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildFilter = default;
     private byte IdxSelCell => _selectorFilter.Get1(0).IdxSelectedCell;
 
     public void Init()
@@ -27,9 +27,6 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
 
     public void Run()
     {
-        ref var buildInGameCom = ref _idxBuildFilter.Get1(0);
-        //ref var 
-
         ref var selCellUnitDataCom = ref _cellUnitFilter.Get1(IdxSelCell);
         ref var selOwnerCellUnitCom = ref _cellUnitFilter.Get2(IdxSelCell);
         ref var selBotOnwerCellUnitCom = ref _cellUnitFilter.Get3(IdxSelCell);
@@ -117,7 +114,7 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
                             //}
 
 
-                            if (buildInGameCom.IsSettedCity(PhotonNetwork.IsMasterClient))
+                            if (_cellBuildFilter.IsSettedCity(PhotonNetwork.IsMasterClient))
                             {
                                 _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, false);
                             }

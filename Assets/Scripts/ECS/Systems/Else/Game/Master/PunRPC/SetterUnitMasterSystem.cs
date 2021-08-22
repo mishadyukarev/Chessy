@@ -15,8 +15,6 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
 
     private EcsFilter<ForSettingUnitMasCom> _setterFilter = default;
     private EcsFilter<InventorUnitsComponent> _unitInventorFilter = default;
-    private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
-    private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
     private EcsFilter<AvailCellsForSetUnitComp> _availCellsForSetUnitFilter = default;
 
     private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
@@ -29,7 +27,6 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
         var idxCellForSetting = _setterFilter.Get1(0).IdxCellForSetting;
 
         ref var unitInventrorCom = ref _unitInventorFilter.Get1(0);
-        ref var unitsInGameCom = ref _idxUnitsFilter.Get1(0);
 
         ref var curCellEnvrDataCom = ref _cellEnvirDataFilter.Get1(idxCellForSetting);
         ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCellForSetting);
@@ -82,9 +79,6 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
 
 
             unitInventrorCom.TakeUnitsInInventor(unitTypeForSetting, sender.IsMasterClient);
-            unitsInGameCom.AddAmountUnitInGame(unitTypeForSetting, sender.IsMasterClient, idxCellForSetting);
-            _idxUnitsInCondFilter.Get1(0).AddUnitInCondition(ConditionUnitTypes.None, unitTypeForSetting, sender.IsMasterClient, idxCellForSetting);
-
 
             RpcGeneralSystem.SetUnitToGeneral(sender, true);
             RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);

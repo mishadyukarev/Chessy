@@ -27,209 +27,119 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
     private EcsFilter<MotionsDataUIComponent> _motionsUIFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
 
-    private EcsFilter<UnitsInGameInfoComponent> _idxUnitsFilter = default;
-    private EcsFilter<UnitsInConditionInGameCom> _idxUnitsInCondFilter = default;
-    private EcsFilter<BuildsInGameComponent> _idxBuildsFilter = default;
-
     public void Run()
     {
         ref var inventorResCom = ref _invResFilt.Get1(0);
-
-        ref var idxUnitsCom = ref _idxUnitsFilter.Get1(0);
-        ref var idxUnitsInCondCom = ref _idxUnitsInCondFilter.Get1(0);
-        ref var idxBuildsCom = ref _idxBuildsFilter.Get1(0);
-
         ref var amountUpgradesCom = ref _upgradeBuildsFilter.Get1(0);
-
         int minus;
-        bool isMasterKey;
+        int amountAdultForest = 0;
 
-        for (byte isMasterByte = 0; isMasterByte <= 1; isMasterByte++)
+
+        inventorResCom.AddAmountResources(ResourceTypes.Food, true);
+        inventorResCom.AddAmountResources(ResourceTypes.Food, false);
+
+
+        foreach (byte curIdxCell in _xyCellFilter)
         {
-            isMasterKey = true;
-            if (isMasterByte == 1) isMasterKey = false;
+            ref var curCellViewCom = ref _cellViewFilter.Get1(curIdxCell);
+
+            ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(curIdxCell);
+            ref var curOwnerCellUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
+
+            ref var cellBuildDataCom = ref _cellBuildDataFilter.Get1(curIdxCell);
+            ref var curOwnerCellBuildCom = ref _cellBuildDataFilter.Get2(curIdxCell);
+
+            ref var curCellFireDataCom = ref _cellFireDataFilter.Get1(curIdxCell);
+            ref var curCellEnvrDataCom = ref _cellEnvDataFilter.Get1(curIdxCell);
 
 
-            for (byte idxCellList = 0; idxCellList < idxBuildsCom.GetAmountBuild(BuildingTypes.Farm, isMasterKey); idxCellList++)
+            if (curCellUnitDataCom.HaveUnit)
             {
-                var curIdxCell = idxBuildsCom.GetIdxCellByIndexList(BuildingTypes.Farm, isMasterKey, idxCellList);
+                if(!curCellUnitDataCom.IsUnitType(UnitTypes.King)) inventorResCom.TakeAmountResources(ResourceTypes.Food, curOwnerCellUnitCom.IsMasterClient);
 
-                ref var cellEnvrDataCom = ref _cellEnvDataFilter.Get1(curIdxCell);
-                ref var cellBuildDataCom = ref _cellBuildDataFilter.Get1(curIdxCell);
-
-                minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Farm, amountUpgradesCom.GetAmountUpgrades(BuildingTypes.Farm, isMasterKey));
-
-                cellEnvrDataCom.TakeAmountResources(EnvironmentTypes.Fertilizer, minus);
-                inventorResCom.AddAmountResources(ResourceTypes.Food, isMasterKey, minus);
-
-                if (!cellEnvrDataCom.HaveResources(EnvironmentTypes.Fertilizer))
+                if (curCellFireDataCom.HaveFire)
                 {
-                    cellEnvrDataCom.ResetEnvironment(EnvironmentTypes.Fertilizer);
-
-                    idxBuildsCom.RemoveIdxBuild(BuildingTypes.Farm, isMasterKey, curIdxCell);
-
-                    cellBuildDataCom.BuildingType = default;
-                    _cellBuildDataFilter.Get2(curIdxCell).ResetOwner();
+                    curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.None;
                 }
-            }
 
-
-            for (byte idxList = 0; idxList < idxBuildsCom.GetAmountBuild(BuildingTypes.Woodcutter, isMasterKey); idxList++)
-            {
-                var curIdxCell = idxBuildsCom.GetIdxCellByIndexList(BuildingTypes.Woodcutter, isMasterKey, idxList);
-
-                ref var curCellEnvDataCom = ref _cellEnvDataFilter.Get1(curIdxCell);
-                ref var curCellBuildDataCom = ref _cellBuildDataFilter.Get1(curIdxCell);
-                ref var curCellFireDataCom = ref _cellFireDataFilter.Get1(curIdxCell);
-
-                minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Woodcutter, amountUpgradesCom.GetAmountUpgrades(BuildingTypes.Woodcutter, isMasterKey));
-
-                curCellEnvDataCom.TakeAmountResources(EnvironmentTypes.AdultForest, minus);
-                inventorResCom.AddAmountResources(ResourceTypes.Wood, isMasterKey, minus);
-
-                if (!curCellEnvDataCom.HaveResources(EnvironmentTypes.AdultForest))
+                else
                 {
-                    curCellEnvDataCom.ResetEnvironment(EnvironmentTypes.AdultForest);
-
-                    idxBuildsCom.RemoveIdxBuild(BuildingTypes.Woodcutter, isMasterKey, curIdxCell);
-                    curCellBuildDataCom.ResetBuildType();
-
-                    if (curCellFireDataCom.HaveFire)
-                    {
-                        curCellFireDataCom.HaveFire = false;
-                    }
-                }
-            }
-
-
-            for (byte idxList = 0; idxList < idxBuildsCom.GetAmountBuild(BuildingTypes.Mine, isMasterKey); idxList++)
-            {
-                var curIdxCell = idxBuildsCom.GetIdxCellByIndexList(BuildingTypes.Mine, isMasterKey, idxList);
-
-                ref var curCellEnvDataCom = ref _cellEnvDataFilter.Get1(curIdxCell);
-                ref var curCellBuildDataCom = ref _cellBuildDataFilter.Get1(curIdxCell);
-                ref var curOwnerCellBuildCom = ref _cellBuildDataFilter.Get2(curIdxCell);
-
-
-                minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Mine, amountUpgradesCom.GetAmountUpgrades(BuildingTypes.Mine, isMasterKey));
-
-                curCellEnvDataCom.TakeAmountResources(EnvironmentTypes.Hill, minus);
-                inventorResCom.AddAmountResources(ResourceTypes.Ore, isMasterKey, minus);
-
-                if (!curCellEnvDataCom.HaveResources(EnvironmentTypes.Hill))
-                {
-                    if (curOwnerCellBuildCom.HaveOwner)
-                    {
-                        idxBuildsCom.RemoveIdxBuild(BuildingTypes.Mine, isMasterKey, curIdxCell);
-                    }
-                    curCellBuildDataCom.ResetBuildType();
-                }
-            }
-
-
-            for (UnitTypes curUnitType = (UnitTypes)1; (byte)curUnitType < Enum.GetNames(typeof(UnitTypes)).Length; curUnitType++)
-            {
-                var curConditionType = ConditionUnitTypes.Relaxed;
-
-                for (int idxCell = 0; idxCell < idxUnitsInCondCom.GetAmountUnitsInCondition(curConditionType, curUnitType, isMasterKey); idxCell++)
-                {
-                    var curIdxCell = idxUnitsInCondCom.GetIdxInConditionByIndex(curConditionType, curUnitType, isMasterKey, idxCell);
-
-                    ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(curIdxCell);
-                    ref var curOwnerCellUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
-                    ref var curCellBuildDataCom = ref _cellBuildDataFilter.Get1(curIdxCell);
-                    ref var curOwnerCellBuildCom = ref _cellBuildDataFilter.Get2(curIdxCell);
-                    ref var curCellFireDataCom = ref _cellFireDataFilter.Get1(curIdxCell);
-                    ref var curCellEnvDataCom = ref _cellEnvDataFilter.Get1(curIdxCell);
-
-                    if (curCellFireDataCom.HaveFire)
-                    {
-                        idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.None, curUnitType, isMasterKey, curIdxCell);
-                        curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.None;
-                    }
-
-                    else
+                    if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
                     {
                         if (curCellUnitDataCom.HaveMaxAmountHealth)
                         {
-                            if (curUnitType == UnitTypes.Pawn)
+
+                            if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn))
                             {
-                                if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                                if (curCellEnvrDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
                                 {
-                                    inventorResCom.AddAmountResources(ResourceTypes.Wood, isMasterKey);
-                                    curCellEnvDataCom.TakeAmountResources(EnvironmentTypes.AdultForest);
+                                    inventorResCom.AddAmountResources(ResourceTypes.Wood, curOwnerCellUnitCom.IsMasterClient);
+                                    curCellEnvrDataCom.TakeAmountResources(EnvironmentTypes.AdultForest);
 
-                                    if (curCellBuildDataCom.HaveBuild)
+                                    if (cellBuildDataCom.HaveBuild)
                                     {
-                                        if (curCellBuildDataCom.IsBuildType(BuildingTypes.Woodcutter))
+                                        if (cellBuildDataCom.IsBuildType(BuildingTypes.Woodcutter))
                                         {
-                                            if (!curCellEnvDataCom.HaveResources(EnvironmentTypes.AdultForest))
+                                            if (!curCellEnvrDataCom.HaveResources(EnvironmentTypes.AdultForest))
                                             {
-                                                idxBuildsCom.RemoveIdxBuild(BuildingTypes.Woodcutter, isMasterKey, curIdxCell);
 
-                                                curCellBuildDataCom.BuildingType = default;
+                                                cellBuildDataCom.BuildingType = default;
                                                 curOwnerCellBuildCom.ResetOwner();
                                             }
                                         }
                                         else
                                         {
-                                            idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
                                             curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
                                         }
                                     }
                                     else
                                     {
-                                        if (curCellEnvDataCom.HaveResources(EnvironmentTypes.AdultForest))
+                                        if (curCellEnvrDataCom.HaveResources(EnvironmentTypes.AdultForest))
                                         {
-                                            curCellBuildDataCom.BuildingType = BuildingTypes.Woodcutter;
+                                            cellBuildDataCom.BuildingType = BuildingTypes.Woodcutter;
                                             curOwnerCellBuildCom.SetOwner(curOwnerCellUnitCom.Owner);
-                                            idxBuildsCom.AddIdxBuild(BuildingTypes.Woodcutter, isMasterKey, curIdxCell);
                                         }
                                         else
                                         {
-                                            curCellEnvDataCom.ResetEnvironment(EnvironmentTypes.AdultForest);
+                                            curCellEnvrDataCom.ResetEnvironment(EnvironmentTypes.AdultForest);
                                         }
                                     }
                                 }
 
                                 else if (curCellUnitDataCom.ExtraToolWeaponType == ToolWeaponTypes.Pick)
                                 {
-                                    if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.Hill))
+                                    if (curCellEnvrDataCom.HaveEnvironment(EnvironmentTypes.Hill))
                                     {
-                                        if (curCellBuildDataCom.HaveBuild)
+                                        if (cellBuildDataCom.HaveBuild)
                                         {
                                             curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
-                                            idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
                                         }
                                         else
                                         {
-                                            if (curCellEnvDataCom.GetAmountResources(EnvironmentTypes.Hill) < curCellEnvDataCom.MaxAmountResources(EnvironmentTypes.Hill))
+                                            if (curCellEnvrDataCom.GetAmountResources(EnvironmentTypes.Hill) < curCellEnvrDataCom.MaxAmountResources(EnvironmentTypes.Hill))
                                             {
-                                                curCellEnvDataCom.AddAmountResources(EnvironmentTypes.Hill);
+                                                curCellEnvrDataCom.AddAmountResources(EnvironmentTypes.Hill);
                                             }
                                             else
                                             {
                                                 curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
-                                                idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
                                             }
                                         }
                                     }
                                     else
                                     {
                                         curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
-                                        idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
                                     }
                                 }
 
                                 else
                                 {
                                     curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
-                                    idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
                                 }
                             }
+
                             else
                             {
-                                idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, curIdxCell);
                                 curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
                             }
                         }
@@ -243,71 +153,74 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                             }
                         }
                     }
-                }
-
-
-
-                curConditionType = ConditionUnitTypes.None;
-
-                for (int index = 0; index < idxUnitsInCondCom.GetAmountUnitsInCondition(curConditionType, curUnitType, isMasterKey); index++)
-                {
-                    var idxUnitInCond = idxUnitsInCondCom.GetIdxInConditionByIndex(curConditionType, curUnitType, isMasterKey, index);
-
-                    ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxUnitInCond);
-
-                    if (curCellUnitDataCom.HaveMaxAmountSteps)
+                    else if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.None))
                     {
-                        curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
-                        idxUnitsInCondCom.ReplaceCondition(curConditionType, ConditionUnitTypes.Protected, curUnitType, isMasterKey, idxUnitInCond);
-                    }
-                }
-            }
-
-            var amountUnits = idxUnitsCom.GetAmountUnitsInGame(isMasterKey, new[]
-            {
-                UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop
-            });
-
-            inventorResCom.TakeAmountResources(ResourceTypes.Food, isMasterKey, amountUnits);
-            inventorResCom.AddAmountResources(ResourceTypes.Food, isMasterKey);
-
-
-
-
-            if (inventorResCom.GetAmountResources(ResourceTypes.Food, isMasterKey) < 0)
-            {
-                for (UnitTypes unitType = (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length - 1; unitType != UnitTypes.None; unitType--)
-                {
-                    amountUnits = idxUnitsCom.GetAmountUnitsInGame(unitType, isMasterKey);
-
-                    if (amountUnits > 0)
-                    {
-                        var curIdxCell = idxUnitsCom.GetIdxUnitInGameByIndexList(unitType, isMasterKey, amountUnits - 1);
-
-                        ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(curIdxCell);
-
-                        idxUnitsCom.RemoveAmountUnitsInGame(unitType, isMasterKey, curIdxCell);
-                        idxUnitsInCondCom.RemoveUnitInCondition(curCellUnitDataCom.ConditionUnitType, unitType, isMasterKey, curIdxCell);
-                        curCellUnitDataCom.UnitType = default;
-                        break;
+                        if (curCellUnitDataCom.HaveMaxAmountSteps)
+                        {
+                            curCellUnitDataCom.ConditionUnitType = ConditionUnitTypes.Protected;
+                        }
                     }
                 }
 
-                inventorResCom.SetAmountResources(ResourceTypes.Food, isMasterKey, 0);
+                _cellUnitFilter.Get1(curIdxCell).RefreshAmountSteps();
             }
 
+            if (cellBuildDataCom.HaveBuild)
+            {
+                if (cellBuildDataCom.IsBuildType(BuildingTypes.Farm))
+                {
+                    minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Farm, amountUpgradesCom.GetAmountUpgrades(BuildingTypes.Farm, curOwnerCellBuildCom.IsMasterClient));
 
-            _donerUIFilter.Get1(0).SetDoned(isMasterKey, false);
-        }
+                    curCellEnvrDataCom.TakeAmountResources(EnvironmentTypes.Fertilizer, minus);
+                    inventorResCom.AddAmountResources(ResourceTypes.Food, curOwnerCellBuildCom.IsMasterClient, minus);
 
-        foreach (byte curIdxCell in _xyCellFilter)
-        {
-            ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(curIdxCell);
-            ref var curOwnerCellUnitDataCom = ref _cellUnitFilter.Get2(curIdxCell);
-            ref var curCellBuildDataCom = ref _cellBuildDataFilter.Get1(curIdxCell);
-            ref var curOwnerBuildCom = ref _cellBuildDataFilter.Get2(curIdxCell);
-            ref var curCellFireDataCom = ref _cellFireDataFilter.Get1(curIdxCell);
-            ref var curCellEnvrDataCom = ref _cellEnvDataFilter.Get1(curIdxCell);
+                    if (!curCellEnvrDataCom.HaveResources(EnvironmentTypes.Fertilizer))
+                    {
+                        curCellEnvrDataCom.ResetEnvironment(EnvironmentTypes.Fertilizer);
+
+                        cellBuildDataCom.BuildingType = default;
+                        _cellBuildDataFilter.Get2(curIdxCell).ResetOwner();
+                    }
+                }
+
+                else if (cellBuildDataCom.IsBuildType(BuildingTypes.Woodcutter))
+                {
+                    minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Woodcutter, amountUpgradesCom.GetAmountUpgrades(BuildingTypes.Woodcutter, curOwnerCellBuildCom.IsMasterClient));
+
+                    curCellEnvrDataCom.TakeAmountResources(EnvironmentTypes.AdultForest, minus);
+                    inventorResCom.AddAmountResources(ResourceTypes.Wood, curOwnerCellBuildCom.IsMasterClient, minus);
+
+                    if (!curCellEnvrDataCom.HaveResources(EnvironmentTypes.AdultForest))
+                    {
+                        curCellEnvrDataCom.ResetEnvironment(EnvironmentTypes.AdultForest);
+
+                        cellBuildDataCom.ResetBuildType();
+
+                        if (curCellFireDataCom.HaveFire)
+                        {
+                            curCellFireDataCom.HaveFire = false;
+                        }
+                    }
+                }
+                else if (cellBuildDataCom.IsBuildType(BuildingTypes.Mine))
+                {
+                    minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Mine, amountUpgradesCom.GetAmountUpgrades(BuildingTypes.Mine, curOwnerCellBuildCom.IsMasterClient));
+
+                    curCellEnvrDataCom.TakeAmountResources(EnvironmentTypes.Hill, minus);
+                    inventorResCom.AddAmountResources(ResourceTypes.Ore, curOwnerCellBuildCom.IsMasterClient, minus);
+
+                    if (!curCellEnvrDataCom.HaveResources(EnvironmentTypes.Hill))
+                    {
+                        cellBuildDataCom.ResetBuildType();
+                    }
+
+                }
+            }
+
+            if (curCellEnvrDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+            {
+                ++amountAdultForest;
+            }
 
             if (curCellFireDataCom.HaveFire)
             {
@@ -319,11 +232,8 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
                     if (!curCellUnitDataCom.HaveAmountHealth)
                     {
-                        idxUnitsCom.RemoveAmountUnitsInGame(curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, curIdxCell);
-                        idxUnitsInCondCom.RemoveUnitInCondition(curCellUnitDataCom.ConditionUnitType, curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient, curIdxCell);
-
                         curCellUnitDataCom.ResetUnit();
-                        curOwnerCellUnitDataCom.ResetOwner();
+                        curOwnerCellUnitCom.ResetOwner();
                     }
                 }
 
@@ -331,11 +241,10 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
                 if (!curCellEnvrDataCom.HaveResources(EnvironmentTypes.AdultForest))
                 {
-                    if (curCellBuildDataCom.HaveBuild)
+                    if (cellBuildDataCom.HaveBuild)
                     {
-                        idxBuildsCom.RemoveIdxBuild(curCellBuildDataCom.BuildingType, curOwnerBuildCom.IsMasterClient, curIdxCell);
-                        curCellBuildDataCom.BuildingType = default;
-                        curOwnerBuildCom.ResetOwner();
+                        cellBuildDataCom.BuildingType = default;
+                        curOwnerCellBuildCom.ResetOwner();
                     }
 
                     curCellEnvrDataCom.ResetEnvironment(EnvironmentTypes.AdultForest);
@@ -360,37 +269,17 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
             }
         }
 
-
-
-        foreach (var curIdxCell in _xyCellFilter)
-        {
-            if (_cellUnitFilter.Get1(curIdxCell).HaveUnit)
-            {
-                _cellUnitFilter.Get1(curIdxCell).RefreshAmountSteps();
-            }
-        }
-
-        _motionsUIFilter.Get1(0).AmountMotions += 1;
-
-
-        int amountAdultForest = 0;
-
-        foreach (var curIdxCell in _xyCellFilter)
-        {
-            ref var curCellEnvDataCom = ref _cellEnvDataFilter.Get1(curIdxCell);
-            ref var curCellViewCom = ref _cellViewFilter.Get1(curIdxCell);
-
-            if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest) && curCellViewCom.IsActiveParent)
-            {
-                ++amountAdultForest;
-            }
-        }
-
         if (amountAdultForest <= 3)
         {
             RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
             GameMasterSystemManager.TruceSystems.Run();
         }
+
+
+        _donerUIFilter.Get1(0).SetDoned(true, false);
+        _donerUIFilter.Get1(0).SetDoned(false, false);
+
+        _motionsUIFilter.Get1(0).AmountMotions += 1;
     }
 }
 

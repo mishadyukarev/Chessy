@@ -8,7 +8,6 @@ using UnityEngine;
 
 internal sealed class GetterUnitsUISystem : IEcsRunSystem
 {
-    private EcsFilter<UnitsInGameInfoComponent> _xyUnitsFilter = default;
     private EcsFilter<GetterUnitsDataUICom, GetterUnitsViewUICom> _takerUnitsUIFilter = default;
 
     private EcsFilter<InventorUnitsComponent> _inventUnitsFilter = default;
@@ -17,7 +16,6 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
 
     public void Run()
     {
-        ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
         ref var getterUnitsDataUICom = ref _takerUnitsUIFilter.Get1(0);
         ref var getterUnitsViewUICom = ref _takerUnitsUIFilter.Get2(0);
         ref var inventUnitsComp = ref _inventUnitsFilter.Get1(0);
