@@ -10,11 +10,13 @@ using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.UpZone;
 using Leopotam.Ecs;
+using System;
+using UnityEngine;
 
-public sealed class GameGeneralSystemManager : SystemAbstManager
+public sealed class GameGeneralSystemManager : SystemAbstManager, IDisposable
 {
-    private PhotonSceneGameGeneralSystem _photonSceneGameGeneralSystem;
-    private RpcGeneralSystem _rPCGameSystem;
+    private PhotonSceneGameGeneralSystem _photonSceneGameSys;
+    private RpcGeneralSystem _rpcGameSystem;
 
     internal GameGeneralSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld)
     {
@@ -22,8 +24,8 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(new InitGameGeneralSystem());
 
 
-        _photonSceneGameGeneralSystem = Main.Instance.gameObject.AddComponent<PhotonSceneGameGeneralSystem>();
-        _rPCGameSystem = Main.Instance.gameObject.AddComponent<RpcGeneralSystem>();
+        _photonSceneGameSys = Main.Instance.gameObject.AddComponent<PhotonSceneGameGeneralSystem>();
+        _rpcGameSystem = Main.Instance.gameObject.AddComponent<RpcGeneralSystem>();
 
 
         var syncCellVisionSystems = new EcsSystems(gameWorld)
@@ -69,8 +71,8 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
         InitOnlySystems
             .Add(spawnerAndCreatorEntSystems)
             .Add(new StaticEventsGameSys())
-            .Add(_photonSceneGameGeneralSystem)
-            .Add(_rPCGameSystem);
+            .Add(_photonSceneGameSys)
+            .Add(_rpcGameSystem);
 
 
         RunOnlySystems
@@ -97,5 +99,11 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(InitOnlySystems)
             .Add(RunOnlySystems)
             .Add(InitRunSystems);
+    }
+
+    public void Dispose()
+    {
+        GameObject.Destroy(_photonSceneGameSys);
+        GameObject.Destroy(_rpcGameSystem);
     }
 }

@@ -275,6 +275,36 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
             GameMasterSystemManager.TruceSystems.Run();
         }
 
+        for (byte i = 0; i < 2; i++)
+        {
+            var isMaster = true;
+            if (i == 1) isMaster = false;
+
+            if (inventorResCom.GetAmountResources(ResourceTypes.Food, isMaster) < 0)
+            {
+                inventorResCom.SetAmountResources(ResourceTypes.Food, isMaster, 0);
+
+                foreach (byte curIdxCell in _xyCellFilter)
+                {
+                    ref var curCellUnitDataComp = ref _cellUnitFilter.Get1(curIdxCell);
+                    ref var curOwnerCellUnitComp = ref _cellUnitFilter.Get2(curIdxCell);
+
+                    if (curCellUnitDataComp.HaveUnit)
+                    {
+                        if (!curCellUnitDataComp.IsUnitType(UnitTypes.King))
+                        {
+                            if (curOwnerCellUnitComp.IsMasterClient == isMaster)
+                            {
+                                curCellUnitDataComp.ResetUnit();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
 
         _donerUIFilter.Get1(0).SetDoned(true, false);
         _donerUIFilter.Get1(0).SetDoned(false, false);

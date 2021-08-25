@@ -13,7 +13,6 @@
     Mistake,
     CreateUnit,
     MeltOre,
-    GetUnit,
     SetUnit,
     SeedEnvironment,
     Fire,
@@ -22,5 +21,5 @@
 
     GiveTakeToolWeapon,
 
-    Upgrade,
+    UpgradeBuild,
 }

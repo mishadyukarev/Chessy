@@ -28,10 +28,9 @@ public sealed class GameMasterSystemManager : SystemAbstManager
         _rpcSystems.Add(RpcMasterTypes.Ready, new EcsSystems(gameWorld).Add(new ReadyMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.Done, new EcsSystems(gameWorld).Add(new DonerMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.CreateUnit, new EcsSystems(gameWorld).Add(new CreatorUnitMasterSystem()));
-        _rpcSystems.Add(RpcMasterTypes.GetUnit, new EcsSystems(gameWorld).Add(new GetterUnitMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.MeltOre, new EcsSystems(gameWorld).Add(new MeltOreMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.SetUnit, new EcsSystems(gameWorld).Add(new SetterUnitMasterSystem()));
-        _rpcSystems.Add(RpcMasterTypes.Upgrade, new EcsSystems(gameWorld).Add(new UpgradeMasterSystem()));
+        _rpcSystems.Add(RpcMasterTypes.UpgradeBuild, new EcsSystems(gameWorld).Add(new UpgradeMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.Fire, new EcsSystems(gameWorld).Add(new FireMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.SeedEnvironment, new EcsSystems(gameWorld).Add(new SeedingMasterSystem()));
         _rpcSystems.Add(RpcMasterTypes.CircularAttackKing, new EcsSystems(gameWorld).Add(new CircularAttackKingMastSys()));

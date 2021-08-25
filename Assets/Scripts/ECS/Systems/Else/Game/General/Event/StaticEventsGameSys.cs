@@ -106,11 +106,11 @@ namespace Assets.Scripts
             {
                 if (_inventorUnitsFilter.Get1(0).HaveUnitInInventor(unitType, PhotonNetwork.IsMasterClient))
                 {
-                    RpcGeneralSystem.GetUnitToMaster(unitType);
+                    _selectorFilter.Get1(0).SelectedUnitType = unitType;
                 }
                 else
                 {
-                    _takerUIFilter.Get1(0).ActiveNeedCreateButton(unitType, PhotonNetwork.IsMasterClient);
+                    _takerUIFilter.Get1(0).ActiveNeedCreateButton(unitType, true);
                 }
             }
         }

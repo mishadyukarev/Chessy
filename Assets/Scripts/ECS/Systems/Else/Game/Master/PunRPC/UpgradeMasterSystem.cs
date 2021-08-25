@@ -36,104 +36,20 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
             bool[] haves;
 
-            switch (forUpgradeCom.UpgradeModType)
+
+            var buildTypeForUpgrade = _forUpgradeFilter.Get1(0).BuildingType;
+
+            if (inventResCom.CanUpgradeBuildings(sender, buildTypeForUpgrade, out haves))
             {
-                case UpgradeModTypes.None:
-                    throw new Exception();
+                inventResCom.BuyUpgradeBuildings(sender, buildTypeForUpgrade);
+                _upgradeBuildsFilter.Get1(0).AddAmountUpgrades(buildTypeForUpgrade, sender.IsMasterClient);
 
-                case UpgradeModTypes.Unit:
-                    if (curCellUnitDataCom.HaveUnit)
-                    {
-                        if (curOwnerCellUnitDataCom.HaveOwner)
-                        {
-                            if (curOwnerCellUnitDataCom.IsHim(sender))
-                            {
-                                if (inventResCom.CanUpgradeUnit(sender, curCellUnitDataCom.UnitType, out haves))
-                                {
-                                    inventResCom.BuyUpgradeUnit(sender, curCellUnitDataCom.UnitType);
-
-
-                                    var preConditionType = curCellUnitDataCom.ConditionUnitType;
-                                    var preUnitType = curCellUnitDataCom.UnitType;
-                                    var preKey = curOwnerCellUnitDataCom.IsMasterClient;
-                                    var preMaxHealth = curCellUnitDataCom.MaxAmountHealth;
-
-                                    curCellUnitDataCom.UnitType = curCellUnitDataCom.UnitType + FOR_NEXT_UPGRADE;
-                                    //switch (curCellUnitDataCom.UnitType)
-                                    //{
-                                    //    case UnitTypes.None:
-                                    //        throw new Exception();
-
-                                    //    case UnitTypes.King:
-                                    //        throw new Exception();
-
-                                    //    case UnitTypes.Pawn:
-                                    //        throw new Exception();
-
-                                    //    case UnitTypes.Rook:
-                                    //        throw new Exception();
-
-                                    //    case UnitTypes.Rook_Crossbow:
-                                    //        curCellUnitDataCom.AmountHealth += curCellUnitDataCom.MaxAmountHealth - UnitValues.STANDART_AMOUNT_HEALTH_ROOK_CROSSBOW;
-                                    //        break;
-
-                                    //    case UnitTypes.Bishop:
-                                    //        throw new Exception();
-
-                                    //    case UnitTypes.Bishop_Crossbow:
-                                    //        curCellUnitDataCom.AmountHealth += curCellUnitDataCom.MaxAmountHealth - UnitValues.STANDART_AMOUNT_HEALTH_BISHOP_CROSSBOW;
-                                    //        break;
-
-                                    //    default:
-                                    //        throw new Exception();
-                                    //}
-
-
-                                    var newUnitType = curCellUnitDataCom.UnitType;
-                                    var newMaxHealth = curCellUnitDataCom.MaxAmountHealth;
-
-                                    //curCellUnitDataCom.AddAmountHealth(newMaxHealth - preMaxHealth);
-
-
-                                    if (curCellUnitDataCom.IsMelee)
-                                    {
-                                        RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitMelee);
-                                    }
-                                    else
-                                    {
-                                        RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitArcher);
-                                    }
-                                }
-                                else
-                                {
-                                    RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                                    RpcGeneralSystem.MistakeEconomyToGeneral(sender, haves);
-                                }
-                            }
-                        }
-                    }
-                    break;
-
-                case UpgradeModTypes.Building:
-
-                    var buildTypeForUpgrade = _forUpgradeFilter.Get1(0).BuildingType;
-
-                    if (inventResCom.CanUpgradeBuildings(sender, buildTypeForUpgrade, out haves))
-                    {
-                        inventResCom.BuyUpgradeBuildings(sender, buildTypeForUpgrade);
-                        _upgradeBuildsFilter.Get1(0).AddAmountUpgrades(buildTypeForUpgrade, sender.IsMasterClient);
-
-                        RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
-                    }
-                    else
-                    {
-                        RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                        RpcGeneralSystem.MistakeEconomyToGeneral(sender, haves);
-                    }
-                    break;
-
-                default:
-                    break;
+                RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
+            }
+            else
+            {
+                RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                RpcGeneralSystem.MistakeEconomyToGeneral(sender, haves);
             }
         }
     }

@@ -90,7 +90,7 @@ namespace Assets.Scripts
         public static void ActiveAmountMotionUIToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
         public static void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
 
-        public static void UpgradeBuildingToMaster(BuildingTypes buildingTypeForUpgrade, UpgradeModTypes upgradeModType = UpgradeModTypes.Building) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Upgrade, new object[] { upgradeModType, buildingTypeForUpgrade });
+        public static void UpgradeBuildingToMaster(BuildingTypes buildingTypeForUpgrade) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeBuild, new object[] { buildingTypeForUpgrade });
 
         public static void ShiftUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { idxPreviousCell, idxSelectedCell });
         public static void AttackUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Attack, new object[] { idxPreviousCell, idxSelectedCell });
@@ -116,9 +116,6 @@ namespace Assets.Scripts
         public static void CreateUnitToMaster(UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CreateUnit, new object[] { unitType });
 
         public static void MeltOreToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.MeltOre, new object[] { });
-
-        public static void GetUnitToMaster(UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GetUnit, new object[] { unitType });
-        public static void GetUnitToGeneral(Player playerTo, bool isGetted, UnitTypes unitType) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.GetUnit, new object[] { isGetted, unitType });
 
 
         public static void SetUniToMaster(byte idxCell, UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SetUnit, new object[] { idxCell, unitType });
@@ -185,10 +182,6 @@ namespace Assets.Scripts
                 case RpcMasterTypes.MeltOre:
                     break;
 
-                case RpcMasterTypes.GetUnit:
-                    _gettingUnitFilter.Get1(0).UnitTypeForGetting = (UnitTypes)objects[0];
-                    break;
-
                 case RpcMasterTypes.SetUnit:
                     _settingUnitFilter.Get1(0).IdxCellForSetting = (byte)objects[0];
                     _settingUnitFilter.Get1(0).UnitTypeForSetting = (UnitTypes)objects[1];
@@ -204,25 +197,8 @@ namespace Assets.Scripts
                     _fireFilter.Get1(0).ToIdx = (byte)objects[1];
                     break;
 
-                case RpcMasterTypes.Upgrade:
-                    var upgradeModType = (UpgradeModTypes)objects[0];
-                    _upgradorFilter.Get1(0).UpgradeModType = upgradeModType;
-                    switch (upgradeModType)
-                    {
-                        case UpgradeModTypes.None:
-                            throw new Exception();
-
-                        case UpgradeModTypes.Unit:
-                            _upgradorFilter.Get1(0).IdxForUpgradeUnit = (byte)objects[1];
-                            break;
-
-                        case UpgradeModTypes.Building:
-                            _upgradorFilter.Get1(0).BuildingType = (BuildingTypes)objects[1];
-                            break;
-
-                        default:
-                            throw new Exception();
-                    }
+                case RpcMasterTypes.UpgradeBuild:
+                    _upgradorFilter.Get1(0).BuildingType = (BuildingTypes)objects[1];
                     break;
 
                 case RpcMasterTypes.CircularAttackKing:
@@ -318,13 +294,6 @@ namespace Assets.Scripts
 
                         default:
                             throw new Exception();
-                    }
-                    break;
-
-                case RpcGeneralTypes.GetUnit:
-                    if ((bool)objects[_curNumber++])
-                    {
-                        selectorCom.SelectedUnitType = (UnitTypes)objects[_curNumber++];
                     }
                     break;
 

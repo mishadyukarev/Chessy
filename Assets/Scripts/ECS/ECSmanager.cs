@@ -48,6 +48,7 @@ namespace Assets.Scripts
                     if (_gameWorld != default)
                     {
                         _gameWorld.Destroy();
+                        _gameGeneralSystemManager.Dispose();
                         _gameGeneralSystemManager = default;
                         _gameMasterSystemManager = default;
                         _gameOtherSystemManager = default;
