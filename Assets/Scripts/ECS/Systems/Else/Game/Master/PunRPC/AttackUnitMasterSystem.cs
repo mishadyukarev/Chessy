@@ -26,104 +26,113 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
 
         ref var fromCellUnitDataCom = ref _cellUnitFilter.Get1(fromIdx);
         ref var fromOwnerCellUnitCom = ref _cellUnitFilter.Get2(fromIdx);
+        ref var fromBotOwnerCellUnitComp = ref _cellUnitFilter.Get3(fromIdx);
 
         ref var toCellUnitDataCom = ref _cellUnitFilter.Get1(toIdxForAttack);
         ref var toOwnerCellUnitCom = ref _cellUnitFilter.Get2(toIdxForAttack);
         ref var toBotOwnerCellUnitCom = ref _cellUnitFilter.Get3(toIdxForAttack);
 
-
+        ref var availCellsForAttackComp = ref _availCellsForAttack.Get1(0);
 
         AttackTypes simpUniqueType = default;
 
 
-        var list1 = _availCellsForAttack.Get1(0).GetSimpleListCopy(fromOwnerCellUnitCom.IsMasterClient, fromIdx);
 
-        foreach (var idx in list1)
-        {
-            if (idx == toIdxForAttack) simpUniqueType = AttackTypes.Simple;
-        }
+        if (availCellsForAttackComp.FindByIdx(AttackTypes.Simple, fromOwnerCellUnitCom.IsMasterClient, fromIdx, toIdxForAttack))
+            simpUniqueType = AttackTypes.Simple;
 
-
-        var list2 = _availCellsForAttack.Get1(0).GetUniqueListCopy(fromOwnerCellUnitCom.IsMasterClient, fromIdx);
-
-        foreach (var idx in list2)
-        {
-            if (idx == toIdxForAttack) simpUniqueType = AttackTypes.Unique;
-        }
+        if (availCellsForAttackComp.FindByIdx(AttackTypes.Unique, fromOwnerCellUnitCom.IsMasterClient, fromIdx, toIdxForAttack))
+            simpUniqueType = AttackTypes.Unique;
 
 
         if (simpUniqueType != default)
         {
-            if (fromOwnerCellUnitCom.ActorNumber != toOwnerCellUnitCom.ActorNumber)
+            fromCellUnitDataCom.ResetAmountSteps();
+            fromCellUnitDataCom.ResetConditionType();
+
+
+            int damageFrom = 0;
+            int damageTo = 0;
+
+            damageTo += fromCellUnitDataCom.SimplePowerDamage;
+            damageTo -= toCellUnitDataCom.PowerProtection;
+
+
+            if (fromCellUnitDataCom.IsMelee)
             {
-                fromCellUnitDataCom.ResetAmountSteps();
-                fromCellUnitDataCom.ResetConditionType();
+                RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+
+                damageFrom += toCellUnitDataCom.SimplePowerDamage;
+
+                if (simpUniqueType == AttackTypes.Unique)
+                {
+                    damageTo += fromCellUnitDataCom.UniquePowerDamage;// CellUnitsDataSystem.UniquePowerDamage(fromUnitType);
+                }
+            }
+
+            else
+            {
+                RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
+
+                if (simpUniqueType == AttackTypes.Unique)
+                {
+                    damageTo += fromCellUnitDataCom.UniquePowerDamage;
+                }
+            }
+
+            //if (damageTo < 0) damageTo = 0;
+
+            fromCellUnitDataCom.TakeAmountHealth(damageFrom);
+            toCellUnitDataCom.TakeAmountHealth(damageTo);
 
 
-                int damageFrom = 0;
-                int damageTo = 0;
+            if (!toCellUnitDataCom.HaveAmountHealth)
+            {
+                if (toCellUnitDataCom.IsUnitType(UnitTypes.King))
+                    RpcGeneralSystem.EndGameToMaster(fromOwnerCellUnitCom.ActorNumber);
 
-                damageTo += fromCellUnitDataCom.SimplePowerDamage;
-                damageTo -= toCellUnitDataCom.PowerProtection;
+
+                toCellUnitDataCom.ReplaceUnit(fromCellUnitDataCom);
+                toOwnerCellUnitCom.SetOwner(fromOwnerCellUnitCom.Owner);
+                toBotOwnerCellUnitCom.IsBot = fromBotOwnerCellUnitComp.IsBot;
 
 
                 if (fromCellUnitDataCom.IsMelee)
                 {
-                    RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+                    fromCellUnitDataCom.ResetUnit();
+                    fromOwnerCellUnitCom.ResetOwner();
+                    fromBotOwnerCellUnitComp.ResetBot();
 
-                    damageFrom += toCellUnitDataCom.SimplePowerDamage;
-
-                    if (simpUniqueType == AttackTypes.Unique)
+                    if (!toCellUnitDataCom.HaveAmountHealth)
                     {
-                        damageTo += fromCellUnitDataCom.UniquePowerDamage;// CellUnitsDataSystem.UniquePowerDamage(fromUnitType);
+                        toCellUnitDataCom.ResetUnit();
+                        toOwnerCellUnitCom.ResetOwner();
+                        toBotOwnerCellUnitCom.ResetBot();
                     }
                 }
 
                 else
                 {
-                    RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
 
-                    if (simpUniqueType == AttackTypes.Unique)
-                    {
-                        damageTo += fromCellUnitDataCom.UniquePowerDamage;
-                    }
                 }
+            }
 
-                if (damageTo < 0) damageTo = 0;
-
-                fromCellUnitDataCom.TakeAmountHealth(damageFrom);
-                toCellUnitDataCom.TakeAmountHealth(damageTo);
-
-                if (!toCellUnitDataCom.HaveAmountHealth)
+            else if (!fromCellUnitDataCom.HaveAmountHealth)
+            {
+                if (fromCellUnitDataCom.IsUnitType(UnitTypes.King))
                 {
-                    if (toCellUnitDataCom.IsUnitType(UnitTypes.King))
-                        RpcGeneralSystem.EndGameToMaster(fromOwnerCellUnitCom.ActorNumber);
-
-                    toCellUnitDataCom.ResetUnitType();
-
-                    if (fromCellUnitDataCom.IsMelee)
+                    if (toOwnerCellUnitCom.HaveOwner)
                     {
-                        toCellUnitDataCom.ReplaceUnit(fromCellUnitDataCom);
+                        RpcGeneralSystem.EndGameToMaster(toOwnerCellUnitCom.ActorNumber);
+                    }
+
+                    else if (toBotOwnerCellUnitCom.IsBot)
+                    {
+
                     }
                 }
 
-                if (!fromCellUnitDataCom.HaveAmountHealth)
-                {
-                    if (fromCellUnitDataCom.IsUnitType(UnitTypes.King))
-                    {
-                        if (toOwnerCellUnitCom.HaveOwner)
-                        {
-                            RpcGeneralSystem.EndGameToMaster(toOwnerCellUnitCom.ActorNumber);
-                        }
-
-                        else if (toBotOwnerCellUnitCom.IsBot)
-                        {
-
-                        }
-                    }
-
-                    fromCellUnitDataCom.ResetUnitType();
-                }
+                fromCellUnitDataCom.ResetUnitType();
             }
 
             //RPCGameSystem.AttackUnitToGeneral(Sender, _isAttacked);

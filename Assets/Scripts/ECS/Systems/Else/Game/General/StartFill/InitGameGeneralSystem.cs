@@ -138,10 +138,9 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                             cellUnitDataComp.Get<CellUnitDataComponent>().UnitType = UnitTypes.Pawn;
                             cellUnitDataComp.Get<CellUnitDataComponent>().MainToolWeaponType = ToolWeaponTypes.Axe;
                             cellUnitDataComp.Get<CellUnitDataComponent>().AmountHealth = 100;
+                            cellUnitDataComp.Get<CellUnitDataComponent>().ConditionUnitType = ConditionUnitTypes.Protected;
                             cellUnitDataComp.Get<OwnerBotComponent>().IsBot = true;
                         }
-                        
-                        // Bot
                     }
                 }
 

@@ -12,14 +12,6 @@ namespace Assets.Scripts
         }
 
 
-
-        internal static void LeaveRoom()
-        {
-            PhotonNetwork.LeaveRoom();
-        }
-
-
-
         public override void OnLeftRoom()
         {
             base.OnLeftRoom();
@@ -34,15 +26,17 @@ namespace Assets.Scripts
 
         public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            LeaveRoom();
-            Main.ToggleScene(SceneTypes.Menu);
+            PhotonNetwork.LeaveRoom();
+
+            //Main.ToggleScene(SceneTypes.Menu);
         }
 
         public override void OnMasterClientSwitched(Player newMasterClient)
         {
             base.OnMasterClientSwitched(newMasterClient);
 
-            LeaveRoom();
+            PhotonNetwork.LeaveRoom();
+            //Main.ToggleScene(SceneTypes.Menu);
         }
     }
 }

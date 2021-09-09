@@ -104,6 +104,7 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
                     unitZoneViewCom.SetActiveUnitZone(UnitUIZoneTypes.Unique, false);
                 }
             }
+
             else if (selBotOnwerCellUnitCom.IsBot)
             {
                 unitZoneViewCom.SetActiveUnitZone(UnitUIZoneTypes.Unique, false);

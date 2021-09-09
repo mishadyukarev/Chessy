@@ -52,6 +52,7 @@ namespace Assets.Scripts
                         _gameGeneralSystemManager = default;
                         _gameMasterSystemManager = default;
                         _gameOtherSystemManager = default;
+                        _allGameSystems.Destroy();
                     }
 
                     _menuWorld = new EcsWorld();
@@ -63,8 +64,9 @@ namespace Assets.Scripts
 
                 case SceneTypes.Game:
                     if (_menuWorld != default)
-                    {
+                    { 
                         _menuWorld.Destroy();
+                        _menuSystemManager.Dispose();
                         _menuSystemManager = default;
                         _allMenuSystems.Destroy();
                     }

@@ -439,9 +439,11 @@ internal struct CellUnitDataComponent
     internal void ReplaceUnit(CellUnitDataComponent newCellUnitDataCom)
     {
         UnitType = newCellUnitDataCom.UnitType;
-        ConditionUnitType = newCellUnitDataCom.ConditionUnitType;
-        AmountSteps = newCellUnitDataCom.AmountSteps;
+        MainToolWeaponType = newCellUnitDataCom.MainToolWeaponType;
+        ExtraToolWeaponType = newCellUnitDataCom.ExtraToolWeaponType;
         AmountHealth = newCellUnitDataCom.AmountHealth;
+        AmountSteps = newCellUnitDataCom.AmountSteps;
+        ConditionUnitType = newCellUnitDataCom.ConditionUnitType;
     }
 
     internal CellUnitDataComponent(Dictionary<bool, bool> isVisibleDict) : this()

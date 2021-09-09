@@ -7,6 +7,7 @@ using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using Photon.Pun;
+using UnityEngine;
 
 internal sealed class SelectorSystem : IEcsRunSystem
 {
@@ -19,6 +20,8 @@ internal sealed class SelectorSystem : IEcsRunSystem
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
 
     private EcsFilter<AvailCellsForArcherArsonComp> _availCellsForArcherArsonFilter = default;
+    private EcsFilter<AvailCellsForAttackComp> _availCellsForAttackFilter = default;
+    private EcsFilter<AvailCellsForShiftComp> _availCellsForShiftFilter = default;
 
     public void Run()
     {
@@ -28,7 +31,14 @@ internal sealed class SelectorSystem : IEcsRunSystem
         CellEnvironDataCom CellEnvironDataCom(byte idxCell) => _cellEnvironDataFilter.Get1(idxCell);
 
 
+
+
         ref var selectorCom = ref _selectorFilter.Get1(0);
+        ref var availCellsForAttackComp = ref _availCellsForAttackFilter.Get1(0);
+        ref var availCellsForShiftComp = ref _availCellsForShiftFilter.Get1(0);
+
+
+        //Debug.Log(CellUnitDataCom(selectorCom.IdxSelectedCell).UnitType);
 
 
         if (_inputFilter.Get1(0).IsClicked)
@@ -55,7 +65,6 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
 
                         selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
-                        //selectorCom.DefSelectedCell();
                     }
 
                     else
@@ -103,35 +112,16 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                     selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
 
- 
-                    if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveUnit)
+
+                    var b1 = availCellsForAttackComp.FindByIdx(AttackTypes.Simple, PhotonNetwork.IsMasterClient, selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
+                    var b2 = availCellsForAttackComp.FindByIdx(AttackTypes.Unique, PhotonNetwork.IsMasterClient, selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
+
+                    if (b1 || b2)
                     {
-                        if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).HaveOwner)
-                        {
-                            if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).IsMine)
-                            {
-                                if (CellUnitDataCom(selectorCom.IdxSelectedCell).IsMelee)
-                                {
-                                    //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickMelee);
-                                }
-                                else
-                                {
-                                    //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickArcher);
-                                }
-                            }
-
-                            else
-                            {
-                                RpcGeneralSystem.AttackUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
-                            }
-                        }
-
-                        else if (OwnerBotCellUnitCom(selectorCom.IdxSelectedCell).IsBot)
-                        {
-
-                        }
+                        RpcGeneralSystem.AttackUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
                     }
-                    else
+
+                    if (availCellsForShiftComp.HaveIdxCell(PhotonNetwork.IsMasterClient, selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell))
                     {
                         RpcGeneralSystem.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
                     }

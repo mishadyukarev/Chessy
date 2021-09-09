@@ -78,13 +78,13 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                             _cellSupViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.Shift);
                         }
 
-                        foreach (var curIdxCell in _availCellsForSimpleAttackFilter.Get1(0).GetSimpleListCopy(PhotonNetwork.IsMasterClient, selCom.IdxSelectedCell))
+                        foreach (var curIdxCell in _availCellsForSimpleAttackFilter.Get1(0).GetListCopy(AttackTypes.Simple, PhotonNetwork.IsMasterClient, selCom.IdxSelectedCell))
                         {
                             _cellSupViewFilter.Get1(curIdxCell).EnableSR();
                             _cellSupViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.SimpleAttack);
                         }
 
-                        foreach (var curIdxCell in _availCellsForSimpleAttackFilter.Get1(0).GetUniqueListCopy(PhotonNetwork.IsMasterClient, selCom.IdxSelectedCell))
+                        foreach (var curIdxCell in _availCellsForSimpleAttackFilter.Get1(0).GetListCopy(AttackTypes.Unique, PhotonNetwork.IsMasterClient, selCom.IdxSelectedCell))
                         {
                             _cellSupViewFilter.Get1(curIdxCell).EnableSR();
                             _cellSupViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.UniqueAttack);

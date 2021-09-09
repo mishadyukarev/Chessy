@@ -44,11 +44,11 @@ namespace Assets.Scripts
             _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Rook, delegate { CreateUnit(UnitTypes.Rook); });
             _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Bishop, delegate { CreateUnit(UnitTypes.Bishop); });
 
-            _donerUIFilter.Get2(0).AddListener(delegate { Done(); });
+            _donerUIFilter.Get2(0).AddListener(Done);
 
             _envirZoneUIFilter.Get2(0).AddListenerToEnvInfo(EnvironmentInfo);
 
-            _leaveUIFilter.Get1(0).AddListener(PhotonSceneGameGeneralSystem.LeaveRoom);
+            _leaveUIFilter.Get1(0).AddListener(delegate { PhotonNetwork.LeaveRoom(); });
 
             _unitZoneUIFilter.Get1(0).AddListenerToCondtionButton(ConditionUnitTypes.Protected, delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
             _unitZoneUIFilter.Get1(0).AddListenerToCondtionButton(ConditionUnitTypes.Relaxed, delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
