@@ -59,12 +59,12 @@ namespace Assets.Scripts
 
 
             _giveTakeZoneUIFilter.Get1(0).AddListenerToGive_Button(ActiveGiveTakeButton);
-            _giveTakeZoneUIFilter.Get1(0).AddListenerToSwap_Button(SwapButton);
+            //_giveTakeZoneUIFilter.Get1(0).AddListenerToSwap_Button(SwapButton);
 
-            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Axe, delegate { Testtttt(ToolWeaponTypes.Axe); });
-            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Pick, delegate { Testtttt(ToolWeaponTypes.Pick); });
-            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Sword, delegate { Testtttt(ToolWeaponTypes.Sword); });
-            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Crossbow, delegate { Testtttt(ToolWeaponTypes.Crossbow); });
+            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Axe, delegate { ToggleToolWeapon(ToolWeaponTypes.Axe); });
+            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Pick, delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
+            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Sword, delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
+            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Crossbow, delegate { ToggleToolWeapon(ToolWeaponTypes.Crossbow); });
 
 
 
@@ -97,9 +97,10 @@ namespace Assets.Scripts
 
         private void GetUnit(UnitTypes unitType)
         {
+            _selectorFilter.Get1(0).DefCellClickType();
             _selectorFilter.Get1(0).IdxCurrentCell = default;
             _selectorFilter.Get1(0).IdxPreviousVisionCell = default;
-            _selectorFilter.Get1(0).ResetSelectedCell();
+            _selectorFilter.Get1(0).DefSelectedCell();
             _takerUIFilter.Get1(0).ResetCurTimer(unitType);
 
             if (!IsDoned(PhotonNetwork.IsMasterClient))
@@ -134,6 +135,10 @@ namespace Assets.Scripts
                 default:
                     throw new Exception();
             }
+
+            _selectorFilter.Get1(0).DefCellClickType();
+            _selectorFilter.Get1(0).DefSelectedUnit();
+            _selectorFilter.Get1(0).DefSelectedCell();
         }
 
         private void EnvironmentInfo()
@@ -158,17 +163,21 @@ namespace Assets.Scripts
 
         private void ActiveGiveTakeButton()
         {
-            ref var selecComp = ref _selectorFilter.Get1(0);
-
-            if(selecComp.CellClickType == CellClickTypes.GiveTakeToolWeapon)
+            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
             {
-                selecComp.CellClickType = default;
+                ref var selecComp = ref _selectorFilter.Get1(0);
+
+                if (selecComp.CellClickType == CellClickTypes.GiveTakeToolWeapon)
+                {
+                    selecComp.CellClickType = default;
+                }
+
+                else
+                {
+                    selecComp.CellClickType = CellClickTypes.GiveTakeToolWeapon;
+                }
             }
 
-            else
-            {
-                selecComp.CellClickType = CellClickTypes.GiveTakeToolWeapon;
-            }
 
             //if (selecComp.IsActivatedGiveTakeMod)
             //{
@@ -192,18 +201,6 @@ namespace Assets.Scripts
             //}
         }
 
-        private void SwapButton()
-        {
-            if (_selectorFilter.Get1(0).IsCellClickType(CellClickTypes.SwapToolWeapon))
-            {
-                _selectorFilter.Get1(0).CellClickType = default;
-            }
-            else
-            {
-                _selectorFilter.Get1(0).CellClickType = CellClickTypes.SwapToolWeapon;
-            }
-        }
-
         private void CreateUnit(UnitTypes unitType)
         {
             _takerUIFilter.Get1(0).ResetCurTimer(unitType);
@@ -221,7 +218,7 @@ namespace Assets.Scripts
             if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGeneralSystem.UpgradeBuildingToMaster(buildingType);
         }
 
-        private void Testtttt(ToolWeaponTypes toolAndWeaponType)
+        private void ToggleToolWeapon(ToolWeaponTypes toolAndWeaponType)
         {
             _selectorFilter.Get1(0).ToolWeaponTypeForGiveTake = toolAndWeaponType;
         }

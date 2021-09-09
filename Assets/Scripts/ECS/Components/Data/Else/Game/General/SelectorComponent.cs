@@ -15,7 +15,7 @@ public struct SelectorComponent
 
     internal UnitTypes SelectedUnitType { get; set; }
     internal bool IsSelectedUnit => SelectedUnitType != default;
-    internal void ResetSelectedUnit() => SelectedUnitType = default;
+    internal void DefSelectedUnit() => SelectedUnitType = default;
 
 
     //internal GiveTakeTypes GiveTakeType { get; set; }
@@ -32,7 +32,7 @@ public struct SelectorComponent
 
     internal bool IsSelectedCell => IdxSelectedCell != 0;
     internal bool IsStartDirectToCell => IdxCurrentCell == default;
-    internal void ResetSelectedCell() => IdxSelectedCell = 0;
+    internal void DefSelectedCell() => IdxSelectedCell = 0;
 
 
     internal SelectorComponent(ToolWeaponTypes toolAndWeaponType) : this() => ToolWeaponTypeForGiveTake = toolAndWeaponType;

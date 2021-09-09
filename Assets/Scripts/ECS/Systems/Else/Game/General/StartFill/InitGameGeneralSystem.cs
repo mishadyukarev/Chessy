@@ -123,7 +123,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                          .Replace(new OwnerBotComponent());
 
 
-                    _currentGameWorld.NewEntity()
+                    var cellUnitDataComp = _currentGameWorld.NewEntity()
                          .Replace(new CellUnitDataComponent(new Dictionary<bool, bool>()))
                          .Replace(new CellUnitMainViewComp(cell_GOs[x, y]))
                          .Replace(new CellUnitExtraViewComp(cell_GOs[x, y]))
@@ -133,6 +133,14 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                     if (PhotonNetwork.OfflineMode)
                     {
+                        if (x == 3 && y == 3)
+                        {
+                            cellUnitDataComp.Get<CellUnitDataComponent>().UnitType = UnitTypes.Pawn;
+                            cellUnitDataComp.Get<CellUnitDataComponent>().MainToolWeaponType = ToolWeaponTypes.Axe;
+                            cellUnitDataComp.Get<CellUnitDataComponent>().AmountHealth = 100;
+                            cellUnitDataComp.Get<OwnerBotComponent>().IsBot = true;
+                        }
+                        
                         // Bot
                     }
                 }
@@ -197,8 +205,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new AvailCellsForSetUnitComp(dictStartCell))
                 .Replace(new AvailCellsForShiftComp(dictForShift))
                 .Replace(new AvailCellsForArcherArsonComp(new Dictionary<bool, List<byte>>()))
-                .Replace(new AvailCellsForUniqueAttackComp(new Dictionary<bool, List<byte>>()))
-                .Replace(new AvailCellsForSimpleAttackComp(new Dictionary<bool, List<byte>>()))
+                .Replace(new AvailCellsForAttackComp(true))
 
                 .Replace(new UpgradesBuildingsComponent(new Dictionary<BuildingTypes, Dictionary<bool, int>>()))
 

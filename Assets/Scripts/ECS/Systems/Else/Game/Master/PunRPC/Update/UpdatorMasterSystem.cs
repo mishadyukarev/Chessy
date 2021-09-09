@@ -68,7 +68,6 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                     {
                         if (curCellUnitDataCom.HaveMaxAmountHealth)
                         {
-
                             if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn))
                             {
                                 if (curCellEnvrDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))

@@ -30,21 +30,10 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone
             if (selectorComp.IsCellClickType(CellClickTypes.GiveTakeToolWeapon))
             {
                 giveTakeZoneViewUIComp.SetColorToGiveTake_Button(Color.yellow);
-                giveTakeZoneViewUIComp.SetColorToSwap_Button(Color.white);
             }
             else
             {
                 giveTakeZoneViewUIComp.SetColorToGiveTake_Button(Color.white);
-
-                if (selectorComp.IsCellClickType(CellClickTypes.SwapToolWeapon))
-                {
-                    giveTakeZoneViewUIComp.SetColorToSwap_Button(Color.green);
-                }
-
-                else
-                {
-                    giveTakeZoneViewUIComp.SetColorToSwap_Button(Color.white);
-                }
             }    
         }
     }

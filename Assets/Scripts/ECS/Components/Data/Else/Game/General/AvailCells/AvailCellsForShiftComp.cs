@@ -12,7 +12,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells
         {
             _availCellsForShift = availCellsForShift;
 
-            _availCellsForShift[true][79].Add(90);
+            //_availCellsForShift[true][79].Add(90);
         }
 
         internal List<byte> GetListCopy(bool isMaster, byte startIdxCell) => _availCellsForShift[isMaster][startIdxCell].Copy();

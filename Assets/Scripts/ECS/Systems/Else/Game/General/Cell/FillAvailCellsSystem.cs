@@ -24,8 +24,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Cell
         private EcsFilter<AvailCellsForSetUnitComp> _availCellsForSetUnitFilter = default;
         private EcsFilter<AvailCellsForShiftComp> _availCellsForShiftFilter = default;
         private EcsFilter<AvailCellsForArcherArsonComp> _availCellsForArcherArsonFilter = default;
-        private EcsFilter<AvailCellsForUniqueAttackComp> _availCellsForUniqueAttackFilter = default;
-        private EcsFilter<AvailCellsForSimpleAttackComp> _availCellsForSimpleAttackFilter = default;
+        private EcsFilter<AvailCellsForAttackComp> _availCellsForAttackFilter = default;
 
         public void Run()
         {
@@ -62,60 +61,77 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Cell
                     }
 
 
-                    //ref var availCellsForSimpleAttackComp = ref _availCellsForSimpleAttackFilter.Get1(0);
-                    //ref var availCellsForUniqueAttackComp = ref _availCellsForUniqueAttackFilter.Get1(0);
+                    ref var availCellsForAttackComp = ref _availCellsForAttackFilter.Get1(0);
 
-                    //availCellsForSimpleAttackComp.Clear(true);
-                    //availCellsForSimpleAttackComp.Clear(false);
+                    availCellsForAttackComp.ClearSimple(true, curIdxCell);
+                    availCellsForAttackComp.ClearSimple(false, curIdxCell);
+                    availCellsForAttackComp.ClearUnique(true, curIdxCell);
+                    availCellsForAttackComp.ClearUnique(false, curIdxCell);
 
-                    //availCellsForUniqueAttackComp.Clear(true);
-                    //availCellsForUniqueAttackComp.Clear(false);
 
-                    //if (curCellUnitDataCom.IsMelee)
-                    //{
-                    //    DirectTypes curDurect1 = default;
+                    if (curCellUnitDataCom.IsMelee)
+                    {
+                        DirectTypes curDurect1 = default;
 
-                    //    foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdxCell)))
-                    //    {
-                    //        curDurect1 += 1;
-                    //        var idxCellAround = _xyCellFilter.GetIndexCell(xy1);
+                        foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdxCell)))
+                        {
+                            curDurect1 += 1;
+                            var idxCellAround = _xyCellFilter.GetIndexCell(xy1);
 
-                    //        ref var arouCellEnvrDataCom = ref _cellEnvDataFilter.Get1(idxCellAround);
-                    //        ref var arouCellUnitDataCom = ref _cellUnitFilter.Get1(idxCellAround);
-                    //        ref var arouOwnerCellUnitCom = ref _cellUnitFilter.Get2(idxCellAround);
-                    //        ref var arouBotOwnerCellUnitCom = ref _cellUnitFilter.Get3(idxCellAround);
+                            ref var arouCellEnvrDataCom = ref _cellEnvDataFilter.Get1(idxCellAround);
+                            ref var arouCellUnitDataCom = ref _cellUnitFilter.Get1(idxCellAround);
+                            ref var arouOwnerCellUnitCom = ref _cellUnitFilter.Get2(idxCellAround);
+                            ref var arouBotOwnerCellUnitCom = ref _cellUnitFilter.Get3(idxCellAround);
 
-                    //        if (!arouCellEnvrDataCom.HaveEnvironment(EnvironmentTypes.Mountain))
-                    //        {
-                    //            if (arouCellEnvrDataCom.NeedAmountSteps <= curCellUnitDataCom.AmountSteps || curCellUnitDataCom.HaveMaxAmountSteps)
-                    //            {
-                    //                if (arouCellUnitDataCom.HaveUnit)
-                    //                {
-                    //                    if (arouOwnerCellUnitCom.HaveOwner || arouBotOwnerCellUnitCom.IsBot)
-                    //                    {
-                    //                        if (!arouOwnerCellUnitCom.IsMine)
-                    //                        {
-                    //                            if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn }))
-                    //                            {
-                    //                                if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
-                    //                                    || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
-                    //                                {
-                    //                                    availCellsForSimpleAttackComp.Add(startOwnerCellUnitDataCom.IsMasterClient, idxCellAround);
-                    //                                }
-                    //                                else availCellsForUniqueAttackComp.Add(startOwnerCellUnitDataCom.IsMasterClient, idxCellAround);
-                    //                            }
+                            if (!arouCellEnvrDataCom.HaveEnvironment(EnvironmentTypes.Mountain))
+                            {
+                                if (arouCellEnvrDataCom.NeedAmountSteps <= curCellUnitDataCom.AmountSteps || curCellUnitDataCom.HaveMaxAmountSteps)
+                                {
+                                    if (arouCellUnitDataCom.HaveUnit)
+                                    {
+                                        if (arouOwnerCellUnitCom.HaveOwner)
+                                        {
+                                            if (!arouOwnerCellUnitCom.IsMine)
+                                            {
+                                                if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn }))
+                                                {
+                                                    if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
+                                                        || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
+                                                    {
+                                                        availCellsForAttackComp.AddSimple(curOwnerCellUnitCom.IsMasterClient, curIdxCell, idxCellAround);
+                                                    }
+                                                    else availCellsForAttackComp.AddUnique(curOwnerCellUnitCom.IsMasterClient, curIdxCell, idxCellAround);
+                                                }
 
-                    //                            else if (curCellUnitDataCom.IsUnitType(UnitTypes.King))
-                    //                            {
-                    //                                availCellsForSimpleAttackComp.Add(startOwnerCellUnitDataCom.IsMasterClient, idxCellAround);
-                    //                            }
-                    //                        }
-                    //                    }
-                    //                }
-                    //            }
-                    //        }
-                    //    }
-                    //}
+                                                else if (curCellUnitDataCom.IsUnitType(UnitTypes.King))
+                                                {
+                                                    availCellsForAttackComp.AddSimple(curOwnerCellUnitCom.IsMasterClient, curIdxCell, idxCellAround);
+                                                }
+                                            }
+                                        }
+
+                                        else
+                                        {
+                                            if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn }))
+                                                {
+                                                    if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
+                                                        || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
+                                                    {
+                                                        availCellsForAttackComp.AddSimple(curOwnerCellUnitCom.IsMasterClient, curIdxCell, idxCellAround);
+                                                    }
+                                                    else availCellsForAttackComp.AddUnique(curOwnerCellUnitCom.IsMasterClient, curIdxCell, idxCellAround);
+                                                }
+
+                                                else if (curCellUnitDataCom.IsUnitType(UnitTypes.King))
+                                                {
+                                                    availCellsForAttackComp.AddSimple(curOwnerCellUnitCom.IsMasterClient, curIdxCell, idxCellAround);
+                                                }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
 
                 else

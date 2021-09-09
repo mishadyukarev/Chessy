@@ -35,7 +35,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
         {
             if (selectorCom.RaycastGettedType == RaycastGettedTypes.UI)
             {
-                selectorCom.ResetSelectedUnit();
+                selectorCom.DefSelectedUnit();
             }
 
             else if (selectorCom.RaycastGettedType == RaycastGettedTypes.Cell)
@@ -55,7 +55,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
 
                         selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
-                        selectorCom.ResetSelectedCell();
+                        //selectorCom.DefSelectedCell();
                     }
 
                     else
@@ -96,48 +96,14 @@ internal sealed class SelectorSystem : IEcsRunSystem
                     }
                 }
 
-                else if (!selectorCom.IsSelectedCell)
-                {
-                    if (selectorCom.IdxPreviousCell != selectorCom.IdxSelectedCell || selectorCom.IdxPreviousCell == 0)
-                    {
-                        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                    }
-                    else
-                    {
-                        selectorCom.ResetSelectedCell();
-                    }
-
-                    if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveUnit)
-                    {
-                        if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).HaveOwner)
-                        {
-                            if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).IsMine)
-                            {
-                                if (CellUnitDataCom(selectorCom.IdxSelectedCell).IsMelee)
-                                {
-                                    //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickMelee);
-                                }
-                                else
-                                {
-                                    //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickArcher);
-                                }
-                            }
-                        }
-                    }
-                    selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
-                }
-
-                else
+                else if (selectorCom.IsSelectedCell)
                 {
                     if (selectorCom.IdxSelectedCell != selectorCom.IdxCurrentCell)
                         selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
 
                     selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
 
-
-                    RpcGeneralSystem.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
-
-
+ 
                     if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveUnit)
                     {
                         if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).HaveOwner)
@@ -165,6 +131,42 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                         }
                     }
+                    else
+                    {
+                        RpcGeneralSystem.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
+                    }
+                }
+
+                else
+                {
+                    if (selectorCom.IdxPreviousCell != selectorCom.IdxSelectedCell || selectorCom.IdxPreviousCell == 0)
+                    {
+                        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                    }
+                    else
+                    {
+                        selectorCom.DefSelectedCell();
+                    }
+
+                    if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveUnit)
+                    {
+                        if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).HaveOwner)
+                        {
+                            if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).IsMine)
+                            {
+                                if (CellUnitDataCom(selectorCom.IdxSelectedCell).IsMelee)
+                                {
+                                    //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickMelee);
+                                }
+                                else
+                                {
+                                    //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickArcher);
+                                }
+                            }
+                        }
+                    }
+
+                    selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
                 }
 
             }
@@ -172,9 +174,9 @@ internal sealed class SelectorSystem : IEcsRunSystem
             else
             {
                 selectorCom.IdxSelectedCell = 0;
-                selectorCom.ResetSelectedUnit();
+                selectorCom.DefSelectedUnit();
 
-                selectorCom.ResetSelectedCell();
+                selectorCom.DefSelectedCell();
             }
         }
 

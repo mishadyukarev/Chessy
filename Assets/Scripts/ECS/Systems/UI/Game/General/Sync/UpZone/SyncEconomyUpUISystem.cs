@@ -46,17 +46,20 @@ internal sealed class SyncEconomyUpUISystem : IEcsRunSystem
 
             if (curCellUnitDataComp.HaveUnit)
             {
-                if (curOwnerCellUnitComp.IsMine)
+                if (curOwnerCellUnitComp.HaveOwner)
                 {
-                    if (!curCellUnitDataComp.IsUnitType(UnitTypes.King)) ++amountUnitsInGame;
-
-                    if (curCellUnitDataComp.IsUnitType(UnitTypes.Pawn))
+                    if (curOwnerCellUnitComp.IsMine)
                     {
-                        if (curCellUnitDataComp.IsConditionType(ConditionUnitTypes.Relaxed))
+                        if (!curCellUnitDataComp.IsUnitType(UnitTypes.King)) ++amountUnitsInGame;
+
+                        if (curCellUnitDataComp.IsUnitType(UnitTypes.Pawn))
                         {
-                            if (_cellEnvDataFilter.Get1(curIdxCell).HaveEnvironment(EnvironmentTypes.AdultForest))
+                            if (curCellUnitDataComp.IsConditionType(ConditionUnitTypes.Relaxed))
                             {
-                                amountAddingWood += 1;
+                                if (_cellEnvDataFilter.Get1(curIdxCell).HaveEnvironment(EnvironmentTypes.AdultForest))
+                                {
+                                    amountAddingWood += 1;
+                                }
                             }
                         }
                     }
@@ -65,20 +68,23 @@ internal sealed class SyncEconomyUpUISystem : IEcsRunSystem
 
             if (curCellBuildDataComp.HaveBuild)
             {
-                if (curOwnerCellBuildComp.IsMine)
+                if (curOwnerCellBuildComp.HaveOwner)
                 {
-                    if (curCellBuildDataComp.IsBuildType(BuildingTypes.Farm))
+                    if (curOwnerCellBuildComp.IsMine)
                     {
-                        ++amountFarm;
-                    }
-                    else if (curCellBuildDataComp.IsBuildType(BuildingTypes.Woodcutter))
-                    {
-                        ++amountWoodcutter;
-                    }
+                        if (curCellBuildDataComp.IsBuildType(BuildingTypes.Farm))
+                        {
+                            ++amountFarm;
+                        }
+                        else if (curCellBuildDataComp.IsBuildType(BuildingTypes.Woodcutter))
+                        {
+                            ++amountWoodcutter;
+                        }
 
-                    else if (curCellBuildDataComp.IsBuildType(BuildingTypes.Mine))
-                    {
-                        ++amountMine;
+                        else if (curCellBuildDataComp.IsBuildType(BuildingTypes.Mine))
+                        {
+                            ++amountMine;
+                        }
                     }
                 }
             }

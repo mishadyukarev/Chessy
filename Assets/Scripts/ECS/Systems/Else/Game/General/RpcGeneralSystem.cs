@@ -77,6 +77,8 @@ namespace Assets.Scripts
         public void Init()
         {
             PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
+
+            if(!PhotonNetwork.IsMasterClient) SyncAllToMaster();
         }
 
 
@@ -300,7 +302,7 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.SetUnit:
                     if ((bool)objects[_curNumber++])
                     {
-                        selectorCom.ResetSelectedCell();// CellClickType = CellClickTypes.Start;
+                        selectorCom.DefSelectedCell();// CellClickType = CellClickTypes.Start;
                         selectorCom.SelectedUnitType = default;
                     }
                     break;
@@ -354,6 +356,10 @@ namespace Assets.Scripts
 
             listObjects.Add(_readyUIFilter.Get1(0).IsStartedGame);
             listObjects.Add(_readyUIFilter.Get1(0).IsReady(false));
+
+
+            listObjects.Add(_donerUIFilter.Get1(0).IsDoned(false));
+
 
             foreach (var curIdxCell in _cellUnitFilter)
             {
@@ -534,6 +540,8 @@ namespace Assets.Scripts
 
             _readyUIFilter.Get1(0).IsStartedGame = (bool)objects[_curNumber++];
             _readyUIFilter.Get1(0).SetIsReady(PhotonNetwork.IsMasterClient, (bool)objects[_curNumber++]);
+
+            _donerUIFilter.Get1(0).SetDoned(false, (bool)objects[_curNumber++]);
 
             foreach (var curIdxCell in _cellUnitFilter)
             {
