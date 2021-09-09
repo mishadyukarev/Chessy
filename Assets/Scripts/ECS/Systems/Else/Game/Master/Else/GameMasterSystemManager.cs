@@ -16,7 +16,7 @@ public sealed class GameMasterSystemManager : SystemAbstManager
 
     internal static EcsSystems UpdateMotion { get; private set; }
 
-    internal GameMasterSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld)
+    internal GameMasterSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
     {
         _rpcSystems = new Dictionary<RpcMasterTypes, EcsSystems>();
 
@@ -48,15 +48,7 @@ public sealed class GameMasterSystemManager : SystemAbstManager
             .Add(new TruceMasterSystem());
 
 
-        InitOnlySystems
-            .Add(new InitGameMasterSystem());
-
-
         allGameSystems
-            .Add(InitOnlySystems)
-            .Add(RunOnlySystems)
-            .Add(InitRunSystems)
-
             .Add(TruceSystems)
             .Add(UpdateMotion);
 

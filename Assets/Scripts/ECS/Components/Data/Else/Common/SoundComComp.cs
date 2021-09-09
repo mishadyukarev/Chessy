@@ -2,17 +2,17 @@
 
 namespace Assets.Scripts.ECS.Component.Common
 {
-    internal struct SoundCommComp
+    internal struct SoundComComp
     {
-        private static AudioSource _audioSource;
+        private AudioSource _audioSource;
 
-        internal static float Volume
+        internal float Volume
         {
             get => _audioSource.volume;
             set => _audioSource.volume = value;
         }
 
-        internal SoundCommComp(AudioSource audioSource)
+        internal SoundComComp(AudioSource audioSource)
         {
             _audioSource = audioSource;
         }

@@ -5,16 +5,25 @@ namespace Assets.Scripts.ECS.Component.Common
 {
     internal struct PhotonViewComponent
     {
-        internal static PhotonView PhotonView { get; private set; }
+        internal static PhotonView PhotonView { get; set; }
 
         internal PhotonViewComponent(PhotonView photonView)
         {
-            PhotonView = photonView;
+            //PhotonView = photonView;
 
-            PhotonView.FindObservables(true);
 
-            if (PhotonNetwork.IsMasterClient) PhotonNetwork.AllocateViewID(PhotonView);
-            else PhotonView.ViewID = ValuesConst.NUMBER_PHOTON_VIEW;
+            //PhotonView.FindObservables(true);
+
+            //if (PhotonNetwork.IsMasterClient)
+            //{
+            //    PhotonNetwork.AllocateViewID(PhotonView);
+            //}
+            //else
+            //{
+            //PhotonView.ViewID = ValuesConst.NUMBER_PHOTON_VIEW;
+            //}
+
+
         }
 
 

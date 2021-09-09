@@ -9,11 +9,16 @@ namespace Assets.Scripts
         protected EcsSystems RunOnlySystems { get; private set; }
         protected EcsSystems InitRunSystems { get; private set; }
 
-        protected SystemAbstManager(EcsWorld world)
+        protected SystemAbstManager(EcsWorld world, EcsSystems allSystems)
         {
             InitOnlySystems = new EcsSystems(world);
             RunOnlySystems = new EcsSystems(world);
             InitRunSystems = new EcsSystems(world);
+
+            allSystems
+                .Add(InitOnlySystems)
+                .Add(RunOnlySystems)
+                .Add(InitRunSystems);
         }
         internal virtual void RunUpdate()
         {

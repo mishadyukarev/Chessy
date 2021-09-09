@@ -11,7 +11,7 @@ using System;
 
 namespace Assets.Scripts
 {
-    internal sealed class StaticEventsGameSys : IEcsInitSystem
+    internal sealed class EventsGameSys : IEcsInitSystem
     {
         private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
 

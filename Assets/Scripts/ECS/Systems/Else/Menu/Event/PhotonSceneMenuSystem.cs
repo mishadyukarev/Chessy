@@ -11,7 +11,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.ECS.Managers.Event
 {
-    internal sealed class PhotonSceneMenuSystem : MonoBehaviourPunCallbacks, IEcsInitSystem, IEcsRunSystem
+    internal sealed class PhotonSceneMenuSystem : IEcsInitSystem
     {
         private EcsFilter<ConnectButtonUIComponent, OnlineZoneUIComponent, BackgroundImagesUIComponent> _rightZoneFilter;
         private EcsFilter<ConnectButtonUIComponent, OfflineZoneUIComponent, BackgroundImagesUIComponent> _leftZoneFilter;
@@ -40,11 +40,6 @@ namespace Assets.Scripts.ECS.Managers.Event
 
             _leftZoneFilter.Get1(0).AddListenerToConnectButton(ConnectOffline);
             _leftZoneFilter.Get2(0).AddListenerToStartWithBotButton(CreateTestSoloGame);
-        }
-
-        public void Run()
-        {
-
         }
 
 
@@ -114,7 +109,7 @@ namespace Assets.Scripts.ECS.Managers.Event
             PhotonNetwork.CreateRoom(default);
         }
 
-        private void ConnectUsingSettingsWithData(bool isOffline)
+        internal void ConnectUsingSettingsWithData(bool isOffline)
         {
             PhotonNetwork.PhotonServerSettings.StartInOfflineMode = isOffline;
 
@@ -126,33 +121,7 @@ namespace Assets.Scripts.ECS.Managers.Event
             PhotonNetwork.ConnectUsingSettings();
         }
 
-        internal void SetTextOnUpLog(string message) => _logTex.text = message;
-
-
-
-
-
-
-
-
-
-        public override void OnConnected()
-        {
-            base.OnConnected();
-
-            OnConnectedToMaster();
-        }
-        public override void OnJoinRandomFailed(short returnCode, string message)
-        {
-            Debug.Log(message);
-            PhotonNetwork.PhotonServerSettings.StartInOfflineMode = true;
-        }
-        public override void OnJoinedRoom()
-        {
-            Main.ToggleScene(SceneTypes.Game);
-        }
-
-        public override void OnConnectedToMaster()
+        internal void ConnectedToMaster()
         {
             ref var rightUIEnt_ConnectButtonUICom = ref _rightZoneFilter.Get1(0);
             ref var rightUIEnt_OnlineZoneUICom = ref _rightZoneFilter.Get2(0);
@@ -182,9 +151,7 @@ namespace Assets.Scripts.ECS.Managers.Event
                 rightUIEnt_BackgroundImagesUICom.SetActiveFrontImage(false);
             }
         }
-        public override void OnDisconnected(DisconnectCause cause)
-        {
-            ConnectUsingSettingsWithData(true);
-        }
+
+        internal void SetTextOnUpLog(string message) => _logTex.text = message;
     }
 }

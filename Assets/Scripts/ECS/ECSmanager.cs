@@ -1,8 +1,13 @@
-﻿using Assets.Scripts.ECS.Manager.View.Menu;
+﻿using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.ECS.Component.Common;
+using Assets.Scripts.ECS.Game.General.Systems.StartFill;
+using Assets.Scripts.ECS.Manager.View.Menu;
 using Assets.Scripts.ECS.System.Common;
+using Assets.Scripts.ECS.System.View.Menu;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -14,27 +19,32 @@ namespace Assets.Scripts
         private EcsWorld _menuWorld;
         private EcsWorld _gameWorld;
 
-        private EcsSystems _allCommSystems;
-        private CommonSystemManager _commonSystemManager;
-
+        private EcsSystems _allComSystems;
         private EcsSystems _allMenuSystems;
-        private MenuSystemManager _menuSystemManager;
-
         private EcsSystems _allGameSystems;
+
+        private ComSysManager _commonSystemManager;
+        private MenuSystemManager _menuSystemManager;
         private GameGeneralSystemManager _gameGeneralSystemManager;
         private GameMasterSystemManager _gameMasterSystemManager;
         private GameOtherSystemManager _gameOtherSystemManager;
+
+        private PhotonSceneSys _photonSceneSys;
+        private RpcGeneralSystem _rpcGameSys;
 
         #endregion
 
 
         public ECSManager()
         {
-            _commonWorld = new EcsWorld();
-            _allCommSystems = new EcsSystems(_commonWorld);
+            _photonSceneSys = Main.Instance.gameObject.AddComponent<PhotonSceneSys>();
 
-            _commonSystemManager = new CommonSystemManager(_commonWorld, _allCommSystems);
-            _allCommSystems.Init();
+            _commonWorld = new EcsWorld();
+            _allComSystems = new EcsSystems(_commonWorld)
+                .Add(_photonSceneSys);
+
+            _commonSystemManager = new ComSysManager(_commonWorld, _allComSystems);
+            _allComSystems.Init();
         }
 
         public void ToggleScene(SceneTypes sceneType)
@@ -48,7 +58,11 @@ namespace Assets.Scripts
                     if (_gameWorld != default)
                     {
                         _gameWorld.Destroy();
-                        _gameGeneralSystemManager.Dispose();
+
+                        if (PhotonViewComponent.PhotonView.gameObject != default)
+                            GameObject.Destroy(PhotonViewComponent.PhotonView.gameObject);
+
+                        GameObject.Destroy(_rpcGameSys);
                         _gameGeneralSystemManager = default;
                         _gameMasterSystemManager = default;
                         _gameOtherSystemManager = default;
@@ -58,6 +72,7 @@ namespace Assets.Scripts
                     _menuWorld = new EcsWorld();
                     _allMenuSystems = new EcsSystems(_menuWorld);
 
+                    _allMenuSystems.Add(new SpawnMenuSys());
                     _menuSystemManager = new MenuSystemManager(_menuWorld, _allMenuSystems);
                     _allMenuSystems.Init();
                     break;
@@ -66,35 +81,57 @@ namespace Assets.Scripts
                     if (_menuWorld != default)
                     { 
                         _menuWorld.Destroy();
-                        _menuSystemManager.Dispose();
+
                         _menuSystemManager = default;
                         _allMenuSystems.Destroy();
                     }
 
+                    
+
+
                     _gameWorld = new EcsWorld();
                     _allGameSystems = new EcsSystems(_gameWorld);
+
+
+                    var go = new GameObject("Ph");
+                    PhotonViewComponent.PhotonView = go.AddComponent<PhotonView>();
+                    PhotonViewComponent.PhotonView.ViewID = 1001;
+                    _rpcGameSys = go.AddComponent<RpcGeneralSystem>();
+
+                    _allGameSystems
+                        .Add(new SpawnGameSys())
+                        .Add(_rpcGameSys);
 
                     _gameGeneralSystemManager = new GameGeneralSystemManager(_gameWorld, _allGameSystems);
                     if (PhotonNetwork.IsMasterClient)
                     {
                         _gameMasterSystemManager = new GameMasterSystemManager(_gameWorld, _allGameSystems);
+
+                        
                     }
                     else
                     {
                         _gameOtherSystemManager = new GameOtherSystemManager(_gameWorld, _allGameSystems);
                     }
 
-                    _allGameSystems.Init();
+                    
+
+                    _allGameSystems.Init();             
                     break;
 
                 default:
                     throw new Exception();
             }
+
+            _photonSceneSys.ToggleScene(sceneType, _menuSystemManager);
         }
 
 
         public void OwnUpdate(SceneTypes sceneType)
         {
+            Debug.Log(PhotonNetwork.InRoom);
+
+
             _commonSystemManager.RunUpdate();
 
             switch (sceneType)

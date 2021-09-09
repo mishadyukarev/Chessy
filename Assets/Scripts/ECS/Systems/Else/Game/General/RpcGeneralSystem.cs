@@ -78,7 +78,7 @@ namespace Assets.Scripts
         {
             PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
 
-            if(!PhotonNetwork.IsMasterClient) SyncAllToMaster();
+            if (!PhotonNetwork.IsMasterClient) SyncAllToMaster();
         }
 
 

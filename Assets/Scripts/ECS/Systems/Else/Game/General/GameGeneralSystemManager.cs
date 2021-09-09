@@ -13,21 +13,10 @@ using Leopotam.Ecs;
 using System;
 using UnityEngine;
 
-public sealed class GameGeneralSystemManager : SystemAbstManager, IDisposable
+public sealed class GameGeneralSystemManager : SystemAbstManager
 {
-    private PhotonSceneGameGeneralSystem _photonSceneGameSys;
-    private RpcGeneralSystem _rpcGameSystem;
-
-    internal GameGeneralSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld)
+    internal GameGeneralSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
     {
-        var spawnerAndCreatorEntSystems = new EcsSystems(gameWorld)
-            .Add(new InitGameGeneralSystem());
-
-
-        _photonSceneGameSys = Main.Instance.gameObject.AddComponent<PhotonSceneGameGeneralSystem>();
-        _rpcGameSystem = Main.Instance.gameObject.AddComponent<RpcGeneralSystem>();
-
-
         var syncCellVisionSystems = new EcsSystems(gameWorld)
             .Add(new SyncCellUnitViewSystem())
             .Add(new SyncCellUnitSupVisSystem())
@@ -69,10 +58,7 @@ public sealed class GameGeneralSystemManager : SystemAbstManager, IDisposable
 
 
         InitOnlySystems
-            .Add(spawnerAndCreatorEntSystems)
-            .Add(new StaticEventsGameSys())
-            .Add(_photonSceneGameSys)
-            .Add(_rpcGameSystem);
+            .Add(new EventsGameSys());
 
 
         RunOnlySystems
@@ -92,18 +78,5 @@ public sealed class GameGeneralSystemManager : SystemAbstManager, IDisposable
 
         InitRunSystems
             .Add(new DinamicEventsGameSys());
-
-
-
-        allGameSystems
-            .Add(InitOnlySystems)
-            .Add(RunOnlySystems)
-            .Add(InitRunSystems);
-    }
-
-    public void Dispose()
-    {
-        GameObject.Destroy(_photonSceneGameSys);
-        GameObject.Destroy(_rpcGameSystem);
     }
 }

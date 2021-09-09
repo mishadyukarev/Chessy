@@ -7,12 +7,12 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.ECS.System.View.Menu
 {
-    internal sealed class MainMenuSystem : IEcsInitSystem, IEcsRunSystem
+    internal sealed class SpawnMenuSys : IEcsInitSystem, IEcsRunSystem
     {
-        private EcsWorld _menuWorld;
+        private EcsWorld _menuWorld = default;
 
-        private EcsFilter<OnlineZoneUIComponent> _onlineFilter;
-        private EcsFilter<CenterMenuUIComponent> _centerFilter;
+        private EcsFilter<OnlineZoneUIComponent> _onlineFilter = default;
+        private EcsFilter<CenterMenuUIComponent> _centerFilter = default;
 
         public void Init()
         {

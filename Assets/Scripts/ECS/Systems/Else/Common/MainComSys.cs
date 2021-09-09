@@ -9,7 +9,7 @@ using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.ECS.System.Data.Common
 {
-    internal class MainCommonSystem : IEcsInitSystem, IEcsRunSystem
+    internal class MainComSys : IEcsInitSystem
     {
         private EcsWorld _curCommonWorld = default;
 
@@ -36,14 +36,17 @@ namespace Assets.Scripts.ECS.System.Data.Common
             audioSource.Play();
 
             commonZoneEnt
+                //Common
                 .Replace(new CommonZoneComponent(new GameObject(NameConst.COMMON_ZONE)))
                 .Replace(new CameraComponent(camera, new Vector3(7, 4.8f, -2)))
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
                 .Replace(new SaverComponent(StepModeTypes.ByQueue, 0.15f))
                 .Replace(new CanvasComponent(canvas))
-                .Replace(new ToggleZoneComponent(new GameObject()))
-                .Replace(new SoundCommComp(audioSource))
-                .Replace(new PhotonViewComponent(Main.Instance.gameObject.AddComponent<PhotonView>()));
+                .Replace(new SoundComComp(audioSource))
+                .Replace(new PhotonViewComponent(default/*new GameObject().AddComponent<PhotonView>()*/))
+
+                //Toggle
+                .Replace(new ToggleZoneComponent(new GameObject()));
 
 
             ref var commZoneCom = ref commonZoneEnt.Get<CommonZoneComponent>();
@@ -60,27 +63,6 @@ namespace Assets.Scripts.ECS.System.Data.Common
             commonZoneCom.Attach(audioSource.transform);
 
 
-        }
-
-        public void Run()
-        {
-            SoundCommComp.Volume = SaverComponent.SliderVolume;
-
-            switch (Main.CurrentSceneType)
-            {
-                case SceneTypes.None:
-                    throw new Exception();
-
-                case SceneTypes.Menu:
-
-                    break;
-
-                case SceneTypes.Game:
-                    break;
-
-                default:
-                    throw new Exception();
-            }
         }
     }
 }
