@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using UnityEngine;
 
 namespace Assets.Scripts.ECS.Game.General.Systems
 {

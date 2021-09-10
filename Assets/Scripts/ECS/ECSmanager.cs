@@ -15,7 +15,7 @@ namespace Assets.Scripts
     {
         #region 
 
-        private EcsWorld _commonWorld;
+        private EcsWorld _comWorld;
         private EcsWorld _menuWorld;
         private EcsWorld _gameWorld;
 
@@ -23,14 +23,16 @@ namespace Assets.Scripts
         private EcsSystems _allMenuSystems;
         private EcsSystems _allGameSystems;
 
-        private ComSysManager _commonSystemManager;
+        private ComSysManager _comSystemManager;
         private MenuSystemManager _menuSystemManager;
         private GameGeneralSystemManager _gameGeneralSystemManager;
         private GameMasterSystemManager _gameMasterSystemManager;
         private GameOtherSystemManager _gameOtherSystemManager;
 
+        private GameObject _go;
         private PhotonSceneSys _photonSceneSys;
-        private RpcGeneralSystem _rpcGameSys;
+        private RpcSys _rpcGameSys;
+        internal static PhotonView PhotonView { get; private set; }
 
         #endregion
 
@@ -39,11 +41,11 @@ namespace Assets.Scripts
         {
             _photonSceneSys = Main.Instance.gameObject.AddComponent<PhotonSceneSys>();
 
-            _commonWorld = new EcsWorld();
-            _allComSystems = new EcsSystems(_commonWorld)
+            _comWorld = new EcsWorld();
+            _allComSystems = new EcsSystems(_comWorld)
                 .Add(_photonSceneSys);
 
-            _commonSystemManager = new ComSysManager(_commonWorld, _allComSystems);
+            _comSystemManager = new ComSysManager(_comWorld, _allComSystems);
             _allComSystems.Init();
         }
 
@@ -59,8 +61,7 @@ namespace Assets.Scripts
                     {
                         _gameWorld.Destroy();
 
-                        if (PhotonViewComponent.PhotonView.gameObject != default)
-                            GameObject.Destroy(PhotonViewComponent.PhotonView.gameObject);
+                        GameObject.Destroy(_go);
 
                         GameObject.Destroy(_rpcGameSys);
                         _gameGeneralSystemManager = default;
@@ -86,17 +87,13 @@ namespace Assets.Scripts
                         _allMenuSystems.Destroy();
                     }
 
-                    
-
-
                     _gameWorld = new EcsWorld();
                     _allGameSystems = new EcsSystems(_gameWorld);
 
 
-                    var go = new GameObject("Ph");
-                    PhotonViewComponent.PhotonView = go.AddComponent<PhotonView>();
-                    PhotonViewComponent.PhotonView.ViewID = 1001;
-                    _rpcGameSys = go.AddComponent<RpcGeneralSystem>();
+                    _go = new GameObject("PhotonView");
+                    PhotonView = _go.AddComponent<PhotonView>();           
+                    _rpcGameSys = _go.AddComponent<RpcSys>();
 
                     _allGameSystems
                         .Add(new SpawnGameSys())
@@ -107,10 +104,12 @@ namespace Assets.Scripts
                     {
                         _gameMasterSystemManager = new GameMasterSystemManager(_gameWorld, _allGameSystems);
 
-                        
+                        PhotonNetwork.AllocateViewID(PhotonView);
                     }
                     else
                     {
+                        PhotonView.ViewID = 1001;
+
                         _gameOtherSystemManager = new GameOtherSystemManager(_gameWorld, _allGameSystems);
                     }
 
@@ -132,7 +131,7 @@ namespace Assets.Scripts
             Debug.Log(PhotonNetwork.InRoom);
 
 
-            _commonSystemManager.RunUpdate();
+            _comSystemManager.RunUpdate();
 
             switch (sceneType)
             {

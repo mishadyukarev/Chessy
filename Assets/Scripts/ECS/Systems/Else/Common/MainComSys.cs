@@ -43,7 +43,6 @@ namespace Assets.Scripts.ECS.System.Data.Common
                 .Replace(new SaverComponent(StepModeTypes.ByQueue, 0.15f))
                 .Replace(new CanvasComponent(canvas))
                 .Replace(new SoundComComp(audioSource))
-                .Replace(new PhotonViewComponent(default/*new GameObject().AddComponent<PhotonView>()*/))
 
                 //Toggle
                 .Replace(new ToggleZoneComponent(new GameObject()));

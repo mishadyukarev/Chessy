@@ -78,14 +78,14 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                 else if (selectorCom.IsSelectedUnit)
                 {
-                    RpcGeneralSystem.SetUniToMaster(selectorCom.IdxCurrentCell, selectorCom.SelectedUnitType);
+                    RpcSys.SetUniToMaster(selectorCom.IdxCurrentCell, selectorCom.SelectedUnitType);
                 }
 
                 else if (selectorCom.IsCellClickType(CellClickTypes.PickFire))
                 {
                     if(_availCellsForArcherArsonFilter.Get1(0).HaveIdxCell(PhotonNetwork.IsMasterClient, selectorCom.IdxCurrentCell))
                     {
-                        RpcGeneralSystem.FireToMaster(selectorCom.IdxSelectedCell, selectorCom.IdxCurrentCell);
+                        RpcSys.FireToMaster(selectorCom.IdxSelectedCell, selectorCom.IdxCurrentCell);
                     }
 
                     selectorCom.CellClickType = default;
@@ -96,7 +96,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                 {
                     if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
                     {
-                        RpcGeneralSystem.GiveTakeToolWeapon(selectorCom.ToolWeaponTypeForGiveTake, selectorCom.IdxCurrentCell);
+                        RpcSys.GiveTakeToolWeapon(selectorCom.ToolWeaponTypeForGiveTake, selectorCom.IdxCurrentCell);
                     }
                     else
                     {
@@ -118,12 +118,12 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                     if (b1 || b2)
                     {
-                        RpcGeneralSystem.AttackUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
+                        RpcSys.AttackUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
                     }
 
                     if (availCellsForShiftComp.HaveIdxCell(PhotonNetwork.IsMasterClient, selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell))
                     {
-                        RpcGeneralSystem.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
+                        RpcSys.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
                     }
                 }
 

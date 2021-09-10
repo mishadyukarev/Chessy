@@ -16,7 +16,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
     private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
     private EcsFilter<SelectorComponent> _selectorFilter = default;
-    private EcsFilter<AvailCellsForSetUnitComp> _availCellsForSetUnitFilter = default;
+    private EcsFilter<CellsForSetUnitComp> _availCellsForSetUnitFilter = default;
     private EcsFilter<AvailCellsForShiftComp> _availCellsForShiftUnitFilter = default;
     private EcsFilter<AvailCellsForArcherArsonComp> _availCellsForArcherArsonFilter = default;
     private EcsFilter<AvailCellsForAttackComp> _availCellsForSimpleAttackFilter = default;

@@ -13,7 +13,9 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
     private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
     private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
-    private EcsFilter<AvailCellsForAttackComp> _availCellsForAttack;
+    private EcsFilter<AvailCellsForAttackComp> _availCellsForAttack = default;
+
+    private EcsFilter<EndGameDataUIComponent> _endGameDataUIFilter = default;
 
     public void Run()
     {
@@ -60,7 +62,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
 
             if (fromCellUnitDataCom.IsMelee)
             {
-                RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+                RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
                 damageFrom += toCellUnitDataCom.SimplePowerDamage;
 
@@ -72,7 +74,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
 
             else
             {
-                RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
+                RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
 
                 if (simpUniqueType == AttackTypes.Unique)
                 {
@@ -89,25 +91,31 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
             if (!toCellUnitDataCom.HaveAmountHealth)
             {
                 if (toCellUnitDataCom.IsUnitType(UnitTypes.King))
-                    RpcGeneralSystem.EndGameToMaster(fromOwnerCellUnitCom.ActorNumber);
+                {
+                    _endGameDataUIFilter.Get1(0).IsEndGame = true;
+                    _endGameDataUIFilter.Get1(0).IsOwnerWinner = toOwnerCellUnitCom.HaveOwner;
 
+                    if (toOwnerCellUnitCom.HaveOwner)
+                    {
+                        _endGameDataUIFilter.Get1(0).PlayerWinner = fromOwnerCellUnitCom.Owner;
+                    }
+                    else
+                    {
+                        _endGameDataUIFilter.Get1(0).IsBotWinner = false;
+                    }
+                }
 
                 toCellUnitDataCom.ReplaceUnit(fromCellUnitDataCom);
                 toOwnerCellUnitCom.SetOwner(fromOwnerCellUnitCom.Owner);
-                toBotOwnerCellUnitCom.IsBot = fromBotOwnerCellUnitComp.IsBot;
 
 
                 if (fromCellUnitDataCom.IsMelee)
                 {
                     fromCellUnitDataCom.ResetUnit();
-                    fromOwnerCellUnitCom.ResetOwner();
-                    fromBotOwnerCellUnitComp.ResetBot();
 
                     if (!toCellUnitDataCom.HaveAmountHealth)
                     {
                         toCellUnitDataCom.ResetUnit();
-                        toOwnerCellUnitCom.ResetOwner();
-                        toBotOwnerCellUnitCom.ResetBot();
                     }
                 }
 
@@ -121,15 +129,9 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
             {
                 if (fromCellUnitDataCom.IsUnitType(UnitTypes.King))
                 {
-                    if (toOwnerCellUnitCom.HaveOwner)
-                    {
-                        RpcGeneralSystem.EndGameToMaster(toOwnerCellUnitCom.ActorNumber);
-                    }
-
-                    else if (toBotOwnerCellUnitCom.IsBot)
-                    {
-
-                    }
+                    _endGameDataUIFilter.Get1(0).IsEndGame = true;
+                    _endGameDataUIFilter.Get1(0).IsOwnerWinner = false;
+                    _endGameDataUIFilter.Get1(0).IsBotWinner = true;
                 }
 
                 fromCellUnitDataCom.ResetUnitType();

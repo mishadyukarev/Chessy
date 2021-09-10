@@ -292,7 +292,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
         if (amountAdultForest <= 3)
         {
-            RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
+            RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
             GameMasterSystemManager.TruceSystems.Run();
         }
 

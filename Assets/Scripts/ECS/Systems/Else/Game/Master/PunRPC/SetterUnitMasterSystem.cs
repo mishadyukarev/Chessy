@@ -15,7 +15,7 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
 
     private EcsFilter<ForSettingUnitMasCom> _setterFilter = default;
     private EcsFilter<InventorUnitsComponent> _unitInventorFilter = default;
-    private EcsFilter<AvailCellsForSetUnitComp> _availCellsForSetUnitFilter = default;
+    private EcsFilter<CellsForSetUnitComp> _availCellsForSetUnitFilter = default;
 
     private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
     private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
@@ -80,12 +80,12 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
 
             unitInventrorCom.TakeUnitsInInventor(unitTypeForSetting, sender.IsMasterClient);
 
-            RpcGeneralSystem.SetUnitToGeneral(sender, true);
-            RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+            RpcSys.SetUnitToGeneral(sender, true);
+            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
         }
         else
         {
-            RpcGeneralSystem.SetUnitToGeneral(sender, false);
+            RpcSys.SetUnitToGeneral(sender, false);
         }
 
     }

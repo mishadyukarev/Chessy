@@ -19,12 +19,12 @@ internal sealed class MeltOreMasterSystem : IEcsRunSystem
         if (invResCom.CanMeltOre(Sender, out bool[] haves))
         {
             invResCom.BuyMeltOre(Sender);
-            RpcGeneralSystem.SoundToGeneral(Sender, SoundEffectTypes.Melting);
+            RpcSys.SoundToGeneral(Sender, SoundEffectTypes.Melting);
         }
         else
         {
-            RpcGeneralSystem.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
-            RpcGeneralSystem.MistakeEconomyToGeneral(Sender, haves);
+            RpcSys.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
+            RpcSys.MistakeEconomyToGeneral(Sender, haves);
         }
     }
 }

@@ -93,7 +93,7 @@ namespace Assets.Scripts
 
 
 
-        private void Ready() => RpcGeneralSystem.ReadyToMaster(!_readyFilter.Get1(0).IsReady(PhotonNetwork.IsMasterClient));
+        private void Ready() => RpcSys.ReadyToMaster(!_readyFilter.Get1(0).IsReady(PhotonNetwork.IsMasterClient));
 
         private void GetUnit(UnitTypes unitType)
         {
@@ -125,11 +125,11 @@ namespace Assets.Scripts
 
                 case StepModeTypes.ByQueue:
                     if (!IsDoned(PhotonNetwork.IsMasterClient))
-                        RpcGeneralSystem.DoneToMaster(!IsDoned(PhotonNetwork.IsMasterClient));
+                        RpcSys.DoneToMaster(!IsDoned(PhotonNetwork.IsMasterClient));
                     break;
 
                 case StepModeTypes.Together:
-                    RpcGeneralSystem.DoneToMaster(!IsDoned(PhotonNetwork.IsMasterClient));
+                    RpcSys.DoneToMaster(!IsDoned(PhotonNetwork.IsMasterClient));
                     break;
 
                 default:
@@ -152,11 +152,11 @@ namespace Assets.Scripts
             {
                 if (_cellUnitFilter.Get1(IdxSelectedCell).IsConditionType(conditionUnitType))
                 {
-                    RpcGeneralSystem.ConditionUnitToMaster(ConditionUnitTypes.None, IdxSelectedCell);
+                    RpcSys.ConditionUnitToMaster(ConditionUnitTypes.None, IdxSelectedCell);
                 }
                 else
                 {
-                    RpcGeneralSystem.ConditionUnitToMaster(conditionUnitType, IdxSelectedCell);
+                    RpcSys.ConditionUnitToMaster(conditionUnitType, IdxSelectedCell);
                 }
             }
         }
@@ -205,17 +205,17 @@ namespace Assets.Scripts
         {
             _takerUIFilter.Get1(0).ResetCurTimer(unitType);
 
-            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGeneralSystem.CreateUnitToMaster(unitType);
+            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcSys.CreateUnitToMaster(unitType);
         }
 
         private void MeltOre()
         {
-            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGeneralSystem.MeltOreToMaster();
+            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcSys.MeltOreToMaster();
         }
 
         private void UpgradeBuilding(BuildingTypes buildingType)
         {
-            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGeneralSystem.UpgradeBuildingToMaster(buildingType);
+            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcSys.UpgradeBuildingToMaster(buildingType);
         }
 
         private void ToggleToolWeapon(ToolWeaponTypes toolAndWeaponType)

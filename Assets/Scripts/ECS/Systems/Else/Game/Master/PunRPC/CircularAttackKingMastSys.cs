@@ -16,6 +16,8 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
 
+        private EcsFilter<EndGameDataUIComponent> _endGameDataUIFilter = default;
+
         public void Run()
         {
             var sender = _infoMastFilter.Get1(0).FromInfo.Sender;
@@ -39,20 +41,25 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
 
                         if (!cellUnitDataComDirect.HaveAmountHealth)
                         {
+                            //if ()
+                            //{
+                            //    _endGameDataUIFilter
+                            //}
+
                             if (cellUnitDataComDirect.IsUnitType(UnitTypes.King))
                             {
-                                RpcGeneralSystem.EndGameToMaster((byte)curOwnerCellUnitCom.ActorNumber);
+                                //RpcSys.EndGameToMaster((byte)curOwnerCellUnitCom.ActorNumber);
                             }
                             cellUnitDataComDirect.ResetUnitType();
                         }
 
-                        RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+                        RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
                     }
                 }
 
                 curCellUnitDataCom.TakeAmountSteps();
 
-                RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.AttackMelee);
+                RpcSys.SoundToGeneral(sender, SoundEffectTypes.AttackMelee);
 
 
                 if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Protected) || curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
@@ -62,8 +69,8 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
             }
             else
             {
-                RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
             }
         }
     }

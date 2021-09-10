@@ -4,7 +4,7 @@
 
     Ready,
     Done,
-    EndGame,
+    //EndGame,
     Build,
     DestroyBuild,
     Shift,

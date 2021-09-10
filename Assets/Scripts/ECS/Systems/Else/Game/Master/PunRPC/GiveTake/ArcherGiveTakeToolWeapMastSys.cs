@@ -58,12 +58,12 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                         }
                         else
                         {
-                            RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                         }
                     }
                     else
                     {
-                        RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
+                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                     }
 
                 }
@@ -100,7 +100,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                                     }
                                     else
                                     {
-                                        RpcGeneralSystem.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
+                                        RpcSys.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
                                     }
                                 }
 
@@ -108,19 +108,19 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 
                             else
                             {
-                                RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
 
                         else
                         {
-                            RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
+                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                         }
                     }
 
                     else
                     {
-                        RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.ThisIsForOtherUnit, sender);
+                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.ThisIsForOtherUnit, sender);
                     }
                 }
 

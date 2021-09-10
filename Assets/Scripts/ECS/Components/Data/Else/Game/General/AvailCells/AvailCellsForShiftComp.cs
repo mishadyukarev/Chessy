@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Workers;
+﻿using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.Workers;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,7 +13,21 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells
         {
             _availCellsForShift = availCellsForShift;
 
-            //_availCellsForShift[true][79].Add(90);
+            var dict1 = new Dictionary<byte, List<byte>>();
+            var dict2 = new Dictionary<byte, List<byte>>();
+
+            byte curIdx = 0;
+            for (byte x = 0; x < CellValues.CELL_COUNT_X; x++)
+                for (byte y = 0; y < CellValues.CELL_COUNT_Y; y++)
+                {
+                    dict1.Add(curIdx, new List<byte>());
+                    dict2.Add(curIdx, new List<byte>());
+
+                    curIdx++;
+                }
+
+            availCellsForShift.Add(true, dict1);
+            availCellsForShift.Add(false, dict2);
         }
 
         internal List<byte> GetListCopy(bool isMaster, byte startIdxCell) => _availCellsForShift[isMaster][startIdxCell].Copy();

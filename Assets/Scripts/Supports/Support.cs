@@ -169,9 +169,12 @@ namespace Assets.Scripts.Supports
             {
                 if (cellBuildDataFilter.Get1(idx).IsBuildType(BuildingTypes.City))
                 {
-                    if (cellBuildDataFilter.Get2(idx).IsMasterClient == isMasterKey)
+                    if (cellBuildDataFilter.Get2(idx).HaveOwner)
                     {
-                        return true;
+                        if (cellBuildDataFilter.Get2(idx).IsMasterClient == isMasterKey)
+                        {
+                            return true;
+                        }
                     }
                 }
             }

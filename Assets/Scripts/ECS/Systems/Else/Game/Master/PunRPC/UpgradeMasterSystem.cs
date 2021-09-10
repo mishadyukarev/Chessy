@@ -44,12 +44,12 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                 inventResCom.BuyUpgradeBuildings(sender, buildTypeForUpgrade);
                 _upgradeBuildsFilter.Get1(0).AddAmountUpgrades(buildTypeForUpgrade, sender.IsMasterClient);
 
-                RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
+                RpcSys.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
             }
             else
             {
-                RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                RpcGeneralSystem.MistakeEconomyToGeneral(sender, haves);
+                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                RpcSys.MistakeEconomyToGeneral(sender, haves);
             }
         }
     }

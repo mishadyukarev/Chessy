@@ -74,7 +74,7 @@ namespace Assets.Scripts
             //PhotonViewComponent.PhotonView. SetControllerInternal(newMasterClient.ActorNumber);
 
             PhotonNetwork.LeaveRoom();
-            Main.ToggleScene(SceneTypes.Menu);
+            //Main.ToggleScene(SceneTypes.Menu);
         }
 
 

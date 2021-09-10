@@ -7,7 +7,7 @@
         SetDonerActiveUI,
         ActiveAmountMotionUI,
         GetAvailableCellsForSetting,
-        EndGame,
+        //EndGame,
         //Attack,
         Mistake,
         GetUnit,

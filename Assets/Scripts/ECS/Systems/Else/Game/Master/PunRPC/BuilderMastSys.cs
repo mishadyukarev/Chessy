@@ -42,8 +42,8 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
         if (curCellBuildDataCom.HaveBuild)
         {
-            RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-            RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
         }
 
         else
@@ -71,7 +71,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
                         if (!haveNearBorder)
                         {
-                            RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
                             curCellBuildDataCom.BuildingType = buildTypeForBuild;
                             curOwnerCellBuildCom.Owner = sender;
@@ -84,14 +84,14 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
                         else
                         {
-                            RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NearTheDesert, sender);
-                            RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NearTheDesert, sender);
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         }
                     }
                     else
                     {
-                        RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                        RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
                     break;
 
@@ -104,7 +104,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                             if (inventorResCom.CanCreateNewBuilding(buildTypeForBuild, sender, out bool[] haves))
                             {
 
-                                RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
+                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
                                 if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.Fertilizer))
                                 {
@@ -125,20 +125,20 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                             }
                             else
                             {
-                                RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                                RpcGeneralSystem.MistakeEconomyToGeneral(sender, haves);
+                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                                RpcSys.MistakeEconomyToGeneral(sender, haves);
                             }
                         }
                         else
                         {
-                            RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                            RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         }
                     }
                     else
                     {
-                        RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                        RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                     }
                     break;
 
@@ -153,7 +153,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                         {
                             if (curCellUnitDataCom.HaveMaxAmountSteps)
                             {
-                                RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Building);
+                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
                                 inventorResCom.BuyNewBuilding(buildTypeForBuild, sender);
 
@@ -164,20 +164,20 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                             }
                             else
                             {
-                                RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                                RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
                         else
                         {
-                            RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                            RpcGeneralSystem.MistakeEconomyToGeneral(sender, haves);
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                            RpcSys.MistakeEconomyToGeneral(sender, haves);
                         }
                     }
                     else
                     {
-                        RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                        RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
                     break;
 

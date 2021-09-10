@@ -21,7 +21,7 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public sealed class RpcGeneralSystem : MonoBehaviour, IEcsInitSystem
+    public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
         private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildFilter = default;
@@ -65,7 +65,7 @@ namespace Assets.Scripts
 
         private EcsFilter<InfoOtherCom> _infoOtherFilter = default;
 
-        private static PhotonView PhotonView => PhotonViewComponent.PhotonView;
+        private static PhotonView PhotonView => ECSManager.PhotonView;
 
         private static string MasterRPCName => nameof(MasterRPC);
         private static string GeneralRPCName => nameof(GeneralRPC);
@@ -102,8 +102,8 @@ namespace Assets.Scripts
 
         public static void ConditionUnitToMaster(ConditionUnitTypes neededCondtionType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ConditionUnit, new object[] { neededCondtionType, idxCell });
 
-        public static void EndGameToMaster(int actorNumberWinner) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.EndGame, new object[] { actorNumberWinner });
-        public static void EndGameToGeneral(RpcTarget rpcTarget, byte actorNumberWinner) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
+        //public static void EndGameToMaster(int actorNumberWinner) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.EndGame, new object[] { actorNumberWinner });
+        //public static void EndGameToGeneral(RpcTarget rpcTarget, byte actorNumberWinner) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
 
         public static void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.Economy, haves });
         public static void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { mistakeType });
@@ -149,9 +149,9 @@ namespace Assets.Scripts
                     _donerFilter.Get1(0).NeedActiveDoner = (bool)objects[0];
                     break;
 
-                case RpcMasterTypes.EndGame:
-                    EndGameToGeneral(RpcTarget.All, (byte)objects[0]);
-                    break;
+                //case RpcMasterTypes.EndGame:
+                //    EndGameToGeneral(RpcTarget.All, (byte)objects[0]);
+                //    break;
 
                 case RpcMasterTypes.Build:
                     _buildFilter.Get1(0).BuildingTypeForBuidling = (BuildingTypes)objects[1];
@@ -238,10 +238,10 @@ namespace Assets.Scripts
                     _motionsFilter.Get1(0).IsActivatedUI = true;
                     break;
 
-                case RpcGeneralTypes.EndGame:
-                    _endGameFilter.Get1(0).IsEndGame = true;
-                    _endGameFilter.Get1(0).PlayerWinner = PhotonNetwork.PlayerList[(byte)objects[_curNumber++] - 1];
-                    break;
+                //case RpcGeneralTypes.EndGame:
+                //    _endGameFilter.Get1(0).IsEndGame = true;
+                //    _endGameFilter.Get1(0).PlayerWinner = PhotonNetwork.PlayerList[(byte)objects[_curNumber++] - 1];
+                //    break;
 
                 case RpcGeneralTypes.Mistake:
                     var mistakeType = (MistakeTypes)objects[_curNumber++];
@@ -353,13 +353,22 @@ namespace Assets.Scripts
         {
             var listObjects = new List<object>();
 
+            var isEndGame = _endGameFilter.Get1(0).IsEndGame;
+            listObjects.Add(isEndGame);
+            if (isEndGame)
+            {
+                var isOwnerWinner = _endGameFilter.Get1(0).IsOwnerWinner;
+                listObjects.Add(isOwnerWinner);
+                if (isOwnerWinner)
+                {
+                    listObjects.Add(_endGameFilter.Get1(0).PlayerWinner.ActorNumber);
+                }
+            }
 
             listObjects.Add(_readyUIFilter.Get1(0).IsStartedGame);
             listObjects.Add(_readyUIFilter.Get1(0).IsReady(false));
 
-
             listObjects.Add(_donerUIFilter.Get1(0).IsDoned(false));
-
 
             foreach (var curIdxCell in _cellUnitFilter)
             {
@@ -537,6 +546,22 @@ namespace Assets.Scripts
         private void SyncAllOther(object[] objects)
         {
             _curNumber = 0;
+
+            ref var endGameDataUIComp = ref _endGameFilter.Get1(0);
+
+            var isEndGame = (bool)objects[_curNumber++];
+            endGameDataUIComp.IsEndGame = isEndGame;
+
+            if (isEndGame)
+            {
+                var isOwnerWinner = (bool)objects[_curNumber++];
+                endGameDataUIComp.IsOwnerWinner = isOwnerWinner;
+                if (isOwnerWinner)
+                {
+                    endGameDataUIComp.PlayerWinner = PhotonNetwork.PlayerList[(byte)objects[_curNumber++] - 1];
+                }
+            }
+
 
             _readyUIFilter.Get1(0).IsStartedGame = (bool)objects[_curNumber++];
             _readyUIFilter.Get1(0).SetIsReady(PhotonNetwork.IsMasterClient, (bool)objects[_curNumber++]);

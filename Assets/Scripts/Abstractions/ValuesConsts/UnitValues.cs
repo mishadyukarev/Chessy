@@ -25,11 +25,10 @@
 
         #region Damage
 
-        public const int SIMPLE_POWER_DAMAGE_KING = 110;
+        public const int SIMPLE_POWER_DAMAGE_KING = 100;
         public const int SIMPLE_POWER_DAMAGE_PAWN = 50;
         public const int SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP = 25;
 
-        public const float RATION_UNIQUE_POWER_DAMAGE_KING = 0.4f;
         public const float RATION_UNIQUE_POWER_DAMAGE_PAWN = 0.4f;
         public const float RATION_UNIQUE_POWER_DAMAGE_ROOK = 0.4f;
 

@@ -5,6 +5,7 @@ using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
 using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Event;
+using Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells;
 using Assets.Scripts.ECS.Systems.Game.General.UI.View.Down;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone;
@@ -57,6 +58,11 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(new KingZoneUISys());
 
 
+        var fillAvailCells = new EcsSystems(gameWorld)
+            .Add(new FillAvailCellsSys())
+            .Add(new FillCellsForSetUnitSys());
+
+
         InitOnlySystems
             .Add(new EventsGameSys());
 
@@ -66,7 +72,7 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(new RaySystem())
             .Add(new SelectorSystem())
 
-            .Add(new FillAvailCellsSystem())
+            .Add(fillAvailCells)
 
             .Add(syncCellVisionSystems)
             .Add(syncCanvasSystems)

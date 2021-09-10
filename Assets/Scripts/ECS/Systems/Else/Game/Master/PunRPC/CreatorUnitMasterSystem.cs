@@ -32,12 +32,12 @@ internal sealed class CreatorUnitMasterSystem : IEcsRunSystem
                         amountResCom.BuyCreateUnit(UnitType, infoCom.FromInfo.Sender);
                         unitInventorCom.AddUnitsInInventor(UnitType, infoCom.FromInfo.Sender.IsMasterClient);
 
-                        RpcGeneralSystem.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.SoundGoldPack);
+                        RpcSys.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.SoundGoldPack);
                     }
                     else
                     {
-                        RpcGeneralSystem.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.Mistake);
-                        RpcGeneralSystem.MistakeEconomyToGeneral(infoCom.FromInfo.Sender, haves);
+                        RpcSys.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.Mistake);
+                        RpcSys.MistakeEconomyToGeneral(infoCom.FromInfo.Sender, haves);
                     }
 
                     return;
@@ -45,6 +45,6 @@ internal sealed class CreatorUnitMasterSystem : IEcsRunSystem
             }
         }
 
-        RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedCity, infoCom.FromInfo.Sender);
+        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedCity, infoCom.FromInfo.Sender);
     }
 }

@@ -34,32 +34,43 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
         ref var selCellBuildDataCom = ref _cellBuildFilter.Get1(IdxSelCell);
 
 
-        if (_selectorFilter.Get1(0).IsSelectedCell && selCellUnitDataCom.HaveUnit)
+        if (_selectorFilter.Get1(0).IsSelectedCell)
         {
-            if (selOwnerCellUnitCom.HaveOwner)
+            if (selCellUnitDataCom.HaveUnit)
             {
-                if (selOwnerCellUnitCom.IsMine)
+                if (selOwnerCellUnitCom.HaveOwner)
                 {
-                    _unitZoneUIFilter.Get1(0).RemoveAllListenersInBuildButton(BuildingButtonTypes.Third);
-
-                    if (selCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn }))
+                    if (selOwnerCellUnitCom.IsMine)
                     {
-                        _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, true);
+                        _unitZoneUIFilter.Get1(0).RemoveAllListenersInBuildButton(BuildingButtonTypes.Third);
 
-                        if (selCellBuildDataCom.HaveBuild)
+                        if (selCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn }))
                         {
-                            //UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.First);
-                            //UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Second);
+                            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, true);
 
-                            if (selOwnerCellUnitCom.HaveOwner)
+                            if (selCellBuildDataCom.HaveBuild)
                             {
-                                if (selOwnerCellUnitCom.IsMine)
+                                //UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.First);
+                                //UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Second);
+
+                                if (selOwnerCellUnitCom.HaveOwner)
                                 {
-                                    if (selCellBuildDataCom.IsBuildType(BuildingTypes.City))
+                                    if (selOwnerCellUnitCom.IsMine)
                                     {
-                                        ///
-                                        _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, false);
+                                        if (selCellBuildDataCom.IsBuildType(BuildingTypes.City))
+                                        {
+                                            ///
+                                            _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, false);
+                                        }
+                                        else
+                                        {
+                                            _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
+
+                                            _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
+                                            _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
+                                        }
                                     }
+
                                     else
                                     {
                                         _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
@@ -69,77 +80,70 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
                                     }
                                 }
 
-                                else
+                                else if (selBotOnwerCellUnitCom.IsBot)
                                 {
-                                    _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
+                                    if (selCellBuildDataCom.IsBuildType(BuildingTypes.City))
+                                    {
+                                        _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
 
-                                    _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
-                                    _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
+                                        _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
+                                        _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
+                                    }
                                 }
+
                             }
 
-                            else if (selBotOnwerCellUnitCom.IsBot)
-                            {
-                                if (selCellBuildDataCom.IsBuildType(BuildingTypes.City))
-                                {
-                                    _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
-
-                                    _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Destroy(); });
-                                    _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
-                                }
-                            }
-
-                        }
-
-                        else
-                        {
-                            //if (!CellEnvirDataWorker.HaveEnvironments(XySelectedCell, new[] { EnvironmentTypes.AdultForest, EnvironmentTypes.YoungForest }))
-                            //{
-                            //    UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.First);
-                            //}
-                            //else
-                            //{
-                            //    UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.First);
-                            //}
-
-
-                            //if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, XySelectedCell))
-                            //{
-                            //    UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.Second);
-                            //}
-
-                            //else
-                            //{
-                            //    UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Second);
-                            //}
-
-
-                            if (_cellBuildFilter.IsSettedCity(PhotonNetwork.IsMasterClient))
-                            {
-                                _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, false);
-                            }
                             else
                             {
-                                _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Build(BuildingTypes.City); });
-                                _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Build City");
+                                //if (!CellEnvirDataWorker.HaveEnvironments(XySelectedCell, new[] { EnvironmentTypes.AdultForest, EnvironmentTypes.YoungForest }))
+                                //{
+                                //    UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.First);
+                                //}
+                                //else
+                                //{
+                                //    UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.First);
+                                //}
+
+
+                                //if (CellEnvirDataWorker.HaveEnvironment(EnvironmentTypes.Hill, XySelectedCell))
+                                //{
+                                //    UIRightWorker.SetActiveBuildingButton(true, BuildingButtonTypes.Second);
+                                //}
+
+                                //else
+                                //{
+                                //    UIRightWorker.SetActiveBuildingButton(false, BuildingButtonTypes.Second);
+                                //}
+
+
+
+                                if (_cellBuildFilter.IsSettedCity(PhotonNetwork.IsMasterClient))
+                                {
+                                    _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, false);
+                                }
+                                else
+                                {
+                                    _unitZoneUIFilter.Get1(0).AddListenerToBuildButton(BuildingButtonTypes.Third, delegate { Build(BuildingTypes.City); });
+                                    _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Build City");
+                                }
                             }
                         }
+                        else
+                        {
+                            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
+                        }
                     }
+
                     else
                     {
                         _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                     }
                 }
 
-                else
+                else if (selBotOnwerCellUnitCom.IsBot)
                 {
                     _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                 }
-            }
-
-            else if (selBotOnwerCellUnitCom.IsBot)
-            {
-                _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
             }
         }
 
@@ -151,10 +155,10 @@ internal sealed class BuildRighUISystem : IEcsInitSystem, IEcsRunSystem
 
     private void Build(BuildingTypes buildingType)
     {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGeneralSystem.BuildToMaster(IdxSelCell, buildingType);
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcSys.BuildToMaster(IdxSelCell, buildingType);
     }
     private void Destroy()
     {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcGeneralSystem.DestroyBuildingToMaster(IdxSelCell);
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcSys.DestroyBuildingToMaster(IdxSelCell);
     }
 }

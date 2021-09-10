@@ -59,6 +59,6 @@
 //        //    default:
 //        //        throw new Exception();
 //        //}
-//        //RpcGeneralSystem.GetUnitToGeneral(infoCom.FromInfo.Sender, isGetted, unitType);
+//        //RpcSys.GetUnitToGeneral(infoCom.FromInfo.Sender, isGetted, unitType);
 //    }
 //}

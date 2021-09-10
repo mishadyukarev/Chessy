@@ -51,7 +51,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     {
                         if (fromOwnerCellUnitCom.HaveOwner)
                         {
-                            RpcGeneralSystem.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
+                            RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
                             toCellFireDataCom.HaveFire = true;
                             toCellUnitDataCom.TakeAmountSteps();
@@ -66,8 +66,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                 else
                 {
-                    RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                    RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                 }
             }
 
@@ -100,8 +100,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
                 else
                 {
-                    RpcGeneralSystem.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                    RpcGeneralSystem.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                 }
             }
         }

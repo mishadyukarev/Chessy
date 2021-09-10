@@ -20,6 +20,7 @@ using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System.Collections.Generic;
@@ -40,6 +41,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
         private EcsFilter<CellViewComponent> _cellViewFilter = default;
+        private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellBuildDataComponent, OwnerComponent, OwnerBotComponent> _cellBuildFilter = default;
 
 
         public void Init()
@@ -139,25 +142,12 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                          .Replace(new OwnerBotComponent());
 
 
-                    var cellUnitDataComp = _currentGameWorld.NewEntity()
+                    _currentGameWorld.NewEntity()
                          .Replace(new CellUnitDataComponent(new Dictionary<bool, bool>()))
                          .Replace(new CellUnitMainViewComp(cell_GOs[x, y]))
                          .Replace(new CellUnitExtraViewComp(cell_GOs[x, y]))
                          .Replace(new OwnerComponent())
                          .Replace(new OwnerBotComponent());
-
-
-                    if (PhotonNetwork.OfflineMode)
-                    {
-                        if (x == 3 && y == 3)
-                        {
-                            cellUnitDataComp.Get<CellUnitDataComponent>().UnitType = UnitTypes.Pawn;
-                            cellUnitDataComp.Get<CellUnitDataComponent>().MainToolWeaponType = ToolWeaponTypes.Axe;
-                            cellUnitDataComp.Get<CellUnitDataComponent>().AmountHealth = 100;
-                            cellUnitDataComp.Get<CellUnitDataComponent>().ConditionUnitType = ConditionUnitTypes.Protected;
-                            cellUnitDataComp.Get<OwnerBotComponent>().IsBot = true;
-                        }
-                    }
                 }
 
 
@@ -166,40 +156,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             ///
             var backGroundGO = GameObject.Instantiate(ResourcesComponent.PrefabConfig.BackGroundCollider2D,
                 Main.Instance.transform.position + new Vector3(7, 5.5f, 2), Main.Instance.transform.rotation);
-
-
-
-            var dictStartCell = new Dictionary<bool, List<byte>>();
-            dictStartCell.Add(true, new List<byte>());
-            dictStartCell.Add(false, new List<byte>());
-
-            var dictForShift = new Dictionary<bool, Dictionary<byte, List<byte>>>();
-            var dict1 = new Dictionary<byte, List<byte>>();
-            var dict2 = new Dictionary<byte, List<byte>>();
-
-            byte curIdx = 0;
-            for (byte x = 0; x < CellValues.CELL_COUNT_X; x++)
-                for (byte y = 0; y < CellValues.CELL_COUNT_Y; y++)
-                {
-                    dict1.Add(curIdx, new List<byte>());
-                    dict2.Add(curIdx, new List<byte>());
-
-                    if (y < 3 && x > 2 && x < 12)
-                    {
-                        dictStartCell[true].Add(curIdx);
-                    }
-                    else if (y > 7 && x > 2 && x < 12)
-                    {
-                        dictStartCell[false].Add(curIdx);
-                    }
-
-                    curIdx++;
-                }
-
-            dictForShift.Add(true, dict1);
-            dictForShift.Add(false, dict2);
-
-
 
 
             var audioSourceParentGO = new GameObject("AudioSource");
@@ -212,8 +168,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new GeneralZoneViewComponent(generalZoneGO))
                 .Replace(new BackgroundComponent(backGroundGO))
 
-                .Replace(new AvailCellsForSetUnitComp(dictStartCell))
-                .Replace(new AvailCellsForShiftComp(dictForShift))
+                .Replace(new CellsForSetUnitComp(new Dictionary<bool, List<byte>>()))
+                .Replace(new AvailCellsForShiftComp(new Dictionary<bool, Dictionary<byte, List<byte>>>()))
                 .Replace(new AvailCellsForArcherArsonComp(new Dictionary<bool, List<byte>>()))
                 .Replace(new AvailCellsForAttackComp(true))
 
@@ -421,6 +377,59 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 CameraComponent.SetRotation(new Quaternion(0, 0, 180, 0));
                 CameraComponent.SetPosition(Main.Instance.transform.position + CameraComponent.PosForCamera + new Vector3(0, 0.5f, 0));
             }
+
+
+            if (PhotonNetwork.OfflineMode)
+            {
+                foreach (byte curIdxCell in _xyCellFilter)
+                {
+                    var curXyCell = _xyCellFilter.GetXyCell(curIdxCell);
+                    var x = curXyCell[0];
+                    var y = curXyCell[1];
+
+                    ref var curCellEnvDataComp = ref _cellEnvFilter.Get1(curIdxCell);
+                    ref var curCellUnitDataComp = ref _cellUnitFilter.Get1(curIdxCell);
+                    ref var curBotCellUnitComp = ref _cellUnitFilter.Get3(curIdxCell);
+                    ref var curCellBuildDataComp = ref _cellBuildFilter.Get1(curIdxCell);
+
+                    if (x == 7 && y == 6)
+                    {
+                        curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.Mountain);
+                        curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.AdultForest);
+
+                        curCellUnitDataComp.UnitType = UnitTypes.King;
+                        curCellUnitDataComp.AmountHealth = 1;
+                        curCellUnitDataComp.ConditionUnitType = ConditionUnitTypes.Protected;
+                        curBotCellUnitComp.IsBot = true;
+                    }
+
+                    else if (x == 8 && y == 6)
+                    {
+                        curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.Mountain);
+                        curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.AdultForest);
+
+                        curCellBuildDataComp.BuildingType = BuildingTypes.City;
+                        _cellBuildFilter.Get3(curIdxCell).IsBot = true;
+                    }
+
+                    else if (x == 6 && y == 6 || x == 9 && y == 6|| x <= 9 && x >= 6 && y == 5 || x <= 9 && x >= 6 && y == 7)
+                    {
+                        curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.Mountain);
+
+                        curCellUnitDataComp.UnitType = UnitTypes.Pawn;
+                        curCellUnitDataComp.MainToolWeaponType = ToolWeaponTypes.Axe;
+
+                        int rand = Random.Range(0, 100);
+
+                        if(rand >= 50) curCellUnitDataComp.ExtraToolWeaponType = ToolWeaponTypes.Sword;
+
+                        curCellUnitDataComp.AmountHealth = 100;
+                        curCellUnitDataComp.ConditionUnitType = ConditionUnitTypes.Protected;
+                        curBotCellUnitComp.IsBot = true;
+                    }
+                }
+            }
         }
+        
     }
 }

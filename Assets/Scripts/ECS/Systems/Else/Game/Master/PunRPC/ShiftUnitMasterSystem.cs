@@ -61,7 +61,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
                     fromCellUnitDataCom.ResetUnit();
                     fromOwnerCellUnitCom.ResetOwner();
 
-                    RpcGeneralSystem.SoundToGeneral(fromInfo.Sender, SoundEffectTypes.ClickToTable);
+                    RpcSys.SoundToGeneral(fromInfo.Sender, SoundEffectTypes.ClickToTable);
                 }
             }
         }

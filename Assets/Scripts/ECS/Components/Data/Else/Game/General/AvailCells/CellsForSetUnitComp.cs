@@ -1,15 +1,19 @@
-﻿using Assets.Scripts.Workers;
+﻿using Assets.Scripts.Abstractions.ValuesConsts;
+using Assets.Scripts.Workers;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
 {
-    internal struct AvailCellsForSetUnitComp
+    internal struct CellsForSetUnitComp
     {
         private Dictionary<bool, List<byte>> _availCellsForSetUnit;
 
-        internal AvailCellsForSetUnitComp(Dictionary<bool, List<byte>> availCellsForSetUnit)
+        internal CellsForSetUnitComp(Dictionary<bool, List<byte>> availCellsForSetUnit)
         {
             _availCellsForSetUnit = availCellsForSetUnit;
+
+            availCellsForSetUnit.Add(true, new List<byte>());
+            availCellsForSetUnit.Add(false, new List<byte>());
         }
 
         internal List<byte> GetListAvailCellsCopy(bool isMasterKey) => _availCellsForSetUnit[isMasterKey].Copy();

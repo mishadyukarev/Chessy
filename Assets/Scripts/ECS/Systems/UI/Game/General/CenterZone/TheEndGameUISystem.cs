@@ -7,15 +7,41 @@ internal sealed class TheEndGameUISystem : IEcsRunSystem
 
     public void Run()
     {
-        if (_endGameUIFilter.Get1(0).IsEndGame)
+        ref var endGameDataUIComp = ref _endGameUIFilter.Get1(0);
+        ref var endGameViewUIComp = ref _endGameUIFilter.Get2(0);
+        
+
+        if (endGameDataUIComp.IsEndGame)
         {
-            _endGameUIFilter.Get2(0).SetActiveZone(true);
-            if (_endGameUIFilter.Get1(0).PlayerWinner.IsLocal) _endGameUIFilter.Get2(0).Text = "You're WINNER!";
-            else _endGameUIFilter.Get2(0).Text = "You're loser :(";
+            endGameViewUIComp.SetActiveZone(true);
+
+            if (endGameDataUIComp.IsOwnerWinner)
+            {
+                if (endGameDataUIComp.PlayerWinner.IsLocal)
+                {
+                    endGameViewUIComp.Text = "You're WINNER!";
+                }
+                else
+                {
+                    endGameViewUIComp.Text = "You're loser :(";
+                }
+            }
+
+            else
+            {
+                if (endGameDataUIComp.IsBotWinner)
+                {
+                    endGameViewUIComp.Text = "You're loser :(";
+                }
+                else
+                {
+                    endGameViewUIComp.Text = "You're WINNER!";
+                }
+            }
         }
         else
         {
-            _endGameUIFilter.Get2(0).SetActiveZone(false);
+            endGameViewUIComp.SetActiveZone(false);
         }
     }
 }
