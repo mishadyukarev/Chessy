@@ -92,7 +92,7 @@ namespace Assets.Scripts
         public static void ActiveAmountMotionUIToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
         public static void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
 
-        public static void UpgradeBuildingToMaster(BuildingTypes buildingTypeForUpgrade) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeBuild, new object[] { buildingTypeForUpgrade });
+        public static void UpgradeBuildingToMaster(BuildingTypes buildingType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeBuild, new object[] { buildingType });
 
         public static void ShiftUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { idxPreviousCell, idxSelectedCell });
         public static void AttackUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Attack, new object[] { idxPreviousCell, idxSelectedCell });
@@ -101,9 +101,6 @@ namespace Assets.Scripts
         public static void DestroyBuildingToMaster(byte xyCellForDestroy) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.DestroyBuild, new object[] { xyCellForDestroy });
 
         public static void ConditionUnitToMaster(ConditionUnitTypes neededCondtionType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ConditionUnit, new object[] { neededCondtionType, idxCell });
-
-        //public static void EndGameToMaster(int actorNumberWinner) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.EndGame, new object[] { actorNumberWinner });
-        //public static void EndGameToGeneral(RpcTarget rpcTarget, byte actorNumberWinner) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.EndGame, new object[] { actorNumberWinner });
 
         public static void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.Economy, haves });
         public static void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { mistakeType });
@@ -148,10 +145,6 @@ namespace Assets.Scripts
                 case RpcMasterTypes.Done:
                     _donerFilter.Get1(0).NeedActiveDoner = (bool)objects[0];
                     break;
-
-                //case RpcMasterTypes.EndGame:
-                //    EndGameToGeneral(RpcTarget.All, (byte)objects[0]);
-                //    break;
 
                 case RpcMasterTypes.Build:
                     _buildFilter.Get1(0).BuildingTypeForBuidling = (BuildingTypes)objects[1];
@@ -200,7 +193,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.UpgradeBuild:
-                    _upgradorFilter.Get1(0).BuildingType = (BuildingTypes)objects[1];
+                    _upgradorFilter.Get1(0).BuildingType = (BuildingTypes)objects[_curNumber++];
                     break;
 
                 case RpcMasterTypes.CircularAttackKing:

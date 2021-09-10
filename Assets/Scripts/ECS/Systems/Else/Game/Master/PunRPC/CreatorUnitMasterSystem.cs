@@ -3,6 +3,7 @@ using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 
@@ -12,7 +13,7 @@ internal sealed class CreatorUnitMasterSystem : IEcsRunSystem
     private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
     private EcsFilter<InventorUnitsComponent, InventorResourcesComponent> _inventorFilter = default;
 
-    private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerComponent, OwnerBotComponent> _cellBuildFilter = default;
 
     private UnitTypes UnitTypeForCreating => _creatorUnitFilter.Get1(0).UnitTypeForCreating;
 

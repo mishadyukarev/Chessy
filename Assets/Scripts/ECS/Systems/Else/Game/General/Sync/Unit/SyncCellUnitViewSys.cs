@@ -6,7 +6,7 @@ using System;
 
 namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 {
-    internal sealed class SyncCellUnitViewSystem : IEcsRunSystem
+    internal sealed class SyncCellUnitViewSys : IEcsRunSystem
     {
         private EcsFilter<CellUnitDataComponent, CellUnitMainViewComp, CellUnitExtraViewComp> _cellUnitFilter = default;
         private EcsFilter<SelectorComponent> _selectorFilter = default;
@@ -17,53 +17,52 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 
             foreach (byte idxCurCell in _cellUnitFilter)
             {
-                ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
-                ref var curMainCellUnitViewCom = ref _cellUnitFilter.Get2(idxCurCell);
-                ref var curExtraCellUnitViewCom = ref _cellUnitFilter.Get3(idxCurCell);
+                ref var curUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
+                ref var curMainUnitViewCom = ref _cellUnitFilter.Get2(idxCurCell);
+                ref var curExtraUnitViewCom = ref _cellUnitFilter.Get3(idxCurCell);
+
+                curMainUnitViewCom.Disable_SR();
+                curExtraUnitViewCom.Disable_SR();
 
 
-                if (curCellUnitDataCom.HaveUnit)
+                if (curUnitDataCom.HaveUnit)
                 {
-                    if (curCellUnitDataCom.IsVisibleUnit(PhotonNetwork.IsMasterClient))
+                    if (curUnitDataCom.IsVisibleUnit(PhotonNetwork.IsMasterClient))
                     {
-                        curMainCellUnitViewCom.Enable_SR();
+                        curMainUnitViewCom.Enable_SR();
 
-                        if (curCellUnitDataCom.IsUnitType(UnitTypes.King))
+                        if (curUnitDataCom.IsUnitType(UnitTypes.King))
                         {
-                            curMainCellUnitViewCom.SetKing_Sprite();
+                            curMainUnitViewCom.SetKing_Sprite();
                         }
 
-                        else if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn))
+                        else if (curUnitDataCom.IsUnitType(UnitTypes.Pawn))
                         {
-                            curMainCellUnitViewCom.SetPawn_Spriter();
+                            curMainUnitViewCom.SetPawn_Spriter();
 
 
-                            if (curCellUnitDataCom.HaveExtraToolWeaponPawn)
+                            if (curUnitDataCom.HaveExtraToolWeaponPawn)
                             {
-                                curExtraCellUnitViewCom.Enable_SR();
-                                curExtraCellUnitViewCom.SetToolWeapon_Sprite(curCellUnitDataCom.ExtraToolWeaponPawnType);
-                            }
-                            else
-                            {
-                                curExtraCellUnitViewCom.Disable_SR();
+                                curExtraUnitViewCom.Enable_SR();
+                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDataCom.ExtraToolWeaponPawnType);
                             }
                         }
 
-                        else if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                        else if (curUnitDataCom.IsUnitType(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                         {
-                            if (curCellUnitDataCom.ArcherWeapon)
+                            if (curUnitDataCom.ArcherWeapon)
                             {
-                                curMainCellUnitViewCom.SetArcher_Sprite(curCellUnitDataCom.UnitType, curCellUnitDataCom.ArcherWeaponType);
+                                curMainUnitViewCom.SetArcher_Sprite(curUnitDataCom.UnitType, curUnitDataCom.ArcherWeaponType);
                             }
                             else
                             {
                                 throw new Exception();
                             }
 
-                            if (curCellUnitDataCom.HaveExtraToolWeaponPawn)
+                            if (curUnitDataCom.HaveExtraToolWeaponPawn)
                             {
-                                curExtraCellUnitViewCom.Enable_SR();
-                                curExtraCellUnitViewCom.SetToolWeapon_Sprite(curCellUnitDataCom.ExtraToolWeaponPawnType);
+                                curExtraUnitViewCom.Enable_SR();
+                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDataCom.ExtraToolWeaponPawnType);
                             }
                         }
 
@@ -72,22 +71,10 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                             throw new Exception();
                         }
                     }
-
-                    else
-                    {
-                        curMainCellUnitViewCom.Disable_SR();
-                        curExtraCellUnitViewCom.Disable_SR();
-                    }
-
-                    if (selectorCom.IsSelectedUnit)
-                    {
-                    }
                 }
 
                 else
                 {
-                    curMainCellUnitViewCom.Disable_SR();
-                    curExtraCellUnitViewCom.Disable_SR();
 
                     if (selectorCom.IsSelectedUnit)
                     {

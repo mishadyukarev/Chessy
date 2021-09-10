@@ -59,7 +59,6 @@ namespace Assets.Scripts
 
 
             _giveTakeZoneUIFilter.Get1(0).AddListenerToGive_Button(ActiveGiveTakeButton);
-            //_giveTakeZoneUIFilter.Get1(0).AddListenerToSwap_Button(SwapButton);
 
             _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Axe, delegate { ToggleToolWeapon(ToolWeaponTypes.Axe); });
             _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Pick, delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
@@ -76,15 +75,6 @@ namespace Assets.Scripts
             ref var buildLeftZoneViewUIComp = ref _buildLeftZoneViewUICom.Get1(0);
 
             buildLeftZoneViewUIComp.AddListenerToMelt(delegate { MeltOre(); });
-
-            //buildLeftZoneViewUIComp.AddListenerToTakePawnTool(delegate { SetCellClickType(CellClickTypes.TakeToolOrWeapon); });
-
-            //buildLeftZoneViewUIComp.AddListenerToGiveTool(PawnToolTypes.Hoe, delegate { SetCellClickSelector(PawnToolTypes.Hoe); });
-            //buildLeftZoneViewUIComp.AddListenerToGiveTool(PawnExtraThingTypes.Pick, delegate { SetCellClickType(CellClickTypes.GiveToolOrWeapon); });
-            //buildLeftZoneViewUIComp.AddListenerToGiveTool(PawnExtraThingTypes.Pick, delegate { () => _selectorFilter.Get1(0).TakeGiveType = TakeGiveTypes.Give/*SetExtraToolOrWeaponType(ToolAndWeaponTypes.Pick)*/; });
-
-            //buildLeftZoneViewUIComp.AddListenerToGiveWeapon(delegate { SetExtraToolOrWeaponType(ToolAndWeaponTypes.Sword); });
-            //buildLeftZoneViewUIComp.AddListenerToGiveWeapon(delegate { SetCellClickType(CellClickTypes.GiveToolOrWeapon); });
 
             buildLeftZoneViewUIComp.AddListenerToBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
             buildLeftZoneViewUIComp.AddListenerToBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
@@ -138,7 +128,6 @@ namespace Assets.Scripts
 
             _selectorFilter.Get1(0).DefCellClickType();
             _selectorFilter.Get1(0).DefSelectedUnit();
-            _selectorFilter.Get1(0).DefSelectedCell();
         }
 
         private void EnvironmentInfo()

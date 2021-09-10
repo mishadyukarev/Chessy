@@ -32,7 +32,7 @@ internal sealed class VisibilityUnitsMasterSystem : IEcsRunSystem
             {
                 if (curOwnerUnitCom.HaveOwner)
                 {
-                    if (curOwnerUnitCom.IsHim(PhotonNetwork.MasterClient))
+                    if (curOwnerUnitCom.IsMasterClient)
                     {
                         if (curEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
                         {
@@ -51,7 +51,7 @@ internal sealed class VisibilityUnitsMasterSystem : IEcsRunSystem
                                 {
                                     if (ownerUnitCom.HaveOwner)
                                     {
-                                        if (!ownerUnitCom.IsHim(PhotonNetwork.MasterClient))
+                                        if (!ownerUnitCom.IsMasterClient)
                                         {
                                             curUnitDataCom.SetIsVisibleUnit(false, true);
                                             break;
@@ -80,7 +80,7 @@ internal sealed class VisibilityUnitsMasterSystem : IEcsRunSystem
                                 {
                                     if (ownerUnitCom.HaveOwner)
                                     {
-                                        if (!ownerUnitCom.IsHim(PhotonNetwork.MasterClient))
+                                        if (ownerUnitCom.IsMasterClient)
                                         {
                                             curUnitDataCom.SetIsVisibleUnit(true, true);
                                             break;

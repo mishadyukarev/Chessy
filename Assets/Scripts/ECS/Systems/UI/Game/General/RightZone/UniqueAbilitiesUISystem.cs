@@ -129,11 +129,11 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
 
     private void CircularAttackKing()
     {
-        RpcSys.CircularAttackKingToMaster(IdxSelCell);
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcSys.CircularAttackKingToMaster(IdxSelCell);
     }
 
     private void ActiveFireSelector()
     {
-        _selectorFilter.Get1(0).CellClickType = CellClickTypes.PickFire;
+        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) _selectorFilter.Get1(0).CellClickType = CellClickTypes.PickFire;
     }
 }

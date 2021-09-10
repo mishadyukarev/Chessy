@@ -19,7 +19,7 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
     internal GameGeneralSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
     {
         var syncCellVisionSystems = new EcsSystems(gameWorld)
-            .Add(new SyncCellUnitViewSystem())
+            .Add(new SyncCellUnitViewSys())
             .Add(new SyncCellUnitSupVisSystem())
             .Add(new SyncCellBuildViewSystem())
             .Add(new SyncCellEnvirsVisSystem())
@@ -68,11 +68,18 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(new FillCellsForShiftSys());
 
 
+        var executersEvents = new EcsSystems(gameWorld)
+            .Add(new EventsGameSys())
+            .Add(new EnventRightBuildZoneSys());
+
+
         InitOnlySystems
-            .Add(new EventsGameSys());
+            .Add(executersEvents);
 
 
         RunOnlySystems
+            .Add(new VisibilityUnitsMasterSystem())
+
             .Add(new InputSystem())
             .Add(new RaySystem())
             .Add(new SelectorSystem())
@@ -82,12 +89,6 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             .Add(syncCellVisionSystems)
             .Add(syncCanvasSystems)
 
-            .Add(new SoundSystem())
-
-            .Add(new VisibilityUnitsMasterSystem());
-
-
-        InitRunSystems
-            .Add(new DinamicEventsGameSys());
+            .Add(new SoundSystem());
     }
 }

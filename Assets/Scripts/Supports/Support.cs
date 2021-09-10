@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
+using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using System;
 
@@ -163,7 +164,7 @@ namespace Assets.Scripts.Supports
         }
 
 
-        internal static bool IsSettedCity(this EcsFilter<CellBuildDataComponent, OwnerComponent> cellBuildDataFilter, bool isMasterKey)
+        internal static bool IsSettedCity(this EcsFilter<CellBuildDataComponent, OwnerComponent, OwnerBotComponent> cellBuildDataFilter, bool isMasterKey)
         {
             foreach (var idx in cellBuildDataFilter)
             {
