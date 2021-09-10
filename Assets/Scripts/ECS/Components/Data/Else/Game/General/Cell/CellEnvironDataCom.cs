@@ -25,10 +25,10 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
                 int amountSteps = 1;
 
                 if (HaveEnvironment(EnvironmentTypes.Fertilizer))
-                    amountSteps += UnitValues.NEED_AMOUNT_STEPS_FOOD;
+                    amountSteps += UnitValues.NEED_AMOUNT_STEPS_FERTILIZE;
 
                 if (HaveEnvironment(EnvironmentTypes.AdultForest))
-                    amountSteps += UnitValues.NEED_AMOUNT_STEPS_TREE;
+                    amountSteps += UnitValues.NEED_AMOUNT_STEPS_ADULTTREE;
 
                 if (HaveEnvironment(EnvironmentTypes.Hill))
                     amountSteps += UnitValues.NEED_AMOUNT_STEPS_HILL;

@@ -49,8 +49,8 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
                     if (fromCellUnitDataCom.AmountSteps < 0) fromCellUnitDataCom.ResetAmountSteps();
 
 
-                    toCellUnitDataCom.MainToolWeaponType = fromCellUnitDataCom.MainToolWeaponType;
-                    toCellUnitDataCom.ExtraToolWeaponType = fromCellUnitDataCom.ExtraToolWeaponType;
+                    toCellUnitDataCom.ArcherWeaponType = fromCellUnitDataCom.ArcherWeaponType;
+                    toCellUnitDataCom.ExtraToolWeaponPawnType = fromCellUnitDataCom.ExtraToolWeaponPawnType;
                     toCellUnitDataCom.UnitType = fromCellUnitDataCom.UnitType;
                     toCellUnitDataCom.AmountHealth = fromCellUnitDataCom.AmountHealth;
                     toCellUnitDataCom.AmountSteps = fromCellUnitDataCom.AmountSteps;

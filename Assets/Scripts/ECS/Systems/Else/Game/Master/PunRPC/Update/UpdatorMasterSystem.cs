@@ -109,7 +109,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                         }
                                     }
 
-                                    else if (curCellUnitDataCom.ExtraToolWeaponType == ToolWeaponTypes.Pick)
+                                    else if (curCellUnitDataCom.ExtraToolWeaponPawnType == ToolWeaponTypes.Pick)
                                     {
                                         if (curCellEnvrDataCom.HaveEnvironment(EnvironmentTypes.Hill))
                                         {
@@ -276,7 +276,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                     var aroundXYList = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdxCell));
                     foreach (var xy1 in aroundXYList)
                     {
-                        var curIdxCell1 = _xyCellFilter.GetIndexCell(xy1);
+                        var curIdxCell1 = _xyCellFilter.GetIdxCell(xy1);
 
                         if (_cellViewFilter.Get1(curIdxCell1).IsActiveParent)
                         {
@@ -301,7 +301,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
             var isMaster = true;
             if (i == 1) isMaster = false;
 
-            if (inventorResCom.GetAmountResources(ResourceTypes.Food, isMaster) < 0)
+            if (inventorResCom.AmountResources(ResourceTypes.Food, isMaster) < 0)
             {
                 inventorResCom.SetAmountResources(ResourceTypes.Food, isMaster, 0);
 
@@ -312,12 +312,15 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
                     if (curCellUnitDataComp.HaveUnit)
                     {
-                        if (!curCellUnitDataComp.IsUnitType(UnitTypes.King))
+                        if (curOwnerCellUnitComp.HaveOwner)
                         {
-                            if (curOwnerCellUnitComp.IsMasterClient == isMaster)
+                            if (!curCellUnitDataComp.IsUnitType(UnitTypes.King))
                             {
-                                curCellUnitDataComp.ResetUnit();
-                                break;
+                                if (curOwnerCellUnitComp.IsMasterClient == isMaster)
+                                {
+                                    curCellUnitDataComp.ResetUnit();
+                                    break;
+                                }
                             }
                         }
                     }

@@ -21,39 +21,8 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
 
 
         internal void SetKing_Sprite() => _main_SR.sprite = ResourcesComponent.SpritesConfig.King_Sprite;
-        internal void SetToolWeapon_Sprite(ToolWeaponTypes toolWeaponType)
-        {
-            switch (toolWeaponType)
-            {
-                case ToolWeaponTypes.None:
-                    throw new Exception();
+        internal void SetPawn_Spriter() => _main_SR.sprite = ResourcesComponent.SpritesConfig.Axe_Sprite;
 
-                case ToolWeaponTypes.Hoe:
-                    break;
-
-                case ToolWeaponTypes.Axe:
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.Axe_Sprite;
-                    break;
-
-                case ToolWeaponTypes.Pick:
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.Pick_Sprite;
-                    break;
-
-                case ToolWeaponTypes.Sword:
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.Sword_Sprite;
-                    break;
-
-                case ToolWeaponTypes.Bow:
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.BowBishop_Sprite;
-                    break;
-
-                case ToolWeaponTypes.Crossbow:
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
         internal void SetArcher_Sprite(UnitTypes unitType, ToolWeaponTypes toolWeaponType)
         {
             if (toolWeaponType == ToolWeaponTypes.Bow)

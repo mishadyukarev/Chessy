@@ -1,96 +1,167 @@
-﻿using Assets.Scripts.ECS.Game.General.Components;
+﻿using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Game.General.Components;
+using Assets.Scripts.Workers;
+using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
+using Photon.Pun;
+using System.Collections.Generic;
 
 internal sealed class VisibilityUnitsMasterSystem : IEcsRunSystem
 {
+    private EcsFilter<XyCellComponent> _xyCellFilter = default;
+    private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
     private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter;
 
     public void Run()
     {
-        foreach (var idxCurCell in _cellUnitFilter)
+        foreach (byte idxCurCell in _cellUnitFilter)
         {
-            ref var cellUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
+            var xy = _xyCellFilter.GetXyCell(idxCurCell);
 
-            cellUnitDataCom.SetIsVisibleUnit(true, true);
-            cellUnitDataCom.SetIsVisibleUnit(false, true);
+            ref var curUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
+            ref var curOwnerUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
+
+            ref var curEnvDataCom = ref _cellEnvFilter.Get1(idxCurCell);
 
 
-            //if (CellUnitsDataSystem.HaveAnyUnit(xy))
-            //{
-            //    if (CellUnitsDataSystem.HaveOwner(xy))
-            //    {
-            //        if (CellUnitsDataSystem.IsHim(PhotonNetwork.MasterClient, xy))
-            //        {
-            //            if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
-            //            {
-            //                CellUnitsDataSystem.SetIsVisibleUnit(false, false, xy);
+            curUnitDataCom.SetIsVisibleUnit(true, true);
+            curUnitDataCom.SetIsVisibleUnit(false, true);
 
-            //                List<int[]> list = TryGetXyAround(xy);
-            //                foreach (var xy1 in list)
-            //                {
-            //                    if (CellUnitsDataSystem.HaveAnyUnit(xy1))
-            //                    {
-            //                        if (CellUnitsDataSystem.HaveOwner(xy1))
-            //                        {
-            //                            if (!CellUnitsDataSystem.IsHim(PhotonNetwork.MasterClient, xy1))
-            //                            {
-            //                                CellUnitsDataSystem.SetIsVisibleUnit(false, true, xy);
-            //                                break;
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
-            //        else
-            //        {
-            //            if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
-            //            {
-            //                CellUnitsDataSystem.SetIsVisibleUnit(true, false, xy);
 
-            //                List<int[]> list = TryGetXyAround(xy);
-            //                foreach (var xy1 in list)
-            //                {
-            //                    if (CellUnitsDataSystem.HaveAnyUnit(xy1))
-            //                    {
-            //                        if (CellUnitsDataSystem.HaveOwner(xy1))
-            //                        {
-            //                            if (CellUnitsDataSystem.IsHim(PhotonNetwork.MasterClient, xy1))
-            //                            {
-            //                                CellUnitsDataSystem.SetIsVisibleUnit(true, true, xy);
-            //                                break;
-            //                            }
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
+            if (curUnitDataCom.HaveUnit)
+            {
+                if (curOwnerUnitCom.HaveOwner)
+                {
+                    if (curOwnerUnitCom.IsHim(PhotonNetwork.MasterClient))
+                    {
+                        if (curEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                        {
+                            curUnitDataCom.SetIsVisibleUnit(false, false);
 
-            //    else if (CellUnitsDataSystem.IsBot(xy))
-            //    {
-            //        if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
-            //        {
-            //            CellUnitsDataSystem.SetIsVisibleUnit(true, false, xy);
+                            var list = CellSpaceSupport.TryGetXyAround(xy);
 
-            //            List<int[]> list = TryGetXyAround(xy);
-            //            foreach (var xy1 in list)
-            //            {
-            //                if (CellUnitsDataSystem.HaveAnyUnit(xy1))
-            //                {
-            //                    if (CellUnitsDataSystem.HaveOwner(xy1))
-            //                    {
-            //                        if (CellUnitsDataSystem.IsHim(PhotonNetwork.MasterClient, xy1))
-            //                        {
-            //                            CellUnitsDataSystem.SetIsVisibleUnit(true, true, xy);
-            //                            break;
-            //                        }
-            //                    }
-            //                }
-            //            }
-            //        }
-            //    }
-            //}
+                            foreach (var xy_1 in list)
+                            {
+                                var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
+
+                                ref var unitDataCom = ref _cellUnitFilter.Get1(idxCell_1);
+                                ref var ownerUnitCom = ref _cellUnitFilter.Get2(idxCell_1);
+
+                                if (unitDataCom.HaveUnit)
+                                {
+                                    if (ownerUnitCom.HaveOwner)
+                                    {
+                                        if (!ownerUnitCom.IsHim(PhotonNetwork.MasterClient))
+                                        {
+                                            curUnitDataCom.SetIsVisibleUnit(false, true);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (curEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                        {
+                            curUnitDataCom.SetIsVisibleUnit(true, false);
+
+                            var list = CellSpaceSupport.TryGetXyAround(xy);
+
+                            foreach (var xy_1 in list)
+                            {
+                                var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
+
+                                ref var unitDataCom = ref _cellUnitFilter.Get1(idxCell_1);
+                                ref var ownerUnitCom = ref _cellUnitFilter.Get2(idxCell_1);
+
+                                if (unitDataCom.HaveUnit)
+                                {
+                                    if (ownerUnitCom.HaveOwner)
+                                    {
+                                        if (!ownerUnitCom.IsHim(PhotonNetwork.MasterClient))
+                                        {
+                                            curUnitDataCom.SetIsVisibleUnit(true, true);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
+                        //if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                        //{
+                        //    CellUnitsDataSystem.SetIsVisibleUnit(true, false, xy);
+
+                        //    List<int[]> list = TryGetXyAround(xy);
+                        //    foreach (var xy1 in list)
+                        //    {
+                        //        if (CellUnitsDataSystem.HaveAnyUnit(xy1))
+                        //        {
+                        //            if (CellUnitsDataSystem.HaveOwner(xy1))
+                        //            {
+                        //                if (CellUnitsDataSystem.IsHim(PhotonNetwork.MasterClient, xy1))
+                        //                {
+                        //                    CellUnitsDataSystem.SetIsVisibleUnit(true, true, xy);
+                        //                    break;
+                        //                }
+                        //            }
+                        //        }
+                        //    }
+                        //}
+                    }
+                }
+
+                else if (_cellUnitFilter.Get3(idxCurCell).IsBot)
+                {
+                    if (curEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                    {
+                        curUnitDataCom.SetIsVisibleUnit(true, false);
+
+                        var list = CellSpaceSupport.TryGetXyAround(xy);
+
+                        foreach (var xy_1 in list)
+                        {
+                            var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
+
+                            ref var unitDataCom_1 = ref _cellUnitFilter.Get1(idxCell_1);
+                            ref var ownerUnitCom_1 = ref _cellUnitFilter.Get2(idxCell_1);
+
+                            if (unitDataCom_1.HaveUnit)
+                            {
+                                if (ownerUnitCom_1.HaveOwner)
+                                {
+                                    curUnitDataCom.SetIsVisibleUnit(true, true);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    //if (CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy))
+                    //{
+                    //    CellUnitsDataSystem.SetIsVisibleUnit(true, false, xy);
+
+                    //    List<int[]> list = TryGetXyAround(xy);
+                    //    foreach (var xy1 in list)
+                    //    {
+                    //        if (CellUnitsDataSystem.HaveAnyUnit(xy1))
+                    //        {
+                    //            if (CellUnitsDataSystem.HaveOwner(xy1))
+                    //            {
+                    //                if (CellUnitsDataSystem.IsHim(PhotonNetwork.MasterClient, xy1))
+                    //                {
+                    //                    CellUnitsDataSystem.SetIsVisibleUnit(true, true, xy);
+                    //                    break;
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                }
+            }
         }
     }
 }

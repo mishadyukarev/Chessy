@@ -377,8 +377,8 @@ namespace Assets.Scripts
                 listObjects.Add(curCellUnitDataComp.AmountHealth);
                 listObjects.Add(curCellUnitDataComp.AmountSteps);
                 listObjects.Add(curCellUnitDataComp.ConditionUnitType);
-                listObjects.Add(curCellUnitDataComp.MainToolWeaponType);
-                listObjects.Add(curCellUnitDataComp.ExtraToolWeaponType);
+                listObjects.Add(curCellUnitDataComp.ArcherWeaponType);
+                listObjects.Add(curCellUnitDataComp.ExtraToolWeaponPawnType);
 
                 ref var curOwnerCellUnitComp = ref _cellUnitFilter.Get2(curIdxCell);
                 var haveOwner = curOwnerCellUnitComp.HaveOwner;
@@ -419,11 +419,11 @@ namespace Assets.Scripts
 
 
             ref var inventResComp = ref _inventorResFilter.Get1(0);
-            listObjects.Add(inventResComp.GetAmountResources(ResourceTypes.Food, false));
-            listObjects.Add(inventResComp.GetAmountResources(ResourceTypes.Wood, false));
-            listObjects.Add(inventResComp.GetAmountResources(ResourceTypes.Ore, false));
-            listObjects.Add(inventResComp.GetAmountResources(ResourceTypes.Iron, false));
-            listObjects.Add(inventResComp.GetAmountResources(ResourceTypes.Gold, false));
+            listObjects.Add(inventResComp.AmountResources(ResourceTypes.Food, false));
+            listObjects.Add(inventResComp.AmountResources(ResourceTypes.Wood, false));
+            listObjects.Add(inventResComp.AmountResources(ResourceTypes.Ore, false));
+            listObjects.Add(inventResComp.AmountResources(ResourceTypes.Iron, false));
+            listObjects.Add(inventResComp.AmountResources(ResourceTypes.Gold, false));
 
 
 
@@ -575,8 +575,8 @@ namespace Assets.Scripts
                 curCellUnitDataComp.AmountHealth = (int)objects[_curNumber++];
                 curCellUnitDataComp.AmountSteps = (int)objects[_curNumber++];
                 curCellUnitDataComp.ConditionUnitType = (ConditionUnitTypes)objects[_curNumber++];
-                curCellUnitDataComp.MainToolWeaponType = (ToolWeaponTypes)objects[_curNumber++];
-                curCellUnitDataComp.ExtraToolWeaponType = (ToolWeaponTypes)objects[_curNumber++];
+                curCellUnitDataComp.ArcherWeaponType = (ToolWeaponTypes)objects[_curNumber++];
+                curCellUnitDataComp.ExtraToolWeaponPawnType = (ToolWeaponTypes)objects[_curNumber++];
 
                 ref var curOwnerCellUnitComp = ref _cellUnitFilter.Get2(curIdxCell);
                 var haveOwner = (bool)objects[_curNumber++];

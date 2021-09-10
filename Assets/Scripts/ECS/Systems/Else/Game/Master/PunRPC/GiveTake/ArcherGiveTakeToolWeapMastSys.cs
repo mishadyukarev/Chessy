@@ -40,7 +40,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 
             if (cellUnitDataComForGive.IsUnitType(new[] { UnitTypes.Bishop, UnitTypes.Rook }))
             {
-                if (cellUnitDataComForGive.MainToolWeaponType.Is(ToolWeaponTypes.Crossbow))
+                if (cellUnitDataComForGive.ArcherWeaponType.Is(ToolWeaponTypes.Crossbow))
                 {
                     if (cellUnitDataComForGive.HaveMaxAmountHealth)
                     {
@@ -52,7 +52,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                             }
 
                             inventWeaponsComp.AddAmountWeapons(ownerCellUnitComForGive.IsMasterClient, ToolWeaponTypes.Crossbow);
-                            cellUnitDataComForGive.MainToolWeaponType = ToolWeaponTypes.Bow;
+                            cellUnitDataComForGive.ArcherWeaponType = ToolWeaponTypes.Bow;
 
                             cellUnitDataComForGive.ResetAmountSteps();
                         }
@@ -85,17 +85,17 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                                 {
                                     inventWeaponsComp.TakeAmountWeapons(ownerCellUnitComForGive.IsMasterClient, toolWeaponTypeForGive);
 
-                                    cellUnitDataComForGive.MainToolWeaponType = toolWeaponTypeForGive;
+                                    cellUnitDataComForGive.ArcherWeaponType = toolWeaponTypeForGive;
                                     cellUnitDataComForGive.ResetAmountSteps();
                                 }
 
                                 else if (toolWeaponTypeForGive == ToolWeaponTypes.Crossbow)
                                 {
-                                    if (inventResCom.GetAmountResources(ResourceTypes.Iron, ownerCellUnitComForGive.IsMasterClient) >= _ironCostForCrossbow)
+                                    if (inventResCom.AmountResources(ResourceTypes.Iron, ownerCellUnitComForGive.IsMasterClient) >= _ironCostForCrossbow)
                                     {
                                         inventResCom.TakeAmountResources(ResourceTypes.Iron, ownerCellUnitComForGive.IsMasterClient, _ironCostForCrossbow);
 
-                                        cellUnitDataComForGive.MainToolWeaponType = toolWeaponTypeForGive;
+                                        cellUnitDataComForGive.ArcherWeaponType = toolWeaponTypeForGive;
                                         cellUnitDataComForGive.ResetAmountSteps();
                                     }
                                     else

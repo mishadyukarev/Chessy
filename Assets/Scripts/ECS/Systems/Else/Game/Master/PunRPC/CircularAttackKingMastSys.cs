@@ -31,7 +31,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
             {
                 foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(idxCellCurculAttack)))
                 {
-                    var idxCellCurDirect = _xyCellFilter.GetIndexCell(xy1);
+                    var idxCellCurDirect = _xyCellFilter.GetIdxCell(xy1);
 
                     ref var cellUnitDataComDirect = ref _cellUnitFilter.Get1(idxCellCurDirect);
 

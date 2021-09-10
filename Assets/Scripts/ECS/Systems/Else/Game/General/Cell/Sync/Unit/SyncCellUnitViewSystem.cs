@@ -35,13 +35,13 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 
                         else if (curCellUnitDataCom.IsUnitType(UnitTypes.Pawn))
                         {
-                            curMainCellUnitViewCom.SetToolWeapon_Sprite(curCellUnitDataCom.MainToolWeaponType);
+                            curMainCellUnitViewCom.SetPawn_Spriter();
 
 
-                            if (curCellUnitDataCom.HaveExtraToolWeapon)
+                            if (curCellUnitDataCom.HaveExtraToolWeaponPawn)
                             {
                                 curExtraCellUnitViewCom.Enable_SR();
-                                curExtraCellUnitViewCom.SetToolWeapon_Sprite(curCellUnitDataCom.ExtraToolWeaponType);
+                                curExtraCellUnitViewCom.SetToolWeapon_Sprite(curCellUnitDataCom.ExtraToolWeaponPawnType);
                             }
                             else
                             {
@@ -51,19 +51,19 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 
                         else if (curCellUnitDataCom.IsUnitType(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                         {
-                            if (curCellUnitDataCom.HaveMainToolWeapon)
+                            if (curCellUnitDataCom.ArcherWeapon)
                             {
-                                curMainCellUnitViewCom.SetArcher_Sprite(curCellUnitDataCom.UnitType, curCellUnitDataCom.MainToolWeaponType);
+                                curMainCellUnitViewCom.SetArcher_Sprite(curCellUnitDataCom.UnitType, curCellUnitDataCom.ArcherWeaponType);
                             }
                             else
                             {
                                 throw new Exception();
                             }
 
-                            if (curCellUnitDataCom.HaveExtraToolWeapon)
+                            if (curCellUnitDataCom.HaveExtraToolWeaponPawn)
                             {
                                 curExtraCellUnitViewCom.Enable_SR();
-                                curExtraCellUnitViewCom.SetToolWeapon_Sprite(curCellUnitDataCom.ExtraToolWeaponType);
+                                curExtraCellUnitViewCom.SetToolWeapon_Sprite(curCellUnitDataCom.ExtraToolWeaponPawnType);
                             }
                         }
 
@@ -101,7 +101,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                             }
                             else if (selectorCom.SelectedUnitType == UnitTypes.Pawn)
                             {
-                                _cellUnitFilter.Get2(idxCurCell).SetToolWeapon_Sprite(ToolWeaponTypes.Axe);
+                                _cellUnitFilter.Get2(idxCurCell).SetPawn_Spriter();
                             }
                             else if (selectorCom.SelectedUnitType == UnitTypes.Rook || selectorCom.SelectedUnitType == UnitTypes.Bishop)
                             {

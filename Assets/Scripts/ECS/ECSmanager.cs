@@ -128,9 +128,6 @@ namespace Assets.Scripts
 
         public void OwnUpdate(SceneTypes sceneType)
         {
-            Debug.Log(PhotonNetwork.InRoom);
-
-
             _comSystemManager.RunUpdate();
 
             switch (sceneType)

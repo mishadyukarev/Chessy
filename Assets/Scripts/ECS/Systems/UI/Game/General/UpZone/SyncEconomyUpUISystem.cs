@@ -114,10 +114,10 @@ internal sealed class SyncEconomyUpUISystem : IEcsRunSystem
 
         economyViewUICom.SetAddingText(ResourceTypes.Ore, "+ " + amountAddingOre);
 
-        economyViewUICom.SetMainText(ResourceTypes.Food, amountResCom.GetAmountResources(ResourceTypes.Food, PhotonNetwork.IsMasterClient).ToString());
-        economyViewUICom.SetMainText(ResourceTypes.Wood, amountResCom.GetAmountResources(ResourceTypes.Wood, PhotonNetwork.IsMasterClient).ToString());
-        economyViewUICom.SetMainText(ResourceTypes.Ore, amountResCom.GetAmountResources(ResourceTypes.Ore, PhotonNetwork.IsMasterClient).ToString());
-        economyViewUICom.SetMainText(ResourceTypes.Iron, amountResCom.GetAmountResources(ResourceTypes.Iron, PhotonNetwork.IsMasterClient).ToString());
-        economyViewUICom.SetMainText(ResourceTypes.Gold, amountResCom.GetAmountResources(ResourceTypes.Gold, PhotonNetwork.IsMasterClient).ToString());
+        economyViewUICom.SetMainText(ResourceTypes.Food, amountResCom.AmountResources(ResourceTypes.Food, PhotonNetwork.IsMasterClient).ToString());
+        economyViewUICom.SetMainText(ResourceTypes.Wood, amountResCom.AmountResources(ResourceTypes.Wood, PhotonNetwork.IsMasterClient).ToString());
+        economyViewUICom.SetMainText(ResourceTypes.Ore, amountResCom.AmountResources(ResourceTypes.Ore, PhotonNetwork.IsMasterClient).ToString());
+        economyViewUICom.SetMainText(ResourceTypes.Iron, amountResCom.AmountResources(ResourceTypes.Iron, PhotonNetwork.IsMasterClient).ToString());
+        economyViewUICom.SetMainText(ResourceTypes.Gold, amountResCom.AmountResources(ResourceTypes.Gold, PhotonNetwork.IsMasterClient).ToString());
     }
 }

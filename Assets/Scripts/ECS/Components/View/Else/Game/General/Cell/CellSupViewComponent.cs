@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using static Assets.Scripts.Abstractions.ValuesConsts.Colors;
+using static Assets.Scripts.Abstractions.ValuesConsts.ColorsValues;
 
 namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
 {
@@ -42,7 +42,7 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
                     break;
 
                 case SupportVisionTypes.Upgrade:
-                    _supVis_SR.color = UpgradeColor;
+                    _supVis_SR.color = GiveTakeColor;
                     break;
 
                 case SupportVisionTypes.FireSelector:
@@ -50,11 +50,11 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
                     break;
 
                 case SupportVisionTypes.GivePawnTool:
-                    _supVis_SR.color = UpgradeColor;
+                    _supVis_SR.color = GiveTakeColor;
                     break;
 
                 case SupportVisionTypes.TakePawnTool:
-                    _supVis_SR.color = UpgradeColor;
+                    _supVis_SR.color = GiveTakeColor;
                     break;
 
                 default:

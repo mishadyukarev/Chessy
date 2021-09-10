@@ -61,7 +61,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
                         foreach (var xy in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(idxCellForBuild)))
                         {
-                            var curIdx = _xyCellFilter.GetIndexCell(xy);
+                            var curIdx = _xyCellFilter.GetIdxCell(xy);
 
                             if (!_cellViewFilter.Get1(curIdx).IsActiveParent)
                             {

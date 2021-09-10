@@ -7,7 +7,7 @@ namespace Assets.Scripts.Workers
 {
     public static class CellBaseOperat
     {
-        internal static byte GetIndexCell(this EcsFilter<XyCellComponent> xyCellFilter, byte[] xy)
+        internal static byte GetIdxCell(this EcsFilter<XyCellComponent> xyCellFilter, byte[] xy)
         {
             for (byte idx = 0; idx < xyCellFilter.GetEntitiesCount(); idx++)
             {

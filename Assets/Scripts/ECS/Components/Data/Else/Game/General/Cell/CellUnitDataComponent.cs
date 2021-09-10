@@ -56,11 +56,11 @@ internal struct CellUnitDataComponent
     }
 
 
-    internal ToolWeaponTypes MainToolWeaponType { get; set; }
-    internal bool HaveMainToolWeapon => MainToolWeaponType != default;
+    internal ToolWeaponTypes ArcherWeaponType { get; set; }
+    internal bool ArcherWeapon => ArcherWeaponType != default;
 
-    internal ToolWeaponTypes ExtraToolWeaponType { get; set; }
-    internal bool HaveExtraToolWeapon => ExtraToolWeaponType != default;
+    internal ToolWeaponTypes ExtraToolWeaponPawnType { get; set; }
+    internal bool HaveExtraToolWeaponPawn => ExtraToolWeaponPawnType != default;
 
 
     private Dictionary<ConditionUnitTypes, int> _amountStepsInCondition;
@@ -93,10 +93,10 @@ internal struct CellUnitDataComponent
                     return AmountSteps == STANDART_AMOUNT_STEPS_PAWN;
 
                 case UnitTypes.Rook:
-                    return AmountSteps == STANDART_AMOUNT_STEPS_ROOK_BOW;
+                    return AmountSteps == STANDART_AMOUNT_STEPS_ROOK;
 
                 case UnitTypes.Bishop:
-                    return AmountSteps == STANDART_AMOUNT_STEPS_BISHOP_BOW;
+                    return AmountSteps == STANDART_AMOUNT_STEPS_BISHOP;
 
                 default:
                     throw new Exception();
@@ -121,11 +121,11 @@ internal struct CellUnitDataComponent
                 break;
 
             case UnitTypes.Rook:
-                AmountSteps = STANDART_AMOUNT_STEPS_ROOK_BOW;
+                AmountSteps = STANDART_AMOUNT_STEPS_ROOK;
                 break;
 
             case UnitTypes.Bishop:
-                AmountSteps = STANDART_AMOUNT_STEPS_BISHOP_BOW;
+                AmountSteps = STANDART_AMOUNT_STEPS_BISHOP;
                 break;
 
             default:
@@ -152,13 +152,13 @@ internal struct CellUnitDataComponent
                     return STANDART_AMOUNT_HEALTH_KING;
 
                 case UnitTypes.Pawn:
-                    return STANDART_AMOUNT_HEALTH_PAWN_AXE;
+                    return STANDART_AMOUNT_HEALTH_PAWN;
 
                 case UnitTypes.Rook:
-                    return STANDART_AMOUNT_HEALTH_ROOK_BOW;
+                    return STANDART_AMOUNT_HEALTH_ROOK;
 
                 case UnitTypes.Bishop:
-                    return STANDART_AMOUNT_HEALTH_BISHOP_BOW;
+                    return STANDART_AMOUNT_HEALTH_BISHOP;
 
                 default:
                     return default;
@@ -175,19 +175,19 @@ internal struct CellUnitDataComponent
                 throw new Exception();
 
             case UnitTypes.King:
-                AddAmountHealth((int)(STANDART_AMOUNT_HEALTH_KING * PERCENT_FOR_HEALTH_KING));
+                AddAmountHealth(FOR_ADD_HEALTH_KING);
                 break;
 
             case UnitTypes.Pawn:
-                AddAmountHealth((int)(STANDART_AMOUNT_HEALTH_PAWN_AXE * PERCENT_FOR_HEALTH_PAWN_AXE));
+                AddAmountHealth(FOR_ADD_HEALTH_PAWN);
                 break;
 
             case UnitTypes.Rook:
-                AddAmountHealth((int)(STANDART_AMOUNT_HEALTH_ROOK_BOW * PERCENT_FOR_HEALTH_ROOK_BOW));
+                AddAmountHealth(FOR_ADD_HEALTH_ROOK);
                 break;
 
             case UnitTypes.Bishop:
-                AddAmountHealth((int)(STANDART_AMOUNT_HEALTH_BISHOP_BOW * PERCENT_FOR_HEALTH_BISHOP_BOW));
+                AddAmountHealth(FOR_ADD_HEALTH_BISHOP);
                 break;
 
             default:
@@ -196,32 +196,7 @@ internal struct CellUnitDataComponent
     }
 
 
-    internal int UniquePowerDamage
-    {
-        get
-        {
-            switch (UnitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
 
-                case UnitTypes.King:
-                    throw new Exception();
-
-                case UnitTypes.Pawn:
-                    return (int)(SimplePowerDamage * 0.5f);
-
-                case UnitTypes.Rook:
-                    return (int)(SimplePowerDamage * 0.5f);
-
-                case UnitTypes.Bishop:
-                    return (int)(SimplePowerDamage * 0.5f);
-
-                default:
-                    throw new Exception();
-            }
-        }
-    }
     internal int PowerProtection
     {
         get
@@ -303,35 +278,7 @@ internal struct CellUnitDataComponent
             {
                 simplePowerDamege = SIMPLE_POWER_DAMAGE_PAWN;
 
-                switch (MainToolWeaponType)
-                {
-                    case ToolWeaponTypes.None:
-                        throw new Exception();
-
-                    case ToolWeaponTypes.Hoe:
-                        throw new Exception();
-
-                    case ToolWeaponTypes.Axe:
-                        simplePowerDamege += 0;
-                        break;
-
-                    case ToolWeaponTypes.Pick:
-                        throw new Exception();
-
-                    case ToolWeaponTypes.Sword:
-                        throw new Exception();
-
-                    case ToolWeaponTypes.Bow:
-                        throw new Exception();
-
-                    case ToolWeaponTypes.Crossbow:
-                        throw new Exception();
-
-                    default:
-                        throw new Exception();
-                }
-
-                switch (ExtraToolWeaponType)
+                switch (ExtraToolWeaponPawnType)
                 {
                     case ToolWeaponTypes.None:
                         break;
@@ -343,7 +290,7 @@ internal struct CellUnitDataComponent
                         throw new Exception();
 
                     case ToolWeaponTypes.Pick:
-                        simplePowerDamege -= simplePowerDamege * 0.2f;
+                        simplePowerDamege -= simplePowerDamege * 0.5f;
                         break;
 
                     case ToolWeaponTypes.Sword:
@@ -365,7 +312,7 @@ internal struct CellUnitDataComponent
             {
                 simplePowerDamege = SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP;
 
-                switch (MainToolWeaponType)
+                switch (ArcherWeaponType)
                 {
                     case ToolWeaponTypes.None:
                         throw new Exception();
@@ -387,14 +334,14 @@ internal struct CellUnitDataComponent
                         break;
 
                     case ToolWeaponTypes.Crossbow:
-                        simplePowerDamege += simplePowerDamege;
+                        simplePowerDamege += simplePowerDamege / 2;
                         break;
 
                     default:
                         throw new Exception();
                 }
 
-                switch (ExtraToolWeaponType)
+                switch (ExtraToolWeaponPawnType)
                 {
                     case ToolWeaponTypes.None:
                         break;
@@ -425,13 +372,39 @@ internal struct CellUnitDataComponent
             return (int)simplePowerDamege;
         }
     }
+    internal int UniquePowerDamage
+    {
+        get
+        {
+            switch (UnitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    throw new Exception();
+
+                case UnitTypes.Pawn:
+                    return (int)(SimplePowerDamage * 0.5f);
+
+                case UnitTypes.Rook:
+                    return (int)(SimplePowerDamage * 0.5f);
+
+                case UnitTypes.Bishop:
+                    return (int)(SimplePowerDamage * 0.5f);
+
+                default:
+                    throw new Exception();
+            }
+        }
+    }
 
 
     internal void ResetUnit()
     {
         UnitType = default;
-        MainToolWeaponType = default;
-        ExtraToolWeaponType = default;
+        ArcherWeaponType = default;
+        ExtraToolWeaponPawnType = default;
         AmountHealth = default;
         AmountSteps = default;
         ConditionUnitType = default;
@@ -439,8 +412,8 @@ internal struct CellUnitDataComponent
     internal void ReplaceUnit(CellUnitDataComponent newCellUnitDataCom)
     {
         UnitType = newCellUnitDataCom.UnitType;
-        MainToolWeaponType = newCellUnitDataCom.MainToolWeaponType;
-        ExtraToolWeaponType = newCellUnitDataCom.ExtraToolWeaponType;
+        ArcherWeaponType = newCellUnitDataCom.ArcherWeaponType;
+        ExtraToolWeaponPawnType = newCellUnitDataCom.ExtraToolWeaponPawnType;
         AmountHealth = newCellUnitDataCom.AmountHealth;
         AmountSteps = newCellUnitDataCom.AmountSteps;
         ConditionUnitType = newCellUnitDataCom.ConditionUnitType;

@@ -417,11 +417,10 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                         curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.Mountain);
 
                         curCellUnitDataComp.UnitType = UnitTypes.Pawn;
-                        curCellUnitDataComp.MainToolWeaponType = ToolWeaponTypes.Axe;
 
                         int rand = Random.Range(0, 100);
 
-                        if(rand >= 50) curCellUnitDataComp.ExtraToolWeaponType = ToolWeaponTypes.Sword;
+                        if(rand >= 50) curCellUnitDataComp.ExtraToolWeaponPawnType = ToolWeaponTypes.Sword;
 
                         curCellUnitDataComp.AmountHealth = 100;
                         curCellUnitDataComp.ConditionUnitType = ConditionUnitTypes.Protected;

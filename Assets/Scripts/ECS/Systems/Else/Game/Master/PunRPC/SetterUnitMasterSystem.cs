@@ -46,25 +46,25 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
                 case UnitTypes.King:
                     newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_KING;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_KING;
-                    curCellUnitDataCom.MainToolWeaponType = default;
+                    curCellUnitDataCom.ArcherWeaponType = default;
                     break;
 
                 case UnitTypes.Pawn:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN_AXE;
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN;
-                    curCellUnitDataCom.MainToolWeaponType = ToolWeaponTypes.Axe;
+                    curCellUnitDataCom.ArcherWeaponType = ToolWeaponTypes.Axe;
                     break;
 
                 case UnitTypes.Rook:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK_BOW;
-                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK_BOW;
-                    curCellUnitDataCom.MainToolWeaponType = ToolWeaponTypes.Bow;
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK;
+                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK;
+                    curCellUnitDataCom.ArcherWeaponType = ToolWeaponTypes.Bow;
                     break;
 
                 case UnitTypes.Bishop:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP_BOW;
-                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP_BOW;
-                    curCellUnitDataCom.MainToolWeaponType = ToolWeaponTypes.Bow;
+                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP;
+                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
+                    curCellUnitDataCom.ArcherWeaponType = ToolWeaponTypes.Bow;
                     break;
 
                 default:

@@ -42,7 +42,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
 
                 if (cellUnitDataComForGive.IsUnitType(UnitTypes.Pawn))
                 {
-                    if (cellUnitDataComForGive.HaveExtraToolWeapon)
+                    if (cellUnitDataComForGive.HaveExtraToolWeaponPawn)
                     {
                         if (cellUnitDataComForGive.HaveMaxAmountHealth)
                         {
@@ -53,17 +53,17 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                                     cellUnitDataComForGive.ConditionUnitType = default;
                                 }
 
-                                if (cellUnitDataComForGive.ExtraToolWeaponType.IsTool())
+                                if (cellUnitDataComForGive.ExtraToolWeaponPawnType.IsTool())
                                 {
-                                    inventToolsCom.AddAmountTools(ownerCellUnitComForGive.IsMasterClient, cellUnitDataComForGive.ExtraToolWeaponType);
+                                    inventToolsCom.AddAmountTools(ownerCellUnitComForGive.IsMasterClient, cellUnitDataComForGive.ExtraToolWeaponPawnType);
                                 }
                                 else
                                 {
-                                    inventWeaponsComp.AddAmountWeapons(ownerCellUnitComForGive.IsMasterClient, cellUnitDataComForGive.ExtraToolWeaponType);
+                                    inventWeaponsComp.AddAmountWeapons(ownerCellUnitComForGive.IsMasterClient, cellUnitDataComForGive.ExtraToolWeaponPawnType);
                                 }
 
                                 cellUnitDataComForGive.ResetAmountSteps();
-                                cellUnitDataComForGive.ExtraToolWeaponType = default;
+                                cellUnitDataComForGive.ExtraToolWeaponPawnType = default;
                             }
 
                             else
@@ -87,7 +87,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                             {
                                 if (cellUnitDataComForGive.HaveMaxAmountSteps)
                                 {
-                                    if (cellUnitDataComForGive.MainToolWeaponType != toolWeapTypeForGive)
+                                    if (cellUnitDataComForGive.ArcherWeaponType != toolWeapTypeForGive)
                                     {
                                         if (toolWeapTypeForGive.IsTool())
                                         {
@@ -95,17 +95,17 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                                             {
                                                 inventToolsCom.TakeAmountTools(ownerCellUnitComForGive.IsMasterClient, toolWeapTypeForGive);
 
-                                                cellUnitDataComForGive.ExtraToolWeaponType = toolWeapTypeForGive;
+                                                cellUnitDataComForGive.ExtraToolWeaponPawnType = toolWeapTypeForGive;
                                                 cellUnitDataComForGive.ResetAmountSteps();
                                             }
 
                                             else if (toolWeapTypeForGive == ToolWeaponTypes.Pick)
                                             {
-                                                if (inventResCom.GetAmountResources(ResourceTypes.Wood, ownerCellUnitComForGive.IsMasterClient) >= _woodCostForPick)
+                                                if (inventResCom.AmountResources(ResourceTypes.Wood, ownerCellUnitComForGive.IsMasterClient) >= _woodCostForPick)
                                                 {
                                                     inventResCom.TakeAmountResources(ResourceTypes.Wood, ownerCellUnitComForGive.IsMasterClient, _woodCostForPick);
 
-                                                    cellUnitDataComForGive.ExtraToolWeaponType = toolWeapTypeForGive;
+                                                    cellUnitDataComForGive.ExtraToolWeaponPawnType = toolWeapTypeForGive;
                                                     cellUnitDataComForGive.ResetAmountSteps();
                                                 }
                                                 else
@@ -116,7 +116,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
 
                                             else if (toolWeapTypeForGive == ToolWeaponTypes.Axe)
                                             {
-                                                cellUnitDataComForGive.ExtraToolWeaponType = toolWeapTypeForGive;
+                                                cellUnitDataComForGive.ExtraToolWeaponPawnType = toolWeapTypeForGive;
                                                 cellUnitDataComForGive.ResetAmountSteps();
                                             }
                                         }
@@ -127,17 +127,17 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                                             {
                                                 inventWeaponsComp.TakeAmountWeapons(ownerCellUnitComForGive.IsMasterClient, toolWeapTypeForGive);
 
-                                                cellUnitDataComForGive.ExtraToolWeaponType = toolWeapTypeForGive;
+                                                cellUnitDataComForGive.ExtraToolWeaponPawnType = toolWeapTypeForGive;
                                                 cellUnitDataComForGive.ResetAmountSteps();
                                             }
 
                                             else if (toolWeapTypeForGive == ToolWeaponTypes.Sword)
                                             {
-                                                if (inventResCom.GetAmountResources(ResourceTypes.Iron, ownerCellUnitComForGive.IsMasterClient) >= _ironCostForSword)
+                                                if (inventResCom.AmountResources(ResourceTypes.Iron, ownerCellUnitComForGive.IsMasterClient) >= _ironCostForSword)
                                                 {
                                                     inventResCom.TakeAmountResources(ResourceTypes.Iron, ownerCellUnitComForGive.IsMasterClient, _ironCostForSword);
 
-                                                    cellUnitDataComForGive.ExtraToolWeaponType = toolWeapTypeForGive;
+                                                    cellUnitDataComForGive.ExtraToolWeaponPawnType = toolWeapTypeForGive;
                                                     cellUnitDataComForGive.ResetAmountSteps();
                                                 }
                                                 else

@@ -38,6 +38,8 @@ internal sealed class SelectorSystem : IEcsRunSystem
         ref var availCellsForShiftComp = ref _availCellsForShiftFilter.Get1(0);
 
 
+        Debug.Log(CellUnitDataCom(selectorCom.IdxSelectedCell).IsVisibleUnit(true));
+
         //Debug.Log(CellUnitDataCom(selectorCom.IdxSelectedCell).UnitType);
 
 

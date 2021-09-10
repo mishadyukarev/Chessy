@@ -105,12 +105,14 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
                     }
                 }
 
-                toCellUnitDataCom.ReplaceUnit(fromCellUnitDataCom);
-                toOwnerCellUnitCom.SetOwner(fromOwnerCellUnitCom.Owner);
+                toCellUnitDataCom.ResetUnit();
 
 
                 if (fromCellUnitDataCom.IsMelee)
                 {
+                    toCellUnitDataCom.ReplaceUnit(fromCellUnitDataCom);
+                    toOwnerCellUnitCom.SetOwner(fromOwnerCellUnitCom.Owner);
+
                     fromCellUnitDataCom.ResetUnit();
 
                     if (!toCellUnitDataCom.HaveAmountHealth)

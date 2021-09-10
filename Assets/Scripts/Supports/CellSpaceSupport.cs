@@ -13,7 +13,7 @@ namespace Assets.Scripts.Workers.Cell
 
             for (byte i = 1; i < (byte)DirectTypes.LeftDown + 1; i++)
             {
-                var xyDirectCell = GetXYDirect((DirectTypes)i);
+                var xyDirectCell = GetXyDirect((DirectTypes)i);
 
                 xyResultCell[X] = (byte)(xyStartCell[X] + xyDirectCell[X]);
                 xyResultCell[Y] = (byte)(xyStartCell[Y] + xyDirectCell[Y]);
@@ -28,14 +28,14 @@ namespace Assets.Scripts.Workers.Cell
         {
             var xyResultCell = new byte[XY_FOR_ARRAY];
 
-            var xyDirectCell = GetXYDirect(directType);
+            var xyDirectCell = GetXyDirect(directType);
 
             xyResultCell[0] = (byte)(xyStartCell[0] + xyDirectCell[0]);
             xyResultCell[1] = (byte)(xyStartCell[1] + xyDirectCell[1]);
 
             return xyResultCell;
         }
-        internal static sbyte[] GetXYDirect(DirectTypes direct)
+        internal static sbyte[] GetXyDirect(DirectTypes direct)
         {
             var xyDirectCell = new sbyte[XY_FOR_ARRAY];
 

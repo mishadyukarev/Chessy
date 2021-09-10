@@ -59,8 +59,13 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
 
 
         var fillAvailCells = new EcsSystems(gameWorld)
-            .Add(new FillAvailCellsSys())
-            .Add(new FillCellsForSetUnitSys());
+            .Add(new ClearAvailCellsSys())
+            .Add(new FillCellsForAttackKingSys())
+            .Add(new FillCellsForAttackPawnSys())
+            .Add(new FillCellsForAttackRookSys())
+            .Add(new FillCellsForAttackBishopSys())
+            .Add(new FillCellsForSetUnitSys())
+            .Add(new FillCellsForShiftSys());
 
 
         InitOnlySystems
