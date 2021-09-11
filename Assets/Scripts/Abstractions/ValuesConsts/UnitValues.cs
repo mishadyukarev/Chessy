@@ -21,7 +21,7 @@
 
         public const int SIMPLE_POWER_DAMAGE_KING = 100;
         public const int SIMPLE_POWER_DAMAGE_PAWN = 50;
-        public const int SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP = 50;
+        public const int SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP = 40;
 
         #endregion
 

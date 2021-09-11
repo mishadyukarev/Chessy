@@ -14,9 +14,9 @@ using Leopotam.Ecs;
 using System;
 using UnityEngine;
 
-public sealed class GameGeneralSystemManager : SystemAbstManager
+public sealed class GameGeneralSysManager : SystemAbstManager
 {
-    internal GameGeneralSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
+    internal GameGeneralSysManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
     {
         var syncCellVisionSystems = new EcsSystems(gameWorld)
             .Add(new SyncCellUnitViewSys())
@@ -36,7 +36,7 @@ public sealed class GameGeneralSystemManager : SystemAbstManager
             ///right
             .Add(new RightZoneUISystem())
             .Add(new StatsUISystem())
-            .Add(new ConditionAbilitiesUISystem())
+            .Add(new ConditionUISys())
             .Add(new UniqueAbilitiesUISystem())
             .Add(new BuildRighUISystem())
 

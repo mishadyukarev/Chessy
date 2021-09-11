@@ -57,7 +57,7 @@ internal struct CellUnitDataComponent
 
 
     internal ToolWeaponTypes ArcherWeaponType { get; set; }
-    internal bool ArcherWeapon => ArcherWeaponType != default;
+    internal bool HaveArcherWeapon => ArcherWeaponType != default;
 
     internal ToolWeaponTypes ExtraToolWeaponPawnType { get; set; }
     internal bool HaveExtraToolWeaponPawn => ExtraToolWeaponPawnType != default;

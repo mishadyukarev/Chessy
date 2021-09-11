@@ -20,6 +20,7 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
         ref var getterUnitsViewUICom = ref _takerUnitsUIFilter.Get2(0);
         ref var inventUnitsComp = ref _inventUnitsFilter.Get1(0);
 
+
         for (UnitTypes curUnitType = 0; curUnitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; curUnitType++)
         {
             if (curUnitType == UnitTypes.Pawn || curUnitType == UnitTypes.Rook || curUnitType == UnitTypes.Bishop)
@@ -47,9 +48,5 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
         getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Pawn, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Pawn, PhotonNetwork.IsMasterClient).ToString());
         getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Rook, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Rook, PhotonNetwork.IsMasterClient).ToString());
         getterUnitsViewUICom.SetTextToAmountUnits(UnitTypes.Bishop, inventUnitsComp.AmountUnitsInInventor(UnitTypes.Bishop, PhotonNetwork.IsMasterClient).ToString());
-
-        //if (xyUnitsCom.IsSettedKing(PhotonNetwork.IsMasterClient))
-        //    getterUnitsViewUICom.SetActiveButton(UnitTypes.King, false);
-        //else getterUnitsViewUICom.SetActiveButton(UnitTypes.King, true);
     }
 }

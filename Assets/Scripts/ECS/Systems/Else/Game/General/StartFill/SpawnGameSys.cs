@@ -172,6 +172,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new AvailCellsForShiftComp(new Dictionary<bool, Dictionary<byte, List<byte>>>()))
                 .Replace(new AvailCellsForArcherArsonComp(new Dictionary<bool, List<byte>>()))
                 .Replace(new AvailCellsForAttackComp(true))
+                .Replace(new CellsGiveTWComp(true))
+                .Replace(new CellsTakeTWComp(true))
 
                 .Replace(new UpgradesBuildingsComponent(new Dictionary<BuildingTypes, Dictionary<bool, int>>()))
 

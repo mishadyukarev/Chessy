@@ -27,7 +27,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone
 
 
 
-            if (selectorComp.IsCellClickType(CellClickTypes.GiveTakeToolWeapon))
+            if (selectorComp.IsCellClickType(CellClickTypes.GiveTakeTW))
             {
                 giveTakeZoneViewUIComp.SetColorToGiveTake_Button(Color.yellow);
             }

@@ -15,10 +15,12 @@ internal sealed class DonerUISystem : IEcsRunSystem
 
         if (donerDataUICom.IsDoned(PhotonNetwork.IsMasterClient))
         {
+            donerViewUICom.EnableWait();
             donerViewUICom.SetColor(Color.red);
         }
         else
         {
+            donerViewUICom.DisableWait();
             donerViewUICom.SetColor(Color.white);
         }
     }

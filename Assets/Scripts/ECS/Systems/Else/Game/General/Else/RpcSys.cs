@@ -231,11 +231,6 @@ namespace Assets.Scripts
                     _motionsFilter.Get1(0).IsActivatedUI = true;
                     break;
 
-                //case RpcGeneralTypes.EndGame:
-                //    _endGameFilter.Get1(0).IsEndGame = true;
-                //    _endGameFilter.Get1(0).PlayerWinner = PhotonNetwork.PlayerList[(byte)objects[_curNumber++] - 1];
-                //    break;
-
                 case RpcGeneralTypes.Mistake:
                     var mistakeType = (MistakeTypes)objects[_curNumber++];
                     _mistakeUIFilter.Get1(0).MistakeTypes = mistakeType;

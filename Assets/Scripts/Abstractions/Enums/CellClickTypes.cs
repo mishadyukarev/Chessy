@@ -6,7 +6,7 @@
 
         UpgradeUnit,
         PickFire,
-        GiveTakeToolWeapon,
+        GiveTakeTW,
         //SwapToolWeapon,
     }
 }

@@ -50,7 +50,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 
                         else if (curUnitDataCom.IsUnitType(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                         {
-                            if (curUnitDataCom.ArcherWeapon)
+                            if (curUnitDataCom.HaveArcherWeapon)
                             {
                                 curMainUnitViewCom.SetArcher_Sprite(curUnitDataCom.UnitType, curUnitDataCom.ArcherWeaponType);
                             }

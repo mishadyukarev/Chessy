@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Components;
@@ -28,29 +29,42 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
 
         foreach (var idxCurCell in _xyCellFilter)
         {
-            ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
-            ref var curOwnerCellUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
+            ref var curUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
+            ref var curOwnerUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
             ref var curCellUnitViewCom = ref _cellUnitFilter.Get3(idxCurCell);
-            ref var curCellSupViewCom = ref _cellSupViewFilter.Get1(idxCurCell);
+            ref var curSupViewCom = ref _cellSupViewFilter.Get1(idxCurCell);
 
-            curCellSupViewCom.DisableSR();
+            curSupViewCom.DisableSR();
 
             if (selCom.IsSelectedCell)
             {
                 if (selCom.IdxSelectedCell == idxCurCell)
                 {
-                    curCellSupViewCom.EnableSR();
-                    curCellSupViewCom.SetColor(SupportVisionTypes.Selector);
-                }
-                else
-                {
-                    curCellSupViewCom.DisableSR();
+                    curSupViewCom.EnableSR();
+                    curSupViewCom.SetColor(SupportVisionTypes.Selector);
                 }
             }
 
-            else
+            if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
             {
-                curCellSupViewCom.DisableSR();
+
+                if (curUnitDataCom.HaveUnit)
+                {
+                    if (curOwnerUnitCom.HaveOwner)
+                    {
+                        if (curUnitDataCom.IsUnitType(UnitTypes.Pawn))
+                        {
+                            curSupViewCom.EnableSR();
+                            curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
+                        }
+
+                        else if (curUnitDataCom.IsUnitType(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                        {
+                            curSupViewCom.EnableSR();
+                            curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
+                        }
+                    }
+                }
             }
         }
 
@@ -89,12 +103,6 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                             _cellSupViewFilter.Get1(curIdxCell).EnableSR();
                             _cellSupViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.UniqueAttack);
                         }
-
-                        //foreach (var curIdxCell in _availCellsForUniqueAttackFilter.Get1(0).GetListCopy(PhotonNetwork.IsMasterClient))
-                        //{
-                        //    _cellSupViewFilter.Get1(curIdxCell).EnableSR();
-                        //    _cellSupViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.UniqueAttack);
-                        //}
                     }
                 }
             }

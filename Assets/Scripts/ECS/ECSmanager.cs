@@ -25,7 +25,7 @@ namespace Assets.Scripts
 
         private ComSysManager _comSystemManager;
         private MenuSystemManager _menuSystemManager;
-        private GameGeneralSystemManager _gameGeneralSystemManager;
+        private GameGeneralSysManager _gameGeneralSystemManager;
         private GameMasterSystemManager _gameMasterSystemManager;
         private GameOtherSystemManager _gameOtherSystemManager;
 
@@ -99,7 +99,7 @@ namespace Assets.Scripts
                         .Add(new SpawnGameSys())
                         .Add(_rpcGameSys);
 
-                    _gameGeneralSystemManager = new GameGeneralSystemManager(_gameWorld, _allGameSystems);
+                    _gameGeneralSystemManager = new GameGeneralSysManager(_gameWorld, _allGameSystems);
                     if (PhotonNetwork.IsMasterClient)
                     {
                         _gameMasterSystemManager = new GameMasterSystemManager(_gameWorld, _allGameSystems);

@@ -14,7 +14,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
             ref var selectTypeViewUIComp = ref _selectorTypeUIFilter.Get1(0);
             ref var selectCom = ref _selectorFilter.Get1(0);
 
-            if (selectCom.IsCellClickType(CellClickTypes.GiveTakeToolWeapon))
+            if (selectCom.IsCellClickType(CellClickTypes.GiveTakeTW))
             {
                 selectTypeViewUIComp.Text = "Give or Take Tool";
                 selectTypeViewUIComp.EnableParent();

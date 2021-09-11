@@ -156,14 +156,14 @@ namespace Assets.Scripts
             {
                 ref var selecComp = ref _selectorFilter.Get1(0);
 
-                if (selecComp.CellClickType == CellClickTypes.GiveTakeToolWeapon)
+                if (selecComp.CellClickType == CellClickTypes.GiveTakeTW)
                 {
                     selecComp.CellClickType = default;
                 }
 
                 else
                 {
-                    selecComp.CellClickType = CellClickTypes.GiveTakeToolWeapon;
+                    selecComp.CellClickType = CellClickTypes.GiveTakeTW;
                 }
             }
 

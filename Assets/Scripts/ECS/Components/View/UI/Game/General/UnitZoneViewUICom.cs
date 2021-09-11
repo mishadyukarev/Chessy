@@ -18,6 +18,7 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 
         private TextMeshProUGUI _conditionZone_TextMP;
         private Dictionary<ConditionUnitTypes, Button> _condition_Buttons;
+        private Dictionary<ConditionUnitTypes, TextMeshProUGUI> _condition_TextMP;
 
         private TextMeshProUGUI _uniqueAbilitiesZone_TextMP;
         private Dictionary<UniqueButtonTypes, Button> _uniqueAbilit_Buttons;
@@ -40,28 +41,12 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 
             _stat_TextMP = new Dictionary<StatTypes, TextMeshProUGUI>();
 
-            for (StatTypes statType = 0; statType < (StatTypes)Enum.GetNames(typeof(StatTypes)).Length; statType++)
-            {
-                if (statType == StatTypes.Health)
-                {
-                    _stat_TextMP[statType] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("HpCurrentUnitText").GetComponent<TextMeshProUGUI>();
-                }
 
-                else if (statType == StatTypes.Damage)
-                {
-                    _stat_TextMP[statType] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("DamageCurrentUnitText").GetComponent<TextMeshProUGUI>();
-                }
+            _stat_TextMP[StatTypes.Health] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("HpCurrentUnitText").GetComponent<TextMeshProUGUI>();
+            _stat_TextMP[StatTypes.Damage] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("DamageCurrentUnitText").GetComponent<TextMeshProUGUI>();
+            _stat_TextMP[StatTypes.Protection] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("ProtectionCurrentUnitText").GetComponent<TextMeshProUGUI>();
+            _stat_TextMP[StatTypes.Steps] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("StepsCurrentUnitText").GetComponent<TextMeshProUGUI>();
 
-                else if (statType == StatTypes.Protection)
-                {
-                    _stat_TextMP[statType] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("ProtectionCurrentUnitText").GetComponent<TextMeshProUGUI>();
-                }
-
-                else if (statType == StatTypes.Steps)
-                {
-                    _stat_TextMP[statType] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("StepsCurrentUnitText").GetComponent<TextMeshProUGUI>();
-                }
-            }
 
 
 
@@ -72,6 +57,10 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
             _condition_Buttons = new Dictionary<ConditionUnitTypes, Button>();
             _condition_Buttons.Add(ConditionUnitTypes.Protected, _unitZone_GOs[UnitUIZoneTypes.Condition].transform.Find("StandartAbilityButton1").GetComponent<Button>());
             _condition_Buttons.Add(ConditionUnitTypes.Relaxed, _unitZone_GOs[UnitUIZoneTypes.Condition].transform.Find("StandartAbilityButton2").GetComponent<Button>());
+
+            _condition_TextMP = new Dictionary<ConditionUnitTypes, TextMeshProUGUI>();
+            _condition_TextMP.Add(ConditionUnitTypes.Protected, _condition_Buttons[ConditionUnitTypes.Protected].transform.Find("Defend_TextMP").GetComponent<TextMeshProUGUI>());
+            _condition_TextMP.Add(ConditionUnitTypes.Relaxed, _condition_Buttons[ConditionUnitTypes.Relaxed].transform.Find("Relax_TextMP").GetComponent<TextMeshProUGUI>());
 
 
 
@@ -122,6 +111,7 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
         internal void SetColoToUniqueAbilityButton(UniqueButtonTypes uniqueButtonType, Color color) => _uniqueAbilit_Buttons[uniqueButtonType].image.color = color;
 
         internal void SetTextToStat(StatTypes statType, string text) => _stat_TextMP[statType].text = text;
+        internal void SetTextToCondition(ConditionUnitTypes conditionUnitType, string text) => _condition_TextMP[conditionUnitType].text = text;
         internal void SetTextToUnique(UniqueButtonTypes uniqueButtonType, string text) => _uniqueAbilit_TextMPs[uniqueButtonType].text = text;
         internal void SetTextBuildButton(BuildingButtonTypes buildingButtonType, string text) => _building_TextMPs[buildingButtonType].text = text;
 

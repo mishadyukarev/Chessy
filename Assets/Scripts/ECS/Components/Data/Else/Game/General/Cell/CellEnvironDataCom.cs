@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
+using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
 
 namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
 {
@@ -10,13 +11,7 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
         private Dictionary<EnvironmentTypes, bool> _haveCellEnvironmentOnCell;
         private Dictionary<EnvironmentTypes, int> _amountResourcesOnCell;
 
-        private const int MAX_AMOUNT_FOOD = 10;
-        private const int MAX_AMOUNT_FOREST = 10;
-        private const int MAX_AMOUNT_ORE = 5;
 
-        private const int MIN_AMOUNT_FOOD = 5;
-        private const int MIN_AMOUNT_WOOD = 5;
-        private const int MIN_AMOUNT_ORE = 2;
 
         internal int NeedAmountSteps
         {

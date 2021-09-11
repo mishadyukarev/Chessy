@@ -94,7 +94,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                     selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
                 }
 
-                else if (selectorCom.IsCellClickType(CellClickTypes.GiveTakeToolWeapon))
+                else if (selectorCom.IsCellClickType(CellClickTypes.GiveTakeTW))
                 {
                     if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
                     {
