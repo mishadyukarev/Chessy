@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-
-namespace Assets.Scripts.ECS.Component.Game.Master
+﻿namespace Assets.Scripts.ECS.Component.Game.Master
 {
     internal struct ForUpgradeMasCom
     {

@@ -1,5 +1,4 @@
 ﻿using System;
-using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
 
 internal struct CellBuildDataComponent
 {
@@ -7,7 +6,7 @@ internal struct CellBuildDataComponent
 
     internal bool HaveBuild => BuildingType != BuildingTypes.None;
     internal bool IsBuildType(BuildingTypes buildingType) => BuildingType == buildingType;
-    internal void ResetBuildType() => BuildingType = default;
+    internal void DefBuildType() => BuildingType = default;
 
     internal int PowerProtectionUnit(UnitTypes unitType)
     {

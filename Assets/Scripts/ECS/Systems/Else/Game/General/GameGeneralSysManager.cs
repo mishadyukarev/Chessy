@@ -1,18 +1,16 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.ECS.Game.General.Systems;
-using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
 using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Event;
 using Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells;
+using Assets.Scripts.ECS.Systems.Else.Game.General.Sync.Unit;
 using Assets.Scripts.ECS.Systems.Game.General.UI.View.Down;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.UpZone;
 using Leopotam.Ecs;
-using System;
-using UnityEngine;
 
 public sealed class GameGeneralSysManager : SystemAbstManager
 {
@@ -20,6 +18,7 @@ public sealed class GameGeneralSysManager : SystemAbstManager
     {
         var syncCellVisionSystems = new EcsSystems(gameWorld)
             .Add(new SyncCellUnitViewSys())
+            .Add(new SyncCellSelUnitViewSys())
             .Add(new SyncCellUnitSupVisSystem())
             .Add(new SyncCellBuildViewSystem())
             .Add(new SyncCellEnvirsVisSystem())
@@ -65,7 +64,8 @@ public sealed class GameGeneralSysManager : SystemAbstManager
             .Add(new FillCellsForAttackRookSys())
             .Add(new FillCellsForAttackBishopSys())
             .Add(new FillCellsForSetUnitSys())
-            .Add(new FillCellsForShiftSys());
+            .Add(new FillCellsForShiftSys())
+            .Add(new FillCellsArsonSys());
 
 
         var executersEvents = new EcsSystems(gameWorld)

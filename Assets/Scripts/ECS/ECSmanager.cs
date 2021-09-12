@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.ECS.Component.Common;
-using Assets.Scripts.ECS.Game.General.Systems.StartFill;
+﻿using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.Manager.View.Menu;
 using Assets.Scripts.ECS.System.Common;
 using Assets.Scripts.ECS.System.View.Menu;
@@ -80,7 +78,7 @@ namespace Assets.Scripts
 
                 case SceneTypes.Game:
                     if (_menuWorld != default)
-                    { 
+                    {
                         _menuWorld.Destroy();
 
                         _menuSystemManager = default;
@@ -92,7 +90,7 @@ namespace Assets.Scripts
 
 
                     _go = new GameObject("PhotonView");
-                    PhotonView = _go.AddComponent<PhotonView>();           
+                    PhotonView = _go.AddComponent<PhotonView>();
                     _rpcGameSys = _go.AddComponent<RpcSys>();
 
                     _allGameSystems
@@ -113,9 +111,9 @@ namespace Assets.Scripts
                         _gameOtherSystemManager = new GameOtherSystemManager(_gameWorld, _allGameSystems);
                     }
 
-                    
 
-                    _allGameSystems.Init();             
+
+                    _allGameSystems.Init();
                     break;
 
                 default:

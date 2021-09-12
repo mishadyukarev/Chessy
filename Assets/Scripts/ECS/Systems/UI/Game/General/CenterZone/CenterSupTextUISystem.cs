@@ -19,7 +19,7 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
             ref var mistakeViewUICom = ref _mistakeUIFilter.Get2(0);
 
 
-            if(mistakeDataUICom.MistakeTypes == MistakeTypes.None)
+            if (mistakeDataUICom.MistakeTypes == MistakeTypes.None)
             {
                 mistakeViewUICom.SetActiveParent(false);
             }

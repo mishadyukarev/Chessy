@@ -2,8 +2,6 @@
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
-using Assets.Scripts.Workers;
-using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
@@ -20,7 +18,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
-        private EcsFilter<AvailCellsForArcherArsonComp> _availCellsForArcherArsonFilter = default;
+        private EcsFilter<CellsArsonArcherComp> _availCellsForArcherArsonFilter = default;
 
 
         public void Run()
@@ -75,27 +73,27 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
             {
                 if (fromCellUnitDataCom.HaveMaxAmountSteps)
                 {
-                    if(_availCellsForArcherArsonFilter.Get1(0).HaveIdxCell(sender.IsMasterClient, toIdx))
+                    if (_availCellsForArcherArsonFilter.Get1(0).HaveIdxCell(sender.IsMasterClient, fromIdx, toIdx))
                     {
                         fromCellUnitDataCom.ResetAmountSteps();
                         toCellFireDataCom.HaveFire = true;
                     }
 
-                        //foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(fromIdx)))
-                        //{
-                        //    var curIdx = _xyCellFilter.GetIndexCell(xy1);
+                    //foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(fromIdx)))
+                    //{
+                    //    var curIdx = _xyCellFilter.GetIndexCell(xy1);
 
-                        //    ref var curCellEnvDataCom = ref _cellEnvFilter.Get1(curIdx);
+                    //    ref var curCellEnvDataCom = ref _cellEnvFilter.Get1(curIdx);
 
-                        //    if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
-                        //    {
-                        //        if (curIdx == toIdx)
-                        //        {
-                        //            fromCellUnitDataCom.ResetAmountSteps();
-                        //            toCellFireDataCom.HaveFire = true;
-                        //        }
-                        //    }
-                        //}
+                    //    if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                    //    {
+                    //        if (curIdx == toIdx)
+                    //        {
+                    //            fromCellUnitDataCom.ResetAmountSteps();
+                    //            toCellFireDataCom.HaveFire = true;
+                    //        }
+                    //    }
+                    //}
                 }
 
                 else

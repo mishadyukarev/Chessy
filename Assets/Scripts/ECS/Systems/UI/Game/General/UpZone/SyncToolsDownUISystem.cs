@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General;
-using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
 using Leopotam.Ecs;
 using Photon.Pun;

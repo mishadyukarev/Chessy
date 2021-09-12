@@ -34,7 +34,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells
 
                     _availCellsForSimpleAttack[AttackTypes.Unique][true].Add(idx, new List<byte>());
                     _availCellsForSimpleAttack[AttackTypes.Unique][false].Add(idx, new List<byte>());
-                }    
+                }
             }
         }
 

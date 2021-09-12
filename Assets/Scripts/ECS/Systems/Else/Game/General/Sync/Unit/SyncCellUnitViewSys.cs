@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
+﻿using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
@@ -9,15 +8,12 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
     internal sealed class SyncCellUnitViewSys : IEcsRunSystem
     {
         private EcsFilter<CellUnitDataComponent, CellUnitMainViewComp, CellUnitExtraViewComp> _cellUnitFilter = default;
-        private EcsFilter<SelectorComponent> _selectorFilter = default;
 
         public void Run()
         {
-            ref var selectorCom = ref _selectorFilter.Get1(0);
-
             foreach (byte idxCurCell in _cellUnitFilter)
             {
-                ref var curUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
+                ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxCurCell);
                 ref var curMainUnitViewCom = ref _cellUnitFilter.Get2(idxCurCell);
                 ref var curExtraUnitViewCom = ref _cellUnitFilter.Get3(idxCurCell);
 
@@ -25,75 +21,50 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                 curExtraUnitViewCom.Disable_SR();
 
 
-                if (curUnitDataCom.HaveUnit)
+                if (curUnitDatCom.HaveUnit)
                 {
-                    if (curUnitDataCom.IsVisibleUnit(PhotonNetwork.IsMasterClient))
+                    if (curUnitDatCom.IsVisibleUnit(PhotonNetwork.IsMasterClient))
                     {
                         curMainUnitViewCom.Enable_SR();
 
-                        if (curUnitDataCom.IsUnitType(UnitTypes.King))
+                        if (curUnitDatCom.IsUnitType(UnitTypes.King))
                         {
                             curMainUnitViewCom.SetKing_Sprite();
                         }
 
-                        else if (curUnitDataCom.IsUnitType(UnitTypes.Pawn))
+                        else if (curUnitDatCom.IsUnitType(UnitTypes.Pawn))
                         {
                             curMainUnitViewCom.SetPawn_Spriter();
 
 
-                            if (curUnitDataCom.HaveExtraToolWeaponPawn)
+                            if (curUnitDatCom.HaveExtraToolWeaponPawn)
                             {
                                 curExtraUnitViewCom.Enable_SR();
-                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDataCom.ExtraToolWeaponPawnType);
+                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDatCom.ExtraTWPawnType);
                             }
                         }
 
-                        else if (curUnitDataCom.IsUnitType(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                        else if (curUnitDatCom.IsUnitType(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                         {
-                            if (curUnitDataCom.HaveArcherWeapon)
+                            if (curUnitDatCom.HaveArcherWeapon)
                             {
-                                curMainUnitViewCom.SetArcher_Sprite(curUnitDataCom.UnitType, curUnitDataCom.ArcherWeaponType);
+                                curMainUnitViewCom.SetArcher_Sprite(curUnitDatCom.UnitType, curUnitDatCom.ArcherWeaponType);
                             }
                             else
                             {
                                 throw new Exception();
                             }
 
-                            if (curUnitDataCom.HaveExtraToolWeaponPawn)
+                            if (curUnitDatCom.HaveExtraToolWeaponPawn)
                             {
                                 curExtraUnitViewCom.Enable_SR();
-                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDataCom.ExtraToolWeaponPawnType);
+                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDatCom.ExtraTWPawnType);
                             }
                         }
 
                         else
                         {
                             throw new Exception();
-                        }
-                    }
-                }
-
-                else
-                {
-
-                    if (selectorCom.IsSelectedUnit)
-                    {
-                        if (selectorCom.IdxCurrentCell == idxCurCell)
-                        {
-                            _cellUnitFilter.Get2(idxCurCell).Enable_SR();
-
-                            if (selectorCom.SelectedUnitType == UnitTypes.King)
-                            {
-                                _cellUnitFilter.Get2(idxCurCell).SetKing_Sprite();
-                            }
-                            else if (selectorCom.SelectedUnitType == UnitTypes.Pawn)
-                            {
-                                _cellUnitFilter.Get2(idxCurCell).SetPawn_Spriter();
-                            }
-                            else if (selectorCom.SelectedUnitType == UnitTypes.Rook || selectorCom.SelectedUnitType == UnitTypes.Bishop)
-                            {
-                                _cellUnitFilter.Get2(idxCurCell).SetArcher_Sprite(selectorCom.SelectedUnitType, ToolWeaponTypes.Bow);
-                            }
                         }
                     }
                 }

@@ -14,7 +14,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
         {
             if (_inventUnitsFilter.Get1(0).HaveUnitInInventor(UnitTypes.King, PhotonNetwork.IsMasterClient))
             {
-                _kingZoneFilter.Get1(0).EnableZone();     
+                _kingZoneFilter.Get1(0).EnableZone();
             }
             else
             {

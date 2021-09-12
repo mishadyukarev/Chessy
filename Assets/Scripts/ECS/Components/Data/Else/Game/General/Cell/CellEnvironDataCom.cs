@@ -1,8 +1,8 @@
 ﻿using Assets.Scripts.Abstractions.ValuesConsts;
 using System;
 using System.Collections.Generic;
-using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
 using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
+using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
 
 namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
 {
@@ -204,7 +204,7 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
                         powerProtection += PROTECTION_HILL_FOR_ROOK_AND_BISHOP;
 
                     break;
-                        throw new Exception();
+                    throw new Exception();
             }
 
 

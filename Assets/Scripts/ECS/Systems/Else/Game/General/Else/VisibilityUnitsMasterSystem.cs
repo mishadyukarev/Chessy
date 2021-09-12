@@ -3,8 +3,6 @@ using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
-using Photon.Pun;
-using System.Collections.Generic;
 
 internal sealed class VisibilityUnitsMasterSystem : IEcsRunSystem
 {

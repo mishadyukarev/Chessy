@@ -1,11 +1,9 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;

@@ -1,9 +1,7 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Leopotam.Ecs;
 
@@ -50,7 +48,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
 
                     toCellUnitDataCom.ArcherWeaponType = fromCellUnitDataCom.ArcherWeaponType;
-                    toCellUnitDataCom.ExtraToolWeaponPawnType = fromCellUnitDataCom.ExtraToolWeaponPawnType;
+                    toCellUnitDataCom.ExtraTWPawnType = fromCellUnitDataCom.ExtraTWPawnType;
                     toCellUnitDataCom.UnitType = fromCellUnitDataCom.UnitType;
                     toCellUnitDataCom.AmountHealth = fromCellUnitDataCom.AmountHealth;
                     toCellUnitDataCom.AmountSteps = fromCellUnitDataCom.AmountSteps;

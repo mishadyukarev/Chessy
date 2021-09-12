@@ -15,7 +15,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells
 
                 _cellsTakeToolWeap.Add(true, new List<byte>());
                 _cellsTakeToolWeap.Add(false, new List<byte>());
-            }   
+            }
         }
     }
 }

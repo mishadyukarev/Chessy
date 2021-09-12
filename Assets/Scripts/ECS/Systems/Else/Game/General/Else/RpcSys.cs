@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
@@ -9,7 +8,6 @@ using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.Game.Other;
-using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.Game.Components;
 using ExitGames.Client.Photon;
 using Leopotam.Ecs;
@@ -291,7 +289,7 @@ namespace Assets.Scripts
                     if ((bool)objects[_curNumber++])
                     {
                         selectorCom.DefSelectedCell();// CellClickType = CellClickTypes.Start;
-                        selectorCom.SelectedUnitType = default;
+                        selectorCom.SelUnitType = default;
                     }
                     break;
 
@@ -360,13 +358,13 @@ namespace Assets.Scripts
 
             foreach (var curIdxCell in _cellUnitFilter)
             {
-                ref var curCellUnitDataComp = ref _cellUnitFilter.Get1(curIdxCell);             
+                ref var curCellUnitDataComp = ref _cellUnitFilter.Get1(curIdxCell);
                 listObjects.Add(curCellUnitDataComp.UnitType);
                 listObjects.Add(curCellUnitDataComp.AmountHealth);
                 listObjects.Add(curCellUnitDataComp.AmountSteps);
                 listObjects.Add(curCellUnitDataComp.ConditionUnitType);
                 listObjects.Add(curCellUnitDataComp.ArcherWeaponType);
-                listObjects.Add(curCellUnitDataComp.ExtraToolWeaponPawnType);
+                listObjects.Add(curCellUnitDataComp.ExtraTWPawnType);
 
                 ref var curOwnerCellUnitComp = ref _cellUnitFilter.Get2(curIdxCell);
                 var haveOwner = curOwnerCellUnitComp.HaveOwner;
@@ -564,11 +562,11 @@ namespace Assets.Scripts
                 curCellUnitDataComp.AmountSteps = (int)objects[_curNumber++];
                 curCellUnitDataComp.ConditionUnitType = (ConditionUnitTypes)objects[_curNumber++];
                 curCellUnitDataComp.ArcherWeaponType = (ToolWeaponTypes)objects[_curNumber++];
-                curCellUnitDataComp.ExtraToolWeaponPawnType = (ToolWeaponTypes)objects[_curNumber++];
+                curCellUnitDataComp.ExtraTWPawnType = (ToolWeaponTypes)objects[_curNumber++];
 
                 ref var curOwnerCellUnitComp = ref _cellUnitFilter.Get2(curIdxCell);
                 var haveOwner = (bool)objects[_curNumber++];
-                if(haveOwner) curOwnerCellUnitComp.SetOwner(PhotonNetwork.PlayerList[(int)objects[_curNumber++] - 1]);
+                if (haveOwner) curOwnerCellUnitComp.SetOwner(PhotonNetwork.PlayerList[(int)objects[_curNumber++] - 1]);
 
 
 
@@ -577,7 +575,7 @@ namespace Assets.Scripts
 
                 ref var curOwnerCellBuildComp = ref _cellBuildFilter.Get2(curIdxCell);
                 var haveOwnerBuild = (bool)objects[_curNumber++];
-                if(haveOwnerBuild) curOwnerCellBuildComp.SetOwner(PhotonNetwork.PlayerList[(int)objects[_curNumber++] - 1]);
+                if (haveOwnerBuild) curOwnerCellBuildComp.SetOwner(PhotonNetwork.PlayerList[(int)objects[_curNumber++] - 1]);
 
 
 

@@ -9,7 +9,7 @@ internal sealed class TheEndGameUISystem : IEcsRunSystem
     {
         ref var endGameDataUIComp = ref _endGameUIFilter.Get1(0);
         ref var endGameViewUIComp = ref _endGameUIFilter.Get2(0);
-        
+
 
         if (endGameDataUIComp.IsEndGame)
         {

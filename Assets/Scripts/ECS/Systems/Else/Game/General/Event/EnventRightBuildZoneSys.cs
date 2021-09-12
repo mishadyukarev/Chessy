@@ -52,7 +52,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
 
 
                     if (_selectorFilter.Get1(0).IsSelectedCell)
-                    
+
                         if (selUnitDataCom.HaveUnit)
 
                             if (selOwnerUnitCom.HaveOwner)
@@ -97,7 +97,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
                                         }
 
 
-                    
+
 
                 }
             }

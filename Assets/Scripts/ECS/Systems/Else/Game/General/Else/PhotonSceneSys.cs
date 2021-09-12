@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.ECS.Component.Common;
-using Assets.Scripts.ECS.Manager.View.Menu;
+﻿using Assets.Scripts.ECS.Manager.View.Menu;
 using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;

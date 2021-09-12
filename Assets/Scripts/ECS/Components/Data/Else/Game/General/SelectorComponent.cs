@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.Cell;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using UnityEngine;
 
@@ -13,9 +12,9 @@ public struct SelectorComponent
     internal void DefCellClickType() => CellClickType = default;
 
 
-    internal UnitTypes SelectedUnitType { get; set; }
-    internal bool IsSelectedUnit => SelectedUnitType != default;
-    internal void DefSelectedUnit() => SelectedUnitType = default;
+    internal UnitTypes SelUnitType { get; set; }
+    internal bool IsSelectedUnit => SelUnitType != default;
+    internal void DefSelectedUnit() => SelUnitType = default;
 
 
     //internal GiveTakeTypes GiveTakeType { get; set; }

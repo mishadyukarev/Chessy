@@ -89,7 +89,7 @@ internal sealed class SyncEconomyUpUISystem : IEcsRunSystem
                 }
             }
         }
-        
+
         var amountUpgradesFarm = amountBuildUpgradesCom.GetAmountUpgrades(BuildingTypes.Farm, PhotonNetwork.IsMasterClient);
         var extractionOneFarm = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Farm, amountUpgradesFarm);
 

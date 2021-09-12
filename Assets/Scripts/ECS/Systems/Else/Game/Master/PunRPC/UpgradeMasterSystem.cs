@@ -3,7 +3,6 @@ using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Leopotam.Ecs;
-using System;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {

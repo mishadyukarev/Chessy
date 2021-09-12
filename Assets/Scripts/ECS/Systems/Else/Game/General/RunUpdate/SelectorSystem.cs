@@ -2,7 +2,6 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
-using Assets.Scripts.ECS.Components;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
@@ -19,7 +18,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
     private EcsFilter<InputComponent> _inputFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
 
-    private EcsFilter<AvailCellsForArcherArsonComp> _availCellsForArcherArsonFilter = default;
+    private EcsFilter<CellsArsonArcherComp> _availCellsForArcherArsonFilter = default;
     private EcsFilter<AvailCellsForAttackComp> _availCellsForAttackFilter = default;
     private EcsFilter<AvailCellsForShiftComp> _availCellsForShiftFilter = default;
 
@@ -80,15 +79,15 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                 else if (selectorCom.IsSelectedUnit)
                 {
-                    RpcSys.SetUniToMaster(selectorCom.IdxCurrentCell, selectorCom.SelectedUnitType);
+                    RpcSys.SetUniToMaster(selectorCom.IdxCurrentCell, selectorCom.SelUnitType);
                 }
 
                 else if (selectorCom.IsCellClickType(CellClickTypes.PickFire))
                 {
-                    if(_availCellsForArcherArsonFilter.Get1(0).HaveIdxCell(PhotonNetwork.IsMasterClient, selectorCom.IdxCurrentCell))
-                    {
-                        RpcSys.FireToMaster(selectorCom.IdxSelectedCell, selectorCom.IdxCurrentCell);
-                    }
+                    //if(_availCellsForArcherArsonFilter.Get1(0).HaveIdxCell(PhotonNetwork.IsMasterClient, selectorCom.IdxCurrentCell))
+                    //{
+                    RpcSys.FireToMaster(selectorCom.IdxSelectedCell, selectorCom.IdxCurrentCell);
+                    //}
 
                     selectorCom.CellClickType = default;
                     selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;

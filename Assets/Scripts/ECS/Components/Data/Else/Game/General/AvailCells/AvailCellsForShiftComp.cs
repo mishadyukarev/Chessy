@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.Workers;
 using System.Collections.Generic;
-using UnityEngine;
 
 namespace Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells
 {

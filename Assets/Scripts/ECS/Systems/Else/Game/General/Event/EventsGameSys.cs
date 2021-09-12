@@ -97,7 +97,7 @@ namespace Assets.Scripts
             {
                 if (_inventorUnitsFilter.Get1(0).HaveUnitInInventor(unitType, PhotonNetwork.IsMasterClient))
                 {
-                    _selectorFilter.Get1(0).SelectedUnitType = unitType;
+                    _selectorFilter.Get1(0).SelUnitType = unitType;
                 }
                 else
                 {

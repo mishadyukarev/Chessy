@@ -2,8 +2,6 @@
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
 using Leopotam.Ecs;
-using Photon.Pun;
-using System;
 using UnityEngine;
 using UnityEngine.EventSystems;
 

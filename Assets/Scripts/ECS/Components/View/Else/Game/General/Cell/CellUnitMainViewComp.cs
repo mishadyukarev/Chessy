@@ -40,7 +40,7 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
                     throw new Exception();
                 }
             }
-            else if (toolWeaponType ==ToolWeaponTypes.Crossbow)
+            else if (toolWeaponType == ToolWeaponTypes.Crossbow)
             {
                 if (unitType == UnitTypes.Rook)
                 {

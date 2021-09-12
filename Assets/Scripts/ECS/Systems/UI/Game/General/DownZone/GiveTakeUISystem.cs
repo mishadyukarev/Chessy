@@ -2,7 +2,6 @@
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
 using Leopotam.Ecs;
-using System;
 using UnityEngine;
 
 namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone
@@ -34,7 +33,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone
             else
             {
                 giveTakeZoneViewUIComp.SetColorToGiveTake_Button(Color.white);
-            }    
+            }
         }
     }
 }

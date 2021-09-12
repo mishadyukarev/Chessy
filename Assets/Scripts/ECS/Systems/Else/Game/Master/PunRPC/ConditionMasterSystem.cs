@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Leopotam.Ecs;
 using System;

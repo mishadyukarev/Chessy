@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.ECS.Game.Components;
 using Leopotam.Ecs;
-using UnityEngine;
 
 public sealed class GameOtherSystemManager : SystemAbstManager
 {

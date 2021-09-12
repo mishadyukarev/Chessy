@@ -35,7 +35,7 @@ internal sealed class StatsUISystem : IEcsRunSystem
             _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Health, selCellUnitDataCom.AmountHealth.ToString());
             _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Damage, selCellUnitDataCom.SimplePowerDamage.ToString());
             _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Protection, comPowerProtection.ToString());
-            _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Steps, selCellUnitDataCom.AmountSteps.ToString()); 
+            _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Steps, selCellUnitDataCom.AmountSteps.ToString());
         }
 
         else

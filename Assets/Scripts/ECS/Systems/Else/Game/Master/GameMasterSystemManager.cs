@@ -1,9 +1,7 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.ECS.Game.Master.Systems.PunRPC;
-using Assets.Scripts.ECS.Systems.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC;
 using Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake;
-using Assets.Scripts.ECS.Systems.Game.Master;
 using Assets.Scripts.ECS.Systems.Game.Master.PunRPC;
 using Leopotam.Ecs;
 using System.Collections.Generic;

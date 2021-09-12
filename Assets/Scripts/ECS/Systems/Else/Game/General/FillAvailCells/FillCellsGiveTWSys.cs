@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
+﻿using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells

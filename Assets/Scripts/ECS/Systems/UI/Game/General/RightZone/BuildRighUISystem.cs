@@ -1,6 +1,4 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component;
+﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Game.General.Components;

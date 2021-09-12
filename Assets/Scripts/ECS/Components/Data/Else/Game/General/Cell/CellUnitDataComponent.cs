@@ -59,8 +59,8 @@ internal struct CellUnitDataComponent
     internal ToolWeaponTypes ArcherWeaponType { get; set; }
     internal bool HaveArcherWeapon => ArcherWeaponType != default;
 
-    internal ToolWeaponTypes ExtraToolWeaponPawnType { get; set; }
-    internal bool HaveExtraToolWeaponPawn => ExtraToolWeaponPawnType != default;
+    internal ToolWeaponTypes ExtraTWPawnType { get; set; }
+    internal bool HaveExtraToolWeaponPawn => ExtraTWPawnType != default;
 
 
     private Dictionary<ConditionUnitTypes, int> _amountStepsInCondition;
@@ -226,7 +226,7 @@ internal struct CellUnitDataComponent
                         powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP);
                         break;
 
-                    default: 
+                    default:
                         throw new Exception();
                 }
             }
@@ -278,7 +278,7 @@ internal struct CellUnitDataComponent
             {
                 simplePowerDamege = SIMPLE_POWER_DAMAGE_PAWN;
 
-                switch (ExtraToolWeaponPawnType)
+                switch (ExtraTWPawnType)
                 {
                     case ToolWeaponTypes.None:
                         break;
@@ -341,7 +341,7 @@ internal struct CellUnitDataComponent
                         throw new Exception();
                 }
 
-                switch (ExtraToolWeaponPawnType)
+                switch (ExtraTWPawnType)
                 {
                     case ToolWeaponTypes.None:
                         break;
@@ -404,7 +404,7 @@ internal struct CellUnitDataComponent
     {
         UnitType = default;
         ArcherWeaponType = default;
-        ExtraToolWeaponPawnType = default;
+        ExtraTWPawnType = default;
         AmountHealth = default;
         AmountSteps = default;
         ConditionUnitType = default;
@@ -413,7 +413,7 @@ internal struct CellUnitDataComponent
     {
         UnitType = newCellUnitDataCom.UnitType;
         ArcherWeaponType = newCellUnitDataCom.ArcherWeaponType;
-        ExtraToolWeaponPawnType = newCellUnitDataCom.ExtraToolWeaponPawnType;
+        ExtraTWPawnType = newCellUnitDataCom.ExtraTWPawnType;
         AmountHealth = newCellUnitDataCom.AmountHealth;
         AmountSteps = newCellUnitDataCom.AmountSteps;
         ConditionUnitType = newCellUnitDataCom.ConditionUnitType;

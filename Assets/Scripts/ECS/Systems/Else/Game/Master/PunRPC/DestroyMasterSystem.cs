@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Leopotam.Ecs;
@@ -51,8 +50,8 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
             curUnitDataCom.ResetAmountSteps();
 
             if (curBuildDataCom.IsBuildType(BuildingTypes.Farm)) curEnvDataCom.ResetEnvironment(EnvironmentTypes.Fertilizer);
- 
-            curBuildDataCom.ResetBuildType();
+
+            curBuildDataCom.DefBuildType();
         }
         else
         {

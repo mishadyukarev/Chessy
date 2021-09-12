@@ -20,7 +20,6 @@ using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Workers;
-using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System.Collections.Generic;
@@ -170,7 +169,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                 .Replace(new CellsForSetUnitComp(new Dictionary<bool, List<byte>>()))
                 .Replace(new AvailCellsForShiftComp(new Dictionary<bool, Dictionary<byte, List<byte>>>()))
-                .Replace(new AvailCellsForArcherArsonComp(new Dictionary<bool, List<byte>>()))
+                .Replace(new CellsArsonArcherComp(true))
                 .Replace(new AvailCellsForAttackComp(true))
                 .Replace(new CellsGiveTWComp(true))
                 .Replace(new CellsTakeTWComp(true))
@@ -414,7 +413,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                         _cellBuildFilter.Get3(curIdxCell).IsBot = true;
                     }
 
-                    else if (x == 6 && y == 6 || x == 9 && y == 6|| x <= 9 && x >= 6 && y == 5 || x <= 9 && x >= 6 && y == 7)
+                    else if (x == 6 && y == 6 || x == 9 && y == 6 || x <= 9 && x >= 6 && y == 5 || x <= 9 && x >= 6 && y == 7)
                     {
                         curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.Mountain);
 
@@ -422,7 +421,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                         int rand = Random.Range(0, 100);
 
-                        if(rand >= 50) curCellUnitDataComp.ExtraToolWeaponPawnType = ToolWeaponTypes.Sword;
+                        if (rand >= 50) curCellUnitDataComp.ExtraTWPawnType = ToolWeaponTypes.Sword;
 
                         curCellUnitDataComp.AmountHealth = 100;
                         curCellUnitDataComp.ConditionUnitType = ConditionUnitTypes.Protected;
@@ -431,6 +430,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 }
             }
         }
-        
+
     }
 }

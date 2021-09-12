@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Component.Game;
@@ -124,8 +123,8 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                     }
                 }
 
-                
-            }     
+
+            }
         }
     }
 }

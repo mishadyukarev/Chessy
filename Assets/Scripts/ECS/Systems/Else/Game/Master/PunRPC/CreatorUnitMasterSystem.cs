@@ -42,6 +42,6 @@ internal sealed class CreatorUnitMasterSystem : IEcsRunSystem
         else
         {
             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedCity, infoCom.FromInfo.Sender);
-        }  
+        }
     }
 }

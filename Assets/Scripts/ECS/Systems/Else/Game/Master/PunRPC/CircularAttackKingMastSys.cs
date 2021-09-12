@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
