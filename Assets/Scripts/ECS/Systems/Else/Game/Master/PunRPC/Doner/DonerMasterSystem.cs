@@ -47,7 +47,7 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
             }
             else
             {
-                switch (SaverComponent.StepModeType)
+                switch (StepModComponent.StepModeType)
                 {
                     case StepModeTypes.None:
                         throw new Exception();

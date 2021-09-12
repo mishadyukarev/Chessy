@@ -10,15 +10,6 @@ namespace Assets.Scripts.ECS.System.Common
         {
             InitOnlySystems
                 .Add(new MainComSys());
-
-            RunOnlySystems
-                .Add(new SyncSoundComSys());
-
-
-            //allCommSystems
-            //    .Add(InitOnlySystems)
-            //    .Add(RunOnlySystems)
-            //    .Add(InitRunSystems);
         }
     }
 }

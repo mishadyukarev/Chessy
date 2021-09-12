@@ -14,15 +14,20 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
             ref var selectTypeViewUIComp = ref _selectorTypeUIFilter.Get1(0);
             ref var selectCom = ref _selectorFilter.Get1(0);
 
+
+            selectTypeViewUIComp.DisableParent();
+
+
             if (selectCom.IsCellClickType(CellClickTypes.GiveTakeTW))
             {
                 selectTypeViewUIComp.Text = "Give or Take Tool";
                 selectTypeViewUIComp.EnableParent();
             }
 
-            else
+            else if (selectCom.IsCellClickType(CellClickTypes.PickFire))
             {
-                selectTypeViewUIComp.DisableParent();
+                selectTypeViewUIComp.Text = "Pick Adult Forest";
+                selectTypeViewUIComp.EnableParent();
             }
         }
     }

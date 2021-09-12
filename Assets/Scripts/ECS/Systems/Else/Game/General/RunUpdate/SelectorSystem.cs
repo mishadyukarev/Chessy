@@ -1,7 +1,9 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
@@ -17,6 +19,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
     private EcsFilter<SelectorComponent> _selectorFilter = default;
     private EcsFilter<InputComponent> _inputFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
+    private EcsFilter<SoundEffectsComp> _soundFilter = default;
 
     private EcsFilter<CellsArsonArcherComp> _availCellsForArcherArsonFilter = default;
     private EcsFilter<AvailCellsForAttackComp> _availCellsForAttackFilter = default;
@@ -35,11 +38,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
         ref var selectorCom = ref _selectorFilter.Get1(0);
         ref var availCellsForAttackComp = ref _availCellsForAttackFilter.Get1(0);
         ref var availCellsForShiftComp = ref _availCellsForShiftFilter.Get1(0);
-
-
-        Debug.Log(CellUnitDataCom(selectorCom.IdxSelectedCell).IsVisibleUnit(true));
-
-        //Debug.Log(CellUnitDataCom(selectorCom.IdxSelectedCell).UnitType);
+        ref var soundEffectCom = ref _soundFilter.Get1(0);
 
 
         if (_inputFilter.Get1(0).IsClicked)
@@ -126,6 +125,23 @@ internal sealed class SelectorSystem : IEcsRunSystem
                     {
                         RpcSys.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
                     }
+                    else if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveUnit)
+                    {
+                        if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).HaveOwner)
+                        {
+                            if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).IsMine)
+                            {
+                                if (CellUnitDataCom(selectorCom.IdxSelectedCell).IsMelee)
+                                {
+                                    soundEffectCom.Play(SoundEffectTypes.PickMelee);
+                                }
+                                else
+                                {
+                                    soundEffectCom.Play(SoundEffectTypes.PickArcher);
+                                }
+                            }
+                        }
+                    }
                 }
 
                 else
@@ -147,11 +163,11 @@ internal sealed class SelectorSystem : IEcsRunSystem
                             {
                                 if (CellUnitDataCom(selectorCom.IdxSelectedCell).IsMelee)
                                 {
-                                    //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickMelee);
+                                    soundEffectCom.Play(SoundEffectTypes.PickMelee);
                                 }
                                 else
                                 {
-                                    //SoundGameGeneralViewWorker.PlaySoundEffect(SoundEffectTypes.PickArcher);
+                                    soundEffectCom.Play(SoundEffectTypes.PickArcher);
                                 }
                             }
                         }

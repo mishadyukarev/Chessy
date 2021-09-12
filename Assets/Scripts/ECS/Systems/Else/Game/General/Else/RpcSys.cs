@@ -8,6 +8,7 @@ using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.Game.Other;
+using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Game.Components;
 using ExitGames.Client.Photon;
 using Leopotam.Ecs;
@@ -39,6 +40,7 @@ namespace Assets.Scripts
         private EcsFilter<MotionsDataUIComponent> _motionsFilter = default;
         private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
         private EcsFilter<MistakeDataUICom> _mistakeUIFilter = default;
+        private EcsFilter<SoundEffectsComp> _soundFilter = default;
 
 
 
@@ -295,7 +297,7 @@ namespace Assets.Scripts
 
                 case RpcGeneralTypes.Sound:
                     var soundEffectType = (SoundEffectTypes)objects[_curNumber++];
-                    //SoundGameGeneralViewWorker.PlaySoundEffect(soundEffectType);
+                    _soundFilter.Get1(0).Play(soundEffectType);
                     break;
 
                 default:
@@ -319,7 +321,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcOtherTypes.SetStepModType:
-                    SaverComponent.StepModeType = (StepModeTypes)objects[_curNumber++];
+                    StepModComponent.StepModeType = (StepModeTypes)objects[_curNumber++];
                     break;
 
                 default:

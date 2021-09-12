@@ -4,9 +4,7 @@
     {
         None,
 
-        UpgradeUnit,
         PickFire,
         GiveTakeTW,
-        //SwapToolWeapon,
     }
 }

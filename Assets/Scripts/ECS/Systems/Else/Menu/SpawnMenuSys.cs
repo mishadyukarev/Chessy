@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Component.Menu;
 using Assets.Scripts.ECS.Component.UI;
 using Leopotam.Ecs;
@@ -7,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.ECS.System.View.Menu
 {
-    internal sealed class SpawnMenuSys : IEcsInitSystem, IEcsRunSystem
+    internal sealed class SpawnMenuSys : IEcsInitSystem
     {
         private EcsWorld _menuWorld = default;
 
@@ -19,8 +20,11 @@ namespace Assets.Scripts.ECS.System.View.Menu
             CanvasComponent.ReplaceZone(Main.CurrentSceneType);
             ToggleZoneComponent.ReplaceZone(Main.CurrentSceneType);
 
+
+
+
             _menuWorld.NewEntity()
-                .Replace(new CenterMenuUIComponent(CanvasComponent.FindUnderParent<Slider>("Slider"), SaverComponent.SliderVolume));
+                .Replace(new CenterMenuUIComponent(CanvasComponent.FindUnderParent<Slider>("Slider"), SoundComComp.Volume));
 
 
             var rightZone = CanvasComponent.FindUnderParent<RectTransform>("OnlineRightZone");
@@ -35,12 +39,6 @@ namespace Assets.Scripts.ECS.System.View.Menu
                 .Replace(new OfflineZoneUIComponent(leftZone))
                 .Replace(new ConnectButtonUIComponent(false, leftZone))
                 .Replace(new BackgroundImagesUIComponent(false, leftZone));
-        }
-
-        public void Run()
-        {
-            SaverComponent.StepModeType = _onlineFilter.Get1(0).StepModValue;
-            SaverComponent.SliderVolume = _centerFilter.Get1(0).MusicVolume;
         }
     }
 }

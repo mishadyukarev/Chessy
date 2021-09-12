@@ -54,14 +54,18 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                             cellUnitDataComForGive.ArcherWeaponType = ToolWeaponTypes.Bow;
 
                             cellUnitDataComForGive.ResetAmountSteps();
+
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickArcher);
                         }
                         else
                         {
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes. Mistake);
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                         }
                     }
                     else
                     {
+                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                     }
 
@@ -96,9 +100,12 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 
                                         cellUnitDataComForGive.ArcherWeaponType = toolWeaponTypeForGive;
                                         cellUnitDataComForGive.ResetAmountSteps();
+
+                                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickArcher);
                                     }
                                     else
                                     {
+                                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                         RpcSys.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
                                     }
                                 }
@@ -107,23 +114,24 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 
                             else
                             {
+                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                 RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
 
                         else
                         {
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                         }
                     }
 
                     else
                     {
+                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         RpcSys.SimpleMistakeToGeneral(MistakeTypes.ThisIsForOtherUnit, sender);
                     }
                 }
-
-
             }
         }
     }

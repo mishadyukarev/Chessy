@@ -4,16 +4,17 @@ using UnityEngine;
 
 namespace Assets.Scripts.ECS.Component.View.Else.Game.General
 {
-    internal struct SoundViewComp
+    internal struct SoundEffectsComp
     {
         Dictionary<SoundEffectTypes, AudioSource> _soundEffect_AudSources;
 
-        internal SoundViewComp(GameObject audioSourceParent_GO)
+        internal SoundEffectsComp(GameObject audioSourceParent_GO)
         {
             _soundEffect_AudSources = new Dictionary<SoundEffectTypes, AudioSource>();
 
             var mistake_AS = audioSourceParent_GO.AddComponent<AudioSource>();
             mistake_AS.clip = ResourcesComponent.SoundConfig.MistakeAudioClip;
+            mistake_AS.volume = 0.4f;
             _soundEffect_AudSources.Add(SoundEffectTypes.Mistake, mistake_AS);
 
 
@@ -46,9 +47,9 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General
             _soundEffect_AudSources.Add(SoundEffectTypes.Building, build_AS);
 
 
-            var settingUnit_AS = audioSourceParent_GO.AddComponent<AudioSource>();
-            settingUnit_AS.clip = ResourcesComponent.SoundConfig.SettingUnitAC;
-            _soundEffect_AudSources.Add(SoundEffectTypes.Setting, settingUnit_AS);
+            var clickToTable_AS = audioSourceParent_GO.AddComponent<AudioSource>();
+            clickToTable_AS.clip = ResourcesComponent.SoundConfig.ClickToTable_Clip;
+            _soundEffect_AudSources.Add(SoundEffectTypes.ClickToTable, clickToTable_AS);
 
 
             var fire_AS = audioSourceParent_GO.AddComponent<AudioSource>();

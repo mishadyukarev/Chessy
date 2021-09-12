@@ -108,7 +108,7 @@ namespace Assets.Scripts
 
         private void Done()
         {
-            switch (SaverComponent.StepModeType)
+            switch (StepModComponent.StepModeType)
             {
                 case StepModeTypes.None:
                     throw new Exception();

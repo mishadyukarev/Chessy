@@ -9,6 +9,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Cell
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
 
         private EcsFilter<AvailCellsForAttackComp> _availCellsForAttackFilter = default;
+        private EcsFilter<CellsArsonArcherComp> _cellsArsonFilter = default;
 
         public void Run()
         {
@@ -20,6 +21,9 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Cell
                 availCellsForAttackComp.Clear(AttackTypes.Simple, false, curIdxCell);
                 availCellsForAttackComp.Clear(AttackTypes.Unique, true, curIdxCell);
                 availCellsForAttackComp.Clear(AttackTypes.Unique, false, curIdxCell);
+
+                _cellsArsonFilter.Get1(0).Clear(true, curIdxCell);
+                _cellsArsonFilter.Get1(0).Clear(false, curIdxCell);
             }
         }
     }

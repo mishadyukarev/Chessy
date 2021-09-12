@@ -29,7 +29,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
 
             var audioSource = new GameObject("AudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
             audioSource.clip = ResourcesComponent.SoundConfig.MusicAudioClip;
-            audioSource.volume = SaverComponent.SliderVolume;
+            audioSource.volume = 0.2f;
             audioSource.loop = true;
             audioSource.Play();
 
@@ -38,7 +38,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
                 .Replace(new CommonZoneComponent(new GameObject(NameConst.COMMON_ZONE)))
                 .Replace(new CameraComponent(camera, new Vector3(7, 4.8f, -2)))
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
-                .Replace(new SaverComponent(StepModeTypes.ByQueue, 0.15f))
+                .Replace(new StepModComponent(StepModeTypes.ByQueue))
                 .Replace(new CanvasComponent(canvas))
                 .Replace(new SoundComComp(audioSource))
 

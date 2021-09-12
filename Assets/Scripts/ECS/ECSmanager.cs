@@ -61,7 +61,6 @@ namespace Assets.Scripts
 
                         GameObject.Destroy(_go);
 
-                        GameObject.Destroy(_rpcGameSys);
                         _gameGeneralSystemManager = default;
                         _gameMasterSystemManager = default;
                         _gameOtherSystemManager = default;

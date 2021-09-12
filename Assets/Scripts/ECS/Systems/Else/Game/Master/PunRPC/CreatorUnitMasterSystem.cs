@@ -41,6 +41,7 @@ internal sealed class CreatorUnitMasterSystem : IEcsRunSystem
         }
         else
         {
+            RpcSys.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.Mistake);
             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedCity, infoCom.FromInfo.Sender);
         }
     }

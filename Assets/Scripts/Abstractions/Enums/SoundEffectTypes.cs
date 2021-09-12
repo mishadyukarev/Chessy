@@ -8,7 +8,6 @@
         AttackMelee,
         Building,
         Fire,
-        Setting,
         Mistake,
         SoundGoldPack,
         Melting,

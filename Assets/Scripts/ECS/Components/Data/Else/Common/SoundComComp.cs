@@ -4,9 +4,9 @@ namespace Assets.Scripts.ECS.Component.Common
 {
     internal struct SoundComComp
     {
-        private AudioSource _audioSource;
+        private static AudioSource _audioSource;
 
-        internal float Volume
+        internal static float Volume
         {
             get => _audioSource.volume;
             set => _audioSource.volume = value;

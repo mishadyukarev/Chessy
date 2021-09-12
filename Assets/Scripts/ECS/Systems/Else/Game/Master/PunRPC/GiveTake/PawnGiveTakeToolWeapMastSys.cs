@@ -63,16 +63,20 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
 
                                 cellUnitDataComForGive.ResetAmountSteps();
                                 cellUnitDataComForGive.ExtraTWPawnType = default;
+
+                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                             }
 
                             else
                             {
+                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                 RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
 
                         else
                         {
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                         }
 
@@ -96,6 +100,8 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
 
                                                 cellUnitDataComForGive.ExtraTWPawnType = toolWeapTypeForGive;
                                                 cellUnitDataComForGive.ResetAmountSteps();
+
+                                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                             }
 
                                             else if (toolWeapTypeForGive == ToolWeaponTypes.Pick)
@@ -106,9 +112,12 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
 
                                                     cellUnitDataComForGive.ExtraTWPawnType = toolWeapTypeForGive;
                                                     cellUnitDataComForGive.ResetAmountSteps();
+
+                                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                                 }
                                                 else
                                                 {
+                                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                                     RpcSys.MistakeEconomyToGeneral(sender, new[] { true, false, true, true, true });
                                                 }
                                             }
@@ -128,6 +137,8 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
 
                                                 cellUnitDataComForGive.ExtraTWPawnType = toolWeapTypeForGive;
                                                 cellUnitDataComForGive.ResetAmountSteps();
+
+                                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                             }
 
                                             else if (toolWeapTypeForGive == ToolWeaponTypes.Sword)
@@ -138,9 +149,12 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
 
                                                     cellUnitDataComForGive.ExtraTWPawnType = toolWeapTypeForGive;
                                                     cellUnitDataComForGive.ResetAmountSteps();
+
+                                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                                 }
                                                 else
                                                 {
+                                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                                     RpcSys.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
                                                 }
                                             }
@@ -150,18 +164,21 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
 
                                 else
                                 {
+                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                     RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                                 }
                             }
 
                             else
                             {
+                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                 RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                             }
                         }
 
                         else
                         {
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.ThisIsForOtherUnit, sender);
                         }
                     }

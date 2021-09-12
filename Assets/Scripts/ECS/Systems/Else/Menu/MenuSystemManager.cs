@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ECS.Managers.Event;
+using Assets.Scripts.ECS.Systems.Else.Common;
 using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Manager.View.Menu
@@ -13,6 +14,9 @@ namespace Assets.Scripts.ECS.Manager.View.Menu
 
             InitOnlySystems
                 .Add(PhotonSceneMenuSystem);
+
+            RunOnlySystems
+                .Add(new SyncSoundMenuSys());
         }
     }
 }

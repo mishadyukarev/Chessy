@@ -57,26 +57,8 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
             }
         }
 
-
-        internal void Flip(bool isActivated, XyTypes flipType)
-        {
-            switch (flipType)
-            {
-                case XyTypes.None:
-                    throw new Exception();
-
-                case XyTypes.X:
-                    _main_SR.flipX = isActivated;
-                    break;
-
-                case XyTypes.Y:
-                    _main_SR.flipY = isActivated;
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
+        internal void SetFlipX(bool isActive) => _main_SR.flipX = isActive;
+        internal void SetFlipY(bool isActive) => _main_SR.flipY = isActive;
         internal void Set_Rotation(Vector3 rotation) => _main_SR.transform.rotation = Quaternion.Euler(rotation);
     }
 }

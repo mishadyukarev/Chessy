@@ -31,3 +31,4 @@ MonoBehaviour:
   _seeding_clip: {fileID: 8300000, guid: 81f4e66d5b08c7f4c98ee5f40b06baab, type: 3}
   _shiftUnit_clip: {fileID: 8300000, guid: f720151cdcbd5294982b669eba77e88a, type: 3}
   _truce_clip: {fileID: 8300000, guid: 3cc9e199c101d384a824029ea1dd8038, type: 3}
+  _clickToTable_clip: {fileID: 8300000, guid: f720151cdcbd5294982b669eba77e88a, type: 3}

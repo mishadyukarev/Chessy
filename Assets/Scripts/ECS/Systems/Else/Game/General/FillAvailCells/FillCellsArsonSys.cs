@@ -14,6 +14,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+        private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
         public void Run()
         {
@@ -36,9 +37,12 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
 
                             ref var arounEnvDatCom = ref _cellEnvFilter.Get1(arouIdx);
 
-                            if (arounEnvDatCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                            if (!_cellFireFilter.Get1(arouIdx).HaveFire)
                             {
-                                cellsArsonCom.Add(curOwnUnitCom.IsMasterClient, curIdxCell, arouIdx);
+                                if (arounEnvDatCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                                {
+                                    cellsArsonCom.Add(curOwnUnitCom.IsMasterClient, curIdxCell, arouIdx);
+                                }
                             }
                         }
                     }

@@ -1,78 +1,60 @@
-﻿using Leopotam.Ecs;
+﻿using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Game.General.Components;
+using Leopotam.Ecs;
+using Photon.Pun;
+using UnityEngine;
 
 namespace Assets.Scripts.ECS.Game.General.Systems
 {
     internal class FliperAndRotatorUnitSystem : IEcsRunSystem
     {
+        private EcsFilter<SelectorComponent> _selComFilter = default;
+
+        private EcsFilter<CellUnitMainViewComp, CellUnitExtraViewComp> _cellUnitViewFilter = default;
+        private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+
         public void Run()
         {
-            //for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
-            //    for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
-            //    {
-            //        var xy = new int[] { x, y };
+            ref var selCom = ref _selComFilter.Get1(0);
 
-            //        if (CellUnitsDataSystem.HaveAnyUnit(xy))
-            //        {
-            //            var unitType = CellUnitsDataSystem.UnitType(xy);
+            foreach (byte idxCurCell in _cellUnitFilter)
+            {
+                ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxCurCell);
+                ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
 
-            //            var standartX = CellViewSystem.GetEulerAngle(XyzTypes.X, xy);
-            //            var standartY = CellViewSystem.GetEulerAngle(XyzTypes.Y, xy);
-            //            var standartZ = CellViewSystem.GetEulerAngle(XyzTypes.Z, xy);
+                ref var curMainUnitViewCom = ref _cellUnitViewFilter.Get1(idxCurCell);
+                ref var curExtraUnitViewCom = ref _cellUnitViewFilter.Get2(idxCurCell);
 
-            //            if (CellUnitsDataSystem.HaveOwner(xy))
-            //            {
-            //                if (CellUnitsDataSystem.IsMine(xy))
-            //                {
-            //                    //if (_eGM.SelectorEnt_SelectorCom.GetXy(SelectorCellTypes.Selected).Compare(new int[] { x, y }))
-            //                    //{
-            //                    //    switch (unitType)
-            //                    //    {
-            //                    //        case UnitTypes.None:
-            //                    //            break;
 
-            //                    //        case UnitTypes.King:
-            //                    //            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
-            //                    //            break;
+                if (selCom.IdxSelectedCell == idxCurCell)
+                {
+                    if (curUnitDatCom.HaveUnit)
 
-            //                    //        case UnitTypes.Pawn:
-            //                    //            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
-            //                    //            break;
+                        if (curOwnUnitCom.HaveOwner)
 
-            //                    //        case UnitTypes.PawnSword:
-            //                    //            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
-            //                    //            break;
+                            if (curOwnUnitCom.IsMine)
+                            {
+                                if (curUnitDatCom.IsUnitType(UnitTypes.Rook))
+                                {
+                                    if (PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_Rotation(new Vector3(0, 0, -90));
+                                    else curMainUnitViewCom.Set_Rotation(new Vector3(0, 0, 90));
+                                }
+                                else
+                                {
+                                    curMainUnitViewCom.SetFlipX(true);
+                                    curExtraUnitViewCom.SetFlipX(false);
+                                }
+                            }
+                }
+                else
+                {
+                    curMainUnitViewCom.SetFlipX(false);
+                    curExtraUnitViewCom.SetFlipX(true);
 
-            //                    //        case UnitTypes.Rook:
-            //                    //            _eGM.CellUnitEnt_CellUnitCom(x, y).SetRotation(unitType, 0, 0, standartZ - 90);
-            //                    //            break;
-
-            //                    //        case UnitTypes.RookCrossbow:
-            //                    //            _eGM.CellUnitEnt_CellUnitCom(x, y).SetRotation(unitType, 0, 0, standartZ - 90);
-            //                    //            break;
-
-            //                    //        case UnitTypes.Bishop:
-            //                    //            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
-            //                    //            break;
-
-            //                    //        case UnitTypes.BishopCrossbow:
-            //                    //            _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(true, unitType, XyTypes.X);
-            //                    //            break;
-
-            //                    //        default:
-            //                    //            break;
-            //                    //    }
-            //                    //}
-
-            //                    //else
-            //                    //{
-            //                    //    _eGM.CellUnitEnt_CellUnitCom(x, y).Flip(false, unitType, XyTypes.X);
-
-            //                    //    _eGM.CellUnitEnt_CellUnitCom(x, y).SetRotation(unitType, 0, 0, standartZ);
-            //                    //}
-            //                }
-            //            }
-            //        }
-            //    }
+                    if(PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_Rotation(new Vector3(0, 0, 0));
+                    else curMainUnitViewCom.Set_Rotation(new Vector3(0, 0, 180));
+                }
+            }
         }
     }
 }

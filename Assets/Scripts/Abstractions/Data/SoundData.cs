@@ -3,22 +3,23 @@
 [CreateAssetMenu(menuName = "SoundConfig", fileName = "SoundConfig")]
 public sealed class SoundData : ScriptableObject
 {
-    [SerializeField] private AudioClip _mistakeAudioClip;
-    [SerializeField] private AudioClip _attackSwordAudioClip;
-    [SerializeField] private AudioClip _attackArcherAC;
-    [SerializeField] private AudioClip _musicAudioClip;
-    [SerializeField] private AudioClip _pickArcherAudioClip;
-    [SerializeField] private AudioClip _pickMeleeAC;
-    [SerializeField] private AudioClip _buildingAC;
-    [SerializeField] private AudioClip _fireAC;
-    [SerializeField] private AudioClip _settingUnitAC;
-    [SerializeField] private AudioClip _buyAC;
-    [SerializeField] private AudioClip _melting_clip;
-    [SerializeField] private AudioClip _destroy_clip;
-    [SerializeField] private AudioClip _upgradeUnitMelee_clip;
-    [SerializeField] private AudioClip _seeding_clip;
-    [SerializeField] private AudioClip _shiftUnit_clip;
-    [SerializeField] private AudioClip _truce_clip;
+    [SerializeField] private AudioClip _mistakeAudioClip = default;
+    [SerializeField] private AudioClip _attackSwordAudioClip = default;
+    [SerializeField] private AudioClip _attackArcherAC = default;
+    [SerializeField] private AudioClip _musicAudioClip = default;
+    [SerializeField] private AudioClip _pickArcherAudioClip = default;
+    [SerializeField] private AudioClip _pickMeleeAC = default;
+    [SerializeField] private AudioClip _buildingAC = default;
+    [SerializeField] private AudioClip _fireAC = default;
+    [SerializeField] private AudioClip _settingUnitAC = default;
+    [SerializeField] private AudioClip _buyAC = default;
+    [SerializeField] private AudioClip _melting_clip = default;
+    [SerializeField] private AudioClip _destroy_clip = default;
+    [SerializeField] private AudioClip _upgradeUnitMelee_clip = default;
+    [SerializeField] private AudioClip _seeding_clip = default;
+    [SerializeField] private AudioClip _shiftUnit_clip = default;
+    [SerializeField] private AudioClip _truce_clip = default;
+    [SerializeField] private AudioClip _clickToTable_clip = default;
 
     public AudioClip MistakeAudioClip => _mistakeAudioClip;
     public AudioClip AttackSwordAudioClip => _attackSwordAudioClip;
@@ -36,4 +37,5 @@ public sealed class SoundData : ScriptableObject
     public AudioClip Seeding_Clip => _seeding_clip;
     public AudioClip ShiftUnit_Clip => _shiftUnit_clip;
     public AudioClip Truce_Clip => _truce_clip;
+    public AudioClip ClickToTable_Clip => _clickToTable_clip;
 }

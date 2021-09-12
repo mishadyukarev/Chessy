@@ -75,6 +75,8 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                 {
                     if (_availCellsForArcherArsonFilter.Get1(0).HaveIdxCell(sender.IsMasterClient, fromIdx, toIdx))
                     {
+                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Fire);
+
                         fromCellUnitDataCom.ResetAmountSteps();
                         toCellFireDataCom.HaveFire = true;
                     }

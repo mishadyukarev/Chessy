@@ -49,5 +49,7 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
                     throw new Exception();
             }
         }
+
+        internal void SetFlipX(bool isFliped) => _extraUnit_SR.flipX = isFliped;
     }
 }

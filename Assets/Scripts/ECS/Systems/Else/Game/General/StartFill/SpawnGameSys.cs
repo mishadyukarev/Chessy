@@ -182,7 +182,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new InventorWeaponsComp(new Dictionary<bool, Dictionary<WeaponTypes, byte>>()))
 
                 .Replace(new FromInfoComponent())
-                .Replace(new SoundViewComp(audioSourceParentGO));
+                .Replace(new SoundEffectsComp(audioSourceParentGO));
 
 
             infoEnt.Get<GeneralZoneViewComponent>().Attach(backGroundGO.transform);

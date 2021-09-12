@@ -11,10 +11,10 @@ namespace Assets.Scripts.ECS.Component.UI
             get => _musicSlider.value;
         }
 
-        internal CenterMenuUIComponent(Slider slider, float sliderVolume)
+        internal CenterMenuUIComponent(Slider slider, float value)
         {
             _musicSlider = slider;
-            _musicSlider.value = sliderVolume;
+            _musicSlider.value = value;
         }
     }
 }

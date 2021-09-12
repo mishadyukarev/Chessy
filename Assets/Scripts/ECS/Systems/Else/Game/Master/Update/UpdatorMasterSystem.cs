@@ -163,7 +163,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                 {
                     if (!curUnitDatCom.HaveMaxAmountHealth)
                     {
-                        curUnitDatCom.AddAmountHealth(50);
+                        curUnitDatCom.AddAmountHealth(100);
 
                         if (curUnitDatCom.MaxAmountHealth < curUnitDatCom.AmountHealth)
                         {
