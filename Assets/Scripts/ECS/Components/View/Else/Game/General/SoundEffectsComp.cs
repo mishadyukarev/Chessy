@@ -101,5 +101,6 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General
 
         internal void Play(SoundEffectTypes soundEffectType) => _soundEffect_AudSources[soundEffectType].Play();
         internal bool IsPlaying(SoundEffectTypes soundEffectType) => _soundEffect_AudSources[soundEffectType].isPlaying;
+        internal void Mute(SoundEffectTypes soundEffectType, bool isMuted) => _soundEffect_AudSources[soundEffectType].mute = isMuted;
     }
 }

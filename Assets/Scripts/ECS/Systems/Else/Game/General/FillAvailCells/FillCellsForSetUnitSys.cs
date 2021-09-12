@@ -32,14 +32,14 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
 
                 if (!curUnitDataFilter.HaveUnit)
                 {
-                    if (y < 3 && x > 2 && x < 12)
-                    {
+                    //if (y < 3 && x > 2 && x < 12)
+                    //{
                         cellsForSetUnitComp.AddIdxCell(true, curIdx);
-                    }
-                    else if (y > 7 && x > 2 && x < 12)
-                    {
+                    //}
+                    //else if (y > 7 && x > 2 && x < 12)
+                    //{
                         cellsForSetUnitComp.AddIdxCell(false, curIdx);
-                    }
+                    //}
 
                 }
             }

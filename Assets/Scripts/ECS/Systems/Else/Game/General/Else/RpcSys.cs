@@ -546,7 +546,9 @@ namespace Assets.Scripts
                 endGameDataUIComp.IsOwnerWinner = isOwnerWinner;
                 if (isOwnerWinner)
                 {
-                    endGameDataUIComp.PlayerWinner = PhotonNetwork.PlayerList[(byte)objects[_curNumber++] - 1];
+                    var actorNumber = (int)objects[_curNumber++];
+
+                    endGameDataUIComp.PlayerWinner = PhotonNetwork.PlayerList[actorNumber - 1];
                 }
             }
 

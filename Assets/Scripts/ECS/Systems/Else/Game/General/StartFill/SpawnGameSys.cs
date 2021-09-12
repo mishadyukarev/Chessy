@@ -2,6 +2,7 @@
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
@@ -47,6 +48,9 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
         public void Init()
         {
             ToggleZoneComponent.ReplaceZone(Main.CurrentSceneType);
+
+
+            SoundComComp.SavedVolume = SoundComComp.Volume;
 
 
             var generalZoneGO = new GameObject("GeneralZone");

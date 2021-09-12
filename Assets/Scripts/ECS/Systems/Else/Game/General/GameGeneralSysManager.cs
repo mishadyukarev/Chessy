@@ -2,6 +2,7 @@
 using Assets.Scripts.ECS.Game.General.Systems;
 using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
 using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
+using Assets.Scripts.ECS.Systems.Else.Common;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Event;
 using Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells;
@@ -25,6 +26,10 @@ public sealed class GameGeneralSysManager : SystemAbstManager
             .Add(new SyncCellEffectsVisSystem())
             .Add(new SyncSupportViewSystem())
             .Add(new FliperAndRotatorUnitSystem());
+
+
+        var soundSystems = new EcsSystems(gameWorld)
+            .Add(new SoundSystem());
 
 
         var syncCanvasSystems = new EcsSystems(gameWorld)
@@ -84,11 +89,11 @@ public sealed class GameGeneralSysManager : SystemAbstManager
             .Add(new RaySystem())
             .Add(new SelectorSystem())
 
+            .Add(soundSystems)
+
             .Add(fillAvailCells)
 
             .Add(syncCellVisionSystems)
-            .Add(syncCanvasSystems)
-
-            .Add(new SoundSystem());
+            .Add(syncCanvasSystems);
     }
 }

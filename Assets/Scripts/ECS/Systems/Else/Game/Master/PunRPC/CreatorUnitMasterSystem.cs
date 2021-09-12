@@ -15,7 +15,6 @@ internal sealed class CreatorUnitMasterSystem : IEcsRunSystem
 
     private EcsFilter<CellBuildDataComponent, OwnerComponent, OwnerBotComponent> _cellBuildFilter = default;
 
-    private UnitTypes UnitTypeForCreating => _creatorUnitFilter.Get1(0).UnitTypeForCreating;
 
     public void Run()
     {
@@ -23,13 +22,15 @@ internal sealed class CreatorUnitMasterSystem : IEcsRunSystem
         ref var amountResCom = ref _inventorFilter.Get2(0);
         ref var unitInventorCom = ref _inventorFilter.Get1(0);
 
+        var unitTypeForCreating = _creatorUnitFilter.Get1(0).UnitTypeForCreating;
+
 
         if (_cellBuildFilter.IsSettedCity(infoCom.FromInfo.Sender.IsMasterClient))
         {
-            if (amountResCom.CanCreateUnit(UnitTypeForCreating, infoCom.FromInfo.Sender, out bool[] haves))
+            if (amountResCom.CanCreateUnit(unitTypeForCreating, infoCom.FromInfo.Sender, out bool[] haves))
             {
-                amountResCom.BuyCreateUnit(UnitTypeForCreating, infoCom.FromInfo.Sender);
-                unitInventorCom.AddUnitsInInventor(UnitTypeForCreating, infoCom.FromInfo.Sender.IsMasterClient);
+                amountResCom.BuyCreateUnit(unitTypeForCreating, infoCom.FromInfo.Sender);
+                unitInventorCom.AddUnitsInInventor(unitTypeForCreating, infoCom.FromInfo.Sender.IsMasterClient);
 
                 RpcSys.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.SoundGoldPack);
             }

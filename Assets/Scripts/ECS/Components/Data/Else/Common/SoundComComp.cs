@@ -12,6 +12,8 @@ namespace Assets.Scripts.ECS.Component.Common
             set => _audioSource.volume = value;
         }
 
+        internal static float SavedVolume;
+
         internal SoundComComp(AudioSource audioSource)
         {
             _audioSource = audioSource;
