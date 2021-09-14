@@ -10,9 +10,9 @@
         public const int STANDART_AMOUNT_HEALTH_BISHOP = 50;
 
         public const int FOR_ADD_HEALTH_KING = (int)(STANDART_AMOUNT_HEALTH_KING * 0.2f);
-        public const int FOR_ADD_HEALTH_PAWN = (int)(STANDART_AMOUNT_HEALTH_PAWN * 0.4f);
-        public const int FOR_ADD_HEALTH_ROOK = (int)(STANDART_AMOUNT_HEALTH_ROOK * 0.4f);
-        public const int FOR_ADD_HEALTH_BISHOP = (int)(STANDART_AMOUNT_HEALTH_BISHOP * 0.4f);
+        public const int FOR_ADD_HEALTH_PAWN = (int)(STANDART_AMOUNT_HEALTH_PAWN * 0.5f);
+        public const int FOR_ADD_HEALTH_ROOK = (int)(STANDART_AMOUNT_HEALTH_ROOK * 0.5f);
+        public const int FOR_ADD_HEALTH_BISHOP = (int)(STANDART_AMOUNT_HEALTH_BISHOP * 0.5f);
 
         #endregion
 
@@ -21,7 +21,7 @@
 
         public const int SIMPLE_POWER_DAMAGE_KING = 100;
         public const int SIMPLE_POWER_DAMAGE_PAWN = 50;
-        public const int SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP = 40;
+        public const int SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP = 50;
 
         #endregion
 
@@ -55,8 +55,8 @@
 
         public const float PERCENT_FOR_PROTECTION_KING = 0.3f;
         public const float PERCENT_FOR_PROTECTION_PAWN = 0.3f;
-        public const float PERCENT_FOR_PROTECTION_ROOK = 0.3f;
-        public const float PERCENT_FOR_PROTECTION_BISHOP = 0.3f;
+        public const float PERCENT_FOR_PROTECTION_ROOK = 0.5f;
+        public const float PERCENT_FOR_PROTECTION_BISHOP = 0.5f;
 
         #endregion
 

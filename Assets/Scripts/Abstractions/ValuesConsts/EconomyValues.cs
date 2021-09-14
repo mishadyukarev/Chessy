@@ -40,11 +40,11 @@
         public const int AMOUNT_ORE_MASTER = 0;
         public const int AMOUNT_ORE_OTHER = 0;
 
-        public const int AMOUNT_IRON_MASTER = 6;
-        public const int AMOUNT_IRON_OTHER = 6;
+        public const int AMOUNT_IRON_MASTER = 0;
+        public const int AMOUNT_IRON_OTHER = 0;
 
-        public const int AMOUNT_GOLD_MASTER = 15;
-        public const int AMOUNT_GOLD_OTHER = 15;
+        public const int AMOUNT_GOLD_MASTER = 0;
+        public const int AMOUNT_GOLD_OTHER = 0;
 
         #endregion
 

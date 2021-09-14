@@ -20,50 +20,57 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
         public void Run()
         {
             var sender = _infoMastFilter.Get1(0).FromInfo.Sender;
-            var idxCellCurculAttack = _forCircAttackFilter.Get1(0).IdxUnitForCirculAttack;
+            var idxCurculAttack = _forCircAttackFilter.Get1(0).IdxUnitForCirculAttack;
 
-            ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCellCurculAttack);
-            ref var curOwnerCellUnitCom = ref _cellUnitFilter.Get2(idxCellCurculAttack);
+            ref var starUnitDatCom = ref _cellUnitFilter.Get1(idxCurculAttack);
+            ref var starOwnUnitCom = ref _cellUnitFilter.Get2(idxCurculAttack);
 
 
-            if (curCellUnitDataCom.HaveMaxAmountSteps)
+            if (starUnitDatCom.HaveMaxAmountSteps)
             {
-                foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(idxCellCurculAttack)))
+                RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+
+                foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(idxCurculAttack)))
                 {
-                    var idxCellCurDirect = _xyCellFilter.GetIdxCell(xy1);
+                    var idxCurDirect = _xyCellFilter.GetIdxCell(xy1);
 
-                    ref var cellUnitDataComDirect = ref _cellUnitFilter.Get1(idxCellCurDirect);
+                    ref var unitDatComDirect = ref _cellUnitFilter.Get1(idxCurDirect);
 
-                    if (cellUnitDataComDirect.HaveUnit)
+                    if (unitDatComDirect.HaveUnit)
                     {
-                        cellUnitDataComDirect.TakeAmountHealth(curCellUnitDataCom.SimplePowerDamage / 2);
+                        unitDatComDirect.TakeAmountHealth(starUnitDatCom.SimplePowerDamage / 3);
 
-                        if (!cellUnitDataComDirect.HaveAmountHealth)
+                        if (!unitDatComDirect.HaveAmountHealth)
                         {
-                            //if ()
-                            //{
-                            //    _endGameDataUIFilter
-                            //}
-
-                            if (cellUnitDataComDirect.IsUnitType(UnitTypes.King))
+                            if (unitDatComDirect.IsUnitType(UnitTypes.King))
                             {
-                                //RpcSys.EndGameToMaster((byte)curOwnerCellUnitCom.ActorNumber);
-                            }
-                            cellUnitDataComDirect.ResetUnitType();
-                        }
+                                _endGameDataUIFilter.Get1(0).IsEndGame = true;
 
-                        RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+                                if (_cellUnitFilter.Get2(idxCurDirect).HaveOwner)
+                                {
+                                    _endGameDataUIFilter.Get1(0).IsOwnerWinner = true;
+                                    _endGameDataUIFilter.Get1(0).PlayerWinner = starOwnUnitCom.Owner;
+                                }
+
+                                else
+                                {
+                                    _endGameDataUIFilter.Get1(0).IsOwnerWinner = false;
+                                    _endGameDataUIFilter.Get1(0).IsBotWinner = false;
+                                }
+                            }
+                            unitDatComDirect.ResetUnitType();
+                        }
                     }
                 }
 
-                curCellUnitDataCom.TakeAmountSteps();
+                starUnitDatCom.TakeAmountSteps();
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.AttackMelee);
 
 
-                if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Protected) || curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
+                if (starUnitDatCom.IsConditionType(ConditionUnitTypes.Protected) || starUnitDatCom.IsConditionType(ConditionUnitTypes.Relaxed))
                 {
-                    curCellUnitDataCom.ResetConditionType();
+                    starUnitDatCom.ResetConditionType();
                 }
             }
             else

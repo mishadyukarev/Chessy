@@ -357,6 +357,7 @@ namespace Assets.Scripts
             listObjects.Add(_readyUIFilter.Get1(0).IsReady(false));
 
             listObjects.Add(_donerUIFilter.Get1(0).IsDoned(false));
+            listObjects.Add(_motionsFilter.Get1(0).AmountMotions);
 
             foreach (var curIdxCell in _cellUnitFilter)
             {
@@ -557,6 +558,7 @@ namespace Assets.Scripts
             _readyUIFilter.Get1(0).SetIsReady(PhotonNetwork.IsMasterClient, (bool)objects[_curNumber++]);
 
             _donerUIFilter.Get1(0).SetDoned(false, (bool)objects[_curNumber++]);
+            _motionsFilter.Get1(0).AmountMotions = (int)objects[_curNumber++];
 
             foreach (var curIdxCell in _cellUnitFilter)
             {

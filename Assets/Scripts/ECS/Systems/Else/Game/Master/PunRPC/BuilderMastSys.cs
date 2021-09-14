@@ -19,6 +19,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
     private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildFilter = default;
     private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+    private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
     private EcsFilter<InventorResourcesComponent> _amountResFilt = default;
 
@@ -36,6 +37,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
         ref var curOwnerCellBuildCom = ref _cellBuildFilter.Get2(idxCellForBuild);
         ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCellForBuild);
         ref var curCellEnvCom = ref _cellEnvFilter.Get1(idxCellForBuild);
+        ref var curFireCom = ref _cellFireFilter.Get1(idxCellForBuild);
 
 
         if (curCellBuildDataCom.HaveBuild)
@@ -75,6 +77,8 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                             curOwnerCellBuildCom.Owner = sender;
 
                             curCellUnitDataCom.ResetAmountSteps();
+
+                            curFireCom.DisableFire();
 
                             if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.AdultForest)) curCellEnvCom.ResetEnvironment(EnvironmentTypes.AdultForest);
                             if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.Fertilizer)) curCellEnvCom.ResetEnvironment(EnvironmentTypes.Fertilizer);

@@ -76,63 +76,62 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                                             }
                                         }
 
-                                    }
+
+                                        var xy_2 = CellSpaceSupport.GetXyCellByDirect(xy_1, dirType_1);
+                                        var idxCell_2 = _xyCellFilter.GetIdxCell(xy_2);
 
 
-                                    var xy_2 = CellSpaceSupport.GetXyCellByDirect(xy_1, dirType_1);
-                                    var idxCell_2 = _xyCellFilter.GetIdxCell(xy_2);
+                                        ref var envrDataCom_2 = ref _cellEnvDataFilter.Get1(idxCell_2);
+                                        ref var unitDataCom_2 = ref _cellUnitFilter.Get1(idxCell_2);
+                                        ref var ownerUnitCom_2 = ref _cellUnitFilter.Get2(idxCell_2);
 
 
-                                    ref var envrDataCom_2 = ref _cellEnvDataFilter.Get1(idxCell_2);
-                                    ref var unitDataCom_2 = ref _cellUnitFilter.Get1(idxCell_2);
-                                    ref var ownerUnitCom_2 = ref _cellUnitFilter.Get2(idxCell_2);
+                                        if (unitDataCom_2.IsVisibleUnit(ownerUnitCom_0.IsMasterClient))
 
-
-                                    if (unitDataCom_2.IsVisibleUnit(ownerUnitCom_0.IsMasterClient))
-
-                                        if (dirType_1 == DirectTypes.LeftDown || dirType_1 == DirectTypes.LeftUp || dirType_1 == DirectTypes.RightUp || dirType_1 == DirectTypes.RightDown)
-                                        {
-                                            if (!envrDataCom_2.HaveEnvironment(EnvironmentTypes.Mountain))
+                                            if (dirType_1 == DirectTypes.LeftDown || dirType_1 == DirectTypes.LeftUp || dirType_1 == DirectTypes.RightUp || dirType_1 == DirectTypes.RightDown)
                                             {
-                                                if (unitDataCom_2.HaveUnit)
+                                                if (!envrDataCom_2.HaveEnvironment(EnvironmentTypes.Mountain))
                                                 {
-                                                    if (ownerUnitCom_2.HaveOwner)
+                                                    if (unitDataCom_2.HaveUnit)
                                                     {
-                                                        if (!ownerUnitCom_2.IsHim(ownerUnitCom_0.Owner))
+                                                        if (ownerUnitCom_2.HaveOwner)
+                                                        {
+                                                            if (!ownerUnitCom_2.IsHim(ownerUnitCom_0.Owner))
+                                                            {
+                                                                cellsForAttackComp.Add(AttackTypes.Simple, ownerUnitCom_0.IsMasterClient, idxCell_0, idxCell_2);
+                                                            }
+                                                        }
+
+                                                        else
                                                         {
                                                             cellsForAttackComp.Add(AttackTypes.Simple, ownerUnitCom_0.IsMasterClient, idxCell_0, idxCell_2);
                                                         }
                                                     }
-
-                                                    else
-                                                    {
-                                                        cellsForAttackComp.Add(AttackTypes.Simple, ownerUnitCom_0.IsMasterClient, idxCell_0, idxCell_2);
-                                                    }
                                                 }
                                             }
-                                        }
 
-                                        else
-                                        {
-                                            if (!envrDataCom_2.HaveEnvironment(EnvironmentTypes.Mountain))
+                                            else
                                             {
-                                                if (unitDataCom_2.HaveUnit)
+                                                if (!envrDataCom_2.HaveEnvironment(EnvironmentTypes.Mountain))
                                                 {
-                                                    if (ownerUnitCom_2.HaveOwner)
+                                                    if (unitDataCom_2.HaveUnit)
                                                     {
-                                                        if (!ownerUnitCom_2.IsHim(ownerUnitCom_0.Owner))
+                                                        if (ownerUnitCom_2.HaveOwner)
+                                                        {
+                                                            if (!ownerUnitCom_2.IsHim(ownerUnitCom_0.Owner))
+                                                            {
+                                                                cellsForAttackComp.Add(AttackTypes.Unique, ownerUnitCom_0.IsMasterClient, idxCell_0, idxCell_2);
+                                                            }
+                                                        }
+
+                                                        else
                                                         {
                                                             cellsForAttackComp.Add(AttackTypes.Unique, ownerUnitCom_0.IsMasterClient, idxCell_0, idxCell_2);
                                                         }
                                                     }
-
-                                                    else
-                                                    {
-                                                        cellsForAttackComp.Add(AttackTypes.Unique, ownerUnitCom_0.IsMasterClient, idxCell_0, idxCell_2);
-                                                    }
                                                 }
                                             }
-                                        }
+                                    }
                                 }
                             }
                         }

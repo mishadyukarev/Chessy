@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.ECS.Game.General.Components;
@@ -12,6 +13,9 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
     private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
     private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
+    private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+
     private EcsFilter<AvailCellsForAttackComp> _availCellsForAttack = default;
 
     private EcsFilter<EndGameDataUIComponent> _endGameDataUIFilter = default;
@@ -29,9 +33,11 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
         ref var fromOwnerCellUnitCom = ref _cellUnitFilter.Get2(fromIdx);
         ref var fromBotOwnerCellUnitComp = ref _cellUnitFilter.Get3(fromIdx);
 
-        ref var toCellUnitDataCom = ref _cellUnitFilter.Get1(toIdxForAttack);
+        ref var toUnitDatCom = ref _cellUnitFilter.Get1(toIdxForAttack);
         ref var toOwnerCellUnitCom = ref _cellUnitFilter.Get2(toIdxForAttack);
         ref var toBotOwnerCellUnitCom = ref _cellUnitFilter.Get3(toIdxForAttack);
+        ref var toBuildDatCom = ref _cellBuildFilter.Get1(toIdxForAttack);
+        ref var toEnvDatCom =ref _cellEnvFilter.Get1(toIdxForAttack);
 
         ref var availCellsForAttackComp = ref _availCellsForAttack.Get1(0);
 
@@ -56,18 +62,20 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
             int damageTo = 0;
 
             damageTo += fromCellUnitDataCom.SimplePowerDamage;
-            damageTo -= toCellUnitDataCom.PowerProtection;
+            damageTo -= toUnitDatCom.PowerProtection;
+            damageTo -= toBuildDatCom.PowerProtectionUnit(toUnitDatCom.UnitType);
+            damageTo -= toEnvDatCom.PowerProtectionUnit(toUnitDatCom.UnitType);
 
 
             if (fromCellUnitDataCom.IsMelee)
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
-                damageFrom += toCellUnitDataCom.SimplePowerDamage;
+                damageFrom += toUnitDatCom.SimplePowerDamage;
 
                 if (simpUniqueType == AttackTypes.Unique)
                 {
-                    damageTo += fromCellUnitDataCom.UniquePowerDamage;// CellUnitsDataSystem.UniquePowerDamage(fromUnitType);
+                    damageTo += fromCellUnitDataCom.UniquePowerDamage;
                 }
             }
 
@@ -84,12 +92,12 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
             //if (damageTo < 0) damageTo = 0;
 
             fromCellUnitDataCom.TakeAmountHealth(damageFrom);
-            toCellUnitDataCom.TakeAmountHealth(damageTo);
+            toUnitDatCom.TakeAmountHealth(damageTo);
 
 
-            if (!toCellUnitDataCom.HaveAmountHealth)
+            if (!toUnitDatCom.HaveAmountHealth)
             {
-                if (toCellUnitDataCom.IsUnitType(UnitTypes.King))
+                if (toUnitDatCom.IsUnitType(UnitTypes.King))
                 {
                     _endGameDataUIFilter.Get1(0).IsEndGame = true;
                     _endGameDataUIFilter.Get1(0).IsOwnerWinner = toOwnerCellUnitCom.HaveOwner;
@@ -104,19 +112,19 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
                     }
                 }
 
-                toCellUnitDataCom.ResetUnit();
+                toUnitDatCom.ResetUnit();
 
 
                 if (fromCellUnitDataCom.IsMelee)
                 {
-                    toCellUnitDataCom.ReplaceUnit(fromCellUnitDataCom);
+                    toUnitDatCom.ReplaceUnit(fromCellUnitDataCom);
                     toOwnerCellUnitCom.SetOwner(fromOwnerCellUnitCom.Owner);
 
                     fromCellUnitDataCom.ResetUnit();
 
-                    if (!toCellUnitDataCom.HaveAmountHealth)
+                    if (!toUnitDatCom.HaveAmountHealth)
                     {
-                        toCellUnitDataCom.ResetUnit();
+                        toUnitDatCom.ResetUnit();
                     }
                 }
 

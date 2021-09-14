@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Leopotam.Ecs;
@@ -9,6 +11,7 @@ using UnityEngine;
 internal sealed class TruceMasterSystem : IEcsRunSystem
 {
     private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
+    private EcsFilter<InventorWeaponsComp> _inventorWeapFilter = default; 
     private EcsFilter<MotionsDataUIComponent> _motionsUIFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
 
@@ -26,8 +29,8 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
 
         foreach (byte curIdxCell in _xyCellFilter)
         {
-            ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(curIdxCell);
-            ref var curOwnerCellUnitDataCom = ref _cellUnitFilter.Get2(curIdxCell);
+            ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
+            ref var curOwnUnitDatCom = ref _cellUnitFilter.Get2(curIdxCell);
 
             ref var curBuildDataCom = ref _cellBuildFilter.Get1(curIdxCell);
 
@@ -38,13 +41,27 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
 
             curCellFireCom.HaveFire = false;
 
-            if (curCellUnitDataCom.HaveUnit)
+            if (curUnitDatCom.HaveUnit)
             {
-                if (curOwnerCellUnitDataCom.HaveOwner)
+                if (curOwnUnitDatCom.HaveOwner)
                 {
-                    inventorUnitsCom.AddUnitsInInventor(curCellUnitDataCom.UnitType, curOwnerCellUnitDataCom.IsMasterClient);
+                    inventorUnitsCom.AddUnitsInInventor(curUnitDatCom.UnitType, curOwnUnitDatCom.IsMasterClient);
 
-                    curCellUnitDataCom.ResetUnitType();
+                    //if (curUnitDatCom.HaveArcherWeapon)
+                    //{
+                    //    _inventorWeapFilter.Get1(0).AddAmountWeapons(curOwnUnitDatCom.IsMasterClient, curUnitDatCom.ArcherWeaponType);
+                    //}
+
+                    //else if (curUnitDatCom.HaveExtraToolWeaponPawn)
+                    //{
+                    //    if(curUnitDatCom.ExtraTWPawnType != ToolWeaponTypes.Axe)
+                    //    {
+                    //        _inventorWeapFilter.Get1(0).AddAmountWeapons(curOwnUnitDatCom.IsMasterClient, curUnitDatCom.ExtraTWPawnType);
+                    //    }
+                    //}
+
+
+                    curUnitDatCom.ResetUnitType();
                 }
             }
 
@@ -76,7 +93,7 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
                     {
                         random = Random.Range(0, 100);
 
-                        if (random <= 5)
+                        if (random <= 10)
                         {
                             curCellEnvDataCom.SetNewEnvironment(EnvironmentTypes.AdultForest);
                         }

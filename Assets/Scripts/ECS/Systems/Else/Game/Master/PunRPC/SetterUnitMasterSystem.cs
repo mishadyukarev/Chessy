@@ -52,7 +52,6 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
                 case UnitTypes.Pawn:
                     newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN;
-                    curCellUnitDataCom.ArcherWeaponType = ToolWeaponTypes.Axe;
                     break;
 
                 case UnitTypes.Rook:
