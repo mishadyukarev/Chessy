@@ -1,5 +1,7 @@
-﻿using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Leopotam.Ecs;
 using Photon.Pun;
 using UnityEngine;
@@ -12,6 +14,10 @@ internal sealed class DonerUISystem : IEcsRunSystem
     {
         ref var donerDataUICom = ref _donerUIFilter.Get1(0);
         ref var donerViewUICom = ref _donerUIFilter.Get2(0);
+
+        donerViewUICom.SetTextDoner(LanguageComComp.GetText(GameLanguageTypes.Done));
+        donerViewUICom.SetTextWait(LanguageComComp.GetText(GameLanguageTypes.WaitPlayer));
+
 
         if (donerDataUICom.IsDoned(PhotonNetwork.IsMasterClient))
         {

@@ -1,5 +1,7 @@
-﻿using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -12,7 +14,7 @@ internal sealed class MotionCenterUISystem : IEcsRunSystem
     {
         if (_motionsUIFilter.Get1(0).IsActivatedUI)
         {
-            _motionsUIFilter.Get2(0).Text = "Motion: " + _motionsUIFilter.Get1(0).AmountMotions;
+            _motionsUIFilter.Get2(0).Text = LanguageComComp.GetText(GameLanguageTypes.Motion) + " " + _motionsUIFilter.Get1(0).AmountMotions;
             _motionsUIFilter.Get2(0).SetActiveParent(true);
 
             _timer += Time.deltaTime;

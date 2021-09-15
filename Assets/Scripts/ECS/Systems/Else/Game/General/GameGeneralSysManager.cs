@@ -34,7 +34,7 @@ public sealed class GameGeneralSysManager : SystemAbstManager
 
         var syncCanvasSystems = new EcsSystems(gameWorld)
            ///left
-           .Add(new LeftBuildingUISystem())
+           .Add(new BuildZoneUISys())
            .Add(new EnvironmentUISystem())
 
             ///right
@@ -48,10 +48,10 @@ public sealed class GameGeneralSysManager : SystemAbstManager
             .Add(new DonerUISystem())
             .Add(new GetterUnitsUISystem())
             .Add(new GiveTakeUISystem())
-            .Add(new SyncToolsDownUISystem())
+            .Add(new ToolsDownUISys())
 
             ///up
-            .Add(new SyncEconomyUpUISystem())
+            .Add(new EconomyUpUISys())
 
             ///center
             .Add(new SelectorTypeUISystem())

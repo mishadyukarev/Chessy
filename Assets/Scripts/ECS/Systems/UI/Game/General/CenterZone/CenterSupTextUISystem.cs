@@ -1,5 +1,7 @@
-﻿using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Leopotam.Ecs;
 using System;
 using UnityEngine;
@@ -35,7 +37,7 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                         }
                     }
 
-                    mistakeViewUICom.Text = "Need more resources";
+                    mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NeedMoreResources);
                     mistakeViewUICom.SetActiveParent(true);
 
                     mistakeDataUICom.CurrentTime += Time.deltaTime;
@@ -76,39 +78,39 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                             throw new Exception();
 
                         case MistakeTypes.NeedKing:
-                            mistakeViewUICom.Text = "Need set king";
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NeedSetKing);
                             break;
 
                         case MistakeTypes.NeedMoreSteps:
-                            mistakeViewUICom.Text = "Need more steps";
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NeedMoreSteps);
                             break;
 
                         case MistakeTypes.NeedOtherPlace:
-                            mistakeViewUICom.Text = "Need other place";
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NeedOtherPlace); 
                             break;
 
                         case MistakeTypes.NeedMoreHealth:
-                            mistakeViewUICom.Text = "Need more health";
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NeedMoreHealth); 
                             break;
 
                         case MistakeTypes.PawnMustHaveTool:
-                            mistakeViewUICom.Text = "Pawn must have tool";
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.PawnMustHaveTool); 
                             break;
 
                         case MistakeTypes.PawnHaveTool:
-                            mistakeViewUICom.Text = "Pawn have tool";
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.PawnHaveTool); 
                             break;
 
                         case MistakeTypes.NeedCity:
-                            mistakeViewUICom.Text = "Need set city";
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NeedSetCity);
                             break;
 
                         case MistakeTypes.ThatIsForOtherUnit:
-                            mistakeViewUICom.Text = "That's for other unit";
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.ThatsForOtherUnit); 
                             break;
 
                         case MistakeTypes.NearBorder:
-                            mistakeViewUICom.Text = "Near Border";
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NearBorder); 
                             break;
 
                         default:

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
 using Leopotam.Ecs;
 
@@ -20,13 +21,13 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
 
             if (selectCom.IsCellClickType(CellClickTypes.GiveTakeTW))
             {
-                selectTypeViewUIComp.Text = "Give or Take Tool";
+                selectTypeViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.GiveOrTakeTool);
                 selectTypeViewUIComp.EnableParent();
             }
 
             else if (selectCom.IsCellClickType(CellClickTypes.PickFire))
             {
-                selectTypeViewUIComp.Text = "Pick Adult Forest";
+                selectTypeViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.PickAdultForest);
                 selectTypeViewUIComp.EnableParent();
             }
         }

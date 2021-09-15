@@ -1,7 +1,9 @@
-﻿using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -22,7 +24,7 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
         var idxSelCell = selCom.IdxSelectedCell;
 
         ref var cellEnvZoneDataUICom = ref _envirZoneUIFilter.Get1(0);
-        ref var cellEnvZoneViewUICom = ref _envirZoneUIFilter.Get2(0);
+        ref var envViewUICom = ref _envirZoneUIFilter.Get2(0);
 
         ref var selCellBuildDataCom = ref _cellBuildFilter.Get1(idxSelCell);
         ref var selCellEnvDataCom = ref _cellEnvFilter.Get1(idxSelCell);
@@ -30,18 +32,21 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
 
         if (selCom.IsSelectedCell && !selCellBuildDataCom.IsBuildType(BuildingTypes.City))
         {
-            cellEnvZoneViewUICom.SetActiveParent(true);
+            envViewUICom.SetActiveParent(true);
         }
         else
         {
-            cellEnvZoneViewUICom.SetActiveParent(false);
+            envViewUICom.SetActiveParent(false);
         }
 
-        var v = selCellEnvDataCom.GetAmountResources(EnvironmentTypes.Fertilizer);
+        //var v = selCellEnvDataCom.GetAmountResources(EnvironmentTypes.Fertilizer);
 
-        cellEnvZoneViewUICom.SetText(ResourceTypes.Food, "Fertilizer: " + selCellEnvDataCom.GetAmountResources(EnvironmentTypes.Fertilizer));
-        cellEnvZoneViewUICom.SetText(ResourceTypes.Wood, "Wood: " + selCellEnvDataCom.GetAmountResources(EnvironmentTypes.AdultForest));
-        cellEnvZoneViewUICom.SetText(ResourceTypes.Ore, "Ore: " + selCellEnvDataCom.GetAmountResources(EnvironmentTypes.Hill));
+
+        envViewUICom.SetTextEnvirInfo(LanguageComComp.GetText(GameLanguageTypes.EnvironmentInfo));
+
+        envViewUICom.SetTextResour(ResourceTypes.Food, LanguageComComp.GetText(GameLanguageTypes.Fertilizer) + ": " + selCellEnvDataCom.GetAmountResources(EnvironmentTypes.Fertilizer));
+        envViewUICom.SetTextResour(ResourceTypes.Wood, LanguageComComp.GetText(GameLanguageTypes.Wood) + ": " + selCellEnvDataCom.GetAmountResources(EnvironmentTypes.AdultForest));
+        envViewUICom.SetTextResour(ResourceTypes.Ore, LanguageComComp.GetText(GameLanguageTypes.Ore) + ": " + selCellEnvDataCom.GetAmountResources(EnvironmentTypes.Hill));
 
 
 

@@ -1,6 +1,8 @@
-﻿using Assets.Scripts.ECS.Component;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
@@ -21,10 +23,18 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
         ref var inventUnitsComp = ref _inventUnitsFilter.Get1(0);
 
 
+
+        getterUnitsViewUICom.SetTextUnit(UnitTypes.Pawn, LanguageComComp.GetText(GameLanguageTypes.Pawn));
+        getterUnitsViewUICom.SetTextUnit(UnitTypes.Rook, LanguageComComp.GetText(GameLanguageTypes.Rook));
+        getterUnitsViewUICom.SetTextUnit(UnitTypes.Bishop, LanguageComComp.GetText(GameLanguageTypes.Bishop));
+
         for (UnitTypes curUnitType = 0; curUnitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; curUnitType++)
         {
             if (curUnitType == UnitTypes.Pawn || curUnitType == UnitTypes.Rook || curUnitType == UnitTypes.Bishop)
             {
+                getterUnitsViewUICom.SetTextCreate(curUnitType, LanguageComComp.GetText(GameLanguageTypes.Create));
+                
+
                 if (getterUnitsDataUICom.IsActivatedButton(curUnitType))
                 {
                     getterUnitsViewUICom.SetActiveCreateButton(curUnitType, true);

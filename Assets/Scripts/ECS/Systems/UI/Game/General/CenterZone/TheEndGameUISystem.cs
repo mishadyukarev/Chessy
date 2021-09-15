@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.ECS.Component.UI.Game.General;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.UI.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Leopotam.Ecs;
 
 internal sealed class TheEndGameUISystem : IEcsRunSystem
@@ -19,11 +21,11 @@ internal sealed class TheEndGameUISystem : IEcsRunSystem
             {
                 if (endGameDataUIComp.PlayerWinner.IsLocal)
                 {
-                    endGameViewUIComp.Text = "You're WINNER!";
+                    endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreWinner); 
                 }
                 else
                 {
-                    endGameViewUIComp.Text = "You're loser :(";
+                    endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreLoser); 
                 }
             }
 
@@ -31,11 +33,11 @@ internal sealed class TheEndGameUISystem : IEcsRunSystem
             {
                 if (endGameDataUIComp.IsBotWinner)
                 {
-                    endGameViewUIComp.Text = "You're loser :(";
+                    endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreLoser);
                 }
                 else
                 {
-                    endGameViewUIComp.Text = "You're WINNER!";
+                    endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreWinner);
                 }
             }
         }
