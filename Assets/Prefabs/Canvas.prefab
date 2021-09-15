@@ -4352,7 +4352,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 2}
-  m_SizeDelta: {x: 0, y: 150}
+  m_SizeDelta: {x: 0, y: 362.294}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &1244273380057641201
 CanvasRenderer:
@@ -6327,8 +6327,8 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 8853799195148116968}
   - {fileID: 5200123828997031618}
+  - {fileID: 8853799195148116968}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12681,6 +12681,8 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Russian
       m_Image: {fileID: 0}
+    - m_Text: Spanish
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -12960,7 +12962,7 @@ RectTransform:
   - {fileID: 1667030630470284768}
   - {fileID: 4771939240897056799}
   m_Father: {fileID: 1725659683371088101}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -16412,7 +16414,7 @@ RectTransform:
   - {fileID: 6284181630555795528}
   - {fileID: 4310234024977857546}
   m_Father: {fileID: 1725659683371088101}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
