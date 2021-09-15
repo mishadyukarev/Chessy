@@ -5,6 +5,8 @@
         None,
 
         English,
-        Russian
+        Russian,
+        Chinese,
+        Spanish,
     }
 }

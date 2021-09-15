@@ -22,8 +22,8 @@ namespace Assets.Scripts.ECS.Component.UI
             get
             {
                 if(_language_Dropdown.value == 0) return LanguageTypes.English;
-
                 else if(_language_Dropdown.value == 1) return LanguageTypes.Russian;
+                else if (_language_Dropdown.value == 2) return LanguageTypes.Spanish;
 
                 else throw new Exception();
             }
@@ -35,15 +35,9 @@ namespace Assets.Scripts.ECS.Component.UI
             _musicSlider.value = value;
 
             _language_Dropdown = CanvasComp.FindUnderParent<TMP_Dropdown>("Language_Dropdown");
-            if(LanguageComComp.CurLanguageType == LanguageTypes.English)
-            {
-                _language_Dropdown.value = 0;
-            }
-
-            else if(LanguageComComp.CurLanguageType == LanguageTypes.Russian)
-            {
-                _language_Dropdown.value = 1;
-            }
+            if(LanguageComComp.CurLanguageType == LanguageTypes.English) _language_Dropdown.value = 0;
+            else if(LanguageComComp.CurLanguageType == LanguageTypes.Russian) _language_Dropdown.value = 1;
+            else if (LanguageComComp.CurLanguageType == LanguageTypes.Spanish) _language_Dropdown.value = 2;
 
             _info_TextMP = CanvasComp.FindUnderParent<TextMeshProUGUI>("Info_TextMP");
             _exit_TextMP = CanvasComp.FindUnderParent<Transform>("QuitButton").Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
