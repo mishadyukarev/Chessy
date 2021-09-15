@@ -3,6 +3,7 @@ using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using Photon.Pun;
@@ -24,20 +25,22 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
     {
         ref var unitZoneViewCom = ref _unitZoneUIFilter.Get1(0);
 
-        ref var selCellUnitDataCom = ref _cellUnitFilter.Get1(IdxSelCell);
-        ref var selOwnerCellUnitCom = ref _cellUnitFilter.Get2(IdxSelCell);
-        ref var selBotOnwerCellUnitCom = ref _cellUnitFilter.Get3(IdxSelCell);
+        ref var selUnitDatCom = ref _cellUnitFilter.Get1(IdxSelCell);
+        ref var selOwnUnitCom = ref _cellUnitFilter.Get2(IdxSelCell);
+        ref var selBotUnitCom = ref _cellUnitFilter.Get3(IdxSelCell);
 
-        ref var selCellEnvDataCom = ref _cellEnvFilter.Get1(IdxSelCell);
+        ref var selEnvDataCom = ref _cellEnvFilter.Get1(IdxSelCell);
 
-        ref var selCellFireDataCom = ref _cellFireFilter.Get1(IdxSelCell);
+        ref var selFireDatCom = ref _cellFireFilter.Get1(IdxSelCell);
 
 
-        if (selCellUnitDataCom.HaveUnit)
+        unitZoneViewCom.SetTextUniqueInfo(LanguageComComp.GetText(GameLanguageTypes.UniqueAbilities));
+
+        if (selUnitDatCom.HaveUnit)
         {
-            if (selOwnerCellUnitCom.HaveOwner)
+            if (selOwnUnitCom.HaveOwner)
             {
-                if (selOwnerCellUnitCom.IsMine)
+                if (selOwnUnitCom.IsMine)
                 {
                     unitZoneViewCom.RemoveAllListenersInUniqueButton(UniqueButtonTypes.First);
                     unitZoneViewCom.RemoveAllListenersInUniqueButton(UniqueButtonTypes.Second);
@@ -47,43 +50,43 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
                     unitZoneViewCom.SetActiveUniqeButton(UniqueButtonTypes.Third, false);
 
 
-                    if (selCellUnitDataCom.IsUnitType(UnitTypes.King))
+                    if (selUnitDatCom.IsUnitType(UnitTypes.King))
                     {
                         unitZoneViewCom.SetActiveUnitZone(UnitUIZoneTypes.Unique, true);
                         unitZoneViewCom.SetActiveUniqeButton(UniqueButtonTypes.First, true);
 
                         unitZoneViewCom.AddListenerToUniqueButton(UniqueButtonTypes.First, CircularAttackKing);
 
-                        unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, "Circular Attack");
+                        unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.CircularAttack));
 
                         unitZoneViewCom.SetColoToUniqueAbilityButton(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
                     }
                     else
                     {
-                        if (selCellUnitDataCom.IsMelee)
+                        if (selUnitDatCom.IsMelee)
                         {
                             unitZoneViewCom.SetActiveUniqeButton(UniqueButtonTypes.First, true);
 
                             unitZoneViewCom.SetActiveUnitZone(UnitUIZoneTypes.Unique, true);
                             unitZoneViewCom.SetActiveUniqeButton(UniqueButtonTypes.First, true);
 
-                            if (selCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                            if (selEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
                             {
                                 unitZoneViewCom.AddListenerToUniqueButton(UniqueButtonTypes.First, delegate { Fire(IdxSelCell, IdxSelCell); });
-                                if (selCellFireDataCom.HaveFire)
+                                if (selFireDatCom.HaveFire)
                                 {
-                                    unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, "Put Out FIRE");
+                                    unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.PutOutFire));
                                 }
                                 else
                                 {
-                                    unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, "Fire forest");
+                                    unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.FireForest));
                                 }
                                 unitZoneViewCom.SetColoToUniqueAbilityButton(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
                             }
                             else
                             {
                                 unitZoneViewCom.AddListenerToUniqueButton(UniqueButtonTypes.First, delegate { SeedEnvironment(EnvironmentTypes.YoungForest); });
-                                unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, "Seed Forest");
+                                unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.SeedForest));
                                 unitZoneViewCom.SetColoToUniqueAbilityButton(UniqueButtonTypes.First, new Color(0.5f, 1, 0.5f, 1));
                             }
                         }
@@ -94,7 +97,7 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
                             unitZoneViewCom.SetActiveUniqeButton(UniqueButtonTypes.First, true);
                             unitZoneViewCom.AddListenerToUniqueButton(UniqueButtonTypes.First, ActiveFireSelector);
                             unitZoneViewCom.SetColoToUniqueAbilityButton(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
-                            unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, "Fire forest");
+                            unitZoneViewCom.SetTextToUnique(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.FireForest));
                         }
                     }
                 }
@@ -105,7 +108,7 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
                 }
             }
 
-            else if (selBotOnwerCellUnitCom.IsBot)
+            else if (selBotUnitCom.IsBot)
             {
                 unitZoneViewCom.SetActiveUnitZone(UnitUIZoneTypes.Unique, false);
             }

@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using UnityEngine;
@@ -16,43 +17,46 @@ internal sealed class ConditionUISys : IEcsRunSystem
         var idxSelCell = _selectorFilter.Get1(0).IdxSelectedCell;
         ref var unitZoneUICom = ref _unitZoneUIFilter.Get1(0);
 
-        ref var selUnitDataCom = ref _cellUnitFilter.Get1(idxSelCell);
-        ref var selOwnerUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
+        ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
+        ref var selOwnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
         ref var selBotUnitCom = ref _cellUnitFilter.Get3(idxSelCell);
 
 
-        if (selUnitDataCom.HaveUnit)
+        unitZoneUICom.SetTextStandInfo(LanguageComComp.GetText(GameLanguageTypes.StandartAbilities));
+        unitZoneUICom.SetTextToCondition(ConditionUnitTypes.Protected, LanguageComComp.GetText(GameLanguageTypes.Protect));
+
+        if (selUnitDatCom.HaveUnit)
         {
-            if (selOwnerUnitCom.HaveOwner)
+            if (selOwnUnitCom.HaveOwner)
             {
-                if (selUnitDataCom.IsUnitType(UnitTypes.King))
+                if (selUnitDatCom.IsUnitType(UnitTypes.King))
                 {
-                    unitZoneUICom.SetTextToCondition(ConditionUnitTypes.Relaxed, "Relax");
+                    unitZoneUICom.SetTextToCondition(ConditionUnitTypes.Relaxed, LanguageComComp.GetText(GameLanguageTypes.Relax));
                 }
 
-                else if (selUnitDataCom.IsUnitType(UnitTypes.Pawn))
+                else if (selUnitDatCom.IsUnitType(UnitTypes.Pawn))
                 {
-                    if (selUnitDataCom.HaveMaxAmountHealth)
+                    if (selUnitDatCom.HaveMaxAmountHealth)
                     {
-                        unitZoneUICom.SetTextToCondition(ConditionUnitTypes.Relaxed, "Extract");
+                        unitZoneUICom.SetTextToCondition(ConditionUnitTypes.Relaxed, LanguageComComp.GetText(GameLanguageTypes.Extract));
                     }
                     else
                     {
-                        unitZoneUICom.SetTextToCondition(ConditionUnitTypes.Relaxed, "Relax");
+                        unitZoneUICom.SetTextToCondition(ConditionUnitTypes.Relaxed, LanguageComComp.GetText(GameLanguageTypes.Relax));
                     }
                 }
 
                 else
                 {
-                    unitZoneUICom.SetTextToCondition(ConditionUnitTypes.Relaxed, "Relax");
+                    unitZoneUICom.SetTextToCondition(ConditionUnitTypes.Relaxed, LanguageComComp.GetText(GameLanguageTypes.Relax));
                 }
 
 
-                if (selOwnerUnitCom.IsMine)
+                if (selOwnUnitCom.IsMine)
                 {
                     unitZoneUICom.SetActiveUnitZone(UnitUIZoneTypes.Condition, true);
 
-                    if (selUnitDataCom.IsConditionType(ConditionUnitTypes.Protected))
+                    if (selUnitDatCom.IsConditionType(ConditionUnitTypes.Protected))
                     {
                         unitZoneUICom.SetColorToConditionButton(ConditionUnitTypes.Protected, Color.yellow);
                     }
@@ -62,7 +66,7 @@ internal sealed class ConditionUISys : IEcsRunSystem
                         unitZoneUICom.SetColorToConditionButton(ConditionUnitTypes.Protected, Color.white);
                     }
 
-                    if (selUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
+                    if (selUnitDatCom.IsConditionType(ConditionUnitTypes.Relaxed))
                     {
                         unitZoneUICom.SetColorToConditionButton(ConditionUnitTypes.Relaxed, Color.green);
                     }

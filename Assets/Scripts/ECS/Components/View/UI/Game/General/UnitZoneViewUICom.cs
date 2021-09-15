@@ -91,11 +91,13 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
             _building_TextMPs = new Dictionary<BuildingButtonTypes, TextMeshProUGUI>();
             _building_Buttons = new Dictionary<BuildingButtonTypes, Button>();
 
-            var buildingFirstAbilityButtom = _unitZone_GOs[UnitUIZoneTypes.Building].transform.Find("BuildingAbilityButton1").GetComponent<Button>();
-            _building_Buttons.Add(BuildingButtonTypes.First, buildingFirstAbilityButtom);
-            _building_TextMPs.Add(BuildingButtonTypes.First, buildingFirstAbilityButtom.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+            var buildFirstAbil_Buttom = _unitZone_GOs[UnitUIZoneTypes.Building].transform.Find("BuildingAbilityButton1").GetComponent<Button>();
+            _building_Buttons.Add(BuildingButtonTypes.First, buildFirstAbil_Buttom);
+            _building_TextMPs.Add(BuildingButtonTypes.First, buildFirstAbil_Buttom.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
 
-            _building_Buttons.Add(BuildingButtonTypes.Second, _unitZone_GOs[UnitUIZoneTypes.Building].transform.Find("BuildingAbilityButton2").GetComponent<Button>());
+            var buildSecondAbil_Buttom = _unitZone_GOs[UnitUIZoneTypes.Building].transform.Find("BuildingAbilityButton2").GetComponent<Button>();
+            _building_Buttons.Add(BuildingButtonTypes.Second, buildSecondAbil_Buttom);
+            _building_TextMPs.Add(BuildingButtonTypes.Second, buildSecondAbil_Buttom.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
 
             var buildingThirdAbilityButtom = _unitZone_GOs[UnitUIZoneTypes.Building].transform.Find("BuildingAbilityButton3").GetComponent<Button>();
             _building_Buttons.Add(BuildingButtonTypes.Third, buildingThirdAbilityButtom);
@@ -109,6 +111,9 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
         internal void SetColorToConditionButton(ConditionUnitTypes conditionUnitType, Color color) => _condition_Buttons[conditionUnitType].image.color = color;
         internal void SetColoToUniqueAbilityButton(UniqueButtonTypes uniqueButtonType, Color color) => _uniqueAbilit_Buttons[uniqueButtonType].image.color = color;
 
+        internal void SetTextStandInfo(string text) => _conditionZone_TextMP.text = text;
+        internal void SetTextUniqueInfo(string text) => _uniqueAbilitiesZone_TextMP.text = text;
+        internal void SetTextBuildInfo(string text) => _buildingZone_TextMP.text = text;
         internal void SetTextToStat(StatTypes statType, string text) => _stat_TextMP[statType].text = text;
         internal void SetTextToCondition(ConditionUnitTypes conditionUnitType, string text) => _condition_TextMP[conditionUnitType].text = text;
         internal void SetTextToUnique(UniqueButtonTypes uniqueButtonType, string text) => _uniqueAbilit_TextMPs[uniqueButtonType].text = text;

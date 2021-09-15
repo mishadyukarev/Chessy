@@ -55,11 +55,13 @@
 
         StandartAbilities,
         Protect,
-        RelaxExtract,
+        Relax,
+        Extract,
 
         UniqueAbilities,
         SeedForest,
-        FireAdultForest,
+        FireForest,
+        PutOutFire,
         CircularAttack,
 
         BuildingAbilities,

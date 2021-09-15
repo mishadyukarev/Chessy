@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
@@ -18,57 +19,65 @@ internal sealed class BuildRighUISystem : IEcsRunSystem
 
     public void Run()
     {
-        ref var selCellUnitDataCom = ref _cellUnitFilter.Get1(IdxSelCell);
-        ref var selOwnerCellUnitCom = ref _cellUnitFilter.Get2(IdxSelCell);
-        ref var selBotOnwerCellUnitCom = ref _cellUnitFilter.Get3(IdxSelCell);
+        ref var selUnitDatCom = ref _cellUnitFilter.Get1(IdxSelCell);
+        ref var selOwnUnitCom = ref _cellUnitFilter.Get2(IdxSelCell);
+        ref var selBotUnitCom = ref _cellUnitFilter.Get3(IdxSelCell);
 
-        ref var selCellBuildDataCom = ref _cellBuildFilter.Get1(IdxSelCell);
-        ref var selOwnerBuildCom = ref _cellBuildFilter.Get2(IdxSelCell);
+        ref var selBuildDatCom = ref _cellBuildFilter.Get1(IdxSelCell);
+        ref var selOwnBuildCom = ref _cellBuildFilter.Get2(IdxSelCell);
         ref var selBotBuildCom = ref _cellBuildFilter.Get3(IdxSelCell);
+
+        ref var unitViewUICom = ref _unitZoneUIFilter.Get1(0);
+
+
+        unitViewUICom.SetTextBuildInfo(LanguageComComp.GetText(GameLanguageTypes.BuildingAbilities));
+
+        unitViewUICom.SetTextBuildButton(BuildingButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.BuildFarm));
+        unitViewUICom.SetTextBuildButton(BuildingButtonTypes.Second, LanguageComComp.GetText(GameLanguageTypes.BuildMine));
 
 
         if (_selectorFilter.Get1(0).IsSelectedCell)
         {
-            if (selCellUnitDataCom.HaveUnit)
+            if (selUnitDatCom.HaveUnit)
             {
-                if (selOwnerCellUnitCom.HaveOwner)
+                if (selOwnUnitCom.HaveOwner)
                 {
-                    if (selOwnerCellUnitCom.IsMine)
+                    if (selOwnUnitCom.IsMine)
                     {
-                        if (selCellUnitDataCom.IsUnitType(new[] { UnitTypes.Pawn }))
+                        if (selUnitDatCom.IsUnitType(new[] { UnitTypes.Pawn }))
                         {
-                            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, true);
+                            unitViewUICom .SetActiveUnitZone(UnitUIZoneTypes.Building, true);
 
-                            if (selCellBuildDataCom.HaveBuild)
+                            if (selBuildDatCom.HaveBuild)
                             {
-                                if (selOwnerBuildCom.HaveOwner)
+                                if (selOwnBuildCom.HaveOwner)
                                 {
-                                    if (selOwnerBuildCom.IsMine)
+                                    if (selOwnBuildCom.IsMine)
                                     {
-                                        if (selCellBuildDataCom.IsBuildType(BuildingTypes.City))
+                                        if (selBuildDatCom.IsBuildType(BuildingTypes.City))
                                         {
-                                            _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, false);
+                                            unitViewUICom .SetActiveBuilButton(BuildingButtonTypes.Third, false);
                                         }
                                         else
                                         {
-                                            _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
-                                            _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
+                                            unitViewUICom .SetActiveBuilButton(BuildingButtonTypes.Third, true);
+                                            unitViewUICom.SetTextBuildButton(BuildingButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
                                         }
                                     }
 
                                     else
                                     {
-                                        _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
-                                        _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
+                                        unitViewUICom.SetActiveBuilButton(BuildingButtonTypes.Third, true);
+                                        unitViewUICom.SetTextBuildButton(BuildingButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
                                     }
                                 }
 
                                 else if (selBotBuildCom.IsBot)
                                 {
-                                    if (selCellBuildDataCom.IsBuildType(BuildingTypes.City))
+                                    if (selBuildDatCom.IsBuildType(BuildingTypes.City))
                                     {
-                                        _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, true);
-                                        _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Destroy");
+                                        unitViewUICom.SetActiveBuilButton(BuildingButtonTypes.Third, true);
+                                        unitViewUICom.SetTextBuildButton(BuildingButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
                                     }
                                 }
 
@@ -78,36 +87,36 @@ internal sealed class BuildRighUISystem : IEcsRunSystem
                             {
                                 if (_cellBuildFilter.IsSettedCity(PhotonNetwork.IsMasterClient))
                                 {
-                                    _unitZoneUIFilter.Get1(0).SetActiveBuilButton(BuildingButtonTypes.Third, false);
+                                    unitViewUICom.SetActiveBuilButton(BuildingButtonTypes.Third, false);
                                 }
                                 else
                                 {
-                                    _unitZoneUIFilter.Get1(0).SetTextBuildButton(BuildingButtonTypes.Third, "Build City");
+                                    unitViewUICom.SetTextBuildButton(BuildingButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.BuildCity));
                                 }
                             }
                         }
                         else
                         {
-                            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
+                            unitViewUICom.SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                         }
                     }
 
                     else
                     {
-                        _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
+                        unitViewUICom.SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                     }
                 }
 
-                else if (selBotOnwerCellUnitCom.IsBot)
+                else if (selBotUnitCom.IsBot)
                 {
-                    _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
+                    unitViewUICom.SetActiveUnitZone(UnitUIZoneTypes.Building, false);
                 }
             }
         }
 
         else
         {
-            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Building, false);
+            unitViewUICom.SetActiveUnitZone(UnitUIZoneTypes.Building, false);
         }
     }
 }

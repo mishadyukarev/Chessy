@@ -17,25 +17,25 @@ internal sealed class StatsUISystem : IEcsRunSystem
     {
         var idxSelCell = _selectorFilter.Get1(0).IdxSelectedCell;
 
-        ref var selCellUnitDataCom = ref _cellUnitFilter.Get1(idxSelCell);
-        ref var selOwnerCellUnitComp = ref _cellUnitFilter.Get2(idxSelCell);
-        ref var selBotOwnerCellUnitComp = ref _cellUnitFilter.Get3(idxSelCell);
+        ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
+        ref var selOwnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
+        ref var selBotUnitCom = ref _cellUnitFilter.Get3(idxSelCell);
 
-        ref var selCellBuildDataCom = ref _cellBuildFilter.Get1(idxSelCell);
-        ref var selCellEnvDataCom = ref _cellEnvFilter.Get1(idxSelCell);
+        ref var selBuildDatCom = ref _cellBuildFilter.Get1(idxSelCell);
+        ref var selEnvDatCom = ref _cellEnvFilter.Get1(idxSelCell);
 
-        if (selCellUnitDataCom.HaveUnit)
+        if (selUnitDatCom.HaveUnit)
         {
-            var comPowerProtection = selCellUnitDataCom.PowerProtection
-                + selCellBuildDataCom.PowerProtectionUnit(selCellUnitDataCom.UnitType)
-                + selCellEnvDataCom.PowerProtectionUnit(selCellUnitDataCom.UnitType);
+            var comPowerProtection = selUnitDatCom.PowerProtection
+                + selBuildDatCom.PowerProtectionUnit(selUnitDatCom.UnitType)
+                + selEnvDatCom.PowerProtectionUnit(selUnitDatCom.UnitType);
 
             _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Stats, true);
 
-            _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Health, selCellUnitDataCom.AmountHealth.ToString());
-            _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Damage, selCellUnitDataCom.SimplePowerDamage.ToString());
+            _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Health, selUnitDatCom.AmountHealth.ToString());
+            _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Damage, selUnitDatCom.SimplePowerDamage.ToString());
             _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Protection, comPowerProtection.ToString());
-            _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Steps, selCellUnitDataCom.AmountSteps.ToString());
+            _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Steps, selUnitDatCom.AmountSteps.ToString());
         }
 
         else

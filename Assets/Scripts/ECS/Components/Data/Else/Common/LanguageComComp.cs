@@ -180,6 +180,52 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
 
                 _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.UpgradeMine, "Upgrade mines");
                 _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.UpgradeMine, "Улучшить шахты");
+
+
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.StandartAbilities, "Standart");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.StandartAbilities, "Стандартные");
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Protect, "Protect");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Protect, "Защита");
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Relax, "Relax");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Relax, "Отдых");
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Extract, "Extract");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Extract, "Добыча");
+
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.UniqueAbilities, "Unique");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.UniqueAbilities, "Уникальные");
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.SeedForest, "Seed forest");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.SeedForest, "Посадить лес");
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.FireForest, "Fire forest");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.FireForest, "Поджечь лес");
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.PutOutFire, "PUT OUT");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.PutOutFire, "ПОТУШИТЬ");
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.CircularAttack, "Circular attack");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.CircularAttack, "Круговая атака");
+
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.BuildingAbilities, "Building");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.BuildingAbilities, "Постройка");
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.BuildFarm, "Farm");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.BuildFarm, "Ферма");
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.BuildMine, "Mine");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.BuildMine, "Шахта");
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.BuildCity, "Сity");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.BuildCity, "Город");
+
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.DestroyBuilding, "Destroy");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.DestroyBuilding, "Разрушить");
             }
         }
 
