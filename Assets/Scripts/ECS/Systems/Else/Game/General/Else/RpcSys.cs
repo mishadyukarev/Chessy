@@ -166,7 +166,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.ConditionUnit:
-                    _conditionFilter.Get1(0).NeededConditionUnitType = (ConditionUnitTypes)objects[0];
+                    _conditionFilter.Get1(0).NeededCondUnitType = (ConditionUnitTypes)objects[0];
                     _conditionFilter.Get1(0).IdxForCondition = (byte)objects[1];
                     break;
 
@@ -276,10 +276,10 @@ namespace Assets.Scripts
                         case MistakeTypes.NeedCity:
                             break;
 
-                        case MistakeTypes.ThisIsForOtherUnit:
+                        case MistakeTypes.ThatIsForOtherUnit:
                             break;
 
-                        case MistakeTypes.NearTheDesert:
+                        case MistakeTypes.NearBorder:
                             break;
 
                         default:
@@ -290,7 +290,7 @@ namespace Assets.Scripts
                 case RpcGeneralTypes.SetUnit:
                     if ((bool)objects[_curNumber++])
                     {
-                        selectorCom.DefSelectedCell();// CellClickType = CellClickTypes.Start;
+                        selectorCom.DefSelectedCell();
                         selectorCom.SelUnitType = default;
                     }
                     break;

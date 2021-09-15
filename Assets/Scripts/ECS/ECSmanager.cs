@@ -110,8 +110,6 @@ namespace Assets.Scripts
                         _gameOtherSystemManager = new GameOtherSystemManager(_gameWorld, _allGameSystems);
                     }
 
-
-
                     _allGameSystems.Init();
                     break;
 

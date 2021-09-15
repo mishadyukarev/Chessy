@@ -11,11 +11,11 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.ECS.Managers.Event
 {
-    internal sealed class PhotonSceneMenuSystem : IEcsInitSystem
+    internal sealed class EvenPhotSceneMenuSys : IEcsInitSystem
     {
-        private EcsFilter<ConnectButtonUIComponent, OnlineZoneUIComponent, BackgroundImagesUIComponent> _rightZoneFilter;
-        private EcsFilter<ConnectButtonUIComponent, OfflineZoneUIComponent, BackgroundImagesUIComponent> _leftZoneFilter;
-        private EcsFilter<CenterMenuUIComponent> _centerUIZoneFilter;
+        private EcsFilter<ConnectButtonUIComp, OnlineZoneUIComponent, BackgroundImagesUIComponent> _rightZoneFilter;
+        private EcsFilter<ConnectButtonUIComp, OfflineZoneUIComponent, BackgroundImagesUIComponent> _leftZoneFilter;
+        private EcsFilter<CenterMenuUIComp> _centerUIZoneFilter;
 
         private TextMeshProUGUI _logTex;
         private const byte MAX_PLAYERS = 2;
@@ -28,7 +28,7 @@ namespace Assets.Scripts.ECS.Managers.Event
             _logTex = CanvasComponent.FindUnderParent<TextMeshProUGUI>("LogText");
             CanvasComponent.FindUnderParent<Button>("QuitButton").onClick.AddListener(delegate { Application.Quit(); });
 
-            rightUIEnt.Get<ConnectButtonUIComponent>().AddListenerToConnectButton(ConnectOnline);
+            rightUIEnt.Get<ConnectButtonUIComp>().AddListenerToConnectButton(ConnectOnline);
             rightUIEnt.Get<OnlineZoneUIComponent>().AddListenerCreatePublicRoom(CreateRoom);
             rightUIEnt.Get<OnlineZoneUIComponent>().AddListenerJoinRandomPublicRoom(JoinRandomRoom);
 

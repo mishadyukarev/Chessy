@@ -103,12 +103,12 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                             mistakeViewUICom.Text = "Need set city";
                             break;
 
-                        case MistakeTypes.ThisIsForOtherUnit:
-                            mistakeViewUICom.Text = "This is for other unit";
+                        case MistakeTypes.ThatIsForOtherUnit:
+                            mistakeViewUICom.Text = "That's for other unit";
                             break;
 
-                        case MistakeTypes.NearTheDesert:
-                            mistakeViewUICom.Text = "Near the desert";
+                        case MistakeTypes.NearBorder:
+                            mistakeViewUICom.Text = "Near Border";
                             break;
 
                         default:

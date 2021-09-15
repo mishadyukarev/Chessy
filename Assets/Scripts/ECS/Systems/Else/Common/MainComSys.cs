@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Abstractions;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -41,6 +42,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
                 .Replace(new StepModComponent(StepModeTypes.ByQueue))
                 .Replace(new CanvasComponent(canvas))
                 .Replace(new SoundComComp(audioSource))
+                .Replace(new LanguageComComp(true))
 
                 //Toggle
                 .Replace(new ToggleZoneComponent(new GameObject()));

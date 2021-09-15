@@ -86,7 +86,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
                         else
                         {
-                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NearTheDesert, sender);
+                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         }
                     }

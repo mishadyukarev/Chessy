@@ -10,6 +10,6 @@
     PawnMustHaveTool,
     PawnHaveTool,
     NeedCity,
-    ThisIsForOtherUnit,
-    NearTheDesert,
+    ThatIsForOtherUnit,
+    NearBorder,
 }

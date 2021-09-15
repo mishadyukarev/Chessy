@@ -13,7 +13,7 @@ namespace Assets.Scripts.ECS.System.View.Menu
         private EcsWorld _menuWorld = default;
 
         private EcsFilter<OnlineZoneUIComponent> _onlineFilter = default;
-        private EcsFilter<CenterMenuUIComponent> _centerFilter = default;
+        private EcsFilter<CenterMenuUIComp> _centerFilter = default;
 
         public void Init()
         {
@@ -24,20 +24,20 @@ namespace Assets.Scripts.ECS.System.View.Menu
 
 
             _menuWorld.NewEntity()
-                .Replace(new CenterMenuUIComponent(CanvasComponent.FindUnderParent<Slider>("Slider"), SoundComComp.Volume));
+                .Replace(new CenterMenuUIComp(CanvasComponent.FindUnderParent<Slider>("Slider"), SoundComComp.Volume));
 
 
             var rightZone = CanvasComponent.FindUnderParent<RectTransform>("OnlineRightZone");
             _menuWorld.NewEntity()
                 .Replace(new OnlineZoneUIComponent(rightZone))
-                .Replace(new ConnectButtonUIComponent(true, rightZone))
+                .Replace(new ConnectButtonUIComp(true, rightZone))
                 .Replace(new BackgroundImagesUIComponent(true, rightZone));
 
 
             var leftZone = CanvasComponent.FindUnderParent<RectTransform>("OfflineLeftZone");
             _menuWorld.NewEntity()
                 .Replace(new OfflineZoneUIComponent(leftZone))
-                .Replace(new ConnectButtonUIComponent(false, leftZone))
+                .Replace(new ConnectButtonUIComp(false, leftZone))
                 .Replace(new BackgroundImagesUIComponent(false, leftZone));
         }
     }

@@ -14,7 +14,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
     public void Run()
     {
         var sender = _infoFilter.Get1(0).FromInfo.Sender;
-        var neededCondType = _conditionFilter.Get1(0).NeededConditionUnitType;
+        var neededCondType = _conditionFilter.Get1(0).NeededCondUnitType;
         var idxForCondit = _conditionFilter.Get1(0).IdxForCondition;
 
         ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxForCondit);
