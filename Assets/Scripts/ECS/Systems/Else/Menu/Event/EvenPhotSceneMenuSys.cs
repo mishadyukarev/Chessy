@@ -25,8 +25,8 @@ namespace Assets.Scripts.ECS.Managers.Event
         {
             ref var rightUIEnt = ref _rightZoneFilter.GetEntity(0);
 
-            _logTex = CanvasComponent.FindUnderParent<TextMeshProUGUI>("LogText");
-            CanvasComponent.FindUnderParent<Button>("QuitButton").onClick.AddListener(delegate { Application.Quit(); });
+            _logTex = CanvasComp.FindUnderParent<TextMeshProUGUI>("LogText");
+            CanvasComp.FindUnderParent<Button>("QuitButton").onClick.AddListener(delegate { Application.Quit(); });
 
             rightUIEnt.Get<ConnectButtonUIComp>().AddListenerToConnectButton(ConnectOnline);
             rightUIEnt.Get<OnlineZoneUIComponent>().AddListenerCreatePublicRoom(CreateRoom);
@@ -66,8 +66,8 @@ namespace Assets.Scripts.ECS.Managers.Event
 
 
 
-            roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
-            roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
+            //roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
+            //roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
 
 
             roomOptions.MaxPlayers = MAX_PLAYERS;
@@ -95,8 +95,8 @@ namespace Assets.Scripts.ECS.Managers.Event
 
         public void JoinRandomRoom()
         {
-            Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
-            PhotonNetwork.JoinRandomRoom(expectedCustomRoomProperties, MAX_PLAYERS);
+            //Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
+            PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
         }
 
         private void JoinFriendRoom()

@@ -17,24 +17,24 @@ namespace Assets.Scripts.ECS.System.View.Menu
 
         public void Init()
         {
-            CanvasComponent.ReplaceZone(Main.CurrentSceneType);
+            CanvasComp.ReplaceZone(Main.CurrentSceneType);
             ToggleZoneComponent.ReplaceZone(Main.CurrentSceneType);
 
 
 
 
             _menuWorld.NewEntity()
-                .Replace(new CenterMenuUIComp(CanvasComponent.FindUnderParent<Slider>("Slider"), SoundComComp.Volume));
+                .Replace(new CenterMenuUIComp(CanvasComp.FindUnderParent<Slider>("Slider"), SoundComComp.Volume));
 
 
-            var rightZone = CanvasComponent.FindUnderParent<RectTransform>("OnlineRightZone");
+            var rightZone = CanvasComp.FindUnderParent<RectTransform>("OnlineRightZone");
             _menuWorld.NewEntity()
                 .Replace(new OnlineZoneUIComponent(rightZone))
                 .Replace(new ConnectButtonUIComp(true, rightZone))
                 .Replace(new BackgroundImagesUIComponent(true, rightZone));
 
 
-            var leftZone = CanvasComponent.FindUnderParent<RectTransform>("OfflineLeftZone");
+            var leftZone = CanvasComp.FindUnderParent<RectTransform>("OfflineLeftZone");
             _menuWorld.NewEntity()
                 .Replace(new OfflineZoneUIComponent(leftZone))
                 .Replace(new ConnectButtonUIComp(false, leftZone))

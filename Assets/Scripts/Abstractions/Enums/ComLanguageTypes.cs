@@ -8,19 +8,17 @@ namespace Assets.Scripts.Abstractions.Enums
         None,
 
         Online,
-
         PublicGame,
-        CreatePGRoom,
-        JoinPGRoom,
-
+        CreatePGR,
+        JoinPGR,
         FriendGame,
-        CreateFGRoom,
-        JoinFGRoom,
-
+        CreateFGR,
+        JoinFGR,
 
         Offline,
+        Training,
 
-        StartWithBot,
-
+        Info,
+        Exit,
     }
 }

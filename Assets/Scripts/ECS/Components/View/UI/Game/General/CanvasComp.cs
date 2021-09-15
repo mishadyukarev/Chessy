@@ -3,12 +3,12 @@ using UnityEngine;
 
 namespace Assets.Scripts
 {
-    public struct CanvasComponent
+    public struct CanvasComp
     {
         private static Canvas _canvas;
         private static GameObject _currentZoneGO;
 
-        internal CanvasComponent(Canvas canvas)
+        internal CanvasComp(Canvas canvas)
         {
             _canvas = canvas;
             _currentZoneGO = default;

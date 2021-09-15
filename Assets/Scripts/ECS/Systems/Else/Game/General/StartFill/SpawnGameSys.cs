@@ -196,18 +196,18 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             ///Canvas
             ///
 
-            CanvasComponent.ReplaceZone(Main.CurrentSceneType);
+            CanvasComp.ReplaceZone(Main.CurrentSceneType);
 
-            var upZone_GO = CanvasComponent.FindUnderParent("UpZone");
-            var centerZone_GO = CanvasComponent.FindUnderParent("CenterZone");
-            var downZone_GO = CanvasComponent.FindUnderParent("DownZone");
-            var leftZone_GO = CanvasComponent.FindUnderParent("LeftZone");
-            var rightZone_GO = CanvasComponent.FindUnderParent("RightZone");
+            var upZone_GO = CanvasComp.FindUnderParent("UpZone");
+            var centerZone_GO = CanvasComp.FindUnderParent("CenterZone");
+            var downZone_GO = CanvasComp.FindUnderParent("DownZone");
+            var leftZone_GO = CanvasComp.FindUnderParent("LeftZone");
+            var rightZone_GO = CanvasComp.FindUnderParent("RightZone");
 
             var canvasEnt = _currentGameWorld.NewEntity()
                 ///Up
                 .Replace(new EconomyViewUICom(upZone_GO))
-                .Replace(new LeaveViewUIComponent(CanvasComponent.FindUnderParent<Button>("ButtonLeave")))
+                .Replace(new LeaveViewUIComponent(CanvasComp.FindUnderParent<Button>("ButtonLeave")))
 
                 ///Center
                 .Replace(new EndGameDataUIComponent())

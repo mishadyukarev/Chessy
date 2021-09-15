@@ -1,4 +1,6 @@
-﻿using Assets.Scripts.ECS.Component.View.UI.Game.General;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.View.UI.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Leopotam.Ecs;
 using Photon.Pun;
 using UnityEngine;
@@ -27,6 +29,10 @@ internal sealed class ReadyZoneUISystem : IEcsRunSystem
         }
         else
         {
+            readyViewUICom.SetTextWait(LanguageComComp.GetText(GameLanguageTypes.WaitReady));
+            readyViewUICom.SetTextReady(LanguageComComp.GetText(GameLanguageTypes.ReadyBeforeGame));
+            readyViewUICom.SetTextJoinForFind(LanguageComComp.GetText(GameLanguageTypes.JoinForFind));
+
             readyViewUICom.SetActiveParent(true);
         }
     }

@@ -40,7 +40,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
                 .Replace(new CameraComponent(camera, new Vector3(7, 4.8f, -2)))
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
                 .Replace(new StepModComponent(StepModeTypes.ByQueue))
-                .Replace(new CanvasComponent(canvas))
+                .Replace(new CanvasComp(canvas))
                 .Replace(new SoundComComp(audioSource))
                 .Replace(new LanguageComComp(true))
 
