@@ -12,7 +12,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
     private EcsFilter<InfoMasCom> _infoMasterFilter = default;
     private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
     private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 

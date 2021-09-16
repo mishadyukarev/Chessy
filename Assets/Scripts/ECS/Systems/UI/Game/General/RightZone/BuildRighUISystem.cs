@@ -13,8 +13,8 @@ internal sealed class BuildRighUISystem : IEcsRunSystem
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
     private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
-    private EcsFilter<CellBuildDataComponent, OwnerComponent, OwnerBotComponent> _cellBuildFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellBuildFilter = default;
     private byte IdxSelCell => _selectorFilter.Get1(0).IdxSelectedCell;
 
     public void Run()

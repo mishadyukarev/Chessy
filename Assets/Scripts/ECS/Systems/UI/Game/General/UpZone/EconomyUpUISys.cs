@@ -11,8 +11,8 @@ internal sealed class EconomyUpUISys : IEcsRunSystem
 {
     private EcsFilter<EconomyViewUICom> _economyUIFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitsFilter = default;
-    private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitsFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
 
     private EcsFilter<InventorResourcesComponent> _amountResFilter = default;

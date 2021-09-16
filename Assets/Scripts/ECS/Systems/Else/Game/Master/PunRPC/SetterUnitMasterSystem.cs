@@ -18,7 +18,7 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
     private EcsFilter<CellsForSetUnitComp> _availCellsForSetUnitFilter = default;
 
     private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
-    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
 
     public void Run()
     {

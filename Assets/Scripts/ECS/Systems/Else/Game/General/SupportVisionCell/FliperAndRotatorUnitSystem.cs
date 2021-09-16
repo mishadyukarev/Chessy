@@ -11,7 +11,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems
         private EcsFilter<SelectorComponent> _selComFilter = default;
 
         private EcsFilter<CellUnitMainViewComp, CellUnitExtraViewComp> _cellUnitViewFilter = default;
-        private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
 
         public void Run()
         {

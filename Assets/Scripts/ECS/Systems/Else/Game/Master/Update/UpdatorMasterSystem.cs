@@ -17,10 +17,10 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellViewComponent> _cellViewFilter = default;
-    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
-    private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildDataFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp> _cellBuildDataFilter = default;
 
     private EcsFilter<UpgradesBuildingsComponent> _upgradeBuildsFilter = default;
     private EcsFilter<InventorResourcesComponent> _invResFilt = default;

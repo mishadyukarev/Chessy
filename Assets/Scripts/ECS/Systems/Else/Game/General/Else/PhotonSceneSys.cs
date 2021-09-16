@@ -8,33 +8,13 @@ namespace Assets.Scripts
 {
     public sealed class PhotonSceneSys : MonoBehaviourPunCallbacks, IEcsInitSystem
     {
-        private MenuSystemManager _menuSystemManager;
+        private MenuSystemManager MenuSystemManager => ECSManager.MenuSysManag;
 
 
         public void Init()
         {
 
         }
-
-        internal void ToggleScene(SceneTypes sceneType, MenuSystemManager menuSystemManager)
-        {
-            switch (sceneType)
-            {
-                case SceneTypes.None:
-                    throw new System.Exception();
-
-                case SceneTypes.Menu:
-                    _menuSystemManager = menuSystemManager;
-                    break;
-
-                case SceneTypes.Game:
-                    break;
-
-                default:
-                    throw new System.Exception();
-            }
-        }
-
 
         public override void OnLeftRoom()
         {
@@ -103,11 +83,11 @@ namespace Assets.Scripts
 
         public override void OnConnectedToMaster()
         {
-            _menuSystemManager.PhotonSceneMenuSystem.ConnectedToMaster();
+            MenuSystemManager.PhotonSceneMenuSystem.ConnectedToMaster();
         }
         public override void OnDisconnected(DisconnectCause cause)
         {
-            _menuSystemManager.PhotonSceneMenuSystem.ConnectUsingSettingsWithData(true);
+            MenuSystemManager.PhotonSceneMenuSystem.ConnectUsingSettingsWithData(true);
         }
     }
 }

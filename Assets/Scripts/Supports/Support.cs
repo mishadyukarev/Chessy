@@ -164,7 +164,7 @@ namespace Assets.Scripts.Supports
         }
 
 
-        internal static bool IsSettedCity(this EcsFilter<CellBuildDataComponent, OwnerComponent, OwnerBotComponent> cellBuildDataFilter, bool isMasterKey)
+        internal static bool IsSettedCity(this EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerBotComponent> cellBuildDataFilter, bool isMasterKey)
         {
             foreach (var idx in cellBuildDataFilter)
             {

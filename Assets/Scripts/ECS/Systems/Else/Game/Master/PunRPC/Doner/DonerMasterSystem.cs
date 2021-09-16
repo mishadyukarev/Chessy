@@ -47,73 +47,45 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
             }
             else
             {
-                switch (StepModComponent.StepModeType)
+                donerDataUICom.SetDoned(sender.IsMasterClient, true);
+                _doneOrNotFromStartAnyUpdate[sender.IsMasterClient] = false;
+
+                if (sender.IsMasterClient)
                 {
-                    case StepModeTypes.None:
-                        throw new Exception();
+                    if (_doneOrNotFromStartAnyUpdate[false] == true)
+                    {
+                        donerDataUICom.SetDoned(false, false);
+                    }
+                    else
+                    {
+                        GameMasterSystemManager.UpdateMotion.Run();
 
-                    case StepModeTypes.ByQueue:
-                        donerDataUICom.SetDoned(sender.IsMasterClient, true);
-                        _doneOrNotFromStartAnyUpdate[sender.IsMasterClient] = false;
+                        RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
-                        if (sender.IsMasterClient)
-                        {
-                            if (_doneOrNotFromStartAnyUpdate[false] == true)
-                            {
-                                donerDataUICom.SetDoned(false, false);
-                            }
-                            else
-                            {
-                                GameMasterSystemManager.UpdateMotion.Run();
+                        donerDataUICom.SetDoned(true, default);
+                        donerDataUICom.SetDoned(false, default);
 
-                                RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
+                        _doneOrNotFromStartAnyUpdate[true] = true;
+                        donerDataUICom.SetDoned(true, true);
+                    }
+                }
+                else
+                {
+                    if (_doneOrNotFromStartAnyUpdate[true] == true)
+                    {
+                        donerDataUICom.SetDoned(true, false);
+                    }
+                    else
+                    {
+                        GameMasterSystemManager.UpdateMotion.Run();
+                        RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
-                                donerDataUICom.SetDoned(true, default);
-                                donerDataUICom.SetDoned(false, default);
+                        donerDataUICom.SetDoned(true, default);
+                        donerDataUICom.SetDoned(false, default);
 
-                                _doneOrNotFromStartAnyUpdate[true] = true;
-                                donerDataUICom.SetDoned(true, true);
-                            }
-                        }
-                        else
-                        {
-                            if (_doneOrNotFromStartAnyUpdate[true] == true)
-                            {
-                                donerDataUICom.SetDoned(true, false);
-                            }
-                            else
-                            {
-                                GameMasterSystemManager.UpdateMotion.Run();
-                                RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-
-                                donerDataUICom.SetDoned(true, default);
-                                donerDataUICom.SetDoned(false, default);
-
-                                _doneOrNotFromStartAnyUpdate[false] = true;
-                                donerDataUICom.SetDoned(false, true);
-                            }
-                        }
-                        break;
-
-                    case StepModeTypes.Together:
-                        donerDataUICom.SetDoned(sender.IsMasterClient, forDonerMasCom.NeedActiveDoner);
-
-                        bool needUpdate = PhotonNetwork.OfflineMode
-                            || donerDataUICom.IsDoned(true)
-                            && donerDataUICom.IsDoned(false);
-
-                        if (needUpdate)
-                        {
-                            GameMasterSystemManager.UpdateMotion.Run();
-                            RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-
-                            donerDataUICom.SetDoned(true, default);
-                            donerDataUICom.SetDoned(false, default);
-                        }
-                        break;
-
-                    default:
-                        throw new Exception();
+                        _doneOrNotFromStartAnyUpdate[false] = true;
+                        donerDataUICom.SetDoned(false, true);
+                    }
                 }
             }
         }

@@ -1,10 +1,10 @@
-﻿namespace Assets.Scripts
-{
-    public enum StepModeTypes
-    {
-        None,
+﻿//namespace Assets.Scripts
+//{
+//    public enum StepModeTypes
+//    {
+//        None,
 
-        ByQueue,
-        Together
-    }
-}
+//        ByQueue,
+//        Together
+//    }
+//}

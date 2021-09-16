@@ -15,7 +15,7 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
     private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 

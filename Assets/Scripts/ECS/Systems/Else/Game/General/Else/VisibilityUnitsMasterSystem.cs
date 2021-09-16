@@ -8,7 +8,7 @@ internal sealed class VisibilityUnitsMasterSystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
-    private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter;
+    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter;
 
     public void Run()
     {

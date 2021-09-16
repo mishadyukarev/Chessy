@@ -1,8 +1,8 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.ECS.Components.View.Else.Game.General;
 using Assets.Scripts.ECS.Game.General.Systems;
 using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
 using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
-using Assets.Scripts.ECS.Systems.Else.Common;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Event;
 using Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells;
@@ -12,11 +12,17 @@ using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.UpZone;
 using Leopotam.Ecs;
+using System;
+using UnityEngine;
 
 public sealed class GameGeneralSysManager : SystemAbstManager
 {
+    private RpcSys _rpcGameSys;
+
     internal GameGeneralSysManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
     {
+        _rpcGameSys = ECSManager.PhotonViewAndRpc_GO.AddComponent<RpcSys>();
+
         var syncCellVisionSystems = new EcsSystems(gameWorld)
             .Add(new SyncCellUnitViewSys())
             .Add(new SyncCellSelUnitViewSys())
@@ -94,6 +100,8 @@ public sealed class GameGeneralSysManager : SystemAbstManager
             .Add(fillAvailCells)
 
             .Add(syncCellVisionSystems)
-            .Add(syncCanvasSystems);
+            .Add(syncCanvasSystems)
+
+            .Add(_rpcGameSys);
     }
 }

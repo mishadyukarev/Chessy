@@ -9,7 +9,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
     private EcsFilter<InfoMasCom> _infoFilter = default;
     private EcsFilter<ConditionMasCom> _conditionFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
 
     public void Run()
     {

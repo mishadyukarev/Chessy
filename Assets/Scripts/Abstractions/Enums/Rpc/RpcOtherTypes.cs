@@ -4,7 +4,6 @@
     {
         None,
 
-        SetAmountMotion,
-        SetStepModType,
+        //SetAmountMotion,
     }
 }

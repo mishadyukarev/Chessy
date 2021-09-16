@@ -108,23 +108,8 @@ namespace Assets.Scripts
 
         private void Done()
         {
-            switch (StepModComponent.StepModeType)
-            {
-                case StepModeTypes.None:
-                    throw new Exception();
-
-                case StepModeTypes.ByQueue:
-                    if (!IsDoned(PhotonNetwork.IsMasterClient))
-                        RpcSys.DoneToMaster(!IsDoned(PhotonNetwork.IsMasterClient));
-                    break;
-
-                case StepModeTypes.Together:
-                    RpcSys.DoneToMaster(!IsDoned(PhotonNetwork.IsMasterClient));
-                    break;
-
-                default:
-                    throw new Exception();
-            }
+            if (!IsDoned(PhotonNetwork.IsMasterClient))
+                RpcSys.DoneToMaster(!IsDoned(PhotonNetwork.IsMasterClient));
 
             _selectorFilter.Get1(0).DefCellClickType();
             _selectorFilter.Get1(0).DefSelectedUnit();

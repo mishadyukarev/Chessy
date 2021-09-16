@@ -9,6 +9,7 @@ using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.Game.Other;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
+using Assets.Scripts.ECS.Components.View.Else.Game.General;
 using Assets.Scripts.ECS.Game.Components;
 using ExitGames.Client.Photon;
 using Leopotam.Ecs;
@@ -22,8 +23,8 @@ namespace Assets.Scripts
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
-        private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildFilter = default;
+        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellBuildDataComponent, OwnerOnlineComp> _cellBuildFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvrFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
@@ -65,7 +66,7 @@ namespace Assets.Scripts
 
         private EcsFilter<InfoOtherCom> _infoOtherFilter = default;
 
-        private static PhotonView PhotonView => ECSManager.PhotonView;
+        private static PhotonView PhotonView => PhotonViewComp.PhotonView;
 
         private static string MasterRPCName => nameof(MasterRPC);
         private static string GeneralRPCName => nameof(GeneralRPC);
@@ -315,14 +316,6 @@ namespace Assets.Scripts
             {
                 case RpcOtherTypes.None:
                     throw new Exception();
-
-                case RpcOtherTypes.SetAmountMotion:
-                    _motionsFilter.Get1(0).AmountMotions = (byte)objects[_curNumber++];
-                    break;
-
-                case RpcOtherTypes.SetStepModType:
-                    StepModComponent.StepModeType = (StepModeTypes)objects[_curNumber++];
-                    break;
 
                 default:
                     throw new Exception();
@@ -616,10 +609,10 @@ namespace Assets.Scripts
 
 
             ref var invUnitsComp = ref _invUnitsFilter.Get1(0);
-            invUnitsComp.SetAmountUnitsInInventor(UnitTypes.King, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
-            invUnitsComp.SetAmountUnitsInInventor(UnitTypes.Pawn, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
-            invUnitsComp.SetAmountUnitsInInventor(UnitTypes.Rook, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
-            invUnitsComp.SetAmountUnitsInInventor(UnitTypes.Bishop, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
+            invUnitsComp.SetAmountUnitsInInvent(UnitTypes.King, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
+            invUnitsComp.SetAmountUnitsInInvent(UnitTypes.Pawn, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
+            invUnitsComp.SetAmountUnitsInInvent(UnitTypes.Rook, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
+            invUnitsComp.SetAmountUnitsInInvent(UnitTypes.Bishop, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
 
 
 
@@ -823,6 +816,5 @@ namespace Assets.Scripts
         }
 
         #endregion
-
     }
 }

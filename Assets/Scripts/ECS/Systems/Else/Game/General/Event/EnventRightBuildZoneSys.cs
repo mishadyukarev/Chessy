@@ -14,8 +14,8 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
         private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
         private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
 
-        private EcsFilter<CellUnitDataComponent, OwnerComponent, OwnerBotComponent> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerComponent, OwnerBotComponent> _cellBuildFilter = default;
+        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellBuildFilter = default;
 
         public void Init()
         {

@@ -24,10 +24,10 @@ namespace Assets.Scripts.ECS.Component
         }
 
         internal int AmountUnitsInInventor(UnitTypes unitType, bool key) => _unitsInventorDict[unitType][key];
-        internal void SetAmountUnitsInInventor(UnitTypes unitType, bool key, int value) => _unitsInventorDict[unitType][key] = value;
+        internal void SetAmountUnitsInInvent(UnitTypes unitType, bool key, int value) => _unitsInventorDict[unitType][key] = value;
 
-        internal void AddUnitsInInventor(UnitTypes unitType, bool key, int adding = 1) => SetAmountUnitsInInventor(unitType, key, AmountUnitsInInventor(unitType, key) + adding);
-        internal void TakeUnitsInInventor(UnitTypes unitType, bool key, int taking = 1) => SetAmountUnitsInInventor(unitType, key, AmountUnitsInInventor(unitType, key) - taking);
+        internal void AddUnitsInInventor(UnitTypes unitType, bool key, int adding = 1) => SetAmountUnitsInInvent(unitType, key, AmountUnitsInInventor(unitType, key) + adding);
+        internal void TakeUnitsInInventor(UnitTypes unitType, bool key, int taking = 1) => SetAmountUnitsInInvent(unitType, key, AmountUnitsInInventor(unitType, key) - taking);
 
         internal bool HaveUnitInInventor(UnitTypes unitType, bool key) => AmountUnitsInInventor(unitType, key) > 0;
     }

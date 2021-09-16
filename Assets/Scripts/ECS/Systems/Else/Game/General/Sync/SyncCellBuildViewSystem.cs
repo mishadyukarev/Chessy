@@ -7,7 +7,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SyncCellVision
 {
     internal sealed class SyncCellBuildViewSystem : IEcsRunSystem
     {
-        private EcsFilter<CellBuildDataComponent, OwnerComponent, OwnerBotComponent, CellBuildViewComponent> _cellBuildFilter;
+        private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerBotComponent, CellBuildViewComponent> _cellBuildFilter;
 
         public void Run()
         {

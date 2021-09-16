@@ -10,7 +10,7 @@ internal sealed class BuildZoneUISys : IEcsRunSystem
     private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
     private EcsFilter<BuildLeftZoneViewUICom> _buildZoneUIFilter = default;
     private EcsFilter<GetterUnitsDataUICom, GetterUnitsViewUICom> _takerUIFilter = default;
-    private EcsFilter<CellBuildDataComponent, OwnerComponent> _cellBuildFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp> _cellBuildFilter = default;
 
     public void Run()
     {

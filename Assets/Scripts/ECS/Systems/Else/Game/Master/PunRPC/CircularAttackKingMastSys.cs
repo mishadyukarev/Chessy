@@ -13,7 +13,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
         private EcsFilter<ForCircularAttackMasCom> _forCircAttackFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
 
         private EcsFilter<EndGameDataUIComponent> _endGameDataUIFilter = default;
 

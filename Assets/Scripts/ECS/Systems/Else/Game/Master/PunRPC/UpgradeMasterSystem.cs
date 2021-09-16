@@ -14,7 +14,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         private EcsFilter<UpgradesBuildingsComponent> _upgradeBuildsFilter = default;
         private EcsFilter<InventorResourcesComponent> _inventResFilt = default;
 
-        private EcsFilter<CellUnitDataComponent, OwnerComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
 
         private const byte FOR_NEXT_UPGRADE = 1;
 

@@ -13,7 +13,7 @@ internal sealed class CreatorUnitMasterSystem : IEcsRunSystem
     private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
     private EcsFilter<InventorUnitsComponent, InventorResourcesComponent> _inventorFilter = default;
 
-    private EcsFilter<CellBuildDataComponent, OwnerComponent, OwnerBotComponent> _cellBuildFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellBuildFilter = default;
 
 
     public void Run()
