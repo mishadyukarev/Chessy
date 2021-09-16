@@ -21,9 +21,9 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
             _info_TextMP = _info_Button.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
 
             _environment_TextMPs = new Dictionary<ResourceTypes, TextMeshProUGUI>();
-            _environment_TextMPs.Add(ResourceTypes.Food, environmentZone_GO.transform.Find("FertilizerResourcesText").GetComponent<TextMeshProUGUI>());
-            _environment_TextMPs.Add(ResourceTypes.Wood, environmentZone_GO.transform.Find("ForestResourcesText").GetComponent<TextMeshProUGUI>());
-            _environment_TextMPs.Add(ResourceTypes.Ore, environmentZone_GO.transform.Find("OreResourcesText").GetComponent<TextMeshProUGUI>());
+            _environment_TextMPs.Add(ResourceTypes.Food, environmentZone_GO.transform.Find("FertilizerResources_TextMP").GetComponent<TextMeshProUGUI>());
+            _environment_TextMPs.Add(ResourceTypes.Wood, environmentZone_GO.transform.Find("ForestResources_TextMP").GetComponent<TextMeshProUGUI>());
+            _environment_TextMPs.Add(ResourceTypes.Ore, environmentZone_GO.transform.Find("OreResources_TextMP").GetComponent<TextMeshProUGUI>());
         }
 
         internal void SetActiveParent(bool isActive) => _info_Button.transform.parent.gameObject.SetActive(isActive);

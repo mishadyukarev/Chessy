@@ -25,7 +25,7 @@ namespace Assets.Scripts.ECS.Managers.Event
         {
             ref var rightUIEnt = ref _rightZoneFilter.GetEntity(0);
 
-            _logTex = CanvasComp.FindUnderParent<TextMeshProUGUI>("LogText");
+            _logTex = CanvasComp.FindUnderParent<TextMeshProUGUI>("Log_TextMP");
             CanvasComp.FindUnderParent<Button>("QuitButton").onClick.AddListener(delegate { Application.Quit(); });
 
             rightUIEnt.Get<ConnectButtonUIComp>().AddListenerToConnectButton(ConnectOnline);

@@ -24,6 +24,7 @@ namespace Assets.Scripts.ECS.Component.UI
                 if(_language_Dropdown.value == 0) return LanguageTypes.English;
                 else if(_language_Dropdown.value == 1) return LanguageTypes.Russian;
                 else if (_language_Dropdown.value == 2) return LanguageTypes.Spanish;
+                else if(_language_Dropdown.value == 3) return LanguageTypes.Chinese;
 
                 else throw new Exception();
             }
@@ -38,6 +39,7 @@ namespace Assets.Scripts.ECS.Component.UI
             if(LanguageComComp.CurLanguageType == LanguageTypes.English) _language_Dropdown.value = 0;
             else if(LanguageComComp.CurLanguageType == LanguageTypes.Russian) _language_Dropdown.value = 1;
             else if (LanguageComComp.CurLanguageType == LanguageTypes.Spanish) _language_Dropdown.value = 2;
+            else if (LanguageComComp.CurLanguageType == LanguageTypes.Chinese) _language_Dropdown.value = 3;
 
             _info_TextMP = CanvasComp.FindUnderParent<TextMeshProUGUI>("Info_TextMP");
             _exit_TextMP = CanvasComp.FindUnderParent<Transform>("QuitButton").Find("Text (TMP)").GetComponent<TextMeshProUGUI>();

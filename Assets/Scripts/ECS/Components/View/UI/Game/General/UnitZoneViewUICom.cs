@@ -41,17 +41,17 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
             _stat_TextMP = new Dictionary<StatTypes, TextMeshProUGUI>();
 
 
-            _stat_TextMP[StatTypes.Health] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("HpCurrentUnitText").GetComponent<TextMeshProUGUI>();
-            _stat_TextMP[StatTypes.Damage] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("DamageCurrentUnitText").GetComponent<TextMeshProUGUI>();
-            _stat_TextMP[StatTypes.Protection] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("ProtectionCurrentUnitText").GetComponent<TextMeshProUGUI>();
-            _stat_TextMP[StatTypes.Steps] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("StepsCurrentUnitText").GetComponent<TextMeshProUGUI>();
+            _stat_TextMP[StatTypes.Health] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("HpCurrentUnit_TextMP").GetComponent<TextMeshProUGUI>();
+            _stat_TextMP[StatTypes.Damage] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("DamageCurrentUnit_TextMP").GetComponent<TextMeshProUGUI>();
+            _stat_TextMP[StatTypes.Protection] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("ProtectionCurrentUnit_TextMP").GetComponent<TextMeshProUGUI>();
+            _stat_TextMP[StatTypes.Steps] = _unitZone_GOs[UnitUIZoneTypes.Stats].transform.Find("StepsCurrentUnit_TextMP").GetComponent<TextMeshProUGUI>();
 
 
 
 
             _unitZone_GOs.Add(UnitUIZoneTypes.Condition, rightZone_GO.transform.Find("ConditionZone").gameObject);
 
-            _conditionZone_TextMP = _unitZone_GOs[UnitUIZoneTypes.Condition].transform.Find("StandartAbilityText").GetComponent<TextMeshProUGUI>();
+            _conditionZone_TextMP = _unitZone_GOs[UnitUIZoneTypes.Condition].transform.Find("StandartAbility_TextMP").GetComponent<TextMeshProUGUI>();
 
             _condition_Buttons = new Dictionary<ConditionUnitTypes, Button>();
             _condition_Buttons.Add(ConditionUnitTypes.Protected, _unitZone_GOs[UnitUIZoneTypes.Condition].transform.Find("StandartAbilityButton1").GetComponent<Button>());
@@ -65,7 +65,7 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 
             _unitZone_GOs.Add(UnitUIZoneTypes.Unique, rightZone_GO.transform.Find("UniqueAbilitiesZone").gameObject);
 
-            _uniqueAbilitiesZone_TextMP = _unitZone_GOs[UnitUIZoneTypes.Unique].transform.Find("UniqueAbilitiesText").GetComponent<TextMeshProUGUI>();
+            _uniqueAbilitiesZone_TextMP = _unitZone_GOs[UnitUIZoneTypes.Unique].transform.Find("UniqueAbilities_TextMP").GetComponent<TextMeshProUGUI>();
 
             _uniqueAbilit_Buttons = new Dictionary<UniqueButtonTypes, Button>();
             _uniqueAbilit_TextMPs = new Dictionary<UniqueButtonTypes, TextMeshProUGUI>();
@@ -86,7 +86,7 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 
             _unitZone_GOs.Add(UnitUIZoneTypes.Building, rightZone_GO.transform.Find("BuildingZone").gameObject);
 
-            _buildingZone_TextMP = _unitZone_GOs[UnitUIZoneTypes.Building].transform.Find("BuildingAbilitiesText").GetComponent<TextMeshProUGUI>();
+            _buildingZone_TextMP = _unitZone_GOs[UnitUIZoneTypes.Building].transform.Find("BuildingAbilities_TextMP").GetComponent<TextMeshProUGUI>();
 
             _building_TextMPs = new Dictionary<BuildingButtonTypes, TextMeshProUGUI>();
             _building_Buttons = new Dictionary<BuildingButtonTypes, Button>();

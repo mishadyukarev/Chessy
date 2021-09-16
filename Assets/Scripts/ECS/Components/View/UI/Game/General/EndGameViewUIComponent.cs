@@ -15,7 +15,7 @@ namespace Assets.Scripts.ECS.Component.UI.Game.General
 
         internal EndGameViewUIComponent(GameObject centerZone_GO)
         {
-            _textMeshProUGUI = centerZone_GO.transform.Find("TheEndGameZone").transform.Find("TheEndGameText").GetComponent<TextMeshProUGUI>();
+            _textMeshProUGUI = centerZone_GO.transform.Find("TheEndGameZone").transform.Find("TheEndGame_TextMP").GetComponent<TextMeshProUGUI>();
         }
 
         internal void SetActiveZone(bool isActive) => _textMeshProUGUI.transform.parent.gameObject.SetActive(isActive);
