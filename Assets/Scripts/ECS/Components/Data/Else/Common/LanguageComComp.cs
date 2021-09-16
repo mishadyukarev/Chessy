@@ -31,7 +31,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
 
                 _comLanguages[LanguageTypes.English].Add(ComLanguageTypes.Offline, "Offline");
                 _comLanguages[LanguageTypes.Russian].Add(ComLanguageTypes.Offline, "Одиночная");
-                _comLanguages[LanguageTypes.Chinese].Add(ComLanguageTypes.Offline, "离线");
+                _comLanguages[LanguageTypes.Chinese].Add(ComLanguageTypes.Offline, "单");
                 _comLanguages[LanguageTypes.Spanish].Add(ComLanguageTypes.Offline, "Solitaria");
 
                 _comLanguages[LanguageTypes.English].Add(ComLanguageTypes.Training, "Training");
