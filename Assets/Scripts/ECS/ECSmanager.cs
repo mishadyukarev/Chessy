@@ -22,7 +22,7 @@ namespace Assets.Scripts
         private EcsSystems _allGameSystems;
 
         private ComSysManager _comSysManag;
-        internal static MenuSystemManager MenuSysManag { get; private set; }
+        private MenuSystemManager _menuSysManag;
         private GameGeneralSysManager _gameGenSysManag;
         private GameMasterSystemManager _gameMasSysManag;
         private GameOtherSystemManager _gameOthSysmManag;
@@ -66,7 +66,7 @@ namespace Assets.Scripts
                     _allMenuSystems = new EcsSystems(_menuWorld);
 
                     _allMenuSystems.Add(new InitSpawnMenuSys());
-                    MenuSysManag = new MenuSystemManager(_menuWorld, _allMenuSystems);
+                    _menuSysManag = new MenuSystemManager(_menuWorld, _allMenuSystems);
                     _allMenuSystems.Init();
                     break;
 
@@ -75,7 +75,7 @@ namespace Assets.Scripts
                     {
                         _menuWorld.Destroy();
 
-                        MenuSysManag = default;
+                        _menuSysManag = default;
                         _allMenuSystems.Destroy();
                     }
 
@@ -118,7 +118,7 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    MenuSysManag.RunUpdate();
+                    _menuSysManag.RunUpdate();
                     break;
 
                 case SceneTypes.Game:

@@ -1,4 +1,7 @@
-﻿using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Workers;
@@ -9,29 +12,40 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
 {
     internal sealed class FillCellsForShiftSys : IEcsRunSystem
     {
-        private EcsFilter<AvailCellsForShiftComp> _availCellsForShiftFilter = default;
+        private EcsFilter<AvailCellsForShiftComp> _cellsForShiftFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerFrientComp, OwnerBotComponent> _cellUnitFilter = default;
 
         public void Run()
         {
-            ref var availCellsForShiftComp = ref _availCellsForShiftFilter.Get1(0);
+            ref var cellsForShiftCom = ref _cellsForShiftFilter.Get1(0);
 
 
             foreach (byte curIdxCell in _xyCellFilter)
             {
-                availCellsForShiftComp.Clear(true, curIdxCell);
-                availCellsForShiftComp.Clear(false, curIdxCell);
+                cellsForShiftCom.Clear(true, curIdxCell);
+                cellsForShiftCom.Clear(false, curIdxCell);
 
-                ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(curIdxCell);
-                ref var curOwnerCellUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
+                ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
+                ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
+                ref var curOwnFriendCom = ref _cellUnitFilter.Get3(curIdxCell);
 
 
-                if (curCellUnitDataCom.HaveUnit)
+                if (curUnitDatCom.HaveUnit)
                 {
-                    if (curOwnerCellUnitCom.HaveOwner)
+                    //if (GameModeTypeComp.IsGameModeType(GameModeTypes.FriendOff))
+                    //{
+                        
+                    //}
+
+                    //else
+                    //{
+
+                    //}
+
+                    if (curOwnUnitCom.HaveOwner)
                     {
                         var xyCellsAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdxCell));
 
@@ -42,13 +56,18 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                             if (!_cellEnvDataFilter.Get1(idxCellAround).HaveEnvironment(EnvironmentTypes.Mountain)
                                 && !_cellUnitFilter.Get1(idxCellAround).HaveUnit)
                             {
-                                if (curCellUnitDataCom.AmountSteps >= _cellEnvDataFilter.Get1(idxCellAround).NeedAmountSteps || _cellUnitFilter.Get1(curIdxCell).HaveMaxAmountSteps)
+                                if (curUnitDatCom.AmountSteps >= _cellEnvDataFilter.Get1(idxCellAround).NeedAmountSteps || _cellUnitFilter.Get1(curIdxCell).HaveMaxAmountSteps)
                                 {
-                                    availCellsForShiftComp.AddIdxCell(curOwnerCellUnitCom.IsMasterClient, curIdxCell, idxCellAround);
+                                    cellsForShiftCom.AddIdxCell(curOwnUnitCom.IsMasterClient, curIdxCell, idxCellAround);
                                 }
                             }
                         }
                     }
+
+                    //else if (curOwnFriendCom.IsMain)
+                    //{
+
+                    //}
                 }
             }
         }

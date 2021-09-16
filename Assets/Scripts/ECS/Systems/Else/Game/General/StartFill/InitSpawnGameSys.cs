@@ -185,7 +185,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new AvailCellsForAttackComp(true))
                 .Replace(new CellsGiveTWComp(true))
                 .Replace(new CellsTakeTWComp(true))
-                .Replace(new WhoseMoveComp())
+                .Replace(new WhoseMoveComp(true))
                 .Replace(new PhotonViewComp(true))
 
                 .Replace(new UpgradesBuildingsComponent(new Dictionary<BuildingTypes, Dictionary<bool, int>>()))

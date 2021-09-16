@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts;
-using Assets.Scripts.ECS.Components.View.Else.Game.General;
 using Assets.Scripts.ECS.Game.General.Systems;
 using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
 using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
@@ -12,18 +11,19 @@ using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.UpZone;
 using Leopotam.Ecs;
-using System;
-using UnityEngine;
 
 public sealed class GameGeneralSysManager : SystemAbstManager
 {
-    private RpcSys _rpcGameSys;
+    internal static RpcSys RpcGameSys { get; private set; }
+    internal static EcsSystems SyncCanvasSyss { get; private set; }
+    internal static EcsSystems SyncCellViewSyss { get; private set; }
+    internal static EcsSystems FillAvailCellsSyss { get; private set; }
 
     internal GameGeneralSysManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
     {
-        _rpcGameSys = ECSManager.PhotonViewAndRpc_GO.AddComponent<RpcSys>();
+        RpcGameSys = ECSManager.PhotonViewAndRpc_GO.AddComponent<RpcSys>();
 
-        var syncCellVisionSystems = new EcsSystems(gameWorld)
+        SyncCellViewSyss = new EcsSystems(gameWorld)
             .Add(new SyncCellUnitViewSys())
             .Add(new SyncCellSelUnitViewSys())
             .Add(new SyncCellUnitSupVisSystem())
@@ -38,7 +38,7 @@ public sealed class GameGeneralSysManager : SystemAbstManager
             .Add(new SoundSystem());
 
 
-        var syncCanvasSystems = new EcsSystems(gameWorld)
+        SyncCanvasSyss = new EcsSystems(gameWorld)
            ///left
            .Add(new BuildZoneUISys())
            .Add(new EnvironmentUISystem())
@@ -68,7 +68,7 @@ public sealed class GameGeneralSysManager : SystemAbstManager
             .Add(new KingZoneUISys());
 
 
-        var fillAvailCells = new EcsSystems(gameWorld)
+        FillAvailCellsSyss = new EcsSystems(gameWorld)
             .Add(new ClearAvailCellsSys())
             .Add(new FillCellsForAttackKingSys())
             .Add(new FillCellsForAttackPawnSys())
@@ -97,11 +97,11 @@ public sealed class GameGeneralSysManager : SystemAbstManager
 
             .Add(soundSystems)
 
-            .Add(fillAvailCells)
+            .Add(FillAvailCellsSyss)
 
-            .Add(syncCellVisionSystems)
-            .Add(syncCanvasSystems)
+            .Add(SyncCellViewSyss)
+            .Add(SyncCanvasSyss)
 
-            .Add(_rpcGameSys);
+            .Add(RpcGameSys);
     }
 }

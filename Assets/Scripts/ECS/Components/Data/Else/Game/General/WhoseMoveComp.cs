@@ -3,5 +3,7 @@
     internal struct WhoseMoveComp
     {
         internal bool IsMainMove;
+
+        internal WhoseMoveComp(bool isMainMove) => IsMainMove = isMainMove;
     }
 }

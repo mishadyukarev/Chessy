@@ -6,14 +6,14 @@ namespace Assets.Scripts.ECS.Manager.View.Menu
 {
     public sealed class MenuSystemManager : SystemAbstManager
     {
-        internal EvenPhotSceneMenuSys PhotonSceneMenuSystem { get; private set; }
+        internal static EvenPhotSceneMenuSys PhotSceneMenuSys { get; private set; }
 
         internal MenuSystemManager(EcsWorld menuWorld, EcsSystems allMenuSystems) : base(menuWorld, allMenuSystems)
         {
-            PhotonSceneMenuSystem = new EvenPhotSceneMenuSys();
+            PhotSceneMenuSys = new EvenPhotSceneMenuSys();
 
             InitOnlySystems
-                .Add(PhotonSceneMenuSystem);
+                .Add(PhotSceneMenuSys);
 
             RunOnlySystems
                 .Add(new SyncMenuSys());

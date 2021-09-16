@@ -8,9 +8,6 @@ namespace Assets.Scripts
 {
     public sealed class PhotonSceneSys : MonoBehaviourPunCallbacks, IEcsInitSystem
     {
-        private MenuSystemManager MenuSystemManager => ECSManager.MenuSysManag;
-
-
         public void Init()
         {
 
@@ -83,11 +80,11 @@ namespace Assets.Scripts
 
         public override void OnConnectedToMaster()
         {
-            MenuSystemManager.PhotonSceneMenuSystem.ConnectedToMaster();
+            MenuSystemManager.PhotSceneMenuSys.ConnectedToMaster();
         }
         public override void OnDisconnected(DisconnectCause cause)
         {
-            MenuSystemManager.PhotonSceneMenuSystem.ConnectUsingSettingsWithData(true);
+            MenuSystemManager.PhotSceneMenuSys.ConnectUsingSettingsWithData(true);
         }
     }
 }
