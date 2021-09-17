@@ -19,7 +19,7 @@ internal sealed class UniqueAbilitiesUISystem : IEcsRunSystem
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
-    private byte IdxSelCell => _selectorFilter.Get1(0).IdxSelectedCell;
+    private byte IdxSelCell => _selectorFilter.Get1(0).IdxSelCell;
 
     public void Run()
     {

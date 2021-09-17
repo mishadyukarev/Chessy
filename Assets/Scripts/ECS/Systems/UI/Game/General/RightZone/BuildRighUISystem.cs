@@ -15,7 +15,7 @@ internal sealed class BuildRighUISystem : IEcsRunSystem
 
     private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
     private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellBuildFilter = default;
-    private byte IdxSelCell => _selectorFilter.Get1(0).IdxSelectedCell;
+    private byte IdxSelCell => _selectorFilter.Get1(0).IdxSelCell;
 
     public void Run()
     {

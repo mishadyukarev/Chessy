@@ -4,9 +4,9 @@
     {
         None,
 
-        PublicOnline,
-        FriendOnline,
-        TrainingOff,
-        FriendOff,
+        PublicOn,
+        FriendOn,
+
+        Offline,
     }
 }

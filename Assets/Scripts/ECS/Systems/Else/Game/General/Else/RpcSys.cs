@@ -119,7 +119,6 @@ namespace Assets.Scripts
 
 
         public static void SetUniToMaster(byte idxCell, UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SetUnit, new object[] { idxCell, unitType });
-        public void SetUnitToGeneral(Player playerTo, bool isSetted) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SetUnit, new object[] { isSetted });
 
         public static void SoundToGeneral(RpcTarget rpcTarget, SoundEffectTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Sound, new object[] { soundEffectType });
         public static void SoundToGeneral(Player playerTo, SoundEffectTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Sound, new object[] { soundEffectType });
@@ -288,14 +287,6 @@ namespace Assets.Scripts
                     }
                     break;
 
-                case RpcGeneralTypes.SetUnit:
-                    if ((bool)objects[_curNumber++])
-                    {
-                        selectorCom.DefSelectedCell();
-                        selectorCom.SelUnitType = default;
-                    }
-                    break;
-
                 case RpcGeneralTypes.Sound:
                     var soundEffectType = (SoundEffectTypes)objects[_curNumber++];
                     _soundFilter.Get1(0).Play(soundEffectType);
@@ -410,10 +401,10 @@ namespace Assets.Scripts
 
 
             ref var invUnitsComp = ref _invUnitsFilter.Get1(0);
-            listObjects.Add(invUnitsComp.AmountUnitsInInventor(UnitTypes.King, false));
-            listObjects.Add(invUnitsComp.AmountUnitsInInventor(UnitTypes.Pawn, false));
-            listObjects.Add(invUnitsComp.AmountUnitsInInventor(UnitTypes.Rook, false));
-            listObjects.Add(invUnitsComp.AmountUnitsInInventor(UnitTypes.Bishop, false));
+            listObjects.Add(invUnitsComp.AmountUnitsInInv(UnitTypes.King, false));
+            listObjects.Add(invUnitsComp.AmountUnitsInInv(UnitTypes.Pawn, false));
+            listObjects.Add(invUnitsComp.AmountUnitsInInv(UnitTypes.Rook, false));
+            listObjects.Add(invUnitsComp.AmountUnitsInInv(UnitTypes.Bishop, false));
 
 
 

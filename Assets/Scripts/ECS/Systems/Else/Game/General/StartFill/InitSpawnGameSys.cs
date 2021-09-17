@@ -147,7 +147,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                          .Replace(new CellBuildViewComponent(cirCell_GO))
                          .Replace(new OwnerOnlineComp())
                          .Replace(new OwnerBotComponent())
-                         .Replace(new OwnerFrientComp());
+                         .Replace(new OwnerOfflineCom());
 
 
                     _curGameWorld.NewEntity()
@@ -156,7 +156,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                          .Replace(new CellUnitExtraViewComp(cirCell_GO))
                          .Replace(new OwnerOnlineComp())
                          .Replace(new OwnerBotComponent())
-                         .Replace(new OwnerFrientComp());
+                         .Replace(new OwnerOfflineCom());
 
                     ++curIdx;
                 }
@@ -185,7 +185,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new AvailCellsForAttackComp(true))
                 .Replace(new CellsGiveTWComp(true))
                 .Replace(new CellsTakeTWComp(true))
-                .Replace(new WhoseMoveComp(true))
+                .Replace(new WhoseMoveCom(true))
                 .Replace(new PhotonViewComp(true))
 
                 .Replace(new UpgradesBuildingsComponent(new Dictionary<BuildingTypes, Dictionary<bool, int>>()))
@@ -251,8 +251,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
             var isMaster = PhotonNetwork.IsMasterClient;
 
-            CameraComComp.SetRotForMaster(isMaster);
-            CameraComComp.SetPosForMaster(isMaster);
+            CameraComComp.SetPosRotClient(isMaster);
 
 
             if (isMaster)
@@ -401,7 +400,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
             if (PhotonNetwork.OfflineMode)
             {
-                if (GameModeTypeComp.IsGameModeType(GameModeTypes.TrainingOff))
+                if (false)
                 {
                     foreach (byte curIdxCell in _xyCellFilter)
                     {
@@ -447,16 +446,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                             curCellUnitDataComp.AmountHealth = 100;
                             curCellUnitDataComp.ConditionUnitType = ConditionUnitTypes.Protected;
                             curBotCellUnitComp.IsBot = true;
-
-
-
                         }
                     }
-                }
-
-                else if (GameModeTypeComp.GameModeType == GameModeTypes.FriendOff)
-                {
-
                 }
             }
         }

@@ -12,7 +12,7 @@ internal sealed class RightZoneUISystem : IEcsRunSystem
 
     public void Run()
     {
-        var idxSelectedCell = _selectorFilter.Get1(0).IdxSelectedCell;
+        var idxSelectedCell = _selectorFilter.Get1(0).IdxSelCell;
         ref var unitZoneViewUICom = ref _unitZoneFilter.Get1(0);
 
         ref var selCellUnitDataCom = ref _cellUnitFilter.Get1(idxSelectedCell);

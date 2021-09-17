@@ -39,7 +39,7 @@ internal sealed class RaySystem : IEcsRunSystem
 
                 if (one == two)
                 {
-                    selectorCom.IdxCurrentCell = idx;
+                    selectorCom.IdxCurCell = idx;
                     selectorCom.RaycastGettedType = RaycastGettedTypes.Cell;
                     return;
                 }

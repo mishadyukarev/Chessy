@@ -26,7 +26,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                 ref var curExtraUnitViewCom = ref _cellUnitViewFilter.Get2(idxCurCell);
 
 
-                if (selCom.IdxSelectedCell == idxCurCell)
+                if (selCom.IdxSelCell == idxCurCell)
                 {
                     if (curUnitDatCom.HaveUnit)
 
@@ -36,8 +36,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                             {
                                 if (curUnitDatCom.IsUnitType(UnitTypes.Rook))
                                 {
-                                    if (PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_Rotation(new Vector3(0, 0, -90));
-                                    else curMainUnitViewCom.Set_Rotation(new Vector3(0, 0, 90));
+                                    if (PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, -90));
+                                    else curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 90));
                                 }
                                 else
                                 {
@@ -51,8 +51,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                     curMainUnitViewCom.SetFlipX(false);
                     curExtraUnitViewCom.SetFlipX(true);
 
-                    if(PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_Rotation(new Vector3(0, 0, 0));
-                    else curMainUnitViewCom.Set_Rotation(new Vector3(0, 0, 180));
+                    if(PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 0));
+                    else curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 180));
                 }
             }
         }

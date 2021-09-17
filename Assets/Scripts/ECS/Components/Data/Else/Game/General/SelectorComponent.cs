@@ -24,14 +24,14 @@ public struct SelectorComponent
 
 
 
-    internal byte IdxCurrentCell { get; set; }
-    internal byte IdxSelectedCell { get; set; }
-    internal byte IdxPreviousCell { get; set; }
+    internal byte IdxCurCell { get; set; }
+    internal byte IdxSelCell { get; set; }
+    internal byte IdxPreCell { get; set; }
     internal byte IdxPreviousVisionCell { get; set; }
 
-    internal bool IsSelectedCell => IdxSelectedCell != 0;
-    internal bool IsStartDirectToCell => IdxCurrentCell == default;
-    internal void DefSelectedCell() => IdxSelectedCell = 0;
+    internal bool IsSelectedCell => IdxSelCell != 0;
+    internal bool IsStartDirectToCell => IdxCurCell == default;
+    internal void DefSelectedCell() => IdxSelCell = 0;
 
 
     internal SelectorComponent(ToolWeaponTypes toolAndWeaponType) : this() => ToolWeaponTypeForGiveTake = toolAndWeaponType;

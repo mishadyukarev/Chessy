@@ -4,6 +4,8 @@ using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Common;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
@@ -25,6 +27,8 @@ internal sealed class SelectorSystem : IEcsRunSystem
     private EcsFilter<AvailCellsForAttackComp> _availCellsForAttackFilter = default;
     private EcsFilter<AvailCellsForShiftComp> _availCellsForShiftFilter = default;
 
+    private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
+
     public void Run()
     {
         CellUnitDataComponent CellUnitDataCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
@@ -35,103 +39,114 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
 
 
-        ref var selectorCom = ref _selectorFilter.Get1(0);
-        ref var availCellsForAttackComp = ref _availCellsForAttackFilter.Get1(0);
-        ref var availCellsForShiftComp = ref _availCellsForShiftFilter.Get1(0);
+        ref var selCom = ref _selectorFilter.Get1(0);
+        ref var cellsAttackCom = ref _availCellsForAttackFilter.Get1(0);
+        ref var cellsShiftCom = ref _availCellsForShiftFilter.Get1(0);
         ref var soundEffectCom = ref _soundFilter.Get1(0);
 
 
         if (_inputFilter.Get1(0).IsClicked)
         {
-            if (selectorCom.RaycastGettedType == RaycastGettedTypes.UI)
+            if (selCom.RaycastGettedType == RaycastGettedTypes.UI)
             {
-                selectorCom.DefSelectedUnit();
+                selCom.DefSelectedUnit();
             }
 
-            else if (selectorCom.RaycastGettedType == RaycastGettedTypes.Cell)
+            else if (selCom.RaycastGettedType == RaycastGettedTypes.Cell)
             {
                 if (_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
                 {
-                    if (!selectorCom.IsSelectedCell)
+                    if (!selCom.IsSelectedCell)
                     {
-                        if (selectorCom.IdxPreviousCell != selectorCom.IdxSelectedCell)
+                        if (selCom.IdxPreCell != selCom.IdxSelCell)
                         {
-                            selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                            selCom.IdxSelCell = selCom.IdxCurCell;
                         }
                         else
                         {
-                            selectorCom.IdxSelectedCell = default;
+                            selCom.IdxSelCell = default;
                         }
 
 
-                        selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
+                        selCom.IdxPreCell = selCom.IdxSelCell;
                     }
 
                     else
                     {
-                        if (selectorCom.IdxSelectedCell != selectorCom.IdxCurrentCell)
-                            selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
+                        if (selCom.IdxSelCell != selCom.IdxCurCell)
+                            selCom.IdxPreCell = selCom.IdxSelCell;
 
-                        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                        selCom.IdxSelCell = selCom.IdxCurCell;
                     }
                 }
 
-                else if (selectorCom.IsSelectedUnit)
-                {
-                    RpcSys.SetUniToMaster(selectorCom.IdxCurrentCell, selectorCom.SelUnitType);
+                else if (selCom.IsSelectedUnit)
+                {  
+                    RpcSys.SetUniToMaster(selCom.IdxCurCell, selCom.SelUnitType);
+                    selCom.SelUnitType = default;
                 }
 
-                else if (selectorCom.IsCellClickType(CellClickTypes.PickFire))
+                else if (selCom.IsCellClickType(CellClickTypes.PickFire))
                 {
-                    //if(_availCellsForArcherArsonFilter.Get1(0).HaveIdxCell(PhotonNetwork.IsMasterClient, selectorCom.IdxCurrentCell))
-                    //{
-                    RpcSys.FireToMaster(selectorCom.IdxSelectedCell, selectorCom.IdxCurrentCell);
-                    //}
 
-                    selectorCom.CellClickType = default;
-                    selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                    RpcSys.FireToMaster(selCom.IdxSelCell, selCom.IdxCurCell);
+
+                    selCom.CellClickType = default;
+                    selCom.IdxSelCell = selCom.IdxCurCell;
                 }
 
-                else if (selectorCom.IsCellClickType(CellClickTypes.GiveTakeTW))
+                else if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
                 {
-                    if (CellUnitDataCom(selectorCom.IdxCurrentCell).IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
+                    if (CellUnitDataCom(selCom.IdxCurCell).IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
                     {
-                        RpcSys.GiveTakeToolWeapon(selectorCom.ToolWeaponTypeForGiveTake, selectorCom.IdxCurrentCell);
+                        RpcSys.GiveTakeToolWeapon(selCom.ToolWeaponTypeForGiveTake, selCom.IdxCurCell);
                     }
                     else
                     {
-                        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
-                        selectorCom.DefCellClickType();
+                        selCom.IdxSelCell = selCom.IdxCurCell;
+                        selCom.DefCellClickType();
                     }
                 }
 
-                else if (selectorCom.IsSelectedCell)
+                else if (selCom.IsSelectedCell)
                 {
-                    if (selectorCom.IdxSelectedCell != selectorCom.IdxCurrentCell)
-                        selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
+                    if (selCom.IdxSelCell != selCom.IdxCurCell)
+                        selCom.IdxPreCell = selCom.IdxSelCell;
 
-                    selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                    selCom.IdxSelCell = selCom.IdxCurCell;
 
 
-                    var b1 = availCellsForAttackComp.FindByIdx(AttackTypes.Simple, PhotonNetwork.IsMasterClient, selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
-                    var b2 = availCellsForAttackComp.FindByIdx(AttackTypes.Unique, PhotonNetwork.IsMasterClient, selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
+                    var isMainMove = false;
+
+                    if (PhotonNetwork.OfflineMode)
+                    {
+                        isMainMove = _whoseMoveFilter.Get1(0).IsMainMove;
+                    }
+                    else
+                    {
+                        isMainMove = PhotonNetwork.IsMasterClient;
+                    }
+
+                    var b1 = cellsAttackCom.FindByIdx(AttackTypes.Simple, isMainMove, selCom.IdxPreCell, selCom.IdxSelCell);
+                    var b2 = cellsAttackCom.FindByIdx(AttackTypes.Unique, isMainMove, selCom.IdxPreCell, selCom.IdxSelCell);
 
                     if (b1 || b2)
                     {
-                        RpcSys.AttackUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
+                        RpcSys.AttackUnitToMaster(selCom.IdxPreCell, selCom.IdxSelCell);
                     }
 
-                    if (availCellsForShiftComp.HaveIdxCell(PhotonNetwork.IsMasterClient, selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell))
+                    if (cellsShiftCom.HaveIdxCell(isMainMove, selCom.IdxPreCell, selCom.IdxSelCell))
                     {
-                        RpcSys.ShiftUnitToMaster(selectorCom.IdxPreviousCell, selectorCom.IdxSelectedCell);
+                        RpcSys.ShiftUnitToMaster(selCom.IdxPreCell, selCom.IdxSelCell);
                     }
-                    else if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveUnit)
+
+                    else if (CellUnitDataCom(selCom.IdxSelCell).HaveUnit)
                     {
-                        if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).HaveOwner)
+                        if (OwnerCellUnitCom(selCom.IdxSelCell).HaveOwner)
                         {
-                            if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).IsMine)
+                            if (OwnerCellUnitCom(selCom.IdxSelCell).IsMine)
                             {
-                                if (CellUnitDataCom(selectorCom.IdxSelectedCell).IsMelee)
+                                if (CellUnitDataCom(selCom.IdxSelCell).IsMelee)
                                 {
                                     soundEffectCom.Play(SoundEffectTypes.PickMelee);
                                 }
@@ -146,22 +161,22 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                 else
                 {
-                    if (selectorCom.IdxPreviousCell != selectorCom.IdxSelectedCell || selectorCom.IdxPreviousCell == 0)
+                    if (selCom.IdxPreCell != selCom.IdxSelCell || selCom.IdxPreCell == 0)
                     {
-                        selectorCom.IdxSelectedCell = selectorCom.IdxCurrentCell;
+                        selCom.IdxSelCell = selCom.IdxCurCell;
                     }
                     else
                     {
-                        selectorCom.DefSelectedCell();
+                        selCom.DefSelectedCell();
                     }
 
-                    if (CellUnitDataCom(selectorCom.IdxSelectedCell).HaveUnit)
+                    if (CellUnitDataCom(selCom.IdxSelCell).HaveUnit)
                     {
-                        if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).HaveOwner)
+                        if (OwnerCellUnitCom(selCom.IdxSelCell).HaveOwner)
                         {
-                            if (OwnerCellUnitCom(selectorCom.IdxSelectedCell).IsMine)
+                            if (OwnerCellUnitCom(selCom.IdxSelCell).IsMine)
                             {
-                                if (CellUnitDataCom(selectorCom.IdxSelectedCell).IsMelee)
+                                if (CellUnitDataCom(selCom.IdxSelCell).IsMelee)
                                 {
                                     soundEffectCom.Play(SoundEffectTypes.PickMelee);
                                 }
@@ -173,40 +188,40 @@ internal sealed class SelectorSystem : IEcsRunSystem
                         }
                     }
 
-                    selectorCom.IdxPreviousCell = selectorCom.IdxSelectedCell;
+                    selCom.IdxPreCell = selCom.IdxSelCell;
                 }
 
             }
 
             else
             {
-                selectorCom.IdxSelectedCell = 0;
-                selectorCom.DefSelectedUnit();
+                selCom.IdxSelCell = 0;
+                selCom.DefSelectedUnit();
 
-                selectorCom.DefSelectedCell();
+                selCom.DefSelectedCell();
             }
         }
 
         else
         {
-            if (selectorCom.RaycastGettedType == RaycastGettedTypes.UI)
+            if (selCom.RaycastGettedType == RaycastGettedTypes.UI)
             {
             }
 
-            else if (selectorCom.RaycastGettedType == RaycastGettedTypes.Cell)
+            else if (selCom.RaycastGettedType == RaycastGettedTypes.Cell)
             {
-                if (selectorCom.IsSelectedUnit)
+                if (selCom.IsSelectedUnit)
                 {
-                    if (!CellUnitDataCom(selectorCom.IdxCurrentCell).HaveUnit || !CellUnitDataCom(selectorCom.IdxCurrentCell).IsVisibleUnit(PhotonNetwork.IsMasterClient))
+                    if (!CellUnitDataCom(selCom.IdxCurCell).HaveUnit || !CellUnitDataCom(selCom.IdxCurCell).IsVisibleUnit(PhotonNetwork.IsMasterClient))
                     {
-                        if (selectorCom.IsStartDirectToCell)
+                        if (selCom.IsStartDirectToCell)
                         {
-                            selectorCom.IdxPreviousVisionCell = selectorCom.IdxCurrentCell;
-                            selectorCom.IdxCurrentCell = default;
+                            selCom.IdxPreviousVisionCell = selCom.IdxCurCell;
+                            selCom.IdxCurCell = default;
                         }
                         else
                         {
-                            selectorCom.IdxPreviousVisionCell = selectorCom.IdxCurrentCell;
+                            selCom.IdxPreviousVisionCell = selCom.IdxCurCell;
                         }
                     }
                 }

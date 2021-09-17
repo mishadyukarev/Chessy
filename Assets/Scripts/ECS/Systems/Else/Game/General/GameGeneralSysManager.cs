@@ -15,13 +15,13 @@ using Leopotam.Ecs;
 public sealed class GameGeneralSysManager : SystemAbstManager
 {
     internal static RpcSys RpcGameSys { get; private set; }
-    internal static EcsSystems SyncCanvasSyss { get; private set; }
+    internal static EcsSystems SyncCanvasViewSyss { get; private set; }
     internal static EcsSystems SyncCellViewSyss { get; private set; }
     internal static EcsSystems FillAvailCellsSyss { get; private set; }
 
     internal GameGeneralSysManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
     {
-        RpcGameSys = ECSManager.PhotonViewAndRpc_GO.AddComponent<RpcSys>();
+        RpcGameSys = ECSManager.RpcView_GO.AddComponent<RpcSys>();
 
         SyncCellViewSyss = new EcsSystems(gameWorld)
             .Add(new SyncCellUnitViewSys())
@@ -38,7 +38,7 @@ public sealed class GameGeneralSysManager : SystemAbstManager
             .Add(new SoundSystem());
 
 
-        SyncCanvasSyss = new EcsSystems(gameWorld)
+        SyncCanvasViewSyss = new EcsSystems(gameWorld)
            ///left
            .Add(new BuildZoneUISys())
            .Add(new EnvironmentUISystem())
@@ -89,7 +89,7 @@ public sealed class GameGeneralSysManager : SystemAbstManager
 
 
         RunOnlySystems
-            .Add(new VisibilityUnitsMasterSystem())
+            .Add(new VisibUnitsMastSys())
 
             .Add(new InputSystem())
             .Add(new RaySystem())
@@ -100,7 +100,7 @@ public sealed class GameGeneralSysManager : SystemAbstManager
             .Add(FillAvailCellsSyss)
 
             .Add(SyncCellViewSyss)
-            .Add(SyncCanvasSyss)
+            .Add(SyncCanvasViewSyss)
 
             .Add(RpcGameSys);
     }

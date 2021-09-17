@@ -18,7 +18,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Sync.Unit
 
             if (selCom.IsSelectedUnit)
             {
-                var idxCurCell = selCom.IdxCurrentCell;
+                var idxCurCell = selCom.IdxCurCell;
                 var idxPreCell = selCom.IdxPreviousVisionCell;
 
 

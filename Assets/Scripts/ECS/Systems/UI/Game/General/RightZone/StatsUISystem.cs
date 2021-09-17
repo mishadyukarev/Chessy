@@ -15,7 +15,7 @@ internal sealed class StatsUISystem : IEcsRunSystem
 
     public void Run()
     {
-        var idxSelCell = _selectorFilter.Get1(0).IdxSelectedCell;
+        var idxSelCell = _selectorFilter.Get1(0).IdxSelCell;
 
         ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
         ref var selOwnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);

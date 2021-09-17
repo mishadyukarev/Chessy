@@ -15,7 +15,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
             availCellsForSetUnit.Add(false, new List<byte>());
         }
 
-        internal List<byte> GetListAvailCellsCopy(bool isMasterKey) => _availCellsForSetUnit[isMasterKey].Copy();
+        internal List<byte> GetListCells(bool isMasterKey) => _availCellsForSetUnit[isMasterKey].Copy();
         internal bool HaveIdxCell(bool isMasterKey, byte idxCell) => _availCellsForSetUnit[isMasterKey].Contains(idxCell);
         internal bool RemoveIdxCell(bool isMasterKey, byte idxCell) => _availCellsForSetUnit[isMasterKey].Remove(idxCell);
         internal void AddIdxCell(bool isMasterKey, byte idxCellValue) => _availCellsForSetUnit[isMasterKey].Add(idxCellValue);

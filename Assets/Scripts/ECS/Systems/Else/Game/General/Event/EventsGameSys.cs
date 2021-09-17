@@ -5,6 +5,7 @@ using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
@@ -26,9 +27,10 @@ namespace Assets.Scripts
         private EcsFilter<KingZoneViewUIComp> _kingZoneUIFilter = default;
         private EcsFilter<GiveTakeZoneViewUIComp> _giveTakeZoneUIFilter = default;
 
-        private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
+        private EcsFilter<InventorUnitsComponent> _invUnitsFilter = default;
+        private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
 
-        private byte IdxSelectedCell => _selectorFilter.Get1(0).IdxSelectedCell;
+        private byte IdxSelectedCell => _selectorFilter.Get1(0).IdxSelCell;
         private bool IsDoned(bool key) => _donerUIFilter.Get1(0).IsDoned(key);
 
         public void Init()
@@ -87,21 +89,41 @@ namespace Assets.Scripts
 
         private void GetUnit(UnitTypes unitType)
         {
-            _selectorFilter.Get1(0).DefCellClickType();
-            _selectorFilter.Get1(0).IdxCurrentCell = default;
-            _selectorFilter.Get1(0).IdxPreviousVisionCell = default;
-            _selectorFilter.Get1(0).DefSelectedCell();
-            _takerUIFilter.Get1(0).ResetCurTimer(unitType);
+            ref var selCom = ref _selectorFilter.Get1(0);
+            ref var invUnitCom = ref _invUnitsFilter.Get1(0);
+            ref var takerUnitDatCom = ref _takerUIFilter.Get1(0);
 
-            if (!IsDoned(PhotonNetwork.IsMasterClient))
+            selCom.DefCellClickType();
+            selCom.IdxCurCell = default;
+            selCom.IdxPreviousVisionCell = default;
+            selCom.DefSelectedCell();
+            takerUnitDatCom.ResetCurTimer(unitType);
+
+
+            if (PhotonNetwork.OfflineMode)
             {
-                if (_inventorUnitsFilter.Get1(0).HaveUnitInInventor(unitType, PhotonNetwork.IsMasterClient))
+                if (invUnitCom.HaveUnitInInventor(unitType, _whoseMoveFilter.Get1(0).IsMainMove))
                 {
-                    _selectorFilter.Get1(0).SelUnitType = unitType;
+                    selCom.SelUnitType = unitType;
                 }
                 else
                 {
-                    _takerUIFilter.Get1(0).ActiveNeedCreateButton(unitType, true);
+                    takerUnitDatCom.ActiveNeedCreateButton(unitType, true);
+                }
+            }
+
+            else
+            {
+                if (!IsDoned(PhotonNetwork.IsMasterClient))
+                {
+                    if (invUnitCom.HaveUnitInInventor(unitType, PhotonNetwork.IsMasterClient))
+                    {
+                        selCom.SelUnitType = unitType;
+                    }
+                    else
+                    {
+                        takerUnitDatCom.ActiveNeedCreateButton(unitType, true);
+                    }
                 }
             }
         }

@@ -21,7 +21,7 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
     {
         ref var selCom = ref _selectorFilter.Get1(0);
 
-        var idxSelCell = selCom.IdxSelectedCell;
+        var idxSelCell = selCom.IdxSelCell;
 
         ref var cellEnvZoneDataUICom = ref _envirZoneUIFilter.Get1(0);
         ref var envViewUICom = ref _envirZoneUIFilter.Get2(0);

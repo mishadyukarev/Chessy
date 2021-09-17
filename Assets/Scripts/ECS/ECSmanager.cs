@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.ECS.Game.General.Systems.StartFill;
 using Assets.Scripts.ECS.Manager.View.Menu;
 using Assets.Scripts.ECS.System.Common;
+using Assets.Scripts.ECS.System.Data.Common;
 using Assets.Scripts.ECS.System.View.Menu;
 using Leopotam.Ecs;
 using Photon.Pun;
@@ -28,7 +29,7 @@ namespace Assets.Scripts
         private GameOtherSystemManager _gameOthSysmManag;
 
 
-        internal static GameObject PhotonViewAndRpc_GO { get; private set; }
+        internal static GameObject RpcView_GO { get; private set; }
 
         #endregion
 
@@ -38,6 +39,7 @@ namespace Assets.Scripts
             _comWorld = new EcsWorld();
             _allComSystems = new EcsSystems(_comWorld);
 
+            _allComSystems.Add(new SpawnInitComSys());
             _comSysManag = new ComSysManager(_comWorld, _allComSystems);
             _allComSystems.Init();
         }
@@ -55,7 +57,7 @@ namespace Assets.Scripts
                         _gameWorld.Destroy();
 
                         
-                        GameObject.Destroy(PhotonViewAndRpc_GO);
+                        GameObject.Destroy(RpcView_GO);
                         _gameGenSysManag = default;
                         _gameMasSysManag = default;
                         _gameOthSysmManag = default;
@@ -79,7 +81,7 @@ namespace Assets.Scripts
                         _allMenuSystems.Destroy();
                     }
 
-                    PhotonViewAndRpc_GO = new GameObject();
+                    RpcView_GO = new GameObject("RpcView");
 
                     _gameWorld = new EcsWorld();
                     _allGameSystems = new EcsSystems(_gameWorld);

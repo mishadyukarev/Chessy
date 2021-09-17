@@ -13,7 +13,7 @@ namespace Assets.Scripts
             _gamePosCamera = gamePosCamera;
         }
 
-        internal static void SetPosForMaster(bool isMasterClient)
+        internal static void SetPosRotClient(bool isMasterClient)
         {
             if (isMasterClient)
             {
@@ -22,11 +22,8 @@ namespace Assets.Scripts
             else
             {
                 _camera.transform.position = Main.Instance.transform.position + _gamePosCamera + new Vector3(0, 0.5f, 0);
-            } 
-        }
+            }
 
-        internal static void SetRotForMaster(bool isMasterClient)
-        {
             if (isMasterClient)
             {
                 _camera.transform.eulerAngles = new Vector3(0, 0, 0);
@@ -34,7 +31,7 @@ namespace Assets.Scripts
             else
             {
                 _camera.transform.eulerAngles = new Vector3(0, 0, 180);
-            }   
+            }
         }
     }
 }

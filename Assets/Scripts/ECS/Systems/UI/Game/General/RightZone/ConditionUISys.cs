@@ -14,7 +14,7 @@ internal sealed class ConditionUISys : IEcsRunSystem
 
     public void Run()
     {
-        var idxSelCell = _selectorFilter.Get1(0).IdxSelectedCell;
+        var idxSelCell = _selectorFilter.Get1(0).IdxSelCell;
         ref var unitZoneUICom = ref _unitZoneUIFilter.Get1(0);
 
         ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);

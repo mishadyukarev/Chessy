@@ -12,7 +12,6 @@ namespace Assets.Scripts.ECS.System.Common
             _photSceneSys = Main.Instance.gameObject.AddComponent<PhotonSceneSys>();
 
             InitOnlySystems
-                .Add(new InitSpawnComSys())
                 .Add(_photSceneSys);
         }
     }

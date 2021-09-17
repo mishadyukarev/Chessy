@@ -16,8 +16,8 @@ internal sealed class BuildZoneUISys : IEcsRunSystem
     {
         ref var selCom = ref _selectorFilter.Get1(0);
 
-        ref var selUnitDataCom = ref _cellBuildFilter.Get1(selCom.IdxSelectedCell);
-        ref var selOwnUnitCom = ref _cellBuildFilter.Get2(selCom.IdxSelectedCell);
+        ref var selUnitDataCom = ref _cellBuildFilter.Get1(selCom.IdxSelCell);
+        ref var selOwnUnitCom = ref _cellBuildFilter.Get2(selCom.IdxSelCell);
 
         ref var buildZoneViewCom = ref _buildZoneUIFilter.Get1(0);
 

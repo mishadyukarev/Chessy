@@ -28,7 +28,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
         {
             if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
             {
-                var idxSelCell = _selectorFilter.Get1(0).IdxSelectedCell;
+                var idxSelCell = _selectorFilter.Get1(0).IdxSelCell;
 
                 if (buildButtonType == BuildingButtonTypes.First)
                 {

@@ -3,9 +3,10 @@ using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
 using Photon.Pun;
-using System;
 using System.Collections.Generic;
 
 internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
@@ -14,10 +15,15 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
     private EcsFilter<ForDonerMasCom> _donerFilter = default;
     private EcsFilter<MotionsDataUIComponent> _motionsFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerDataUIFilter = default;
-    private EcsFilter<InventorUnitsComponent> _inventUnitsFilter = default;
+    private EcsFilter<InventorUnitsComponent> _invUnitsFilter = default;
+
+    private EcsFilter<CellViewComponent> _cellViewFilter = default;
+    private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
+
 
     private Dictionary<bool, bool> _doneOrNotFromStartAnyUpdate = new Dictionary<bool, bool>();
 
+    private bool _isMasterMotion = true;
 
     public void Init()
     {
@@ -33,17 +39,40 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
 
         var sender = infoMasCom.FromInfo.Sender;
 
-        if (!_inventUnitsFilter.Get1(0).HaveUnitInInventor(UnitTypes.King, sender.IsMasterClient))
+        ref var whoseMoveCom = ref _whoseMoveFilter.Get1(0);
+
+        if (!_invUnitsFilter.Get1(0).HaveUnitInInventor(UnitTypes.King, sender.IsMasterClient))
         {
             RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
             if (PhotonNetwork.OfflineMode)
             {
-                GameMasterSystemManager.UpdateMotion.Run();
+                if (_isMasterMotion)
+                {
+                    _isMasterMotion = !_isMasterMotion;
 
-                RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-                donerDataUICom.SetDoned(true, default);
-                donerDataUICom.SetDoned(false, default);
+                    CameraComComp.SetPosRotClient(_isMasterMotion);
+
+                    whoseMoveCom.IsMainMove = _isMasterMotion;
+
+                    foreach (byte curIdxCell in _cellViewFilter) 
+                        _cellViewFilter.Get1(curIdxCell).SetRotForClient(_isMasterMotion);
+
+                }
+                else
+                {
+                    _isMasterMotion = !_isMasterMotion;
+
+                    CameraComComp.SetPosRotClient(_isMasterMotion);
+
+                    whoseMoveCom.IsMainMove = _isMasterMotion;
+
+                    foreach (byte curIdxCell in _cellViewFilter)
+                        _cellViewFilter.Get1(curIdxCell).SetRotForClient(_isMasterMotion);
+
+                    GameMasterSystemManager.UpdateMotion.Run();
+                    RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.MasterClient);
+                }
             }
             else
             {
@@ -62,7 +91,6 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
 
                         RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
-                        donerDataUICom.SetDoned(true, default);
                         donerDataUICom.SetDoned(false, default);
 
                         _doneOrNotFromStartAnyUpdate[true] = true;
@@ -81,17 +109,12 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
                         RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
                         donerDataUICom.SetDoned(true, default);
-                        donerDataUICom.SetDoned(false, default);
 
                         _doneOrNotFromStartAnyUpdate[false] = true;
                         donerDataUICom.SetDoned(false, true);
                     }
                 }
             }
-        }
-        else
-        {
-            //RpcGameSystem.SimpleMistakeToGeneral(MistakeTypes.) MistakeUnitToGeneral(sender);
         }
     }
 }

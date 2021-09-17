@@ -12,6 +12,6 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
 
         internal CellViewComponent(GameObject cellView_GO) => _cell_GO = cellView_GO;
 
-        internal void SetRotForClient(bool isMaster) => _cell_GO.transform.rotation = isMaster ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
+        internal void SetRotForClient(bool isMaster) => _cell_GO.transform.parent.rotation = isMaster ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
     }
 }

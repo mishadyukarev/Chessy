@@ -58,8 +58,7 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
         }
 
         internal void SetFlipX(bool isActive) => _main_SR.flipX = isActive;
-        internal void SetFlipY(bool isActive) => _main_SR.flipY = isActive;
-        internal void Set_Rotation(Vector3 rotation) => _main_SR.transform.rotation = Quaternion.Euler(rotation);
+        internal void Set_LocRotEuler(Vector3 rotation) => _main_SR.transform.localEulerAngles = rotation;
     }
 }
 

@@ -10,7 +10,7 @@ namespace Assets.Scripts.ECS.Components.View.Else.Game.General
 
         internal PhotonViewComp(bool needNew)
         {
-            PhotonView = ECSManager.PhotonViewAndRpc_GO.AddComponent<PhotonView>();
+            PhotonView = ECSManager.RpcView_GO.AddComponent<PhotonView>();
 
             if (PhotonNetwork.IsMasterClient)
             {
