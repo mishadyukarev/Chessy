@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
@@ -23,16 +24,20 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 
                 if (curUnitDatCom.HaveUnit)
                 {
-                    if (curUnitDatCom.IsVisibleUnit(PhotonNetwork.IsMasterClient))
+                    var isMaster = false;
+                    if (PhotonNetwork.OfflineMode) isMaster = WhoseMoveCom.IsMainMove;
+                    else isMaster = PhotonNetwork.IsMasterClient;
+
+                    if (curUnitDatCom.IsVisibleUnit(isMaster))
                     {
                         curMainUnitViewCom.Enable_SR();
 
-                        if (curUnitDatCom.Is(UnitTypes.King))
+                        if (curUnitDatCom.IsUnit(UnitTypes.King))
                         {
                             curMainUnitViewCom.SetKing_Sprite();
                         }
 
-                        else if (curUnitDatCom.Is(UnitTypes.Pawn))
+                        else if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
                         {
                             curMainUnitViewCom.SetPawn_Spriter();
 
@@ -48,7 +53,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                         {
                             if (curUnitDatCom.HaveArcherWeapon)
                             {
-                                curMainUnitViewCom.SetArcher_Sprite(curUnitDatCom.UnitType, curUnitDatCom.ArcherWeaponType);
+                                curMainUnitViewCom.SetArcher_Sprite(curUnitDatCom.UnitType, curUnitDatCom.ArcherWeapType);
                             }
                             else
                             {

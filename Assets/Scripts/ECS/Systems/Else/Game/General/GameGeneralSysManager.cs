@@ -17,10 +17,10 @@ using Leopotam.Ecs;
 
 public sealed class GameGeneralSysManager : SystemAbstManager
 {
-    internal static RpcSys RpcGameSys { get; private set; }
-    internal static EcsSystems SyncCanvasViewSyss { get; private set; }
-    internal static EcsSystems SyncCellViewSyss { get; private set; }
-    internal static EcsSystems FillAvailCellsSyss { get; private set; }
+    internal RpcSys RpcGameSys { get; private set; }
+    internal EcsSystems SyncCanvasViewSyss { get; private set; }
+    internal EcsSystems SyncCellViewSyss { get; private set; }
+    internal EcsSystems FillAvailCellsSyss { get; private set; }
 
     internal GameGeneralSysManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
     {
@@ -97,7 +97,7 @@ public sealed class GameGeneralSysManager : SystemAbstManager
 
 
         RunOnlySystems
-            .Add(new VisibUnitsMastSys())
+            .Add(new VisibUnitsSys())
 
             .Add(new InputSystem())
             .Add(new RaySystem())

@@ -55,7 +55,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
             if (fromUnitDatCom.AmountSteps < 0) fromUnitDatCom.ResetAmountSteps();
 
 
-            toUnitDatCom.ArcherWeaponType = fromUnitDatCom.ArcherWeaponType;
+            toUnitDatCom.ArcherWeapType = fromUnitDatCom.ArcherWeapType;
             toUnitDatCom.ExtraTWPawnType = fromUnitDatCom.ExtraTWPawnType;
             toUnitDatCom.UnitType = fromUnitDatCom.UnitType;
             toUnitDatCom.AmountHealth = fromUnitDatCom.AmountHealth;

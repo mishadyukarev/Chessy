@@ -39,7 +39,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                 ref var cellUnitDataComForGive = ref _cellUnitFilter.Get1(neededIdxCell);
                 ref var ownerCellUnitComForGive = ref _cellUnitFilter.Get2(neededIdxCell);
 
-                if (cellUnitDataComForGive.Is(UnitTypes.Pawn))
+                if (cellUnitDataComForGive.IsUnit(UnitTypes.Pawn))
                 {
                     if (cellUnitDataComForGive.HaveExtraToolWeaponPawn)
                     {
@@ -90,7 +90,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                             {
                                 if (cellUnitDataComForGive.HaveMaxAmountSteps)
                                 {
-                                    if (cellUnitDataComForGive.ArcherWeaponType != toolWeapTypeForGive)
+                                    if (cellUnitDataComForGive.ArcherWeapType != toolWeapTypeForGive)
                                     {
                                         if (toolWeapTypeForGive.IsTool())
                                         {

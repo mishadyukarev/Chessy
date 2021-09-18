@@ -15,8 +15,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
         private EcsFilter<CellBlocksViewComponent> _cellBlocksFilter = default;
 
-        private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
-
         public void Run()
         {
             foreach (byte idx in _cellUnitFilter)
@@ -24,7 +22,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                 ref var curUnitDataCom = ref _cellUnitFilter.Get1(idx);
                 ref var curUnitViewCom = ref _cellUnitViewFilter.Get1(idx);
 
-                ref var curOnlineUnitCom = ref _cellUnitFilter.Get2(idx);
+                ref var curOnUnitCom = ref _cellUnitFilter.Get2(idx);
                 ref var curOffUnitCom = ref _cellUnitFilter.Get3(idx);
                 ref var curBotUnitCom = ref _cellUnitFilter.Get4(idx);
 
@@ -39,7 +37,11 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                 blocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
 
 
-                if (curUnitDataCom.IsVisibleUnit(PhotonNetwork.IsMasterClient))
+                var isMaster = false;
+                if (PhotonNetwork.OfflineMode) isMaster = WhoseMoveCom.IsMainMove;
+                else isMaster = PhotonNetwork.IsMasterClient;
+
+                if (curUnitDataCom.IsVisibleUnit(isMaster))
                 {
                     if (curUnitDataCom.HaveUnit)
                     {
@@ -59,13 +61,13 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                             blocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
                         }
 
-                        if (curUnitDataCom.IsConditionType(CondUnitTypes.Protected))
+                        if (curUnitDataCom.IsCondType(CondUnitTypes.Protected))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
                             blocksViewCom.SetColor(CellBlockTypes.Condition, Color.yellow);
                         }
 
-                        else if (curUnitDataCom.IsConditionType(CondUnitTypes.Relaxed))
+                        else if (curUnitDataCom.IsCondType(CondUnitTypes.Relaxed))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
                             blocksViewCom.SetColor(CellBlockTypes.Condition, Color.green);
@@ -76,9 +78,9 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                             blocksViewCom.DisableBlockSR(CellBlockTypes.Condition);
                         }
 
-                        if (curOnlineUnitCom.HaveOwner)
+                        if (curOnUnitCom.HaveOwner)
                         {
-                            if (curOnlineUnitCom.IsMasterClient)
+                            if (curOnUnitCom.IsMasterClient)
                             {
                                 barsViewCom.SetColorHp(Color.blue);
                                 blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.blue);
@@ -90,33 +92,17 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                             }
                         }
 
-                        else if (curOffUnitCom.LocalPlayerType != default)
+                        else if (curOffUnitCom.HaveLocalPlayer)
                         {
-                            if (WhoseMoveCom.IsMainMove)
+                            if (curOffUnitCom.IsMainMaster)
                             {
-                                if (curOffUnitCom.Is(PlayerTypes.First))
-                                {
-                                    barsViewCom.SetColorHp(Color.blue);
-                                    blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.blue);
-                                }
-                                else
-                                {
-                                    barsViewCom.SetColorHp(Color.red);
-                                    blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.red);
-                                }
+                                barsViewCom.SetColorHp(Color.blue);
+                                blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.blue);
                             }
                             else
                             {
-                                if (curOffUnitCom.Is(PlayerTypes.First))
-                                {
-                                    barsViewCom.SetColorHp(Color.red);
-                                    blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.red);
-                                }
-                                else
-                                {
-                                    barsViewCom.SetColorHp(Color.blue);
-                                    blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.blue);
-                                }
+                                barsViewCom.SetColorHp(Color.red);
+                                blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.red);
                             }
                         }
 

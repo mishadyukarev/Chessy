@@ -8,7 +8,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Cell
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
 
-        private EcsFilter<AvailCellsForAttackComp> _availCellsForAttackFilter = default;
+        private EcsFilter<CellsForAttackCom> _availCellsForAttackFilter = default;
         private EcsFilter<CellsArsonArcherComp> _cellsArsonFilter = default;
 
         public void Run()

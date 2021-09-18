@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -30,7 +31,11 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Sync.Unit
 
                 if (curUnitDatCom.HaveUnit)
                 {
-                    if (curUnitDatCom.IsVisibleUnit(PhotonNetwork.IsMasterClient))
+                    var isMaster = false;
+                    if (PhotonNetwork.OfflineMode) isMaster = WhoseMoveCom.IsMainMove;
+                    else isMaster = PhotonNetwork.IsMasterClient;
+
+                    if (curUnitDatCom.IsVisibleUnit(isMaster))
                     {
                         preVisMainUnitViewCom.Enable_SR();
 

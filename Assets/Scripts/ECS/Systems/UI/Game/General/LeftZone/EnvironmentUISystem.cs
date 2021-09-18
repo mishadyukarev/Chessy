@@ -44,9 +44,9 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
 
         envViewUICom.SetTextEnvirInfo(LanguageComComp.GetText(GameLanguageTypes.EnvironmentInfo));
 
-        envViewUICom.SetTextResour(ResourceTypes.Food, LanguageComComp.GetText(GameLanguageTypes.Fertilizer) + ": " + selCellEnvDataCom.GetAmountResources(EnvironmentTypes.Fertilizer));
-        envViewUICom.SetTextResour(ResourceTypes.Wood, LanguageComComp.GetText(GameLanguageTypes.Wood) + ": " + selCellEnvDataCom.GetAmountResources(EnvironmentTypes.AdultForest));
-        envViewUICom.SetTextResour(ResourceTypes.Ore, LanguageComComp.GetText(GameLanguageTypes.Ore) + ": " + selCellEnvDataCom.GetAmountResources(EnvironmentTypes.Hill));
+        envViewUICom.SetTextResour(ResourceTypes.Food, LanguageComComp.GetText(GameLanguageTypes.Fertilizer) + ": " + selCellEnvDataCom.GetAmountResources(EnvirTypes.Fertilizer));
+        envViewUICom.SetTextResour(ResourceTypes.Wood, LanguageComComp.GetText(GameLanguageTypes.Wood) + ": " + selCellEnvDataCom.GetAmountResources(EnvirTypes.AdultForest));
+        envViewUICom.SetTextResour(ResourceTypes.Ore, LanguageComComp.GetText(GameLanguageTypes.Ore) + ": " + selCellEnvDataCom.GetAmountResources(EnvirTypes.Hill));
 
 
 
@@ -58,31 +58,31 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
 
             if (_envirZoneUIFilter.Get1(0).IsActivatedInfo)
             {
-                if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.Fertilizer))
+                if (curCellEnvDataCom.HaveEnvir(EnvirTypes.Fertilizer))
                 {
                     curCellBarsViewCom.EnableSR(CellBarTypes.Food);
 
-                    curCellBarsViewCom.SetScale(CellBarTypes.Food, new Vector3((float)curCellEnvDataCom.GetAmountResources(EnvironmentTypes.Fertilizer) / (float)(curCellEnvDataCom.MaxAmountResources(EnvironmentTypes.Fertilizer) + curCellEnvDataCom.MaxAmountResources(EnvironmentTypes.Fertilizer)), 0.15f, 1));
+                    curCellBarsViewCom.SetScale(CellBarTypes.Food, new Vector3((float)curCellEnvDataCom.GetAmountResources(EnvirTypes.Fertilizer) / (float)(curCellEnvDataCom.MaxAmountResources(EnvirTypes.Fertilizer) + curCellEnvDataCom.MaxAmountResources(EnvirTypes.Fertilizer)), 0.15f, 1));
                 }
                 else
                 {
                     curCellBarsViewCom.DisableSR(CellBarTypes.Food);
                 }
 
-                if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                if (curCellEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
                 {
                     curCellBarsViewCom.EnableSR(CellBarTypes.Wood);
-                    curCellBarsViewCom.SetScale(CellBarTypes.Wood, new Vector3((float)curCellEnvDataCom.GetAmountResources(EnvironmentTypes.AdultForest) / (float)curCellEnvDataCom.MaxAmountResources(EnvironmentTypes.AdultForest), 0.15f, 1));
+                    curCellBarsViewCom.SetScale(CellBarTypes.Wood, new Vector3((float)curCellEnvDataCom.GetAmountResources(EnvirTypes.AdultForest) / (float)curCellEnvDataCom.MaxAmountResources(EnvirTypes.AdultForest), 0.15f, 1));
                 }
                 else
                 {
                     curCellBarsViewCom.DisableSR(CellBarTypes.Wood);
                 }
 
-                if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.Hill))
+                if (curCellEnvDataCom.HaveEnvir(EnvirTypes.Hill))
                 {
                     curCellBarsViewCom.EnableSR(CellBarTypes.Ore);
-                    curCellBarsViewCom.SetScale(CellBarTypes.Ore, new Vector3((float)curCellEnvDataCom.GetAmountResources(EnvironmentTypes.Hill) / (float)curCellEnvDataCom.MaxAmountResources(EnvironmentTypes.Hill), 0.15f, 1));
+                    curCellBarsViewCom.SetScale(CellBarTypes.Ore, new Vector3((float)curCellEnvDataCom.GetAmountResources(EnvirTypes.Hill) / (float)curCellEnvDataCom.MaxAmountResources(EnvirTypes.Hill), 0.15f, 1));
                 }
                 else
                 {

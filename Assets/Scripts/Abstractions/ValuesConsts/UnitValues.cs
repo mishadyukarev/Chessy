@@ -10,9 +10,9 @@
         public const int STANDART_AMOUNT_HEALTH_BISHOP = 50;
 
         public const int FOR_ADD_HEALTH_KING = (int)(STANDART_AMOUNT_HEALTH_KING * 0.2f);
-        public const int FOR_ADD_HEALTH_PAWN = (int)(STANDART_AMOUNT_HEALTH_PAWN * 0.5f);
-        public const int FOR_ADD_HEALTH_ROOK = (int)(STANDART_AMOUNT_HEALTH_ROOK * 0.5f);
-        public const int FOR_ADD_HEALTH_BISHOP = (int)(STANDART_AMOUNT_HEALTH_BISHOP * 0.5f);
+        public const int FOR_ADD_HEALTH_PAWN = (int)(STANDART_AMOUNT_HEALTH_PAWN * 1f);
+        public const int FOR_ADD_HEALTH_ROOK = (int)(STANDART_AMOUNT_HEALTH_ROOK * 1f);
+        public const int FOR_ADD_HEALTH_BISHOP = (int)(STANDART_AMOUNT_HEALTH_BISHOP * 1f);
 
         #endregion
 
@@ -21,7 +21,7 @@
 
         public const int SIMPLE_POWER_DAMAGE_KING = 100;
         public const int SIMPLE_POWER_DAMAGE_PAWN = 50;
-        public const int SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP = 50;
+        public const int SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP = 60;
 
         #endregion
 

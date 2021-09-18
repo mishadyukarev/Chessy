@@ -26,11 +26,11 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                 ref var selUnitDatCom = ref _cellUnitFilt.Get1(selCom.IdxSelCell);
 
 
-                if (selUnitDatCom.Is(UnitTypes.Pawn))
+                if (selUnitDatCom.IsUnit(UnitTypes.Pawn))
                 {
                     ref var selOffUnitCom = ref _cellUnitFilt.Get3(selCom.IdxSelCell);
 
-                    if (selOffUnitCom.HaveLocPlayer)
+                    if (selOffUnitCom.HaveLocalPlayer)
                     {
                         if (selOffUnitCom.IsMine)
                         {

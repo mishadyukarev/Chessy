@@ -2,7 +2,9 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
+using Photon.Pun;
 using Photon.Realtime;
 
 internal sealed class MeltOreMasterSystem : IEcsRunSystem
@@ -10,21 +12,25 @@ internal sealed class MeltOreMasterSystem : IEcsRunSystem
     private EcsFilter<InfoMasCom> _infoMasFilter = default;
     private EcsFilter<InventorResourcesComponent> _invResFilt = default;
 
-    private Player Sender => _infoMasFilter.Get1(0).FromInfo.Sender;
-
     public void Run()
     {
+        var sender = _infoMasFilter.Get1(0).FromInfo.Sender;
         ref var invResCom = ref _invResFilt.Get1(0);
 
-        if (invResCom.CanMeltOre(Sender, out bool[] haves))
+        var isMastSender = false;
+        if (PhotonNetwork.OfflineMode) isMastSender = WhoseMoveCom.IsMainMove;
+        else isMastSender = sender.IsMasterClient;
+
+
+        if (invResCom.CanMeltOre(isMastSender, out bool[] haves))
         {
-            invResCom.BuyMeltOre(Sender);
-            RpcSys.SoundToGeneral(Sender, SoundEffectTypes.Melting);
+            invResCom.BuyMeltOre(isMastSender);
+            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Melting);
         }
         else
         {
-            RpcSys.SoundToGeneral(Sender, SoundEffectTypes.Mistake);
-            RpcSys.MistakeEconomyToGeneral(Sender, haves);
+            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+            RpcSys.MistakeEconomyToGeneral(sender, haves);
         }
     }
 }

@@ -16,8 +16,8 @@ internal sealed class BuilderMastSys : IEcsRunSystem
     private EcsFilter<InfoMasCom> _infoFilter = default;
     private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
 
-    private EcsFilter<XyCellComponent> _xyCellFilter = default;
-    private EcsFilter<CellViewComponent> _cellViewFilter = default;
+    private EcsFilter<XyCellComponent> _xyCellFilt = default;
+    private EcsFilter<CellViewComponent> _cellViewFilt = default;
     private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerOfflineCom> _cellBuildFilter = default;
     private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
@@ -44,6 +44,16 @@ internal sealed class BuilderMastSys : IEcsRunSystem
         ref var curFireCom = ref _cellFireFilter.Get1(idxForBuild);
 
 
+        var isMastMain = false;
+        if (PhotonNetwork.OfflineMode)
+        {
+            isMastMain = WhoseMoveCom.IsMainMove;
+        }
+        else
+        {
+            isMastMain = sender.IsMasterClient;
+        }
+
 
         if (curBuildDatCom.HaveBuild)
         {
@@ -64,11 +74,11 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                     {
                         bool haveNearBorder = false;
 
-                        foreach (var xy in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(idxForBuild)))
+                        foreach (var xy in CellSpaceSupport.TryGetXyAround(_xyCellFilt.GetXyCell(idxForBuild)))
                         {
-                            var curIdx = _xyCellFilter.GetIdxCell(xy);
+                            var curIdx = _xyCellFilt.GetIdxCell(xy);
 
-                            if (!_cellViewFilter.Get1(curIdx).IsActiveParent)
+                            if (!_cellViewFilt.Get1(curIdx).IsActiveParent)
                             {
                                 haveNearBorder = true;
                             }
@@ -92,10 +102,10 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
                             curUnitDatCom.ResetAmountSteps();
 
-                            curFireCom.DisableFire();
+                            curFireCom.DisFire();
 
-                            if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.AdultForest)) curCellEnvCom.ResetEnvironment(EnvironmentTypes.AdultForest);
-                            if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.Fertilizer)) curCellEnvCom.ResetEnvironment(EnvironmentTypes.Fertilizer);
+                            if (curCellEnvCom.HaveEnvir(EnvirTypes.AdultForest)) curCellEnvCom.ResetEnvironment(EnvirTypes.AdultForest);
+                            if (curCellEnvCom.HaveEnvir(EnvirTypes.Fertilizer)) curCellEnvCom.ResetEnvironment(EnvirTypes.Fertilizer);
                         }
 
                         else
@@ -115,26 +125,34 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                 case BuildingTypes.Farm:
                     if (curUnitDatCom.HaveMinAmountSteps)
                     {
-                        if (!curCellEnvCom.HaveEnvironment(EnvironmentTypes.AdultForest) && !curCellEnvCom.HaveEnvironment(EnvironmentTypes.YoungForest))
+                        if (!curCellEnvCom.HaveEnvir(EnvirTypes.AdultForest) && !curCellEnvCom.HaveEnvir(EnvirTypes.YoungForest))
                         {
-                            if (invResCom.CanCreateNewBuilding(forBuildType, sender.IsMasterClient, out bool[] haves))
+                            if (invResCom.CanCreateBuild(forBuildType, isMastMain, out bool[] haves))
                             {
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                                if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.Fertilizer))
+                                if (curCellEnvCom.HaveEnvir(EnvirTypes.Fertilizer))
                                 {
-                                    curCellEnvCom.AddAmountResources(EnvironmentTypes.Fertilizer, curCellEnvCom.MaxAmountResources(EnvironmentTypes.Fertilizer));
+                                    curCellEnvCom.AddAmountRes(EnvirTypes.Fertilizer, curCellEnvCom.MaxAmountResources(EnvirTypes.Fertilizer));
                                 }
                                 else
                                 {
-                                    curCellEnvCom.SetNewEnvironment(EnvironmentTypes.Fertilizer);
+                                    curCellEnvCom.SetNewEnvir(EnvirTypes.Fertilizer);
                                 }
 
-                                invResCom.BuyNewBuilding(forBuildType, sender.IsMasterClient);
+                                invResCom.BuyBuild(forBuildType, isMastMain);
 
                                 curBuildDatCom.BuildType = forBuildType;
-                                curOnBuildCom.Owner = sender;
+
+                                if (PhotonNetwork.OfflineMode)
+                                {
+                                    curOffBuildCom.LocalPlayerType = WhoseMoveCom.PlayerType;
+                                }
+                                else
+                                {
+                                    curOnBuildCom.Owner = sender;
+                                }
 
                                 curUnitDatCom.TakeAmountSteps();
 
@@ -163,18 +181,26 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
 
                 case BuildingTypes.Mine:
-                    if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.Hill) && curCellEnvCom.HaveResources(EnvironmentTypes.Hill))
+                    if (curCellEnvCom.HaveEnvir(EnvirTypes.Hill) && curCellEnvCom.HaveResources(EnvirTypes.Hill))
                     {
-                        if (invResCom.CanCreateNewBuilding(forBuildType, sender.IsMasterClient, out bool[] haves))
+                        if (invResCom.CanCreateBuild(forBuildType, isMastMain, out bool[] haves))
                         {
                             if (curUnitDatCom.HaveMaxAmountSteps)
                             {
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                                invResCom.BuyNewBuilding(forBuildType, sender.IsMasterClient);
+                                invResCom.BuyBuild(forBuildType, isMastMain);
 
                                 curBuildDatCom.BuildType = forBuildType;
-                                curOnBuildCom.Owner = sender;
+
+                                if (PhotonNetwork.OfflineMode)
+                                {
+                                    curOffBuildCom.LocalPlayerType = WhoseMoveCom.PlayerType;
+                                }
+                                else
+                                {
+                                    curOnBuildCom.Owner = sender;
+                                }
 
                                 curUnitDatCom.ResetAmountSteps();
                             }

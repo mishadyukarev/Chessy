@@ -16,9 +16,9 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SyncCellVision
                 ref var cellEnvrDataCom = ref _cellEnvFilter.Get1(idx);
                 ref var cellEnvrViewCom = ref _cellEnvFilter.Get2(idx);
 
-                for (EnvironmentTypes curEnvirType = (EnvironmentTypes)1; curEnvirType < (EnvironmentTypes)Enum.GetNames(typeof(EnvironmentTypes)).Length; curEnvirType++)
+                for (EnvirTypes curEnvirType = (EnvirTypes)1; curEnvirType < (EnvirTypes)Enum.GetNames(typeof(EnvirTypes)).Length; curEnvirType++)
                 {
-                    if (cellEnvrDataCom.HaveEnvironment(curEnvirType))
+                    if (cellEnvrDataCom.HaveEnvir(curEnvirType))
                     {
                         cellEnvrViewCom.EnableSR(curEnvirType);
                     }

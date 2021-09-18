@@ -39,7 +39,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 
             if (cellUnitDataComForGive.Is(new[] { UnitTypes.Bishop, UnitTypes.Rook }))
             {
-                if (cellUnitDataComForGive.ArcherWeaponType.Is(ToolWeaponTypes.Crossbow))
+                if (cellUnitDataComForGive.ArcherWeapType.Is(ToolWeaponTypes.Crossbow))
                 {
                     if (cellUnitDataComForGive.HaveMaxAmountHealth)
                     {
@@ -51,7 +51,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                             }
 
                             inventWeaponsComp.AddAmountWeapons(ownerCellUnitComForGive.IsMasterClient, ToolWeaponTypes.Crossbow);
-                            cellUnitDataComForGive.ArcherWeaponType = ToolWeaponTypes.Bow;
+                            cellUnitDataComForGive.ArcherWeapType = ToolWeaponTypes.Bow;
 
                             cellUnitDataComForGive.ResetAmountSteps();
 
@@ -88,7 +88,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                                 {
                                     inventWeaponsComp.TakeAmountWeapons(ownerCellUnitComForGive.IsMasterClient, toolWeaponTypeForGive);
 
-                                    cellUnitDataComForGive.ArcherWeaponType = toolWeaponTypeForGive;
+                                    cellUnitDataComForGive.ArcherWeapType = toolWeaponTypeForGive;
                                     cellUnitDataComForGive.ResetAmountSteps();
                                 }
 
@@ -98,7 +98,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                                     {
                                         inventResCom.TakeAmountResources(ResourceTypes.Iron, ownerCellUnitComForGive.IsMasterClient, _ironCostForCrossbow);
 
-                                        cellUnitDataComForGive.ArcherWeaponType = toolWeaponTypeForGive;
+                                        cellUnitDataComForGive.ArcherWeapType = toolWeaponTypeForGive;
                                         cellUnitDataComForGive.ResetAmountSteps();
 
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickArcher);

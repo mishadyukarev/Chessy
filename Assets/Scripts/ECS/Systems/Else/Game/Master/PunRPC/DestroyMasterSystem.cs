@@ -49,7 +49,7 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
             }
             curUnitDataCom.ResetAmountSteps();
 
-            if (curBuildDataCom.IsBuildType(BuildingTypes.Farm)) curEnvDataCom.ResetEnvironment(EnvironmentTypes.Fertilizer);
+            if (curBuildDataCom.IsBuildType(BuildingTypes.Farm)) curEnvDataCom.ResetEnvironment(EnvirTypes.Fertilizer);
 
             curBuildDataCom.DefBuildType();
         }

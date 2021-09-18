@@ -34,7 +34,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems
 
                             if (curOwnUnitCom.IsMine)
                             {
-                                if (curUnitDatCom.Is(UnitTypes.Rook))
+                                if (curUnitDatCom.IsUnit(UnitTypes.Rook))
                                 {
                                     if (PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, -90));
                                     else curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 90));

@@ -63,7 +63,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
                             {
                                 if (selOnUnitCom.IsMine) canCome = true;
                             }
-                            else if (selOffUnitCom.HaveLocPlayer)
+                            else if (selOffUnitCom.HaveLocalPlayer)
                             {
                                 if (selOffUnitCom.IsMine) canCome = true;
                             }

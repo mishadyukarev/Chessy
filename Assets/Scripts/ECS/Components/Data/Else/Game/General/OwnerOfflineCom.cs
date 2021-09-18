@@ -5,7 +5,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
     internal struct OwnerOfflineCom
     {
         internal PlayerTypes LocalPlayerType;
-        internal bool IsMastMain
+        internal bool IsMainMaster
         {
             get
             {
@@ -17,12 +17,11 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
                 if (value == true) LocalPlayerType = PlayerTypes.First;
                 else LocalPlayerType = PlayerTypes.Second;
             }
-
         }
 
         internal bool Is(PlayerTypes localPlayerType) => LocalPlayerType == localPlayerType;
 
-        internal bool HaveLocPlayer => LocalPlayerType != default;
+        internal bool HaveLocalPlayer => LocalPlayerType != default;
         internal bool IsMine
         {
             get

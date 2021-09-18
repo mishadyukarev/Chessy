@@ -14,9 +14,8 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
     private EcsFilter<SelectorCom> _selectorFilter = default;
     private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
     private EcsFilter<AvailCellsForShiftComp> _cellsShiftFilter = default;
-    private EcsFilter<CellsArsonArcherComp> _availCellsForArcherArsonFilter = default;
-    private EcsFilter<AvailCellsForAttackComp> _cellsSimpleFilter = default;
-    private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
+    private EcsFilter<CellsArsonArcherComp> _cellsArcherArsonFilt = default;
+    private EcsFilter<CellsForAttackCom> _cellsSimpleFilter = default;
 
     public void Run()
     {
@@ -53,7 +52,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                     {
                         if (curOwnUnitCom.IsMine)
                         {
-                            if (curUnitDatCom.Is(UnitTypes.Pawn))
+                            if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
                             {
                                 curSupViewCom.EnableSR();
                                 curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
@@ -87,7 +86,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                     {
                         if (selCom.IsCellClickType(CellClickTypes.PickFire))
                         {
-                            foreach (var curIdxCell in _availCellsForArcherArsonFilter.Get1(0).GetListCopy(PhotonNetwork.IsMasterClient, selCom.IdxSelCell))
+                            foreach (var curIdxCell in _cellsArcherArsonFilt.Get1(0).GetListCopy(PhotonNetwork.IsMasterClient, selCom.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.FireSelector);
@@ -119,13 +118,34 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
 
                 else if (selOffUnitCom.LocalPlayerType != default)
                 {
-                    if (selCom.IsCellClickType(CellClickTypes.None))
+                    if (selCom.IsCellClickType(CellClickTypes.PickFire))
+                    {
+                        foreach (var curIdxCell in _cellsArcherArsonFilt.Get1(0).GetListCopy(isMainMove, selCom.IdxSelCell))
+                        {
+                            _supViewFilter.Get1(curIdxCell).EnableSR();
+                            _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.FireSelector);
+                        }
+                    }
+
+                    else if (selCom.IsCellClickType(CellClickTypes.None))
                     {
                         foreach (var curIdxCell in cellsShiftCom.GetListCopy(isMainMove, selCom.IdxSelCell))
                         {
                             _supViewFilter.Get1(curIdxCell).EnableSR();
                             _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.Shift);
                         }
+                    }
+
+                    foreach (var curIdxCell in _cellsSimpleFilter.Get1(0).GetListCopy(AttackTypes.Simple, isMainMove, selCom.IdxSelCell))
+                    {
+                        _supViewFilter.Get1(curIdxCell).EnableSR();
+                        _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.SimpleAttack);
+                    }
+
+                    foreach (var curIdxCell in _cellsSimpleFilter.Get1(0).GetListCopy(AttackTypes.Unique, isMainMove, selCom.IdxSelCell))
+                    {
+                        _supViewFilter.Get1(curIdxCell).EnableSR();
+                        _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.UniqueAttack);
                     }
                 }
             }

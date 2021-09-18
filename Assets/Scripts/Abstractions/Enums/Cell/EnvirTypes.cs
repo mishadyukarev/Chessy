@@ -1,4 +1,4 @@
-﻿public enum EnvironmentTypes
+﻿public enum EnvirTypes
 {
     None,
 

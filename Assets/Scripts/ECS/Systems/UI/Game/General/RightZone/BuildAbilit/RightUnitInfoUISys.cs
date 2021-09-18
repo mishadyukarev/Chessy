@@ -11,7 +11,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
     {
         private EcsFilter<SelectorCom> _selFilt = default;
         private EcsFilter<BuildAbilitUICom> _buildAbilUIFilt = default;
-        private EcsFilter<CondUnitUICom> _condUnitUIFilter = default;
+        private EcsFilter<CondUnitUICom> _condUnitUIFilt = default;
         private EcsFilter<UniqueAbiltUICom> _uniqueAbilUIFilt = default;
 
         private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilt = default;
@@ -19,7 +19,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
         public void Run()
         {
             ref var selCom = ref _selFilt.Get1(0);
-            ref var condUnitUICom = ref _condUnitUIFilter.Get1(0);
+            ref var condUnitUICom = ref _condUnitUIFilt.Get1(0);
             ref var uniqueAbilUICom = ref _uniqueAbilUIFilt.Get1(0);
             ref var buildAbilUICom = ref _buildAbilUIFilt.Get1(0);
 
@@ -31,11 +31,11 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
                 ref var selUnitDatCom = ref _cellUnitFilt.Get1(selCom.IdxSelCell);
 
 
-                if (selUnitDatCom.Is(UnitTypes.Pawn))
+                if (selUnitDatCom.HaveUnit)
                 {
                     ref var selOffUnitCom = ref _cellUnitFilt.Get3(selCom.IdxSelCell);
 
-                    if (selOffUnitCom.HaveLocPlayer)
+                    if (selOffUnitCom.HaveLocalPlayer)
                     {
                         if (selOffUnitCom.IsMine)
                         {

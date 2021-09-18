@@ -89,8 +89,7 @@ namespace Assets.Scripts
 
         public static void ReadyToMaster(in bool isReady) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Ready, new object[] { isReady });
 
-        public static void DoneToMaster(bool isDone) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[] { isDone });
-        public static void ActiveAmountMotionUIToGeneral(Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
+        public static void DoneToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[default]);
         public static void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
 
         public static void UpgradeBuildingToMaster(BuildingTypes buildingType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeBuild, new object[] { buildingType });
@@ -107,7 +106,7 @@ namespace Assets.Scripts
         public static void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { mistakeType });
 
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
-        public static void SeedEnvironmentToMaster(byte idxCell, EnvironmentTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
+        public static void SeedEnvironmentToMaster(byte idxCell, EnvirTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
         public static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, idxCell });
 
@@ -143,7 +142,6 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.Done:
-                    _donerFilter.Get1(0).NeedActiveDoner = (bool)objects[0];
                     break;
 
                 case RpcMasterTypes.Build:
@@ -184,7 +182,7 @@ namespace Assets.Scripts
 
                 case RpcMasterTypes.SeedEnvironment:
                     _seedingFilter.Get1(0).IdxForSeeding = (byte)objects[0];
-                    _seedingFilter.Get1(0).EnvTypeForSeeding = (EnvironmentTypes)objects[1];
+                    _seedingFilter.Get1(0).EnvTypeForSeeding = (EnvirTypes)objects[1];
                     break;
 
                 case RpcMasterTypes.Fire:
@@ -350,7 +348,7 @@ namespace Assets.Scripts
                 listObjects.Add(curCellUnitDataComp.AmountHealth);
                 listObjects.Add(curCellUnitDataComp.AmountSteps);
                 listObjects.Add(curCellUnitDataComp.CondUnitType);
-                listObjects.Add(curCellUnitDataComp.ArcherWeaponType);
+                listObjects.Add(curCellUnitDataComp.ArcherWeapType);
                 listObjects.Add(curCellUnitDataComp.ExtraTWPawnType);
 
                 ref var curOwnerCellUnitComp = ref _cellUnitFilter.Get2(curIdxCell);
@@ -371,17 +369,17 @@ namespace Assets.Scripts
 
 
                 ref var curCellEnvDataComp = ref _cellEnvrFilter.Get1(curIdxCell);
-                listObjects.Add(curCellEnvDataComp.HaveEnvironment(EnvironmentTypes.Fertilizer));
-                listObjects.Add(curCellEnvDataComp.HaveEnvironment(EnvironmentTypes.YoungForest));
-                listObjects.Add(curCellEnvDataComp.HaveEnvironment(EnvironmentTypes.AdultForest));
-                listObjects.Add(curCellEnvDataComp.HaveEnvironment(EnvironmentTypes.Hill));
-                listObjects.Add(curCellEnvDataComp.HaveEnvironment(EnvironmentTypes.Mountain));
+                listObjects.Add(curCellEnvDataComp.HaveEnvir(EnvirTypes.Fertilizer));
+                listObjects.Add(curCellEnvDataComp.HaveEnvir(EnvirTypes.YoungForest));
+                listObjects.Add(curCellEnvDataComp.HaveEnvir(EnvirTypes.AdultForest));
+                listObjects.Add(curCellEnvDataComp.HaveEnvir(EnvirTypes.Hill));
+                listObjects.Add(curCellEnvDataComp.HaveEnvir(EnvirTypes.Mountain));
 
-                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvironmentTypes.Fertilizer));
-                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvironmentTypes.YoungForest));
-                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvironmentTypes.AdultForest));
-                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvironmentTypes.Hill));
-                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvironmentTypes.Mountain));
+                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvirTypes.Fertilizer));
+                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvirTypes.YoungForest));
+                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvirTypes.AdultForest));
+                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvirTypes.Hill));
+                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvirTypes.Mountain));
 
 
 
@@ -551,7 +549,7 @@ namespace Assets.Scripts
                 curCellUnitDataComp.AmountHealth = (int)objects[_curNumber++];
                 curCellUnitDataComp.AmountSteps = (int)objects[_curNumber++];
                 curCellUnitDataComp.CondUnitType = (CondUnitTypes)objects[_curNumber++];
-                curCellUnitDataComp.ArcherWeaponType = (ToolWeaponTypes)objects[_curNumber++];
+                curCellUnitDataComp.ArcherWeapType = (ToolWeaponTypes)objects[_curNumber++];
                 curCellUnitDataComp.ExtraTWPawnType = (ToolWeaponTypes)objects[_curNumber++];
 
                 ref var curOwnerCellUnitComp = ref _cellUnitFilter.Get2(curIdxCell);
@@ -570,17 +568,17 @@ namespace Assets.Scripts
 
 
                 ref var curCellEnvrDataComp = ref _cellEnvrFilter.Get1(curIdxCell);
-                curCellEnvrDataComp.SetHaveEnvironment(EnvironmentTypes.Fertilizer, (bool)objects[_curNumber++]);
-                curCellEnvrDataComp.SetHaveEnvironment(EnvironmentTypes.YoungForest, (bool)objects[_curNumber++]);
-                curCellEnvrDataComp.SetHaveEnvironment(EnvironmentTypes.AdultForest, (bool)objects[_curNumber++]);
-                curCellEnvrDataComp.SetHaveEnvironment(EnvironmentTypes.Hill, (bool)objects[_curNumber++]);
-                curCellEnvrDataComp.SetHaveEnvironment(EnvironmentTypes.Mountain, (bool)objects[_curNumber++]);
+                curCellEnvrDataComp.SetHaveEnvironment(EnvirTypes.Fertilizer, (bool)objects[_curNumber++]);
+                curCellEnvrDataComp.SetHaveEnvironment(EnvirTypes.YoungForest, (bool)objects[_curNumber++]);
+                curCellEnvrDataComp.SetHaveEnvironment(EnvirTypes.AdultForest, (bool)objects[_curNumber++]);
+                curCellEnvrDataComp.SetHaveEnvironment(EnvirTypes.Hill, (bool)objects[_curNumber++]);
+                curCellEnvrDataComp.SetHaveEnvironment(EnvirTypes.Mountain, (bool)objects[_curNumber++]);
 
-                curCellEnvrDataComp.SetAmountResources(EnvironmentTypes.Fertilizer, (int)objects[_curNumber++]);
-                curCellEnvrDataComp.SetAmountResources(EnvironmentTypes.YoungForest, (int)objects[_curNumber++]);
-                curCellEnvrDataComp.SetAmountResources(EnvironmentTypes.AdultForest, (int)objects[_curNumber++]);
-                curCellEnvrDataComp.SetAmountResources(EnvironmentTypes.Hill, (int)objects[_curNumber++]);
-                curCellEnvrDataComp.SetAmountResources(EnvironmentTypes.Mountain, (int)objects[_curNumber++]);
+                curCellEnvrDataComp.SetAmountResources(EnvirTypes.Fertilizer, (int)objects[_curNumber++]);
+                curCellEnvrDataComp.SetAmountResources(EnvirTypes.YoungForest, (int)objects[_curNumber++]);
+                curCellEnvrDataComp.SetAmountResources(EnvirTypes.AdultForest, (int)objects[_curNumber++]);
+                curCellEnvrDataComp.SetAmountResources(EnvirTypes.Hill, (int)objects[_curNumber++]);
+                curCellEnvrDataComp.SetAmountResources(EnvirTypes.Mountain, (int)objects[_curNumber++]);
 
 
 

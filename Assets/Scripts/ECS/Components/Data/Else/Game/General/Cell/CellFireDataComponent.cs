@@ -3,7 +3,7 @@
     internal struct CellFireDataComponent
     {
         internal bool HaveFire { get; set; }
-        internal bool DisableFire() => HaveFire = false;
-        internal bool EnableFire() => HaveFire = true;
+        internal bool DisFire() => HaveFire = default;
+        internal bool EnabFire() => HaveFire = true;
     }
 }

@@ -5,11 +5,11 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells
 {
-    internal struct AvailCellsForAttackComp
+    internal struct CellsForAttackCom
     {
         private Dictionary<AttackTypes, Dictionary<bool, Dictionary<byte, List<byte>>>> _availCellsForSimpleAttack;
 
-        internal AvailCellsForAttackComp(bool needNew) : this()
+        internal CellsForAttackCom(bool needNew) : this()
         {
             if (needNew)
             {

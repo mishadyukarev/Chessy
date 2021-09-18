@@ -52,6 +52,6 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
         internal void SetMainText(ResourceTypes resourcesType, string text) => _amountResources_TextMP[resourcesType].text = text;
         internal void SetMainColor(ResourceTypes resourcesType, Color color) => _amountResources_TextMP[resourcesType].color = color;
 
-        internal void SetAddingText(ResourceTypes resourceType, string text) => _amountAddingResources_TextMP[resourceType].text = text;
+        internal void SetAddText(ResourceTypes resourceType, string text) => _amountAddingResources_TextMP[resourceType].text = text;
     }
 }

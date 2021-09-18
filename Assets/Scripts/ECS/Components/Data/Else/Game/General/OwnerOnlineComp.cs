@@ -10,6 +10,6 @@ internal struct OwnerOnlineComp
     internal bool IsMine => Owner.IsLocal;
 
     internal void SetOwner(Player newOwner) => Owner = newOwner;
-    internal void ResetOwner() => Owner = default;
+    internal void DefOwner() => Owner = default;
     internal bool IsHim(Player player) => ActorNumber == player.ActorNumber;
 }

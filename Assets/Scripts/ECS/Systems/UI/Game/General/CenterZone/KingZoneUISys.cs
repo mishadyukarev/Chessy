@@ -27,7 +27,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
             else isMaster = PhotonNetwork.IsMasterClient;
 
 
-            if (_invUnitFil.Get1(0).HaveUnitInInventor(UnitTypes.King, isMaster))
+            if (_invUnitFil.Get1(0).HaveUnitInInv(UnitTypes.King, isMaster))
             {
                 kingZoneViewCom.SetTextKingBut(LanguageComComp.GetText(GameLanguageTypes.SetKing));
                 kingZoneViewCom.EnableZone();

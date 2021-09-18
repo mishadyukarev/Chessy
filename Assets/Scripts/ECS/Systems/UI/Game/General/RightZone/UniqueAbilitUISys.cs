@@ -20,23 +20,27 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
-    private byte IdxSelCell => _selectorFilter.Get1(0).IdxSelCell;
-
     public void Run()
     {
+        var idxSelCell = _selectorFilter.Get1(0).IdxSelCell;
+
         ref var unitZoneViewCom = ref _unitZoneUIFilter.Get1(0);
 
-        ref var selUnitDatCom = ref _cellUnitFilter.Get1(IdxSelCell);
-        ref var selOnUnitCom = ref _cellUnitFilter.Get2(IdxSelCell);
-        ref var selOffUnitCom = ref _cellUnitFilter.Get3(IdxSelCell);
-        ref var selBotUnitCom = ref _cellUnitFilter.Get4(IdxSelCell);
+        ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
+        ref var selOnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
+        ref var selOffUnitCom = ref _cellUnitFilter.Get3(idxSelCell);
+        ref var selBotUnitCom = ref _cellUnitFilter.Get4(idxSelCell);
 
-        ref var selEnvDataCom = ref _cellEnvFilter.Get1(IdxSelCell);
+        ref var selEnvDataCom = ref _cellEnvFilter.Get1(idxSelCell);
 
-        ref var selFireDatCom = ref _cellFireFilter.Get1(IdxSelCell);
+        ref var selFireDatCom = ref _cellFireFilter.Get1(idxSelCell);
 
 
         unitZoneViewCom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.UniqueAbilities));
+
+        unitZoneViewCom.SetActive_Button(UniqueButtonTypes.First, false);
+        unitZoneViewCom.SetActive_Button(UniqueButtonTypes.Second, false);
+       
 
 
         if (selUnitDatCom.HaveUnit)
@@ -50,7 +54,7 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
                     canCome = true;
                 }
             }
-            else if (selOffUnitCom.HaveLocPlayer)
+            else if (selOffUnitCom.HaveLocalPlayer)
             {
                 if (selOffUnitCom.IsMine)
                 {
@@ -60,22 +64,10 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
 
             if (canCome)
             {
-                unitZoneViewCom.RemoveAllList(UniqueButtonTypes.First);
-                unitZoneViewCom.RemoveAllList(UniqueButtonTypes.Second);
-                unitZoneViewCom.RemoveAllList(UniqueButtonTypes.Third);
-
-                unitZoneViewCom.SetActive_Button(UniqueButtonTypes.Second, false);
-                unitZoneViewCom.SetActive_Button(UniqueButtonTypes.Third, false);
-
-
-                if (selUnitDatCom.Is(UnitTypes.King))
+                if (selUnitDatCom.IsUnit(UnitTypes.King))
                 {
                     unitZoneViewCom.SetActive_Button(UniqueButtonTypes.First, true);
-
-                    unitZoneViewCom.AddListener_Button(UniqueButtonTypes.First, CircularAttackKing);
-
                     unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.CircularAttack));
-
                     unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
                 }
                 else
@@ -86,9 +78,8 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
 
                         unitZoneViewCom.SetActive_Button(UniqueButtonTypes.First, true);
 
-                        if (selEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                        if (selEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
                         {
-                            unitZoneViewCom.AddListener_Button(UniqueButtonTypes.First, delegate { Fire(IdxSelCell, IdxSelCell); });
                             if (selFireDatCom.HaveFire)
                             {
                                 unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.PutOutFire));
@@ -101,7 +92,6 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
                         }
                         else
                         {
-                            unitZoneViewCom.AddListener_Button(UniqueButtonTypes.First, delegate { SeedEnvironment(EnvironmentTypes.YoungForest); });
                             unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.SeedForest));
                             unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(0.5f, 1, 0.5f, 1));
                         }
@@ -110,7 +100,6 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
                     else
                     {
                         unitZoneViewCom.SetActive_Button(UniqueButtonTypes.First, true);
-                        unitZoneViewCom.AddListener_Button(UniqueButtonTypes.First, ActiveFireSelector);
                         unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
                         unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.FireForest));
                     }
@@ -119,23 +108,5 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
         }
     }
 
-    private void SeedEnvironment(EnvironmentTypes environmentType)
-    {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcSys.SeedEnvironmentToMaster(IdxSelCell, environmentType);
-    }
 
-    private void Fire(byte fromIdx, byte toIdx)
-    {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcSys.FireToMaster(fromIdx, toIdx);
-    }
-
-    private void CircularAttackKing()
-    {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcSys.CircularAttackKingToMaster(IdxSelCell);
-    }
-
-    private void ActiveFireSelector()
-    {
-        if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) _selectorFilter.Get1(0).CellClickType = CellClickTypes.PickFire;
-    }
 }

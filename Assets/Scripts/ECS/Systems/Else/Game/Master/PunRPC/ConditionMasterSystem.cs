@@ -28,7 +28,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
                 break;
 
             case CondUnitTypes.Protected:
-                if (curCellUnitDataCom.IsConditionType(CondUnitTypes.Protected))
+                if (curCellUnitDataCom.IsCondType(CondUnitTypes.Protected))
                 {
                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
@@ -37,7 +37,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
 
                 else if (curCellUnitDataCom.HaveMaxAmountSteps)
                 {
-                    if (curCellUnitDataCom.IsConditionType(CondUnitTypes.Relaxed))
+                    if (curCellUnitDataCom.IsCondType(CondUnitTypes.Relaxed))
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
@@ -64,7 +64,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
 
 
             case CondUnitTypes.Relaxed:
-                if (curCellUnitDataCom.IsConditionType(CondUnitTypes.Relaxed))
+                if (curCellUnitDataCom.IsCondType(CondUnitTypes.Relaxed))
                 {
                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
                     curCellUnitDataCom.ResetConditionType();
@@ -72,7 +72,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
 
                 else if (curCellUnitDataCom.HaveMaxAmountSteps)
                 {
-                    if (curCellUnitDataCom.IsConditionType(CondUnitTypes.Protected))
+                    if (curCellUnitDataCom.IsCondType(CondUnitTypes.Protected))
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
                         curCellUnitDataCom.CondUnitType = neededCondType;

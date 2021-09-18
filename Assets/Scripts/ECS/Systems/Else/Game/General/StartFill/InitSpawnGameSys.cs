@@ -134,7 +134,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                         .Replace(new CellViewComponent(cellView_GO))
 
-                        .Replace(new CellEnvironDataCom(new Dictionary<EnvironmentTypes, bool>()))
+                        .Replace(new CellEnvironDataCom(new Dictionary<EnvirTypes, bool>()))
                         .Replace(new CellEnvironViewCom(cirCell_GO))
                         .Replace(new CellFireDataComponent())
                         .Replace(new CellFireViewComponent(cirCell_GO))
@@ -183,7 +183,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new CellsForSetUnitComp(new Dictionary<bool, List<byte>>()))
                 .Replace(new AvailCellsForShiftComp(new Dictionary<bool, Dictionary<byte, List<byte>>>()))
                 .Replace(new CellsArsonArcherComp(true))
-                .Replace(new AvailCellsForAttackComp(true))
+                .Replace(new CellsForAttackCom(true))
                 .Replace(new CellsGiveTWComp(true))
                 .Replace(new CellsTakeTWComp(true))
                 .Replace(new WhoseMoveCom(true))
@@ -327,18 +327,18 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                         {
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= EnvironmentValues.START_MOUNTAIN_PERCENT)
-                                curEnvDatCom.SetNewEnvironment(EnvironmentTypes.Mountain);
+                                curEnvDatCom.SetNewEnvir(EnvirTypes.Mountain);
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= EnvironmentValues.START_FOREST_PERCENT)
                                 {
-                                    curEnvDatCom.SetNewEnvironment(EnvironmentTypes.AdultForest);
+                                    curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
                                 }
 
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= EnvironmentValues.START_HILL_PERCENT)
-                                    curEnvDatCom.SetNewEnvironment(EnvironmentTypes.Hill);
+                                    curEnvDatCom.SetNewEnvir(EnvirTypes.Hill);
                             }
                         }
                         else
@@ -346,14 +346,14 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= EnvironmentValues.START_FOREST_PERCENT)
                             {
-                                curEnvDatCom.SetNewEnvironment(EnvironmentTypes.AdultForest);
+                                curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
                             }
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= EnvironmentValues.START_FERTILIZER_PERCENT)
                                 {
-                                    curEnvDatCom.SetNewEnvironment(EnvironmentTypes.Fertilizer);
+                                    curEnvDatCom.SetNewEnvir(EnvirTypes.Fertilizer);
                                 }
                             }
                         }
@@ -419,8 +419,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                         if (x == 7 && y == 6)
                         {
-                            curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.Mountain);
-                            curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.AdultForest);
+                            curCellEnvDataComp.ResetEnvironment(EnvirTypes.Mountain);
+                            curCellEnvDataComp.ResetEnvironment(EnvirTypes.AdultForest);
 
                             curCellUnitDataComp.UnitType = UnitTypes.King;
                             curCellUnitDataComp.AmountHealth = 1;
@@ -430,8 +430,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                         else if (x == 8 && y == 6)
                         {
-                            curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.Mountain);
-                            curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.AdultForest);
+                            curCellEnvDataComp.ResetEnvironment(EnvirTypes.Mountain);
+                            curCellEnvDataComp.ResetEnvironment(EnvirTypes.AdultForest);
 
                             curCellBuildDataComp.BuildType = BuildingTypes.City;
                             _cellBuildFilter.Get3(curIdxCell).IsBot = true;
@@ -439,7 +439,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                         else if (x == 6 && y == 6 || x == 9 && y == 6 || x <= 9 && x >= 6 && y == 5 || x <= 9 && x >= 6 && y == 7)
                         {
-                            curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.Mountain);
+                            curCellEnvDataComp.ResetEnvironment(EnvirTypes.Mountain);
 
                             curCellUnitDataComp.UnitType = UnitTypes.Pawn;
 

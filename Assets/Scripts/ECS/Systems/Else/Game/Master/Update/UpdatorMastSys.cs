@@ -21,7 +21,7 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
     private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
-    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp> _cellBuildDataFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerOfflineCom> _cellBuildFilt = default;
 
     private EcsFilter<UpgradesBuildingsComponent> _upgradeBuildsFilter = default;
     private EcsFilter<InventorResourcesComponent> _invResFilt = default;
@@ -46,12 +46,13 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
             ref var curCellViewCom = ref _cellViewFilter.Get1(curIdxCell);
 
             ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
-            ref var curOnlineUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
-            ref var curOfflineUnitCom = ref _cellUnitFilter.Get3(curIdxCell);
+            ref var curOnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
+            ref var curOffUnitCom = ref _cellUnitFilter.Get3(curIdxCell);
             ref var curBotUnitCom = ref _cellUnitFilter.Get4(curIdxCell);
 
-            ref var curBuilDatCom = ref _cellBuildDataFilter.Get1(curIdxCell);
-            ref var curOwnBuilCom = ref _cellBuildDataFilter.Get2(curIdxCell);
+            ref var curBuilDatCom = ref _cellBuildFilt.Get1(curIdxCell);
+            ref var curOnBuilCom = ref _cellBuildFilt.Get2(curIdxCell);
+            ref var curOffBuildCom = ref _cellBuildFilt.Get3(curIdxCell);
 
             ref var curFireDatCom = ref _cellFireDataFilter.Get1(curIdxCell);
             ref var curEnvrDatCom = ref _cellEnvDataFilter.Get1(curIdxCell);
@@ -59,78 +60,101 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
 
             if (curUnitDatCom.HaveUnit)
             {
-                if (curOnlineUnitCom.HaveOwner || curOfflineUnitCom.HaveLocPlayer)
+                if (curBotUnitCom.IsBot)
                 {
-                    var isCurUnitMaster = false;
-
-                    if (PhotonNetwork.OfflineMode) isCurUnitMaster = WhoseMoveCom.IsMainMove;
-
-                    else isCurUnitMaster = PhotonNetwork.IsMasterClient;
-
-
-
-                    if (!curUnitDatCom.Is(UnitTypes.King)) invResCom.TakeAmountResources(ResourceTypes.Food, isCurUnitMaster);
-
-                    if (curFireDatCom.HaveFire)
+                    if (!curUnitDatCom.HaveMaxAmountHealth)
                     {
-                        curUnitDatCom.CondUnitType = CondUnitTypes.None;
-                    }
+                        curUnitDatCom.AddAmountHealth(100);
 
-                    else
-                    {
-                        if (curUnitDatCom.IsConditionType(CondUnitTypes.Relaxed))
+                        if (curUnitDatCom.MaxAmountHealth < curUnitDatCom.AmountHealth)
                         {
-                            if (curUnitDatCom.HaveMaxAmountHealth)
+                            curUnitDatCom.AmountHealth = curUnitDatCom.MaxAmountHealth;
+                        }
+                    }
+                }
+                else
+                {
+                    if (curOnUnitCom.HaveOwner  || curOffUnitCom.HaveLocalPlayer)
+                    {
+                        var isCurUnitMaster = false;
+
+                        if (PhotonNetwork.OfflineMode) isCurUnitMaster = curOffUnitCom.IsMainMaster;
+
+                        else isCurUnitMaster = PhotonNetwork.IsMasterClient;
+
+
+
+                        if (!curUnitDatCom.IsUnit(UnitTypes.King)) invResCom.TakeAmountResources(ResourceTypes.Food, isCurUnitMaster);
+
+                        if (curFireDatCom.HaveFire)
+                        {
+                            curUnitDatCom.CondUnitType = CondUnitTypes.None;
+                        }
+
+                        else
+                        {
+                            if (curUnitDatCom.IsCondType(CondUnitTypes.Relaxed))
                             {
-                                if (curUnitDatCom.Is(UnitTypes.Pawn))
+                                if (curUnitDatCom.HaveMaxAmountHealth)
                                 {
-                                    if (curEnvrDatCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                                    if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
                                     {
-                                        invResCom.AddAmountResources(ResourceTypes.Wood, isCurUnitMaster);
-                                        curEnvrDatCom.TakeAmountResources(EnvironmentTypes.AdultForest);
+                                        if (curEnvrDatCom.HaveEnvir(EnvirTypes.AdultForest))
+                                        {
+                                            invResCom.AddAmountResources(ResourceTypes.Wood, isCurUnitMaster);
+                                            curEnvrDatCom.TakeAmountResources(EnvirTypes.AdultForest);
 
-                                        if (curEnvrDatCom.HaveResources(EnvironmentTypes.AdultForest))
-                                        {
-                                            if (curBuilDatCom.HaveBuild)
+                                            if (curEnvrDatCom.HaveResources(EnvirTypes.AdultForest))
                                             {
-                                                if (!curBuilDatCom.HaveBuild)
+                                                if (curBuilDatCom.HaveBuild)
                                                 {
-                                                    curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
-                                                }
-                                            }
-                                            else
-                                            {
-                                                curBuilDatCom.BuildType = BuildingTypes.Woodcutter;
-                                                curOwnBuilCom.SetOwner(curOnlineUnitCom.Owner);
-                                            }
-                                        }
-                                        else
-                                        {
-                                            curBuilDatCom.DefBuildType();
-                                            curEnvrDatCom.ResetEnvironment(EnvironmentTypes.AdultForest);
-                                        }
-                                    }
-
-                                    else if (curUnitDatCom.ExtraTWPawnType == ToolWeaponTypes.Pick)
-                                    {
-                                        if (curEnvrDatCom.HaveEnvironment(EnvironmentTypes.Hill))
-                                        {
-                                            if (curBuilDatCom.HaveBuild)
-                                            {
-                                                curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
-                                            }
-                                            else
-                                            {
-                                                if (curEnvrDatCom.GetAmountResources(EnvironmentTypes.Hill) < curEnvrDatCom.MaxAmountResources(EnvironmentTypes.Hill))
-                                                {
-                                                    curEnvrDatCom.AddAmountResources(EnvironmentTypes.Hill);
+                                                    if (!curBuilDatCom.HaveBuild)
+                                                    {
+                                                        curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
+                                                    }
                                                 }
                                                 else
                                                 {
-                                                    curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
+                                                    curBuilDatCom.BuildType = BuildingTypes.Woodcutter;
+
+                                                    if (PhotonNetwork.OfflineMode) curOffBuildCom.IsMainMaster = curOffUnitCom.IsMainMaster;
+                                                    else curOnBuilCom.SetOwner(curOnUnitCom.Owner);
+
                                                 }
                                             }
+                                            else
+                                            {
+                                                curBuilDatCom.DefBuildType();
+                                                curEnvrDatCom.ResetEnvironment(EnvirTypes.AdultForest);
+                                            }
                                         }
+
+                                        else if (curUnitDatCom.ExtraTWPawnType == ToolWeaponTypes.Pick)
+                                        {
+                                            if (curEnvrDatCom.HaveEnvir(EnvirTypes.Hill))
+                                            {
+                                                if (curBuilDatCom.HaveBuild)
+                                                {
+                                                    curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
+                                                }
+                                                else
+                                                {
+                                                    if (curEnvrDatCom.GetAmountResources(EnvirTypes.Hill) < curEnvrDatCom.MaxAmountResources(EnvirTypes.Hill))
+                                                    {
+                                                        curEnvrDatCom.AddAmountRes(EnvirTypes.Hill);
+                                                    }
+                                                    else
+                                                    {
+                                                        curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
+                                            }
+                                        }
+
                                         else
                                         {
                                             curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
@@ -145,75 +169,64 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
 
                                 else
                                 {
+                                    curUnitDatCom.AddStandartHeal();
+                                    if (curUnitDatCom.AmountHealth > curUnitDatCom.MaxAmountHealth)
+                                    {
+                                        curUnitDatCom.AmountHealth = curUnitDatCom.MaxAmountHealth;
+                                    }
+                                }
+                            }
+                            else if (curUnitDatCom.IsCondType(CondUnitTypes.None))
+                            {
+                                if (curUnitDatCom.HaveMaxAmountSteps)
+                                {
                                     curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
                                 }
                             }
-
-                            else
-                            {
-                                curUnitDatCom.AddStandartHeal();
-                                if (curUnitDatCom.AmountHealth > curUnitDatCom.MaxAmountHealth)
-                                {
-                                    curUnitDatCom.AmountHealth = curUnitDatCom.MaxAmountHealth;
-                                }
-                            }
                         }
-                        else if (curUnitDatCom.IsConditionType(CondUnitTypes.None))
-                        {
-                            if (curUnitDatCom.HaveMaxAmountSteps)
-                            {
-                                curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
-                            }
-                        }
-                    }
 
-                    curUnitDatCom.RefreshAmountSteps();
-                }
-
-                else if (curBotUnitCom.IsBot)
-                {
-                    if (!curUnitDatCom.HaveMaxAmountHealth)
-                    {
-                        curUnitDatCom.AddAmountHealth(100);
-
-                        if (curUnitDatCom.MaxAmountHealth < curUnitDatCom.AmountHealth)
-                        {
-                            curUnitDatCom.AmountHealth = curUnitDatCom.MaxAmountHealth;
-                        }
+                        curUnitDatCom.RefreshAmountSteps();
                     }
                 }
             }
 
             if (curBuilDatCom.HaveBuild)
             {
-                if (curOwnBuilCom.HaveOwner)
+                if (curOnBuilCom.HaveOwner || curOffBuildCom.HaveLocalPlayer)
                 {
+                    var isCurBuildMast = false;
+
+                    if (PhotonNetwork.OfflineMode) isCurBuildMast = curOffBuildCom.IsMainMaster;
+
+                    else isCurBuildMast = PhotonNetwork.IsMasterClient;
+
+
                     if (curBuilDatCom.IsBuildType(BuildingTypes.Farm))
                     {
-                        minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Farm, amountUpgradesCom.GetAmountUpgrades(BuildingTypes.Farm, curOwnBuilCom.IsMasterClient));
+                        minus = ExtractionInfoSupport.ExtractOneBuild(BuildingTypes.Farm, amountUpgradesCom.AmountUpgs(BuildingTypes.Farm, isCurBuildMast));
 
-                        curEnvrDatCom.TakeAmountResources(EnvironmentTypes.Fertilizer, minus);
-                        invResCom.AddAmountResources(ResourceTypes.Food, curOwnBuilCom.IsMasterClient, minus);
+                        curEnvrDatCom.TakeAmountResources(EnvirTypes.Fertilizer, minus);
+                        invResCom.AddAmountResources(ResourceTypes.Food, isCurBuildMast, minus);
 
-                        if (!curEnvrDatCom.HaveResources(EnvironmentTypes.Fertilizer))
+                        if (!curEnvrDatCom.HaveResources(EnvirTypes.Fertilizer))
                         {
-                            curEnvrDatCom.ResetEnvironment(EnvironmentTypes.Fertilizer);
+                            curEnvrDatCom.ResetEnvironment(EnvirTypes.Fertilizer);
 
                             curBuilDatCom.DefBuildType();
-                            _cellBuildDataFilter.Get2(curIdxCell).ResetOwner();
+                            _cellBuildFilt.Get2(curIdxCell).DefOwner();
                         }
                     }
 
                     else if (curBuilDatCom.IsBuildType(BuildingTypes.Woodcutter))
                     {
-                        minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Woodcutter, amountUpgradesCom.GetAmountUpgrades(BuildingTypes.Woodcutter, curOwnBuilCom.IsMasterClient));
+                        minus = ExtractionInfoSupport.ExtractOneBuild(BuildingTypes.Woodcutter, amountUpgradesCom.AmountUpgs(BuildingTypes.Woodcutter, isCurBuildMast));
 
-                        curEnvrDatCom.TakeAmountResources(EnvironmentTypes.AdultForest, minus);
-                        invResCom.AddAmountResources(ResourceTypes.Wood, curOwnBuilCom.IsMasterClient, minus);
+                        curEnvrDatCom.TakeAmountResources(EnvirTypes.AdultForest, minus);
+                        invResCom.AddAmountResources(ResourceTypes.Wood, isCurBuildMast, minus);
 
-                        if (!curEnvrDatCom.HaveResources(EnvironmentTypes.AdultForest))
+                        if (!curEnvrDatCom.HaveResources(EnvirTypes.AdultForest))
                         {
-                            curEnvrDatCom.ResetEnvironment(EnvironmentTypes.AdultForest);
+                            curEnvrDatCom.ResetEnvironment(EnvirTypes.AdultForest);
 
                             curBuilDatCom.DefBuildType();
 
@@ -226,12 +239,12 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
 
                     else if (curBuilDatCom.IsBuildType(BuildingTypes.Mine))
                     {
-                        minus = ExtractionInfoSupport.GetExtractionOneBuilding(BuildingTypes.Mine, amountUpgradesCom.GetAmountUpgrades(BuildingTypes.Mine, curOwnBuilCom.IsMasterClient));
+                        minus = ExtractionInfoSupport.ExtractOneBuild(BuildingTypes.Mine, amountUpgradesCom.AmountUpgs(BuildingTypes.Mine, isCurBuildMast));
 
-                        curEnvrDatCom.TakeAmountResources(EnvironmentTypes.Hill, minus);
-                        invResCom.AddAmountResources(ResourceTypes.Ore, curOwnBuilCom.IsMasterClient, minus);
+                        curEnvrDatCom.TakeAmountResources(EnvirTypes.Hill, minus);
+                        invResCom.AddAmountResources(ResourceTypes.Ore, isCurBuildMast, minus);
 
-                        if (!curEnvrDatCom.HaveResources(EnvironmentTypes.Hill))
+                        if (!curEnvrDatCom.HaveResources(EnvirTypes.Hill))
                         {
                             curBuilDatCom.DefBuildType();
                         }
@@ -240,14 +253,14 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
                 }
             }
 
-            if (curEnvrDatCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+            if (curEnvrDatCom.HaveEnvir(EnvirTypes.AdultForest))
             {
                 ++amountAdultForest;
             }
 
             if (curFireDatCom.HaveFire)
             {
-                curEnvrDatCom.TakeAmountResources(EnvironmentTypes.AdultForest, 2);
+                curEnvrDatCom.TakeAmountResources(EnvirTypes.AdultForest, 2);
 
                 if (curUnitDatCom.HaveUnit)
                 {
@@ -256,21 +269,21 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
                     if (!curUnitDatCom.HaveAmountHealth)
                     {
                         curUnitDatCom.ResetUnit();
-                        curOnlineUnitCom.ResetOwner();
+                        curOnUnitCom.DefOwner();
                     }
                 }
 
 
 
-                if (!curEnvrDatCom.HaveResources(EnvironmentTypes.AdultForest))
+                if (!curEnvrDatCom.HaveResources(EnvirTypes.AdultForest))
                 {
                     if (curBuilDatCom.HaveBuild)
                     {
                         curBuilDatCom.BuildType = default;
-                        curOwnBuilCom.ResetOwner();
+                        curOnBuilCom.DefOwner();
                     }
 
-                    curEnvrDatCom.ResetEnvironment(EnvironmentTypes.AdultForest);
+                    curEnvrDatCom.ResetEnvironment(EnvirTypes.AdultForest);
 
                     curFireDatCom.HaveFire = false;
 
@@ -282,7 +295,7 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
 
                         if (_cellViewFilter.Get1(curIdxCell1).IsActiveParent)
                         {
-                            if (_cellEnvDataFilter.Get1(curIdxCell1).HaveEnvironment(EnvironmentTypes.AdultForest))
+                            if (_cellEnvDataFilter.Get1(curIdxCell1).HaveEnvir(EnvirTypes.AdultForest))
                             {
                                 _cellFireDataFilter.Get1(curIdxCell1).HaveFire = true;
                             }
@@ -314,26 +327,36 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
                     foreach (byte curIdxCell in _xyCellFilter)
                     {
                         ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
-                        ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
+                        ref var curOnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
+                        ref var curOffUnitCom = ref _cellUnitFilter.Get3(curIdxCell);
 
-                        if (curUnitDatCom.HaveUnit)
+                        if (curUnitDatCom.IsUnit(unitType))
                         {
-                            if (curOwnUnitCom.HaveOwner)
+                            if (curOnUnitCom.HaveOwner)
                             {
-                                if (curUnitDatCom.Is(unitType))
+                                if (curOnUnitCom.IsMasterClient == isMaster)
                                 {
-                                    if (curOwnUnitCom.IsMasterClient == isMaster)
-                                    {
-                                        curUnitDatCom.ResetUnit();
+                                    curUnitDatCom.ResetUnit();
 
-                                        isFindedUnit = true;
-                                        break;
-                                    }
+                                    isFindedUnit = true;
+                                    break;
+                                }
+                            }
+
+                            else if (curOffUnitCom.HaveLocalPlayer)
+                            {
+                                if (curOffUnitCom.IsMainMaster == isMaster)
+                                {
+                                    curUnitDatCom.ResetUnit();
+
+                                    isFindedUnit = true;
+                                    break;
                                 }
                             }
                         }
-                    }
 
+
+                    }
                     if (isFindedUnit) break;
                 }
             }

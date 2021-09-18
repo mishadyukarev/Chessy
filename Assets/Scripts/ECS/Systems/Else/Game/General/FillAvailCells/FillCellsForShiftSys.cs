@@ -58,7 +58,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                         {
                             var idxCellAround = _xyCellFilter.GetIdxCell(xy1);
 
-                            if (!_cellEnvDataFilter.Get1(idxCellAround).HaveEnvironment(EnvironmentTypes.Mountain))
+                            if (!_cellEnvDataFilter.Get1(idxCellAround).HaveEnvir(EnvirTypes.Mountain))
                             {
                                 if (!_cellUnitFilter.Get1(idxCellAround).HaveUnit)
 

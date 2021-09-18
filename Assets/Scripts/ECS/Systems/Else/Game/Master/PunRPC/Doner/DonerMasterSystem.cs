@@ -18,7 +18,6 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
     private EcsFilter<InventorUnitsComponent> _invUnitsFilter = default;
 
     private EcsFilter<CellViewComponent> _cellViewFilter = default;
-    private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
 
 
     private Dictionary<bool, bool> _doneOrNotFromStartAnyUpdate = new Dictionary<bool, bool>();
@@ -39,9 +38,8 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
 
         var sender = infoMasCom.FromInfo.Sender;
 
-        ref var whoseMoveCom = ref _whoseMoveFilter.Get1(0);
 
-        if (!_invUnitsFilter.Get1(0).HaveUnitInInventor(UnitTypes.King, sender.IsMasterClient))
+        if (!_invUnitsFilter.Get1(0).HaveUnitInInv(UnitTypes.King, sender.IsMasterClient))
         {
             RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 

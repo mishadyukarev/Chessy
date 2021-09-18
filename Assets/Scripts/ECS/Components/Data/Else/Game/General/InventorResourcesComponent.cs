@@ -34,7 +34,7 @@ namespace Assets.Scripts.ECS.Component.Game
 
 
 
-        internal bool CanCreateNewBuilding(BuildingTypes buildingType, bool isMasterMain, out bool[] haves)
+        internal bool CanCreateBuild(BuildingTypes buildingType, bool isMasterMain, out bool[] haves)
         {
             haves = new bool[AMOUNT_RESOURCES_TYPES];
 
@@ -71,7 +71,7 @@ namespace Assets.Scripts.ECS.Component.Game
 
             return HavedAll(haves);
         }
-        internal void BuyNewBuilding(BuildingTypes buildingType, bool isMastMain)
+        internal void BuyBuild(BuildingTypes buildingType, bool isMastMain)
         {
             switch (buildingType)
             {
@@ -105,7 +105,7 @@ namespace Assets.Scripts.ECS.Component.Game
             }
         }
 
-        internal bool CanCreateUnit(UnitTypes unitType, Player player, out bool[] haves)
+        internal bool CanCreateUnit(UnitTypes unitType, bool isMastMain, out bool[] haves)
         {
             haves = new bool[AMOUNT_RESOURCES_TYPES];
 
@@ -118,27 +118,27 @@ namespace Assets.Scripts.ECS.Component.Game
                     throw new Exception();
 
                 case UnitTypes.Pawn:
-                    haves[FOOD_NUMBER] = FOOD_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Food, player.IsMasterClient) >= FOOD_FOR_BUYING_PAWN;
-                    haves[WOOD_NUMBER] = WOOD_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= WOOD_FOR_BUYING_PAWN;
-                    haves[ORE_NUMBER] = ORE_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= ORE_FOR_BUYING_PAWN;
-                    haves[IRON_NUMBER] = IRON_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= IRON_FOR_BUYING_PAWN;
-                    haves[GOLD_NUMBER] = GOLD_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= GOLD_FOR_BUYING_PAWN;
+                    haves[FOOD_NUMBER] = FOOD_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Food, isMastMain) >= FOOD_FOR_BUYING_PAWN;
+                    haves[WOOD_NUMBER] = WOOD_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Wood, isMastMain) >= WOOD_FOR_BUYING_PAWN;
+                    haves[ORE_NUMBER] = ORE_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Ore, isMastMain) >= ORE_FOR_BUYING_PAWN;
+                    haves[IRON_NUMBER] = IRON_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Iron, isMastMain) >= IRON_FOR_BUYING_PAWN;
+                    haves[GOLD_NUMBER] = GOLD_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Gold, isMastMain) >= GOLD_FOR_BUYING_PAWN;
                     break;
 
                 case UnitTypes.Rook:
-                    haves[FOOD_NUMBER] = FOOD_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Food, player.IsMasterClient) >= FOOD_FOR_BUYING_ROOK;
-                    haves[WOOD_NUMBER] = WOOD_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= WOOD_FOR_BUYING_ROOK;
-                    haves[ORE_NUMBER] = ORE_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= ORE_FOR_BUYING_ROOK;
-                    haves[IRON_NUMBER] = IRON_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= IRON_FOR_BUYING_ROOK;
-                    haves[GOLD_NUMBER] = GOLD_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= GOLD_FOR_BUYING_ROOK;
+                    haves[FOOD_NUMBER] = FOOD_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Food, isMastMain) >= FOOD_FOR_BUYING_ROOK;
+                    haves[WOOD_NUMBER] = WOOD_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Wood, isMastMain) >= WOOD_FOR_BUYING_ROOK;
+                    haves[ORE_NUMBER] = ORE_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Ore, isMastMain) >= ORE_FOR_BUYING_ROOK;
+                    haves[IRON_NUMBER] = IRON_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Iron, isMastMain) >= IRON_FOR_BUYING_ROOK;
+                    haves[GOLD_NUMBER] = GOLD_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Gold, isMastMain) >= GOLD_FOR_BUYING_ROOK;
                     break;
 
                 case UnitTypes.Bishop:
-                    haves[FOOD_NUMBER] = FOOD_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Food, player.IsMasterClient) >= FOOD_FOR_BUYING_BISHOP;
-                    haves[WOOD_NUMBER] = WOOD_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= WOOD_FOR_BUYING_BISHOP;
-                    haves[ORE_NUMBER] = ORE_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= ORE_FOR_BUYING_BISHOP;
-                    haves[IRON_NUMBER] = IRON_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= IRON_FOR_BUYING_BISHOP;
-                    haves[GOLD_NUMBER] = GOLD_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= GOLD_FOR_BUYING_BISHOP;
+                    haves[FOOD_NUMBER] = FOOD_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Food, isMastMain) >= FOOD_FOR_BUYING_BISHOP;
+                    haves[WOOD_NUMBER] = WOOD_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Wood, isMastMain) >= WOOD_FOR_BUYING_BISHOP;
+                    haves[ORE_NUMBER] = ORE_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Ore, isMastMain) >= ORE_FOR_BUYING_BISHOP;
+                    haves[IRON_NUMBER] = IRON_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Iron, isMastMain) >= IRON_FOR_BUYING_BISHOP;
+                    haves[GOLD_NUMBER] = GOLD_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Gold, isMastMain) >= GOLD_FOR_BUYING_BISHOP;
                     break;
 
                 default:
@@ -147,7 +147,7 @@ namespace Assets.Scripts.ECS.Component.Game
 
             return HavedAll(haves);
         }
-        internal void BuyCreateUnit(UnitTypes unitType, Player player)
+        internal void BuyCreateUnit(UnitTypes unitType, bool isMastMain)
         {
             switch (unitType)
             {
@@ -158,27 +158,27 @@ namespace Assets.Scripts.ECS.Component.Game
                     throw new Exception();
 
                 case UnitTypes.Pawn:
-                    TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, FOOD_FOR_BUYING_PAWN);
-                    TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, WOOD_FOR_BUYING_PAWN);
-                    TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, ORE_FOR_BUYING_PAWN);
-                    TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, IRON_FOR_BUYING_PAWN);
-                    TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, GOLD_FOR_BUYING_PAWN);
+                    TakeAmountResources(ResourceTypes.Food, isMastMain, FOOD_FOR_BUYING_PAWN);
+                    TakeAmountResources(ResourceTypes.Wood, isMastMain, WOOD_FOR_BUYING_PAWN);
+                    TakeAmountResources(ResourceTypes.Ore, isMastMain, ORE_FOR_BUYING_PAWN);
+                    TakeAmountResources(ResourceTypes.Iron, isMastMain, IRON_FOR_BUYING_PAWN);
+                    TakeAmountResources(ResourceTypes.Gold, isMastMain, GOLD_FOR_BUYING_PAWN);
                     break;
 
                 case UnitTypes.Rook:
-                    TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, FOOD_FOR_BUYING_ROOK);
-                    TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, WOOD_FOR_BUYING_ROOK);
-                    TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, ORE_FOR_BUYING_ROOK);
-                    TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, IRON_FOR_BUYING_ROOK);
-                    TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, GOLD_FOR_BUYING_ROOK);
+                    TakeAmountResources(ResourceTypes.Food, isMastMain, FOOD_FOR_BUYING_ROOK);
+                    TakeAmountResources(ResourceTypes.Wood, isMastMain, WOOD_FOR_BUYING_ROOK);
+                    TakeAmountResources(ResourceTypes.Ore, isMastMain, ORE_FOR_BUYING_ROOK);
+                    TakeAmountResources(ResourceTypes.Iron, isMastMain, IRON_FOR_BUYING_ROOK);
+                    TakeAmountResources(ResourceTypes.Gold, isMastMain, GOLD_FOR_BUYING_ROOK);
                     break;
 
                 case UnitTypes.Bishop:
-                    TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, FOOD_FOR_BUYING_BISHOP);
-                    TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, WOOD_FOR_BUYING_BISHOP);
-                    TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, ORE_FOR_BUYING_BISHOP);
-                    TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, IRON_FOR_BUYING_BISHOP);
-                    TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, GOLD_FOR_BUYING_BISHOP);
+                    TakeAmountResources(ResourceTypes.Food, isMastMain, FOOD_FOR_BUYING_BISHOP);
+                    TakeAmountResources(ResourceTypes.Wood, isMastMain, WOOD_FOR_BUYING_BISHOP);
+                    TakeAmountResources(ResourceTypes.Ore, isMastMain, ORE_FOR_BUYING_BISHOP);
+                    TakeAmountResources(ResourceTypes.Iron, isMastMain, IRON_FOR_BUYING_BISHOP);
+                    TakeAmountResources(ResourceTypes.Gold, isMastMain, GOLD_FOR_BUYING_BISHOP);
                     break;
 
                 default:
@@ -186,29 +186,29 @@ namespace Assets.Scripts.ECS.Component.Game
             }
         }
 
-        internal bool CanMeltOre(Player player, out bool[] haves)
+        internal bool CanMeltOre(bool isMastMain, out bool[] haves)
         {
             haves = new bool[AMOUNT_RESOURCES_TYPES];
 
-            haves[FOOD_NUMBER] = FOOD_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Food, player.IsMasterClient) >= FOOD_FOR_MELTING_ORE;
-            haves[WOOD_NUMBER] = WOOD_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= WOOD_FOR_MELTING_ORE;
-            haves[ORE_NUMBER] = ORE_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= ORE_FOR_MELTING_ORE;
-            haves[IRON_NUMBER] = IRON_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= IRON_FOR_MELTING_ORE;
-            haves[GOLD_NUMBER] = GOLD_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= GOLD_FOR_MELTING_ORE;
+            haves[FOOD_NUMBER] = FOOD_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Food, isMastMain) >= FOOD_FOR_MELTING_ORE;
+            haves[WOOD_NUMBER] = WOOD_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Wood, isMastMain) >= WOOD_FOR_MELTING_ORE;
+            haves[ORE_NUMBER] = ORE_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Ore, isMastMain) >= ORE_FOR_MELTING_ORE;
+            haves[IRON_NUMBER] = IRON_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Iron, isMastMain) >= IRON_FOR_MELTING_ORE;
+            haves[GOLD_NUMBER] = GOLD_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Gold, isMastMain) >= GOLD_FOR_MELTING_ORE;
 
 
             return HavedAll(haves);
         }
-        internal void BuyMeltOre(Player player)
+        internal void BuyMeltOre(bool isMastMain)
         {
-            TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, FOOD_FOR_MELTING_ORE);
-            TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, WOOD_FOR_MELTING_ORE);
-            TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, ORE_FOR_MELTING_ORE);
-            TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, IRON_FOR_MELTING_ORE);
-            TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, GOLD_FOR_MELTING_ORE);
+            TakeAmountResources(ResourceTypes.Food, isMastMain, FOOD_FOR_MELTING_ORE);
+            TakeAmountResources(ResourceTypes.Wood, isMastMain, WOOD_FOR_MELTING_ORE);
+            TakeAmountResources(ResourceTypes.Ore, isMastMain, ORE_FOR_MELTING_ORE);
+            TakeAmountResources(ResourceTypes.Iron, isMastMain, IRON_FOR_MELTING_ORE);
+            TakeAmountResources(ResourceTypes.Gold, isMastMain, GOLD_FOR_MELTING_ORE);
 
-            AddAmountResources(ResourceTypes.Iron, player.IsMasterClient, 4);
-            AddAmountResources(ResourceTypes.Gold, player.IsMasterClient, 1);
+            AddAmountResources(ResourceTypes.Iron, isMastMain, 4);
+            AddAmountResources(ResourceTypes.Gold, isMastMain, 1);
         }
 
 

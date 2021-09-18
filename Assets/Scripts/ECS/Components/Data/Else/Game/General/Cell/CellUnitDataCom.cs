@@ -10,7 +10,7 @@ internal struct CellUnitDataCom
     internal UnitTypes UnitType;
     internal bool HaveUnit => UnitType != UnitTypes.None;
     internal void ResetUnitType() => UnitType = default;
-    internal bool Is(UnitTypes unitType) => UnitType.Is(unitType);
+    internal bool IsUnit(UnitTypes unitType) => UnitType.Is(unitType);
     internal bool Is(UnitTypes[] unitTypes) => UnitType.Is(unitTypes);
     internal bool IsMelee
     {
@@ -47,17 +47,17 @@ internal struct CellUnitDataCom
 
     internal CondUnitTypes CondUnitType { get; set; }
     internal void ResetConditionType() => CondUnitType = default;
-    internal bool IsConditionType(CondUnitTypes conditionUnitType) => CondUnitType == conditionUnitType;
+    internal bool IsCondType(CondUnitTypes conditionUnitType) => CondUnitType == conditionUnitType;
     internal bool IsConditionType(CondUnitTypes[] conditionUnitTypes)
     {
         foreach (var conditionUnitType in conditionUnitTypes)
-            if (IsConditionType(conditionUnitType)) return true;
+            if (IsCondType(conditionUnitType)) return true;
         return false;
     }
 
 
-    internal ToolWeaponTypes ArcherWeaponType { get; set; }
-    internal bool HaveArcherWeapon => ArcherWeaponType != default;
+    internal ToolWeaponTypes ArcherWeapType { get; set; }
+    internal bool HaveArcherWeapon => ArcherWeapType != default;
 
     internal ToolWeaponTypes ExtraTWPawnType { get; set; }
     internal bool HaveExtraToolWeaponPawn => ExtraTWPawnType != default;
@@ -203,7 +203,7 @@ internal struct CellUnitDataCom
         {
             int powerProtection = 0;
 
-            if (IsConditionType(CondUnitTypes.Protected))
+            if (IsCondType(CondUnitTypes.Protected))
             {
                 switch (UnitType)
                 {
@@ -231,7 +231,7 @@ internal struct CellUnitDataCom
                 }
             }
 
-            else if (IsConditionType(CondUnitTypes.Relaxed))
+            else if (IsCondType(CondUnitTypes.Relaxed))
             {
                 switch (UnitType)
                 {
@@ -312,7 +312,7 @@ internal struct CellUnitDataCom
             {
                 simplePowerDamege = SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP;
 
-                switch (ArcherWeaponType)
+                switch (ArcherWeapType)
                 {
                     case ToolWeaponTypes.None:
                         throw new Exception();
@@ -403,7 +403,7 @@ internal struct CellUnitDataCom
     internal void ResetUnit()
     {
         UnitType = default;
-        ArcherWeaponType = default;
+        ArcherWeapType = default;
         ExtraTWPawnType = default;
         AmountHealth = default;
         AmountSteps = default;
@@ -412,7 +412,7 @@ internal struct CellUnitDataCom
     internal void ReplaceUnit(CellUnitDataCom newCellUnitDataCom)
     {
         UnitType = newCellUnitDataCom.UnitType;
-        ArcherWeaponType = newCellUnitDataCom.ArcherWeaponType;
+        ArcherWeapType = newCellUnitDataCom.ArcherWeapType;
         ExtraTWPawnType = newCellUnitDataCom.ExtraTWPawnType;
         AmountHealth = newCellUnitDataCom.AmountHealth;
         AmountSteps = newCellUnitDataCom.AmountSteps;

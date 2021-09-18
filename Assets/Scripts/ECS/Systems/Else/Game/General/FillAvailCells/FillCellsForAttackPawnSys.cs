@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Workers;
@@ -12,51 +13,66 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
 
-        private EcsFilter<AvailCellsForAttackComp> _availCellsForAttackFilter = default;
+        private EcsFilter<CellsForAttackCom> _availCellsForAttackFilter = default;
 
         public void Run()
         {
-            foreach (byte curIdxCell in _xyCellFilter)
+            foreach (byte curIdx in _xyCellFilter)
             {
-                ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(curIdxCell);
-                ref var curOwnerCellUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
+                ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdx);
+                ref var curOnUnitCom = ref _cellUnitFilter.Get2(curIdx);
+                ref var curOffUnitCom = ref _cellUnitFilter.Get3(curIdx);
 
-                ref var availCellsForAttackComp = ref _availCellsForAttackFilter.Get1(0);
+                ref var cellsAttackCom = ref _availCellsForAttackFilter.Get1(0);
 
 
-                if (curCellUnitDataCom.HaveUnit && curCellUnitDataCom.Is(UnitTypes.Pawn))
+                if (curUnitDatCom.HaveUnit && curUnitDatCom.IsUnit(UnitTypes.Pawn))
                 {
-                    if (curOwnerCellUnitCom.HaveOwner)
+                    if (curOnUnitCom.HaveOwner || curOffUnitCom.HaveLocalPlayer)
                     {
                         DirectTypes curDurect1 = default;
 
-                        foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdxCell)))
+                        foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdx)))
                         {
                             curDurect1 += 1;
-                            var idxCellAround = _xyCellFilter.GetIdxCell(xy1);
+                            var idxAround = _xyCellFilter.GetIdxCell(xy1);
 
-                            ref var arouCellEnvrDataCom = ref _cellEnvDataFilter.Get1(idxCellAround);
-                            ref var arouCellUnitDataCom = ref _cellUnitFilter.Get1(idxCellAround);
-                            ref var arouOwnerCellUnitCom = ref _cellUnitFilter.Get2(idxCellAround);
+                            ref var aroEnvrDatCom = ref _cellEnvDataFilter.Get1(idxAround);
+                            ref var aroUnitDatCom = ref _cellUnitFilter.Get1(idxAround);
+                            ref var aroOnUnitCom = ref _cellUnitFilter.Get2(idxAround);
+                            ref var aroOffUnitCom = ref _cellUnitFilter.Get3(idxAround);
 
-                            if (!arouCellEnvrDataCom.HaveEnvironment(EnvironmentTypes.Mountain))
+                            if (!aroEnvrDatCom.HaveEnvir(EnvirTypes.Mountain))
                             {
-                                if (arouCellEnvrDataCom.NeedAmountSteps <= curCellUnitDataCom.AmountSteps || curCellUnitDataCom.HaveMaxAmountSteps)
+                                if (aroEnvrDatCom.NeedAmountSteps <= curUnitDatCom.AmountSteps || curUnitDatCom.HaveMaxAmountSteps)
                                 {
-                                    if (arouCellUnitDataCom.HaveUnit)
+                                    if (aroUnitDatCom.HaveUnit)
                                     {
-                                        if (arouOwnerCellUnitCom.HaveOwner)
+                                        if (aroOnUnitCom.HaveOwner)
                                         {
-                                            if (!arouOwnerCellUnitCom.IsHim(curOwnerCellUnitCom.Owner))
+                                            if (!aroOnUnitCom.IsHim(curOnUnitCom.Owner))
                                             {
                                                 if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
                                                     || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
                                                 {
-                                                    availCellsForAttackComp.Add(AttackTypes.Simple, curOwnerCellUnitCom.IsMasterClient, curIdxCell, idxCellAround);
+                                                    cellsAttackCom.Add(AttackTypes.Simple, curOnUnitCom.IsMasterClient, curIdx, idxAround);
                                                 }
-                                                else availCellsForAttackComp.Add(AttackTypes.Unique, curOwnerCellUnitCom.IsMasterClient, curIdxCell, idxCellAround);
+                                                else cellsAttackCom.Add(AttackTypes.Unique, curOnUnitCom.IsMasterClient, curIdx, idxAround);
+                                            }
+                                        }
+
+                                        else if (aroOffUnitCom.HaveLocalPlayer)
+                                        {
+                                            if (aroOffUnitCom.IsMainMaster != curOffUnitCom.IsMainMaster)
+                                            {
+                                                if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
+                                                    || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
+                                                {
+                                                    cellsAttackCom.Add(AttackTypes.Simple, curOffUnitCom.IsMainMaster, curIdx, idxAround);
+                                                }
+                                                else cellsAttackCom.Add(AttackTypes.Unique, curOffUnitCom.IsMainMaster, curIdx, idxAround);
                                             }
                                         }
 
@@ -65,9 +81,9 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                                             if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
                                                 || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
                                             {
-                                                availCellsForAttackComp.Add(AttackTypes.Simple, curOwnerCellUnitCom.IsMasterClient, curIdxCell, idxCellAround);
+                                                cellsAttackCom.Add(AttackTypes.Simple, curOffUnitCom.IsMainMaster, curIdx, idxAround);
                                             }
-                                            else availCellsForAttackComp.Add(AttackTypes.Unique, curOwnerCellUnitCom.IsMasterClient, curIdxCell, idxCellAround);
+                                            else cellsAttackCom.Add(AttackTypes.Unique, curOffUnitCom.IsMainMaster, curIdx, idxAround);
                                         }
                                     }
                                 }

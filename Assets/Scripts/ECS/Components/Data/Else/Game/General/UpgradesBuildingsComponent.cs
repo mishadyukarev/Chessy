@@ -22,10 +22,10 @@ namespace Assets.Scripts.ECS.Component
             }
         }
 
-        internal int GetAmountUpgrades(BuildingTypes buildingType, bool key) => _amountUpgradesDict[buildingType][key];
+        internal int AmountUpgs(BuildingTypes buildingType, bool key) => _amountUpgradesDict[buildingType][key];
         internal int SetAmountUpgrades(BuildingTypes buildingType, bool key, int value) => _amountUpgradesDict[buildingType][key] = value;
 
-        internal void AddAmountUpgrades(BuildingTypes buildingType, bool key, int adding = 1) => SetAmountUpgrades(buildingType, key, GetAmountUpgrades(buildingType, key) + adding);
-        internal void TakeAmountUpgrades(BuildingTypes buildingType, bool key, int taking = 1) => SetAmountUpgrades(buildingType, key, GetAmountUpgrades(buildingType, key) - taking);
+        internal void AddAmountUpgrades(BuildingTypes buildingType, bool key, int adding = 1) => SetAmountUpgrades(buildingType, key, AmountUpgs(buildingType, key) + adding);
+        internal void TakeAmountUpgrades(BuildingTypes buildingType, bool key, int taking = 1) => SetAmountUpgrades(buildingType, key, AmountUpgs(buildingType, key) - taking);
     }
 }

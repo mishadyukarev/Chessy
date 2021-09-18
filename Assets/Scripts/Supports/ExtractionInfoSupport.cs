@@ -5,7 +5,7 @@ namespace Assets.Scripts.Workers.Game.Else.Economy
 {
     internal static class ExtractionInfoSupport
     {
-        internal static int GetExtractionOneBuilding(BuildingTypes buildingType, int amountUpgrades)
+        internal static int ExtractOneBuild(BuildingTypes buildingType, int amountUpgrades)
         {
             switch (buildingType)
             {

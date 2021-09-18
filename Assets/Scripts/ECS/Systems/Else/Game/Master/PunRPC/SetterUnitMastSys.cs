@@ -11,11 +11,9 @@ using Leopotam.Ecs;
 using Photon.Pun;
 using System;
 
-internal sealed class SetterUnitMasterSystem : IEcsRunSystem
+internal sealed class SetterUnitMastSys : IEcsRunSystem
 {
     private EcsFilter<InfoMasCom> _infoFilter = default;
-
-    private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
 
     private EcsFilter<ForSettingUnitMasCom> _setterFilter = default;
     private EcsFilter<InventorUnitsComponent> _unitInventorFilter = default;
@@ -36,8 +34,8 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
 
         ref var curEnvDatCom = ref _cellEnvirDataFilter.Get1(idxForSet);
         ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForSet);
-        ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxForSet);
-        ref var curOwnLocalCom = ref _cellUnitFilter.Get3(idxForSet);
+        ref var curOnUnitCom = ref _cellUnitFilter.Get2(idxForSet);
+        ref var curOffUnitCom = ref _cellUnitFilter.Get3(idxForSet);
 
 
         var isMaster = false;
@@ -65,24 +63,25 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
                 case UnitTypes.King:
                     newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_KING;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_KING;
-                    curUnitDatCom.ArcherWeaponType = default;
+                    curUnitDatCom.ArcherWeapType = default;
                     break;
 
                 case UnitTypes.Pawn:
                     newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN;
+                    curUnitDatCom.ArcherWeapType = default;
                     break;
 
                 case UnitTypes.Rook:
                     newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK;
-                    curUnitDatCom.ArcherWeaponType = ToolWeaponTypes.Bow;
+                    curUnitDatCom.ArcherWeapType = ToolWeaponTypes.Bow;
                     break;
 
                 case UnitTypes.Bishop:
                     newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP;
                     newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
-                    curUnitDatCom.ArcherWeaponType = ToolWeaponTypes.Bow;
+                    curUnitDatCom.ArcherWeapType = ToolWeaponTypes.Bow;
                     break;
 
                 default:
@@ -96,21 +95,19 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
 
             if (PhotonNetwork.OfflineMode)
             {
-                if (isMaster) curOwnLocalCom.LocalPlayerType = PlayerTypes.First;
-
-                else curOwnLocalCom.LocalPlayerType = PlayerTypes.Second;
+                curOffUnitCom.IsMainMaster = isMaster;
 
                 _soundEffFilter.Get1(0).Play(SoundEffectTypes.ClickToTable);
             }
             else
             {
-                curOwnUnitCom.SetOwner(sender);
+                curOnUnitCom.SetOwner(sender);
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
             }
 
 
-            unitInvCom.TakeUnitsInInventor(unitTypeForSet, isMaster);
+            unitInvCom.TakeUnitsInInv(unitTypeForSet, isMaster);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using UnityEngine;
@@ -7,47 +8,64 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SyncCellVision
 {
     internal sealed class SyncCellBuildViewSystem : IEcsRunSystem
     {
-        private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerBotComponent, CellBuildViewComponent> _cellBuildFilter;
+        private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellBuildFilter = default;
+        private EcsFilter<CellBuildViewComponent> _cellBuildViewFilt = default;
 
         public void Run()
         {
             foreach (byte idx in _cellBuildFilter)
             {
-                ref var cellBuildDataCom = ref _cellBuildFilter.Get1(idx);
-                ref var ownerCellBuildCom = ref _cellBuildFilter.Get2(idx);
-                ref var ownerBotCellBuildCom = ref _cellBuildFilter.Get3(idx);
-                ref var cellBuildViewCom = ref _cellBuildFilter.Get4(idx);
+                ref var curBuildDatCom = ref _cellBuildFilter.Get1(idx);
+                ref var curOnBuildCom = ref _cellBuildFilter.Get2(idx);
+                ref var curOffBuildCom = ref _cellBuildFilter.Get3(idx);
+                ref var curBotBuildCom = ref _cellBuildFilter.Get4(idx);          
 
-                if (cellBuildDataCom.HaveBuild)
+                ref var curBuildViewCom = ref _cellBuildViewFilt.Get1(idx);
+
+
+                if (curBuildDatCom.HaveBuild)
                 {
-                    cellBuildViewCom.SetSpriteFront(cellBuildDataCom.BuildType);
-                    cellBuildViewCom.EnableFrontSR();
+                    curBuildViewCom.SetSpriteFront(curBuildDatCom.BuildType);
+                    curBuildViewCom.EnableFrontSR();
 
-                    cellBuildViewCom.EnableBackSR();
-                    cellBuildViewCom.SetSpriteBack(cellBuildDataCom.BuildType);
+                    curBuildViewCom.EnableBackSR();
+                    curBuildViewCom.SetSpriteBack(curBuildDatCom.BuildType);
 
-                    if (ownerCellBuildCom.HaveOwner)
+                    if (curOnBuildCom.HaveOwner)
                     {
-                        if (ownerCellBuildCom.IsMasterClient)
+                        if (curOnBuildCom.IsMasterClient)
                         {
-                            cellBuildViewCom.SetBackColor(Color.blue);
+                            curBuildViewCom.SetBackColor(Color.blue);
                         }
 
                         else
                         {
-                            cellBuildViewCom.SetBackColor(Color.red);
+                            curBuildViewCom.SetBackColor(Color.red);
                         }
                     }
 
-                    else if (ownerBotCellBuildCom.IsBot)
+                    else if (curOffBuildCom.HaveLocalPlayer)
                     {
-                        cellBuildViewCom.SetBackColor(Color.red);
+                        if (curOffBuildCom.IsMainMaster)
+                        {
+                            curBuildViewCom.SetBackColor(Color.blue);
+                        }
+                        else
+                        {
+                            curBuildViewCom.SetBackColor(Color.red);
+                        }
+
+                    }
+
+                    else if (curBotBuildCom.IsBot)
+                    {
+                        curBuildViewCom.SetBackColor(Color.red);
                     }
                 }
                 else
                 {
-                    cellBuildViewCom.DisableFrontSR();
-                    cellBuildViewCom.DisableBackSR();
+                    curBuildViewCom.DisableFrontSR();
+                    curBuildViewCom.DisableBackSR();
                 }
             }
         }

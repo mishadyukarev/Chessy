@@ -39,9 +39,9 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
 
             if (selCom.IsSelectedCell)
             {
-                if (selUnitDatCom.Is(UnitTypes.Pawn))
+                if (selUnitDatCom.IsUnit(UnitTypes.Pawn))
                 {
-                    if (selOffUnitCom.HaveLocPlayer)
+                    if (selOffUnitCom.HaveLocalPlayer)
                     {
                         if (selOffUnitCom.IsMine)
                         {
@@ -52,9 +52,9 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
 
                                 if (curBuildDatCom.HaveBuild)
                                 {
-                                    if (curOffBuildCom.HaveLocPlayer)
+                                    if (curOffBuildCom.HaveLocalPlayer)
                                     {
-                                        if (curOffBuildCom.IsMastMain == WhoseMoveCom.IsMainMove)
+                                        if (curOffBuildCom.IsMainMaster == WhoseMoveCom.IsMainMove)
                                         {
                                             buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.BuildCity));
                                             needActiveThirdButt = false;

@@ -42,7 +42,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
 
                         if (!unitDatComDirect.HaveAmountHealth)
                         {
-                            if (unitDatComDirect.Is(UnitTypes.King))
+                            if (unitDatComDirect.IsUnit(UnitTypes.King))
                             {
                                 _endGameDataUIFilter.Get1(0).IsEndGame = true;
 
@@ -68,7 +68,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.AttackMelee);
 
 
-                if (starUnitDatCom.IsConditionType(CondUnitTypes.Protected) || starUnitDatCom.IsConditionType(CondUnitTypes.Relaxed))
+                if (starUnitDatCom.IsCondType(CondUnitTypes.Protected) || starUnitDatCom.IsCondType(CondUnitTypes.Relaxed))
                 {
                     starUnitDatCom.ResetConditionType();
                 }

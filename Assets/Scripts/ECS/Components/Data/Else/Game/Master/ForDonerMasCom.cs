@@ -2,6 +2,6 @@
 {
     internal struct ForDonerMasCom
     {
-        internal bool NeedActiveDoner { get; set; }
+        //internal bool NeedActiveDoner { get; set; }
     }
 }

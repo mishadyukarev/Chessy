@@ -23,12 +23,12 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                 {
                     if (curOwnerUnitCom.HaveOwner)
                     {
-                        if (curUnitDataCom.Is(UnitTypes.Pawn))
+                        if (curUnitDataCom.IsUnit(UnitTypes.Pawn))
                         {
                             //cellsGiveTWCom.Add(ToolWeaponTypes.Axe,)
                         }
 
-                        else if (curUnitDataCom.Is(UnitTypes.Rook))
+                        else if (curUnitDataCom.IsUnit(UnitTypes.Rook))
                         {
 
                         }

@@ -37,7 +37,7 @@ namespace Assets.Scripts.ECS.Components.View.UI.Game.General.Right
 
                 }
 
-                else if (selOffUnitCom.HaveLocPlayer)
+                else if (selOffUnitCom.HaveLocalPlayer)
                 {
                     if (selOffUnitCom.IsMine)
                     {

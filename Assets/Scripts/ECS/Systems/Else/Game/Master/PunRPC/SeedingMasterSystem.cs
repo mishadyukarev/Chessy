@@ -28,13 +28,13 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
             switch (envTypeForSeeding)
             {
-                case EnvironmentTypes.None:
+                case EnvirTypes.None:
                     throw new Exception();
 
-                case EnvironmentTypes.Fertilizer:
+                case EnvirTypes.Fertilizer:
                     throw new Exception();
 
-                case EnvironmentTypes.YoungForest:
+                case EnvirTypes.YoungForest:
                     if (curCellUnitDataCom.HaveMinAmountSteps)
                     {
                         if (curCellBuildDataCom.HaveBuild)
@@ -44,14 +44,14 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                         }
                         else
                         {
-                            if (!curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.Fertilizer))
+                            if (!curCellEnvDataCom.HaveEnvir(EnvirTypes.Fertilizer))
                             {
-                                if (!curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                                if (!curCellEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
 
-                                    if (!curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.YoungForest))
+                                    if (!curCellEnvDataCom.HaveEnvir(EnvirTypes.YoungForest))
                                     {
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.Seeding);
-                                        curCellEnvDataCom.SetNewEnvironment(EnvironmentTypes.YoungForest);
+                                        curCellEnvDataCom.SetNewEnvir(EnvirTypes.YoungForest);
 
                                         curCellUnitDataCom.TakeAmountSteps();
                                     }
@@ -82,13 +82,13 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     }
                     break;
 
-                case EnvironmentTypes.AdultForest:
+                case EnvirTypes.AdultForest:
                     throw new Exception();
 
-                case EnvironmentTypes.Hill:
+                case EnvirTypes.Hill:
                     throw new Exception();
 
-                case EnvironmentTypes.Mountain:
+                case EnvirTypes.Mountain:
                     throw new Exception();
 
                 default:

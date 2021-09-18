@@ -2,6 +2,7 @@
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
@@ -26,9 +27,9 @@ namespace Assets.Scripts
         private EcsFilter<BuildLeftZoneViewUICom> _buildLeftZoneViewUICom = default;
         private EcsFilter<KingZoneViewUIComp> _kingZoneUIFilter = default;
         private EcsFilter<GiveTakeZoneViewUIComp> _giveTakeZoneUIFilter = default;
+        private EcsFilter<SoundEffectsComp> _soundEffFilt = default;
 
-        private EcsFilter<InventorUnitsComponent> _invUnitsFilter = default;
-        private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
+        private EcsFilter<InventorUnitsComponent> _invUnitsFilt = default;
 
         private byte IdxSelectedCell => _selectorFilter.Get1(0).IdxSelCell;
         private bool IsDoned(bool key) => _donerUIFilter.Get1(0).IsDoned(key);
@@ -90,7 +91,7 @@ namespace Assets.Scripts
         private void GetUnit(UnitTypes unitType)
         {
             ref var selCom = ref _selectorFilter.Get1(0);
-            ref var invUnitCom = ref _invUnitsFilter.Get1(0);
+            ref var invUnitCom = ref _invUnitsFilt.Get1(0);
             ref var takerUnitDatCom = ref _takerUIFilter.Get1(0);
 
             selCom.DefCellClickType();
@@ -102,7 +103,7 @@ namespace Assets.Scripts
 
             if (PhotonNetwork.OfflineMode)
             {
-                if (invUnitCom.HaveUnitInInventor(unitType, WhoseMoveCom.IsMainMove))
+                if (invUnitCom.HaveUnitInInv(unitType, WhoseMoveCom.IsMainMove))
                 {
                     selCom.SelUnitType = unitType;
                 }
@@ -116,7 +117,7 @@ namespace Assets.Scripts
             {
                 if (!IsDoned(PhotonNetwork.IsMasterClient))
                 {
-                    if (invUnitCom.HaveUnitInInventor(unitType, PhotonNetwork.IsMasterClient))
+                    if (invUnitCom.HaveUnitInInv(unitType, PhotonNetwork.IsMasterClient))
                     {
                         selCom.SelUnitType = unitType;
                     }
@@ -130,8 +131,25 @@ namespace Assets.Scripts
 
         private void Done()
         {
-            if (!IsDoned(PhotonNetwork.IsMasterClient))
-                RpcSys.DoneToMaster(!IsDoned(PhotonNetwork.IsMasterClient));
+            var isMasterMain = false;
+
+            if (PhotonNetwork.OfflineMode)
+            {
+                isMasterMain = WhoseMoveCom.IsMainMove;
+            }
+            else
+            {
+                isMasterMain = PhotonNetwork.IsMasterClient;
+            }
+
+            if (!_invUnitsFilt.Get1(0).HaveUnitInInv(UnitTypes.King, isMasterMain))
+            {
+                RpcSys.DoneToMaster(); 
+            }
+            else
+            {
+                _soundEffFilt.Get1(0).Play(SoundEffectTypes.Mistake);
+            }
 
             _selectorFilter.Get1(0).DefCellClickType();
             _selectorFilter.Get1(0).DefSelectedUnit();
@@ -146,7 +164,7 @@ namespace Assets.Scripts
         {
             if (!IsDoned(PhotonNetwork.IsMasterClient))
             {
-                if (_cellUnitFilter.Get1(IdxSelectedCell).IsConditionType(conditionUnitType))
+                if (_cellUnitFilter.Get1(IdxSelectedCell).IsCondType(conditionUnitType))
                 {
                     RpcSys.ConditionUnitToMaster(CondUnitTypes.None, IdxSelectedCell);
                 }

@@ -2,7 +2,7 @@
 {
     internal struct ForSeedingMasCom
     {
-        internal EnvironmentTypes EnvTypeForSeeding { get; set; }
+        internal EnvirTypes EnvTypeForSeeding { get; set; }
         internal byte IdxForSeeding { get; set; }
     }
 }

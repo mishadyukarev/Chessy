@@ -8,7 +8,7 @@ using System;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
-    internal sealed class FireMasterSystem : IEcsRunSystem
+    internal sealed class FireMastSys : IEcsRunSystem
     {
         private EcsFilter<InfoMasCom> _infoFilter = default;
         private EcsFilter<ForFireMasCom> _fireFilter = default;
@@ -18,7 +18,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
-        private EcsFilter<CellsArsonArcherComp> _availCellsForArcherArsonFilter = default;
+        private EcsFilter<CellsArsonArcherComp> _cellsArcherArsonFilt = default;
 
 
         public void Run()
@@ -27,34 +27,30 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
             var fromIdx = _fireFilter.Get1(0).FromIdx;
             var toIdx = _fireFilter.Get1(0).ToIdx;
 
-            ref var fromCellUnitDataCom = ref _cellUnitFilter.Get1(fromIdx);
-            ref var fromOwnerCellUnitCom = ref _cellUnitFilter.Get2(fromIdx);
+            ref var fromUnitDatCom = ref _cellUnitFilter.Get1(fromIdx);
+            ref var fromOnUnitCom = ref _cellUnitFilter.Get2(fromIdx);
 
-            ref var toCellUnitDataCom = ref _cellUnitFilter.Get1(toIdx);
-            ref var toCellFireDataCom = ref _cellFireFilter.Get1(toIdx);
-            ref var toCellEnvDataCom = ref _cellEnvFilter.Get1(toIdx);
+            ref var toUnitDatCom = ref _cellUnitFilter.Get1(toIdx);
+            ref var toFireDatCom = ref _cellFireFilter.Get1(toIdx);
+            ref var toEnvDatCom = ref _cellEnvFilter.Get1(toIdx);
 
 
-            if (fromCellUnitDataCom.IsMelee)
+            if (fromUnitDatCom.IsMelee)
             {
-                if (fromCellUnitDataCom.HaveMinAmountSteps)
+                if (fromUnitDatCom.HaveMinAmountSteps)
                 {
-                    if (toCellFireDataCom.HaveFire)
+                    if (toFireDatCom.HaveFire)
                     {
-                        toCellFireDataCom.HaveFire = default;
+                        toFireDatCom.HaveFire = default;
 
-                        toCellUnitDataCom.TakeAmountSteps();
+                        toUnitDatCom.TakeAmountSteps();
                     }
-                    else if (toCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
+                    else if (toEnvDatCom.HaveEnvir(EnvirTypes.AdultForest))
                     {
-                        if (fromOwnerCellUnitCom.HaveOwner)
-                        {
-                            RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
+                        RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
-                            toCellFireDataCom.HaveFire = true;
-                            toCellUnitDataCom.TakeAmountSteps();
-                        }
-
+                        toFireDatCom.EnabFire();
+                        toUnitDatCom.TakeAmountSteps();
                     }
                     else
                     {
@@ -71,14 +67,14 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
             else
             {
-                if (fromCellUnitDataCom.HaveMaxAmountSteps)
+                if (fromUnitDatCom.HaveMaxAmountSteps)
                 {
-                    if (_availCellsForArcherArsonFilter.Get1(0).HaveIdxCell(sender.IsMasterClient, fromIdx, toIdx))
+                    if (_cellsArcherArsonFilt.Get1(0).HaveIdxCell(sender.IsMasterClient, fromIdx, toIdx))
                     {
                         RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
-                        fromCellUnitDataCom.ResetAmountSteps();
-                        toCellFireDataCom.HaveFire = true;
+                        fromUnitDatCom.ResetAmountSteps();
+                        toFireDatCom.HaveFire = true;
                     }
 
                     //foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(fromIdx)))

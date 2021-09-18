@@ -43,7 +43,5 @@ namespace Assets.Scripts.ECS.Components.View.UI.Game.General.Right
         internal void SetText_Button(UniqueButtonTypes uniqueButtonType, string text) => _uniqueAbilit_TextMPs[uniqueButtonType].text = text;
 
         internal void AddListener_Button(UniqueButtonTypes uniqueButtonType, UnityAction unityAction) => _uniqueAbilit_Buttons[uniqueButtonType].onClick.AddListener(unityAction);
-
-        internal void RemoveAllList(UniqueButtonTypes uniqueButtonType) => _uniqueAbilit_Buttons[uniqueButtonType].onClick.RemoveAllListeners();
     }
 }
