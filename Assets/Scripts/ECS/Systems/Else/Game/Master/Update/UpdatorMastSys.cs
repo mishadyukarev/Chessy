@@ -6,6 +6,7 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
@@ -13,11 +14,11 @@ using Assets.Scripts.Workers.Game.Else.Economy;
 using Leopotam.Ecs;
 using Photon.Pun;
 
-internal sealed class UpdatorMasterSystem : IEcsRunSystem
+internal sealed class UpdatorMastSys : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellViewComponent> _cellViewFilter = default;
-    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
     private EcsFilter<CellBuildDataComponent, OwnerOnlineComp> _cellBuildDataFilter = default;
@@ -26,6 +27,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
     private EcsFilter<InventorResourcesComponent> _invResFilt = default;
     private EcsFilter<MotionsDataUIComponent> _motionsUIFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
+    private EcsFilter<WhoseMoveCom> _whoseMoveFilt = default;
 
     public void Run()
     {
@@ -44,8 +46,9 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
             ref var curCellViewCom = ref _cellViewFilter.Get1(curIdxCell);
 
             ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
-            ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
-            ref var curBotUnitCom = ref _cellUnitFilter.Get3(curIdxCell);
+            ref var curOnlineUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
+            ref var curOfflineUnitCom = ref _cellUnitFilter.Get3(curIdxCell);
+            ref var curBotUnitCom = ref _cellUnitFilter.Get4(curIdxCell);
 
             ref var curBuilDatCom = ref _cellBuildDataFilter.Get1(curIdxCell);
             ref var curOwnBuilCom = ref _cellBuildDataFilter.Get2(curIdxCell);
@@ -56,26 +59,34 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
 
             if (curUnitDatCom.HaveUnit)
             {
-                if (curOwnUnitCom.HaveOwner)
+                if (curOnlineUnitCom.HaveOwner || curOfflineUnitCom.HaveLocPlayer)
                 {
-                    if (!curUnitDatCom.IsUnitType(UnitTypes.King)) invResCom.TakeAmountResources(ResourceTypes.Food, curOwnUnitCom.IsMasterClient);
+                    var isCurUnitMaster = false;
+
+                    if (PhotonNetwork.OfflineMode) isCurUnitMaster = WhoseMoveCom.IsMainMove;
+
+                    else isCurUnitMaster = PhotonNetwork.IsMasterClient;
+
+
+
+                    if (!curUnitDatCom.Is(UnitTypes.King)) invResCom.TakeAmountResources(ResourceTypes.Food, isCurUnitMaster);
 
                     if (curFireDatCom.HaveFire)
                     {
-                        curUnitDatCom.ConditionUnitType = ConditionUnitTypes.None;
+                        curUnitDatCom.CondUnitType = CondUnitTypes.None;
                     }
 
                     else
                     {
-                        if (curUnitDatCom.IsConditionType(ConditionUnitTypes.Relaxed))
+                        if (curUnitDatCom.IsConditionType(CondUnitTypes.Relaxed))
                         {
                             if (curUnitDatCom.HaveMaxAmountHealth)
                             {
-                                if (curUnitDatCom.IsUnitType(UnitTypes.Pawn))
+                                if (curUnitDatCom.Is(UnitTypes.Pawn))
                                 {
                                     if (curEnvrDatCom.HaveEnvironment(EnvironmentTypes.AdultForest))
                                     {
-                                        invResCom.AddAmountResources(ResourceTypes.Wood, curOwnUnitCom.IsMasterClient);
+                                        invResCom.AddAmountResources(ResourceTypes.Wood, isCurUnitMaster);
                                         curEnvrDatCom.TakeAmountResources(EnvironmentTypes.AdultForest);
 
                                         if (curEnvrDatCom.HaveResources(EnvironmentTypes.AdultForest))
@@ -84,13 +95,13 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                             {
                                                 if (!curBuilDatCom.HaveBuild)
                                                 {
-                                                    curUnitDatCom.ConditionUnitType = ConditionUnitTypes.Protected;
+                                                    curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
                                                 }
                                             }
                                             else
                                             {
-                                                curBuilDatCom.BuildingType = BuildingTypes.Woodcutter;
-                                                curOwnBuilCom.SetOwner(curOwnUnitCom.Owner);
+                                                curBuilDatCom.BuildType = BuildingTypes.Woodcutter;
+                                                curOwnBuilCom.SetOwner(curOnlineUnitCom.Owner);
                                             }
                                         }
                                         else
@@ -106,7 +117,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                         {
                                             if (curBuilDatCom.HaveBuild)
                                             {
-                                                curUnitDatCom.ConditionUnitType = ConditionUnitTypes.Protected;
+                                                curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
                                             }
                                             else
                                             {
@@ -116,25 +127,25 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                                 }
                                                 else
                                                 {
-                                                    curUnitDatCom.ConditionUnitType = ConditionUnitTypes.Protected;
+                                                    curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
                                                 }
                                             }
                                         }
                                         else
                                         {
-                                            curUnitDatCom.ConditionUnitType = ConditionUnitTypes.Protected;
+                                            curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
                                         }
                                     }
 
                                     else
                                     {
-                                        curUnitDatCom.ConditionUnitType = ConditionUnitTypes.Protected;
+                                        curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
                                     }
                                 }
 
                                 else
                                 {
-                                    curUnitDatCom.ConditionUnitType = ConditionUnitTypes.Protected;
+                                    curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
                                 }
                             }
 
@@ -147,11 +158,11 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                                 }
                             }
                         }
-                        else if (curUnitDatCom.IsConditionType(ConditionUnitTypes.None))
+                        else if (curUnitDatCom.IsConditionType(CondUnitTypes.None))
                         {
                             if (curUnitDatCom.HaveMaxAmountSteps)
                             {
-                                curUnitDatCom.ConditionUnitType = ConditionUnitTypes.Protected;
+                                curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
                             }
                         }
                     }
@@ -245,7 +256,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                     if (!curUnitDatCom.HaveAmountHealth)
                     {
                         curUnitDatCom.ResetUnit();
-                        curOwnUnitCom.ResetOwner();
+                        curOnlineUnitCom.ResetOwner();
                     }
                 }
 
@@ -255,7 +266,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                 {
                     if (curBuilDatCom.HaveBuild)
                     {
-                        curBuilDatCom.BuildingType = default;
+                        curBuilDatCom.BuildType = default;
                         curOwnBuilCom.ResetOwner();
                     }
 
@@ -309,7 +320,7 @@ internal sealed class UpdatorMasterSystem : IEcsRunSystem
                         {
                             if (curOwnUnitCom.HaveOwner)
                             {
-                                if (curUnitDatCom.IsUnitType(unitType))
+                                if (curUnitDatCom.Is(unitType))
                                 {
                                     if (curOwnUnitCom.IsMasterClient == isMaster)
                                     {

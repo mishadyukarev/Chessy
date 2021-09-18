@@ -8,7 +8,7 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
 {
     internal struct CellEnvironDataCom
     {
-        private Dictionary<EnvironmentTypes, bool> _haveCellEnvironmentOnCell;
+        private Dictionary<EnvironmentTypes, bool> _haveCellEnvirOnCell;
         private Dictionary<EnvironmentTypes, int> _amountResourcesOnCell;
 
 
@@ -34,20 +34,20 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
 
         internal CellEnvironDataCom(Dictionary<EnvironmentTypes, bool> haveCellEnvironments)
         {
-            _haveCellEnvironmentOnCell = haveCellEnvironments;
+            _haveCellEnvirOnCell = haveCellEnvironments;
             _amountResourcesOnCell = new Dictionary<EnvironmentTypes, int>();
 
             for (EnvironmentTypes envirType = (EnvironmentTypes)1; envirType < (EnvironmentTypes)Enum.GetNames(typeof(EnvironmentTypes)).Length; envirType++)
             {
-                _haveCellEnvironmentOnCell.Add(envirType, default);
+                _haveCellEnvirOnCell.Add(envirType, default);
                 _amountResourcesOnCell.Add(envirType, default);
             }
         }
 
 
-        internal void SetHaveEnvironment(EnvironmentTypes environmentType, bool haveEnvironment) => _haveCellEnvironmentOnCell[environmentType] = haveEnvironment;
+        internal void SetHaveEnvironment(EnvironmentTypes environmentType, bool haveEnvironment) => _haveCellEnvirOnCell[environmentType] = haveEnvironment;
 
-        internal bool HaveEnvironment(EnvironmentTypes environmentType) => _haveCellEnvironmentOnCell[environmentType];
+        internal bool HaveEnvironment(EnvironmentTypes environmentType) => _haveCellEnvirOnCell[environmentType];
         internal void SetEnvironment(EnvironmentTypes environmentType) => SetHaveEnvironment(environmentType, true);
         internal void ResetEnvironment(EnvironmentTypes environmentType) => SetHaveEnvironment(environmentType, default);
 

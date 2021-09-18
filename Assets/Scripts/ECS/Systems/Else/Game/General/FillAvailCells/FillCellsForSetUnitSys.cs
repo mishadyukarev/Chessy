@@ -7,7 +7,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
     internal sealed class FillCellsForSetUnitSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
 
         private EcsFilter<CellsForSetUnitComp> _cellsForSetUnitFilter = default;
 

@@ -20,7 +20,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
         private EcsFilter<InventorResourcesComponent> _inventResFilter = default;
         private EcsFilter<InventorToolsComp, InventorWeaponsComp> _inventToolWeapFilter = default;
 
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -39,7 +39,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                 ref var cellUnitDataComForGive = ref _cellUnitFilter.Get1(neededIdxCell);
                 ref var ownerCellUnitComForGive = ref _cellUnitFilter.Get2(neededIdxCell);
 
-                if (cellUnitDataComForGive.IsUnitType(UnitTypes.Pawn))
+                if (cellUnitDataComForGive.Is(UnitTypes.Pawn))
                 {
                     if (cellUnitDataComForGive.HaveExtraToolWeaponPawn)
                     {
@@ -47,9 +47,9 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                         {
                             if (cellUnitDataComForGive.HaveMaxAmountSteps)
                             {
-                                if (cellUnitDataComForGive.IsConditionType(new[] { ConditionUnitTypes.Protected, ConditionUnitTypes.Relaxed }))
+                                if (cellUnitDataComForGive.IsConditionType(new[] { CondUnitTypes.Protected, CondUnitTypes.Relaxed }))
                                 {
-                                    cellUnitDataComForGive.ConditionUnitType = default;
+                                    cellUnitDataComForGive.CondUnitType = default;
                                 }
 
                                 if (cellUnitDataComForGive.ExtraTWPawnType.IsTool())

@@ -8,7 +8,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
     internal sealed class SelectorTypeUISystem : IEcsRunSystem
     {
         private EcsFilter<SelectorTypeViewUIComp> _selectorTypeUIFilter = default;
-        private EcsFilter<SelectorComponent> _selectorFilter = default;
+        private EcsFilter<SelectorCom> _selectorFilter = default;
 
         public void Run()
         {

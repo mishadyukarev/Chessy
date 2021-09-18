@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
 using Assets.Scripts.ECS.Game.General.Systems;
 using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
 using Assets.Scripts.ECS.Game.General.Systems.SyncCellVision;
@@ -7,6 +8,8 @@ using Assets.Scripts.ECS.Systems.Else.Game.General.Event;
 using Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Sync.Unit;
 using Assets.Scripts.ECS.Systems.Game.General.UI.View.Down;
+using Assets.Scripts.ECS.Systems.UI.Game.General.RightZone;
+using Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.UpZone;
@@ -44,11 +47,15 @@ public sealed class GameGeneralSysManager : SystemAbstManager
            .Add(new EnvironmentUISystem())
 
             ///right
-            .Add(new RightZoneUISystem())
+            .Add(new RightZoneUISys())
+            .Add(new RightUnitInfoUISys())
             .Add(new StatsUISystem())
-            .Add(new ConditionUISys())
-            .Add(new UniqueAbilitiesUISystem())
-            .Add(new BuildRighUISystem())
+            .Add(new ProtectUISys())
+            .Add(new RelaxUISys())
+            .Add(new UniqueAbilitUISys())
+            .Add(new FirstButtonBuildUISys())
+            .Add(new SecButtonBuildUISys())
+            .Add(new ThirdButtonBuildUISys())
 
             ///down
             .Add(new DonerUISystem())
@@ -79,13 +86,14 @@ public sealed class GameGeneralSysManager : SystemAbstManager
             .Add(new FillCellsArsonSys());
 
 
-        var executersEvents = new EcsSystems(gameWorld)
+        var eventExecuters = new EcsSystems(gameWorld)
             .Add(new EventsGameSys())
-            .Add(new EnventRightBuildZoneSys());
+            .Add(new UnitUniqueEventSys())
+            .Add(new EventUnitBuildUISys());
 
 
         InitOnlySystems
-            .Add(executersEvents);
+            .Add(eventExecuters);
 
 
         RunOnlySystems

@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
-using System;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Components.Data.Else.Common
@@ -276,10 +275,10 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
 
 
 
-                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.StandartAbilities, "Standart");
-                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.StandartAbilities, "Стандартные");
-                _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.StandartAbilities, "标准");
-                _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.StandartAbilities, "Standart");
+                _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.ConditAbilities, "Standart");
+                _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.ConditAbilities, "Стандартные");
+                _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.ConditAbilities, "标准");
+                _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.ConditAbilities, "Standart");
 
                 _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Protect, "Protect");
                 _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Protect, "Защита");
@@ -360,7 +359,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
             {
                 return _comLanguages[LanguageTypes.English][comLanguageType];
             }
-            
+
         }
         internal static string GetText(GameLanguageTypes gameLanguageType)
         {

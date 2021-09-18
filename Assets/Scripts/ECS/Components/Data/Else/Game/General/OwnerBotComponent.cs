@@ -5,5 +5,6 @@
         internal bool IsBot { get; set; }
 
         internal void ResetBot() => IsBot = default;
+
     }
 }

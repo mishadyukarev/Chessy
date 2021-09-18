@@ -22,7 +22,7 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
     private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
 
     private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
-    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilter = default;
 
     private EcsFilter<SoundEffectsComp> _soundEffFilter = default;
 
@@ -44,7 +44,7 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
 
         if (PhotonNetwork.OfflineMode)
         {
-            isMaster = _whoseMoveFilter.Get1(0).IsMainMove;
+            isMaster = WhoseMoveCom.IsMainMove;
         }
         else
         {
@@ -92,7 +92,7 @@ internal sealed class SetterUnitMasterSystem : IEcsRunSystem
             curUnitDatCom.UnitType = unitTypeForSet;
             curUnitDatCom.AmountHealth = newAmountHealth;
             curUnitDatCom.AmountSteps = newAmountSteps;
-            curUnitDatCom.ConditionUnitType = default;
+            curUnitDatCom.CondUnitType = default;
 
             if (PhotonNetwork.OfflineMode)
             {

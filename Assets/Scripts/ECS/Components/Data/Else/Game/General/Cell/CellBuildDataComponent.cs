@@ -2,16 +2,16 @@
 
 internal struct CellBuildDataComponent
 {
-    internal BuildingTypes BuildingType;
+    internal BuildingTypes BuildType;
 
-    internal bool HaveBuild => BuildingType != BuildingTypes.None;
-    internal bool IsBuildType(BuildingTypes buildingType) => BuildingType == buildingType;
-    internal void DefBuildType() => BuildingType = default;
+    internal bool HaveBuild => BuildType != BuildingTypes.None;
+    internal bool IsBuildType(BuildingTypes buildingType) => BuildType == buildingType;
+    internal void DefBuildType() => BuildType = default;
 
     internal int PowerProtectionUnit(UnitTypes unitType)
     {
         var powerProtection = 0;
-        switch (BuildingType)
+        switch (BuildType)
         {
             case BuildingTypes.City:
 

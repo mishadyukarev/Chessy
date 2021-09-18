@@ -13,7 +13,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
         private EcsFilter<ForCircularAttackMasCom> _forCircAttackFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
 
         private EcsFilter<EndGameDataUIComponent> _endGameDataUIFilter = default;
 
@@ -42,7 +42,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
 
                         if (!unitDatComDirect.HaveAmountHealth)
                         {
-                            if (unitDatComDirect.IsUnitType(UnitTypes.King))
+                            if (unitDatComDirect.Is(UnitTypes.King))
                             {
                                 _endGameDataUIFilter.Get1(0).IsEndGame = true;
 
@@ -68,7 +68,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.AttackMelee);
 
 
-                if (starUnitDatCom.IsConditionType(ConditionUnitTypes.Protected) || starUnitDatCom.IsConditionType(ConditionUnitTypes.Relaxed))
+                if (starUnitDatCom.IsConditionType(CondUnitTypes.Protected) || starUnitDatCom.IsConditionType(CondUnitTypes.Relaxed))
                 {
                     starUnitDatCom.ResetConditionType();
                 }

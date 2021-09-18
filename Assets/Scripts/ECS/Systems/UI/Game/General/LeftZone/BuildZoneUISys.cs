@@ -6,7 +6,7 @@ using Leopotam.Ecs;
 
 internal sealed class BuildZoneUISys : IEcsRunSystem
 {
-    private EcsFilter<SelectorComponent> _selectorFilter = default;
+    private EcsFilter<SelectorCom> _selectorFilter = default;
     private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
     private EcsFilter<BuildLeftZoneViewUICom> _buildZoneUIFilter = default;
     private EcsFilter<GetterUnitsDataUICom, GetterUnitsViewUICom> _takerUIFilter = default;

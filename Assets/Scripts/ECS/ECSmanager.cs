@@ -56,7 +56,7 @@ namespace Assets.Scripts
                     {
                         _gameWorld.Destroy();
 
-                        
+
                         GameObject.Destroy(RpcView_GO);
                         _gameGenSysManag = default;
                         _gameMasSysManag = default;
@@ -85,7 +85,7 @@ namespace Assets.Scripts
 
                     _gameWorld = new EcsWorld();
                     _allGameSystems = new EcsSystems(_gameWorld);
- 
+
 
                     _allGameSystems.Add(new InitSpawnGameSys());
 
@@ -106,7 +106,7 @@ namespace Assets.Scripts
                     throw new Exception();
             }
 
-            
+
         }
 
 

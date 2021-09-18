@@ -10,7 +10,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 {
     internal sealed class SyncCellUnitSupVisSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
         private EcsFilter<CellUnitMainViewComp> _cellUnitViewFilter = default;
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
         private EcsFilter<CellBlocksViewComponent> _cellBlocksFilter = default;
@@ -59,13 +59,13 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                             blocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
                         }
 
-                        if (curUnitDataCom.IsConditionType(ConditionUnitTypes.Protected))
+                        if (curUnitDataCom.IsConditionType(CondUnitTypes.Protected))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
                             blocksViewCom.SetColor(CellBlockTypes.Condition, Color.yellow);
                         }
 
-                        else if (curUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
+                        else if (curUnitDataCom.IsConditionType(CondUnitTypes.Relaxed))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
                             blocksViewCom.SetColor(CellBlockTypes.Condition, Color.green);
@@ -92,7 +92,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 
                         else if (curOffUnitCom.LocalPlayerType != default)
                         {
-                            if (_whoseMoveFilter.Get1(0).IsMainMove)
+                            if (WhoseMoveCom.IsMainMove)
                             {
                                 if (curOffUnitCom.Is(PlayerTypes.First))
                                 {

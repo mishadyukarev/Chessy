@@ -1,24 +1,21 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using Photon.Pun;
-using UnityEngine;
 
 internal sealed class SelectorSystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
-    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvironDataFilter = default;
 
-    private EcsFilter<SelectorComponent> _selectorFilter = default;
+    private EcsFilter<SelectorCom> _selectorFilter = default;
     private EcsFilter<InputComponent> _inputFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
     private EcsFilter<SoundEffectsComp> _soundFilter = default;
@@ -31,7 +28,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
     public void Run()
     {
-        CellUnitDataComponent CellUnitDataCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
+        CellUnitDataCom CellUnitDataCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
         OwnerOnlineComp OwnerCellUnitCom(byte idxCell) => _cellUnitFilter.Get2(idxCell);
         OwnerBotComponent OwnerBotCellUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
         CellEnvironDataCom CellEnvironDataCom(byte idxCell) => _cellEnvironDataFilter.Get1(idxCell);
@@ -81,7 +78,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                 }
 
                 else if (selCom.IsSelectedUnit)
-                {  
+                {
                     RpcSys.SetUniToMaster(selCom.IdxCurCell, selCom.SelUnitType);
                     selCom.SelUnitType = default;
                 }
@@ -97,7 +94,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                 else if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
                 {
-                    if (CellUnitDataCom(selCom.IdxCurCell).IsUnitType(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
+                    if (CellUnitDataCom(selCom.IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
                     {
                         RpcSys.GiveTakeToolWeapon(selCom.ToolWeaponTypeForGiveTake, selCom.IdxCurCell);
                     }
@@ -120,7 +117,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                     if (PhotonNetwork.OfflineMode)
                     {
-                        isMainMove = _whoseMoveFilter.Get1(0).IsMainMove;
+                        isMainMove = WhoseMoveCom.IsMainMove;
                     }
                     else
                     {

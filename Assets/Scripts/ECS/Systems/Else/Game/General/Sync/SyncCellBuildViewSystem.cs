@@ -20,11 +20,11 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SyncCellVision
 
                 if (cellBuildDataCom.HaveBuild)
                 {
-                    cellBuildViewCom.SetSpriteFront(cellBuildDataCom.BuildingType);
+                    cellBuildViewCom.SetSpriteFront(cellBuildDataCom.BuildType);
                     cellBuildViewCom.EnableFrontSR();
 
                     cellBuildViewCom.EnableBackSR();
-                    cellBuildViewCom.SetSpriteBack(cellBuildDataCom.BuildingType);
+                    cellBuildViewCom.SetSpriteBack(cellBuildDataCom.BuildType);
 
                     if (ownerCellBuildCom.HaveOwner)
                     {

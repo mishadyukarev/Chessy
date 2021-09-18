@@ -14,7 +14,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         private EcsFilter<ForFireMasCom> _fireFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 

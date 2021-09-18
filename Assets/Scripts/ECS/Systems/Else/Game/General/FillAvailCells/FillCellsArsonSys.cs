@@ -12,7 +12,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
         private EcsFilter<CellsArsonArcherComp> _cellsArsonFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
@@ -27,7 +27,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
                 ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
 
-                if (curUnitDatCom.IsUnitType(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                 {
                     if (curOwnUnitCom.HaveOwner)
                     {

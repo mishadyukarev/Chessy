@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Menu;
 using Assets.Scripts.ECS.Component.UI;
-using ExitGames.Client.Photon;
 using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;

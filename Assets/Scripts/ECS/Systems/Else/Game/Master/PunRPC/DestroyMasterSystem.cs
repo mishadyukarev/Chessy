@@ -10,7 +10,7 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
     private EcsFilter<InfoMasCom> _infoFilter = default;
     private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
     private EcsFilter<CellBuildDataComponent, OwnerOnlineComp> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 

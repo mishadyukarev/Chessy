@@ -5,13 +5,13 @@ using System;
 using System.Collections.Generic;
 using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
 
-internal struct CellUnitDataComponent
+internal struct CellUnitDataCom
 {
     internal UnitTypes UnitType;
     internal bool HaveUnit => UnitType != UnitTypes.None;
     internal void ResetUnitType() => UnitType = default;
-    internal bool IsUnitType(UnitTypes unitType) => UnitType.Is(unitType);
-    internal bool IsUnitType(UnitTypes[] unitTypes) => UnitType.Is(unitTypes);
+    internal bool Is(UnitTypes unitType) => UnitType.Is(unitType);
+    internal bool Is(UnitTypes[] unitTypes) => UnitType.Is(unitTypes);
     internal bool IsMelee
     {
         get
@@ -45,10 +45,10 @@ internal struct CellUnitDataComponent
     internal void SetIsVisibleUnit(bool key, bool value) => _isVisibleDict[key] = value;
 
 
-    internal ConditionUnitTypes ConditionUnitType { get; set; }
-    internal void ResetConditionType() => ConditionUnitType = default;
-    internal bool IsConditionType(ConditionUnitTypes conditionUnitType) => ConditionUnitType == conditionUnitType;
-    internal bool IsConditionType(ConditionUnitTypes[] conditionUnitTypes)
+    internal CondUnitTypes CondUnitType { get; set; }
+    internal void ResetConditionType() => CondUnitType = default;
+    internal bool IsConditionType(CondUnitTypes conditionUnitType) => CondUnitType == conditionUnitType;
+    internal bool IsConditionType(CondUnitTypes[] conditionUnitTypes)
     {
         foreach (var conditionUnitType in conditionUnitTypes)
             if (IsConditionType(conditionUnitType)) return true;
@@ -63,13 +63,13 @@ internal struct CellUnitDataComponent
     internal bool HaveExtraToolWeaponPawn => ExtraTWPawnType != default;
 
 
-    private Dictionary<ConditionUnitTypes, int> _amountStepsInCondition;
-    internal int AmountStepsInProtectRelax(ConditionUnitTypes conditionUnitType) => _amountStepsInCondition[conditionUnitType];
-    internal void SetAmountStepsInProtectRelax(ConditionUnitTypes conditionUnitType, int value) => _amountStepsInCondition[conditionUnitType] = value;
-    internal void AddAmountStepsInProtectRelax(ConditionUnitTypes conditionUnitType, int adding = 1) => _amountStepsInCondition[conditionUnitType] += adding;
-    internal void TakeAmountStepsInProtectRelax(ConditionUnitTypes conditionUnitType, int taking = 1) => _amountStepsInCondition[conditionUnitType] += taking;
+    private Dictionary<CondUnitTypes, int> _amountStepsInCondition;
+    internal int AmountStepsInProtectRelax(CondUnitTypes conditionUnitType) => _amountStepsInCondition[conditionUnitType];
+    internal void SetAmountStepsInProtectRelax(CondUnitTypes conditionUnitType, int value) => _amountStepsInCondition[conditionUnitType] = value;
+    internal void AddAmountStepsInProtectRelax(CondUnitTypes conditionUnitType, int adding = 1) => _amountStepsInCondition[conditionUnitType] += adding;
+    internal void TakeAmountStepsInProtectRelax(CondUnitTypes conditionUnitType, int taking = 1) => _amountStepsInCondition[conditionUnitType] += taking;
 
-    internal void ResetAmountStepsInProtectRelax(ConditionUnitTypes conditionUnitType) => _amountStepsInCondition[conditionUnitType] = default;
+    internal void ResetAmountStepsInProtectRelax(CondUnitTypes conditionUnitType) => _amountStepsInCondition[conditionUnitType] = default;
 
 
     internal int AmountSteps { get; set; }
@@ -203,7 +203,7 @@ internal struct CellUnitDataComponent
         {
             int powerProtection = 0;
 
-            if (IsConditionType(ConditionUnitTypes.Protected))
+            if (IsConditionType(CondUnitTypes.Protected))
             {
                 switch (UnitType)
                 {
@@ -231,7 +231,7 @@ internal struct CellUnitDataComponent
                 }
             }
 
-            else if (IsConditionType(ConditionUnitTypes.Relaxed))
+            else if (IsConditionType(CondUnitTypes.Relaxed))
             {
                 switch (UnitType)
                 {
@@ -407,19 +407,19 @@ internal struct CellUnitDataComponent
         ExtraTWPawnType = default;
         AmountHealth = default;
         AmountSteps = default;
-        ConditionUnitType = default;
+        CondUnitType = default;
     }
-    internal void ReplaceUnit(CellUnitDataComponent newCellUnitDataCom)
+    internal void ReplaceUnit(CellUnitDataCom newCellUnitDataCom)
     {
         UnitType = newCellUnitDataCom.UnitType;
         ArcherWeaponType = newCellUnitDataCom.ArcherWeaponType;
         ExtraTWPawnType = newCellUnitDataCom.ExtraTWPawnType;
         AmountHealth = newCellUnitDataCom.AmountHealth;
         AmountSteps = newCellUnitDataCom.AmountSteps;
-        ConditionUnitType = newCellUnitDataCom.ConditionUnitType;
+        CondUnitType = newCellUnitDataCom.CondUnitType;
     }
 
-    internal CellUnitDataComponent(Dictionary<bool, bool> isVisibleDict) : this()
+    internal CellUnitDataCom(Dictionary<bool, bool> isVisibleDict) : this()
     {
         _isVisibleDict = isVisibleDict;
 
@@ -427,10 +427,10 @@ internal struct CellUnitDataComponent
         _isVisibleDict.Add(false, default);
 
 
-        _amountStepsInCondition = new Dictionary<ConditionUnitTypes, int>();
-        _amountStepsInCondition.Add(ConditionUnitTypes.None, default);
-        _amountStepsInCondition.Add(ConditionUnitTypes.Protected, default);
-        _amountStepsInCondition.Add(ConditionUnitTypes.Relaxed, default);
+        _amountStepsInCondition = new Dictionary<CondUnitTypes, int>();
+        _amountStepsInCondition.Add(CondUnitTypes.None, default);
+        _amountStepsInCondition.Add(CondUnitTypes.Protected, default);
+        _amountStepsInCondition.Add(CondUnitTypes.Relaxed, default);
     }
 }
 

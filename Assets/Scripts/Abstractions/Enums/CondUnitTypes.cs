@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Abstractions.Enums
 {
-    public enum ConditionUnitTypes
+    public enum CondUnitTypes
     {
         None,
 

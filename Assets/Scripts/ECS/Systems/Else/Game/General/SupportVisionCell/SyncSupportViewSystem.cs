@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Leopotam.Ecs;
@@ -9,10 +8,10 @@ using Photon.Pun;
 internal sealed class SyncSupportViewSystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
-    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerOfflineCom, CellUnitMainViewComp> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, CellUnitMainViewComp> _cellUnitFilter = default;
     private EcsFilter<CellSupViewComponent> _supViewFilter = default;
 
-    private EcsFilter<SelectorComponent> _selectorFilter = default;
+    private EcsFilter<SelectorCom> _selectorFilter = default;
     private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
     private EcsFilter<AvailCellsForShiftComp> _cellsShiftFilter = default;
     private EcsFilter<CellsArsonArcherComp> _availCellsForArcherArsonFilter = default;
@@ -24,7 +23,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
         ref var selCom = ref _selectorFilter.Get1(0);
 
 
-        var isMainMove = _whoseMoveFilter.Get1(0).IsMainMove;
+        var isMainMove = WhoseMoveCom.IsMainMove;
 
 
         foreach (var idxCurCell in _xyCellFilter)
@@ -54,13 +53,13 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                     {
                         if (curOwnUnitCom.IsMine)
                         {
-                            if (curUnitDatCom.IsUnitType(UnitTypes.Pawn))
+                            if (curUnitDatCom.Is(UnitTypes.Pawn))
                             {
                                 curSupViewCom.EnableSR();
                                 curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
                             }
 
-                            else if (curUnitDatCom.IsUnitType(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                            else if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                             {
                                 curSupViewCom.EnableSR();
                                 curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);

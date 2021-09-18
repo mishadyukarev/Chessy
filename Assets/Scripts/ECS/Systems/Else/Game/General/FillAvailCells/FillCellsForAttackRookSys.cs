@@ -15,7 +15,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellViewComponent> _cellViewFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
 
         private EcsFilter<AvailCellsForAttackComp> _cellsForAttackFilter = default;
 
@@ -31,7 +31,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                 ref var cellsForAttackComp = ref _cellsForAttackFilter.Get1(0);
 
 
-                if (unitDataCom_0.HaveUnit && unitDataCom_0.IsUnitType(UnitTypes.Rook))
+                if (unitDataCom_0.HaveUnit && unitDataCom_0.Is(UnitTypes.Rook))
                 {
                     if (unitDataCom_0.HaveMinAmountSteps)
 

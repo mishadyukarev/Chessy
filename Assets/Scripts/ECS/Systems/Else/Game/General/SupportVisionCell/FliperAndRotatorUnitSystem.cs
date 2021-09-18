@@ -8,10 +8,10 @@ namespace Assets.Scripts.ECS.Game.General.Systems
 {
     internal class FliperAndRotatorUnitSystem : IEcsRunSystem
     {
-        private EcsFilter<SelectorComponent> _selComFilter = default;
+        private EcsFilter<SelectorCom> _selComFilter = default;
 
         private EcsFilter<CellUnitMainViewComp, CellUnitExtraViewComp> _cellUnitViewFilter = default;
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -34,7 +34,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems
 
                             if (curOwnUnitCom.IsMine)
                             {
-                                if (curUnitDatCom.IsUnitType(UnitTypes.Rook))
+                                if (curUnitDatCom.Is(UnitTypes.Rook))
                                 {
                                     if (PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, -90));
                                     else curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 90));
@@ -51,7 +51,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                     curMainUnitViewCom.SetFlipX(false);
                     curExtraUnitViewCom.SetFlipX(true);
 
-                    if(PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 0));
+                    if (PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 0));
                     else curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 180));
                 }
             }

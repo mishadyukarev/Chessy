@@ -19,7 +19,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
         private EcsFilter<InventorResourcesComponent> _inventResFilter = default;
         private EcsFilter<InventorToolsComp, InventorWeaponsComp> _inventToolWeapFilter = default;
 
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -37,7 +37,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 
 
 
-            if (cellUnitDataComForGive.IsUnitType(new[] { UnitTypes.Bishop, UnitTypes.Rook }))
+            if (cellUnitDataComForGive.Is(new[] { UnitTypes.Bishop, UnitTypes.Rook }))
             {
                 if (cellUnitDataComForGive.ArcherWeaponType.Is(ToolWeaponTypes.Crossbow))
                 {
@@ -45,9 +45,9 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                     {
                         if (cellUnitDataComForGive.HaveMaxAmountSteps)
                         {
-                            if (cellUnitDataComForGive.IsConditionType(new[] { ConditionUnitTypes.Protected, ConditionUnitTypes.Relaxed }))
+                            if (cellUnitDataComForGive.IsConditionType(new[] { CondUnitTypes.Protected, CondUnitTypes.Relaxed }))
                             {
-                                cellUnitDataComForGive.ConditionUnitType = default;
+                                cellUnitDataComForGive.CondUnitType = default;
                             }
 
                             inventWeaponsComp.AddAmountWeapons(ownerCellUnitComForGive.IsMasterClient, ToolWeaponTypes.Crossbow);
@@ -59,7 +59,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                         }
                         else
                         {
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes. Mistake);
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                         }
                     }
@@ -79,9 +79,9 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                         {
                             if (cellUnitDataComForGive.HaveMaxAmountSteps)
                             {
-                                if (cellUnitDataComForGive.IsConditionType(new[] { ConditionUnitTypes.Protected, ConditionUnitTypes.Relaxed }))
+                                if (cellUnitDataComForGive.IsConditionType(new[] { CondUnitTypes.Protected, CondUnitTypes.Relaxed }))
                                 {
-                                    cellUnitDataComForGive.ConditionUnitType = default;
+                                    cellUnitDataComForGive.CondUnitType = default;
                                 }
 
                                 if (inventWeaponsComp.HaveWeapon(ownerCellUnitComForGive.IsMasterClient, toolWeaponTypeForGive))

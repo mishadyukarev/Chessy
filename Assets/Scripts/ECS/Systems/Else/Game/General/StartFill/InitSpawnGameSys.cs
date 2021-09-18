@@ -15,11 +15,12 @@ using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.ECS.Components.View.Else.Game.General;
+using Assets.Scripts.ECS.Components.View.UI.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
+using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
 using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Workers;
@@ -42,7 +43,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
         private EcsFilter<CellViewComponent> _cellViewFilter = default;
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellBuildFilter = default;
 
 
@@ -151,7 +152,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
 
                     _curGameWorld.NewEntity()
-                         .Replace(new CellUnitDataComponent(new Dictionary<bool, bool>()))
+                         .Replace(new CellUnitDataCom(new Dictionary<bool, bool>()))
                          .Replace(new CellUnitMainViewComp(cirCell_GO))
                          .Replace(new CellUnitExtraViewComp(cirCell_GO))
                          .Replace(new OwnerOnlineComp())
@@ -175,7 +176,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
             var infoEnt = _curGameWorld.NewEntity()
                 .Replace(new InputComponent())
-                .Replace(new SelectorComponent(ToolWeaponTypes.Pick))
+                .Replace(new SelectorCom(ToolWeaponTypes.Pick))
                 .Replace(new GeneralZoneViewComponent(generalZoneGO))
                 .Replace(new BackgroundComponent(backGroundGO))
 
@@ -244,7 +245,10 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new EnvirZoneViewUICom(leftZone_GO))
 
                 ///Right
-                .Replace(new UnitZoneViewUICom(rightZone_GO));
+                .Replace(new StatZoneViewUICom(rightZone_GO))
+                .Replace(new CondUnitUICom(rightZone_GO.transform.Find("ConditionZone")))
+                .Replace(new UniqueAbiltUICom(rightZone_GO.transform.Find("UniqueAbilitiesZone")))
+                .Replace(new BuildAbilitUICom(rightZone_GO.transform.Find("BuildingZone")));
 
 
 
@@ -358,8 +362,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                     _cellViewFilter.Get1(curIdxCell).SetRotForClient(PhotonNetwork.IsMasterClient);
                 }
 
-                
-                
+
+
                 ref var unitInvCom = ref _inventorUnitsFilter.Get1(0);
                 ref var invResCom = ref _inventorResFilter.Get1(0);
 
@@ -420,7 +424,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                             curCellUnitDataComp.UnitType = UnitTypes.King;
                             curCellUnitDataComp.AmountHealth = 1;
-                            curCellUnitDataComp.ConditionUnitType = ConditionUnitTypes.Protected;
+                            curCellUnitDataComp.CondUnitType = CondUnitTypes.Protected;
                             curBotCellUnitComp.IsBot = true;
                         }
 
@@ -429,7 +433,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                             curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.Mountain);
                             curCellEnvDataComp.ResetEnvironment(EnvironmentTypes.AdultForest);
 
-                            curCellBuildDataComp.BuildingType = BuildingTypes.City;
+                            curCellBuildDataComp.BuildType = BuildingTypes.City;
                             _cellBuildFilter.Get3(curIdxCell).IsBot = true;
                         }
 
@@ -444,7 +448,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                             if (rand >= 50) curCellUnitDataComp.ExtraTWPawnType = ToolWeaponTypes.Sword;
 
                             curCellUnitDataComp.AmountHealth = 100;
-                            curCellUnitDataComp.ConditionUnitType = ConditionUnitTypes.Protected;
+                            curCellUnitDataComp.CondUnitType = CondUnitTypes.Protected;
                             curBotCellUnitComp.IsBot = true;
                         }
                     }

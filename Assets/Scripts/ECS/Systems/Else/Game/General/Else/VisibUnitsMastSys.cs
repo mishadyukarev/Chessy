@@ -8,7 +8,7 @@ internal sealed class VisibUnitsMastSys : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
-    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter;
+    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter;
 
     public void Run()
     {

@@ -11,7 +11,7 @@ internal sealed class EconomyUpUISys : IEcsRunSystem
 {
     private EcsFilter<EconomyViewUICom> _economyUIFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitsFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitsFilter = default;
     private EcsFilter<CellBuildDataComponent, OwnerOnlineComp> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
 
@@ -50,11 +50,11 @@ internal sealed class EconomyUpUISys : IEcsRunSystem
                 {
                     if (curOwnerCellUnitComp.IsMine)
                     {
-                        if (!curCellUnitDataComp.IsUnitType(UnitTypes.King)) ++amountUnitsInGame;
+                        if (!curCellUnitDataComp.Is(UnitTypes.King)) ++amountUnitsInGame;
 
-                        if (curCellUnitDataComp.IsUnitType(UnitTypes.Pawn))
+                        if (curCellUnitDataComp.Is(UnitTypes.Pawn))
                         {
-                            if (curCellUnitDataComp.IsConditionType(ConditionUnitTypes.Relaxed))
+                            if (curCellUnitDataComp.IsConditionType(CondUnitTypes.Relaxed))
                             {
                                 if (_cellEnvDataFilter.Get1(curIdxCell).HaveEnvironment(EnvironmentTypes.AdultForest))
                                 {

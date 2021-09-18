@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.ECS.System.Data.Common;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.System.Common
 {

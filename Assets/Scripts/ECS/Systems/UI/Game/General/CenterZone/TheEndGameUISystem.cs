@@ -21,11 +21,11 @@ internal sealed class TheEndGameUISystem : IEcsRunSystem
             {
                 if (endGameDataUIComp.PlayerWinner.IsLocal)
                 {
-                    endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreWinner); 
+                    endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreWinner);
                 }
                 else
                 {
-                    endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreLoser); 
+                    endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreLoser);
                 }
             }
 

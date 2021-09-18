@@ -9,7 +9,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
     private EcsFilter<InfoMasCom> _infoFilter = default;
     private EcsFilter<ConditionMasCom> _conditionFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
 
     public void Run()
     {
@@ -23,12 +23,12 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
 
         switch (neededCondType)
         {
-            case ConditionUnitTypes.None:
+            case CondUnitTypes.None:
                 curCellUnitDataCom.ResetConditionType();
                 break;
 
-            case ConditionUnitTypes.Protected:
-                if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Protected))
+            case CondUnitTypes.Protected:
+                if (curCellUnitDataCom.IsConditionType(CondUnitTypes.Protected))
                 {
                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
@@ -37,11 +37,11 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
 
                 else if (curCellUnitDataCom.HaveMaxAmountSteps)
                 {
-                    if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
+                    if (curCellUnitDataCom.IsConditionType(CondUnitTypes.Relaxed))
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-                        curCellUnitDataCom.ConditionUnitType = neededCondType;
+                        curCellUnitDataCom.CondUnitType = neededCondType;
 
                         curCellUnitDataCom.ResetAmountSteps();
                     }
@@ -49,7 +49,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-                        curCellUnitDataCom.ConditionUnitType = neededCondType;
+                        curCellUnitDataCom.CondUnitType = neededCondType;
 
                         curCellUnitDataCom.ResetAmountSteps();
                     }
@@ -63,8 +63,8 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
                 break;
 
 
-            case ConditionUnitTypes.Relaxed:
-                if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Relaxed))
+            case CondUnitTypes.Relaxed:
+                if (curCellUnitDataCom.IsConditionType(CondUnitTypes.Relaxed))
                 {
                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
                     curCellUnitDataCom.ResetConditionType();
@@ -72,16 +72,16 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
 
                 else if (curCellUnitDataCom.HaveMaxAmountSteps)
                 {
-                    if (curCellUnitDataCom.IsConditionType(ConditionUnitTypes.Protected))
+                    if (curCellUnitDataCom.IsConditionType(CondUnitTypes.Protected))
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-                        curCellUnitDataCom.ConditionUnitType = neededCondType;
+                        curCellUnitDataCom.CondUnitType = neededCondType;
                         curCellUnitDataCom.ResetAmountSteps();
                     }
                     else
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-                        curCellUnitDataCom.ConditionUnitType = neededCondType;
+                        curCellUnitDataCom.CondUnitType = neededCondType;
                         curCellUnitDataCom.ResetAmountSteps();
                     }
                 }

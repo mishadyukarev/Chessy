@@ -8,7 +8,7 @@ internal sealed class RaySystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellViewComponent> _cellViewFilter = default;
-    private EcsFilter<SelectorComponent> _selectorFilter = default;
+    private EcsFilter<SelectorCom> _selectorFilter = default;
 
     private Ray _ray;
     private const float RAY_DISTANCE = 100;

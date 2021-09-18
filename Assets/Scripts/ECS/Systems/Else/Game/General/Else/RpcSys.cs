@@ -23,7 +23,7 @@ namespace Assets.Scripts
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataComponent, OwnerOnlineComp> _cellBuildFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvrFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
@@ -34,7 +34,7 @@ namespace Assets.Scripts
         private EcsFilter<InventorWeaponsComp> _invWeaponsFilter = default;
 
         private EcsFilter<FromInfoComponent> _fromInfoFilter = default;
-        private EcsFilter<SelectorComponent> _selectorFilter = default;
+        private EcsFilter<SelectorCom> _selectorFilter = default;
         private EcsFilter<UpgradesBuildingsComponent> _upgradesBuildFilter = default;
         private EcsFilter<EndGameDataUIComponent> _endGameFilter = default;
         private EcsFilter<ReadyDataUICom> _readyUIFilter = default;
@@ -101,7 +101,7 @@ namespace Assets.Scripts
         public static void BuildToMaster(byte idxCellForBuild, BuildingTypes buildingType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Build, new object[] { idxCellForBuild, buildingType });
         public static void DestroyBuildingToMaster(byte xyCellForDestroy) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.DestroyBuild, new object[] { xyCellForDestroy });
 
-        public static void ConditionUnitToMaster(ConditionUnitTypes neededCondtionType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ConditionUnit, new object[] { neededCondtionType, idxCell });
+        public static void ConditionUnitToMaster(CondUnitTypes neededCondtionType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ConditionUnit, new object[] { neededCondtionType, idxCell });
 
         public static void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.Economy, haves });
         public static void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { mistakeType });
@@ -166,7 +166,7 @@ namespace Assets.Scripts
                     break;
 
                 case RpcMasterTypes.ConditionUnit:
-                    _conditionFilter.Get1(0).NeededCondUnitType = (ConditionUnitTypes)objects[0];
+                    _conditionFilter.Get1(0).NeededCondUnitType = (CondUnitTypes)objects[0];
                     _conditionFilter.Get1(0).IdxForCondition = (byte)objects[1];
                     break;
 
@@ -349,7 +349,7 @@ namespace Assets.Scripts
                 listObjects.Add(curCellUnitDataComp.UnitType);
                 listObjects.Add(curCellUnitDataComp.AmountHealth);
                 listObjects.Add(curCellUnitDataComp.AmountSteps);
-                listObjects.Add(curCellUnitDataComp.ConditionUnitType);
+                listObjects.Add(curCellUnitDataComp.CondUnitType);
                 listObjects.Add(curCellUnitDataComp.ArcherWeaponType);
                 listObjects.Add(curCellUnitDataComp.ExtraTWPawnType);
 
@@ -361,7 +361,7 @@ namespace Assets.Scripts
 
 
                 ref var curBuildDataComp = ref _cellBuildFilter.Get1(curIdxCell);
-                listObjects.Add(curBuildDataComp.BuildingType);
+                listObjects.Add(curBuildDataComp.BuildType);
 
                 ref var curOwnerBuildComp = ref _cellBuildFilter.Get2(curIdxCell);
                 var haveOwnerBuild = curOwnerBuildComp.HaveOwner;
@@ -550,7 +550,7 @@ namespace Assets.Scripts
                 curCellUnitDataComp.UnitType = (UnitTypes)objects[_curNumber++];
                 curCellUnitDataComp.AmountHealth = (int)objects[_curNumber++];
                 curCellUnitDataComp.AmountSteps = (int)objects[_curNumber++];
-                curCellUnitDataComp.ConditionUnitType = (ConditionUnitTypes)objects[_curNumber++];
+                curCellUnitDataComp.CondUnitType = (CondUnitTypes)objects[_curNumber++];
                 curCellUnitDataComp.ArcherWeaponType = (ToolWeaponTypes)objects[_curNumber++];
                 curCellUnitDataComp.ExtraTWPawnType = (ToolWeaponTypes)objects[_curNumber++];
 
@@ -561,7 +561,7 @@ namespace Assets.Scripts
 
 
                 ref var curCellBuildDataComp = ref _cellBuildFilter.Get1(curIdxCell);
-                curCellBuildDataComp.BuildingType = (BuildingTypes)objects[_curNumber++];
+                curCellBuildDataComp.BuildType = (BuildingTypes)objects[_curNumber++];
 
                 ref var curOwnerCellBuildComp = ref _cellBuildFilter.Get2(curIdxCell);
                 var haveOwnerBuild = (bool)objects[_curNumber++];

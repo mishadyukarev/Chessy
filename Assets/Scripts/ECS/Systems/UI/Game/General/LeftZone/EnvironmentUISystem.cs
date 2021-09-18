@@ -9,7 +9,7 @@ using UnityEngine;
 
 internal sealed class EnvironmentUISystem : IEcsRunSystem
 {
-    private EcsFilter<SelectorComponent> _selectorFilter = default;
+    private EcsFilter<SelectorCom> _selectorFilter = default;
 
     private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;

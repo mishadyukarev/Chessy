@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Assets.Scripts.Abstractions.Enums
+﻿namespace Assets.Scripts.Abstractions.Enums
 {
     public enum ComLanguageTypes
     {

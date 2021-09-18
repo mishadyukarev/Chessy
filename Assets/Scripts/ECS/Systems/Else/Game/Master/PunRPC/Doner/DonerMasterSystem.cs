@@ -53,9 +53,9 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
 
                     CameraComComp.SetPosRotClient(_isMasterMotion);
 
-                    whoseMoveCom.IsMainMove = _isMasterMotion;
+                    WhoseMoveCom.IsMainMove = _isMasterMotion;
 
-                    foreach (byte curIdxCell in _cellViewFilter) 
+                    foreach (byte curIdxCell in _cellViewFilter)
                         _cellViewFilter.Get1(curIdxCell).SetRotForClient(_isMasterMotion);
 
                 }
@@ -65,7 +65,7 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
 
                     CameraComComp.SetPosRotClient(_isMasterMotion);
 
-                    whoseMoveCom.IsMainMove = _isMasterMotion;
+                    WhoseMoveCom.IsMainMove = _isMasterMotion;
 
                     foreach (byte curIdxCell in _cellViewFilter)
                         _cellViewFilter.Get1(curIdxCell).SetRotForClient(_isMasterMotion);

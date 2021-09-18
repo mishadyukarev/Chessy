@@ -4,7 +4,7 @@ namespace Assets.Scripts.ECS.Component.Game.Master
 {
     internal struct ConditionMasCom
     {
-        internal ConditionUnitTypes NeededCondUnitType { get; set; }
+        internal CondUnitTypes NeededCondUnitType { get; set; }
         internal byte IdxForCondition { get; set; }
     }
 }

@@ -10,7 +10,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone
     internal sealed class GiveTakeUISystem : IEcsRunSystem
     {
         private EcsFilter<GiveTakeZoneViewUIComp> _giveThingUIFilter = default;
-        private EcsFilter<SelectorComponent> _selectorFilter = default;
+        private EcsFilter<SelectorCom> _selectorFilter = default;
 
         public void Run()
         {

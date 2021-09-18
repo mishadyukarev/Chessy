@@ -4,9 +4,11 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
+using Photon.Pun;
 using System;
 
 internal sealed class BuilderMastSys : IEcsRunSystem
@@ -16,8 +18,8 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellViewComponent> _cellViewFilter = default;
-    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp> _cellBuildFilter = default;
-    private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerOfflineCom> _cellBuildFilter = default;
+    private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
@@ -26,21 +28,24 @@ internal sealed class BuilderMastSys : IEcsRunSystem
     public void Run()
     {
         ref var infoMasCom = ref _infoFilter.Get1(0);
-        ref var inventorResCom = ref _amountResFilt.Get1(0);
+        ref var invResCom = ref _amountResFilt.Get1(0);
         ref var forBuildMasCom = ref _forBuilderFilter.Get1(0);
 
         var sender = infoMasCom.FromInfo.Sender;
-        var idxCellForBuild = forBuildMasCom.IdxForBuild;
-        var buildTypeForBuild = forBuildMasCom.BuildingTypeForBuidling;
+        var idxForBuild = forBuildMasCom.IdxForBuild;
+        var forBuildType = forBuildMasCom.BuildingTypeForBuidling;
 
-        ref var curCellBuildDataCom = ref _cellBuildFilter.Get1(idxCellForBuild);
-        ref var curOwnerCellBuildCom = ref _cellBuildFilter.Get2(idxCellForBuild);
-        ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCellForBuild);
-        ref var curCellEnvCom = ref _cellEnvFilter.Get1(idxCellForBuild);
-        ref var curFireCom = ref _cellFireFilter.Get1(idxCellForBuild);
+        ref var curBuildDatCom = ref _cellBuildFilter.Get1(idxForBuild);
+        ref var curOnBuildCom = ref _cellBuildFilter.Get2(idxForBuild);
+        ref var curOffBuildCom = ref _cellBuildFilter.Get3(idxForBuild);
+
+        ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForBuild);
+        ref var curCellEnvCom = ref _cellEnvFilter.Get1(idxForBuild);
+        ref var curFireCom = ref _cellFireFilter.Get1(idxForBuild);
 
 
-        if (curCellBuildDataCom.HaveBuild)
+
+        if (curBuildDatCom.HaveBuild)
         {
             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
             RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
@@ -48,18 +53,18 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
         else
         {
-            switch (buildTypeForBuild)
+            switch (forBuildType)
             {
                 case BuildingTypes.None:
                     throw new Exception();
 
 
                 case BuildingTypes.City:
-                    if (curCellUnitDataCom.HaveMinAmountSteps)
+                    if (curUnitDatCom.HaveMinAmountSteps)
                     {
                         bool haveNearBorder = false;
 
-                        foreach (var xy in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(idxCellForBuild)))
+                        foreach (var xy in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(idxForBuild)))
                         {
                             var curIdx = _xyCellFilter.GetIdxCell(xy);
 
@@ -73,10 +78,19 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                         {
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                            curCellBuildDataCom.BuildingType = buildTypeForBuild;
-                            curOwnerCellBuildCom.Owner = sender;
+                            curBuildDatCom.BuildType = forBuildType;
 
-                            curCellUnitDataCom.ResetAmountSteps();
+                            if (PhotonNetwork.OfflineMode)
+                            {
+                                curOffBuildCom.LocalPlayerType = WhoseMoveCom.PlayerType;
+                            }
+                            else
+                            {
+                                curOnBuildCom.Owner = sender;
+                            }
+
+
+                            curUnitDatCom.ResetAmountSteps();
 
                             curFireCom.DisableFire();
 
@@ -99,11 +113,11 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
 
                 case BuildingTypes.Farm:
-                    if (curCellUnitDataCom.HaveMinAmountSteps)
+                    if (curUnitDatCom.HaveMinAmountSteps)
                     {
                         if (!curCellEnvCom.HaveEnvironment(EnvironmentTypes.AdultForest) && !curCellEnvCom.HaveEnvironment(EnvironmentTypes.YoungForest))
                         {
-                            if (inventorResCom.CanCreateNewBuilding(buildTypeForBuild, sender, out bool[] haves))
+                            if (invResCom.CanCreateNewBuilding(forBuildType, sender.IsMasterClient, out bool[] haves))
                             {
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
@@ -117,12 +131,12 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                                     curCellEnvCom.SetNewEnvironment(EnvironmentTypes.Fertilizer);
                                 }
 
-                                inventorResCom.BuyNewBuilding(buildTypeForBuild, sender);
+                                invResCom.BuyNewBuilding(forBuildType, sender.IsMasterClient);
 
-                                curCellBuildDataCom.BuildingType = buildTypeForBuild;
-                                curOwnerCellBuildCom.Owner = sender;
+                                curBuildDatCom.BuildType = forBuildType;
+                                curOnBuildCom.Owner = sender;
 
-                                curCellUnitDataCom.TakeAmountSteps();
+                                curUnitDatCom.TakeAmountSteps();
 
                             }
                             else
@@ -151,18 +165,18 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                 case BuildingTypes.Mine:
                     if (curCellEnvCom.HaveEnvironment(EnvironmentTypes.Hill) && curCellEnvCom.HaveResources(EnvironmentTypes.Hill))
                     {
-                        if (inventorResCom.CanCreateNewBuilding(buildTypeForBuild, sender, out bool[] haves))
+                        if (invResCom.CanCreateNewBuilding(forBuildType, sender.IsMasterClient, out bool[] haves))
                         {
-                            if (curCellUnitDataCom.HaveMaxAmountSteps)
+                            if (curUnitDatCom.HaveMaxAmountSteps)
                             {
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                                inventorResCom.BuyNewBuilding(buildTypeForBuild, sender);
+                                invResCom.BuyNewBuilding(forBuildType, sender.IsMasterClient);
 
-                                curCellBuildDataCom.BuildingType = buildTypeForBuild;
-                                curOwnerCellBuildCom.Owner = sender;
+                                curBuildDatCom.BuildType = forBuildType;
+                                curOnBuildCom.Owner = sender;
 
-                                curCellUnitDataCom.ResetAmountSteps();
+                                curUnitDatCom.ResetAmountSteps();
                             }
                             else
                             {

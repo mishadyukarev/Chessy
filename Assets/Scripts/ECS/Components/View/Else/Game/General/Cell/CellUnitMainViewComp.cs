@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
+﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using System;
 using UnityEngine;
 

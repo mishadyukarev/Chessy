@@ -7,7 +7,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
     {
         private EcsFilter<CellsGiveTWComp> _cellsGiveFilter = default;
 
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -23,12 +23,12 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                 {
                     if (curOwnerUnitCom.HaveOwner)
                     {
-                        if (curUnitDataCom.IsUnitType(UnitTypes.Pawn))
+                        if (curUnitDataCom.Is(UnitTypes.Pawn))
                         {
                             //cellsGiveTWCom.Add(ToolWeaponTypes.Axe,)
                         }
 
-                        else if (curUnitDataCom.IsUnitType(UnitTypes.Rook))
+                        else if (curUnitDataCom.Is(UnitTypes.Rook))
                         {
 
                         }

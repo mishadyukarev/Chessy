@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.Abstractions.Enums
 {
-    public enum BuildingButtonTypes
+    public enum BuildButtonTypes
     {
         None,
 

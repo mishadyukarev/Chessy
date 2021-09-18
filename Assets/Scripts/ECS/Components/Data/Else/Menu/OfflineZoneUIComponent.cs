@@ -9,7 +9,7 @@ namespace Assets.Scripts.ECS.Component.UI
     {
         private Button _startWithBotButton;
         private TextMeshProUGUI _textTraining;
-        
+
         internal OfflineZoneUIComponent(RectTransform leftZoneRectTrans)
         {
             _startWithBotButton = leftZoneRectTrans.Find("TestSoloGame_Button").GetComponent<Button>();

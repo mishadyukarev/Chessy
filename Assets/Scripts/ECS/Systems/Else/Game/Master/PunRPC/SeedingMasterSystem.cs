@@ -11,7 +11,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         private EcsFilter<InfoMasCom> _infoFilter = default;
         private EcsFilter<ForSeedingMasCom> _seedingFilter = default;
 
-        private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 

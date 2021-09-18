@@ -7,7 +7,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 {
     internal sealed class SyncCellUnitViewSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataComponent, CellUnitMainViewComp, CellUnitExtraViewComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, CellUnitMainViewComp, CellUnitExtraViewComp> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -27,12 +27,12 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                     {
                         curMainUnitViewCom.Enable_SR();
 
-                        if (curUnitDatCom.IsUnitType(UnitTypes.King))
+                        if (curUnitDatCom.Is(UnitTypes.King))
                         {
                             curMainUnitViewCom.SetKing_Sprite();
                         }
 
-                        else if (curUnitDatCom.IsUnitType(UnitTypes.Pawn))
+                        else if (curUnitDatCom.Is(UnitTypes.Pawn))
                         {
                             curMainUnitViewCom.SetPawn_Spriter();
 
@@ -44,7 +44,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                             }
                         }
 
-                        else if (curUnitDatCom.IsUnitType(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                        else if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                         {
                             if (curUnitDatCom.HaveArcherWeapon)
                             {

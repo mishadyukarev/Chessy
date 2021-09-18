@@ -12,7 +12,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
 
         private EcsFilter<AvailCellsForAttackComp> _availCellsForAttackFilter = default;
 
@@ -26,7 +26,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                 ref var availCellsForAttackComp = ref _availCellsForAttackFilter.Get1(0);
 
 
-                if (curCellUnitDataCom.HaveUnit && curCellUnitDataCom.IsUnitType(UnitTypes.Pawn))
+                if (curCellUnitDataCom.HaveUnit && curCellUnitDataCom.Is(UnitTypes.Pawn))
                 {
                     if (curOwnerCellUnitCom.HaveOwner)
                     {

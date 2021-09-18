@@ -23,7 +23,7 @@ namespace Assets.Scripts.ECS.System.View.Menu
             _menuWorld.NewEntity()
                 .Replace(new CenterMenuUIComp(CanvasComp.FindUnderParent<Slider>("Slider"), SoundComComp.Volume));
 
-            
+
             var rightZone = CanvasComp.FindUnderParent<RectTransform>("OnlineRightZone");
             _menuWorld.NewEntity()
                 .Replace(new OnlineZoneUIComponent(rightZone))

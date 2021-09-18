@@ -40,7 +40,7 @@ public sealed class GameMasterSystemManager : SystemAbstManager
 
 
         UpdateMotion = new EcsSystems(gameWorld)
-            .Add(new UpdatorMasterSystem());
+            .Add(new UpdatorMastSys());
 
         TruceSystems = new EcsSystems(gameWorld)
             .Add(new TruceMasterSystem());

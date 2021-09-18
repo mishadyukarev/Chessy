@@ -35,7 +35,7 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
             if (curUnitType == UnitTypes.Pawn || curUnitType == UnitTypes.Rook || curUnitType == UnitTypes.Bishop)
             {
                 getUnitViewCom.SetTextCreate(curUnitType, LanguageComComp.GetText(GameLanguageTypes.Create));
-                
+
 
                 if (getUnitDatCom.IsActivatedButton(curUnitType))
                 {
@@ -59,7 +59,7 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
 
         if (PhotonNetwork.OfflineMode)
         {
-            var isMainMove = _whoseMoveFilter.Get1(0).IsMainMove;
+            var isMainMove = WhoseMoveCom.IsMainMove;
 
             getUnitViewCom.SetTextToAmountUnits(UnitTypes.Pawn, invUnitCom.AmountUnitsInInv(UnitTypes.Pawn, isMainMove).ToString());
             getUnitViewCom.SetTextToAmountUnits(UnitTypes.Rook, invUnitCom.AmountUnitsInInv(UnitTypes.Rook, isMainMove).ToString());
@@ -73,6 +73,6 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
             getUnitViewCom.SetTextToAmountUnits(UnitTypes.Bishop, invUnitCom.AmountUnitsInInv(UnitTypes.Bishop, PhotonNetwork.IsMasterClient).ToString());
         }
 
-        
+
     }
 }

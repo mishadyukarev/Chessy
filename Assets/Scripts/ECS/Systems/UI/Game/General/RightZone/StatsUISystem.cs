@@ -6,10 +6,10 @@ using Leopotam.Ecs;
 
 internal sealed class StatsUISystem : IEcsRunSystem
 {
-    private EcsFilter<SelectorComponent> _selectorFilter = default;
-    private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
+    private EcsFilter<SelectorCom> _selectorFilter = default;
+    private EcsFilter<StatZoneViewUICom> _unitZoneUIFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
     private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
@@ -30,7 +30,7 @@ internal sealed class StatsUISystem : IEcsRunSystem
                 + selBuildDatCom.PowerProtectionUnit(selUnitDatCom.UnitType)
                 + selEnvDatCom.PowerProtectionUnit(selUnitDatCom.UnitType);
 
-            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Stats, true);
+            _unitZoneUIFilter.Get1(0).SetActiveStatZone(true);
 
             _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Health, selUnitDatCom.AmountHealth.ToString());
             _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Damage, selUnitDatCom.SimplePowerDamage.ToString());
@@ -40,7 +40,7 @@ internal sealed class StatsUISystem : IEcsRunSystem
 
         else
         {
-            _unitZoneUIFilter.Get1(0).SetActiveUnitZone(UnitUIZoneTypes.Stats, false);
+            _unitZoneUIFilter.Get1(0).SetActiveStatZone(false);
         }
     }
 }

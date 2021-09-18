@@ -86,19 +86,19 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                             break;
 
                         case MistakeTypes.NeedOtherPlace:
-                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NeedOtherPlace); 
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NeedOtherPlace);
                             break;
 
                         case MistakeTypes.NeedMoreHealth:
-                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NeedMoreHealth); 
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NeedMoreHealth);
                             break;
 
                         case MistakeTypes.PawnMustHaveTool:
-                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.PawnMustHaveTool); 
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.PawnMustHaveTool);
                             break;
 
                         case MistakeTypes.PawnHaveTool:
-                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.PawnHaveTool); 
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.PawnHaveTool);
                             break;
 
                         case MistakeTypes.NeedCity:
@@ -106,11 +106,11 @@ namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
                             break;
 
                         case MistakeTypes.ThatIsForOtherUnit:
-                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.ThatsForOtherUnit); 
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.ThatsForOtherUnit);
                             break;
 
                         case MistakeTypes.NearBorder:
-                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NearBorder); 
+                            mistakeViewUICom.Text = LanguageComComp.GetText(GameLanguageTypes.NearBorder);
                             break;
 
                         default:

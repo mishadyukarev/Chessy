@@ -6,23 +6,23 @@ using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
 using Leopotam.Ecs;
 using Photon.Pun;
-using System;
 
 namespace Assets.Scripts
 {
     internal sealed class EventsGameSys : IEcsInitSystem
     {
-        private EcsFilter<CellUnitDataComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
 
         private EcsFilter<ReadyDataUICom, ReadyViewUICom> _readyFilter = default;
-        private EcsFilter<SelectorComponent> _selectorFilter = default;
+        private EcsFilter<SelectorCom> _selectorFilter = default;
         private EcsFilter<LeaveViewUIComponent> _leaveUIFilter = default;
         private EcsFilter<GetterUnitsDataUICom, GetterUnitsViewUICom> _takerUIFilter = default;
         private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
         private EcsFilter<EnvirZoneDataUICom, EnvirZoneViewUICom> _envirZoneUIFilter = default;
-        private EcsFilter<UnitZoneViewUICom> _unitZoneUIFilter = default;
+        private EcsFilter<CondUnitUICom> _condUnitZoneUIFilt = default;
         private EcsFilter<BuildLeftZoneViewUICom> _buildLeftZoneViewUICom = default;
         private EcsFilter<KingZoneViewUIComp> _kingZoneUIFilter = default;
         private EcsFilter<GiveTakeZoneViewUIComp> _giveTakeZoneUIFilter = default;
@@ -52,8 +52,8 @@ namespace Assets.Scripts
 
             _leaveUIFilter.Get1(0).AddListener(delegate { PhotonNetwork.LeaveRoom(); });
 
-            _unitZoneUIFilter.Get1(0).AddListenerToCondtionButton(ConditionUnitTypes.Protected, delegate { ConditionAbilityButton(ConditionUnitTypes.Protected); });
-            _unitZoneUIFilter.Get1(0).AddListenerToCondtionButton(ConditionUnitTypes.Relaxed, delegate { ConditionAbilityButton(ConditionUnitTypes.Relaxed); });
+            _condUnitZoneUIFilt.Get1(0).AddListener(CondUnitTypes.Protected, delegate { ConditionAbilityButton(CondUnitTypes.Protected); });
+            _condUnitZoneUIFilt.Get1(0).AddListener(CondUnitTypes.Relaxed, delegate { ConditionAbilityButton(CondUnitTypes.Relaxed); });
 
 
 
@@ -102,7 +102,7 @@ namespace Assets.Scripts
 
             if (PhotonNetwork.OfflineMode)
             {
-                if (invUnitCom.HaveUnitInInventor(unitType, _whoseMoveFilter.Get1(0).IsMainMove))
+                if (invUnitCom.HaveUnitInInventor(unitType, WhoseMoveCom.IsMainMove))
                 {
                     selCom.SelUnitType = unitType;
                 }
@@ -142,13 +142,13 @@ namespace Assets.Scripts
             _envirZoneUIFilter.Get1(0).IsActivatedInfo = !_envirZoneUIFilter.Get1(0).IsActivatedInfo;
         }
 
-        private void ConditionAbilityButton(ConditionUnitTypes conditionUnitType)
+        private void ConditionAbilityButton(CondUnitTypes conditionUnitType)
         {
             if (!IsDoned(PhotonNetwork.IsMasterClient))
             {
                 if (_cellUnitFilter.Get1(IdxSelectedCell).IsConditionType(conditionUnitType))
                 {
-                    RpcSys.ConditionUnitToMaster(ConditionUnitTypes.None, IdxSelectedCell);
+                    RpcSys.ConditionUnitToMaster(CondUnitTypes.None, IdxSelectedCell);
                 }
                 else
                 {

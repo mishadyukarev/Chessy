@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
 {

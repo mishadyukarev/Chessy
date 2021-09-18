@@ -3,7 +3,6 @@ using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Leopotam.Ecs;
@@ -16,7 +15,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
     private EcsFilter<AvailCellsForShiftComp> _cellsShiftFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvrDataFilter = default;
 
     private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
@@ -33,7 +32,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
         var isMaster = false;
 
-        if (PhotonNetwork.OfflineMode) isMaster = _whoseMoveFilter.Get1(0).IsMainMove;
+        if (PhotonNetwork.OfflineMode) isMaster = WhoseMoveCom.IsMainMove;
 
         else isMaster = fromInfo.Sender.IsMasterClient;
 
@@ -61,7 +60,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
             toUnitDatCom.UnitType = fromUnitDatCom.UnitType;
             toUnitDatCom.AmountHealth = fromUnitDatCom.AmountHealth;
             toUnitDatCom.AmountSteps = fromUnitDatCom.AmountSteps;
-            toUnitDatCom.ConditionUnitType = default;
+            toUnitDatCom.CondUnitType = default;
 
             if (PhotonNetwork.OfflineMode)
             {
@@ -81,7 +80,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
             fromUnitDatCom.ResetUnitType();
 
-            
+
         }
     }
 }

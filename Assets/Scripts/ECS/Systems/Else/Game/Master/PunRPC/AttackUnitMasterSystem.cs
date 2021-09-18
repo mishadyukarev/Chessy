@@ -12,7 +12,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
     private EcsFilter<InfoMasCom> _infoMasterFilter = default;
     private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
-    private EcsFilter<CellUnitDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
     private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
@@ -37,7 +37,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
         ref var toOwnerCellUnitCom = ref _cellUnitFilter.Get2(toIdxForAttack);
         ref var toBotOwnerCellUnitCom = ref _cellUnitFilter.Get3(toIdxForAttack);
         ref var toBuildDatCom = ref _cellBuildFilter.Get1(toIdxForAttack);
-        ref var toEnvDatCom =ref _cellEnvFilter.Get1(toIdxForAttack);
+        ref var toEnvDatCom = ref _cellEnvFilter.Get1(toIdxForAttack);
 
         ref var availCellsForAttackComp = ref _availCellsForAttack.Get1(0);
 
@@ -97,7 +97,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
 
             if (!toUnitDatCom.HaveAmountHealth)
             {
-                if (toUnitDatCom.IsUnitType(UnitTypes.King))
+                if (toUnitDatCom.Is(UnitTypes.King))
                 {
                     _endGameDataUIFilter.Get1(0).IsEndGame = true;
                     _endGameDataUIFilter.Get1(0).IsOwnerWinner = toOwnerCellUnitCom.HaveOwner;
@@ -136,7 +136,7 @@ internal sealed class AttackUnitMasterSystem : IEcsRunSystem
 
             else if (!fromCellUnitDataCom.HaveAmountHealth)
             {
-                if (fromCellUnitDataCom.IsUnitType(UnitTypes.King))
+                if (fromCellUnitDataCom.Is(UnitTypes.King))
                 {
                     _endGameDataUIFilter.Get1(0).IsEndGame = true;
                     _endGameDataUIFilter.Get1(0).IsOwnerWinner = false;

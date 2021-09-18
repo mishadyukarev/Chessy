@@ -2,7 +2,7 @@
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using UnityEngine;
 
-public struct SelectorComponent
+public struct SelectorCom
 {
     internal RaycastHit2D RaycastHit2D { get; set; }
     internal RaycastGettedTypes RaycastGettedType { get; set; }
@@ -15,10 +15,6 @@ public struct SelectorComponent
     internal UnitTypes SelUnitType { get; set; }
     internal bool IsSelectedUnit => SelUnitType != default;
     internal void DefSelectedUnit() => SelUnitType = default;
-
-
-    //internal GiveTakeTypes GiveTakeType { get; set; }
-    //internal bool IsActivatedGiveTakeMod => GiveTakeType != default;
 
     internal ToolWeaponTypes ToolWeaponTypeForGiveTake { get; set; }
 
@@ -34,5 +30,5 @@ public struct SelectorComponent
     internal void DefSelectedCell() => IdxSelCell = 0;
 
 
-    internal SelectorComponent(ToolWeaponTypes toolAndWeaponType) : this() => ToolWeaponTypeForGiveTake = toolAndWeaponType;
+    internal SelectorCom(ToolWeaponTypes toolAndWeaponType) : this() => ToolWeaponTypeForGiveTake = toolAndWeaponType;
 }

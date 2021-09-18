@@ -7,8 +7,8 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Sync.Unit
 {
     internal sealed class SyncCellSelUnitViewSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataComponent, CellUnitMainViewComp> _cellUnitFilter = default;
-        private EcsFilter<SelectorComponent> _selectorFilter = default;
+        private EcsFilter<CellUnitDataCom, CellUnitMainViewComp> _cellUnitFilter = default;
+        private EcsFilter<SelectorCom> _selectorFilter = default;
 
         public void Run()
         {

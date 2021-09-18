@@ -1,9 +1,7 @@
 ﻿using Assets.Scripts.Abstractions;
-using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.EventSystems;

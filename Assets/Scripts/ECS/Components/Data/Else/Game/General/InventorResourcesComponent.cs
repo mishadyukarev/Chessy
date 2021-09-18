@@ -34,7 +34,7 @@ namespace Assets.Scripts.ECS.Component.Game
 
 
 
-        internal bool CanCreateNewBuilding(BuildingTypes buildingType, Player player, out bool[] haves)
+        internal bool CanCreateNewBuilding(BuildingTypes buildingType, bool isMasterMain, out bool[] haves)
         {
             haves = new bool[AMOUNT_RESOURCES_TYPES];
 
@@ -47,22 +47,22 @@ namespace Assets.Scripts.ECS.Component.Game
                     return true;
 
                 case BuildingTypes.Farm:
-                    haves[FOOD_NUMBER] = FOOD_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Food, player.IsMasterClient) >= FOOD_FOR_BUILDING_FARM;
-                    haves[WOOD_NUMBER] = WOOD_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= WOOD_FOR_BUILDING_FARM;
-                    haves[ORE_NUMBER] = ORE_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= ORE_FOR_BUILDING_FARM;
-                    haves[IRON_NUMBER] = IRON_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= IRON_FOR_BUILDING_FARM;
-                    haves[GOLD_NUMBER] = GOLD_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= GOLD_FOR_BUILDING_FARM;
+                    haves[FOOD_NUMBER] = FOOD_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Food, isMasterMain) >= FOOD_FOR_BUILDING_FARM;
+                    haves[WOOD_NUMBER] = WOOD_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Wood, isMasterMain) >= WOOD_FOR_BUILDING_FARM;
+                    haves[ORE_NUMBER] = ORE_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Ore, isMasterMain) >= ORE_FOR_BUILDING_FARM;
+                    haves[IRON_NUMBER] = IRON_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Iron, isMasterMain) >= IRON_FOR_BUILDING_FARM;
+                    haves[GOLD_NUMBER] = GOLD_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Gold, isMasterMain) >= GOLD_FOR_BUILDING_FARM;
                     break;
 
                 case BuildingTypes.Woodcutter:
                     throw new Exception();
 
                 case BuildingTypes.Mine:
-                    haves[FOOD_NUMBER] = FOOD_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Food, player.IsMasterClient) >= FOOD_FOR_BUILDING_MINE;
-                    haves[WOOD_NUMBER] = WOOD_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Wood, player.IsMasterClient) >= WOOD_FOR_BUILDING_MINE;
-                    haves[ORE_NUMBER] = ORE_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Ore, player.IsMasterClient) >= ORE_FOR_BUILDING_MINE;
-                    haves[IRON_NUMBER] = IRON_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Iron, player.IsMasterClient) >= IRON_FOR_BUILDING_MINE;
-                    haves[GOLD_NUMBER] = GOLD_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Gold, player.IsMasterClient) >= GOLD_FOR_BUILDING_MINE;
+                    haves[FOOD_NUMBER] = FOOD_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Food, isMasterMain) >= FOOD_FOR_BUILDING_MINE;
+                    haves[WOOD_NUMBER] = WOOD_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Wood, isMasterMain) >= WOOD_FOR_BUILDING_MINE;
+                    haves[ORE_NUMBER] = ORE_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Ore, isMasterMain) >= ORE_FOR_BUILDING_MINE;
+                    haves[IRON_NUMBER] = IRON_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Iron, isMasterMain) >= IRON_FOR_BUILDING_MINE;
+                    haves[GOLD_NUMBER] = GOLD_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(ResourceTypes.Gold, isMasterMain) >= GOLD_FOR_BUILDING_MINE;
                     break;
 
                 default:
@@ -71,7 +71,7 @@ namespace Assets.Scripts.ECS.Component.Game
 
             return HavedAll(haves);
         }
-        internal void BuyNewBuilding(BuildingTypes buildingType, Player player)
+        internal void BuyNewBuilding(BuildingTypes buildingType, bool isMastMain)
         {
             switch (buildingType)
             {
@@ -82,22 +82,22 @@ namespace Assets.Scripts.ECS.Component.Game
                     throw new Exception();
 
                 case BuildingTypes.Farm:
-                    TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, FOOD_FOR_BUILDING_FARM);
-                    TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, WOOD_FOR_BUILDING_FARM);
-                    TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, ORE_FOR_BUILDING_FARM);
-                    TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, IRON_FOR_BUILDING_FARM);
-                    TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, GOLD_FOR_BUILDING_FARM);
+                    TakeAmountResources(ResourceTypes.Food, isMastMain, FOOD_FOR_BUILDING_FARM);
+                    TakeAmountResources(ResourceTypes.Wood, isMastMain, WOOD_FOR_BUILDING_FARM);
+                    TakeAmountResources(ResourceTypes.Ore, isMastMain, ORE_FOR_BUILDING_FARM);
+                    TakeAmountResources(ResourceTypes.Iron, isMastMain, IRON_FOR_BUILDING_FARM);
+                    TakeAmountResources(ResourceTypes.Gold, isMastMain, GOLD_FOR_BUILDING_FARM);
                     break;
 
                 case BuildingTypes.Woodcutter:
                     throw new Exception();
 
                 case BuildingTypes.Mine:
-                    TakeAmountResources(ResourceTypes.Food, player.IsMasterClient, FOOD_FOR_BUILDING_MINE);
-                    TakeAmountResources(ResourceTypes.Wood, player.IsMasterClient, WOOD_FOR_BUILDING_MINE);
-                    TakeAmountResources(ResourceTypes.Ore, player.IsMasterClient, ORE_FOR_BUILDING_MINE);
-                    TakeAmountResources(ResourceTypes.Iron, player.IsMasterClient, IRON_FOR_BUILDING_MINE);
-                    TakeAmountResources(ResourceTypes.Gold, player.IsMasterClient, GOLD_FOR_BUILDING_MINE);
+                    TakeAmountResources(ResourceTypes.Food, isMastMain, FOOD_FOR_BUILDING_MINE);
+                    TakeAmountResources(ResourceTypes.Wood, isMastMain, WOOD_FOR_BUILDING_MINE);
+                    TakeAmountResources(ResourceTypes.Ore, isMastMain, ORE_FOR_BUILDING_MINE);
+                    TakeAmountResources(ResourceTypes.Iron, isMastMain, IRON_FOR_BUILDING_MINE);
+                    TakeAmountResources(ResourceTypes.Gold, isMastMain, GOLD_FOR_BUILDING_MINE);
                     break;
 
                 default:

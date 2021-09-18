@@ -53,7 +53,7 @@
 
 
 
-        StandartAbilities,
+        ConditAbilities,
         Protect,
         Relax,
         Extract,
