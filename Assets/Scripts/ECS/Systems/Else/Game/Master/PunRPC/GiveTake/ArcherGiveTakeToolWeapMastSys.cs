@@ -4,8 +4,10 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
+using Photon.Pun;
 
 namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 {
@@ -19,41 +21,52 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
         private EcsFilter<InventorResourcesComponent> _inventResFilter = default;
         private EcsFilter<InventorToolsComp, InventorWeaponsComp> _inventToolWeapFilter = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilter = default;
 
         public void Run()
         {
             ref var forGiveToolOrWeaponCom = ref _forGivePawnToolFilter.Get1(0);
             ref var inventToolsCom = ref _inventToolWeapFilter.Get1(0);
-            ref var inventWeaponsComp = ref _inventToolWeapFilter.Get2(0);
+            ref var invWeapsComp = ref _inventToolWeapFilter.Get2(0);
             ref var inventResCom = ref _inventResFilter.Get1(0);
 
             var sender = _infoFilter.Get1(0).FromInfo.Sender;
             var neededIdx = forGiveToolOrWeaponCom.IdxCell;
             var toolWeaponTypeForGive = forGiveToolOrWeaponCom.ToolWeapType;
 
-            ref var cellUnitDataComForGive = ref _cellUnitFilter.Get1(neededIdx);
-            ref var ownerCellUnitComForGive = ref _cellUnitFilter.Get2(neededIdx);
+            ref var unitDatComForGive = ref _cellUnitFilter.Get1(neededIdx);
+            ref var onUnitComForGive = ref _cellUnitFilter.Get2(neededIdx);
+            ref var offUnitComForGive = ref _cellUnitFilter.Get3(neededIdx);
 
 
 
-            if (cellUnitDataComForGive.Is(new[] { UnitTypes.Bishop, UnitTypes.Rook }))
+            if (unitDatComForGive.Is(new[] { UnitTypes.Bishop, UnitTypes.Rook }))
             {
-                if (cellUnitDataComForGive.ArcherWeapType.Is(ToolWeaponTypes.Crossbow))
+                if (unitDatComForGive.ArcherWeapType.Is(ToolWeaponTypes.Crossbow))
                 {
-                    if (cellUnitDataComForGive.HaveMaxAmountHealth)
+                    if (unitDatComForGive.HaveMaxAmountHealth)
                     {
-                        if (cellUnitDataComForGive.HaveMaxAmountSteps)
+                        if (unitDatComForGive.HaveMaxAmountSteps)
                         {
-                            if (cellUnitDataComForGive.IsConditionType(new[] { CondUnitTypes.Protected, CondUnitTypes.Relaxed }))
+                            if (unitDatComForGive.IsConditionType(new[] { CondUnitTypes.Protected, CondUnitTypes.Relaxed }))
                             {
-                                cellUnitDataComForGive.CondUnitType = default;
+                                unitDatComForGive.CondUnitType = default;
                             }
 
-                            inventWeaponsComp.AddAmountWeapons(ownerCellUnitComForGive.IsMasterClient, ToolWeaponTypes.Crossbow);
-                            cellUnitDataComForGive.ArcherWeapType = ToolWeaponTypes.Bow;
+                            if (onUnitComForGive.HaveOwner)
+                            {
+                                invWeapsComp.AddAmountWeapons(onUnitComForGive.IsMasterClient, ToolWeaponTypes.Crossbow);
+                            }
+                            else
+                            {
+                                invWeapsComp.AddAmountWeapons(offUnitComForGive.IsMainMaster, ToolWeaponTypes.Crossbow);
+                            }
 
-                            cellUnitDataComForGive.ResetAmountSteps();
+
+                            
+                            unitDatComForGive.ArcherWeapType = ToolWeaponTypes.Bow;
+
+                            unitDatComForGive.ResetAmountSteps();
 
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickArcher);
                         }
@@ -75,31 +88,43 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                 {
                     if (toolWeaponTypeForGive.IsForArcher())
                     {
-                        if (cellUnitDataComForGive.HaveMaxAmountHealth)
+                        if (unitDatComForGive.HaveMaxAmountHealth)
                         {
-                            if (cellUnitDataComForGive.HaveMaxAmountSteps)
+                            if (unitDatComForGive.HaveMaxAmountSteps)
                             {
-                                if (cellUnitDataComForGive.IsConditionType(new[] { CondUnitTypes.Protected, CondUnitTypes.Relaxed }))
+                                if (unitDatComForGive.IsConditionType(new[] { CondUnitTypes.Protected, CondUnitTypes.Relaxed }))
                                 {
-                                    cellUnitDataComForGive.CondUnitType = default;
+                                    unitDatComForGive.CondUnitType = default;
                                 }
 
-                                if (inventWeaponsComp.HaveWeapon(ownerCellUnitComForGive.IsMasterClient, toolWeaponTypeForGive))
+                                var isMastMain = false;
+                                if (onUnitComForGive.HaveOwner)
                                 {
-                                    inventWeaponsComp.TakeAmountWeapons(ownerCellUnitComForGive.IsMasterClient, toolWeaponTypeForGive);
+                                    isMastMain = onUnitComForGive.IsMasterClient;
+                                }
+                                else
+                                {
+                                    isMastMain = offUnitComForGive.IsMainMaster;
+                                }
 
-                                    cellUnitDataComForGive.ArcherWeapType = toolWeaponTypeForGive;
-                                    cellUnitDataComForGive.ResetAmountSteps();
+
+
+                                if (invWeapsComp.HaveWeapon(isMastMain, toolWeaponTypeForGive))
+                                {
+                                    invWeapsComp.TakeAmountWeapons(isMastMain, toolWeaponTypeForGive);
+
+                                    unitDatComForGive.ArcherWeapType = toolWeaponTypeForGive;
+                                    unitDatComForGive.ResetAmountSteps();
                                 }
 
                                 else if (toolWeaponTypeForGive == ToolWeaponTypes.Crossbow)
                                 {
-                                    if (inventResCom.AmountResources(ResourceTypes.Iron, ownerCellUnitComForGive.IsMasterClient) >= _ironCostForCrossbow)
+                                    if (inventResCom.AmountResources(ResourceTypes.Iron, isMastMain) >= _ironCostForCrossbow)
                                     {
-                                        inventResCom.TakeAmountResources(ResourceTypes.Iron, ownerCellUnitComForGive.IsMasterClient, _ironCostForCrossbow);
+                                        inventResCom.TakeAmountResources(ResourceTypes.Iron, isMastMain, _ironCostForCrossbow);
 
-                                        cellUnitDataComForGive.ArcherWeapType = toolWeaponTypeForGive;
-                                        cellUnitDataComForGive.ResetAmountSteps();
+                                        unitDatComForGive.ArcherWeapType = toolWeaponTypeForGive;
+                                        unitDatComForGive.ResetAmountSteps();
 
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickArcher);
                                     }

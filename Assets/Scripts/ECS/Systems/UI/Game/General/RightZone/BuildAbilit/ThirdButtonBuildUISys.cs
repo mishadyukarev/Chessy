@@ -50,7 +50,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                                 ref var curBuildDatCom = ref _cellBuildFilt.Get1(idxCell);
                                 ref var curOffBuildCom = ref _cellBuildFilt.Get3(idxCell);
 
-                                if (curBuildDatCom.HaveBuild)
+                                if (curBuildDatCom.IsBuildType(BuildingTypes.City))
                                 {
                                     if (curOffBuildCom.HaveLocalPlayer)
                                     {

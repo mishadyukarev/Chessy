@@ -4,6 +4,7 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 
@@ -20,7 +21,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
         private EcsFilter<InventorResourcesComponent> _inventResFilter = default;
         private EcsFilter<InventorToolsComp, InventorWeaponsComp> _inventToolWeapFilter = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -31,38 +32,55 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                 var toolWeapTypeForGive = _forGiveTakeToolWeapFilter.Get1(0).ToolWeapType;
 
                 ref var inventToolsCom = ref _inventToolWeapFilter.Get1(0);
-                ref var inventWeaponsComp = ref _inventToolWeapFilter.Get2(0);
-                ref var inventResCom = ref _inventResFilter.Get1(0);
+                ref var inventWeapsCom = ref _inventToolWeapFilter.Get2(0);
+                ref var invResCom = ref _inventResFilter.Get1(0);
 
                 var sender = _infoFilter.Get1(0).FromInfo.Sender;
 
-                ref var cellUnitDataComForGive = ref _cellUnitFilter.Get1(neededIdxCell);
-                ref var ownerCellUnitComForGive = ref _cellUnitFilter.Get2(neededIdxCell);
+                ref var unitDatComForGive = ref _cellUnitFilter.Get1(neededIdxCell);
+                ref var onUnitComForGive = ref _cellUnitFilter.Get2(neededIdxCell);
 
-                if (cellUnitDataComForGive.IsUnit(UnitTypes.Pawn))
+
+
+
+                var isMaster = false;
+                if (onUnitComForGive.HaveOwner)
                 {
-                    if (cellUnitDataComForGive.HaveExtraToolWeaponPawn)
+                    isMaster = onUnitComForGive.IsMasterClient;
+                }
+                else
+                {
+                    isMaster = _cellUnitFilter.Get3(neededIdxCell).IsMainMaster;
+                }
+
+
+
+
+
+                if (unitDatComForGive.IsUnit(UnitTypes.Pawn))
+                {
+                    if (unitDatComForGive.HaveExtraToolWeaponPawn)
                     {
-                        if (cellUnitDataComForGive.HaveMaxAmountHealth)
+                        if (unitDatComForGive.HaveMaxAmountHealth)
                         {
-                            if (cellUnitDataComForGive.HaveMaxAmountSteps)
+                            if (unitDatComForGive.HaveMaxAmountSteps)
                             {
-                                if (cellUnitDataComForGive.IsConditionType(new[] { CondUnitTypes.Protected, CondUnitTypes.Relaxed }))
+                                if (unitDatComForGive.IsConditionType(new[] { CondUnitTypes.Protected, CondUnitTypes.Relaxed }))
                                 {
-                                    cellUnitDataComForGive.CondUnitType = default;
+                                    unitDatComForGive.CondUnitType = default;
                                 }
 
-                                if (cellUnitDataComForGive.ExtraTWPawnType.IsTool())
+                                if (unitDatComForGive.ExtraTWPawnType.IsTool())
                                 {
-                                    inventToolsCom.AddAmountTools(ownerCellUnitComForGive.IsMasterClient, cellUnitDataComForGive.ExtraTWPawnType);
+                                    inventToolsCom.AddAmountTools(isMaster , unitDatComForGive.ExtraTWPawnType);
                                 }
                                 else
                                 {
-                                    inventWeaponsComp.AddAmountWeapons(ownerCellUnitComForGive.IsMasterClient, cellUnitDataComForGive.ExtraTWPawnType);
+                                    inventWeapsCom.AddAmountWeapons(isMaster, unitDatComForGive.ExtraTWPawnType);
                                 }
 
-                                cellUnitDataComForGive.ResetAmountSteps();
-                                cellUnitDataComForGive.ExtraTWPawnType = default;
+                                unitDatComForGive.ResetAmountSteps();
+                                unitDatComForGive.ExtraTWPawnType = default;
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                             }
@@ -86,32 +104,32 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                     {
                         if (toolWeapTypeForGive.IsForPawn())
                         {
-                            if (cellUnitDataComForGive.HaveMaxAmountHealth)
+                            if (unitDatComForGive.HaveMaxAmountHealth)
                             {
-                                if (cellUnitDataComForGive.HaveMaxAmountSteps)
+                                if (unitDatComForGive.HaveMaxAmountSteps)
                                 {
-                                    if (cellUnitDataComForGive.ArcherWeapType != toolWeapTypeForGive)
+                                    if (unitDatComForGive.ArcherWeapType != toolWeapTypeForGive)
                                     {
                                         if (toolWeapTypeForGive.IsTool())
                                         {
-                                            if (inventToolsCom.HaveTool(ownerCellUnitComForGive.IsMasterClient, toolWeapTypeForGive))
+                                            if (inventToolsCom.HaveTool(isMaster, toolWeapTypeForGive))
                                             {
-                                                inventToolsCom.TakeAmountTools(ownerCellUnitComForGive.IsMasterClient, toolWeapTypeForGive);
+                                                inventToolsCom.TakeAmountTools(isMaster, toolWeapTypeForGive);
 
-                                                cellUnitDataComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                                cellUnitDataComForGive.ResetAmountSteps();
+                                                unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                                unitDatComForGive.ResetAmountSteps();
 
                                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                             }
 
                                             else if (toolWeapTypeForGive == ToolWeaponTypes.Pick)
                                             {
-                                                if (inventResCom.AmountResources(ResourceTypes.Wood, ownerCellUnitComForGive.IsMasterClient) >= _woodCostForPick)
+                                                if (invResCom.AmountResources(ResourceTypes.Wood, isMaster) >= _woodCostForPick)
                                                 {
-                                                    inventResCom.TakeAmountResources(ResourceTypes.Wood, ownerCellUnitComForGive.IsMasterClient, _woodCostForPick);
+                                                    invResCom.TakeAmountResources(ResourceTypes.Wood, isMaster, _woodCostForPick);
 
-                                                    cellUnitDataComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                                    cellUnitDataComForGive.ResetAmountSteps();
+                                                    unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                                    unitDatComForGive.ResetAmountSteps();
 
                                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                                 }
@@ -124,31 +142,31 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
 
                                             else if (toolWeapTypeForGive == ToolWeaponTypes.Axe)
                                             {
-                                                cellUnitDataComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                                cellUnitDataComForGive.ResetAmountSteps();
+                                                unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                                unitDatComForGive.ResetAmountSteps();
                                             }
                                         }
 
                                         else
                                         {
-                                            if (inventWeaponsComp.HaveWeapon(ownerCellUnitComForGive.IsMasterClient, toolWeapTypeForGive))
+                                            if (inventWeapsCom.HaveWeapon(isMaster, toolWeapTypeForGive))
                                             {
-                                                inventWeaponsComp.TakeAmountWeapons(ownerCellUnitComForGive.IsMasterClient, toolWeapTypeForGive);
+                                                inventWeapsCom.TakeAmountWeapons(isMaster, toolWeapTypeForGive);
 
-                                                cellUnitDataComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                                cellUnitDataComForGive.ResetAmountSteps();
+                                                unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                                unitDatComForGive.ResetAmountSteps();
 
                                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                             }
 
                                             else if (toolWeapTypeForGive == ToolWeaponTypes.Sword)
                                             {
-                                                if (inventResCom.AmountResources(ResourceTypes.Iron, ownerCellUnitComForGive.IsMasterClient) >= _ironCostForSword)
+                                                if (invResCom.AmountResources(ResourceTypes.Iron, isMaster) >= _ironCostForSword)
                                                 {
-                                                    inventResCom.TakeAmountResources(ResourceTypes.Iron, ownerCellUnitComForGive.IsMasterClient, _ironCostForSword);
+                                                    invResCom.TakeAmountResources(ResourceTypes.Iron, isMaster, _ironCostForSword);
 
-                                                    cellUnitDataComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                                    cellUnitDataComForGive.ResetAmountSteps();
+                                                    unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                                    unitDatComForGive.ResetAmountSteps();
 
                                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                                 }

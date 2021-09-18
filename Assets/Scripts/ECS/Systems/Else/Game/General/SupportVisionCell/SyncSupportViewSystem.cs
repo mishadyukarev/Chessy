@@ -28,8 +28,9 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
         foreach (var idxCurCell in _xyCellFilter)
         {
             ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxCurCell);
-            ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
-            ref var curUnitViewCom = ref _cellUnitFilter.Get3(idxCurCell);
+            ref var curOnUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
+            ref var curOffUnitCom = ref _cellUnitFilter.Get3(idxCurCell);
+            ref var curUnitViewCom = ref _cellUnitFilter.Get4(idxCurCell);
 
             ref var curSupViewCom = ref _supViewFilter.Get1(idxCurCell);
 
@@ -48,9 +49,26 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
             {
                 if (curUnitDatCom.HaveUnit)
                 {
-                    if (curOwnUnitCom.HaveOwner)
+                    if (curOnUnitCom.HaveOwner)
                     {
-                        if (curOwnUnitCom.IsMine)
+                        if (curOnUnitCom.IsMine)
+                        {
+                            if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
+                            {
+                                curSupViewCom.EnableSR();
+                                curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
+                            }
+
+                            else if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                            {
+                                curSupViewCom.EnableSR();
+                                curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
+                            }
+                        }
+                    }
+                    else if(curOffUnitCom.HaveLocalPlayer)
+                    {
+                        if (curOffUnitCom.IsMine)
                         {
                             if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
                             {
