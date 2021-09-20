@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.ECS.Component.Data.UI.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General;
-using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 
 internal sealed class BuildRighUISystem : IEcsRunSystem
@@ -10,8 +8,8 @@ internal sealed class BuildRighUISystem : IEcsRunSystem
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
     private EcsFilter<BuildAbilitUICom> _buildAbilViewCom = default;
 
-    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
-    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellBuildFilt = default;
+    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilt = default;
     private byte IdxSelCell => _selectorFilter.Get1(0).IdxSelCell;
 
     public void Run()

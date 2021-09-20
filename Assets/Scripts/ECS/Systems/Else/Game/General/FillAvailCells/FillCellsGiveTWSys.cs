@@ -7,7 +7,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
     {
         private EcsFilter<CellsGiveTWComp> _cellsGiveFilter = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -21,7 +21,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
 
                 if (curUnitDataCom.HaveUnit)
                 {
-                    if (curOwnerUnitCom.HaveOwner)
+                    if (curOwnerUnitCom.IsPlayer)
                     {
                         if (curUnitDataCom.IsUnit(UnitTypes.Pawn))
                         {

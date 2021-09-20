@@ -40,8 +40,8 @@ namespace Assets.Scripts.ECS.Managers.Event
             ref var leftEnt = ref _leftZoneFilter.GetEntity(0);
 
             _leftZoneFilter.Get1(0).AddListenerToConnectButton(ConnectOffline);
-            _leftZoneFilter.Get2(0).AddListenerTrain(delegate { CreateOffGame(OffGameModes.Training); });
-            _leftZoneFilter.Get2(0).AddListenerFriend(delegate { CreateOffGame(OffGameModes.WithFriend); });
+            _leftZoneFilter.Get2(0).AddListenerTrain(delegate { CreateOffGame(GameModes.TrainingOff); });
+            _leftZoneFilter.Get2(0).AddListenerFriend(delegate { CreateOffGame(GameModes.WithFriendOff); });
         }
 
 
@@ -106,9 +106,9 @@ namespace Assets.Scripts.ECS.Managers.Event
             PhotonNetwork.JoinRoom(_rightZoneFilter.Get2(0).TextJoinFriendRoom);
         }
 
-        private void CreateOffGame(OffGameModes offGameMode)
+        private void CreateOffGame(GameModes offGameMode)
         {
-            GameModesCom.OffGameMode = offGameMode;
+            GameModesCom.GameMode = offGameMode;
             PhotonNetwork.CreateRoom(default);
         }
 

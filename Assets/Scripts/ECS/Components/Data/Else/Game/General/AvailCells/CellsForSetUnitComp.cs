@@ -1,24 +1,28 @@
-﻿using Assets.Scripts.Workers;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Workers;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
 {
     internal struct CellsForSetUnitComp
     {
-        private Dictionary<bool, List<byte>> _availCellsForSetUnit;
+        private Dictionary<PlayerTypes, List<byte>> _cellsForSetUnit;
 
-        internal CellsForSetUnitComp(Dictionary<bool, List<byte>> availCellsForSetUnit)
+        internal CellsForSetUnitComp(bool needNew) : this()
         {
-            _availCellsForSetUnit = availCellsForSetUnit;
+            if (needNew)
+            {
+                _cellsForSetUnit = new Dictionary<PlayerTypes, List<byte>>();
 
-            availCellsForSetUnit.Add(true, new List<byte>());
-            availCellsForSetUnit.Add(false, new List<byte>());
+                _cellsForSetUnit.Add(PlayerTypes.First, new List<byte>());
+                _cellsForSetUnit.Add(PlayerTypes.Second, new List<byte>());
+            }
         }
 
-        internal List<byte> GetListCells(bool isMasterKey) => _availCellsForSetUnit[isMasterKey].Copy();
-        internal bool HaveIdxCell(bool isMasterKey, byte idxCell) => _availCellsForSetUnit[isMasterKey].Contains(idxCell);
-        internal bool RemoveIdxCell(bool isMasterKey, byte idxCell) => _availCellsForSetUnit[isMasterKey].Remove(idxCell);
-        internal void AddIdxCell(bool isMasterKey, byte idxCellValue) => _availCellsForSetUnit[isMasterKey].Add(idxCellValue);
-        internal void ClearIdxCells(bool isMasterKey) => _availCellsForSetUnit[isMasterKey].Clear();
+        internal List<byte> GetListCells(PlayerTypes playerType) => _cellsForSetUnit[playerType].Copy();
+        internal bool HaveIdxCell(PlayerTypes playerType, byte idxCell) => _cellsForSetUnit[playerType].Contains(idxCell);
+        internal bool RemoveIdxCell(PlayerTypes playerType, byte idxCell) => _cellsForSetUnit[playerType].Remove(idxCell);
+        internal void AddIdxCell(PlayerTypes playerType, byte idxCellValue) => _cellsForSetUnit[playerType].Add(idxCellValue);
+        internal void ClearIdxCells(PlayerTypes playerType) => _cellsForSetUnit[playerType].Clear();
     }
 }

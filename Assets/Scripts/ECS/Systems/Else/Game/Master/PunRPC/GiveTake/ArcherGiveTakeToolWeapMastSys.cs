@@ -4,10 +4,8 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
-using Photon.Pun;
 
 namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 {
@@ -18,16 +16,15 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
         private EcsFilter<InfoMasCom> _infoFilter = default;
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGivePawnToolFilter = default;
 
-        private EcsFilter<InventorResourcesComponent> _inventResFilter = default;
-        private EcsFilter<InventorToolsComp, InventorWeaponsComp> _inventToolWeapFilter = default;
+        private EcsFilter<InventResourCom> _inventResFilter = default;
+        private EcsFilter<InventorTWCom> _inventTWFilt = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
             ref var forGiveToolOrWeaponCom = ref _forGivePawnToolFilter.Get1(0);
-            ref var inventToolsCom = ref _inventToolWeapFilter.Get1(0);
-            ref var invWeapsComp = ref _inventToolWeapFilter.Get2(0);
+            ref var inventTWCom = ref _inventTWFilt.Get1(0);
             ref var inventResCom = ref _inventResFilter.Get1(0);
 
             var sender = _infoFilter.Get1(0).FromInfo.Sender;
@@ -36,7 +33,6 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 
             ref var unitDatComForGive = ref _cellUnitFilter.Get1(neededIdx);
             ref var onUnitComForGive = ref _cellUnitFilter.Get2(neededIdx);
-            ref var offUnitComForGive = ref _cellUnitFilter.Get3(neededIdx);
 
 
 
@@ -50,17 +46,11 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                         {
                             unitDatComForGive.CondUnitType = default;
 
-                            if (onUnitComForGive.HaveOwner)
+                            if (onUnitComForGive.IsPlayer)
                             {
-                                invWeapsComp.AddAmountWeapons(onUnitComForGive.IsMasterClient, ToolWeaponTypes.Crossbow);
-                            }
-                            else
-                            {
-                                invWeapsComp.AddAmountWeapons(offUnitComForGive.IsMainMaster, ToolWeaponTypes.Crossbow);
+                                inventTWCom.AddAmountTools(onUnitComForGive.PlayerType, ToolWeaponTypes.Crossbow);
                             }
 
-
-                            
                             unitDatComForGive.ArcherWeapType = ToolWeaponTypes.Bow;
 
                             unitDatComForGive.AmountSteps -= 1;
@@ -91,21 +81,9 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                             {
                                 unitDatComForGive.CondUnitType = default;
 
-                                var isMastMain = false;
-                                if (onUnitComForGive.HaveOwner)
+                                if (inventTWCom.HaveTool(onUnitComForGive.PlayerType, toolWeaponTypeForGive))
                                 {
-                                    isMastMain = onUnitComForGive.IsMasterClient;
-                                }
-                                else
-                                {
-                                    isMastMain = offUnitComForGive.IsMainMaster;
-                                }
-
-
-
-                                if (invWeapsComp.HaveWeapon(isMastMain, toolWeaponTypeForGive))
-                                {
-                                    invWeapsComp.TakeAmountWeapons(isMastMain, toolWeaponTypeForGive);
+                                    inventTWCom.TakeAmountTools(onUnitComForGive.PlayerType, toolWeaponTypeForGive);
 
                                     unitDatComForGive.ArcherWeapType = toolWeaponTypeForGive;
                                     unitDatComForGive.AmountSteps -= 1;
@@ -113,9 +91,9 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 
                                 else if (toolWeaponTypeForGive == ToolWeaponTypes.Crossbow)
                                 {
-                                    if (inventResCom.AmountResources(ResourceTypes.Iron, isMastMain) >= _ironCostForCrossbow)
+                                    if (inventResCom.AmountResources(onUnitComForGive.PlayerType, ResourceTypes.Iron) >= _ironCostForCrossbow)
                                     {
-                                        inventResCom.TakeAmountResources(ResourceTypes.Iron, isMastMain, _ironCostForCrossbow);
+                                        inventResCom.TakeAmountResources(onUnitComForGive.PlayerType, ResourceTypes.Iron, _ironCostForCrossbow);
 
                                         unitDatComForGive.ArcherWeapType = toolWeaponTypeForGive;
                                         unitDatComForGive.AmountSteps -= 1;

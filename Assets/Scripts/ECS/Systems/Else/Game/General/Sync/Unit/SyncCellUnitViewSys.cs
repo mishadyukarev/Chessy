@@ -24,11 +24,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
 
                 if (curUnitDatCom.HaveUnit)
                 {
-                    var isMaster = false;
-                    if (PhotonNetwork.OfflineMode) isMaster = WhoseMoveCom.IsMainMove;
-                    else isMaster = PhotonNetwork.IsMasterClient;
-
-                    if (curUnitDatCom.IsVisibleUnit(isMaster))
+                    if (curUnitDatCom.IsVisibleUnit(WhoseMoveCom.CurPlayer))
                     {
                         curMainUnitViewCom.Enable_SR();
 

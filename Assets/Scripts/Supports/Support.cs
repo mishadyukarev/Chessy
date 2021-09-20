@@ -1,99 +1,14 @@
-﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Assets.Scripts.ECS.Game.General.Components;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Leopotam.Ecs;
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 
 namespace Assets.Scripts.Supports
 {
     internal static class Support
     {
-        internal static ToolTypes TransInTool(this ToolWeaponTypes toolAndWeaponType)
-        {
-            switch (toolAndWeaponType)
-            {
-                case ToolWeaponTypes.None:
-                    throw new Exception();
-
-                case ToolWeaponTypes.Hoe:
-                    return ToolTypes.Hoe;
-
-                case ToolWeaponTypes.Axe:
-                    return ToolTypes.Axe;
-
-                case ToolWeaponTypes.Pick:
-                    return ToolTypes.Pick;
-
-                case ToolWeaponTypes.Sword:
-                    throw new Exception();
-
-                case ToolWeaponTypes.Bow:
-                    throw new Exception();
-
-                case ToolWeaponTypes.Crossbow:
-                    throw new Exception();
-
-                default:
-                    throw new Exception();
-            }
-        }
-        internal static WeaponTypes TransInWeapon(this ToolWeaponTypes toolAndWeaponType)
-        {
-            switch (toolAndWeaponType)
-            {
-                case ToolWeaponTypes.None:
-                    throw new Exception();
-
-                case ToolWeaponTypes.Hoe:
-                    throw new Exception();
-
-                case ToolWeaponTypes.Axe:
-                    throw new Exception();
-
-                case ToolWeaponTypes.Pick:
-                    throw new Exception();
-
-                case ToolWeaponTypes.Sword:
-                    return WeaponTypes.Sword;
-
-                case ToolWeaponTypes.Bow:
-                    return WeaponTypes.Bow;
-
-                case ToolWeaponTypes.Crossbow:
-                    return WeaponTypes.Crossbow;
-
-                default:
-                    throw new Exception();
-            }
-        }
-        internal static bool IsTool(this ToolWeaponTypes toolWeaponType)
-        {
-            switch (toolWeaponType)
-            {
-                case ToolWeaponTypes.None:
-                    throw new Exception();
-
-                case ToolWeaponTypes.Hoe:
-                    return true;
-
-                case ToolWeaponTypes.Axe:
-                    return true;
-
-                case ToolWeaponTypes.Pick:
-                    return true;
-
-                case ToolWeaponTypes.Sword:
-                    return false;
-
-                case ToolWeaponTypes.Bow:
-                    return false;
-
-                case ToolWeaponTypes.Crossbow:
-                    return false;
-
-                default:
-                    throw new Exception();
-            }
-        }
         internal static bool Is(this ToolWeaponTypes leftToolWeaponType, ToolWeaponTypes rightToolWeaponType) => leftToolWeaponType == rightToolWeaponType;
         internal static bool IsForArcher(this ToolWeaponTypes toolWeaponType)
         {
@@ -164,23 +79,16 @@ namespace Assets.Scripts.Supports
         }
 
 
-        internal static bool IsSettedCity(this EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerBotComponent> cellBuildDataFilter, bool isMasterKey)
+        internal static PlayerTypes GetPlayerType(this Player player)
         {
-            foreach (var idx in cellBuildDataFilter)
-            {
-                if (cellBuildDataFilter.Get1(idx).IsBuildType(BuildingTypes.City))
-                {
-                    if (cellBuildDataFilter.Get2(idx).HaveOwner)
-                    {
-                        if (cellBuildDataFilter.Get2(idx).IsMasterClient == isMasterKey)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
+            if (player.IsMasterClient == true) return PlayerTypes.First;
+            else return PlayerTypes.Second;
+        }
 
-            return false;
+        internal static Player GetPlayerType(this PlayerTypes playerType)
+        {
+            if (playerType == PlayerTypes.First) return PhotonNetwork.PlayerList[0];
+            else return PhotonNetwork.PlayerList[1];
         }
     }
 }

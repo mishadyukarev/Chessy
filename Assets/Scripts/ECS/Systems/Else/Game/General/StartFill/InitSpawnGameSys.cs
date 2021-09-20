@@ -23,7 +23,6 @@ using Assets.Scripts.ECS.Components.View.UI.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
 using Assets.Scripts.ECS.Game.Components;
-using Assets.Scripts.ECS.Game.General.Components;
 using Assets.Scripts.Workers;
 using Leopotam.Ecs;
 using Photon.Pun;
@@ -38,15 +37,15 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
     {
         private EcsWorld _curGameWorld = default;
 
-        private EcsFilter<InventorResourcesComponent> _inventorResFilter = default;
+        private EcsFilter<InventResourCom> _inventorResFilter = default;
         private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
         private EcsFilter<FriendZoneDataUICom> _friendZoneUIFilt = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
         private EcsFilter<CellViewComponent> _cellViewFilt = default;
-        private EcsFilter<CellUnitDataCom, CellUnitExtraViewComp, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellBuildFilter = default;
+        private EcsFilter<CellUnitDataCom, CellUnitExtraViewComp, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
 
 
         public void Init()
@@ -148,18 +147,14 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                     _curGameWorld.NewEntity()
                          .Replace(new CellBuildDataComponent())
                          .Replace(new CellBuildViewComponent(curCell_GO))
-                         .Replace(new OwnerOnlineComp())
-                         .Replace(new OwnerBotComponent())
-                         .Replace(new OwnerOfflineCom());
+                         .Replace(new OwnerCom());
 
 
                     _curGameWorld.NewEntity()
-                         .Replace(new CellUnitDataCom(new Dictionary<bool, bool>()))
+                         .Replace(new CellUnitDataCom(true))
                          .Replace(new CellUnitMainViewComp(curCell_GO))
                          .Replace(new CellUnitExtraViewComp(curCell_GO))
-                         .Replace(new OwnerOnlineComp())
-                         .Replace(new OwnerBotComponent())
-                         .Replace(new OwnerOfflineCom());
+                         .Replace(new OwnerCom());
 
                     ++curIdx;
                 }
@@ -179,30 +174,28 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             var infoEnt = _curGameWorld.NewEntity()
                 .Replace(new InputComponent())
                 .Replace(new SelectorCom(ToolWeaponTypes.Pick))
-                .Replace(new GeneralZoneViewComponent(generalZoneGO))
-                .Replace(new BackgroundComponent(backGroundGO))
+                .Replace(new GenerZoneViewCom(generalZoneGO))
+                .Replace(new BackgroundComponent(backGroundGO, PhotonNetwork.IsMasterClient))
 
-                .Replace(new CellsForSetUnitComp(new Dictionary<bool, List<byte>>()))
-                .Replace(new AvailCellsForShiftComp(new Dictionary<bool, Dictionary<byte, List<byte>>>()))
+                .Replace(new CellsForSetUnitComp(true))
+                .Replace(new AvailCellsForShiftComp(true))
                 .Replace(new CellsArsonArcherComp(true))
                 .Replace(new CellsForAttackCom(true))
                 .Replace(new CellsGiveTWComp(true))
-                .Replace(new CellsTakeTWComp(true))
-                .Replace(new WhoseMoveCom(true))
+                .Replace(new WhoseMoveCom(PlayerTypes.First))
                 .Replace(new PhotonViewComp(true))
 
-                .Replace(new UpgradesBuildingsComponent(new Dictionary<BuildingTypes, Dictionary<bool, int>>()))
+                .Replace(new UpgradesBuildsCom(true))
 
-                .Replace(new InventorUnitsComponent(new Dictionary<UnitTypes, Dictionary<bool, int>>()))
-                .Replace(new InventorResourcesComponent(new Dictionary<ResourceTypes, Dictionary<bool, int>>()))
-                .Replace(new InventorToolsComp(new Dictionary<bool, Dictionary<ToolTypes, byte>>()))
-                .Replace(new InventorWeaponsComp(new Dictionary<bool, Dictionary<WeaponTypes, byte>>()))
+                .Replace(new InventorUnitsComponent(true))
+                .Replace(new InventResourCom(true))
+                .Replace(new InventorTWCom(true))
 
                 .Replace(new FromInfoComponent())
                 .Replace(new SoundEffectsComp(audioSourceParentGO));
 
 
-            infoEnt.Get<GeneralZoneViewComponent>().Attach(backGroundGO.transform);
+            infoEnt.Get<GenerZoneViewCom>().Attach(backGroundGO.transform);
 
 
 
@@ -366,30 +359,28 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 ref var invResCom = ref _inventorResFilter.Get1(0);
 
 
-                unitInvCom.SetAmountUnitsInInvent(UnitTypes.King, true, EconomyValues.AMOUNT_KING_MASTER);
-                unitInvCom.SetAmountUnitsInInvent(UnitTypes.King, false, EconomyValues.AMOUNT_KING_OTHER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.King, EconomyValues.AMOUNT_KING_MASTER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.Pawn, EconomyValues.AMOUNT_PAWN_MASTER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.Rook, EconomyValues.AMOUNT_ROOK_MASTER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.Bishop, EconomyValues.AMOUNT_BISHOP_MASTER);
 
-                unitInvCom.SetAmountUnitsInInvent(UnitTypes.Pawn, true, EconomyValues.AMOUNT_PAWN_MASTER);
-                unitInvCom.SetAmountUnitsInInvent(UnitTypes.Pawn, false, EconomyValues.AMOUNT_PAWN_OTHER);
-
-                unitInvCom.SetAmountUnitsInInvent(UnitTypes.Rook, true, EconomyValues.AMOUNT_ROOK_MASTER);
-                unitInvCom.SetAmountUnitsInInvent(UnitTypes.Rook, false, EconomyValues.AMOUNT_ROOK_OTHER);
-
-                unitInvCom.SetAmountUnitsInInvent(UnitTypes.Bishop, true, EconomyValues.AMOUNT_BISHOP_MASTER);
-                unitInvCom.SetAmountUnitsInInvent(UnitTypes.Bishop, false, EconomyValues.AMOUNT_BISHOP_OTHER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.King, EconomyValues.AMOUNT_KING_OTHER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.Pawn, EconomyValues.AMOUNT_PAWN_OTHER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.Rook, EconomyValues.AMOUNT_ROOK_OTHER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.Bishop, EconomyValues.AMOUNT_BISHOP_OTHER);   
 
 
-                invResCom.SetAmountResources(ResourceTypes.Food, true, EconomyValues.AMOUNT_FOOD_MASTER);
-                invResCom.SetAmountResources(ResourceTypes.Wood, true, EconomyValues.AMOUNT_WOOD_MASTER);
-                invResCom.SetAmountResources(ResourceTypes.Ore, true, EconomyValues.AMOUNT_ORE_MASTER);
-                invResCom.SetAmountResources(ResourceTypes.Iron, true, EconomyValues.AMOUNT_IRON_MASTER);
-                invResCom.SetAmountResources(ResourceTypes.Gold, true, EconomyValues.AMOUNT_GOLD_MASTER);
+                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_MASTER);
+                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Wood, EconomyValues.AMOUNT_WOOD_MASTER);
+                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Ore, EconomyValues.AMOUNT_ORE_MASTER);
+                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Iron, EconomyValues.AMOUNT_IRON_MASTER);
+                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Gold, EconomyValues.AMOUNT_GOLD_MASTER);
 
-                invResCom.SetAmountResources(ResourceTypes.Food, false, EconomyValues.AMOUNT_FOOD_OTHER);
-                invResCom.SetAmountResources(ResourceTypes.Wood, false, EconomyValues.AMOUNT_WOOD_OTHER);
-                invResCom.SetAmountResources(ResourceTypes.Ore, false, EconomyValues.AMOUNT_ORE_OTHER);
-                invResCom.SetAmountResources(ResourceTypes.Iron, false, EconomyValues.AMOUNT_IRON_OTHER);
-                invResCom.SetAmountResources(ResourceTypes.Gold, false, EconomyValues.AMOUNT_GOLD_OTHER);
+                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_OTHER);
+                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Wood, EconomyValues.AMOUNT_WOOD_OTHER);
+                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Ore, EconomyValues.AMOUNT_ORE_OTHER);
+                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Iron, EconomyValues.AMOUNT_IRON_OTHER);
+                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Gold, EconomyValues.AMOUNT_GOLD_OTHER);
 
             }
 
@@ -403,7 +394,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             {
                 CameraComComp.SetPosRotClient(true);
 
-                if (GameModesCom.IsGameMode(OffGameModes.Training))
+                if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
                     foreach (byte curIdxCell in _xyCellFilter)
                     {
@@ -411,49 +402,49 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                         var x = curXyCell[0];
                         var y = curXyCell[1];
 
-                        ref var curCellEnvDataComp = ref _cellEnvFilter.Get1(curIdxCell);
-                        ref var curCellUnitDataComp = ref _cellUnitFilter.Get1(curIdxCell);
-                        ref var curBotCellUnitComp = ref _cellUnitFilter.Get4(curIdxCell);
-                        ref var curCellBuildDataComp = ref _cellBuildFilter.Get1(curIdxCell);
+                        ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
+                        ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
+                        ref var curOwnUnitCom = ref _cellUnitFilter.Get3(curIdxCell);
+                        ref var curBuildDatCom = ref _cellBuildFilter.Get1(curIdxCell);
 
                         if (x == 7 && y == 6)
                         {
-                            curCellEnvDataComp.ResetEnvironment(EnvirTypes.Mountain);
-                            curCellEnvDataComp.ResetEnvironment(EnvirTypes.AdultForest);
+                            curEnvDatCom.ResetEnvironment(EnvirTypes.Mountain);
+                            curEnvDatCom.ResetEnvironment(EnvirTypes.AdultForest);
 
-                            curCellUnitDataComp.UnitType = UnitTypes.King;
-                            curCellUnitDataComp.AmountHealth = 1;
-                            curCellUnitDataComp.CondUnitType = CondUnitTypes.Protected;
-                            curBotCellUnitComp.IsBot = true;
+                            curUnitDatCom.UnitType = UnitTypes.King;
+                            curUnitDatCom.AmountHealth = 1;
+                            curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
+                            curOwnUnitCom.PlayerType = PlayerTypes.Second;
                         }
 
                         else if (x == 8 && y == 6)
                         {
-                            curCellEnvDataComp.ResetEnvironment(EnvirTypes.Mountain);
-                            curCellEnvDataComp.ResetEnvironment(EnvirTypes.AdultForest);
+                            curEnvDatCom.ResetEnvironment(EnvirTypes.Mountain);
+                            curEnvDatCom.ResetEnvironment(EnvirTypes.AdultForest);
 
-                            curCellBuildDataComp.BuildType = BuildingTypes.City;
-                            _cellBuildFilter.Get3(curIdxCell).IsBot = true;
+                            curBuildDatCom.BuildType = BuildingTypes.City;
+                            curOwnUnitCom.PlayerType = PlayerTypes.Second;
                         }
 
                         else if (x == 6 && y == 6 || x == 9 && y == 6 || x <= 9 && x >= 6 && y == 5 || x <= 9 && x >= 6 && y == 7)
                         {
-                            curCellEnvDataComp.ResetEnvironment(EnvirTypes.Mountain);
+                            curEnvDatCom.ResetEnvironment(EnvirTypes.Mountain);
 
-                            curCellUnitDataComp.UnitType = UnitTypes.Pawn;
+                            curUnitDatCom.UnitType = UnitTypes.Pawn;
 
                             int rand = Random.Range(0, 100);
 
-                            if (rand >= 50) curCellUnitDataComp.ExtraTWPawnType = ToolWeaponTypes.Sword;
+                            if (rand >= 50) curUnitDatCom.ExtraTWPawnType = ToolWeaponTypes.Sword;
 
-                            curCellUnitDataComp.AmountHealth = 100;
-                            curCellUnitDataComp.CondUnitType = CondUnitTypes.Protected;
-                            curBotCellUnitComp.IsBot = true;
+                            curUnitDatCom.AmountHealth = 100;
+                            curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
+                            curOwnUnitCom.PlayerType = PlayerTypes.Second;
                         }
                     }
                 }
 
-                else if (GameModesCom.IsGameMode(OffGameModes.WithFriend))
+                else if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
                 {
                     _friendZoneUIFilt.Get1(0).IsActiveFriendZone = true;
                 }

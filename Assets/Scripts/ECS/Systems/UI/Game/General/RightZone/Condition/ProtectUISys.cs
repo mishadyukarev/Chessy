@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Components.View.UI.Game.General.Right
@@ -11,7 +10,7 @@ namespace Assets.Scripts.ECS.Components.View.UI.Game.General.Right
         private EcsFilter<CondUnitUICom> _condUnitUIFilt = default;
         private EcsFilter<SelectorCom> _selectorFilter = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -20,8 +19,6 @@ namespace Assets.Scripts.ECS.Components.View.UI.Game.General.Right
 
             ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
             ref var selOnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
-            ref var selOffUnitCom = ref _cellUnitFilter.Get3(idxSelCell);
-            ref var selBotUnitCom = ref _cellUnitFilter.Get4(idxSelCell);
 
 
             var isEnableButt = false;
@@ -32,27 +29,12 @@ namespace Assets.Scripts.ECS.Components.View.UI.Game.General.Right
                 condUnitUICom.SetText_Button(CondUnitTypes.Protected, LanguageComComp.GetText(GameLanguageTypes.Protect));
 
 
-                if (selOnUnitCom.HaveOwner)
+                if (selOnUnitCom.IsPlayer)
                 {
-                    if (selOnUnitCom.IsMine)
+                    if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
                     {
                         isEnableButt = true;
                     }
-                }
-
-                else if (selOffUnitCom.HaveLocalPlayer)
-                {
-                    if (selOffUnitCom.IsMine)
-                    {
-                        isEnableButt = true;
-
-                    }
-                }
-
-                else if (selBotUnitCom.IsBot)
-                {
-
-
                 }
             }
 

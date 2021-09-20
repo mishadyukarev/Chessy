@@ -5,6 +5,7 @@ using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
+using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -15,7 +16,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
     private EcsFilter<AvailCellsForShiftComp> _cellsShiftFilter = default;
 
-    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvrDataFilter = default;
 
     private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
@@ -30,14 +31,12 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
 
 
-        var isMaster = false;
-
-        if (PhotonNetwork.OfflineMode) isMaster = WhoseMoveCom.IsMainMove;
-
-        else isMaster = fromInfo.Sender.IsMasterClient;
+        PlayerTypes playerType = default;
+        if (PhotonNetwork.OfflineMode) playerType = WhoseMoveCom.CurOfflinePlayer;
+        else playerType = fromInfo.Sender.GetPlayerType();
 
 
-        if (_cellsShiftFilter.Get1(0).HaveIdxCell(isMaster, fromIdx, toIdx))
+        if (_cellsShiftFilter.Get1(0).HaveIdxCell(playerType, fromIdx, toIdx))
         {
             ref var forShiftMasCom = ref _forShiftFilter.Get1(0);
 
@@ -46,7 +45,6 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
             ref var toUnitDatCom = ref _cellUnitFilter.Get1(toIdx);
             ref var toOnlineUnitCom = ref _cellUnitFilter.Get2(toIdx);
-            ref var toOfflineUnitCom = ref _cellUnitFilter.Get3(toIdx);
 
             ref var toCellEnvDataCom = ref _cellEnvrDataFilter.Get1(toIdx);
 
@@ -62,20 +60,20 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
             toUnitDatCom.AmountSteps = fromUnitDatCom.AmountSteps;
             toUnitDatCom.CondUnitType = default;
 
-            if (PhotonNetwork.OfflineMode)
-            {
-                if (isMaster) toOfflineUnitCom.LocalPlayerType = PlayerTypes.First;
-                else toOfflineUnitCom.LocalPlayerType = PlayerTypes.Second;
+            //if (PhotonNetwork.OfflineMode)
+            //{
+            //    if (isMaster) toOfflineUnitCom.LocalPlayerType = PlayerTypes.First;
+            //    else toOfflineUnitCom.LocalPlayerType = PlayerTypes.Second;
 
-                _soundEffFilter.Get1(0).Play(SoundEffectTypes.ClickToTable);
-            }
+            //    _soundEffFilter.Get1(0).Play(SoundEffectTypes.ClickToTable);
+            //}
 
-            else
-            {
-                toOnlineUnitCom.SetOwner(fromInfo.Sender);
+            //else
+            //{
+            //    toOnlineUnitCom.SetOnlineOwner(fromInfo.Sender);
 
-                RpcSys.SoundToGeneral(fromInfo.Sender, SoundEffectTypes.ClickToTable);
-            }
+            //    RpcSys.SoundToGeneral(fromInfo.Sender, SoundEffectTypes.ClickToTable);
+            //}
 
 
             fromUnitDatCom.ResetUnitType();

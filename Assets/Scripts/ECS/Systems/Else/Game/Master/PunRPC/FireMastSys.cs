@@ -2,6 +2,7 @@
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
+using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
@@ -14,7 +15,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         private EcsFilter<ForFireMasCom> _fireFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
@@ -69,7 +70,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
             {
                 if (fromUnitDatCom.HaveMaxAmountSteps)
                 {
-                    if (_cellsArcherArsonFilt.Get1(0).HaveIdxCell(sender.IsMasterClient, fromIdx, toIdx))
+                    if (_cellsArcherArsonFilt.Get1(0).HaveIdxCell(sender.GetPlayerType(), fromIdx, toIdx))
                     {
                         RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 

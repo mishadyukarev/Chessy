@@ -19,14 +19,14 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.CenterZone
             {
                 friendViewCom.SetActiveParent(true);
 
-                if (WhoseMoveCom.IsMainMove)
-                {
-                    friendViewCom.SetTextPlayerMotion("1 player");
-                }
-                else
-                {
-                    friendViewCom.SetTextPlayerMotion("2 player");
-                }
+                //if (WhoseMoveCom.IsMainMove)
+                //{
+                //    friendViewCom.SetTextPlayerMotion("1 player");
+                //}
+                //else
+                //{
+                //    friendViewCom.SetTextPlayerMotion("2 player");
+                //}
             }
 
             else

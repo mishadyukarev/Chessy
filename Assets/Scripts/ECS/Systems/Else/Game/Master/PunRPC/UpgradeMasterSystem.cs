@@ -2,6 +2,7 @@
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
@@ -11,10 +12,10 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
         private EcsFilter<InfoMasCom> _infoFilter = default;
         private EcsFilter<ForUpgradeMasCom> _forUpgradeFilter = default;
 
-        private EcsFilter<UpgradesBuildingsComponent> _upgradeBuildsFilter = default;
-        private EcsFilter<InventorResourcesComponent> _inventResFilt = default;
+        private EcsFilter<UpgradesBuildsCom> _upgradeBuildsFilter = default;
+        private EcsFilter<InventResourCom> _inventResFilt = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
         private const byte FOR_NEXT_UPGRADE = 1;
 
@@ -33,15 +34,12 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
 
 
-            bool[] haves;
-
-
             var buildTypeForUpgrade = _forUpgradeFilter.Get1(0).BuildingType;
 
-            if (inventResCom.CanUpgradeBuildings(sender, buildTypeForUpgrade, out haves))
+            if (inventResCom.CanUpgradeBuildings(sender.GetPlayerType(), buildTypeForUpgrade, out var haves))
             {
-                inventResCom.BuyUpgradeBuildings(sender, buildTypeForUpgrade);
-                _upgradeBuildsFilter.Get1(0).AddAmountUpgrades(buildTypeForUpgrade, sender.IsMasterClient);
+                inventResCom.BuyUpgradeBuildings(sender.GetPlayerType(), buildTypeForUpgrade);
+                _upgradeBuildsFilter.Get1(0).AddAmountUpgrades(sender.GetPlayerType(), buildTypeForUpgrade);
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
             }

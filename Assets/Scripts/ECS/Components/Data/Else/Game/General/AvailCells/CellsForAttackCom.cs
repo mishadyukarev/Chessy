@@ -7,47 +7,47 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells
 {
     internal struct CellsForAttackCom
     {
-        private Dictionary<AttackTypes, Dictionary<bool, Dictionary<byte, List<byte>>>> _availCellsForSimpleAttack;
+        private Dictionary<PlayerTypes, Dictionary<AttackTypes, Dictionary<byte, List<byte>>>> _cellsForAttack;
 
         internal CellsForAttackCom(bool needNew) : this()
         {
             if (needNew)
             {
-                _availCellsForSimpleAttack = new Dictionary<AttackTypes, Dictionary<bool, Dictionary<byte, List<byte>>>>();
+                _cellsForAttack = new Dictionary<PlayerTypes, Dictionary<AttackTypes, Dictionary<byte, List<byte>>>>();
 
 
-                _availCellsForSimpleAttack[AttackTypes.Simple] = new Dictionary<bool, Dictionary<byte, List<byte>>>();
-                _availCellsForSimpleAttack[AttackTypes.Unique] = new Dictionary<bool, Dictionary<byte, List<byte>>>();
+                _cellsForAttack[PlayerTypes.First] = new Dictionary<AttackTypes, Dictionary<byte, List<byte>>>();
+                _cellsForAttack[PlayerTypes.Second] = new Dictionary<AttackTypes, Dictionary<byte, List<byte>>>();
 
 
-                _availCellsForSimpleAttack[AttackTypes.Simple].Add(true, new Dictionary<byte, List<byte>>());
-                _availCellsForSimpleAttack[AttackTypes.Simple].Add(false, new Dictionary<byte, List<byte>>());
+                _cellsForAttack[PlayerTypes.First].Add(AttackTypes.Simple, new Dictionary<byte, List<byte>>());
+                _cellsForAttack[PlayerTypes.Second].Add(AttackTypes.Simple, new Dictionary<byte, List<byte>>());
 
-                _availCellsForSimpleAttack[AttackTypes.Unique].Add(true, new Dictionary<byte, List<byte>>());
-                _availCellsForSimpleAttack[AttackTypes.Unique].Add(false, new Dictionary<byte, List<byte>>());
+                _cellsForAttack[PlayerTypes.First].Add(AttackTypes.Unique, new Dictionary<byte, List<byte>>());
+                _cellsForAttack[PlayerTypes.Second].Add(AttackTypes.Unique, new Dictionary<byte, List<byte>>());
 
 
                 for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
                 {
-                    _availCellsForSimpleAttack[AttackTypes.Simple][true].Add(idx, new List<byte>());
-                    _availCellsForSimpleAttack[AttackTypes.Simple][false].Add(idx, new List<byte>());
+                    _cellsForAttack[PlayerTypes.First][AttackTypes.Simple].Add(idx, new List<byte>());
+                    _cellsForAttack[PlayerTypes.Second][AttackTypes.Simple].Add(idx, new List<byte>());
 
-                    _availCellsForSimpleAttack[AttackTypes.Unique][true].Add(idx, new List<byte>());
-                    _availCellsForSimpleAttack[AttackTypes.Unique][false].Add(idx, new List<byte>());
+                    _cellsForAttack[PlayerTypes.First][AttackTypes.Unique].Add(idx, new List<byte>());
+                    _cellsForAttack[PlayerTypes.Second][AttackTypes.Unique].Add(idx, new List<byte>());
                 }
             }
         }
 
-        internal List<byte> GetListCopy(AttackTypes attackType, bool isMasterKey, byte idxCell) => _availCellsForSimpleAttack[attackType][isMasterKey][idxCell].Copy();
-        internal bool FindByIdx(AttackTypes attackType, bool isMasterKey, byte idxCell, byte idxForFind)
+        internal List<byte> GetListCopy(PlayerTypes playerType, AttackTypes attackType, byte idxCell) => _cellsForAttack[playerType][attackType][idxCell].Copy();
+        internal bool FindByIdx(PlayerTypes playerType, AttackTypes attackType, byte idxCell, byte idxForFind)
         {
-            foreach (var idx in _availCellsForSimpleAttack[attackType][isMasterKey][idxCell])
+            foreach (var idx in _cellsForAttack[playerType][attackType][idxCell])
             {
                 if (idxForFind == idx) return true;
             }
             return false;
         }
-        internal void Add(AttackTypes attackType, bool isMasterKey, byte idxCell, byte value) => _availCellsForSimpleAttack[attackType][isMasterKey][idxCell].Add(value);
-        internal void Clear(AttackTypes attackType, bool isMasterKey, byte idxCell) => _availCellsForSimpleAttack[attackType][isMasterKey][idxCell].Clear();
+        internal void Add(PlayerTypes playerType, AttackTypes attackType, byte idxCell, byte value) => _cellsForAttack[playerType][attackType][idxCell].Add(value);
+        internal void Clear(PlayerTypes playerType, AttackTypes attackType, byte idxCell) => _cellsForAttack[playerType][attackType][idxCell].Clear();
     }
 }

@@ -2,9 +2,8 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
-using Assets.Scripts.ECS.Game.General.Components;
+using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -13,7 +12,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
     private EcsFilter<InfoMasCom> _infoMasterFilter = default;
     private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
-    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
     private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
@@ -31,14 +30,10 @@ internal sealed class AttackMastSys : IEcsRunSystem
         var toIdxAttack = forAttackMasCom.IdxToCell;
 
         ref var fromUnitDatCom = ref _cellUnitFilter.Get1(fromIdx);
-        ref var fromOnUnitCom = ref _cellUnitFilter.Get2(fromIdx);
-        ref var fromOffUnitCom = ref _cellUnitFilter.Get3(fromIdx);
-        ref var fromBotUnitCom = ref _cellUnitFilter.Get4(fromIdx);
+        ref var fromOwnUnitCom = ref _cellUnitFilter.Get2(fromIdx);
 
         ref var toUnitDatCom = ref _cellUnitFilter.Get1(toIdxAttack);
         ref var toOnUnitCom = ref _cellUnitFilter.Get2(toIdxAttack);
-        ref var toOffUnitCom = ref _cellUnitFilter.Get3(toIdxAttack);
-        ref var toBotUnitCom = ref _cellUnitFilter.Get4(toIdxAttack);
         ref var toBuildDatCom = ref _cellBuildFilter.Get1(toIdxAttack);
         ref var toEnvDatCom = ref _cellEnvFilter.Get1(toIdxAttack);
 
@@ -46,23 +41,13 @@ internal sealed class AttackMastSys : IEcsRunSystem
 
         AttackTypes simpUniqueType = default;
 
-        if (PhotonNetwork.OfflineMode)
-        {
-            if (cellsAttackCom.FindByIdx(AttackTypes.Simple, fromOffUnitCom.IsMainMaster, fromIdx, toIdxAttack))
-                simpUniqueType = AttackTypes.Simple;
 
-            if (cellsAttackCom.FindByIdx(AttackTypes.Unique, fromOffUnitCom.IsMainMaster, fromIdx, toIdxAttack))
-                simpUniqueType = AttackTypes.Unique;
-        }
+        if (cellsAttackCom.FindByIdx(fromOwnUnitCom.PlayerType, AttackTypes.Simple,  fromIdx, toIdxAttack))
+            simpUniqueType = AttackTypes.Simple;
 
-        else
-        {
-            if (cellsAttackCom.FindByIdx(AttackTypes.Simple, fromOnUnitCom.IsMasterClient, fromIdx, toIdxAttack))
-                simpUniqueType = AttackTypes.Simple;
+        if (cellsAttackCom.FindByIdx(fromOwnUnitCom.PlayerType, AttackTypes.Unique,  fromIdx, toIdxAttack))
+            simpUniqueType = AttackTypes.Unique;
 
-            if (cellsAttackCom.FindByIdx(AttackTypes.Unique, fromOnUnitCom.IsMasterClient, fromIdx, toIdxAttack))
-                simpUniqueType = AttackTypes.Unique;
-        }
 
 
 
@@ -116,11 +101,11 @@ internal sealed class AttackMastSys : IEcsRunSystem
                 if (toUnitDatCom.IsUnit(UnitTypes.King))
                 {
                     _endGameDataUIFilter.Get1(0).IsEndGame = true;
-                    _endGameDataUIFilter.Get1(0).IsOwnerWinner = toOnUnitCom.HaveOwner;
+                    _endGameDataUIFilter.Get1(0).IsOwnerWinner = toOnUnitCom.IsPlayer;
 
-                    if (toOnUnitCom.HaveOwner)
+                    if (toOnUnitCom.IsPlayer)
                     {
-                        _endGameDataUIFilter.Get1(0).PlayerWinner = fromOnUnitCom.Owner;
+                        _endGameDataUIFilter.Get1(0).PlayerWinner = fromOwnUnitCom.PlayerType.GetPlayerType();
                     }
                     else
                     {
@@ -129,16 +114,13 @@ internal sealed class AttackMastSys : IEcsRunSystem
                 }
 
                 toUnitDatCom.ResetUnit();
-                toBotUnitCom.DefBot();
-                toOnUnitCom.DefOwner();
-                toOffUnitCom.DefOwner();
 
 
                 if (fromUnitDatCom.IsMelee)
                 {
                     toUnitDatCom.ReplaceUnit(fromUnitDatCom);
-                    if (PhotonNetwork.OfflineMode) toOffUnitCom.IsMainMaster = fromOffUnitCom.IsMainMaster;
-                    else toOnUnitCom.SetOwner(fromOnUnitCom.Owner);
+
+                    //toOnUnitCom.SetOnlineOwner(fromOwnUnitCom.PlayerType, fromOwnUnitCom.Owner);
 
                     fromUnitDatCom.ResetUnit();
 

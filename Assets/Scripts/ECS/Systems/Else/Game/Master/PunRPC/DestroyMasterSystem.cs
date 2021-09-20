@@ -2,6 +2,7 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -10,8 +11,8 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
     private EcsFilter<InfoMasCom> _infoFilter = default;
     private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
 
-    private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
-    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp> _cellBuildFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
     private EcsFilter<EndGameDataUIComponent> _endGameFilter = default;
@@ -22,7 +23,7 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
         var idxCellForDestory = _destroyFilter.Get1(0).IdxForDestroy;
 
         ref var curUnitDataCom = ref _cellUnitFilter.Get1(idxCellForDestory);
-        ref var curOnwerUnitCom = ref _cellUnitFilter.Get2(idxCellForDestory);
+        ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxCellForDestory);
         ref var curBuildDataCom = ref _cellBuildFilter.Get1(idxCellForDestory);
         ref var curOwnerBuildCom = ref _cellBuildFilter.Get2(idxCellForDestory);
         ref var curEnvDataCom = ref _cellEnvFilter.Get1(idxCellForDestory);
@@ -36,10 +37,10 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
             {
                 _endGameFilter.Get1(0).IsEndGame = true;
 
-                if (curOwnerBuildCom.HaveOwner)
+                if (curOwnerBuildCom.IsPlayer)
                 {
                     _endGameFilter.Get1(0).IsOwnerWinner = true;
-                    _endGameFilter.Get1(0).PlayerWinner = curOnwerUnitCom.Owner;
+                    _endGameFilter.Get1(0).PlayerWinner = curOwnUnitCom.PlayerType.GetPlayerType();
                 }
                 else
                 {

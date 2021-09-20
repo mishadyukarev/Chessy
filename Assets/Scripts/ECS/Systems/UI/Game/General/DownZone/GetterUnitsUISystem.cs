@@ -12,9 +12,7 @@ using UnityEngine;
 internal sealed class GetterUnitsUISystem : IEcsRunSystem
 {
     private EcsFilter<GetterUnitsDataUICom, GetterUnitsViewUICom> _takerUnitsUIFilter = default;
-
     private EcsFilter<InventorUnitsComponent> _inventUnitsFilter = default;
-    private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
 
     private const float NEEDED_TIME = 1;
 
@@ -57,22 +55,9 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
             }
         }
 
-        if (PhotonNetwork.OfflineMode)
-        {
-            var isMainMove = WhoseMoveCom.IsMainMove;
 
-            getUnitViewCom.SetTextToAmountUnits(UnitTypes.Pawn, invUnitCom.AmountUnitsInInv(UnitTypes.Pawn, isMainMove).ToString());
-            getUnitViewCom.SetTextToAmountUnits(UnitTypes.Rook, invUnitCom.AmountUnitsInInv(UnitTypes.Rook, isMainMove).ToString());
-            getUnitViewCom.SetTextToAmountUnits(UnitTypes.Bishop, invUnitCom.AmountUnitsInInv(UnitTypes.Bishop, isMainMove).ToString());
-        }
-
-        else
-        {
-            getUnitViewCom.SetTextToAmountUnits(UnitTypes.Pawn, invUnitCom.AmountUnitsInInv(UnitTypes.Pawn, PhotonNetwork.IsMasterClient).ToString());
-            getUnitViewCom.SetTextToAmountUnits(UnitTypes.Rook, invUnitCom.AmountUnitsInInv(UnitTypes.Rook, PhotonNetwork.IsMasterClient).ToString());
-            getUnitViewCom.SetTextToAmountUnits(UnitTypes.Bishop, invUnitCom.AmountUnitsInInv(UnitTypes.Bishop, PhotonNetwork.IsMasterClient).ToString());
-        }
-
-
+        getUnitViewCom.SetTextToAmountUnits(UnitTypes.Pawn, invUnitCom.AmountUnitsInInv(WhoseMoveCom.CurPlayer, UnitTypes.Pawn).ToString());
+        getUnitViewCom.SetTextToAmountUnits(UnitTypes.Rook, invUnitCom.AmountUnitsInInv(WhoseMoveCom.CurPlayer, UnitTypes.Rook).ToString());
+        getUnitViewCom.SetTextToAmountUnits(UnitTypes.Bishop, invUnitCom.AmountUnitsInInv(WhoseMoveCom.CurPlayer, UnitTypes.Bishop).ToString());
     }
 }

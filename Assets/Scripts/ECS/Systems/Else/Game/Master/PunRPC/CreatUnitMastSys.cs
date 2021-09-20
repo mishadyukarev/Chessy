@@ -5,7 +5,6 @@ using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -13,11 +12,11 @@ internal sealed class CreatUnitMastSys : IEcsRunSystem
 {
     private EcsFilter<InfoMasCom> _mastInfoFilter = default;
     private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
-    private EcsFilter<InventorUnitsComponent, InventorResourcesComponent> _inventorFilter = default;
+    private EcsFilter<InventorUnitsComponent, InventResourCom> _inventorFilter = default;
     private EcsFilter<SoundEffectsComp> _soundEffFilt = default;
 
 
-    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellBuildFilt = default;
+    private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilt = default;
 
 
     public void Run()
@@ -32,29 +31,15 @@ internal sealed class CreatUnitMastSys : IEcsRunSystem
 
 
 
-
-        var isMastSender = false;
-        if (PhotonNetwork.OfflineMode) isMastSender = WhoseMoveCom.IsMainMove;
-        else isMastSender = infoCom.FromInfo.Sender.IsMasterClient;
-
-
         var isSettedCity = false;
 
         foreach (var idx in _cellBuildFilt)
         {
             if (_cellBuildFilt.Get1(idx).IsBuildType(BuildingTypes.City))
             {
-                if (_cellBuildFilt.Get2(idx).HaveOwner)
+                if (_cellBuildFilt.Get2(idx).IsPlayer)
                 {
-                    if (_cellBuildFilt.Get2(idx).IsMasterClient == isMastSender)
-                    {
-                        isSettedCity = true;
-                    }
-                }
-
-                else if (_cellBuildFilt.Get3(idx).HaveLocalPlayer)
-                {
-                    if (_cellBuildFilt.Get3(idx).IsMainMaster == isMastSender)
+                    if (_cellBuildFilt.Get2(idx).PlayerType == WhoseMoveCom.CurPlayer)
                     {
                         isSettedCity = true;
                     }
@@ -64,10 +49,10 @@ internal sealed class CreatUnitMastSys : IEcsRunSystem
 
         if (isSettedCity)
         {
-            if (amountResCom.CanCreateUnit(unitTypeForCreating, isMastSender, out bool[] haves))
+            if (amountResCom.CanCreateUnit(WhoseMoveCom.CurPlayer, unitTypeForCreating, out bool[] haves))
             {
-                amountResCom.BuyCreateUnit(unitTypeForCreating, isMastSender);
-                unitInventorCom.AddUnitsInInventor(unitTypeForCreating, isMastSender);
+                amountResCom.BuyCreateUnit(WhoseMoveCom.CurPlayer, unitTypeForCreating);
+                unitInventorCom.AddUnitsInInventor(WhoseMoveCom.CurPlayer, unitTypeForCreating);
 
                 RpcSys.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.SoundGoldPack);
             }

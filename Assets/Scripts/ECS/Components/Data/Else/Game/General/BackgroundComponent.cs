@@ -7,9 +7,9 @@ namespace Assets.Scripts.ECS.Component.Game
     {
         private GameObject _background_GO;
 
-        internal BackgroundComponent(GameObject background_GO)
+        internal BackgroundComponent(GameObject background_GO, bool isMaster)
         {
-            background_GO.transform.rotation = PhotonNetwork.IsMasterClient ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
+            background_GO.transform.rotation = isMaster ? new Quaternion(0, 0, 0, 0) : new Quaternion(0, 0, 180, 0);
             _background_GO = background_GO;
         }
     }

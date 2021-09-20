@@ -5,6 +5,7 @@ using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+using Assets.Scripts.Supports;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
@@ -18,12 +19,12 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
     private EcsFilter<XyCellComponent> _xyCellFilt = default;
     private EcsFilter<CellViewComponent> _cellViewFilt = default;
-    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerOfflineCom> _cellBuildFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
     private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
-    private EcsFilter<InventorResourcesComponent> _amountResFilt = default;
+    private EcsFilter<InventResourCom> _amountResFilt = default;
 
     public void Run()
     {
@@ -36,23 +37,16 @@ internal sealed class BuilderMastSys : IEcsRunSystem
         var forBuildType = forBuildMasCom.BuildingTypeForBuidling;
 
         ref var curBuildDatCom = ref _cellBuildFilter.Get1(idxForBuild);
-        ref var curOnBuildCom = ref _cellBuildFilter.Get2(idxForBuild);
-        ref var curOffBuildCom = ref _cellBuildFilter.Get3(idxForBuild);
+        ref var curOwnBuildCom = ref _cellBuildFilter.Get2(idxForBuild);
 
         ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForBuild);
         ref var curCellEnvCom = ref _cellEnvFilter.Get1(idxForBuild);
         ref var curFireCom = ref _cellFireFilter.Get1(idxForBuild);
 
 
-        var isMastMain = false;
-        if (PhotonNetwork.OfflineMode)
-        {
-            isMastMain = WhoseMoveCom.IsMainMove;
-        }
-        else
-        {
-            isMastMain = sender.IsMasterClient;
-        }
+        PlayerTypes playerType = default;
+        if (PhotonNetwork.OfflineMode) playerType = WhoseMoveCom.CurOfflinePlayer;
+        else playerType = sender.GetPlayerType();
 
 
         if (curBuildDatCom.HaveBuild)
@@ -90,19 +84,19 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
                             curBuildDatCom.BuildType = forBuildType;
 
-                            if (PhotonNetwork.OfflineMode)
-                            {
-                                curOffBuildCom.LocalPlayerType = WhoseMoveCom.PlayerType;
-                            }
-                            else
-                            {
-                                curOnBuildCom.Owner = sender;
-                            }
+                            //if (PhotonNetwork.OfflineMode)
+                            //{
+                            //    curOffBuildCom.LocalPlayerType = WhoseMoveCom.PlayerType;
+                            //}
+                            //else
+                            //{
+                            //    curOwnBuildCom.Owner = sender;
+                            //}
 
 
                             curUnitDatCom.ResetAmountSteps();
 
-                            curFireCom.DisFire();
+                            curFireCom.DisableFire();
 
                             if (curCellEnvCom.HaveEnvir(EnvirTypes.AdultForest)) curCellEnvCom.ResetEnvironment(EnvirTypes.AdultForest);
                             if (curCellEnvCom.HaveEnvir(EnvirTypes.Fertilizer)) curCellEnvCom.ResetEnvironment(EnvirTypes.Fertilizer);
@@ -127,7 +121,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                     {
                         if (!curCellEnvCom.HaveEnvir(EnvirTypes.AdultForest) && !curCellEnvCom.HaveEnvir(EnvirTypes.YoungForest))
                         {
-                            if (invResCom.CanCreateBuild(forBuildType, isMastMain, out bool[] haves))
+                            if (invResCom.CanCreateBuild(playerType, forBuildType, out bool[] haves))
                             {
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
@@ -141,18 +135,18 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                                     curCellEnvCom.SetNewEnvir(EnvirTypes.Fertilizer);
                                 }
 
-                                invResCom.BuyBuild(forBuildType, isMastMain);
+                                invResCom.BuyBuild(playerType , forBuildType);
 
                                 curBuildDatCom.BuildType = forBuildType;
 
-                                if (PhotonNetwork.OfflineMode)
-                                {
-                                    curOffBuildCom.LocalPlayerType = WhoseMoveCom.PlayerType;
-                                }
-                                else
-                                {
-                                    curOnBuildCom.Owner = sender;
-                                }
+                                //if (PhotonNetwork.OfflineMode)
+                                //{
+                                //    curOffBuildCom.LocalPlayerType = WhoseMoveCom.PlayerType;
+                                //}
+                                //else
+                                //{
+                                //    curOwnBuildCom.Owner = sender;
+                                //}
 
                                 curUnitDatCom.TakeAmountSteps();
 
@@ -183,24 +177,24 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                 case BuildingTypes.Mine:
                     if (curCellEnvCom.HaveEnvir(EnvirTypes.Hill) && curCellEnvCom.HaveResources(EnvirTypes.Hill))
                     {
-                        if (invResCom.CanCreateBuild(forBuildType, isMastMain, out bool[] haves))
+                        if (invResCom.CanCreateBuild(playerType , forBuildType, out bool[] haves))
                         {
                             if (curUnitDatCom.HaveMaxAmountSteps)
                             {
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                                invResCom.BuyBuild(forBuildType, isMastMain);
+                                invResCom.BuyBuild(playerType , forBuildType);
 
                                 curBuildDatCom.BuildType = forBuildType;
 
-                                if (PhotonNetwork.OfflineMode)
-                                {
-                                    curOffBuildCom.LocalPlayerType = WhoseMoveCom.PlayerType;
-                                }
-                                else
-                                {
-                                    curOnBuildCom.Owner = sender;
-                                }
+                                //if (PhotonNetwork.OfflineMode)
+                                //{
+                                //    curOffBuildCom.LocalPlayerType = WhoseMoveCom.PlayerType;
+                                //}
+                                //else
+                                //{
+                                //    curOwnBuildCom.Owner = sender;
+                                //}
 
                                 curUnitDatCom.ResetAmountSteps();
                             }

@@ -1,9 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General;
-using Assets.Scripts.ECS.Game.General.Components;
-using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -15,8 +12,8 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
         private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
         private EcsFilter<BuildAbilitUICom> _buildAbilUIFilt = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellBuildFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
 
         public void Init()
         {

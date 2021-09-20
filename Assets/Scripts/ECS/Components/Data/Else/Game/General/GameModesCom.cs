@@ -4,7 +4,15 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
 {
     internal struct GameModesCom
     {
-        internal static OffGameModes OffGameMode;
-        internal static bool IsGameMode(OffGameModes offGameMode) => OffGameMode == offGameMode;
+        internal static GameModes GameMode;
+        internal static bool IsGameMode(GameModes gameMode) => GameMode == gameMode;
+        internal static bool IsGameMode(GameModes[] gameModes)
+        {
+            foreach (var gameMode in gameModes) if (IsGameMode(gameMode)) return true;
+            return false;
+        }
+
+        internal static bool IsOffMode => IsGameMode(new[] { GameModes.TrainingOff, GameModes.WithFriendOff });
+        internal static bool IsOnMode => IsGameMode(new[] { GameModes.PublicOn, GameModes.WithFriendOn });
     }
 }

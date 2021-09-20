@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Workers;
 using Leopotam.Ecs;
 
@@ -17,8 +18,8 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
             ref var cellsForSetUnitComp = ref _cellsForSetUnitFilter.Get1(0);
 
 
-            cellsForSetUnitComp.ClearIdxCells(true);
-            cellsForSetUnitComp.ClearIdxCells(false);
+            cellsForSetUnitComp.ClearIdxCells(PlayerTypes.First);
+            cellsForSetUnitComp.ClearIdxCells(PlayerTypes.Second);
 
 
             foreach (byte curIdx in _xyCellFilter)
@@ -34,11 +35,11 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                 {
                     if (y < 3 && x > 2 && x < 12)
                     {
-                        cellsForSetUnitComp.AddIdxCell(true, curIdx);
+                        cellsForSetUnitComp.AddIdxCell(PlayerTypes.First, curIdx);
                     }
                     else if (y > 7 && x > 2 && x < 12)
                     {
-                        cellsForSetUnitComp.AddIdxCell(false, curIdx);
+                        cellsForSetUnitComp.AddIdxCell(PlayerTypes.Second, curIdx);
                     }
 
                 }

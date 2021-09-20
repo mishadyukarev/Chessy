@@ -101,9 +101,9 @@ namespace Assets.Scripts
             takerUnitDatCom.ResetCurTimer(unitType);
 
 
-            if (PhotonNetwork.OfflineMode)
+            if (GameModesCom.IsOffMode)
             {
-                if (invUnitCom.HaveUnitInInv(unitType, WhoseMoveCom.IsMainMove))
+                if (invUnitCom.HaveUnitInInv(WhoseMoveCom.CurOfflinePlayer, unitType))
                 {
                     selCom.SelUnitType = unitType;
                 }
@@ -117,7 +117,7 @@ namespace Assets.Scripts
             {
                 if (!IsDoned(PhotonNetwork.IsMasterClient))
                 {
-                    if (invUnitCom.HaveUnitInInv(unitType, PhotonNetwork.IsMasterClient))
+                    if (invUnitCom.HaveUnitInInv(WhoseMoveCom.CurOnlinePlayer, unitType))
                     {
                         selCom.SelUnitType = unitType;
                     }
@@ -136,18 +136,18 @@ namespace Assets.Scripts
 
         private void Done()
         {
-            var isMasterMain = false;
+            PlayerTypes curPlayer = default;
 
             if (PhotonNetwork.OfflineMode)
             {
-                isMasterMain = WhoseMoveCom.IsMainMove;
+                curPlayer = WhoseMoveCom.CurOfflinePlayer;
             }
             else
             {
-                isMasterMain = PhotonNetwork.IsMasterClient;
+                curPlayer = WhoseMoveCom.CurOnlinePlayer;
             }
 
-            if (!_invUnitsFilt.Get1(0).HaveUnitInInv(UnitTypes.King, isMasterMain))
+            if (!_invUnitsFilt.Get1(0).HaveUnitInInv(curPlayer, UnitTypes.King))
             {
                 RpcSys.DoneToMaster(); 
             }

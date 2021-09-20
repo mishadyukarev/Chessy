@@ -40,9 +40,9 @@ internal struct CellUnitDataCom
     }
 
 
-    private Dictionary<bool, bool> _isVisibleDict;
-    internal bool IsVisibleUnit(bool key) => _isVisibleDict[key];
-    internal void SetIsVisibleUnit(bool key, bool value) => _isVisibleDict[key] = value;
+    private Dictionary<PlayerTypes, bool> _isVisibleDict;
+    internal bool IsVisibleUnit(PlayerTypes key) => _isVisibleDict[key];
+    internal void SetIsVisibleUnit(PlayerTypes key, bool value) => _isVisibleDict[key] = value;
 
 
     internal CondUnitTypes CondUnitType { get; set; }
@@ -419,18 +419,21 @@ internal struct CellUnitDataCom
         CondUnitType = newCellUnitDataCom.CondUnitType;
     }
 
-    internal CellUnitDataCom(Dictionary<bool, bool> isVisibleDict) : this()
+    internal CellUnitDataCom(bool needNew) : this()
     {
-        _isVisibleDict = isVisibleDict;
+        if (needNew)
+        {
+            _isVisibleDict = new Dictionary<PlayerTypes, bool>();
 
-        _isVisibleDict.Add(true, default);
-        _isVisibleDict.Add(false, default);
+            _isVisibleDict.Add(PlayerTypes.First, default);
+            _isVisibleDict.Add(PlayerTypes.Second, default);
 
 
-        _amountStepsInCondition = new Dictionary<CondUnitTypes, int>();
-        _amountStepsInCondition.Add(CondUnitTypes.None, default);
-        _amountStepsInCondition.Add(CondUnitTypes.Protected, default);
-        _amountStepsInCondition.Add(CondUnitTypes.Relaxed, default);
+            _amountStepsInCondition = new Dictionary<CondUnitTypes, int>();
+            _amountStepsInCondition.Add(CondUnitTypes.None, default);
+            _amountStepsInCondition.Add(CondUnitTypes.Protected, default);
+            _amountStepsInCondition.Add(CondUnitTypes.Relaxed, default);
+        }
     }
 }
 

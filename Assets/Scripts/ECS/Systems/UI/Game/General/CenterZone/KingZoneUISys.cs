@@ -13,21 +13,12 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
         private EcsFilter<KingZoneViewUIComp> _kingZoneFilter = default;
         private EcsFilter<InventorUnitsComponent> _invUnitFil = default;
 
-        private EcsFilter<WhoseMoveCom> _whoseMoveFilt = default;
-
         public void Run()
         {
             ref var kingZoneViewCom = ref _kingZoneFilter.Get1(0);
 
 
-            var isMaster = false;
-
-            if (PhotonNetwork.OfflineMode) isMaster = WhoseMoveCom.IsMainMove;
-
-            else isMaster = PhotonNetwork.IsMasterClient;
-
-
-            if (_invUnitFil.Get1(0).HaveUnitInInv(UnitTypes.King, isMaster))
+            if (_invUnitFil.Get1(0).HaveUnitInInv(WhoseMoveCom.CurPlayer, UnitTypes.King))
             {
                 kingZoneViewCom.SetTextKingBut(LanguageComComp.GetText(GameLanguageTypes.SetKing));
                 kingZoneViewCom.EnableZone();

@@ -1,4 +1,6 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
@@ -11,12 +13,11 @@ using UnityEngine;
 internal sealed class TruceMasterSystem : IEcsRunSystem
 {
     private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
-    private EcsFilter<InventorWeaponsComp> _inventorWeapFilter = default;
-    private EcsFilter<MotionsDataUIComponent> _motionsUIFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
+    private EcsFilter<InventorTWCom> _invToolsFilt = default;
 
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
-    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
     private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
     private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
@@ -27,75 +28,62 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
 
         int random;
 
+
+        _invToolsFilt.Get1(0).SetAmountTools(PlayerTypes.First, ToolWeaponTypes.Pick, 0);
+        _invToolsFilt.Get1(0).SetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick, 0);
+
+        _invToolsFilt.Get1(0).SetAmountTools(PlayerTypes.First, ToolWeaponTypes.Sword, 0);
+        _invToolsFilt.Get1(0).SetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword, 0);
+
+        _invToolsFilt.Get1(0).SetAmountTools(PlayerTypes.First, ToolWeaponTypes.Crossbow, 0);
+        _invToolsFilt.Get1(0).SetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Crossbow, 0);
+
+
         foreach (byte curIdxCell in _xyCellFilter)
         {
             ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
-            ref var curOnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
-            ref var curOffUnitCom = ref _cellUnitFilter.Get3(curIdxCell);
+            ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
 
-            ref var curBuildDataCom = ref _cellBuildFilter.Get1(curIdxCell);
-
-            ref var curCellEnvDataCom = ref _cellEnvFilter.Get1(curIdxCell);
-
-            ref var curCellFireCom = ref _cellFireFilter.Get1(curIdxCell);
+            ref var curBuildDatCom = ref _cellBuildFilter.Get1(curIdxCell);
+            ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
+            ref var curFireCom = ref _cellFireFilter.Get1(curIdxCell);
 
 
-            curCellFireCom.HaveFire = false;
+            curFireCom.DisableFire();
 
             if (curUnitDatCom.HaveUnit)
             {
-                if (curOnUnitCom.HaveOwner)
+                if (curOwnUnitCom.IsPlayer)
                 {
-                    invUnitsCom.AddUnitsInInventor(curUnitDatCom.UnitType, curOnUnitCom.IsMasterClient);
-
-                    //if (curUnitDatCom.HaveArcherWeapon)
-                    //{
-                    //    _inventorWeapFilter.Get1(0).AddAmountWeapons(curOwnUnitDatCom.IsMasterClient, curUnitDatCom.ArcherWeaponType);
-                    //}
-
-                    //else if (curUnitDatCom.HaveExtraToolWeaponPawn)
-                    //{
-                    //    if(curUnitDatCom.ExtraTWPawnType != ToolWeaponTypes.Axe)
-                    //    {
-                    //        _inventorWeapFilter.Get1(0).AddAmountWeapons(curOwnUnitDatCom.IsMasterClient, curUnitDatCom.ExtraTWPawnType);
-                    //    }
-                    //}
-
-
-                    curUnitDatCom.ResetUnitType();
-                }
-
-                else if (curOffUnitCom.HaveLocalPlayer)
-                {
-                    invUnitsCom.AddUnitsInInventor(curUnitDatCom.UnitType, curOffUnitCom.IsMainMaster);
+                    invUnitsCom.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType);
 
                     curUnitDatCom.ResetUnitType();
                 }
             }
 
 
-            if (curBuildDataCom.HaveBuild)
+            if (curBuildDatCom.HaveBuild)
             {
 
             }
 
             else
             {
-                if (curCellEnvDataCom.HaveEnvir(EnvirTypes.YoungForest))
+                if (curEnvDatCom.HaveEnvir(EnvirTypes.YoungForest))
                 {
-                    curCellEnvDataCom.ResetEnvironment(EnvirTypes.YoungForest);
-                    curCellEnvDataCom.SetNewEnvir(EnvirTypes.AdultForest);
+                    curEnvDatCom.ResetEnvironment(EnvirTypes.YoungForest);
+                    curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
                 }
 
-                if (!curCellEnvDataCom.HaveEnvir(EnvirTypes.Fertilizer)
-                    && !curCellEnvDataCom.HaveEnvir(EnvirTypes.Mountain)
-                    && !curCellEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
+                if (!curEnvDatCom.HaveEnvir(EnvirTypes.Fertilizer)
+                    && !curEnvDatCom.HaveEnvir(EnvirTypes.Mountain)
+                    && !curEnvDatCom.HaveEnvir(EnvirTypes.AdultForest))
                 {
                     random = Random.Range(0, 100);
 
                     if (random <= 20)
                     {
-                        curCellEnvDataCom.SetNewEnvir(EnvirTypes.Fertilizer);
+                        curEnvDatCom.SetNewEnvir(EnvirTypes.Fertilizer);
                     }
                     else
                     {
@@ -103,7 +91,7 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
 
                         if (random <= 10)
                         {
-                            curCellEnvDataCom.SetNewEnvir(EnvirTypes.AdultForest);
+                            curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
                         }
                     }
                 }

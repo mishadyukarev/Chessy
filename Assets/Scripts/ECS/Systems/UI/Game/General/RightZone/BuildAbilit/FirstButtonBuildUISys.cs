@@ -11,7 +11,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
         private EcsFilter<SelectorCom> _selFilt = default;
         private EcsFilter<BuildAbilitUICom> _buildAbilUIFilt = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilt = default;
 
         public void Run()
         {
@@ -31,19 +31,10 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                 if (selUnitDatCom.IsUnit(UnitTypes.Pawn))
                 {
                     ref var selOnUnitCom = ref _cellUnitFilt.Get2(selCom.IdxSelCell);
-                    ref var selOffUnitCom = ref _cellUnitFilt.Get3(selCom.IdxSelCell);
 
-                    if (selOnUnitCom.HaveOwner)
+                    if (selOnUnitCom.IsPlayer)
                     {
-                        if (selOnUnitCom.IsMine)
-                        {
-                            needActiveButton = true;
-                        }
-                    }
-
-                    else if (selOffUnitCom.HaveLocalPlayer)
-                    {
-                        if (selOffUnitCom.IsMine)
+                        if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
                         {
                             needActiveButton = true;
                         }

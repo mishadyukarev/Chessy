@@ -5,14 +5,13 @@ using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
-using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using Photon.Pun;
 
 internal sealed class SelectorSystem : IEcsRunSystem
 {
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
-    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvironDataFilter = default;
 
     private EcsFilter<SelectorCom> _selectorFilter = default;
@@ -28,11 +27,9 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
     public void Run()
     {
-        CellUnitDataCom CellUnitDataCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
-        OwnerOnlineComp OwnerCellUnitCom(byte idxCell) => _cellUnitFilter.Get2(idxCell);
-        OwnerOfflineCom OffUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
-        OwnerBotComponent OwnerBotCellUnitCom(byte idxCell) => _cellUnitFilter.Get4(idxCell);
-        CellEnvironDataCom CellEnvironDataCom(byte idxCell) => _cellEnvironDataFilter.Get1(idxCell);
+        CellUnitDataCom UnitDatCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
+        OwnerCom OwnUnitCom(byte idxCell) => _cellUnitFilter.Get2(idxCell);
+        CellEnvironDataCom EnvDatCom(byte idxCell) => _cellEnvironDataFilter.Get1(idxCell);
 
 
 
@@ -95,7 +92,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                 else if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
                 {
-                    if (CellUnitDataCom(selCom.IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
+                    if (UnitDatCom(selCom.IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
                     {
                         RpcSys.GiveTakeToolWeapon(selCom.ToolWeaponTypeForGiveTake, selCom.IdxCurCell);
                     }
@@ -113,63 +110,36 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                     selCom.IdxSelCell = selCom.IdxCurCell;
 
-
-                    var isMainMove = false;
-
-                    if (PhotonNetwork.OfflineMode)
-                    {
-                        isMainMove = WhoseMoveCom.IsMainMove;
-                    }
-                    else
-                    {
-                        isMainMove = PhotonNetwork.IsMasterClient;
-                    }
-
-                    var b1 = cellsAttackCom.FindByIdx(AttackTypes.Simple, isMainMove, selCom.IdxPreCell, selCom.IdxSelCell);
-                    var b2 = cellsAttackCom.FindByIdx(AttackTypes.Unique, isMainMove, selCom.IdxPreCell, selCom.IdxSelCell);
+                    var b1 = cellsAttackCom.FindByIdx(WhoseMoveCom.CurPlayer, AttackTypes.Simple,  selCom.IdxPreCell, selCom.IdxSelCell);
+                    var b2 = cellsAttackCom.FindByIdx(WhoseMoveCom.CurPlayer, AttackTypes.Unique, selCom.IdxPreCell, selCom.IdxSelCell);
 
                     if (b1 || b2)
                     {
                         RpcSys.AttackUnitToMaster(selCom.IdxPreCell, selCom.IdxSelCell);
                     }
 
-                    if (cellsShiftCom.HaveIdxCell(isMainMove, selCom.IdxPreCell, selCom.IdxSelCell))
+                    if (cellsShiftCom.HaveIdxCell(WhoseMoveCom.CurPlayer, selCom.IdxPreCell, selCom.IdxSelCell))
                     {
                         RpcSys.ShiftUnitToMaster(selCom.IdxPreCell, selCom.IdxSelCell);
                     }
 
-                    else if (CellUnitDataCom(selCom.IdxSelCell).HaveUnit)
-                    {
-                        if (OwnerCellUnitCom(selCom.IdxSelCell).HaveOwner)
-                        {
-                            if (OwnerCellUnitCom(selCom.IdxSelCell).IsMine)
-                            {
-                                if (CellUnitDataCom(selCom.IdxSelCell).IsMelee)
-                                {
-                                    soundEffectCom.Play(SoundEffectTypes.PickMelee);
-                                }
-                                else
-                                {
-                                    soundEffectCom.Play(SoundEffectTypes.PickArcher);
-                                }
-                            }
-                        }
-
-                        else if (OffUnitCom(selCom.IdxSelCell).HaveLocalPlayer)
-                        {
-                            if (OffUnitCom(selCom.IdxSelCell).IsMine)
-                            {
-                                if (CellUnitDataCom(selCom.IdxSelCell).IsMelee)
-                                {
-                                    soundEffectCom.Play(SoundEffectTypes.PickMelee);
-                                }
-                                else
-                                {
-                                    soundEffectCom.Play(SoundEffectTypes.PickArcher);
-                                }
-                            }
-                        }
-                    }
+                    //else if (UnitDatCom(selCom.IdxSelCell).HaveUnit)
+                    //{
+                    //    if (OwnUnitCom(selCom.IdxSelCell).IsPlayer)
+                    //    {
+                    //        if (OwnUnitCom(selCom.IdxSelCell).IsMine)
+                    //        {
+                    //            if (UnitDatCom(selCom.IdxSelCell).IsMelee)
+                    //            {
+                    //                soundEffectCom.Play(SoundEffectTypes.PickMelee);
+                    //            }
+                    //            else
+                    //            {
+                    //                soundEffectCom.Play(SoundEffectTypes.PickArcher);
+                    //            }
+                    //        }
+                    //    }
+                    //}
                 }
 
                 else
@@ -183,39 +153,25 @@ internal sealed class SelectorSystem : IEcsRunSystem
                         selCom.DefSelectedCell();
                     }
 
-                    if (CellUnitDataCom(selCom.IdxSelCell).HaveUnit)
-                    {
-                        if (OwnerCellUnitCom(selCom.IdxSelCell).HaveOwner)
-                        {
-                            if (OwnerCellUnitCom(selCom.IdxSelCell).IsMine)
-                            {
-                                if (CellUnitDataCom(selCom.IdxSelCell).IsMelee)
-                                {
-                                    soundEffectCom.Play(SoundEffectTypes.PickMelee);
-                                }
-                                else
-                                {
-                                    soundEffectCom.Play(SoundEffectTypes.PickArcher);
-                                }
-                            }
-                        }
-                        else if (OffUnitCom(selCom.IdxSelCell).HaveLocalPlayer)
-                        {
-                            if (OffUnitCom(selCom.IdxSelCell).IsMine)
-                            {
-                                if (CellUnitDataCom(selCom.IdxSelCell).IsMelee)
-                                {
-                                    soundEffectCom.Play(SoundEffectTypes.PickMelee);
-                                }
-                                else
-                                {
-                                    soundEffectCom.Play(SoundEffectTypes.PickArcher);
-                                }
-                            }
-                        }
-                    }
+                    //if (UnitDatCom(selCom.IdxSelCell).HaveUnit)
+                    //{
+                    //    if (OwnUnitCom(selCom.IdxSelCell).IsPlayer)
+                    //    {
+                    //        if (OwnUnitCom(selCom.IdxSelCell).IsMine)
+                    //        {
+                    //            if (UnitDatCom(selCom.IdxSelCell).IsMelee)
+                    //            {
+                    //                soundEffectCom.Play(SoundEffectTypes.PickMelee);
+                    //            }
+                    //            else
+                    //            {
+                    //                soundEffectCom.Play(SoundEffectTypes.PickArcher);
+                    //            }
+                    //        }
+                    //    }
+                    //}
 
-                    
+
 
                     selCom.IdxPreCell = selCom.IdxSelCell;
                 }
@@ -241,7 +197,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
             {
                 if (selCom.IsSelectedUnit)
                 {
-                    if (!CellUnitDataCom(selCom.IdxCurCell).HaveUnit || !CellUnitDataCom(selCom.IdxCurCell).IsVisibleUnit(PhotonNetwork.IsMasterClient))
+                    if (!UnitDatCom(selCom.IdxCurCell).HaveUnit || !UnitDatCom(selCom.IdxCurCell).IsVisibleUnit(WhoseMoveCom.CurPlayer))
                     {
                         if (selCom.IsStartDirectToCell)
                         {

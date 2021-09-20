@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -9,7 +8,7 @@ internal sealed class RightZoneUISys : IEcsRunSystem
     private EcsFilter<SelectorCom> _selFilt = default;
     private EcsFilter<StatZoneViewUICom> _unitZoneFilter = default;
 
-    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
 
     public void Run()
@@ -24,13 +23,9 @@ internal sealed class RightZoneUISys : IEcsRunSystem
 
         if (_selFilt.Get1(0).IsSelectedCell)
         {
-            var isMaster = false;
-            if (PhotonNetwork.OfflineMode) isMaster = WhoseMoveCom.IsMainMove;
-            else isMaster = PhotonNetwork.IsMasterClient;
-
             if (selUnitDatCom.HaveUnit)
             {
-                if (selUnitDatCom.IsVisibleUnit(isMaster))
+                if (selUnitDatCom.IsVisibleUnit(WhoseMoveCom.CurPlayer))
                 {
                     activeParent = true;
                 }

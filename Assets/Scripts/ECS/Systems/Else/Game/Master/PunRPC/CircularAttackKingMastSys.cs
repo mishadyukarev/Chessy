@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.Supports;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
@@ -13,7 +14,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
         private EcsFilter<ForCircularAttackMasCom> _forCircAttackFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
         private EcsFilter<EndGameDataUIComponent> _endGameDataUIFilter = default;
 
@@ -46,10 +47,10 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
                             {
                                 _endGameDataUIFilter.Get1(0).IsEndGame = true;
 
-                                if (_cellUnitFilter.Get2(idxCurDirect).HaveOwner)
+                                if (_cellUnitFilter.Get2(idxCurDirect).IsPlayer)
                                 {
                                     _endGameDataUIFilter.Get1(0).IsOwnerWinner = true;
-                                    _endGameDataUIFilter.Get1(0).PlayerWinner = starOwnUnitCom.Owner;
+                                    _endGameDataUIFilter.Get1(0).PlayerWinner = starOwnUnitCom.PlayerType.GetPlayerType();
                                 }
 
                                 else

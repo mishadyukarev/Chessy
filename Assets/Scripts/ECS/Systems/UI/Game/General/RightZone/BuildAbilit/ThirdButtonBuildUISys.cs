@@ -2,7 +2,6 @@
 using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General;
-using Assets.Scripts.ECS.Game.General.Components;
 using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
@@ -12,8 +11,8 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
         private EcsFilter<SelectorCom> _selFilt = default;
         private EcsFilter<BuildAbilitUICom> _buildAbilViewCom = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellBuildFilt = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilt = default;
 
         public void Run()
         {
@@ -24,14 +23,10 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                 var idxSelCell = _selFilt.Get1(0).IdxSelCell;
 
                 ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
-                ref var selOnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
-                ref var selOffUnitCom = ref _cellUnitFilter.Get3(idxSelCell);
-                ref var selBotUnitCom = ref _cellUnitFilter.Get4(idxSelCell);
+                ref var selOwnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
 
                 ref var selBuildDatCom = ref _cellBuildFilt.Get1(idxSelCell);
-                ref var selOnBuildCom = ref _cellBuildFilt.Get2(idxSelCell);
-                ref var selOffBuildCom = ref _cellBuildFilt.Get3(idxSelCell);
-                ref var selBotBuildCom = ref _cellBuildFilt.Get4(idxSelCell);
+                ref var selOwnBuildCom = ref _cellBuildFilt.Get2(idxSelCell);
 
                 ref var buildAbilUICom = ref _buildAbilViewCom.Get1(0);
 
@@ -40,15 +35,15 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
 
                 if (selUnitDatCom.IsUnit(UnitTypes.Pawn))
                 {
-                    if (selOnUnitCom.HaveOwner)
+                    if (selOwnUnitCom.IsPlayer)
                     {
-                        if (selOnUnitCom.IsMine)
+                        if (selOwnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
                         {
                             if (selBuildDatCom.IsBuildType(BuildingTypes.City))
                             {
-                                if (selOnBuildCom.HaveOwner)
+                                if (selOwnBuildCom.IsPlayer)
                                 {
-                                    if (!selOnBuildCom.IsMine)
+                                    if (!selOwnBuildCom.IsPlayerType(WhoseMoveCom.CurPlayer))
                                     {
                                         buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
                                         needActiveThirdButt = true;
@@ -63,14 +58,13 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                                 foreach (var idxCell in _cellBuildFilt)
                                 {
                                     ref var curBuildDatCom = ref _cellBuildFilt.Get1(idxCell);
-                                    ref var curOnBuildCom = ref _cellBuildFilt.Get2(idxCell);
-                                    ref var curOffBuildCom = ref _cellBuildFilt.Get3(idxCell);
+                                    ref var curOwnBuildCom = ref _cellBuildFilt.Get2(idxCell);
 
                                     if (curBuildDatCom.IsBuildType(BuildingTypes.City))
                                     {
-                                        if (curOnBuildCom.HaveOwner)
+                                        if (curOwnBuildCom.IsPlayer)
                                         {
-                                            if (curOnBuildCom.IsMine)
+                                            if (curOwnBuildCom.IsPlayerType(WhoseMoveCom.CurPlayer))
                                             {
                                                 buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.BuildCity));
                                                 isSettedMyCity = true;
@@ -91,58 +85,6 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                             }
                         }
                     }
-
-                    else if (selOffUnitCom.HaveLocalPlayer)
-                    {
-                        if (selOffUnitCom.IsMine)
-                        {
-                            if (selBuildDatCom.IsBuildType(BuildingTypes.City))
-                            { 
-                                if (selOffBuildCom.HaveLocalPlayer)
-                                {
-                                    if (!selOffBuildCom.IsMine)
-                                    {
-                                        buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
-                                        needActiveThirdButt = true;
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                var isSettedMyCity = false;
-
-                                foreach (var idxCell in _cellBuildFilt)
-                                {
-                                    ref var curBuildDatCom = ref _cellBuildFilt.Get1(idxCell);
-                                    ref var curOnBuildCom = ref _cellBuildFilt.Get2(idxCell);
-                                    ref var curOffBuildCom = ref _cellBuildFilt.Get3(idxCell);
-
-                                    if (curBuildDatCom.IsBuildType(BuildingTypes.City))
-                                    {
-                                        if (curOffBuildCom.HaveLocalPlayer)
-                                        {
-                                            if (curOffBuildCom.IsMainMaster == WhoseMoveCom.IsMainMove)
-                                            {
-                                                buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.BuildCity));
-                                                isSettedMyCity = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-                                if (isSettedMyCity)
-                                {
-                                    needActiveThirdButt = false;
-                                }
-                                else
-                                {
-                                    needActiveThirdButt = true;
-                                }
-                            }
-                        }
-                    }
-
-                   
                 }
 
                 buildAbilUICom.SetActive_Button(BuildButtonTypes.Third, needActiveThirdButt);

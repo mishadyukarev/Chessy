@@ -6,7 +6,7 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General
 {
     internal struct SoundEffectsComp
     {
-        Dictionary<SoundEffectTypes, AudioSource> _soundEffect_AudSources;
+        private Dictionary<SoundEffectTypes, AudioSource> _soundEffect_AudSources;
 
         internal SoundEffectsComp(GameObject audioSourceParent_GO)
         {

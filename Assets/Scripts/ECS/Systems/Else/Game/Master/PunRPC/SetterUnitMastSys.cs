@@ -7,8 +7,8 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+using Assets.Scripts.Supports;
 using Leopotam.Ecs;
-using Photon.Pun;
 using System;
 
 internal sealed class SetterUnitMastSys : IEcsRunSystem
@@ -20,7 +20,7 @@ internal sealed class SetterUnitMastSys : IEcsRunSystem
     private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
 
     private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
-    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
     private EcsFilter<SoundEffectsComp> _soundEffFilter = default;
 
@@ -34,23 +34,16 @@ internal sealed class SetterUnitMastSys : IEcsRunSystem
 
         ref var curEnvDatCom = ref _cellEnvirDataFilter.Get1(idxForSet);
         ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForSet);
-        ref var curOnUnitCom = ref _cellUnitFilter.Get2(idxForSet);
-        ref var curOffUnitCom = ref _cellUnitFilter.Get3(idxForSet);
+        ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxForSet);
 
 
-        var isMaster = false;
+        PlayerTypes playerSender = default;
 
-        if (PhotonNetwork.OfflineMode)
-        {
-            isMaster = WhoseMoveCom.IsMainMove;
-        }
-        else
-        {
-            isMaster = sender.IsMasterClient;
-        }
+        if(GameModesCom.IsOffMode) playerSender = WhoseMoveCom.CurOfflinePlayer;
+        else playerSender = WhoseMoveCom.CurOnlinePlayer;
 
 
-        if (_cellsSetUnitFilter.Get1(0).HaveIdxCell(isMaster, idxForSet))
+        if (_cellsSetUnitFilter.Get1(0).HaveIdxCell(playerSender, idxForSet))
         {
             int newAmountHealth;
             int newAmountSteps;
@@ -92,22 +85,12 @@ internal sealed class SetterUnitMastSys : IEcsRunSystem
             curUnitDatCom.AmountHealth = newAmountHealth;
             curUnitDatCom.AmountSteps = newAmountSteps;
             curUnitDatCom.CondUnitType = default;
-
-            if (PhotonNetwork.OfflineMode)
-            {
-                curOffUnitCom.IsMainMaster = isMaster;
-
-                _soundEffFilter.Get1(0).Play(SoundEffectTypes.ClickToTable);
-            }
-            else
-            {
-                curOnUnitCom.SetOwner(sender);
-
-                RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-            }
+            curOwnUnitCom.PlayerType = playerSender;
 
 
-            unitInvCom.TakeUnitsInInv(unitTypeForSet, isMaster);
+            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+
+            unitInvCom.TakeUnitsInInv(playerSender, unitTypeForSet);
         }
     }
 }

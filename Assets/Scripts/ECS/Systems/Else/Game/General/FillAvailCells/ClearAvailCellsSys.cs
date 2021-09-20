@@ -17,13 +17,13 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Cell
 
             foreach (byte curIdxCell in _xyCellFilter)
             {
-                availCellsForAttackComp.Clear(AttackTypes.Simple, true, curIdxCell);
-                availCellsForAttackComp.Clear(AttackTypes.Simple, false, curIdxCell);
-                availCellsForAttackComp.Clear(AttackTypes.Unique, true, curIdxCell);
-                availCellsForAttackComp.Clear(AttackTypes.Unique, false, curIdxCell);
+                availCellsForAttackComp.Clear(PlayerTypes.First, AttackTypes.Simple, curIdxCell);
+                availCellsForAttackComp.Clear(PlayerTypes.Second, AttackTypes.Simple, curIdxCell);
+                availCellsForAttackComp.Clear(PlayerTypes.First, AttackTypes.Unique, curIdxCell);
+                availCellsForAttackComp.Clear(PlayerTypes.Second, AttackTypes.Unique, curIdxCell);
 
-                _cellsArsonFilter.Get1(0).Clear(true, curIdxCell);
-                _cellsArsonFilter.Get1(0).Clear(false, curIdxCell);
+                _cellsArsonFilter.Get1(0).Clear(PlayerTypes.First, curIdxCell);
+                _cellsArsonFilter.Get1(0).Clear(PlayerTypes.Second, curIdxCell);
             }
         }
     }

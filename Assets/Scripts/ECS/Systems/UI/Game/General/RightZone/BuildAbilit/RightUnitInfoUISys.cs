@@ -14,7 +14,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
         private EcsFilter<CondUnitUICom> _condUnitUIFilt = default;
         private EcsFilter<UniqueAbiltUICom> _uniqueAbilUIFilt = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilt = default;
 
         public void Run()
         {
@@ -33,24 +33,15 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
 
                 if (selUnitDatCom.HaveUnit)
                 {
-                    ref var selOnUnitCom = ref _cellUnitFilt.Get2(selCom.IdxSelCell);
-                    ref var selOffUnitCom = ref _cellUnitFilt.Get3(selCom.IdxSelCell);
+                    ref var selOwnUnitCom = ref _cellUnitFilt.Get2(selCom.IdxSelCell);
 
                     condUnitUICom.SetText_Info(LanguageComComp.GetText(GameLanguageTypes.ConditAbilities));
                     uniqueAbilUICom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.UniqueAbilities));
                     buildAbilUICom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.BuildingAbilities));
 
-                    if (selOnUnitCom.HaveOwner)
+                    if (selOwnUnitCom.IsPlayer)
                     {
-                        if (selOnUnitCom.IsMine)
-                        {
-                            needActiveInfoText = true;
-                        }
-                    }
-
-                    else if (selOffUnitCom.HaveLocalPlayer)
-                    {
-                        if (selOffUnitCom.IsMine)
+                        if (selOwnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
                         {
                             needActiveInfoText = true;
                         }

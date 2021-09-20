@@ -6,6 +6,7 @@ using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
+using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
 
     private Dictionary<bool, bool> _doneOrNotFromStartAnyUpdate = new Dictionary<bool, bool>();
 
-    private bool _isMasterMotion = true;
+    private PlayerTypes _playerMotion = PlayerTypes.First;
 
     public void Init()
     {
@@ -46,38 +47,38 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
 
         if (PhotonNetwork.OfflineMode)
         {
-            if (GameModesCom.IsGameMode(OffGameModes.Training))
+            if (GameModesCom.IsGameMode(GameModes.TrainingOff))
             {
                 RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.MasterClient);
                 GameMasterSystemManager.UpdateMotion.Run();
             }
 
-            else if (GameModesCom.IsGameMode(OffGameModes.WithFriend))
+            else if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
             {
                 _friendUIFilt.Get1(0).IsActiveFriendZone = true;
 
-                if (_isMasterMotion)
+                if (_playerMotion == PlayerTypes.First)
                 {
-                    _isMasterMotion = !_isMasterMotion;
+                    _playerMotion = PlayerTypes.Second;
 
-                    CameraComComp.SetPosRotClient(_isMasterMotion);
+                    CameraComComp.SetPosRotClient(false);
 
-                    WhoseMoveCom.IsMainMove = _isMasterMotion;
+                    WhoseMoveCom.CurOfflinePlayer = _playerMotion;
 
                     foreach (byte curIdxCell in _cellViewFilter)
-                        _cellViewFilter.Get1(curIdxCell).SetRotForClient(_isMasterMotion);
+                        _cellViewFilter.Get1(curIdxCell).SetRotForClient(false);
 
                 }
                 else
                 {
-                    _isMasterMotion = !_isMasterMotion;
+                    _playerMotion = PlayerTypes.First;
 
-                    CameraComComp.SetPosRotClient(_isMasterMotion);
+                    CameraComComp.SetPosRotClient(true);
 
-                    WhoseMoveCom.IsMainMove = _isMasterMotion;
+                    WhoseMoveCom.CurOfflinePlayer = _playerMotion;
 
                     foreach (byte curIdxCell in _cellViewFilter)
-                        _cellViewFilter.Get1(curIdxCell).SetRotForClient(_isMasterMotion);
+                        _cellViewFilter.Get1(curIdxCell).SetRotForClient(true);
 
                     GameMasterSystemManager.UpdateMotion.Run();
                     RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.MasterClient);
@@ -91,7 +92,7 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
         }
         else
         {
-            if (!_invUnitsFilter.Get1(0).HaveUnitInInv(UnitTypes.King, sender.IsMasterClient))
+            if (!_invUnitsFilter.Get1(0).HaveUnitInInv(sender.GetPlayerType(), UnitTypes.King))
             {
                 donerDataUICom.SetDoned(sender.IsMasterClient, true);
                 _doneOrNotFromStartAnyUpdate[sender.IsMasterClient] = false;

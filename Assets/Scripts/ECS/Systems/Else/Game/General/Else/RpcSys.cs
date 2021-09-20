@@ -9,6 +9,7 @@ using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.Game.Other;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.View.Else.Game.General;
 using Assets.Scripts.ECS.Game.Components;
 using ExitGames.Client.Photon;
@@ -23,19 +24,18 @@ namespace Assets.Scripts
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerOnlineComp> _cellBuildFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvrFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
-        private EcsFilter<InventorResourcesComponent> _inventorResFilter = default;
+        private EcsFilter<InventResourCom> _inventorResFilter = default;
         private EcsFilter<InventorUnitsComponent> _invUnitsFilter = default;
-        private EcsFilter<InventorToolsComp> _invToolsFilter = default;
-        private EcsFilter<InventorWeaponsComp> _invWeaponsFilter = default;
+        private EcsFilter<InventorTWCom> _invToolsFilter = default;
 
         private EcsFilter<FromInfoComponent> _fromInfoFilter = default;
         private EcsFilter<SelectorCom> _selectorFilter = default;
-        private EcsFilter<UpgradesBuildingsComponent> _upgradesBuildFilter = default;
+        private EcsFilter<UpgradesBuildsCom> _upgradesBuildFilter = default;
         private EcsFilter<EndGameDataUIComponent> _endGameFilter = default;
         private EcsFilter<ReadyDataUICom> _readyUIFilter = default;
         private EcsFilter<MotionsDataUIComponent> _motionsFilter = default;
@@ -343,77 +343,61 @@ namespace Assets.Scripts
 
             foreach (var curIdxCell in _cellUnitFilter)
             {
-                ref var curCellUnitDataComp = ref _cellUnitFilter.Get1(curIdxCell);
-                listObjects.Add(curCellUnitDataComp.UnitType);
-                listObjects.Add(curCellUnitDataComp.AmountHealth);
-                listObjects.Add(curCellUnitDataComp.AmountSteps);
-                listObjects.Add(curCellUnitDataComp.CondUnitType);
-                listObjects.Add(curCellUnitDataComp.ArcherWeapType);
-                listObjects.Add(curCellUnitDataComp.ExtraTWPawnType);
+                ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
+                listObjects.Add(curUnitDatCom.UnitType);
+                listObjects.Add(curUnitDatCom.AmountHealth);
+                listObjects.Add(curUnitDatCom.AmountSteps);
+                listObjects.Add(curUnitDatCom.CondUnitType);
+                listObjects.Add(curUnitDatCom.ArcherWeapType);
+                listObjects.Add(curUnitDatCom.ExtraTWPawnType);
 
-                ref var curOwnerCellUnitComp = ref _cellUnitFilter.Get2(curIdxCell);
-                var haveOwner = curOwnerCellUnitComp.HaveOwner;
-                listObjects.Add(haveOwner);
-                if (haveOwner) listObjects.Add(curOwnerCellUnitComp.ActorNumber);
+                listObjects.Add(_cellUnitFilter.Get2(curIdxCell).PlayerType);
 
 
-
-                ref var curBuildDataComp = ref _cellBuildFilter.Get1(curIdxCell);
-                listObjects.Add(curBuildDataComp.BuildType);
-
-                ref var curOwnerBuildComp = ref _cellBuildFilter.Get2(curIdxCell);
-                var haveOwnerBuild = curOwnerBuildComp.HaveOwner;
-                listObjects.Add(haveOwnerBuild);
-                if (haveOwnerBuild) listObjects.Add(curOwnerBuildComp.ActorNumber);
+                listObjects.Add(_cellBuildFilter.Get1(curIdxCell).BuildType);
+                listObjects.Add(_cellBuildFilter.Get2(curIdxCell).PlayerType);
 
 
+                ref var curEnvDatCom = ref _cellEnvrFilter.Get1(curIdxCell);
+                listObjects.Add(curEnvDatCom.HaveEnvir(EnvirTypes.Fertilizer));
+                listObjects.Add(curEnvDatCom.HaveEnvir(EnvirTypes.YoungForest));
+                listObjects.Add(curEnvDatCom.HaveEnvir(EnvirTypes.AdultForest));
+                listObjects.Add(curEnvDatCom.HaveEnvir(EnvirTypes.Hill));
+                listObjects.Add(curEnvDatCom.HaveEnvir(EnvirTypes.Mountain));
 
-                ref var curCellEnvDataComp = ref _cellEnvrFilter.Get1(curIdxCell);
-                listObjects.Add(curCellEnvDataComp.HaveEnvir(EnvirTypes.Fertilizer));
-                listObjects.Add(curCellEnvDataComp.HaveEnvir(EnvirTypes.YoungForest));
-                listObjects.Add(curCellEnvDataComp.HaveEnvir(EnvirTypes.AdultForest));
-                listObjects.Add(curCellEnvDataComp.HaveEnvir(EnvirTypes.Hill));
-                listObjects.Add(curCellEnvDataComp.HaveEnvir(EnvirTypes.Mountain));
-
-                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvirTypes.Fertilizer));
-                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvirTypes.YoungForest));
-                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvirTypes.AdultForest));
-                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvirTypes.Hill));
-                listObjects.Add(curCellEnvDataComp.GetAmountResources(EnvirTypes.Mountain));
-
+                listObjects.Add(curEnvDatCom.GetAmountResources(EnvirTypes.Fertilizer));
+                listObjects.Add(curEnvDatCom.GetAmountResources(EnvirTypes.YoungForest));
+                listObjects.Add(curEnvDatCom.GetAmountResources(EnvirTypes.AdultForest));
+                listObjects.Add(curEnvDatCom.GetAmountResources(EnvirTypes.Hill));
+                listObjects.Add(curEnvDatCom.GetAmountResources(EnvirTypes.Mountain));
 
 
-                ref var cellFireDataComp = ref _cellFireFilter.Get1(curIdxCell);
-                listObjects.Add(cellFireDataComp.HaveFire);
+                listObjects.Add(_cellFireFilter.Get1(curIdxCell).HaveFire);
             }
 
 
 
             ref var inventResComp = ref _inventorResFilter.Get1(0);
-            listObjects.Add(inventResComp.AmountResources(ResourceTypes.Food, false));
-            listObjects.Add(inventResComp.AmountResources(ResourceTypes.Wood, false));
-            listObjects.Add(inventResComp.AmountResources(ResourceTypes.Ore, false));
-            listObjects.Add(inventResComp.AmountResources(ResourceTypes.Iron, false));
-            listObjects.Add(inventResComp.AmountResources(ResourceTypes.Gold, false));
+            listObjects.Add(inventResComp.AmountResources(PlayerTypes.Second, ResourceTypes.Food));
+            listObjects.Add(inventResComp.AmountResources(PlayerTypes.Second, ResourceTypes.Wood));
+            listObjects.Add(inventResComp.AmountResources(PlayerTypes.Second, ResourceTypes.Ore));
+            listObjects.Add(inventResComp.AmountResources(PlayerTypes.Second, ResourceTypes.Iron));
+            listObjects.Add(inventResComp.AmountResources(PlayerTypes.Second, ResourceTypes.Gold));
 
 
 
             ref var invUnitsComp = ref _invUnitsFilter.Get1(0);
-            listObjects.Add(invUnitsComp.AmountUnitsInInv(UnitTypes.King, false));
-            listObjects.Add(invUnitsComp.AmountUnitsInInv(UnitTypes.Pawn, false));
-            listObjects.Add(invUnitsComp.AmountUnitsInInv(UnitTypes.Rook, false));
-            listObjects.Add(invUnitsComp.AmountUnitsInInv(UnitTypes.Bishop, false));
+            listObjects.Add(invUnitsComp.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.King));
+            listObjects.Add(invUnitsComp.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Pawn));
+            listObjects.Add(invUnitsComp.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Rook));
+            listObjects.Add(invUnitsComp.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Bishop));
 
 
 
             ref var invToolsComp = ref _invToolsFilter.Get1(0);
-            listObjects.Add(invToolsComp.GetAmountTools(false, ToolTypes.Pick));
-
-
-
-            ref var invWeapsComp = ref _invWeaponsFilter.Get1(0);
-            listObjects.Add(invWeapsComp.GetAmountWeapons(false, WeaponTypes.Sword));
-            listObjects.Add(invWeapsComp.GetAmountWeapons(false, WeaponTypes.Crossbow));
+            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick));
+            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword));
+            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Crossbow));
 
 
             #region Else
@@ -544,238 +528,63 @@ namespace Assets.Scripts
 
             foreach (var curIdxCell in _cellUnitFilter)
             {
-                ref var curCellUnitDataComp = ref _cellUnitFilter.Get1(curIdxCell);
-                curCellUnitDataComp.UnitType = (UnitTypes)objects[_curNumber++];
-                curCellUnitDataComp.AmountHealth = (int)objects[_curNumber++];
-                curCellUnitDataComp.AmountSteps = (int)objects[_curNumber++];
-                curCellUnitDataComp.CondUnitType = (CondUnitTypes)objects[_curNumber++];
-                curCellUnitDataComp.ArcherWeapType = (ToolWeaponTypes)objects[_curNumber++];
-                curCellUnitDataComp.ExtraTWPawnType = (ToolWeaponTypes)objects[_curNumber++];
-
-                ref var curOwnerCellUnitComp = ref _cellUnitFilter.Get2(curIdxCell);
-                var haveOwner = (bool)objects[_curNumber++];
-                if (haveOwner) curOwnerCellUnitComp.SetOwner(PhotonNetwork.PlayerList[(int)objects[_curNumber++] - 1]);
+                ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
+                curUnitDatCom.UnitType = (UnitTypes)objects[_curNumber++];
+                curUnitDatCom.AmountHealth = (int)objects[_curNumber++];
+                curUnitDatCom.AmountSteps = (int)objects[_curNumber++];
+                curUnitDatCom.CondUnitType = (CondUnitTypes)objects[_curNumber++];
+                curUnitDatCom.ArcherWeapType = (ToolWeaponTypes)objects[_curNumber++];
+                curUnitDatCom.ExtraTWPawnType = (ToolWeaponTypes)objects[_curNumber++];
+                _cellUnitFilter.Get2(curIdxCell).PlayerType = (PlayerTypes)objects[_curNumber++];
 
 
-
-                ref var curCellBuildDataComp = ref _cellBuildFilter.Get1(curIdxCell);
-                curCellBuildDataComp.BuildType = (BuildingTypes)objects[_curNumber++];
-
-                ref var curOwnerCellBuildComp = ref _cellBuildFilter.Get2(curIdxCell);
-                var haveOwnerBuild = (bool)objects[_curNumber++];
-                if (haveOwnerBuild) curOwnerCellBuildComp.SetOwner(PhotonNetwork.PlayerList[(int)objects[_curNumber++] - 1]);
+                _cellBuildFilter.Get1(curIdxCell).BuildType = (BuildingTypes)objects[_curNumber++];
+                _cellBuildFilter.Get2(curIdxCell).PlayerType = (PlayerTypes)objects[_curNumber++];
 
 
 
-                ref var curCellEnvrDataComp = ref _cellEnvrFilter.Get1(curIdxCell);
-                curCellEnvrDataComp.SetHaveEnvironment(EnvirTypes.Fertilizer, (bool)objects[_curNumber++]);
-                curCellEnvrDataComp.SetHaveEnvironment(EnvirTypes.YoungForest, (bool)objects[_curNumber++]);
-                curCellEnvrDataComp.SetHaveEnvironment(EnvirTypes.AdultForest, (bool)objects[_curNumber++]);
-                curCellEnvrDataComp.SetHaveEnvironment(EnvirTypes.Hill, (bool)objects[_curNumber++]);
-                curCellEnvrDataComp.SetHaveEnvironment(EnvirTypes.Mountain, (bool)objects[_curNumber++]);
+                ref var curEnvrDatCom = ref _cellEnvrFilter.Get1(curIdxCell);
+                curEnvrDatCom.SetHaveEnvironment(EnvirTypes.Fertilizer, (bool)objects[_curNumber++]);
+                curEnvrDatCom.SetHaveEnvironment(EnvirTypes.YoungForest, (bool)objects[_curNumber++]);
+                curEnvrDatCom.SetHaveEnvironment(EnvirTypes.AdultForest, (bool)objects[_curNumber++]);
+                curEnvrDatCom.SetHaveEnvironment(EnvirTypes.Hill, (bool)objects[_curNumber++]);
+                curEnvrDatCom.SetHaveEnvironment(EnvirTypes.Mountain, (bool)objects[_curNumber++]);
 
-                curCellEnvrDataComp.SetAmountResources(EnvirTypes.Fertilizer, (int)objects[_curNumber++]);
-                curCellEnvrDataComp.SetAmountResources(EnvirTypes.YoungForest, (int)objects[_curNumber++]);
-                curCellEnvrDataComp.SetAmountResources(EnvirTypes.AdultForest, (int)objects[_curNumber++]);
-                curCellEnvrDataComp.SetAmountResources(EnvirTypes.Hill, (int)objects[_curNumber++]);
-                curCellEnvrDataComp.SetAmountResources(EnvirTypes.Mountain, (int)objects[_curNumber++]);
+                curEnvrDatCom.SetAmountResources(EnvirTypes.Fertilizer, (int)objects[_curNumber++]);
+                curEnvrDatCom.SetAmountResources(EnvirTypes.YoungForest, (int)objects[_curNumber++]);
+                curEnvrDatCom.SetAmountResources(EnvirTypes.AdultForest, (int)objects[_curNumber++]);
+                curEnvrDatCom.SetAmountResources(EnvirTypes.Hill, (int)objects[_curNumber++]);
+                curEnvrDatCom.SetAmountResources(EnvirTypes.Mountain, (int)objects[_curNumber++]);
 
 
 
-                ref var curCellFireDataComp = ref _cellFireFilter.Get1(curIdxCell);
-                curCellFireDataComp.HaveFire = (bool)objects[_curNumber++];
+                ref var curFireDatCom = ref _cellFireFilter.Get1(curIdxCell);
+                curFireDatCom.HaveFire = (bool)objects[_curNumber++];
             }
 
-
+            
 
             ref var inventResComp = ref _inventorResFilter.Get1(0);
-            inventResComp.SetAmountResources(ResourceTypes.Food, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
-            inventResComp.SetAmountResources(ResourceTypes.Wood, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
-            inventResComp.SetAmountResources(ResourceTypes.Ore, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
-            inventResComp.SetAmountResources(ResourceTypes.Iron, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
-            inventResComp.SetAmountResources(ResourceTypes.Gold, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
+            inventResComp.SetAmountResources(WhoseMoveCom.CurOnlinePlayer, ResourceTypes.Food, (int)objects[_curNumber++]);
+            inventResComp.SetAmountResources(WhoseMoveCom.CurOnlinePlayer, ResourceTypes.Wood, (int)objects[_curNumber++]);
+            inventResComp.SetAmountResources(WhoseMoveCom.CurOnlinePlayer, ResourceTypes.Ore, (int)objects[_curNumber++]);
+            inventResComp.SetAmountResources(WhoseMoveCom.CurOnlinePlayer, ResourceTypes.Iron, (int)objects[_curNumber++]);
+            inventResComp.SetAmountResources(WhoseMoveCom.CurOnlinePlayer, ResourceTypes.Gold, (int)objects[_curNumber++]);
 
 
 
             ref var invUnitsComp = ref _invUnitsFilter.Get1(0);
-            invUnitsComp.SetAmountUnitsInInvent(UnitTypes.King, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
-            invUnitsComp.SetAmountUnitsInInvent(UnitTypes.Pawn, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
-            invUnitsComp.SetAmountUnitsInInvent(UnitTypes.Rook, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
-            invUnitsComp.SetAmountUnitsInInvent(UnitTypes.Bishop, PhotonNetwork.IsMasterClient, (int)objects[_curNumber++]);
+            invUnitsComp.SetAmountUnitsInInvent(WhoseMoveCom.CurOnlinePlayer, UnitTypes.King, (int)objects[_curNumber++]);
+            invUnitsComp.SetAmountUnitsInInvent(WhoseMoveCom.CurOnlinePlayer, UnitTypes.Pawn, (int)objects[_curNumber++]);
+            invUnitsComp.SetAmountUnitsInInvent(WhoseMoveCom.CurOnlinePlayer, UnitTypes.Rook, (int)objects[_curNumber++]);
+            invUnitsComp.SetAmountUnitsInInvent(WhoseMoveCom.CurOnlinePlayer, UnitTypes.Bishop, (int)objects[_curNumber++]);
 
 
 
             ref var invToolsComp = ref _invToolsFilter.Get1(0);
-            invToolsComp.SetAmountTools(PhotonNetwork.IsMasterClient, ToolTypes.Pick, (byte)objects[_curNumber++]);
-
-
-
-            ref var invWeapsComp = ref _invWeaponsFilter.Get1(0);
-            invWeapsComp.SetAmountWeapons(PhotonNetwork.IsMasterClient, WeaponTypes.Sword, (byte)objects[_curNumber++]);
-            invWeapsComp.SetAmountWeapons(PhotonNetwork.IsMasterClient, WeaponTypes.Crossbow, (byte)objects[_curNumber++]);
-
-
-
-
-
-            //for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
-            //    for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
-            //    {
-            //        var xy = new int[] { x, y };
-
-            //        Player owner;
-
-            //        UnitTypes unitType = (UnitTypes)objects[_currentNumber++];
-            //        bool isVisibleUnit = (bool)objects[_currentNumber++];
-            //        int amountSteps = (int)objects[_currentNumber++];
-            //        int amountHealth = (int)objects[_currentNumber++];
-            //        ConditionUnitTypes conditionType = (ConditionUnitTypes)objects[_currentNumber++];
-            //        int actorNumber = (int)objects[_currentNumber++];
-            //        bool haveBot = (bool)objects[_currentNumber++];
-
-            //        if (unitType != UnitTypes.None)
-            //        {
-            //            if (actorNumber != -2)
-            //            {
-            //                owner = PhotonNetwork.PlayerList[actorNumber - 1];
-            //                CellUnitsDataSystem.SetPlayerUnit(unitType, amountHealth, amountSteps, conditionType, owner, xy);
-            //            }
-            //            else
-            //            {
-            //                CellUnitsDataSystem.SetBotUnit(unitType, haveBot, amountHealth, amountSteps, conditionType, xy);
-            //            }
-
-            //            CellUnitsDataSystem.SetIsVisibleUnit(PhotonNetwork.IsMasterClient, isVisibleUnit, xy);
-            //        }
-
-            //        else
-            //        {
-            //            CellUnitsDataSystem.ResetUnit(xy);
-            //        }
-
-
-
-            //        BuildingTypes buildingType = (BuildingTypes)objects[_currentNumber++];
-            //        actorNumber = (int)objects[_currentNumber++];
-            //        haveBot = (bool)objects[_currentNumber++];
-
-            //        if (buildingType != BuildingTypes.None)
-            //        {
-            //            if (actorNumber != -2)
-            //            {
-            //                owner = PhotonNetwork.PlayerList[actorNumber - 1];
-            //                CellBuildDataSystem.SetPlayerBuilding(buildingType, owner, xy);
-            //            }
-            //            else
-            //            {
-            //                CellBuildDataSystem.SetBotBuilding(buildingType, xy);
-            //            }
-            //        }
-
-            //        else
-            //        {
-            //            CellBuildDataSystem.ResetBuild(xy);
-            //        }
-
-
-
-            //        int amountResourcesFertilizer = (int)objects[_currentNumber++];
-            //        int amountResourcesAdultForest = (int)objects[_currentNumber++];
-            //        int amountResourcesOre = (int)objects[_currentNumber++];
-
-            //        bool haveFertilizer = (bool)objects[_currentNumber++];
-            //        bool haveYoungTree = (bool)objects[_currentNumber++];
-            //        bool haveAdultForest = (bool)objects[_currentNumber++];
-            //        bool haveHill = (bool)objects[_currentNumber++];
-            //        bool haveMountain = (bool)objects[_currentNumber++];
-
-            //        CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.Fertilizer, haveFertilizer, amountResourcesFertilizer, xy);
-            //        CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.YoungForest, haveYoungTree, default, xy);
-            //        CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.AdultForest, haveAdultForest, amountResourcesAdultForest, xy);
-            //        CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.Hill, haveHill, amountResourcesOre, xy);
-            //        CellEnvrDataSystem.SetEnvironment(EnvironmentTypes.Mountain, haveMountain, default, xy);
-
-
-
-            //        bool haveFire = (bool)objects[_currentNumber++];
-
-            //        CellFireDataSystem.HaveFireCom(xy).HaveFire = haveFire;
-            //    }
-
-
-
-            //SaverComponent.StepModeType = (StepModeTypes)objects[_currentNumber++];
-
-
-
-            //bool isStartedGame = (bool)objects[_currentNumber++];
-            //_readyUIFilter.Get1(0).IsStartedGame = isStartedGame;
-
-
-
-            //bool isActivatedReadyButton = (bool)objects[_currentNumber++];
-            //_readyUIFilter.Get1(0).SetIsReady(PhotonNetwork.IsMasterClient, isActivatedReadyButton);
-
-
-
-            //bool isActivatedDoner = (bool)objects[_currentNumber++];
-            //_donerUIFilter.Get1(0).SetDoned(PhotonNetwork.IsMasterClient, isActivatedDoner);
-
-
-            //ref var invResCom = ref _inventorFilter.Get1(0);
-            //var food = (int)objects[_currentNumber++];
-            //var wood = (int)objects[_currentNumber++];
-            //var ore = (int)objects[_currentNumber++];
-            //var iron = (int)objects[_currentNumber++];
-            //var gold = (int)objects[_currentNumber++];
-            //invResCom.SetAmountResources(ResourceTypes.Food, PhotonNetwork.IsMasterClient, food);
-            //invResCom.SetAmountResources(ResourceTypes.Wood, PhotonNetwork.IsMasterClient, wood);
-            //invResCom.SetAmountResources(ResourceTypes.Ore, PhotonNetwork.IsMasterClient, ore);
-            //invResCom.SetAmountResources(ResourceTypes.Iron, PhotonNetwork.IsMasterClient, iron);
-            //invResCom.SetAmountResources(ResourceTypes.Gold, PhotonNetwork.IsMasterClient, gold);
-
-
-
-            //for (UnitTypes unitTypeType = (UnitTypes)1; (byte)unitTypeType < Enum.GetNames(typeof(UnitTypes)).Length; unitTypeType++)
-            //{
-            //    var amountUnits = (int)objects[_currentNumber++];
-
-            //    ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
-
-            //    List<int[]> xyUnits = new List<int[]>();
-            //    for (int i = 0; i < amountUnits; i++)
-            //    {
-            //        var xyUnit = (int[])objects[_currentNumber++];
-            //        xyUnits.Add(xyUnit);
-            //    }
-            //    xyUnitsCom.SetAmountUnitInGame(unitTypeType, PhotonNetwork.IsMasterClient, xyUnits);
-            //}
-
-
-
-            //var amountFarmUpgrades = (int)objects[_currentNumber++];
-            //var amountWoodcutterUpgrades = (int)objects[_currentNumber++];
-            //var amountMineUpgrades = (int)objects[_currentNumber++];
-            //_upgradesBuildFilter.Get1(0).SetAmountUpgrades(BuildingTypes.Farm, PhotonNetwork.IsMasterClient, amountFarmUpgrades);
-            //_upgradesBuildFilter.Get1(0).SetAmountUpgrades(BuildingTypes.Woodcutter, PhotonNetwork.IsMasterClient, amountWoodcutterUpgrades);
-            //_upgradesBuildFilter.Get1(0).SetAmountUpgrades(BuildingTypes.Mine, PhotonNetwork.IsMasterClient, amountMineUpgrades);
-
-            //for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
-            //{
-            //    var amountBuildings = (int)objects[_currentNumber++];
-
-            //    List<int[]> xyBuildings = new List<int[]>();
-            //    for (int i = 0; i < amountBuildings; i++)
-            //    {
-            //        var xyBuilding = (int[])objects[_currentNumber++];
-            //        xyBuildings.Add(xyBuilding);
-            //    }
-            //    MainGameSystem.XyBuildingsCom.SetXyBuildings(buildingType, PhotonNetwork.IsMasterClient, xyBuildings);
-            //}
-
-
-
-            //GameGeneralSystemManager.SyncCellVisionSystems.Run();
+            invToolsComp.SetAmountTools(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Pick, (byte)objects[_curNumber++]);
+            invToolsComp.SetAmountTools(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Sword, (byte)objects[_curNumber++]);
+            invToolsComp.SetAmountTools(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Crossbow, (byte)objects[_curNumber++]);
         }
 
         #endregion

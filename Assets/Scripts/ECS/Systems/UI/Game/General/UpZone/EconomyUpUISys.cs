@@ -14,12 +14,12 @@ internal sealed class EconomyUpUISys : IEcsRunSystem
 {
     private EcsFilter<EconomyViewUICom> _economyUIFilter = default;
 
-    private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitsFilter = default;
-    private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerOfflineCom> _cellBuildFilter = default;
+    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitsFilter = default;
+    private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvDatFilt = default;
 
-    private EcsFilter<InventorResourcesComponent> _amountResFilter = default;
-    private EcsFilter<UpgradesBuildingsComponent> _upgradeBuildsFilter = default;
+    private EcsFilter<InventResourCom> _amountResFilter = default;
+    private EcsFilter<UpgradesBuildsCom> _upgradeBuildsFilter = default;
 
 
     public void Run()
@@ -41,113 +41,58 @@ internal sealed class EconomyUpUISys : IEcsRunSystem
         {
             ref var curUnitDatCom = ref _cellUnitsFilter.Get1(curIdxCell);
             ref var curOnUnitCom = ref _cellUnitsFilter.Get2(curIdxCell);
-            ref var curOffUnitCom = ref _cellUnitsFilter.Get3(curIdxCell);
 
             ref var curBuildDatCom = ref _cellBuildFilter.Get1(curIdxCell);
             ref var curOnBuildCom = ref _cellBuildFilter.Get2(curIdxCell);
-            ref var curOffBuildCom = ref _cellBuildFilter.Get3(curIdxCell);
 
 
             if (curUnitDatCom.HaveUnit)
             {
-                if (curOnUnitCom.HaveOwner)
+                if (curOnUnitCom.IsPlayer)
                 {
-                    if (curOnUnitCom.IsMine)
-                    {
-                        if (!curUnitDatCom.IsUnit(UnitTypes.King)) ++amountUnitsInGame;
+                    //if (curOnUnitCom.IsMine)
+                    //{
+                    //    if (!curUnitDatCom.IsUnit(UnitTypes.King)) ++amountUnitsInGame;
 
-                        if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
-                        {
-                            if (curUnitDatCom.IsCondType(CondUnitTypes.Relaxed))
-                            {
-                                if (_cellEnvDatFilt.Get1(curIdxCell).HaveEnvir(EnvirTypes.AdultForest))
-                                {
-                                    amountAddWood += 1;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                else if (curOffUnitCom.HaveLocalPlayer)
-                {
-                    if (curOffUnitCom.IsMine)
-                    {
-                        if (!curUnitDatCom.IsUnit(UnitTypes.King)) ++amountUnitsInGame;
-
-                        if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
-                        {
-                            if (curUnitDatCom.IsCondType(CondUnitTypes.Relaxed))
-                            {
-                                if (_cellEnvDatFilt.Get1(curIdxCell).HaveEnvir(EnvirTypes.AdultForest))
-                                {
-                                    amountAddWood += 1;
-                                }
-                            }
-                        }
-                    }
+                    //    if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
+                    //    {
+                    //        if (curUnitDatCom.IsCondType(CondUnitTypes.Relaxed))
+                    //        {
+                    //            if (_cellEnvDatFilt.Get1(curIdxCell).HaveEnvir(EnvirTypes.AdultForest))
+                    //            {
+                    //                amountAddWood += 1;
+                    //            }
+                    //        }
+                    //    }
+                    //}
                 }
             }
 
             if (curBuildDatCom.HaveBuild)
             {
-                if (curOnBuildCom.HaveOwner)
+                if (curOnBuildCom.IsPlayer)
                 {
-                    if (curOnBuildCom.IsMine)
-                    {
-                        if (curBuildDatCom.IsBuildType(BuildingTypes.Farm))
-                        {
-                            ++builds[BuildingTypes.Farm];
-                        }
-                        else if (curBuildDatCom.IsBuildType(BuildingTypes.Woodcutter))
-                        {
-                            ++builds[BuildingTypes.Woodcutter];
-                        }
+                    //if (curOnBuildCom.IsMine)
+                    //{
+                    //    if (curBuildDatCom.IsBuildType(BuildingTypes.Farm))
+                    //    {
+                    //        ++builds[BuildingTypes.Farm];
+                    //    }
+                    //    else if (curBuildDatCom.IsBuildType(BuildingTypes.Woodcutter))
+                    //    {
+                    //        ++builds[BuildingTypes.Woodcutter];
+                    //    }
 
-                        else if (curBuildDatCom.IsBuildType(BuildingTypes.Mine))
-                        {
-                            ++builds[BuildingTypes.Mine];
-                        }
-                    }
-                }
-
-                else if (curOffBuildCom.HaveLocalPlayer)
-                {
-                    if (curOffBuildCom.IsMine)
-                    {
-                        if (curBuildDatCom.IsBuildType(BuildingTypes.Farm))
-                        {
-                            ++builds[BuildingTypes.Farm];
-                        }
-                        else if (curBuildDatCom.IsBuildType(BuildingTypes.Woodcutter))
-                        {
-                            ++builds[BuildingTypes.Woodcutter];
-                        }
-
-                        else if (curBuildDatCom.IsBuildType(BuildingTypes.Mine))
-                        {
-                            ++builds[BuildingTypes.Mine];
-                        }
-                    }
+                    //    else if (curBuildDatCom.IsBuildType(BuildingTypes.Mine))
+                    //    {
+                    //        ++builds[BuildingTypes.Mine];
+                    //    }
+                    //}
                 }
             }
         }
 
-        var isMastMain = false;
-
-        if (PhotonNetwork.OfflineMode)
-        {
-            isMastMain = WhoseMoveCom.IsMainMove;
-        }
-
-        else
-        {
-            isMastMain = PhotonNetwork.IsMasterClient;
-        }
-
-
-
-        var amountUpgsFarm = amountBuildUpgsCom.AmountUpgs(BuildingTypes.Farm, isMastMain);
+        var amountUpgsFarm = amountBuildUpgsCom.AmountUpgs(WhoseMoveCom.CurPlayer, BuildingTypes.Farm);
         var extractOneFarm = ExtractionInfoSupport.ExtractOneBuild(BuildingTypes.Farm, amountUpgsFarm);
 
         var amountAddFood = 1 + builds[BuildingTypes.Farm] * extractOneFarm - amountUnitsInGame;
@@ -159,14 +104,14 @@ internal sealed class EconomyUpUISys : IEcsRunSystem
 
 
 
-        var amountUpgsWoodcut = amountBuildUpgsCom.AmountUpgs(BuildingTypes.Woodcutter, isMastMain);
+        var amountUpgsWoodcut = amountBuildUpgsCom.AmountUpgs(WhoseMoveCom.CurPlayer, BuildingTypes.Woodcutter);
         amountAddWood += (byte)(builds[BuildingTypes.Woodcutter] * ExtractionInfoSupport.ExtractOneBuild(BuildingTypes.Woodcutter, amountUpgsWoodcut));
 
         econViewUICom.SetAddText(ResourceTypes.Wood, "+ " + amountAddWood);
 
 
 
-        var amountUpgrsMine = amountBuildUpgsCom.AmountUpgs(BuildingTypes.Mine, isMastMain);
+        var amountUpgrsMine = amountBuildUpgsCom.AmountUpgs(WhoseMoveCom.CurPlayer, BuildingTypes.Mine);
         var amountAddOre = builds[BuildingTypes.Mine] * ExtractionInfoSupport.ExtractOneBuild(BuildingTypes.Mine, amountUpgrsMine);
 
         econViewUICom.SetAddText(ResourceTypes.Ore, "+ " + amountAddOre);
@@ -174,11 +119,11 @@ internal sealed class EconomyUpUISys : IEcsRunSystem
 
 
 
-        econViewUICom.SetMainText(ResourceTypes.Food, amountResCom.AmountResources(ResourceTypes.Food, isMastMain).ToString());
-        econViewUICom.SetMainText(ResourceTypes.Wood, amountResCom.AmountResources(ResourceTypes.Wood, isMastMain).ToString());
-        econViewUICom.SetMainText(ResourceTypes.Ore, amountResCom.AmountResources(ResourceTypes.Ore, isMastMain).ToString());
-        econViewUICom.SetMainText(ResourceTypes.Iron, amountResCom.AmountResources(ResourceTypes.Iron, isMastMain).ToString());
-        econViewUICom.SetMainText(ResourceTypes.Gold, amountResCom.AmountResources(ResourceTypes.Gold, isMastMain).ToString());
+        econViewUICom.SetMainText(ResourceTypes.Food, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Food).ToString());
+        econViewUICom.SetMainText(ResourceTypes.Wood, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Wood).ToString());
+        econViewUICom.SetMainText(ResourceTypes.Ore, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Ore).ToString());
+        econViewUICom.SetMainText(ResourceTypes.Iron, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Iron).ToString());
+        econViewUICom.SetMainText(ResourceTypes.Gold, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Gold).ToString());
     }
 }
 
