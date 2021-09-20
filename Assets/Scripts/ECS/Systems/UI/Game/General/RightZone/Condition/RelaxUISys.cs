@@ -58,7 +58,26 @@ internal sealed class RelaxUISys : IEcsRunSystem
             {
                 if (selOnUnitCom.IsMine)
                 {
+                    activeButt = true;
 
+                    if (selUnitDatCom.IsCondType(CondUnitTypes.Protected))
+                    {
+                        condUnitUICom.SetColor(CondUnitTypes.Protected, Color.yellow);
+                    }
+
+                    else
+                    {
+                        condUnitUICom.SetColor(CondUnitTypes.Protected, Color.white);
+                    }
+
+                    if (selUnitDatCom.IsCondType(CondUnitTypes.Relaxed))
+                    {
+                        condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.green);
+                    }
+                    else
+                    {
+                        condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.white);
+                    }
                 }
             }
 

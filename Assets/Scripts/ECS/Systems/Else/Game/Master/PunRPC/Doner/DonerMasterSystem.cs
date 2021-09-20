@@ -5,6 +5,7 @@ using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
     private EcsFilter<MotionsDataUIComponent> _motionsFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerDataUIFilter = default;
     private EcsFilter<InventorUnitsComponent> _invUnitsFilter = default;
+    private EcsFilter<FriendZoneDataUICom> _friendUIFilt = default;
 
     private EcsFilter<CellViewComponent> _cellViewFilter = default;
 
@@ -39,12 +41,21 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
         var sender = infoMasCom.FromInfo.Sender;
 
 
-        if (!_invUnitsFilter.Get1(0).HaveUnitInInv(UnitTypes.King, sender.IsMasterClient))
-        {
-            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-            if (PhotonNetwork.OfflineMode)
+        RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+
+        if (PhotonNetwork.OfflineMode)
+        {
+            if (GameModesCom.IsGameMode(OffGameModes.Training))
             {
+                RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.MasterClient);
+                GameMasterSystemManager.UpdateMotion.Run();
+            }
+
+            else if (GameModesCom.IsGameMode(OffGameModes.WithFriend))
+            {
+                _friendUIFilt.Get1(0).IsActiveFriendZone = true;
+
                 if (_isMasterMotion)
                 {
                     _isMasterMotion = !_isMasterMotion;
@@ -72,7 +83,15 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
                     RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.MasterClient);
                 }
             }
+
             else
+            {
+                throw new System.Exception();
+            }
+        }
+        else
+        {
+            if (!_invUnitsFilter.Get1(0).HaveUnitInInv(UnitTypes.King, sender.IsMasterClient))
             {
                 donerDataUICom.SetDoned(sender.IsMasterClient, true);
                 _doneOrNotFromStartAnyUpdate[sender.IsMasterClient] = false;

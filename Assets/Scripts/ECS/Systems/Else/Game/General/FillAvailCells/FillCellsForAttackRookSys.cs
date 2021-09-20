@@ -154,7 +154,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
 
                                                     else
                                                     {
-                                                        cellsAttackCom.Add(AttackTypes.Unique, onUnitCom_0.IsMasterClient, idxCell_0, idxCell_2);
+                                                        cellsAttackCom.Add(AttackTypes.Unique, offUnitCom_0.IsMainMaster, idxCell_0, idxCell_2);
                                                     }
                                                 }
 

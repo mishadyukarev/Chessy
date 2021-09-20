@@ -35,7 +35,7 @@ internal sealed class CreatUnitMastSys : IEcsRunSystem
 
         var isMastSender = false;
         if (PhotonNetwork.OfflineMode) isMastSender = WhoseMoveCom.IsMainMove;
-        else isMastSender = PhotonNetwork.IsMasterClient;
+        else isMastSender = infoCom.FromInfo.Sender.IsMasterClient;
 
 
         var isSettedCity = false;

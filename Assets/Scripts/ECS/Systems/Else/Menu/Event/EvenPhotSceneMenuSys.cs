@@ -1,6 +1,8 @@
-﻿using Assets.Scripts.ECS.Component;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Menu;
 using Assets.Scripts.ECS.Component.UI;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
@@ -38,7 +40,8 @@ namespace Assets.Scripts.ECS.Managers.Event
             ref var leftEnt = ref _leftZoneFilter.GetEntity(0);
 
             _leftZoneFilter.Get1(0).AddListenerToConnectButton(ConnectOffline);
-            _leftZoneFilter.Get2(0).AddListenerToStartWithBotButton(CreateTestSoloGame);
+            _leftZoneFilter.Get2(0).AddListenerTrain(delegate { CreateOffGame(OffGameModes.Training); });
+            _leftZoneFilter.Get2(0).AddListenerFriend(delegate { CreateOffGame(OffGameModes.WithFriend); });
         }
 
 
@@ -103,8 +106,9 @@ namespace Assets.Scripts.ECS.Managers.Event
             PhotonNetwork.JoinRoom(_rightZoneFilter.Get2(0).TextJoinFriendRoom);
         }
 
-        private void CreateTestSoloGame()
+        private void CreateOffGame(OffGameModes offGameMode)
         {
+            GameModesCom.OffGameMode = offGameMode;
             PhotonNetwork.CreateRoom(default);
         }
 

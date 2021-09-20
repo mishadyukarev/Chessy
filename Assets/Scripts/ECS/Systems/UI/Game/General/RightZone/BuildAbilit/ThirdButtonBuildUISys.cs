@@ -19,52 +19,70 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
         {
             ref var selCom = ref _selFilt.Get1(0);
 
-            var idxSelCell = _selFilt.Get1(0).IdxSelCell;
-
-            ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
-            ref var selOnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
-            ref var selOffUnitCom = ref _cellUnitFilter.Get3(idxSelCell);
-            ref var selBotUnitCom = ref _cellUnitFilter.Get4(idxSelCell);
-
-            ref var selBuildDatCom = ref _cellBuildFilt.Get1(idxSelCell);
-            ref var selOnBuildCom = ref _cellBuildFilt.Get2(idxSelCell);
-            ref var selOffBuildCom = ref _cellBuildFilt.Get3(idxSelCell);
-            ref var selBotBuildCom = ref _cellBuildFilt.Get4(idxSelCell);
-
-            ref var buildAbilUICom = ref _buildAbilViewCom.Get1(0);
-
-
-
-            var needActiveThirdButt = false;
-
             if (selCom.IsSelectedCell)
             {
+                var idxSelCell = _selFilt.Get1(0).IdxSelCell;
+
+                ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
+                ref var selOnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
+                ref var selOffUnitCom = ref _cellUnitFilter.Get3(idxSelCell);
+                ref var selBotUnitCom = ref _cellUnitFilter.Get4(idxSelCell);
+
+                ref var selBuildDatCom = ref _cellBuildFilt.Get1(idxSelCell);
+                ref var selOnBuildCom = ref _cellBuildFilt.Get2(idxSelCell);
+                ref var selOffBuildCom = ref _cellBuildFilt.Get3(idxSelCell);
+                ref var selBotBuildCom = ref _cellBuildFilt.Get4(idxSelCell);
+
+                ref var buildAbilUICom = ref _buildAbilViewCom.Get1(0);
+
+                var needActiveThirdButt = false;
+
+
                 if (selUnitDatCom.IsUnit(UnitTypes.Pawn))
                 {
-                    if (selOffUnitCom.HaveLocalPlayer)
+                    if (selOnUnitCom.HaveOwner)
                     {
-                        if (selOffUnitCom.IsMine)
+                        if (selOnUnitCom.IsMine)
                         {
-                            foreach (var idxCell in _cellBuildFilt)
+                            if (selBuildDatCom.IsBuildType(BuildingTypes.City))
                             {
-                                ref var curBuildDatCom = ref _cellBuildFilt.Get1(idxCell);
-                                ref var curOffBuildCom = ref _cellBuildFilt.Get3(idxCell);
-
-                                if (curBuildDatCom.IsBuildType(BuildingTypes.City))
+                                if (selOnBuildCom.HaveOwner)
                                 {
-                                    if (curOffBuildCom.HaveLocalPlayer)
+                                    if (!selOnBuildCom.IsMine)
                                     {
-                                        if (curOffBuildCom.IsMainMaster == WhoseMoveCom.IsMainMove)
-                                        {
-                                            buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.BuildCity));
-                                            needActiveThirdButt = false;
-                                            break;
-                                        }
-                                    }
-                                    else
-                                    {
+                                        buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
                                         needActiveThirdButt = true;
                                     }
+                                }
+                            }
+
+                            else
+                            {
+                                var isSettedMyCity = false;
+
+                                foreach (var idxCell in _cellBuildFilt)
+                                {
+                                    ref var curBuildDatCom = ref _cellBuildFilt.Get1(idxCell);
+                                    ref var curOnBuildCom = ref _cellBuildFilt.Get2(idxCell);
+                                    ref var curOffBuildCom = ref _cellBuildFilt.Get3(idxCell);
+
+                                    if (curBuildDatCom.IsBuildType(BuildingTypes.City))
+                                    {
+                                        if (curOnBuildCom.HaveOwner)
+                                        {
+                                            if (curOnBuildCom.IsMine)
+                                            {
+                                                buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.BuildCity));
+                                                isSettedMyCity = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if (isSettedMyCity)
+                                {
+                                    needActiveThirdButt = false;
                                 }
                                 else
                                 {
@@ -73,11 +91,62 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                             }
                         }
                     }
+
+                    else if (selOffUnitCom.HaveLocalPlayer)
+                    {
+                        if (selOffUnitCom.IsMine)
+                        {
+                            if (selBuildDatCom.IsBuildType(BuildingTypes.City))
+                            { 
+                                if (selOffBuildCom.HaveLocalPlayer)
+                                {
+                                    if (!selOffBuildCom.IsMine)
+                                    {
+                                        buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
+                                        needActiveThirdButt = true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                var isSettedMyCity = false;
+
+                                foreach (var idxCell in _cellBuildFilt)
+                                {
+                                    ref var curBuildDatCom = ref _cellBuildFilt.Get1(idxCell);
+                                    ref var curOnBuildCom = ref _cellBuildFilt.Get2(idxCell);
+                                    ref var curOffBuildCom = ref _cellBuildFilt.Get3(idxCell);
+
+                                    if (curBuildDatCom.IsBuildType(BuildingTypes.City))
+                                    {
+                                        if (curOffBuildCom.HaveLocalPlayer)
+                                        {
+                                            if (curOffBuildCom.IsMainMaster == WhoseMoveCom.IsMainMove)
+                                            {
+                                                buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.BuildCity));
+                                                isSettedMyCity = true;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
+                                if (isSettedMyCity)
+                                {
+                                    needActiveThirdButt = false;
+                                }
+                                else
+                                {
+                                    needActiveThirdButt = true;
+                                }
+                            }
+                        }
+                    }
+
+                   
                 }
+
+                buildAbilUICom.SetActive_Button(BuildButtonTypes.Third, needActiveThirdButt);
             }
-
-
-            buildAbilUICom.SetActive_Button(BuildButtonTypes.Third, needActiveThirdButt);
         }
     }
 }

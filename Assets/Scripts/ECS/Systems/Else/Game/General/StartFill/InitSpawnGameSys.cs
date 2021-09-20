@@ -17,6 +17,7 @@ using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
+using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
 using Assets.Scripts.ECS.Components.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
@@ -39,11 +40,12 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
         private EcsFilter<InventorResourcesComponent> _inventorResFilter = default;
         private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
+        private EcsFilter<FriendZoneDataUICom> _friendZoneUIFilt = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
-        private EcsFilter<CellViewComponent> _cellViewFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellViewComponent> _cellViewFilt = default;
+        private EcsFilter<CellUnitDataCom, CellUnitExtraViewComp, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellBuildFilter = default;
 
 
@@ -76,38 +78,38 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             for (byte x = 0; x < CELL_COUNT_X; x++)
                 for (byte y = 0; y < CELL_COUNT_Y; y++)
                 {
-                    var cirCell_GO = cell_GOs[x, y];
+                    var curCell_GO = cell_GOs[x, y];
 
                     if (y % 2 == 0)
                     {
                         if (x % 2 == 0)
                         {
-                            cirCell_GO = CreateGameObject(cellGO, blackCellSR, x, y, Main.Instance.gameObject);
-                            SetActive(cirCell_GO, x, y);
+                            curCell_GO = CreateGameObject(cellGO, blackCellSR, x, y, Main.Instance.gameObject);
+                            SetActive(curCell_GO, x, y);
                         }
                         if (x % 2 != 0)
                         {
-                            cirCell_GO = CreateGameObject(cellGO, whiteCellSR, x, y, Main.Instance.gameObject);
-                            SetActive(cirCell_GO, x, y);
+                            curCell_GO = CreateGameObject(cellGO, whiteCellSR, x, y, Main.Instance.gameObject);
+                            SetActive(curCell_GO, x, y);
                         }
                     }
                     if (y % 2 != 0)
                     {
                         if (x % 2 != 0)
                         {
-                            cirCell_GO = CreateGameObject(cellGO, blackCellSR, x, y, Main.Instance.gameObject);
-                            SetActive(cirCell_GO, x, y);
+                            curCell_GO = CreateGameObject(cellGO, blackCellSR, x, y, Main.Instance.gameObject);
+                            SetActive(curCell_GO, x, y);
                         }
                         if (x % 2 == 0)
                         {
-                            cirCell_GO = CreateGameObject(cellGO, whiteCellSR, x, y, Main.Instance.gameObject);
-                            SetActive(cirCell_GO, x, y);
+                            curCell_GO = CreateGameObject(cellGO, whiteCellSR, x, y, Main.Instance.gameObject);
+                            SetActive(curCell_GO, x, y);
                         }
                     }
 
-                    GameObject CreateGameObject(GameObject cellGOForCreation, Sprite sprite, int xxx, int yyy, GameObject mainGameGO)
+                    GameObject CreateGameObject(GameObject cellGOForCreation, Sprite sprite, int xxx, int yyy, GameObject mainGame_GO)
                     {
-                        var go = GameObject.Instantiate(cellGOForCreation, mainGameGO.transform.position + new Vector3(xxx, yyy, mainGameGO.transform.position.z), mainGameGO.transform.rotation);
+                        var go = GameObject.Instantiate(cellGOForCreation, mainGame_GO.transform.position + new Vector3(xxx, yyy, mainGame_GO.transform.position.z), mainGame_GO.transform.rotation);
                         go.name = "Cell";
                         go.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
 
@@ -124,10 +126,10 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                             go.SetActive(false);
                     }
 
-                    cirCell_GO.transform.SetParent(supportParentForCells.transform);
+                    curCell_GO.transform.SetParent(supportParentForCells.transform);
 
 
-                    var cellView_GO = cirCell_GO.transform.Find("Cell").gameObject;
+                    var cellView_GO = curCell_GO.transform.Find("Cell").gameObject;
 
                     _curGameWorld.NewEntity()
                         .Replace(new XyCellComponent(new byte[] { x, y }))
@@ -135,17 +137,17 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                         .Replace(new CellViewComponent(cellView_GO))
 
                         .Replace(new CellEnvironDataCom(new Dictionary<EnvirTypes, bool>()))
-                        .Replace(new CellEnvironViewCom(cirCell_GO))
+                        .Replace(new CellEnvironViewCom(curCell_GO))
                         .Replace(new CellFireDataComponent())
-                        .Replace(new CellFireViewComponent(cirCell_GO))
-                        .Replace(new CellBlocksViewComponent(cirCell_GO))
-                        .Replace(new CellBarsViewComponent(cirCell_GO))
-                        .Replace(new CellSupViewComponent(cirCell_GO));
+                        .Replace(new CellFireViewComponent(curCell_GO))
+                        .Replace(new CellBlocksViewComponent(curCell_GO))
+                        .Replace(new CellBarsViewComponent(curCell_GO))
+                        .Replace(new CellSupViewComponent(curCell_GO));
 
 
                     _curGameWorld.NewEntity()
                          .Replace(new CellBuildDataComponent())
-                         .Replace(new CellBuildViewComponent(cirCell_GO))
+                         .Replace(new CellBuildViewComponent(curCell_GO))
                          .Replace(new OwnerOnlineComp())
                          .Replace(new OwnerBotComponent())
                          .Replace(new OwnerOfflineCom());
@@ -153,8 +155,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                     _curGameWorld.NewEntity()
                          .Replace(new CellUnitDataCom(new Dictionary<bool, bool>()))
-                         .Replace(new CellUnitMainViewComp(cirCell_GO))
-                         .Replace(new CellUnitExtraViewComp(cirCell_GO))
+                         .Replace(new CellUnitMainViewComp(curCell_GO))
+                         .Replace(new CellUnitExtraViewComp(curCell_GO))
                          .Replace(new OwnerOnlineComp())
                          .Replace(new OwnerBotComponent())
                          .Replace(new OwnerOfflineCom());
@@ -231,6 +233,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new MistakeDataUICom(new Dictionary<ResourceTypes, bool>()))
                 .Replace(new KingZoneViewUIComp(centerZone_GO))
                 .Replace(new SelectorTypeViewUIComp(centerZone_GO))
+                .Replace(new FriendZoneViewUICom(centerZone_GO.transform))
+                .Replace(new FriendZoneDataUICom())
 
                 ///Down
                 .Replace(new GetterUnitsDataUICom(new Dictionary<UnitTypes, bool>()))
@@ -252,13 +256,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
 
 
-
-            var isMaster = PhotonNetwork.IsMasterClient;
-
-            CameraComComp.SetPosRotClient(isMaster);
-
-
-            if (isMaster)
+            if (PhotonNetwork.IsMasterClient)
             {
                 _curGameWorld.NewEntity()
                    .Replace(new InfoMasCom());
@@ -321,7 +319,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                     ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
 
-                    if (_cellViewFilter.Get1(curIdxCell).IsActiveParent)
+                    if (_cellViewFilt.Get1(curIdxCell).IsActiveParent)
                     {
                         if (curXyCell[1] >= 4 && curXyCell[1] <= 6)
                         {
@@ -359,7 +357,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                         }
                     }
 
-                    _cellViewFilter.Get1(curIdxCell).SetRotForClient(PhotonNetwork.IsMasterClient);
+                    _cellViewFilt.Get1(curIdxCell).SetRotForClient(PhotonNetwork.IsMasterClient);
                 }
 
 
@@ -401,10 +399,11 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                     .Replace(new FromInfoComponent());
             }
 
-
             if (PhotonNetwork.OfflineMode)
             {
-                if (false)
+                CameraComComp.SetPosRotClient(true);
+
+                if (GameModesCom.IsGameMode(OffGameModes.Training))
                 {
                     foreach (byte curIdxCell in _xyCellFilter)
                     {
@@ -414,7 +413,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                         ref var curCellEnvDataComp = ref _cellEnvFilter.Get1(curIdxCell);
                         ref var curCellUnitDataComp = ref _cellUnitFilter.Get1(curIdxCell);
-                        ref var curBotCellUnitComp = ref _cellUnitFilter.Get3(curIdxCell);
+                        ref var curBotCellUnitComp = ref _cellUnitFilter.Get4(curIdxCell);
                         ref var curCellBuildDataComp = ref _cellBuildFilter.Get1(curIdxCell);
 
                         if (x == 7 && y == 6)
@@ -452,6 +451,22 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                             curBotCellUnitComp.IsBot = true;
                         }
                     }
+                }
+
+                else if (GameModesCom.IsGameMode(OffGameModes.WithFriend))
+                {
+                    _friendZoneUIFilt.Get1(0).IsActiveFriendZone = true;
+                }
+            }
+
+            else
+            {
+                var isMaster = PhotonNetwork.IsMasterClient;
+                CameraComComp.SetPosRotClient(isMaster);
+
+                foreach (byte curIdxCell in _xyCellFilter)
+                {
+                    _cellViewFilt.Get1(curIdxCell).SetRotForClient(isMaster);
                 }
             }
         }

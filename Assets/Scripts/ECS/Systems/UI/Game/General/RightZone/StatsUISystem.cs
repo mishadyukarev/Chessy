@@ -27,7 +27,7 @@ internal sealed class StatsUISystem : IEcsRunSystem
         if (selUnitDatCom.HaveUnit)
         {
             var comPowerProtection = selUnitDatCom.PowerProtection
-                + selBuildDatCom.PowerProtectionUnit(selUnitDatCom.UnitType)
+                + selBuildDatCom.PowerProtectionUnit(selUnitDatCom.UnitType, selUnitDatCom.SimplePowerDamage)
                 + selEnvDatCom.PowerProtectionUnit(selUnitDatCom.UnitType);
 
             _unitZoneUIFilter.Get1(0).SetActiveStatZone(true);

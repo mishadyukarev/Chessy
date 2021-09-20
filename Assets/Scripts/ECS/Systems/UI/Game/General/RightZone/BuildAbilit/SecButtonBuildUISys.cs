@@ -25,16 +25,26 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
             {
                 ref var selUnitDatCom = ref _cellUnitFilt.Get1(selCom.IdxSelCell);
 
+                buildAbilUICom.SetText_Button(BuildButtonTypes.Second, LanguageComComp.GetText(GameLanguageTypes.BuildMine));
+
 
                 if (selUnitDatCom.IsUnit(UnitTypes.Pawn))
                 {
+                    ref var sellOnUnitCom = ref _cellUnitFilt.Get2(selCom.IdxSelCell);
                     ref var selOffUnitCom = ref _cellUnitFilt.Get3(selCom.IdxSelCell);
+
+                    if (sellOnUnitCom.HaveOwner)
+                    {
+                        if (sellOnUnitCom.IsMine)
+                        {
+                            needActiveButton = true;
+                        }
+                    }
 
                     if (selOffUnitCom.HaveLocalPlayer)
                     {
                         if (selOffUnitCom.IsMine)
                         {
-                            buildAbilUICom.SetText_Button(BuildButtonTypes.Second, LanguageComComp.GetText(GameLanguageTypes.BuildMine));
                             needActiveButton = true;
                         }
                     }

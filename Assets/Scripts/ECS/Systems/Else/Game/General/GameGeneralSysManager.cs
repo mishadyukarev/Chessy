@@ -8,6 +8,7 @@ using Assets.Scripts.ECS.Systems.Else.Game.General.Event;
 using Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells;
 using Assets.Scripts.ECS.Systems.Else.Game.General.Sync.Unit;
 using Assets.Scripts.ECS.Systems.Game.General.UI.View.Down;
+using Assets.Scripts.ECS.Systems.UI.Game.General.CenterZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.RightZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone;
@@ -27,6 +28,7 @@ public sealed class GameGeneralSysManager : SystemAbstManager
         RpcGameSys = ECSManager.RpcView_GO.AddComponent<RpcSys>();
 
         SyncCellViewSyss = new EcsSystems(gameWorld)
+            .Add(new VisibUnitsSys())
             .Add(new SyncCellUnitViewSys())
             .Add(new SyncCellSelUnitViewSys())
             .Add(new SyncCellUnitSupVisSystem())
@@ -72,7 +74,8 @@ public sealed class GameGeneralSysManager : SystemAbstManager
             .Add(new MotionCenterUISystem())
             .Add(new ReadyZoneUISystem())
             .Add(new CenterSupTextUISystem())
-            .Add(new KingZoneUISys());
+            .Add(new KingZoneUISys())
+            .Add(new FriendZoneUISys());
 
 
         FillAvailCellsSyss = new EcsSystems(gameWorld)
@@ -97,8 +100,6 @@ public sealed class GameGeneralSysManager : SystemAbstManager
 
 
         RunOnlySystems
-            .Add(new VisibUnitsSys())
-
             .Add(new InputSystem())
             .Add(new RaySystem())
             .Add(new SelectorSystem())

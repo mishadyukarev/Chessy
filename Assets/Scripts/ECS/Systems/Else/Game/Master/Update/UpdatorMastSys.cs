@@ -2,6 +2,7 @@
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game;
@@ -27,7 +28,8 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
     private EcsFilter<InventorResourcesComponent> _invResFilt = default;
     private EcsFilter<MotionsDataUIComponent> _motionsUIFilter = default;
     private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
-    private EcsFilter<WhoseMoveCom> _whoseMoveFilt = default;
+    private EcsFilter<InventorToolsComp> _invToolsFilt = default;
+    private EcsFilter<InventorWeaponsComp> _invWeapsFilt = default;
 
     public void Run()
     {
@@ -39,6 +41,15 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
 
         invResCom.AddAmountResources(ResourceTypes.Food, true);
         invResCom.AddAmountResources(ResourceTypes.Food, false);
+
+        _invToolsFilt.Get1(0).SetAmountTools(true, ToolTypes.Pick, 0);
+        _invToolsFilt.Get1(0).SetAmountTools(false, ToolTypes.Pick, 0);
+
+        _invWeapsFilt.Get1(0).SetAmountWeapons(true, WeaponTypes.Sword, 0);
+        _invWeapsFilt.Get1(0).SetAmountWeapons(false, WeaponTypes.Sword, 0);
+
+        _invWeapsFilt.Get1(0).SetAmountWeapons(true, WeaponTypes.Crossbow, 0);
+        _invWeapsFilt.Get1(0).SetAmountWeapons(false, WeaponTypes.Crossbow, 0);
 
 
         foreach (byte curIdxCell in _xyCellFilter)

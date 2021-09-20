@@ -4,7 +4,7 @@
     {
         #region Health
 
-        public const int STANDART_AMOUNT_HEALTH_KING = 300;
+        public const int STANDART_AMOUNT_HEALTH_KING = 500;
         public const int STANDART_AMOUNT_HEALTH_PAWN = 100;
         public const int STANDART_AMOUNT_HEALTH_ROOK = 50;
         public const int STANDART_AMOUNT_HEALTH_BISHOP = 50;
@@ -19,9 +19,9 @@
 
         #region Damage
 
-        public const int SIMPLE_POWER_DAMAGE_KING = 100;
-        public const int SIMPLE_POWER_DAMAGE_PAWN = 50;
-        public const int SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP = 60;
+        public const int SIMPLE_POWER_DAMAGE_KING = 170;
+        public const int SIMPLE_POWER_DAMAGE_PAWN = 70;
+        public const int SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP = 70;
 
         #endregion
 
@@ -36,27 +36,27 @@
 
         #region Environment
 
-        public static int PROTECTION_FOOD_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * 0.1f);
-        public static int PROTECTION_FOOD_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * 0.1f);
-        public static int PROTECTION_FOOD_FOR_ROOK_AND_BISHOP => (int)(SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP * 0.1f);
+        public static int PROTECTION_FOOD_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * 0.5f);
+        public static int PROTECTION_FOOD_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * 0.5f);
+        public static int PROTECTION_FOOD_FOR_ROOK_AND_BISHOP => (int)(SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP * 0.5f);
 
-        public static int PROTECTION_HILL_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * 0.15f);
-        public static int PROTECTION_HILL_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * 0.15f);
-        public static int PROTECTION_HILL_FOR_ROOK_AND_BISHOP => (int)(SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP * 0.15f);
+        public static int PROTECTION_HILL_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * 0.2f);
+        public static int PROTECTION_HILL_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * 0.3f);
+        public static int PROTECTION_HILL_FOR_ROOK_AND_BISHOP => (int)(SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP * 0.1f);
 
-        public static int PROTECTION_TREE_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * 0.15f);
-        public static int PROTECTION_TREE_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * 0.15f);
-        public static int PROTECTION_TREE_FOR_ROOK_AND_BISHOP => (int)(SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP * 0.15f);
+        public static int PROTECTION_TREE_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * 0.2f);
+        public static int PROTECTION_TREE_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * 0.3f);
+        public static int PROTECTION_TREE_FOR_ROOK_AND_BISHOP => (int)(SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP * 0.1f);
 
         #endregion
 
 
         #region Click
 
-        public const float PERCENT_FOR_PROTECTION_KING = 0.3f;
-        public const float PERCENT_FOR_PROTECTION_PAWN = 0.3f;
-        public const float PERCENT_FOR_PROTECTION_ROOK = 0.5f;
-        public const float PERCENT_FOR_PROTECTION_BISHOP = 0.5f;
+        public const float PERCENT_FOR_PROTECTION_KING = 0.2f;
+        public const float PERCENT_FOR_PROTECTION_PAWN = 0.7f;
+        public const float PERCENT_FOR_PROTECTION_ROOK = 0.3f;
+        public const float PERCENT_FOR_PROTECTION_BISHOP = 0.3f;
 
         #endregion
 

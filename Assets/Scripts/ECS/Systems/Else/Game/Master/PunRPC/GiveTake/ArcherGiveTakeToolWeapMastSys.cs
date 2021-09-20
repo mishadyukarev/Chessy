@@ -46,12 +46,9 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                 {
                     if (unitDatComForGive.HaveMaxAmountHealth)
                     {
-                        if (unitDatComForGive.HaveMaxAmountSteps)
+                        if (unitDatComForGive.HaveMinAmountSteps)
                         {
-                            if (unitDatComForGive.IsConditionType(new[] { CondUnitTypes.Protected, CondUnitTypes.Relaxed }))
-                            {
-                                unitDatComForGive.CondUnitType = default;
-                            }
+                            unitDatComForGive.CondUnitType = default;
 
                             if (onUnitComForGive.HaveOwner)
                             {
@@ -66,7 +63,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                             
                             unitDatComForGive.ArcherWeapType = ToolWeaponTypes.Bow;
 
-                            unitDatComForGive.ResetAmountSteps();
+                            unitDatComForGive.AmountSteps -= 1;
 
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickArcher);
                         }
@@ -90,12 +87,9 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                     {
                         if (unitDatComForGive.HaveMaxAmountHealth)
                         {
-                            if (unitDatComForGive.HaveMaxAmountSteps)
+                            if (unitDatComForGive.HaveMinAmountSteps)
                             {
-                                if (unitDatComForGive.IsConditionType(new[] { CondUnitTypes.Protected, CondUnitTypes.Relaxed }))
-                                {
-                                    unitDatComForGive.CondUnitType = default;
-                                }
+                                unitDatComForGive.CondUnitType = default;
 
                                 var isMastMain = false;
                                 if (onUnitComForGive.HaveOwner)
@@ -114,7 +108,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                                     invWeapsComp.TakeAmountWeapons(isMastMain, toolWeaponTypeForGive);
 
                                     unitDatComForGive.ArcherWeapType = toolWeaponTypeForGive;
-                                    unitDatComForGive.ResetAmountSteps();
+                                    unitDatComForGive.AmountSteps -= 1;
                                 }
 
                                 else if (toolWeaponTypeForGive == ToolWeaponTypes.Crossbow)
@@ -124,7 +118,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                                         inventResCom.TakeAmountResources(ResourceTypes.Iron, isMastMain, _ironCostForCrossbow);
 
                                         unitDatComForGive.ArcherWeapType = toolWeaponTypeForGive;
-                                        unitDatComForGive.ResetAmountSteps();
+                                        unitDatComForGive.AmountSteps -= 1;
 
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickArcher);
                                     }

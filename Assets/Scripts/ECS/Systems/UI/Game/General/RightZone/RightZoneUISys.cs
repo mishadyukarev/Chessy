@@ -19,9 +19,8 @@ internal sealed class RightZoneUISys : IEcsRunSystem
 
         ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
 
-
-
         var activeParent = false;
+
 
         if (_selFilt.Get1(0).IsSelectedCell)
         {

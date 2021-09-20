@@ -78,7 +78,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
 
             damageTo += fromUnitDatCom.SimplePowerDamage;
             damageTo -= toUnitDatCom.PowerProtection;
-            damageTo -= toBuildDatCom.PowerProtectionUnit(toUnitDatCom.UnitType);
+            damageTo -= toBuildDatCom.PowerProtectionUnit(toUnitDatCom.UnitType, fromUnitDatCom.SimplePowerDamage);
             damageTo -= toEnvDatCom.PowerProtectionUnit(toUnitDatCom.UnitType);
 
 
@@ -129,6 +129,9 @@ internal sealed class AttackMastSys : IEcsRunSystem
                 }
 
                 toUnitDatCom.ResetUnit();
+                toBotUnitCom.DefBot();
+                toOnUnitCom.DefOwner();
+                toOffUnitCom.DefOwner();
 
 
                 if (fromUnitDatCom.IsMelee)

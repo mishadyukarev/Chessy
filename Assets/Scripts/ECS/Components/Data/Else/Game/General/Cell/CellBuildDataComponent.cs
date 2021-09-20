@@ -8,9 +8,9 @@ internal struct CellBuildDataComponent
     internal bool IsBuildType(BuildingTypes buildingType) => BuildType == buildingType;
     internal void DefBuildType() => BuildType = default;
 
-    internal int PowerProtectionUnit(UnitTypes unitType)
+    internal int PowerProtectionUnit(UnitTypes unitType, float simPowerDamage)
     {
-        var powerProtection = 0;
+        float powerProtection = 0;
         switch (BuildType)
         {
             case BuildingTypes.City:
@@ -21,19 +21,19 @@ internal struct CellBuildDataComponent
                         throw new Exception();
 
                     case UnitTypes.King:
-                        powerProtection += 10;
+                        powerProtection += simPowerDamage  * 0.3f;
                         break;
 
                     case UnitTypes.Pawn:
-                        powerProtection += 10;
+                        powerProtection += simPowerDamage * 0.5f;
                         break;
 
                     case UnitTypes.Rook:
-                        powerProtection += 10;
+                        powerProtection += simPowerDamage * 0.5f;
                         break;
 
                     case UnitTypes.Bishop:
-                        powerProtection += 10;
+                        powerProtection += simPowerDamage * 0.5f;
                         break;
 
                     default:
@@ -43,17 +43,67 @@ internal struct CellBuildDataComponent
                 break;
 
             case BuildingTypes.Farm:
-                powerProtection += 5;
+
+                switch (unitType)
+                {
+                    case UnitTypes.None:
+                        throw new Exception();
+
+                    case UnitTypes.King:
+                        powerProtection += simPowerDamage * 0.1f;
+                        break;
+
+                    case UnitTypes.Pawn:
+                        powerProtection += simPowerDamage * 0.3f;
+                        break;
+
+                    case UnitTypes.Rook:
+                        powerProtection += simPowerDamage * 0.3f;
+                        break;
+
+                    case UnitTypes.Bishop:
+                        powerProtection += simPowerDamage * 0.3f;
+                        break;
+
+                    default:
+                        throw new Exception();
+                }
+
                 break;
 
             case BuildingTypes.Woodcutter:
-                powerProtection += 5;
+
+                switch (unitType)
+                {
+                    case UnitTypes.None:
+                        throw new Exception();
+
+                    case UnitTypes.King:
+                        powerProtection += simPowerDamage * 0.1f;
+                        break;
+
+                    case UnitTypes.Pawn:
+                        powerProtection += simPowerDamage * 0.3f;
+                        break;
+
+                    case UnitTypes.Rook:
+                        powerProtection += simPowerDamage * 0.3f;
+                        break;
+
+                    case UnitTypes.Bishop:
+                        powerProtection += simPowerDamage * 0.3f;
+                        break;
+
+                    default:
+                        throw new Exception();
+                }
+
                 break;
 
             case BuildingTypes.Mine:
                 break;
         }
 
-        return powerProtection;
+        return (int)powerProtection;
     }
 }

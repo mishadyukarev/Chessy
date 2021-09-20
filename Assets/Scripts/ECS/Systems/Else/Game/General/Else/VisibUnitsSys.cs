@@ -169,10 +169,11 @@ internal sealed class VisibUnitsSys : IEcsRunSystem
 
                             ref var unitDataCom_1 = ref _cellUnitFilter.Get1(idxCell_1);
                             ref var ownerUnitCom_1 = ref _cellUnitFilter.Get2(idxCell_1);
+                            ref var offUnitCom_1 = ref _cellUnitFilter.Get3(idxCell_1);
 
                             if (unitDataCom_1.HaveUnit)
                             {
-                                if (ownerUnitCom_1.HaveOwner)
+                                if (ownerUnitCom_1.HaveOwner || offUnitCom_1.HaveLocalPlayer)
                                 {
                                     curUnitDataCom.SetIsVisibleUnit(true, true);
                                     break;

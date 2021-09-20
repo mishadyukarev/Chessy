@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Game.General.Components;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
 using Photon.Pun;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems
         private EcsFilter<SelectorCom> _selComFilter = default;
 
         private EcsFilter<CellUnitMainViewComp, CellUnitExtraViewComp> _cellUnitViewFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerBotComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -20,7 +20,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems
             foreach (byte idxCurCell in _cellUnitFilter)
             {
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxCurCell);
-                ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
+                ref var curOnUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
+                ref var curOffUnitCom = ref _cellUnitFilter.Get3(idxCurCell);
 
                 ref var curMainUnitViewCom = ref _cellUnitViewFilter.Get1(idxCurCell);
                 ref var curExtraUnitViewCom = ref _cellUnitViewFilter.Get2(idxCurCell);
@@ -29,10 +30,10 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                 if (selCom.IdxSelCell == idxCurCell)
                 {
                     if (curUnitDatCom.HaveUnit)
-
-                        if (curOwnUnitCom.HaveOwner)
-
-                            if (curOwnUnitCom.IsMine)
+                    {
+                        if (curOnUnitCom.HaveOwner)
+                        {
+                            if (curOnUnitCom.IsMine)
                             {
                                 if (curUnitDatCom.IsUnit(UnitTypes.Rook))
                                 {
@@ -45,14 +46,30 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                                     curExtraUnitViewCom.SetFlipX(false);
                                 }
                             }
+                        }
+                        else if (curOffUnitCom.HaveLocalPlayer)
+                        {
+                            if (curOffUnitCom.IsMine)
+                            {
+                                if (curUnitDatCom.IsUnit(UnitTypes.Rook))
+                                {
+                                    if (PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, -90));
+                                    else curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 90));
+                                }
+                                else
+                                {
+                                    curMainUnitViewCom.SetFlipX(true);
+                                    curExtraUnitViewCom.SetFlipX(false);
+                                }
+                            }
+                        }
+                    }
                 }
+
                 else
                 {
                     curMainUnitViewCom.SetFlipX(false);
                     curExtraUnitViewCom.SetFlipX(true);
-
-                    if (PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 0));
-                    else curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 180));
                 }
             }
         }

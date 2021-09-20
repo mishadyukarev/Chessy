@@ -33,15 +33,25 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
 
                 if (selUnitDatCom.HaveUnit)
                 {
+                    ref var selOnUnitCom = ref _cellUnitFilt.Get2(selCom.IdxSelCell);
                     ref var selOffUnitCom = ref _cellUnitFilt.Get3(selCom.IdxSelCell);
 
-                    if (selOffUnitCom.HaveLocalPlayer)
+                    condUnitUICom.SetText_Info(LanguageComComp.GetText(GameLanguageTypes.ConditAbilities));
+                    uniqueAbilUICom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.UniqueAbilities));
+                    buildAbilUICom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.BuildingAbilities));
+
+                    if (selOnUnitCom.HaveOwner)
+                    {
+                        if (selOnUnitCom.IsMine)
+                        {
+                            needActiveInfoText = true;
+                        }
+                    }
+
+                    else if (selOffUnitCom.HaveLocalPlayer)
                     {
                         if (selOffUnitCom.IsMine)
                         {
-                            condUnitUICom.SetText_Info(LanguageComComp.GetText(GameLanguageTypes.ConditAbilities));
-                            uniqueAbilUICom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.UniqueAbilities));
-                            buildAbilUICom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.BuildingAbilities));
                             needActiveInfoText = true;
                         }
                     }

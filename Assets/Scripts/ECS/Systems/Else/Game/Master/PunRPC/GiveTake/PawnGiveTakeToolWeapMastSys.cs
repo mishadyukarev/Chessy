@@ -63,12 +63,9 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                     {
                         if (unitDatComForGive.HaveMaxAmountHealth)
                         {
-                            if (unitDatComForGive.HaveMaxAmountSteps)
+                            if (unitDatComForGive.HaveMinAmountSteps)
                             {
-                                if (unitDatComForGive.IsConditionType(new[] { CondUnitTypes.Protected, CondUnitTypes.Relaxed }))
-                                {
-                                    unitDatComForGive.CondUnitType = default;
-                                }
+                                unitDatComForGive.CondUnitType = default;
 
                                 if (unitDatComForGive.ExtraTWPawnType.IsTool())
                                 {
@@ -79,7 +76,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                                     inventWeapsCom.AddAmountWeapons(isMaster, unitDatComForGive.ExtraTWPawnType);
                                 }
 
-                                unitDatComForGive.ResetAmountSteps();
+                                unitDatComForGive.AmountSteps -= 1;
                                 unitDatComForGive.ExtraTWPawnType = default;
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
@@ -106,10 +103,12 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                         {
                             if (unitDatComForGive.HaveMaxAmountHealth)
                             {
-                                if (unitDatComForGive.HaveMaxAmountSteps)
+                                if (unitDatComForGive.HaveMinAmountSteps)
                                 {
                                     if (unitDatComForGive.ArcherWeapType != toolWeapTypeForGive)
                                     {
+                                        unitDatComForGive.CondUnitType = default;
+
                                         if (toolWeapTypeForGive.IsTool())
                                         {
                                             if (inventToolsCom.HaveTool(isMaster, toolWeapTypeForGive))
@@ -117,7 +116,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                                                 inventToolsCom.TakeAmountTools(isMaster, toolWeapTypeForGive);
 
                                                 unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                                unitDatComForGive.ResetAmountSteps();
+                                                unitDatComForGive.AmountSteps -= 1;
 
                                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                             }
@@ -129,7 +128,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                                                     invResCom.TakeAmountResources(ResourceTypes.Wood, isMaster, _woodCostForPick);
 
                                                     unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                                    unitDatComForGive.ResetAmountSteps();
+                                                    unitDatComForGive.AmountSteps -= 1;
 
                                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                                 }
@@ -143,7 +142,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                                             else if (toolWeapTypeForGive == ToolWeaponTypes.Axe)
                                             {
                                                 unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                                unitDatComForGive.ResetAmountSteps();
+                                                unitDatComForGive.AmountSteps -= 1;
                                             }
                                         }
 
@@ -154,7 +153,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                                                 inventWeapsCom.TakeAmountWeapons(isMaster, toolWeapTypeForGive);
 
                                                 unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                                unitDatComForGive.ResetAmountSteps();
+                                                unitDatComForGive.AmountSteps -= 1;
 
                                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                             }
@@ -166,7 +165,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                                                     invResCom.TakeAmountResources(ResourceTypes.Iron, isMaster, _ironCostForSword);
 
                                                     unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                                    unitDatComForGive.ResetAmountSteps();
+                                                    unitDatComForGive.AmountSteps -= 1;
 
                                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                                 }

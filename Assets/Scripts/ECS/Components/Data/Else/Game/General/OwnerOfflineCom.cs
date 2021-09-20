@@ -38,5 +38,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
                 }
             }
         }
+
+        internal void DefOwner() => LocalPlayerType = default;
     }
 }

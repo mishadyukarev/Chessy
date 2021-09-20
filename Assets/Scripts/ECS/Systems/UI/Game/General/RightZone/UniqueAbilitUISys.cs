@@ -38,10 +38,10 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
 
         unitZoneViewCom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.UniqueAbilities));
 
-        unitZoneViewCom.SetActive_Button(UniqueButtonTypes.First, false);
-        unitZoneViewCom.SetActive_Button(UniqueButtonTypes.Second, false);
-       
 
+
+        var activeFirst = false;
+        var activeSecond = false;
 
         if (selUnitDatCom.HaveUnit)
         {
@@ -66,7 +66,7 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
             {
                 if (selUnitDatCom.IsUnit(UnitTypes.King))
                 {
-                    unitZoneViewCom.SetActive_Button(UniqueButtonTypes.First, true);
+                    activeFirst = true;
                     unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.CircularAttack));
                     unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
                 }
@@ -74,9 +74,7 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
                 {
                     if (selUnitDatCom.IsMelee)
                     {
-                        unitZoneViewCom.SetActive_Button(UniqueButtonTypes.First, true);
-
-                        unitZoneViewCom.SetActive_Button(UniqueButtonTypes.First, true);
+                        activeFirst = true;
 
                         if (selEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
                         {
@@ -99,13 +97,16 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
 
                     else
                     {
-                        unitZoneViewCom.SetActive_Button(UniqueButtonTypes.First, true);
+                        activeFirst = true;
                         unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
                         unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.FireForest));
                     }
                 }
             }
         }
+
+        unitZoneViewCom.SetActive_Button(UniqueButtonTypes.First, activeFirst);
+        unitZoneViewCom.SetActive_Button(UniqueButtonTypes.Second, activeSecond);
     }
 
 

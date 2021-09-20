@@ -16,7 +16,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
         private EcsFilter<BuildAbilitUICom> _buildAbilUIFilt = default;
 
         private EcsFilter<CellUnitDataCom, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerBotComponent> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataComponent, OwnerOnlineComp, OwnerOfflineCom, OwnerBotComponent> _cellBuildFilter = default;
 
         public void Init()
         {
@@ -43,75 +43,16 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
 
                 else
                 {
-                    ref var selUnitDataCom = ref _cellUnitFilter.Get1(idxSelCell);
-                    ref var selOnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
-                    ref var selOffUnitCom = ref _cellUnitFilter.Get3(idxSelCell);
-                    ref var selBotUnitCom = ref _cellUnitFilter.Get4(idxSelCell);
-
                     ref var selBuildDataCom = ref _cellBuildFilter.Get1(idxSelCell);
-                    ref var selOnBuildCom = ref _cellBuildFilter.Get2(idxSelCell);
-                    ref var selBotBuildCom = ref _cellBuildFilter.Get3(idxSelCell);
 
-
-                    if (_selFilt.Get1(0).IsSelectedCell)
-
-                        if (selUnitDataCom.HaveUnit)
-                        {
-                            var canCome = false;
-
-                            if (selOnUnitCom.HaveOwner)
-                            {
-                                if (selOnUnitCom.IsMine) canCome = true;
-                            }
-                            else if (selOffUnitCom.HaveLocalPlayer)
-                            {
-                                if (selOffUnitCom.IsMine) canCome = true;
-                            }
-
-
-                            if (canCome)
-
-                                if (selUnitDataCom.Is(new[] { UnitTypes.Pawn }))
-
-                                    if (selBuildDataCom.HaveBuild)
-                                    {
-                                        if (selOnBuildCom.HaveOwner)
-                                        {
-                                            if (selOnBuildCom.IsMine)
-                                            {
-                                                if (!selBuildDataCom.IsBuildType(BuildingTypes.City))
-
-                                                    RpcSys.DestroyBuildingToMaster(idxSelCell);
-
-                                            }
-
-                                            else
-                                            {
-                                                RpcSys.DestroyBuildingToMaster(idxSelCell);
-                                            }
-                                        }
-
-                                        else if (selBotBuildCom.IsBot)
-                                        {
-                                            if (selBuildDataCom.IsBuildType(BuildingTypes.City))
-                                            {
-                                                RpcSys.DestroyBuildingToMaster(idxSelCell);
-                                            }
-                                        }
-                                    }
-
-                                    else
-                                    {
-                                        if (!_cellBuildFilter.IsSettedCity(PhotonNetwork.IsMasterClient))
-                                        {
-                                            RpcSys.BuildToMaster(idxSelCell, BuildingTypes.City);
-                                        }
-                                    }
-
-
-
-
-                        }
+                    if (selBuildDataCom.IsBuildType(BuildingTypes.City))
+                    {
+                        RpcSys.DestroyBuildingToMaster(idxSelCell);
+                    }
+                    else
+                    {
+                        RpcSys.BuildToMaster(idxSelCell, BuildingTypes.City);
+                    }
                 }
             }
         }

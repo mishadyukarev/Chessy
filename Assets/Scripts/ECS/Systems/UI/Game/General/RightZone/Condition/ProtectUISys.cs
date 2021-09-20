@@ -34,7 +34,10 @@ namespace Assets.Scripts.ECS.Components.View.UI.Game.General.Right
 
                 if (selOnUnitCom.HaveOwner)
                 {
-
+                    if (selOnUnitCom.IsMine)
+                    {
+                        isEnableButt = true;
+                    }
                 }
 
                 else if (selOffUnitCom.HaveLocalPlayer)

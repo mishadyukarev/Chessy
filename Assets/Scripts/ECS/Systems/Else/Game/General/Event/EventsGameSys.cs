@@ -7,6 +7,8 @@ using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
+using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
 using Leopotam.Ecs;
 using Photon.Pun;
@@ -28,6 +30,7 @@ namespace Assets.Scripts
         private EcsFilter<KingZoneViewUIComp> _kingZoneUIFilter = default;
         private EcsFilter<GiveTakeZoneViewUIComp> _giveTakeZoneUIFilter = default;
         private EcsFilter<SoundEffectsComp> _soundEffFilt = default;
+        private EcsFilter<FriendZoneDataUICom, FriendZoneViewUICom> _friendZoneFilt = default;
 
         private EcsFilter<InventorUnitsComponent> _invUnitsFilt = default;
 
@@ -58,9 +61,6 @@ namespace Assets.Scripts
 
 
 
-
-
-
             _giveTakeZoneUIFilter.Get1(0).AddListenerToGive_Button(ActiveGiveTakeButton);
 
             _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Axe, delegate { ToggleToolWeapon(ToolWeaponTypes.Axe); });
@@ -69,7 +69,7 @@ namespace Assets.Scripts
             _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Crossbow, delegate { ToggleToolWeapon(ToolWeaponTypes.Crossbow); });
 
 
-
+            _friendZoneFilt.Get2(0).AddListenerReady(ReadyFriend);
 
 
 
@@ -127,6 +127,11 @@ namespace Assets.Scripts
                     }
                 }
             }
+        }
+
+        internal void ReadyFriend()
+        {
+            _friendZoneFilt.Get1(0).IsActiveFriendZone = false;
         }
 
         private void Done()
