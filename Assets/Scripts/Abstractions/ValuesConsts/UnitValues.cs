@@ -36,9 +36,9 @@
 
         #region Environment
 
-        public static int PROTECTION_FOOD_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * 0.5f);
-        public static int PROTECTION_FOOD_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * 0.5f);
-        public static int PROTECTION_FOOD_FOR_ROOK_AND_BISHOP => (int)(SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP * 0.5f);
+        public static int PROTECTION_FOOD_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * 0.7f);
+        public static int PROTECTION_FOOD_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * 0.7f);
+        public static int PROTECTION_FOOD_FOR_ROOK_AND_BISHOP => (int)(SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP * 0.7f);
 
         public static int PROTECTION_HILL_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * 0.2f);
         public static int PROTECTION_HILL_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * 0.3f);

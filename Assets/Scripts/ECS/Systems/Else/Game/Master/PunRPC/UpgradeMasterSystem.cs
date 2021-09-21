@@ -2,6 +2,7 @@
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 
@@ -34,12 +35,16 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
 
 
+            PlayerTypes playerSender = default;
+            if (GameModesCom.IsOffMode) playerSender = WhoseMoveCom.CurOfflinePlayer;
+            else playerSender = sender.GetPlayerType();
+
             var buildTypeForUpgrade = _forUpgradeFilter.Get1(0).BuildingType;
 
-            if (inventResCom.CanUpgradeBuildings(sender.GetPlayerType(), buildTypeForUpgrade, out var haves))
+            if (inventResCom.CanUpgradeBuildings(playerSender, buildTypeForUpgrade, out var haves))
             {
-                inventResCom.BuyUpgradeBuildings(sender.GetPlayerType(), buildTypeForUpgrade);
-                _upgradeBuildsFilter.Get1(0).AddAmountUpgrades(sender.GetPlayerType(), buildTypeForUpgrade);
+                inventResCom.BuyUpgradeBuildings(playerSender, buildTypeForUpgrade);
+                _upgradeBuildsFilter.Get1(0).AddAmountUpgrades(playerSender, buildTypeForUpgrade);
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
             }

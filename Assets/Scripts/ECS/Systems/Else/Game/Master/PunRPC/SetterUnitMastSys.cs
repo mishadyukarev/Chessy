@@ -39,8 +39,8 @@ internal sealed class SetterUnitMastSys : IEcsRunSystem
 
         PlayerTypes playerSender = default;
 
-        if(GameModesCom.IsOffMode) playerSender = WhoseMoveCom.CurOfflinePlayer;
-        else playerSender = WhoseMoveCom.CurOnlinePlayer;
+        if (GameModesCom.IsOffMode) playerSender = WhoseMoveCom.CurOfflinePlayer;
+        else playerSender = sender.GetPlayerType();
 
 
         if (_cellsSetUnitFilter.Get1(0).HaveIdxCell(playerSender, idxForSet))

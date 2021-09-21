@@ -50,7 +50,7 @@ internal struct CellBuildDataComponent
                         throw new Exception();
 
                     case UnitTypes.King:
-                        powerProtection += simPowerDamage * 0.1f;
+                        powerProtection += simPowerDamage * 0.3f;
                         break;
 
                     case UnitTypes.Pawn:

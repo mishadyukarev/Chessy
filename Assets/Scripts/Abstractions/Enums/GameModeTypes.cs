@@ -1,12 +1,12 @@
-﻿namespace Assets.Scripts.Abstractions.Enums
-{
-    public enum GameModeTypes
-    {
-        None,
+﻿//namespace Assets.Scripts.Abstractions.Enums
+//{
+//    public enum GameModeTypes
+//    {
+//        None,
 
-        PublicOn,
-        FriendOn,
+//        PublicOn,
+//        FriendOn,
 
-        Offline,
-    }
-}
+//        Offline,
+//    }
+//}

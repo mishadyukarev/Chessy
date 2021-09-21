@@ -494,11 +494,8 @@ namespace Assets.Scripts
         {
             _curNumber = 0;
 
-            ref var endGameDataUIComp = ref _endGameFilter.Get1(0);
 
-
-            endGameDataUIComp.PlayerWinner = (PlayerTypes)objects[_curNumber++];
-
+            _endGameFilter.Get1(0).PlayerWinner = (PlayerTypes)objects[_curNumber++];
 
 
             _readyUIFilter.Get1(0).IsStartedGame = (bool)objects[_curNumber++];

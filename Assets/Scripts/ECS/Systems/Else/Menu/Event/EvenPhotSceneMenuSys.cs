@@ -66,7 +66,7 @@ namespace Assets.Scripts.ECS.Managers.Event
         {
             RoomOptions roomOptions = new RoomOptions();
 
-
+            GameModesCom.GameMode = GameModes.PublicOn;
 
             //roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
             //roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
@@ -86,6 +86,8 @@ namespace Assets.Scripts.ECS.Managers.Event
             ref var rightOnlineUICom = ref _rightZoneFilter.Get2(0);
             var roomName = rightOnlineUICom.TextCreateFriendRoom;
 
+            GameModesCom.GameMode = GameModes.WithFriendOn;
+
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = MAX_PLAYERS;
             //roomOptions.PlayerTtl = 200;//1000
@@ -97,12 +99,14 @@ namespace Assets.Scripts.ECS.Managers.Event
 
         public void JoinRandomRoom()
         {
+            GameModesCom.GameMode = GameModes.PublicOn;
             //Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
             PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
         }
 
         private void JoinFriendRoom()
         {
+            GameModesCom.GameMode = GameModes.WithFriendOn;
             PhotonNetwork.JoinRoom(_rightZoneFilter.Get2(0).TextJoinFriendRoom);
         }
 

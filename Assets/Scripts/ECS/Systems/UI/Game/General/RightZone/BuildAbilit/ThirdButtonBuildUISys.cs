@@ -39,9 +39,10 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                     {
                         if (selBuildDatCom.IsBuildType(BuildingTypes.City))
                         {
+                            buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
+
                             if (!selOwnBuildCom.IsMine)
-                            {
-                                buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
+                            {  
                                 needActiveThirdButt = true;
                             }
                         }
@@ -49,6 +50,8 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                         else
                         {
                             var isSettedMyCity = false;
+
+                            buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.BuildCity));
 
                             foreach (var idxCell in _cellBuildFilt)
                             {
@@ -59,7 +62,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                                 {
                                     if (curOwnBuildCom.IsMine)
                                     {
-                                        buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.BuildCity));
+                                        
                                         isSettedMyCity = true;
                                         break;
                                     }

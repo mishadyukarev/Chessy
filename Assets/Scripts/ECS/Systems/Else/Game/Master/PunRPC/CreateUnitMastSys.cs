@@ -5,6 +5,7 @@ using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -30,6 +31,10 @@ internal sealed class CreateUnitMastSys : IEcsRunSystem
         var unitTypeForCreating = _creatorUnitFilter.Get1(0).UnitTypeForCreating;
 
 
+        PlayerTypes playerSender = default;
+        if (GameModesCom.IsOffMode) playerSender = WhoseMoveCom.CurOfflinePlayer;
+        else playerSender = infoCom.FromInfo.Sender.GetPlayerType();
+
 
         var isSettedCity = false;
 
@@ -37,7 +42,7 @@ internal sealed class CreateUnitMastSys : IEcsRunSystem
         {
             if (_cellBuildFilt.Get1(idx).IsBuildType(BuildingTypes.City))
             {
-                if (_cellBuildFilt.Get2(idx).IsMine)
+                if (_cellBuildFilt.Get2(idx).IsPlayerType(playerSender))
                 {
                     isSettedCity = true;
                 }
@@ -46,10 +51,10 @@ internal sealed class CreateUnitMastSys : IEcsRunSystem
 
         if (isSettedCity)
         {
-            if (amountResCom.CanCreateUnit(WhoseMoveCom.CurPlayer, unitTypeForCreating, out bool[] haves))
+            if (amountResCom.CanCreateUnit(playerSender, unitTypeForCreating, out bool[] haves))
             {
-                amountResCom.BuyCreateUnit(WhoseMoveCom.CurPlayer, unitTypeForCreating);
-                unitInventorCom.AddUnitsInInventor(WhoseMoveCom.CurPlayer, unitTypeForCreating);
+                amountResCom.BuyCreateUnit(playerSender, unitTypeForCreating);
+                unitInventorCom.AddUnitsInInventor(playerSender, unitTypeForCreating);
 
                 RpcSys.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.SoundGoldPack);
             }

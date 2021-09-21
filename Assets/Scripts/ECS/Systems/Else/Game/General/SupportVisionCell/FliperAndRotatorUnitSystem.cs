@@ -30,12 +30,11 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                 {
                     if (curUnitDatCom.HaveUnit)
                     {
-                        if (curOwnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
+                        if (curOwnUnitCom.IsMine)
                         {
                             if (curUnitDatCom.IsUnit(UnitTypes.Rook))
                             {
-                                if (PhotonNetwork.IsMasterClient) curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, -90));
-                                else curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 90));
+                                curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, -90));
                             }
                             else
                             {
@@ -48,6 +47,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems
 
                 else
                 {
+                    curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, 0));
+
                     curMainUnitViewCom.SetFlipX(false);
                     curExtraUnitViewCom.SetFlipX(true);
                 }

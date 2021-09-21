@@ -85,39 +85,39 @@ internal sealed class EconomyUpUISys : IEcsRunSystem
 
                 }
             }
-
-            var amountUpgsFarm = amountBuildUpgsCom.AmountUpgs(WhoseMoveCom.CurPlayer, BuildingTypes.Farm);
-            var extractOneFarm = ExtractionInfoSupport.ExtractOneBuild(BuildingTypes.Farm, amountUpgsFarm);
-
-            var amountAddFood = 1 + builds[BuildingTypes.Farm] * extractOneFarm - amountUnitsInGame;
-
-
-            if (amountAddFood < 0) econViewUICom.SetAddText(ResourceTypes.Food, amountAddFood.ToString());
-
-            else econViewUICom.SetAddText(ResourceTypes.Food, "+ " + amountAddFood.ToString());
-
-
-
-            var amountUpgsWoodcut = amountBuildUpgsCom.AmountUpgs(WhoseMoveCom.CurPlayer, BuildingTypes.Woodcutter);
-            amountAddWood += (byte)(builds[BuildingTypes.Woodcutter] * ExtractionInfoSupport.ExtractOneBuild(BuildingTypes.Woodcutter, amountUpgsWoodcut));
-
-            econViewUICom.SetAddText(ResourceTypes.Wood, "+ " + amountAddWood);
-
-
-
-            var amountUpgrsMine = amountBuildUpgsCom.AmountUpgs(WhoseMoveCom.CurPlayer, BuildingTypes.Mine);
-            var amountAddOre = builds[BuildingTypes.Mine] * ExtractionInfoSupport.ExtractOneBuild(BuildingTypes.Mine, amountUpgrsMine);
-
-            econViewUICom.SetAddText(ResourceTypes.Ore, "+ " + amountAddOre);
-
-
-
-
-            econViewUICom.SetMainText(ResourceTypes.Food, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Food).ToString());
-            econViewUICom.SetMainText(ResourceTypes.Wood, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Wood).ToString());
-            econViewUICom.SetMainText(ResourceTypes.Ore, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Ore).ToString());
-            econViewUICom.SetMainText(ResourceTypes.Iron, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Iron).ToString());
-            econViewUICom.SetMainText(ResourceTypes.Gold, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Gold).ToString());
         }
+        var amountUpgsFarm = amountBuildUpgsCom.AmountUpgs(WhoseMoveCom.CurPlayer, BuildingTypes.Farm);
+        var extractOneFarm = ExtractionInfoSupport.ExtractOneBuild(BuildingTypes.Farm, amountUpgsFarm);
+
+        var amountAddFood = 1 + builds[BuildingTypes.Farm] * extractOneFarm - amountUnitsInGame;
+
+
+        if (amountAddFood < 0) econViewUICom.SetAddText(ResourceTypes.Food, amountAddFood.ToString());
+
+        else econViewUICom.SetAddText(ResourceTypes.Food, "+ " + amountAddFood.ToString());
+
+
+
+        var amountUpgsWoodcut = amountBuildUpgsCom.AmountUpgs(WhoseMoveCom.CurPlayer, BuildingTypes.Woodcutter);
+        amountAddWood += (byte)(builds[BuildingTypes.Woodcutter] * ExtractionInfoSupport.ExtractOneBuild(BuildingTypes.Woodcutter, amountUpgsWoodcut));
+
+        econViewUICom.SetAddText(ResourceTypes.Wood, "+ " + amountAddWood);
+
+
+
+        var amountUpgrsMine = amountBuildUpgsCom.AmountUpgs(WhoseMoveCom.CurPlayer, BuildingTypes.Mine);
+        var amountAddOre = builds[BuildingTypes.Mine] * ExtractionInfoSupport.ExtractOneBuild(BuildingTypes.Mine, amountUpgrsMine);
+
+        econViewUICom.SetAddText(ResourceTypes.Ore, "+ " + amountAddOre);
+
+
+
+
+        econViewUICom.SetMainText(ResourceTypes.Food, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Food).ToString());
+        econViewUICom.SetMainText(ResourceTypes.Wood, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Wood).ToString());
+        econViewUICom.SetMainText(ResourceTypes.Ore, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Ore).ToString());
+        econViewUICom.SetMainText(ResourceTypes.Iron, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Iron).ToString());
+        econViewUICom.SetMainText(ResourceTypes.Gold, amountResCom.AmountResources(WhoseMoveCom.CurPlayer, ResourceTypes.Gold).ToString());
+
     }
 }

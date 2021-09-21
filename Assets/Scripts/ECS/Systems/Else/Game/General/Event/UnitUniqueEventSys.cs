@@ -10,6 +10,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
     {
         private EcsFilter<SelectorCom> _selectorFilter = default;
         private EcsFilter<UniqueAbiltUICom> _uniqueAbilUIFilt = default;
+        private EcsFilter<DonerDataUIComponent> _donerUIFilt = default;
 
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
@@ -22,6 +23,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
 
         private void ExecuteUniqueButton(UniqueButtonTypes uniqueButtonType)
         {
+
             if (uniqueButtonType == UniqueButtonTypes.First)
             {
                 var idxSelCell = _selectorFilter.Get1(0).IdxSelCell;

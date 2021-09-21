@@ -252,88 +252,75 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
 
             if (PhotonNetwork.IsMasterClient)
+            {
+                _curGameWorld.NewEntity()
+                   .Replace(new InfoMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForGettingUnitMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForSettingUnitMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForAttackMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForShiftMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForDonerMasCom())
+                    .Replace(new NeedActiveSomethingMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForBuildingMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForSeedingMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ConditionMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForCircularAttackMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForCreatingUnitMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForDestroyMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForFireMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForReadyMasCom())
+                    .Replace(new NeedActiveSomethingMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForUpgradeMasCom());
+
+                _curGameWorld.NewEntity()
+                    .Replace(new ForGiveTakeToolWeaponComp());
+
+
+                canvasEnt.Get<DonerDataUIComponent>().SetDoned(false, true);
+
+                int random;
+
+                foreach (byte curIdxCell in _xyCellFilter)
                 {
-                    _curGameWorld.NewEntity()
-                       .Replace(new InfoMasCom());
+                    var curXyCell = _xyCellFilter.GetXyCell(curIdxCell);
 
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForGettingUnitMasCom());
+                    ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
 
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForSettingUnitMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForAttackMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForShiftMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForDonerMasCom())
-                        .Replace(new NeedActiveSomethingMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForBuildingMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForSeedingMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ConditionMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForCircularAttackMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForCreatingUnitMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForDestroyMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForFireMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForReadyMasCom())
-                        .Replace(new NeedActiveSomethingMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForUpgradeMasCom());
-
-                    _curGameWorld.NewEntity()
-                        .Replace(new ForGiveTakeToolWeaponComp());
-
-
-                    canvasEnt.Get<DonerDataUIComponent>().SetDoned(false, true);
-
-                    int random;
-
-                    foreach (byte curIdxCell in _xyCellFilter)
+                    if (_cellViewFilt.Get1(curIdxCell).IsActiveParent)
                     {
-                        var curXyCell = _xyCellFilter.GetXyCell(curIdxCell);
-
-                        ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
-
-                        if (_cellViewFilt.Get1(curIdxCell).IsActiveParent)
+                        if (curXyCell[1] >= 4 && curXyCell[1] <= 6)
                         {
-                            if (curXyCell[1] >= 4 && curXyCell[1] <= 6)
-                            {
-                                random = UnityEngine.Random.Range(1, 100);
-                                if (random <= EnvironmentValues.START_MOUNTAIN_PERCENT)
-                                    curEnvDatCom.SetNewEnvir(EnvirTypes.Mountain);
-                                else
-                                {
-                                    random = UnityEngine.Random.Range(1, 100);
-                                    if (random <= EnvironmentValues.START_FOREST_PERCENT)
-                                    {
-                                        curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
-                                    }
-
-                                    random = UnityEngine.Random.Range(1, 100);
-                                    if (random <= EnvironmentValues.START_HILL_PERCENT)
-                                        curEnvDatCom.SetNewEnvir(EnvirTypes.Hill);
-                                }
-                            }
+                            random = UnityEngine.Random.Range(1, 100);
+                            if (random <= EnvironmentValues.START_MOUNTAIN_PERCENT)
+                                curEnvDatCom.SetNewEnvir(EnvirTypes.Mountain);
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
@@ -341,55 +328,68 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                                 {
                                     curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
                                 }
-                                else
+
+                                random = UnityEngine.Random.Range(1, 100);
+                                if (random <= EnvironmentValues.START_HILL_PERCENT)
+                                    curEnvDatCom.SetNewEnvir(EnvirTypes.Hill);
+                            }
+                        }
+                        else
+                        {
+                            random = UnityEngine.Random.Range(1, 100);
+                            if (random <= EnvironmentValues.START_FOREST_PERCENT)
+                            {
+                                curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
+                            }
+                            else
+                            {
+                                random = UnityEngine.Random.Range(1, 100);
+                                if (random <= EnvironmentValues.START_FERTILIZER_PERCENT)
                                 {
-                                    random = UnityEngine.Random.Range(1, 100);
-                                    if (random <= EnvironmentValues.START_FERTILIZER_PERCENT)
-                                    {
-                                        curEnvDatCom.SetNewEnvir(EnvirTypes.Fertilizer);
-                                    }
+                                    curEnvDatCom.SetNewEnvir(EnvirTypes.Fertilizer);
                                 }
                             }
                         }
-
-                        _cellViewFilt.Get1(curIdxCell).SetRotForClient(PhotonNetwork.IsMasterClient);
                     }
 
-
-
-                    ref var unitInvCom = ref _inventorUnitsFilter.Get1(0);
-
-
-                    unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.King, EconomyValues.AMOUNT_KING_MASTER);
-                    unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.Pawn, EconomyValues.AMOUNT_PAWN_MASTER);
-                    unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.Rook, EconomyValues.AMOUNT_ROOK_MASTER);
-                    unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.Bishop, EconomyValues.AMOUNT_BISHOP_MASTER);
-
-                    unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.King, EconomyValues.AMOUNT_KING_OTHER);
-                    unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.Pawn, EconomyValues.AMOUNT_PAWN_OTHER);
-                    unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.Rook, EconomyValues.AMOUNT_ROOK_OTHER);
-                    unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.Bishop, EconomyValues.AMOUNT_BISHOP_OTHER);
-
-
-                    invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_MASTER);
-                    invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Wood, EconomyValues.AMOUNT_WOOD_MASTER);
-                    invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Ore, EconomyValues.AMOUNT_ORE_MASTER);
-                    invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Iron, EconomyValues.AMOUNT_IRON_MASTER);
-                    invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Gold, EconomyValues.AMOUNT_GOLD_MASTER);
-
-                    invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_OTHER);
-                    invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Wood, EconomyValues.AMOUNT_WOOD_OTHER);
-                    invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Ore, EconomyValues.AMOUNT_ORE_OTHER);
-                    invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Iron, EconomyValues.AMOUNT_IRON_OTHER);
-                    invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Gold, EconomyValues.AMOUNT_GOLD_OTHER);
-
+                    _cellViewFilt.Get1(curIdxCell).SetRotForClient(PhotonNetwork.IsMasterClient);
                 }
+
+
+
+                ref var unitInvCom = ref _inventorUnitsFilter.Get1(0);
+
+
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.King, EconomyValues.AMOUNT_KING_MASTER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.Pawn, EconomyValues.AMOUNT_PAWN_MASTER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.Rook, EconomyValues.AMOUNT_ROOK_MASTER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.Bishop, EconomyValues.AMOUNT_BISHOP_MASTER);
+
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.King, EconomyValues.AMOUNT_KING_OTHER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.Pawn, EconomyValues.AMOUNT_PAWN_OTHER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.Rook, EconomyValues.AMOUNT_ROOK_OTHER);
+                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.Bishop, EconomyValues.AMOUNT_BISHOP_OTHER);
+
+
+                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_MASTER);
+                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Wood, EconomyValues.AMOUNT_WOOD_MASTER);
+                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Ore, EconomyValues.AMOUNT_ORE_MASTER);
+                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Iron, EconomyValues.AMOUNT_IRON_MASTER);
+                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Gold, EconomyValues.AMOUNT_GOLD_MASTER);
+
+                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_OTHER);
+                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Wood, EconomyValues.AMOUNT_WOOD_OTHER);
+                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Ore, EconomyValues.AMOUNT_ORE_OTHER);
+                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Iron, EconomyValues.AMOUNT_IRON_OTHER);
+                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Gold, EconomyValues.AMOUNT_GOLD_OTHER);
+
+            }
 
             else
-                {
-                    _curGameWorld.NewEntity()
-                        .Replace(new FromInfoComponent());
-                }
+            {
+                _curGameWorld.NewEntity()
+                    .Replace(new FromInfoComponent());
+            }
             
 
             if (GameModesCom.IsOnMode)
