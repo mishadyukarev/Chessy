@@ -19,9 +19,6 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
     private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvrDataFilter = default;
 
-    private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
-    private EcsFilter<SoundEffectsComp> _soundEffFilter = default;
-
     public void Run()
     {
         var fromInfo = _infoFilter.Get1(0).FromInfo;
@@ -44,12 +41,11 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
             ref var fromOnlineUnitCom = ref _cellUnitFilter.Get2(fromIdx);
 
             ref var toUnitDatCom = ref _cellUnitFilter.Get1(toIdx);
-            ref var toOnlineUnitCom = ref _cellUnitFilter.Get2(toIdx);
+            ref var toOwnUnitCom = ref _cellUnitFilter.Get2(toIdx);
+            ref var toEnvDatCom = ref _cellEnvrDataFilter.Get1(toIdx);
 
-            ref var toCellEnvDataCom = ref _cellEnvrDataFilter.Get1(toIdx);
 
-
-            fromUnitDatCom.TakeAmountSteps(toCellEnvDataCom.NeedAmountSteps);
+            fromUnitDatCom.TakeAmountSteps(toEnvDatCom.NeedAmountSteps);
             if (fromUnitDatCom.AmountSteps < 0) fromUnitDatCom.ResetAmountSteps();
 
 
@@ -59,26 +55,11 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
             toUnitDatCom.AmountHealth = fromUnitDatCom.AmountHealth;
             toUnitDatCom.AmountSteps = fromUnitDatCom.AmountSteps;
             toUnitDatCom.CondUnitType = default;
+            toOwnUnitCom.PlayerType = playerType;
 
-            //if (PhotonNetwork.OfflineMode)
-            //{
-            //    if (isMaster) toOfflineUnitCom.LocalPlayerType = PlayerTypes.First;
-            //    else toOfflineUnitCom.LocalPlayerType = PlayerTypes.Second;
+            fromUnitDatCom.DefUnitType();
 
-            //    _soundEffFilter.Get1(0).Play(SoundEffectTypes.ClickToTable);
-            //}
-
-            //else
-            //{
-            //    toOnlineUnitCom.SetOnlineOwner(fromInfo.Sender);
-
-            //    RpcSys.SoundToGeneral(fromInfo.Sender, SoundEffectTypes.ClickToTable);
-            //}
-
-
-            fromUnitDatCom.ResetUnitType();
-
-
+            RpcSys.SoundToGeneral(fromInfo.Sender, SoundEffectTypes.ClickToTable);
         }
     }
 }

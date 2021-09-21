@@ -1,5 +1,7 @@
-﻿using Assets.Scripts.ECS.Component.Data.Else.Game.General;
+﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
+using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.UpZone
@@ -14,9 +16,9 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.UpZone
             ref var giveTakeZoneViewUICom = ref _giveTakeZoneViewUIFilter.Get1(0);
             ref var inventToolsCom = ref _inventToolsFilter.Get1(0);
 
-            //giveTakeZoneViewUICom.SetText(ToolWeaponTypes.Pick, inventToolsCom.GetAmountTools(PhotonNetwork.IsMasterClient, ToolTypes.Pick).ToString());
-            //giveTakeZoneViewUICom.SetText(ToolWeaponTypes.Sword, inventorWeaponsComp.GetAmountWeapons(PhotonNetwork.IsMasterClient, WeaponTypes.Sword).ToString());
-            //giveTakeZoneViewUICom.SetText(ToolWeaponTypes.Crossbow, inventorWeaponsComp.GetAmountWeapons(PhotonNetwork.IsMasterClient, WeaponTypes.Crossbow).ToString());
+            giveTakeZoneViewUICom.SetText(ToolWeaponTypes.Pick, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Pick).ToString());
+            giveTakeZoneViewUICom.SetText(ToolWeaponTypes.Sword, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Sword).ToString());
+            giveTakeZoneViewUICom.SetText(ToolWeaponTypes.Crossbow, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Crossbow).ToString());
         }
     }
 }

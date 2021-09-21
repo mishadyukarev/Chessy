@@ -46,10 +46,9 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
                         {
                             unitDatComForGive.CondUnitType = default;
 
-                            if (onUnitComForGive.IsPlayer)
-                            {
-                                inventTWCom.AddAmountTools(onUnitComForGive.PlayerType, ToolWeaponTypes.Crossbow);
-                            }
+
+                            inventTWCom.AddAmountTools(onUnitComForGive.PlayerType, ToolWeaponTypes.Crossbow);
+                            
 
                             unitDatComForGive.ArcherWeapType = ToolWeaponTypes.Bow;
 

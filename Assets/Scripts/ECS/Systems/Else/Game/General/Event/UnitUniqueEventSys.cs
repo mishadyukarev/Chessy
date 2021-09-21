@@ -33,35 +33,32 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
 
                 if (selUnitDatCom.HaveUnit)
                 {
-                    //if (selOnUnitCom.IsPlayer)
-                    //{
-                    //    if (selOnUnitCom.IsMine)
-                    //    {
-                    //        if (selUnitDatCom.IsUnit(UnitTypes.King))
-                    //        {
-                    //            RpcSys.CircularAttackKingToMaster(idxSelCell);
-                    //        }
-                    //        else
-                    //        {
-                    //            if (selUnitDatCom.IsMelee)
-                    //            {
-                    //                if (selEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
-                    //                {
-                    //                    RpcSys.FireToMaster(idxSelCell, idxSelCell);
-                    //                }
-                    //                else
-                    //                {
-                    //                    RpcSys.SeedEnvironmentToMaster(idxSelCell, EnvirTypes.YoungForest);
-                    //                }
-                    //            }
+                    if (selOnUnitCom.IsMine)
+                    {
+                        if (selUnitDatCom.IsUnit(UnitTypes.King))
+                        {
+                            RpcSys.CircularAttackKingToMaster(idxSelCell);
+                        }
+                        else
+                        {
+                            if (selUnitDatCom.IsMelee)
+                            {
+                                if (selEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
+                                {
+                                    RpcSys.FireToMaster(idxSelCell, idxSelCell);
+                                }
+                                else
+                                {
+                                    RpcSys.SeedEnvironmentToMaster(idxSelCell, EnvirTypes.YoungForest);
+                                }
+                            }
 
-                    //            else
-                    //            {
-                    //                _selectorFilter.Get1(0).CellClickType = CellClickTypes.PickFire;
-                    //            }
-                    //        }
-                    //    }
-                    //}
+                            else
+                            {
+                                _selectorFilter.Get1(0).CellClickType = CellClickTypes.PickFire;
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -2,6 +2,7 @@
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
 using Leopotam.Ecs;
 using UnityEngine;
@@ -38,50 +39,47 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
 
         if (selUnitDatCom.HaveUnit)
         {
-            //if (selOwnUnitCom.IsPlayer)
-            //{
-            //    if (selOwnUnitCom.IsMine)
-            //    {
-            //        if (selUnitDatCom.IsUnit(UnitTypes.King))
-            //        {
-            //            activeFirst = true;
-            //            unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.CircularAttack));
-            //            unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
-            //        }
-            //        else
-            //        {
-            //            if (selUnitDatCom.IsMelee)
-            //            {
-            //                activeFirst = true;
+            if (selOwnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
+            {
+                if (selUnitDatCom.IsUnit(UnitTypes.King))
+                {
+                    activeFirst = true;
+                    unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.CircularAttack));
+                    unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
+                }
+                else
+                {
+                    if (selUnitDatCom.IsMelee)
+                    {
+                        activeFirst = true;
 
-            //                if (selEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
-            //                {
-            //                    if (selFireDatCom.HaveFire)
-            //                    {
-            //                        unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.PutOutFire));
-            //                    }
-            //                    else
-            //                    {
-            //                        unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.FireForest));
-            //                    }
-            //                    unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
-            //                }
-            //                else
-            //                {
-            //                    unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.SeedForest));
-            //                    unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(0.5f, 1, 0.5f, 1));
-            //                }
-            //            }
+                        if (selEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
+                        {
+                            if (selFireDatCom.HaveFire)
+                            {
+                                unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.PutOutFire));
+                            }
+                            else
+                            {
+                                unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.FireForest));
+                            }
+                            unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
+                        }
+                        else
+                        {
+                            unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.SeedForest));
+                            unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(0.5f, 1, 0.5f, 1));
+                        }
+                    }
 
-            //            else
-            //            {
-            //                activeFirst = true;
-            //                unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
-            //                unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.FireForest));
-            //            }
-            //        }
-            //    }
-            //}
+                    else
+                    {
+                        activeFirst = true;
+                        unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
+                        unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.FireForest));
+                    }
+                }
+            }
         }
 
         unitZoneViewCom.SetActive_Button(UniqueButtonTypes.First, activeFirst);

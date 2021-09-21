@@ -28,32 +28,29 @@ internal sealed class VisibUnitsSys : IEcsRunSystem
 
             if (curUnitDataCom.HaveUnit)
             {
-                if (curOwnUnitCom.IsPlayer)
+                if (curEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
                 {
+                    PlayerTypes nextPlayer = default;
+                    if (curOwnUnitCom.IsPlayerType(PlayerTypes.First)) nextPlayer = PlayerTypes.Second;
+                    else nextPlayer = PlayerTypes.First;
 
-                    if (curEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
+                    curUnitDataCom.SetIsVisibleUnit(nextPlayer, false);
+
+                    var list = CellSpaceSupport.TryGetXyAround(xy);
+
+                    foreach (var xy_1 in list)
                     {
-                        //curUnitDataCom.SetIsVisibleUnit(false, false);
+                        var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
 
-                        var list = CellSpaceSupport.TryGetXyAround(xy);
+                        ref var aroUnitDataCom = ref _cellUnitFilter.Get1(idxCell_1);
+                        ref var arouOnUnitCom = ref _cellUnitFilter.Get2(idxCell_1);
 
-                        foreach (var xy_1 in list)
+                        if (aroUnitDataCom.HaveUnit)
                         {
-                            var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
-
-                            ref var aroUnitDataCom = ref _cellUnitFilter.Get1(idxCell_1);
-                            ref var arouOnUnitCom = ref _cellUnitFilter.Get2(idxCell_1);
-
-                            if (aroUnitDataCom.HaveUnit)
+                            if (!arouOnUnitCom.IsPlayerType(curOwnUnitCom.PlayerType))
                             {
-                                if (arouOnUnitCom.IsPlayer)
-                                {
-                                    if (!arouOnUnitCom.IsPlayerType(curOwnUnitCom.PlayerType))
-                                    {
-                                        //curUnitDataCom.SetIsVisibleUnit(false, true);
-                                        break;
-                                    }
-                                }
+                                curUnitDataCom.SetIsVisibleUnit(nextPlayer, true);
+                                break;
                             }
                         }
                     }

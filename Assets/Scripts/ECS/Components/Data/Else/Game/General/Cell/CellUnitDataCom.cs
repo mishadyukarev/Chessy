@@ -9,7 +9,7 @@ internal struct CellUnitDataCom
 {
     internal UnitTypes UnitType;
     internal bool HaveUnit => UnitType != UnitTypes.None;
-    internal void ResetUnitType() => UnitType = default;
+    internal void DefUnitType() => UnitType = default;
     internal bool IsUnit(UnitTypes unitType) => UnitType.Is(unitType);
     internal bool Is(UnitTypes[] unitTypes) => UnitType.Is(unitTypes);
     internal bool IsMelee

@@ -13,7 +13,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
         private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
-        private EcsFilter<CellsForAttackCom> _availCellsForAttackFilter = default;
+        private EcsFilter<CellsForAttackCom> _cellsForAttackFilter = default;
 
         public void Run()
         {
@@ -22,42 +22,36 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdx);
                 ref var curOnUnitCom = ref _cellUnitFilter.Get2(curIdx);
 
-                ref var cellsAttackCom = ref _availCellsForAttackFilter.Get1(0);
+                ref var cellsAttackCom = ref _cellsForAttackFilter.Get1(0);
 
 
                 if (curUnitDatCom.HaveUnit && curUnitDatCom.IsUnit(UnitTypes.Pawn))
                 {
-                    if (curOnUnitCom.IsPlayer)
+                    DirectTypes curDurect1 = default;
+
+                    foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdx)))
                     {
-                        DirectTypes curDurect1 = default;
+                        curDurect1 += 1;
+                        var idxAround = _xyCellFilter.GetIdxCell(xy1);
 
-                        foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdx)))
+                        ref var aroEnvrDatCom = ref _cellEnvDataFilter.Get1(idxAround);
+                        ref var aroUnitDatCom = ref _cellUnitFilter.Get1(idxAround);
+                        ref var aroOwnUnitCom = ref _cellUnitFilter.Get2(idxAround);
+
+                        if (!aroEnvrDatCom.HaveEnvir(EnvirTypes.Mountain))
                         {
-                            curDurect1 += 1;
-                            var idxAround = _xyCellFilter.GetIdxCell(xy1);
-
-                            ref var aroEnvrDatCom = ref _cellEnvDataFilter.Get1(idxAround);
-                            ref var aroUnitDatCom = ref _cellUnitFilter.Get1(idxAround);
-                            ref var aroOwnUnitCom = ref _cellUnitFilter.Get2(idxAround);
-
-                            if (!aroEnvrDatCom.HaveEnvir(EnvirTypes.Mountain))
+                            if (aroEnvrDatCom.NeedAmountSteps <= curUnitDatCom.AmountSteps || curUnitDatCom.HaveMaxAmountSteps)
                             {
-                                if (aroEnvrDatCom.NeedAmountSteps <= curUnitDatCom.AmountSteps || curUnitDatCom.HaveMaxAmountSteps)
+                                if (aroUnitDatCom.HaveUnit)
                                 {
-                                    if (aroUnitDatCom.HaveUnit)
+                                    if (!aroOwnUnitCom.IsPlayerType(curOnUnitCom.PlayerType))
                                     {
-                                        if (aroOwnUnitCom.IsPlayer)
+                                        if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
+                                            || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
                                         {
-                                            if (!aroOwnUnitCom.IsPlayerType(curOnUnitCom.PlayerType))
-                                            {
-                                                if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
-                                                    || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
-                                                {
-                                                    cellsAttackCom.Add(curOnUnitCom.PlayerType, AttackTypes.Simple,  curIdx, idxAround);
-                                                }
-                                                else cellsAttackCom.Add(curOnUnitCom.PlayerType, AttackTypes.Unique, curIdx, idxAround);
-                                            }
+                                            cellsAttackCom.Add(curOnUnitCom.PlayerType, AttackTypes.Simple, curIdx, idxAround);
                                         }
+                                        else cellsAttackCom.Add(curOnUnitCom.PlayerType, AttackTypes.Unique, curIdx, idxAround);
                                     }
                                 }
                             }

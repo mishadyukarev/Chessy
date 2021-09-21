@@ -35,64 +35,58 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                 {
                     if (unitDataCom_0.HaveMinAmountSteps)
 
-                        if (ownUnitCom_0.IsPlayer)
+                        for (DirectTypes dirType_1 = (DirectTypes)1; dirType_1 < (DirectTypes)Enum.GetNames(typeof(DirectTypes)).Length; dirType_1++)
                         {
-                            for (DirectTypes dirType_1 = (DirectTypes)1; dirType_1 < (DirectTypes)Enum.GetNames(typeof(DirectTypes)).Length; dirType_1++)
+                            var xy_1 = CellSpaceSupport.GetXyCellByDirect(xy_0, dirType_1);
+                            var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
+
+
+                            ref var envrDatCom_1 = ref _cellEnvDataFilter.Get1(idxCell_1);
+                            ref var unitDatCom_1 = ref _cellUnitFilter.Get1(idxCell_1);
+                            ref var ownUnitCom_1 = ref _cellUnitFilter.Get2(idxCell_1);
+
+
+                            if (_cellViewFilter.Get1(idxCell_1).IsActiveParent)
                             {
-                                var xy_1 = CellSpaceSupport.GetXyCellByDirect(xy_0, dirType_1);
-                                var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
-
-
-                                ref var envrDatCom_1 = ref _cellEnvDataFilter.Get1(idxCell_1);
-                                ref var unitDatCom_1 = ref _cellUnitFilter.Get1(idxCell_1);
-                                ref var ownUnitCom_1 = ref _cellUnitFilter.Get2(idxCell_1);
-
-
-                                if (_cellViewFilter.Get1(idxCell_1).IsActiveParent)
+                                if (!envrDatCom_1.HaveEnvir(EnvirTypes.Mountain))
                                 {
-                                    if (!envrDatCom_1.HaveEnvir(EnvirTypes.Mountain))
+                                    if (unitDatCom_1.HaveUnit)
                                     {
-                                        if (unitDatCom_1.HaveUnit)
+                                        if (!ownUnitCom_1.IsPlayerType(ownUnitCom_0.PlayerType))
                                         {
-                                            if (ownUnitCom_1.IsPlayer)
+                                            if (dirType_1 == DirectTypes.Left || dirType_1 == DirectTypes.Right || dirType_1 == DirectTypes.Up || dirType_1 == DirectTypes.Down)
                                             {
-                                                if (!ownUnitCom_1.IsPlayerType(ownUnitCom_0.PlayerType))
-                                                {
-                                                    if (dirType_1 == DirectTypes.Left || dirType_1 == DirectTypes.Right || dirType_1 == DirectTypes.Up || dirType_1 == DirectTypes.Down)
-                                                    {
-                                                        cellsAttackCom.Add(ownUnitCom_0.PlayerType, AttackTypes.Unique, idxCell_0, idxCell_1);
-                                                    }
-                                                    else cellsAttackCom.Add(ownUnitCom_0.PlayerType, AttackTypes.Simple, idxCell_0, idxCell_1);
-                                                }
+                                                cellsAttackCom.Add(ownUnitCom_0.PlayerType, AttackTypes.Unique, idxCell_0, idxCell_1);
                                             }
+                                            else cellsAttackCom.Add(ownUnitCom_0.PlayerType, AttackTypes.Simple, idxCell_0, idxCell_1);
                                         }
+                                    }
 
 
-                                        var xy_2 = CellSpaceSupport.GetXyCellByDirect(xy_1, dirType_1);
-                                        var idxCell_2 = _xyCellFilter.GetIdxCell(xy_2);
+                                    var xy_2 = CellSpaceSupport.GetXyCellByDirect(xy_1, dirType_1);
+                                    var idxCell_2 = _xyCellFilter.GetIdxCell(xy_2);
 
 
-                                        ref var envrDataCom_2 = ref _cellEnvDataFilter.Get1(idxCell_2);
-                                        ref var unitDataCom_2 = ref _cellUnitFilter.Get1(idxCell_2);
-                                        ref var ownUnitCom_2 = ref _cellUnitFilter.Get2(idxCell_2);
+                                    ref var envrDataCom_2 = ref _cellEnvDataFilter.Get1(idxCell_2);
+                                    ref var unitDataCom_2 = ref _cellUnitFilter.Get1(idxCell_2);
+                                    ref var ownUnitCom_2 = ref _cellUnitFilter.Get2(idxCell_2);
 
 
 
-                                        if (unitDataCom_2.HaveUnit)
+                                    if (unitDataCom_2.HaveUnit)
+                                    {
+                                        if (unitDataCom_2.IsVisibleUnit(ownUnitCom_0.PlayerType))
                                         {
-                                            if (unitDataCom_2.IsVisibleUnit(ownUnitCom_0.PlayerType))
+                                            if (!ownUnitCom_2.IsPlayerType(ownUnitCom_0.PlayerType))
                                             {
-                                                if (!ownUnitCom_2.IsPlayerType(ownUnitCom_0.PlayerType))
+                                                if (dirType_1 == DirectTypes.LeftDown || dirType_1 == DirectTypes.LeftUp || dirType_1 == DirectTypes.RightUp || dirType_1 == DirectTypes.RightDown)
                                                 {
-                                                    if (dirType_1 == DirectTypes.LeftDown || dirType_1 == DirectTypes.LeftUp || dirType_1 == DirectTypes.RightUp || dirType_1 == DirectTypes.RightDown)
-                                                    {
-                                                        cellsAttackCom.Add(ownUnitCom_0.PlayerType, AttackTypes.Simple, idxCell_0, idxCell_2);
-                                                    }
+                                                    cellsAttackCom.Add(ownUnitCom_0.PlayerType, AttackTypes.Simple, idxCell_0, idxCell_2);
+                                                }
 
-                                                    else
-                                                    {
-                                                        cellsAttackCom.Add(ownUnitCom_0.PlayerType, AttackTypes.Unique, idxCell_0, idxCell_2);
-                                                    }
+                                                else
+                                                {
+                                                    cellsAttackCom.Add(ownUnitCom_0.PlayerType, AttackTypes.Unique, idxCell_0, idxCell_2);
                                                 }
                                             }
                                         }

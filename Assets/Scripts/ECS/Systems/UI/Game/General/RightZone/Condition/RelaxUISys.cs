@@ -51,30 +51,27 @@ internal sealed class RelaxUISys : IEcsRunSystem
                 condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComComp.GetText(GameLanguageTypes.Relax));
             }
 
-            if (selOnUnitCom.IsPlayer)
+            if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
             {
-                if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
+                activeButt = true;
+
+                if (selUnitDatCom.IsCondType(CondUnitTypes.Protected))
                 {
-                    activeButt = true;
+                    condUnitUICom.SetColor(CondUnitTypes.Protected, Color.yellow);
+                }
 
-                    if (selUnitDatCom.IsCondType(CondUnitTypes.Protected))
-                    {
-                        condUnitUICom.SetColor(CondUnitTypes.Protected, Color.yellow);
-                    }
+                else
+                {
+                    condUnitUICom.SetColor(CondUnitTypes.Protected, Color.white);
+                }
 
-                    else
-                    {
-                        condUnitUICom.SetColor(CondUnitTypes.Protected, Color.white);
-                    }
-
-                    if (selUnitDatCom.IsCondType(CondUnitTypes.Relaxed))
-                    {
-                        condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.green);
-                    }
-                    else
-                    {
-                        condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.white);
-                    }
+                if (selUnitDatCom.IsCondType(CondUnitTypes.Relaxed))
+                {
+                    condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.green);
+                }
+                else
+                {
+                    condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.white);
                 }
             }
         }

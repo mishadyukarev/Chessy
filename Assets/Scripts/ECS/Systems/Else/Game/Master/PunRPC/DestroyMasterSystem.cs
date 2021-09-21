@@ -35,18 +35,7 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
 
             if (curBuildDataCom.IsBuildType(BuildingTypes.City))
             {
-                _endGameFilter.Get1(0).IsEndGame = true;
-
-                if (curOwnerBuildCom.IsPlayer)
-                {
-                    _endGameFilter.Get1(0).IsOwnerWinner = true;
-                    _endGameFilter.Get1(0).PlayerWinner = curOwnUnitCom.PlayerType.GetPlayerType();
-                }
-                else
-                {
-                    _endGameFilter.Get1(0).IsOwnerWinner = false;
-
-                }
+                _endGameFilter.Get1(0).PlayerWinner = curOwnUnitCom.PlayerType;
             }
             curUnitDataCom.ResetAmountSteps();
 

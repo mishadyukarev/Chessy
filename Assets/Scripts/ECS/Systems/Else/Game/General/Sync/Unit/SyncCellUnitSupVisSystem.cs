@@ -70,24 +70,16 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                             blocksViewCom.DisableBlockSR(CellBlockTypes.Condition);
                         }
 
-                        if (curOwnUnitCom.IsPlayer)
+                        if (curOwnUnitCom.IsPlayerType(PlayerTypes.First))
                         {
-                            //if (curOwnUnitCom.KeyOwner)
-                            //{
-                            //    barsViewCom.SetColorHp(Color.blue);
-                            //    blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.blue);
-                            //}
-                            //else
-                            //{
-                            //    barsViewCom.SetColorHp(Color.red);
-                            //    blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.red);
-                            //}
+                            barsViewCom.SetColorHp(Color.blue);
+                            blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.blue);
                         }
-
-                        //else if (curOwnUnitCom.IsBot)
-                        //{
-                        //    barsViewCom.SetColorHp(Color.red);
-                        //}
+                        else
+                        {
+                            barsViewCom.SetColorHp(Color.red);
+                            blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.red);
+                        }
                     }
                 }
             }

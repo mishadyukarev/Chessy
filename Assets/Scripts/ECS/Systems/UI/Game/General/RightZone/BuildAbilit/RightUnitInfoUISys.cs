@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
 using Leopotam.Ecs;
@@ -39,12 +38,10 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
                     uniqueAbilUICom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.UniqueAbilities));
                     buildAbilUICom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.BuildingAbilities));
 
-                    if (selOwnUnitCom.IsPlayer)
+
+                    if (selOwnUnitCom.IsMine)
                     {
-                        if (selOwnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
-                        {
-                            needActiveInfoText = true;
-                        }
+                        needActiveInfoText = true;
                     }
                 }
             }

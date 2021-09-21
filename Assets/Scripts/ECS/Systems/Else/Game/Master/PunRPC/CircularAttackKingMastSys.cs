@@ -45,21 +45,9 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
                         {
                             if (unitDatComDirect.IsUnit(UnitTypes.King))
                             {
-                                _endGameDataUIFilter.Get1(0).IsEndGame = true;
-
-                                if (_cellUnitFilter.Get2(idxCurDirect).IsPlayer)
-                                {
-                                    _endGameDataUIFilter.Get1(0).IsOwnerWinner = true;
-                                    _endGameDataUIFilter.Get1(0).PlayerWinner = starOwnUnitCom.PlayerType.GetPlayerType();
-                                }
-
-                                else
-                                {
-                                    _endGameDataUIFilter.Get1(0).IsOwnerWinner = false;
-                                    _endGameDataUIFilter.Get1(0).IsBotWinner = false;
-                                }
+                                _endGameDataUIFilter.Get1(0).PlayerWinner = starOwnUnitCom.PlayerType;
                             }
-                            unitDatComDirect.ResetUnitType();
+                            unitDatComDirect.DefUnitType();
                         }
                     }
                 }

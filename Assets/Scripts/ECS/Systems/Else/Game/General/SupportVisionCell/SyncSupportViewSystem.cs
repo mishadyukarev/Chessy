@@ -45,22 +45,19 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
             {
                 if (curUnitDatCom.HaveUnit)
                 {
-                    if (curOnUnitCom.IsPlayer)
+                    if (curOnUnitCom.IsMine)
                     {
-                        //if (curOnUnitCom.IsMine)
-                        //{
-                        //    if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
-                        //    {
-                        //        curSupViewCom.EnableSR();
-                        //        curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
-                        //    }
+                        if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
+                        {
+                            curSupViewCom.EnableSR();
+                            curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
+                        }
 
-                        //    else if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
-                        //    {
-                        //        curSupViewCom.EnableSR();
-                        //        curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
-                        //    }
-                        //}
+                        else if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                        {
+                            curSupViewCom.EnableSR();
+                            curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
+                        }
                     }
                 }
             }
@@ -77,40 +74,37 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
 
             if (selUnitDatCom.HaveUnit)
             {
-                if (_cellUnitFilter.Get2(selCom.IdxSelCell).IsPlayer)
+                if (_cellUnitFilter.Get2(selCom.IdxSelCell).IsMine)
                 {
-                    //if (_cellUnitFilter.Get2(selCom.IdxSelCell).IsMine)
-                    //{
-                    //    if (selCom.IsCellClickType(CellClickTypes.PickFire))
-                    //    {
-                    //        foreach (var curIdxCell in _cellsArcherArsonFilt.Get1(0).GetListCopy(WhoseMoveCom.CurPlayer, selCom.IdxSelCell))
-                    //        {
-                    //            _supViewFilter.Get1(curIdxCell).EnableSR();
-                    //            _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.FireSelector);
-                    //        }
-                    //    }
+                    if (selCom.IsCellClickType(CellClickTypes.PickFire))
+                    {
+                        foreach (var curIdxCell in _cellsArcherArsonFilt.Get1(0).GetListCopy(WhoseMoveCom.CurPlayer, selCom.IdxSelCell))
+                        {
+                            _supViewFilter.Get1(curIdxCell).EnableSR();
+                            _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.FireSelector);
+                        }
+                    }
 
-                    //    else if (selCom.IsCellClickType(CellClickTypes.None))
-                    //    {
-                    //        foreach (var curIdxCell in cellsShiftCom.GetListCopy(WhoseMoveCom.CurPlayer, selCom.IdxSelCell))
-                    //        {
-                    //            _supViewFilter.Get1(curIdxCell).EnableSR();
-                    //            _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.Shift);
-                    //        }
+                    else if (selCom.IsCellClickType(CellClickTypes.None))
+                    {
+                        foreach (var curIdxCell in cellsShiftCom.GetListCopy(WhoseMoveCom.CurPlayer, selCom.IdxSelCell))
+                        {
+                            _supViewFilter.Get1(curIdxCell).EnableSR();
+                            _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.Shift);
+                        }
 
-                    //        foreach (var curIdxCell in _cellsSimpleFilter.Get1(0).GetListCopy(WhoseMoveCom.CurPlayer, AttackTypes.Simple, selCom.IdxSelCell))
-                    //        {
-                    //            _supViewFilter.Get1(curIdxCell).EnableSR();
-                    //            _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.SimpleAttack);
-                    //        }
+                        foreach (var curIdxCell in _cellsSimpleFilter.Get1(0).GetListCopy(WhoseMoveCom.CurPlayer, AttackTypes.Simple, selCom.IdxSelCell))
+                        {
+                            _supViewFilter.Get1(curIdxCell).EnableSR();
+                            _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.SimpleAttack);
+                        }
 
-                    //        foreach (var curIdxCell in _cellsSimpleFilter.Get1(0).GetListCopy(WhoseMoveCom.CurPlayer, AttackTypes.Unique, selCom.IdxSelCell))
-                    //        {
-                    //            _supViewFilter.Get1(curIdxCell).EnableSR();
-                    //            _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.UniqueAttack);
-                    //        }
-                    //    }
-                    //}
+                        foreach (var curIdxCell in _cellsSimpleFilter.Get1(0).GetListCopy(WhoseMoveCom.CurPlayer, AttackTypes.Unique, selCom.IdxSelCell))
+                        {
+                            _supViewFilter.Get1(curIdxCell).EnableSR();
+                            _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.UniqueAttack);
+                        }
+                    }
                 }
             }
         }

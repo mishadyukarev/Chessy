@@ -35,53 +35,44 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
 
                 if (selUnitDatCom.IsUnit(UnitTypes.Pawn))
                 {
-                    if (selOwnUnitCom.IsPlayer)
+                    if (selOwnUnitCom.IsMine)
                     {
-                        if (selOwnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
+                        if (selBuildDatCom.IsBuildType(BuildingTypes.City))
                         {
-                            if (selBuildDatCom.IsBuildType(BuildingTypes.City))
+                            if (!selOwnBuildCom.IsMine)
                             {
-                                if (selOwnBuildCom.IsPlayer)
+                                buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
+                                needActiveThirdButt = true;
+                            }
+                        }
+
+                        else
+                        {
+                            var isSettedMyCity = false;
+
+                            foreach (var idxCell in _cellBuildFilt)
+                            {
+                                ref var curBuildDatCom = ref _cellBuildFilt.Get1(idxCell);
+                                ref var curOwnBuildCom = ref _cellBuildFilt.Get2(idxCell);
+
+                                if (curBuildDatCom.IsBuildType(BuildingTypes.City))
                                 {
-                                    if (!selOwnBuildCom.IsPlayerType(WhoseMoveCom.CurPlayer))
+                                    if (curOwnBuildCom.IsMine)
                                     {
-                                        buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
-                                        needActiveThirdButt = true;
+                                        buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.BuildCity));
+                                        isSettedMyCity = true;
+                                        break;
                                     }
                                 }
                             }
 
+                            if (isSettedMyCity)
+                            {
+                                needActiveThirdButt = false;
+                            }
                             else
                             {
-                                var isSettedMyCity = false;
-
-                                foreach (var idxCell in _cellBuildFilt)
-                                {
-                                    ref var curBuildDatCom = ref _cellBuildFilt.Get1(idxCell);
-                                    ref var curOwnBuildCom = ref _cellBuildFilt.Get2(idxCell);
-
-                                    if (curBuildDatCom.IsBuildType(BuildingTypes.City))
-                                    {
-                                        if (curOwnBuildCom.IsPlayer)
-                                        {
-                                            if (curOwnBuildCom.IsPlayerType(WhoseMoveCom.CurPlayer))
-                                            {
-                                                buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.BuildCity));
-                                                isSettedMyCity = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-                                }
-
-                                if (isSettedMyCity)
-                                {
-                                    needActiveThirdButt = false;
-                                }
-                                else
-                                {
-                                    needActiveThirdButt = true;
-                                }
+                                needActiveThirdButt = true;
                             }
                         }
                     }

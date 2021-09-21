@@ -323,17 +323,9 @@ namespace Assets.Scripts
         {
             var listObjects = new List<object>();
 
-            var isEndGame = _endGameFilter.Get1(0).IsEndGame;
-            listObjects.Add(isEndGame);
-            if (isEndGame)
-            {
-                var isOwnerWinner = _endGameFilter.Get1(0).IsOwnerWinner;
-                listObjects.Add(isOwnerWinner);
-                if (isOwnerWinner)
-                {
-                    listObjects.Add(_endGameFilter.Get1(0).PlayerWinner.ActorNumber);
-                }
-            }
+
+            listObjects.Add(_endGameFilter.Get1(0).PlayerWinner);
+
 
             listObjects.Add(_readyUIFilter.Get1(0).IsStartedGame);
             listObjects.Add(_readyUIFilter.Get1(0).IsReady(false));
@@ -504,20 +496,9 @@ namespace Assets.Scripts
 
             ref var endGameDataUIComp = ref _endGameFilter.Get1(0);
 
-            var isEndGame = (bool)objects[_curNumber++];
-            endGameDataUIComp.IsEndGame = isEndGame;
 
-            if (isEndGame)
-            {
-                var isOwnerWinner = (bool)objects[_curNumber++];
-                endGameDataUIComp.IsOwnerWinner = isOwnerWinner;
-                if (isOwnerWinner)
-                {
-                    var actorNumber = (int)objects[_curNumber++];
+            endGameDataUIComp.PlayerWinner = (PlayerTypes)objects[_curNumber++];
 
-                    endGameDataUIComp.PlayerWinner = PhotonNetwork.PlayerList[actorNumber - 1];
-                }
-            }
 
 
             _readyUIFilter.Get1(0).IsStartedGame = (bool)objects[_curNumber++];

@@ -33,7 +33,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
         ref var fromOwnUnitCom = ref _cellUnitFilter.Get2(fromIdx);
 
         ref var toUnitDatCom = ref _cellUnitFilter.Get1(toIdxAttack);
-        ref var toOnUnitCom = ref _cellUnitFilter.Get2(toIdxAttack);
+        ref var toOwnUnitCom = ref _cellUnitFilter.Get2(toIdxAttack);
         ref var toBuildDatCom = ref _cellBuildFilter.Get1(toIdxAttack);
         ref var toEnvDatCom = ref _cellEnvFilter.Get1(toIdxAttack);
 
@@ -100,17 +100,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
             {
                 if (toUnitDatCom.IsUnit(UnitTypes.King))
                 {
-                    _endGameDataUIFilter.Get1(0).IsEndGame = true;
-                    _endGameDataUIFilter.Get1(0).IsOwnerWinner = toOnUnitCom.IsPlayer;
-
-                    if (toOnUnitCom.IsPlayer)
-                    {
-                        _endGameDataUIFilter.Get1(0).PlayerWinner = fromOwnUnitCom.PlayerType.GetPlayerType();
-                    }
-                    else
-                    {
-                        _endGameDataUIFilter.Get1(0).IsBotWinner = false;
-                    }
+                    _endGameDataUIFilter.Get1(0).PlayerWinner = fromOwnUnitCom.PlayerType;
                 }
 
                 toUnitDatCom.ResetUnit();
@@ -119,8 +109,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
                 if (fromUnitDatCom.IsMelee)
                 {
                     toUnitDatCom.ReplaceUnit(fromUnitDatCom);
-
-                    //toOnUnitCom.SetOnlineOwner(fromOwnUnitCom.PlayerType, fromOwnUnitCom.Owner);
+                    toOwnUnitCom.PlayerType = fromOwnUnitCom.PlayerType;
 
                     fromUnitDatCom.ResetUnit();
 
@@ -140,16 +129,12 @@ internal sealed class AttackMastSys : IEcsRunSystem
             {
                 if (fromUnitDatCom.IsUnit(UnitTypes.King))
                 {
-                    _endGameDataUIFilter.Get1(0).IsEndGame = true;
-                    _endGameDataUIFilter.Get1(0).IsOwnerWinner = false;
-                    _endGameDataUIFilter.Get1(0).IsBotWinner = true;
+                    fromOwnUnitCom.PlayerType = toOwnUnitCom.PlayerType;
+                    _endGameDataUIFilter.Get1(0).PlayerWinner = toOwnUnitCom.PlayerType;
                 }
 
-                fromUnitDatCom.ResetUnitType();
+                fromUnitDatCom.DefUnitType();
             }
-
-            //RPCGameSystem.AttackUnitToGeneral(Sender, _isAttacked);
-            //RPCGameSystem.AttackUnitToGeneral(RpcTarget.All, false, _isAttacked, FromXy, ToXy);
         }
     }
 }

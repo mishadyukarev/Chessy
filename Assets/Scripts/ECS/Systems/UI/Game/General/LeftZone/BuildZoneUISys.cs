@@ -23,7 +23,7 @@ internal sealed class BuildZoneUISys : IEcsRunSystem
 
         if (selCom.IsSelectedCell && selUnitDataCom.IsBuildType(BuildingTypes.City))
         {
-            if (selOwnUnitCom.IsPlayer && selOwnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
+            if (selOwnUnitCom.IsMine)
             {
                 buildZoneViewCom.SetTextMelt(LanguageComComp.GetText(GameLanguageTypes.Melt));
                 buildZoneViewCom.SetTextUpgrade(BuildingTypes.Farm, LanguageComComp.GetText(GameLanguageTypes.UpgradeFarm));

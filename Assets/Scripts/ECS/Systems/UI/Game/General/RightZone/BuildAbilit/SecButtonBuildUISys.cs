@@ -32,12 +32,9 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
                 {
                     ref var sellOnUnitCom = ref _cellUnitFilt.Get2(selCom.IdxSelCell);
 
-                    if (sellOnUnitCom.IsPlayer)
+                    if (sellOnUnitCom.IsMine)
                     {
-                        if (sellOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
-                        {
-                            needActiveButton = true;
-                        }
+                        needActiveButton = true;
                     }
                 }
             }

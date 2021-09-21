@@ -31,34 +31,21 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
 
                 if (curUnitDatCom.HaveUnit)
                 {
-                    if (!curOwnUnitCom.IsPlayer)
+                    var xyCellsAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdxCell));
+
+                    foreach (var xy1 in xyCellsAround)
                     {
-                        //var isMaster = false;
+                        var idxCellAround = _xyCellFilter.GetIdxCell(xy1);
 
-                        //isMaster = curOwnUnitCom.KeyOwner;
-
-                        //if (curOwnUnitCom.IsPlayerType(PlayerTypes.First))
-                        //{
-                        //    isMaster = true;
-                        //}
-                        //else isMaster = false;
-
-                        var xyCellsAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdxCell));
-
-                        foreach (var xy1 in xyCellsAround)
+                        if (!_cellEnvDataFilter.Get1(idxCellAround).HaveEnvir(EnvirTypes.Mountain))
                         {
-                            var idxCellAround = _xyCellFilter.GetIdxCell(xy1);
+                            if (!_cellUnitFilter.Get1(idxCellAround).HaveUnit)
 
-                            if (!_cellEnvDataFilter.Get1(idxCellAround).HaveEnvir(EnvirTypes.Mountain))
-                            {
-                                if (!_cellUnitFilter.Get1(idxCellAround).HaveUnit)
-
-                                    if (curUnitDatCom.AmountSteps >= _cellEnvDataFilter.Get1(idxCellAround).NeedAmountSteps
-                                        || _cellUnitFilter.Get1(curIdxCell).HaveMaxAmountSteps)
-                                    {
-                                        cellsForShiftCom.AddIdxCell(curOwnUnitCom.PlayerType, curIdxCell, idxCellAround);
-                                    }
-                            }
+                                if (curUnitDatCom.AmountSteps >= _cellEnvDataFilter.Get1(idxCellAround).NeedAmountSteps
+                                    || _cellUnitFilter.Get1(curIdxCell).HaveMaxAmountSteps)
+                                {
+                                    cellsForShiftCom.AddIdxCell(curOwnUnitCom.PlayerType, curIdxCell, idxCellAround);
+                                }
                         }
                     }
                 }

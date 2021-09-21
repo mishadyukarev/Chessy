@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -27,23 +28,17 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SyncCellVision
                     curBuildViewCom.EnableBackSR();
                     curBuildViewCom.SetSpriteBack(curBuildDatCom.BuildType);
 
-                    //if (curOwnBuildCom.IsPlayer)
-                    //{
-                    //    if (curOwnBuildCom.KeyOwner)
-                    //    {
-                    //        curBuildViewCom.SetBackColor(Color.blue);
-                    //    }
 
-                    //    else
-                    //    {
-                    //        curBuildViewCom.SetBackColor(Color.red);
-                    //    }
-                    //}
+                    if (curOwnBuildCom.IsPlayerType(PlayerTypes.First))
+                    {
+                        curBuildViewCom.SetBackColor(Color.blue);
+                    }
 
-                    //else if (curOwnBuildCom.IsBot)
-                    //{
-                    //    curBuildViewCom.SetBackColor(Color.red);
-                    //}
+                    else
+                    {
+                        curBuildViewCom.SetBackColor(Color.red);
+                    }
+
                 }
                 else
                 {

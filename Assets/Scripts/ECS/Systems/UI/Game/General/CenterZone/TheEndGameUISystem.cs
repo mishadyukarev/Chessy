@@ -1,6 +1,8 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.UI.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 
 internal sealed class TheEndGameUISystem : IEcsRunSystem
@@ -12,38 +14,20 @@ internal sealed class TheEndGameUISystem : IEcsRunSystem
         ref var endGameDataUIComp = ref _endGameUIFilter.Get1(0);
         ref var endGameViewUIComp = ref _endGameUIFilter.Get2(0);
 
-
-        if (endGameDataUIComp.IsEndGame)
+        if (endGameDataUIComp.PlayerWinner == default)
         {
+            endGameViewUIComp.SetActiveZone(false);
+        }
+
+        else if (endGameDataUIComp.PlayerWinner == WhoseMoveCom.CurPlayer)
+        {
+            endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreWinner);
             endGameViewUIComp.SetActiveZone(true);
-
-            if (endGameDataUIComp.IsOwnerWinner)
-            {
-                if (endGameDataUIComp.PlayerWinner.IsLocal)
-                {
-                    endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreWinner);
-                }
-                else
-                {
-                    endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreLoser);
-                }
-            }
-
-            else
-            {
-                if (endGameDataUIComp.IsBotWinner)
-                {
-                    endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreLoser);
-                }
-                else
-                {
-                    endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreWinner);
-                }
-            }
         }
         else
         {
-            endGameViewUIComp.SetActiveZone(false);
+            endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreLoser);
+            endGameViewUIComp.SetActiveZone(true);
         }
     }
 }

@@ -53,12 +53,9 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
 
             if (curUnitDatCom.HaveUnit)
             {
-                if (curOwnUnitCom.IsPlayer)
-                {
-                    invUnitsCom.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType);
+                invUnitsCom.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType);
 
-                    curUnitDatCom.ResetUnitType();
-                }
+                curUnitDatCom.DefUnitType();
             }
 
 

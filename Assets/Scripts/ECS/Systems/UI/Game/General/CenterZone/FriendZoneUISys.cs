@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+﻿using Assets.Scripts.Abstractions.Enums;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
 using Leopotam.Ecs;
@@ -11,27 +12,27 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.CenterZone
 
         public void Run()
         {
-            ref var friendDataCom = ref _friendZoneUIFilt.Get1(0);
             ref var friendViewCom = ref _friendZoneUIFilt.Get2(0);
 
+            friendViewCom.SetActiveParent(false);
 
-            if (friendDataCom.IsActiveFriendZone)
+            if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
             {
-                friendViewCom.SetActiveParent(true);
+                ref var friendDataCom = ref _friendZoneUIFilt.Get1(0);
 
-                //if (WhoseMoveCom.IsMainMove)
-                //{
-                //    friendViewCom.SetTextPlayerMotion("1 player");
-                //}
-                //else
-                //{
-                //    friendViewCom.SetTextPlayerMotion("2 player");
-                //}
-            }
+                if (friendDataCom.IsActiveFriendZone)
+                {
+                    friendViewCom.SetActiveParent(true);
 
-            else
-            {
-                friendViewCom.SetActiveParent(false);
+                    if (WhoseMoveCom.CurPlayer == PlayerTypes.First)
+                    {
+                        friendViewCom.SetTextPlayerMotion("1 player");
+                    }
+                    else
+                    {
+                        friendViewCom.SetTextPlayerMotion("2 player");
+                    }
+                }
             }
         }
     }

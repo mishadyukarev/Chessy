@@ -44,9 +44,9 @@ internal sealed class BuilderMastSys : IEcsRunSystem
         ref var curFireCom = ref _cellFireFilter.Get1(idxForBuild);
 
 
-        PlayerTypes playerType = default;
-        if (PhotonNetwork.OfflineMode) playerType = WhoseMoveCom.CurOfflinePlayer;
-        else playerType = sender.GetPlayerType();
+        PlayerTypes playerTypeSender = default;
+        if (PhotonNetwork.OfflineMode) playerTypeSender = WhoseMoveCom.CurOfflinePlayer;
+        else playerTypeSender = sender.GetPlayerType();
 
 
         if (curBuildDatCom.HaveBuild)
@@ -83,15 +83,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
                             curBuildDatCom.BuildType = forBuildType;
-
-                            //if (PhotonNetwork.OfflineMode)
-                            //{
-                            //    curOffBuildCom.LocalPlayerType = WhoseMoveCom.PlayerType;
-                            //}
-                            //else
-                            //{
-                            //    curOwnBuildCom.Owner = sender;
-                            //}
+                            curOwnBuildCom.PlayerType = playerTypeSender;
 
 
                             curUnitDatCom.ResetAmountSteps();
@@ -121,7 +113,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                     {
                         if (!curCellEnvCom.HaveEnvir(EnvirTypes.AdultForest) && !curCellEnvCom.HaveEnvir(EnvirTypes.YoungForest))
                         {
-                            if (invResCom.CanCreateBuild(playerType, forBuildType, out bool[] haves))
+                            if (invResCom.CanCreateBuild(playerTypeSender, forBuildType, out bool[] haves))
                             {
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
@@ -135,18 +127,10 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                                     curCellEnvCom.SetNewEnvir(EnvirTypes.Fertilizer);
                                 }
 
-                                invResCom.BuyBuild(playerType , forBuildType);
+                                invResCom.BuyBuild(playerTypeSender , forBuildType);
 
                                 curBuildDatCom.BuildType = forBuildType;
-
-                                //if (PhotonNetwork.OfflineMode)
-                                //{
-                                //    curOffBuildCom.LocalPlayerType = WhoseMoveCom.PlayerType;
-                                //}
-                                //else
-                                //{
-                                //    curOwnBuildCom.Owner = sender;
-                                //}
+                                curOwnBuildCom.PlayerType = playerTypeSender;
 
                                 curUnitDatCom.TakeAmountSteps();
 
@@ -177,24 +161,16 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                 case BuildingTypes.Mine:
                     if (curCellEnvCom.HaveEnvir(EnvirTypes.Hill) && curCellEnvCom.HaveResources(EnvirTypes.Hill))
                     {
-                        if (invResCom.CanCreateBuild(playerType , forBuildType, out bool[] haves))
+                        if (invResCom.CanCreateBuild(playerTypeSender , forBuildType, out bool[] haves))
                         {
                             if (curUnitDatCom.HaveMaxAmountSteps)
                             {
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                                invResCom.BuyBuild(playerType , forBuildType);
+                                invResCom.BuyBuild(playerTypeSender , forBuildType);
 
                                 curBuildDatCom.BuildType = forBuildType;
-
-                                //if (PhotonNetwork.OfflineMode)
-                                //{
-                                //    curOffBuildCom.LocalPlayerType = WhoseMoveCom.PlayerType;
-                                //}
-                                //else
-                                //{
-                                //    curOwnBuildCom.Owner = sender;
-                                //}
+                                curOwnBuildCom.PlayerType = playerTypeSender;
 
                                 curUnitDatCom.ResetAmountSteps();
                             }

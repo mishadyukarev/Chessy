@@ -8,7 +8,7 @@ using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
 using Photon.Pun;
 
-internal sealed class CreatUnitMastSys : IEcsRunSystem
+internal sealed class CreateUnitMastSys : IEcsRunSystem
 {
     private EcsFilter<InfoMasCom> _mastInfoFilter = default;
     private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
@@ -37,12 +37,9 @@ internal sealed class CreatUnitMastSys : IEcsRunSystem
         {
             if (_cellBuildFilt.Get1(idx).IsBuildType(BuildingTypes.City))
             {
-                if (_cellBuildFilt.Get2(idx).IsPlayer)
+                if (_cellBuildFilt.Get2(idx).IsMine)
                 {
-                    if (_cellBuildFilt.Get2(idx).PlayerType == WhoseMoveCom.CurPlayer)
-                    {
-                        isSettedCity = true;
-                    }
+                    isSettedCity = true;
                 }
             }
         }

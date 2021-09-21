@@ -28,20 +28,17 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
 
                 if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                 {
-                    if (curOwnUnitCom.IsPlayer)
+                    foreach (var arouXy in CellSpaceSupport.TryGetXyAround(curXy))
                     {
-                        foreach (var arouXy in CellSpaceSupport.TryGetXyAround(curXy))
+                        var arouIdx = _xyCellFilter.GetIdxCell(arouXy);
+
+                        ref var arounEnvDatCom = ref _cellEnvFilter.Get1(arouIdx);
+
+                        if (!_cellFireFilter.Get1(arouIdx).HaveFire)
                         {
-                            var arouIdx = _xyCellFilter.GetIdxCell(arouXy);
-
-                            ref var arounEnvDatCom = ref _cellEnvFilter.Get1(arouIdx);
-
-                            if (!_cellFireFilter.Get1(arouIdx).HaveFire)
+                            if (arounEnvDatCom.HaveEnvir(EnvirTypes.AdultForest))
                             {
-                                if (arounEnvDatCom.HaveEnvir(EnvirTypes.AdultForest))
-                                {
-                                    cellsArsonCom.Add(curOwnUnitCom.PlayerType, curIdxCell, arouIdx);
-                                }
+                                cellsArsonCom.Add(curOwnUnitCom.PlayerType, curIdxCell, arouIdx);
                             }
                         }
                     }
