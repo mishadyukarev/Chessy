@@ -29,7 +29,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
 
         PlayerTypes playerType = default;
-        if (PhotonNetwork.OfflineMode) playerType = WhoseMoveCom.CurOfflinePlayer;
+        if (PhotonNetwork.OfflineMode) playerType = WhoseMoveCom.WhoseMoveOffline;
         else playerType = fromInfo.Sender.GetPlayerType();
 
 

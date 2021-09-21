@@ -39,7 +39,6 @@ namespace Assets.Scripts
         private EcsFilter<EndGameDataUIComponent> _endGameFilter = default;
         private EcsFilter<ReadyDataUICom> _readyUIFilter = default;
         private EcsFilter<MotionsDataUIComponent> _motionsFilter = default;
-        private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
         private EcsFilter<MistakeDataUICom> _mistakeUIFilter = default;
         private EcsFilter<SoundEffectsComp> _soundFilter = default;
 
@@ -330,7 +329,6 @@ namespace Assets.Scripts
             listObjects.Add(_readyUIFilter.Get1(0).IsStartedGame);
             listObjects.Add(_readyUIFilter.Get1(0).IsReady(false));
 
-            listObjects.Add(_donerUIFilter.Get1(0).IsDoned(false));
             listObjects.Add(_motionsFilter.Get1(0).AmountMotions);
 
             foreach (var curIdxCell in _cellUnitFilter)
@@ -501,7 +499,6 @@ namespace Assets.Scripts
             _readyUIFilter.Get1(0).IsStartedGame = (bool)objects[_curNumber++];
             _readyUIFilter.Get1(0).SetIsReady(PhotonNetwork.IsMasterClient, (bool)objects[_curNumber++]);
 
-            _donerUIFilter.Get1(0).SetDoned(false, (bool)objects[_curNumber++]);
             _motionsFilter.Get1(0).AmountMotions = (int)objects[_curNumber++];
 
             foreach (var curIdxCell in _cellUnitFilter)

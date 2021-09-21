@@ -13,7 +13,6 @@ using UnityEngine;
 internal sealed class TruceMasterSystem : IEcsRunSystem
 {
     private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
-    private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
     private EcsFilter<InventorTWCom> _invToolsFilt = default;
 
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
@@ -97,7 +96,7 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
 
         RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
 
-        _donerUIFilter.Get1(0).SetDoned(true, default);
-        _donerUIFilter.Get1(0).SetDoned(false, default);
+        //_donerUIFilter.Get1(0).SetDoned(true, default);
+        //_donerUIFilter.Get1(0).SetDoned(false, default);
     }
 }

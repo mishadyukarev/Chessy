@@ -23,7 +23,7 @@ namespace Assets.Scripts
         private EcsFilter<SelectorCom> _selectorFilter = default;
         private EcsFilter<LeaveViewUIComponent> _leaveUIFilter = default;
         private EcsFilter<GetterUnitsDataUICom, GetterUnitsViewUICom> _takerUIFilter = default;
-        private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
+        private EcsFilter<DonerUICom> _donerUIFilter = default;
         private EcsFilter<EnvirZoneDataUICom, EnvirZoneViewUICom> _envirZoneUIFilter = default;
         private EcsFilter<CondUnitUICom> _condUnitZoneUIFilt = default;
         private EcsFilter<BuildLeftZoneViewUICom> _buildLeftZoneViewUICom = default;
@@ -35,7 +35,6 @@ namespace Assets.Scripts
         private EcsFilter<InventorUnitsComponent> _invUnitsFilt = default;
 
         private byte IdxSelectedCell => _selectorFilter.Get1(0).IdxSelCell;
-        private bool IsDoned(bool key) => _donerUIFilter.Get1(0).IsDoned(key);
 
         public void Init()
         {
@@ -50,7 +49,7 @@ namespace Assets.Scripts
             _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Rook, delegate { CreateUnit(UnitTypes.Rook); });
             _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Bishop, delegate { CreateUnit(UnitTypes.Bishop); });
 
-            _donerUIFilter.Get2(0).AddListener(Done);
+            _donerUIFilter.Get1(0).AddListener(Done);
 
             _envirZoneUIFilter.Get2(0).AddListenerToEnvInfo(EnvironmentInfo);
 
@@ -103,7 +102,7 @@ namespace Assets.Scripts
 
             if (GameModesCom.IsOffMode)
             {
-                if (invUnitCom.HaveUnitInInv(WhoseMoveCom.CurOfflinePlayer, unitType))
+                if (invUnitCom.HaveUnitInInv(WhoseMoveCom.WhoseMoveOffline, unitType))
                 {
                     selCom.SelUnitType = unitType;
                 }
@@ -115,17 +114,17 @@ namespace Assets.Scripts
 
             else
             {
-                if (!IsDoned(PhotonNetwork.IsMasterClient))
-                {
-                    if (invUnitCom.HaveUnitInInv(WhoseMoveCom.CurOnlinePlayer, unitType))
-                    {
-                        selCom.SelUnitType = unitType;
-                    }
-                    else
-                    {
-                        takerUnitDatCom.ActiveNeedCreateButton(unitType, true);
-                    }
-                }
+                //if (!IsDoned(PhotonNetwork.IsMasterClient))
+                //{
+                //    if (invUnitCom.HaveUnitInInv(WhoseMoveCom.CurOnlinePlayer, unitType))
+                //    {
+                //        selCom.SelUnitType = unitType;
+                //    }
+                //    else
+                //    {
+                //        takerUnitDatCom.ActiveNeedCreateButton(unitType, true);
+                //    }
+                //}
             }
         }
 
@@ -140,7 +139,7 @@ namespace Assets.Scripts
 
             if (PhotonNetwork.OfflineMode)
             {
-                curPlayer = WhoseMoveCom.CurOfflinePlayer;
+                curPlayer = WhoseMoveCom.WhoseMoveOffline;
             }
             else
             {
@@ -167,8 +166,8 @@ namespace Assets.Scripts
 
         private void ConditionAbilityButton(CondUnitTypes conditionUnitType)
         {
-            if (!IsDoned(PhotonNetwork.IsMasterClient))
-            {
+            //if (!IsDoned(PhotonNetwork.IsMasterClient))
+            //{
                 if (_cellUnitFilter.Get1(IdxSelectedCell).IsCondType(conditionUnitType))
                 {
                     RpcSys.ConditionUnitToMaster(CondUnitTypes.None, IdxSelectedCell);
@@ -177,13 +176,13 @@ namespace Assets.Scripts
                 {
                     RpcSys.ConditionUnitToMaster(conditionUnitType, IdxSelectedCell);
                 }
-            }
+            //}
         }
 
         private void ActiveGiveTakeButton()
         {
-            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
-            {
+            //if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
+            //{
                 ref var selecComp = ref _selectorFilter.Get1(0);
 
                 if (selecComp.CellClickType == CellClickTypes.GiveTakeTW)
@@ -195,7 +194,7 @@ namespace Assets.Scripts
                 {
                     selecComp.CellClickType = CellClickTypes.GiveTakeTW;
                 }
-            }
+            //}
 
 
             //if (selecComp.IsActivatedGiveTakeMod)
@@ -224,17 +223,17 @@ namespace Assets.Scripts
         {
             _takerUIFilter.Get1(0).ResetCurTimer(unitType);
 
-            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcSys.CreateUnitToMaster(unitType);
+            /*if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) */RpcSys.CreateUnitToMaster(unitType);
         }
 
         private void MeltOre()
         {
-            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcSys.MeltOreToMaster();
+           /* if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) */RpcSys.MeltOreToMaster();
         }
 
         private void UpgradeBuilding(BuildingTypes buildingType)
         {
-            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) RpcSys.UpgradeBuildingToMaster(buildingType);
+            /*if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) */RpcSys.UpgradeBuildingToMaster(buildingType);
         }
 
         private void ToggleToolWeapon(ToolWeaponTypes toolAndWeaponType)

@@ -26,7 +26,6 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
     private EcsFilter<UpgradesBuildsCom> _upgradeBuildsFilter = default;
     private EcsFilter<InventResourCom> _invResFilt = default;
     private EcsFilter<MotionsDataUIComponent> _motionsUIFilter = default;
-    private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
 
     public void Run()
     {
@@ -319,8 +318,8 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
 
 
 
-        _donerUIFilter.Get1(0).SetDoned(true, false);
-        _donerUIFilter.Get1(0).SetDoned(false, false);
+        //_donerUIFilter.Get1(0).SetDoned(true, false);
+        //_donerUIFilter.Get1(0).SetDoned(false, false);
 
         _motionsUIFilter.Get1(0).AmountMotions += 1;
     }

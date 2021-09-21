@@ -16,7 +16,6 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
     private EcsFilter<SelectorCom> _selectorFilter = default;
     private EcsFilter<InputComponent> _inputFilter = default;
-    private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
     private EcsFilter<SoundEffectsComp> _soundFilter = default;
 
     private EcsFilter<CellsArsonArcherComp> _availCellsForArcherArsonFilter = default;
@@ -49,33 +48,33 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
             else if (selCom.RaycastGettedType == RaycastGettedTypes.Cell)
             {
-                if (_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
-                {
-                    if (!selCom.IsSelectedCell)
-                    {
-                        if (selCom.IdxPreCell != selCom.IdxSelCell)
-                        {
-                            selCom.IdxSelCell = selCom.IdxCurCell;
-                        }
-                        else
-                        {
-                            selCom.IdxSelCell = default;
-                        }
+                //if (_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
+                //{
+                //    if (!selCom.IsSelectedCell)
+                //    {
+                //        if (selCom.IdxPreCell != selCom.IdxSelCell)
+                //        {
+                //            selCom.IdxSelCell = selCom.IdxCurCell;
+                //        }
+                //        else
+                //        {
+                //            selCom.IdxSelCell = default;
+                //        }
 
 
-                        selCom.IdxPreCell = selCom.IdxSelCell;
-                    }
+                //        selCom.IdxPreCell = selCom.IdxSelCell;
+                //    }
 
-                    else
-                    {
-                        if (selCom.IdxSelCell != selCom.IdxCurCell)
-                            selCom.IdxPreCell = selCom.IdxSelCell;
+                //    else
+                //    {
+                //        if (selCom.IdxSelCell != selCom.IdxCurCell)
+                //            selCom.IdxPreCell = selCom.IdxSelCell;
 
-                        selCom.IdxSelCell = selCom.IdxCurCell;
-                    }
-                }
+                //        selCom.IdxSelCell = selCom.IdxCurCell;
+                //    }
+                //}
 
-                else if (selCom.IsSelectedUnit)
+                /*else */if (selCom.IsSelectedUnit)
                 {
                     RpcSys.SetUniToMaster(selCom.IdxCurCell, selCom.SelUnitType);
                     selCom.SelUnitType = default;

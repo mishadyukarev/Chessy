@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 {
-    internal struct DonerViewUIComponent
+    internal struct DonerUICom
     {
         private Button _doner_Button;
         private TextMeshProUGUI _doner_TextMP;
 
         private TextMeshProUGUI _waitPlayer_TextMP;
 
-        internal DonerViewUIComponent(GameObject downZone_GO)
+        internal DonerUICom(GameObject downZone_GO)
         {
             _doner_Button = downZone_GO.transform.Find("DonerButton").GetComponent<Button>();
             _doner_TextMP = _doner_Button.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();

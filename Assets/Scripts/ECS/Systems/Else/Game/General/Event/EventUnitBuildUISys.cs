@@ -9,7 +9,6 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
     internal sealed class EventUnitBuildUISys : IEcsInitSystem
     {
         private EcsFilter<SelectorCom> _selFilt = default;
-        private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
         private EcsFilter<BuildAbilitUICom> _buildAbilUIFilt = default;
 
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
@@ -24,8 +23,8 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
 
         private void ExecuteButton(BuildButtonTypes buildButtonType)
         {
-            if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
-            {
+            //if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
+            //{
                 var idxSelCell = _selFilt.Get1(0).IdxSelCell;
 
                 if (buildButtonType == BuildButtonTypes.First)
@@ -51,7 +50,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
                         RpcSys.BuildToMaster(idxSelCell, BuildingTypes.City);
                     }
                 }
-            }
+            //}
         }
     }
 }

@@ -19,7 +19,7 @@ internal sealed class MeltOreMasterSystem : IEcsRunSystem
         ref var invResCom = ref _invResFilt.Get1(0);
 
         PlayerTypes isMastSender = default;
-        if (PhotonNetwork.OfflineMode) isMastSender = WhoseMoveCom.CurOfflinePlayer;
+        if (PhotonNetwork.OfflineMode) isMastSender = WhoseMoveCom.WhoseMoveOffline;
         else isMastSender = sender.GetPlayerType();
 
 

@@ -232,8 +232,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 ///Down
                 .Replace(new GetterUnitsDataUICom(new Dictionary<UnitTypes, bool>()))
                 .Replace(new GetterUnitsViewUICom(downZone_GO))
-                .Replace(new DonerViewUIComponent(downZone_GO))
-                .Replace(new DonerDataUIComponent(new Dictionary<bool, bool>()))
+                .Replace(new DonerUICom(downZone_GO))
                 .Replace(new GiveTakeZoneViewUIComp(downZone_GO))
 
                 ///Left
@@ -302,9 +301,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
                 _curGameWorld.NewEntity()
                     .Replace(new ForGiveTakeToolWeaponComp());
-
-
-                canvasEnt.Get<DonerDataUIComponent>().SetDoned(false, true);
 
                 int random;
 

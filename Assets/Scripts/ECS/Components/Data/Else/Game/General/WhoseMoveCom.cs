@@ -5,15 +5,16 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
 {
     internal struct WhoseMoveCom
     {
-        internal static PlayerTypes CurOfflinePlayer;
+        internal static PlayerTypes WhoseMoveOnline;
+        internal static PlayerTypes WhoseMoveOffline;
 
-        internal WhoseMoveCom(PlayerTypes playerType) => CurOfflinePlayer = playerType;
+
 
         internal static PlayerTypes CurOnlinePlayer
         {
             get
             {
-                if (PhotonNetwork.LocalPlayer.IsMasterClient) return PlayerTypes.First;
+                if (PhotonNetwork.IsMasterClient) return PlayerTypes.First;
                 else return PlayerTypes.Second;
             }
         }
@@ -23,8 +24,12 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
             get
             {
                 if (GameModesCom.IsOnMode) return CurOnlinePlayer;
-                else return CurOfflinePlayer;
+                else return WhoseMoveOffline;
             }
         }
+
+
+
+        internal WhoseMoveCom(PlayerTypes playerType) => WhoseMoveOffline = playerType;
     }
 }

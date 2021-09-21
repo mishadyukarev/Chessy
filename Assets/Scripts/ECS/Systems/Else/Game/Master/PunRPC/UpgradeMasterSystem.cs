@@ -36,7 +36,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
 
             PlayerTypes playerSender = default;
-            if (GameModesCom.IsOffMode) playerSender = WhoseMoveCom.CurOfflinePlayer;
+            if (GameModesCom.IsOffMode) playerSender = WhoseMoveCom.WhoseMoveOffline;
             else playerSender = sender.GetPlayerType();
 
             var buildTypeForUpgrade = _forUpgradeFilter.Get1(0).BuildingType;

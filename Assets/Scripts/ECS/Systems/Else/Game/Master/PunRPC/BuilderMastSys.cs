@@ -45,7 +45,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
 
         PlayerTypes playerTypeSender = default;
-        if (PhotonNetwork.OfflineMode) playerTypeSender = WhoseMoveCom.CurOfflinePlayer;
+        if (PhotonNetwork.OfflineMode) playerTypeSender = WhoseMoveCom.WhoseMoveOffline;
         else playerTypeSender = sender.GetPlayerType();
 
 

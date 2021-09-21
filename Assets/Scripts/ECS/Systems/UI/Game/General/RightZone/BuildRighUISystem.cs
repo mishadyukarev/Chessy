@@ -5,7 +5,6 @@ using Leopotam.Ecs;
 internal sealed class BuildRighUISystem : IEcsRunSystem
 {
     private EcsFilter<SelectorCom> _selectorFilter = default;
-    private EcsFilter<DonerDataUIComponent> _donerUIFilter = default;
     private EcsFilter<BuildAbilitUICom> _buildAbilViewCom = default;
 
     private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;

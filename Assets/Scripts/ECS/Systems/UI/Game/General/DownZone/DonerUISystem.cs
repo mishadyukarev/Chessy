@@ -8,26 +8,25 @@ using UnityEngine;
 
 internal sealed class DonerUISystem : IEcsRunSystem
 {
-    private EcsFilter<DonerDataUIComponent, DonerViewUIComponent> _donerUIFilter = default;
+    private EcsFilter<DonerUICom> _donerUIFilter = default;
 
     public void Run()
     {
-        ref var donerDataUICom = ref _donerUIFilter.Get1(0);
-        ref var donerViewUICom = ref _donerUIFilter.Get2(0);
+        ref var donerViewUICom = ref _donerUIFilter.Get1(0);
 
-        donerViewUICom.SetTextDoner(LanguageComComp.GetText(GameLanguageTypes.Done));
-        donerViewUICom.SetTextWait(LanguageComComp.GetText(GameLanguageTypes.WaitPlayer));
+        //donerViewUICom.SetTextDoner(LanguageComComp.GetText(GameLanguageTypes.Done));
+        //donerViewUICom.SetTextWait(LanguageComComp.GetText(GameLanguageTypes.WaitPlayer));
 
 
-        if (donerDataUICom.IsDoned(PhotonNetwork.IsMasterClient))
-        {
-            donerViewUICom.EnableWait();
-            donerViewUICom.SetColor(Color.red);
-        }
-        else
-        {
-            donerViewUICom.DisableWait();
-            donerViewUICom.SetColor(Color.white);
-        }
+        //if (donerDataUICom.IsDoned(PhotonNetwork.IsMasterClient))
+        //{
+        //    donerViewUICom.EnableWait();
+        //    donerViewUICom.SetColor(Color.red);
+        //}
+        //else
+        //{
+        donerViewUICom.DisableWait();
+        //    donerViewUICom.SetColor(Color.white);
+        //}
     }
 }
