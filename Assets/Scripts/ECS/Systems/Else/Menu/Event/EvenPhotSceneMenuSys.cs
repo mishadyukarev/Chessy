@@ -73,7 +73,6 @@ namespace Assets.Scripts.ECS.Managers.Event
 
 
             roomOptions.MaxPlayers = MAX_PLAYERS;
-            //roomOptions.PlayerTtl = 200;//1000
             roomOptions.IsVisible = true;
             roomOptions.IsOpen = true;
             var roomName = UnityEngine.Random.Range(1, 9999999).ToString();
@@ -90,7 +89,6 @@ namespace Assets.Scripts.ECS.Managers.Event
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = MAX_PLAYERS;
-            //roomOptions.PlayerTtl = 200;//1000
             roomOptions.IsVisible = false;
             roomOptions.IsOpen = true;
 

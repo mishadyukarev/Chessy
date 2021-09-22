@@ -52,9 +52,19 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
 
             if (curUnitDatCom.HaveUnit)
             {
-                invUnitsCom.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType);
-
-                curUnitDatCom.DefUnitType();
+                if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+                {
+                    if (curOwnUnitCom.IsPlayerType(PlayerTypes.First))
+                    {
+                        invUnitsCom.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType);
+                        curUnitDatCom.DefUnitType();
+                    }
+                }
+                else
+                {
+                    invUnitsCom.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType);
+                    curUnitDatCom.DefUnitType();
+                }
             }
 
 
@@ -95,8 +105,5 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
         }
 
         RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-
-        //_donerUIFilter.Get1(0).SetDoned(true, default);
-        //_donerUIFilter.Get1(0).SetDoned(false, default);
     }
 }

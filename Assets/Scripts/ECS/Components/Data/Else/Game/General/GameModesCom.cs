@@ -12,7 +12,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
             return false;
         }
 
-        internal static bool IsOffMode => IsGameMode(new[] { GameModes.TrainingOff, GameModes.WithFriendOff });
-        internal static bool IsOnMode => IsGameMode(new[] { GameModes.PublicOn, GameModes.WithFriendOn });
+        internal static bool IsOfflineMode => IsGameMode(new[] { GameModes.TrainingOff, GameModes.WithFriendOff });
+        internal static bool IsOnlineMode => IsGameMode(new[] { GameModes.PublicOn, GameModes.WithFriendOn });
     }
 }

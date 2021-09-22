@@ -227,9 +227,12 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
                 }
             }
 
-            if (curEnvrDatCom.HaveEnvir(EnvirTypes.AdultForest))
+            if (curCellViewCom.IsActiveParent)
             {
-                ++amountAdultForest;
+                if (curEnvrDatCom.HaveEnvir(EnvirTypes.AdultForest))
+                {
+                    ++amountAdultForest;
+                }
             }
 
             if (curFireDatCom.HaveFire)

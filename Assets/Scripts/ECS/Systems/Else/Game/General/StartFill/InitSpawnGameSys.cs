@@ -351,8 +351,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                     _cellViewFilt.Get1(curIdxCell).SetRotForClient(PhotonNetwork.IsMasterClient);
                 }
 
-
-
                 ref var unitInvCom = ref _inventorUnitsFilter.Get1(0);
 
 
@@ -378,7 +376,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Ore, EconomyValues.AMOUNT_ORE_OTHER);
                 invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Iron, EconomyValues.AMOUNT_IRON_OTHER);
                 invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Gold, EconomyValues.AMOUNT_GOLD_OTHER);
-
             }
 
             else
@@ -388,7 +385,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             }
             
 
-            if (GameModesCom.IsOnMode)
+            if (GameModesCom.IsOnlineMode)
             {
                 var isMaster = PhotonNetwork.IsMasterClient;
                 CameraComComp.SetPosRotClient(isMaster);
@@ -397,6 +394,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 {
                     _cellViewFilt.Get1(curIdxCell).SetRotForClient(isMaster);
                 }
+
+                WhoseMoveCom.WhoseMoveOnline = PlayerTypes.First;
             }
 
             else

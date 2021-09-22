@@ -32,7 +32,7 @@ internal sealed class CreateUnitMastSys : IEcsRunSystem
 
 
         PlayerTypes playerSender = default;
-        if (GameModesCom.IsOffMode) playerSender = WhoseMoveCom.WhoseMoveOffline;
+        if (GameModesCom.IsOfflineMode) playerSender = WhoseMoveCom.WhoseMoveOffline;
         else playerSender = infoCom.FromInfo.Sender.GetPlayerType();
 
 

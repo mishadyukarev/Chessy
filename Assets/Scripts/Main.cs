@@ -16,11 +16,25 @@ namespace Assets.Scripts
             Instance = this;
             _eCSmanager = new ECSManager();
             ToggleScene(CurrentSceneType);
+
+            //if (Advertisement.isSupported)
+            //{
+            //    Advertisement.Initialize("4097313", true);
+            //}
         }
 
         private void Update()
         {
             _eCSmanager.OwnUpdate(CurrentSceneType);
+
+
+            //if (Input.GetMouseButtonDown(0))
+            //{
+            //    if (Advertisement.IsReady())
+            //    {
+            //        Advertisement.Show();
+            //    }
+            //}
         }
 
         public static void ToggleScene(SceneTypes sceneType)

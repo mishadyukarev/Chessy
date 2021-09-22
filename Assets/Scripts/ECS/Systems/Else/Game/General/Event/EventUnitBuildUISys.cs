@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General;
 using Leopotam.Ecs;
 using Photon.Pun;
@@ -23,8 +24,8 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
 
         private void ExecuteButton(BuildButtonTypes buildButtonType)
         {
-            //if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
-            //{
+            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode)
+            {
                 var idxSelCell = _selFilt.Get1(0).IdxSelCell;
 
                 if (buildButtonType == BuildButtonTypes.First)
@@ -50,7 +51,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
                         RpcSys.BuildToMaster(idxSelCell, BuildingTypes.City);
                     }
                 }
-            //}
+            }
         }
     }
 }

@@ -99,10 +99,9 @@ namespace Assets.Scripts
             selCom.DefSelectedCell();
             takerUnitDatCom.ResetCurTimer(unitType);
 
-
-            if (GameModesCom.IsOffMode)
+            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode)
             {
-                if (invUnitCom.HaveUnitInInv(WhoseMoveCom.WhoseMoveOffline, unitType))
+                if (invUnitCom.HaveUnitInInv(WhoseMoveCom.CurPlayer, unitType))
                 {
                     selCom.SelUnitType = unitType;
                 }
@@ -110,21 +109,6 @@ namespace Assets.Scripts
                 {
                     takerUnitDatCom.ActiveNeedCreateButton(unitType, true);
                 }
-            }
-
-            else
-            {
-                //if (!IsDoned(PhotonNetwork.IsMasterClient))
-                //{
-                //    if (invUnitCom.HaveUnitInInv(WhoseMoveCom.CurOnlinePlayer, unitType))
-                //    {
-                //        selCom.SelUnitType = unitType;
-                //    }
-                //    else
-                //    {
-                //        takerUnitDatCom.ActiveNeedCreateButton(unitType, true);
-                //    }
-                //}
             }
         }
 
@@ -135,18 +119,7 @@ namespace Assets.Scripts
 
         private void Done()
         {
-            PlayerTypes curPlayer = default;
-
-            if (PhotonNetwork.OfflineMode)
-            {
-                curPlayer = WhoseMoveCom.WhoseMoveOffline;
-            }
-            else
-            {
-                curPlayer = WhoseMoveCom.CurOnlinePlayer;
-            }
-
-            if (!_invUnitsFilt.Get1(0).HaveUnitInInv(curPlayer, UnitTypes.King))
+            if (!_invUnitsFilt.Get1(0).HaveUnitInInv(WhoseMoveCom.CurPlayer, UnitTypes.King))
             {
                 RpcSys.DoneToMaster(); 
             }
@@ -166,8 +139,8 @@ namespace Assets.Scripts
 
         private void ConditionAbilityButton(CondUnitTypes conditionUnitType)
         {
-            //if (!IsDoned(PhotonNetwork.IsMasterClient))
-            //{
+            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode)
+            {
                 if (_cellUnitFilter.Get1(IdxSelectedCell).IsCondType(conditionUnitType))
                 {
                     RpcSys.ConditionUnitToMaster(CondUnitTypes.None, IdxSelectedCell);
@@ -176,13 +149,13 @@ namespace Assets.Scripts
                 {
                     RpcSys.ConditionUnitToMaster(conditionUnitType, IdxSelectedCell);
                 }
-            //}
+            }
         }
 
         private void ActiveGiveTakeButton()
         {
-            //if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient))
-            //{
+            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode)
+            {
                 ref var selecComp = ref _selectorFilter.Get1(0);
 
                 if (selecComp.CellClickType == CellClickTypes.GiveTakeTW)
@@ -194,46 +167,24 @@ namespace Assets.Scripts
                 {
                     selecComp.CellClickType = CellClickTypes.GiveTakeTW;
                 }
-            //}
-
-
-            //if (selecComp.IsActivatedGiveTakeMod)
-            //{
-            //    if (selecComp.GiveTakeType == GiveTakeTypes.Give)
-            //    {
-            //        selecComp.GiveTakeType = GiveTakeTypes.Take;
-            //    }
-            //    else if (selecComp.GiveTakeType == GiveTakeTypes.Take)
-            //    {
-            //        selecComp.GiveTakeType = GiveTakeTypes.Give;
-            //    }
-            //    else
-            //    {
-            //        throw new Exception();
-            //    }
-            //}
-
-            //else
-            //{
-            //    selecComp.GiveTakeType = GiveTakeTypes.Give;
-            //}
+            }
         }
 
         private void CreateUnit(UnitTypes unitType)
         {
             _takerUIFilter.Get1(0).ResetCurTimer(unitType);
 
-            /*if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) */RpcSys.CreateUnitToMaster(unitType);
+            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode) RpcSys.CreateUnitToMaster(unitType);
         }
 
         private void MeltOre()
         {
-           /* if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) */RpcSys.MeltOreToMaster();
+             if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode) RpcSys.MeltOreToMaster();
         }
 
         private void UpgradeBuilding(BuildingTypes buildingType)
         {
-            /*if (!_donerUIFilter.Get1(0).IsDoned(PhotonNetwork.IsMasterClient)) */RpcSys.UpgradeBuildingToMaster(buildingType);
+              if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode) RpcSys.UpgradeBuildingToMaster(buildingType);
         }
 
         private void ToggleToolWeapon(ToolWeaponTypes toolAndWeaponType)

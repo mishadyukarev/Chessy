@@ -5,10 +5,10 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
 {
     internal struct WhoseMoveCom
     {
-        internal static PlayerTypes WhoseMoveOnline;
-        internal static PlayerTypes WhoseMoveOffline;
+        internal static PlayerTypes WhoseMoveOnline { get; set; }
+        internal static PlayerTypes WhoseMoveOffline { get; set; }
 
-
+        internal static bool IsMyOnlineMove => CurOnlinePlayer == WhoseMoveOnline;
 
         internal static PlayerTypes CurOnlinePlayer
         {
@@ -23,7 +23,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
         {
             get
             {
-                if (GameModesCom.IsOnMode) return CurOnlinePlayer;
+                if (GameModesCom.IsOnlineMode) return CurOnlinePlayer;
                 else return WhoseMoveOffline;
             }
         }

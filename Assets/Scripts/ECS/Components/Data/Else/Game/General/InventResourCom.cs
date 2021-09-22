@@ -22,6 +22,7 @@ namespace Assets.Scripts.ECS.Component.Game
                 for (ResourceTypes resourceType = (ResourceTypes)1; resourceType < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resourceType++)
                 {
                     _amountResources[PlayerTypes.First].Add(resourceType, default);
+                    _amountResources[PlayerTypes.Second].Add(resourceType, default);
                 }
             }
         }

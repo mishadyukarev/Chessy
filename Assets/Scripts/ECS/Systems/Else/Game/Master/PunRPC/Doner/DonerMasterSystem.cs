@@ -11,7 +11,7 @@ using Leopotam.Ecs;
 using Photon.Pun;
 using System.Collections.Generic;
 
-internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
+internal sealed class DonerMasterSystem : IEcsRunSystem
 {
     private EcsFilter<InfoMasCom> _infoFilter = default;
     private EcsFilter<ForDonerMasCom> _donerFilter = default;
@@ -22,15 +22,7 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
     private EcsFilter<CellViewComponent> _cellViewFilter = default;
 
 
-    private Dictionary<bool, bool> _doneOrNotFromStartAnyUpdate = new Dictionary<bool, bool>();
-
     private PlayerTypes _playerMotion = PlayerTypes.First;
-
-    public void Init()
-    {
-        _doneOrNotFromStartAnyUpdate.Add(true, false);
-        _doneOrNotFromStartAnyUpdate.Add(false, true);
-    }
 
     public void Run()
     {
@@ -90,47 +82,26 @@ internal sealed class DonerMasterSystem : IEcsInitSystem, IEcsRunSystem
         }
         else
         {
-            //if (!_invUnitsFilter.Get1(0).HaveUnitInInv(sender.GetPlayerType(), UnitTypes.King))
-            //{
-            //    donerDataUICom.SetDoned(sender.IsMasterClient, true);
-            //    _doneOrNotFromStartAnyUpdate[sender.IsMasterClient] = false;
+            if (sender.GetPlayerType() == _playerMotion)
+            {
+                if (!_invUnitsFilter.Get1(0).HaveUnitInInv(sender.GetPlayerType(), UnitTypes.King))
+                {
 
-            //    if (sender.IsMasterClient)
-            //    {
-            //        if (_doneOrNotFromStartAnyUpdate[false] == true)
-            //        {
-            //            donerDataUICom.SetDoned(false, false);
-            //        }
-            //        else
-            //        {
-            //            GameMasterSystemManager.UpdateMotion.Run();
+                    if (_playerMotion == PlayerTypes.First)
+                    {
+                        _playerMotion = PlayerTypes.Second;
+                        WhoseMoveCom.WhoseMoveOnline = _playerMotion;
+                    }
+                    else
+                    {
+                        _playerMotion = PlayerTypes.First;
+                        WhoseMoveCom.WhoseMoveOnline = _playerMotion;
 
-            //            RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-
-            //            donerDataUICom.SetDoned(false, default);
-
-            //            _doneOrNotFromStartAnyUpdate[true] = true;
-            //            donerDataUICom.SetDoned(true, true);
-            //        }
-            //    }
-            //    else
-            //    {
-            //        if (_doneOrNotFromStartAnyUpdate[true] == true)
-            //        {
-            //            donerDataUICom.SetDoned(true, false);
-            //        }
-            //        else
-            //        {
-            //            GameMasterSystemManager.UpdateMotion.Run();
-            //            RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
-
-            //            donerDataUICom.SetDoned(true, default);
-
-            //            _doneOrNotFromStartAnyUpdate[false] = true;
-            //            donerDataUICom.SetDoned(false, true);
-            //        }
-            //    }
-            //}
+                        GameMasterSystemManager.UpdateMotion.Run();
+                        RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.MasterClient);
+                    }
+                }
+            }
         }
     }
 }

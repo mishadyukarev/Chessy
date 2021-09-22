@@ -23,6 +23,7 @@ namespace Assets.Scripts.ECS.Component
                     var dict1 = new Dictionary<PlayerTypes, int>();
 
                     _unitsInventorDict[PlayerTypes.First].Add(unitType, default);
+                    _unitsInventorDict[PlayerTypes.Second].Add(unitType, default);
                 }
             }
         }

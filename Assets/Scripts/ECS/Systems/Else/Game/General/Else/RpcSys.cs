@@ -322,9 +322,9 @@ namespace Assets.Scripts
         {
             var listObjects = new List<object>();
 
+            listObjects.Add(WhoseMoveCom.WhoseMoveOnline);
 
             listObjects.Add(_endGameFilter.Get1(0).PlayerWinner);
-
 
             listObjects.Add(_readyUIFilter.Get1(0).IsStartedGame);
             listObjects.Add(_readyUIFilter.Get1(0).IsReady(false));
@@ -492,9 +492,9 @@ namespace Assets.Scripts
         {
             _curNumber = 0;
 
+            WhoseMoveCom.WhoseMoveOnline = (PlayerTypes)objects[_curNumber++];
 
             _endGameFilter.Get1(0).PlayerWinner = (PlayerTypes)objects[_curNumber++];
-
 
             _readyUIFilter.Get1(0).IsStartedGame = (bool)objects[_curNumber++];
             _readyUIFilter.Get1(0).SetIsReady(PhotonNetwork.IsMasterClient, (bool)objects[_curNumber++]);
