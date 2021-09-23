@@ -557,9 +557,9 @@ namespace Assets.Scripts
 
 
             ref var invToolsComp = ref _invToolsFilter.Get1(0);
-            invToolsComp.SetAmountTools(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Pick, (byte)objects[_curNumber++]);
-            invToolsComp.SetAmountTools(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Sword, (byte)objects[_curNumber++]);
-            invToolsComp.SetAmountTools(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Crossbow, (byte)objects[_curNumber++]);
+            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Pick, (byte)objects[_curNumber++]);
+            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Sword, (byte)objects[_curNumber++]);
+            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Crossbow, (byte)objects[_curNumber++]);
         }
 
         #endregion

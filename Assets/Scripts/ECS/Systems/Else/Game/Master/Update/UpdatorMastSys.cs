@@ -26,6 +26,7 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
     private EcsFilter<UpgradesBuildsCom> _upgradeBuildsFilter = default;
     private EcsFilter<InventResourCom> _invResFilt = default;
     private EcsFilter<MotionsDataUIComponent> _motionsUIFilter = default;
+    private EcsFilter<EndGameDataUIComponent> _endGameDataUIFilt = default;
 
     public void Run()
     {
@@ -245,6 +246,19 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
 
                     if (!curUnitDatCom.HaveAmountHealth)
                     {
+                        if (curUnitDatCom.IsUnit(UnitTypes.King))
+                        {
+                            if (curOwnUnitCom.IsPlayerType(PlayerTypes.First))
+                            {
+                                _endGameDataUIFilt.Get1(0).PlayerWinner = PlayerTypes.Second;
+                            }
+                            else
+                            {
+                                _endGameDataUIFilt.Get1(0).PlayerWinner = PlayerTypes.First;
+                            }
+                            
+                        }
+
                         curUnitDatCom.DefUnitType();
                     }
                 }

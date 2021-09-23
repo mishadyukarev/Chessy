@@ -37,13 +37,12 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                 {
                     if (selOwnUnitCom.IsMine)
                     {
-                        if (selBuildDatCom.IsBuildType(BuildingTypes.City))
+                        if (selBuildDatCom.HaveBuild)
                         {
-                            buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
-
                             if (!selOwnBuildCom.IsMine)
-                            {  
+                            {
                                 needActiveThirdButt = true;
+                                buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComComp.GetText(GameLanguageTypes.DestroyBuilding));
                             }
                         }
 
@@ -62,7 +61,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                                 {
                                     if (curOwnBuildCom.IsMine)
                                     {
-                                        
+
                                         isSettedMyCity = true;
                                         break;
                                     }

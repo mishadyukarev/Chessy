@@ -173,10 +173,9 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
             else
             {
-                selCom.IdxSelCell = 0;
                 selCom.DefSelectedUnit();
-
                 selCom.DefSelectedCell();
+                selCom.DefCellClickType();
             }
         }
 

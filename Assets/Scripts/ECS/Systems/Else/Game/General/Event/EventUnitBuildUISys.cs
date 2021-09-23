@@ -42,10 +42,11 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
                 {
                     ref var selBuildDataCom = ref _cellBuildFilter.Get1(idxSelCell);
 
-                    if (selBuildDataCom.IsBuildType(BuildingTypes.City))
+                    if (selBuildDataCom.HaveBuild)
                     {
                         RpcSys.DestroyBuildingToMaster(idxSelCell);
                     }
+
                     else
                     {
                         RpcSys.BuildToMaster(idxSelCell, BuildingTypes.City);

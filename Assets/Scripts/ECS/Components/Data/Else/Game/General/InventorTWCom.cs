@@ -31,7 +31,7 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General
         }
 
         internal bool HaveTool(PlayerTypes playerType, ToolWeaponTypes toolWeaponType) => _inventorTools[playerType][toolWeaponType] > 0;
-        internal void SetAmountTools(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, byte value) => _inventorTools[playerType][toolWeaponType] = value;
+        internal void SetAmountTW(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, byte value) => _inventorTools[playerType][toolWeaponType] = value;
         internal byte GetAmountTools(PlayerTypes playerType, ToolWeaponTypes toolWeapType) => _inventorTools[playerType][toolWeapType];
 
         internal void AddAmountTools(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, byte adding = 1) => _inventorTools[playerType][toolWeaponType] += adding;

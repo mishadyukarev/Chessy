@@ -13,7 +13,7 @@ using UnityEngine;
 internal sealed class TruceMasterSystem : IEcsRunSystem
 {
     private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
-    private EcsFilter<InventorTWCom> _invToolsFilt = default;
+    private EcsFilter<InventorTWCom> _invTWFilt = default;
 
     private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
@@ -28,14 +28,14 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
         int random;
 
 
-        _invToolsFilt.Get1(0).SetAmountTools(PlayerTypes.First, ToolWeaponTypes.Pick, 0);
-        _invToolsFilt.Get1(0).SetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick, 0);
+        _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.First, ToolWeaponTypes.Pick, 0);
+        _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.Second, ToolWeaponTypes.Pick, 0);
 
-        _invToolsFilt.Get1(0).SetAmountTools(PlayerTypes.First, ToolWeaponTypes.Sword, 0);
-        _invToolsFilt.Get1(0).SetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword, 0);
+        _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.First, ToolWeaponTypes.Sword, 0);
+        _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.Second, ToolWeaponTypes.Sword, 0);
 
-        _invToolsFilt.Get1(0).SetAmountTools(PlayerTypes.First, ToolWeaponTypes.Crossbow, 0);
-        _invToolsFilt.Get1(0).SetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Crossbow, 0);
+        _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.First, ToolWeaponTypes.Crossbow, 0);
+        _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.Second, ToolWeaponTypes.Crossbow, 0);
 
 
         foreach (byte curIdxCell in _xyCellFilter)
@@ -87,7 +87,7 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
                 {
                     random = Random.Range(0, 100);
 
-                    if (random <= 20)
+                    if (random <= 5)
                     {
                         curEnvDatCom.SetNewEnvir(EnvirTypes.Fertilizer);
                     }
@@ -95,7 +95,7 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
                     {
                         random = Random.Range(0, 100);
 
-                        if (random <= 10)
+                        if (random <= 20)
                         {
                             curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
                         }
