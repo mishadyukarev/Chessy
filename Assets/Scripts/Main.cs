@@ -4,6 +4,7 @@ namespace Assets.Scripts
 {
     public sealed class Main : MonoBehaviour
     {
+        //private FacebookManager _facebookManager;
         private static ECSManager _eCSmanager;
 
         public const string VERSION_PHOTON_GAME = "0.1i";
@@ -21,6 +22,8 @@ namespace Assets.Scripts
             //{
             //    Advertisement.Initialize("4097313", true);
             //}
+
+            //_facebookManager = new FacebookManager();
         }
 
         private void Update()
