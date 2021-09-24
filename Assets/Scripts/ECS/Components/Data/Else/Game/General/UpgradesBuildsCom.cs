@@ -26,7 +26,7 @@ namespace Assets.Scripts.ECS.Component
         }
 
         internal int AmountUpgs(PlayerTypes playerType, BuildingTypes buildingType) => _amountUpgradesDict[playerType][buildingType];
-        internal int SetAmountUpgrades(PlayerTypes playerType, BuildingTypes buildingType,  int value) => _amountUpgradesDict[playerType][buildingType] = value;
+        internal int SetAmountUpgrades(PlayerTypes playerType, BuildingTypes buildingType, int value) => _amountUpgradesDict[playerType][buildingType] = value;
 
         internal void AddAmountUpgrades(PlayerTypes playerType, BuildingTypes buildingType, int adding = 1) => SetAmountUpgrades(playerType, buildingType, AmountUpgs(playerType, buildingType) + adding);
         internal void TakeAmountUpgrades(PlayerTypes playerType, BuildingTypes buildingType, int taking = 1) => SetAmountUpgrades(playerType, buildingType, AmountUpgs(playerType, buildingType) - taking);

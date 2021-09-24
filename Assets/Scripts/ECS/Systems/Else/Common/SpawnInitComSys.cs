@@ -42,7 +42,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
                 .Replace(new CanvasCom(canvas))
                 .Replace(new SoundComComp(audioSource))
-                .Replace(new LanguageComCom(LanguageTypes.Russian))
+                .Replace(new LanguageComCom(LanguageTypes.English))
 
                 //Toggle
                 .Replace(new ToggleZoneComponent(new GameObject()));

@@ -6,9 +6,7 @@ using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Workers.Game.Else.Economy;
 using Leopotam.Ecs;
-using Photon.Pun;
 using System.Collections.Generic;
-using UnityEngine;
 
 internal sealed class EconomyUpUISys : IEcsRunSystem
 {

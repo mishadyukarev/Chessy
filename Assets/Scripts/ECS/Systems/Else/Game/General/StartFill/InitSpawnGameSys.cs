@@ -18,7 +18,6 @@ using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
-using Assets.Scripts.ECS.Components.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
@@ -384,7 +383,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 _curGameWorld.NewEntity()
                     .Replace(new FromInfoComponent());
             }
-            
+
 
             if (GameModesCom.IsOnlineMode)
             {

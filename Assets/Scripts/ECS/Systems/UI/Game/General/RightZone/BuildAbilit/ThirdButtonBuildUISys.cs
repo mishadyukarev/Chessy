@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General;
 using Leopotam.Ecs;
 

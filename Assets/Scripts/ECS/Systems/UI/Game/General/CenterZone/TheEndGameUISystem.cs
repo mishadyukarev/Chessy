@@ -2,7 +2,6 @@
 using Assets.Scripts.ECS.Component.UI.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 
 internal sealed class TheEndGameUISystem : IEcsRunSystem

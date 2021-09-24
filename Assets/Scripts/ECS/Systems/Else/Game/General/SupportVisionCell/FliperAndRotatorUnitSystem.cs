@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
-using Photon.Pun;
 using UnityEngine;
 
 namespace Assets.Scripts.ECS.Game.General.Systems

@@ -345,7 +345,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
             _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.DestroyBuilding, "销毁");
             _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.DestroyBuilding, "Destruir");
         }
-        
+
 
         internal static string GetText(ComLanguageTypes comLanguageType)
         {

@@ -6,7 +6,6 @@ using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 using Photon.Pun;
-using Photon.Realtime;
 
 internal sealed class MeltOreMasterSystem : IEcsRunSystem
 {

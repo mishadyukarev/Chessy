@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 using static Assets.Scripts.Abstractions.ValuesConsts.EconomyValues;
@@ -86,20 +85,20 @@ namespace Assets.Scripts.ECS.Component.Game
                     throw new Exception();
 
                 case BuildingTypes.Farm:
-                    TakeAmountResources(playerType, ResourceTypes.Food,  FOOD_FOR_BUILDING_FARM);
-                    TakeAmountResources(playerType, ResourceTypes.Wood,  WOOD_FOR_BUILDING_FARM);
-                    TakeAmountResources(playerType, ResourceTypes.Ore,  ORE_FOR_BUILDING_FARM);
-                    TakeAmountResources(playerType, ResourceTypes.Iron,  IRON_FOR_BUILDING_FARM);
-                    TakeAmountResources(playerType, ResourceTypes.Gold,  GOLD_FOR_BUILDING_FARM);
+                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_BUILDING_FARM);
+                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_BUILDING_FARM);
+                    TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_BUILDING_FARM);
+                    TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_BUILDING_FARM);
+                    TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_BUILDING_FARM);
                     break;
 
                 case BuildingTypes.Woodcutter:
                     throw new Exception();
 
                 case BuildingTypes.Mine:
-                    TakeAmountResources(playerType, ResourceTypes.Food,  FOOD_FOR_BUILDING_MINE);
-                    TakeAmountResources(playerType, ResourceTypes.Wood,  WOOD_FOR_BUILDING_MINE);
-                    TakeAmountResources(playerType, ResourceTypes.Ore,  ORE_FOR_BUILDING_MINE);
+                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_BUILDING_MINE);
+                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_BUILDING_MINE);
+                    TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_BUILDING_MINE);
                     TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_BUILDING_MINE);
                     TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_BUILDING_MINE);
                     break;
@@ -109,7 +108,7 @@ namespace Assets.Scripts.ECS.Component.Game
             }
         }
 
-        internal bool CanCreateUnit(PlayerTypes playerType, UnitTypes unitType,  out bool[] haves)
+        internal bool CanCreateUnit(PlayerTypes playerType, UnitTypes unitType, out bool[] haves)
         {
             haves = new bool[AMOUNT_RESOURCES_TYPES];
 
@@ -162,25 +161,25 @@ namespace Assets.Scripts.ECS.Component.Game
                     throw new Exception();
 
                 case UnitTypes.Pawn:
-                    TakeAmountResources(playerType, ResourceTypes.Food,  FOOD_FOR_BUYING_PAWN);
-                    TakeAmountResources(playerType, ResourceTypes.Wood,  WOOD_FOR_BUYING_PAWN);
+                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_BUYING_PAWN);
+                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_BUYING_PAWN);
                     TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_BUYING_PAWN);
-                    TakeAmountResources(playerType, ResourceTypes.Iron,  IRON_FOR_BUYING_PAWN);
-                    TakeAmountResources(playerType, ResourceTypes.Gold,  GOLD_FOR_BUYING_PAWN);
+                    TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_BUYING_PAWN);
+                    TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_BUYING_PAWN);
                     break;
 
                 case UnitTypes.Rook:
-                    TakeAmountResources(playerType, ResourceTypes.Food,  FOOD_FOR_BUYING_ROOK);
-                    TakeAmountResources(playerType, ResourceTypes.Wood,  WOOD_FOR_BUYING_ROOK);
-                    TakeAmountResources(playerType, ResourceTypes.Ore,  ORE_FOR_BUYING_ROOK);
-                    TakeAmountResources(playerType, ResourceTypes.Iron,  IRON_FOR_BUYING_ROOK);
+                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_BUYING_ROOK);
+                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_BUYING_ROOK);
+                    TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_BUYING_ROOK);
+                    TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_BUYING_ROOK);
                     TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_BUYING_ROOK);
                     break;
 
                 case UnitTypes.Bishop:
-                    TakeAmountResources(playerType, ResourceTypes.Food,  FOOD_FOR_BUYING_BISHOP);
-                    TakeAmountResources(playerType, ResourceTypes.Wood,  WOOD_FOR_BUYING_BISHOP);
-                    TakeAmountResources(playerType, ResourceTypes.Ore,  ORE_FOR_BUYING_BISHOP);
+                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_BUYING_BISHOP);
+                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_BUYING_BISHOP);
+                    TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_BUYING_BISHOP);
                     TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_BUYING_BISHOP);
                     TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_BUYING_BISHOP);
                     break;
@@ -205,11 +204,11 @@ namespace Assets.Scripts.ECS.Component.Game
         }
         internal void BuyMeltOre(PlayerTypes playerType)
         {
-            TakeAmountResources(playerType, ResourceTypes.Food,  FOOD_FOR_MELTING_ORE);
-            TakeAmountResources(playerType, ResourceTypes.Wood,  WOOD_FOR_MELTING_ORE);
-            TakeAmountResources(playerType, ResourceTypes.Ore,  ORE_FOR_MELTING_ORE);
-            TakeAmountResources(playerType, ResourceTypes.Iron,  IRON_FOR_MELTING_ORE);
-            TakeAmountResources(playerType, ResourceTypes.Gold,  GOLD_FOR_MELTING_ORE);
+            TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_MELTING_ORE);
+            TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_MELTING_ORE);
+            TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_MELTING_ORE);
+            TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_MELTING_ORE);
+            TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_MELTING_ORE);
 
             AddAmountResources(playerType, ResourceTypes.Iron, 4);
             AddAmountResources(playerType, ResourceTypes.Gold, 1);

@@ -4,7 +4,6 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.General;
 using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 

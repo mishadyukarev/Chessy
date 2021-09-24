@@ -9,7 +9,6 @@ using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 using Photon.Pun;
-using System.Collections.Generic;
 
 internal sealed class DonerMasterSystem : IEcsRunSystem
 {

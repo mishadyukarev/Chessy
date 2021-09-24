@@ -5,7 +5,6 @@ using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
-using Photon.Pun;
 using System;
 
 namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells

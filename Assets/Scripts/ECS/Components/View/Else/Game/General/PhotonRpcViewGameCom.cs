@@ -12,7 +12,7 @@ namespace Assets.Scripts.ECS.Components.View.Else.Game.General
         internal PhotonRpcViewGameCom(bool needNew)
         {
             RpcView_GO = new GameObject("RpcView");
-            
+
             PhotonView = RpcView_GO.AddComponent<PhotonView>();
             RpcSys = RpcView_GO.AddComponent<RpcSys>();
 

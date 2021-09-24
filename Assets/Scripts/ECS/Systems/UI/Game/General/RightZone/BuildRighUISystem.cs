@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.ECS.Component.Data.UI.Game.General;
-using Assets.Scripts.ECS.Components.View.UI.Game.General;
+﻿using Assets.Scripts.ECS.Components.View.UI.Game.General;
 using Leopotam.Ecs;
 
 internal sealed class BuildRighUISystem : IEcsRunSystem

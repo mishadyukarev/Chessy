@@ -48,7 +48,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
 
 
                             inventTWCom.AddAmountTools(onUnitComForGive.PlayerType, ToolWeaponTypes.Crossbow);
-                            
+
 
                             unitDatComForGive.ArcherWeapType = ToolWeaponTypes.Bow;
 

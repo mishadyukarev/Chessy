@@ -121,7 +121,7 @@ namespace Assets.Scripts
         {
             if (!_invUnitsFilt.Get1(0).HaveUnitInInv(WhoseMoveCom.CurPlayer, UnitTypes.King))
             {
-                RpcSys.DoneToMaster(); 
+                RpcSys.DoneToMaster();
             }
             else
             {
@@ -179,12 +179,12 @@ namespace Assets.Scripts
 
         private void MeltOre()
         {
-             if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode) RpcSys.MeltOreToMaster();
+            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode) RpcSys.MeltOreToMaster();
         }
 
         private void UpgradeBuilding(BuildingTypes buildingType)
         {
-              if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode) RpcSys.UpgradeBuildingToMaster(buildingType);
+            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode) RpcSys.UpgradeBuildingToMaster(buildingType);
         }
 
         private void ToggleToolWeapon(ToolWeaponTypes toolAndWeaponType)

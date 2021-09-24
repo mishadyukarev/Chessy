@@ -1,12 +1,10 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Leopotam.Ecs;
-using Photon.Pun;
 
 internal sealed class SelectorSystem : IEcsRunSystem
 {
@@ -109,7 +107,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                     selCom.IdxSelCell = selCom.IdxCurCell;
 
-                    var b1 = cellsAttackCom.FindByIdx(WhoseMoveCom.CurPlayer, AttackTypes.Simple,  selCom.IdxPreCell, selCom.IdxSelCell);
+                    var b1 = cellsAttackCom.FindByIdx(WhoseMoveCom.CurPlayer, AttackTypes.Simple, selCom.IdxPreCell, selCom.IdxSelCell);
                     var b2 = cellsAttackCom.FindByIdx(WhoseMoveCom.CurPlayer, AttackTypes.Unique, selCom.IdxPreCell, selCom.IdxSelCell);
 
                     if (b1 || b2)

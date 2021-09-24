@@ -6,7 +6,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells
 {
     internal struct CellsGiveTWComp
     {
-        private Dictionary<PlayerTypes , Dictionary<ToolWeaponTypes, List<byte>>> _cellsGiveToolWeaps;
+        private Dictionary<PlayerTypes, Dictionary<ToolWeaponTypes, List<byte>>> _cellsGiveToolWeaps;
 
         internal CellsGiveTWComp(bool needNew) : this()
         {
@@ -30,6 +30,6 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells
         }
 
         internal void Clear(PlayerTypes playerType, ToolWeaponTypes toolWeaponType) => _cellsGiveToolWeaps[playerType][toolWeaponType].Clear();
-        internal void Add(PlayerTypes playerType, ToolWeaponTypes toolWeaponType,  byte idxCell) => _cellsGiveToolWeaps[playerType][toolWeaponType].Add(idxCell);
+        internal void Add(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, byte idxCell) => _cellsGiveToolWeaps[playerType][toolWeaponType].Add(idxCell);
     }
 }

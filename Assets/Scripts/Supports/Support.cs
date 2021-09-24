@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
 using System;

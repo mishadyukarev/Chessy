@@ -11112,7 +11112,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u041C\u0443\u0437\u044B\u043A\u0430"
+  m_text: Music
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2de3197879ac61447b2aa2e6628142f0, type: 2}
   m_sharedMaterial: {fileID: 8171159788567922818, guid: 2de3197879ac61447b2aa2e6628142f0,
@@ -17272,7 +17272,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0421 \u0434\u0440\u0443\u0433\u043E\u043C"
+  m_text: With Friend
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2de3197879ac61447b2aa2e6628142f0, type: 2}
   m_sharedMaterial: {fileID: 8171159788567922818, guid: 2de3197879ac61447b2aa2e6628142f0,
@@ -22329,9 +22329,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u0415\u0441\u043B\u0438 \u0435\u0441\u0442\u044C \u0436\u0435\u043B\u0430\u043D\u0438\u0435
-    \u043F\u043E\u043C\u043E\u0447\u044C \u043F\u0440\u043E\u0435\u043A\u0442\u0443\nPaypal:
-    mishadyukarev64@gmail.com"
+  m_text: 'Get Respect from me ^-^
+
+    Paypal: mishadyukarev64@gmail.com'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2de3197879ac61447b2aa2e6628142f0, type: 2}
   m_sharedMaterial: {fileID: 8171159788567922818, guid: 2de3197879ac61447b2aa2e6628142f0,

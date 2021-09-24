@@ -537,7 +537,7 @@ namespace Assets.Scripts
                 curFireDatCom.HaveFire = (bool)objects[_curNumber++];
             }
 
-            
+
 
             ref var inventResComp = ref _inventorResFilter.Get1(0);
             inventResComp.SetAmountResources(WhoseMoveCom.CurOnlinePlayer, ResourceTypes.Food, (int)objects[_curNumber++]);

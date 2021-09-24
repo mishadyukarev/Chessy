@@ -127,7 +127,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                                     curCellEnvCom.SetNewEnvir(EnvirTypes.Fertilizer);
                                 }
 
-                                invResCom.BuyBuild(playerTypeSender , forBuildType);
+                                invResCom.BuyBuild(playerTypeSender, forBuildType);
 
                                 curBuildDatCom.BuildType = forBuildType;
                                 curOwnBuildCom.PlayerType = playerTypeSender;
@@ -161,13 +161,13 @@ internal sealed class BuilderMastSys : IEcsRunSystem
                 case BuildingTypes.Mine:
                     if (curCellEnvCom.HaveEnvir(EnvirTypes.Hill) && curCellEnvCom.HaveResources(EnvirTypes.Hill))
                     {
-                        if (invResCom.CanCreateBuild(playerTypeSender , forBuildType, out bool[] haves))
+                        if (invResCom.CanCreateBuild(playerTypeSender, forBuildType, out bool[] haves))
                         {
                             if (curUnitDatCom.HaveMaxAmountSteps)
                             {
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                                invResCom.BuyBuild(playerTypeSender , forBuildType);
+                                invResCom.BuyBuild(playerTypeSender, forBuildType);
 
                                 curBuildDatCom.BuildType = forBuildType;
                                 curOwnBuildCom.PlayerType = playerTypeSender;

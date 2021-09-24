@@ -1,9 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
+﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
-using Photon.Pun;
 
 namespace Assets.Scripts.ECS.Systems.Else.Game.General.Sync.Unit
 {

@@ -7,7 +7,6 @@ using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
-using Photon.Pun;
 
 internal sealed class CreateUnitMastSys : IEcsRunSystem
 {

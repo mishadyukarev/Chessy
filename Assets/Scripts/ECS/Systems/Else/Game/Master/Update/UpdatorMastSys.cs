@@ -256,7 +256,7 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
                             {
                                 _endGameDataUIFilt.Get1(0).PlayerWinner = PlayerTypes.First;
                             }
-                            
+
                         }
 
                         curUnitDatCom.DefUnitType();

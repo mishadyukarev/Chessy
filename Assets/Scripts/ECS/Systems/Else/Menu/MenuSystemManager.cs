@@ -19,7 +19,7 @@ namespace Assets.Scripts.ECS.Manager.View.Menu
 
             InitOnlySystems
                 .Add(PhotSceneMenuSys);
-                
+
 
             RunOnlySystems
                 .Add(new SyncMenuSys());

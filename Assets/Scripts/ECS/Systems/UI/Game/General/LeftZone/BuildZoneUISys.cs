@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
 
 internal sealed class BuildZoneUISys : IEcsRunSystem

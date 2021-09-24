@@ -1,7 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Assets.Scripts.Supports;
-using System;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Component.Data.Else.Game.General

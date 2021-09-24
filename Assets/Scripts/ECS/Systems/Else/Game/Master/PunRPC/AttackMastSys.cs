@@ -3,7 +3,6 @@ using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
-using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 using Photon.Pun;
 
@@ -42,10 +41,10 @@ internal sealed class AttackMastSys : IEcsRunSystem
         AttackTypes simpUniqueType = default;
 
 
-        if (cellsAttackCom.FindByIdx(fromOwnUnitCom.PlayerType, AttackTypes.Simple,  fromIdx, toIdxAttack))
+        if (cellsAttackCom.FindByIdx(fromOwnUnitCom.PlayerType, AttackTypes.Simple, fromIdx, toIdxAttack))
             simpUniqueType = AttackTypes.Simple;
 
-        if (cellsAttackCom.FindByIdx(fromOwnUnitCom.PlayerType, AttackTypes.Unique,  fromIdx, toIdxAttack))
+        if (cellsAttackCom.FindByIdx(fromOwnUnitCom.PlayerType, AttackTypes.Unique, fromIdx, toIdxAttack))
             simpUniqueType = AttackTypes.Unique;
 
 

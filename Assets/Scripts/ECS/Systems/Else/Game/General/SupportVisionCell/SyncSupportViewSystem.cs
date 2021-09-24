@@ -3,7 +3,6 @@ using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Leopotam.Ecs;
-using Photon.Pun;
 
 internal sealed class SyncSupportViewSystem : IEcsRunSystem
 {

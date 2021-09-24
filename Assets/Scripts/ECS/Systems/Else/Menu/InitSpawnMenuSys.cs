@@ -4,7 +4,6 @@ using Assets.Scripts.ECS.Component.Menu;
 using Assets.Scripts.ECS.Component.UI;
 using Leopotam.Ecs;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Assets.Scripts.ECS.System.View.Menu
 {

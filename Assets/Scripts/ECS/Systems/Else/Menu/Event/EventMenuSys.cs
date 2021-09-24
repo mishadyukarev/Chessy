@@ -7,7 +7,6 @@ using Assets.Scripts.ECS.Manager.View.Menu;
 using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
-using TMPro;
 using UnityEngine;
 
 namespace Assets.Scripts.ECS.Managers.Event
