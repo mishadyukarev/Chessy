@@ -24,15 +24,15 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
 
 
 
-        getUnitViewCom.SetTextUnit(UnitTypes.Pawn, LanguageComComp.GetText(GameLanguageTypes.Pawn));
-        getUnitViewCom.SetTextUnit(UnitTypes.Rook, LanguageComComp.GetText(GameLanguageTypes.Rook));
-        getUnitViewCom.SetTextUnit(UnitTypes.Bishop, LanguageComComp.GetText(GameLanguageTypes.Bishop));
+        getUnitViewCom.SetTextUnit(UnitTypes.Pawn, LanguageComCom.GetText(GameLanguageTypes.Pawn));
+        getUnitViewCom.SetTextUnit(UnitTypes.Rook, LanguageComCom.GetText(GameLanguageTypes.Rook));
+        getUnitViewCom.SetTextUnit(UnitTypes.Bishop, LanguageComCom.GetText(GameLanguageTypes.Bishop));
 
         for (UnitTypes curUnitType = 0; curUnitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; curUnitType++)
         {
             if (curUnitType == UnitTypes.Pawn || curUnitType == UnitTypes.Rook || curUnitType == UnitTypes.Bishop)
             {
-                getUnitViewCom.SetTextCreate(curUnitType, LanguageComComp.GetText(GameLanguageTypes.Create));
+                getUnitViewCom.SetTextCreate(curUnitType, LanguageComCom.GetText(GameLanguageTypes.Create));
 
 
                 if (getUnitDatCom.IsActivatedButton(curUnitType))

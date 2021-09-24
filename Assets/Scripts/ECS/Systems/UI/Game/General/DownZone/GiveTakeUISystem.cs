@@ -26,7 +26,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone
             giveTakeViewCom.Enable_ButtonImage(selectorComp.ToolWeaponTypeForGiveTake);
 
 
-            giveTakeViewCom.SetTextToGiveTake_Button(LanguageComComp.GetText(GameLanguageTypes.GiveTake));
+            giveTakeViewCom.SetTextToGiveTake_Button(LanguageComCom.GetText(GameLanguageTypes.GiveTake));
 
 
             if (selectorComp.IsCellClickType(CellClickTypes.GiveTakeTW))

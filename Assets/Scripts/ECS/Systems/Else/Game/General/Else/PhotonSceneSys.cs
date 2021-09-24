@@ -80,11 +80,12 @@ namespace Assets.Scripts
 
         public override void OnConnectedToMaster()
         {
-            MenuSystemManager.PhotSceneMenuSys.ConnectedToMaster();
+            MenuSystemManager.ConnectToMasterMenuSys.Run();
         }
         public override void OnDisconnected(DisconnectCause cause)
         {
-            MenuSystemManager.PhotSceneMenuSys.ConnectUsingSettingsWithData(true);
+            PhotonNetwork.PhotonServerSettings.StartInOfflineMode = true;
+            MenuSystemManager.ConnUsingSettingsMenuSys.Run();
         }
     }
 }

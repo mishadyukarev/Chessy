@@ -34,9 +34,9 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
                 {
                     ref var selOwnUnitCom = ref _cellUnitFilt.Get2(selCom.IdxSelCell);
 
-                    condUnitUICom.SetText_Info(LanguageComComp.GetText(GameLanguageTypes.ConditAbilities));
-                    uniqueAbilUICom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.UniqueAbilities));
-                    buildAbilUICom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.BuildingAbilities));
+                    condUnitUICom.SetText_Info(LanguageComCom.GetText(GameLanguageTypes.ConditAbilities));
+                    uniqueAbilUICom.SetTextInfo(LanguageComCom.GetText(GameLanguageTypes.UniqueAbilities));
+                    buildAbilUICom.SetTextInfo(LanguageComCom.GetText(GameLanguageTypes.BuildingAbilities));
 
 
                     if (selOwnUnitCom.IsMine)

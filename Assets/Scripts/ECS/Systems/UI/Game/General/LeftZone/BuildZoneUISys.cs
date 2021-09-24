@@ -25,10 +25,10 @@ internal sealed class BuildZoneUISys : IEcsRunSystem
         {
             if (selOwnUnitCom.IsMine)
             {
-                buildZoneViewCom.SetTextMelt(LanguageComComp.GetText(GameLanguageTypes.Melt));
-                buildZoneViewCom.SetTextUpgrade(BuildingTypes.Farm, LanguageComComp.GetText(GameLanguageTypes.UpgradeFarm));
-                buildZoneViewCom.SetTextUpgrade(BuildingTypes.Woodcutter, LanguageComComp.GetText(GameLanguageTypes.UpgradeWoodcutter));
-                buildZoneViewCom.SetTextUpgrade(BuildingTypes.Mine, LanguageComComp.GetText(GameLanguageTypes.UpgradeMine));
+                buildZoneViewCom.SetTextMelt(LanguageComCom.GetText(GameLanguageTypes.Melt));
+                buildZoneViewCom.SetTextUpgrade(BuildingTypes.Farm, LanguageComCom.GetText(GameLanguageTypes.UpgradeFarm));
+                buildZoneViewCom.SetTextUpgrade(BuildingTypes.Woodcutter, LanguageComCom.GetText(GameLanguageTypes.UpgradeWoodcutter));
+                buildZoneViewCom.SetTextUpgrade(BuildingTypes.Mine, LanguageComCom.GetText(GameLanguageTypes.UpgradeMine));
 
                 buildZoneViewCom.SetActiveZone(true);
             }

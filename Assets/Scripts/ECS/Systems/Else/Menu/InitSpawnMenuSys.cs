@@ -14,28 +14,30 @@ namespace Assets.Scripts.ECS.System.View.Menu
 
         public void Init()
         {
-            CanvasComp.ReplaceZone(Main.CurrentSceneType);
+            CanvasCom.ReplaceZone(Main.CurrentSceneType);
             ToggleZoneComponent.ReplaceZone(Main.CurrentSceneType);
 
 
+            var centerZone_Trans = CanvasCom.FindUnderParent<Transform>("CenterZone");
+
 
 
             _menuWorld.NewEntity()
-                .Replace(new CenterMenuUIComp(CanvasComp.FindUnderParent<Slider>("Slider"), SoundComComp.Volume));
+                .Replace(new CenterMenuUICom(centerZone_Trans, SoundComComp.Volume));
 
 
-            var rightZone = CanvasComp.FindUnderParent<RectTransform>("OnlineRightZone");
+            var rightZone = CanvasCom.FindUnderParent<RectTransform>("OnlineRightZone");
             _menuWorld.NewEntity()
-                .Replace(new OnlineZoneUIComponent(rightZone))
-                .Replace(new ConnectButtonUIComp(true, rightZone))
-                .Replace(new BackgroundImagesUIComponent(true, rightZone));
+                .Replace(new OnlineZoneUICom(rightZone))
+                .Replace(new ConnectButtonUICom(true, rightZone))
+                .Replace(new BackgroundMenuUICom(true, rightZone));
 
 
-            var leftZone = CanvasComp.FindUnderParent<RectTransform>("OfflineLeftZone");
+            var leftZone = CanvasCom.FindUnderParent<RectTransform>("OfflineLeftZone");
             _menuWorld.NewEntity()
-                .Replace(new OfflineZoneUIComponent(leftZone))
-                .Replace(new ConnectButtonUIComp(false, leftZone))
-                .Replace(new BackgroundImagesUIComponent(false, leftZone));
+                .Replace(new OfflineZoneUICom(leftZone))
+                .Replace(new ConnectButtonUICom(false, leftZone))
+                .Replace(new BackgroundMenuUICom(false, leftZone));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
 
             if (_invUnitFil.Get1(0).HaveUnitInInv(WhoseMoveCom.CurPlayer, UnitTypes.King))
             {
-                kingZoneViewCom.SetTextKingBut(LanguageComComp.GetText(GameLanguageTypes.SetKing));
+                kingZoneViewCom.SetTextKingBut(LanguageComCom.GetText(GameLanguageTypes.SetKing));
                 kingZoneViewCom.EnableZone();
             }
             else

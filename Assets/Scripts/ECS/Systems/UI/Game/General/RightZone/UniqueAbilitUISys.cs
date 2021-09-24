@@ -30,7 +30,7 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
         ref var selFireDatCom = ref _cellFireFilter.Get1(idxSelCell);
 
 
-        unitZoneViewCom.SetTextInfo(LanguageComComp.GetText(GameLanguageTypes.UniqueAbilities));
+        unitZoneViewCom.SetTextInfo(LanguageComCom.GetText(GameLanguageTypes.UniqueAbilities));
 
 
 
@@ -44,7 +44,7 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
                 if (selUnitDatCom.IsUnit(UnitTypes.King))
                 {
                     activeFirst = true;
-                    unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.CircularAttack));
+                    unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.CircularAttack));
                     unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
                 }
                 else
@@ -57,17 +57,17 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
                         {
                             if (selFireDatCom.HaveFire)
                             {
-                                unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.PutOutFire));
+                                unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.PutOutFire));
                             }
                             else
                             {
-                                unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.FireForest));
+                                unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.FireForest));
                             }
                             unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
                         }
                         else
                         {
-                            unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.SeedForest));
+                            unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.SeedForest));
                             unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(0.5f, 1, 0.5f, 1));
                         }
                     }
@@ -76,7 +76,7 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
                     {
                         activeFirst = true;
                         unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
-                        unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComComp.GetText(GameLanguageTypes.FireForest));
+                        unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.FireForest));
                     }
                 }
             }

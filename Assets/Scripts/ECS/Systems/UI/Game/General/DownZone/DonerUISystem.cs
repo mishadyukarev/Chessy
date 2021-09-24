@@ -16,8 +16,8 @@ internal sealed class DonerUISystem : IEcsRunSystem
 
         if (GameModesCom.IsOnlineMode)
         {          
-            donerViewUICom.SetTextDoner(LanguageComComp.GetText(GameLanguageTypes.Done));
-            donerViewUICom.SetTextWait(LanguageComComp.GetText(GameLanguageTypes.WaitPlayer));
+            donerViewUICom.SetTextDoner(LanguageComCom.GetText(GameLanguageTypes.Done));
+            donerViewUICom.SetTextWait(LanguageComCom.GetText(GameLanguageTypes.WaitPlayer));
 
 
             if (WhoseMoveCom.IsMyOnlineMove)

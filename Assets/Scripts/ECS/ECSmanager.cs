@@ -6,7 +6,6 @@ using Assets.Scripts.ECS.System.View.Menu;
 using Leopotam.Ecs;
 using Photon.Pun;
 using System;
-using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -27,9 +26,6 @@ namespace Assets.Scripts
         private GameGeneralSysManager _gameGenSysManag;
         private GameMasterSystemManager _gameMasSysManag;
         private GameOtherSystemManager _gameOthSysmManag;
-
-
-        internal static GameObject RpcView_GO { get; private set; }
 
         #endregion
 
@@ -56,8 +52,7 @@ namespace Assets.Scripts
                     {
                         _gameWorld.Destroy();
 
-
-                        GameObject.Destroy(RpcView_GO);
+                        _gameGenSysManag.Dispose();
                         _gameGenSysManag = default;
                         _gameMasSysManag = default;
                         _gameOthSysmManag = default;
@@ -81,14 +76,10 @@ namespace Assets.Scripts
                         _allMenuSystems.Destroy();
                     }
 
-                    RpcView_GO = new GameObject("RpcView");
-
                     _gameWorld = new EcsWorld();
                     _allGameSystems = new EcsSystems(_gameWorld);
 
-
                     _allGameSystems.Add(new InitSpawnGameSys());
-
                     _gameGenSysManag = new GameGeneralSysManager(_gameWorld, _allGameSystems);
                     if (PhotonNetwork.IsMasterClient)
                     {
@@ -105,8 +96,6 @@ namespace Assets.Scripts
                 default:
                     throw new Exception();
             }
-
-
         }
 
 

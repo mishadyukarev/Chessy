@@ -53,6 +53,8 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             ToggleZoneComponent.ReplaceZone(Main.CurrentSceneType);
 
 
+
+
             SoundComComp.SavedVolume = SoundComComp.Volume;
 
 
@@ -183,7 +185,6 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new CellsForAttackCom(true))
                 .Replace(new CellsGiveTWComp(true))
                 .Replace(new WhoseMoveCom(PlayerTypes.First))
-                .Replace(new PhotonViewComp(true))
 
                 .Replace(new UpgradesBuildsCom(true))
 
@@ -202,18 +203,18 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             ///Canvas
             ///
 
-            CanvasComp.ReplaceZone(Main.CurrentSceneType);
+            CanvasCom.ReplaceZone(Main.CurrentSceneType);
 
-            var upZone_GO = CanvasComp.FindUnderParent("UpZone");
-            var centerZone_GO = CanvasComp.FindUnderParent("CenterZone");
-            var downZone_GO = CanvasComp.FindUnderParent("DownZone");
-            var leftZone_GO = CanvasComp.FindUnderParent("LeftZone");
-            var rightZone_GO = CanvasComp.FindUnderParent("RightZone");
+            var upZone_GO = CanvasCom.FindUnderParent("UpZone");
+            var centerZone_GO = CanvasCom.FindUnderParent("CenterZone");
+            var downZone_GO = CanvasCom.FindUnderParent("DownZone");
+            var leftZone_GO = CanvasCom.FindUnderParent("LeftZone");
+            var rightZone_GO = CanvasCom.FindUnderParent("RightZone");
 
             var canvasEnt = _curGameWorld.NewEntity()
                 ///Up
                 .Replace(new EconomyViewUICom(upZone_GO))
-                .Replace(new LeaveViewUIComponent(CanvasComp.FindUnderParent<Button>("ButtonLeave")))
+                .Replace(new LeaveViewUIComponent(CanvasCom.FindUnderParent<Button>("ButtonLeave")))
 
                 ///Center
                 .Replace(new EndGameDataUIComponent())

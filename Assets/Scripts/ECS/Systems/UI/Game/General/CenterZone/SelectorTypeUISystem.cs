@@ -21,13 +21,13 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
 
             if (selectCom.IsCellClickType(CellClickTypes.GiveTakeTW))
             {
-                selectTypeViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.GiveOrTakeTool);
+                selectTypeViewUIComp.Text = LanguageComCom.GetText(GameLanguageTypes.GiveOrTakeTool);
                 selectTypeViewUIComp.EnableParent();
             }
 
             else if (selectCom.IsCellClickType(CellClickTypes.PickFire))
             {
-                selectTypeViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.PickAdultForest);
+                selectTypeViewUIComp.Text = LanguageComCom.GetText(GameLanguageTypes.PickAdultForest);
                 selectTypeViewUIComp.EnableParent();
             }
         }

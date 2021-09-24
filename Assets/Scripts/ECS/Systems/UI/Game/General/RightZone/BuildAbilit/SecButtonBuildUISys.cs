@@ -25,7 +25,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
             {
                 ref var selUnitDatCom = ref _cellUnitFilt.Get1(selCom.IdxSelCell);
 
-                buildAbilUICom.SetText_Button(BuildButtonTypes.Second, LanguageComComp.GetText(GameLanguageTypes.BuildMine));
+                buildAbilUICom.SetText_Button(BuildButtonTypes.Second, LanguageComCom.GetText(GameLanguageTypes.BuildMine));
 
 
                 if (selUnitDatCom.IsUnit(UnitTypes.Pawn))

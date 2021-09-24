@@ -65,7 +65,7 @@ namespace Assets.Scripts
 
         private EcsFilter<InfoOtherCom> _infoOtherFilter = default;
 
-        private static PhotonView PhotonView => PhotonViewComp.PhotonView;
+        private static PhotonView PhotonView => PhotonRpcViewGameCom.PhotonView;
 
         private static string MasterRPCName => nameof(MasterRPC);
         private static string GeneralRPCName => nameof(GeneralRPC);

@@ -42,11 +42,11 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
         //var v = selCellEnvDataCom.GetAmountResources(EnvironmentTypes.Fertilizer);
 
 
-        envViewUICom.SetTextEnvirInfo(LanguageComComp.GetText(GameLanguageTypes.EnvironmentInfo));
+        envViewUICom.SetTextEnvirInfo(LanguageComCom.GetText(GameLanguageTypes.EnvironmentInfo));
 
-        envViewUICom.SetTextResour(ResourceTypes.Food, LanguageComComp.GetText(GameLanguageTypes.Fertilizer) + ": " + selCellEnvDataCom.GetAmountResources(EnvirTypes.Fertilizer));
-        envViewUICom.SetTextResour(ResourceTypes.Wood, LanguageComComp.GetText(GameLanguageTypes.Wood) + ": " + selCellEnvDataCom.GetAmountResources(EnvirTypes.AdultForest));
-        envViewUICom.SetTextResour(ResourceTypes.Ore, LanguageComComp.GetText(GameLanguageTypes.Ore) + ": " + selCellEnvDataCom.GetAmountResources(EnvirTypes.Hill));
+        envViewUICom.SetTextResour(ResourceTypes.Food, LanguageComCom.GetText(GameLanguageTypes.Fertilizer) + ": " + selCellEnvDataCom.GetAmountResources(EnvirTypes.Fertilizer));
+        envViewUICom.SetTextResour(ResourceTypes.Wood, LanguageComCom.GetText(GameLanguageTypes.Wood) + ": " + selCellEnvDataCom.GetAmountResources(EnvirTypes.AdultForest));
+        envViewUICom.SetTextResour(ResourceTypes.Ore, LanguageComCom.GetText(GameLanguageTypes.Ore) + ": " + selCellEnvDataCom.GetAmountResources(EnvirTypes.Hill));
 
 
 

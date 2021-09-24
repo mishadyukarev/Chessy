@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts;
+using Assets.Scripts.ECS.Components.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
 using Assets.Scripts.ECS.Game.General.Systems;
 using Assets.Scripts.ECS.Game.General.Systems.SupportVision;
@@ -15,8 +16,10 @@ using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone;
 using Assets.Scripts.ECS.Systems.UI.Game.General.Sync.UpZone;
 using Leopotam.Ecs;
+using System;
+using UnityEngine;
 
-public sealed class GameGeneralSysManager : SystemAbstManager
+public sealed class GameGeneralSysManager : SystemAbstManager, IDisposable
 {
     internal RpcSys RpcGameSys { get; private set; }
     internal EcsSystems SyncCanvasViewSyss { get; private set; }
@@ -25,7 +28,9 @@ public sealed class GameGeneralSysManager : SystemAbstManager
 
     internal GameGeneralSysManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
     {
-        RpcGameSys = ECSManager.RpcView_GO.AddComponent<RpcSys>();
+        new PhotonRpcViewGameCom(true);
+
+        RpcGameSys = PhotonRpcViewGameCom.RpcSys;
 
         SyncCellViewSyss = new EcsSystems(gameWorld)
             .Add(new VisibUnitsSys())
@@ -112,5 +117,10 @@ public sealed class GameGeneralSysManager : SystemAbstManager
             .Add(SyncCanvasViewSyss)
 
             .Add(RpcGameSys);
+    }
+
+    public void Dispose()
+    {
+        GameObject.Destroy(PhotonRpcViewGameCom.RpcView_GO);
     }
 }

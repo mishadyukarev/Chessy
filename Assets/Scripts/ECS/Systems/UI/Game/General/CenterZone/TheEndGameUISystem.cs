@@ -21,12 +21,12 @@ internal sealed class TheEndGameUISystem : IEcsRunSystem
 
         else if (endGameDataUIComp.PlayerWinner == WhoseMoveCom.CurPlayer)
         {
-            endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreWinner);
+            endGameViewUIComp.Text = LanguageComCom.GetText(GameLanguageTypes.YouAreWinner);
             endGameViewUIComp.SetActiveZone(true);
         }
         else
         {
-            endGameViewUIComp.Text = LanguageComComp.GetText(GameLanguageTypes.YouAreLoser);
+            endGameViewUIComp.Text = LanguageComCom.GetText(GameLanguageTypes.YouAreLoser);
             endGameViewUIComp.SetActiveZone(true);
         }
     }

@@ -22,7 +22,7 @@ internal sealed class RelaxUISys : IEcsRunSystem
         ref var selOnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
 
 
-        condUnitUICom.SetText_Info(LanguageComComp.GetText(GameLanguageTypes.ConditAbilities));
+        condUnitUICom.SetText_Info(LanguageComCom.GetText(GameLanguageTypes.ConditAbilities));
 
 
         var activeButt = false;
@@ -31,24 +31,24 @@ internal sealed class RelaxUISys : IEcsRunSystem
         {
             if (selUnitDatCom.IsUnit(UnitTypes.King))
             {
-                condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComComp.GetText(GameLanguageTypes.Relax));
+                condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
             }
 
             else if (selUnitDatCom.IsUnit(UnitTypes.Pawn))
             {
                 if (selUnitDatCom.HaveMaxAmountHealth)
                 {
-                    condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComComp.GetText(GameLanguageTypes.Extract));
+                    condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Extract));
                 }
                 else
                 {
-                    condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComComp.GetText(GameLanguageTypes.Relax));
+                    condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
                 }
             }
 
             else
             {
-                condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComComp.GetText(GameLanguageTypes.Relax));
+                condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
             }
 
             if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))

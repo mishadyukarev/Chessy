@@ -29,9 +29,9 @@ internal sealed class ReadyZoneUISystem : IEcsRunSystem
         }
         else
         {
-            readyViewUICom.SetTextWait(LanguageComComp.GetText(GameLanguageTypes.WaitReady));
-            readyViewUICom.SetTextReady(LanguageComComp.GetText(GameLanguageTypes.ReadyBeforeGame));
-            readyViewUICom.SetTextJoinForFind(LanguageComComp.GetText(GameLanguageTypes.JoinForFind));
+            readyViewUICom.SetTextWait(LanguageComCom.GetText(GameLanguageTypes.WaitReady));
+            readyViewUICom.SetTextReady(LanguageComCom.GetText(GameLanguageTypes.ReadyBeforeGame));
+            readyViewUICom.SetTextJoinForFind(LanguageComCom.GetText(GameLanguageTypes.JoinForFind));
 
             readyViewUICom.SetActiveParent(true);
         }

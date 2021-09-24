@@ -39,9 +39,9 @@ namespace Assets.Scripts.ECS.System.Data.Common
                 .Replace(new ComZoneComp(new GameObject(NameConst.COMMON_ZONE)))
                 .Replace(new CameraComComp(camera, new Vector3(7, 4.8f, -2)))
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
-                .Replace(new CanvasComp(canvas))
+                .Replace(new CanvasCom(canvas))
                 .Replace(new SoundComComp(audioSource))
-                .Replace(new LanguageComComp(true))
+                .Replace(new LanguageComCom(true))
 
                 //Toggle
                 .Replace(new ToggleZoneComponent(new GameObject()));
