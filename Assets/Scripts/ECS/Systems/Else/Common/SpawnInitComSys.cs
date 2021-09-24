@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions;
+using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
@@ -41,7 +42,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
                 .Replace(new CanvasCom(canvas))
                 .Replace(new SoundComComp(audioSource))
-                .Replace(new LanguageComCom(true))
+                .Replace(new LanguageComCom(LanguageTypes.Russian))
 
                 //Toggle
                 .Replace(new ToggleZoneComponent(new GameObject()));
