@@ -1,55 +1,36 @@
-﻿using Assets.Scripts.ECS.Manager.View.Menu;
-using Leopotam.Ecs;
-using Photon.Pun;
-using Photon.Realtime;
-using UnityEngine;
+﻿using Leopotam.Ecs;
+using Photon;
 
 namespace Assets.Scripts
 {
-    public sealed class PhotonSceneSys : MonoBehaviourPunCallbacks, IEcsInitSystem
+    public sealed class PhotonSceneSys : PunBehaviour, IEcsInitSystem
     {
         public void Init()
         {
 
         }
 
-        public override void OnLeftRoom()
+
+        public override sealed void OnLeftRoom()
         {
             base.OnLeftRoom();
 
             Main.ToggleScene(SceneTypes.Menu);
         }
 
-        public override void OnPlayerEnteredRoom(Player newPlayer)
+        public override sealed void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
         {
-
-        }
-
-        public override void OnPlayerLeftRoom(Player otherPlayer)
-        {
-            base.OnPlayerLeftRoom(otherPlayer);
+            base.OnPhotonPlayerDisconnected(otherPlayer);
 
             PhotonNetwork.LeaveRoom();
-
-            //Main.ToggleScene(SceneTypes.Menu);
+            Main.ToggleScene(SceneTypes.Menu);
         }
 
-        public override void OnMasterClientSwitched(Player newMasterClient)
+        public override sealed void OnMasterClientSwitched(PhotonPlayer newMasterClient)
         {
             base.OnMasterClientSwitched(newMasterClient);
 
-
-            //PhotonViewComponent.PhotonView = new GameObject().AddComponent<PhotonView>();
-            //PhotonViewComponent.PhotonView.ViewID = ValuesConst.NUMBER_PHOTON_VIEW;
-
-            //PhotonViewComponent.PhotonView.ViewID = 1002;
-
-            //PhotonViewComponent
-
-            //PhotonViewComponent.PhotonView. SetControllerInternal(newMasterClient.ActorNumber);
-
             PhotonNetwork.LeaveRoom();
-            //Main.ToggleScene(SceneTypes.Menu);
         }
 
 
@@ -58,34 +39,16 @@ namespace Assets.Scripts
 
 
 
-
-
-
-
-        public override void OnConnected()
-        {
-            base.OnConnected();
-
-            OnConnectedToMaster();
-        }
-        public override void OnJoinRandomFailed(short returnCode, string message)
-        {
-            Debug.Log(message);
-            PhotonNetwork.PhotonServerSettings.StartInOfflineMode = true;
-        }
-        public override void OnJoinedRoom()
+        public override sealed void OnJoinedRoom()
         {
             Main.ToggleScene(SceneTypes.Game);
         }
 
-        public override void OnConnectedToMaster()
+        public override sealed void OnDisconnectedFromPhoton()
         {
-            MenuSystemManager.ConnectToMasterMenuSys.Run();
-        }
-        public override void OnDisconnected(DisconnectCause cause)
-        {
-            PhotonNetwork.PhotonServerSettings.StartInOfflineMode = true;
-            MenuSystemManager.ConnUsingSettingsMenuSys.Run();
+            base.OnDisconnectedFromPhoton();
+
+            PhotonNetwork.offlineMode = true;
         }
     }
 }

@@ -6,7 +6,6 @@ using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
-using Photon.Pun;
 
 internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 {
@@ -28,8 +27,8 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
 
         PlayerTypes playerType = default;
-        if (PhotonNetwork.OfflineMode) playerType = WhoseMoveCom.WhoseMoveOffline;
-        else playerType = fromInfo.Sender.GetPlayerType();
+        if (PhotonNetwork.offlineMode) playerType = WhoseMoveCom.WhoseMoveOffline;
+        else playerType = fromInfo.sender.GetPlayerType();
 
 
         if (_cellsShiftFilter.Get1(0).HaveIdxCell(playerType, fromIdx, toIdx))
@@ -58,7 +57,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 
             fromUnitDatCom.DefUnitType();
 
-            RpcSys.SoundToGeneral(fromInfo.Sender, SoundEffectTypes.ClickToTable);
+            RpcSys.SoundToGeneral(fromInfo.sender, SoundEffectTypes.ClickToTable);
         }
     }
 }

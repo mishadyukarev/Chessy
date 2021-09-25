@@ -20,7 +20,7 @@ internal sealed class RightZoneUISys : IEcsRunSystem
         var activeParent = false;
 
 
-        if (_selFilt.Get1(0).IsSelectedCell)
+        if (_selFilt.Get1(0).IsSelCell)
         {
             if (selUnitDatCom.HaveUnit)
             {

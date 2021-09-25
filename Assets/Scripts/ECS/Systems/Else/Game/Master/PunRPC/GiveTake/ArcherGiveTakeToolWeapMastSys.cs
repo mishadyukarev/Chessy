@@ -27,7 +27,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
             ref var inventTWCom = ref _inventTWFilt.Get1(0);
             ref var inventResCom = ref _inventResFilter.Get1(0);
 
-            var sender = _infoFilter.Get1(0).FromInfo.Sender;
+            var sender = _infoFilter.Get1(0).FromInfo.sender;
             var neededIdx = forGiveToolOrWeaponCom.IdxCell;
             var toolWeaponTypeForGive = forGiveToolOrWeaponCom.ToolWeapType;
 

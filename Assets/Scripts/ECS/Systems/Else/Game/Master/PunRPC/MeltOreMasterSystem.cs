@@ -5,7 +5,6 @@ using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
-using Photon.Pun;
 
 internal sealed class MeltOreMasterSystem : IEcsRunSystem
 {
@@ -14,11 +13,11 @@ internal sealed class MeltOreMasterSystem : IEcsRunSystem
 
     public void Run()
     {
-        var sender = _infoMasFilter.Get1(0).FromInfo.Sender;
+        var sender = _infoMasFilter.Get1(0).FromInfo.sender;
         ref var invResCom = ref _invResFilt.Get1(0);
 
         PlayerTypes isMastSender = default;
-        if (PhotonNetwork.OfflineMode) isMastSender = WhoseMoveCom.WhoseMoveOffline;
+        if (PhotonNetwork.offlineMode) isMastSender = WhoseMoveCom.WhoseMoveOffline;
         else isMastSender = sender.GetPlayerType();
 
 

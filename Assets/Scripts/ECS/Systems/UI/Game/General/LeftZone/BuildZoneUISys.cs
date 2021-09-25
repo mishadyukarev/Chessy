@@ -20,7 +20,7 @@ internal sealed class BuildZoneUISys : IEcsRunSystem
         ref var buildZoneViewCom = ref _buildZoneUIFilter.Get1(0);
 
 
-        if (selCom.IsSelectedCell && selUnitDataCom.IsBuildType(BuildingTypes.City))
+        if (selCom.IsSelCell && selUnitDataCom.IsBuildType(BuildingTypes.City))
         {
             if (selOwnUnitCom.IsMine)
             {

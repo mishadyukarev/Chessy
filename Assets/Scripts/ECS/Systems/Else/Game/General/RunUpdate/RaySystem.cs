@@ -2,6 +2,7 @@
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Leopotam.Ecs;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 internal sealed class RaySystem : IEcsRunSystem
 {
@@ -14,37 +15,37 @@ internal sealed class RaySystem : IEcsRunSystem
 
     public void Run()
     {
-        ref var selectorCom = ref _selectorFilter.Get1(0);
+        ref var selCom = ref _selectorFilter.Get1(0);
 
         _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        selectorCom.RaycastHit2D = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
+        selCom.RaycastHit2D = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
 
 #if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
 
         if (EventSystem.current.IsPointerOverGameObject())
         {
-            selectorCom.RaycastGettedType = RaycastGettedTypes.UI;
+            selCom.RaycastGettedType = RaycastGettedTypes.UI;
             return;
         }
 
 #endif
 
-        if (selectorCom.RaycastHit2D)
+        if (selCom.RaycastHit2D)
         {
             foreach (byte idx in _xyCellFilter)
             {
                 int one = _cellViewFilter.Get1(idx).InstanceID;
-                int two = selectorCom.RaycastHit2D.transform.gameObject.GetInstanceID();
+                int two = selCom.RaycastHit2D.transform.gameObject.GetInstanceID();
 
                 if (one == two)
                 {
-                    selectorCom.IdxCurCell = idx;
-                    selectorCom.RaycastGettedType = RaycastGettedTypes.Cell;
+                    selCom.IdxCurCell = idx;
+                    selCom.RaycastGettedType = RaycastGettedTypes.Cell;
                     return;
                 }
             }
 
-            selectorCom.RaycastGettedType = default;
+            selCom.RaycastGettedType = default;
         }
 
 
@@ -54,7 +55,7 @@ internal sealed class RaySystem : IEcsRunSystem
         {
             if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             {
-                selectorCom.RaycastGettedType = RaycastGettedTypes.UI;
+                selCom.RaycastGettedType = RaycastGettedTypes.UI;
             }
         }
 #endif

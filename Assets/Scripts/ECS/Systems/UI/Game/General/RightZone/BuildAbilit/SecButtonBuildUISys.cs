@@ -20,14 +20,14 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
 
             var needActiveButton = false;
 
-            if (selCom.IsSelectedCell)
+            if (selCom.IsSelCell)
             {
                 ref var selUnitDatCom = ref _cellUnitFilt.Get1(selCom.IdxSelCell);
 
                 buildAbilUICom.SetText_Button(BuildButtonTypes.Second, LanguageComCom.GetText(GameLanguageTypes.BuildMine));
 
 
-                if (selUnitDatCom.IsUnit(UnitTypes.Pawn))
+                if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
                     ref var sellOnUnitCom = ref _cellUnitFilt.Get2(selCom.IdxSelCell);
 

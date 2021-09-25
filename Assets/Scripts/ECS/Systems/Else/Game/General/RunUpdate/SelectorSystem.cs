@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts;
 using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
@@ -8,47 +7,38 @@ using Leopotam.Ecs;
 
 internal sealed class SelectorSystem : IEcsRunSystem
 {
-    private EcsFilter<XyCellComponent> _xyCellFilter = default;
     private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-    private EcsFilter<CellEnvironDataCom> _cellEnvironDataFilter = default;
 
     private EcsFilter<SelectorCom> _selectorFilter = default;
     private EcsFilter<InputComponent> _inputFilter = default;
     private EcsFilter<SoundEffectsComp> _soundFilter = default;
-
-    private EcsFilter<CellsArsonArcherComp> _availCellsForArcherArsonFilter = default;
-    private EcsFilter<CellsForAttackCom> _availCellsForAttackFilter = default;
-    private EcsFilter<AvailCellsForShiftComp> _availCellsForShiftFilter = default;
-
-    private EcsFilter<WhoseMoveCom> _whoseMoveFilter = default;
+    private EcsFilter<CellsForAttackCom> _cellsAttackFilt = default;
+    private EcsFilter<AvailCellsForShiftComp> _cellsShiftFilt = default;
 
     public void Run()
     {
         CellUnitDataCom UnitDatCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
         OwnerCom OwnUnitCom(byte idxCell) => _cellUnitFilter.Get2(idxCell);
-        CellEnvironDataCom EnvDatCom(byte idxCell) => _cellEnvironDataFilter.Get1(idxCell);
-
-
 
 
         ref var selCom = ref _selectorFilter.Get1(0);
-        ref var cellsAttackCom = ref _availCellsForAttackFilter.Get1(0);
-        ref var cellsShiftCom = ref _availCellsForShiftFilter.Get1(0);
+        ref var cellsAttackCom = ref _cellsAttackFilt.Get1(0);
+        ref var cellsShiftCom = ref _cellsShiftFilt.Get1(0);
         ref var soundEffectCom = ref _soundFilter.Get1(0);
 
 
         if (_inputFilter.Get1(0).IsClicked)
         {
-            if (selCom.RaycastGettedType == RaycastGettedTypes.UI)
+            if (selCom.Is(RaycastGettedTypes.UI))
             {
                 selCom.DefSelectedUnit();
             }
 
-            else if (selCom.RaycastGettedType == RaycastGettedTypes.Cell)
+            else if (selCom.Is(RaycastGettedTypes.Cell))
             {
                 if (GameModesCom.IsOnlineMode && !WhoseMoveCom.IsMyOnlineMove)
                 {
-                    if (!selCom.IsSelectedCell)
+                    if (!selCom.IsSelCell)
                     {
                         if (selCom.IdxPreCell != selCom.IdxSelCell)
                         {
@@ -72,7 +62,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                     }
                 }
 
-                else if (selCom.IsSelectedUnit)
+                else if (selCom.IsSelUnit)
                 {
                     RpcSys.SetUniToMaster(selCom.IdxCurCell, selCom.SelUnitType);
                     selCom.SelUnitType = default;
@@ -80,7 +70,6 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
                 else if (selCom.IsCellClickType(CellClickTypes.PickFire))
                 {
-
                     RpcSys.FireToMaster(selCom.IdxSelCell, selCom.IdxCurCell);
 
                     selCom.CellClickType = default;
@@ -100,7 +89,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
                     }
                 }
 
-                else if (selCom.IsSelectedCell)
+                else if (selCom.IsSelCell)
                 {
                     if (selCom.IdxSelCell != selCom.IdxCurCell)
                         selCom.IdxPreCell = selCom.IdxSelCell;
@@ -179,32 +168,27 @@ internal sealed class SelectorSystem : IEcsRunSystem
 
         else
         {
-            if (selCom.RaycastGettedType == RaycastGettedTypes.UI)
+            if (selCom.Is(RaycastGettedTypes.UI))
             {
             }
 
-            else if (selCom.RaycastGettedType == RaycastGettedTypes.Cell)
+            else if (selCom.Is(RaycastGettedTypes.Cell))
             {
-                if (selCom.IsSelectedUnit)
+                if (selCom.IsSelUnit)
                 {
                     if (!UnitDatCom(selCom.IdxCurCell).HaveUnit || !UnitDatCom(selCom.IdxCurCell).IsVisibleUnit(WhoseMoveCom.CurPlayer))
                     {
                         if (selCom.IsStartDirectToCell)
                         {
-                            selCom.IdxPreviousVisionCell = selCom.IdxCurCell;
+                            selCom.IdxPreVisionCell = selCom.IdxCurCell;
                             selCom.IdxCurCell = default;
                         }
                         else
                         {
-                            selCom.IdxPreviousVisionCell = selCom.IdxCurCell;
+                            selCom.IdxPreVisionCell = selCom.IdxCurCell;
                         }
                     }
                 }
-            }
-
-            else
-            {
-
             }
         }
     }

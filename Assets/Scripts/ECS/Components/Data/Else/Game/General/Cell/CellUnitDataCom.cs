@@ -10,7 +10,7 @@ internal struct CellUnitDataCom
     internal UnitTypes UnitType;
     internal bool HaveUnit => UnitType != UnitTypes.None;
     internal void DefUnitType() => UnitType = default;
-    internal bool IsUnit(UnitTypes unitType) => UnitType.Is(unitType);
+    internal bool Is(UnitTypes unitType) => UnitType.Is(unitType);
     internal bool Is(UnitTypes[] unitTypes) => UnitType.Is(unitTypes);
     internal bool IsMelee
     {
@@ -46,12 +46,12 @@ internal struct CellUnitDataCom
 
 
     internal CondUnitTypes CondUnitType { get; set; }
-    internal void ResetConditionType() => CondUnitType = default;
-    internal bool IsCondType(CondUnitTypes conditionUnitType) => CondUnitType == conditionUnitType;
-    internal bool IsConditionType(CondUnitTypes[] conditionUnitTypes)
+    internal void ResetCondType() => CondUnitType = default;
+    internal bool Is(CondUnitTypes conditionUnitType) => CondUnitType == conditionUnitType;
+    internal bool Is(CondUnitTypes[] conditionUnitTypes)
     {
         foreach (var conditionUnitType in conditionUnitTypes)
-            if (IsCondType(conditionUnitType)) return true;
+            if (Is(conditionUnitType)) return true;
         return false;
     }
 
@@ -203,7 +203,7 @@ internal struct CellUnitDataCom
         {
             int powerProtection = 0;
 
-            if (IsCondType(CondUnitTypes.Protected))
+            if (Is(CondUnitTypes.Protected))
             {
                 switch (UnitType)
                 {
@@ -231,7 +231,7 @@ internal struct CellUnitDataCom
                 }
             }
 
-            else if (IsCondType(CondUnitTypes.Relaxed))
+            else if (Is(CondUnitTypes.Relaxed))
             {
                 switch (UnitType)
                 {

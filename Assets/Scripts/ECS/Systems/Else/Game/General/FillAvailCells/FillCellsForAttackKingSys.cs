@@ -27,7 +27,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
 
                 if (curUnitDatCom.HaveUnit)
                 {
-                    if (curUnitDatCom.IsUnit(UnitTypes.King))
+                    if (curUnitDatCom.Is(UnitTypes.King))
                     {
                         DirectTypes curDurect1 = default;
 

@@ -3,7 +3,6 @@ using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
-using Photon.Pun;
 
 namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
 {
@@ -19,7 +18,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
 
         public void Run()
         {
-            var sender = _infoMastFilter.Get1(0).FromInfo.Sender;
+            var sender = _infoMastFilter.Get1(0).FromInfo.sender;
             var idxCurculAttack = _forCircAttackFilter.Get1(0).IdxUnitForCirculAttack;
 
             ref var starUnitDatCom = ref _cellUnitFilter.Get1(idxCurculAttack);
@@ -28,7 +27,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
 
             if (starUnitDatCom.HaveMaxAmountSteps)
             {
-                RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+                RpcSys.SoundToGeneral(PhotonTargets.All, SoundEffectTypes.AttackMelee);
 
                 foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(idxCurculAttack)))
                 {
@@ -42,7 +41,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
 
                         if (!unitDatComDirect.HaveAmountHealth)
                         {
-                            if (unitDatComDirect.IsUnit(UnitTypes.King))
+                            if (unitDatComDirect.Is(UnitTypes.King))
                             {
                                 _endGameDataUIFilter.Get1(0).PlayerWinner = starOwnUnitCom.PlayerType;
                             }
@@ -56,9 +55,9 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.AttackMelee);
 
 
-                if (starUnitDatCom.IsCondType(CondUnitTypes.Protected) || starUnitDatCom.IsCondType(CondUnitTypes.Relaxed))
+                if (starUnitDatCom.Is(CondUnitTypes.Protected) || starUnitDatCom.Is(CondUnitTypes.Relaxed))
                 {
-                    starUnitDatCom.ResetConditionType();
+                    starUnitDatCom.ResetCondType();
                 }
             }
             else

@@ -4,10 +4,7 @@ using Assets.Scripts.ECS.Component.Menu;
 using Assets.Scripts.ECS.Component.UI;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Menu.Down;
-using Assets.Scripts.ECS.Manager.View.Menu;
 using Leopotam.Ecs;
-using Photon.Pun;
-using Photon.Realtime;
 using UnityEngine;
 
 namespace Assets.Scripts.ECS.Managers.Event
@@ -16,7 +13,6 @@ namespace Assets.Scripts.ECS.Managers.Event
     {
         private EcsFilter<ConnectButtonUICom, OnlineZoneUICom, BackgroundMenuUICom> _rightZoneFilter = default;
         private EcsFilter<ConnectButtonUICom, OfflineZoneUICom, BackgroundMenuUICom> _leftZoneFilter = default;
-        //private EcsFilter<CenterMenuUICom> _centerUIZoneFilter = default;
         private EcsFilter<DownZoneUIMenuCom> _downZoneUIFilt = default;
 
         public void Init()
@@ -47,39 +43,31 @@ namespace Assets.Scripts.ECS.Managers.Event
 
         private void ConnectOnline()
         {
-            PhotonNetwork.PhotonServerSettings.StartInOfflineMode = false;
-            MenuSystemManager.ConnUsingSettingsMenuSys.Run();
+            PhotonNetwork.PhotonServerSettings.PreferredRegion = CloudRegionCode.ru;
+            PhotonNetwork.ConnectUsingSettings(Main.VERSION_PHOTON_GAME);
         }
 
         private void ConnectOffline()
         {
-            if (PhotonNetwork.IsConnected)
-            {
-                PhotonNetwork.Disconnect();
-            }
-            else
-            {
-                PhotonNetwork.PhotonServerSettings.StartInOfflineMode = true;
-                MenuSystemManager.ConnUsingSettingsMenuSys.Run();
-            }
+            if (PhotonNetwork.connected) PhotonNetwork.Disconnect();
+            else PhotonNetwork.offlineMode = true;
         }
 
         private void CreateRoom()
         {
             RoomOptions roomOptions = new RoomOptions();
 
-            GameModesCom.GameMode = GameModes.PublicOn;
+            GameModesCom.CurGameMode = GameModes.PublicOn;
 
             //roomOptions.CustomRoomPropertiesForLobby = new string[] { nameof(StepModeTypes) };
             //roomOptions.CustomRoomProperties = new Hashtable() { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
-
 
             roomOptions.MaxPlayers = Main.MAX_PLAYERS;
             roomOptions.IsVisible = true;
             roomOptions.IsOpen = true;
             var roomName = UnityEngine.Random.Range(1, 9999999).ToString();
 
-            PhotonNetwork.CreateRoom(roomName, roomOptions);
+            PhotonNetwork.CreateRoom(roomName, roomOptions, default, default);// CreateRoom(roomName, roomOptions);
         }
 
         private void CreateFriendRoom()
@@ -87,7 +75,7 @@ namespace Assets.Scripts.ECS.Managers.Event
             ref var rightOnlineUICom = ref _rightZoneFilter.Get2(0);
             var roomName = rightOnlineUICom.TextCreateFriendRoom;
 
-            GameModesCom.GameMode = GameModes.WithFriendOn;
+            GameModesCom.CurGameMode = GameModes.WithFriendOn;
 
             RoomOptions roomOptions = new RoomOptions();
             roomOptions.MaxPlayers = Main.MAX_PLAYERS;
@@ -99,20 +87,20 @@ namespace Assets.Scripts.ECS.Managers.Event
 
         private void JoinRandomRoom()
         {
-            GameModesCom.GameMode = GameModes.PublicOn;
+            GameModesCom.CurGameMode = GameModes.PublicOn;
             //Hashtable expectedCustomRoomProperties = new Hashtable { { nameof(StepModeTypes), _rightZoneFilter.Get2(0).StepModValue } };
             PhotonNetwork.JoinRandomRoom(/*expectedCustomRoomProperties, MAX_PLAYERS*/);
         }
 
         private void JoinFriendRoom()
         {
-            GameModesCom.GameMode = GameModes.WithFriendOn;
+            GameModesCom.CurGameMode = GameModes.WithFriendOn;
             PhotonNetwork.JoinRoom(_rightZoneFilter.Get2(0).TextJoinFriendRoom);
         }
 
         private void CreateOffGame(GameModes offGameMode)
         {
-            GameModesCom.GameMode = offGameMode;
+            GameModesCom.CurGameMode = offGameMode;
             PhotonNetwork.CreateRoom(default);
         }
     }

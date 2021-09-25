@@ -37,7 +37,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
                     {
                         if (selOnUnitCom.IsMine)
                         {
-                            if (selUnitDatCom.IsUnit(UnitTypes.King))
+                            if (selUnitDatCom.Is(UnitTypes.King))
                             {
                                 RpcSys.CircularAttackKingToMaster(idxSelCell);
                             }

@@ -31,7 +31,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
 
             curSupViewCom.DisableSR();
 
-            if (selCom.IsSelectedCell)
+            if (selCom.IsSelCell)
             {
                 if (selCom.IdxSelCell == idxCurCell)
                 {
@@ -46,7 +46,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                 {
                     if (curOnUnitCom.IsMine)
                     {
-                        if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
+                        if (curUnitDatCom.Is(UnitTypes.Pawn))
                         {
                             curSupViewCom.EnableSR();
                             curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
@@ -63,7 +63,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
         }
 
 
-        if (selCom.IsSelectedCell)
+        if (selCom.IsSelCell)
         {
             ref var selUnitDatCom = ref _cellUnitFilter.Get1(selCom.IdxSelCell);
             ref var selOffUnitCom = ref _cellUnitFilter.Get3(selCom.IdxSelCell);
@@ -107,7 +107,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
                 }
             }
         }
-        if (selCom.IsSelectedUnit)
+        if (selCom.IsSelUnit)
         {
             ref var cellsSetUnitCom = ref _cellsSetUnitFilter.Get1(0);
 

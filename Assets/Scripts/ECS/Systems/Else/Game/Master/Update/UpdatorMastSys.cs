@@ -11,7 +11,6 @@ using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Assets.Scripts.Workers.Game.Else.Economy;
 using Leopotam.Ecs;
-using Photon.Pun;
 using System;
 
 internal sealed class UpdatorMastSys : IEcsRunSystem
@@ -75,7 +74,7 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
                 }
 
 
-                if (!curUnitDatCom.IsUnit(UnitTypes.King)) invResCom.TakeAmountResources(curOwnUnitCom.PlayerType, ResourceTypes.Food);
+                if (!curUnitDatCom.Is(UnitTypes.King)) invResCom.TakeAmountResources(curOwnUnitCom.PlayerType, ResourceTypes.Food);
 
                 if (curFireDatCom.HaveFire)
                 {
@@ -84,11 +83,11 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
 
                 else
                 {
-                    if (curUnitDatCom.IsCondType(CondUnitTypes.Relaxed))
+                    if (curUnitDatCom.Is(CondUnitTypes.Relaxed))
                     {
                         if (curUnitDatCom.HaveMaxAmountHealth)
                         {
-                            if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
+                            if (curUnitDatCom.Is(UnitTypes.Pawn))
                             {
                                 if (curEnvrDatCom.HaveEnvir(EnvirTypes.AdultForest))
                                 {
@@ -164,7 +163,7 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
                             }
                         }
                     }
-                    else if (curUnitDatCom.IsCondType(CondUnitTypes.None))
+                    else if (curUnitDatCom.Is(CondUnitTypes.None))
                     {
                         if (curUnitDatCom.HaveMaxAmountSteps)
                         {
@@ -246,7 +245,7 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
 
                     if (!curUnitDatCom.HaveAmountHealth)
                     {
-                        if (curUnitDatCom.IsUnit(UnitTypes.King))
+                        if (curUnitDatCom.Is(UnitTypes.King))
                         {
                             if (curOwnUnitCom.IsPlayerType(PlayerTypes.First))
                             {
@@ -296,7 +295,7 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
 
         if (amountAdultForest <= 9)
         {
-            RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
+            RpcSys.SoundToGeneral(PhotonTargets.All, SoundEffectTypes.Truce);
             GameMasterSystemManager.TruceSystems.Run();
         }
 
@@ -315,7 +314,7 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
                         ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
                         ref var curOnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
 
-                        if (curUnitDatCom.IsUnit(unitType))
+                        if (curUnitDatCom.Is(unitType))
                         {
                             if (curOnUnitCom.PlayerType == playerType)
                             {

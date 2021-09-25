@@ -4,7 +4,6 @@ using Assets.Scripts.ECS.System.Common;
 using Assets.Scripts.ECS.System.Data.Common;
 using Assets.Scripts.ECS.System.View.Menu;
 using Leopotam.Ecs;
-using Photon.Pun;
 using System;
 
 namespace Assets.Scripts
@@ -81,7 +80,7 @@ namespace Assets.Scripts
 
                     _allGameSystems.Add(new InitSpawnGameSys());
                     _gameGenSysManag = new GameGeneralSysManager(_gameWorld, _allGameSystems);
-                    if (PhotonNetwork.IsMasterClient)
+                    if (PhotonNetwork.isMasterClient)
                     {
                         _gameMasSysManag = new GameMasterSystemManager(_gameWorld, _allGameSystems);
                     }
@@ -115,7 +114,7 @@ namespace Assets.Scripts
                 case SceneTypes.Game:
                     _gameGenSysManag.RunUpdate();
 
-                    if (PhotonNetwork.IsMasterClient) _gameMasSysManag.RunUpdate();
+                    if (PhotonNetwork.isMasterClient) _gameMasSysManag.RunUpdate();
                     else _gameOthSysmManag.RunUpdate();
                     break;
 

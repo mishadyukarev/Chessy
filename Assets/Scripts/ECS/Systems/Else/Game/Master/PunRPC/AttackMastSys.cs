@@ -4,7 +4,6 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Leopotam.Ecs;
-using Photon.Pun;
 
 internal sealed class AttackMastSys : IEcsRunSystem
 {
@@ -24,7 +23,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
         ref var infoCom = ref _infoMasterFilter.Get1(0);
         ref var forAttackMasCom = ref _forAttackFilter.Get1(0);
 
-        var sender = infoCom.FromInfo.Sender;
+        var sender = infoCom.FromInfo.sender;
         var fromIdx = forAttackMasCom.IdxFromCell;
         var toIdxAttack = forAttackMasCom.IdxToCell;
 
@@ -54,7 +53,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
         if (simpUniqueType != default)
         {
             fromUnitDatCom.ResetAmountSteps();
-            fromUnitDatCom.ResetConditionType();
+            fromUnitDatCom.ResetCondType();
 
 
             int damageFrom = 0;
@@ -68,7 +67,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
 
             if (fromUnitDatCom.IsMelee)
             {
-                RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+                RpcSys.SoundToGeneral(PhotonTargets.All, SoundEffectTypes.AttackMelee);
 
                 if (toUnitDatCom.IsMelee)
                 {
@@ -83,7 +82,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
 
             else
             {
-                RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
+                RpcSys.SoundToGeneral(PhotonTargets.All, SoundEffectTypes.AttackArcher);
 
                 if (simpUniqueType == AttackTypes.Unique)
                 {
@@ -97,7 +96,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
 
             if (!toUnitDatCom.HaveAmountHealth)
             {
-                if (toUnitDatCom.IsUnit(UnitTypes.King))
+                if (toUnitDatCom.Is(UnitTypes.King))
                 {
                     _endGameDataUIFilter.Get1(0).PlayerWinner = fromOwnUnitCom.PlayerType;
                 }
@@ -126,7 +125,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
 
             else if (!fromUnitDatCom.HaveAmountHealth)
             {
-                if (fromUnitDatCom.IsUnit(UnitTypes.King))
+                if (fromUnitDatCom.Is(UnitTypes.King))
                 {
                     fromOwnUnitCom.PlayerType = toOwnUnitCom.PlayerType;
                     _endGameDataUIFilter.Get1(0).PlayerWinner = toOwnUnitCom.PlayerType;

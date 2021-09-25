@@ -32,7 +32,7 @@ internal sealed class CreateUnitMastSys : IEcsRunSystem
 
         PlayerTypes playerSender = default;
         if (GameModesCom.IsOfflineMode) playerSender = WhoseMoveCom.WhoseMoveOffline;
-        else playerSender = infoCom.FromInfo.Sender.GetPlayerType();
+        else playerSender = infoCom.FromInfo.sender.GetPlayerType();
 
 
         var isSettedCity = false;
@@ -55,18 +55,18 @@ internal sealed class CreateUnitMastSys : IEcsRunSystem
                 amountResCom.BuyCreateUnit(playerSender, unitTypeForCreating);
                 unitInventorCom.AddUnitsInInventor(playerSender, unitTypeForCreating);
 
-                RpcSys.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.SoundGoldPack);
+                RpcSys.SoundToGeneral(infoCom.FromInfo.sender, SoundEffectTypes.SoundGoldPack);
             }
             else
             {
-                RpcSys.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.Mistake);
-                RpcSys.MistakeEconomyToGeneral(infoCom.FromInfo.Sender, haves);
+                RpcSys.SoundToGeneral(infoCom.FromInfo.sender, SoundEffectTypes.Mistake);
+                RpcSys.MistakeEconomyToGeneral(infoCom.FromInfo.sender, haves);
             }
         }
         else
         {
-            RpcSys.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.Mistake);
-            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedCity, infoCom.FromInfo.Sender);
+            RpcSys.SoundToGeneral(infoCom.FromInfo.sender, SoundEffectTypes.Mistake);
+            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedCity, infoCom.FromInfo.sender);
         }
     }
 }

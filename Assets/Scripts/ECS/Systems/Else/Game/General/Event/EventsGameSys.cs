@@ -11,7 +11,6 @@ using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
 using Leopotam.Ecs;
-using Photon.Pun;
 
 namespace Assets.Scripts
 {
@@ -85,7 +84,7 @@ namespace Assets.Scripts
 
 
 
-        private void Ready() => RpcSys.ReadyToMaster(!_readyFilter.Get1(0).IsReady(PhotonNetwork.IsMasterClient));
+        private void Ready() => RpcSys.ReadyToMaster(!_readyFilter.Get1(0).IsReady(PhotonNetwork.isMasterClient));
 
         private void GetUnit(UnitTypes unitType)
         {
@@ -95,7 +94,7 @@ namespace Assets.Scripts
 
             selCom.DefCellClickType();
             selCom.IdxCurCell = default;
-            selCom.IdxPreviousVisionCell = default;
+            selCom.IdxPreVisionCell = default;
             selCom.DefSelectedCell();
             takerUnitDatCom.ResetCurTimer(unitType);
 
@@ -141,7 +140,7 @@ namespace Assets.Scripts
         {
             if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode)
             {
-                if (_cellUnitFilter.Get1(IdxSelectedCell).IsCondType(conditionUnitType))
+                if (_cellUnitFilter.Get1(IdxSelectedCell).Is(conditionUnitType))
                 {
                     RpcSys.ConditionUnitToMaster(CondUnitTypes.None, IdxSelectedCell);
                 }

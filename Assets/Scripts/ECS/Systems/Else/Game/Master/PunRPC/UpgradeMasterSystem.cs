@@ -25,7 +25,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
             ref var infoCom = ref _infoFilter.Get1(0);
             var forUpgradeCom = _forUpgradeFilter.Get1(0);
 
-            var sender = infoCom.FromInfo.Sender;
+            var sender = infoCom.FromInfo.sender;
             var idxForUpgradeUnit = forUpgradeCom.IdxForUpgradeUnit;
 
             ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxForUpgradeUnit);

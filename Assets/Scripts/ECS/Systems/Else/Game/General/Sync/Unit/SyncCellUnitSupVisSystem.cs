@@ -52,13 +52,13 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                             blocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
                         }
 
-                        if (curUnitDataCom.IsCondType(CondUnitTypes.Protected))
+                        if (curUnitDataCom.Is(CondUnitTypes.Protected))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
                             blocksViewCom.SetColor(CellBlockTypes.Condition, Color.yellow);
                         }
 
-                        else if (curUnitDataCom.IsCondType(CondUnitTypes.Relaxed))
+                        else if (curUnitDataCom.Is(CondUnitTypes.Relaxed))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
                             blocksViewCom.SetColor(CellBlockTypes.Condition, Color.green);

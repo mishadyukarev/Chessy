@@ -25,7 +25,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
 
             var needActiveInfoText = false;
 
-            if (selCom.IsSelectedCell)
+            if (selCom.IsSelCell)
             {
                 ref var selUnitDatCom = ref _cellUnitFilt.Get1(selCom.IdxSelCell);
 

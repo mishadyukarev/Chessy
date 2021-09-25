@@ -16,10 +16,10 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.Sync.Unit
 
 
 
-            if (selCom.IsSelectedUnit)
+            if (selCom.IsSelUnit)
             {
                 var idxCurCell = selCom.IdxCurCell;
-                var idxPreCell = selCom.IdxPreviousVisionCell;
+                var idxPreCell = selCom.IdxPreVisionCell;
 
 
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxCurCell);

@@ -48,11 +48,11 @@ internal sealed class EconomyUpUISys : IEcsRunSystem
             {
                 if (curOnUnitCom.IsMine)
                 {
-                    if (!curUnitDatCom.IsUnit(UnitTypes.King)) ++amountUnitsInGame;
+                    if (!curUnitDatCom.Is(UnitTypes.King)) ++amountUnitsInGame;
 
-                    if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
+                    if (curUnitDatCom.Is(UnitTypes.Pawn))
                     {
-                        if (curUnitDatCom.IsCondType(CondUnitTypes.Relaxed))
+                        if (curUnitDatCom.Is(CondUnitTypes.Relaxed))
                         {
                             if (_cellEnvDatFilt.Get1(curIdxCell).HaveEnvir(EnvirTypes.AdultForest))
                             {

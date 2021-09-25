@@ -6,6 +6,7 @@ public struct SelectorCom
 {
     internal RaycastHit2D RaycastHit2D { get; set; }
     internal RaycastGettedTypes RaycastGettedType { get; set; }
+    internal bool Is(RaycastGettedTypes raycastGettedType) => RaycastGettedType == raycastGettedType;
 
     internal CellClickTypes CellClickType { get; set; }
     internal bool IsCellClickType(CellClickTypes cellClickType) => cellClickType == CellClickType;
@@ -13,7 +14,7 @@ public struct SelectorCom
 
 
     internal UnitTypes SelUnitType { get; set; }
-    internal bool IsSelectedUnit => SelUnitType != default;
+    internal bool IsSelUnit => SelUnitType != default;
     internal void DefSelectedUnit() => SelUnitType = default;
 
     internal ToolWeaponTypes ToolWeaponTypeForGiveTake { get; set; }
@@ -23,9 +24,9 @@ public struct SelectorCom
     internal byte IdxCurCell { get; set; }
     internal byte IdxSelCell { get; set; }
     internal byte IdxPreCell { get; set; }
-    internal byte IdxPreviousVisionCell { get; set; }
+    internal byte IdxPreVisionCell { get; set; }
 
-    internal bool IsSelectedCell => IdxSelCell != 0;
+    internal bool IsSelCell => IdxSelCell != 0;
     internal bool IsStartDirectToCell => IdxCurCell == default;
     internal void DefSelectedCell() => IdxSelCell = 0;
 

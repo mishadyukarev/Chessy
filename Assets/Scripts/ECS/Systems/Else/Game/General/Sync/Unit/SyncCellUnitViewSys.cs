@@ -27,12 +27,12 @@ namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
                     {
                         curMainUnitViewCom.Enable_SR();
 
-                        if (curUnitDatCom.IsUnit(UnitTypes.King))
+                        if (curUnitDatCom.Is(UnitTypes.King))
                         {
                             curMainUnitViewCom.SetKing_Sprite();
                         }
 
-                        else if (curUnitDatCom.IsUnit(UnitTypes.Pawn))
+                        else if (curUnitDatCom.Is(UnitTypes.Pawn))
                         {
                             curMainUnitViewCom.SetPawn_Spriter();
 

@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Assets.Scripts.ECS.Components.View.Else.Game.General
 {
@@ -16,14 +15,17 @@ namespace Assets.Scripts.ECS.Components.View.Else.Game.General
             PhotonView = RpcView_GO.AddComponent<PhotonView>();
             RpcSys = RpcView_GO.AddComponent<RpcSys>();
 
-            if (PhotonNetwork.IsMasterClient)
-            {
-                PhotonNetwork.AllocateViewID(PhotonView);
-            }
-            else
-            {
-                PhotonView.ViewID = 1001;
-            }
+
+            PhotonNetwork.AllocateViewID(/*PhotonView*/);
+            PhotonView.viewID = 1001;
+            //if (PhotonNetwork.isMasterClient)
+            //{
+            //    PhotonNetwork.AllocateViewID(/*PhotonView*/);
+            //}
+            //else
+            //{
+            //    PhotonView.viewID = 1001;
+            //}
         }
     }
 }

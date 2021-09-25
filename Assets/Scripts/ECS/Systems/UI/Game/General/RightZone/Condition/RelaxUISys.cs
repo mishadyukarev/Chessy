@@ -29,12 +29,12 @@ internal sealed class RelaxUISys : IEcsRunSystem
 
         if (selUnitDatCom.HaveUnit)
         {
-            if (selUnitDatCom.IsUnit(UnitTypes.King))
+            if (selUnitDatCom.Is(UnitTypes.King))
             {
                 condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
             }
 
-            else if (selUnitDatCom.IsUnit(UnitTypes.Pawn))
+            else if (selUnitDatCom.Is(UnitTypes.Pawn))
             {
                 if (selUnitDatCom.HaveMaxAmountHealth)
                 {
@@ -55,7 +55,7 @@ internal sealed class RelaxUISys : IEcsRunSystem
             {
                 activeButt = true;
 
-                if (selUnitDatCom.IsCondType(CondUnitTypes.Protected))
+                if (selUnitDatCom.Is(CondUnitTypes.Protected))
                 {
                     condUnitUICom.SetColor(CondUnitTypes.Protected, Color.yellow);
                 }
@@ -65,7 +65,7 @@ internal sealed class RelaxUISys : IEcsRunSystem
                     condUnitUICom.SetColor(CondUnitTypes.Protected, Color.white);
                 }
 
-                if (selUnitDatCom.IsCondType(CondUnitTypes.Relaxed))
+                if (selUnitDatCom.Is(CondUnitTypes.Relaxed))
                 {
                     condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.green);
                 }

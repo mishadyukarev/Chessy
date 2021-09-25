@@ -14,8 +14,6 @@ using Assets.Scripts.ECS.Components.View.Else.Game.General;
 using Assets.Scripts.ECS.Game.Components;
 using ExitGames.Client.Photon;
 using Leopotam.Ecs;
-using Photon.Pun;
-using Photon.Realtime;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -78,7 +76,7 @@ namespace Assets.Scripts
         {
             PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
 
-            if (!PhotonNetwork.IsMasterClient) SyncAllToMaster();
+            if (!PhotonNetwork.isMasterClient) SyncAllToMaster();
         }
 
 
@@ -86,40 +84,40 @@ namespace Assets.Scripts
 
         #region Methods
 
-        public static void ReadyToMaster(in bool isReady) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Ready, new object[] { isReady });
+        public static void ReadyToMaster(in bool isReady) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.Ready, new object[] { isReady });
 
-        public static void DoneToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[default]);
-        public static void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
+        public static void DoneToMaster() => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.Done, new object[default]);
+        public static void ActiveAmountMotionUIToGeneral(PhotonTargets rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
 
-        public static void UpgradeBuildingToMaster(BuildingTypes buildingType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeBuild, new object[] { buildingType });
+        public static void UpgradeBuildingToMaster(BuildingTypes buildingType) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.UpgradeBuild, new object[] { buildingType });
 
-        public static void ShiftUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { idxPreviousCell, idxSelectedCell });
-        public static void AttackUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Attack, new object[] { idxPreviousCell, idxSelectedCell });
+        public static void ShiftUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.Shift, new object[] { idxPreviousCell, idxSelectedCell });
+        public static void AttackUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.Attack, new object[] { idxPreviousCell, idxSelectedCell });
 
-        public static void BuildToMaster(byte idxCellForBuild, BuildingTypes buildingType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Build, new object[] { idxCellForBuild, buildingType });
-        public static void DestroyBuildingToMaster(byte xyCellForDestroy) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.DestroyBuild, new object[] { xyCellForDestroy });
+        public static void BuildToMaster(byte idxCellForBuild, BuildingTypes buildingType) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.Build, new object[] { idxCellForBuild, buildingType });
+        public static void DestroyBuildingToMaster(byte xyCellForDestroy) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.DestroyBuild, new object[] { xyCellForDestroy });
 
-        public static void ConditionUnitToMaster(CondUnitTypes neededCondtionType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ConditionUnit, new object[] { neededCondtionType, idxCell });
+        public static void ConditionUnitToMaster(CondUnitTypes neededCondtionType, byte idxCell) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.ConditionUnit, new object[] { neededCondtionType, idxCell });
 
-        public static void MistakeEconomyToGeneral(Player playerTo, params bool[] haves) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.Economy, haves });
-        public static void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { mistakeType });
+        public static void MistakeEconomyToGeneral(PhotonPlayer playerTo, params bool[] haves) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.Economy, haves });
+        public static void SimpleMistakeToGeneral(MistakeTypes mistakeType, PhotonPlayer playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { mistakeType });
 
-        public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
-        public static void SeedEnvironmentToMaster(byte idxCell, EnvirTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
+        public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
+        public static void SeedEnvironmentToMaster(byte idxCell, EnvirTypes environmentType) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
-        public static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, idxCell });
+        public static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, byte idxCell) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, idxCell });
 
-        public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { idxCell });
+        public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { idxCell });
 
-        public static void CreateUnitToMaster(UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CreateUnit, new object[] { unitType });
+        public static void CreateUnitToMaster(UnitTypes unitType) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.CreateUnit, new object[] { unitType });
 
-        public static void MeltOreToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.MeltOre, new object[] { });
+        public static void MeltOreToMaster() => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.MeltOre, new object[] { });
 
 
-        public static void SetUniToMaster(byte idxCell, UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SetUnit, new object[] { idxCell, unitType });
+        public static void SetUniToMaster(byte idxCell, UnitTypes unitType) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.SetUnit, new object[] { idxCell, unitType });
 
-        public static void SoundToGeneral(RpcTarget rpcTarget, SoundEffectTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Sound, new object[] { soundEffectType });
-        public static void SoundToGeneral(Player playerTo, SoundEffectTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Sound, new object[] { soundEffectType });
+        public static void SoundToGeneral(PhotonTargets rpcTarget, SoundEffectTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Sound, new object[] { soundEffectType });
+        public static void SoundToGeneral(PhotonPlayer playerTo, SoundEffectTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Sound, new object[] { soundEffectType });
 
         #endregion
 
@@ -315,7 +313,7 @@ namespace Assets.Scripts
 
         #region SyncData
 
-        internal void SyncAllToMaster() => PhotonView.RPC(SyncMasterRPCName, RpcTarget.MasterClient);
+        internal void SyncAllToMaster() => PhotonView.RPC(SyncMasterRPCName, PhotonTargets.MasterClient);
 
         [PunRPC]
         private void SyncAllMaster()
@@ -484,7 +482,7 @@ namespace Assets.Scripts
             for (int i = 0; i < objects.Length; i++) objects[i] = listObjects[i];
 
 
-            PhotonView.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
+            PhotonView.RPC(nameof(SyncAllOther), PhotonTargets.Others, objects);
         }
 
         [PunRPC]
@@ -497,7 +495,7 @@ namespace Assets.Scripts
             _endGameFilter.Get1(0).PlayerWinner = (PlayerTypes)objects[_curNumber++];
 
             _readyUIFilter.Get1(0).IsStartedGame = (bool)objects[_curNumber++];
-            _readyUIFilter.Get1(0).SetIsReady(PhotonNetwork.IsMasterClient, (bool)objects[_curNumber++]);
+            _readyUIFilter.Get1(0).SetIsReady(PhotonNetwork.isMasterClient, (bool)objects[_curNumber++]);
 
             _motionsFilter.Get1(0).AmountMotions = (int)objects[_curNumber++];
 

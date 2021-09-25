@@ -13,7 +13,7 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
 
     public void Run()
     {
-        var sender = _infoFilter.Get1(0).FromInfo.Sender;
+        var sender = _infoFilter.Get1(0).FromInfo.sender;
         var neededCondType = _conditionFilter.Get1(0).NeededCondUnitType;
         var idxForCondit = _conditionFilter.Get1(0).IdxForCondition;
 
@@ -24,20 +24,20 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
         switch (neededCondType)
         {
             case CondUnitTypes.None:
-                curCellUnitDataCom.ResetConditionType();
+                curCellUnitDataCom.ResetCondType();
                 break;
 
             case CondUnitTypes.Protected:
-                if (curCellUnitDataCom.IsCondType(CondUnitTypes.Protected))
+                if (curCellUnitDataCom.Is(CondUnitTypes.Protected))
                 {
                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-                    curCellUnitDataCom.ResetConditionType();
+                    curCellUnitDataCom.ResetCondType();
                 }
 
                 else if (curCellUnitDataCom.HaveMaxAmountSteps)
                 {
-                    if (curCellUnitDataCom.IsCondType(CondUnitTypes.Relaxed))
+                    if (curCellUnitDataCom.Is(CondUnitTypes.Relaxed))
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
@@ -64,15 +64,15 @@ internal sealed class ConditionMasterSystem : IEcsRunSystem
 
 
             case CondUnitTypes.Relaxed:
-                if (curCellUnitDataCom.IsCondType(CondUnitTypes.Relaxed))
+                if (curCellUnitDataCom.Is(CondUnitTypes.Relaxed))
                 {
                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-                    curCellUnitDataCom.ResetConditionType();
+                    curCellUnitDataCom.ResetCondType();
                 }
 
                 else if (curCellUnitDataCom.HaveMaxAmountSteps)
                 {
-                    if (curCellUnitDataCom.IsCondType(CondUnitTypes.Protected))
+                    if (curCellUnitDataCom.Is(CondUnitTypes.Protected))
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
                         curCellUnitDataCom.CondUnitType = neededCondType;

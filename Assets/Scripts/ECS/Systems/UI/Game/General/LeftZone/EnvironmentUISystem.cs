@@ -30,7 +30,7 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
         ref var selCellEnvDataCom = ref _cellEnvFilter.Get1(idxSelCell);
 
 
-        if (selCom.IsSelectedCell && !selCellBuildDataCom.IsBuildType(BuildingTypes.City))
+        if (selCom.IsSelCell && !selCellBuildDataCom.IsBuildType(BuildingTypes.City))
         {
             envViewUICom.SetActiveParent(true);
         }

@@ -30,7 +30,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                 ref var cellsForAttackComp = ref _cellsForAttackFilter.Get1(0);
 
 
-                if (unitDataCom_0.IsUnit(UnitTypes.Bishop))
+                if (unitDataCom_0.Is(UnitTypes.Bishop))
                 {
                     if (unitDataCom_0.HaveMinAmountSteps)
 

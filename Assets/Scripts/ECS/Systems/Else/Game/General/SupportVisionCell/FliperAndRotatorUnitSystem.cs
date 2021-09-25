@@ -30,7 +30,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems
                     {
                         if (curOwnUnitCom.IsMine)
                         {
-                            if (curUnitDatCom.IsUnit(UnitTypes.Rook))
+                            if (curUnitDatCom.Is(UnitTypes.Rook))
                             {
                                 curMainUnitViewCom.Set_LocRotEuler(new Vector3(0, 0, -90));
                             }

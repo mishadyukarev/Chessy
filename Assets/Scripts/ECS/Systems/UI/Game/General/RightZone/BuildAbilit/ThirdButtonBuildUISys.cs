@@ -17,7 +17,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
         {
             ref var selCom = ref _selFilt.Get1(0);
 
-            if (selCom.IsSelectedCell)
+            if (selCom.IsSelCell)
             {
                 var idxSelCell = _selFilt.Get1(0).IdxSelCell;
 
@@ -32,7 +32,7 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
                 var needActiveThirdButt = false;
 
 
-                if (selUnitDatCom.IsUnit(UnitTypes.Pawn))
+                if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
                     if (selOwnUnitCom.IsMine)
                     {

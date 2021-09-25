@@ -4,8 +4,8 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
 {
     internal struct GameModesCom
     {
-        internal static GameModes GameMode;
-        internal static bool IsGameMode(GameModes gameMode) => GameMode == gameMode;
+        internal static GameModes CurGameMode;
+        internal static bool IsGameMode(GameModes gameMode) => CurGameMode == gameMode;
         internal static bool IsGameMode(GameModes[] gameModes)
         {
             foreach (var gameMode in gameModes) if (IsGameMode(gameMode)) return true;

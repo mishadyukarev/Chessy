@@ -8,7 +8,6 @@ using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
-using Photon.Pun;
 
 internal sealed class DonerMasterSystem : IEcsRunSystem
 {
@@ -28,17 +27,17 @@ internal sealed class DonerMasterSystem : IEcsRunSystem
         ref var infoMasCom = ref _infoFilter.Get1(0);
         ref var forDonerMasCom = ref _donerFilter.Get1(0);
 
-        var sender = infoMasCom.FromInfo.Sender;
+        var sender = infoMasCom.FromInfo.sender;
 
 
 
         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-        if (PhotonNetwork.OfflineMode)
+        if (PhotonNetwork.offlineMode)
         {
             if (GameModesCom.IsGameMode(GameModes.TrainingOff))
             {
-                RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.MasterClient);
+                RpcSys.ActiveAmountMotionUIToGeneral(PhotonTargets.MasterClient);
                 GameMasterSystemManager.UpdateMotion.Run();
             }
 
@@ -70,7 +69,7 @@ internal sealed class DonerMasterSystem : IEcsRunSystem
                         _cellViewFilter.Get1(curIdxCell).SetRotForClient(true);
 
                     GameMasterSystemManager.UpdateMotion.Run();
-                    RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.MasterClient);
+                    RpcSys.ActiveAmountMotionUIToGeneral(PhotonTargets.MasterClient);
                 }
             }
 
@@ -97,7 +96,7 @@ internal sealed class DonerMasterSystem : IEcsRunSystem
                         WhoseMoveCom.WhoseMoveOnline = _playerMotion;
 
                         GameMasterSystemManager.UpdateMotion.Run();
-                        RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.MasterClient);
+                        RpcSys.ActiveAmountMotionUIToGeneral(PhotonTargets.MasterClient);
                     }
                 }
             }

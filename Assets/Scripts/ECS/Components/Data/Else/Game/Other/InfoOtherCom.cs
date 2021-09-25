@@ -1,6 +1,4 @@
-﻿using Photon.Pun;
-
-namespace Assets.Scripts.ECS.Component.Game.Other
+﻿namespace Assets.Scripts.ECS.Component.Game.Other
 {
     internal struct InfoOtherCom
     {

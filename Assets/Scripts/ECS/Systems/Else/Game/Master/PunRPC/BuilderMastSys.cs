@@ -9,7 +9,6 @@ using Assets.Scripts.Supports;
 using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Leopotam.Ecs;
-using Photon.Pun;
 using System;
 
 internal sealed class BuilderMastSys : IEcsRunSystem
@@ -32,7 +31,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
         ref var invResCom = ref _amountResFilt.Get1(0);
         ref var forBuildMasCom = ref _forBuilderFilter.Get1(0);
 
-        var sender = infoMasCom.FromInfo.Sender;
+        var sender = infoMasCom.FromInfo.sender;
         var idxForBuild = forBuildMasCom.IdxForBuild;
         var forBuildType = forBuildMasCom.BuildingTypeForBuidling;
 
@@ -45,7 +44,7 @@ internal sealed class BuilderMastSys : IEcsRunSystem
 
 
         PlayerTypes playerTypeSender = default;
-        if (PhotonNetwork.OfflineMode) playerTypeSender = WhoseMoveCom.WhoseMoveOffline;
+        if (PhotonNetwork.offlineMode) playerTypeSender = WhoseMoveCom.WhoseMoveOffline;
         else playerTypeSender = sender.GetPlayerType();
 
 

@@ -40,7 +40,7 @@ internal sealed class UniqueAbilitUISys : IEcsRunSystem
         {
             if (selOwnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
             {
-                if (selUnitDatCom.IsUnit(UnitTypes.King))
+                if (selUnitDatCom.Is(UnitTypes.King))
                 {
                     activeFirst = true;
                     unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.CircularAttack));

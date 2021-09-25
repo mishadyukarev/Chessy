@@ -30,7 +30,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
                 ref var cellsAttackCom = ref _cellsForAttackFilter.Get1(0);
 
 
-                if (unitDataCom_0.HaveUnit && unitDataCom_0.IsUnit(UnitTypes.Rook))
+                if (unitDataCom_0.HaveUnit && unitDataCom_0.Is(UnitTypes.Rook))
                 {
                     if (unitDataCom_0.HaveMinAmountSteps)
 

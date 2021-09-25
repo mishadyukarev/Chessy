@@ -3,7 +3,6 @@ using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Leopotam.Ecs;
-using Photon.Pun;
 
 internal sealed class DestroyMasterSystem : IEcsRunSystem
 {
@@ -18,7 +17,7 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
 
     public void Run()
     {
-        var sender = _infoFilter.Get1(0).FromInfo.Sender;
+        var sender = _infoFilter.Get1(0).FromInfo.sender;
         var idxCellForDestory = _destroyFilter.Get1(0).IdxForDestroy;
 
         ref var curUnitDataCom = ref _cellUnitFilter.Get1(idxCellForDestory);
@@ -30,7 +29,7 @@ internal sealed class DestroyMasterSystem : IEcsRunSystem
 
         if (curUnitDataCom.HaveMaxAmountSteps)
         {
-            RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
+            RpcSys.SoundToGeneral(PhotonTargets.All, SoundEffectTypes.Destroy);
 
             if (curBuildDataCom.IsBuildType(BuildingTypes.City))
             {
