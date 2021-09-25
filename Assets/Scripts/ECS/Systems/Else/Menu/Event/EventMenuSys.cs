@@ -3,7 +3,9 @@ using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Menu;
 using Assets.Scripts.ECS.Component.UI;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+using Assets.Scripts.ECS.Components.View.UI.Menu.Center;
 using Assets.Scripts.ECS.Components.View.UI.Menu.Down;
+using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -14,6 +16,7 @@ namespace Assets.Scripts.ECS.Managers.Event
         private EcsFilter<ConnectButtonUICom, OnlineZoneUICom, BackgroundMenuUICom> _rightZoneFilter = default;
         private EcsFilter<ConnectButtonUICom, OfflineZoneUICom, BackgroundMenuUICom> _leftZoneFilter = default;
         private EcsFilter<DownZoneUIMenuCom> _downZoneUIFilt = default;
+        private EcsFilter<ShopZoneUIMenuCom> _shopZoneUIFilt = default;
 
         public void Init()
         {
@@ -39,6 +42,9 @@ namespace Assets.Scripts.ECS.Managers.Event
             _leftZoneFilter.Get1(0).AddListConnect_Button(ConnectOffline);
             _leftZoneFilter.Get2(0).AddListTrain(delegate { CreateOffGame(GameModes.TrainingOff); });
             _leftZoneFilter.Get2(0).AddListFriend(delegate { CreateOffGame(GameModes.WithFriendOff); });
+
+
+            _shopZoneUIFilt.Get1(0).AddListExit_Button(ExitShop);
         }
 
 
@@ -107,7 +113,11 @@ namespace Assets.Scripts.ECS.Managers.Event
 
         private void Help()
         {
-
+            _shopZoneUIFilt.Get1(0).EnableZone();
+        }
+        private void ExitShop()
+        {
+            _shopZoneUIFilt.Get1(0).DisableZone();
         }
     }
 }
