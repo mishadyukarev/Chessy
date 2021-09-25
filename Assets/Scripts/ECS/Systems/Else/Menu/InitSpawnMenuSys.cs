@@ -2,6 +2,7 @@
 using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Component.Menu;
 using Assets.Scripts.ECS.Component.UI;
+using Assets.Scripts.ECS.Components.View.UI.Menu.Down;
 using Leopotam.Ecs;
 using UnityEngine;
 
@@ -18,11 +19,12 @@ namespace Assets.Scripts.ECS.System.View.Menu
 
 
             var centerZone_Trans = CanvasCom.FindUnderParent<Transform>("CenterZone");
-
+            var downZone_Trans = CanvasCom.FindUnderParent<Transform>("DownZone");
 
 
             _menuWorld.NewEntity()
-                .Replace(new CenterMenuUICom(centerZone_Trans, SoundComComp.Volume));
+                .Replace(new CenterMenuUICom(centerZone_Trans, SoundComComp.Volume))
+                .Replace(new DownZoneUIMenuCom(downZone_Trans));
 
 
             var rightZone = CanvasCom.FindUnderParent<RectTransform>("OnlineRightZone");

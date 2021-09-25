@@ -3,6 +3,7 @@ using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Component.UI;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
+using Assets.Scripts.ECS.Components.View.UI.Menu.Down;
 using Leopotam.Ecs;
 
 namespace Assets.Scripts.ECS.Systems.Else.Common
@@ -12,15 +13,18 @@ namespace Assets.Scripts.ECS.Systems.Else.Common
         private EcsFilter<ConnectButtonUICom, OnlineZoneUICom> _olineButUIFilter = default;
         private EcsFilter<ConnectButtonUICom, OfflineZoneUICom> _offlineButUIFilter = default;
         private EcsFilter<CenterMenuUICom> _centerUIFilter = default;
+        private EcsFilter<DownZoneUIMenuCom> _downZoneFilt = default;
 
         public void Run()
         {
             ref var centerMenuUICom = ref _centerUIFilter.Get1(0);
 
             LanguageComCom.CurLanguageType = centerMenuUICom.LanguageType;
-            SoundComComp.Volume = centerMenuUICom.MusicVolume;
-            centerMenuUICom.SetTextExit(LanguageComCom.GetText(ComLanguageTypes.Exit));
+            SoundComComp.Volume = centerMenuUICom.MusicVolume;          
             centerMenuUICom.SetTextInfo(LanguageComCom.GetText(ComLanguageTypes.Info));
+
+
+            _downZoneFilt.Get1(0).SetTextExit(LanguageComCom.GetText(ComLanguageTypes.Exit));
 
 
             ref var onlineZoneUICom = ref _olineButUIFilter.Get2(0);

@@ -14,8 +14,6 @@ namespace Assets.Scripts.ECS.Component.UI
         private Slider _musicSlider;
         private TMP_Dropdown _language_Dropdown;
         private TextMeshProUGUI _info_TextMP;
-        private TextMeshProUGUI _exit_TextMP;
-        private Button _quit_Button;
 
         internal float MusicVolume => _musicSlider.value;
 
@@ -47,15 +45,10 @@ namespace Assets.Scripts.ECS.Component.UI
             else if (LanguageComCom.CurLanguageType == LanguageTypes.Chinese) _language_Dropdown.value = 3;
 
             _info_TextMP = centerZone_Trans.Find("Info_TextMP").GetComponent<TextMeshProUGUI>();
-            _quit_Button = centerZone_Trans.Find("QuitButton").GetComponent<Button>();
-            _exit_TextMP = _quit_Button.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
         }
 
         internal void SetLogText(string text) => _log_TextMP.text = text;
 
         internal void SetTextInfo(string text) => _info_TextMP.text = text;
-        internal void SetTextExit(string text) => _exit_TextMP.text = text;
-
-        internal void AddListQuit_Button(UnityAction unityAction) => _quit_Button.onClick.AddListener(unityAction);
     }
 }

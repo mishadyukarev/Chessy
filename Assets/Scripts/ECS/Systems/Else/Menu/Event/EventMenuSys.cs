@@ -3,6 +3,7 @@ using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Menu;
 using Assets.Scripts.ECS.Component.UI;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+using Assets.Scripts.ECS.Components.View.UI.Menu.Down;
 using Assets.Scripts.ECS.Manager.View.Menu;
 using Leopotam.Ecs;
 using Photon.Pun;
@@ -15,16 +16,20 @@ namespace Assets.Scripts.ECS.Managers.Event
     {
         private EcsFilter<ConnectButtonUICom, OnlineZoneUICom, BackgroundMenuUICom> _rightZoneFilter = default;
         private EcsFilter<ConnectButtonUICom, OfflineZoneUICom, BackgroundMenuUICom> _leftZoneFilter = default;
-        private EcsFilter<CenterMenuUICom> _centerUIZoneFilter = default;
+        //private EcsFilter<CenterMenuUICom> _centerUIZoneFilter = default;
+        private EcsFilter<DownZoneUIMenuCom> _downZoneUIFilt = default;
 
         public void Init()
         {
-            ref var centerCom = ref _centerUIZoneFilter.Get1(0);
+            ref var downZoneUICom = ref _downZoneUIFilt.Get1(0);
 
             ref var rightConnectCom = ref _rightZoneFilter.Get1(0);
             ref var rightOnlineCom = ref _rightZoneFilter.Get2(0);
 
-            centerCom.AddListQuit_Button(delegate { Application.Quit(); });
+
+
+            downZoneUICom.AddListQuit_Button(delegate { Application.Quit(); });
+
 
             rightConnectCom.AddListConnect_Button(ConnectOnline);
             rightOnlineCom.AddListCreatePublicRoom(CreateRoom);

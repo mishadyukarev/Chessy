@@ -17,6 +17,7 @@
 namespace Photon.Realtime
 {
     using System;
+    using UnityEngine;
     using SupportClass = ExitGames.Client.Photon.SupportClass;
 
 #if SUPPORTED_UNITY
