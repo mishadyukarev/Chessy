@@ -20,12 +20,11 @@
 
 namespace Photon.Realtime
 {
+    using ExitGames.Client.Photon;
     using System;
-    using System.Text;
-    using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using ExitGames.Client.Photon;
+    using System.Text;
 
 #if SUPPORTED_UNITY
     using UnityEngine;

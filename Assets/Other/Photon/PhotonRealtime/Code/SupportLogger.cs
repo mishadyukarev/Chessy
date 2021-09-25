@@ -18,9 +18,8 @@
 
 namespace Photon.Realtime
 {
-    using System.Text;
     using System.Collections.Generic;
-
+    using System.Text;
     using Stopwatch = System.Diagnostics.Stopwatch;
 
 #if SUPPORTED_UNITY
@@ -42,7 +41,7 @@ namespace Photon.Realtime
     [AddComponentMenu("")] // hide from Unity Menus and searches
     public class SupportLogger : MonoBehaviour, IConnectionCallbacks, IMatchmakingCallbacks, IInRoomCallbacks, ILobbyCallbacks, IErrorInfoCallback
 #else
-	public class SupportLogger : IConnectionCallbacks, IInRoomCallbacks, IMatchmakingCallbacks , ILobbyCallbacks
+    public class SupportLogger : IConnectionCallbacks, IInRoomCallbacks, IMatchmakingCallbacks, ILobbyCallbacks
 #endif
     {
         /// <summary>

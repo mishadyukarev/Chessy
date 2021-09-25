@@ -16,8 +16,8 @@
 
 namespace Photon.Realtime
 {
-    using System.Collections.Generic;
     using ExitGames.Client.Photon;
+    using System.Collections.Generic;
 
 #if SUPPORTED_UNITY || NETFX_CORE
     using Hashtable = ExitGames.Client.Photon.Hashtable;

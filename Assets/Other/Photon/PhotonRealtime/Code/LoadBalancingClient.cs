@@ -16,10 +16,10 @@
 
 namespace Photon.Realtime
 {
+    using ExitGames.Client.Photon;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
-    using ExitGames.Client.Photon;
 
 #if SUPPORTED_UNITY
     using Debug = UnityEngine.Debug;

@@ -11,15 +11,14 @@
 
 namespace Photon.Pun
 {
-    using System.Diagnostics;
-    using UnityEngine;
-    using System;
-    using System.Linq;
-    using System.Collections.Generic;
     using ExitGames.Client.Photon;
-    using UnityEngine.SceneManagement;
-
     using Photon.Realtime;
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics;
+    using System.Linq;
+    using UnityEngine;
+    using UnityEngine.SceneManagement;
     using Debug = UnityEngine.Debug;
     using Hashtable = ExitGames.Client.Photon.Hashtable;
 

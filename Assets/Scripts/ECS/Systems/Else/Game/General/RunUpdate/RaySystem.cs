@@ -2,7 +2,6 @@
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Leopotam.Ecs;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 internal sealed class RaySystem : IEcsRunSystem
 {

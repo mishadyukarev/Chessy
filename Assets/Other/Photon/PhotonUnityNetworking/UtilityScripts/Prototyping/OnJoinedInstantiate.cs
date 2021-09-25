@@ -8,11 +8,10 @@
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------
 
+using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
-
-using Photon.Realtime;
 
 #if UNITY_EDITOR
 using UnityEditor;

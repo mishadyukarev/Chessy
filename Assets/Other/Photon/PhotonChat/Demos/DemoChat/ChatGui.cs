@@ -5,14 +5,12 @@
 // <author>developer@exitgames.com</author>
 // --------------------------------------------------------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
-using UnityEngine;
-using UnityEngine.UI;
-
 using Photon.Chat;
 using Photon.Realtime;
+using System;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.UI;
 using AuthenticationValues = Photon.Chat.AuthenticationValues;
 #if PHOTON_UNITY_NETWORKING
 using Photon.Pun;

@@ -16,9 +16,9 @@
 
 namespace Photon.Realtime
 {
+    using ExitGames.Client.Photon;
     using System;
     using System.Collections.Generic;
-    using ExitGames.Client.Photon;
 
 #if SUPPORTED_UNITY
 #endif

@@ -26,7 +26,7 @@ namespace Photon.Pun
 #if (UNITY_2018 || UNITY_2018_1_OR_NEWER)
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
 #else
-			EditorApplication.hierarchyWindowChanged += OnHierarchyChanged;
+            EditorApplication.hierarchyWindowChanged += OnHierarchyChanged;
 #endif
         }
 

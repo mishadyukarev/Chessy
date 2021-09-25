@@ -13,8 +13,8 @@
 
 namespace Photon.Chat
 {
-    using System;
     using ExitGames.Client.Photon;
+    using System;
 #if SUPPORTED_UNITY
     using UnityEngine.Serialization;
 #endif

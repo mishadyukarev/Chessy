@@ -20,7 +20,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Common
             ref var centerMenuUICom = ref _centerUIFilter.Get1(0);
 
             LanguageComCom.CurLanguageType = centerMenuUICom.LanguageType;
-            SoundComComp.Volume = centerMenuUICom.MusicVolume;          
+            SoundComComp.Volume = centerMenuUICom.MusicVolume;
             centerMenuUICom.SetTextInfo(LanguageComCom.GetText(ComLanguageTypes.Info));
 
 
