@@ -7,26 +7,15 @@ namespace Assets.Scripts.ECS.Manager.View.Menu
 {
     public sealed class MenuSystemManager : SystemAbstManager
     {
-        internal static EventMenuSys PhotSceneMenuSys { get; private set; }
-        internal static ConnectorMenuSys ConnectToMasterMenuSys { get; private set; }
-        //internal static ConnUsingSettingsMenuSys ConnUsingSettingsMenuSys { get; private set; }
-
         internal MenuSystemManager(EcsWorld menuWorld, EcsSystems allMenuSystems) : base(menuWorld, allMenuSystems)
         {
-            PhotSceneMenuSys = new EventMenuSys();
-            ConnectToMasterMenuSys = new ConnectorMenuSys();
-            //ConnUsingSettingsMenuSys = new ConnUsingSettingsMenuSys();
-
             InitOnlySystems
-                .Add(PhotSceneMenuSys);
+                .Add(new EventMenuSys());
 
 
             RunOnlySystems
                 .Add(new SyncMenuSys())
-                .Add(ConnectToMasterMenuSys);
-
-
-                //.Add(ConnUsingSettingsMenuSys);
+                .Add(new ConnectorMenuSys());
         }
     }
 }

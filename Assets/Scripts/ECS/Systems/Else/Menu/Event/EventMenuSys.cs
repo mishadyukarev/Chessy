@@ -24,6 +24,7 @@ namespace Assets.Scripts.ECS.Managers.Event
 
 
 
+            downZoneUICom.AddListHelp_Button(Help);
             downZoneUICom.AddListQuit_Button(delegate { Application.Quit(); });
 
 
@@ -102,6 +103,11 @@ namespace Assets.Scripts.ECS.Managers.Event
         {
             GameModesCom.CurGameMode = offGameMode;
             PhotonNetwork.CreateRoom(default);
+        }
+
+        private void Help()
+        {
+
         }
     }
 }
