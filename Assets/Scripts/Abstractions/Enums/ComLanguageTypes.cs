@@ -16,6 +16,8 @@
         Training,
 
         Info,
+        HelpProject,
+        InfoBuy,
         Exit,
     }
 }

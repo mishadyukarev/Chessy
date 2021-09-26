@@ -22,6 +22,7 @@ namespace Assets.Scripts.ECS.Components.View.UI.Menu.Down
             _exit_TextMP = _exit_Button.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
         }
 
+        internal void SetTextHelp(string text) => _help_TextMP.text = text;
         internal void SetTextExit(string text) => _exit_TextMP.text = text;
 
         internal void AddListHelp_Button(UnityAction unityAction) => _help_Button.onClick.AddListener(unityAction);
