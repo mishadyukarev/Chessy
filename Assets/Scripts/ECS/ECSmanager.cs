@@ -44,7 +44,7 @@ namespace Assets.Scripts
             _allComSystems.Init();
 
 
-            if (Advertisement.isSupported) Advertisement.Initialize("4097313", true);
+            if (Advertisement.isSupported) Advertisement.Initialize("4097313", false);
         }
 
         public void ToggleScene(SceneTypes sceneType)

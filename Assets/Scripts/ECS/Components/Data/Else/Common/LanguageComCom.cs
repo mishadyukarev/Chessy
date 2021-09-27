@@ -84,10 +84,10 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
             _comLanguages[LanguageTypes.Spanish].Add(ComLanguageTypes.HelpProject, "Ayudar al proyecto");
 
 
-            _comLanguages[LanguageTypes.English].Add(ComLanguageTypes.InfoBuy, "-Ad \n +help the project \n +get all future factions \n \n Get a monthly subscription");
-            _comLanguages[LanguageTypes.Russian].Add(ComLanguageTypes.InfoBuy, "-Реклама \n +Помощь проекту \n +получить все будущие фракции \n \n Получить ежемесячную подписку");
-            _comLanguages[LanguageTypes.Chinese].Add(ComLanguageTypes.InfoBuy, "-广告 \n +项目援助 \n +获取所有未来派系 \n \n 获得包月订阅");
-            _comLanguages[LanguageTypes.Spanish].Add(ComLanguageTypes.InfoBuy, "-Publicidad \n +Ayuda al proyecto \n +Obtener todas las facciones futuras \n \n Obtener una suscripción mensual");
+            _comLanguages[LanguageTypes.English].Add(ComLanguageTypes.InfoBuy, /*"/*-Ad \n*/ "+help the project \n +get all future factions \n \n Get a monthly subscription");
+            _comLanguages[LanguageTypes.Russian].Add(ComLanguageTypes.InfoBuy, /*"-Реклама \n*/ "+Помощь проекту \n +получить все будущие фракции \n \n Получить ежемесячную подписку");
+            _comLanguages[LanguageTypes.Chinese].Add(ComLanguageTypes.InfoBuy, /*"-广告 \n*/ "+项目援助 \n +获取所有未来派系 \n \n 获得包月订阅");
+            _comLanguages[LanguageTypes.Spanish].Add(ComLanguageTypes.InfoBuy, /*"-Publicidad \n*/ "+Ayuda al proyecto \n +Obtener todas las facciones futuras \n \n Obtener una suscripción mensual");
 
 
             _comLanguages[LanguageTypes.English].Add(ComLanguageTypes.Exit, "Exit");
