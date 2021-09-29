@@ -10,6 +10,7 @@ using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.Master;
+using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
 using Assets.Scripts.ECS.Components.View.Else.Game.General;
 using Assets.Scripts.ECS.Game.Components;
 using ExitGames.Client.Photon;

@@ -13,7 +13,7 @@ internal sealed class ReadyMasterSystem : IEcsRunSystem
         ref var readyDataUICom = ref _readyUIFilter.Get1(0);
 
 
-        readyDataUICom.SetIsReady(sender.IsMasterClient, readyDataUICom.IsReady(sender.IsMasterClient));
+        readyDataUICom.SetIsReady(sender.IsMasterClient, !readyDataUICom.IsReady(sender.IsMasterClient));
 
         if (readyDataUICom.IsReady(true) && readyDataUICom.IsReady(false))
         {

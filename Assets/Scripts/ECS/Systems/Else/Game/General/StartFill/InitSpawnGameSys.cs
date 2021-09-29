@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Abstractions.Enums;
+﻿using Assets.Scripts.Abstractions.Data;
+using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Component;
@@ -249,21 +250,21 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
             ref var invResCom = ref _inventorResFilter.Get1(0);
 
-                _curGameWorld.NewEntity()
-                   .Replace(new InfoCom())
-                   .Replace(new ForSettingUnitMasCom())
-                   .Replace(new ForAttackMasCom())
-                   .Replace(new ForShiftMasCom())
-                   .Replace(new ForBuildingMasCom())
-                   .Replace(new ForSeedingMasCom())
-                   .Replace(new ConditionMasCom())
-                   .Replace(new ForCircularAttackMasCom())
-                   .Replace(new ForCreatingUnitMasCom())
-                   .Replace(new ForDestroyMasCom())
-                   .Replace(new ForFireMasCom())
-                   .Replace(new ForUpgradeMasCom())
-                   .Replace(new ForGiveTakeToolWeaponComp())
-                   .Replace(new UpdatedMasCom());
+            _curGameWorld.NewEntity()
+               .Replace(new InfoCom())
+               .Replace(new ForSettingUnitMasCom())
+               .Replace(new ForAttackMasCom())
+               .Replace(new ForShiftMasCom())
+               .Replace(new ForBuildingMasCom())
+               .Replace(new ForSeedingMasCom())
+               .Replace(new ConditionMasCom())
+               .Replace(new ForCircularAttackMasCom())
+               .Replace(new ForCreatingUnitMasCom())
+               .Replace(new ForDestroyMasCom())
+               .Replace(new ForFireMasCom())
+               .Replace(new ForUpgradeMasCom())
+               .Replace(new ForGiveTakeToolWeaponComp())
+               .Replace(new UpdatedMasCom());
 
 
             if (PhotonNetwork.isMasterClient)

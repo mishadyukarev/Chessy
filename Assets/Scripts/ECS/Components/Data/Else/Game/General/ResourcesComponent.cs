@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Abstractions.Data;
+using UnityEngine;
 
 namespace Assets.Scripts
 {
@@ -11,18 +12,23 @@ namespace Assets.Scripts
         internal static SoundData SoundConfig { get; private set; }
         internal static SpritesData SpritesConfig { get; private set; }
         internal static StartGameValuesConfig StartValuesGameConfig { get; private set; }
+        internal static VideoClipsData VideoClipsData { get; private set; }
 
 
         internal ResourcesComponent(bool isNeeded)
         {
-            PrefabConfig = Resources.Load<PrefabData>("PrefabData");
+            if (isNeeded)
+            {
+                PrefabConfig = Resources.Load<PrefabData>("PrefabData");
 
-            InMenuZoneGO = PrefabConfig.Canvas.transform.Find("InMenuZone").gameObject;
-            InGameZoneGO = PrefabConfig.Canvas.transform.Find("InGameZone").gameObject;
+                InMenuZoneGO = PrefabConfig.Canvas.transform.Find("InMenuZone").gameObject;
+                InGameZoneGO = PrefabConfig.Canvas.transform.Find("InGameZone").gameObject;
 
-            SoundConfig = Resources.Load<SoundData>("SoundData");
-            SpritesConfig = Resources.Load<SpritesData>("SpritesData");
-            StartValuesGameConfig = Resources.Load<StartGameValuesConfig>("StartValues");
+                SoundConfig = Resources.Load<SoundData>("SoundData");
+                SpritesConfig = Resources.Load<SpritesData>("SpritesData");
+                StartValuesGameConfig = Resources.Load<StartGameValuesConfig>("StartValues");
+                VideoClipsData = Resources.Load<VideoClipsData>("VideoClipsData");
+            }
         }
     }
 }

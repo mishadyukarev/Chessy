@@ -80,7 +80,8 @@ public sealed class GameGeneralSysManager : SystemAbstManager, IDisposable
             .Add(new ReadyZoneUISystem())
             .Add(new CenterSupTextUISystem())
             .Add(new KingZoneUISys())
-            .Add(new FriendZoneUISys());
+            .Add(new FriendZoneUISys())
+            .Add(new ActiveHitUISys());
 
 
         FillAvailCellsSyss = new EcsSystems(gameWorld)
