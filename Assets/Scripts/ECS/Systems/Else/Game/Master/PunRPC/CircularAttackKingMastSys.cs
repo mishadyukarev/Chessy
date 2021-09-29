@@ -8,7 +8,7 @@ namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
 {
     internal sealed class CircularAttackKingMastSys : IEcsRunSystem
     {
-        private EcsFilter<InfoMasCom> _infoMastFilter = default;
+        private EcsFilter<InfoCom> _infoMastFilter = default;
         private EcsFilter<ForCircularAttackMasCom> _forCircAttackFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;

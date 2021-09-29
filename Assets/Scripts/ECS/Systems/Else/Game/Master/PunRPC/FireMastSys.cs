@@ -10,7 +10,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
     internal sealed class FireMastSys : IEcsRunSystem
     {
-        private EcsFilter<InfoMasCom> _infoFilter = default;
+        private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForFireMasCom> _fireFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;

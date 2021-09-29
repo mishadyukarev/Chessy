@@ -104,7 +104,7 @@ public sealed class GameGeneralSysManager : SystemAbstManager, IDisposable
             .Add(eventExecuters);
 
 
-        RunOnlySystems
+        UpdateOnlySystems
             .Add(new InputSystem())
             .Add(new RaySystem())
             .Add(new SelectorSystem())

@@ -17,6 +17,7 @@ using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
+using Assets.Scripts.ECS.Components.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
 using Assets.Scripts.ECS.Components.View.UI.Game.General;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
@@ -248,59 +249,25 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
             ref var invResCom = ref _inventorResFilter.Get1(0);
 
+                _curGameWorld.NewEntity()
+                   .Replace(new InfoCom())
+                   .Replace(new ForSettingUnitMasCom())
+                   .Replace(new ForAttackMasCom())
+                   .Replace(new ForShiftMasCom())
+                   .Replace(new ForBuildingMasCom())
+                   .Replace(new ForSeedingMasCom())
+                   .Replace(new ConditionMasCom())
+                   .Replace(new ForCircularAttackMasCom())
+                   .Replace(new ForCreatingUnitMasCom())
+                   .Replace(new ForDestroyMasCom())
+                   .Replace(new ForFireMasCom())
+                   .Replace(new ForUpgradeMasCom())
+                   .Replace(new ForGiveTakeToolWeaponComp())
+                   .Replace(new UpdatedMasCom());
+
 
             if (PhotonNetwork.isMasterClient)
             {
-                _curGameWorld.NewEntity()
-                   .Replace(new InfoMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForGettingUnitMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForSettingUnitMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForAttackMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForShiftMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForDonerMasCom())
-                    .Replace(new NeedActiveSomethingMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForBuildingMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForSeedingMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ConditionMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForCircularAttackMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForCreatingUnitMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForDestroyMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForFireMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForReadyMasCom())
-                    .Replace(new NeedActiveSomethingMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForUpgradeMasCom());
-
-                _curGameWorld.NewEntity()
-                    .Replace(new ForGiveTakeToolWeaponComp());
-
                 int random;
 
                 foreach (byte curIdxCell in _xyCellFilter)

@@ -8,7 +8,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
     internal sealed class SeedingMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<InfoMasCom> _infoFilter = default;
+        private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForSeedingMasCom> _seedingFilter = default;
 
         private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;

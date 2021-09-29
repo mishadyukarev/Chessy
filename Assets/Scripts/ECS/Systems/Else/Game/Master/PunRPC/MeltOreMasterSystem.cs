@@ -8,7 +8,7 @@ using Leopotam.Ecs;
 
 internal sealed class MeltOreMasterSystem : IEcsRunSystem
 {
-    private EcsFilter<InfoMasCom> _infoMasFilter = default;
+    private EcsFilter<InfoCom> _infoMasFilter = default;
     private EcsFilter<InventResourCom> _invResFilt = default;
 
     public void Run()

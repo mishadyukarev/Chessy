@@ -7,9 +7,9 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game;
 using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Component.Game.Other;
 using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Components.View.Else.Game.General;
 using Assets.Scripts.ECS.Game.Components;
 using ExitGames.Client.Photon;
@@ -42,26 +42,20 @@ namespace Assets.Scripts
 
 
 
-        private EcsFilter<InfoMasCom> _infoMasterComFilter = default;
-        private EcsFilter<ForReadyMasCom, NeedActiveSomethingMasCom> _readyFilter = default;
-        private EcsFilter<ForDonerMasCom> _donerFilter = default;
+        private EcsFilter<InfoCom> _fromInfoFilt = default;
         private EcsFilter<ForBuildingMasCom, XyCellForDoingMasCom> _buildFilter = default;
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
         private EcsFilter<ForShiftMasCom> _shiftFilter = default;
         private EcsFilter<ForAttackMasCom> _attackFilter = default;
         private EcsFilter<ConditionMasCom, XyCellForDoingMasCom> _conditionFilter = default;
         private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
-        private EcsFilter<ForGettingUnitMasCom> _gettingUnitFilter = default;
         private EcsFilter<ForSettingUnitMasCom, XyCellForDoingMasCom> _settingUnitFilter = default;
         private EcsFilter<ForSeedingMasCom, XyCellForDoingMasCom> _seedingFilter = default;
         private EcsFilter<ForFireMasCom> _fireFilter = default;
         private EcsFilter<ForUpgradeMasCom> _upgradorFilter = default;
         private EcsFilter<ForCircularAttackMasCom, XyCellForDoingMasCom> _circularAttackFilter = default;
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGivePawnToolFilter = default;
-        private EcsFilter<ForTakePawnExtraToolMastCom> _forTakePawnExtraToolFilter = default;
-        private EcsFilter<ForSwapToolWeaponComp> _forSwapToolWeapFilter = default;
-
-        private EcsFilter<InfoOtherCom> _infoOtherFilter = default;
+        private EcsFilter<UpdatedMasCom> _updatedMotMasFilt = default;
 
         private static PhotonView PhotonView => PhotonRpcViewGameCom.PhotonView;
 
@@ -84,7 +78,7 @@ namespace Assets.Scripts
 
         #region Methods
 
-        public static void ReadyToMaster(in bool isReady) => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.Ready, new object[] { isReady });
+        public static void ReadyToMaster() => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.Ready, new object[default]);
 
         public static void DoneToMaster() => PhotonView.RPC(MasterRPCName, PhotonTargets.MasterClient, RpcMasterTypes.Done, new object[default]);
         public static void ActiveAmountMotionUIToGeneral(PhotonTargets rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
@@ -127,7 +121,7 @@ namespace Assets.Scripts
         {
             _curNumber = default;
 
-            _infoMasterComFilter.Get1(0).FromInfo = infoFrom;
+            _fromInfoFilt.Get1(0).FromInfo = infoFrom;
 
             switch (rpcType)
             {
@@ -135,7 +129,6 @@ namespace Assets.Scripts
                     throw new Exception();
 
                 case RpcMasterTypes.Ready:
-                    _readyFilter.Get2(0).NeedActiveSomething = (bool)objects[0];
                     break;
 
                 case RpcMasterTypes.Done:
@@ -213,7 +206,7 @@ namespace Assets.Scripts
         private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _curNumber = 0;
-            _fromInfoFilter.Get1(0).FromInfo = infoFrom;
+            _fromInfoFilt.Get1(0).FromInfo = infoFrom;
 
             ref var selectorCom = ref _selectorFilter.Get1(0);
 
@@ -296,7 +289,7 @@ namespace Assets.Scripts
         private void OtherRPC(RpcOtherTypes rpcOtherType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _curNumber = 0;
-            _infoOtherFilter.Get1(0).FromInfo = infoFrom;
+            _fromInfoFilt.Get1(0).FromInfo = infoFrom;
 
             switch (rpcOtherType)
             {

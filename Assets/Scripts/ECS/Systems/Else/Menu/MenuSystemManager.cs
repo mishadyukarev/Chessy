@@ -13,7 +13,7 @@ namespace Assets.Scripts.ECS.Manager.View.Menu
                 .Add(new EventMenuSys());
 
 
-            RunOnlySystems
+            UpdateOnlySystems
                 .Add(new SyncMenuSys())
                 .Add(new ConnectorMenuSys());
         }

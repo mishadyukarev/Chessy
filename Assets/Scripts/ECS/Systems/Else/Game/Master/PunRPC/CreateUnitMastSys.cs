@@ -10,7 +10,7 @@ using Leopotam.Ecs;
 
 internal sealed class CreateUnitMastSys : IEcsRunSystem
 {
-    private EcsFilter<InfoMasCom> _mastInfoFilter = default;
+    private EcsFilter<InfoCom> _mastInfoFilter = default;
     private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
     private EcsFilter<InventorUnitsComponent, InventResourCom> _inventorFilter = default;
     private EcsFilter<SoundEffectsComp> _soundEffFilt = default;

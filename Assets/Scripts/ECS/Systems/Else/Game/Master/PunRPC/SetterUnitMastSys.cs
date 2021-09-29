@@ -13,7 +13,7 @@ using System;
 
 internal sealed class SetterUnitMastSys : IEcsRunSystem
 {
-    private EcsFilter<InfoMasCom> _infoFilter = default;
+    private EcsFilter<InfoCom> _infoFilter = default;
 
     private EcsFilter<ForSettingUnitMasCom> _setterFilter = default;
     private EcsFilter<InventorUnitsComponent> _unitInventorFilter = default;

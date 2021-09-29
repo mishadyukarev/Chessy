@@ -10,7 +10,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 {
     internal class UpgradeMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<InfoMasCom> _infoFilter = default;
+        private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForUpgradeMasCom> _forUpgradeFilter = default;
 
         private EcsFilter<UpgradesBuildsCom> _upgradeBuildsFilter = default;

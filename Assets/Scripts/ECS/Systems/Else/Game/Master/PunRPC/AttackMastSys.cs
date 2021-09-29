@@ -7,7 +7,7 @@ using Leopotam.Ecs;
 
 internal sealed class AttackMastSys : IEcsRunSystem
 {
-    private EcsFilter<InfoMasCom> _infoMasterFilter = default;
+    private EcsFilter<InfoCom> _infoMasterFilter = default;
     private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
     private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;

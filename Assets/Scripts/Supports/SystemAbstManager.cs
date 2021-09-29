@@ -6,24 +6,24 @@ namespace Assets.Scripts
     public abstract class SystemAbstManager
     {
         protected EcsSystems InitOnlySystems { get; private set; }
-        protected EcsSystems RunOnlySystems { get; private set; }
-        protected EcsSystems InitRunSystems { get; private set; }
+        protected EcsSystems UpdateOnlySystems { get; private set; }
+        protected EcsSystems InitUpdateSystems { get; private set; }
 
         protected SystemAbstManager(EcsWorld world, EcsSystems allSystems)
         {
             InitOnlySystems = new EcsSystems(world);
-            RunOnlySystems = new EcsSystems(world);
-            InitRunSystems = new EcsSystems(world);
+            UpdateOnlySystems = new EcsSystems(world);
+            InitUpdateSystems = new EcsSystems(world);
 
             allSystems
                 .Add(InitOnlySystems)
-                .Add(RunOnlySystems)
-                .Add(InitRunSystems);
+                .Add(UpdateOnlySystems)
+                .Add(InitUpdateSystems);
         }
         internal virtual void RunUpdate()
         {
-            RunOnlySystems.Run();
-            InitRunSystems.Run();
+            UpdateOnlySystems.Run();
+            InitUpdateSystems.Run();
         }
 
 

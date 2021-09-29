@@ -4,7 +4,9 @@ using Assets.Scripts.ECS.Component;
 using Assets.Scripts.ECS.Component.Common;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Leopotam.Ecs;
+using System;
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.EventSystems;
 
 namespace Assets.Scripts.ECS.System.Data.Common
@@ -43,6 +45,7 @@ namespace Assets.Scripts.ECS.System.Data.Common
                 .Replace(new CanvasCom(canvas))
                 .Replace(new SoundComComp(audioSource))
                 .Replace(new LanguageComCom(LanguageTypes.English))
+                .Replace(new AdComCom(DateTime.Now))
 
                 //Toggle
                 .Replace(new ToggleZoneComponent(new GameObject()));
@@ -62,6 +65,8 @@ namespace Assets.Scripts.ECS.System.Data.Common
             commonZoneCom.Attach(audioSource.transform);
 
 
+
+            if (Advertisement.isSupported) Advertisement.Initialize("4097313", false);
         }
     }
 }

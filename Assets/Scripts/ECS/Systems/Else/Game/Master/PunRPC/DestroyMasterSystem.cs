@@ -6,7 +6,7 @@ using Leopotam.Ecs;
 
 internal sealed class DestroyMasterSystem : IEcsRunSystem
 {
-    private EcsFilter<InfoMasCom> _infoFilter = default;
+    private EcsFilter<InfoCom> _infoFilter = default;
     private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
 
     private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;

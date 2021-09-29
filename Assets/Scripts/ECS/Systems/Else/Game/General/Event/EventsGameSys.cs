@@ -84,7 +84,7 @@ namespace Assets.Scripts
 
 
 
-        private void Ready() => RpcSys.ReadyToMaster(!_readyFilter.Get1(0).IsReady(PhotonNetwork.isMasterClient));
+        private void Ready() => RpcSys.ReadyToMaster();
 
         private void GetUnit(UnitTypes unitType)
         {

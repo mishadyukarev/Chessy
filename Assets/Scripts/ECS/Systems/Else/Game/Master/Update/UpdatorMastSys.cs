@@ -38,8 +38,7 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
         invResCom.AddAmountResources(PlayerTypes.First, ResourceTypes.Food);
         invResCom.AddAmountResources(PlayerTypes.Second, ResourceTypes.Food);
 
-
-
+        RpcSys.ActiveAmountMotionUIToGeneral(PhotonTargets.MasterClient);
 
         foreach (byte curIdxCell in _xyCellFilter)
         {

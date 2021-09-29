@@ -14,7 +14,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
         private byte _woodCostForPick = 5;
         private byte _ironCostForSword = 1;
 
-        private EcsFilter<InfoMasCom> _infoFilter = default;
+        private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGiveTakeToolWeapFilter = default;
 
         private EcsFilter<InventResourCom> _inventResFilter = default;

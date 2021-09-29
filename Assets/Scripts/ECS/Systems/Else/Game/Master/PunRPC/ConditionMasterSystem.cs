@@ -6,7 +6,7 @@ using System;
 
 internal sealed class ConditionMasterSystem : IEcsRunSystem
 {
-    private EcsFilter<InfoMasCom> _infoFilter = default;
+    private EcsFilter<InfoCom> _infoFilter = default;
     private EcsFilter<ConditionMasCom> _conditionFilter = default;
 
     private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;

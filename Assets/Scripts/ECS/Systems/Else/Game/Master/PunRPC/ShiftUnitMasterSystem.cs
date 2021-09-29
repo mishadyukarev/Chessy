@@ -9,7 +9,7 @@ using Leopotam.Ecs;
 
 internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
 {
-    private EcsFilter<InfoMasCom> _infoFilter = default;
+    private EcsFilter<InfoCom> _infoFilter = default;
     private EcsFilter<ForShiftMasCom> _forShiftFilter = default;
 
     private EcsFilter<AvailCellsForShiftComp> _cellsShiftFilter = default;

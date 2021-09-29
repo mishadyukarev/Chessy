@@ -13,7 +13,7 @@ using System;
 
 internal sealed class BuilderMastSys : IEcsRunSystem
 {
-    private EcsFilter<InfoMasCom> _infoFilter = default;
+    private EcsFilter<InfoCom> _infoFilter = default;
     private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
 
     private EcsFilter<XyCellComponent> _xyCellFilt = default;

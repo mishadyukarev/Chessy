@@ -5,7 +5,6 @@ using Assets.Scripts.ECS.System.Data.Common;
 using Assets.Scripts.ECS.System.View.Menu;
 using Leopotam.Ecs;
 using System;
-using UnityEngine.Advertisements;
 
 namespace Assets.Scripts
 {
@@ -27,24 +26,17 @@ namespace Assets.Scripts
         private GameMasterSystemManager _gameMasSysManag;
         private GameOtherSystemManager _gameOthSysmManag;
 
-        private DateTime _lastTimeAd;
-
         #endregion
 
 
         public ECSManager()
         {
-            _lastTimeAd = DateTime.Now;
-
             _comWorld = new EcsWorld();
             _allComSystems = new EcsSystems(_comWorld);
 
             _allComSystems.Add(new SpawnInitComSys());
             _comSysManag = new ComSysManager(_comWorld, _allComSystems);
             _allComSystems.Init();
-
-
-            if (Advertisement.isSupported) Advertisement.Initialize("4097313", false);
         }
 
         public void ToggleScene(SceneTypes sceneType)
@@ -57,20 +49,7 @@ namespace Assets.Scripts
                 case SceneTypes.Menu:
                     if (_gameWorld != default)
                     {
-                        var t = DateTime.Now - _lastTimeAd;
-
-                        if (t.Minutes >= 1)
-                        {
-                            //PurchasingSettings.
-                            if (Advertisement.IsReady())
-                            {
-                                Advertisement.Show();
-                                _lastTimeAd = DateTime.Now;
-                            }
-                        }
-
-
-
+                        _comSysManag.LaunchAdSys.Run();
                         _gameWorld.Destroy();
 
                         _gameGenSysManag.Dispose();
@@ -101,15 +80,10 @@ namespace Assets.Scripts
                     _allGameSystems = new EcsSystems(_gameWorld);
 
                     _allGameSystems.Add(new InitSpawnGameSys());
+
                     _gameGenSysManag = new GameGeneralSysManager(_gameWorld, _allGameSystems);
-                    if (PhotonNetwork.isMasterClient)
-                    {
-                        _gameMasSysManag = new GameMasterSystemManager(_gameWorld, _allGameSystems);
-                    }
-                    else
-                    {
-                        _gameOthSysmManag = new GameOtherSystemManager(_gameWorld, _allGameSystems);
-                    }
+                    _gameMasSysManag = new GameMasterSystemManager(_gameWorld, _allGameSystems);
+                    _gameOthSysmManag = new GameOtherSystemManager(_gameWorld, _allGameSystems);
 
                     _allGameSystems.Init();
                     break;

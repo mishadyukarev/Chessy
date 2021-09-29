@@ -13,7 +13,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC
     {
         private byte _ironCostForCrossbow = 1;
 
-        private EcsFilter<InfoMasCom> _infoFilter = default;
+        private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGivePawnToolFilter = default;
 
         private EcsFilter<InventResourCom> _inventResFilter = default;

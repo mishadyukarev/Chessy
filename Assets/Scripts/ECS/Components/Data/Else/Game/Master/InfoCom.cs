@@ -1,6 +1,6 @@
 ﻿namespace Assets.Scripts.ECS.Component.Game.Master
 {
-    internal struct InfoMasCom
+    internal struct InfoCom
     {
         internal PhotonMessageInfo FromInfo { get; set; }
     }

@@ -5,15 +5,14 @@ using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
+using Assets.Scripts.ECS.Components.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 
 internal sealed class DonerMasterSystem : IEcsRunSystem
 {
-    private EcsFilter<InfoMasCom> _infoFilter = default;
-    private EcsFilter<ForDonerMasCom> _donerFilter = default;
-    private EcsFilter<MotionsDataUIComponent> _motionsFilter = default;
+    private EcsFilter<InfoCom> _infoFilter = default;
     private EcsFilter<InventorUnitsComponent> _invUnitsFilter = default;
     private EcsFilter<FriendZoneDataUICom> _friendUIFilt = default;
 
@@ -25,7 +24,6 @@ internal sealed class DonerMasterSystem : IEcsRunSystem
     public void Run()
     {
         ref var infoMasCom = ref _infoFilter.Get1(0);
-        ref var forDonerMasCom = ref _donerFilter.Get1(0);
 
         var sender = infoMasCom.FromInfo.sender;
 
@@ -37,7 +35,6 @@ internal sealed class DonerMasterSystem : IEcsRunSystem
         {
             if (GameModesCom.IsGameMode(GameModes.TrainingOff))
             {
-                RpcSys.ActiveAmountMotionUIToGeneral(PhotonTargets.MasterClient);
                 GameMasterSystemManager.UpdateMotion.Run();
             }
 
@@ -69,7 +66,6 @@ internal sealed class DonerMasterSystem : IEcsRunSystem
                         _cellViewFilter.Get1(curIdxCell).SetRotForClient(true);
 
                     GameMasterSystemManager.UpdateMotion.Run();
-                    RpcSys.ActiveAmountMotionUIToGeneral(PhotonTargets.MasterClient);
                 }
             }
 
@@ -95,8 +91,7 @@ internal sealed class DonerMasterSystem : IEcsRunSystem
                         _playerMotion = PlayerTypes.First;
                         WhoseMoveCom.WhoseMoveOnline = _playerMotion;
 
-                        GameMasterSystemManager.UpdateMotion.Run();
-                        RpcSys.ActiveAmountMotionUIToGeneral(PhotonTargets.MasterClient);
+                        GameMasterSystemManager.UpdateMotion.Run();       
                     }
                 }
             }
