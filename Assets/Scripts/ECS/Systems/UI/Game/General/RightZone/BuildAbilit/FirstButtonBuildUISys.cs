@@ -24,9 +24,6 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone
             {
                 ref var selUnitDatCom = ref _cellUnitFilt.Get1(selCom.IdxSelCell);
 
-                buildAbilUICom.SetText_Button(BuildButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.BuildFarm));
-
-
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
                     ref var selOnUnitCom = ref _cellUnitFilt.Get2(selCom.IdxSelCell);

@@ -31,24 +31,24 @@ internal sealed class RelaxUISys : IEcsRunSystem
         {
             if (selUnitDatCom.Is(UnitTypes.King))
             {
-                condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
+                //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
             }
 
             else if (selUnitDatCom.Is(UnitTypes.Pawn))
             {
                 if (selUnitDatCom.HaveMaxAmountHealth)
                 {
-                    condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Extract));
+                    //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Extract));
                 }
                 else
                 {
-                    condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
+                    //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
                 }
             }
 
             else
             {
-                condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
+                //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
             }
 
             if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))

@@ -9,7 +9,6 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
     internal struct EnvirZoneViewUICom
     {
         private Button _info_Button;
-        private TextMeshProUGUI _info_TextMP;
         private Dictionary<ResourceTypes, TextMeshProUGUI> _environment_TextMPs;
 
 
@@ -18,7 +17,6 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
             var environmentZone_GO = leftZone_GO.transform.Find("EnvironmentZone").gameObject;
 
             _info_Button = environmentZone_GO.transform.Find("EnvironmentInfoButton").GetComponent<Button>();
-            _info_TextMP = _info_Button.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
 
             _environment_TextMPs = new Dictionary<ResourceTypes, TextMeshProUGUI>();
             _environment_TextMPs.Add(ResourceTypes.Food, environmentZone_GO.transform.Find("FertilizerResources_TextMP").GetComponent<TextMeshProUGUI>());
@@ -29,7 +27,6 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
         internal void SetActiveParent(bool isActive) => _info_Button.transform.parent.gameObject.SetActive(isActive);
         internal void AddListenerToEnvInfo(UnityAction unityAction) => _info_Button.onClick.AddListener(unityAction);
 
-        internal void SetTextEnvirInfo(string text) => _info_TextMP.text = text;
         internal void SetTextResour(ResourceTypes resourceType, string text) => _environment_TextMPs[resourceType].text = text;
     }
 }

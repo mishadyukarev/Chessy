@@ -26,7 +26,7 @@ namespace Assets.Scripts.ECS.Components.View.UI.Game.General.Right
 
             if (selUnitDatCom.HaveUnit)
             {
-                condUnitUICom.SetText_Button(CondUnitTypes.Protected, LanguageComCom.GetText(GameLanguageTypes.Protect));
+                //condUnitUICom.SetText_Button(CondUnitTypes.Protected, LanguageComCom.GetText(GameLanguageTypes.Protect));
 
 
                 if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))

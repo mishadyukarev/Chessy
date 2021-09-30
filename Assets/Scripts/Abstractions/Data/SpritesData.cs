@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Abstractions.Enums;
+using System;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "Sprites", fileName = "Sprites")]
 public class SpritesData : ScriptableObject
@@ -19,6 +21,7 @@ public class SpritesData : ScriptableObject
 
     [Space(20)]
     [SerializeField] private Sprite _citySprite = default;
+    [SerializeField] private Sprite _noneCitySprite = default;
     [SerializeField] private Sprite _farmSprite = default;
     [SerializeField] private Sprite _woodcutterSprite = default;
     [SerializeField] private Sprite _mineSprite = default;
@@ -30,11 +33,46 @@ public class SpritesData : ScriptableObject
     [SerializeField] private Sprite _mineBackSprite = default;
 
     [Space(20)]
-    [SerializeField] private Sprite _fertilizerSprite = default;
-    [SerializeField] private Sprite _youngForestSprite = default;
-    [SerializeField] private Sprite _forestSprite = default;
-    [SerializeField] private Sprite _hillSprite = default;
-    [SerializeField] private Sprite _mountainSprite = default;
+    [SerializeField] private Sprite _youngForest_Sprite = default;
+
+    [Space(20)]
+    [SerializeField] private Sprite _fire_Sprite = default;
+    [SerializeField] private Sprite _noneFire_Sprite = default;
+
+    [Space(20)]
+    [SerializeField] private Sprite _circularAttack_Sprite = default;
+
+
+    public Sprite GetSprite(SpriteGameTypes spriteGameType)
+    {
+        switch (spriteGameType)
+        {
+            case SpriteGameTypes.None:
+                throw new Exception();
+
+            case SpriteGameTypes.YoungForest:
+                return _youngForest_Sprite;
+
+            case SpriteGameTypes.Fire:
+                return _fire_Sprite;
+
+            case SpriteGameTypes.NoneFire:
+                return _noneFire_Sprite;
+
+            case SpriteGameTypes.CircularAttack:
+                return _circularAttack_Sprite;
+
+            case SpriteGameTypes.City:
+                return _citySprite;
+
+            case SpriteGameTypes.NoneCity:
+                return _noneCitySprite;
+
+            default:
+                throw new Exception();
+        }
+    }
+
 
 
     public Sprite BlackCell_Sprite => _blackCell_Sprite;
@@ -64,11 +102,4 @@ public class SpritesData : ScriptableObject
     public Sprite FarmBack => _farmBackSprite;
     public Sprite WoodcutterBack => _woodcutterBackSprite;
     public Sprite MineBack => _mineBackSprite;
-
-
-    public Sprite Ferilizer => _fertilizerSprite;
-    public Sprite YoungForest => _youngForestSprite;
-    public Sprite Forest => _forestSprite;
-    public Sprite Hill => _hillSprite;
-    public Sprite Mountain => _mountainSprite;
 }

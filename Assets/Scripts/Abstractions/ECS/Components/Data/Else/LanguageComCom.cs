@@ -175,12 +175,6 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
             _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.NearBorder, "Cerca de la Frontera");
 
 
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Motion, "Motion");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Motion, "Ход");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Motion, "运动");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Motion, "Movimiento");
-
-
             _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.GiveOrTakeTool, "Give or take tool");
             _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.GiveOrTakeTool, "Дай или возьми инструмент");
             _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.GiveOrTakeTool, "给予或采取工具");
@@ -202,17 +196,6 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
             _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.YouAreLoser, "你输了:(");
             _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.YouAreLoser, "Eres un perdedor :(");
 
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.GiveTake, "Give/Take");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.GiveTake, "Дать/Взять");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.GiveTake, "赠送/接受");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.GiveTake, "Dar/Tomar");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Done, "Done");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Done, "Готов");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Done, "准备");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Done, "Listos");
-
             _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.WaitPlayer, "Wait for player");
             _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.WaitPlayer, "Ждите игрока");
             _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.WaitPlayer, "等待玩家");
@@ -223,66 +206,6 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
             _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Create, "要创建");
             _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Create, "Crear");
 
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Pawn, "Pawn");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Pawn, "Пешка");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Pawn, "典当");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Pawn, "Peón");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Rook, "Rook");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Rook, "Ладья");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Rook, "鲁克");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Rook, "Torre");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Bishop, "Bishop");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Bishop, "Слон");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Bishop, "主教");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Bishop, "Obispo");
-
-
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.EnvironmentInfo, "Environment info");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.EnvironmentInfo, "Инфо окружения");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.EnvironmentInfo, "环境信息");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.EnvironmentInfo, "Medio ambiente info");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Fertilizer, "Fertilizer");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Fertilizer, "Удобрение");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Fertilizer, "肥料");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Fertilizer, "Fertilizante");
-
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Wood, "Wood");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Wood, "Дерево");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Wood, "树");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Wood, "Madera");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Ore, "Ore");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Ore, "Руда");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Ore, "矿石");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Ore, "Mineral");
-
-
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Melt, "Melt ore");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Melt, "Переплавить руду");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Melt, "融化矿石");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Melt, "Mineral de fusión");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.UpgradeFarm, "Upgrade farms");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.UpgradeFarm, "Улучшить фермы");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.UpgradeFarm, "改善农场");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.UpgradeFarm, "Granjas de actualización");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.UpgradeWoodcutter, "Upgrade woodcutters");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.UpgradeWoodcutter, "Улучшить лесорубки");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.UpgradeWoodcutter, "提高樵夫");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.UpgradeWoodcutter, "Actualización de leñadores");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.UpgradeMine, "Upgrade mines");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.UpgradeMine, "Улучшить шахты");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.UpgradeMine, "改善地雷");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.UpgradeMine, "Minas de actualización");
-
 
 
             _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.ConditAbilities, "Standart");
@@ -290,36 +213,12 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
             _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.ConditAbilities, "标准");
             _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.ConditAbilities, "Standart");
 
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Protect, "Protect");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Protect, "Защита");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Protect, "保护");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Protect, "Proteger");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Relax, "Relax");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Relax, "Отдых");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Relax, "休息");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Relax, "Relájate");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.Extract, "Extract");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.Extract, "Добыча");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.Extract, "提取");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.Extract, "Extraer");
-
 
             _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.UniqueAbilities, "Unique");
             _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.UniqueAbilities, "Уникальные");
             _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.UniqueAbilities, "独特");
             _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.UniqueAbilities, "Exclusivo");
 
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.SeedForest, "Seed forest");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.SeedForest, "Посадить лес");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.SeedForest, "种植森林");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.SeedForest, "Bosque de semillas");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.FireForest, "Fire forest");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.FireForest, "Поджечь лес");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.FireForest, "放火烧森林");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.FireForest, "Bosque de fuego");
 
             _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.PutOutFire, "PUT OUT");
             _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.PutOutFire, "ПОТУШИТЬ");
@@ -336,16 +235,6 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
             _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.BuildingAbilities, "Постройка");
             _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.BuildingAbilities, "建筑");
             _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.BuildingAbilities, "Edificio");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.BuildFarm, "Farm");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.BuildFarm, "Ферма");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.BuildFarm, "农场");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.BuildFarm, "Granja");
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.BuildMine, "Mine");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.BuildMine, "Шахта");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.BuildMine, "我的");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.BuildMine, "Mina");
 
             _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.BuildCity, "Сity");
             _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.BuildCity, "Город");

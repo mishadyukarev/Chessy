@@ -61,7 +61,6 @@ namespace Assets.Scripts
 
             _giveTakeZoneUIFilter.Get1(0).AddListenerToGive_Button(ActiveGiveTakeButton);
 
-            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Axe, delegate { ToggleToolWeapon(ToolWeaponTypes.Axe); });
             _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Pick, delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
             _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Sword, delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
             _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Crossbow, delegate { ToggleToolWeapon(ToolWeaponTypes.Crossbow); });

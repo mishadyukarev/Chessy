@@ -23,9 +23,9 @@ internal sealed class GetterUnitsUISystem : IEcsRunSystem
 
 
 
-        getUnitViewCom.SetTextUnit(UnitTypes.Pawn, LanguageComCom.GetText(GameLanguageTypes.Pawn));
-        getUnitViewCom.SetTextUnit(UnitTypes.Rook, LanguageComCom.GetText(GameLanguageTypes.Rook));
-        getUnitViewCom.SetTextUnit(UnitTypes.Bishop, LanguageComCom.GetText(GameLanguageTypes.Bishop));
+        //getUnitViewCom.SetTextUnit(UnitTypes.Pawn, LanguageComCom.GetText(GameLanguageTypes.Pawn));
+        //getUnitViewCom.SetTextUnit(UnitTypes.Rook, LanguageComCom.GetText(GameLanguageTypes.Rook));
+        //getUnitViewCom.SetTextUnit(UnitTypes.Bishop, LanguageComCom.GetText(GameLanguageTypes.Bishop));
 
         for (UnitTypes curUnitType = 0; curUnitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; curUnitType++)
         {

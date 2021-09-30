@@ -21,8 +21,6 @@
         ThatsForOtherUnit,
         NearBorder,
 
-        Motion,
-
         GiveOrTakeTool,
         PickAdultForest,
 
@@ -30,43 +28,19 @@
         YouAreLoser,
 
 
-        GiveTake,
-        Done,
         WaitPlayer,
 
         Create,
-        Pawn,
-        Rook,
-        Bishop,
-
-
-        EnvironmentInfo,
-        Fertilizer,
-        Wood,
-        Ore,
-
-
-        Melt,
-        UpgradeFarm,
-        UpgradeWoodcutter,
-        UpgradeMine,
 
 
 
         ConditAbilities,
-        Protect,
-        Relax,
-        Extract,
 
         UniqueAbilities,
-        SeedForest,
-        FireForest,
         PutOutFire,
         CircularAttack,
 
         BuildingAbilities,
-        BuildFarm,
-        BuildMine,
         BuildCity,
         DestroyBuilding,
 

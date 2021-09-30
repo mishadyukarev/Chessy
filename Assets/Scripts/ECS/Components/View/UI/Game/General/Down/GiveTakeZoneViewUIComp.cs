@@ -12,7 +12,6 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General.Down
         private GameObject _giveTakeZone_GO;
 
         private Button _giveTake_Button;
-        private TextMeshProUGUI _giveTake_TextMP;
         private Dictionary<ToolWeaponTypes, Button> _toolAndWeapon_Buttons;
         private Dictionary<ToolWeaponTypes, TextMeshProUGUI> _toolWeapon_texsMPs;
 
@@ -21,10 +20,8 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General.Down
             _giveTakeZone_GO = downZone_GO.transform.Find("GiveTakeZone").gameObject;
 
             _giveTake_Button = _giveTakeZone_GO.transform.Find("GiveThing_Button").GetComponent<Button>();
-            _giveTake_TextMP = _giveTake_Button.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
 
             _toolAndWeapon_Buttons = new Dictionary<ToolWeaponTypes, Button>();
-            _toolAndWeapon_Buttons.Add(ToolWeaponTypes.Axe, _giveTakeZone_GO.transform.Find("Axe_Button").GetComponent<Button>());
             _toolAndWeapon_Buttons.Add(ToolWeaponTypes.Pick, _giveTakeZone_GO.transform.Find("Pick_Button").GetComponent<Button>());
             _toolAndWeapon_Buttons.Add(ToolWeaponTypes.Sword, _giveTakeZone_GO.transform.Find("Sword_Button").GetComponent<Button>());
             _toolAndWeapon_Buttons.Add(ToolWeaponTypes.Crossbow, _giveTakeZone_GO.transform.Find("Crossbow_Button").GetComponent<Button>());
@@ -45,7 +42,6 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General.Down
 
         internal void SetColorToGiveTake_Button(Color color) => _giveTake_Button.image.color = color;
 
-        internal void SetTextToGiveTake_Button(string text) => _giveTake_TextMP.text = text;
         internal void SetText(ToolWeaponTypes toolWeaponType, string text) => _toolWeapon_texsMPs[toolWeaponType].text = text;
     }
 }

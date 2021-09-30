@@ -18,7 +18,6 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone
             ref var selectorComp = ref _selectorFilter.Get1(0);
 
 
-            giveTakeViewCom.Disable_ButtonImage(ToolWeaponTypes.Axe);
             giveTakeViewCom.Disable_ButtonImage(ToolWeaponTypes.Pick);
             giveTakeViewCom.Disable_ButtonImage(ToolWeaponTypes.Sword);
             giveTakeViewCom.Disable_ButtonImage(ToolWeaponTypes.Crossbow);
@@ -26,17 +25,17 @@ namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone
             giveTakeViewCom.Enable_ButtonImage(selectorComp.ToolWeaponTypeForGiveTake);
 
 
-            giveTakeViewCom.SetTextToGiveTake_Button(LanguageComCom.GetText(GameLanguageTypes.GiveTake));
+            //giveTakeViewCom.SetTextToGiveTake_Button(LanguageComCom.GetText(GameLanguageTypes.GiveTake));
 
 
-            if (selectorComp.IsCellClickType(CellClickTypes.GiveTakeTW))
-            {
-                giveTakeViewCom.SetColorToGiveTake_Button(Color.yellow);
-            }
-            else
-            {
-                giveTakeViewCom.SetColorToGiveTake_Button(Color.white);
-            }
+            //if (selectorComp.IsCellClickType(CellClickTypes.GiveTakeTW))
+            //{
+            //    giveTakeViewCom.SetColorToGiveTake_Button(Color.yellow);
+            //}
+            //else
+            //{
+            //    giveTakeViewCom.SetColorToGiveTake_Button(Color.white);
+            //}
         }
     }
 }

@@ -42,11 +42,9 @@ internal sealed class EnvironmentUISystem : IEcsRunSystem
         //var v = selCellEnvDataCom.GetAmountResources(EnvironmentTypes.Fertilizer);
 
 
-        envViewUICom.SetTextEnvirInfo(LanguageComCom.GetText(GameLanguageTypes.EnvironmentInfo));
-
-        envViewUICom.SetTextResour(ResourceTypes.Food, LanguageComCom.GetText(GameLanguageTypes.Fertilizer) + ": " + selCellEnvDataCom.GetAmountResources(EnvirTypes.Fertilizer));
-        envViewUICom.SetTextResour(ResourceTypes.Wood, LanguageComCom.GetText(GameLanguageTypes.Wood) + ": " + selCellEnvDataCom.GetAmountResources(EnvirTypes.AdultForest));
-        envViewUICom.SetTextResour(ResourceTypes.Ore, LanguageComCom.GetText(GameLanguageTypes.Ore) + ": " + selCellEnvDataCom.GetAmountResources(EnvirTypes.Hill));
+        envViewUICom.SetTextResour(ResourceTypes.Food, selCellEnvDataCom.GetAmountResources(EnvirTypes.Fertilizer).ToString());
+        envViewUICom.SetTextResour(ResourceTypes.Wood, selCellEnvDataCom.GetAmountResources(EnvirTypes.AdultForest).ToString());
+        envViewUICom.SetTextResour(ResourceTypes.Ore, selCellEnvDataCom.GetAmountResources(EnvirTypes.Hill).ToString());
 
 
 
