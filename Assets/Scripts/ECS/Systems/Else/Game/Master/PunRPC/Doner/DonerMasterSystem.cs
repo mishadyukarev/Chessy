@@ -46,7 +46,7 @@ internal sealed class DonerMasterSystem : IEcsRunSystem
                 {
                     _playerMotion = PlayerTypes.Second;
 
-                    CameraComComp.SetPosRotClient(false);
+                    CameraComComp.SetPosRotClient(false, Main.Instance.transform.position);
 
                     WhoseMoveCom.WhoseMoveOffline = _playerMotion;
 
@@ -58,7 +58,7 @@ internal sealed class DonerMasterSystem : IEcsRunSystem
                 {
                     _playerMotion = PlayerTypes.First;
 
-                    CameraComComp.SetPosRotClient(true);
+                    CameraComComp.SetPosRotClient(true, Main.Instance.transform.position);
 
                     WhoseMoveCom.WhoseMoveOffline = _playerMotion;
 

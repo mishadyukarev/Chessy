@@ -355,7 +355,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
             if (GameModesCom.IsOnlineMode)
             {
                 var isMaster = PhotonNetwork.isMasterClient;
-                CameraComComp.SetPosRotClient(isMaster);
+                CameraComComp.SetPosRotClient(isMaster, Main.Instance.transform.position);
 
                 foreach (byte curIdxCell in _xyCellFilter)
                 {
@@ -367,7 +367,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
             else
             {
-                CameraComComp.SetPosRotClient(true);
+                CameraComComp.SetPosRotClient(true, Main.Instance.transform.position);
 
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {

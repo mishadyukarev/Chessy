@@ -2,26 +2,26 @@
 
 namespace Assets.Scripts
 {
-    internal struct CameraComComp
+    public struct CameraComComp
     {
         private static Camera _camera;
         private static Vector3 _gamePosCamera;
 
-        internal CameraComComp(Camera camera, Vector3 gamePosCamera)
+        public CameraComComp(Camera camera, Vector3 gamePosCamera)
         {
             _camera = camera;
             _gamePosCamera = gamePosCamera;
         }
 
-        internal static void SetPosRotClient(bool isMasterClient)
+        public static void SetPosRotClient(bool isMasterClient, Vector3 posMain)
         {
             if (isMasterClient)
             {
-                _camera.transform.position = Main.Instance.transform.position + _gamePosCamera;
+                _camera.transform.position = posMain + _gamePosCamera;
             }
             else
             {
-                _camera.transform.position = Main.Instance.transform.position + _gamePosCamera + new Vector3(0, 0.5f, 0);
+                _camera.transform.position = posMain + _gamePosCamera + new Vector3(0, 0.5f, 0);
             }
 
             if (isMasterClient)

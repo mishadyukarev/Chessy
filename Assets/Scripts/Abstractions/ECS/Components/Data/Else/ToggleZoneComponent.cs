@@ -4,14 +4,14 @@ using UnityEngine;
 
 namespace Assets.Scripts.ECS.Component
 {
-    internal readonly struct ToggleZoneComponent
+    public readonly struct ToggleZoneComponent
     {
         private static GameObject _toggleZoneGO;
 
-        internal ToggleZoneComponent(GameObject toggleZoneGO) => _toggleZoneGO = toggleZoneGO;
+        public ToggleZoneComponent(GameObject toggleZoneGO) => _toggleZoneGO = toggleZoneGO;
 
 
-        internal static void ReplaceZone(SceneTypes sceneType)
+        public static void ReplaceZone(SceneTypes sceneType)
         {
             GameObject.Destroy(_toggleZoneGO);
 
@@ -32,6 +32,6 @@ namespace Assets.Scripts.ECS.Component
                     throw new Exception();
             }
         }
-        internal static void Attach(Transform transform) => transform.transform.SetParent(_toggleZoneGO.transform);
+        public static void Attach(Transform transform) => transform.transform.SetParent(_toggleZoneGO.transform);
     }
 }

@@ -4,16 +4,16 @@ using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Components.Data.Else.Common
 {
-    internal struct LanguageComCom
+    public struct LanguageComCom
     {
         private static Dictionary<LanguageTypes, Dictionary<ComLanguageTypes, string>> _comLanguages;
         private static Dictionary<LanguageTypes, Dictionary<GameLanguageTypes, string>> _gameLanguages;
 
-        internal static LanguageTypes CurLanguageType { get; set; }
+        public static LanguageTypes CurLanguageType { get; set; }
 
 
 
-        internal LanguageComCom(LanguageTypes languageType) : this()
+        public LanguageComCom(LanguageTypes languageType) : this()
         {
             CurLanguageType = languageType;
 
@@ -359,7 +359,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
         }
 
 
-        internal static string GetText(ComLanguageTypes comLanguageType)
+        public static string GetText(ComLanguageTypes comLanguageType)
         {
             if (_comLanguages[CurLanguageType].ContainsKey(comLanguageType))
             {
@@ -371,7 +371,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
             }
 
         }
-        internal static string GetText(GameLanguageTypes gameLanguageType)
+        public static string GetText(GameLanguageTypes gameLanguageType)
         {
             if (_gameLanguages[CurLanguageType].ContainsKey(gameLanguageType))
             {

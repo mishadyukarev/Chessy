@@ -3,13 +3,13 @@ using UnityEngine.EventSystems;
 
 namespace Assets.Scripts
 {
-    internal struct UnityEventBaseComponent
+    public struct UnityEventBaseComponent
     {
         private EventSystem _eventSystem;
         private StandaloneInputModule _standaloneInputModule;
         private AudioListener _audioListener;
 
-        internal UnityEventBaseComponent(EventSystem eventSystem, StandaloneInputModule standaloneInputModule)
+        public UnityEventBaseComponent(EventSystem eventSystem, StandaloneInputModule standaloneInputModule)
         {
             _eventSystem = eventSystem;
             _standaloneInputModule = standaloneInputModule;
