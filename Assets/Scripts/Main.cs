@@ -6,7 +6,7 @@ namespace Assets.Scripts
     {
         private static ECSManager _eCSmanager;
 
-        public const string VERSION_PHOTON_GAME = "0.1i";
+        public const string VERSION_PHOTON_GAME = "0.2c";
         public const byte MAX_PLAYERS = 2;
 
         public static Main Instance { get; private set; }

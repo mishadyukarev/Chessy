@@ -23,7 +23,6 @@ namespace Assets.Scripts.ECS.Components.View.UI.Game.General.Right
 
             var isEnableButt = false;
 
-
             if (selUnitDatCom.HaveUnit)
             {
                 //condUnitUICom.SetText_Button(CondUnitTypes.Protected, LanguageComCom.GetText(GameLanguageTypes.Protect));
