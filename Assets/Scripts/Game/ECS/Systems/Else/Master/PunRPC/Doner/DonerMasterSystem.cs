@@ -7,6 +7,7 @@ using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.Master;
 using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
+using Assets.Scripts.ECS.System.Data.Common;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
 
@@ -46,7 +47,7 @@ internal sealed class DonerMasterSystem : IEcsRunSystem
                 {
                     _playerMotion = PlayerTypes.Second;
 
-                    CameraComComp.SetPosRotClient(false, Main.Instance.transform.position);
+                    CameraComComp.SetPosRotClient(false, SpawnInitComSys.Main_GO.transform.position);
 
                     WhoseMoveCom.WhoseMoveOffline = _playerMotion;
 
@@ -58,7 +59,7 @@ internal sealed class DonerMasterSystem : IEcsRunSystem
                 {
                     _playerMotion = PlayerTypes.First;
 
-                    CameraComComp.SetPosRotClient(true, Main.Instance.transform.position);
+                    CameraComComp.SetPosRotClient(true, SpawnInitComSys.Main_GO.transform.position);
 
                     WhoseMoveCom.WhoseMoveOffline = _playerMotion;
 

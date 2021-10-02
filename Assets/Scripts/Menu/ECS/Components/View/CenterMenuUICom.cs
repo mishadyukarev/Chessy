@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
+using Assets.Scripts.ECS.System.Data.Common;
 using System;
 using TMPro;
 using UnityEngine;
@@ -45,7 +46,7 @@ namespace Assets.Scripts.ECS.Component.UI
 
 
             _discord_Button = centerZone_Trans.transform.Find("JoinDiscordButton").GetComponent<Button>();
-            _discord_Button.onClick.AddListener(delegate { Application.OpenURL(Main.IRL_DISCORD); });
+            _discord_Button.onClick.AddListener(delegate { Application.OpenURL(SpawnInitComSys.IRL_DISCORD); });
         }
 
         internal void SetLogText(string text) => _log_TextMP.text = text;
