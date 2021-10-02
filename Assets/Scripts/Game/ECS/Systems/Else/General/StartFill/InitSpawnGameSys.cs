@@ -27,6 +27,7 @@ using Assets.Scripts.ECS.Game.Components;
 using Assets.Scripts.ECS.System.Data.Common;
 using Assets.Scripts.Workers;
 using Leopotam.Ecs;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -178,7 +179,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new InputComponent())
                 .Replace(new SelectorCom(ToolWeaponTypes.Pick))
                 .Replace(new GenerZoneViewCom(generalZoneGO))
-                .Replace(new BackgroundComponent(backGroundGO, PhotonNetwork.isMasterClient))
+                .Replace(new BackgroundComponent(backGroundGO, PhotonNetwork.IsMasterClient))
 
                 .Replace(new CellsForSetUnitComp(true))
                 .Replace(new AvailCellsForShiftComp(true))
@@ -268,7 +269,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                .Replace(new UpdatedMasCom());
 
 
-            if (PhotonNetwork.isMasterClient)
+            if (PhotonNetwork.IsMasterClient)
             {
                 int random;
 
@@ -316,7 +317,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                         }
                     }
 
-                    _cellViewFilt.Get1(curIdxCell).SetRotForClient(PhotonNetwork.isMasterClient);
+                    _cellViewFilt.Get1(curIdxCell).SetRotForClient(PhotonNetwork.IsMasterClient);
                 }
 
                 ref var unitInvCom = ref _inventorUnitsFilter.Get1(0);
@@ -355,7 +356,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 
             if (GameModesCom.IsOnlineMode)
             {
-                var isMaster = PhotonNetwork.isMasterClient;
+                var isMaster = PhotonNetwork.IsMasterClient;
                 CameraComComp.SetPosRotClient(isMaster, SpawnInitComSys.Main_GO.transform.position);
 
                 foreach (byte curIdxCell in _xyCellFilter)

@@ -11,6 +11,7 @@ using Assets.Scripts.Workers;
 using Assets.Scripts.Workers.Cell;
 using Assets.Scripts.Workers.Game.Else.Economy;
 using Leopotam.Ecs;
+using Photon.Pun;
 using System;
 
 internal sealed class UpdatorMastSys : IEcsRunSystem
@@ -38,7 +39,7 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
         invResCom.AddAmountResources(PlayerTypes.First, ResourceTypes.Food);
         invResCom.AddAmountResources(PlayerTypes.Second, ResourceTypes.Food);
 
-        RpcSys.ActiveAmountMotionUIToGeneral(PhotonTargets.MasterClient);
+        RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.MasterClient);
 
         foreach (byte curIdxCell in _xyCellFilter)
         {
@@ -294,7 +295,7 @@ internal sealed class UpdatorMastSys : IEcsRunSystem
 
         if (amountAdultForest <= 9)
         {
-            RpcSys.SoundToGeneral(PhotonTargets.All, SoundEffectTypes.Truce);
+            RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
             GameMasterSystemManager.TruceSystems.Run();
         }
 

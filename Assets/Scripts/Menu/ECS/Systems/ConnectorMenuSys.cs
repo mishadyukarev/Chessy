@@ -2,6 +2,7 @@
 using Assets.Scripts.ECS.Component.Menu;
 using Assets.Scripts.ECS.Component.UI;
 using Leopotam.Ecs;
+using Photon.Pun;
 
 namespace Assets.Scripts.ECS.Systems.Else.Menu
 {
@@ -20,9 +21,9 @@ namespace Assets.Scripts.ECS.Systems.Else.Menu
             ref var leftConnectCom = ref _leftZoneFilter.Get1(0);
             ref var leftBackCom = ref _leftZoneFilter.Get3(0);
 
-            if (PhotonNetwork.connected)
+            if (PhotonNetwork.IsConnected)
             {
-                if (PhotonNetwork.offlineMode)
+                if (PhotonNetwork.OfflineMode)
                 {
                     rightBackCom.SetActiveFrontImage(true);
                     rightConnectCom.SetActive_Button(true);

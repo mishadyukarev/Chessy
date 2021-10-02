@@ -33,7 +33,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
                 ref var inventTWCom = ref _inventTWFilt.Get1(0);
                 ref var invResCom = ref _inventResFilter.Get1(0);
 
-                var sender = _infoFilter.Get1(0).FromInfo.sender;
+                var sender = _infoFilter.Get1(0).FromInfo.Sender;
 
                 ref var unitDatComForGive = ref _cellUnitFilter.Get1(neededIdxCell);
                 ref var ownUnitComForGive = ref _cellUnitFilter.Get2(neededIdxCell);

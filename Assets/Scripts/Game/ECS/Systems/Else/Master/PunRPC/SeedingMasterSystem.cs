@@ -17,7 +17,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
         public void Run()
         {
-            var sender = _infoFilter.Get1(0).FromInfo.sender;
+            var sender = _infoFilter.Get1(0).FromInfo.Sender;
             var envTypeForSeeding = _seedingFilter.Get1(0).EnvTypeForSeeding;
             var idxCellForSeeding = _seedingFilter.Get1(0).IdxForSeeding;
 

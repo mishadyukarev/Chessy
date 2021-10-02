@@ -11,6 +11,7 @@ using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
 using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
 using Leopotam.Ecs;
+using Photon.Pun;
 
 namespace Assets.Scripts
 {

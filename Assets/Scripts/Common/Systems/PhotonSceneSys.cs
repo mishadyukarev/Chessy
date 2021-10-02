@@ -1,16 +1,17 @@
 ﻿using Assets.Scripts.ECS.System.Data.Common;
 using Leopotam.Ecs;
 using Photon;
+using Photon.Pun;
+using Photon.Realtime;
 
 namespace Assets.Scripts
 {
-    public sealed class PhotonSceneSys : PunBehaviour, IEcsInitSystem
+    public sealed class PhotonSceneSys : MonoBehaviourPunCallbacks, IEcsInitSystem
     {
         public void Init()
         {
 
         }
-
 
         public override sealed void OnLeftRoom()
         {
@@ -19,15 +20,22 @@ namespace Assets.Scripts
             SpawnInitComSys.ToggleScene(SceneTypes.Menu);
         }
 
-        public override sealed void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer)
+        //public override sealed void OnPhotonPlayerDisconnected(Player otherPlayer)
+        //{
+        //    base.OnPhotonPlayerDisconnected(otherPlayer);
+
+        //    PhotonNetwork.LeaveRoom();
+        //    SpawnInitComSys.ToggleScene(SceneTypes.Menu);
+        //}
+        public override void OnPlayerLeftRoom(Player otherPlayer)
         {
-            base.OnPhotonPlayerDisconnected(otherPlayer);
+            base.OnPlayerLeftRoom(otherPlayer);
 
             PhotonNetwork.LeaveRoom();
             SpawnInitComSys.ToggleScene(SceneTypes.Menu);
         }
 
-        public override sealed void OnMasterClientSwitched(PhotonPlayer newMasterClient)
+        public override sealed void OnMasterClientSwitched(Player newMasterClient)
         {
             base.OnMasterClientSwitched(newMasterClient);
 
@@ -45,11 +53,17 @@ namespace Assets.Scripts
             SpawnInitComSys.ToggleScene(SceneTypes.Game);
         }
 
-        public override sealed void OnDisconnectedFromPhoton()
-        {
-            base.OnDisconnectedFromPhoton();
+        //public override sealed void OnDisconnectedFromPhoton()
+        //{
+        //    base.OnDisconnectedFromPhoton();
 
-            PhotonNetwork.offlineMode = true;
+        //    PhotonNetwork.OfflineMode = true;
+        //}
+        public override void OnDisconnected(DisconnectCause cause)
+        {
+            base.OnDisconnected(cause);
+
+            PhotonNetwork.OfflineMode = true;
         }
     }
 }

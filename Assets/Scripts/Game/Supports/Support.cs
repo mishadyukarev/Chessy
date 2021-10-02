@@ -1,5 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
+using Photon.Pun;
+using Photon.Realtime;
 using System;
 
 namespace Assets.Scripts.Supports
@@ -76,16 +78,16 @@ namespace Assets.Scripts.Supports
         }
 
 
-        internal static PlayerTypes GetPlayerType(this PhotonPlayer player)
+        internal static PlayerTypes GetPlayerType(this Player player)
         {
             if (player.IsMasterClient == true) return PlayerTypes.First;
             else return PlayerTypes.Second;
         }
 
-        internal static PhotonPlayer GetPlayerType(this PlayerTypes playerType)
+        internal static Player GetPlayerType(this PlayerTypes playerType)
         {
-            if (playerType == PlayerTypes.First) return PhotonNetwork.playerList[0];//PhotonNetwork.PlayerList[0];
-            else return PhotonNetwork.playerList[1];
+            if (playerType == PlayerTypes.First) return PhotonNetwork.PlayerList[0];//PhotonNetwork.PlayerList[0];
+            else return PhotonNetwork.PlayerList[1];
         }
     }
 }

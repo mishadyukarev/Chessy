@@ -9,7 +9,7 @@ internal sealed class ReadyMasterSystem : IEcsRunSystem
 
     public void Run()
     {
-        var sender = _infoFilter.Get1(0).FromInfo.sender;
+        var sender = _infoFilter.Get1(0).FromInfo.Sender;
         ref var readyDataUICom = ref _readyUIFilter.Get1(0);
 
 

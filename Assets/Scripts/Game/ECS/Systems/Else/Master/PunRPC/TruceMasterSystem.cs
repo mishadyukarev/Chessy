@@ -7,6 +7,7 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Data.UI.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Leopotam.Ecs;
+using Photon.Pun;
 using UnityEngine;
 
 internal sealed class TruceMasterSystem : IEcsRunSystem
@@ -103,6 +104,6 @@ internal sealed class TruceMasterSystem : IEcsRunSystem
             }
         }
 
-        RpcSys.ActiveAmountMotionUIToGeneral(PhotonTargets.All);
+        RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.All);
     }
 }

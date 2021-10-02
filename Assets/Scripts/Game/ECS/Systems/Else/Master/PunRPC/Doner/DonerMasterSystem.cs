@@ -10,6 +10,7 @@ using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
 using Assets.Scripts.ECS.System.Data.Common;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
+using Photon.Pun;
 
 internal sealed class DonerMasterSystem : IEcsRunSystem
 {
@@ -26,13 +27,13 @@ internal sealed class DonerMasterSystem : IEcsRunSystem
     {
         ref var infoMasCom = ref _infoFilter.Get1(0);
 
-        var sender = infoMasCom.FromInfo.sender;
+        var sender = infoMasCom.FromInfo.Sender;
 
 
 
         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-        if (PhotonNetwork.offlineMode)
+        if (PhotonNetwork.OfflineMode)
         {
             if (GameModesCom.IsGameMode(GameModes.TrainingOff))
             {

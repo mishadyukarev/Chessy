@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
+using Photon.Pun;
 
 namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
 {
@@ -13,7 +14,7 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
         {
             get
             {
-                if (PhotonNetwork.isMasterClient) return PlayerTypes.First;
+                if (PhotonNetwork.IsMasterClient) return PlayerTypes.First;
                 else return PlayerTypes.Second;
             }
         }

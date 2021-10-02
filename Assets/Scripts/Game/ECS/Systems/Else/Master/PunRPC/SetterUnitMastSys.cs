@@ -26,7 +26,7 @@ internal sealed class SetterUnitMastSys : IEcsRunSystem
 
     public void Run()
     {
-        var sender = _infoFilter.Get1(0).FromInfo.sender;
+        var sender = _infoFilter.Get1(0).FromInfo.Sender;
         var unitTypeForSet = _setterFilter.Get1(0).UnitTypeForSetting;
         var idxForSet = _setterFilter.Get1(0).IdxCellForSetting;
 

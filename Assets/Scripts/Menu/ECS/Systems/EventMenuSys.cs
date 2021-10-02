@@ -7,6 +7,8 @@ using Assets.Scripts.ECS.Components.View.UI.Menu.Center;
 using Assets.Scripts.ECS.Components.View.UI.Menu.Down;
 using ExitGames.Client.Photon.StructWrapping;
 using Leopotam.Ecs;
+using Photon.Pun;
+using Photon.Realtime;
 using UnityEngine;
 
 namespace Assets.Scripts.ECS.Managers.Event
@@ -52,14 +54,16 @@ namespace Assets.Scripts.ECS.Managers.Event
 
         private void ConnectOnline()
         {
-            PhotonNetwork.PhotonServerSettings.PreferredRegion = CloudRegionCode.ru;
-            PhotonNetwork.ConnectUsingSettings(Application.version);
+            //PhotonNetwork.PhotonServerSettings. PreferredRegion = CloudRegionCode.ru;
+            PhotonNetwork.PhotonServerSettings.DevRegion = "ru";
+            //PhotonNetwork.
+            PhotonNetwork.ConnectUsingSettings(/*Application.version*/);
         }
 
         private void ConnectOffline()
         {
-            if (PhotonNetwork.connected) PhotonNetwork.Disconnect();
-            else PhotonNetwork.offlineMode = true;
+            if (PhotonNetwork.IsConnected) PhotonNetwork.Disconnect();
+            else PhotonNetwork.OfflineMode = true;
         }
 
         private void CreateRoom()

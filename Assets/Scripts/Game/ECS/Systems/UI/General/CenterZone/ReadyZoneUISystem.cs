@@ -2,6 +2,7 @@
 using Assets.Scripts.ECS.Component.View.UI.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Common;
 using Leopotam.Ecs;
+using Photon.Pun;
 using UnityEngine;
 
 internal sealed class ReadyZoneUISystem : IEcsRunSystem
@@ -13,7 +14,7 @@ internal sealed class ReadyZoneUISystem : IEcsRunSystem
         ref var readyDataUICom = ref _readyUIFilter.Get1(0);
         ref var readyViewUICom = ref _readyUIFilter.Get2(0);
 
-        if (readyDataUICom.IsReady(PhotonNetwork.isMasterClient))
+        if (readyDataUICom.IsReady(PhotonNetwork.IsMasterClient))
         {
             readyViewUICom.SetColorReadyButton(Color.red);
         }
@@ -22,7 +23,7 @@ internal sealed class ReadyZoneUISystem : IEcsRunSystem
             readyViewUICom.SetColorReadyButton(Color.white);
         }
 
-        if (readyDataUICom.IsStartedGame || PhotonNetwork.offlineMode)
+        if (readyDataUICom.IsStartedGame || PhotonNetwork.OfflineMode)
         {
             readyViewUICom.SetActiveParent(false);
         }

@@ -4,6 +4,7 @@ using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
+using Photon.Pun;
 using System;
 
 namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
@@ -23,7 +24,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
 
         public void Run()
         {
-            var sender = _infoFilter.Get1(0).FromInfo.sender;
+            var sender = _infoFilter.Get1(0).FromInfo.Sender;
             var fromIdx = _fireFilter.Get1(0).FromIdx;
             var toIdx = _fireFilter.Get1(0).ToIdx;
 
@@ -47,7 +48,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                     }
                     else if (toEnvDatCom.HaveEnvir(EnvirTypes.AdultForest))
                     {
-                        RpcSys.SoundToGeneral(PhotonTargets.All, SoundEffectTypes.Fire);
+                        RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
                         toFireDatCom.EnabFire();
                         toUnitDatCom.TakeAmountSteps();
@@ -71,7 +72,7 @@ namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
                 {
                     if (_cellsArcherArsonFilt.Get1(0).HaveIdxCell(sender.GetPlayerType(), fromIdx, toIdx))
                     {
-                        RpcSys.SoundToGeneral(PhotonTargets.All, SoundEffectTypes.Fire);
+                        RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
                         fromUnitDatCom.ResetAmountSteps();
                         toFireDatCom.HaveFire = true;

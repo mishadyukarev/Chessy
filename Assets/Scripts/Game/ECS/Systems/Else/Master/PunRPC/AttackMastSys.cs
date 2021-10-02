@@ -4,6 +4,7 @@ using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
 using Assets.Scripts.ECS.Component.Game.Master;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
 using Leopotam.Ecs;
+using Photon.Pun;
 
 internal sealed class AttackMastSys : IEcsRunSystem
 {
@@ -23,7 +24,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
         ref var infoCom = ref _infoMasterFilter.Get1(0);
         ref var forAttackMasCom = ref _forAttackFilter.Get1(0);
 
-        var sender = infoCom.FromInfo.sender;
+        var sender = infoCom.FromInfo.Sender;
         var fromIdx = forAttackMasCom.IdxFromCell;
         var toIdxAttack = forAttackMasCom.IdxToCell;
 
@@ -67,7 +68,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
 
             if (fromUnitDatCom.IsMelee)
             {
-                RpcSys.SoundToGeneral(PhotonTargets.All, SoundEffectTypes.AttackMelee);
+                RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
                 if (toUnitDatCom.IsMelee)
                 {
@@ -82,7 +83,7 @@ internal sealed class AttackMastSys : IEcsRunSystem
 
             else
             {
-                RpcSys.SoundToGeneral(PhotonTargets.All, SoundEffectTypes.AttackArcher);
+                RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
 
                 if (simpUniqueType == AttackTypes.Unique)
                 {
