@@ -4,30 +4,23 @@ namespace Assets.Scripts
 {
     public sealed class Main : MonoBehaviour
     {
+        private static SceneTypes _currentSceneType = SceneTypes.Menu;
         private static ECSManager _eCSmanager;
-
-        public const string VERSION_PHOTON_GAME = "0.2d";
-        public const byte MAX_PLAYERS = 2;
-        public const string DISCORD_REFERENCE = "https://discord.gg/yxfZnrkBPU";
-
-        public static Main Instance { get; private set; }
-        public static SceneTypes CurrentSceneType { get; private set; } = SceneTypes.Menu;
 
         private void Start()
         {
-            Instance = this;
-            _eCSmanager = new ECSManager();
-            ToggleScene(CurrentSceneType);
+            _eCSmanager = new ECSManager(ToggleScene, gameObject);
+            ToggleScene(_currentSceneType);
         }
 
         private void Update()
         {
-            _eCSmanager.OwnUpdate(CurrentSceneType);
+            _eCSmanager.OwnUpdate(_currentSceneType);
         }
 
         public static void ToggleScene(SceneTypes sceneType)
         {
-            CurrentSceneType = sceneType;
+            _currentSceneType = sceneType;
             _eCSmanager.ToggleScene(sceneType);
         }
     }
