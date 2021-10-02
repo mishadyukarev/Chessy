@@ -23,7 +23,6 @@ namespace Assets.Scripts.ECS.Systems.Else.Common
 
             LanguageComCom.CurLanguageType = centerMenuUICom.LanguageType;
             SoundComComp.Volume = centerMenuUICom.MusicVolume;
-            centerMenuUICom.SetTextInfo(LanguageComCom.GetText(ComLanguageTypes.Info));
 
 
             _downZoneFilt.Get1(0).SetTextExit(LanguageComCom.GetText(ComLanguageTypes.Exit));

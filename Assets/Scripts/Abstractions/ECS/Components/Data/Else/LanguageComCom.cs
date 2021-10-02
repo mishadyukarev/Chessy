@@ -73,11 +73,6 @@ namespace Assets.Scripts.ECS.Components.Data.Else.Common
             _comLanguages[LanguageTypes.Spanish].Add(ComLanguageTypes.CreateFGR, "Crear");
 
 
-            _comLanguages[LanguageTypes.English].Add(ComLanguageTypes.Info, "You need to destroy the king or capture the castle");
-            _comLanguages[LanguageTypes.Russian].Add(ComLanguageTypes.Info, "Вам нужно уничтожить короля или захватить замок");
-            _comLanguages[LanguageTypes.Chinese].Add(ComLanguageTypes.Info, "你需要摧毁国王或捕获城堡");
-            _comLanguages[LanguageTypes.Spanish].Add(ComLanguageTypes.Info, "Tienes que destruir al rey o capturar el castillo");
-
             _comLanguages[LanguageTypes.English].Add(ComLanguageTypes.HelpProject, "Help the project");
             _comLanguages[LanguageTypes.Russian].Add(ComLanguageTypes.HelpProject, "Помочь проекту");
             _comLanguages[LanguageTypes.Chinese].Add(ComLanguageTypes.HelpProject, "帮助项目");

@@ -12,7 +12,7 @@ namespace Assets.Scripts.ECS.Component.UI
         private TextMeshProUGUI _log_TextMP;
         private Slider _musicSlider;
         private TMP_Dropdown _language_Dropdown;
-        private TextMeshProUGUI _info_TextMP;
+        private Button _discord_Button;
 
         internal float MusicVolume => _musicSlider.value;
 
@@ -43,11 +43,11 @@ namespace Assets.Scripts.ECS.Component.UI
             else if (LanguageComCom.CurLanguageType == LanguageTypes.Spanish) _language_Dropdown.value = 2;
             else if (LanguageComCom.CurLanguageType == LanguageTypes.Chinese) _language_Dropdown.value = 3;
 
-            _info_TextMP = centerZone_Trans.Find("Info_TextMP").GetComponent<TextMeshProUGUI>();
+
+            _discord_Button = centerZone_Trans.transform.Find("JoinDiscordButton").GetComponent<Button>();
+            _discord_Button.onClick.AddListener(delegate { Application.OpenURL(Main.DISCORD_REFERENCE); });
         }
 
         internal void SetLogText(string text) => _log_TextMP.text = text;
-
-        internal void SetTextInfo(string text) => _info_TextMP.text = text;
     }
 }

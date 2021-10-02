@@ -15,7 +15,6 @@
         Offline,
         Training,
 
-        Info,
         HelpProject,
         InfoBuy,
         Exit,
