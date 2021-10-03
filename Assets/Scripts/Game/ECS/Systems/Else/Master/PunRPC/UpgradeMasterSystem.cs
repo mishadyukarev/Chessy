@@ -45,7 +45,6 @@ namespace Scripts.Game
             }
             else
             {
-                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                 RpcSys.MistakeEconomyToGeneral(sender, haves);
             }
         }

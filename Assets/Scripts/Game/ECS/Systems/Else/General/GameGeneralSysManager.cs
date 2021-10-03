@@ -35,7 +35,7 @@ namespace Scripts.Game
 
             SyncCanvasViewSyss = new EcsSystems(gameWorld)
            ///left
-           .Add(new BuildZoneUISys())
+            .Add(new BuildZoneUISys())
                .Add(new EnvironmentUISystem())
 
             ///right

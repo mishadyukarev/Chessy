@@ -5,8 +5,8 @@ namespace Scripts
 {
     public sealed class Main : MonoBehaviour
     {
-        private static SceneTypes _currentSceneType = SceneTypes.Menu;
-        private static ECSManager _eCSmanager;
+        private SceneTypes _currentSceneType = SceneTypes.Menu;
+        private ECSManager _eCSmanager;
 
         private void Start()
         {
@@ -19,7 +19,7 @@ namespace Scripts
             _eCSmanager.OwnUpdate(_currentSceneType);
         }
 
-        public static void ToggleScene(SceneTypes sceneType)
+        private void ToggleScene(SceneTypes sceneType)
         {
             _currentSceneType = sceneType;
             _eCSmanager.ToggleScene(sceneType);

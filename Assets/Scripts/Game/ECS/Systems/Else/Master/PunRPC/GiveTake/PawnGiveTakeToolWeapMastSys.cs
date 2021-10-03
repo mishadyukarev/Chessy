@@ -52,14 +52,12 @@ namespace Scripts.Game
 
                             else
                             {
-                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                 RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
 
                         else
                         {
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                         }
 
@@ -101,7 +99,6 @@ namespace Scripts.Game
                                             }
                                             else
                                             {
-                                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                                 RpcSys.MistakeEconomyToGeneral(sender, new[] { true, false, true, true, true });
                                             }
                                         }
@@ -125,7 +122,6 @@ namespace Scripts.Game
                                             }
                                             else
                                             {
-                                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                                 RpcSys.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
                                             }
                                         }
@@ -134,21 +130,18 @@ namespace Scripts.Game
 
                                 else
                                 {
-                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                     RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                                 }
                             }
 
                             else
                             {
-                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                 RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                             }
                         }
 
                         else
                         {
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.ThatIsForOtherUnit, sender);
                         }
                     }

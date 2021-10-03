@@ -212,56 +212,24 @@ namespace Scripts.Game
                     var mistakeType = (MistakeTypes)objects[_curNumber++];
                     _mistakeUIFilter.Get1(0).MistakeTypes = mistakeType;
                     _mistakeUIFilter.Get1(0).CurrentTime = default;
-                    switch (mistakeType)
+
+                    if(mistakeType == MistakeTypes.Economy)
                     {
-                        case MistakeTypes.None:
-                            throw new Exception();
+                        var haves = (bool[])objects[_curNumber++];
+                        var haveFood = haves[0];
+                        var haveWood = haves[1];
+                        var haveOre = haves[2];
+                        var haveIron = haves[3];
+                        var haveGold = haves[4];
 
-                        case MistakeTypes.Economy:
-                            var haves = (bool[])objects[_curNumber++];
-                            var haveFood = haves[0];
-                            var haveWood = haves[1];
-                            var haveOre = haves[2];
-                            var haveIron = haves[3];
-                            var haveGold = haves[4];
-
-                            if (!haveFood) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Food);
-                            if (!haveWood) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Wood);
-                            if (!haveOre) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Ore);
-                            if (!haveIron) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Iron);
-                            if (!haveGold) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Gold);
-                            break;
-
-                        case MistakeTypes.NeedKing:
-                            break;
-
-                        case MistakeTypes.NeedMoreSteps:
-                            break;
-
-                        case MistakeTypes.NeedOtherPlace:
-                            break;
-
-                        case MistakeTypes.NeedMoreHealth:
-                            break;
-
-                        case MistakeTypes.PawnMustHaveTool:
-                            break;
-
-                        case MistakeTypes.PawnHaveTool:
-                            break;
-
-                        case MistakeTypes.NeedCity:
-                            break;
-
-                        case MistakeTypes.ThatIsForOtherUnit:
-                            break;
-
-                        case MistakeTypes.NearBorder:
-                            break;
-
-                        default:
-                            throw new Exception();
+                        if (!haveFood) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Food);
+                        if (!haveWood) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Wood);
+                        if (!haveOre) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Ore);
+                        if (!haveIron) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Iron);
+                        if (!haveGold) _mistakeUIFilter.Get1(0).AddNeedResources(ResourceTypes.Gold);
                     }
+
+                    _soundFilter.Get1(0).Play(SoundEffectTypes.Mistake);
                     break;
 
                 case RpcGeneralTypes.Sound:

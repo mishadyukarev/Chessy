@@ -101,7 +101,7 @@ namespace Scripts.Game
                 }
             }
         }
-        internal bool HaveMinAmountSteps => AmountSteps > 0;
+        internal bool HaveMinAmountSteps => AmountSteps >= 1;
         internal void ResetAmountSteps() => AmountSteps = default;
         internal void RefreshAmountSteps()
         {

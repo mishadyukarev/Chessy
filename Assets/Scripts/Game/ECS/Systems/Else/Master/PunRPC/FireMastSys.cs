@@ -57,7 +57,6 @@ namespace Scripts.Game
                 else
                 {
                     RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                 }
             }
 
@@ -72,28 +71,11 @@ namespace Scripts.Game
                         fromUnitDatCom.ResetAmountSteps();
                         toFireDatCom.HaveFire = true;
                     }
-
-                    //foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(fromIdx)))
-                    //{
-                    //    var curIdx = _xyCellFilter.GetIndexCell(xy1);
-
-                    //    ref var curCellEnvDataCom = ref _cellEnvFilter.Get1(curIdx);
-
-                    //    if (curCellEnvDataCom.HaveEnvironment(EnvironmentTypes.AdultForest))
-                    //    {
-                    //        if (curIdx == toIdx)
-                    //        {
-                    //            fromCellUnitDataCom.ResetAmountSteps();
-                    //            toCellFireDataCom.HaveFire = true;
-                    //        }
-                    //    }
-                    //}
                 }
 
                 else
                 {
                     RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                 }
             }
         }

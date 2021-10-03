@@ -4,7 +4,7 @@ using System;
 
 namespace Scripts.Game
 {
-    internal sealed class BuilderMastSys : IEcsRunSystem
+    internal sealed class BuildMastSys : IEcsRunSystem
     {
         private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
@@ -17,12 +17,14 @@ namespace Scripts.Game
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
         private EcsFilter<InventResourCom> _amountResFilt = default;
+        private EcsFilter<BuildsInGameCom> _buildsFilt = default;
 
         public void Run()
         {
             ref var infoMasCom = ref _infoFilter.Get1(0);
             ref var invResCom = ref _amountResFilt.Get1(0);
             ref var forBuildMasCom = ref _forBuilderFilter.Get1(0);
+            ref var buildsInGameCom = ref _buildsFilt.Get1(0);
 
             var sender = infoMasCom.FromInfo.Sender;
             var idxForBuild = forBuildMasCom.IdxForBuild;
@@ -44,7 +46,6 @@ namespace Scripts.Game
             if (curBuildDatCom.HaveBuild)
             {
                 RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
             }
 
             else
@@ -77,6 +78,7 @@ namespace Scripts.Game
                                 curBuildDatCom.BuildType = forBuildType;
                                 curOwnBuildCom.PlayerType = playerTypeSender;
 
+                                buildsInGameCom.Add(playerTypeSender, forBuildType, idxForBuild);
 
                                 curUnitDatCom.ResetAmountSteps();
 
@@ -89,13 +91,11 @@ namespace Scripts.Game
                             else
                             {
                                 RpcSys.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
-                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                             }
                         }
                         else
                         {
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         }
                         break;
 
@@ -129,19 +129,16 @@ namespace Scripts.Game
                                 }
                                 else
                                 {
-                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                     RpcSys.MistakeEconomyToGeneral(sender, haves);
                                 }
                             }
                             else
                             {
                                 RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                             }
                         }
                         else
                         {
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                         }
                         break;
@@ -168,20 +165,17 @@ namespace Scripts.Game
                                 }
                                 else
                                 {
-                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                     RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                                 }
                             }
                             else
                             {
-                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                 RpcSys.MistakeEconomyToGeneral(sender, haves);
                             }
                         }
                         else
                         {
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         }
                         break;
 

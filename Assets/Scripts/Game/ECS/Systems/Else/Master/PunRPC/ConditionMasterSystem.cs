@@ -57,7 +57,6 @@ namespace Scripts.Game
                     else
                     {
                         RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
                     break;
 
@@ -88,7 +87,6 @@ namespace Scripts.Game
                     else
                     {
                         RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
                     break;
 

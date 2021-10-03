@@ -37,7 +37,6 @@ namespace Scripts.Game
                         if (curCellBuildDataCom.HaveBuild)
                         {
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                         }
                         else
                         {
@@ -55,18 +54,15 @@ namespace Scripts.Game
                                     else
                                     {
                                         RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                     }
                                 else
                                 {
                                     RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                                 }
                             }
                             else
                             {
                                 RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                             }
 
                         }
@@ -75,7 +71,6 @@ namespace Scripts.Game
                     else
                     {
                         RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
                     break;
 

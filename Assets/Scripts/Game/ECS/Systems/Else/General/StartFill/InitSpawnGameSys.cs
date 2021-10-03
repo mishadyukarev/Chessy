@@ -161,6 +161,7 @@ namespace Scripts.Game
                 .Replace(new CellsForAttackCom(true))
                 .Replace(new CellsGiveTWComp(true))
                 .Replace(new WhoseMoveCom(PlayerTypes.First))
+                .Replace(new BuildsInGameCom(true))
 
                 .Replace(new UpgradesBuildsCom(true))
 
