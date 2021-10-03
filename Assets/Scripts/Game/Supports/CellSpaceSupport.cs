@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
+using static Scripts.Game.CellValues;
 
 namespace Assets.Scripts.Workers.Cell
 {

@@ -1,7 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using System;
 using System.Collections.Generic;
-using static Assets.Scripts.Abstractions.ValuesConsts.EconomyValues;
+using static Scripts.Game.EconomyValues;
 
 namespace Assets.Scripts.ECS.Component.Game
 {

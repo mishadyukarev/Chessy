@@ -1,15 +1,15 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.Workers;
+using Scripts.Game;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells
 {
-    internal struct AvailCellsForShiftComp
+    internal struct CellsForShiftCom
     {
         private Dictionary<PlayerTypes, Dictionary<byte, List<byte>>> _availCellsForShift;
 
-        internal AvailCellsForShiftComp(bool needNew) : this()
+        internal CellsForShiftCom(bool needNew) : this()
         {
             if (needNew)
             {

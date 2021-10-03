@@ -1,6 +1,6 @@
 ﻿using System;
 using UnityEngine;
-using static Assets.Scripts.Abstractions.ValuesConsts.ColorsValues;
+using Scripts.Game;
 
 namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
 {
@@ -22,39 +22,39 @@ namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
                     throw new Exception();
 
                 case SupportVisionTypes.Selector:
-                    _supVis_SR.color = SelectorColor;
+                    _supVis_SR.color = ColorsValues.SelectorColor;
                     break;
 
                 case SupportVisionTypes.Spawn:
-                    _supVis_SR.color = SpawnColor;
+                    _supVis_SR.color = ColorsValues.SpawnColor;
                     break;
 
                 case SupportVisionTypes.Shift:
-                    _supVis_SR.color = ShiftColor;
+                    _supVis_SR.color = ColorsValues.ShiftColor;
                     break;
 
                 case SupportVisionTypes.SimpleAttack:
-                    _supVis_SR.color = SimpleAttackColor;
+                    _supVis_SR.color = ColorsValues.SimpleAttackColor;
                     break;
 
                 case SupportVisionTypes.UniqueAttack:
-                    _supVis_SR.color = UniqueAttackColor;
+                    _supVis_SR.color = ColorsValues.UniqueAttackColor;
                     break;
 
                 case SupportVisionTypes.Upgrade:
-                    _supVis_SR.color = GiveTakeColor;
+                    _supVis_SR.color = ColorsValues.GiveTakeColor;
                     break;
 
                 case SupportVisionTypes.FireSelector:
-                    _supVis_SR.color = FireSelectorColor;
+                    _supVis_SR.color = ColorsValues.FireSelectorColor;
                     break;
 
                 case SupportVisionTypes.GivePawnTool:
-                    _supVis_SR.color = GiveTakeColor;
+                    _supVis_SR.color = ColorsValues.GiveTakeColor;
                     break;
 
                 case SupportVisionTypes.TakePawnTool:
-                    _supVis_SR.color = GiveTakeColor;
+                    _supVis_SR.color = ColorsValues.GiveTakeColor;
                     break;
 
                 default:

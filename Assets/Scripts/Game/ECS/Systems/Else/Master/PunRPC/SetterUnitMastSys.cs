@@ -9,6 +9,7 @@ using Assets.Scripts.ECS.Component.View.Else.Game.General;
 using Assets.Scripts.ECS.Components.Data.Else.Game.General;
 using Assets.Scripts.Supports;
 using Leopotam.Ecs;
+using Scripts.Game;
 using System;
 
 internal sealed class SetterUnitMastSys : IEcsRunSystem

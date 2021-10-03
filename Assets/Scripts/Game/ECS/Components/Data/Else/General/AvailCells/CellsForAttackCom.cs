@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Abstractions.Enums;
 using Assets.Scripts.Abstractions.ValuesConsts;
 using Assets.Scripts.Workers;
+using Scripts.Game;
 using System.Collections.Generic;
 
 namespace Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells

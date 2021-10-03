@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Abstractions.ValuesConsts
+﻿namespace Scripts.Game
 {
     public static class ValuesConst
     {

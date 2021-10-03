@@ -1,5 +1,5 @@
 ﻿using System;
-using static Assets.Scripts.Abstractions.ValuesConsts.EconomyValues;
+using static Scripts.Game.EconomyValues;
 
 namespace Assets.Scripts.Workers.Game.Else.Economy
 {

@@ -13,7 +13,7 @@ internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
     private EcsFilter<InfoCom> _infoFilter = default;
     private EcsFilter<ForShiftMasCom> _forShiftFilter = default;
 
-    private EcsFilter<AvailCellsForShiftComp> _cellsShiftFilter = default;
+    private EcsFilter<CellsForShiftCom> _cellsShiftFilter = default;
 
     private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
     private EcsFilter<CellEnvironDataCom> _cellEnvrDataFilter = default;

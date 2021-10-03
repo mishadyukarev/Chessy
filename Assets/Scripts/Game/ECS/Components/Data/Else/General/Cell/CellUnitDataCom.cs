@@ -3,7 +3,7 @@ using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
 using Assets.Scripts.Supports;
 using System;
 using System.Collections.Generic;
-using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
+using Scripts.Game;
 
 internal struct CellUnitDataCom
 {
@@ -87,16 +87,16 @@ internal struct CellUnitDataCom
                     throw new Exception();
 
                 case UnitTypes.King:
-                    return AmountSteps == STANDART_AMOUNT_STEPS_KING;
+                    return AmountSteps == UnitValues.STANDART_AMOUNT_STEPS_KING;
 
                 case UnitTypes.Pawn:
-                    return AmountSteps == STANDART_AMOUNT_STEPS_PAWN;
+                    return AmountSteps == UnitValues.STANDART_AMOUNT_STEPS_PAWN;
 
                 case UnitTypes.Rook:
-                    return AmountSteps == STANDART_AMOUNT_STEPS_ROOK;
+                    return AmountSteps == UnitValues.STANDART_AMOUNT_STEPS_ROOK;
 
                 case UnitTypes.Bishop:
-                    return AmountSteps == STANDART_AMOUNT_STEPS_BISHOP;
+                    return AmountSteps == UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
 
                 default:
                     throw new Exception();
@@ -113,19 +113,19 @@ internal struct CellUnitDataCom
                 throw new Exception();
 
             case UnitTypes.King:
-                AmountSteps = STANDART_AMOUNT_STEPS_KING;
+                AmountSteps = UnitValues.STANDART_AMOUNT_STEPS_KING;
                 break;
 
             case UnitTypes.Pawn:
-                AmountSteps = STANDART_AMOUNT_STEPS_PAWN;
+                AmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN;
                 break;
 
             case UnitTypes.Rook:
-                AmountSteps = STANDART_AMOUNT_STEPS_ROOK;
+                AmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK;
                 break;
 
             case UnitTypes.Bishop:
-                AmountSteps = STANDART_AMOUNT_STEPS_BISHOP;
+                AmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
                 break;
 
             default:
@@ -149,16 +149,16 @@ internal struct CellUnitDataCom
                     return default;
 
                 case UnitTypes.King:
-                    return STANDART_AMOUNT_HEALTH_KING;
+                    return UnitValues.STANDART_AMOUNT_HEALTH_KING;
 
                 case UnitTypes.Pawn:
-                    return STANDART_AMOUNT_HEALTH_PAWN;
+                    return UnitValues.STANDART_AMOUNT_HEALTH_PAWN;
 
                 case UnitTypes.Rook:
-                    return STANDART_AMOUNT_HEALTH_ROOK;
+                    return UnitValues.STANDART_AMOUNT_HEALTH_ROOK;
 
                 case UnitTypes.Bishop:
-                    return STANDART_AMOUNT_HEALTH_BISHOP;
+                    return UnitValues.STANDART_AMOUNT_HEALTH_BISHOP;
 
                 default:
                     return default;
@@ -175,19 +175,19 @@ internal struct CellUnitDataCom
                 throw new Exception();
 
             case UnitTypes.King:
-                AddAmountHealth(FOR_ADD_HEALTH_KING);
+                AddAmountHealth(UnitValues.FOR_ADD_HEALTH_KING);
                 break;
 
             case UnitTypes.Pawn:
-                AddAmountHealth(FOR_ADD_HEALTH_PAWN);
+                AddAmountHealth(UnitValues.FOR_ADD_HEALTH_PAWN);
                 break;
 
             case UnitTypes.Rook:
-                AddAmountHealth(FOR_ADD_HEALTH_ROOK);
+                AddAmountHealth(UnitValues.FOR_ADD_HEALTH_ROOK);
                 break;
 
             case UnitTypes.Bishop:
-                AddAmountHealth(FOR_ADD_HEALTH_BISHOP);
+                AddAmountHealth(UnitValues.FOR_ADD_HEALTH_BISHOP);
                 break;
 
             default:
@@ -211,19 +211,19 @@ internal struct CellUnitDataCom
                         throw new Exception();
 
                     case UnitTypes.King:
-                        powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_KING);
+                        powerProtection += (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_KING);
                         break;
 
                     case UnitTypes.Pawn:
-                        powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_PAWN);
+                        powerProtection += (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_PAWN);
                         break;
 
                     case UnitTypes.Rook:
-                        powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK);
+                        powerProtection += (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_ROOK);
                         break;
 
                     case UnitTypes.Bishop:
-                        powerProtection += (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP);
+                        powerProtection += (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_BISHOP);
                         break;
 
                     default:
@@ -239,19 +239,19 @@ internal struct CellUnitDataCom
                         throw new Exception();
 
                     case UnitTypes.King:
-                        powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_KING);
+                        powerProtection -= (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_KING);
                         break;
 
                     case UnitTypes.Pawn:
-                        powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_PAWN);
+                        powerProtection -= (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_PAWN);
                         break;
 
                     case UnitTypes.Rook:
-                        powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_ROOK);
+                        powerProtection -= (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_ROOK);
                         break;
 
                     case UnitTypes.Bishop:
-                        powerProtection -= (int)(SimplePowerDamage * PERCENT_FOR_PROTECTION_BISHOP);
+                        powerProtection -= (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_BISHOP);
                         break;
 
                     default:
@@ -271,12 +271,12 @@ internal struct CellUnitDataCom
 
             if (UnitType.Is(UnitTypes.King))
             {
-                simplePowerDamege = SIMPLE_POWER_DAMAGE_KING;
+                simplePowerDamege = UnitValues.SIMPLE_POWER_DAMAGE_KING;
             }
 
             else if (UnitType.Is(UnitTypes.Pawn))
             {
-                simplePowerDamege = SIMPLE_POWER_DAMAGE_PAWN;
+                simplePowerDamege = UnitValues.SIMPLE_POWER_DAMAGE_PAWN;
 
                 switch (ExtraTWPawnType)
                 {
@@ -310,7 +310,7 @@ internal struct CellUnitDataCom
 
             else if (UnitType.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
             {
-                simplePowerDamege = SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP;
+                simplePowerDamege = UnitValues.SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP;
 
                 switch (ArcherWeapType)
                 {

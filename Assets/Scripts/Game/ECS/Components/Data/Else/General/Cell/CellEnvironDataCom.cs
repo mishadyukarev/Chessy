@@ -1,8 +1,6 @@
-﻿using Assets.Scripts.Abstractions.ValuesConsts;
+﻿using Scripts.Game;
 using System;
 using System.Collections.Generic;
-using static Assets.Scripts.Abstractions.ValuesConsts.EnvironmentValues;
-using static Assets.Scripts.Abstractions.ValuesConsts.UnitValues;
 
 namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
 {
@@ -67,16 +65,16 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
                     throw new Exception();
 
                 case EnvirTypes.Fertilizer:
-                    return MAX_AMOUNT_FOOD;
+                    return EnvironmentValues.MAX_AMOUNT_FOOD;
 
                 case EnvirTypes.YoungForest:
                     throw new Exception();
 
                 case EnvirTypes.AdultForest:
-                    return MAX_AMOUNT_FOREST;
+                    return EnvironmentValues.MAX_AMOUNT_FOREST;
 
                 case EnvirTypes.Hill:
-                    return MAX_AMOUNT_ORE;
+                    return EnvironmentValues.MAX_AMOUNT_ORE;
 
                 case EnvirTypes.Mountain:
                     throw new Exception();
@@ -93,16 +91,16 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
                     throw new Exception();
 
                 case EnvirTypes.Fertilizer:
-                    return MIN_AMOUNT_FOOD;
+                    return EnvironmentValues.MIN_AMOUNT_FOOD;
 
                 case EnvirTypes.YoungForest:
                     throw new Exception();
 
                 case EnvirTypes.AdultForest:
-                    return MIN_AMOUNT_WOOD;
+                    return EnvironmentValues.MIN_AMOUNT_WOOD;
 
                 case EnvirTypes.Hill:
-                    return MIN_AMOUNT_ORE;
+                    return EnvironmentValues.MIN_AMOUNT_ORE;
 
                 case EnvirTypes.Mountain:
                     throw new Exception();
@@ -160,48 +158,48 @@ namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
 
                 case UnitTypes.King:
                     if (HaveEnvir(EnvirTypes.Fertilizer))
-                        powerProtection -= PROTECTION_FOOD_FOR_KING;
+                        powerProtection -= UnitValues.PROTECTION_FOOD_FOR_KING;
 
                     if (HaveEnvir(EnvirTypes.AdultForest))
-                        powerProtection += PROTECTION_TREE_FOR_KING;
+                        powerProtection += UnitValues.PROTECTION_TREE_FOR_KING;
 
                     if (HaveEnvir(EnvirTypes.Hill))
-                        powerProtection += PROTECTION_HILL_FOR_KING;
+                        powerProtection += UnitValues.PROTECTION_HILL_FOR_KING;
                     break;
 
                 case UnitTypes.Pawn:
                     if (HaveEnvir(EnvirTypes.Fertilizer))
-                        powerProtection -= PROTECTION_FOOD_FOR_PAWN;
+                        powerProtection -= UnitValues.PROTECTION_FOOD_FOR_PAWN;
 
                     if (HaveEnvir(EnvirTypes.AdultForest))
-                        powerProtection += PROTECTION_TREE_FOR_PAWN;
+                        powerProtection += UnitValues.PROTECTION_TREE_FOR_PAWN;
 
                     if (HaveEnvir(EnvirTypes.Hill))
-                        powerProtection += PROTECTION_HILL_FOR_PAWN;
+                        powerProtection += UnitValues.PROTECTION_HILL_FOR_PAWN;
                     break;
 
 
                 case UnitTypes.Rook:
                     if (HaveEnvir(EnvirTypes.Fertilizer))
-                        powerProtection -= PROTECTION_FOOD_FOR_ROOK_AND_BISHOP;
+                        powerProtection -= UnitValues.PROTECTION_FOOD_FOR_ROOK_AND_BISHOP;
 
                     if (HaveEnvir(EnvirTypes.AdultForest))
-                        powerProtection += PROTECTION_TREE_FOR_ROOK_AND_BISHOP;
+                        powerProtection += UnitValues.PROTECTION_TREE_FOR_ROOK_AND_BISHOP;
 
                     if (HaveEnvir(EnvirTypes.Hill))
-                        powerProtection += PROTECTION_HILL_FOR_ROOK_AND_BISHOP;
+                        powerProtection += UnitValues.PROTECTION_HILL_FOR_ROOK_AND_BISHOP;
                     break;
 
 
                 case UnitTypes.Bishop:
                     if (HaveEnvir(EnvirTypes.Fertilizer))
-                        powerProtection -= PROTECTION_FOOD_FOR_ROOK_AND_BISHOP;
+                        powerProtection -= UnitValues.PROTECTION_FOOD_FOR_ROOK_AND_BISHOP;
 
                     if (HaveEnvir(EnvirTypes.AdultForest))
-                        powerProtection += PROTECTION_TREE_FOR_ROOK_AND_BISHOP;
+                        powerProtection += UnitValues.PROTECTION_TREE_FOR_ROOK_AND_BISHOP;
 
                     if (HaveEnvir(EnvirTypes.Hill))
-                        powerProtection += PROTECTION_HILL_FOR_ROOK_AND_BISHOP;
+                        powerProtection += UnitValues.PROTECTION_HILL_FOR_ROOK_AND_BISHOP;
 
                     break;
                     throw new Exception();

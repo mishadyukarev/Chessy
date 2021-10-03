@@ -9,7 +9,7 @@ namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
 {
     internal sealed class FillCellsForShiftSys : IEcsRunSystem
     {
-        private EcsFilter<AvailCellsForShiftComp> _cellsForShiftFilter = default;
+        private EcsFilter<CellsForShiftCom> _cellsForShiftFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;

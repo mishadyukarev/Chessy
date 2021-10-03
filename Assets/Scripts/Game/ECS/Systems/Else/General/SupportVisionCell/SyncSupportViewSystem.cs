@@ -12,7 +12,7 @@ internal sealed class SyncSupportViewSystem : IEcsRunSystem
 
     private EcsFilter<SelectorCom> _selectorFilter = default;
     private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
-    private EcsFilter<AvailCellsForShiftComp> _cellsShiftFilter = default;
+    private EcsFilter<CellsForShiftCom> _cellsShiftFilter = default;
     private EcsFilter<CellsArsonArcherComp> _cellsArcherArsonFilt = default;
     private EcsFilter<CellsForAttackCom> _cellsSimpleFilter = default;
 

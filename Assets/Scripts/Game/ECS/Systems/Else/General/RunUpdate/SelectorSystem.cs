@@ -13,7 +13,7 @@ internal sealed class SelectorSystem : IEcsRunSystem
     private EcsFilter<InputComponent> _inputFilter = default;
     private EcsFilter<SoundEffectsComp> _soundFilter = default;
     private EcsFilter<CellsForAttackCom> _cellsAttackFilt = default;
-    private EcsFilter<AvailCellsForShiftComp> _cellsShiftFilt = default;
+    private EcsFilter<CellsForShiftCom> _cellsShiftFilt = default;
 
     public void Run()
     {

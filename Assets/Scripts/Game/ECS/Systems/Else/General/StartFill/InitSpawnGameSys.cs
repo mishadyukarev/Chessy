@@ -28,10 +28,11 @@ using Assets.Scripts.ECS.System.Data.Common;
 using Assets.Scripts.Workers;
 using Leopotam.Ecs;
 using Photon.Pun;
+using Scripts.Game;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static Assets.Scripts.Abstractions.ValuesConsts.CellValues;
+using static Scripts.Game.CellValues;
 
 namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
 {
@@ -182,7 +183,7 @@ namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
                 .Replace(new BackgroundComponent(backGroundGO, PhotonNetwork.IsMasterClient))
 
                 .Replace(new CellsForSetUnitComp(true))
-                .Replace(new AvailCellsForShiftComp(true))
+                .Replace(new CellsForShiftCom(true))
                 .Replace(new CellsArsonArcherComp(true))
                 .Replace(new CellsForAttackCom(true))
                 .Replace(new CellsGiveTWComp(true))
