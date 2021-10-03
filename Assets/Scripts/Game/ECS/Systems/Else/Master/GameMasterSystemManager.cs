@@ -17,7 +17,8 @@ namespace Scripts.Game
             _rpcSystems = new Dictionary<RpcMasterTypes, EcsSystems>();
 
             _rpcSystems.Add(RpcMasterTypes.Build, new EcsSystems(gameWorld)
-                .Add(new BuildMastSys())
+                .Add(new BuildMineMastSys())
+                .Add(new BuildFarmMastSys())
                 .Add(new BuildCityMastSys()));
             _rpcSystems.Add(RpcMasterTypes.DestroyBuild, new EcsSystems(gameWorld).Add(new DestroyMasterSystem()));
             _rpcSystems.Add(RpcMasterTypes.Shift, new EcsSystems(gameWorld).Add(new ShiftUnitMasterSystem()));
