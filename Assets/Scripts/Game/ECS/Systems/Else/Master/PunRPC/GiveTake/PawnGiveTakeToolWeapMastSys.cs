@@ -1,13 +1,6 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General;
-using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
-using Assets.Scripts.ECS.Component.Game;
-using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.Supports;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 
-namespace Assets.Scripts.ECS.Systems.Else.Game.Master.PunRPC.GiveTake
+namespace Scripts.Game
 {
     internal sealed class PawnGiveTakeToolWeapMastSys : IEcsRunSystem
     {

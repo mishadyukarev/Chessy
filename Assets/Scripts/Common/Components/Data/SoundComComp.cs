@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.ECS.Component.Common
+namespace Scripts.Common
 {
     public struct SoundComComp
     {

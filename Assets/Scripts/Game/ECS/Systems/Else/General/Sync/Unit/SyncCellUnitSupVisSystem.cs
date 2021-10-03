@@ -1,10 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Game.General.Systems.SupportVision
+namespace Scripts.Game
 {
     internal sealed class SyncCellUnitSupVisSystem : IEcsRunSystem
     {

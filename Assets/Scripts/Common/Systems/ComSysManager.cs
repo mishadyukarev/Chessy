@@ -1,8 +1,6 @@
-﻿using Assets.Scripts.ECS.System.Data.Common;
-using Assets.Scripts.ECS.Systems.Else.Common.Else;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 
-namespace Assets.Scripts.ECS.System.Common
+namespace Scripts.Common
 {
     public sealed class ComSysManager : SystemAbstManager
     {

@@ -1,10 +1,12 @@
-﻿
-public enum UnitTypes
+﻿namespace Scripts.Game
 {
-    None,
+    public enum UnitTypes
+    {
+        None,
 
-    King,
-    Pawn,
-    Rook,
-    Bishop,
+        King,
+        Pawn,
+        Rook,
+        Bishop,
+    }
 }

@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Scripts.Common;
+using UnityEngine;
 
-namespace Assets.Scripts
+namespace Scripts
 {
     public sealed class Main : MonoBehaviour
     {

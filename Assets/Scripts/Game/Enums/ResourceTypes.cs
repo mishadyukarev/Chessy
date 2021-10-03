@@ -1,10 +1,13 @@
-﻿public enum ResourceTypes
+﻿namespace Scripts.Game
 {
-    None,
+    public enum ResourceTypes
+    {
+        None,
 
-    Food,
-    Wood,
-    Ore,
-    Iron,
-    Gold,
+        Food,
+        Wood,
+        Ore,
+        Iron,
+        Gold,
+    }
 }

@@ -1,10 +1,6 @@
-﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General;
-using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 
-namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.UpZone
+namespace Scripts.Game
 {
     internal sealed class ToolsDownUISys : IEcsRunSystem
     {

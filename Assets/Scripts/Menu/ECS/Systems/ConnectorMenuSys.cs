@@ -1,10 +1,7 @@
-﻿using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Menu;
-using Assets.Scripts.ECS.Component.UI;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using Photon.Pun;
 
-namespace Assets.Scripts.ECS.Systems.Else.Menu
+namespace Scripts.Menu
 {
     internal sealed class ConnectorMenuSys : IEcsRunSystem
     {

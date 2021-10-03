@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using static Scripts.Game.CellValues;
 
-namespace Assets.Scripts.Workers.Cell
+namespace Scripts.Game
 {
     internal static class CellSpaceSupport
     {

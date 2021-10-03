@@ -1,7 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using System.Collections.Generic;
-
-namespace Assets.Scripts.ECS.Component.Data.UI.Game.General
+﻿namespace Scripts.Game
 {
     internal struct MotionsDataUIComponent
     {

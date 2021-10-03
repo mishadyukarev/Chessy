@@ -43,8 +43,45 @@
         public const int AMOUNT_IRON_MASTER = 0;
         public const int AMOUNT_IRON_OTHER = 0;
 
-        public const int AMOUNT_GOLD_MASTER = 0;
-        public const int AMOUNT_GOLD_OTHER = 0;
+        public const int AMOUNT_GOLD_MASTER = 6;
+        public const int AMOUNT_GOLD_OTHER = 6;
+
+        //internal static int GetAmountStartResource(PlayerTypes playerType, ResourceTypes resourceType)
+        //{
+        //    switch (playerType)
+        //    {
+        //        case PlayerTypes.None:
+        //            throw new Exception();
+
+        //        case PlayerTypes.First:
+        //            {
+        //                switch (resourceType)
+        //                {
+        //                    case ResourceTypes.None:
+        //                        throw new Exception();
+        //                    case ResourceTypes.Food:
+        //                        break;
+        //                    case ResourceTypes.Wood:
+        //                        break;
+        //                    case ResourceTypes.Ore:
+        //                        break;
+        //                    case ResourceTypes.Iron:
+        //                        break;
+        //                    case ResourceTypes.Gold:
+        //                        break;
+        //                    default:
+        //                        throw new Exception();
+        //                }
+        //            }
+        //            break;
+
+        //        case PlayerTypes.Second:
+        //            break;
+
+        //        default:
+        //            throw new Exception();
+        //    }
+        //}
 
         #endregion
 

@@ -1,10 +1,8 @@
-﻿using Assets.Scripts.ECS.System.Data.Common;
-using Leopotam.Ecs;
-using Photon;
+﻿using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
 
-namespace Assets.Scripts
+namespace Scripts.Common
 {
     public sealed class PhotonSceneSys : MonoBehaviourPunCallbacks, IEcsInitSystem
     {

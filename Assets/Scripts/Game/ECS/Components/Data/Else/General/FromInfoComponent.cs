@@ -1,7 +1,7 @@
 ﻿
 using Photon.Pun;
 
-namespace Assets.Scripts.ECS.Game.Components
+namespace Scripts.Game
 {
     public struct FromInfoComponent
     {

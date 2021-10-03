@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.ECS.Component
+namespace Scripts.Menu
 {
     internal struct ConnectButtonUICom
     {

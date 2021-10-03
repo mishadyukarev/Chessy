@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using static Scripts.Game.CellValues;
 
-namespace Assets.Scripts.Workers
+namespace Scripts.Game
 {
     public static class CellBaseOperat
     {

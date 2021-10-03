@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Abstractions.Enums
+﻿namespace Scripts.Game
 {
     public enum RpcOtherTypes
     {

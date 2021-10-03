@@ -4,7 +4,7 @@ using UnityEngine.Video;
 
 public class TestButton : MonoBehaviour
 {
-    [SerializeField]private VideoClip[] _videoClips;
+    [SerializeField] private VideoClip[] _videoClips;
     private int _cur;
 
     private void Start()
@@ -18,7 +18,7 @@ public class TestButton : MonoBehaviour
         {
             ++_cur;
 
-            if(_cur < _videoClips.Length)
+            if (_cur < _videoClips.Length)
             {
                 videoPlayer.clip = _videoClips[_cur];
 

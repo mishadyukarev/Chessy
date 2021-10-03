@@ -1,13 +1,8 @@
-﻿using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Common;
-using Assets.Scripts.ECS.Component.Menu;
-using Assets.Scripts.ECS.Component.UI;
-using Assets.Scripts.ECS.Components.View.UI.Menu.Center;
-using Assets.Scripts.ECS.Components.View.UI.Menu.Down;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.System.View.Menu
+namespace Scripts.Menu
 {
     public sealed class InitSpawnMenuSys : IEcsInitSystem
     {

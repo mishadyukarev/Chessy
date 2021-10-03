@@ -1,8 +1,6 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.ValuesConsts;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Assets.Scripts.ECS.Components.Data.Else.Common
+namespace Scripts.Common
 {
     public struct LanguageComCom
     {

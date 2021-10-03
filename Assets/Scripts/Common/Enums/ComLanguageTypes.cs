@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Abstractions.Enums
+﻿namespace Scripts.Common
 {
     public enum ComLanguageTypes
     {

@@ -1,9 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 
-namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
+namespace Scripts.Game
 {
     internal sealed class SelectorTypeUISystem : IEcsRunSystem
     {

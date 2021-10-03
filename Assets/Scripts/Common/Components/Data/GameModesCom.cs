@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-
-namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
+﻿namespace Scripts.Common
 {
     public struct GameModesCom
     {

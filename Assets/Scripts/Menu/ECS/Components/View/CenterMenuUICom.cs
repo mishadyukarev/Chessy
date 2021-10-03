@@ -1,12 +1,10 @@
-﻿using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Assets.Scripts.ECS.System.Data.Common;
+﻿using Scripts.Common;
 using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.ECS.Component.UI
+namespace Scripts.Menu
 {
     internal struct CenterMenuUICom
     {

@@ -1,18 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
-using Assets.Scripts.ECS.Component.Data.UI.Game.General;
-using Assets.Scripts.ECS.Component.Game;
-using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Component.View.Else.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Game.Master;
-using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
-using Assets.Scripts.ECS.Components.View.Else.Game.General;
-using Assets.Scripts.ECS.Game.Components;
+﻿using Assets.Scripts.ECS.Components.Data.Else.Game.Master;
 using ExitGames.Client.Photon;
 using Leopotam.Ecs;
 using Photon.Pun;
@@ -21,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Scripts.Game
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {

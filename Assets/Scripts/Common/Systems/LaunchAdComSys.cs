@@ -1,9 +1,8 @@
-﻿using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using System;
 using UnityEngine.Advertisements;
 
-namespace Assets.Scripts.ECS.Systems.Else.Common.Else
+namespace Scripts.Common
 {
     public class LaunchAdComSys : IEcsRunSystem
     {

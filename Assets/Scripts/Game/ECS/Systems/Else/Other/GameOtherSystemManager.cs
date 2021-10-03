@@ -1,10 +1,13 @@
-﻿using Assets.Scripts;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 
-public sealed class GameOtherSystemManager : SystemAbstManager
+namespace Scripts.Game
 {
-    public GameOtherSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
+    public sealed class GameOtherSystemManager : SystemAbstManager
     {
+        public GameOtherSystemManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
+        {
 
+        }
     }
 }

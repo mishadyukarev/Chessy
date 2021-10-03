@@ -1,56 +1,55 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
-using Assets.Scripts.Workers;
-using Assets.Scripts.Workers.Cell;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 
-internal sealed class VisibUnitsSys : IEcsRunSystem
+namespace Scripts.Game
 {
-    private EcsFilter<XyCellComponent> _xyCellFilter = default;
-    private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
-    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-
-    public void Run()
+    internal sealed class VisibUnitsSys : IEcsRunSystem
     {
-        foreach (byte idxCurCell in _cellUnitFilter)
+        private EcsFilter<XyCellComponent> _xyCellFilter = default;
+        private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+
+        public void Run()
         {
-            var xy = _xyCellFilter.GetXyCell(idxCurCell);
-
-            ref var curUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
-            ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
-
-            ref var curEnvDataCom = ref _cellEnvFilter.Get1(idxCurCell);
-
-
-            curUnitDataCom.SetIsVisibleUnit(PlayerTypes.First, true);
-            curUnitDataCom.SetIsVisibleUnit(PlayerTypes.Second, true);
-
-
-            if (curUnitDataCom.HaveUnit)
+            foreach (byte idxCurCell in _cellUnitFilter)
             {
-                if (curEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
+                var xy = _xyCellFilter.GetXyCell(idxCurCell);
+
+                ref var curUnitDataCom = ref _cellUnitFilter.Get1(idxCurCell);
+                ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
+
+                ref var curEnvDataCom = ref _cellEnvFilter.Get1(idxCurCell);
+
+
+                curUnitDataCom.SetIsVisibleUnit(PlayerTypes.First, true);
+                curUnitDataCom.SetIsVisibleUnit(PlayerTypes.Second, true);
+
+
+                if (curUnitDataCom.HaveUnit)
                 {
-                    PlayerTypes nextPlayer = default;
-                    if (curOwnUnitCom.IsPlayerType(PlayerTypes.First)) nextPlayer = PlayerTypes.Second;
-                    else nextPlayer = PlayerTypes.First;
-
-                    curUnitDataCom.SetIsVisibleUnit(nextPlayer, false);
-
-                    var list = CellSpaceSupport.TryGetXyAround(xy);
-
-                    foreach (var xy_1 in list)
+                    if (curEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
                     {
-                        var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
+                        PlayerTypes nextPlayer = default;
+                        if (curOwnUnitCom.IsPlayerType(PlayerTypes.First)) nextPlayer = PlayerTypes.Second;
+                        else nextPlayer = PlayerTypes.First;
 
-                        ref var aroUnitDataCom = ref _cellUnitFilter.Get1(idxCell_1);
-                        ref var arouOnUnitCom = ref _cellUnitFilter.Get2(idxCell_1);
+                        curUnitDataCom.SetIsVisibleUnit(nextPlayer, false);
 
-                        if (aroUnitDataCom.HaveUnit)
+                        var list = CellSpaceSupport.TryGetXyAround(xy);
+
+                        foreach (var xy_1 in list)
                         {
-                            if (!arouOnUnitCom.IsPlayerType(curOwnUnitCom.PlayerType))
+                            var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
+
+                            ref var aroUnitDataCom = ref _cellUnitFilter.Get1(idxCell_1);
+                            ref var arouOnUnitCom = ref _cellUnitFilter.Get2(idxCell_1);
+
+                            if (aroUnitDataCom.HaveUnit)
                             {
-                                curUnitDataCom.SetIsVisibleUnit(nextPlayer, true);
-                                break;
+                                if (!arouOnUnitCom.IsPlayerType(curOwnUnitCom.PlayerType))
+                                {
+                                    curUnitDataCom.SetIsVisibleUnit(nextPlayer, true);
+                                    break;
+                                }
                             }
                         }
                     }

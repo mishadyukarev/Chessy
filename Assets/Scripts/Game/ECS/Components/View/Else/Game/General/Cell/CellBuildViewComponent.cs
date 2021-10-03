@@ -1,7 +1,8 @@
-﻿using System;
+﻿using Scripts.Common;
+using System;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
+namespace Scripts.Game
 {
     internal struct CellBuildViewComponent
     {

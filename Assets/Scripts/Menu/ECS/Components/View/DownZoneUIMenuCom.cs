@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.ECS.Components.View.UI.Menu.Down
+namespace Scripts.Menu
 {
     internal struct DownZoneUIMenuCom
     {

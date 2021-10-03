@@ -1,7 +1,6 @@
-﻿using Assets.Scripts.Abstractions.Data;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace Assets.Scripts
+namespace Scripts.Common
 {
     public struct ResourcesComponent
     {

@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.Abstractions.Enums;
+﻿using Scripts.Common;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Component.View.Else.Game.General
+namespace Scripts.Game
 {
     internal struct SoundEffectsComp
     {

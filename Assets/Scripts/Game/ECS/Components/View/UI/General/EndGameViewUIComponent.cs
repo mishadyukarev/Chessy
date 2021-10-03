@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Component.UI.Game.General
+namespace Scripts.Game
 {
     internal struct EndGameViewUIComponent
     {

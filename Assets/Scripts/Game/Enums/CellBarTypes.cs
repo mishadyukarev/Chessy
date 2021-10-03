@@ -1,9 +1,12 @@
-﻿public enum CellBarTypes
+﻿namespace Scripts.Game
 {
-    None,
+    public enum CellBarTypes
+    {
+        None,
 
-    Food,
-    Wood,
-    Ore,
-    Hp,
+        Food,
+        Wood,
+        Ore,
+        Hp,
+    }
 }

@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.Abstractions;
-using System;
+﻿using System;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Component
+namespace Scripts.Common
 {
     public readonly struct ToggleZoneComponent
     {

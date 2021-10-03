@@ -1,19 +1,8 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Data.UI.Game.General;
-using Assets.Scripts.ECS.Component.View.Else.Game.General;
-using Assets.Scripts.ECS.Component.View.UI.Game.General;
-using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
-using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
-using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
-using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using Photon.Pun;
+using Scripts.Common;
 
-namespace Assets.Scripts
+namespace Scripts.Game
 {
     internal sealed class EventsGameSys : IEcsInitSystem
     {

@@ -1,10 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 
-namespace Assets.Scripts.ECS.Systems.Else.Game.General.Event
+namespace Scripts.Game
 {
     internal sealed class UnitUniqueEventSys : IEcsInitSystem
     {

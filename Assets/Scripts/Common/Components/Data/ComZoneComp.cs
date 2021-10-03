@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.ECS.Component
+namespace Scripts.Common
 {
     public struct ComZoneComp
     {

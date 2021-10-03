@@ -1,5 +1,7 @@
-﻿
-internal struct InputComponent
+﻿namespace Scripts.Game
 {
-    internal bool IsClicked { get; set; }
+    internal struct InputComponent
+    {
+        internal bool IsClicked { get; set; }
+    }
 }

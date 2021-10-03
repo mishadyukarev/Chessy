@@ -1,9 +1,7 @@
-﻿using Assets.Scripts.ECS.Managers.Event;
-using Assets.Scripts.ECS.Systems.Else.Common;
-using Assets.Scripts.ECS.Systems.Else.Menu;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 
-namespace Assets.Scripts.ECS.Manager.View.Menu
+namespace Scripts.Menu
 {
     public sealed class MenuSystemManager : SystemAbstManager
     {

@@ -1,14 +1,16 @@
-﻿
-public enum DirectTypes : byte
+﻿namespace Scripts.Game
 {
-    None,
+    public enum DirectTypes : byte
+    {
+        None,
 
-    Right,
-    Left,
-    Up,
-    Down,
-    RightUp,
-    LeftUp,
-    RightDown,
-    LeftDown
+        Right,
+        Left,
+        Up,
+        Down,
+        RightUp,
+        LeftUp,
+        RightDown,
+        LeftDown
+    }
 }

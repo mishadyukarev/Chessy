@@ -1,8 +1,6 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 
-namespace Assets.Scripts.ECS.Systems.Else.Game.General.Cell
+namespace Scripts.Game
 {
     internal sealed class ClearAvailCellsSys : IEcsRunSystem
     {

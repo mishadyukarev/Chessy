@@ -1,10 +1,8 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 using System;
 
-namespace Assets.Scripts.Supports
+namespace Scripts.Game
 {
     internal static class Support
     {
@@ -83,7 +81,6 @@ namespace Assets.Scripts.Supports
             if (player.IsMasterClient == true) return PlayerTypes.First;
             else return PlayerTypes.Second;
         }
-
         internal static Player GetPlayerType(this PlayerTypes playerType)
         {
             if (playerType == PlayerTypes.First) return PhotonNetwork.PlayerList[0];//PhotonNetwork.PlayerList[0];

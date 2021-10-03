@@ -1,18 +1,21 @@
 ﻿using System.Collections.Generic;
 
-internal struct ReadyDataUICom
+namespace Scripts.Game
 {
-    internal bool IsStartedGame { get; set; }
-    private Dictionary<bool, bool> _isActivatedButton;
-
-    internal ReadyDataUICom(Dictionary<bool, bool> dict) : this()
+    internal struct ReadyDataUICom
     {
-        _isActivatedButton = dict;
+        internal bool IsStartedGame { get; set; }
+        private Dictionary<bool, bool> _isActivatedButton;
 
-        dict.Add(true, default);
-        dict.Add(false, default);
+        internal ReadyDataUICom(Dictionary<bool, bool> dict) : this()
+        {
+            _isActivatedButton = dict;
+
+            dict.Add(true, default);
+            dict.Add(false, default);
+        }
+
+        internal bool IsReady(bool key) => _isActivatedButton[key];
+        internal void SetIsReady(bool key, bool value) => _isActivatedButton[key] = value;
     }
-
-    internal bool IsReady(bool key) => _isActivatedButton[key];
-    internal void SetIsReady(bool key, bool value) => _isActivatedButton[key] = value;
 }

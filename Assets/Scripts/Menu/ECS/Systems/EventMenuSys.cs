@@ -1,17 +1,10 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Menu;
-using Assets.Scripts.ECS.Component.UI;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.ECS.Components.View.UI.Menu.Center;
-using Assets.Scripts.ECS.Components.View.UI.Menu.Down;
-using ExitGames.Client.Photon.StructWrapping;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
+using Scripts.Common;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Managers.Event
+namespace Scripts.Menu
 {
     internal sealed class EventMenuSys : IEcsInitSystem
     {

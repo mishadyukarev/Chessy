@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Video;
 
-namespace Assets.Scripts.Abstractions.Data
+namespace Scripts.Common
 {
     [CreateAssetMenu(menuName = "VideoClipsData", fileName = "VideoClipsData")]
     public sealed class VideoClipsData : ScriptableObject

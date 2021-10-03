@@ -1,10 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Assets.Scripts.ECS.Components.View.UI.Game.General;
-using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 
-namespace Assets.Scripts.ECS.Systems.UI.Game.General.RightZone.BuildAbilit
+namespace Scripts.Game
 {
     internal sealed class RightUnitInfoUISys : IEcsRunSystem
     {

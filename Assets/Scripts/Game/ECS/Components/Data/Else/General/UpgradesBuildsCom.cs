@@ -1,8 +1,8 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using static Scripts.Game.EconomyValues;
 
-namespace Assets.Scripts.ECS.Component
+namespace Scripts.Game
 {
     internal struct UpgradesBuildsCom
     {
@@ -30,5 +30,30 @@ namespace Assets.Scripts.ECS.Component
 
         internal void AddAmountUpgrades(PlayerTypes playerType, BuildingTypes buildingType, int adding = 1) => SetAmountUpgrades(playerType, buildingType, AmountUpgs(playerType, buildingType) + adding);
         internal void TakeAmountUpgrades(PlayerTypes playerType, BuildingTypes buildingType, int taking = 1) => SetAmountUpgrades(playerType, buildingType, AmountUpgs(playerType, buildingType) - taking);
+
+
+        internal int GetExtractOneBuild(PlayerTypes playerType, BuildingTypes buildingType)
+        {
+            switch (buildingType)
+            {
+                case BuildingTypes.None:
+                    throw new Exception();
+
+                case BuildingTypes.City:
+                    throw new Exception();
+
+                case BuildingTypes.Farm:
+                    return BENEFIT_FOOD_FARM + BENEFIT_FOOD_FARM * _amountUpgradesDict[playerType][buildingType];
+
+                case BuildingTypes.Woodcutter:
+                    return BENEFIT_WOOD_WOODCUTTER + BENEFIT_WOOD_WOODCUTTER * _amountUpgradesDict[playerType][buildingType];
+
+                case BuildingTypes.Mine:
+                    return BENEFIT_ORE_MINE + BENEFIT_ORE_MINE * _amountUpgradesDict[playerType][buildingType];
+
+                default:
+                    throw new Exception();
+            }
+        }
     }
 }

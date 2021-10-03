@@ -1,13 +1,15 @@
-﻿internal struct XyCellComponent
+﻿namespace Scripts.Game
 {
-    private byte[] _xyCell;
-
-    internal byte[] XyCell
+    internal struct XyCellComponent
     {
-        get => (byte[])_xyCell.Clone();
-        set => _xyCell = (byte[])value.Clone();
+        private byte[] _xyCell;
+
+        internal byte[] XyCell
+        {
+            get => (byte[])_xyCell.Clone();
+            set => _xyCell = (byte[])value.Clone();
+        }
+
+        internal XyCellComponent(byte[] xy) => _xyCell = xy;
     }
-
-    internal XyCellComponent(byte[] xy) => _xyCell = xy;
 }
-

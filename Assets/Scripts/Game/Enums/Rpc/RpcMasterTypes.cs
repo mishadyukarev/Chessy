@@ -1,25 +1,27 @@
-﻿public enum RpcMasterTypes
+﻿namespace Scripts.Game
 {
-    None,
+    public enum RpcMasterTypes
+    {
+        None,
 
-    Ready,
-    Done,
-    //EndGame,
-    Build,
-    DestroyBuild,
-    Shift,
-    Attack,
-    ConditionUnit,
-    Mistake,
-    CreateUnit,
-    MeltOre,
-    SetUnit,
-    SeedEnvironment,
-    Fire,
-    Sound,
-    CircularAttackKing,
+        Ready,
+        Done,
+        Build,
+        DestroyBuild,
+        Shift,
+        Attack,
+        ConditionUnit,
+        Mistake,
+        CreateUnit,
+        MeltOre,
+        SetUnit,
+        SeedEnvironment,
+        Fire,
+        Sound,
+        CircularAttackKing,
 
-    GiveTakeToolWeapon,
+        GiveTakeToolWeapon,
 
-    UpgradeBuild,
+        UpgradeBuild,
+    }
 }

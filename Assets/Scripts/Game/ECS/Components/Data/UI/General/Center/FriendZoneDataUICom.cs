@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.ECS.Components.Data.UI.Game.General.Center
+﻿namespace Scripts.Game
 {
     internal struct FriendZoneDataUICom
     {

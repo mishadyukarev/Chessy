@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell
+﻿namespace Scripts.Game
 {
     internal struct CellFireDataComponent
     {

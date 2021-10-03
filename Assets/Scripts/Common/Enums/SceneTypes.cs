@@ -1,7 +1,10 @@
-﻿public enum SceneTypes
+﻿namespace Scripts.Common
 {
-    None,
+    public enum SceneTypes
+    {
+        None,
 
-    Menu,
-    Game,
+        Menu,
+        Game,
+    }
 }

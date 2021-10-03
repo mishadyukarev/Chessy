@@ -1,10 +1,10 @@
-﻿using Assets.Scripts.ECS.System.Data.Common;
+﻿using Scripts.Common;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.ECS.Component.View.UI.Game.General
+namespace Scripts.Game
 {
     internal struct ReadyViewUICom
     {
@@ -26,7 +26,7 @@ namespace Assets.Scripts.ECS.Component.View.UI.Game.General
 
             _joinForFinding_TextMP = readyZone_GO.transform.Find("JoinForFind_TextMP").GetComponent<TextMeshProUGUI>();
             _joinDiscord_Button = readyZone_GO.transform.Find("JoinDiscordButton").GetComponent<Button>();
-            _joinDiscord_Button.onClick.AddListener(delegate { Application.OpenURL(SpawnInitComSys.IRL_DISCORD); } );
+            _joinDiscord_Button.onClick.AddListener(delegate { Application.OpenURL(SpawnInitComSys.IRL_DISCORD); });
         }
 
         internal void SetActiveParent(bool isActive) => _ready_Button.transform.parent.gameObject.SetActive(isActive);

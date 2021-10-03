@@ -1,9 +1,12 @@
-﻿public enum BuildingTypes
+﻿namespace Scripts.Game
 {
-    None,
+    public enum BuildingTypes
+    {
+        None,
 
-    City,
-    Farm,
-    Woodcutter,
-    Mine,
+        City,
+        Farm,
+        Woodcutter,
+        Mine,
+    }
 }

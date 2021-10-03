@@ -1,34 +1,33 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.Data.UI.Game.General;
-using Assets.Scripts.ECS.Component.View.UI.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using UnityEngine;
 
-internal sealed class MotionCenterUISystem : IEcsRunSystem
+namespace Scripts.Game
 {
-    private EcsFilter<MotionsDataUIComponent, MotionsViewUIComponent> _motionsUIFilter = default;
-    private float _timer;
-
-    public void Run()
+    internal sealed class MotionCenterUISystem : IEcsRunSystem
     {
-        if (_motionsUIFilter.Get1(0).IsActivatedUI)
+        private EcsFilter<MotionsDataUIComponent, MotionsViewUIComponent> _motionsUIFilter = default;
+        private float _timer;
+
+        public void Run()
         {
-            _motionsUIFilter.Get2(0).Text = _motionsUIFilter.Get1(0).AmountMotions.ToString();
-            _motionsUIFilter.Get2(0).SetActiveParent(true);
+            if (_motionsUIFilter.Get1(0).IsActivatedUI)
+            {
+                _motionsUIFilter.Get2(0).Text = _motionsUIFilter.Get1(0).AmountMotions.ToString();
+                _motionsUIFilter.Get2(0).SetActiveParent(true);
 
-            _timer += Time.deltaTime;
+                _timer += Time.deltaTime;
 
-            if (_timer >= 1)
+                if (_timer >= 1)
+                {
+                    _motionsUIFilter.Get2(0).SetActiveParent(false);
+                    _motionsUIFilter.Get1(0).IsActivatedUI = false;
+                    _timer = 0;
+                }
+            }
+            else
             {
                 _motionsUIFilter.Get2(0).SetActiveParent(false);
-                _motionsUIFilter.Get1(0).IsActivatedUI = false;
-                _timer = 0;
             }
-        }
-        else
-        {
-            _motionsUIFilter.Get2(0).SetActiveParent(false);
         }
     }
 }

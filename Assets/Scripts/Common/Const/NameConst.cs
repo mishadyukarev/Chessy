@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Abstractions
+﻿namespace Scripts.Common
 {
     public static class NameConst
     {

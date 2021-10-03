@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.ECS.Component
+namespace Scripts.Game
 {
     internal struct InventorUnitsComponent
     {

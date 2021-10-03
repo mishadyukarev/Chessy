@@ -1,191 +1,190 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.View.Else.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 
-internal sealed class SelectorSystem : IEcsRunSystem
+namespace Scripts.Game
 {
-    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-
-    private EcsFilter<SelectorCom> _selectorFilter = default;
-    private EcsFilter<InputComponent> _inputFilter = default;
-    private EcsFilter<SoundEffectsComp> _soundFilter = default;
-    private EcsFilter<CellsForAttackCom> _cellsAttackFilt = default;
-    private EcsFilter<CellsForShiftCom> _cellsShiftFilt = default;
-
-    public void Run()
+    internal sealed class SelectorSystem : IEcsRunSystem
     {
-        CellUnitDataCom UnitDatCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
-        OwnerCom OwnUnitCom(byte idxCell) => _cellUnitFilter.Get2(idxCell);
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
+        private EcsFilter<SelectorCom> _selectorFilter = default;
+        private EcsFilter<InputComponent> _inputFilter = default;
+        private EcsFilter<SoundEffectsComp> _soundFilter = default;
+        private EcsFilter<CellsForAttackCom> _cellsAttackFilt = default;
+        private EcsFilter<CellsForShiftCom> _cellsShiftFilt = default;
 
-        ref var selCom = ref _selectorFilter.Get1(0);
-        ref var cellsAttackCom = ref _cellsAttackFilt.Get1(0);
-        ref var cellsShiftCom = ref _cellsShiftFilt.Get1(0);
-        ref var soundEffectCom = ref _soundFilter.Get1(0);
-
-
-        if (_inputFilter.Get1(0).IsClicked)
+        public void Run()
         {
-            if (selCom.Is(RaycastGettedTypes.UI))
-            {
-                selCom.DefSelectedUnit();
-            }
+            CellUnitDataCom UnitDatCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
+            OwnerCom OwnUnitCom(byte idxCell) => _cellUnitFilter.Get2(idxCell);
 
-            else if (selCom.Is(RaycastGettedTypes.Cell))
+
+            ref var selCom = ref _selectorFilter.Get1(0);
+            ref var cellsAttackCom = ref _cellsAttackFilt.Get1(0);
+            ref var cellsShiftCom = ref _cellsShiftFilt.Get1(0);
+            ref var soundEffectCom = ref _soundFilter.Get1(0);
+
+
+            if (_inputFilter.Get1(0).IsClicked)
             {
-                if (GameModesCom.IsOnlineMode && !WhoseMoveCom.IsMyOnlineMove)
+                if (selCom.Is(RaycastGettedTypes.UI))
                 {
-                    if (!selCom.IsSelCell)
+                    selCom.DefSelectedUnit();
+                }
+
+                else if (selCom.Is(RaycastGettedTypes.Cell))
+                {
+                    if (GameModesCom.IsOnlineMode && !WhoseMoveCom.IsMyOnlineMove)
                     {
-                        if (selCom.IdxPreCell != selCom.IdxSelCell)
+                        if (!selCom.IsSelCell)
                         {
+                            if (selCom.IdxPreCell != selCom.IdxSelCell)
+                            {
+                                selCom.IdxSelCell = selCom.IdxCurCell;
+                            }
+                            else
+                            {
+                                selCom.IdxSelCell = default;
+                            }
+
+
+                            selCom.IdxPreCell = selCom.IdxSelCell;
+                        }
+
+                        else
+                        {
+                            if (selCom.IdxSelCell != selCom.IdxCurCell)
+                                selCom.IdxPreCell = selCom.IdxSelCell;
+
                             selCom.IdxSelCell = selCom.IdxCurCell;
+                        }
+                    }
+
+                    else if (selCom.IsSelUnit)
+                    {
+                        RpcSys.SetUniToMaster(selCom.IdxCurCell, selCom.SelUnitType);
+                        selCom.SelUnitType = default;
+                    }
+
+                    else if (selCom.IsCellClickType(CellClickTypes.PickFire))
+                    {
+                        RpcSys.FireToMaster(selCom.IdxSelCell, selCom.IdxCurCell);
+
+                        selCom.CellClickType = default;
+                        selCom.IdxSelCell = selCom.IdxCurCell;
+                    }
+
+                    else if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
+                    {
+                        if (UnitDatCom(selCom.IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
+                        {
+                            RpcSys.GiveTakeToolWeapon(selCom.ToolWeaponTypeForGiveTake, selCom.IdxCurCell);
                         }
                         else
                         {
-                            selCom.IdxSelCell = default;
+                            selCom.IdxSelCell = selCom.IdxCurCell;
+                            selCom.DefCellClickType();
                         }
-
-
-                        selCom.IdxPreCell = selCom.IdxSelCell;
                     }
 
-                    else
+                    else if (selCom.IsSelCell)
                     {
                         if (selCom.IdxSelCell != selCom.IdxCurCell)
                             selCom.IdxPreCell = selCom.IdxSelCell;
 
                         selCom.IdxSelCell = selCom.IdxCurCell;
-                    }
-                }
 
-                else if (selCom.IsSelUnit)
-                {
-                    RpcSys.SetUniToMaster(selCom.IdxCurCell, selCom.SelUnitType);
-                    selCom.SelUnitType = default;
-                }
+                        var b1 = cellsAttackCom.FindByIdx(WhoseMoveCom.CurPlayer, AttackTypes.Simple, selCom.IdxPreCell, selCom.IdxSelCell);
+                        var b2 = cellsAttackCom.FindByIdx(WhoseMoveCom.CurPlayer, AttackTypes.Unique, selCom.IdxPreCell, selCom.IdxSelCell);
 
-                else if (selCom.IsCellClickType(CellClickTypes.PickFire))
-                {
-                    RpcSys.FireToMaster(selCom.IdxSelCell, selCom.IdxCurCell);
-
-                    selCom.CellClickType = default;
-                    selCom.IdxSelCell = selCom.IdxCurCell;
-                }
-
-                else if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
-                {
-                    if (UnitDatCom(selCom.IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
-                    {
-                        RpcSys.GiveTakeToolWeapon(selCom.ToolWeaponTypeForGiveTake, selCom.IdxCurCell);
-                    }
-                    else
-                    {
-                        selCom.IdxSelCell = selCom.IdxCurCell;
-                        selCom.DefCellClickType();
-                    }
-                }
-
-                else if (selCom.IsSelCell)
-                {
-                    if (selCom.IdxSelCell != selCom.IdxCurCell)
-                        selCom.IdxPreCell = selCom.IdxSelCell;
-
-                    selCom.IdxSelCell = selCom.IdxCurCell;
-
-                    var b1 = cellsAttackCom.FindByIdx(WhoseMoveCom.CurPlayer, AttackTypes.Simple, selCom.IdxPreCell, selCom.IdxSelCell);
-                    var b2 = cellsAttackCom.FindByIdx(WhoseMoveCom.CurPlayer, AttackTypes.Unique, selCom.IdxPreCell, selCom.IdxSelCell);
-
-                    if (b1 || b2)
-                    {
-                        RpcSys.AttackUnitToMaster(selCom.IdxPreCell, selCom.IdxSelCell);
-                    }
-
-                    if (cellsShiftCom.HaveIdxCell(WhoseMoveCom.CurPlayer, selCom.IdxPreCell, selCom.IdxSelCell))
-                    {
-                        RpcSys.ShiftUnitToMaster(selCom.IdxPreCell, selCom.IdxSelCell);
-                    }
-
-                    else if (UnitDatCom(selCom.IdxSelCell).HaveUnit)
-                    {
-                        if (OwnUnitCom(selCom.IdxSelCell).IsMine)
+                        if (b1 || b2)
                         {
-                            if (UnitDatCom(selCom.IdxSelCell).IsMelee)
+                            RpcSys.AttackUnitToMaster(selCom.IdxPreCell, selCom.IdxSelCell);
+                        }
+
+                        if (cellsShiftCom.HaveIdxCell(WhoseMoveCom.CurPlayer, selCom.IdxPreCell, selCom.IdxSelCell))
+                        {
+                            RpcSys.ShiftUnitToMaster(selCom.IdxPreCell, selCom.IdxSelCell);
+                        }
+
+                        else if (UnitDatCom(selCom.IdxSelCell).HaveUnit)
+                        {
+                            if (OwnUnitCom(selCom.IdxSelCell).IsMine)
                             {
-                                soundEffectCom.Play(SoundEffectTypes.PickMelee);
-                            }
-                            else
-                            {
-                                soundEffectCom.Play(SoundEffectTypes.PickArcher);
+                                if (UnitDatCom(selCom.IdxSelCell).IsMelee)
+                                {
+                                    soundEffectCom.Play(SoundEffectTypes.PickMelee);
+                                }
+                                else
+                                {
+                                    soundEffectCom.Play(SoundEffectTypes.PickArcher);
+                                }
                             }
                         }
                     }
+
+                    else
+                    {
+                        if (selCom.IdxPreCell != selCom.IdxSelCell || selCom.IdxPreCell == 0)
+                        {
+                            selCom.IdxSelCell = selCom.IdxCurCell;
+                        }
+                        else
+                        {
+                            selCom.DefSelectedCell();
+                        }
+
+                        if (UnitDatCom(selCom.IdxSelCell).HaveUnit)
+                        {
+                            if (OwnUnitCom(selCom.IdxSelCell).IsMine)
+                            {
+                                if (UnitDatCom(selCom.IdxSelCell).IsMelee)
+                                {
+                                    soundEffectCom.Play(SoundEffectTypes.PickMelee);
+                                }
+                                else
+                                {
+                                    soundEffectCom.Play(SoundEffectTypes.PickArcher);
+                                }
+                            }
+                        }
+
+
+
+                        selCom.IdxPreCell = selCom.IdxSelCell;
+                    }
+
                 }
 
                 else
                 {
-                    if (selCom.IdxPreCell != selCom.IdxSelCell || selCom.IdxPreCell == 0)
-                    {
-                        selCom.IdxSelCell = selCom.IdxCurCell;
-                    }
-                    else
-                    {
-                        selCom.DefSelectedCell();
-                    }
-
-                    if (UnitDatCom(selCom.IdxSelCell).HaveUnit)
-                    {
-                        if (OwnUnitCom(selCom.IdxSelCell).IsMine)
-                        {
-                            if (UnitDatCom(selCom.IdxSelCell).IsMelee)
-                            {
-                                soundEffectCom.Play(SoundEffectTypes.PickMelee);
-                            }
-                            else
-                            {
-                                soundEffectCom.Play(SoundEffectTypes.PickArcher);
-                            }
-                        }
-                    }
-
-
-
-                    selCom.IdxPreCell = selCom.IdxSelCell;
+                    selCom.DefSelectedUnit();
+                    selCom.DefSelectedCell();
+                    selCom.DefCellClickType();
                 }
-
             }
 
             else
             {
-                selCom.DefSelectedUnit();
-                selCom.DefSelectedCell();
-                selCom.DefCellClickType();
-            }
-        }
-
-        else
-        {
-            if (selCom.Is(RaycastGettedTypes.UI))
-            {
-            }
-
-            else if (selCom.Is(RaycastGettedTypes.Cell))
-            {
-                if (selCom.IsSelUnit)
+                if (selCom.Is(RaycastGettedTypes.UI))
                 {
-                    if (!UnitDatCom(selCom.IdxCurCell).HaveUnit || !UnitDatCom(selCom.IdxCurCell).IsVisibleUnit(WhoseMoveCom.CurPlayer))
+                }
+
+                else if (selCom.Is(RaycastGettedTypes.Cell))
+                {
+                    if (selCom.IsSelUnit)
                     {
-                        if (selCom.IsStartDirectToCell)
+                        if (!UnitDatCom(selCom.IdxCurCell).HaveUnit || !UnitDatCom(selCom.IdxCurCell).IsVisibleUnit(WhoseMoveCom.CurPlayer))
                         {
-                            selCom.IdxPreVisionCell = selCom.IdxCurCell;
-                            selCom.IdxCurCell = default;
-                        }
-                        else
-                        {
-                            selCom.IdxPreVisionCell = selCom.IdxCurCell;
+                            if (selCom.IsStartDirectToCell)
+                            {
+                                selCom.IdxPreVisionCell = selCom.IdxCurCell;
+                                selCom.IdxCurCell = default;
+                            }
+                            else
+                            {
+                                selCom.IdxPreVisionCell = selCom.IdxCurCell;
+                            }
                         }
                     }
                 }

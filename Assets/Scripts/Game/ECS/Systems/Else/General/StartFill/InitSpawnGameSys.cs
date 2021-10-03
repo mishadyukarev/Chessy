@@ -1,40 +1,13 @@
-﻿using Assets.Scripts.Abstractions.Data;
-using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Common;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Component.Data.Else.Game.Master;
-using Assets.Scripts.ECS.Component.Data.UI.Game.General;
-using Assets.Scripts.ECS.Component.Game;
-using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Component.UI.Game.General;
-using Assets.Scripts.ECS.Component.View.Else.Game.General;
-using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Component.View.UI.Game.General;
-using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
-using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
-using Assets.Scripts.ECS.Components.Data.Else.Game.Master;
-using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
-using Assets.Scripts.ECS.Components.View.UI.Game.General;
-using Assets.Scripts.ECS.Components.View.UI.Game.General.Center;
-using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
-using Assets.Scripts.ECS.Game.Components;
-using Assets.Scripts.ECS.System.Data.Common;
-using Assets.Scripts.Workers;
+﻿using Assets.Scripts.ECS.Components.Data.Else.Game.Master;
 using Leopotam.Ecs;
 using Photon.Pun;
-using Scripts.Game;
+using Scripts.Common;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using static Scripts.Game.CellValues;
 
-namespace Assets.Scripts.ECS.Game.General.Systems.StartFill
+namespace Scripts.Game
 {
     public sealed class InitSpawnGameSys : IEcsInitSystem
     {

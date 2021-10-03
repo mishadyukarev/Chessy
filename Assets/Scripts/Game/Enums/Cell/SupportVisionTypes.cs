@@ -1,15 +1,17 @@
-﻿
-public enum SupportVisionTypes
+﻿namespace Scripts.Game
 {
-    None,
+    public enum SupportVisionTypes
+    {
+        None,
 
-    Selector,
-    Spawn,
-    Shift,
-    SimpleAttack,
-    UniqueAttack,
-    Upgrade,
-    FireSelector,
-    TakePawnTool,
-    GivePawnTool,
+        Selector,
+        Spawn,
+        Shift,
+        SimpleAttack,
+        UniqueAttack,
+        Upgrade,
+        FireSelector,
+        TakePawnTool,
+        GivePawnTool,
+    }
 }

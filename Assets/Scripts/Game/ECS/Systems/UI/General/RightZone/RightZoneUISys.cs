@@ -1,36 +1,37 @@
-﻿using Assets.Scripts.ECS.Component.View.UI.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 
-internal sealed class RightZoneUISys : IEcsRunSystem
+namespace Scripts.Game
 {
-    private EcsFilter<SelectorCom> _selFilt = default;
-    private EcsFilter<StatZoneViewUICom> _unitZoneFilter = default;
-
-    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-
-
-    public void Run()
+    internal sealed class RightZoneUISys : IEcsRunSystem
     {
-        var idxSelCell = _selFilt.Get1(0).IdxSelCell;
-        ref var unitZoneViewCom = ref _unitZoneFilter.Get1(0);
+        private EcsFilter<SelectorCom> _selFilt = default;
+        private EcsFilter<StatZoneViewUICom> _unitZoneFilter = default;
 
-        ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
-
-        var activeParent = false;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
 
-        if (_selFilt.Get1(0).IsSelCell)
+        public void Run()
         {
-            if (selUnitDatCom.HaveUnit)
+            var idxSelCell = _selFilt.Get1(0).IdxSelCell;
+            ref var unitZoneViewCom = ref _unitZoneFilter.Get1(0);
+
+            ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
+
+            var activeParent = false;
+
+
+            if (_selFilt.Get1(0).IsSelCell)
             {
-                if (selUnitDatCom.IsVisibleUnit(WhoseMoveCom.CurPlayer))
+                if (selUnitDatCom.HaveUnit)
                 {
-                    activeParent = true;
+                    if (selUnitDatCom.IsVisibleUnit(WhoseMoveCom.CurPlayer))
+                    {
+                        activeParent = true;
+                    }
                 }
             }
-        }
 
-        unitZoneViewCom.SetActiveParentZone(activeParent);
+            unitZoneViewCom.SetActiveParentZone(activeParent);
+        }
     }
 }

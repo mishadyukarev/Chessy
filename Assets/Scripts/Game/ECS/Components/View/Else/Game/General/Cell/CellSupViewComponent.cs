@@ -1,8 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using Scripts.Game;
 
-namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
+namespace Scripts.Game
 {
     internal struct CellSupViewComponent
     {

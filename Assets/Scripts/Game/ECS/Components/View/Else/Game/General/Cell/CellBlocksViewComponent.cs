@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Component.View.Else.Game.General.Cell
+namespace Scripts.Game
 {
     internal struct CellBlocksViewComponent
     {

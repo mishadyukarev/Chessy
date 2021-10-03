@@ -1,8 +1,7 @@
-﻿using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Game.General.Systems
+namespace Scripts.Game
 {
     internal class FliperAndRotatorUnitSystem : IEcsRunSystem
     {

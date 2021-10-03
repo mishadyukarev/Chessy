@@ -1,13 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Common;
-using Assets.Scripts.ECS.Component.UI;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Assets.Scripts.ECS.Components.View.UI.Menu.Center;
-using Assets.Scripts.ECS.Components.View.UI.Menu.Down;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 
-namespace Assets.Scripts.ECS.Systems.Else.Common
+namespace Scripts.Menu
 {
     internal sealed class SyncMenuSys : IEcsRunSystem
     {

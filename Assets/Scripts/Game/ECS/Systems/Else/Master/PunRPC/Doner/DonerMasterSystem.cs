@@ -1,99 +1,92 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Data.UI.Game.General;
-using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Game.Master;
-using Assets.Scripts.ECS.Components.Data.UI.Game.General.Center;
-using Assets.Scripts.ECS.System.Data.Common;
-using Assets.Scripts.Supports;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using Photon.Pun;
+using Scripts.Common;
 
-internal sealed class DonerMasterSystem : IEcsRunSystem
+namespace Scripts.Game
 {
-    private EcsFilter<InfoCom> _infoFilter = default;
-    private EcsFilter<InventorUnitsComponent> _invUnitsFilter = default;
-    private EcsFilter<FriendZoneDataUICom> _friendUIFilt = default;
-
-    private EcsFilter<CellViewComponent> _cellViewFilter = default;
-
-
-    private PlayerTypes _playerMotion = PlayerTypes.First;
-
-    public void Run()
+    internal sealed class DonerMasterSystem : IEcsRunSystem
     {
-        ref var infoMasCom = ref _infoFilter.Get1(0);
+        private EcsFilter<InfoCom> _infoFilter = default;
+        private EcsFilter<InventorUnitsComponent> _invUnitsFilter = default;
+        private EcsFilter<FriendZoneDataUICom> _friendUIFilt = default;
 
-        var sender = infoMasCom.FromInfo.Sender;
+        private EcsFilter<CellViewComponent> _cellViewFilter = default;
 
 
+        private PlayerTypes _playerMotion = PlayerTypes.First;
 
-        RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-
-        if (PhotonNetwork.OfflineMode)
+        public void Run()
         {
-            if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+            ref var infoMasCom = ref _infoFilter.Get1(0);
+
+            var sender = infoMasCom.FromInfo.Sender;
+
+
+
+            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+
+            if (PhotonNetwork.OfflineMode)
             {
-                GameMasterSystemManager.UpdateMotion.Run();
-            }
-
-            else if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
-            {
-                _friendUIFilt.Get1(0).IsActiveFriendZone = true;
-
-                if (_playerMotion == PlayerTypes.First)
+                if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
-                    _playerMotion = PlayerTypes.Second;
-
-                    CameraComComp.SetPosRotClient(false, SpawnInitComSys.Main_GO.transform.position);
-
-                    WhoseMoveCom.WhoseMoveOffline = _playerMotion;
-
-                    foreach (byte curIdxCell in _cellViewFilter)
-                        _cellViewFilter.Get1(curIdxCell).SetRotForClient(false);
-
-                }
-                else
-                {
-                    _playerMotion = PlayerTypes.First;
-
-                    CameraComComp.SetPosRotClient(true, SpawnInitComSys.Main_GO.transform.position);
-
-                    WhoseMoveCom.WhoseMoveOffline = _playerMotion;
-
-                    foreach (byte curIdxCell in _cellViewFilter)
-                        _cellViewFilter.Get1(curIdxCell).SetRotForClient(true);
-
                     GameMasterSystemManager.UpdateMotion.Run();
                 }
-            }
 
-            else
-            {
-                throw new System.Exception();
-            }
-        }
-        else
-        {
-            if (sender.GetPlayerType() == _playerMotion)
-            {
-                if (!_invUnitsFilter.Get1(0).HaveUnitInInv(sender.GetPlayerType(), UnitTypes.King))
+                else if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
                 {
+                    _friendUIFilt.Get1(0).IsActiveFriendZone = true;
 
                     if (_playerMotion == PlayerTypes.First)
                     {
                         _playerMotion = PlayerTypes.Second;
-                        WhoseMoveCom.WhoseMoveOnline = _playerMotion;
+
+                        CameraComComp.SetPosRotClient(false, SpawnInitComSys.Main_GO.transform.position);
+
+                        WhoseMoveCom.WhoseMoveOffline = _playerMotion;
+
+                        foreach (byte curIdxCell in _cellViewFilter)
+                            _cellViewFilter.Get1(curIdxCell).SetRotForClient(false);
+
                     }
                     else
                     {
                         _playerMotion = PlayerTypes.First;
-                        WhoseMoveCom.WhoseMoveOnline = _playerMotion;
 
-                        GameMasterSystemManager.UpdateMotion.Run();       
+                        CameraComComp.SetPosRotClient(true, SpawnInitComSys.Main_GO.transform.position);
+
+                        WhoseMoveCom.WhoseMoveOffline = _playerMotion;
+
+                        foreach (byte curIdxCell in _cellViewFilter)
+                            _cellViewFilter.Get1(curIdxCell).SetRotForClient(true);
+
+                        GameMasterSystemManager.UpdateMotion.Run();
+                    }
+                }
+
+                else
+                {
+                    throw new System.Exception();
+                }
+            }
+            else
+            {
+                if (sender.GetPlayerType() == _playerMotion)
+                {
+                    if (!_invUnitsFilter.Get1(0).HaveUnitInInv(sender.GetPlayerType(), UnitTypes.King))
+                    {
+
+                        if (_playerMotion == PlayerTypes.First)
+                        {
+                            _playerMotion = PlayerTypes.Second;
+                            WhoseMoveCom.WhoseMoveOnline = _playerMotion;
+                        }
+                        else
+                        {
+                            _playerMotion = PlayerTypes.First;
+                            WhoseMoveCom.WhoseMoveOnline = _playerMotion;
+
+                            GameMasterSystemManager.UpdateMotion.Run();
+                        }
                     }
                 }
             }

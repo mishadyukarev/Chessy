@@ -1,39 +1,39 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.View.UI.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 using UnityEngine;
 
-internal sealed class DonerUISystem : IEcsRunSystem
+namespace Scripts.Game
 {
-    private EcsFilter<DonerUICom> _donerUIFilter = default;
-
-    public void Run()
+    internal sealed class DonerUISystem : IEcsRunSystem
     {
-        ref var donerViewUICom = ref _donerUIFilter.Get1(0);
+        private EcsFilter<DonerUICom> _donerUIFilter = default;
 
-        if (GameModesCom.IsOnlineMode)
+        public void Run()
         {
-            //donerViewUICom.SetTextDoner(LanguageComCom.GetText(GameLanguageTypes.Done));
-            donerViewUICom.SetTextWait(LanguageComCom.GetText(GameLanguageTypes.WaitPlayer));
+            ref var donerViewUICom = ref _donerUIFilter.Get1(0);
 
-
-            if (WhoseMoveCom.IsMyOnlineMove)
+            if (GameModesCom.IsOnlineMode)
             {
-                donerViewUICom.DisableWait();
-                donerViewUICom.SetColor(Color.white);
+                //donerViewUICom.SetTextDoner(LanguageComCom.GetText(GameLanguageTypes.Done));
+                donerViewUICom.SetTextWait(LanguageComCom.GetText(GameLanguageTypes.WaitPlayer));
+
+
+                if (WhoseMoveCom.IsMyOnlineMove)
+                {
+                    donerViewUICom.DisableWait();
+                    donerViewUICom.SetColor(Color.white);
+                }
+                else
+                {
+                    donerViewUICom.EnableWait();
+                    donerViewUICom.SetColor(Color.red);
+                }
             }
+
             else
             {
-                donerViewUICom.EnableWait();
-                donerViewUICom.SetColor(Color.red);
+                donerViewUICom.DisableWait();
             }
-        }
-
-        else
-        {
-            donerViewUICom.DisableWait();
         }
     }
 }

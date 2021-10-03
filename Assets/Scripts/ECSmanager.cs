@@ -1,14 +1,12 @@
-﻿using Assets.Scripts.ECS.Game.General.Systems.StartFill;
-using Assets.Scripts.ECS.Manager.View.Menu;
-using Assets.Scripts.ECS.System.Common;
-using Assets.Scripts.ECS.System.Data.Common;
-using Assets.Scripts.ECS.System.View.Menu;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using Photon.Pun;
+using Scripts.Common;
+using Scripts.Game;
+using Scripts.Menu;
 using System;
 using UnityEngine;
 
-namespace Assets.Scripts
+namespace Scripts
 {
     public sealed class ECSManager
     {

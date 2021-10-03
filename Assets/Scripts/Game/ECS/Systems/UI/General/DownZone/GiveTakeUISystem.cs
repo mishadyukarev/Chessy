@@ -1,11 +1,6 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Assets.Scripts.ECS.Component.View.UI.Game.General.Down;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Leopotam.Ecs;
-using UnityEngine;
+﻿using Leopotam.Ecs;
 
-namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.DownZone
+namespace Scripts.Game
 {
     internal sealed class GiveTakeUISystem : IEcsRunSystem
     {

@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Components.View.UI.Game.General.Center
+namespace Scripts.Game
 {
     internal struct SelectorTypeViewUIComp
     {

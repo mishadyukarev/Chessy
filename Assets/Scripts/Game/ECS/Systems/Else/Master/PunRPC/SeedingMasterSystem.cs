@@ -1,10 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Component.Game.Master;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using System;
 
-namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
+namespace Scripts.Game
 {
     internal sealed class SeedingMasterSystem : IEcsRunSystem
     {

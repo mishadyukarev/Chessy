@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Photon.Pun;
+﻿using Photon.Pun;
+using Scripts.Common;
 
-namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
+namespace Scripts.Game
 {
     internal struct WhoseMoveCom
     {

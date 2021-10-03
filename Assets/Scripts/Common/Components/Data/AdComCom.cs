@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Assets.Scripts.ECS.Components.Data.Else.Common
+namespace Scripts.Common
 {
     public struct AdComCom
     {

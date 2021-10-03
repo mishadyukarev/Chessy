@@ -1,9 +1,6 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 
-namespace Assets.Scripts.ECS.Components.View.UI.Game.General.Right
+namespace Scripts.Game
 {
     internal class ProtectUISys : IEcsRunSystem
     {

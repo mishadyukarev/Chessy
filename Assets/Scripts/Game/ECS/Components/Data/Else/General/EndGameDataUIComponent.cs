@@ -1,6 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-
-internal struct EndGameDataUIComponent
+﻿namespace Scripts.Game
 {
-    internal PlayerTypes PlayerWinner { get; set; }
+    internal struct EndGameDataUIComponent
+    {
+        internal PlayerTypes PlayerWinner { get; set; }
+    }
 }

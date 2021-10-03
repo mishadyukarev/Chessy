@@ -1,82 +1,82 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.ECS.Components.View.UI.Game.General.Right;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 using UnityEngine;
 
-internal sealed class RelaxUISys : IEcsRunSystem
+namespace Scripts.Game
 {
-    private EcsFilter<CondUnitUICom> _condUIFilt = default;
-    private EcsFilter<SelectorCom> _selectorFilter = default;
-
-    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-
-
-    public void Run()
+    internal sealed class RelaxUISys : IEcsRunSystem
     {
-        var idxSelCell = _selectorFilter.Get1(0).IdxSelCell;
-        ref var condUnitUICom = ref _condUIFilt.Get1(0);
+        private EcsFilter<CondUnitUICom> _condUIFilt = default;
+        private EcsFilter<SelectorCom> _selectorFilter = default;
 
-        ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
-        ref var selOnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
-
-
-        condUnitUICom.SetText_Info(LanguageComCom.GetText(GameLanguageTypes.ConditAbilities));
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
 
-        var activeButt = false;
-
-        if (selUnitDatCom.HaveUnit)
+        public void Run()
         {
-            if (selUnitDatCom.Is(UnitTypes.King))
-            {
-                //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
-            }
+            var idxSelCell = _selectorFilter.Get1(0).IdxSelCell;
+            ref var condUnitUICom = ref _condUIFilt.Get1(0);
 
-            else if (selUnitDatCom.Is(UnitTypes.Pawn))
+            ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
+            ref var selOnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
+
+
+            condUnitUICom.SetText_Info(LanguageComCom.GetText(GameLanguageTypes.ConditAbilities));
+
+
+            var activeButt = false;
+
+            if (selUnitDatCom.HaveUnit)
             {
-                if (selUnitDatCom.HaveMaxAmountHealth)
+                if (selUnitDatCom.Is(UnitTypes.King))
                 {
-                    //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Extract));
+                    //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
                 }
+
+                else if (selUnitDatCom.Is(UnitTypes.Pawn))
+                {
+                    if (selUnitDatCom.HaveMaxAmountHealth)
+                    {
+                        //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Extract));
+                    }
+                    else
+                    {
+                        //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
+                    }
+                }
+
                 else
                 {
                     //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
                 }
-            }
 
-            else
-            {
-                //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
-            }
-
-            if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
-            {
-                activeButt = true;
-
-                if (selUnitDatCom.Is(CondUnitTypes.Protected))
+                if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
                 {
-                    condUnitUICom.SetColor(CondUnitTypes.Protected, Color.yellow);
-                }
+                    activeButt = true;
 
-                else
-                {
-                    condUnitUICom.SetColor(CondUnitTypes.Protected, Color.white);
-                }
+                    if (selUnitDatCom.Is(CondUnitTypes.Protected))
+                    {
+                        condUnitUICom.SetColor(CondUnitTypes.Protected, Color.yellow);
+                    }
 
-                if (selUnitDatCom.Is(CondUnitTypes.Relaxed))
-                {
-                    condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.green);
-                }
-                else
-                {
-                    condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.white);
+                    else
+                    {
+                        condUnitUICom.SetColor(CondUnitTypes.Protected, Color.white);
+                    }
+
+                    if (selUnitDatCom.Is(CondUnitTypes.Relaxed))
+                    {
+                        condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.green);
+                    }
+                    else
+                    {
+                        condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.white);
+                    }
                 }
             }
+
+
+            condUnitUICom.SetActive(CondUnitTypes.Relaxed, activeButt);
         }
-
-
-        condUnitUICom.SetActive(CondUnitTypes.Relaxed, activeButt);
     }
 }

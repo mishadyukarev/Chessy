@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Components.View.Else.Game.General
+namespace Scripts.Game
 {
     internal struct PhotonRpcViewGameCom
     {

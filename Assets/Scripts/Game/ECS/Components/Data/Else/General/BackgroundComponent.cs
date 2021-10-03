@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Assets.Scripts.ECS.Component.Game
+namespace Scripts.Game
 {
     internal struct BackgroundComponent
     {

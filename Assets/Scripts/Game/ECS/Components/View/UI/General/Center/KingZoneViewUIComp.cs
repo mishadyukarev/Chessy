@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.ECS.Component.View.UI.Game.General.Center
+namespace Scripts.Game
 {
     internal struct KingZoneViewUIComp
     {

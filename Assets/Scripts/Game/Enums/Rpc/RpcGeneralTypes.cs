@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Abstractions.Enums
+﻿namespace Scripts.Game
 {
     public enum RpcGeneralTypes
     {
@@ -7,11 +7,8 @@
         SetDonerActiveUI,
         ActiveAmountMotionUI,
         GetAvailableCellsForSetting,
-        //EndGame,
-        //Attack,
         Mistake,
         GetUnit,
-        //SetUnit,
         Sound,
     }
 }

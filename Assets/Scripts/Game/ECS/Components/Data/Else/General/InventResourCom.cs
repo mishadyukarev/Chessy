@@ -1,9 +1,8 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using static Scripts.Game.EconomyValues;
 
-namespace Assets.Scripts.ECS.Component.Game
+namespace Scripts.Game
 {
     internal struct InventResourCom
     {

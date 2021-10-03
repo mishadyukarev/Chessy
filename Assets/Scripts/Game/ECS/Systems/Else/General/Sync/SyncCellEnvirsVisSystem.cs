@@ -1,9 +1,7 @@
-﻿using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using System;
 
-namespace Assets.Scripts.ECS.Game.General.Systems.SyncCellVision
+namespace Scripts.Game
 {
     internal sealed class SyncCellEnvirsVisSystem : IEcsRunSystem
     {

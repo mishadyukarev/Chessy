@@ -1,11 +1,10 @@
-﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.ECS.Component.View.UI.Game.General.Down
+namespace Scripts.Game
 {
     internal struct GiveTakeZoneViewUIComp
     {

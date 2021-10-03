@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.ECS.Component.Menu
+namespace Scripts.Menu
 {
     internal struct BackgroundMenuUICom
     {

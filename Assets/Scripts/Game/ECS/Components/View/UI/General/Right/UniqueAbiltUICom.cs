@@ -1,11 +1,11 @@
-﻿using Assets.Scripts.Abstractions.Enums;
+﻿using Scripts.Common;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Assets.Scripts.ECS.Components.View.UI.Game.General.Right
+namespace Scripts.Game
 {
     internal struct UniqueAbiltUICom
     {

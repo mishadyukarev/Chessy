@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.ECS.Component.Game.Master
+﻿namespace Scripts.Game
 {
     internal struct ForSettingUnitMasCom
     {

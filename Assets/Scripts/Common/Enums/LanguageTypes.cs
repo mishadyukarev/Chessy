@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Abstractions.ValuesConsts
+﻿namespace Scripts.Common
 {
     public enum LanguageTypes
     {

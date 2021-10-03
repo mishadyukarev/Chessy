@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Abstractions.Enums.Cell
+﻿namespace Scripts.Game
 {
     public enum UnitSlotTypes
     {

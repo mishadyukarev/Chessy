@@ -1,8 +1,6 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Workers;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Assets.Scripts.ECS.Components.Data.Else.Game.General
+namespace Scripts.Game
 {
     internal struct CellsForSetUnitComp
     {

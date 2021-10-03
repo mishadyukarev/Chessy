@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Assets.Scripts.ECS.Component.Data.UI.Game.General
+namespace Scripts.Game
 {
     internal struct MistakeDataUICom
     {

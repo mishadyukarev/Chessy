@@ -1,101 +1,101 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.Game.Master;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using System;
 
-internal sealed class ConditionMasterSystem : IEcsRunSystem
+namespace Scripts.Game
 {
-    private EcsFilter<InfoCom> _infoFilter = default;
-    private EcsFilter<ConditionMasCom> _conditionFilter = default;
-
-    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-
-    public void Run()
+    internal sealed class ConditionMasterSystem : IEcsRunSystem
     {
-        var sender = _infoFilter.Get1(0).FromInfo.Sender;
-        var neededCondType = _conditionFilter.Get1(0).NeededCondUnitType;
-        var idxForCondit = _conditionFilter.Get1(0).IdxForCondition;
+        private EcsFilter<InfoCom> _infoFilter = default;
+        private EcsFilter<ConditionMasCom> _conditionFilter = default;
 
-        ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxForCondit);
-        ref var curOwnerCellUnitDataCom = ref _cellUnitFilter.Get2(idxForCondit);
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
-
-        switch (neededCondType)
+        public void Run()
         {
-            case CondUnitTypes.None:
-                curCellUnitDataCom.ResetCondType();
-                break;
+            var sender = _infoFilter.Get1(0).FromInfo.Sender;
+            var neededCondType = _conditionFilter.Get1(0).NeededCondUnitType;
+            var idxForCondit = _conditionFilter.Get1(0).IdxForCondition;
 
-            case CondUnitTypes.Protected:
-                if (curCellUnitDataCom.Is(CondUnitTypes.Protected))
-                {
-                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+            ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxForCondit);
+            ref var curOwnerCellUnitDataCom = ref _cellUnitFilter.Get2(idxForCondit);
 
+
+            switch (neededCondType)
+            {
+                case CondUnitTypes.None:
                     curCellUnitDataCom.ResetCondType();
-                }
+                    break;
 
-                else if (curCellUnitDataCom.HaveMaxAmountSteps)
-                {
-                    if (curCellUnitDataCom.Is(CondUnitTypes.Relaxed))
-                    {
-                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-
-                        curCellUnitDataCom.CondUnitType = neededCondType;
-
-                        curCellUnitDataCom.ResetAmountSteps();
-                    }
-                    else
-                    {
-                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-
-                        curCellUnitDataCom.CondUnitType = neededCondType;
-
-                        curCellUnitDataCom.ResetAmountSteps();
-                    }
-                }
-
-                else
-                {
-                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                }
-                break;
-
-
-            case CondUnitTypes.Relaxed:
-                if (curCellUnitDataCom.Is(CondUnitTypes.Relaxed))
-                {
-                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-                    curCellUnitDataCom.ResetCondType();
-                }
-
-                else if (curCellUnitDataCom.HaveMaxAmountSteps)
-                {
+                case CondUnitTypes.Protected:
                     if (curCellUnitDataCom.Is(CondUnitTypes.Protected))
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-                        curCellUnitDataCom.CondUnitType = neededCondType;
-                        curCellUnitDataCom.ResetAmountSteps();
+
+                        curCellUnitDataCom.ResetCondType();
                     }
+
+                    else if (curCellUnitDataCom.HaveMaxAmountSteps)
+                    {
+                        if (curCellUnitDataCom.Is(CondUnitTypes.Relaxed))
+                        {
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+
+                            curCellUnitDataCom.CondUnitType = neededCondType;
+
+                            curCellUnitDataCom.ResetAmountSteps();
+                        }
+                        else
+                        {
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+
+                            curCellUnitDataCom.CondUnitType = neededCondType;
+
+                            curCellUnitDataCom.ResetAmountSteps();
+                        }
+                    }
+
                     else
                     {
-                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-                        curCellUnitDataCom.CondUnitType = neededCondType;
-                        curCellUnitDataCom.ResetAmountSteps();
+                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
                     }
-                }
-
-                else
-                {
-                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
-                }
-                break;
+                    break;
 
 
-            default:
-                throw new Exception();
+                case CondUnitTypes.Relaxed:
+                    if (curCellUnitDataCom.Is(CondUnitTypes.Relaxed))
+                    {
+                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                        curCellUnitDataCom.ResetCondType();
+                    }
+
+                    else if (curCellUnitDataCom.HaveMaxAmountSteps)
+                    {
+                        if (curCellUnitDataCom.Is(CondUnitTypes.Protected))
+                        {
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                            curCellUnitDataCom.CondUnitType = neededCondType;
+                            curCellUnitDataCom.ResetAmountSteps();
+                        }
+                        else
+                        {
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                            curCellUnitDataCom.CondUnitType = neededCondType;
+                            curCellUnitDataCom.ResetAmountSteps();
+                        }
+                    }
+
+                    else
+                    {
+                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                    }
+                    break;
+
+
+                default:
+                    throw new Exception();
+            }
         }
     }
 }

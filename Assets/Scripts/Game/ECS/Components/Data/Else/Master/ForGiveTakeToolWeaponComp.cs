@@ -1,6 +1,4 @@
-﻿using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-
-namespace Assets.Scripts.ECS.Component.Data.Else.Game.Master
+﻿namespace Scripts.Game
 {
     internal struct ForGiveTakeToolWeaponComp
     {

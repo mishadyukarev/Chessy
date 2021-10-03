@@ -1,15 +1,10 @@
-﻿using Assets.Scripts.Abstractions;
-using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Common;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using System;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.EventSystems;
 
-namespace Assets.Scripts.ECS.System.Data.Common
+namespace Scripts.Common
 {
     public class SpawnInitComSys : IEcsInitSystem
     {

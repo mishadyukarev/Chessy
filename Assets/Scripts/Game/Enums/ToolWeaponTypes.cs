@@ -1,4 +1,4 @@
-﻿namespace Assets.Scripts.Abstractions.Enums.WeaponsAndTools
+﻿namespace Scripts.Game
 {
     public enum ToolWeaponTypes
     {

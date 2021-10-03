@@ -1,11 +1,6 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General.AvailCells;
-using Assets.Scripts.Workers;
-using Assets.Scripts.Workers.Cell;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 
-namespace Assets.Scripts.ECS.Systems.Else.Game.General.FillAvailCells
+namespace Scripts.Game
 {
     internal sealed class FillCellsForShiftSys : IEcsRunSystem
     {

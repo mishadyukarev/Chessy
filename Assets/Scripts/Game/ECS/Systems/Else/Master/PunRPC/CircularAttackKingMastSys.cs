@@ -1,11 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.Workers;
-using Assets.Scripts.Workers.Cell;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using Photon.Pun;
 
-namespace Assets.Scripts.ECS.Systems.Game.Master.PunRPC
+namespace Scripts.Game
 {
     internal sealed class CircularAttackKingMastSys : IEcsRunSystem
     {

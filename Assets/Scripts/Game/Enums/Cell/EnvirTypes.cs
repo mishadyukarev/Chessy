@@ -1,10 +1,13 @@
-﻿public enum EnvirTypes
+﻿namespace Scripts.Game
 {
-    None,
+    public enum EnvirTypes
+    {
+        None,
 
-    Fertilizer,
-    YoungForest,
-    AdultForest,
-    Hill,
-    Mountain,
+        Fertilizer,
+        YoungForest,
+        AdultForest,
+        Hill,
+        Mountain,
+    }
 }

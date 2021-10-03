@@ -1,97 +1,90 @@
-﻿using Assets.Scripts;
-using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.Abstractions.Enums.WeaponsAndTools;
-using Assets.Scripts.Abstractions.ValuesConsts;
-using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Data.Else.Game.General.Cell;
-using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Component.View.Else.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.Supports;
-using Leopotam.Ecs;
-using Scripts.Game;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 using System;
 
-internal sealed class SetterUnitMastSys : IEcsRunSystem
+namespace Scripts.Game
 {
-    private EcsFilter<InfoCom> _infoFilter = default;
-
-    private EcsFilter<ForSettingUnitMasCom> _setterFilter = default;
-    private EcsFilter<InventorUnitsComponent> _unitInventorFilter = default;
-    private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
-
-    private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
-    private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-
-    private EcsFilter<SoundEffectsComp> _soundEffFilter = default;
-
-    public void Run()
+    internal sealed class SetterUnitMastSys : IEcsRunSystem
     {
-        var sender = _infoFilter.Get1(0).FromInfo.Sender;
-        var unitTypeForSet = _setterFilter.Get1(0).UnitTypeForSetting;
-        var idxForSet = _setterFilter.Get1(0).IdxCellForSetting;
+        private EcsFilter<InfoCom> _infoFilter = default;
 
-        ref var unitInvCom = ref _unitInventorFilter.Get1(0);
+        private EcsFilter<ForSettingUnitMasCom> _setterFilter = default;
+        private EcsFilter<InventorUnitsComponent> _unitInventorFilter = default;
+        private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
 
-        ref var curEnvDatCom = ref _cellEnvirDataFilter.Get1(idxForSet);
-        ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForSet);
-        ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxForSet);
+        private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
+        private EcsFilter<SoundEffectsComp> _soundEffFilter = default;
 
-        PlayerTypes playerSender = default;
-
-        if (GameModesCom.IsOfflineMode) playerSender = WhoseMoveCom.WhoseMoveOffline;
-        else playerSender = sender.GetPlayerType();
-
-
-        if (_cellsSetUnitFilter.Get1(0).HaveIdxCell(playerSender, idxForSet))
+        public void Run()
         {
-            int newAmountHealth;
-            int newAmountSteps;
+            var sender = _infoFilter.Get1(0).FromInfo.Sender;
+            var unitTypeForSet = _setterFilter.Get1(0).UnitTypeForSetting;
+            var idxForSet = _setterFilter.Get1(0).IdxCellForSetting;
 
-            switch (unitTypeForSet)
+            ref var unitInvCom = ref _unitInventorFilter.Get1(0);
+
+            ref var curEnvDatCom = ref _cellEnvirDataFilter.Get1(idxForSet);
+            ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForSet);
+            ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxForSet);
+
+
+            PlayerTypes playerSender = default;
+
+            if (GameModesCom.IsOfflineMode) playerSender = WhoseMoveCom.WhoseMoveOffline;
+            else playerSender = sender.GetPlayerType();
+
+
+            if (_cellsSetUnitFilter.Get1(0).HaveIdxCell(playerSender, idxForSet))
             {
-                case UnitTypes.None:
-                    throw new Exception();
+                int newAmountHealth;
+                int newAmountSteps;
 
-                case UnitTypes.King:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_KING;
-                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_KING;
-                    curUnitDatCom.ArcherWeapType = default;
-                    break;
+                switch (unitTypeForSet)
+                {
+                    case UnitTypes.None:
+                        throw new Exception();
 
-                case UnitTypes.Pawn:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN;
-                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN;
-                    curUnitDatCom.ArcherWeapType = default;
-                    break;
+                    case UnitTypes.King:
+                        newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_KING;
+                        newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_KING;
+                        curUnitDatCom.ArcherWeapType = default;
+                        break;
 
-                case UnitTypes.Rook:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK;
-                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK;
-                    curUnitDatCom.ArcherWeapType = ToolWeaponTypes.Bow;
-                    break;
+                    case UnitTypes.Pawn:
+                        newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN;
+                        newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN;
+                        curUnitDatCom.ArcherWeapType = default;
+                        break;
 
-                case UnitTypes.Bishop:
-                    newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP;
-                    newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
-                    curUnitDatCom.ArcherWeapType = ToolWeaponTypes.Bow;
-                    break;
+                    case UnitTypes.Rook:
+                        newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK;
+                        newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK;
+                        curUnitDatCom.ArcherWeapType = ToolWeaponTypes.Bow;
+                        break;
 
-                default:
-                    throw new Exception();
+                    case UnitTypes.Bishop:
+                        newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP;
+                        newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
+                        curUnitDatCom.ArcherWeapType = ToolWeaponTypes.Bow;
+                        break;
+
+                    default:
+                        throw new Exception();
+                }
+
+                curUnitDatCom.UnitType = unitTypeForSet;
+                curUnitDatCom.AmountHealth = newAmountHealth;
+                curUnitDatCom.AmountSteps = newAmountSteps;
+                curUnitDatCom.CondUnitType = default;
+                curOwnUnitCom.PlayerType = playerSender;
+
+
+                RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+
+                unitInvCom.TakeUnitsInInv(playerSender, unitTypeForSet);
             }
-
-            curUnitDatCom.UnitType = unitTypeForSet;
-            curUnitDatCom.AmountHealth = newAmountHealth;
-            curUnitDatCom.AmountSteps = newAmountSteps;
-            curUnitDatCom.CondUnitType = default;
-            curOwnUnitCom.PlayerType = playerSender;
-
-
-            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-
-            unitInvCom.TakeUnitsInInv(playerSender, unitTypeForSet);
         }
     }
 }

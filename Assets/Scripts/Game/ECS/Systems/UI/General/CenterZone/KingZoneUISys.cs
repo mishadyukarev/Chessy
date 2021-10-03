@@ -1,11 +1,6 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.View.UI.Game.General.Center;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 
-namespace Assets.Scripts.ECS.Systems.UI.Game.General.Sync.CenterZone
+namespace Scripts.Game
 {
     internal sealed class KingZoneUISys : IEcsRunSystem
     {

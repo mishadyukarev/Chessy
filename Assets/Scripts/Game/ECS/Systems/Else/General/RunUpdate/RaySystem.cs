@@ -1,24 +1,24 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.View.Else.Game.General.Cell;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-internal sealed class RaySystem : IEcsRunSystem
+namespace Scripts.Game
 {
-    private EcsFilter<XyCellComponent> _xyCellFilter = default;
-    private EcsFilter<CellViewComponent> _cellViewFilter = default;
-    private EcsFilter<SelectorCom> _selectorFilter = default;
-
-    private Ray _ray;
-    private const float RAY_DISTANCE = 100;
-
-    public void Run()
+    internal sealed class RaySystem : IEcsRunSystem
     {
-        ref var selCom = ref _selectorFilter.Get1(0);
+        private EcsFilter<XyCellComponent> _xyCellFilter = default;
+        private EcsFilter<CellViewComponent> _cellViewFilter = default;
+        private EcsFilter<SelectorCom> _selectorFilter = default;
 
-        _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        selCom.RaycastHit2D = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
+        private Ray _ray;
+        private const float RAY_DISTANCE = 100;
+
+        public void Run()
+        {
+            ref var selCom = ref _selectorFilter.Get1(0);
+
+            _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            selCom.RaycastHit2D = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
 
 #if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
 
@@ -30,23 +30,23 @@ internal sealed class RaySystem : IEcsRunSystem
 
 #endif
 
-        if (selCom.RaycastHit2D)
-        {
-            foreach (byte idx in _xyCellFilter)
+            if (selCom.RaycastHit2D)
             {
-                int one = _cellViewFilter.Get1(idx).InstanceID;
-                int two = selCom.RaycastHit2D.transform.gameObject.GetInstanceID();
-
-                if (one == two)
+                foreach (byte idx in _xyCellFilter)
                 {
-                    selCom.IdxCurCell = idx;
-                    selCom.RaycastGettedType = RaycastGettedTypes.Cell;
-                    return;
-                }
-            }
+                    int one = _cellViewFilter.Get1(idx).InstanceID;
+                    int two = selCom.RaycastHit2D.transform.gameObject.GetInstanceID();
 
-            selCom.RaycastGettedType = default;
-        }
+                    if (one == two)
+                    {
+                        selCom.IdxCurCell = idx;
+                        selCom.RaycastGettedType = RaycastGettedTypes.Cell;
+                        return;
+                    }
+                }
+
+                selCom.RaycastGettedType = default;
+            }
 
 
 
@@ -59,5 +59,6 @@ internal sealed class RaySystem : IEcsRunSystem
             }
         }
 #endif
+        }
     }
 }

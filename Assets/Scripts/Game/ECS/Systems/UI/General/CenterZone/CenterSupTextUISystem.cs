@@ -1,12 +1,9 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component.Data.UI.Game.General;
-using Assets.Scripts.ECS.Component.View.UI.Game.General;
-using Assets.Scripts.ECS.Components.Data.Else.Common;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 using System;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Systems.Game.General.UI.View.Down
+namespace Scripts.Game
 {
     internal sealed class CenterSupTextUISystem : IEcsRunSystem
     {

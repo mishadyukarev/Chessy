@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-namespace Assets.Scripts.ECS.Component.View.UI.Game.General
+namespace Scripts.Game
 {
     internal struct EconomyViewUICom
     {

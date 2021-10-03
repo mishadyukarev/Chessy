@@ -1,12 +1,7 @@
-﻿using Assets.Scripts.Abstractions.Enums;
-using Assets.Scripts.ECS.Component;
-using Assets.Scripts.ECS.Component.Game;
-using Assets.Scripts.ECS.Component.Game.Master;
-using Assets.Scripts.ECS.Components.Data.Else.Game.General;
-using Assets.Scripts.Supports;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
+using Scripts.Common;
 
-namespace Assets.Scripts.ECS.Game.Master.Systems.PunRPC
+namespace Scripts.Game
 {
     internal class UpgradeMasterSystem : IEcsRunSystem
     {
