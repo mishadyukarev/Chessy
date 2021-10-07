@@ -20,7 +20,16 @@ namespace Scripts.Game
 
             if (mistakeDataUICom.MistakeTypes == MistakeTypes.None)
             {
-                mistakeViewUICom.SetActiveParent(false);
+                mistakeViewUICom.ActiveBackgroud(false);
+
+                mistakeViewUICom.ActiveTextZone(false);
+                mistakeViewUICom.ActiveNeedSteps(false);
+                mistakeViewUICom.ActiveNeedMoreHealth(false);
+                mistakeViewUICom.ActiveNeedOtherPlace(false);
+                mistakeViewUICom.ActiveNeedCity(false);
+                mistakeViewUICom.ActiveThatsForOtherUnit(false);
+                mistakeViewUICom.ActiveNearBorderZone(false);
+                mistakeViewUICom.ActiveNeedMoreResources(false);
             }
             else
             {
@@ -34,15 +43,13 @@ namespace Scripts.Game
                         }
                     }
 
-                    mistakeViewUICom.Text = LanguageComCom.GetText(GameLanguageTypes.NeedMoreResources);
-                    mistakeViewUICom.SetActiveParent(true);
+                    mistakeViewUICom.ActiveNeedMoreResources(true);
 
                     mistakeDataUICom.CurrentTime += Time.deltaTime;
 
                     if (mistakeDataUICom.CurrentTime >= _neededTimeForFading)
                     {
                         mistakeDataUICom.CurrentTime = 0;
-                        mistakeViewUICom.SetActiveParent(false);
                         mistakeDataUICom.ResetMistakeType();
                         mistakeDataUICom.ClearAllNeeds();
 
@@ -55,14 +62,13 @@ namespace Scripts.Game
 
                 else
                 {
-                    mistakeViewUICom.SetActiveParent(true);
+                    mistakeViewUICom.ActiveBackgroud(true);
 
                     mistakeDataUICom.CurrentTime += Time.deltaTime;
 
                     if (mistakeDataUICom.CurrentTime >= _neededTimeForFading)
                     {
                         mistakeDataUICom.CurrentTime = 0;
-                        mistakeViewUICom.SetActiveParent(false);
                         mistakeDataUICom.ResetMistakeType();
                     }
 
@@ -74,40 +80,28 @@ namespace Scripts.Game
                         case MistakeTypes.Economy:
                             throw new Exception();
 
-                        case MistakeTypes.NeedKing:
-                            mistakeViewUICom.Text = LanguageComCom.GetText(GameLanguageTypes.NeedSetKing);
-                            break;
-
                         case MistakeTypes.NeedMoreSteps:
-                            mistakeViewUICom.Text = LanguageComCom.GetText(GameLanguageTypes.NeedMoreSteps);
+                            mistakeViewUICom.ActiveNeedSteps(true);
                             break;
 
                         case MistakeTypes.NeedOtherPlace:
-                            mistakeViewUICom.Text = LanguageComCom.GetText(GameLanguageTypes.NeedOtherPlace);
+                            mistakeViewUICom.ActiveNeedOtherPlace(true);
                             break;
 
                         case MistakeTypes.NeedMoreHealth:
-                            mistakeViewUICom.Text = LanguageComCom.GetText(GameLanguageTypes.NeedMoreHealth);
-                            break;
-
-                        case MistakeTypes.PawnMustHaveTool:
-                            mistakeViewUICom.Text = LanguageComCom.GetText(GameLanguageTypes.PawnMustHaveTool);
-                            break;
-
-                        case MistakeTypes.PawnHaveTool:
-                            mistakeViewUICom.Text = LanguageComCom.GetText(GameLanguageTypes.PawnHaveTool);
+                            mistakeViewUICom.ActiveNeedMoreHealth(true);
                             break;
 
                         case MistakeTypes.NeedCity:
-                            mistakeViewUICom.Text = LanguageComCom.GetText(GameLanguageTypes.NeedSetCity);
+                            mistakeViewUICom.ActiveNeedCity(true);
                             break;
 
                         case MistakeTypes.ThatIsForOtherUnit:
-                            mistakeViewUICom.Text = LanguageComCom.GetText(GameLanguageTypes.ThatsForOtherUnit);
+                            mistakeViewUICom.ActiveThatsForOtherUnit(true);
                             break;
 
                         case MistakeTypes.NearBorder:
-                            mistakeViewUICom.Text = LanguageComCom.GetText(GameLanguageTypes.NearBorder);
+                            mistakeViewUICom.ActiveNearBorderZone(true);
                             break;
 
                         default:

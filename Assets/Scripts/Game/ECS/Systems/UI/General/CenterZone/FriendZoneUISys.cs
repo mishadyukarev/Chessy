@@ -23,11 +23,11 @@ namespace Scripts.Game
 
                     if (WhoseMoveCom.CurPlayer == PlayerTypes.First)
                     {
-                        friendViewCom.SetTextPlayerMotion("1 player");
+                        friendViewCom.SetTextPlayerMotion("1");
                     }
                     else
                     {
-                        friendViewCom.SetTextPlayerMotion("2 player");
+                        friendViewCom.SetTextPlayerMotion("2");
                     }
                 }
             }

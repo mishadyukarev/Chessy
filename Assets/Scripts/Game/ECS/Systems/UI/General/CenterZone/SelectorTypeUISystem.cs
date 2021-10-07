@@ -14,19 +14,24 @@ namespace Scripts.Game
             ref var selectCom = ref _selectorFilter.Get1(0);
 
 
-            selectTypeViewUIComp.DisableParent();
-
-
             if (selectCom.IsCellClickType(CellClickTypes.GiveTakeTW))
             {
-                selectTypeViewUIComp.Text = LanguageComCom.GetText(GameLanguageTypes.GiveOrTakeTool);
-                selectTypeViewUIComp.EnableParent();
+                selectTypeViewUIComp.SetActiveBack(true);
+                selectTypeViewUIComp.SetActiveGiveTake(true);
             }
 
             else if (selectCom.IsCellClickType(CellClickTypes.PickFire))
             {
-                selectTypeViewUIComp.Text = LanguageComCom.GetText(GameLanguageTypes.PickAdultForest);
-                selectTypeViewUIComp.EnableParent();
+                selectTypeViewUIComp.SetActiveBack(true);
+                selectTypeViewUIComp.SetActivePickAdultForest(true);
+            }
+
+            else
+            {
+                selectTypeViewUIComp.SetActiveBack(false);
+
+                selectTypeViewUIComp.SetActivePickAdultForest(false);
+                selectTypeViewUIComp.SetActiveGiveTake(false);
             }
         }
     }

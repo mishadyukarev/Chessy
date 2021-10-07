@@ -4,19 +4,6 @@
     {
         None,
 
-        Online,
-        PublicGame,
-        CreatePGR,
-        JoinPGR,
-        FriendGame,
-        CreateFGR,
-        JoinFGR,
-
-        Offline,
-        Training,
-
-        HelpProject,
         InfoBuy,
-        Exit,
     }
 }

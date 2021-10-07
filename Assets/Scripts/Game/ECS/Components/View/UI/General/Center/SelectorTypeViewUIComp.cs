@@ -1,27 +1,28 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Scripts.Game
 {
     internal struct SelectorTypeViewUIComp
     {
-        private GameObject _parent_GO;
-        private TextMeshProUGUI _text_MP;
-
-        internal string Text
-        {
-            get => _text_MP.text;
-            set => _text_MP.text = value;
-        }
+        private Image _back_Image;
+        private GameObject _pickAdultForest_GO;
+        private GameObject _giveTakeTool_GO;
 
         internal SelectorTypeViewUIComp(GameObject centerZone_GO)
         {
-            _parent_GO = centerZone_GO.transform.Find("SelectorTypeZone").gameObject;
-            _text_MP = _parent_GO.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+            var selZone_Trans = centerZone_GO.transform.Find("SelectorTypeZone");
+
+            _back_Image = selZone_Trans.Find("Back_Image").GetComponent<Image>();
+            _pickAdultForest_GO = selZone_Trans.Find("PickAdultForestZone").gameObject;
+            _giveTakeTool_GO = selZone_Trans.Find("GiveTakeToolZone").gameObject;
         }
 
 
-        internal void EnableParent() => _parent_GO.SetActive(true);
-        internal void DisableParent() => _parent_GO.SetActive(false);
+        internal void SetActiveBack(bool isActive) => _back_Image.gameObject.SetActive(isActive);
+
+        internal void SetActivePickAdultForest(bool isActive) => _pickAdultForest_GO.SetActive(isActive);
+        internal void SetActiveGiveTake(bool isActive) => _giveTakeTool_GO.SetActive(isActive);
     }
 }

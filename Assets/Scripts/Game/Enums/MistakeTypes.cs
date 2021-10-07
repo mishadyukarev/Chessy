@@ -5,12 +5,10 @@
         None,
 
         Economy,
-        NeedKing,
         NeedMoreSteps,
         NeedOtherPlace,
         NeedMoreHealth,
-        PawnMustHaveTool,
-        PawnHaveTool,
+        //PawnMustHaveTool,
         NeedCity,
         ThatIsForOtherUnit,
         NearBorder,

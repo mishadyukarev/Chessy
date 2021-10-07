@@ -30,7 +30,7 @@ namespace Scripts.Menu
                     leftConnectCom.SetActive_Button(false);
                     leftBackCom.SetActiveFrontImage(false);
                 }
-                else
+                else if (PhotonNetwork.IsConnectedAndReady)
                 {
                     leftConnectCom.SetActive_Button(true);
                     leftBackCom.SetActiveFrontImage(true);

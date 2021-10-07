@@ -29,10 +29,6 @@ namespace Scripts.Game
             }
             else
             {
-                readyViewUICom.SetTextWait(LanguageComCom.GetText(GameLanguageTypes.WaitReady));
-                readyViewUICom.SetTextReady(LanguageComCom.GetText(GameLanguageTypes.ReadyBeforeGame));
-                readyViewUICom.SetTextJoinForFind(LanguageComCom.GetText(GameLanguageTypes.JoinForFind));
-
                 readyViewUICom.SetActiveParent(true);
             }
         }
