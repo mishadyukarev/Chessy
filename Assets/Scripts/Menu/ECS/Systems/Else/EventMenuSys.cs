@@ -47,10 +47,10 @@ namespace Scripts.Menu
 
         private void ConnectOnline()
         {
-            //PhotonNetwork.PhotonServerSettings. PreferredRegion = CloudRegionCode.ru;
             PhotonNetwork.PhotonServerSettings.DevRegion = "ru";
-            //PhotonNetwork.
-            PhotonNetwork.ConnectUsingSettings(/*Application.version*/);
+            PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "ru";
+            //PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion = Refe
+            PhotonNetwork.ConnectUsingSettings();
         }
 
         private void ConnectOffline()
