@@ -1,4 +1,6 @@
-﻿using Scripts.Common;
+﻿using Photon.Pun;
+using Photon.Realtime;
+using Scripts.Common;
 using UnityEngine;
 
 namespace Scripts
@@ -12,6 +14,9 @@ namespace Scripts
         {
             _eCSmanager = new ECSManager(ToggleScene, gameObject);
             ToggleScene(_currentSceneType);
+
+            Application.runInBackground = true;
+
         }
 
         private void Update()

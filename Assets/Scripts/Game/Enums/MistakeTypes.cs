@@ -8,7 +8,6 @@
         NeedMoreSteps,
         NeedOtherPlace,
         NeedMoreHealth,
-        //PawnMustHaveTool,
         NeedCity,
         ThatIsForOtherUnit,
         NearBorder,

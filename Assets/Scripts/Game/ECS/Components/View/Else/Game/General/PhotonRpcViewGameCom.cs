@@ -17,16 +17,16 @@ namespace Scripts.Game
             RpcSys = RpcView_GO.AddComponent<RpcSys>();
 
 
-            PhotonNetwork.AllocateViewID(PhotonView);
-            PhotonView.ViewID = 1001;
-            //if (PhotonNetwork.isMasterClient)
-            //{
-            //    PhotonNetwork.AllocateViewID(/*PhotonView*/);
-            //}
-            //else
-            //{
-            //    PhotonView.viewID = 1001;
-            //}
+            //PhotonNetwork.AllocateViewID(PhotonView);
+            //PhotonView.ViewID = 1001;
+            if (PhotonNetwork.IsMasterClient)
+            {
+                PhotonNetwork.AllocateViewID(PhotonView);
+            }
+            else
+            {
+                PhotonView.ViewID = 1001;
+            }
         }
     }
 }

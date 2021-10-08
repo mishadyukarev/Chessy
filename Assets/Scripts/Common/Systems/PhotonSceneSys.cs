@@ -51,6 +51,14 @@ namespace Scripts.Common
             SpawnInitComSys.ToggleScene(SceneTypes.Game);
         }
 
+        public override void OnPlayerEnteredRoom(Player newPlayer)
+        {
+            base.OnPlayerEnteredRoom(newPlayer);
+
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+            PhotonNetwork.CurrentRoom.IsVisible = false;
+        }
+
         //public override sealed void OnDisconnectedFromPhoton()
         //{
         //    base.OnDisconnectedFromPhoton();

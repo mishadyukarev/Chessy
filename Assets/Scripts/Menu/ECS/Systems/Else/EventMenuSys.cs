@@ -2,6 +2,7 @@
 using Photon.Pun;
 using Photon.Realtime;
 using Scripts.Common;
+using UnityEditor;
 using UnityEngine;
 
 namespace Scripts.Menu
@@ -49,7 +50,8 @@ namespace Scripts.Menu
         {
             PhotonNetwork.PhotonServerSettings.DevRegion = "ru";
             PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "ru";
-            //PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion = Refe
+            PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion = Application.version;
+
             PhotonNetwork.ConnectUsingSettings();
         }
 
@@ -71,6 +73,7 @@ namespace Scripts.Menu
             roomOptions.MaxPlayers = MAX_PLAYERS;
             roomOptions.IsVisible = true;
             roomOptions.IsOpen = true;
+            roomOptions.EmptyRoomTtl = 3000;
             var roomName = UnityEngine.Random.Range(1, 9999999).ToString();
 
             PhotonNetwork.CreateRoom(roomName, roomOptions, default, default);// CreateRoom(roomName, roomOptions);
