@@ -16,6 +16,7 @@ namespace Scripts.Common
         private static event Action<SceneTypes> _toggleScene_Event;
         public static GameObject Main_GO { get; private set; }
         public const string IRL_DISCORD = "https://discord.gg/yxfZnrkBPU";
+        public const string IRL_GAME_IN_GOOGLE_PLAY = "https://play.google.com/store/apps/details?id=com.GooPy.Chessy";
 
         public static void ToggleScene(SceneTypes sceneType) => _toggleScene_Event.Invoke(sceneType);
 

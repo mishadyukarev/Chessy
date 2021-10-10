@@ -11,9 +11,6 @@ public class TestButton : MonoBehaviour
     {
         var videoPlayer = GetComponent<VideoPlayer>();
 
-        transform.parent.GetComponent<RectTransform>().anchoredPosition = new Vector3(Random.Range(-500f, 500f), Random.Range(-300f, 300f));
-
-
         GetComponent<Button>().onClick.AddListener(delegate
         {
             ++_cur;

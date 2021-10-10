@@ -63,7 +63,7 @@ namespace Scripts.Game
                 .Add(new TheEndGameUISystem())
                 .Add(new MotionCenterUISystem())
                 .Add(new ReadyZoneUISystem())
-                .Add(new CenterSupTextUISystem())
+                .Add(new MistakeUISys())
                 .Add(new KingZoneUISys())
                 .Add(new FriendZoneUISys())
                 .Add(new ActiveHitUISys());

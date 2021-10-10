@@ -215,6 +215,9 @@ namespace Scripts.Game
 
                     if(mistakeType == MistakeTypes.Economy)
                     {
+                        _mistakeUIFilter.Get1(0).ClearAllNeeds();
+
+
                         var haves = (bool[])objects[_curNumber++];
                         var haveFood = haves[0];
                         var haveWood = haves[1];

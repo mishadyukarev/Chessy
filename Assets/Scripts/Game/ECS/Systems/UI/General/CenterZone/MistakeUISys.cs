@@ -1,11 +1,10 @@
 ﻿using Leopotam.Ecs;
-using Scripts.Common;
 using System;
 using UnityEngine;
 
 namespace Scripts.Game
 {
-    internal sealed class CenterSupTextUISystem : IEcsRunSystem
+    internal sealed class MistakeUISys : IEcsRunSystem
     {
         private EcsFilter<MistakeDataUICom, MistakeViewUICom> _mistakeUIFilter = default;
         private EcsFilter<EconomyViewUICom> _economyUIFilter = default;
@@ -20,32 +19,15 @@ namespace Scripts.Game
 
             if (mistakeDataUICom.MistakeTypes == MistakeTypes.None)
             {
-                mistakeViewUICom.ActiveBackgroud(false);
-
-                mistakeViewUICom.ActiveTextZone(false);
-                mistakeViewUICom.ActiveNeedSteps(false);
-                mistakeViewUICom.ActiveNeedMoreHealth(false);
-                mistakeViewUICom.ActiveNeedOtherPlace(false);
-                mistakeViewUICom.ActiveNeedCity(false);
-                mistakeViewUICom.ActiveThatsForOtherUnit(false);
-                mistakeViewUICom.ActiveNearBorderZone(false);
-                mistakeViewUICom.ActiveNeedMoreResources(false);
+                ResetAll();
             }
             else
             {
+                mistakeDataUICom.CurrentTime += Time.deltaTime;
+
                 if (mistakeDataUICom.MistakeTypes == MistakeTypes.Economy)
                 {
-                    for (ResourceTypes resourceType = (ResourceTypes)1; resourceType < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resourceType++)
-                    {
-                        if (mistakeDataUICom.GetNeedResources(resourceType))
-                        {
-                            _economyUIFilter.Get1(0).SetMainColor(resourceType, Color.red);
-                        }
-                    }
-
-                    mistakeViewUICom.ActiveNeedMoreResources(true);
-
-                    mistakeDataUICom.CurrentTime += Time.deltaTime;
+                    mistakeViewUICom.ActiveNeedMoreResources(true);          
 
                     if (mistakeDataUICom.CurrentTime >= _neededTimeForFading)
                     {
@@ -58,13 +40,28 @@ namespace Scripts.Game
                             _economyUIFilter.Get1(0).SetMainColor(resourceType, Color.white);
                         }
                     }
+
+                    else
+                    {
+                        for (ResourceTypes resourceType = (ResourceTypes)1; resourceType < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resourceType++)
+                        {
+                            if (mistakeDataUICom.GetNeedResources(resourceType))
+                            {
+                                _economyUIFilter.Get1(0).SetMainColor(resourceType, Color.red);
+                            }
+                            else
+                            {
+                                _economyUIFilter.Get1(0).SetMainColor(resourceType, Color.white);
+                            }
+                        }
+                    }
                 }
 
                 else
                 {
-                    mistakeViewUICom.ActiveBackgroud(true);
+                    ResetAll();
 
-                    mistakeDataUICom.CurrentTime += Time.deltaTime;
+                    mistakeViewUICom.ActiveBackgroud(true);
 
                     if (mistakeDataUICom.CurrentTime >= _neededTimeForFading)
                     {
@@ -108,6 +105,27 @@ namespace Scripts.Game
                             throw new Exception();
                     }
                 }
+            }
+        }
+
+        private void ResetAll()
+        {
+            ref var mistakeViewUICom = ref _mistakeUIFilter.Get2(0);
+
+            mistakeViewUICom.ActiveBackgroud(false);
+
+            mistakeViewUICom.ActiveTextZone(false);
+            mistakeViewUICom.ActiveNeedSteps(false);
+            mistakeViewUICom.ActiveNeedMoreHealth(false);
+            mistakeViewUICom.ActiveNeedOtherPlace(false);
+            mistakeViewUICom.ActiveNeedCity(false);
+            mistakeViewUICom.ActiveThatsForOtherUnit(false);
+            mistakeViewUICom.ActiveNearBorderZone(false);
+            mistakeViewUICom.ActiveNeedMoreResources(false);
+
+            for (ResourceTypes resourceType = (ResourceTypes)1; resourceType < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resourceType++)
+            {
+                _economyUIFilter.Get1(0).SetMainColor(resourceType, Color.white);
             }
         }
     }

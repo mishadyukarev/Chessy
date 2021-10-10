@@ -76,7 +76,7 @@ namespace Scripts.Game
 
                     else if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
                     {
-                        if (UnitDatCom(selCom.IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
+                        if (UnitDatCom(selCom.IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }) && OwnUnitCom(selCom.IdxCurCell).IsMine)
                         {
                             RpcSys.GiveTakeToolWeapon(selCom.ToolWeaponTypeForGiveTake, selCom.IdxCurCell);
                         }
