@@ -2,7 +2,6 @@
 using Photon.Pun;
 using Photon.Realtime;
 using Scripts.Common;
-using UnityEditor;
 using UnityEngine;
 
 namespace Scripts.Menu
@@ -13,6 +12,7 @@ namespace Scripts.Menu
         private EcsFilter<ConnectButtonUICom, OfflineZoneUICom, BackgroundMenuUICom> _leftZoneFilter = default;
         private EcsFilter<DownZoneUIMenuCom> _downZoneUIFilt = default;
         private EcsFilter<ShopZoneUIMenuCom> _shopZoneUIFilt = default;
+        private EcsFilter<LikeGameZoneCom> _likeGameZoneFilt = default;
 
         private const byte MAX_PLAYERS = 2;
 
@@ -43,6 +43,7 @@ namespace Scripts.Menu
 
 
             _shopZoneUIFilt.Get1(0).AddListExit_Button(ExitShop);
+            _likeGameZoneFilt.Get1(0).AddListenerExit_But(ExitLikeGame);
         }
 
 
@@ -120,6 +121,10 @@ namespace Scripts.Menu
         private void ExitShop()
         {
             _shopZoneUIFilt.Get1(0).DisableZone();
+        }
+        private void ExitLikeGame()
+        {
+            _likeGameZoneFilt.Get1(0).SetActiveZone(false);
         }
     }
 }

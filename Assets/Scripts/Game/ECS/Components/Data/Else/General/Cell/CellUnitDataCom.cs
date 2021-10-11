@@ -332,7 +332,7 @@ namespace Scripts.Game
                             break;
 
                         case ToolWeaponTypes.Crossbow:
-                            simplePowerDamege += simplePowerDamege / 2;
+                            simplePowerDamege += simplePowerDamege / 3;
                             break;
 
                         default:

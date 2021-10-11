@@ -31,11 +31,11 @@
 
         #region Stats
 
-        public const int AMOUNT_FOOD_MASTER = 20;
-        public const int AMOUNT_FOOD_OTHER = 20;
+        public const int AMOUNT_FOOD_MASTER = 25;
+        public const int AMOUNT_FOOD_OTHER = 25;
 
-        public const int AMOUNT_WOOD_MASTER = 20;
-        public const int AMOUNT_WOOD_OTHER = 20;
+        public const int AMOUNT_WOOD_MASTER = 25;
+        public const int AMOUNT_WOOD_OTHER = 25;
 
         public const int AMOUNT_ORE_MASTER = 0;
         public const int AMOUNT_ORE_OTHER = 0;

@@ -88,8 +88,10 @@ namespace Scripts.Game
                     }
                 }
 
-                fromUnitDatCom.TakeAmountHealth(damageFrom);
-                toUnitDatCom.TakeAmountHealth(damageTo);
+                if(damageFrom > 0) fromUnitDatCom.TakeAmountHealth(damageFrom);
+                if (damageTo > 0) toUnitDatCom.TakeAmountHealth(damageTo);
+
+
 
 
                 if (!toUnitDatCom.HaveAmountHealth)

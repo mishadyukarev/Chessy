@@ -35,6 +35,8 @@ namespace Scripts.Game
                     if (unitDatComDirect.HaveUnit)
                     {
                         unitDatComDirect.TakeAmountHealth(starUnitDatCom.SimplePowerDamage / 4);
+                        unitDatComDirect.TakeAmountHealth(1);
+
 
                         if (!unitDatComDirect.HaveAmountHealth)
                         {

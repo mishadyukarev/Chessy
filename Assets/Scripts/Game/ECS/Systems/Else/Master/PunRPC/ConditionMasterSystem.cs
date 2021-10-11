@@ -34,7 +34,7 @@ namespace Scripts.Game
                         curCellUnitDataCom.ResetCondType();
                     }
 
-                    else if (curCellUnitDataCom.HaveMaxAmountSteps)
+                    else if (curCellUnitDataCom.HaveMinAmountSteps)
                     {
                         if (curCellUnitDataCom.Is(CondUnitTypes.Relaxed))
                         {
@@ -42,7 +42,7 @@ namespace Scripts.Game
 
                             curCellUnitDataCom.CondUnitType = neededCondType;
 
-                            curCellUnitDataCom.ResetAmountSteps();
+                            curCellUnitDataCom.TakeAmountSteps();
                         }
                         else
                         {
@@ -50,7 +50,7 @@ namespace Scripts.Game
 
                             curCellUnitDataCom.CondUnitType = neededCondType;
 
-                            curCellUnitDataCom.ResetAmountSteps();
+                            curCellUnitDataCom.TakeAmountSteps();
                         }
                     }
 
@@ -68,19 +68,19 @@ namespace Scripts.Game
                         curCellUnitDataCom.ResetCondType();
                     }
 
-                    else if (curCellUnitDataCom.HaveMaxAmountSteps)
+                    else if (curCellUnitDataCom.HaveMinAmountSteps)
                     {
                         if (curCellUnitDataCom.Is(CondUnitTypes.Protected))
                         {
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
                             curCellUnitDataCom.CondUnitType = neededCondType;
-                            curCellUnitDataCom.ResetAmountSteps();
+                            curCellUnitDataCom.TakeAmountSteps();
                         }
                         else
                         {
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
                             curCellUnitDataCom.CondUnitType = neededCondType;
-                            curCellUnitDataCom.ResetAmountSteps();
+                            curCellUnitDataCom.TakeAmountSteps();
                         }
                     }
 

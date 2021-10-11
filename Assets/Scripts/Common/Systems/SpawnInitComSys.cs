@@ -60,6 +60,7 @@ namespace Scripts.Common
                 .Replace(new SoundComComp(audioSource))
                 .Replace(new LanguageComCom(LanguageTypes.English))
                 .Replace(new AdComCom(DateTime.Now))
+                .Replace(new TimeStartGameComCom(DateTime.Now))
 
                 //Toggle
                 .Replace(new ToggleZoneComponent(new GameObject()));

@@ -49,7 +49,6 @@ namespace Scripts
                 case SceneTypes.Menu:
                     if (_gameWorld != default)
                     {
-                        _comSysManag.LaunchAdSys.Run();
                         _gameWorld.Destroy();
 
                         _gameGenSysManag.Dispose();
@@ -65,6 +64,10 @@ namespace Scripts
                     _allMenuSystems.Add(new InitSpawnMenuSys());
                     _menuSysManag = new MenuSystemManager(_menuWorld, _allMenuSystems);
                     _allMenuSystems.Init();
+
+
+                    _comSysManag.LaunchAdSys.Run();
+                    _menuSysManag.LaunchLikeGameSys.Run();
                     break;
 
                 case SceneTypes.Game:
