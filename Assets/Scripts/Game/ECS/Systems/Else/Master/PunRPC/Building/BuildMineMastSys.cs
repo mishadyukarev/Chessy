@@ -60,7 +60,7 @@ namespace Scripts.Game
                                 curBuildDatCom.BuildType = forBuildType;
                                 curOwnBuildCom.PlayerType = playerTypeSender;
 
-                                curUnitDatCom.ResetAmountSteps();
+                                curUnitDatCom.TakeAmountSteps();
 
                             }
                             else

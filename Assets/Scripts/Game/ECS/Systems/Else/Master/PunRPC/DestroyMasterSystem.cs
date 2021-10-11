@@ -26,7 +26,7 @@ namespace Scripts.Game
             ref var curEnvDataCom = ref _cellEnvFilter.Get1(idxCellForDestory);
 
 
-            if (curUnitDataCom.HaveMaxAmountSteps)
+            if (curUnitDataCom.HaveMinAmountSteps)
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
 
@@ -34,7 +34,7 @@ namespace Scripts.Game
                 {
                     _endGameFilter.Get1(0).PlayerWinner = curOwnUnitCom.PlayerType;
                 }
-                curUnitDataCom.ResetAmountSteps();
+                curUnitDataCom.TakeAmountSteps();
 
                 if (curBuildDataCom.IsBuildType(BuildingTypes.Farm)) curEnvDataCom.ResetEnvironment(EnvirTypes.Fertilizer);
 

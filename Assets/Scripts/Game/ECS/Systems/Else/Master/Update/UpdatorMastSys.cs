@@ -27,8 +27,8 @@ namespace Scripts.Game
             int amountAdultForest = 0;
 
 
-            invResCom.AddAmountResources(PlayerTypes.First, ResourceTypes.Food);
-            invResCom.AddAmountResources(PlayerTypes.Second, ResourceTypes.Food);
+            invResCom.AddAmountResources(PlayerTypes.First, ResourceTypes.Food, 3);
+            invResCom.AddAmountResources(PlayerTypes.Second, ResourceTypes.Food, 3);
 
             RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.MasterClient);
 

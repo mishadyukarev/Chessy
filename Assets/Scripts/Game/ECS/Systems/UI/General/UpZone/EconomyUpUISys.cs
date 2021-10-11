@@ -81,7 +81,7 @@ namespace Scripts.Game
             }
             var extractOneFarm = amountBuildUpgsCom.GetExtractOneBuild(WhoseMoveCom.CurPlayer, BuildingTypes.Farm);
 
-            var amountAddFood = 1 + builds[BuildingTypes.Farm] * extractOneFarm - amountUnitsInGame;
+            var amountAddFood = 3 + builds[BuildingTypes.Farm] * extractOneFarm - amountUnitsInGame;
 
 
             if (amountAddFood < 0) econViewUICom.SetAddText(ResourceTypes.Food, amountAddFood.ToString());
