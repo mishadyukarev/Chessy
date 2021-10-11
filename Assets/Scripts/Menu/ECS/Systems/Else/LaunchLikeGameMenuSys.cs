@@ -16,7 +16,7 @@ namespace Scripts.Menu
 
                 var difTime = DateTime.Now - TimeStartGameComCom.TimeStartGame;
 
-                if (difTime.Seconds >= 5)
+                if (difTime.Minutes >= 20)
                 {
                     timeStartGameCom.SetActiveZone(true);
                     TimeStartGameComCom.WasLikeGameZone = true;
