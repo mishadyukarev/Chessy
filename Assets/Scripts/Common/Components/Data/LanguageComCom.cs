@@ -48,25 +48,6 @@ namespace Scripts.Common
             _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.YouAreLoser, "Ты проиграл :(");
             _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.YouAreLoser, "你输了:(");
             _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.YouAreLoser, "Eres un perdedor :(");
-
-
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.ConditAbilities, "Standart");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.ConditAbilities, "Стандартные");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.ConditAbilities, "标准");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.ConditAbilities, "Standart");
-
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.UniqueAbilities, "Unique");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.UniqueAbilities, "Уникальные");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.UniqueAbilities, "独特");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.UniqueAbilities, "Exclusivo");
-
-
-            _gameLanguages[LanguageTypes.English].Add(GameLanguageTypes.BuildingAbilities, "Building");
-            _gameLanguages[LanguageTypes.Russian].Add(GameLanguageTypes.BuildingAbilities, "Постройка");
-            _gameLanguages[LanguageTypes.Chinese].Add(GameLanguageTypes.BuildingAbilities, "建筑");
-            _gameLanguages[LanguageTypes.Spanish].Add(GameLanguageTypes.BuildingAbilities, "Edificio");
         }
 
 

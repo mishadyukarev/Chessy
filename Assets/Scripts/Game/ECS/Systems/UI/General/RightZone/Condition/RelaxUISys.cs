@@ -21,9 +21,6 @@ namespace Scripts.Game
             ref var selOnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
 
 
-            condUnitUICom.SetText_Info(LanguageComCom.GetText(GameLanguageTypes.ConditAbilities));
-
-
             var activeButt = false;
 
             if (selUnitDatCom.HaveUnit)

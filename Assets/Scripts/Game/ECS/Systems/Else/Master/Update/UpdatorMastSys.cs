@@ -284,7 +284,7 @@ namespace Scripts.Game
                 }
             }
 
-            if (amountAdultForest <= 9)
+            if (amountAdultForest <= 6)
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
                 GameMasterSystemManager.TruceSystems.Run();

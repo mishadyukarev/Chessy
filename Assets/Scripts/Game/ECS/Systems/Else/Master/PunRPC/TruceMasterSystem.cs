@@ -15,6 +15,7 @@ namespace Scripts.Game
         private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
+        private EcsFilter<CellViewComponent> _cellViewFilt = default;
 
         public void Run()
         {
@@ -45,54 +46,58 @@ namespace Scripts.Game
 
                 curFireCom.DisableFire();
 
-                if (curUnitDatCom.HaveUnit)
+
+                if (_cellViewFilt.Get1(curIdxCell).IsActiveParent)
                 {
-                    if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+                    if (curUnitDatCom.HaveUnit)
                     {
-                        if (curOwnUnitCom.IsPlayerType(PlayerTypes.First))
+                        if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+                        {
+                            if (curOwnUnitCom.IsPlayerType(PlayerTypes.First))
+                            {
+                                invUnitsCom.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType);
+                                curUnitDatCom.DefUnitType();
+                            }
+                        }
+                        else
                         {
                             invUnitsCom.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType);
                             curUnitDatCom.DefUnitType();
                         }
                     }
+
+
+                    if (curBuildDatCom.HaveBuild)
+                    {
+
+                    }
+
                     else
                     {
-                        invUnitsCom.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType);
-                        curUnitDatCom.DefUnitType();
-                    }
-                }
-
-
-                if (curBuildDatCom.HaveBuild)
-                {
-
-                }
-
-                else
-                {
-                    if (curEnvDatCom.HaveEnvir(EnvirTypes.YoungForest))
-                    {
-                        curEnvDatCom.ResetEnvironment(EnvirTypes.YoungForest);
-                        curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
-                    }
-
-                    if (!curEnvDatCom.HaveEnvir(EnvirTypes.Fertilizer)
-                        && !curEnvDatCom.HaveEnvir(EnvirTypes.Mountain)
-                        && !curEnvDatCom.HaveEnvir(EnvirTypes.AdultForest))
-                    {
-                        random = Random.Range(0, 100);
-
-                        if (random <= 5)
+                        if (curEnvDatCom.HaveEnvir(EnvirTypes.YoungForest))
                         {
-                            curEnvDatCom.SetNewEnvir(EnvirTypes.Fertilizer);
+                            curEnvDatCom.ResetEnvironment(EnvirTypes.YoungForest);
+                            curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
                         }
-                        else
+
+                        if (!curEnvDatCom.HaveEnvir(EnvirTypes.Fertilizer)
+                            && !curEnvDatCom.HaveEnvir(EnvirTypes.Mountain)
+                            && !curEnvDatCom.HaveEnvir(EnvirTypes.AdultForest))
                         {
                             random = Random.Range(0, 100);
 
-                            if (random <= 20)
+                            if (random <= 3)
                             {
-                                curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
+                                curEnvDatCom.SetNewEnvir(EnvirTypes.Fertilizer);
+                            }
+                            else
+                            {
+                                random = Random.Range(0, 100);
+
+                                if (random <= 30)
+                                {
+                                    curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
+                                }
                             }
                         }
                     }

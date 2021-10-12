@@ -51,6 +51,7 @@ namespace Scripts.Menu
         {
             PhotonNetwork.PhotonServerSettings.DevRegion = "ru";
             PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = "ru";
+            PhotonNetwork.PhotonServerSettings.AppSettings.BestRegionSummaryFromStorage = "ru";
             PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion = Application.version;
 
             PhotonNetwork.ConnectUsingSettings();

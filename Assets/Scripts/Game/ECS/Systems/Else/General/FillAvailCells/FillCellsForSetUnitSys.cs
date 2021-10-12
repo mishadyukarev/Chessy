@@ -30,11 +30,11 @@ namespace Scripts.Game
 
                 if (!curUnitDataFilter.HaveUnit)
                 {
-                    if (y < 3 && x > 2 && x < 12)
+                    if (y < 3 && x > 3 && x < 12)
                     {
                         cellsForSetUnitComp.AddIdxCell(PlayerTypes.First, curIdx);
                     }
-                    else if (y > 7 && x > 2 && x < 12)
+                    else if (y > 7 && x > 3 && x < 12)
                     {
                         cellsForSetUnitComp.AddIdxCell(PlayerTypes.Second, curIdx);
                     }

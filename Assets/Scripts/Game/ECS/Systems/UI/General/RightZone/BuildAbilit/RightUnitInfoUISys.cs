@@ -31,10 +31,6 @@ namespace Scripts.Game
                 {
                     ref var selOwnUnitCom = ref _cellUnitFilt.Get2(selCom.IdxSelCell);
 
-                    condUnitUICom.SetText_Info(LanguageComCom.GetText(GameLanguageTypes.ConditAbilities));
-                    uniqueAbilUICom.SetTextInfo(LanguageComCom.GetText(GameLanguageTypes.UniqueAbilities));
-                    buildAbilUICom.SetTextInfo(LanguageComCom.GetText(GameLanguageTypes.BuildingAbilities));
-
 
                     if (selOwnUnitCom.IsMine)
                     {
@@ -42,10 +38,6 @@ namespace Scripts.Game
                     }
                 }
             }
-
-            condUnitUICom.SetActiveInfo(needActiveInfoText);
-            uniqueAbilUICom.SetActiveInfo(needActiveInfoText);
-            buildAbilUICom.ActiveInfo(needActiveInfoText);
         }
     }
 }

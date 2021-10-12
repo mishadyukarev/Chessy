@@ -26,9 +26,6 @@ namespace Scripts.Game
             ref var selFireDatCom = ref _cellFireFilter.Get1(idxSelCell);
 
 
-            unitZoneViewCom.SetTextInfo(LanguageComCom.GetText(GameLanguageTypes.UniqueAbilities));
-
-
 
             var activeFirst = false;
             var activeSecond = false;

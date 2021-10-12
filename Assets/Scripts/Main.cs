@@ -16,7 +16,6 @@ namespace Scripts
             ToggleScene(_currentSceneType);
 
             Application.runInBackground = true;
-
         }
 
         private void Update()

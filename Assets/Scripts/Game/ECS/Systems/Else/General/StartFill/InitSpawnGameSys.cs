@@ -95,12 +95,21 @@ namespace Scripts.Game
 
                     void SetActive(GameObject go, int xx, int yy)
                     {
-                        if (xx >= 0 && yy == 0 || xx >= 0 && yy == 10 ||
-                            xx == 1 && yy >= 0 || xx == 13 && yy >= 0 ||
-                        xx == 0 && yy >= 0 || xx == 14 && yy >= 0 ||
-                        xx == 1 && yy == 1 || xx == 2 && yy == 1 || xx == 12 && yy == 1 || xx == 13 && yy == 1 ||
-                        xx == 1 && yy == 9 || xx == 2 && yy == 9 || xx == 12 && yy == 9 || xx == 13 && yy == 9)
+                        if (yy == 0 || yy == 10 && xx >= 0 && xx < 15 ||
+                            yy >= 1 && yy < 10 && xx >= 0 && xx <= 2 || xx >= 13 && xx < 15 ||
+
+                            yy == 1 && xx == 3 || yy == 1 && xx == 12 || 
+                            yy == 9 && xx == 3 || yy == 9 && xx == 12)
+                        {
                             go.SetActive(false);
+                        }
+
+                        //if (xx >= 0 && yy == 0 || yy == 10 ||
+                        //    xx == 0 || xx == 1 || xx == 13 || xx == 14 && yy >= 0)
+
+                            //xx == 1 || xx == 2 || xx == 12 || xx == 13 && yy == 1 ||
+                            //xx == 1 && yy == 9 || xx == 2 && yy == 9 || xx == 12 && yy == 9 || xx == 13 && yy == 9)
+                            
                     }
 
                     curCell_GO.transform.SetParent(supportParentForCells.transform);
