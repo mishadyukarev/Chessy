@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 namespace Scripts.Menu
 {
-    internal struct ShopZoneUIMenuCom
+    internal struct ShopZoneUICom
     {
         private GameObject _shopZone_GO;
         private TextMeshProUGUI _infoBuy_TextMP;
         private Button _exit_Button;
 
-        internal ShopZoneUIMenuCom(Transform centerZone_Trans)
+        internal ShopZoneUICom(Transform centerZone_Trans)
         {
             _shopZone_GO = centerZone_Trans.Find("ShopZone").gameObject;
             _infoBuy_TextMP = _shopZone_GO.transform.Find("BuyInfo_TextMP").GetComponent<TextMeshProUGUI>();

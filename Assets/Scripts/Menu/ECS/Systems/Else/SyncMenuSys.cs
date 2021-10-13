@@ -9,7 +9,7 @@ namespace Scripts.Menu
         private EcsFilter<ConnectButtonUICom, OfflineZoneUICom> _offlineButUIFilter = default;
         private EcsFilter<CenterMenuUICom> _centerUIFilter = default;
         private EcsFilter<DownZoneUIMenuCom> _downZoneFilt = default;
-        private EcsFilter<ShopZoneUIMenuCom> _shopZoneUIFilt = default;
+        private EcsFilter<ShopZoneUICom> _shopZoneUIFilt = default;
 
         public void Run()
         {

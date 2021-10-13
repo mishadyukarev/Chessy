@@ -11,7 +11,7 @@ namespace Scripts.Menu
         private EcsFilter<ConnectButtonUICom, OnlineZoneUICom, BackgroundMenuUICom> _rightZoneFilter = default;
         private EcsFilter<ConnectButtonUICom, OfflineZoneUICom, BackgroundMenuUICom> _leftZoneFilter = default;
         private EcsFilter<DownZoneUIMenuCom> _downZoneUIFilt = default;
-        private EcsFilter<ShopZoneUIMenuCom> _shopZoneUIFilt = default;
+        private EcsFilter<ShopZoneUICom> _shopZoneUIFilt = default;
         private EcsFilter<LikeGameZoneCom> _likeGameZoneFilt = default;
 
         private const byte MAX_PLAYERS = 2;

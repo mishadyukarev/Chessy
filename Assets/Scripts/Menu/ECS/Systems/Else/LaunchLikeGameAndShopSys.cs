@@ -4,9 +4,13 @@ using System;
 
 namespace Scripts.Menu
 {
-    public class LaunchLikeGameMenuSys : IEcsRunSystem
+    public class LaunchLikeGameAndShopSys : IEcsRunSystem
     {
         private EcsFilter<LikeGameZoneCom> _timeStartGameFilt = default;
+
+
+        private EcsFilter<ShopZoneUICom> _shopZoneUIFilt = default;
+
 
         public void Run()
         {
@@ -20,6 +24,8 @@ namespace Scripts.Menu
                 {
                     timeStartGameCom.SetActiveZone(true);
                     TimeStartGameComCom.WasLikeGameZone = true;
+
+                    _shopZoneUIFilt.Get1(0).EnableZone();
                 }
             }
         }
