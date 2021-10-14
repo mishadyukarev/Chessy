@@ -23,7 +23,7 @@ namespace Scripts.Common
             _comLanguages.Add(LanguageTypes.Spanish, new Dictionary<ComLanguageTypes, string>());
 
 
-            _comLanguages[LanguageTypes.English].Add(ComLanguageTypes.InfoBuy, /*"/*-Ad \n*/ "+Help the project \n +Get all future factions \n -Add(still don't work)\n And many other) \n \n Get Premium forever!");
+            _comLanguages[LanguageTypes.English].Add(ComLanguageTypes.InfoBuy, /*"/*-Ad \n*/ "+Help the project \n +Get all future factions \n -Ad(still don't work)\n And many other) \n \n Get Premium forever!");
             //_comLanguages[LanguageTypes.Russian].Add(ComLanguageTypes.InfoBuy, /*"-Реклама \n*/ "+Помощь проекту \n +получить все будущие фракции \n \n Получить ежемесячную подписку");
             //_comLanguages[LanguageTypes.Chinese].Add(ComLanguageTypes.InfoBuy, /*"-广告 \n*/ "+项目援助 \n +获取所有未来派系 \n \n 获得包月订阅");
             //_comLanguages[LanguageTypes.Spanish].Add(ComLanguageTypes.InfoBuy, /*"-Publicidad \n*/ "+Ayuda al proyecto \n +Obtener todas las facciones futuras \n \n Obtener una suscripción mensual");
