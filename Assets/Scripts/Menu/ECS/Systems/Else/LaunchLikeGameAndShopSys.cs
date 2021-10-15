@@ -6,7 +6,7 @@ namespace Scripts.Menu
 {
     public class LaunchLikeGameAndShopSys : IEcsRunSystem
     {
-        private EcsFilter<LikeGameZoneCom> _timeStartGameFilt = default;
+        private EcsFilter<LikeGameUICom> _timeStartGameFilt = default;
 
 
         private EcsFilter<ShopZoneUICom> _shopZoneUIFilt = default;

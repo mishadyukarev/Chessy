@@ -9,7 +9,7 @@ using static Scripts.Game.CellValues;
 
 namespace Scripts.Game
 {
-    public sealed class InitSpawnGameSys : IEcsInitSystem
+    public sealed class InitSpawnSys : IEcsInitSystem
     {
         private EcsWorld _curGameWorld = default;
 
@@ -102,14 +102,7 @@ namespace Scripts.Game
                             yy == 9 && xx == 3 || yy == 9 && xx == 12)
                         {
                             go.SetActive(false);
-                        }
-
-                        //if (xx >= 0 && yy == 0 || yy == 10 ||
-                        //    xx == 0 || xx == 1 || xx == 13 || xx == 14 && yy >= 0)
-
-                            //xx == 1 || xx == 2 || xx == 12 || xx == 13 && yy == 1 ||
-                            //xx == 1 && yy == 9 || xx == 2 && yy == 9 || xx == 12 && yy == 9 || xx == 13 && yy == 9)
-                            
+                        }        
                     }
 
                     curCell_GO.transform.SetParent(supportParentForCells.transform);
@@ -215,6 +208,8 @@ namespace Scripts.Game
                 .Replace(new SelectorTypeViewUIComp(centerZone_GO))
                 .Replace(new FriendZoneViewUICom(centerZone_GO.transform))
                 .Replace(new FriendZoneDataUICom())
+                .Replace(new HintDataUICom(1))
+                .Replace(new HintViewUICom(centerZone_GO.transform))
 
                 ///Down
                 .Replace(new GetterUnitsDataUICom(new Dictionary<UnitTypes, bool>()))

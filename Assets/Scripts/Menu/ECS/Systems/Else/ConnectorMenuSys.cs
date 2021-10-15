@@ -7,7 +7,7 @@ namespace Scripts.Menu
     {
         private EcsFilter<ConnectButtonUICom, OnlineZoneUICom, BackgroundMenuUICom> _rightZoneFilter = default;
         private EcsFilter<ConnectButtonUICom, OfflineZoneUICom, BackgroundMenuUICom> _leftZoneFilter = default;
-        private EcsFilter<CenterMenuUICom> _centerUIZoneFilter = default;
+        private EcsFilter<CenterZoneUICom> _centerUIZoneFilter = default;
 
         public void Run()
         {

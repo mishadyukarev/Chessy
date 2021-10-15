@@ -13,12 +13,12 @@ namespace Scripts.Menu
 
 
             InitOnlySystems
-                .Add(new EventMenuSys())
+                .Add(new EventSys())
                 .Add(LaunchLikeGameSys);
 
 
             UpdateOnlySystems
-                .Add(new SyncMenuSys())
+                .Add(new SyncSys())
                 .Add(new ConnectorMenuSys());
         }
     }

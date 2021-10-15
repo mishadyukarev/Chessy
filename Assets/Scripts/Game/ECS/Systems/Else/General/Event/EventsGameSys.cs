@@ -1,6 +1,7 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
 using Scripts.Common;
+using UnityEngine;
 
 namespace Scripts.Game
 {
@@ -20,6 +21,7 @@ namespace Scripts.Game
         private EcsFilter<GiveTakeZoneViewUIComp> _giveTakeZoneUIFilter = default;
         private EcsFilter<SoundEffectsComp> _soundEffFilt = default;
         private EcsFilter<FriendZoneDataUICom, FriendZoneViewUICom> _friendZoneFilt = default;
+        private EcsFilter<HintDataUICom, HintViewUICom> _hintUIFilt = default;
 
         private EcsFilter<InventorUnitsComponent> _invUnitsFilt = default;
 
@@ -69,6 +71,12 @@ namespace Scripts.Game
             buildLeftZoneViewUIComp.AddListenerToBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
             buildLeftZoneViewUIComp.AddListenerToBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
             buildLeftZoneViewUIComp.AddListenerToBuildUpgrade(BuildingTypes.Mine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
+
+
+
+
+
+            _hintUIFilt.Get2(0).AddListHint_But(ExecuteHint);
         }
 
 
@@ -178,6 +186,25 @@ namespace Scripts.Game
         private void ToggleToolWeapon(ToolWeaponTypes toolAndWeaponType)
         {
             _selectorFilter.Get1(0).ToolWeaponTypeForGiveTake = toolAndWeaponType;
+        }
+
+        private void ExecuteHint()
+        {
+            ref var hintDataUICom = ref _hintUIFilt.Get1(0);
+            ref var hintViewUICom = ref _hintUIFilt.Get2(0);
+
+
+            hintDataUICom.CurNumber++;
+
+            if (hintDataUICom.CurNumber < System.Enum.GetNames(typeof(VideoClipTypes)).Length)
+            {
+                hintViewUICom.SetVideoClip((VideoClipTypes)hintDataUICom.CurNumber);
+                hintViewUICom.SetPos(new Vector3(Random.Range(-500f, 500f), Random.Range(-300f, 300f)));
+            }
+            else
+            {
+                hintViewUICom.SetActiveHintZone(false);
+            }
         }
     }
 }

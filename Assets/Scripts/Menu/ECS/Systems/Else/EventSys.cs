@@ -6,27 +6,29 @@ using UnityEngine;
 
 namespace Scripts.Menu
 {
-    internal sealed class EventMenuSys : IEcsInitSystem
+    internal sealed class EventSys : IEcsInitSystem
     {
         private EcsFilter<ConnectButtonUICom, OnlineZoneUICom, BackgroundMenuUICom> _rightZoneFilter = default;
         private EcsFilter<ConnectButtonUICom, OfflineZoneUICom, BackgroundMenuUICom> _leftZoneFilter = default;
-        private EcsFilter<DownZoneUIMenuCom> _downZoneUIFilt = default;
+        private EcsFilter<CenterZoneUICom> _centZoneUIFilt = default;
         private EcsFilter<ShopZoneUICom> _shopZoneUIFilt = default;
-        private EcsFilter<LikeGameZoneCom> _likeGameZoneFilt = default;
+        private EcsFilter<LikeGameUICom> _likeGameZoneFilt = default;
 
         private const byte MAX_PLAYERS = 2;
 
         public void Init()
         {
-            ref var downZoneUICom = ref _downZoneUIFilt.Get1(0);
+            ref var centZoneUICom = ref _centZoneUIFilt.Get1(0);
 
             ref var rightConnectCom = ref _rightZoneFilter.Get1(0);
             ref var rightOnlineCom = ref _rightZoneFilter.Get2(0);
 
 
 
-            downZoneUICom.AddListHelp_Button(Help);
-            downZoneUICom.AddListQuit_Button(delegate { Application.Quit(); });
+            centZoneUICom.AddListHelp_But(Help);
+            centZoneUICom.AddListDiscord_But(delegate { Application.OpenURL(URL.URL_DISCORD); });
+            centZoneUICom.AddListLikeGame_But(delegate { Application.OpenURL(URL.URL_GAME_IN_GOOGLE_PLAY); });
+            centZoneUICom.AddListQuit_But(delegate { Application.Quit(); });
 
 
             rightConnectCom.AddListConnect_Button(ConnectOnline);
@@ -43,6 +45,7 @@ namespace Scripts.Menu
 
 
             _shopZoneUIFilt.Get1(0).AddListExit_Button(ExitShop);
+            _likeGameZoneFilt.Get1(0).AddListLikeGame_But(delegate { Application.OpenURL(URL.URL_GAME_IN_GOOGLE_PLAY); });
             _likeGameZoneFilt.Get1(0).AddListenerExit_But(ExitLikeGame);
         }
 

@@ -9,9 +9,8 @@ namespace Scripts.Common
 
         public static PrefabData PrefabConfig { get; private set; }
         public static SoundData SoundConfig { get; private set; }
-        public static SpritesData SpritesConfig { get; private set; }
+        public static SpritesResources SpritesConfig { get; private set; }
         public static StartGameValuesConfig StartValuesGameConfig { get; private set; }
-        public static VideoClipsData VideoClipsData { get; private set; }
 
 
         internal ResourcesComponent(bool isNeeded)
@@ -24,9 +23,8 @@ namespace Scripts.Common
                 InGameZoneGO = PrefabConfig.Canvas.transform.Find("InGameZone").gameObject;
 
                 SoundConfig = Resources.Load<SoundData>("SoundData");
-                SpritesConfig = Resources.Load<SpritesData>("SpritesData");
+                SpritesConfig = Resources.Load<SpritesResources>("SpritesData");
                 StartValuesGameConfig = Resources.Load<StartGameValuesConfig>("StartValues");
-                VideoClipsData = Resources.Load<VideoClipsData>("VideoClipsData");
             }
         }
     }

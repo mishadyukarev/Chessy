@@ -61,7 +61,7 @@ namespace Scripts
                     _menuWorld = new EcsWorld();
                     _allMenuSystems = new EcsSystems(_menuWorld);
 
-                    _allMenuSystems.Add(new InitSpawnMenuSys());
+                    _allMenuSystems.Add(new Menu.InitSpawnSys());
                     _menuSysManag = new MenuSystemManager(_menuWorld, _allMenuSystems);
                     _allMenuSystems.Init();
 
@@ -82,7 +82,7 @@ namespace Scripts
                     _gameWorld = new EcsWorld();
                     _allGameSystems = new EcsSystems(_gameWorld);
 
-                    _allGameSystems.Add(new InitSpawnGameSys());
+                    _allGameSystems.Add(new Game.InitSpawnSys());
 
                     _gameGenSysManag = new GameGeneralSysManager(_gameWorld, _allGameSystems);
                     _gameMasSysManag = new GameMasterSystemManager(_gameWorld, _allGameSystems);

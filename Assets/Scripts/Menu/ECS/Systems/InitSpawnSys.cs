@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Scripts.Menu
 {
-    public sealed class InitSpawnMenuSys : IEcsInitSystem
+    public sealed class InitSpawnSys : IEcsInitSystem
     {
         private EcsWorld _curMenuWorld = default;
 
@@ -15,17 +15,12 @@ namespace Scripts.Menu
 
 
             var centerZone_Trans = CanvasCom.FindUnderParent<Transform>("CenterZone");
-            var downZone_Trans = CanvasCom.FindUnderParent<Transform>("DownZone");
 
 
             _curMenuWorld.NewEntity()
-                //center
-                .Replace(new CenterMenuUICom(centerZone_Trans, SoundComComp.Volume))
+                .Replace(new CenterZoneUICom(centerZone_Trans, SoundComComp.Volume))
                 .Replace(new ShopZoneUICom(centerZone_Trans))
-                .Replace(new LikeGameZoneCom(centerZone_Trans))
-
-                //down
-                .Replace(new DownZoneUIMenuCom(downZone_Trans));
+                .Replace(new LikeGameUICom(centerZone_Trans));
 
 
             var rightZone = CanvasCom.FindUnderParent<RectTransform>("OnlineRightZone");
