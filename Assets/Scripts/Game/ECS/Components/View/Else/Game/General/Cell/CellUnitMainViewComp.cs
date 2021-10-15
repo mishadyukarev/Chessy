@@ -19,8 +19,8 @@ namespace Scripts.Game
 
 
 
-        internal void SetKing_Sprite() => _main_SR.sprite = ResourcesComponent.SpritesConfig.King_Sprite;
-        internal void SetPawn_Spriter() => _main_SR.sprite = ResourcesComponent.SpritesConfig.Axe_Sprite;
+        internal void SetKing_Sprite() => _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.King);
+        internal void SetPawn_Spriter() => _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Pawn);
 
         internal void SetArcher_Sprite(UnitTypes unitType, ToolWeaponTypes toolWeaponType)
         {
@@ -28,11 +28,11 @@ namespace Scripts.Game
             {
                 if (unitType == UnitTypes.Rook)
                 {
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.BowRook_Sprite;
+                    _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Rook);
                 }
                 else if (unitType == UnitTypes.Bishop)
                 {
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.BowBishop_Sprite;
+                    _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Bishop);
                 }
                 else
                 {
@@ -43,11 +43,11 @@ namespace Scripts.Game
             {
                 if (unitType == UnitTypes.Rook)
                 {
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.CrossbowRook_Sprite;
+                    _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.RookCrossbow);
                 }
                 else if (unitType == UnitTypes.Bishop)
                 {
-                    _main_SR.sprite = ResourcesComponent.SpritesConfig.CrossbowBishop_Sprite;
+                    _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.BishopCrossbow);
                 }
                 else
                 {

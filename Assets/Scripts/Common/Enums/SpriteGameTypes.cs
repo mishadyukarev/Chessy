@@ -4,11 +4,34 @@
     {
         None,
 
-        YoungForest,
-        Fire,
-        NoneFire,
-        CircularAttack,
+        BlackCell,
+        WhiteCell,
+
+        King,
+        Pawn,
+        Pick,
+        Sword,
+        Rook,
+        RookCrossbow,
+        Bishop,
+        BishopCrossbow,
+
         City,
-        NoneCity,
+        CityNone,
+        CityBack,
+        Farm,
+        FarmBack,
+        FarmNone,
+        Woodcutter,
+        WoodcutterBack,
+        Mine,
+        MineBack,
+
+        YoungForest,
+
+        Fire,
+        FireNone,
+
+        CircularAttack,
     }
 }

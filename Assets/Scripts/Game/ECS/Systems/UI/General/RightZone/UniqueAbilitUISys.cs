@@ -51,7 +51,7 @@ namespace Scripts.Game
                             {
                                 if (selFireDatCom.HaveFire)
                                 {
-                                    unitZoneViewCom.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.NoneFire);
+                                    unitZoneViewCom.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.FireNone);
                                     //unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.PutOutFire));
                                 }
                                 else

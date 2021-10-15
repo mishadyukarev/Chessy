@@ -18,18 +18,11 @@ namespace Scripts.Common
             if (isMasterClient)
             {
                 _camera.transform.position = posMain + _gamePosCamera;
-            }
-            else
-            {
-                _camera.transform.position = posMain + _gamePosCamera + new Vector3(0, 0.5f, 0);
-            }
-
-            if (isMasterClient)
-            {
                 _camera.transform.eulerAngles = new Vector3(0, 0, 0);
             }
             else
             {
+                _camera.transform.position = posMain + _gamePosCamera + new Vector3(0, 0.5f, 0);
                 _camera.transform.eulerAngles = new Vector3(0, 0, 180);
             }
         }

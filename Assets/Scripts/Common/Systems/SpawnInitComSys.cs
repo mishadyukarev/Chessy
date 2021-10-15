@@ -30,22 +30,24 @@ namespace Scripts.Common
         public void Init()
         {
             var commonZoneEnt = _curComWorld.NewEntity()
-                .Replace(new ResourcesComponent(true))
-                .Replace(new VideoClipsResources(true));
+                .Replace(new VideoClipsResCom(true))
+                .Replace(new SpritesResCom(true))
+                .Replace(new PrefabsResComCom(true))
+                .Replace(new ClipsResComCom(true));
 
 
 
-            var camera = UnityEngine.Object.Instantiate(ResourcesComponent.PrefabConfig.Camera, Main_GO.transform.position, Main_GO.transform.rotation);
+            var camera = UnityEngine.Object.Instantiate(PrefabsResComCom.Camera, Main_GO.transform.position, Main_GO.transform.rotation);
             camera.name = "Camera";
             camera.orthographicSize = 5.7f;
 
             var goES = new GameObject("EventSystem");
 
-            var canvas = GameObject.Instantiate(ResourcesComponent.PrefabConfig.Canvas);
+            var canvas = GameObject.Instantiate(PrefabsResComCom.Canvas);
             canvas.name = "Canvas";
 
             var audioSource = new GameObject("AudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
-            audioSource.clip = ResourcesComponent.SoundConfig.MusicAudioClip;
+            audioSource.clip = ClipsResComCom.AudioClip(ClipComTypes.Music);
             audioSource.volume = 0.2f;
             audioSource.loop = true;
             audioSource.Play();

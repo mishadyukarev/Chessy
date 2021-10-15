@@ -40,9 +40,9 @@ namespace Scripts.Game
 
             ///Cells
             ///
-            var cellGO = ResourcesComponent.PrefabConfig.CellGO;
-            var whiteCellSR = ResourcesComponent.SpritesConfig.WhiteCell_Sprite;
-            var blackCellSR = ResourcesComponent.SpritesConfig.BlackCell_Sprite;
+            var cellGO = PrefabsResComCom.CellGO;
+            var whiteCellSR = SpritesResCom.Sprite(SpriteGameTypes.WhiteCell);
+            var blackCellSR = SpritesResCom.Sprite(SpriteGameTypes.BlackCell);
 
             var cell_GOs = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
 
@@ -143,7 +143,7 @@ namespace Scripts.Game
 
             ///Else
             ///
-            var backGroundGO = GameObject.Instantiate(ResourcesComponent.PrefabConfig.BackGroundCollider2D,
+            var backGroundGO = GameObject.Instantiate(PrefabsResComCom.BackGroundCollider2D,
                 SpawnInitComSys.Main_GO.transform.position + new Vector3(7, 5.5f, 2), SpawnInitComSys.Main_GO.transform.rotation);
 
 

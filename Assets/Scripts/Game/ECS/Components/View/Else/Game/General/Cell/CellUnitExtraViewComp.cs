@@ -24,19 +24,18 @@ namespace Scripts.Game
                     throw new Exception();
 
                 case ToolWeaponTypes.Hoe:
-                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.Hoe_Sprite;
-                    break;
+                    throw new Exception();
 
                 case ToolWeaponTypes.Axe:
-                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.Axe_Sprite;
+                    _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Pawn);
                     break;
 
                 case ToolWeaponTypes.Pick:
-                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.Pick_Sprite;
+                    _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Pick);
                     break;
 
                 case ToolWeaponTypes.Sword:
-                    _extraUnit_SR.sprite = ResourcesComponent.SpritesConfig.Sword_Sprite;
+                    _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Sword);
                     break;
 
                 case ToolWeaponTypes.Bow:

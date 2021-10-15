@@ -17,6 +17,7 @@
         BishopCrossbow,
 
         City,
+        CityBack,
         Farm,
         FarmBack,
         FarmNone,

@@ -24,6 +24,6 @@ namespace Scripts.Game
         internal void SetActiveHintZone(bool isActive) => _hintZone_Rect.gameObject.SetActive(isActive);
         internal void SetPos(Vector3 pos) => _hintZone_Rect.anchoredPosition = pos;
         internal void AddListHint_But(UnityAction unityAction) => _hint_But.onClick.AddListener(unityAction);
-        internal void SetVideoClip(VideoClipTypes videoClipType) => _videoPlayer.clip = VideoClipsResources.VideoClip(videoClipType);
+        internal void SetVideoClip(VideoClipTypes videoClipType) => _videoPlayer.clip = VideoClipsResCom.VideoClip(videoClipType);
     }
 }

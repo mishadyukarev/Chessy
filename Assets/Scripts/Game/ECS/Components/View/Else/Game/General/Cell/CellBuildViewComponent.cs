@@ -26,19 +26,19 @@ namespace Scripts.Game
                     throw new Exception();
 
                 case BuildingTypes.City:
-                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.City_Sprite;
+                    _cellBuildFront_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.City);
                     break;
 
                 case BuildingTypes.Farm:
-                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.Farm;
+                    _cellBuildFront_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Farm);
                     break;
 
                 case BuildingTypes.Woodcutter:
-                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.Woodcutter;
+                    _cellBuildFront_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Woodcutter);
                     break;
 
                 case BuildingTypes.Mine:
-                    _cellBuildFront_SR.sprite = ResourcesComponent.SpritesConfig.Mine;
+                    _cellBuildFront_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Mine);
                     break;
 
                 default:
@@ -57,19 +57,19 @@ namespace Scripts.Game
                     throw new Exception();
 
                 case BuildingTypes.City:
-                    _cellBuildBack_SR.sprite = ResourcesComponent.SpritesConfig.CityBack;
+                    _cellBuildBack_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.CityBack);
                     break;
 
                 case BuildingTypes.Farm:
-                    _cellBuildBack_SR.sprite = ResourcesComponent.SpritesConfig.FarmBack;
+                    _cellBuildBack_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.FarmBack);
                     break;
 
                 case BuildingTypes.Woodcutter:
-                    _cellBuildBack_SR.sprite = ResourcesComponent.SpritesConfig.WoodcutterBack;
+                    _cellBuildBack_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.WoodcutterBack);
                     break;
 
                 case BuildingTypes.Mine:
-                    _cellBuildBack_SR.sprite = ResourcesComponent.SpritesConfig.MineBack;
+                    _cellBuildBack_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.MineBack);
                     break;
 
                 default:

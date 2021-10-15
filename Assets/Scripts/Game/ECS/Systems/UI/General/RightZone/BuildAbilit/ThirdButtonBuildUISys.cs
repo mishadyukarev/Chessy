@@ -39,7 +39,7 @@ namespace Scripts.Game
                             if (!selOwnBuildCom.IsMine)
                             {
                                 needActiveThirdButt = true;
-                                buildAbilUICom.SetSpriteThird(SpriteGameTypes.NoneCity);
+                                buildAbilUICom.SetSpriteThird(SpriteGameTypes.CityNone);
                                 //buildAbilUICom.SetSpriteThird(SpriteGameTypes.City);
                                 //buildAbilUICom.SetText_Button(BuildButtonTypes.Third, LanguageComCom.GetText(GameLanguageTypes.DestroyBuilding));
                             }

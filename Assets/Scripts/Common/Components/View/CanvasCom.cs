@@ -27,11 +27,11 @@ namespace Scripts.Common
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    _currentZoneGO = GameObject.Instantiate(ResourcesComponent.InMenuZoneGO, _canvas.transform);
+                    _currentZoneGO = GameObject.Instantiate(PrefabsResComCom.InMenuZoneGO, _canvas.transform);
                     break;
 
                 case SceneTypes.Game:
-                    _currentZoneGO = GameObject.Instantiate(ResourcesComponent.InGameZoneGO, _canvas.transform);
+                    _currentZoneGO = GameObject.Instantiate(PrefabsResComCom.InGameZoneGO, _canvas.transform);
                     break;
 
                 default:
