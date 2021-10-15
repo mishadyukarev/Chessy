@@ -24,36 +24,38 @@ namespace Scripts.Game
 
         internal void SetArcher_Sprite(UnitTypes unitType, ToolWeaponTypes toolWeaponType)
         {
-            if (toolWeaponType == ToolWeaponTypes.Bow)
-            {
-                if (unitType == UnitTypes.Rook)
-                {
-                    _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Rook);
-                }
-                else if (unitType == UnitTypes.Bishop)
-                {
-                    _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Bishop);
-                }
-                else
-                {
-                    throw new Exception();
-                }
-            }
-            else if (toolWeaponType == ToolWeaponTypes.Crossbow)
-            {
-                if (unitType == UnitTypes.Rook)
-                {
-                    _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.RookCrossbow);
-                }
-                else if (unitType == UnitTypes.Bishop)
-                {
-                    _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.BishopCrossbow);
-                }
-                else
-                {
-                    throw new Exception();
-                }
-            }
+
+
+            //if (toolWeaponType == ToolWeaponTypes.Bow)
+            //{
+            //    if (unitType == UnitTypes.Rook)
+            //    {
+            //        _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Rook);
+            //    }
+            //    else if (unitType == UnitTypes.Bishop)
+            //    {
+            //        _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Bishop);
+            //    }
+            //    else
+            //    {
+            //        throw new Exception();
+            //    }
+            //}
+            //else if (toolWeaponType == ToolWeaponTypes.Crossbow)
+            //{
+            //    if (unitType == UnitTypes.Rook)
+            //    {
+            //        _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.RookCrossbow);
+            //    }
+            //    else if (unitType == UnitTypes.Bishop)
+            //    {
+            //        _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.BishopCrossbow);
+            //    }
+            //    else
+            //    {
+            //        throw new Exception();
+            //    }
+            //}
         }
 
         internal void SetFlipX(bool isActive) => _main_SR.flipX = isActive;

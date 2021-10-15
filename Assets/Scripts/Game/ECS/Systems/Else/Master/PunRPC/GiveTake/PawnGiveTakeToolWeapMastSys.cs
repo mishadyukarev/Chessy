@@ -44,7 +44,7 @@ namespace Scripts.Game
 
                                 inventTWCom.AddAmountTools(ownUnitComForGive.PlayerType, unitDatComForGive.ExtraTWPawnType);
 
-                                unitDatComForGive.AmountSteps -= 1;
+                                unitDatComForGive.TakeAmountSteps();
                                 unitDatComForGive.ExtraTWPawnType = default;
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
@@ -65,84 +65,87 @@ namespace Scripts.Game
 
                     else
                     {
-                        if (toolWeapTypeForGive.IsForPawn())
+
+                        if (unitDatComForGive.HaveMaxAmountHealth)
                         {
-                            if (unitDatComForGive.HaveMaxAmountHealth)
+                            if (unitDatComForGive.HaveMinAmountSteps)
                             {
-                                if (unitDatComForGive.HaveMinAmountSteps)
+
+                                unitDatComForGive.CondUnitType = default;
+
+
+                                if (inventTWCom.HaveTool(ownUnitComForGive.PlayerType, toolWeapTypeForGive))
                                 {
-                                    if (unitDatComForGive.ArcherWeapType != toolWeapTypeForGive)
+                                    inventTWCom.TakeAmountTools(ownUnitComForGive.PlayerType, toolWeapTypeForGive);
+
+                                    unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                    unitDatComForGive.AmountSteps -= 1;
+
+                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
+                                }
+
+                                else if (toolWeapTypeForGive == ToolWeaponTypes.Pick)
+                                {
+                                    if (invResCom.AmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Wood) >= _woodCostForPick)
                                     {
-                                        unitDatComForGive.CondUnitType = default;
+                                        invResCom.TakeAmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Wood, _woodCostForPick);
 
+                                        unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                        unitDatComForGive.AmountSteps -= 1;
 
-                                        if (inventTWCom.HaveTool(ownUnitComForGive.PlayerType, toolWeapTypeForGive))
-                                        {
-                                            inventTWCom.TakeAmountTools(ownUnitComForGive.PlayerType, toolWeapTypeForGive);
-
-                                            unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                            unitDatComForGive.AmountSteps -= 1;
-
-                                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
-                                        }
-
-                                        else if (toolWeapTypeForGive == ToolWeaponTypes.Pick)
-                                        {
-                                            if (invResCom.AmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Wood) >= _woodCostForPick)
-                                            {
-                                                invResCom.TakeAmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Wood, _woodCostForPick);
-
-                                                unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                                unitDatComForGive.AmountSteps -= 1;
-
-                                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
-                                            }
-                                            else
-                                            {
-                                                RpcSys.MistakeEconomyToGeneral(sender, new[] { true, false, true, true, true });
-                                            }
-                                        }
-
-                                        else if (toolWeapTypeForGive == ToolWeaponTypes.Axe)
-                                        {
-                                            unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                            unitDatComForGive.AmountSteps -= 1;
-                                        }
-
-                                        else if (toolWeapTypeForGive == ToolWeaponTypes.Sword)
-                                        {
-                                            if (invResCom.AmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Iron) >= _ironCostForSword)
-                                            {
-                                                invResCom.TakeAmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Iron, _ironCostForSword);
-
-                                                unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
-                                                unitDatComForGive.AmountSteps -= 1;
-
-                                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
-                                            }
-                                            else
-                                            {
-                                                RpcSys.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
-                                            }
-                                        }
+                                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
+                                    }
+                                    else
+                                    {
+                                        RpcSys.MistakeEconomyToGeneral(sender, new[] { true, false, true, true, true });
                                     }
                                 }
 
-                                else
+                                else if (toolWeapTypeForGive == ToolWeaponTypes.Sword)
                                 {
-                                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                                    if (invResCom.AmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Iron) >= _ironCostForSword)
+                                    {
+                                        invResCom.TakeAmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Iron, _ironCostForSword);
+
+                                        unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                        unitDatComForGive.AmountSteps -= 1;
+
+                                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
+                                    }
+                                    else
+                                    {
+                                        RpcSys.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
+                                    }
+                                }
+
+
+                                else if (toolWeapTypeForGive == ToolWeaponTypes.Shield)
+                                {
+                                    if (invResCom.AmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Wood) >= 5)
+                                    {
+                                        invResCom.TakeAmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Wood, 5);
+
+                                        unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                        unitDatComForGive.AmountSteps -= 1;
+
+                                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
+                                    }
+                                    else
+                                    {
+                                        RpcSys.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
+                                    }
                                 }
                             }
 
                             else
                             {
-                                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
+                                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
                         }
 
                         else
                         {
-                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.ThatIsForOtherUnit, sender);
+                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                         }
                     }
                 }

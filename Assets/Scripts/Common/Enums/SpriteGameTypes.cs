@@ -11,6 +11,7 @@
         Pawn,
         Pick,
         Sword,
+        Shield,
         Rook,
         RookCrossbow,
         Bishop,

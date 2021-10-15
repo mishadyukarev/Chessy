@@ -15,7 +15,7 @@ namespace Scripts.Game
 
             giveTakeViewCom.Disable_ButtonImage(ToolWeaponTypes.Pick);
             giveTakeViewCom.Disable_ButtonImage(ToolWeaponTypes.Sword);
-            giveTakeViewCom.Disable_ButtonImage(ToolWeaponTypes.Crossbow);
+            giveTakeViewCom.Disable_ButtonImage(ToolWeaponTypes.Shield);
 
             giveTakeViewCom.Enable_ButtonImage(selectorComp.ToolWeaponTypeForGiveTake);
 

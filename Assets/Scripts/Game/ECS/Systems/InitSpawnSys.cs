@@ -2,6 +2,7 @@
 using Leopotam.Ecs;
 using Photon.Pun;
 using Scripts.Common;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -301,29 +302,15 @@ namespace Scripts.Game
 
                 ref var unitInvCom = ref _inventorUnitsFilter.Get1(0);
 
+                for (UnitTypes unitType = (UnitTypes)1; unitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; unitType++)
+                {
+                    unitInvCom.SetAmountUnitsInInvAll(unitType, StartEconomyValues.AmountUnits(unitType));
+                }
 
-                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.King, EconomyValues.AMOUNT_KING_MASTER);
-                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.Pawn, EconomyValues.AMOUNT_PAWN_MASTER);
-                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.Rook, EconomyValues.AMOUNT_ROOK_MASTER);
-                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.First, UnitTypes.Bishop, EconomyValues.AMOUNT_BISHOP_MASTER);
-
-                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.King, EconomyValues.AMOUNT_KING_OTHER);
-                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.Pawn, EconomyValues.AMOUNT_PAWN_OTHER);
-                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.Rook, EconomyValues.AMOUNT_ROOK_OTHER);
-                unitInvCom.SetAmountUnitsInInvent(PlayerTypes.Second, UnitTypes.Bishop, EconomyValues.AMOUNT_BISHOP_OTHER);
-
-
-                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_MASTER);
-                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Wood, EconomyValues.AMOUNT_WOOD_MASTER);
-                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Ore, EconomyValues.AMOUNT_ORE_MASTER);
-                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Iron, EconomyValues.AMOUNT_IRON_MASTER);
-                invResCom.SetAmountResources(PlayerTypes.First, ResourceTypes.Gold, EconomyValues.AMOUNT_GOLD_MASTER);
-
-                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Food, EconomyValues.AMOUNT_FOOD_OTHER);
-                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Wood, EconomyValues.AMOUNT_WOOD_OTHER);
-                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Ore, EconomyValues.AMOUNT_ORE_OTHER);
-                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Iron, EconomyValues.AMOUNT_IRON_OTHER);
-                invResCom.SetAmountResources(PlayerTypes.Second, ResourceTypes.Gold, EconomyValues.AMOUNT_GOLD_OTHER);
+                for (ResourceTypes resourceTypes = (ResourceTypes)1; resourceTypes < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resourceTypes++)
+                {
+                    invResCom.SetAmountResAll(resourceTypes, StartEconomyValues.AmountResources(resourceTypes));
+                }
             }
 
             else
@@ -389,7 +376,7 @@ namespace Scripts.Game
 
                             curUnitDatCom.UnitType = UnitTypes.Pawn;
 
-                            int rand = Random.Range(0, 100);
+                            int rand = UnityEngine.Random.Range(0, 100);
 
                             if (rand >= 50) curUnitDatCom.ExtraTWPawnType = ToolWeaponTypes.Sword;
 

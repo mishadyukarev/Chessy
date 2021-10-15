@@ -18,11 +18,11 @@ namespace Scripts.Game
 
                 _inventorTools[PlayerTypes.First].Add(ToolWeaponTypes.Pick, default);
                 _inventorTools[PlayerTypes.First].Add(ToolWeaponTypes.Sword, default);
-                _inventorTools[PlayerTypes.First].Add(ToolWeaponTypes.Crossbow, default);
+                _inventorTools[PlayerTypes.First].Add(ToolWeaponTypes.Shield, default);
 
                 _inventorTools[PlayerTypes.Second].Add(ToolWeaponTypes.Pick, default);
                 _inventorTools[PlayerTypes.Second].Add(ToolWeaponTypes.Sword, default);
-                _inventorTools[PlayerTypes.Second].Add(ToolWeaponTypes.Crossbow, default);
+                _inventorTools[PlayerTypes.Second].Add(ToolWeaponTypes.Shield, default);
             }
         }
 

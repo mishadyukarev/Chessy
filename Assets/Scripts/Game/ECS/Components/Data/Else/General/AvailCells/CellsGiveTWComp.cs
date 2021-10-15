@@ -19,11 +19,11 @@ namespace Scripts.Game
 
                 _cellsGiveToolWeaps[PlayerTypes.First].Add(ToolWeaponTypes.Pick, new List<byte>());
                 _cellsGiveToolWeaps[PlayerTypes.First].Add(ToolWeaponTypes.Sword, new List<byte>());
-                _cellsGiveToolWeaps[PlayerTypes.First].Add(ToolWeaponTypes.Crossbow, new List<byte>());
+                _cellsGiveToolWeaps[PlayerTypes.First].Add(ToolWeaponTypes.Shield, new List<byte>());
 
                 _cellsGiveToolWeaps[PlayerTypes.Second].Add(ToolWeaponTypes.Pick, new List<byte>());
                 _cellsGiveToolWeaps[PlayerTypes.Second].Add(ToolWeaponTypes.Sword, new List<byte>());
-                _cellsGiveToolWeaps[PlayerTypes.Second].Add(ToolWeaponTypes.Crossbow, new List<byte>());
+                _cellsGiveToolWeaps[PlayerTypes.Second].Add(ToolWeaponTypes.Shield, new List<byte>());
             }
         }
 

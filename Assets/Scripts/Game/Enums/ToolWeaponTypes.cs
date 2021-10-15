@@ -5,10 +5,8 @@
         None,
 
         Hoe,
-        Axe,
         Pick,
         Sword,
-        Bow,
-        Crossbow,
+        Shield,
     }
 }

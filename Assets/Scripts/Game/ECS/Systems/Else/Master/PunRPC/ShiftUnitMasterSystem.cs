@@ -43,7 +43,7 @@ namespace Scripts.Game
                 if (fromUnitDatCom.AmountSteps < 0) fromUnitDatCom.ResetAmountSteps();
 
 
-                toUnitDatCom.ArcherWeapType = fromUnitDatCom.ArcherWeapType;
+                toUnitDatCom.UpgradeUnitType = fromUnitDatCom.UpgradeUnitType;
                 toUnitDatCom.ExtraTWPawnType = fromUnitDatCom.ExtraTWPawnType;
                 toUnitDatCom.UnitType = fromUnitDatCom.UnitType;
                 toUnitDatCom.AmountHealth = fromUnitDatCom.AmountHealth;

@@ -51,11 +51,9 @@ namespace Scripts.Game
 
 
 
-            _giveTakeZoneUIFilter.Get1(0).AddListenerToGive_Button(ActiveGiveTakeButton);
-
             _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Pick, delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
             _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Sword, delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
-            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Crossbow, delegate { ToggleToolWeapon(ToolWeaponTypes.Crossbow); });
+            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Shield, delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
 
 
             _friendZoneFilt.Get2(0).AddListenerReady(ReadyFriend);
@@ -148,24 +146,6 @@ namespace Scripts.Game
             }
         }
 
-        private void ActiveGiveTakeButton()
-        {
-            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode)
-            {
-                ref var selecComp = ref _selectorFilter.Get1(0);
-
-                if (selecComp.CellClickType == CellClickTypes.GiveTakeTW)
-                {
-                    selecComp.CellClickType = default;
-                }
-
-                else
-                {
-                    selecComp.CellClickType = CellClickTypes.GiveTakeTW;
-                }
-            }
-        }
-
         private void CreateUnit(UnitTypes unitType)
         {
             _takerUIFilter.Get1(0).ResetCurTimer(unitType);
@@ -185,7 +165,44 @@ namespace Scripts.Game
 
         private void ToggleToolWeapon(ToolWeaponTypes toolAndWeaponType)
         {
-            _selectorFilter.Get1(0).ToolWeaponTypeForGiveTake = toolAndWeaponType;
+            
+
+            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode)
+            {
+                ref var selecComp = ref _selectorFilter.Get1(0);
+
+                if (_selectorFilter.Get1(0).ToolWeaponTypeForGiveTake == toolAndWeaponType)
+                {
+                    if(selecComp.CellClickType != CellClickTypes.GiveTakeTW)
+                    {
+                        selecComp.CellClickType = CellClickTypes.GiveTakeTW;
+                    }
+                    else
+                    {
+                        selecComp.CellClickType = default;
+                    }
+                }
+                else
+                {
+                    _selectorFilter.Get1(0).ToolWeaponTypeForGiveTake = toolAndWeaponType;
+                    selecComp.CellClickType = CellClickTypes.GiveTakeTW;
+                }
+
+                
+
+
+               
+
+                //if (selecComp.CellClickType == CellClickTypes.GiveTakeTW)
+                //{
+                //    selecComp.CellClickType = default;
+                //}
+
+                //else
+                //{
+                //    selecComp.CellClickType = CellClickTypes.GiveTakeTW;
+                //}
+            }
         }
 
         private void ExecuteHint()

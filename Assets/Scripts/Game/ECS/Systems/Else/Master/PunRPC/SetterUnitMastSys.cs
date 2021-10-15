@@ -49,25 +49,25 @@ namespace Scripts.Game
                     case UnitTypes.King:
                         newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_KING;
                         newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_KING;
-                        curUnitDatCom.ArcherWeapType = default;
+                        curUnitDatCom.UpgradeUnitType = UpgradeUnitTypes.First;
                         break;
 
                     case UnitTypes.Pawn:
                         newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_PAWN;
                         newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN;
-                        curUnitDatCom.ArcherWeapType = default;
+                        curUnitDatCom.UpgradeUnitType = UpgradeUnitTypes.First;
                         break;
 
                     case UnitTypes.Rook:
                         newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_ROOK;
                         newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK;
-                        curUnitDatCom.ArcherWeapType = ToolWeaponTypes.Bow;
+                        curUnitDatCom.UpgradeUnitType = UpgradeUnitTypes.First;
                         break;
 
                     case UnitTypes.Bishop:
                         newAmountHealth = UnitValues.STANDART_AMOUNT_HEALTH_BISHOP;
                         newAmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
-                        curUnitDatCom.ArcherWeapType = ToolWeaponTypes.Bow;
+                        curUnitDatCom.UpgradeUnitType = UpgradeUnitTypes.First;
                         break;
 
                     default:

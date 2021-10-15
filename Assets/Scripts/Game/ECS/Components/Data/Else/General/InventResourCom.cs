@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Scripts.Game.EconomyValues;
+using static Scripts.Game.StartEconomyValues;
 
 namespace Scripts.Game
 {
@@ -27,6 +27,13 @@ namespace Scripts.Game
 
         internal int AmountResources(PlayerTypes playerType, ResourceTypes resourceTypes) => _amountResources[playerType][resourceTypes];
         internal void SetAmountResources(PlayerTypes playerType, ResourceTypes resourceType, int value) => _amountResources[playerType][resourceType] = value;
+        internal void SetAmountResAll(ResourceTypes resourceType, int value)
+        {
+            for (PlayerTypes playerType = (PlayerTypes)1; playerType < (PlayerTypes)Enum.GetNames(typeof(PlayerTypes)).Length; playerType++)
+            {
+                _amountResources[playerType][resourceType] = value;
+            }
+        }
 
         internal void AddAmountResources(PlayerTypes playerType, ResourceTypes resourceType, int adding = 1) => SetAmountResources(playerType, resourceType, AmountResources(playerType, resourceType) + adding);
         internal void TakeAmountResources(PlayerTypes playerType, ResourceTypes resourceType, int taking = 1) => SetAmountResources(playerType, resourceType, AmountResources(playerType, resourceType) - taking);
@@ -109,271 +116,63 @@ namespace Scripts.Game
 
         internal bool CanCreateUnit(PlayerTypes playerType, UnitTypes unitType, out bool[] haves)
         {
-            haves = new bool[AMOUNT_RESOURCES_TYPES];
+            haves = new bool[Enum.GetNames(typeof(ResourceTypes)).Length];
 
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    throw new Exception();
-
-                case UnitTypes.Pawn:
-                    haves[FOOD_NUMBER] = FOOD_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= FOOD_FOR_BUYING_PAWN;
-                    haves[WOOD_NUMBER] = WOOD_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= WOOD_FOR_BUYING_PAWN;
-                    haves[ORE_NUMBER] = ORE_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= ORE_FOR_BUYING_PAWN;
-                    haves[IRON_NUMBER] = IRON_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= IRON_FOR_BUYING_PAWN;
-                    haves[GOLD_NUMBER] = GOLD_FOR_BUYING_PAWN == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= GOLD_FOR_BUYING_PAWN;
-                    break;
-
-                case UnitTypes.Rook:
-                    haves[FOOD_NUMBER] = FOOD_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= FOOD_FOR_BUYING_ROOK;
-                    haves[WOOD_NUMBER] = WOOD_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= WOOD_FOR_BUYING_ROOK;
-                    haves[ORE_NUMBER] = ORE_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= ORE_FOR_BUYING_ROOK;
-                    haves[IRON_NUMBER] = IRON_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= IRON_FOR_BUYING_ROOK;
-                    haves[GOLD_NUMBER] = GOLD_FOR_BUYING_ROOK == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= GOLD_FOR_BUYING_ROOK;
-                    break;
-
-                case UnitTypes.Bishop:
-                    haves[FOOD_NUMBER] = FOOD_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= FOOD_FOR_BUYING_BISHOP;
-                    haves[WOOD_NUMBER] = WOOD_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= WOOD_FOR_BUYING_BISHOP;
-                    haves[ORE_NUMBER] = ORE_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= ORE_FOR_BUYING_BISHOP;
-                    haves[IRON_NUMBER] = IRON_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= IRON_FOR_BUYING_BISHOP;
-                    haves[GOLD_NUMBER] = GOLD_FOR_BUYING_BISHOP == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= GOLD_FOR_BUYING_BISHOP;
-                    break;
-
-                default:
-                    throw new Exception();
-            }
+            haves[FOOD_NUMBER] = AmountResForBuy(unitType, ResourceTypes.Food) == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= AmountResForBuy(unitType, ResourceTypes.Food);
+            haves[WOOD_NUMBER] = AmountResForBuy(unitType, ResourceTypes.Wood) == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= AmountResForBuy(unitType, ResourceTypes.Wood);
+            haves[ORE_NUMBER] = AmountResForBuy(unitType, ResourceTypes.Ore) == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= AmountResForBuy(unitType, ResourceTypes.Ore);
+            haves[IRON_NUMBER] = AmountResForBuy(unitType, ResourceTypes.Iron) == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= AmountResForBuy(unitType, ResourceTypes.Iron);
+            haves[GOLD_NUMBER] = AmountResForBuy(unitType, ResourceTypes.Gold) == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= AmountResForBuy(unitType, ResourceTypes.Gold);
 
             return HavedAll(haves);
         }
         internal void BuyCreateUnit(PlayerTypes playerType, UnitTypes unitType)
         {
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    throw new Exception();
-
-                case UnitTypes.Pawn:
-                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_BUYING_PAWN);
-                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_BUYING_PAWN);
-                    TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_BUYING_PAWN);
-                    TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_BUYING_PAWN);
-                    TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_BUYING_PAWN);
-                    break;
-
-                case UnitTypes.Rook:
-                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_BUYING_ROOK);
-                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_BUYING_ROOK);
-                    TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_BUYING_ROOK);
-                    TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_BUYING_ROOK);
-                    TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_BUYING_ROOK);
-                    break;
-
-                case UnitTypes.Bishop:
-                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_BUYING_BISHOP);
-                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_BUYING_BISHOP);
-                    TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_BUYING_BISHOP);
-                    TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_BUYING_BISHOP);
-                    TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_BUYING_BISHOP);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
+            for (ResourceTypes resourceTypes = (ResourceTypes)1; resourceTypes < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resourceTypes++)
+                TakeAmountResources(playerType, resourceTypes, AmountResForBuy(unitType, resourceTypes));
         }
 
         internal bool CanMeltOre(PlayerTypes playerType, out bool[] haves)
         {
-            haves = new bool[AMOUNT_RESOURCES_TYPES];
+            haves = new bool[Enum.GetNames(typeof(ResourceTypes)).Length];
 
-            haves[FOOD_NUMBER] = FOOD_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= FOOD_FOR_MELTING_ORE;
-            haves[WOOD_NUMBER] = WOOD_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= WOOD_FOR_MELTING_ORE;
-            haves[ORE_NUMBER] = ORE_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= ORE_FOR_MELTING_ORE;
-            haves[IRON_NUMBER] = IRON_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= IRON_FOR_MELTING_ORE;
-            haves[GOLD_NUMBER] = GOLD_FOR_MELTING_ORE == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= GOLD_FOR_MELTING_ORE;
-
+            int i = 0;
+            for (var resType = (ResourceTypes)1; resType < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resType++)
+            {
+                haves[i] = AmountResForMelting(resType) == NULL_RESOURCES ? true : AmountResources(playerType, resType) >= AmountResForMelting(resType);
+                i++;
+            }
+                
 
             return HavedAll(haves);
         }
         internal void BuyMeltOre(PlayerTypes playerType)
         {
-            TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_MELTING_ORE);
-            TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_MELTING_ORE);
-            TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_MELTING_ORE);
-            TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_MELTING_ORE);
-            TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_MELTING_ORE);
+            for (var resourceTypes = (ResourceTypes)1; resourceTypes < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resourceTypes++)
+                TakeAmountResources(playerType, resourceTypes, AmountResForMelting(resourceTypes));
 
             AddAmountResources(playerType, ResourceTypes.Iron, 4);
             AddAmountResources(playerType, ResourceTypes.Gold, 1);
         }
 
-
-        internal bool CanUpgradeUnit(PlayerTypes playerType, UnitTypes unitType, out bool[] haves)
-        {
-            haves = new bool[AMOUNT_RESOURCES_TYPES];
-
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    throw new Exception();
-
-                case UnitTypes.Pawn:
-                    haves[FOOD_NUMBER] = FOOD_FOR_UPGRADE_PAWN == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= FOOD_FOR_UPGRADE_PAWN;
-                    haves[WOOD_NUMBER] = WOOD_FOR_UPGRADE_PAWN == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= WOOD_FOR_UPGRADE_PAWN;
-                    haves[ORE_NUMBER] = ORE_FOR_UPGRADE_PAWN == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= ORE_FOR_UPGRADE_PAWN;
-                    haves[IRON_NUMBER] = IRON_FOR_UPGRADE_PAWN == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= IRON_FOR_UPGRADE_PAWN;
-                    haves[GOLD_NUMBER] = GOLD_FOR_UPGRADE_PAWN == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= GOLD_FOR_UPGRADE_PAWN;
-                    break;
-
-                case UnitTypes.Rook:
-                    haves[FOOD_NUMBER] = FOOD_FOR_UPGRADE_ROOK == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= FOOD_FOR_UPGRADE_ROOK;
-                    haves[WOOD_NUMBER] = WOOD_FOR_UPGRADE_ROOK == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= WOOD_FOR_UPGRADE_ROOK;
-                    haves[ORE_NUMBER] = ORE_FOR_UPGRADE_ROOK == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= ORE_FOR_UPGRADE_ROOK;
-                    haves[IRON_NUMBER] = IRON_FOR_UPGRADE_ROOK == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= IRON_FOR_UPGRADE_ROOK;
-                    haves[GOLD_NUMBER] = GOLD_FOR_UPGRADE_ROOK == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= GOLD_FOR_UPGRADE_ROOK;
-                    break;
-
-                case UnitTypes.Bishop:
-                    haves[FOOD_NUMBER] = FOOD_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= FOOD_FOR_UPGRADE_BISHOP;
-                    haves[WOOD_NUMBER] = WOOD_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= WOOD_FOR_UPGRADE_BISHOP;
-                    haves[ORE_NUMBER] = ORE_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= ORE_FOR_UPGRADE_BISHOP;
-                    haves[IRON_NUMBER] = IRON_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= IRON_FOR_UPGRADE_BISHOP;
-                    haves[GOLD_NUMBER] = GOLD_FOR_UPGRADE_BISHOP == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= GOLD_FOR_UPGRADE_BISHOP;
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-
-            return HavedAll(haves);
-        }
-        internal void BuyUpgradeUnit(PlayerTypes playerType, UnitTypes unitType)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    throw new Exception();
-
-                case UnitTypes.Pawn:
-                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_UPGRADE_PAWN);
-                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_UPGRADE_PAWN);
-                    TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_UPGRADE_PAWN);
-                    TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_UPGRADE_PAWN);
-                    TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_UPGRADE_PAWN);
-                    break;
-
-                case UnitTypes.Rook:
-                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_UPGRADE_ROOK);
-                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_UPGRADE_ROOK);
-                    TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_UPGRADE_ROOK);
-                    TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_UPGRADE_ROOK);
-                    TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_UPGRADE_ROOK);
-                    break;
-
-                case UnitTypes.Bishop:
-                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_UPGRADE_BISHOP);
-                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_UPGRADE_BISHOP);
-                    TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_UPGRADE_BISHOP);
-                    TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_UPGRADE_BISHOP);
-                    TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_UPGRADE_BISHOP);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
-
         internal bool CanUpgradeBuildings(PlayerTypes playerType, BuildingTypes buildingType, out bool[] haves)
         {
-            haves = new bool[AMOUNT_RESOURCES_TYPES];
+            haves = new bool[Enum.GetNames(typeof(ResourceTypes)).Length];
 
-            switch (buildingType)
+            int i = 0;
+            for (var resType = (ResourceTypes)1; resType < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resType++)
             {
-                case BuildingTypes.None:
-                    throw new Exception();
-
-                case BuildingTypes.City:
-                    throw new Exception();
-
-                case BuildingTypes.Farm:
-                    haves[FOOD_NUMBER] = FOOD_FOR_UPGRADE_FARM == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= FOOD_FOR_UPGRADE_FARM;
-                    haves[WOOD_NUMBER] = WoodForUpgradeFarm == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= WoodForUpgradeFarm;
-                    haves[ORE_NUMBER] = OreForUpgradeFarm == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= OreForUpgradeFarm;
-                    haves[IRON_NUMBER] = IronForUpgradeFarm == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= IronForUpgradeFarm;
-                    haves[GOLD_NUMBER] = GoldForUpgradeFarm == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= GoldForUpgradeFarm;
-                    break;
-
-                case BuildingTypes.Woodcutter:
-                    haves[FOOD_NUMBER] = FoodForUpgradeWoodcutter == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= FoodForUpgradeWoodcutter;
-                    haves[WOOD_NUMBER] = WoodForUpgradeWoodcutter == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= WoodForUpgradeWoodcutter;
-                    haves[ORE_NUMBER] = OreForUpgradeWoodcutter == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= OreForUpgradeWoodcutter;
-                    haves[IRON_NUMBER] = IronForUpgradeWoodcutter == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= IronForUpgradeWoodcutter;
-                    haves[GOLD_NUMBER] = GoldForUpgradeWoodcutter == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= GoldForUpgradeWoodcutter;
-                    break;
-
-                case BuildingTypes.Mine:
-                    haves[FOOD_NUMBER] = FoodForUpgradeMine == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= FoodForUpgradeMine;
-                    haves[WOOD_NUMBER] = WoodForUpgradeMine == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= WoodForUpgradeMine;
-                    haves[ORE_NUMBER] = OreForUpgradeMine == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= OreForUpgradeMine;
-                    haves[IRON_NUMBER] = IronForUpgradeMine == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= IronForUpgradeMine;
-                    haves[GOLD_NUMBER] = GoldForUpgradeMine == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= GoldForUpgradeMine;
-                    break;
-
-                default:
-                    break;
+                haves[i] = AmountResForUpgrade(buildingType, resType) == NULL_RESOURCES ? true : AmountResources(playerType, resType) >= AmountResForUpgrade(buildingType, resType);
+                i++;
             }
+                
 
             return HavedAll(haves);
         }
         internal void BuyUpgradeBuildings(PlayerTypes playerType, BuildingTypes buildingType)
         {
-            switch (buildingType)
-            {
-                case BuildingTypes.None:
-                    throw new Exception();
-
-                case BuildingTypes.City:
-                    break;
-
-                case BuildingTypes.Farm:
-                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_UPGRADE_FARM);
-                    TakeAmountResources(playerType, ResourceTypes.Wood, WoodForUpgradeFarm);
-                    TakeAmountResources(playerType, ResourceTypes.Ore, OreForUpgradeFarm);
-                    TakeAmountResources(playerType, ResourceTypes.Iron, IronForUpgradeFarm);
-                    TakeAmountResources(playerType, ResourceTypes.Gold, GoldForUpgradeFarm);
-                    break;
-
-                case BuildingTypes.Woodcutter:
-                    TakeAmountResources(playerType, ResourceTypes.Food, FoodForUpgradeWoodcutter);
-                    TakeAmountResources(playerType, ResourceTypes.Wood, WoodForUpgradeWoodcutter);
-                    TakeAmountResources(playerType, ResourceTypes.Ore, OreForUpgradeWoodcutter);
-                    TakeAmountResources(playerType, ResourceTypes.Iron, IronForUpgradeWoodcutter);
-                    TakeAmountResources(playerType, ResourceTypes.Gold, GoldForUpgradeWoodcutter);
-                    break;
-
-                case BuildingTypes.Mine:
-                    TakeAmountResources(playerType, ResourceTypes.Food, FoodForUpgradeMine);
-                    TakeAmountResources(playerType, ResourceTypes.Wood, WoodForUpgradeMine);
-                    TakeAmountResources(playerType, ResourceTypes.Ore, OreForUpgradeMine);
-                    TakeAmountResources(playerType, ResourceTypes.Iron, IronForUpgradeMine);
-                    TakeAmountResources(playerType, ResourceTypes.Gold, GoldForUpgradeMine);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
+            for (var resourceTypes = (ResourceTypes)1; resourceTypes < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resourceTypes++)
+                TakeAmountResources(playerType, resourceTypes, AmountResForUpgrade(buildingType, resourceTypes));
         }
 
         private bool HavedAll(bool[] haves) => haves[FOOD_NUMBER] && haves[WOOD_NUMBER] && haves[ORE_NUMBER] && haves[IRON_NUMBER] && haves[GOLD_NUMBER];

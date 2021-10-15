@@ -14,7 +14,7 @@ namespace Scripts.Game
 
             giveTakeZoneViewUICom.SetText(ToolWeaponTypes.Pick, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Pick).ToString());
             giveTakeZoneViewUICom.SetText(ToolWeaponTypes.Sword, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Sword).ToString());
-            giveTakeZoneViewUICom.SetText(ToolWeaponTypes.Crossbow, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Crossbow).ToString());
+            giveTakeZoneViewUICom.SetText(ToolWeaponTypes.Shield, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Shield).ToString());
         }
     }
 }

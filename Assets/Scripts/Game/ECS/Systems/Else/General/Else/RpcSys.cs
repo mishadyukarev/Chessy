@@ -289,7 +289,7 @@ namespace Scripts.Game
                 listObjects.Add(curUnitDatCom.AmountHealth);
                 listObjects.Add(curUnitDatCom.AmountSteps);
                 listObjects.Add(curUnitDatCom.CondUnitType);
-                listObjects.Add(curUnitDatCom.ArcherWeapType);
+                listObjects.Add(curUnitDatCom.UpgradeUnitType);
                 listObjects.Add(curUnitDatCom.ExtraTWPawnType);
 
                 listObjects.Add(_cellUnitFilter.Get2(curIdxCell).PlayerType);
@@ -338,7 +338,6 @@ namespace Scripts.Game
             ref var invToolsComp = ref _invToolsFilter.Get1(0);
             listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick));
             listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword));
-            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Crossbow));
 
 
             #region Else
@@ -459,7 +458,7 @@ namespace Scripts.Game
                 curUnitDatCom.AmountHealth = (int)objects[_curNumber++];
                 curUnitDatCom.AmountSteps = (int)objects[_curNumber++];
                 curUnitDatCom.CondUnitType = (CondUnitTypes)objects[_curNumber++];
-                curUnitDatCom.ArcherWeapType = (ToolWeaponTypes)objects[_curNumber++];
+                curUnitDatCom.UpgradeUnitType = (UpgradeUnitTypes)objects[_curNumber++];
                 curUnitDatCom.ExtraTWPawnType = (ToolWeaponTypes)objects[_curNumber++];
                 _cellUnitFilter.Get2(curIdxCell).PlayerType = (PlayerTypes)objects[_curNumber++];
 
@@ -510,7 +509,6 @@ namespace Scripts.Game
             ref var invToolsComp = ref _invToolsFilter.Get1(0);
             invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Pick, (byte)objects[_curNumber++]);
             invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Sword, (byte)objects[_curNumber++]);
-            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Crossbow, (byte)objects[_curNumber++]);
         }
 
         #endregion

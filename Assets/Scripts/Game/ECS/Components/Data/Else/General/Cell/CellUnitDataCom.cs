@@ -54,10 +54,10 @@ namespace Scripts.Game
         }
 
 
-        internal ToolWeaponTypes ArcherWeapType { get; set; }
-        internal bool HaveArcherWeapon => ArcherWeapType != default;
+        internal UpgradeUnitTypes UpgradeUnitType;
 
-        internal ToolWeaponTypes ExtraTWPawnType { get; set; }
+
+        internal ToolWeaponTypes ExtraTWPawnType;
         internal bool HaveExtraToolWeaponPawn => ExtraTWPawnType != default;
 
 
@@ -284,9 +284,6 @@ namespace Scripts.Game
                         case ToolWeaponTypes.Hoe:
                             throw new Exception();
 
-                        case ToolWeaponTypes.Axe:
-                            throw new Exception();
-
                         case ToolWeaponTypes.Pick:
                             simplePowerDamege -= simplePowerDamege * 0.5f;
                             break;
@@ -295,11 +292,8 @@ namespace Scripts.Game
                             simplePowerDamege += simplePowerDamege * 0.5f;
                             break;
 
-                        case ToolWeaponTypes.Bow:
-                            throw new Exception();
-
-                        case ToolWeaponTypes.Crossbow:
-                            throw new Exception();
+                        case ToolWeaponTypes.Shield:
+                            break;
 
                         default:
                             throw new Exception();
@@ -310,61 +304,58 @@ namespace Scripts.Game
                 {
                     simplePowerDamege = UnitValues.SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP;
 
-                    switch (ArcherWeapType)
-                    {
-                        case ToolWeaponTypes.None:
-                            throw new Exception();
+                    //switch (ArcherWeapType)
+                    //{
+                    //    case ToolWeaponTypes.None:
+                    //        throw new Exception();
 
-                        case ToolWeaponTypes.Hoe:
-                            throw new Exception();
+                    //    case ToolWeaponTypes.Hoe:
+                    //        throw new Exception();
 
-                        case ToolWeaponTypes.Axe:
-                            throw new Exception();
+                    //    case ToolWeaponTypes.Pick:
+                    //        throw new Exception();
 
-                        case ToolWeaponTypes.Pick:
-                            throw new Exception();
+                    //    case ToolWeaponTypes.Sword:
+                    //        throw new Exception();
 
-                        case ToolWeaponTypes.Sword:
-                            throw new Exception();
+                    //    case ToolWeaponTypes.Bow:
+                    //        simplePowerDamege += 0;
+                    //        break;
 
-                        case ToolWeaponTypes.Bow:
-                            simplePowerDamege += 0;
-                            break;
+                    //    case ToolWeaponTypes.Crossbow:
+                    //        simplePowerDamege += simplePowerDamege / 3;
+                    //        break;
 
-                        case ToolWeaponTypes.Crossbow:
-                            simplePowerDamege += simplePowerDamege / 3;
-                            break;
+                    //    default:
+                    //        throw new Exception();
+                    //}
 
-                        default:
-                            throw new Exception();
-                    }
+                    //switch (ExtraTWPawnType)
+                    //{
+                    //    case ToolWeaponTypes.None:
+                    //        break;
 
-                    switch (ExtraTWPawnType)
-                    {
-                        case ToolWeaponTypes.None:
-                            break;
+                    //    case ToolWeaponTypes.Hoe:
+                    //        throw new Exception();
 
-                        case ToolWeaponTypes.Hoe:
-                            throw new Exception();
+                    //    case ToolWeaponTypes.Axe:
+                    //        throw new Exception();
 
-                        case ToolWeaponTypes.Axe:
-                            throw new Exception();
+                    //    case ToolWeaponTypes.Pick:
+                    //        throw new Exception();
 
-                        case ToolWeaponTypes.Pick:
-                            throw new Exception();
+                    //    case ToolWeaponTypes.Sword:
+                    //        throw new Exception();
 
-                        case ToolWeaponTypes.Sword:
-                            throw new Exception();
+                    //    case ToolWeaponTypes.Bow:
+                    //        throw new Exception();
 
-                        case ToolWeaponTypes.Bow:
-                            throw new Exception();
+                    //    case ToolWeaponTypes.Crossbow:
+                    //        throw new Exception();
 
-                        case ToolWeaponTypes.Crossbow:
-                            throw new Exception();
-
-                        default:
-                            throw new Exception();
-                    }
+                    //    default:
+                    //        throw new Exception();
+                    //}
                 }
 
                 return (int)simplePowerDamege;
@@ -397,20 +388,10 @@ namespace Scripts.Game
             }
         }
 
-
-        internal void ResetUnit()
-        {
-            UnitType = default;
-            ArcherWeapType = default;
-            ExtraTWPawnType = default;
-            AmountHealth = default;
-            AmountSteps = default;
-            CondUnitType = default;
-        }
         internal void ReplaceUnit(CellUnitDataCom newCellUnitDataCom)
         {
             UnitType = newCellUnitDataCom.UnitType;
-            ArcherWeapType = newCellUnitDataCom.ArcherWeapType;
+            UpgradeUnitType = newCellUnitDataCom.UpgradeUnitType;
             ExtraTWPawnType = newCellUnitDataCom.ExtraTWPawnType;
             AmountHealth = newCellUnitDataCom.AmountHealth;
             AmountSteps = newCellUnitDataCom.AmountSteps;

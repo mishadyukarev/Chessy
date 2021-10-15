@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Scripts.Game.EconomyValues;
+using static Scripts.Game.StartEconomyValues;
 
 namespace Scripts.Game
 {

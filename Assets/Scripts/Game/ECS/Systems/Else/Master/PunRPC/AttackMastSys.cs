@@ -101,7 +101,7 @@ namespace Scripts.Game
                         _endGameDataUIFilter.Get1(0).PlayerWinner = fromOwnUnitCom.PlayerType;
                     }
 
-                    toUnitDatCom.ResetUnit();
+                    toUnitDatCom.DefUnitType();
 
 
                     if (fromUnitDatCom.IsMelee)
@@ -109,17 +109,12 @@ namespace Scripts.Game
                         toUnitDatCom.ReplaceUnit(fromUnitDatCom);
                         toOwnUnitCom.PlayerType = fromOwnUnitCom.PlayerType;
 
-                        fromUnitDatCom.ResetUnit();
+                        fromUnitDatCom.DefUnitType();
 
                         if (!toUnitDatCom.HaveAmountHealth)
                         {
-                            toUnitDatCom.ResetUnit();
+                            toUnitDatCom.DefUnitType();
                         }
-                    }
-
-                    else
-                    {
-
                     }
                 }
 

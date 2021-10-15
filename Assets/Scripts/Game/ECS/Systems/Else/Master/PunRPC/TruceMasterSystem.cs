@@ -30,8 +30,8 @@ namespace Scripts.Game
             _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.First, ToolWeaponTypes.Sword, 0);
             _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.Second, ToolWeaponTypes.Sword, 0);
 
-            _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.First, ToolWeaponTypes.Crossbow, 0);
-            _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.Second, ToolWeaponTypes.Crossbow, 0);
+            _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.First, ToolWeaponTypes.Shield, 0);
+            _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.Second, ToolWeaponTypes.Shield, 0);
 
 
             foreach (byte curIdxCell in _xyCellFilter)

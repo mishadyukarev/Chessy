@@ -26,10 +26,6 @@ namespace Scripts.Game
                 case ToolWeaponTypes.Hoe:
                     throw new Exception();
 
-                case ToolWeaponTypes.Axe:
-                    _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Pawn);
-                    break;
-
                 case ToolWeaponTypes.Pick:
                     _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Pick);
                     break;
@@ -38,10 +34,8 @@ namespace Scripts.Game
                     _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Sword);
                     break;
 
-                case ToolWeaponTypes.Bow:
-                    break;
-
-                case ToolWeaponTypes.Crossbow:
+                case ToolWeaponTypes.Shield:
+                    _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Shield);
                     break;
 
                 default:

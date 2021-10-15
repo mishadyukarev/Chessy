@@ -309,7 +309,7 @@ namespace Scripts.Game
                             {
                                 if (curOnUnitCom.PlayerType == playerType)
                                 {
-                                    curUnitDatCom.ResetUnit();
+                                    curUnitDatCom.DefUnitType();
 
                                     isFindedUnit = true;
                                     break;
