@@ -1,78 +1,228 @@
-﻿namespace Scripts.Game
+﻿using System;
+
+namespace Scripts.Game
 {
     public static class UnitValues
     {
         #region Health
 
-        public const int STANDART_AMOUNT_HEALTH_KING = 500;
-        public const int STANDART_AMOUNT_HEALTH_PAWN = 100;
-        public const int STANDART_AMOUNT_HEALTH_ROOK = 50;
-        public const int STANDART_AMOUNT_HEALTH_BISHOP = 50;
+        internal static int StandartAmountHealth(UnitTypes unitType)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
 
-        public const int FOR_ADD_HEALTH_KING = (int)(STANDART_AMOUNT_HEALTH_KING * 0.2f);
-        public const int FOR_ADD_HEALTH_PAWN = (int)(STANDART_AMOUNT_HEALTH_PAWN * 1f);
-        public const int FOR_ADD_HEALTH_ROOK = (int)(STANDART_AMOUNT_HEALTH_ROOK * 1f);
-        public const int FOR_ADD_HEALTH_BISHOP = (int)(STANDART_AMOUNT_HEALTH_BISHOP * 1f);
+                case UnitTypes.King:
+                    return 500;
+
+                case UnitTypes.Pawn:
+                    return 100;
+
+                case UnitTypes.Rook:
+                    return 100;
+
+                case UnitTypes.Bishop:
+                    return 100;
+
+                default:
+                    throw new Exception();
+            }
+        }
+        internal static float ForAdding(UnitTypes unitType)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
+
+                case UnitTypes.King:
+                    return 0.2f;
+
+                case UnitTypes.Pawn:
+                    return 1f;
+
+                case UnitTypes.Rook:
+                    return 1f;
+
+                case UnitTypes.Bishop:
+                    return 1f;
+
+                default:
+                    throw new Exception();
+            }
+        }
 
         #endregion
 
 
         #region Damage
 
-        public const int SIMPLE_POWER_DAMAGE_KING = 170;
-        public const int SIMPLE_POWER_DAMAGE_PAWN = 70;
-        public const int SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP = 70;
+        internal static int SimplePowerDamage(UnitTypes unitType)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King: return 150;
+                case UnitTypes.Pawn: return 80;
+                case UnitTypes.Rook: return 80;
+                case UnitTypes.Bishop: return 80;
+                default: throw new Exception();
+            }
+        }
+
+        internal static float UniqueRatioPowerDamage(UnitTypes unitType)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King: throw new Exception();
+                case UnitTypes.Pawn: return 0.5f;
+                case UnitTypes.Rook: return 0.5f;
+                case UnitTypes.Bishop: return 0.5f;
+                default: throw new Exception();
+            }
+        }
 
         #endregion
 
 
         #region Protection
 
-        #region Building
+        internal static float ProtectionRatioEnvir(UnitTypes unitType, EnvirTypes envirType)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King:
+                    switch (envirType)
+                    {
+                        case EnvirTypes.None: throw new Exception();
+                        case EnvirTypes.Fertilizer: return -0.5f;
+                        case EnvirTypes.YoungForest: throw new Exception();
+                        case EnvirTypes.AdultForest: return 0.4f;
+                        case EnvirTypes.Hill: return 0.2f;
+                        case EnvirTypes.Mountain: throw new Exception();
+                        default: throw new Exception();
+                    }
+                case UnitTypes.Pawn:
+                    switch (envirType)
+                    {
+                        case EnvirTypes.None: throw new Exception();
+                        case EnvirTypes.Fertilizer: return -0.5f;
+                        case EnvirTypes.YoungForest: throw new Exception();
+                        case EnvirTypes.AdultForest: return 0.5f;
+                        case EnvirTypes.Hill: return 0.2f;
+                        case EnvirTypes.Mountain: throw new Exception();
+                        default: throw new Exception();
+                    }
+                case UnitTypes.Rook:
+                    switch (envirType)
+                    {
+                        case EnvirTypes.None: throw new Exception();
+                        case EnvirTypes.Fertilizer: return -0.5f;
+                        case EnvirTypes.YoungForest: throw new Exception();
+                        case EnvirTypes.AdultForest: return 0.5f;
+                        case EnvirTypes.Hill: return 0.2f;
+                        case EnvirTypes.Mountain: throw new Exception();
+                        default: throw new Exception();
+                    }
+                case UnitTypes.Bishop:
+                    switch (envirType)
+                    {
+                        case EnvirTypes.None: throw new Exception();
+                        case EnvirTypes.Fertilizer: return -0.5f;
+                        case EnvirTypes.YoungForest: throw new Exception();
+                        case EnvirTypes.AdultForest: return 0.5f;
+                        case EnvirTypes.Hill: return 0.2f;
+                        case EnvirTypes.Mountain: throw new Exception();
+                        default: throw new Exception();
+                    }
+                default: throw new Exception();
+            }
 
+
+        }
+
+        internal static float PercentForProtection(UnitTypes unitType)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King: return 0.5f;
+                case UnitTypes.Pawn: return 0.5f;
+                case UnitTypes.Rook: return 0.5f;
+                case UnitTypes.Bishop: return 0.5f;
+                default: throw new Exception();
+            }
+        }
+        internal static float PercentForRelax(UnitTypes unitType)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King: return -0.5f;
+                case UnitTypes.Pawn: return -0.5f;
+                case UnitTypes.Rook: return -0.5f;
+                case UnitTypes.Bishop: return -0.5f;
+                default: throw new Exception();
+            }
+        }
 
         #endregion
 
 
-        #region Environment
+        #region Steps
 
-        public static int PROTECTION_FOOD_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * 0.7f);
-        public static int PROTECTION_FOOD_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * 0.7f);
-        public static int PROTECTION_FOOD_FOR_ROOK_AND_BISHOP => (int)(SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP * 0.7f);
+        internal static int NeedAmountSteps(EnvirTypes envirType)
+        {
+            switch (envirType)
+            {
+                case EnvirTypes.None:
+                    throw new Exception();
 
-        public static int PROTECTION_HILL_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * 0.2f);
-        public static int PROTECTION_HILL_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * 0.3f);
-        public static int PROTECTION_HILL_FOR_ROOK_AND_BISHOP => (int)(SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP * 0.1f);
+                case EnvirTypes.Fertilizer:
+                    throw new Exception();
 
-        public static int PROTECTION_TREE_FOR_KING => (int)(SIMPLE_POWER_DAMAGE_KING * 0.2f);
-        public static int PROTECTION_TREE_FOR_PAWN => (int)(SIMPLE_POWER_DAMAGE_PAWN * 0.3f);
-        public static int PROTECTION_TREE_FOR_ROOK_AND_BISHOP => (int)(SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP * 0.1f);
+                case EnvirTypes.YoungForest:
+                    throw new Exception();
 
-        #endregion
+                case EnvirTypes.AdultForest:
+                    return 2;
 
+                case EnvirTypes.Hill:
+                    return 2;
 
-        #region Click
+                case EnvirTypes.Mountain:
+                    throw new Exception();
 
-        public const float PERCENT_FOR_PROTECTION_KING = 0.2f;
-        public const float PERCENT_FOR_PROTECTION_PAWN = 0.7f;
-        public const float PERCENT_FOR_PROTECTION_ROOK = 0.3f;
-        public const float PERCENT_FOR_PROTECTION_BISHOP = 0.3f;
+                default:
+                    throw new Exception();
+            }
+        }
 
-        #endregion
+        internal static int StandartAmountSteps(UnitTypes unitType)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None:
+                    throw new Exception();
 
-        #endregion
+                case UnitTypes.King:
+                    return 1;
 
+                case UnitTypes.Pawn:
+                    return 2;
 
-        #region Step
+                case UnitTypes.Rook:
+                    return 2;
 
-        public const int NEED_AMOUNT_STEPS_FERTILIZE = 0;
-        public const int NEED_AMOUNT_STEPS_ADULTTREE = 2;
-        public const int NEED_AMOUNT_STEPS_HILL = 2;
-
-        public const int STANDART_AMOUNT_STEPS_KING = 1;
-        public const int STANDART_AMOUNT_STEPS_PAWN = 2;
-        public const int STANDART_AMOUNT_STEPS_ROOK = 2;
-        public const int STANDART_AMOUNT_STEPS_BISHOP = 2;
+                case UnitTypes.Bishop:
+                    return 2;
+                default:
+                    throw new Exception();
+            }
+        }
 
         #endregion
     }

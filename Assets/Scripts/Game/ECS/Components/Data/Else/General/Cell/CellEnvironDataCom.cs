@@ -14,18 +14,30 @@ namespace Scripts.Game
         {
             get
             {
-                int amountSteps = 1;
-
-                if (HaveEnvir(EnvirTypes.Fertilizer))
-                    amountSteps += UnitValues.NEED_AMOUNT_STEPS_FERTILIZE;
+                int amountSteps = 1;         
 
                 if (HaveEnvir(EnvirTypes.AdultForest))
-                    amountSteps += UnitValues.NEED_AMOUNT_STEPS_ADULTTREE;
+                    amountSteps += UnitValues.NeedAmountSteps(EnvirTypes.AdultForest);
 
                 if (HaveEnvir(EnvirTypes.Hill))
-                    amountSteps += UnitValues.NEED_AMOUNT_STEPS_HILL;
+                    amountSteps += UnitValues.NeedAmountSteps(EnvirTypes.Hill);
 
                 return amountSteps;
+            }
+        }
+        internal Dictionary<EnvirTypes, bool> Envronments
+        {
+            get
+            {
+                var envrs = new Dictionary<EnvirTypes, bool>();
+
+                for (EnvirTypes envType = (EnvirTypes)1; envType < (EnvirTypes)Enum.GetNames(typeof(EnvirTypes)).Length; envType++)
+                {
+                    if (_haveCellEnvirOnCell[envType]) envrs.Add(envType, true);
+                    else envrs.Add(envType, false);
+                }
+
+                return envrs;
             }
         }
 
@@ -143,69 +155,6 @@ namespace Scripts.Game
             }
 
             SetAmountResources(environmentType, randAmountResour);
-        }
-
-
-        internal int PowerProtectionUnit(UnitTypes unitType)
-        {
-            var powerProtection = 0;
-
-            switch (unitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    if (HaveEnvir(EnvirTypes.Fertilizer))
-                        powerProtection -= UnitValues.PROTECTION_FOOD_FOR_KING;
-
-                    if (HaveEnvir(EnvirTypes.AdultForest))
-                        powerProtection += UnitValues.PROTECTION_TREE_FOR_KING;
-
-                    if (HaveEnvir(EnvirTypes.Hill))
-                        powerProtection += UnitValues.PROTECTION_HILL_FOR_KING;
-                    break;
-
-                case UnitTypes.Pawn:
-                    if (HaveEnvir(EnvirTypes.Fertilizer))
-                        powerProtection -= UnitValues.PROTECTION_FOOD_FOR_PAWN;
-
-                    if (HaveEnvir(EnvirTypes.AdultForest))
-                        powerProtection += UnitValues.PROTECTION_TREE_FOR_PAWN;
-
-                    if (HaveEnvir(EnvirTypes.Hill))
-                        powerProtection += UnitValues.PROTECTION_HILL_FOR_PAWN;
-                    break;
-
-
-                case UnitTypes.Rook:
-                    if (HaveEnvir(EnvirTypes.Fertilizer))
-                        powerProtection -= UnitValues.PROTECTION_FOOD_FOR_ROOK_AND_BISHOP;
-
-                    if (HaveEnvir(EnvirTypes.AdultForest))
-                        powerProtection += UnitValues.PROTECTION_TREE_FOR_ROOK_AND_BISHOP;
-
-                    if (HaveEnvir(EnvirTypes.Hill))
-                        powerProtection += UnitValues.PROTECTION_HILL_FOR_ROOK_AND_BISHOP;
-                    break;
-
-
-                case UnitTypes.Bishop:
-                    if (HaveEnvir(EnvirTypes.Fertilizer))
-                        powerProtection -= UnitValues.PROTECTION_FOOD_FOR_ROOK_AND_BISHOP;
-
-                    if (HaveEnvir(EnvirTypes.AdultForest))
-                        powerProtection += UnitValues.PROTECTION_TREE_FOR_ROOK_AND_BISHOP;
-
-                    if (HaveEnvir(EnvirTypes.Hill))
-                        powerProtection += UnitValues.PROTECTION_HILL_FOR_ROOK_AND_BISHOP;
-
-                    break;
-                    throw new Exception();
-            }
-
-
-            return powerProtection;
         }
     }
 }

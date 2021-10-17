@@ -23,15 +23,11 @@ namespace Scripts.Game
 
             if (selUnitDatCom.HaveUnit)
             {
-                var comPowerProtection = selUnitDatCom.PowerProtection
-                    + selBuildDatCom.PowerProtectionUnit(selUnitDatCom.UnitType, selUnitDatCom.SimplePowerDamage)
-                    + selEnvDatCom.PowerProtectionUnit(selUnitDatCom.UnitType);
-
                 _unitZoneUIFilter.Get1(0).SetActiveStatZone(true);
 
                 _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Health, selUnitDatCom.AmountHealth.ToString());
                 _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Damage, selUnitDatCom.SimplePowerDamage.ToString());
-                _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Protection, comPowerProtection.ToString());
+                _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Protection, selUnitDatCom.PowerProtection(selBuildDatCom.BuildType, selEnvDatCom.Envronments).ToString());
                 _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Steps, selUnitDatCom.AmountSteps.ToString());
             }
 

@@ -44,7 +44,7 @@ namespace Scripts.Game
 
 
                 toUnitDatCom.UpgradeUnitType = fromUnitDatCom.UpgradeUnitType;
-                toUnitDatCom.ExtraTWPawnType = fromUnitDatCom.ExtraTWPawnType;
+                toUnitDatCom.TWExtraPawnType = fromUnitDatCom.TWExtraPawnType;
                 toUnitDatCom.UnitType = fromUnitDatCom.UnitType;
                 toUnitDatCom.AmountHealth = fromUnitDatCom.AmountHealth;
                 toUnitDatCom.AmountSteps = fromUnitDatCom.AmountSteps;

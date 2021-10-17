@@ -42,10 +42,10 @@ namespace Scripts.Game
                             {
                                 unitDatComForGive.CondUnitType = default;
 
-                                inventTWCom.AddAmountTools(ownUnitComForGive.PlayerType, unitDatComForGive.ExtraTWPawnType);
+                                inventTWCom.AddAmountTools(ownUnitComForGive.PlayerType, unitDatComForGive.TWExtraPawnType);
 
                                 unitDatComForGive.TakeAmountSteps();
-                                unitDatComForGive.ExtraTWPawnType = default;
+                                unitDatComForGive.TWExtraPawnType = default;
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                             }
@@ -78,7 +78,7 @@ namespace Scripts.Game
                                 {
                                     inventTWCom.TakeAmountTools(ownUnitComForGive.PlayerType, toolWeapTypeForGive);
 
-                                    unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                    unitDatComForGive.TWExtraPawnType = toolWeapTypeForGive;
                                     unitDatComForGive.AmountSteps -= 1;
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
@@ -90,7 +90,7 @@ namespace Scripts.Game
                                     {
                                         invResCom.TakeAmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Wood, _woodCostForPick);
 
-                                        unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                        unitDatComForGive.TWExtraPawnType = toolWeapTypeForGive;
                                         unitDatComForGive.AmountSteps -= 1;
 
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
@@ -107,7 +107,7 @@ namespace Scripts.Game
                                     {
                                         invResCom.TakeAmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Iron, _ironCostForSword);
 
-                                        unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                        unitDatComForGive.TWExtraPawnType = toolWeapTypeForGive;
                                         unitDatComForGive.AmountSteps -= 1;
 
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
@@ -125,7 +125,7 @@ namespace Scripts.Game
                                     {
                                         invResCom.TakeAmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Wood, 5);
 
-                                        unitDatComForGive.ExtraTWPawnType = toolWeapTypeForGive;
+                                        unitDatComForGive.TWExtraPawnType = toolWeapTypeForGive;
                                         unitDatComForGive.AmountSteps -= 1;
 
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);

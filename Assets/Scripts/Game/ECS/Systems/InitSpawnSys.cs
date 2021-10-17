@@ -378,7 +378,7 @@ namespace Scripts.Game
 
                             int rand = UnityEngine.Random.Range(0, 100);
 
-                            if (rand >= 50) curUnitDatCom.ExtraTWPawnType = ToolWeaponTypes.Sword;
+                            if (rand >= 50) curUnitDatCom.TWExtraPawnType = ToolWeaponTypes.Sword;
 
                             curUnitDatCom.AmountHealth = 100;
                             curUnitDatCom.CondUnitType = CondUnitTypes.Protected;

@@ -38,7 +38,7 @@ namespace Scripts.Game
                             if (curUnitDatCom.HaveExtraToolWeaponPawn)
                             {
                                 curExtraUnitViewCom.Enable_SR();
-                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDatCom.ExtraTWPawnType);
+                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDatCom.TWExtraPawnType);
                             }
                         }
 
@@ -56,7 +56,7 @@ namespace Scripts.Game
                             if (curUnitDatCom.HaveExtraToolWeaponPawn)
                             {
                                 curExtraUnitViewCom.Enable_SR();
-                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDatCom.ExtraTWPawnType);
+                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDatCom.TWExtraPawnType);
                             }
                         }
 

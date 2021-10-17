@@ -58,9 +58,7 @@ namespace Scripts.Game
                 int damageTo = 0;
 
                 damageTo += fromUnitDatCom.SimplePowerDamage;
-                damageTo -= toUnitDatCom.PowerProtection;
-                damageTo -= toBuildDatCom.PowerProtectionUnit(toUnitDatCom.UnitType, fromUnitDatCom.SimplePowerDamage);
-                damageTo -= toEnvDatCom.PowerProtectionUnit(toUnitDatCom.UnitType);
+                damageTo -= toUnitDatCom.PowerProtection(toBuildDatCom.BuildType, toEnvDatCom.Envronments);
 
 
                 if (fromUnitDatCom.IsMelee)

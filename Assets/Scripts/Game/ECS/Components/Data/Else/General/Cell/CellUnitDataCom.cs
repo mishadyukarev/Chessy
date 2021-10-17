@@ -57,8 +57,8 @@ namespace Scripts.Game
         internal UpgradeUnitTypes UpgradeUnitType;
 
 
-        internal ToolWeaponTypes ExtraTWPawnType;
-        internal bool HaveExtraToolWeaponPawn => ExtraTWPawnType != default;
+        internal ToolWeaponTypes TWExtraPawnType;
+        internal bool HaveExtraToolWeaponPawn => TWExtraPawnType != default;
 
 
         private Dictionary<CondUnitTypes, int> _amountStepsInCondition;
@@ -75,61 +75,10 @@ namespace Scripts.Game
         internal void TakeAmountSteps(int taking = 1) => AmountSteps -= taking;
 
 
-        internal bool HaveMaxAmountSteps
-        {
-            get
-            {
-                switch (UnitType)
-                {
-                    case UnitTypes.None:
-                        throw new Exception();
-
-                    case UnitTypes.King:
-                        return AmountSteps == UnitValues.STANDART_AMOUNT_STEPS_KING;
-
-                    case UnitTypes.Pawn:
-                        return AmountSteps == UnitValues.STANDART_AMOUNT_STEPS_PAWN;
-
-                    case UnitTypes.Rook:
-                        return AmountSteps == UnitValues.STANDART_AMOUNT_STEPS_ROOK;
-
-                    case UnitTypes.Bishop:
-                        return AmountSteps == UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
-
-                    default:
-                        throw new Exception();
-                }
-            }
-        }
+        internal bool HaveMaxAmountSteps => AmountSteps == UnitValues.StandartAmountSteps(UnitType);
         internal bool HaveMinAmountSteps => AmountSteps >= 1;
         internal void ResetAmountSteps() => AmountSteps = default;
-        internal void RefreshAmountSteps()
-        {
-            switch (UnitType)
-            {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    AmountSteps = UnitValues.STANDART_AMOUNT_STEPS_KING;
-                    break;
-
-                case UnitTypes.Pawn:
-                    AmountSteps = UnitValues.STANDART_AMOUNT_STEPS_PAWN;
-                    break;
-
-                case UnitTypes.Rook:
-                    AmountSteps = UnitValues.STANDART_AMOUNT_STEPS_ROOK;
-                    break;
-
-                case UnitTypes.Bishop:
-                    AmountSteps = UnitValues.STANDART_AMOUNT_STEPS_BISHOP;
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
+        internal void RefreshAmountSteps() => AmountSteps = UnitValues.StandartAmountSteps(UnitType);
 
 
         internal int AmountHealth { get; set; }
@@ -137,146 +86,98 @@ namespace Scripts.Game
         internal void TakeAmountHealth(int taking = 1) => AmountHealth -= taking;
 
 
-        internal int MaxAmountHealth
-        {
-            get
-            {
-                switch (UnitType)
-                {
-                    case UnitTypes.None:
-                        return default;
-
-                    case UnitTypes.King:
-                        return UnitValues.STANDART_AMOUNT_HEALTH_KING;
-
-                    case UnitTypes.Pawn:
-                        return UnitValues.STANDART_AMOUNT_HEALTH_PAWN;
-
-                    case UnitTypes.Rook:
-                        return UnitValues.STANDART_AMOUNT_HEALTH_ROOK;
-
-                    case UnitTypes.Bishop:
-                        return UnitValues.STANDART_AMOUNT_HEALTH_BISHOP;
-
-                    default:
-                        return default;
-                }
-            }
-        }
+        internal int MaxAmountHealth => UnitValues.StandartAmountHealth(UnitType);
         internal bool HaveMaxAmountHealth => AmountHealth >= MaxAmountHealth;
         internal bool HaveAmountHealth => AmountHealth > 0;
-        internal void AddStandartHeal()
+        internal void AddStandartHeal() => AddAmountHealth((int)(UnitValues.StandartAmountHealth(UnitType) * UnitValues.ForAdding(UnitType)));
+
+        internal int PowerProtection(BuildingTypes buildingType, Dictionary<EnvirTypes, bool> envrs)
         {
-            switch (UnitType)
+            int powerProt = 0;
+
+            if (Is(CondUnitTypes.Protected)) powerProt += (int)(SimplePowerDamage * UnitValues.PercentForProtection(UnitType));
+            else if (Is(CondUnitTypes.Relaxed)) powerProt += (int)(SimplePowerDamage * UnitValues.PercentForRelax(UnitType));
+
+            switch (buildingType)
             {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    AddAmountHealth(UnitValues.FOR_ADD_HEALTH_KING);
-                    break;
-
-                case UnitTypes.Pawn:
-                    AddAmountHealth(UnitValues.FOR_ADD_HEALTH_PAWN);
-                    break;
-
-                case UnitTypes.Rook:
-                    AddAmountHealth(UnitValues.FOR_ADD_HEALTH_ROOK);
-                    break;
-
-                case UnitTypes.Bishop:
-                    AddAmountHealth(UnitValues.FOR_ADD_HEALTH_BISHOP);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
-        }
-
-
-
-        internal int PowerProtection
-        {
-            get
-            {
-                int powerProtection = 0;
-
-                if (Is(CondUnitTypes.Protected))
-                {
+                case BuildingTypes.City:
                     switch (UnitType)
                     {
-                        case UnitTypes.None:
-                            throw new Exception();
-
-                        case UnitTypes.King:
-                            powerProtection += (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_KING);
-                            break;
-
-                        case UnitTypes.Pawn:
-                            powerProtection += (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_PAWN);
-                            break;
-
-                        case UnitTypes.Rook:
-                            powerProtection += (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_ROOK);
-                            break;
-
-                        case UnitTypes.Bishop:
-                            powerProtection += (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_BISHOP);
-                            break;
-
-                        default:
-                            throw new Exception();
+                        case UnitTypes.None: throw new Exception();
+                        case UnitTypes.King: powerProt += (int)(SimplePowerDamage * 0.5f); break;
+                        case UnitTypes.Pawn: powerProt += (int)(SimplePowerDamage * 0.5); break;
+                        case UnitTypes.Rook: powerProt += (int)(SimplePowerDamage * 0.5); break;
+                        case UnitTypes.Bishop: powerProt += (int)(SimplePowerDamage * 0.5); break;
+                        default: throw new Exception();
                     }
-                }
+                    break;
 
-                else if (Is(CondUnitTypes.Relaxed))
-                {
-                    switch (UnitType)
-                    {
-                        case UnitTypes.None:
-                            throw new Exception();
+                case BuildingTypes.Farm:
+                    //switch (UnitType)
+                    //{
+                    //    case UnitTypes.None: throw new Exception();
+                    //    case UnitTypes.King: powerProtection += (int)(SimplePowerDamage * 0.3f); break;
+                    //    case UnitTypes.Pawn: powerProtection += (int)(SimplePowerDamage * 0.5f); break;
+                    //    case UnitTypes.Rook: powerProtection += (int)(SimplePowerDamage * 0.5f); break;
+                    //    case UnitTypes.Bishop: powerProtection += (int)(SimplePowerDamage * 0.5f); break;
+                    //    default: throw new Exception();
+                    //}
+                    break;
 
-                        case UnitTypes.King:
-                            powerProtection -= (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_KING);
-                            break;
+                case BuildingTypes.Woodcutter:
+                    //switch (UnitType)
+                    //{
+                    //    case UnitTypes.None: throw new Exception();
+                    //    case UnitTypes.King: powerProtection += (int)(SimplePowerDamage * 0.1f); break;
+                    //    case UnitTypes.Pawn: powerProtection += (int)(SimplePowerDamage * 0.3f); break;
+                    //    case UnitTypes.Rook: powerProtection += (int)(SimplePowerDamage * 0.3f); break;
+                    //    case UnitTypes.Bishop: powerProtection += (int)(SimplePowerDamage * 0.3f); break;
+                    //    default: throw new Exception();
+                    //}
+                    break;
 
-                        case UnitTypes.Pawn:
-                            powerProtection -= (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_PAWN);
-                            break;
-
-                        case UnitTypes.Rook:
-                            powerProtection -= (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_ROOK);
-                            break;
-
-                        case UnitTypes.Bishop:
-                            powerProtection -= (int)(SimplePowerDamage * UnitValues.PERCENT_FOR_PROTECTION_BISHOP);
-                            break;
-
-                        default:
-                            throw new Exception();
-                    }
-                }
-
-                return powerProtection;
+                case BuildingTypes.Mine:
+                    //switch (UnitType)
+                    //{
+                    //    case UnitTypes.None: throw new Exception();
+                    //    case UnitTypes.King: powerProtection -= (int)(SimplePowerDamage * 0.3f); break;
+                    //    case UnitTypes.Pawn: powerProtection -= (int)(SimplePowerDamage * 0.3f); break;
+                    //    case UnitTypes.Rook: powerProtection -= (int)(SimplePowerDamage * 0.3f); break;
+                    //    case UnitTypes.Bishop: powerProtection -= (int)(SimplePowerDamage * 0.3f); break;
+                    //    default: throw new Exception();
+                    //}
+                    break;
             }
+
+
+            if (envrs[EnvirTypes.Fertilizer])
+                powerProt += (int)(UnitValues.SimplePowerDamage(UnitType) 
+                    * UnitValues.ProtectionRatioEnvir(UnitType, EnvirTypes.Fertilizer));
+
+            if (envrs[EnvirTypes.AdultForest])
+                powerProt += (int)(UnitValues.SimplePowerDamage(UnitType) 
+                    * UnitValues.ProtectionRatioEnvir(UnitType, EnvirTypes.AdultForest));
+
+            if (envrs[EnvirTypes.Hill])
+                powerProt += (int)(UnitValues.SimplePowerDamage(UnitType) 
+                    * UnitValues.ProtectionRatioEnvir(UnitType, EnvirTypes.Hill));
+
+
+            if (TWExtraPawnType == ToolWeaponTypes.Shield) powerProt += (int)(SimplePowerDamage * 0.3f);
+
+
+            return powerProt;
         }
 
         internal int SimplePowerDamage
         {
             get
             {
-                float simplePowerDamege = 0;
+                float simplePowerDamege = UnitValues.SimplePowerDamage(UnitType);
 
-                if (UnitType.Is(UnitTypes.King))
+                if (UnitType.Is(UnitTypes.Pawn))
                 {
-                    simplePowerDamege = UnitValues.SIMPLE_POWER_DAMAGE_KING;
-                }
-
-                else if (UnitType.Is(UnitTypes.Pawn))
-                {
-                    simplePowerDamege = UnitValues.SIMPLE_POWER_DAMAGE_PAWN;
-
-                    switch (ExtraTWPawnType)
+                    switch (TWExtraPawnType)
                     {
                         case ToolWeaponTypes.None:
                             break;
@@ -302,7 +203,11 @@ namespace Scripts.Game
 
                 else if (UnitType.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                 {
-                    simplePowerDamege = UnitValues.SIMPLE_POWER_DAMAGE_ROOK_AND_BISHOP;
+                    //switch (Arc)
+                    //{
+                    //    default:
+                    //        break;
+                    //}
 
                     //switch (ArcherWeapType)
                     //{
@@ -361,38 +266,13 @@ namespace Scripts.Game
                 return (int)simplePowerDamege;
             }
         }
-        internal int UniquePowerDamage
-        {
-            get
-            {
-                switch (UnitType)
-                {
-                    case UnitTypes.None:
-                        throw new Exception();
-
-                    case UnitTypes.King:
-                        throw new Exception();
-
-                    case UnitTypes.Pawn:
-                        return (int)(SimplePowerDamage * 0.5f);
-
-                    case UnitTypes.Rook:
-                        return (int)(SimplePowerDamage * 0.5f);
-
-                    case UnitTypes.Bishop:
-                        return (int)(SimplePowerDamage * 0.5f);
-
-                    default:
-                        throw new Exception();
-                }
-            }
-        }
+        internal int UniquePowerDamage => (int)(SimplePowerDamage * UnitValues.UniqueRatioPowerDamage(UnitType));
 
         internal void ReplaceUnit(CellUnitDataCom newCellUnitDataCom)
         {
             UnitType = newCellUnitDataCom.UnitType;
             UpgradeUnitType = newCellUnitDataCom.UpgradeUnitType;
-            ExtraTWPawnType = newCellUnitDataCom.ExtraTWPawnType;
+            TWExtraPawnType = newCellUnitDataCom.TWExtraPawnType;
             AmountHealth = newCellUnitDataCom.AmountHealth;
             AmountSteps = newCellUnitDataCom.AmountSteps;
             CondUnitType = newCellUnitDataCom.CondUnitType;

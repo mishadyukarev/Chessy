@@ -290,7 +290,7 @@ namespace Scripts.Game
                 listObjects.Add(curUnitDatCom.AmountSteps);
                 listObjects.Add(curUnitDatCom.CondUnitType);
                 listObjects.Add(curUnitDatCom.UpgradeUnitType);
-                listObjects.Add(curUnitDatCom.ExtraTWPawnType);
+                listObjects.Add(curUnitDatCom.TWExtraPawnType);
 
                 listObjects.Add(_cellUnitFilter.Get2(curIdxCell).PlayerType);
 
@@ -459,7 +459,7 @@ namespace Scripts.Game
                 curUnitDatCom.AmountSteps = (int)objects[_curNumber++];
                 curUnitDatCom.CondUnitType = (CondUnitTypes)objects[_curNumber++];
                 curUnitDatCom.UpgradeUnitType = (UpgradeUnitTypes)objects[_curNumber++];
-                curUnitDatCom.ExtraTWPawnType = (ToolWeaponTypes)objects[_curNumber++];
+                curUnitDatCom.TWExtraPawnType = (ToolWeaponTypes)objects[_curNumber++];
                 _cellUnitFilter.Get2(curIdxCell).PlayerType = (PlayerTypes)objects[_curNumber++];
 
 

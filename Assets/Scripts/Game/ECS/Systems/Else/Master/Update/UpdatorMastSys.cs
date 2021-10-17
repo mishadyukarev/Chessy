@@ -107,7 +107,7 @@ namespace Scripts.Game
                                         }
                                     }
 
-                                    else if (curUnitDatCom.ExtraTWPawnType == ToolWeaponTypes.Pick)
+                                    else if (curUnitDatCom.TWExtraPawnType == ToolWeaponTypes.Pick)
                                     {
                                         if (curEnvrDatCom.HaveEnvir(EnvirTypes.Hill))
                                         {
