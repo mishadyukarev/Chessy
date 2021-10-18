@@ -2,7 +2,7 @@
 
 namespace Scripts.Game
 {
-    internal sealed class PawnGiveTakeToolWeapMastSys : IEcsRunSystem
+    internal sealed class GiveTakeTWMastSys : IEcsRunSystem
     {
         private byte _woodCostForPick = 5;
         private byte _ironCostForSword = 1;
@@ -70,12 +70,10 @@ namespace Scripts.Game
                         {
                             if (unitDatComForGive.HaveMinAmountSteps)
                             {
-
-                                unitDatComForGive.CondUnitType = default;
-
-
                                 if (inventTWCom.HaveTool(ownUnitComForGive.PlayerType, toolWeapTypeForGive))
                                 {
+                                    unitDatComForGive.CondUnitType = default;
+
                                     inventTWCom.TakeAmountTools(ownUnitComForGive.PlayerType, toolWeapTypeForGive);
 
                                     unitDatComForGive.TWExtraPawnType = toolWeapTypeForGive;
@@ -88,6 +86,7 @@ namespace Scripts.Game
                                 {
                                     if (invResCom.AmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Wood) >= _woodCostForPick)
                                     {
+                                        unitDatComForGive.CondUnitType = default;
                                         invResCom.TakeAmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Wood, _woodCostForPick);
 
                                         unitDatComForGive.TWExtraPawnType = toolWeapTypeForGive;
@@ -105,6 +104,7 @@ namespace Scripts.Game
                                 {
                                     if (invResCom.AmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Iron) >= _ironCostForSword)
                                     {
+                                        unitDatComForGive.CondUnitType = default;
                                         invResCom.TakeAmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Iron, _ironCostForSword);
 
                                         unitDatComForGive.TWExtraPawnType = toolWeapTypeForGive;
@@ -123,6 +123,7 @@ namespace Scripts.Game
                                 {
                                     if (invResCom.AmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Wood) >= 5)
                                     {
+                                        unitDatComForGive.CondUnitType = default;
                                         invResCom.TakeAmountResources(ownUnitComForGive.PlayerType, ResourceTypes.Wood, 5);
 
                                         unitDatComForGive.TWExtraPawnType = toolWeapTypeForGive;
@@ -132,7 +133,7 @@ namespace Scripts.Game
                                     }
                                     else
                                     {
-                                        RpcSys.MistakeEconomyToGeneral(sender, new[] { true, true, true, false, true });
+                                        RpcSys.MistakeEconomyToGeneral(sender, new[] { true, false, true, true, true });
                                     }
                                 }
                             }

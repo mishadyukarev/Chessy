@@ -6,7 +6,7 @@ namespace Scripts.Game
     internal sealed class SyncCellUnitSupVisSystem : IEcsRunSystem
     {
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellUnitMainViewComp> _cellUnitViewFilter = default;
+        private EcsFilter<CellUnitMainViewCom> _cellUnitViewFilter = default;
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
         private EcsFilter<CellBlocksViewComponent> _cellBlocksFilter = default;
 

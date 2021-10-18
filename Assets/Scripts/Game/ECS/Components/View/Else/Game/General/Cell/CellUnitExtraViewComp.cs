@@ -43,6 +43,11 @@ namespace Scripts.Game
             }
         }
 
+        internal void SetAlpha(bool isVisible)
+        {
+            if (isVisible) _extraUnit_SR.color = new Color(_extraUnit_SR.color.r, _extraUnit_SR.color.g, _extraUnit_SR.color.b, 1);
+            else _extraUnit_SR.color = new Color(_extraUnit_SR.color.r, _extraUnit_SR.color.g, _extraUnit_SR.color.b, 0.8f);
+        }
         internal void SetFlipX(bool isFliped) => _extraUnit_SR.flipX = isFliped;
     }
 }

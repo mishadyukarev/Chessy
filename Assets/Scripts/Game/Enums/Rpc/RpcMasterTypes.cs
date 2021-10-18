@@ -20,6 +20,7 @@
         Sound,
         CircularAttackKing,
 
+        UpgradeUnit,
         GiveTakeToolWeapon,
 
         UpgradeBuild,

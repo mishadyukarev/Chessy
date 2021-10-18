@@ -24,12 +24,13 @@ namespace Scripts.Common
 
 
                 _gameSprites.Add(SpriteGameTypes.King, Resources.Load<Sprite>(sectionName + "King_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.Pawn, Resources.Load<Sprite>(sectionName + "Pawn_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.PawnWood, Resources.Load<Sprite>(sectionName + "PawnWood_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.PawnIron, Resources.Load<Sprite>(sectionName + "PawnIron_Sprite"));
 
-                _gameSprites.Add(SpriteGameTypes.Rook, Resources.Load<Sprite>(sectionName + "RookBow_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.RookBow, Resources.Load<Sprite>(sectionName + "RookBow_Sprite"));
                 _gameSprites.Add(SpriteGameTypes.RookCrossbow, Resources.Load<Sprite>(sectionName + "RookCrossbow_Sprite"));
 
-                _gameSprites.Add(SpriteGameTypes.Bishop, Resources.Load<Sprite>(sectionName + "BishopBow_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.BishopBow, Resources.Load<Sprite>(sectionName + "BishopBow_Sprite"));
                 _gameSprites.Add(SpriteGameTypes.BishopCrossbow, Resources.Load<Sprite>(sectionName + "BishopCrossbow_Sprite"));
 
                 _gameSprites.Add(SpriteGameTypes.Pick, Resources.Load<Sprite>(sectionName + "Pick_Sprite"));

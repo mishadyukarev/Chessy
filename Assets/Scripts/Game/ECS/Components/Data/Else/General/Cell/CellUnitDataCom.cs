@@ -45,10 +45,10 @@ namespace Scripts.Game
 
         internal CondUnitTypes CondUnitType { get; set; }
         internal void ResetCondType() => CondUnitType = default;
-        internal bool Is(CondUnitTypes conditionUnitType) => CondUnitType == conditionUnitType;
-        internal bool Is(CondUnitTypes[] conditionUnitTypes)
+        internal bool Is(CondUnitTypes condUnitType) => CondUnitType == condUnitType;
+        internal bool Is(CondUnitTypes[] condUnitTypes)
         {
-            foreach (var conditionUnitType in conditionUnitTypes)
+            foreach (var conditionUnitType in condUnitTypes)
                 if (Is(conditionUnitType)) return true;
             return false;
         }
@@ -59,16 +59,6 @@ namespace Scripts.Game
 
         internal ToolWeaponTypes TWExtraPawnType;
         internal bool HaveExtraToolWeaponPawn => TWExtraPawnType != default;
-
-
-        private Dictionary<CondUnitTypes, int> _amountStepsInCondition;
-        internal int AmountStepsInProtectRelax(CondUnitTypes conditionUnitType) => _amountStepsInCondition[conditionUnitType];
-        internal void SetAmountStepsInProtectRelax(CondUnitTypes conditionUnitType, int value) => _amountStepsInCondition[conditionUnitType] = value;
-        internal void AddAmountStepsInProtectRelax(CondUnitTypes conditionUnitType, int adding = 1) => _amountStepsInCondition[conditionUnitType] += adding;
-        internal void TakeAmountStepsInProtectRelax(CondUnitTypes conditionUnitType, int taking = 1) => _amountStepsInCondition[conditionUnitType] += taking;
-
-        internal void ResetAmountStepsInProtectRelax(CondUnitTypes conditionUnitType) => _amountStepsInCondition[conditionUnitType] = default;
-
 
         internal int AmountSteps { get; set; }
         internal void AddAmountSteps(int adding = 1) => AmountSteps += adding;
@@ -98,69 +88,19 @@ namespace Scripts.Game
             if (Is(CondUnitTypes.Protected)) powerProt += (int)(SimplePowerDamage * UnitValues.PercentForProtection(UnitType));
             else if (Is(CondUnitTypes.Relaxed)) powerProt += (int)(SimplePowerDamage * UnitValues.PercentForRelax(UnitType));
 
-            switch (buildingType)
-            {
-                case BuildingTypes.City:
-                    switch (UnitType)
-                    {
-                        case UnitTypes.None: throw new Exception();
-                        case UnitTypes.King: powerProt += (int)(SimplePowerDamage * 0.5f); break;
-                        case UnitTypes.Pawn: powerProt += (int)(SimplePowerDamage * 0.5); break;
-                        case UnitTypes.Rook: powerProt += (int)(SimplePowerDamage * 0.5); break;
-                        case UnitTypes.Bishop: powerProt += (int)(SimplePowerDamage * 0.5); break;
-                        default: throw new Exception();
-                    }
-                    break;
-
-                case BuildingTypes.Farm:
-                    //switch (UnitType)
-                    //{
-                    //    case UnitTypes.None: throw new Exception();
-                    //    case UnitTypes.King: powerProtection += (int)(SimplePowerDamage * 0.3f); break;
-                    //    case UnitTypes.Pawn: powerProtection += (int)(SimplePowerDamage * 0.5f); break;
-                    //    case UnitTypes.Rook: powerProtection += (int)(SimplePowerDamage * 0.5f); break;
-                    //    case UnitTypes.Bishop: powerProtection += (int)(SimplePowerDamage * 0.5f); break;
-                    //    default: throw new Exception();
-                    //}
-                    break;
-
-                case BuildingTypes.Woodcutter:
-                    //switch (UnitType)
-                    //{
-                    //    case UnitTypes.None: throw new Exception();
-                    //    case UnitTypes.King: powerProtection += (int)(SimplePowerDamage * 0.1f); break;
-                    //    case UnitTypes.Pawn: powerProtection += (int)(SimplePowerDamage * 0.3f); break;
-                    //    case UnitTypes.Rook: powerProtection += (int)(SimplePowerDamage * 0.3f); break;
-                    //    case UnitTypes.Bishop: powerProtection += (int)(SimplePowerDamage * 0.3f); break;
-                    //    default: throw new Exception();
-                    //}
-                    break;
-
-                case BuildingTypes.Mine:
-                    //switch (UnitType)
-                    //{
-                    //    case UnitTypes.None: throw new Exception();
-                    //    case UnitTypes.King: powerProtection -= (int)(SimplePowerDamage * 0.3f); break;
-                    //    case UnitTypes.Pawn: powerProtection -= (int)(SimplePowerDamage * 0.3f); break;
-                    //    case UnitTypes.Rook: powerProtection -= (int)(SimplePowerDamage * 0.3f); break;
-                    //    case UnitTypes.Bishop: powerProtection -= (int)(SimplePowerDamage * 0.3f); break;
-                    //    default: throw new Exception();
-                    //}
-                    break;
-            }
-
+            powerProt += (int)(SimplePowerDamage * UnitValues.ProtectionPercentBuild(UnitType, buildingType));
 
             if (envrs[EnvirTypes.Fertilizer])
-                powerProt += (int)(UnitValues.SimplePowerDamage(UnitType) 
-                    * UnitValues.ProtectionRatioEnvir(UnitType, EnvirTypes.Fertilizer));
+                powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, UpgradeUnitType) 
+                    * UnitValues.ProtectionPercentEnvir(UnitType, EnvirTypes.Fertilizer));
 
             if (envrs[EnvirTypes.AdultForest])
-                powerProt += (int)(UnitValues.SimplePowerDamage(UnitType) 
-                    * UnitValues.ProtectionRatioEnvir(UnitType, EnvirTypes.AdultForest));
+                powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, UpgradeUnitType) 
+                    * UnitValues.ProtectionPercentEnvir(UnitType, EnvirTypes.AdultForest));
 
             if (envrs[EnvirTypes.Hill])
-                powerProt += (int)(UnitValues.SimplePowerDamage(UnitType) 
-                    * UnitValues.ProtectionRatioEnvir(UnitType, EnvirTypes.Hill));
+                powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, UpgradeUnitType) 
+                    * UnitValues.ProtectionPercentEnvir(UnitType, EnvirTypes.Hill));
 
 
             if (TWExtraPawnType == ToolWeaponTypes.Shield) powerProt += (int)(SimplePowerDamage * 0.3f);
@@ -173,7 +113,7 @@ namespace Scripts.Game
         {
             get
             {
-                float simplePowerDamege = UnitValues.SimplePowerDamage(UnitType);
+                float simplePowerDamege = UnitValues.SimplePowerDamage(UnitType, UpgradeUnitType);
 
                 if (UnitType.Is(UnitTypes.Pawn))
                 {
@@ -201,68 +141,6 @@ namespace Scripts.Game
                     }
                 }
 
-                else if (UnitType.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
-                {
-                    //switch (Arc)
-                    //{
-                    //    default:
-                    //        break;
-                    //}
-
-                    //switch (ArcherWeapType)
-                    //{
-                    //    case ToolWeaponTypes.None:
-                    //        throw new Exception();
-
-                    //    case ToolWeaponTypes.Hoe:
-                    //        throw new Exception();
-
-                    //    case ToolWeaponTypes.Pick:
-                    //        throw new Exception();
-
-                    //    case ToolWeaponTypes.Sword:
-                    //        throw new Exception();
-
-                    //    case ToolWeaponTypes.Bow:
-                    //        simplePowerDamege += 0;
-                    //        break;
-
-                    //    case ToolWeaponTypes.Crossbow:
-                    //        simplePowerDamege += simplePowerDamege / 3;
-                    //        break;
-
-                    //    default:
-                    //        throw new Exception();
-                    //}
-
-                    //switch (ExtraTWPawnType)
-                    //{
-                    //    case ToolWeaponTypes.None:
-                    //        break;
-
-                    //    case ToolWeaponTypes.Hoe:
-                    //        throw new Exception();
-
-                    //    case ToolWeaponTypes.Axe:
-                    //        throw new Exception();
-
-                    //    case ToolWeaponTypes.Pick:
-                    //        throw new Exception();
-
-                    //    case ToolWeaponTypes.Sword:
-                    //        throw new Exception();
-
-                    //    case ToolWeaponTypes.Bow:
-                    //        throw new Exception();
-
-                    //    case ToolWeaponTypes.Crossbow:
-                    //        throw new Exception();
-
-                    //    default:
-                    //        throw new Exception();
-                    //}
-                }
-
                 return (int)simplePowerDamege;
             }
         }
@@ -286,12 +164,6 @@ namespace Scripts.Game
 
                 _isVisibleDict.Add(PlayerTypes.First, default);
                 _isVisibleDict.Add(PlayerTypes.Second, default);
-
-
-                _amountStepsInCondition = new Dictionary<CondUnitTypes, int>();
-                _amountStepsInCondition.Add(CondUnitTypes.None, default);
-                _amountStepsInCondition.Add(CondUnitTypes.Protected, default);
-                _amountStepsInCondition.Add(CondUnitTypes.Relaxed, default);
             }
         }
     }

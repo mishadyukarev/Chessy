@@ -133,7 +133,7 @@ namespace Scripts.Game
 
                     _curGameWorld.NewEntity()
                          .Replace(new CellUnitDataCom(true))
-                         .Replace(new CellUnitMainViewComp(curCell_GO))
+                         .Replace(new CellUnitMainViewCom(curCell_GO))
                          .Replace(new CellUnitExtraViewComp(curCell_GO))
                          .Replace(new OwnerCom());
 
@@ -172,7 +172,6 @@ namespace Scripts.Game
                 .Replace(new InventResourCom(true))
                 .Replace(new InventorTWCom(true))
 
-                .Replace(new FromInfoComponent())
                 .Replace(new SoundEffectsComp(audioSourceParentGO));
 
 
@@ -304,19 +303,13 @@ namespace Scripts.Game
 
                 for (UnitTypes unitType = (UnitTypes)1; unitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; unitType++)
                 {
-                    unitInvCom.SetAmountUnitsInInvAll(unitType, StartEconomyValues.AmountUnits(unitType));
+                    unitInvCom.SetAmountUnitsInInvAll(unitType, EconomyValues.AmountUnits(unitType));
                 }
 
                 for (ResourceTypes resourceTypes = (ResourceTypes)1; resourceTypes < (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length; resourceTypes++)
                 {
-                    invResCom.SetAmountResAll(resourceTypes, StartEconomyValues.AmountResources(resourceTypes));
+                    invResCom.SetAmountResAll(resourceTypes, EconomyValues.AmountResources(resourceTypes));
                 }
-            }
-
-            else
-            {
-                _curGameWorld.NewEntity()
-                    .Replace(new FromInfoComponent());
             }
 
 
@@ -356,6 +349,7 @@ namespace Scripts.Game
                             curEnvDatCom.ResetEnvironment(EnvirTypes.AdultForest);
 
                             curUnitDatCom.UnitType = UnitTypes.King;
+                            curUnitDatCom.UpgradeUnitType = UpgradeUnitTypes.First;
                             curUnitDatCom.AmountHealth = 1;
                             curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
                             curOwnUnitCom.PlayerType = PlayerTypes.Second;
@@ -375,6 +369,7 @@ namespace Scripts.Game
                             curEnvDatCom.ResetEnvironment(EnvirTypes.Mountain);
 
                             curUnitDatCom.UnitType = UnitTypes.Pawn;
+                            curUnitDatCom.UpgradeUnitType = UpgradeUnitTypes.First;
 
                             int rand = UnityEngine.Random.Range(0, 100);
 

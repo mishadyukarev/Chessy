@@ -50,10 +50,10 @@ namespace Scripts.Game
             _condUnitZoneUIFilt.Get1(0).AddListener(CondUnitTypes.Relaxed, delegate { ConditionAbilityButton(CondUnitTypes.Relaxed); });
 
 
-
-            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Pick, delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
-            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Sword, delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
-            _giveTakeZoneUIFilter.Get1(0).AddListener_Button(ToolWeaponTypes.Shield, delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
+            _giveTakeZoneUIFilter.Get1(0).AddListUpgradeButton(ToggleUpgradeUnit);
+            _giveTakeZoneUIFilter.Get1(0).AddList_Button(ToolWeaponTypes.Pick, delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
+            _giveTakeZoneUIFilter.Get1(0).AddList_Button(ToolWeaponTypes.Sword, delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
+            _giveTakeZoneUIFilter.Get1(0).AddList_Button(ToolWeaponTypes.Shield, delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
 
 
             _friendZoneFilt.Get2(0).AddListenerReady(ReadyFriend);
@@ -62,13 +62,13 @@ namespace Scripts.Game
 
 
 
-            ref var buildLeftZoneViewUIComp = ref _buildLeftZoneViewUICom.Get1(0);
+            ref var buildLeftZoneViewUICom = ref _buildLeftZoneViewUICom.Get1(0);
 
-            buildLeftZoneViewUIComp.AddListenerToMelt(delegate { MeltOre(); });
+            buildLeftZoneViewUICom.AddListenerToMelt(delegate { MeltOre(); });
 
-            buildLeftZoneViewUIComp.AddListenerToBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
-            buildLeftZoneViewUIComp.AddListenerToBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
-            buildLeftZoneViewUIComp.AddListenerToBuildUpgrade(BuildingTypes.Mine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
+            buildLeftZoneViewUICom.AddListBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
+            buildLeftZoneViewUICom.AddListBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
+            buildLeftZoneViewUICom.AddListBuildUpgrade(BuildingTypes.Mine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
 
 
 
@@ -223,5 +223,7 @@ namespace Scripts.Game
                 hintViewUICom.SetActiveHintZone(false);
             }
         }
+
+        private void ToggleUpgradeUnit() => _selectorFilter.Get1(0).CellClickType = CellClickTypes.UpgradeUnit;
     }
 }

@@ -20,7 +20,6 @@ namespace Scripts.Game
         private EcsFilter<InventorUnitsComponent> _invUnitsFilter = default;
         private EcsFilter<InventorTWCom> _invToolsFilter = default;
 
-        private EcsFilter<FromInfoComponent> _fromInfoFilter = default;
         private EcsFilter<SelectorCom> _selectorFilter = default;
         private EcsFilter<UpgradesBuildsCom> _upgradesBuildFilter = default;
         private EcsFilter<EndGameDataUIComponent> _endGameFilter = default;
@@ -44,6 +43,7 @@ namespace Scripts.Game
         private EcsFilter<ForUpgradeMasCom> _upgradorFilter = default;
         private EcsFilter<ForCircularAttackMasCom, XyCellForDoingMasCom> _circularAttackFilter = default;
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGivePawnToolFilter = default;
+        private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
         private EcsFilter<UpdatedMasCom> _updatedMotMasFilt = default;
 
         private static PhotonView PhotonView => PhotonRpcViewGameCom.PhotonView;
@@ -88,6 +88,7 @@ namespace Scripts.Game
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
         public static void SeedEnvironmentToMaster(byte idxCell, EnvirTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
+        internal static void UpgradeUnit(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeUnit, new object[] { idxCell });
         public static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, idxCell });
 
         public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { idxCell });
@@ -175,6 +176,10 @@ namespace Scripts.Game
 
                 case RpcMasterTypes.CircularAttackKing:
                     _circularAttackFilter.Get1(0).IdxUnitForCirculAttack = (byte)objects[0];
+                    break;
+
+                case RpcMasterTypes.UpgradeUnit:
+                    _forUpgradeUnitFilt.Get1(0).idxCellForUpgrade = (byte)objects[0];
                     break;
 
                 case RpcMasterTypes.GiveTakeToolWeapon:

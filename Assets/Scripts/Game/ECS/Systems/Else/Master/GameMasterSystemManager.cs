@@ -33,10 +33,11 @@ namespace Scripts.Game
             _rpcSystems.Add(RpcMasterTypes.Fire, new EcsSystems(gameWorld).Add(new FireMastSys()));
             _rpcSystems.Add(RpcMasterTypes.SeedEnvironment, new EcsSystems(gameWorld).Add(new SeedingMasterSystem()));
             _rpcSystems.Add(RpcMasterTypes.CircularAttackKing, new EcsSystems(gameWorld).Add(new CircularAttackKingMastSys()));
+            _rpcSystems.Add(RpcMasterTypes.UpgradeUnit, new EcsSystems(gameWorld).Add(new UpgradeUnitMasSys()));
 
             var giveTakeSystems = new EcsSystems(gameWorld)
                 .Add(new ArcherGiveTakeToolWeapMastSys())
-                .Add(new PawnGiveTakeToolWeapMastSys());
+                .Add(new GiveTakeTWMastSys());
             _rpcSystems.Add(RpcMasterTypes.GiveTakeToolWeapon, giveTakeSystems);
 
 

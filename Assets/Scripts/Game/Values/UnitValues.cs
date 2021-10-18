@@ -10,46 +10,24 @@ namespace Scripts.Game
         {
             switch (unitType)
             {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    return 500;
-
-                case UnitTypes.Pawn:
-                    return 100;
-
-                case UnitTypes.Rook:
-                    return 100;
-
-                case UnitTypes.Bishop:
-                    return 100;
-
-                default:
-                    throw new Exception();
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King: return 500;
+                case UnitTypes.Pawn: return 100;
+                case UnitTypes.Rook: return 100;
+                case UnitTypes.Bishop: return 100;
+                default: throw new Exception();
             }
         }
         internal static float ForAdding(UnitTypes unitType)
         {
             switch (unitType)
             {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    return 0.2f;
-
-                case UnitTypes.Pawn:
-                    return 1f;
-
-                case UnitTypes.Rook:
-                    return 1f;
-
-                case UnitTypes.Bishop:
-                    return 1f;
-
-                default:
-                    throw new Exception();
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King: return 0.2f;
+                case UnitTypes.Pawn: return 1f;
+                case UnitTypes.Rook: return 1f;
+                case UnitTypes.Bishop: return 1f;
+                default: throw new Exception();
             }
         }
 
@@ -58,15 +36,43 @@ namespace Scripts.Game
 
         #region Damage
 
-        internal static int SimplePowerDamage(UnitTypes unitType)
+        internal static int SimplePowerDamage(UnitTypes unitType, UpgradeUnitTypes upgUnitType)
         {
             switch (unitType)
             {
                 case UnitTypes.None: throw new Exception();
-                case UnitTypes.King: return 150;
-                case UnitTypes.Pawn: return 80;
-                case UnitTypes.Rook: return 80;
-                case UnitTypes.Bishop: return 80;
+                case UnitTypes.King:
+                    switch (upgUnitType)
+                    {
+                        case UpgradeUnitTypes.None: throw new Exception();
+                        case UpgradeUnitTypes.First: return 180;
+                        case UpgradeUnitTypes.Second: throw new Exception();
+                        default: throw new Exception();
+                    }         
+                case UnitTypes.Pawn:
+                    switch (upgUnitType)
+                    {
+                        case UpgradeUnitTypes.None: throw new Exception();
+                        case UpgradeUnitTypes.First: return 100;
+                        case UpgradeUnitTypes.Second: return 120;
+                        default: throw new Exception();
+                    }
+                case UnitTypes.Rook:
+                    switch (upgUnitType)
+                    {
+                        case UpgradeUnitTypes.None: throw new Exception();
+                        case UpgradeUnitTypes.First: return 70;
+                        case UpgradeUnitTypes.Second: return 90;
+                        default: throw new Exception();
+                    }
+                case UnitTypes.Bishop:
+                    switch (upgUnitType)
+                    {
+                        case UpgradeUnitTypes.None: throw new Exception();
+                        case UpgradeUnitTypes.First: return 70;
+                        case UpgradeUnitTypes.Second: return 90;
+                        default: throw new Exception();
+                    }
                 default: throw new Exception();
             }
         }
@@ -89,7 +95,7 @@ namespace Scripts.Game
 
         #region Protection
 
-        internal static float ProtectionRatioEnvir(UnitTypes unitType, EnvirTypes envirType)
+        internal static float ProtectionPercentEnvir(UnitTypes unitType, EnvirTypes envirType)
         {
             switch (unitType)
             {
@@ -143,7 +149,54 @@ namespace Scripts.Game
 
 
         }
-
+        internal static float ProtectionPercentBuild(UnitTypes unitType, BuildingTypes buildingType)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King:
+                    switch (buildingType)
+                    {
+                        case BuildingTypes.None: return 0;
+                        case BuildingTypes.City: return 0.5f;
+                        case BuildingTypes.Farm: return 0;
+                        case BuildingTypes.Woodcutter: return 0;
+                        case BuildingTypes.Mine: return 0;
+                        default: throw new Exception();
+                    }
+                case UnitTypes.Pawn:
+                    switch (buildingType)
+                    {
+                        case BuildingTypes.None: return 0;
+                        case BuildingTypes.City: return 0.5f;
+                        case BuildingTypes.Farm: return 0;
+                        case BuildingTypes.Woodcutter: return 0;
+                        case BuildingTypes.Mine: return 0;
+                        default: throw new Exception();
+                    }
+                case UnitTypes.Rook:
+                    switch (buildingType)
+                    {
+                        case BuildingTypes.None: return 0;
+                        case BuildingTypes.City: return 0.5f;
+                        case BuildingTypes.Farm: return 0;
+                        case BuildingTypes.Woodcutter: return 0;
+                        case BuildingTypes.Mine: return 0;
+                        default: throw new Exception();
+                    }
+                case UnitTypes.Bishop:
+                    switch (buildingType)
+                    {
+                        case BuildingTypes.None: return 0;
+                        case BuildingTypes.City: return 0.5f;
+                        case BuildingTypes.Farm: return 0;
+                        case BuildingTypes.Woodcutter: return 0;
+                        case BuildingTypes.Mine: return 0;
+                        default: throw new Exception();
+                    }
+                default: throw new Exception();
+            }
+        }
         internal static float PercentForProtection(UnitTypes unitType)
         {
             switch (unitType)

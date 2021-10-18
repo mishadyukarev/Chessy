@@ -5,7 +5,7 @@ namespace Scripts.Game
     internal sealed class SyncSupportViewSystem : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerCom, CellUnitMainViewComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom, CellUnitMainViewCom> _cellUnitFilter = default;
         private EcsFilter<CellSupViewComponent> _supViewFilter = default;
 
         private EcsFilter<SelectorCom> _selectorFilter = default;
@@ -37,24 +37,26 @@ namespace Scripts.Game
                         curSupViewCom.SetColor(SupportVisionTypes.Selector);
                     }
                 }
-
-                if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
+                if (curUnitDatCom.HaveUnit)
                 {
-                    if (curUnitDatCom.HaveUnit)
+                    if (curOnUnitCom.IsMine)
                     {
-                        if (curOnUnitCom.IsMine)
+                        if (curUnitDatCom.Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop}))
                         {
                             if (curUnitDatCom.Is(UnitTypes.Pawn))
+                            {
+                                if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
+                                {
+                                    curSupViewCom.EnableSR();
+                                    curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
+                                }
+                            }
+
+                            if (selCom.IsCellClickType(CellClickTypes.UpgradeUnit))
                             {
                                 curSupViewCom.EnableSR();
                                 curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
                             }
-
-                            //else if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
-                            //{
-                            //    curSupViewCom.EnableSR();
-                            //    curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
-                            //}
                         }
                     }
                 }

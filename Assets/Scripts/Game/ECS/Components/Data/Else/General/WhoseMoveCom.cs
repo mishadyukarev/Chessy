@@ -28,6 +28,14 @@ namespace Scripts.Game
             }
         }
 
+        internal static PlayerTypes NextPLayer
+        {
+            get
+            {
+                if (CurPlayer == PlayerTypes.First) return PlayerTypes.Second;
+                else return PlayerTypes.First;
+            }
+        }
 
 
         internal WhoseMoveCom(PlayerTypes playerType) => WhoseMoveOffline = playerType;

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Scripts.Game.StartEconomyValues;
+using static Scripts.Game.EconomyValues;
 
 namespace Scripts.Game
 {
@@ -47,71 +47,24 @@ namespace Scripts.Game
         {
             haves = new bool[AMOUNT_RESOURCES_TYPES];
 
-            switch (buildingType)
-            {
-                case BuildingTypes.None:
-                    throw new Exception();
 
-                case BuildingTypes.City:
-                    return true;
+            haves[FOOD_NUMBER] = AmountResForBuild(buildingType, ResourceTypes.Food) == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= AmountResForBuild(buildingType, ResourceTypes.Food);
+            haves[WOOD_NUMBER] = AmountResForBuild(buildingType, ResourceTypes.Wood) == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= AmountResForBuild(buildingType, ResourceTypes.Wood);
+            haves[ORE_NUMBER] = AmountResForBuild(buildingType, ResourceTypes.Ore) == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= AmountResForBuild(buildingType, ResourceTypes.Ore);
+            haves[IRON_NUMBER] = AmountResForBuild(buildingType, ResourceTypes.Iron) == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= AmountResForBuild(buildingType, ResourceTypes.Iron);
+            haves[GOLD_NUMBER] = AmountResForBuild(buildingType, ResourceTypes.Gold) == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= AmountResForBuild(buildingType, ResourceTypes.Gold);
 
-                case BuildingTypes.Farm:
-                    haves[FOOD_NUMBER] = FOOD_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= FOOD_FOR_BUILDING_FARM;
-                    haves[WOOD_NUMBER] = WOOD_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= WOOD_FOR_BUILDING_FARM;
-                    haves[ORE_NUMBER] = ORE_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= ORE_FOR_BUILDING_FARM;
-                    haves[IRON_NUMBER] = IRON_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= IRON_FOR_BUILDING_FARM;
-                    haves[GOLD_NUMBER] = GOLD_FOR_BUILDING_FARM == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= GOLD_FOR_BUILDING_FARM;
-                    break;
 
-                case BuildingTypes.Woodcutter:
-                    throw new Exception();
-
-                case BuildingTypes.Mine:
-                    haves[FOOD_NUMBER] = FOOD_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Food) >= FOOD_FOR_BUILDING_MINE;
-                    haves[WOOD_NUMBER] = WOOD_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Wood) >= WOOD_FOR_BUILDING_MINE;
-                    haves[ORE_NUMBER] = ORE_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Ore) >= ORE_FOR_BUILDING_MINE;
-                    haves[IRON_NUMBER] = IRON_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Iron) >= IRON_FOR_BUILDING_MINE;
-                    haves[GOLD_NUMBER] = GOLD_FOR_BUILDING_MINE == NULL_RESOURCES ? true : AmountResources(playerType, ResourceTypes.Gold) >= GOLD_FOR_BUILDING_MINE;
-                    break;
-
-                default:
-                    throw new Exception();
-            }
 
             return HavedAll(haves);
         }
         internal void BuyBuild(PlayerTypes playerType, BuildingTypes buildingType)
         {
-            switch (buildingType)
-            {
-                case BuildingTypes.None:
-                    throw new Exception();
-
-                case BuildingTypes.City:
-                    throw new Exception();
-
-                case BuildingTypes.Farm:
-                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_BUILDING_FARM);
-                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_BUILDING_FARM);
-                    TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_BUILDING_FARM);
-                    TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_BUILDING_FARM);
-                    TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_BUILDING_FARM);
-                    break;
-
-                case BuildingTypes.Woodcutter:
-                    throw new Exception();
-
-                case BuildingTypes.Mine:
-                    TakeAmountResources(playerType, ResourceTypes.Food, FOOD_FOR_BUILDING_MINE);
-                    TakeAmountResources(playerType, ResourceTypes.Wood, WOOD_FOR_BUILDING_MINE);
-                    TakeAmountResources(playerType, ResourceTypes.Ore, ORE_FOR_BUILDING_MINE);
-                    TakeAmountResources(playerType, ResourceTypes.Iron, IRON_FOR_BUILDING_MINE);
-                    TakeAmountResources(playerType, ResourceTypes.Gold, GOLD_FOR_BUILDING_MINE);
-                    break;
-
-                default:
-                    throw new Exception();
-            }
+            TakeAmountResources(playerType, ResourceTypes.Food, AmountResForBuild(buildingType, ResourceTypes.Food));
+            TakeAmountResources(playerType, ResourceTypes.Wood, AmountResForBuild(buildingType, ResourceTypes.Wood));
+            TakeAmountResources(playerType, ResourceTypes.Ore, AmountResForBuild(buildingType, ResourceTypes.Ore));
+            TakeAmountResources(playerType, ResourceTypes.Iron, AmountResForBuild(buildingType, ResourceTypes.Iron));
+            TakeAmountResources(playerType, ResourceTypes.Gold, AmountResForBuild(buildingType, ResourceTypes.Gold));
         }
 
         internal bool CanCreateUnit(PlayerTypes playerType, UnitTypes unitType, out bool[] haves)

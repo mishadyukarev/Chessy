@@ -8,13 +8,14 @@
         WhiteCell,
 
         King,
-        Pawn,
+        PawnWood,
+        PawnIron,
         Pick,
         Sword,
         Shield,
-        Rook,
+        RookBow,
         RookCrossbow,
-        Bishop,
+        BishopBow,
         BishopCrossbow,
 
         City,

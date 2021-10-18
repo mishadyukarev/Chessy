@@ -4,7 +4,7 @@ namespace Scripts.Game
 {
     internal sealed class SyncCellSelUnitViewSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, CellUnitMainViewComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, CellUnitMainViewCom> _cellUnitFilter = default;
         private EcsFilter<SelectorCom> _selectorFilter = default;
 
         public void Run()
@@ -30,58 +30,20 @@ namespace Scripts.Game
                     if (curUnitDatCom.IsVisibleUnit(WhoseMoveCom.CurPlayer))
                     {
                         preVisMainUnitViewCom.Enable_SR();
-
-                        if (selCom.SelUnitType == UnitTypes.King)
-                        {
-                            preVisMainUnitViewCom.SetKing_Sprite();
-                        }
-                        else if (selCom.SelUnitType == UnitTypes.Pawn)
-                        {
-                            preVisMainUnitViewCom.SetPawn_Spriter();
-                        }
-                        //else if (selCom.SelUnitType == UnitTypes.Rook || selCom.SelUnitType == UnitTypes.Bishop)
-                        //{
-                        //    preVisMainUnitViewCom.SetArcher_Sprite(selCom.SelUnitType, ToolWeaponTypes.Bow);
-                        //}
+                        preVisMainUnitViewCom.SetSprite(selCom.SelUnitType, UpgradeUnitTypes.First);
                     }
 
                     else
                     {
                         curMainUnitViewCom.Enable_SR();
-
-                        if (selCom.SelUnitType == UnitTypes.King)
-                        {
-                            curMainUnitViewCom.SetKing_Sprite();
-                        }
-                        else if (selCom.SelUnitType == UnitTypes.Pawn)
-                        {
-                            curMainUnitViewCom.SetPawn_Spriter();
-                        }
-                        //else if (selCom.SelUnitType == UnitTypes.Rook || selCom.SelUnitType == UnitTypes.Bishop)
-                        //{
-                        //    curMainUnitViewCom.SetArcher_Sprite(selCom.SelUnitType, ToolWeaponTypes.Bow);
-                        //}
-
-
+                        curMainUnitViewCom.SetSprite(selCom.SelUnitType, UpgradeUnitTypes.First);
                     }
                 }
 
                 else
                 {
                     curMainUnitViewCom.Enable_SR();
-
-                    if (selCom.SelUnitType == UnitTypes.King)
-                    {
-                        curMainUnitViewCom.SetKing_Sprite();
-                    }
-                    else if (selCom.SelUnitType == UnitTypes.Pawn)
-                    {
-                        curMainUnitViewCom.SetPawn_Spriter();
-                    }
-                    //else if (selCom.SelUnitType == UnitTypes.Rook || selCom.SelUnitType == UnitTypes.Bishop)
-                    //{
-                    //    curMainUnitViewCom.SetArcher_Sprite(selCom.SelUnitType, ToolWeaponTypes.Bow);
-                    //}
+                    curMainUnitViewCom.SetSprite(selCom.SelUnitType, UpgradeUnitTypes.First);
                 }
             }
         }

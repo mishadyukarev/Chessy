@@ -5,7 +5,7 @@ namespace Scripts.Game
 {
     internal sealed class SyncCellUnitViewSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, CellUnitMainViewComp, CellUnitExtraViewComp> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -24,17 +24,11 @@ namespace Scripts.Game
                     if (curUnitDatCom.IsVisibleUnit(WhoseMoveCom.CurPlayer))
                     {
                         curMainUnitViewCom.Enable_SR();
+                        curMainUnitViewCom.SetSprite(curUnitDatCom.UnitType, curUnitDatCom.UpgradeUnitType);
 
-                        if (curUnitDatCom.Is(UnitTypes.King))
+
+                        if (curUnitDatCom.Is(UnitTypes.Pawn))
                         {
-                            curMainUnitViewCom.SetKing_Sprite();
-                        }
-
-                        else if (curUnitDatCom.Is(UnitTypes.Pawn))
-                        {
-                            curMainUnitViewCom.SetPawn_Spriter();
-
-
                             if (curUnitDatCom.HaveExtraToolWeaponPawn)
                             {
                                 curExtraUnitViewCom.Enable_SR();
@@ -44,6 +38,9 @@ namespace Scripts.Game
 
                         else if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                         {
+
+                            //curMainUnitViewCom.SetArcher_Sprite(curUnitDatCom.UnitType, curUnitDatCom.ArcherWeapType);
+
                             //if (curUnitDatCom.HaveArcherWeapon)
                             //{
                             //    curMainUnitViewCom.SetArcher_Sprite(curUnitDatCom.UnitType, curUnitDatCom.ArcherWeapType);
@@ -53,17 +50,21 @@ namespace Scripts.Game
                             //    throw new Exception();
                             //}
 
-                            if (curUnitDatCom.HaveExtraToolWeaponPawn)
-                            {
-                                curExtraUnitViewCom.Enable_SR();
-                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDatCom.TWExtraPawnType);
-                            }
+                            //if (curUnitDatCom.HaveExtraToolWeaponPawn)
+                            //{
+                            //    curExtraUnitViewCom.Enable_SR();
+                            //    curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDatCom.TWExtraPawnType);
+                            //}
                         }
 
-                        else
-                        {
-                            throw new Exception();
-                        }
+                        //else
+                        //{
+                        //    throw new Exception();
+                        //}
+
+
+                        curMainUnitViewCom.SetAlpha(curUnitDatCom.IsVisibleUnit(WhoseMoveCom.NextPLayer));
+                        curExtraUnitViewCom.SetAlpha(curUnitDatCom.IsVisibleUnit(WhoseMoveCom.NextPLayer));
                     }
                 }
             }

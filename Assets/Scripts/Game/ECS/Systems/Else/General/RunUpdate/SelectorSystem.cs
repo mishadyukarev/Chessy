@@ -87,6 +87,20 @@ namespace Scripts.Game
                         }
                     }
 
+                    else if (selCom.IsCellClickType(CellClickTypes.UpgradeUnit))
+                    {
+                        if (UnitDatCom(selCom.IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop })
+                            && OwnUnitCom(selCom.IdxCurCell).IsMine)
+                        {
+                            RpcSys.UpgradeUnit(selCom.IdxCurCell);
+                        }
+                        else
+                        {
+                            selCom.IdxSelCell = selCom.IdxCurCell;
+                            selCom.DefCellClickType();
+                        }
+                    }
+
                     else if (selCom.IsSelCell)
                     {
                         if (selCom.IdxSelCell != selCom.IdxCurCell)

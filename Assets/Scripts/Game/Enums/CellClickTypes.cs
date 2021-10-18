@@ -5,6 +5,7 @@
         None,
 
         PickFire,
+        UpgradeUnit,
         GiveTakeTW,
     }
 }
