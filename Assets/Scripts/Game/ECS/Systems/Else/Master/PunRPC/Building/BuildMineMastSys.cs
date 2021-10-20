@@ -49,7 +49,7 @@ namespace Scripts.Game
                 {
                     if (curUnitDatCom.HaveMinAmountSteps)
                     {
-                        if (curCellEnvCom.HaveEnvir(EnvirTypes.Hill) && curCellEnvCom.HaveResources(EnvirTypes.Hill))
+                        if (curCellEnvCom.Have(EnvirTypes.Hill) && curCellEnvCom.HaveResources(EnvirTypes.Hill))
                         {
                             if (invResCom.CanCreateBuild(playerTypeSender, forBuildType, out bool[] haves))
                             {

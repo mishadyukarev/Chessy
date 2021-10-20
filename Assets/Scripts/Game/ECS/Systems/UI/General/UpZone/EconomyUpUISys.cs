@@ -49,7 +49,7 @@ namespace Scripts.Game
                         {
                             if (curUnitDatCom.Is(CondUnitTypes.Relaxed))
                             {
-                                if (_cellEnvDatFilt.Get1(curIdxCell).HaveEnvir(EnvirTypes.AdultForest))
+                                if (_cellEnvDatFilt.Get1(curIdxCell).Have(EnvirTypes.AdultForest))
                                 {
                                     amountAddWood += 1;
                                 }

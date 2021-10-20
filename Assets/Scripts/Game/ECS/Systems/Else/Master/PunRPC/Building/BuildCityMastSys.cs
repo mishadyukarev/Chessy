@@ -78,8 +78,8 @@ namespace Scripts.Game
 
                             curFireCom.DisableFire();
 
-                            if (curCellEnvCom.HaveEnvir(EnvirTypes.AdultForest)) curCellEnvCom.ResetEnvironment(EnvirTypes.AdultForest);
-                            if (curCellEnvCom.HaveEnvir(EnvirTypes.Fertilizer)) curCellEnvCom.ResetEnvironment(EnvirTypes.Fertilizer);
+                            if (curCellEnvCom.Have(EnvirTypes.AdultForest)) curCellEnvCom.ResetEnvironment(EnvirTypes.AdultForest);
+                            if (curCellEnvCom.Have(EnvirTypes.Fertilizer)) curCellEnvCom.ResetEnvironment(EnvirTypes.Fertilizer);
                         }
 
                         else

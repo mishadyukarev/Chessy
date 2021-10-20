@@ -26,7 +26,7 @@ namespace Scripts.Game
 
                 if (curUnitDataCom.HaveUnit)
                 {
-                    if (curEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
+                    if (curEnvDataCom.Have(EnvirTypes.AdultForest))
                     {
                         PlayerTypes nextPlayer = default;
                         if (curOwnUnitCom.IsPlayerType(PlayerTypes.First)) nextPlayer = PlayerTypes.Second;

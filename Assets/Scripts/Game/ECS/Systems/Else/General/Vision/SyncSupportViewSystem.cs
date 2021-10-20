@@ -34,7 +34,7 @@ namespace Scripts.Game
                     if (selCom.IdxSelCell == idxCurCell)
                     {
                         curSupViewCom.EnableSR();
-                        curSupViewCom.SetColor(SupportVisionTypes.Selector);
+                        curSupViewCom.SetColor(SupVisTypes.Selector);
                     }
                 }
                 if (curUnitDatCom.HaveUnit)
@@ -48,14 +48,14 @@ namespace Scripts.Game
                                 if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
                                 {
                                     curSupViewCom.EnableSR();
-                                    curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
+                                    curSupViewCom.SetColor(SupVisTypes.GivePawnTool);
                                 }
                             }
 
                             if (selCom.IsCellClickType(CellClickTypes.UpgradeUnit))
                             {
                                 curSupViewCom.EnableSR();
-                                curSupViewCom.SetColor(SupportVisionTypes.GivePawnTool);
+                                curSupViewCom.SetColor(SupVisTypes.GivePawnTool);
                             }
                         }
                     }
@@ -80,7 +80,7 @@ namespace Scripts.Game
                             foreach (var curIdxCell in _cellsArcherArsonFilt.Get1(0).GetListCopy(WhoseMoveCom.CurPlayer, selCom.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
-                                _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.FireSelector);
+                                _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.FireSelector);
                             }
                         }
 
@@ -89,19 +89,19 @@ namespace Scripts.Game
                             foreach (var curIdxCell in cellsShiftCom.GetListCopy(WhoseMoveCom.CurPlayer, selCom.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
-                                _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.Shift);
+                                _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.Shift);
                             }
 
                             foreach (var curIdxCell in _cellsSimpleFilter.Get1(0).GetListCopy(WhoseMoveCom.CurPlayer, AttackTypes.Simple, selCom.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
-                                _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.SimpleAttack);
+                                _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.SimpleAttack);
                             }
 
                             foreach (var curIdxCell in _cellsSimpleFilter.Get1(0).GetListCopy(WhoseMoveCom.CurPlayer, AttackTypes.Unique, selCom.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
-                                _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.UniqueAttack);
+                                _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.UniqueAttack);
                             }
                         }
                     }
@@ -114,7 +114,7 @@ namespace Scripts.Game
                 foreach (var curIdxCell in cellsSetUnitCom.GetListCells(WhoseMoveCom.CurPlayer))
                 {
                     _supViewFilter.Get1(curIdxCell).EnableSR();
-                    _supViewFilter.Get1(curIdxCell).SetColor(SupportVisionTypes.Spawn);
+                    _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.Spawn);
                 }
             }
         }

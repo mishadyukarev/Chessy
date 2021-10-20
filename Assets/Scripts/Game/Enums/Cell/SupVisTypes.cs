@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Game
 {
-    public enum SupportVisionTypes
+    public enum SupVisTypes
     {
         None,
 

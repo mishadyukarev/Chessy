@@ -27,5 +27,8 @@ namespace Scripts.Game
 
         internal void Add(PlayerTypes playerType, BuildingTypes buildType, byte idxCell) => _buildsInGame[playerType][buildType].Add(idxCell);
         internal void Remove(PlayerTypes playerType, BuildingTypes buildType, byte idxCell) => _buildsInGame[playerType][buildType].Remove(idxCell);
+
+        internal bool IsSettedCity(PlayerTypes playerType) => _buildsInGame[playerType][BuildingTypes.City].Count >= 1;
+        internal byte IdxCity(PlayerTypes playerType) => _buildsInGame[playerType][BuildingTypes.City][0];
     }
 }

@@ -58,13 +58,13 @@ namespace Scripts.Game
                 {
                     if (curUnitDatCom.HaveMinAmountSteps)
                     {
-                        if (!curCellEnvCom.HaveEnvir(EnvirTypes.AdultForest) && !curCellEnvCom.HaveEnvir(EnvirTypes.YoungForest))
+                        if (!curCellEnvCom.Have(EnvirTypes.AdultForest) && !curCellEnvCom.Have(EnvirTypes.YoungForest))
                         {
                             if (invResCom.CanCreateBuild(playerTypeSender, forBuildType, out bool[] haves))
                             {
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                                if (curCellEnvCom.HaveEnvir(EnvirTypes.Fertilizer))
+                                if (curCellEnvCom.Have(EnvirTypes.Fertilizer))
                                 {
                                     curCellEnvCom.AddAmountRes(EnvirTypes.Fertilizer, curCellEnvCom.MaxAmountResources(EnvirTypes.Fertilizer));
                                 }

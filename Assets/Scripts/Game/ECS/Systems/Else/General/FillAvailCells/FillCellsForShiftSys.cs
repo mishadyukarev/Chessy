@@ -32,7 +32,7 @@ namespace Scripts.Game
                     {
                         var idxCellAround = _xyCellFilter.GetIdxCell(xy1);
 
-                        if (!_cellEnvDataFilter.Get1(idxCellAround).HaveEnvir(EnvirTypes.Mountain))
+                        if (!_cellEnvDataFilter.Get1(idxCellAround).Have(EnvirTypes.Mountain))
                         {
                             if (!_cellUnitFilter.Get1(idxCellAround).HaveUnit)
 

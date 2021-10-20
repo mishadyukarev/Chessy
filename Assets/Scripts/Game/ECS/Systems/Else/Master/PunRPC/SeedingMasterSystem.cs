@@ -40,11 +40,11 @@ namespace Scripts.Game
                         }
                         else
                         {
-                            if (!curCellEnvDataCom.HaveEnvir(EnvirTypes.Fertilizer))
+                            if (!curCellEnvDataCom.Have(EnvirTypes.Fertilizer))
                             {
-                                if (!curCellEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
+                                if (!curCellEnvDataCom.Have(EnvirTypes.AdultForest))
 
-                                    if (!curCellEnvDataCom.HaveEnvir(EnvirTypes.YoungForest))
+                                    if (!curCellEnvDataCom.Have(EnvirTypes.YoungForest))
                                     {
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.Seeding);
                                         curCellEnvDataCom.SetNewEnvir(EnvirTypes.YoungForest);

@@ -74,15 +74,15 @@ namespace Scripts.Game
 
                     else
                     {
-                        if (curEnvDatCom.HaveEnvir(EnvirTypes.YoungForest))
+                        if (curEnvDatCom.Have(EnvirTypes.YoungForest))
                         {
                             curEnvDatCom.ResetEnvironment(EnvirTypes.YoungForest);
                             curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
                         }
 
-                        if (!curEnvDatCom.HaveEnvir(EnvirTypes.Fertilizer)
-                            && !curEnvDatCom.HaveEnvir(EnvirTypes.Mountain)
-                            && !curEnvDatCom.HaveEnvir(EnvirTypes.AdultForest))
+                        if (!curEnvDatCom.Have(EnvirTypes.Fertilizer)
+                            && !curEnvDatCom.Have(EnvirTypes.Mountain)
+                            && !curEnvDatCom.Have(EnvirTypes.AdultForest))
                         {
                             random = Random.Range(0, 100);
 

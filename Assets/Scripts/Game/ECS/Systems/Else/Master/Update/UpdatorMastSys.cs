@@ -80,7 +80,7 @@ namespace Scripts.Game
                             {
                                 if (curUnitDatCom.Is(UnitTypes.Pawn))
                                 {
-                                    if (curEnvrDatCom.HaveEnvir(EnvirTypes.AdultForest))
+                                    if (curEnvrDatCom.Have(EnvirTypes.AdultForest))
                                     {
                                         invResCom.AddAmountResources(curOwnUnitCom.PlayerType, ResourceTypes.Wood);
                                         curEnvrDatCom.TakeAmountResources(EnvirTypes.AdultForest);
@@ -109,7 +109,7 @@ namespace Scripts.Game
 
                                     else if (curUnitDatCom.TWExtraPawnType == ToolWeaponTypes.Pick)
                                     {
-                                        if (curEnvrDatCom.HaveEnvir(EnvirTypes.Hill))
+                                        if (curEnvrDatCom.Have(EnvirTypes.Hill))
                                         {
                                             if (curBuilDatCom.HaveBuild)
                                             {
@@ -220,7 +220,7 @@ namespace Scripts.Game
 
                 if (curCellViewCom.IsActiveParent)
                 {
-                    if (curEnvrDatCom.HaveEnvir(EnvirTypes.AdultForest))
+                    if (curEnvrDatCom.Have(EnvirTypes.AdultForest))
                     {
                         ++amountAdultForest;
                     }
@@ -274,7 +274,7 @@ namespace Scripts.Game
 
                             if (_cellViewFilter.Get1(curIdxCell1).IsActiveParent)
                             {
-                                if (_cellEnvDataFilter.Get1(curIdxCell1).HaveEnvir(EnvirTypes.AdultForest))
+                                if (_cellEnvDataFilter.Get1(curIdxCell1).Have(EnvirTypes.AdultForest))
                                 {
                                     _cellFireDataFilter.Get1(curIdxCell1).HaveFire = true;
                                 }

@@ -305,11 +305,11 @@ namespace Scripts.Game
 
 
                 ref var curEnvDatCom = ref _cellEnvrFilter.Get1(curIdxCell);
-                listObjects.Add(curEnvDatCom.HaveEnvir(EnvirTypes.Fertilizer));
-                listObjects.Add(curEnvDatCom.HaveEnvir(EnvirTypes.YoungForest));
-                listObjects.Add(curEnvDatCom.HaveEnvir(EnvirTypes.AdultForest));
-                listObjects.Add(curEnvDatCom.HaveEnvir(EnvirTypes.Hill));
-                listObjects.Add(curEnvDatCom.HaveEnvir(EnvirTypes.Mountain));
+                listObjects.Add(curEnvDatCom.Have(EnvirTypes.Fertilizer));
+                listObjects.Add(curEnvDatCom.Have(EnvirTypes.YoungForest));
+                listObjects.Add(curEnvDatCom.Have(EnvirTypes.AdultForest));
+                listObjects.Add(curEnvDatCom.Have(EnvirTypes.Hill));
+                listObjects.Add(curEnvDatCom.Have(EnvirTypes.Mountain));
 
                 listObjects.Add(curEnvDatCom.GetAmountResources(EnvirTypes.Fertilizer));
                 listObjects.Add(curEnvDatCom.GetAmountResources(EnvirTypes.YoungForest));

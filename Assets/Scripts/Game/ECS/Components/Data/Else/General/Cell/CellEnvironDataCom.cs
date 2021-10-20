@@ -16,10 +16,10 @@ namespace Scripts.Game
             {
                 int amountSteps = 1;         
 
-                if (HaveEnvir(EnvirTypes.AdultForest))
+                if (Have(EnvirTypes.AdultForest))
                     amountSteps += UnitValues.NeedAmountSteps(EnvirTypes.AdultForest);
 
-                if (HaveEnvir(EnvirTypes.Hill))
+                if (Have(EnvirTypes.Hill))
                     amountSteps += UnitValues.NeedAmountSteps(EnvirTypes.Hill);
 
                 return amountSteps;
@@ -56,7 +56,7 @@ namespace Scripts.Game
 
         internal void SetHaveEnvironment(EnvirTypes environmentType, bool haveEnvironment) => _haveCellEnvirOnCell[environmentType] = haveEnvironment;
 
-        internal bool HaveEnvir(EnvirTypes environmentType) => _haveCellEnvirOnCell[environmentType];
+        internal bool Have(EnvirTypes environmentType) => _haveCellEnvirOnCell[environmentType];
         internal void SetEnvironment(EnvirTypes environmentType) => SetHaveEnvironment(environmentType, true);
         internal void ResetEnvironment(EnvirTypes environmentType) => SetHaveEnvironment(environmentType, default);
 

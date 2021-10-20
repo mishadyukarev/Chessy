@@ -33,7 +33,7 @@ namespace Scripts.Game
                         ref var aroUnitDatCom = ref _cellUnitFilter.Get1(idxAround);
                         ref var aroOwnUnitCom = ref _cellUnitFilter.Get2(idxAround);
 
-                        if (!aroEnvrDatCom.HaveEnvir(EnvirTypes.Mountain))
+                        if (!aroEnvrDatCom.Have(EnvirTypes.Mountain))
                         {
                             if (aroEnvrDatCom.NeedAmountSteps <= curUnitDatCom.AmountSteps || curUnitDatCom.HaveMaxAmountSteps)
                             {

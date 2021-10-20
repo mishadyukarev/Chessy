@@ -16,7 +16,7 @@ namespace Scripts.Game
 
                 for (EnvirTypes curEnvirType = (EnvirTypes)1; curEnvirType < (EnvirTypes)Enum.GetNames(typeof(EnvirTypes)).Length; curEnvirType++)
                 {
-                    if (cellEnvrDataCom.HaveEnvir(curEnvirType))
+                    if (cellEnvrDataCom.Have(curEnvirType))
                     {
                         cellEnvrViewCom.EnableSR(curEnvirType);
                     }

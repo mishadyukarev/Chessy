@@ -52,7 +52,7 @@ namespace Scripts.Game
 
                 if (_envirZoneUIFilter.Get1(0).IsActivatedInfo)
                 {
-                    if (curCellEnvDataCom.HaveEnvir(EnvirTypes.Fertilizer))
+                    if (curCellEnvDataCom.Have(EnvirTypes.Fertilizer))
                     {
                         curCellBarsViewCom.EnableSR(CellBarTypes.Food);
 
@@ -63,7 +63,7 @@ namespace Scripts.Game
                         curCellBarsViewCom.DisableSR(CellBarTypes.Food);
                     }
 
-                    if (curCellEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
+                    if (curCellEnvDataCom.Have(EnvirTypes.AdultForest))
                     {
                         curCellBarsViewCom.EnableSR(CellBarTypes.Wood);
                         curCellBarsViewCom.SetScale(CellBarTypes.Wood, new Vector3(curCellEnvDataCom.GetAmountResources(EnvirTypes.AdultForest) / (float)curCellEnvDataCom.MaxAmountResources(EnvirTypes.AdultForest), 0.15f, 1));
@@ -73,7 +73,7 @@ namespace Scripts.Game
                         curCellBarsViewCom.DisableSR(CellBarTypes.Wood);
                     }
 
-                    if (curCellEnvDataCom.HaveEnvir(EnvirTypes.Hill))
+                    if (curCellEnvDataCom.Have(EnvirTypes.Hill))
                     {
                         curCellBarsViewCom.EnableSR(CellBarTypes.Ore);
                         curCellBarsViewCom.SetScale(CellBarTypes.Ore, new Vector3(curCellEnvDataCom.GetAmountResources(EnvirTypes.Hill) / (float)curCellEnvDataCom.MaxAmountResources(EnvirTypes.Hill), 0.15f, 1));

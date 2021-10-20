@@ -32,7 +32,7 @@ namespace Scripts.Game
 
                         if (!_cellFireFilter.Get1(arouIdx).HaveFire)
                         {
-                            if (arounEnvDatCom.HaveEnvir(EnvirTypes.AdultForest))
+                            if (arounEnvDatCom.Have(EnvirTypes.AdultForest))
                             {
                                 cellsArsonCom.Add(curOwnUnitCom.PlayerType, curIdxCell, arouIdx);
                             }

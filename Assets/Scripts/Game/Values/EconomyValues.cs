@@ -249,9 +249,6 @@ namespace Scripts.Game
         public const int BENEFIT_WOOD_WOODCUTTER = 1;
         public const int BENEFIT_ORE_MINE = 1;
 
-        public const int BENEFIT_FOOD_CITY = 1;
-        public const int BENEFIT_WOOD_CITY = 1;
-
         #endregion
     }
 }

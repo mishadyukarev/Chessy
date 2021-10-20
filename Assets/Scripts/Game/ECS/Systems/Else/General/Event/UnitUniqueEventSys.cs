@@ -42,7 +42,7 @@ namespace Scripts.Game
                             {
                                 if (selUnitDatCom.IsMelee)
                                 {
-                                    if (selEnvDataCom.HaveEnvir(EnvirTypes.AdultForest))
+                                    if (selEnvDataCom.Have(EnvirTypes.AdultForest))
                                     {
                                         RpcSys.FireToMaster(idxSelCell, idxSelCell);
                                     }

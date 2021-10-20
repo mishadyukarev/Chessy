@@ -41,7 +41,7 @@ namespace Scripts.Game
 
                         toUnitDatCom.TakeAmountSteps();
                     }
-                    else if (toEnvDatCom.HaveEnvir(EnvirTypes.AdultForest))
+                    else if (toEnvDatCom.Have(EnvirTypes.AdultForest))
                     {
                         RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
