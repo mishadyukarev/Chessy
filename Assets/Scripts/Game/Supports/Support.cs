@@ -27,5 +27,8 @@ namespace Scripts.Game
         }
 
         internal static byte AmountTypes(Type type) => (byte)Enum.GetNames(type).Length;
+
+        internal static ResourceTypes MinResType => (ResourceTypes)1;
+        internal static ResourceTypes MaxResType => (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length;
     }
 }

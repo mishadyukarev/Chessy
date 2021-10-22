@@ -33,9 +33,10 @@ namespace Scripts.Common
                 _gameSprites.Add(SpriteGameTypes.BishopBow, Resources.Load<Sprite>(sectionName + "BishopBow_Sprite"));
                 _gameSprites.Add(SpriteGameTypes.BishopCrossbow, Resources.Load<Sprite>(sectionName + "BishopCrossbow_Sprite"));
 
-                _gameSprites.Add(SpriteGameTypes.Pick, Resources.Load<Sprite>(sectionName + "Pick_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.Sword, Resources.Load<Sprite>(sectionName + "Sword_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.Shield, Resources.Load<Sprite>(sectionName + "Shield_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.PickWood, Resources.Load<Sprite>(sectionName + "Pick_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.SwordIron, Resources.Load<Sprite>(sectionName + "SwordIron_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.ShieldWood, Resources.Load<Sprite>(sectionName + "ShieldWood_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.ShieldIron, Resources.Load<Sprite>(sectionName + "ShieldIron_Sprite"));
 
 
 

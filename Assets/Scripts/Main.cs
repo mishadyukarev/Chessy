@@ -1,6 +1,4 @@
-﻿using Photon.Pun;
-using Photon.Realtime;
-using Scripts.Common;
+﻿using Scripts.Common;
 using UnityEngine;
 
 namespace Scripts

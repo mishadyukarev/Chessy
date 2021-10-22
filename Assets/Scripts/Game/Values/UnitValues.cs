@@ -36,7 +36,7 @@ namespace Scripts.Game
 
         #region Damage
 
-        internal static int SimplePowerDamage(UnitTypes unitType, UpgradeUnitTypes upgUnitType)
+        internal static int SimplePowerDamage(UnitTypes unitType, LevelUnitTypes upgUnitType)
         {
             switch (unitType)
             {
@@ -44,33 +44,33 @@ namespace Scripts.Game
                 case UnitTypes.King:
                     switch (upgUnitType)
                     {
-                        case UpgradeUnitTypes.None: throw new Exception();
-                        case UpgradeUnitTypes.First: return 180;
-                        case UpgradeUnitTypes.Second: throw new Exception();
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 180;
+                        case LevelUnitTypes.Iron: throw new Exception();
                         default: throw new Exception();
                     }         
                 case UnitTypes.Pawn:
                     switch (upgUnitType)
                     {
-                        case UpgradeUnitTypes.None: throw new Exception();
-                        case UpgradeUnitTypes.First: return 100;
-                        case UpgradeUnitTypes.Second: return 120;
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 100;
+                        case LevelUnitTypes.Iron: return 120;
                         default: throw new Exception();
                     }
                 case UnitTypes.Rook:
                     switch (upgUnitType)
                     {
-                        case UpgradeUnitTypes.None: throw new Exception();
-                        case UpgradeUnitTypes.First: return 70;
-                        case UpgradeUnitTypes.Second: return 90;
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 70;
+                        case LevelUnitTypes.Iron: return 90;
                         default: throw new Exception();
                     }
                 case UnitTypes.Bishop:
                     switch (upgUnitType)
                     {
-                        case UpgradeUnitTypes.None: throw new Exception();
-                        case UpgradeUnitTypes.First: return 70;
-                        case UpgradeUnitTypes.Second: return 90;
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 70;
+                        case LevelUnitTypes.Iron: return 90;
                         default: throw new Exception();
                     }
                 default: throw new Exception();
