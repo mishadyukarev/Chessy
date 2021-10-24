@@ -7,5 +7,6 @@
         PickFire,
         UpgradeUnit,
         GiveTakeTW,
+        OldToNewUnit,
     }
 }

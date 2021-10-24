@@ -45,11 +45,13 @@ namespace Scripts.Game
                         {
                             if (curUnitDatCom.Is(UnitTypes.Pawn))
                             {
-                                if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
+                                if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW) 
+                                    || selCom.IsCellClickType(CellClickTypes.OldToNewUnit))
                                 {
                                     curSupViewCom.EnableSR();
                                     curSupViewCom.SetColor(SupVisTypes.GivePawnTool);
                                 }
+
                             }
 
                             if (curUnitDatCom.LevelUnitType == LevelUnitTypes.Wood)

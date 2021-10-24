@@ -81,19 +81,19 @@ namespace Scripts.Game
         internal void TakeAmountHealth(int taking = 1) => AmountHealth -= taking;
 
 
-        internal int MaxAmountHealth => UnitValues.StandartAmountHealth(UnitType);
+        internal int MaxAmountHealth => UnitValues.StandartAmountHealth(UnitType, LevelUnitType);
         internal bool HaveMaxAmountHealth => AmountHealth >= MaxAmountHealth;
         internal bool HaveAmountHealth => AmountHealth > 0;
-        internal void AddStandartHeal() => AddAmountHealth((int)(UnitValues.StandartAmountHealth(UnitType) * UnitValues.ForAdding(UnitType)));
+        internal void AddStandartHeal() => AddAmountHealth((int)(UnitValues.StandartAmountHealth(UnitType, LevelUnitType) * UnitValues.ForAdding(UnitType)));
 
         internal int PowerProtection(BuildingTypes buildingType, Dictionary<EnvirTypes, bool> envrs)
         {
             int powerProt = 0;
 
-            if (Is(CondUnitTypes.Protected)) powerProt += (int)(SimplePowerDamage * UnitValues.PercentForProtection(UnitType));
-            else if (Is(CondUnitTypes.Relaxed)) powerProt += (int)(SimplePowerDamage * UnitValues.PercentForRelax(UnitType));
+            if (Is(CondUnitTypes.Protected)) powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, LevelUnitType) * UnitValues.PercentForProtection(UnitType));
+            else if (Is(CondUnitTypes.Relaxed)) powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, LevelUnitType) * UnitValues.PercentForRelax(UnitType));
 
-            powerProt += (int)(SimplePowerDamage * UnitValues.ProtectionPercentBuild(UnitType, buildingType));
+            powerProt += (int)(PowerDamage * UnitValues.ProtectionPercentBuild(UnitType, buildingType));
 
             if (envrs[EnvirTypes.Fertilizer])
                 powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, LevelUnitType) 
@@ -108,17 +108,17 @@ namespace Scripts.Game
                     * UnitValues.ProtectionPercentEnvir(UnitType, EnvirTypes.Hill));
 
 
-            if (TWExtraType == ToolWeaponTypes.Shield) powerProt += (int)(SimplePowerDamage * 0.3f);
+            //if (TWExtraType == ToolWeaponTypes.Shield) powerProt += (int)(SimplePowerDamage * 0.3f);
 
 
             return powerProt;
         }
 
-        internal int SimplePowerDamage
+        internal int PowerDamage
         {
             get
             {
-                float simplePowerDamege = UnitValues.SimplePowerDamage(UnitType, LevelUnitType);
+                float powerDamege = UnitValues.SimplePowerDamage(UnitType, LevelUnitType);
 
                 if (UnitType.Is(UnitTypes.Pawn))
                 {
@@ -131,11 +131,11 @@ namespace Scripts.Game
                             throw new Exception();
 
                         case ToolWeaponTypes.Pick:
-                            simplePowerDamege -= simplePowerDamege * 0.5f;
+                            //simplePowerDamege -= simplePowerDamege * 0.5f;
                             break;
 
                         case ToolWeaponTypes.Sword:
-                            simplePowerDamege += simplePowerDamege * 0.5f;
+                            powerDamege += powerDamege * 0.5f;
                             break;
 
                         case ToolWeaponTypes.Shield:
@@ -146,19 +146,20 @@ namespace Scripts.Game
                     }
                 }
 
-                return (int)simplePowerDamege;
+                return (int)powerDamege;
             }
         }
-        internal int UniquePowerDamage => (int)(SimplePowerDamage * UnitValues.UniqueRatioPowerDamage(UnitType));
+        internal int UniquePowerDamage => (int)(PowerDamage * UnitValues.UniqueRatioPowerDamage(UnitType));
 
-        internal void ReplaceUnit(CellUnitDataCom newCellUnitDataCom)
+        internal void ReplaceUnit(CellUnitDataCom newUnit)
         {
-            UnitType = newCellUnitDataCom.UnitType;
-            LevelUnitType = newCellUnitDataCom.LevelUnitType;
-            TWExtraType = newCellUnitDataCom.TWExtraType;
-            AmountHealth = newCellUnitDataCom.AmountHealth;
-            AmountSteps = newCellUnitDataCom.AmountSteps;
-            CondUnitType = newCellUnitDataCom.CondUnitType;
+            UnitType = newUnit.UnitType;
+            LevelUnitType = newUnit.LevelUnitType;
+            TWExtraType = newUnit.TWExtraType;
+            LevelTWType = newUnit.LevelTWType;
+            AmountHealth = newUnit.AmountHealth;
+            AmountSteps = newUnit.AmountSteps;
+            CondUnitType = newUnit.CondUnitType;
         }
 
         internal CellUnitDataCom(bool needNew) : this()

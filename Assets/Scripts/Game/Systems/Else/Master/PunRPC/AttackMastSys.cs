@@ -57,7 +57,7 @@ namespace Scripts.Game
                 int damageFrom = 0;
                 int damageTo = 0;
 
-                damageTo += fromUnitDatCom.SimplePowerDamage;
+                damageTo += fromUnitDatCom.PowerDamage;
                 damageTo -= toUnitDatCom.PowerProtection(toBuildDatCom.BuildType, toEnvDatCom.Envronments);
 
 
@@ -67,7 +67,7 @@ namespace Scripts.Game
 
                     if (toUnitDatCom.IsMelee)
                     {
-                        damageFrom += toUnitDatCom.SimplePowerDamage;
+                        damageFrom += toUnitDatCom.PowerDamage;
 
                         if (simpUniqueType == AttackTypes.Unique)
                         {

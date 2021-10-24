@@ -38,12 +38,13 @@ namespace Scripts.Game
                         {
                             if (unitDatComForGive.HaveMinAmountSteps)
                             {
-                                unitDatComForGive.CondUnitType = default;
+                                inventTWCom.AddAmountTools(ownUnitCom.PlayerType, unitDatComForGive.TWExtraType, unitDatComForGive.LevelTWType);
 
-                                inventTWCom.AddAmountTools(ownUnitCom.PlayerType, unitDatComForGive.TWExtraType);
-
-                                unitDatComForGive.TakeAmountSteps();
                                 unitDatComForGive.TWExtraType = default;
+                                unitDatComForGive.LevelTWType = default;
+
+                                unitDatComForGive.CondUnitType = default;
+                                unitDatComForGive.TakeAmountSteps();
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                             }
@@ -68,14 +69,15 @@ namespace Scripts.Game
                         {
                             if (unitDatComForGive.HaveMinAmountSteps)
                             {
-                                if (inventTWCom.HaveTool(ownUnitCom.PlayerType, tWTypeForGive))
+                                if (inventTWCom.HaveTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType))
                                 {
-                                    unitDatComForGive.CondUnitType = default;
-
-                                    inventTWCom.TakeAmountTools(ownUnitCom.PlayerType, tWTypeForGive);
+                                    inventTWCom.TakeAmountTools(ownUnitCom.PlayerType, tWTypeForGive, levelTWType);
 
                                     unitDatComForGive.TWExtraType = tWTypeForGive;
-                                    unitDatComForGive.AmountSteps -= 1;
+                                    unitDatComForGive.LevelTWType = levelTWType;
+
+                                    unitDatComForGive.TakeAmountSteps();
+                                    unitDatComForGive.CondUnitType = default;
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                 }
@@ -84,11 +86,13 @@ namespace Scripts.Game
                                 {
                                     if (invResCom.CanBuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Pick, levelTWType, out var needRes))
                                     {
-                                        unitDatComForGive.CondUnitType = default;
                                         invResCom.BuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Pick, levelTWType);
 
                                         unitDatComForGive.TWExtraType = tWTypeForGive;
-                                        unitDatComForGive.AmountSteps -= 1;
+                                        unitDatComForGive.LevelTWType = levelTWType;
+
+                                        unitDatComForGive.CondUnitType = default;
+                                        unitDatComForGive.TakeAmountSteps();
 
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                     }
@@ -104,11 +108,11 @@ namespace Scripts.Game
                                     {
                                         invResCom.BuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Sword, levelTWType);
 
+                                        unitDatComForGive.TWExtraType = tWTypeForGive;
+                                        unitDatComForGive.LevelTWType = levelTWType;
 
                                         unitDatComForGive.CondUnitType = default;
-
-                                        unitDatComForGive.TWExtraType = tWTypeForGive;
-                                        unitDatComForGive.AmountSteps -= 1;
+                                        unitDatComForGive.TakeAmountSteps();
 
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                     }
@@ -118,16 +122,17 @@ namespace Scripts.Game
                                     }
                                 }
 
-
                                 else if (tWTypeForGive == ToolWeaponTypes.Shield)
                                 {
-                                    if (invResCom.CanBuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Shield, levelTWType, out var needRes))
+                                    if (invResCom.CanBuyTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType, out var needRes))
                                     {
-                                        unitDatComForGive.CondUnitType = default;
-                                        invResCom.BuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Shield, levelTWType);
+                                        invResCom.BuyTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType);
 
                                         unitDatComForGive.TWExtraType = tWTypeForGive;
-                                        unitDatComForGive.AmountSteps -= 1;
+                                        unitDatComForGive.LevelTWType = levelTWType;
+
+                                        unitDatComForGive.CondUnitType = default;
+                                        unitDatComForGive.TakeAmountSteps();
 
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                     }

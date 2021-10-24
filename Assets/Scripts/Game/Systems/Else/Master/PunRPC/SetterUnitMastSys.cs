@@ -41,7 +41,7 @@ namespace Scripts.Game
 
                 newAmountSteps = UnitValues.StandartAmountSteps(unitTypeForSet);
                 curUnitDatCom.LevelUnitType = LevelUnitTypes.Wood;
-                newAmountHealth = UnitValues.StandartAmountHealth(unitTypeForSet);
+                newAmountHealth = UnitValues.StandartAmountHealth(unitTypeForSet, curUnitDatCom.LevelUnitType);
 
                 curUnitDatCom.UnitType = unitTypeForSet;
                 curUnitDatCom.AmountHealth = newAmountHealth;

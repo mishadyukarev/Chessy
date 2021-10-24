@@ -45,6 +45,7 @@ namespace Scripts.Game
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGivePawnToolFilter = default;
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
         private EcsFilter<UpdatedMasCom> _updatedMotMasFilt = default;
+        private EcsFilter<ForOldToNewUnitCom> _forOldToNewUnitFilt = default;
 
         private static PhotonView PhotonView => PhotonRpcViewGameCom.PhotonView;
 
@@ -98,7 +99,8 @@ namespace Scripts.Game
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
         public static void SeedEnvironmentToMaster(byte idxCell, EnvirTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
-        internal static void UpgradeUnit(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeUnit, new object[] { idxCell });
+        internal static void OldToNewToMaster(UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.OldToNewUnit, new object[] { unitType });
+        internal static void UpgradeUnitToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeUnit, new object[] { idxCell });
         internal static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, LevelTWTypes levelTWType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, levelTWType, idxCell });
 
         public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { idxCell });
@@ -186,6 +188,10 @@ namespace Scripts.Game
 
                 case RpcMasterTypes.CircularAttackKing:
                     _circularAttackFilter.Get1(0).IdxUnitForCirculAttack = (byte)objects[0];
+                    break;
+
+                case RpcMasterTypes.OldToNewUnit:
+                    _forOldToNewUnitFilt.Get1(0).UnitType = (UnitTypes)objects[0];
                     break;
 
                 case RpcMasterTypes.UpgradeUnit:
@@ -351,98 +357,13 @@ namespace Scripts.Game
 
 
             ref var invToolsComp = ref _invToolsFilter.Get1(0);
-            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick));
-            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword));
+            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick, LevelTWTypes.Wood));
+            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword, LevelTWTypes.Wood));
+            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Shield, LevelTWTypes.Wood));
 
-
-            #region Else
-
-            //for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
-            //    for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
-            //    {
-            //        var xy = new int[] { x, y };
-
-            //        listObjects.Add(CellUnitsDataSystem.UnitType(xy));
-            //        listObjects.Add(CellUnitsDataSystem.IsVisibleUnit(false, xy));
-            //        listObjects.Add(CellUnitsDataSystem.AmountSteps(xy));
-            //        listObjects.Add(CellUnitsDataSystem.AmountHealth(xy));
-            //        listObjects.Add(CellUnitsDataSystem.ConditionType(xy));
-            //        if (CellUnitsDataSystem.HaveOwner(xy)) listObjects.Add(CellUnitsDataSystem.ActorNumber(xy));
-            //        else listObjects.Add(-2);
-            //        listObjects.Add(CellUnitsDataSystem.IsBot(xy));
-
-
-
-            //        listObjects.Add(CellBuildDataSystem.BuildTypeCom(xy).BuildingType);
-            //        if (CellBuildDataSystem.OwnerCom(xy).HaveOwner) listObjects.Add(CellBuildDataSystem.OwnerCom(xy).ActorNumber);
-            //        else listObjects.Add(-2);
-            //        listObjects.Add(CellBuildDataSystem.OwnerBotCom(xy).IsBot);
-
-
-
-            //        listObjects.Add(CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Fertilizer, xy));
-            //        listObjects.Add(CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.AdultForest, xy));
-            //        listObjects.Add(CellEnvrDataSystem.GetAmountResources(EnvironmentTypes.Hill, xy));
-
-            //        listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Fertilizer, xy));
-            //        listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.YoungForest, xy));
-            //        listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.AdultForest, xy));
-            //        listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Hill, xy));
-            //        listObjects.Add(CellEnvrDataSystem.HaveEnvironment(EnvironmentTypes.Mountain, xy));
-
-
-            //        listObjects.Add(CellFireDataSystem.HaveFireCom(xy).HaveFire);
-            //    }
-
-
-
-            //listObjects.Add(SaverComponent.StepModeType);
-            //listObjects.Add(_readyUIFilter.Get1(0).IsStartedGame);
-
-
-
-            //listObjects.Add(_readyUIFilter.Get1(0).IsReady(false));
-            //listObjects.Add(_donerUIFilter.Get1(0).IsDoned(false));
-
-
-            //ref var invResCom = ref _inventorFilter.Get1(0);
-            //listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Food, false));
-            //listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Wood, false));
-            //listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Ore, false));
-            //listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Iron, false));
-            //listObjects.Add(invResCom.GetAmountResources(ResourceTypes.Gold, false));
-
-
-
-            //for (UnitTypes unitTypeType = (UnitTypes)1; (byte)unitTypeType < Enum.GetNames(typeof(UnitTypes)).Length; unitTypeType++)
-            //{
-            //    ref var xyUnitsCom = ref _xyUnitsFilter.Get1(0);
-
-            //    var amountUnitsInGame = xyUnitsCom.GetAmountUnitsInGame(unitTypeType, false);
-            //    listObjects.Add(amountUnitsInGame);
-            //    for (int indexXy = 0; indexXy < amountUnitsInGame; indexXy++)
-            //    {
-            //        listObjects.Add(xyUnitsCom.GetXyUnitInGame(unitTypeType, false, indexXy));
-            //    }
-            //}
-
-
-
-            //listObjects.Add(_upgradesBuildFilter.Get1(0).GetAmountUpgrades(BuildingTypes.Farm, false));
-            //listObjects.Add(_upgradesBuildFilter.Get1(0).GetAmountUpgrades(BuildingTypes.Woodcutter, false));
-            //listObjects.Add(_upgradesBuildFilter.Get1(0).GetAmountUpgrades(BuildingTypes.Mine, false));
-
-            //for (BuildingTypes buildingType = (BuildingTypes)1; (byte)buildingType < Enum.GetNames(typeof(BuildingTypes)).Length; buildingType++)
-            //{
-            //    var amountBuildingsInGame = MainGameSystem.XyBuildingsCom.GetAmountBuild(buildingType, false);
-            //    listObjects.Add(amountBuildingsInGame);
-            //    for (int indexXy = 0; indexXy < amountBuildingsInGame; indexXy++)
-            //    {
-            //        listObjects.Add(MainGameSystem.XyBuildingsCom.GetXyBuildByIndex(buildingType, false, indexXy));
-            //    }
-            //}
-
-            #endregion
+            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick, LevelTWTypes.Iron));
+            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword, LevelTWTypes.Iron));
+            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Shield, LevelTWTypes.Iron));
 
 
             var objects = new object[listObjects.Count];
@@ -526,8 +447,13 @@ namespace Scripts.Game
 
 
             ref var invToolsComp = ref _invToolsFilter.Get1(0);
-            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Pick, (byte)objects[_curNumber++]);
-            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Sword, (byte)objects[_curNumber++]);
+            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Pick, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
+            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Sword, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
+            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Shield, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
+
+            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Pick, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
+            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Sword, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
+            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Shield, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
         }
 
         #endregion

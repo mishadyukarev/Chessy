@@ -170,31 +170,40 @@ namespace Scripts.Game
             if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode) RpcSys.UpgradeBuildingToMaster(buildingType);
         }
 
-        private void ToggleToolWeapon(ToolWeaponTypes toolAndWeaponType)
+        private void ToggleToolWeapon(ToolWeaponTypes tWType)
         {
             if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode)
             {
                 ref var selCom = ref _selectorFilter.Get1(0);
 
-                selCom.CellClickType = CellClickTypes.GiveTakeTW;
-
-                if (toolAndWeaponType == ToolWeaponTypes.Shield)
+                if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
                 {
-                    if (selCom.TWTypeForGive == toolAndWeaponType)
+                    if (tWType == ToolWeaponTypes.Shield)
                     {
-                        if (selCom.LevelTWType == LevelTWTypes.Wood) selCom.LevelTWType = LevelTWTypes.Iron;
-                        else selCom.LevelTWType = LevelTWTypes.Wood;
+                        if (selCom.TWTypeForGive == tWType)
+                        {
+                            if (selCom.LevelTWType == LevelTWTypes.Wood) selCom.LevelTWType = LevelTWTypes.Iron;
+                            else selCom.LevelTWType = LevelTWTypes.Wood;
+                        }
+                        else
+                        {
+                            selCom.TWTypeForGive = tWType;
+                            selCom.LevelTWType = LevelTWTypes.Wood;
+                        }
                     }
                     else
                     {
-                        selCom.TWTypeForGive = toolAndWeaponType;
-                        selCom.LevelTWType = LevelTWTypes.Wood;
+                        selCom.TWTypeForGive = tWType;
+                        selCom.LevelTWType = LevelTWTypes.Iron;
                     }
                 }
                 else
                 {
-                    selCom.TWTypeForGive = toolAndWeaponType;
-                    selCom.LevelTWType = LevelTWTypes.Iron;
+                    selCom.CellClickType = CellClickTypes.GiveTakeTW;
+                    selCom.TWTypeForGive = tWType;
+
+                    if (tWType == ToolWeaponTypes.Shield) selCom.LevelTWType = LevelTWTypes.Wood;
+                    else selCom.LevelTWType = LevelTWTypes.Iron; 
                 }
             }
         }

@@ -16,30 +16,37 @@ namespace Scripts.Game
         internal void Enable_SR() => _extraUnit_SR.enabled = true;
         internal void Disable_SR() => _extraUnit_SR.enabled = false;
 
-        internal void SetToolWeapon_Sprite(ToolWeaponTypes toolAndWeaponType)
+        internal void SetToolWeapon_Sprite(ToolWeaponTypes tWType, LevelTWTypes levelTWType)
         {
-            switch (toolAndWeaponType)
+            switch (tWType)
             {
-                case ToolWeaponTypes.None:
-                    throw new Exception();
-
-                case ToolWeaponTypes.Hoe:
-                    throw new Exception();
-
+                case ToolWeaponTypes.None: throw new Exception();
+                case ToolWeaponTypes.Hoe: throw new Exception();
                 case ToolWeaponTypes.Pick:
-                    _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.PickWood);
-                    break;
-
+                    switch (levelTWType)
+                    {
+                        case LevelTWTypes.None: throw new Exception();
+                        case LevelTWTypes.Wood: throw new Exception();
+                        case LevelTWTypes.Iron: _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.PickWood); return;
+                        default: throw new Exception();
+                    }
                 case ToolWeaponTypes.Sword:
-                    _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.SwordIron);
-                    break;
-
+                    switch (levelTWType)
+                    {
+                        case LevelTWTypes.None: throw new Exception();
+                        case LevelTWTypes.Wood: throw new Exception();
+                        case LevelTWTypes.Iron: _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.SwordIron); return;
+                        default: throw new Exception();
+                    }
                 case ToolWeaponTypes.Shield:
-                    _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.ShieldWood);
-                    break;
-
-                default:
-                    throw new Exception();
+                    switch (levelTWType)
+                    {
+                        case LevelTWTypes.None: throw new Exception();
+                        case LevelTWTypes.Wood: _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.ShieldWood); return;
+                        case LevelTWTypes.Iron: _extraUnit_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.ShieldIron); return;
+                        default: throw new Exception();
+                    }
+                default: throw new Exception();
             }
         }
 

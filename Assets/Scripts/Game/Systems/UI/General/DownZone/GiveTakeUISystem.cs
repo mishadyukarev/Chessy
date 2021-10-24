@@ -14,22 +14,23 @@ namespace Scripts.Game
         {
             ref var inventToolsCom = ref _inventToolsFilter.Get1(0);
             ref var giveTakeViewCom = ref _giveThingUIFilter.Get1(0);
-            ref var selectorComp = ref _selectorFilter.Get1(0);
+            ref var selCom = ref _selectorFilter.Get1(0);
 
 
             giveTakeViewCom.SetView_ButtonImage(ToolWeaponTypes.Pick, false);
             giveTakeViewCom.SetView_ButtonImage(ToolWeaponTypes.Sword, false);
             giveTakeViewCom.SetView_ButtonImage(ToolWeaponTypes.Shield, false);
 
-            if (selectorComp.TWTypeForGive != default)
-            {
-                giveTakeViewCom.SetView_ButtonImage(selectorComp.TWTypeForGive, true);
-                giveTakeViewCom.SetImage(selectorComp.TWTypeForGive, selectorComp.LevelTWType);
-            }
+            if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
+                if (selCom.TWTypeForGive != default)
+                {
+                    giveTakeViewCom.SetView_ButtonImage(selCom.TWTypeForGive, true);
+                    giveTakeViewCom.SetImage(selCom.TWTypeForGive, selCom.LevelTWType);
+                }
 
-            giveTakeViewCom.SetText(ToolWeaponTypes.Pick, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Pick).ToString());
-            giveTakeViewCom.SetText(ToolWeaponTypes.Sword, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Sword).ToString());
-            giveTakeViewCom.SetText(ToolWeaponTypes.Shield, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Shield).ToString());
+            giveTakeViewCom.SetText(ToolWeaponTypes.Pick, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Pick, selCom.LevelTWType).ToString());
+            giveTakeViewCom.SetText(ToolWeaponTypes.Sword, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Sword, selCom.LevelTWType).ToString());
+            giveTakeViewCom.SetText(ToolWeaponTypes.Shield, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Shield, selCom.LevelTWType).ToString());
         }
     } 
 }

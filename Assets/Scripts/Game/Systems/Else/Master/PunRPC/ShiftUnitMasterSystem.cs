@@ -42,12 +42,7 @@ namespace Scripts.Game
                 fromUnitDatCom.TakeAmountSteps(toEnvDatCom.NeedAmountSteps);
                 if (fromUnitDatCom.AmountSteps < 0) fromUnitDatCom.ResetAmountSteps();
 
-
-                toUnitDatCom.LevelUnitType = fromUnitDatCom.LevelUnitType;
-                toUnitDatCom.TWExtraType = fromUnitDatCom.TWExtraType;
-                toUnitDatCom.UnitType = fromUnitDatCom.UnitType;
-                toUnitDatCom.AmountHealth = fromUnitDatCom.AmountHealth;
-                toUnitDatCom.AmountSteps = fromUnitDatCom.AmountSteps;
+                toUnitDatCom.ReplaceUnit(fromUnitDatCom);
                 toUnitDatCom.CondUnitType = default;
                 toOwnUnitCom.PlayerType = playerType;
 

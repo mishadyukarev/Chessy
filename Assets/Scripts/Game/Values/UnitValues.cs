@@ -6,15 +6,43 @@ namespace Scripts.Game
     {
         #region Health
 
-        internal static int StandartAmountHealth(UnitTypes unitType)
+        internal static int StandartAmountHealth(UnitTypes unitType, LevelUnitTypes levelUnitType)
         {
             switch (unitType)
             {
                 case UnitTypes.None: throw new Exception();
-                case UnitTypes.King: return 500;
-                case UnitTypes.Pawn: return 100;
-                case UnitTypes.Rook: return 100;
-                case UnitTypes.Bishop: return 100;
+                case UnitTypes.King:
+                    switch (levelUnitType)
+                    {
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 500;
+                        case LevelUnitTypes.Iron: throw new Exception();
+                        default: throw new Exception();
+                    }
+                case UnitTypes.Pawn:
+                    switch (levelUnitType)
+                    {
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 100;
+                        case LevelUnitTypes.Iron: return 150;
+                        default: throw new Exception();
+                    }  
+                case UnitTypes.Rook:
+                    switch (levelUnitType)
+                    {
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 100;
+                        case LevelUnitTypes.Iron: return 100;
+                        default: throw new Exception();
+                    }
+                case UnitTypes.Bishop:
+                    switch (levelUnitType)
+                    {
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 100;
+                        case LevelUnitTypes.Iron: return 100;
+                        default: throw new Exception();
+                    }
                 default: throw new Exception();
             }
         }

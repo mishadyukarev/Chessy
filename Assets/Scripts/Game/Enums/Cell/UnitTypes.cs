@@ -8,5 +8,7 @@
         Pawn,
         Rook,
         Bishop,
+
+        Scout,
     }
 }

@@ -21,7 +21,12 @@ namespace Scripts.Game
 
 
         internal ToolWeaponTypes TWTypeForGive;
+        internal void DefTWTypeForGive() => TWTypeForGive = default;
+
         internal LevelTWTypes LevelTWType;
+
+
+        internal UnitTypes UnitTypeOldToNew;
 
 
         internal byte IdxCurCell { get; set; }

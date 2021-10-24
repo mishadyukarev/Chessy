@@ -32,7 +32,7 @@ namespace Scripts.Game
                             if (curUnitDatCom.HaveExtraTW)
                             {
                                 curExtraUnitViewCom.Enable_SR();
-                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDatCom.TWExtraType);
+                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDatCom.TWExtraType, curUnitDatCom.LevelTWType);
                             }
                         }
 

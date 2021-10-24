@@ -216,6 +216,7 @@ namespace Scripts.Game
                 .Replace(new GetterUnitsViewUICom(downZone_GO))
                 .Replace(new DonerUICom(downZone_GO))
                 .Replace(new GiveTakeViewUICom(downZone_GO))
+                .Replace(new HeroZoneUICom(downZone_GO.transform))
 
                 ///Left
                 .Replace(new BuildLeftZoneViewUICom(leftZone_GO))
@@ -231,21 +232,21 @@ namespace Scripts.Game
 
             ref var invResCom = ref _inventorResFilter.Get1(0);
 
-            _curGameWorld.NewEntity()
-               .Replace(new InfoCom())
-               .Replace(new ForSettingUnitMasCom())
-               .Replace(new ForAttackMasCom())
-               .Replace(new ForShiftMasCom())
-               .Replace(new ForBuildingMasCom())
-               .Replace(new ForSeedingMasCom())
-               .Replace(new ConditionMasCom())
-               .Replace(new ForCircularAttackMasCom())
-               .Replace(new ForCreatingUnitMasCom())
-               .Replace(new ForDestroyMasCom())
-               .Replace(new ForFireMasCom())
-               .Replace(new ForUpgradeMasCom())
-               .Replace(new ForGiveTakeToolWeaponComp())
-               .Replace(new UpdatedMasCom());
+            //_curGameWorld.NewEntity()
+            //   .Replace(new InfoCom())
+            //   .Replace(new ForSettingUnitMasCom())
+            //   .Replace(new ForAttackMasCom())
+            //   .Replace(new ForShiftMasCom())
+            //   .Replace(new ForBuildingMasCom())
+            //   .Replace(new ForSeedingMasCom())
+            //   .Replace(new ConditionMasCom())
+            //   .Replace(new ForCircularAttackMasCom())
+            //   .Replace(new ForCreatingUnitMasCom())
+            //   .Replace(new ForDestroyMasCom())
+            //   .Replace(new ForFireMasCom())
+            //   .Replace(new ForUpgradeMasCom())
+            //   .Replace(new ForGiveTakeToolWeaponComp())
+            //   .Replace(new UpdatedMasCom());
 
 
             if (PhotonNetwork.IsMasterClient)
@@ -373,8 +374,11 @@ namespace Scripts.Game
 
                             int rand = UnityEngine.Random.Range(0, 100);
 
-                            if (rand >= 50) curUnitDatCom.TWExtraType = ToolWeaponTypes.Sword;
-
+                            if (rand >= 50)
+                            {
+                                curUnitDatCom.TWExtraType = ToolWeaponTypes.Sword;
+                                curUnitDatCom.LevelTWType = LevelTWTypes.Iron;
+                            }
                             curUnitDatCom.AmountHealth = 100;
                             curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
                             curOwnUnitCom.PlayerType = PlayerTypes.Second;

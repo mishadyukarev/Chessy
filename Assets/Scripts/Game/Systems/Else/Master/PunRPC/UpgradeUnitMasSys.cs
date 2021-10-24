@@ -36,6 +36,8 @@ namespace Scripts.Game
                         unitDatForUpg.LevelUnitType = LevelUnitTypes.Iron;
                         unitDatForUpg.TakeAmountSteps();
 
+                        unitDatForUpg.AmountHealth = unitDatForUpg.MaxAmountHealth;
+
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitMelee);
                     }
                     else

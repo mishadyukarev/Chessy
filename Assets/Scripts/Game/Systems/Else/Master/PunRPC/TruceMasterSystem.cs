@@ -24,14 +24,14 @@ namespace Scripts.Game
             int random;
 
 
-            _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.First, ToolWeaponTypes.Pick, 0);
-            _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.Second, ToolWeaponTypes.Pick, 0);
+            //_invTWFilt.Get1(0).SetAmountTW(PlayerTypes.First, ToolWeaponTypes.Pick, 0);
+            //_invTWFilt.Get1(0).SetAmountTW(PlayerTypes.Second, ToolWeaponTypes.Pick, 0);
 
-            _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.First, ToolWeaponTypes.Sword, 0);
-            _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.Second, ToolWeaponTypes.Sword, 0);
+            //_invTWFilt.Get1(0).SetAmountTW(PlayerTypes.First, ToolWeaponTypes.Sword, 0);
+            //_invTWFilt.Get1(0).SetAmountTW(PlayerTypes.Second, ToolWeaponTypes.Sword, 0);
 
-            _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.First, ToolWeaponTypes.Shield, 0);
-            _invTWFilt.Get1(0).SetAmountTW(PlayerTypes.Second, ToolWeaponTypes.Shield, 0);
+            //_invTWFilt.Get1(0).SetAmountTW(PlayerTypes.First, ToolWeaponTypes.Shield, 0);
+            //_invTWFilt.Get1(0).SetAmountTW(PlayerTypes.Second, ToolWeaponTypes.Shield, 0);
 
 
             foreach (byte curIdxCell in _xyCellFilter)

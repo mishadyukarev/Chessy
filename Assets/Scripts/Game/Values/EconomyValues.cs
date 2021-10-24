@@ -4,38 +4,17 @@ namespace Scripts.Game
 {
     internal readonly struct EconomyValues
     {
-        public const int NULL_RESOURCES = 0;
-
-        public const int AMOUNT_RESOURCES_TYPES = 5;
-        public const int FOOD_NUMBER = 0;
-        public const int WOOD_NUMBER = 1;
-        public const int ORE_NUMBER = 2;
-        public const int IRON_NUMBER = 3;
-        public const int GOLD_NUMBER = 4;
-
-
-
         internal static int AmountUnits(UnitTypes unitType)
         {
             switch (unitType)
             {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    return 1;
-
-                case UnitTypes.Pawn:
-                    return 1;
-
-                case UnitTypes.Rook:
-                    return 0;
-
-                case UnitTypes.Bishop:
-                    return 0;
-
-                default:
-                    throw new Exception();
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King: return 1;
+                case UnitTypes.Pawn: return 1;
+                case UnitTypes.Rook: return 0;
+                case UnitTypes.Bishop: return 0;
+                case UnitTypes.Scout: return 1;
+                default: throw new Exception();
             }
         }
 
@@ -43,44 +22,27 @@ namespace Scripts.Game
         {
             switch (resourceType)
             {
-                case ResourceTypes.None:
-                    throw new Exception();
-
-                case ResourceTypes.Food:
-                    return 25;
-
-                case ResourceTypes.Wood:
-                    return 25;
-
-                case ResourceTypes.Ore:
-                    return 0;
-
-                case ResourceTypes.Iron:
-                    return 0;
-
-                case ResourceTypes.Gold:
-                    return 0;
-
-                default:
-                    throw new Exception();
+                case ResourceTypes.None: throw new Exception();
+                case ResourceTypes.Food: return 25;
+                case ResourceTypes.Wood: return 25;
+                case ResourceTypes.Ore:  return 0;
+                case ResourceTypes.Iron: return 0;
+                case ResourceTypes.Gold: return 0;
+                default: throw new Exception();
             }
         }
 
 
         #region Costs
 
-        internal static int AmountResForBuy(UnitTypes unitType, ResourceTypes resourceType)
+        internal static int AmountResForBuy(UnitTypes unitType, ResourceTypes resType)
         {
             switch (unitType)
             {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    throw new Exception();
-
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King: throw new Exception();
                 case UnitTypes.Pawn:
-                    switch (resourceType)
+                    switch (resType)
                     {
                         case ResourceTypes.None: throw new Exception();
                         case ResourceTypes.Food: return 5;
@@ -90,9 +52,8 @@ namespace Scripts.Game
                         case ResourceTypes.Gold: return 0;
                         default: throw new Exception();
                     }
-
                 case UnitTypes.Rook:
-                    switch (resourceType)
+                    switch (resType)
                     {
                         case ResourceTypes.None: throw new Exception();
                         case ResourceTypes.Food: return 5;
@@ -102,9 +63,8 @@ namespace Scripts.Game
                         case ResourceTypes.Gold: return 0;
                         default: throw new Exception();
                     }
-
                 case UnitTypes.Bishop:
-                    switch (resourceType)
+                    switch (resType)
                     {
                         case ResourceTypes.None: throw new Exception();
                         case ResourceTypes.Food: return 5;
@@ -114,9 +74,7 @@ namespace Scripts.Game
                         case ResourceTypes.Gold: return 0;
                         default: throw new Exception();
                     }
-
-                default:
-                    throw new Exception();
+                default: throw new Exception();
             }
         }
         internal static int AmountResForUpgrade(BuildingTypes buildingType, ResourceTypes resourceType)

@@ -21,6 +21,7 @@
         CircularAttackKing,
 
         UpgradeUnit,
+        OldToNewUnit,
         GiveTakeToolWeapon,
 
         UpgradeBuild,

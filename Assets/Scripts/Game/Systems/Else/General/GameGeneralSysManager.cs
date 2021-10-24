@@ -81,6 +81,7 @@ namespace Scripts.Game
 
             var eventExecuters = new EcsSystems(gameWorld)
                 .Add(new EventsGameSys())
+                .Add(new EventDownSys())
                 .Add(new UnitUniqueEventSys())
                 .Add(new EventUnitBuildUISys());
 

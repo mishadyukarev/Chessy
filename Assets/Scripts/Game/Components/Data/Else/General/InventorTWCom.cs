@@ -1,36 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Scripts.Game
 {
     internal struct InventorTWCom
     {
-        private Dictionary<PlayerTypes, Dictionary<ToolWeaponTypes, byte>> _inventorTools;
+        private Dictionary<PlayerTypes, Dictionary<ToolWeaponTypes, Dictionary<LevelTWTypes, byte>>> _inventorTools;
 
         internal InventorTWCom(bool needNew) : this()
         {
             if (needNew)
             {
-                _inventorTools = new Dictionary<PlayerTypes, Dictionary<ToolWeaponTypes, byte>>();
+                _inventorTools = new Dictionary<PlayerTypes, Dictionary<ToolWeaponTypes, Dictionary<LevelTWTypes, byte>>>();
 
-                _inventorTools[PlayerTypes.First] = new Dictionary<ToolWeaponTypes, byte>();
-                _inventorTools[PlayerTypes.Second] = new Dictionary<ToolWeaponTypes, byte>();
+                for (PlayerTypes playerType = (PlayerTypes)1; playerType < (PlayerTypes)Enum.GetNames(typeof(PlayerTypes)).Length; playerType++)
+                {
+                    _inventorTools[playerType] = new Dictionary<ToolWeaponTypes, Dictionary<LevelTWTypes, byte>>();
 
+                    _inventorTools[playerType].Add(ToolWeaponTypes.Pick, new Dictionary<LevelTWTypes, byte>());
+                    _inventorTools[playerType].Add(ToolWeaponTypes.Sword, new Dictionary<LevelTWTypes, byte>());
+                    _inventorTools[playerType].Add(ToolWeaponTypes.Shield, new Dictionary<LevelTWTypes, byte>());
 
-                _inventorTools[PlayerTypes.First].Add(ToolWeaponTypes.Pick, default);
-                _inventorTools[PlayerTypes.First].Add(ToolWeaponTypes.Sword, default);
-                _inventorTools[PlayerTypes.First].Add(ToolWeaponTypes.Shield, default);
+                    _inventorTools[playerType][ToolWeaponTypes.Pick].Add(LevelTWTypes.Wood, default);
+                    _inventorTools[playerType][ToolWeaponTypes.Sword].Add(LevelTWTypes.Wood, default);
+                    _inventorTools[playerType][ToolWeaponTypes.Shield].Add(LevelTWTypes.Wood, default);
 
-                _inventorTools[PlayerTypes.Second].Add(ToolWeaponTypes.Pick, default);
-                _inventorTools[PlayerTypes.Second].Add(ToolWeaponTypes.Sword, default);
-                _inventorTools[PlayerTypes.Second].Add(ToolWeaponTypes.Shield, default);
+                    _inventorTools[playerType][ToolWeaponTypes.Pick].Add(LevelTWTypes.Iron, default);
+                    _inventorTools[playerType][ToolWeaponTypes.Sword].Add(LevelTWTypes.Iron, default);
+                    _inventorTools[playerType][ToolWeaponTypes.Shield].Add(LevelTWTypes.Iron, default);
+                }
             }
         }
 
-        internal bool HaveTool(PlayerTypes playerType, ToolWeaponTypes toolWeaponType) => _inventorTools[playerType][toolWeaponType] > 0;
-        internal void SetAmountTW(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, byte value) => _inventorTools[playerType][toolWeaponType] = value;
-        internal byte GetAmountTools(PlayerTypes playerType, ToolWeaponTypes toolWeapType) => _inventorTools[playerType][toolWeapType];
+        internal bool HaveTW(PlayerTypes playerType, ToolWeaponTypes tWType, LevelTWTypes levelTWType) => _inventorTools[playerType][tWType][levelTWType] > 0;
+        internal void SetAmountTW(PlayerTypes playerType, ToolWeaponTypes tWType, LevelTWTypes levelTWType, byte value) => _inventorTools[playerType][tWType][levelTWType] = value;
+        internal byte GetAmountTools(PlayerTypes playerType, ToolWeaponTypes toolWeapType, LevelTWTypes levelTWType) => _inventorTools[playerType][toolWeapType][levelTWType];
 
-        internal void AddAmountTools(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, byte adding = 1) => _inventorTools[playerType][toolWeaponType] += adding;
-        internal void TakeAmountTools(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, byte taking = 1) => _inventorTools[playerType][toolWeaponType] -= taking;
+        internal void AddAmountTools(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, LevelTWTypes levelTWType, byte adding = 1) => _inventorTools[playerType][toolWeaponType][levelTWType] += adding;
+        internal void TakeAmountTools(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, LevelTWTypes levelTWType, byte taking = 1) => _inventorTools[playerType][toolWeaponType][levelTWType] -= taking;
     }
 }

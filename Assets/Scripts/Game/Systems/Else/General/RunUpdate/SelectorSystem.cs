@@ -94,7 +94,20 @@ namespace Scripts.Game
                             && OwnUnitCom(selCom.IdxCurCell).IsMine
                             && UnitDatCom(selCom.IdxCurCell).LevelUnitType != LevelUnitTypes.Iron)
                         {
-                            RpcSys.UpgradeUnit(selCom.IdxCurCell);
+                            RpcSys.UpgradeUnitToMaster(selCom.IdxCurCell);
+                        }
+                        else
+                        {
+                            selCom.IdxSelCell = selCom.IdxCurCell;
+                            selCom.DefCellClickType();
+                        }
+                    }
+
+                    else if (selCom.IsCellClickType(CellClickTypes.OldToNewUnit))
+                    {
+                        if (UnitDatCom(selCom.IdxCurCell).Is(UnitTypes.Pawn) && OwnUnitCom(selCom.IdxCurCell).IsMine)
+                        {
+                            RpcSys.OldToNewToMaster(selCom.UnitTypeOldToNew);
                         }
                         else
                         {
