@@ -22,10 +22,11 @@ namespace Scripts.Game
 
             if (selUnitDatCom.HaveUnit)
             {
-                //condUnitUICom.SetText_Button(CondUnitTypes.Protected, LanguageComCom.GetText(GameLanguageTypes.Protect));
+                if (selUnitDatCom.Is(UnitTypes.Scout))
+                {
 
-
-                if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
+                }
+                else if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
                 {
                     isEnableButt = true;
                 }

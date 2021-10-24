@@ -17,7 +17,7 @@ namespace Scripts.Game
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
         private EcsFilter<InventResourCom> _inventorResFilter = default;
-        private EcsFilter<InventorUnitsComponent> _invUnitsFilter = default;
+        private EcsFilter<InventorUnitsCom> _invUnitsFilter = default;
         private EcsFilter<InventorTWCom> _invToolsFilter = default;
 
         private EcsFilter<SelectorCom> _selectorFilter = default;
@@ -45,7 +45,7 @@ namespace Scripts.Game
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGivePawnToolFilter = default;
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
         private EcsFilter<UpdatedMasCom> _updatedMotMasFilt = default;
-        private EcsFilter<ForOldToNewUnitCom> _forOldToNewUnitFilt = default;
+        private EcsFilter<ForOldNewUnitCom> _forOldToNewUnitFilt = default;
 
         private static PhotonView PhotonView => PhotonRpcViewGameCom.PhotonView;
 
@@ -99,7 +99,7 @@ namespace Scripts.Game
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
         public static void SeedEnvironmentToMaster(byte idxCell, EnvirTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
-        internal static void OldToNewToMaster(UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.OldToNewUnit, new object[] { unitType });
+        internal static void OldToNewToMaster(UnitTypes unitType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.OldToNewUnit, new object[] { unitType, idxCell });
         internal static void UpgradeUnitToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeUnit, new object[] { idxCell });
         internal static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, LevelTWTypes levelTWType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, levelTWType, idxCell });
 
@@ -192,6 +192,7 @@ namespace Scripts.Game
 
                 case RpcMasterTypes.OldToNewUnit:
                     _forOldToNewUnitFilt.Get1(0).UnitType = (UnitTypes)objects[0];
+                    _forOldToNewUnitFilt.Get1(0).IdxCell = (byte)objects[1];
                     break;
 
                 case RpcMasterTypes.UpgradeUnit:

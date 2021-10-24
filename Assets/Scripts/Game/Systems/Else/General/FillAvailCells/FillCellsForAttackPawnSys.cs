@@ -20,7 +20,7 @@ namespace Scripts.Game
                 ref var cellsAttackCom = ref _cellsForAttackFilter.Get1(0);
 
 
-                if (curUnitDatCom.HaveUnit && curUnitDatCom.Is(UnitTypes.Pawn))
+                if (curUnitDatCom.Is(UnitTypes.Pawn))
                 {
                     DirectTypes curDurect1 = default;
 

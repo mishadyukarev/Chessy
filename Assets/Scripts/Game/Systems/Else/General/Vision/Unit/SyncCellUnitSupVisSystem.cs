@@ -31,14 +31,17 @@ namespace Scripts.Game
 
                 if (curUnitDataCom.IsVisibleUnit(WhoseMoveCom.CurPlayer))
                 {
+
                     if (curUnitDataCom.HaveUnit)
                     {
-                        barsViewCom.EnableSR(CellBarTypes.Hp);
-                        barsViewCom.SetColorHp(Color.red);
+                        if (!curUnitDataCom.Is(UnitTypes.Scout))
+                        {
+                            barsViewCom.EnableSR(CellBarTypes.Hp);
+                            barsViewCom.SetColorHp(Color.red);
 
-                        float xCordinate = (float)curUnitDataCom.AmountHealth / curUnitDataCom.MaxAmountHealth;
-                        barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
-
+                            float xCordinate = (float)curUnitDataCom.AmountHealth / curUnitDataCom.MaxAmountHealth;
+                            barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
+                        }
 
                         if (curUnitDataCom.HaveMaxAmountSteps)
                         {

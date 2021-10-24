@@ -26,6 +26,7 @@ namespace Scripts.Game
                 .Add(new SyncCellEnvirsVisSystem())
                 .Add(new SyncCellEffectsVisSystem())
                 .Add(new SyncSupportViewSystem())
+                .Add(new CellWeatherViewSys())
                 .Add(new FliperAndRotatorUnitSystem());
 
 
@@ -53,9 +54,11 @@ namespace Scripts.Game
             .Add(new DonerUISystem())
                 .Add(new GetterUnitsUISystem())
                 .Add(new GiveTakeUISystem())
+                .Add(new HeroZoneUISys())
 
             ///up
             .Add(new EconomyUpUISys())
+            .Add(new WindUISys())
 
             ///center
             .Add(new SelectorTypeUISystem())

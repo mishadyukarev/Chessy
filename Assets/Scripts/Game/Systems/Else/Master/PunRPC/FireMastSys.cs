@@ -68,7 +68,7 @@ namespace Scripts.Game
                     {
                         RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
-                        fromUnitDatCom.ResetAmountSteps();
+                        fromUnitDatCom.DefAmountSteps();
                         toFireDatCom.HaveFire = true;
                     }
                 }

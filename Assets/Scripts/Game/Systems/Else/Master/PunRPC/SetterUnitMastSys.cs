@@ -9,7 +9,7 @@ namespace Scripts.Game
         private EcsFilter<InfoCom> _infoFilter = default;
 
         private EcsFilter<ForSettingUnitMasCom> _setterFilter = default;
-        private EcsFilter<InventorUnitsComponent> _unitInventorFilter = default;
+        private EcsFilter<InventorUnitsCom> _unitInventorFilter = default;
         private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
 
         private EcsFilter<CellEnvironDataCom> _cellEnvirDataFilter = default;
@@ -29,7 +29,6 @@ namespace Scripts.Game
 
 
             PlayerTypes playerSender = default;
-
             if (GameModesCom.IsOfflineMode) playerSender = WhoseMoveCom.WhoseMoveOffline;
             else playerSender = sender.GetPlayerType();
 

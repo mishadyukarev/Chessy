@@ -25,49 +25,30 @@ namespace Scripts.Game
 
             if (selUnitDatCom.HaveUnit)
             {
-                if (selUnitDatCom.Is(UnitTypes.King))
+                if (!selUnitDatCom.Is(UnitTypes.Scout))
                 {
-                    //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
-                }
-
-                else if (selUnitDatCom.Is(UnitTypes.Pawn))
-                {
-                    if (selUnitDatCom.HaveMaxAmountHealth)
+                    if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
                     {
-                        //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Extract));
-                    }
-                    else
-                    {
-                        //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
-                    }
-                }
+                        activeButt = true;
 
-                else
-                {
-                    //condUnitUICom.SetText_Button(CondUnitTypes.Relaxed, LanguageComCom.GetText(GameLanguageTypes.Relax));
-                }
+                        if (selUnitDatCom.Is(CondUnitTypes.Protected))
+                        {
+                            condUnitUICom.SetColor(CondUnitTypes.Protected, Color.yellow);
+                        }
 
-                if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
-                {
-                    activeButt = true;
+                        else
+                        {
+                            condUnitUICom.SetColor(CondUnitTypes.Protected, Color.white);
+                        }
 
-                    if (selUnitDatCom.Is(CondUnitTypes.Protected))
-                    {
-                        condUnitUICom.SetColor(CondUnitTypes.Protected, Color.yellow);
-                    }
-
-                    else
-                    {
-                        condUnitUICom.SetColor(CondUnitTypes.Protected, Color.white);
-                    }
-
-                    if (selUnitDatCom.Is(CondUnitTypes.Relaxed))
-                    {
-                        condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.green);
-                    }
-                    else
-                    {
-                        condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.white);
+                        if (selUnitDatCom.Is(CondUnitTypes.Relaxed))
+                        {
+                            condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.green);
+                        }
+                        else
+                        {
+                            condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.white);
+                        }
                     }
                 }
             }

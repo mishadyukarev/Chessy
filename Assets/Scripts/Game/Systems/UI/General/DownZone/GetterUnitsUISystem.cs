@@ -8,7 +8,7 @@ namespace Scripts.Game
     internal sealed class GetterUnitsUISystem : IEcsRunSystem
     {
         private EcsFilter<GetterUnitsDataUICom, GetterUnitsViewUICom> _takerUnitsUIFilter = default;
-        private EcsFilter<InventorUnitsComponent> _inventUnitsFilter = default;
+        private EcsFilter<InventorUnitsCom> _inventUnitsFilter = default;
 
         private const float NEEDED_TIME = 1;
 

@@ -40,7 +40,7 @@ namespace Scripts.Game
 
 
                 fromUnitDatCom.TakeAmountSteps(toEnvDatCom.NeedAmountSteps);
-                if (fromUnitDatCom.AmountSteps < 0) fromUnitDatCom.ResetAmountSteps();
+                if (fromUnitDatCom.AmountSteps < 0) fromUnitDatCom.DefAmountSteps();
 
                 toUnitDatCom.ReplaceUnit(fromUnitDatCom);
                 toUnitDatCom.CondUnitType = default;

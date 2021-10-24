@@ -56,6 +56,9 @@ TagManager:
   - name: Fire
     uniqueID: 2994770637
     locked: 0
+  - name: Weather
+    uniqueID: 1231844777
+    locked: 0
   - name: SupportVision
     uniqueID: 3301346089
     locked: 0

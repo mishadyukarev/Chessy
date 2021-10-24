@@ -1,7 +1,8 @@
 ﻿namespace Scripts.Game
 {
-    internal struct ForOldToNewUnitCom
+    internal struct ForOldNewUnitCom
     {
         internal UnitTypes UnitType;
+        internal byte IdxCell;
     }
 }

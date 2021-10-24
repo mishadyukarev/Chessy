@@ -7,7 +7,7 @@ namespace Scripts.Game
     {
         private EcsFilter<InfoCom> _mastInfoFilter = default;
         private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
-        private EcsFilter<InventorUnitsComponent, InventResourCom> _inventorFilter = default;
+        private EcsFilter<InventorUnitsCom, InventResourCom> _inventorFilter = default;
         private EcsFilter<SoundEffectsComp> _soundEffFilt = default;
         private EcsFilter<BuildsInGameCom> _buildsInGameFilt = default;
 

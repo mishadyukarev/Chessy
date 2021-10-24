@@ -18,6 +18,7 @@
         RookCrossbow,
         BishopBow,
         BishopCrossbow,
+        Scout,
 
         City,
         CityNone,

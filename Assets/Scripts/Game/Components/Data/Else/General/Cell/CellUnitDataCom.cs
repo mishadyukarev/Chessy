@@ -16,23 +16,13 @@ namespace Scripts.Game
             {
                 switch (UnitType)
                 {
-                    case UnitTypes.None:
-                        throw new Exception();
-
-                    case UnitTypes.King:
-                        return true;
-
-                    case UnitTypes.Pawn:
-                        return true;
-
-                    case UnitTypes.Rook:
-                        return false;
-
-                    case UnitTypes.Bishop:
-                        return false;
-
-                    default:
-                        throw new Exception();
+                    case UnitTypes.None: throw new Exception();
+                    case UnitTypes.King: return true;
+                    case UnitTypes.Pawn: return true;
+                    case UnitTypes.Rook: return false;
+                    case UnitTypes.Bishop: return false;
+                    case UnitTypes.Scout: return true;
+                    default: throw new Exception();
                 }
             }
         }
@@ -44,7 +34,7 @@ namespace Scripts.Game
 
 
         internal CondUnitTypes CondUnitType { get; set; }
-        internal void ResetCondType() => CondUnitType = default;
+        internal void DefCondType() => CondUnitType = default;
         internal bool Is(CondUnitTypes condUnitType) => CondUnitType == condUnitType;
         internal bool Is(CondUnitTypes[] condUnitTypes)
         {
@@ -69,22 +59,21 @@ namespace Scripts.Game
         internal void AddAmountSteps(int adding = 1) => AmountSteps += adding;
         internal void TakeAmountSteps(int taking = 1) => AmountSteps -= taking;
 
-
         internal bool HaveMaxAmountSteps => AmountSteps == UnitValues.StandartAmountSteps(UnitType);
         internal bool HaveMinAmountSteps => AmountSteps >= 1;
-        internal void ResetAmountSteps() => AmountSteps = default;
-        internal void RefreshAmountSteps() => AmountSteps = UnitValues.StandartAmountSteps(UnitType);
+        internal void DefAmountSteps() => AmountSteps = default;
+        internal void SetMaxAmountSteps() => AmountSteps = UnitValues.StandartAmountSteps(UnitType);
 
 
         internal int AmountHealth { get; set; }
         internal void AddAmountHealth(int adding = 1) => AmountHealth += adding;
         internal void TakeAmountHealth(int taking = 1) => AmountHealth -= taking;
 
-
         internal int MaxAmountHealth => UnitValues.StandartAmountHealth(UnitType, LevelUnitType);
         internal bool HaveMaxAmountHealth => AmountHealth >= MaxAmountHealth;
         internal bool HaveAmountHealth => AmountHealth > 0;
-        internal void AddStandartHeal() => AddAmountHealth((int)(UnitValues.StandartAmountHealth(UnitType, LevelUnitType) * UnitValues.ForAdding(UnitType)));
+        internal void AddStandartHeal() => AddAmountHealth((int)(UnitValues.StandartAmountHealth(UnitType, LevelUnitType) * UnitValues.ForAddingHealth(UnitType)));
+        internal void SetMaxAmountHealth() => AmountHealth = MaxAmountHealth;
 
         internal int PowerProtection(BuildingTypes buildingType, Dictionary<EnvirTypes, bool> envrs)
         {

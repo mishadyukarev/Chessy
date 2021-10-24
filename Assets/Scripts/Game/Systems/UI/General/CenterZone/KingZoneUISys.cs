@@ -5,7 +5,7 @@ namespace Scripts.Game
     internal sealed class KingZoneUISys : IEcsRunSystem
     {
         private EcsFilter<KingZoneViewUIComp> _kingZoneFilter = default;
-        private EcsFilter<InventorUnitsComponent> _invUnitFil = default;
+        private EcsFilter<InventorUnitsCom> _invUnitFil = default;
 
         public void Run()
         {

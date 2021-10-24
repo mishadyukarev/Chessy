@@ -23,7 +23,7 @@ namespace Scripts.Game
             switch (neededCondType)
             {
                 case CondUnitTypes.None:
-                    curCellUnitDataCom.ResetCondType();
+                    curCellUnitDataCom.DefCondType();
                     break;
 
                 case CondUnitTypes.Protected:
@@ -31,7 +31,7 @@ namespace Scripts.Game
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-                        curCellUnitDataCom.ResetCondType();
+                        curCellUnitDataCom.DefCondType();
                     }
 
                     else if (curCellUnitDataCom.HaveMinAmountSteps)
@@ -65,7 +65,7 @@ namespace Scripts.Game
                     if (curCellUnitDataCom.Is(CondUnitTypes.Relaxed))
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-                        curCellUnitDataCom.ResetCondType();
+                        curCellUnitDataCom.DefCondType();
                     }
 
                     else if (curCellUnitDataCom.HaveMinAmountSteps)

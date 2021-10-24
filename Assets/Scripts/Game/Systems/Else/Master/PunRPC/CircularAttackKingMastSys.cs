@@ -56,7 +56,7 @@ namespace Scripts.Game
 
                 if (starUnitDatCom.Is(CondUnitTypes.Protected) || starUnitDatCom.Is(CondUnitTypes.Relaxed))
                 {
-                    starUnitDatCom.ResetCondType();
+                    starUnitDatCom.DefCondType();
                 }
             }
             else

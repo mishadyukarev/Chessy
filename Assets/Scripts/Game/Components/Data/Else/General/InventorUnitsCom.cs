@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Scripts.Game
 {
-    internal struct InventorUnitsComponent
+    internal struct InventorUnitsCom
     {
         private Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelUnitTypes, int>>> _unitsInventorDict;
 
-        internal InventorUnitsComponent(bool needNew) : this()
+        internal InventorUnitsCom(bool needNew) : this()
         {
             if (needNew)
             {

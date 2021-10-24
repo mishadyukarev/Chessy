@@ -7,7 +7,7 @@ namespace Scripts.Game
 {
     internal sealed class TruceMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
+        private EcsFilter<InventorUnitsCom> _inventorUnitsFilter = default;
         private EcsFilter<InventorTWCom> _invTWFilt = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;

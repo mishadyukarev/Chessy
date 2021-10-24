@@ -50,8 +50,8 @@ namespace Scripts.Game
 
             if (simpUniqueType != default)
             {
-                fromUnitDatCom.ResetAmountSteps();
-                fromUnitDatCom.ResetCondType();
+                fromUnitDatCom.DefAmountSteps();
+                fromUnitDatCom.DefCondType();
 
 
                 int damageFrom = 0;

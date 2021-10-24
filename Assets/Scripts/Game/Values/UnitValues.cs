@@ -43,10 +43,18 @@ namespace Scripts.Game
                         case LevelUnitTypes.Iron: return 100;
                         default: throw new Exception();
                     }
+                case UnitTypes.Scout:
+                    switch (levelUnitType)
+                    {
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 1;
+                        case LevelUnitTypes.Iron: throw new Exception();
+                        default: throw new Exception();
+                    }
                 default: throw new Exception();
             }
         }
-        internal static float ForAdding(UnitTypes unitType)
+        internal static float ForAddingHealth(UnitTypes unitType)
         {
             switch (unitType)
             {
@@ -55,6 +63,7 @@ namespace Scripts.Game
                 case UnitTypes.Pawn: return 1f;
                 case UnitTypes.Rook: return 1f;
                 case UnitTypes.Bishop: return 1f;
+                case UnitTypes.Scout: throw new Exception();
                 default: throw new Exception();
             }
         }
@@ -101,6 +110,14 @@ namespace Scripts.Game
                         case LevelUnitTypes.Iron: return 90;
                         default: throw new Exception();
                     }
+                case UnitTypes.Scout:
+                    switch (upgUnitType)
+                    {
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 0;
+                        case LevelUnitTypes.Iron: throw new Exception();
+                        default: throw new Exception();
+                    }
                 default: throw new Exception();
             }
         }
@@ -114,6 +131,7 @@ namespace Scripts.Game
                 case UnitTypes.Pawn: return 0.5f;
                 case UnitTypes.Rook: return 0.5f;
                 case UnitTypes.Bishop: return 0.5f;
+                case UnitTypes.Scout: throw new Exception();
                 default: throw new Exception();
             }
         }
@@ -172,6 +190,7 @@ namespace Scripts.Game
                         case EnvirTypes.Mountain: throw new Exception();
                         default: throw new Exception();
                     }
+                case UnitTypes.Scout: return 0;
                 default: throw new Exception();
             }
 
@@ -222,6 +241,7 @@ namespace Scripts.Game
                         case BuildingTypes.Mine: return 0;
                         default: throw new Exception();
                     }
+                case UnitTypes.Scout: return 0;
                 default: throw new Exception();
             }
         }
@@ -234,6 +254,7 @@ namespace Scripts.Game
                 case UnitTypes.Pawn: return 0.5f;
                 case UnitTypes.Rook: return 0.5f;
                 case UnitTypes.Bishop: return 0.5f;
+                case UnitTypes.Scout: return 0;
                 default: throw new Exception();
             }
         }
@@ -246,6 +267,7 @@ namespace Scripts.Game
                 case UnitTypes.Pawn: return -0.5f;
                 case UnitTypes.Rook: return -0.5f;
                 case UnitTypes.Bishop: return -0.5f;
+                case UnitTypes.Scout: return 0;
                 default: throw new Exception();
             }
         }
@@ -259,26 +281,13 @@ namespace Scripts.Game
         {
             switch (envirType)
             {
-                case EnvirTypes.None:
-                    throw new Exception();
-
-                case EnvirTypes.Fertilizer:
-                    throw new Exception();
-
-                case EnvirTypes.YoungForest:
-                    throw new Exception();
-
-                case EnvirTypes.AdultForest:
-                    return 2;
-
-                case EnvirTypes.Hill:
-                    return 2;
-
-                case EnvirTypes.Mountain:
-                    throw new Exception();
-
-                default:
-                    throw new Exception();
+                case EnvirTypes.None: throw new Exception();
+                case EnvirTypes.Fertilizer:  throw new Exception();
+                case EnvirTypes.YoungForest:  throw new Exception();
+                case EnvirTypes.AdultForest: return 1;
+                case EnvirTypes.Hill: return 1;
+                case EnvirTypes.Mountain: throw new Exception();
+                default: throw new Exception();
             }
         }
 
@@ -286,22 +295,13 @@ namespace Scripts.Game
         {
             switch (unitType)
             {
-                case UnitTypes.None:
-                    throw new Exception();
-
-                case UnitTypes.King:
-                    return 1;
-
-                case UnitTypes.Pawn:
-                    return 2;
-
-                case UnitTypes.Rook:
-                    return 2;
-
-                case UnitTypes.Bishop:
-                    return 2;
-                default:
-                    throw new Exception();
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King: return 1;
+                case UnitTypes.Pawn: return 2;
+                case UnitTypes.Rook:  return 2;
+                case UnitTypes.Bishop: return 2;
+                case UnitTypes.Scout: return 4;
+                default: throw new Exception();
             }
         }
 

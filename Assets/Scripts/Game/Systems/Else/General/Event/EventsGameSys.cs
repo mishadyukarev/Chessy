@@ -23,7 +23,7 @@ namespace Scripts.Game
         private EcsFilter<FriendZoneDataUICom, FriendZoneViewUICom> _friendZoneFilt = default;
         private EcsFilter<HintDataUICom, HintViewUICom> _hintUIFilt = default;
 
-        private EcsFilter<InventorUnitsComponent> _invUnitsFilt = default;
+        private EcsFilter<InventorUnitsCom> _invUnitsFilt = default;
 
         private byte IdxSelectedCell => _selectorFilter.Get1(0).IdxSelCell;
 

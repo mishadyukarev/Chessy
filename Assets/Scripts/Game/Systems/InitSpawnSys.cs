@@ -15,7 +15,7 @@ namespace Scripts.Game
         private EcsWorld _curGameWorld = default;
 
         private EcsFilter<InventResourCom> _inventorResFilter = default;
-        private EcsFilter<InventorUnitsComponent> _inventorUnitsFilter = default;
+        private EcsFilter<InventorUnitsCom> _inventorUnitsFilter = default;
         private EcsFilter<FriendZoneDataUICom> _friendZoneUIFilt = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
@@ -23,6 +23,7 @@ namespace Scripts.Game
         private EcsFilter<CellViewComponent> _cellViewFilt = default;
         private EcsFilter<CellUnitDataCom, CellUnitExtraViewComp, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellWeatherDataCom> _cellWeatherFilt = default;
 
 
         public void Init()
@@ -122,7 +123,9 @@ namespace Scripts.Game
                         .Replace(new CellFireViewComponent(curCell_GO))
                         .Replace(new CellBlocksViewComponent(curCell_GO))
                         .Replace(new CellBarsViewComponent(curCell_GO))
-                        .Replace(new CellSupViewComponent(curCell_GO));
+                        .Replace(new CellSupViewComponent(curCell_GO))
+                        .Replace(new CellWeatherDataCom())
+                        .Replace(new CellWeatherViewCom(curCell_GO));
 
 
                     _curGameWorld.NewEntity()
@@ -165,10 +168,11 @@ namespace Scripts.Game
                 .Replace(new CellsGiveTWComp(true))
                 .Replace(new WhoseMoveCom(PlayerTypes.First))
                 .Replace(new BuildsInGameCom(true))
+                .Replace(new WindCom(DirectTypes.Right))
 
                 .Replace(new UpgradesBuildsCom(true))
 
-                .Replace(new InventorUnitsComponent(true))
+                .Replace(new InventorUnitsCom(true))
                 .Replace(new InventResourCom(true))
                 .Replace(new InventorTWCom(true))
 
@@ -194,6 +198,7 @@ namespace Scripts.Game
                 ///Up
                 .Replace(new EconomyViewUICom(upZone_GO))
                 .Replace(new LeaveViewUIComponent(CanvasCom.FindUnderParent<Button>("ButtonLeave")))
+                .Replace(new WindZoneUICom(upZone_GO.transform))
 
                 ///Center
                 .Replace(new EndGameDataUIComponent())
@@ -258,6 +263,7 @@ namespace Scripts.Game
                     var curXyCell = _xyCellFilter.GetXyCell(curIdxCell);
 
                     ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
+                    ref var curWeatherDatCom = ref _cellWeatherFilt.Get1(curIdxCell);
 
                     if (_cellViewFilt.Get1(curIdxCell).IsActiveParent)
                     {
@@ -295,9 +301,16 @@ namespace Scripts.Game
                                 }
                             }
                         }
+                        if (curXyCell[0] == 5 && curXyCell[1] == 5)
+                        {
+                            curWeatherDatCom.EnabledCloud = true;
+                            curWeatherDatCom.CloudWidthType = CloudWidthTypes.OneBlock;
+                        }
                     }
 
-                    _cellViewFilt.Get1(curIdxCell).SetRotForClient(PhotonNetwork.IsMasterClient);
+                    
+
+                    //_cellViewFilt.Get1(curIdxCell).SetRotForClient(PhotonNetwork.IsMasterClient);
                 }
 
                 ref var unitInvCom = ref _inventorUnitsFilter.Get1(0);

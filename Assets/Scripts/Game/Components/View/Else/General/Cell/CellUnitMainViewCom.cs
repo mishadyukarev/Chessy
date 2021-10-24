@@ -55,6 +55,15 @@ namespace Scripts.Game
                         default: throw new Exception();
                     }
                     break;
+                case UnitTypes.Scout:
+                    switch (upgradeUnitType)
+                    {
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Scout); break;
+                        case LevelUnitTypes.Iron: throw new Exception();
+                        default: throw new Exception();
+                    }
+                    break;
                 default:
                     throw new Exception();
             }

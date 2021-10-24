@@ -38,8 +38,10 @@ namespace Scripts.Game
                     {
                         activeFirst = true;
                         unitZoneViewCom.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.CircularAttack);
-                        //unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.CircularAttack));
-                        //unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
+                    }
+                    else if (selUnitDatCom.Is(UnitTypes.Scout))
+                    {
+
                     }
                     else
                     {
@@ -52,20 +54,15 @@ namespace Scripts.Game
                                 if (selFireDatCom.HaveFire)
                                 {
                                     unitZoneViewCom.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.FireNone);
-                                    //unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.PutOutFire));
                                 }
                                 else
                                 {
-                                    unitZoneViewCom.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.Fire);
-                                    //unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.Fire));
+                                    unitZoneViewCom.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.Fire);     
                                 }
-                                //unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
                             }
                             else
                             {
                                 unitZoneViewCom.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.YoungForest);
-                                //unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.Seed));
-                                //unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(0.5f, 1, 0.5f, 1));
                             }
                         }
 
@@ -73,8 +70,6 @@ namespace Scripts.Game
                         {
                             activeFirst = true;
                             unitZoneViewCom.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.Fire);
-                            //unitZoneViewCom.SetColor_Button(UniqueButtonTypes.First, new Color(1, 0.5f, 0.5f, 1));
-                            //unitZoneViewCom.SetText_Button(UniqueButtonTypes.First, LanguageComCom.GetText(GameLanguageTypes.Fire));
                         }
                     }
                 }

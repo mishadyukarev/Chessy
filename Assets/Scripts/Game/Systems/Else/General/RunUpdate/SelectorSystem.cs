@@ -107,7 +107,7 @@ namespace Scripts.Game
                     {
                         if (UnitDatCom(selCom.IdxCurCell).Is(UnitTypes.Pawn) && OwnUnitCom(selCom.IdxCurCell).IsMine)
                         {
-                            RpcSys.OldToNewToMaster(selCom.UnitTypeOldToNew);
+                            RpcSys.OldToNewToMaster(selCom.UnitTypeOldToNew, selCom.IdxCurCell);
                         }
                         else
                         {
@@ -140,7 +140,11 @@ namespace Scripts.Game
                         {
                             if (OwnUnitCom(selCom.IdxSelCell).IsMine)
                             {
-                                if (UnitDatCom(selCom.IdxSelCell).IsMelee)
+                                if (UnitDatCom(selCom.IdxSelCell).Is(UnitTypes.Scout))
+                                {
+
+                                }
+                                else if (UnitDatCom(selCom.IdxSelCell).IsMelee)
                                 {
                                     soundEffectCom.Play(SoundEffectTypes.PickMelee);
                                 }
@@ -167,7 +171,11 @@ namespace Scripts.Game
                         {
                             if (OwnUnitCom(selCom.IdxSelCell).IsMine)
                             {
-                                if (UnitDatCom(selCom.IdxSelCell).IsMelee)
+                                if (UnitDatCom(selCom.IdxSelCell).Is(UnitTypes.Scout))
+                                {
+
+                                }
+                                else if (UnitDatCom(selCom.IdxSelCell).IsMelee)
                                 {
                                     soundEffectCom.Play(SoundEffectTypes.PickMelee);
                                 }

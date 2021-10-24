@@ -74,7 +74,7 @@ namespace Scripts.Game
 
                             buildsInGameCom.Add(playerTypeSender, forBuildType, idxForBuild);
 
-                            curUnitDatCom.ResetAmountSteps();
+                            curUnitDatCom.DefAmountSteps();
 
                             curFireCom.DisableFire();
 

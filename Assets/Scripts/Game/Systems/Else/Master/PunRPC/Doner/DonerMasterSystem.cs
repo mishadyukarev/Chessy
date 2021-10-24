@@ -7,7 +7,7 @@ namespace Scripts.Game
     internal sealed class DonerMasterSystem : IEcsRunSystem
     {
         private EcsFilter<InfoCom> _infoFilter = default;
-        private EcsFilter<InventorUnitsComponent> _invUnitsFilter = default;
+        private EcsFilter<InventorUnitsCom> _invUnitsFilter = default;
         private EcsFilter<FriendZoneDataUICom> _friendUIFilt = default;
 
         private EcsFilter<CellViewComponent> _cellViewFilter = default;
