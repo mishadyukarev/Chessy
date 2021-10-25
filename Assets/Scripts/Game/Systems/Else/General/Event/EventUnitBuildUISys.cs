@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Photon.Pun;
 using Scripts.Common;
 using System;
 
@@ -10,7 +11,7 @@ namespace Scripts.Game
         private EcsFilter<BuildAbilitUICom> _buildAbilUIFilt = default;
 
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
 
 
         public void Init()
@@ -22,7 +23,7 @@ namespace Scripts.Game
 
         private void ExecuteButton(BuildButtonTypes buildButtonType)
         {
-            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode)
+            if (WhoseMoveCom.IsMyOnlineMove || PhotonNetwork.OfflineMode/*GameModesCom.IsOfflineMode*/)
             {
                 var idxSelCell = _selFilt.Get1(0).IdxSelCell;
 

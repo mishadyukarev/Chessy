@@ -30,5 +30,8 @@ namespace Scripts.Game
 
         internal static ResourceTypes MinResType => (ResourceTypes)1;
         internal static ResourceTypes MaxResType => (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length;
+
+        internal static PlayerTypes MinPlayerType => (PlayerTypes)1;
+        internal static PlayerTypes MaxPlayerType => (PlayerTypes)Enum.GetNames(typeof(PlayerTypes)).Length;
     }
 }

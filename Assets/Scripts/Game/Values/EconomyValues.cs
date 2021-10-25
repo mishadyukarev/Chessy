@@ -246,34 +246,14 @@ namespace Scripts.Game
                     {
                         case ToolWeaponTypes.None: throw new Exception();
                         case ToolWeaponTypes.Hoe: throw new Exception();
-                        case ToolWeaponTypes.Pick:
-                            switch (resourceType)
-                            {
-                                case ResourceTypes.None: throw new Exception();
-                                case ResourceTypes.Food: return 0;
-                                case ResourceTypes.Wood: return 5;
-                                case ResourceTypes.Ore: return 0;
-                                case ResourceTypes.Iron: return 0;
-                                case ResourceTypes.Gold: return 0;
-                                default: throw new Exception();
-                            }
-                        case ToolWeaponTypes.Sword:
-                            switch (resourceType)
-                            {
-                                case ResourceTypes.None: throw new Exception();
-                                case ResourceTypes.Food: return 0;
-                                case ResourceTypes.Wood: return 5;
-                                case ResourceTypes.Ore: return 0;
-                                case ResourceTypes.Iron: return 0;
-                                case ResourceTypes.Gold: return 0;
-                                default: throw new Exception();
-                            }
+                        case ToolWeaponTypes.Pick: throw new Exception();
+                        case ToolWeaponTypes.Sword: throw new Exception();
                         case ToolWeaponTypes.Shield:
                             switch (resourceType)
                             {
                                 case ResourceTypes.None: throw new Exception();
                                 case ResourceTypes.Food: return 0;
-                                case ResourceTypes.Wood: return 5;
+                                case ResourceTypes.Wood: return 1;
                                 case ResourceTypes.Ore: return 0;
                                 case ResourceTypes.Iron: return 0;
                                 case ResourceTypes.Gold: return 0;

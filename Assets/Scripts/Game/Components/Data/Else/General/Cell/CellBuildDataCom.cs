@@ -2,12 +2,12 @@
 
 namespace Scripts.Game
 {
-    internal struct CellBuildDataComponent
+    internal struct CellBuildDataCom
     {
         internal BuildingTypes BuildType;
 
         internal bool HaveBuild => BuildType != BuildingTypes.None;
-        internal bool IsBuildType(BuildingTypes buildingType) => BuildType == buildingType;
+        internal bool Is(BuildingTypes buildingType) => BuildType == buildingType;
         internal void DefBuildType() => BuildType = default;   
     }
 }

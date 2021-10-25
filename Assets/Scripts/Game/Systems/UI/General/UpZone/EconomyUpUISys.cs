@@ -8,7 +8,7 @@ namespace Scripts.Game
         private EcsFilter<EconomyViewUICom> _economyUIFilter = default;
 
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitsFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvDatFilt = default;
 
         private EcsFilter<InventResourCom> _amountResFilter = default;
@@ -62,16 +62,16 @@ namespace Scripts.Game
                 {
                     if (curOnBuildCom.IsMine)
                     {
-                        if (curBuildDatCom.IsBuildType(BuildingTypes.Farm))
+                        if (curBuildDatCom.Is(BuildingTypes.Farm))
                         {
                             ++builds[BuildingTypes.Farm];
                         }
-                        else if (curBuildDatCom.IsBuildType(BuildingTypes.Woodcutter))
+                        else if (curBuildDatCom.Is(BuildingTypes.Woodcutter))
                         {
                             ++builds[BuildingTypes.Woodcutter];
                         }
 
-                        else if (curBuildDatCom.IsBuildType(BuildingTypes.Mine))
+                        else if (curBuildDatCom.Is(BuildingTypes.Mine))
                         {
                             ++builds[BuildingTypes.Mine];
                         }

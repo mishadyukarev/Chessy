@@ -9,12 +9,12 @@ namespace Scripts.Game
         private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
         private EcsFilter<CellsForAttackCom> _cellsAttackFilt = default;
-
         private EcsFilter<EndGameDataUIComponent> _endGameDataUIFilter = default;
+        private EcsFilter<InventorUnitsCom> _invUnitsFilt = default;
 
         public void Run()
         {
@@ -57,9 +57,8 @@ namespace Scripts.Game
                 int damageFrom = 0;
                 int damageTo = 0;
 
-                damageTo += fromUnitDatCom.PowerDamage;
+                damageTo += fromUnitDatCom.PowerDamageWithTW;
                 damageTo -= toUnitDatCom.PowerProtection(toBuildDatCom.BuildType, toEnvDatCom.Envronments);
-
 
                 if (fromUnitDatCom.IsMelee)
                 {
@@ -67,7 +66,7 @@ namespace Scripts.Game
 
                     if (toUnitDatCom.IsMelee)
                     {
-                        damageFrom += toUnitDatCom.PowerDamage;
+                        damageFrom += toUnitDatCom.PowerDamageWithTW;
 
                         if (simpUniqueType == AttackTypes.Unique)
                         {
@@ -86,7 +85,41 @@ namespace Scripts.Game
                     }
                 }
 
-                if(damageFrom > 0) fromUnitDatCom.TakeAmountHealth(damageFrom);
+
+                if (toUnitDatCom.Is(UnitTypes.Pawn))
+                {
+                    if (toUnitDatCom.TWExtraType == ToolWeaponTypes.Shield)
+                    {
+                        if (toUnitDatCom.ShieldProtection >= 1)
+                        {
+                            toUnitDatCom.TakeShieldProtect();
+                            damageTo = 0;
+
+                            if (toUnitDatCom.ShieldProtection == 0)
+                            {
+                                toUnitDatCom.TWExtraType = ToolWeaponTypes.None;
+                            }
+                        }
+                    }
+                }
+                if (fromUnitDatCom.Is(UnitTypes.Pawn))
+                {
+                    if (fromUnitDatCom.TWExtraType == ToolWeaponTypes.Shield)
+                    {
+                        if (fromUnitDatCom.ShieldProtection >= 1)
+                        {
+                            fromUnitDatCom.TakeShieldProtect();
+                            damageFrom = 0;
+
+                            if (fromUnitDatCom.ShieldProtection == 0)
+                            {
+                                fromUnitDatCom.TWExtraType = ToolWeaponTypes.None;
+                            }
+                        }
+                    }
+                }
+
+                if (damageFrom > 0) fromUnitDatCom.TakeAmountHealth(damageFrom);
                 if (damageTo > 0) toUnitDatCom.TakeAmountHealth(damageTo);
 
 
@@ -97,6 +130,10 @@ namespace Scripts.Game
                     if (toUnitDatCom.Is(UnitTypes.King))
                     {
                         _endGameDataUIFilter.Get1(0).PlayerWinner = fromOwnUnitCom.PlayerType;
+                    }
+                    else if(toUnitDatCom.Is(UnitTypes.Scout))
+                    {
+                        _invUnitsFilt.Get1(0).AddUnitsInInventor(toOwnUnitCom.PlayerType, toUnitDatCom.UnitType, LevelUnitTypes.Wood);
                     }
 
                     toUnitDatCom.DefUnitType();

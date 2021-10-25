@@ -9,7 +9,7 @@ namespace Scripts.Game
         private EcsFilter<BuildAbilitUICom> _buildAbilViewCom = default;
 
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilt = default;
+        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilt = default;
 
         public void Run()
         {
@@ -57,7 +57,7 @@ namespace Scripts.Game
                                 ref var curBuildDatCom = ref _cellBuildFilt.Get1(idxCell);
                                 ref var curOwnBuildCom = ref _cellBuildFilt.Get2(idxCell);
 
-                                if (curBuildDatCom.IsBuildType(BuildingTypes.City))
+                                if (curBuildDatCom.Is(BuildingTypes.City))
                                 {
                                     if (curOwnBuildCom.IsMine)
                                     {

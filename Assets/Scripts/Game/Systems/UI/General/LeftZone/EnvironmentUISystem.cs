@@ -7,7 +7,7 @@ namespace Scripts.Game
     {
         private EcsFilter<SelectorCom> _selectorFilter = default;
 
-        private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
 
@@ -26,7 +26,7 @@ namespace Scripts.Game
             ref var selCellEnvDataCom = ref _cellEnvFilter.Get1(idxSelCell);
 
 
-            if (selCom.IsSelCell && !selCellBuildDataCom.IsBuildType(BuildingTypes.City))
+            if (selCom.IsSelCell && !selCellBuildDataCom.Is(BuildingTypes.City))
             {
                 envViewUICom.SetActiveParent(true);
             }

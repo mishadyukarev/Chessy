@@ -8,7 +8,7 @@ namespace Scripts.Game
         private EcsFilter<StatZoneViewUICom> _unitZoneUIFilter = default;
 
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
         public void Run()
@@ -26,7 +26,7 @@ namespace Scripts.Game
                 _unitZoneUIFilter.Get1(0).SetActiveStatZone(true);
 
                 _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Health, selUnitDatCom.AmountHealth.ToString());
-                _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Damage, selUnitDatCom.PowerDamage.ToString());
+                _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Damage, selUnitDatCom.PowerDamageWithTW.ToString());
                 _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Protection, selUnitDatCom.PowerProtection(selBuildDatCom.BuildType, selEnvDatCom.Envronments).ToString());
                 _unitZoneUIFilter.Get1(0).SetTextToStat(StatTypes.Steps, selUnitDatCom.AmountSteps.ToString());
             }

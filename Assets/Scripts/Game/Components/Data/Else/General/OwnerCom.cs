@@ -4,7 +4,7 @@
     {
         internal PlayerTypes PlayerType;
 
-        internal bool IsMine => IsPlayerType(WhoseMoveCom.CurPlayer);
-        internal bool IsPlayerType(PlayerTypes playerType) => PlayerType == playerType;
+        internal bool IsMine => Is(WhoseMoveCom.CurPlayer);
+        internal bool Is(PlayerTypes playerType) => PlayerType == playerType;
     }
 }

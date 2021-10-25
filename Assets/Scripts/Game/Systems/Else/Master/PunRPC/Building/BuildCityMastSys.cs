@@ -10,7 +10,7 @@ namespace Scripts.Game
 
         private EcsFilter<XyCellComponent> _xyCellFilt = default;
         private EcsFilter<CellViewComponent> _cellViewFilt = default;
-        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
@@ -31,7 +31,7 @@ namespace Scripts.Game
                 var sender = infoMasCom.FromInfo.Sender;
                 var idxForBuild = forBuildMasCom.IdxForBuild;
 
-                ref var curBuildDatCom = ref _cellBuildFilter.Get1(idxForBuild);
+                ref var curBuildCom = ref _cellBuildFilter.Get1(idxForBuild);
                 ref var curOwnBuildCom = ref _cellBuildFilter.Get2(idxForBuild);
 
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForBuild);
@@ -44,32 +44,27 @@ namespace Scripts.Game
                 else playerTypeSender = sender.GetPlayerType();
 
 
-                if (curBuildDatCom.HaveBuild)
+
+                if (curUnitDatCom.HaveMinAmountSteps)
                 {
-                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                }
-                else
-                {
-                    if (curUnitDatCom.HaveMinAmountSteps)
+                    bool haveNearBorder = false;
+
+                    foreach (var xy in CellSpaceSupport.TryGetXyAround(_xyCellFilt.GetXyCell(idxForBuild)))
                     {
-                        bool haveNearBorder = false;
+                        var curIdx = _xyCellFilt.GetIdxCell(xy);
 
-                        foreach (var xy in CellSpaceSupport.TryGetXyAround(_xyCellFilt.GetXyCell(idxForBuild)))
+                        if (!_cellViewFilt.Get1(curIdx).IsActiveParent)
                         {
-                            var curIdx = _xyCellFilt.GetIdxCell(xy);
-
-                            if (!_cellViewFilt.Get1(curIdx).IsActiveParent)
-                            {
-                                haveNearBorder = true;
-                                break;
-                            }
+                            haveNearBorder = true;
+                            break;
                         }
+                    }
 
-                        if (!haveNearBorder)
-                        {
+                    if (!haveNearBorder)
+                    {
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                            curBuildDatCom.BuildType = forBuildType;
+                            curBuildCom.BuildType = forBuildType;
                             curOwnBuildCom.PlayerType = playerTypeSender;
 
                             buildsInGameCom.Add(playerTypeSender, forBuildType, idxForBuild);
@@ -80,17 +75,16 @@ namespace Scripts.Game
 
                             if (curCellEnvCom.Have(EnvirTypes.AdultForest)) curCellEnvCom.ResetEnvironment(EnvirTypes.AdultForest);
                             if (curCellEnvCom.Have(EnvirTypes.Fertilizer)) curCellEnvCom.ResetEnvironment(EnvirTypes.Fertilizer);
-                        }
-
-                        else
-                        {
-                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
-                        }
                     }
+
                     else
                     {
-                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
+                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NearBorder, sender);
                     }
+                }
+                else
+                {
+                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

@@ -7,7 +7,7 @@ namespace Scripts.Game
         private EcsFilter<SelectorCom> _selectorFilter = default;
         private EcsFilter<BuildLeftZoneViewUICom> _buildZoneUIFilter = default;
 
-        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
 
         public void Run()
         {
@@ -19,7 +19,7 @@ namespace Scripts.Game
             ref var buildZoneViewCom = ref _buildZoneUIFilter.Get1(0);
 
 
-            if (selCom.IsSelCell && selUnitDataCom.IsBuildType(BuildingTypes.City))
+            if (selCom.IsSelCell && selUnitDataCom.Is(BuildingTypes.City))
             {
                 if (selOwnUnitCom.IsMine)
                 {

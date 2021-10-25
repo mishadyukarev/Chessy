@@ -8,5 +8,6 @@
         Farm,
         Woodcutter,
         Mine,
+        Camp,
     }
 }

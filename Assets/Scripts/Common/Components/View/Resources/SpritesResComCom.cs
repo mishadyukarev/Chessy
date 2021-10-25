@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Scripts.Common
 {
-    public struct SpritesResCom
+    public struct SpritesResComCom
     {
         private static Dictionary<SpriteGameTypes, Sprite> _gameSprites;
 
 
-        internal SpritesResCom(bool needUpload)
+        internal SpritesResComCom(bool needUpload)
         {
             if (needUpload)
             {
@@ -54,6 +54,9 @@ namespace Scripts.Common
 
                 _gameSprites.Add(SpriteGameTypes.Mine, Resources.Load<Sprite>(sectionName + "Mine_Sprite"));
                 _gameSprites.Add(SpriteGameTypes.MineBack, Resources.Load<Sprite>(sectionName + "Mine_Back"));
+
+                _gameSprites.Add(SpriteGameTypes.Camp, Resources.Load<Sprite>(sectionName + "Camp_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.CampBack, Resources.Load<Sprite>(sectionName + "CampBack_Sprite"));
 
 
 

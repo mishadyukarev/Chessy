@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Photon.Pun;
 using Scripts.Common;
 
 namespace Scripts.Game
@@ -12,7 +13,7 @@ namespace Scripts.Game
         private EcsFilter<BuildsInGameCom> _buildsInGameFilt = default;
 
 
-        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilt = default;
+        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilt = default;
 
 
         public void Run()
@@ -27,7 +28,7 @@ namespace Scripts.Game
 
 
             PlayerTypes playerSender = default;
-            if (GameModesCom.IsOfflineMode) playerSender = WhoseMoveCom.WhoseMoveOffline;
+            if (PhotonNetwork.OfflineMode) playerSender = WhoseMoveCom.WhoseMoveOffline;
             else playerSender = infoCom.FromInfo.Sender.GetPlayerType();
 
 

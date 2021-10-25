@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Scripts.Game
 {
@@ -17,10 +18,30 @@ namespace Scripts.Game
             }
         }
 
-        internal List<byte> GetListCells(PlayerTypes playerType) => _cellsForSetUnit[playerType].Copy();
-        internal bool HaveIdxCell(PlayerTypes playerType, byte idxCell) => _cellsForSetUnit[playerType].Contains(idxCell);
-        internal bool RemoveIdxCell(PlayerTypes playerType, byte idxCell) => _cellsForSetUnit[playerType].Remove(idxCell);
-        internal void AddIdxCell(PlayerTypes playerType, byte idxCellValue) => _cellsForSetUnit[playerType].Add(idxCellValue);
-        internal void ClearIdxCells(PlayerTypes playerType) => _cellsForSetUnit[playerType].Clear();
+        internal List<byte> GetListCells(PlayerTypes playerType)
+        {
+            if(playerType == default) throw new Exception();
+            return _cellsForSetUnit[playerType].Copy();
+        }
+        internal bool HaveIdxCell(PlayerTypes playerType, byte idxCell)
+        {
+            if (playerType == default) throw new Exception();
+            return _cellsForSetUnit[playerType].Contains(idxCell);
+        }
+        internal bool RemoveIdxCell(PlayerTypes playerType, byte idxCell)
+        {
+            if(playerType == default) throw new Exception();
+            return _cellsForSetUnit[playerType].Remove(idxCell);
+        }
+        internal void AddIdxCell(PlayerTypes playerType, byte idxCellValue)
+        {
+            if (playerType == default) throw new Exception();
+            _cellsForSetUnit[playerType].Add(idxCellValue);
+        }
+        internal void ClearIdxCells(PlayerTypes playerType)
+        {
+            if (playerType == default) throw new Exception();
+            _cellsForSetUnit[playerType].Clear();
+        }
     }
 }

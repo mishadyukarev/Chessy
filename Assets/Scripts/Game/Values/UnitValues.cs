@@ -24,7 +24,7 @@ namespace Scripts.Game
                     {
                         case LevelUnitTypes.None: throw new Exception();
                         case LevelUnitTypes.Wood: return 100;
-                        case LevelUnitTypes.Iron: return 150;
+                        case LevelUnitTypes.Iron: return 100;
                         default: throw new Exception();
                     }  
                 case UnitTypes.Rook:
@@ -209,6 +209,7 @@ namespace Scripts.Game
                         case BuildingTypes.Farm: return 0;
                         case BuildingTypes.Woodcutter: return 0;
                         case BuildingTypes.Mine: return 0;
+                        case BuildingTypes.Camp: return 0;
                         default: throw new Exception();
                     }
                 case UnitTypes.Pawn:
@@ -219,6 +220,7 @@ namespace Scripts.Game
                         case BuildingTypes.Farm: return 0;
                         case BuildingTypes.Woodcutter: return 0;
                         case BuildingTypes.Mine: return 0;
+                        case BuildingTypes.Camp: return 0;
                         default: throw new Exception();
                     }
                 case UnitTypes.Rook:
@@ -229,6 +231,7 @@ namespace Scripts.Game
                         case BuildingTypes.Farm: return 0;
                         case BuildingTypes.Woodcutter: return 0;
                         case BuildingTypes.Mine: return 0;
+                        case BuildingTypes.Camp: return 0;
                         default: throw new Exception();
                     }
                 case UnitTypes.Bishop:
@@ -239,6 +242,7 @@ namespace Scripts.Game
                         case BuildingTypes.Farm: return 0;
                         case BuildingTypes.Woodcutter: return 0;
                         case BuildingTypes.Mine: return 0;
+                        case BuildingTypes.Camp: return 0;
                         default: throw new Exception();
                     }
                 case UnitTypes.Scout: return 0;

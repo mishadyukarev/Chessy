@@ -32,11 +32,11 @@ namespace Scripts.Game
 
                 if (unitDatComForGive.Is(UnitTypes.Pawn))
                 {
-                    if (unitDatComForGive.HaveExtraTW)
+                    if (unitDatComForGive.HaveMinAmountSteps)
                     {
                         if (unitDatComForGive.HaveMaxAmountHealth)
                         {
-                            if (unitDatComForGive.HaveMinAmountSteps)
+                            if (unitDatComForGive.HaveExtraTW)
                             {
                                 inventTWCom.AddAmountTools(ownUnitCom.PlayerType, unitDatComForGive.TWExtraType, unitDatComForGive.LevelTWType);
 
@@ -50,24 +50,6 @@ namespace Scripts.Game
                             }
 
                             else
-                            {
-                                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                            }
-                        }
-
-                        else
-                        {
-                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
-                        }
-
-                    }
-
-                    else
-                    {
-
-                        if (unitDatComForGive.HaveMaxAmountHealth)
-                        {
-                            if (unitDatComForGive.HaveMinAmountSteps)
                             {
                                 if (inventTWCom.HaveTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType))
                                 {
@@ -130,6 +112,7 @@ namespace Scripts.Game
 
                                         unitDatComForGive.TWExtraType = tWTypeForGive;
                                         unitDatComForGive.LevelTWType = levelTWType;
+                                        unitDatComForGive.AddShieldProtect(levelTWType);
 
                                         unitDatComForGive.CondUnitType = default;
                                         unitDatComForGive.TakeAmountSteps();
@@ -143,17 +126,10 @@ namespace Scripts.Game
                                 }
                             }
 
-                            else
-                            {
-                                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                            }
                         }
-
-                        else
-                        {
-                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
-                        }
+                        else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                     }
+                    else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

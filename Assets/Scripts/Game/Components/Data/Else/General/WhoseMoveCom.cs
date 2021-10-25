@@ -23,18 +23,15 @@ namespace Scripts.Game
         {
             get
             {
-                if (GameModesCom.IsOnlineMode) return CurOnlinePlayer;
-                else return WhoseMoveOffline;
+                if (PhotonNetwork.OfflineMode) return WhoseMoveOffline;
+                else return CurOnlinePlayer;
             }
         }
 
-        internal static PlayerTypes NextPLayer
+        internal static PlayerTypes NextPlayerFrom(PlayerTypes playerType)
         {
-            get
-            {
-                if (CurPlayer == PlayerTypes.First) return PlayerTypes.Second;
-                else return PlayerTypes.First;
-            }
+            if (playerType == PlayerTypes.First) return PlayerTypes.Second;
+            else return PlayerTypes.First;
         }
 
 

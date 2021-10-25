@@ -9,7 +9,7 @@ namespace Scripts.Game
         private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
 
-        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
@@ -40,19 +40,12 @@ namespace Scripts.Game
 
             if (forBuildType == BuildingTypes.Mine)
             {
-                if (curBuildDatCom.HaveBuild)
+                if (curUnitDatCom.HaveMinAmountSteps)
                 {
-                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                }
-
-                else
-                {
-                    if (curUnitDatCom.HaveMinAmountSteps)
+                    if (curCellEnvCom.Have(EnvirTypes.Hill) && curCellEnvCom.HaveResources(EnvirTypes.Hill))
                     {
-                        if (curCellEnvCom.Have(EnvirTypes.Hill) && curCellEnvCom.HaveResources(EnvirTypes.Hill))
+                        if (invResCom.CanCreateBuild(playerTypeSender, forBuildType, out var needRes))
                         {
-                            if (invResCom.CanCreateBuild(playerTypeSender, forBuildType, out var needRes))
-                            {
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
                                 invResCom.BuyBuild(playerTypeSender, forBuildType);
@@ -61,22 +54,16 @@ namespace Scripts.Game
                                 curOwnBuildCom.PlayerType = playerTypeSender;
 
                                 curUnitDatCom.TakeAmountSteps();
+                        }
 
-                            }
-                            else
-                            {
-                                RpcSys.MistakeEconomyToGeneral(sender, needRes);
-                            }
-                        }
-                        else
-                        {
-                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
-                        }
+                        else RpcSys.MistakeEconomyToGeneral(sender, needRes);
                     }
-                    else
-                    {
-                        RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
-                    }
+
+                    else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
+                }
+                else
+                {
+                    RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
         }

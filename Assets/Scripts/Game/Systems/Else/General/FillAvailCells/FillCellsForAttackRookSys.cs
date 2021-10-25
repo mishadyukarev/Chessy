@@ -8,7 +8,7 @@ namespace Scripts.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellViewComponent> _cellViewFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleCom> _cellUnitFilter = default;
 
         private EcsFilter<CellsForAttackCom> _cellsForAttackFilter = default;
 
@@ -45,7 +45,7 @@ namespace Scripts.Game
                                 {
                                     if (unitDatCom_1.HaveUnit)
                                     {
-                                        if (!ownUnitCom_1.IsPlayerType(ownUnitCom_0.PlayerType))
+                                        if (!ownUnitCom_1.Is(ownUnitCom_0.PlayerType))
                                         {
                                             if (dirType_1 == DirectTypes.Left || dirType_1 == DirectTypes.Right || dirType_1 == DirectTypes.Up || dirType_1 == DirectTypes.Down)
                                             {
@@ -63,14 +63,15 @@ namespace Scripts.Game
                                     ref var envrDataCom_2 = ref _cellEnvDataFilter.Get1(idxCell_2);
                                     ref var unitDataCom_2 = ref _cellUnitFilter.Get1(idxCell_2);
                                     ref var ownUnitCom_2 = ref _cellUnitFilter.Get2(idxCell_2);
+                                    ref var visUnitCom_2 = ref _cellUnitFilter.Get3(idxCell_2);
 
 
 
                                     if (unitDataCom_2.HaveUnit)
                                     {
-                                        if (unitDataCom_2.IsVisibleUnit(ownUnitCom_0.PlayerType))
+                                        if (visUnitCom_2.IsVisibled(ownUnitCom_0.PlayerType))
                                         {
-                                            if (!ownUnitCom_2.IsPlayerType(ownUnitCom_0.PlayerType))
+                                            if (!ownUnitCom_2.Is(ownUnitCom_0.PlayerType))
                                             {
                                                 if (dirType_1 == DirectTypes.LeftDown || dirType_1 == DirectTypes.LeftUp || dirType_1 == DirectTypes.RightUp || dirType_1 == DirectTypes.RightDown)
                                                 {

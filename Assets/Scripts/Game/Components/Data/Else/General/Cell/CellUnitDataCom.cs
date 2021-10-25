@@ -27,12 +27,6 @@ namespace Scripts.Game
             }
         }
 
-
-        private Dictionary<PlayerTypes, bool> _isVisibleDict;
-        internal bool IsVisibleUnit(PlayerTypes key) => _isVisibleDict[key];
-        internal void SetIsVisibleUnit(PlayerTypes key, bool value) => _isVisibleDict[key] = value;
-
-
         internal CondUnitTypes CondUnitType { get; set; }
         internal void DefCondType() => CondUnitType = default;
         internal bool Is(CondUnitTypes condUnitType) => CondUnitType == condUnitType;
@@ -53,6 +47,19 @@ namespace Scripts.Game
 
         internal LevelTWTypes LevelTWType;
         internal bool IsLevelTWType(LevelTWTypes levelTWType) => LevelTWType == levelTWType;
+
+        internal int ShieldProtection;
+        internal void AddShieldProtect(LevelTWTypes levelTWType)
+        {
+            switch (levelTWType)
+            {
+                case LevelTWTypes.None: throw new Exception();
+                case LevelTWTypes.Wood: ShieldProtection = 1; return;
+                case LevelTWTypes.Iron: ShieldProtection = 3; return;
+                default: throw new Exception();
+            }
+        }
+        internal void TakeShieldProtect(int taking = 1) => ShieldProtection -= taking;
 
 
         internal int AmountSteps { get; set; }
@@ -82,7 +89,7 @@ namespace Scripts.Game
             if (Is(CondUnitTypes.Protected)) powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, LevelUnitType) * UnitValues.PercentForProtection(UnitType));
             else if (Is(CondUnitTypes.Relaxed)) powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, LevelUnitType) * UnitValues.PercentForRelax(UnitType));
 
-            powerProt += (int)(PowerDamage * UnitValues.ProtectionPercentBuild(UnitType, buildingType));
+            powerProt += (int)(PowerDamageWithTW * UnitValues.ProtectionPercentBuild(UnitType, buildingType));
 
             if (envrs[EnvirTypes.Fertilizer])
                 powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, LevelUnitType) 
@@ -103,7 +110,7 @@ namespace Scripts.Game
             return powerProt;
         }
 
-        internal int PowerDamage
+        internal int PowerDamageWithTW
         {
             get
             {
@@ -138,7 +145,7 @@ namespace Scripts.Game
                 return (int)powerDamege;
             }
         }
-        internal int UniquePowerDamage => (int)(PowerDamage * UnitValues.UniqueRatioPowerDamage(UnitType));
+        internal int UniquePowerDamage => (int)(PowerDamageWithTW * UnitValues.UniqueRatioPowerDamage(UnitType));
 
         internal void ReplaceUnit(CellUnitDataCom newUnit)
         {
@@ -149,17 +156,6 @@ namespace Scripts.Game
             AmountHealth = newUnit.AmountHealth;
             AmountSteps = newUnit.AmountSteps;
             CondUnitType = newUnit.CondUnitType;
-        }
-
-        internal CellUnitDataCom(bool needNew) : this()
-        {
-            if (needNew)
-            {
-                _isVisibleDict = new Dictionary<PlayerTypes, bool>();
-
-                _isVisibleDict.Add(PlayerTypes.First, default);
-                _isVisibleDict.Add(PlayerTypes.Second, default);
-            }
         }
     }
 }

@@ -6,16 +6,16 @@ namespace Scripts.Game
 {
     internal struct CellBuildViewComponent
     {
-        private SpriteRenderer _cellBuildFront_SR;
-        private SpriteRenderer _cellBuildBack_SR;
+        private SpriteRenderer _build_SR;
+        private SpriteRenderer _buildBack_SR;
 
         internal CellBuildViewComponent(GameObject cell_GO)
         {
             var parentGO = cell_GO.transform.Find("Building").gameObject;
 
-            _cellBuildFront_SR = parentGO.GetComponent<SpriteRenderer>();
+            _build_SR = parentGO.GetComponent<SpriteRenderer>();
 
-            _cellBuildBack_SR = parentGO.transform.Find("BackBuilding").GetComponent<SpriteRenderer>();
+            _buildBack_SR = parentGO.transform.Find("BackBuilding").GetComponent<SpriteRenderer>();
         }
 
         internal void SetSpriteFront(BuildingTypes buildingType)
@@ -26,29 +26,42 @@ namespace Scripts.Game
                     throw new Exception();
 
                 case BuildingTypes.City:
-                    _cellBuildFront_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.City);
+                    _build_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.City);
                     break;
 
                 case BuildingTypes.Farm:
-                    _cellBuildFront_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Farm);
+                    _build_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.Farm);
                     break;
 
                 case BuildingTypes.Woodcutter:
-                    _cellBuildFront_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Woodcutter);
+                    _build_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.Woodcutter);
                     break;
 
                 case BuildingTypes.Mine:
-                    _cellBuildFront_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.Mine);
+                    _build_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.Mine);
+                    break;
+
+                case BuildingTypes.Camp:
+                    _build_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.Camp);
                     break;
 
                 default:
                     throw new Exception();
             }
         }
-        internal void EnableFrontSR() => _cellBuildFront_SR.enabled = true;
-        internal void DisableFrontSR() => _cellBuildFront_SR.enabled = false;
+        internal void EnableFrontSR() => _build_SR.enabled = true;
+        internal void DisableFrontSR() => _build_SR.enabled = false;
 
-        internal void SetBackColor(Color color) => _cellBuildBack_SR.color = color;
+        internal void SetBackColor(PlayerTypes playerType)
+        {
+            switch (playerType)
+            {
+                case PlayerTypes.None: throw new Exception();
+                case PlayerTypes.First: _buildBack_SR.color = Color.blue; return;
+                case PlayerTypes.Second: _buildBack_SR.color = Color.red; return;
+                default: throw new Exception();
+            }
+        }
         internal void SetSpriteBack(BuildingTypes buildingType)
         {
             switch (buildingType)
@@ -57,26 +70,44 @@ namespace Scripts.Game
                     throw new Exception();
 
                 case BuildingTypes.City:
-                    _cellBuildBack_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.CityBack);
+                    _buildBack_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.CityBack);
                     break;
 
                 case BuildingTypes.Farm:
-                    _cellBuildBack_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.FarmBack);
+                    _buildBack_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.FarmBack);
                     break;
 
                 case BuildingTypes.Woodcutter:
-                    _cellBuildBack_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.WoodcutterBack);
+                    _buildBack_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.WoodcutterBack);
                     break;
 
                 case BuildingTypes.Mine:
-                    _cellBuildBack_SR.sprite = SpritesResCom.Sprite(SpriteGameTypes.MineBack);
+                    _buildBack_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.MineBack);
+                    break;
+
+                case BuildingTypes.Camp:
+                    _buildBack_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.CampBack);
                     break;
 
                 default:
                     throw new Exception();
             }
         }
-        internal void EnableBackSR() => _cellBuildBack_SR.enabled = true;
-        internal void DisableBackSR() => _cellBuildBack_SR.enabled = false;
+        internal void EnableBackSR() => _buildBack_SR.enabled = true;
+        internal void DisableBackSR() => _buildBack_SR.enabled = false;
+
+        internal void SetAlpha(bool isVisibled)
+        {
+            if (isVisibled)
+            {
+                _build_SR.color = new Color(_build_SR.color.r, _build_SR.color.g, _build_SR.color.b, 1);
+                _buildBack_SR.color = new Color(_buildBack_SR.color.r, _buildBack_SR.color.g, _buildBack_SR.color.b, 1);
+            }
+            else
+            {
+                _build_SR.color = new Color(_build_SR.color.r, _build_SR.color.g, _build_SR.color.b, 0.8f);
+                _buildBack_SR.color = new Color(_buildBack_SR.color.r, _buildBack_SR.color.g, _buildBack_SR.color.b, 0.8f);
+            }
+        }
     }
 }

@@ -22,7 +22,7 @@ namespace Scripts.Game
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
         private EcsFilter<CellViewComponent> _cellViewFilt = default;
         private EcsFilter<CellUnitDataCom, CellUnitExtraViewComp, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellWeatherDataCom> _cellWeatherFilt = default;
 
 
@@ -43,8 +43,8 @@ namespace Scripts.Game
             ///Cells
             ///
             var cellGO = PrefabsResComCom.CellGO;
-            var whiteCellSR = SpritesResCom.Sprite(SpriteGameTypes.WhiteCell);
-            var blackCellSR = SpritesResCom.Sprite(SpriteGameTypes.BlackCell);
+            var whiteCellSR = SpritesResComCom.Sprite(SpriteGameTypes.WhiteCell);
+            var blackCellSR = SpritesResComCom.Sprite(SpriteGameTypes.BlackCell);
 
             var cell_GOs = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
 
@@ -129,16 +129,18 @@ namespace Scripts.Game
 
 
                     _curGameWorld.NewEntity()
-                         .Replace(new CellBuildDataComponent())
-                         .Replace(new CellBuildViewComponent(curCell_GO))
-                         .Replace(new OwnerCom());
+                         .Replace(new CellBuildDataCom())
+                         .Replace(new OwnerCom())
+                         .Replace(new VisibleCom(true))
+                         .Replace(new CellBuildViewComponent(curCell_GO));
 
 
                     _curGameWorld.NewEntity()
-                         .Replace(new CellUnitDataCom(true))
+                         .Replace(new CellUnitDataCom())
+                         .Replace(new OwnerCom())
+                         .Replace(new VisibleCom(true))
                          .Replace(new CellUnitMainViewCom(curCell_GO))
-                         .Replace(new CellUnitExtraViewComp(curCell_GO))
-                         .Replace(new OwnerCom());
+                         .Replace(new CellUnitExtraViewComp(curCell_GO));
 
                     ++curIdx;
                 }
@@ -353,19 +355,22 @@ namespace Scripts.Game
                         var y = curXyCell[1];
 
                         ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
-                        ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
+
+                        ref var curUnitCom = ref _cellUnitFilter.Get1(curIdxCell);
                         ref var curOwnUnitCom = ref _cellUnitFilter.Get3(curIdxCell);
-                        ref var curBuildDatCom = ref _cellBuildFilter.Get1(curIdxCell);
+
+                        ref var curBuildCom = ref _cellBuildFilter.Get1(curIdxCell);
+                        ref var curOwnBuildCom = ref _cellBuildFilter.Get2(curIdxCell);
 
                         if (x == 7 && y == 6)
                         {
                             curEnvDatCom.ResetEnvironment(EnvirTypes.Mountain);
                             curEnvDatCom.ResetEnvironment(EnvirTypes.AdultForest);
 
-                            curUnitDatCom.UnitType = UnitTypes.King;
-                            curUnitDatCom.LevelUnitType = LevelUnitTypes.Wood;
-                            curUnitDatCom.AmountHealth = 1;
-                            curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
+                            curUnitCom.UnitType = UnitTypes.King;
+                            curUnitCom.LevelUnitType = LevelUnitTypes.Wood;
+                            curUnitCom.AmountHealth = 1;
+                            curUnitCom.CondUnitType = CondUnitTypes.Protected;
                             curOwnUnitCom.PlayerType = PlayerTypes.Second;
                         }
 
@@ -374,26 +379,32 @@ namespace Scripts.Game
                             curEnvDatCom.ResetEnvironment(EnvirTypes.Mountain);
                             curEnvDatCom.ResetEnvironment(EnvirTypes.AdultForest);
 
-                            curBuildDatCom.BuildType = BuildingTypes.City;
-                            curOwnUnitCom.PlayerType = PlayerTypes.Second;
+                            curBuildCom.BuildType = BuildingTypes.City;
+                            curOwnBuildCom.PlayerType = PlayerTypes.Second;
                         }
 
                         else if (x == 6 && y == 6 || x == 9 && y == 6 || x <= 9 && x >= 6 && y == 5 || x <= 9 && x >= 6 && y == 7)
                         {
                             curEnvDatCom.ResetEnvironment(EnvirTypes.Mountain);
 
-                            curUnitDatCom.UnitType = UnitTypes.Pawn;
-                            curUnitDatCom.LevelUnitType = LevelUnitTypes.Wood;
+                            curUnitCom.UnitType = UnitTypes.Pawn;
+                            curUnitCom.LevelUnitType = LevelUnitTypes.Wood;
 
                             int rand = UnityEngine.Random.Range(0, 100);
 
                             if (rand >= 50)
                             {
-                                curUnitDatCom.TWExtraType = ToolWeaponTypes.Sword;
-                                curUnitDatCom.LevelTWType = LevelTWTypes.Iron;
+                                curUnitCom.TWExtraType = ToolWeaponTypes.Sword;
+                                curUnitCom.LevelTWType = LevelTWTypes.Iron;
                             }
-                            curUnitDatCom.AmountHealth = 100;
-                            curUnitDatCom.CondUnitType = CondUnitTypes.Protected;
+                            else
+                            {
+                                curUnitCom.TWExtraType = ToolWeaponTypes.Shield;
+                                curUnitCom.LevelTWType = LevelTWTypes.Wood;
+                                curUnitCom.AddShieldProtect(LevelTWTypes.Wood);
+                            }
+                            curUnitCom.AmountHealth = 100;
+                            curUnitCom.CondUnitType = CondUnitTypes.Protected;
                             curOwnUnitCom.PlayerType = PlayerTypes.Second;
                         }
                     }

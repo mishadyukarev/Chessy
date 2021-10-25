@@ -32,7 +32,7 @@ namespace Scripts.Game
 
             if (selUnitDatCom.HaveUnit)
             {
-                if (selOwnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
+                if (selOwnUnitCom.Is(WhoseMoveCom.CurPlayer))
                 {
                     if (selUnitDatCom.Is(UnitTypes.King))
                     {

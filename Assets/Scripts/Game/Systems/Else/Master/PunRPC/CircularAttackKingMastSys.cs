@@ -12,17 +12,18 @@ namespace Scripts.Game
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
         private EcsFilter<EndGameDataUIComponent> _endGameDataUIFilter = default;
+        private EcsFilter<InventorUnitsCom> _invUnitsFilt = default;
 
         public void Run()
         {
             var sender = _infoMastFilter.Get1(0).FromInfo.Sender;
             var idxCurculAttack = _forCircAttackFilter.Get1(0).IdxUnitForCirculAttack;
 
-            ref var starUnitDatCom = ref _cellUnitFilter.Get1(idxCurculAttack);
+            ref var starUnitCom = ref _cellUnitFilter.Get1(idxCurculAttack);
             ref var starOwnUnitCom = ref _cellUnitFilter.Get2(idxCurculAttack);
 
 
-            if (starUnitDatCom.HaveMaxAmountSteps)
+            if (starUnitCom.HaveMaxAmountSteps)
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
@@ -30,33 +31,38 @@ namespace Scripts.Game
                 {
                     var idxCurDirect = _xyCellFilter.GetIdxCell(xy1);
 
-                    ref var unitDatComDirect = ref _cellUnitFilter.Get1(idxCurDirect);
+                    ref var unitComDirect = ref _cellUnitFilter.Get1(idxCurDirect);
+                    ref var ownUnitComDir = ref _cellUnitFilter.Get2(idxCurDirect);
 
-                    if (unitDatComDirect.HaveUnit)
+                    if (unitComDirect.HaveUnit)
                     {
-                        unitDatComDirect.TakeAmountHealth(starUnitDatCom.PowerDamage / 4);
-                        unitDatComDirect.TakeAmountHealth(2);
+                        unitComDirect.TakeAmountHealth(starUnitCom.PowerDamageWithTW / 4);
+                        unitComDirect.TakeAmountHealth(2);
 
 
-                        if (!unitDatComDirect.HaveAmountHealth)
+                        if (!unitComDirect.HaveAmountHealth)
                         {
-                            if (unitDatComDirect.Is(UnitTypes.King))
+                            if (unitComDirect.Is(UnitTypes.King))
                             {
                                 _endGameDataUIFilter.Get1(0).PlayerWinner = starOwnUnitCom.PlayerType;
                             }
-                            unitDatComDirect.DefUnitType();
+                            else if (unitComDirect.Is(UnitTypes.Scout))
+                            {
+                                _invUnitsFilt.Get1(0).AddUnitsInInventor(ownUnitComDir.PlayerType, UnitTypes.Scout, LevelUnitTypes.Wood);
+                            }
+                            unitComDirect.DefUnitType();
                         }
                     }
                 }
 
-                starUnitDatCom.TakeAmountSteps();
+                starUnitCom.TakeAmountSteps();
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.AttackMelee);
 
 
-                if (starUnitDatCom.Is(CondUnitTypes.Protected) || starUnitDatCom.Is(CondUnitTypes.Relaxed))
+                if (starUnitCom.Is(CondUnitTypes.Protected) || starUnitCom.Is(CondUnitTypes.Relaxed))
                 {
-                    starUnitDatCom.DefCondType();
+                    starUnitCom.DefCondType();
                 }
             }
             else

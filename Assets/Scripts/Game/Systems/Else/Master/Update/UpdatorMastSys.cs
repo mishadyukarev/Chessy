@@ -12,7 +12,7 @@ namespace Scripts.Game
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilt = default;
+        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilt = default;
         private EcsFilter<CellWeatherDataCom> _cellWeatherFilt = default;
 
         private EcsFilter<UpgradesBuildsCom> _upgradeBuildsFilter = default;
@@ -46,7 +46,7 @@ namespace Scripts.Game
                 ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
 
                 ref var curBuilCom = ref _cellBuildFilt.Get1(curIdxCell);
-                ref var curOnBuilCom = ref _cellBuildFilt.Get2(curIdxCell);
+                ref var curOwnBuilCom = ref _cellBuildFilt.Get2(curIdxCell);
 
                 ref var curFireDatCom = ref _cellFireDataFilter.Get1(curIdxCell);
                 ref var curEnvrDatCom = ref _cellEnvDataFilter.Get1(curIdxCell);
@@ -61,7 +61,7 @@ namespace Scripts.Game
                     {
                         if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                         {
-                            if (curOwnUnitCom.IsPlayerType(PlayerTypes.Second))
+                            if (curOwnUnitCom.Is(PlayerTypes.Second))
                             {
                                 if (!curUnitCom.HaveMaxAmountHealth)
                                 {
@@ -98,17 +98,14 @@ namespace Scripts.Game
 
                                             if (curEnvrDatCom.HaveResources(EnvirTypes.AdultForest))
                                             {
-                                                if (curBuilCom.HaveBuild)
+                                                if (curBuilCom.Is(BuildingTypes.Camp) || !curBuilCom.HaveBuild)
                                                 {
-                                                    if (!curBuilCom.HaveBuild)
-                                                    {
-                                                        curUnitCom.CondUnitType = CondUnitTypes.Protected;
-                                                    }
+                                                    curBuilCom.BuildType = BuildingTypes.Woodcutter;
+                                                    curOwnBuilCom.PlayerType = curOwnUnitCom.PlayerType;
                                                 }
                                                 else
                                                 {
-                                                    curBuilCom.BuildType = BuildingTypes.Woodcutter;
-                                                    curOnBuilCom.PlayerType = curOwnUnitCom.PlayerType;
+                                                    curUnitCom.CondUnitType = CondUnitTypes.Protected;
                                                 }
                                             }
                                             else
@@ -165,9 +162,36 @@ namespace Scripts.Game
                                     }
                                 }
                             }
-                            else if (curUnitCom.Is(CondUnitTypes.None))
+
+                            else if (curUnitCom.Is(CondUnitTypes.Protected))
                             {
-                                if (curUnitCom.HaveMaxAmountSteps)
+                                if (curUnitCom.HaveMaxAmountHealth)
+                                {
+                                    if (curUnitCom.Is(UnitTypes.Pawn))
+                                    {
+                                        if (curEnvrDatCom.Have(EnvirTypes.AdultForest))
+                                        {
+                                            if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+                                            {
+                                                if (curOwnUnitCom.Is(PlayerTypes.First))
+                                                {
+                                                    curBuilCom.BuildType = BuildingTypes.Camp;
+                                                    curOwnBuilCom.PlayerType = curOwnUnitCom.PlayerType;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                curBuilCom.BuildType = BuildingTypes.Camp;
+                                                curOwnBuilCom.PlayerType = curOwnUnitCom.PlayerType;
+                                            }
+                                        }   
+                                    }
+                                }
+                            }
+
+                            else
+                            {
+                                if (curUnitCom.HaveMinAmountSteps)
                                 {
                                     curUnitCom.CondUnitType = CondUnitTypes.Protected;
                                 }
@@ -178,10 +202,15 @@ namespace Scripts.Game
                     curUnitCom.SetMaxAmountSteps();
                 }
 
+                else
+                {
+                    if (curBuilCom.Is(BuildingTypes.Camp)) curBuilCom.DefBuildType();
+                }
+
                 if (curBuilCom.HaveBuild)
                 {
 
-                    if (curBuilCom.IsBuildType(BuildingTypes.Farm))
+                    if (curBuilCom.Is(BuildingTypes.Farm))
                     {
                         minus = amountUpgradesCom.GetExtractOneBuild(curOwnUnitCom.PlayerType, BuildingTypes.Farm);
 
@@ -196,7 +225,7 @@ namespace Scripts.Game
                         }
                     }
 
-                    else if (curBuilCom.IsBuildType(BuildingTypes.Woodcutter))
+                    else if (curBuilCom.Is(BuildingTypes.Woodcutter))
                     {
                         minus = amountUpgradesCom.GetExtractOneBuild(curOwnUnitCom.PlayerType, BuildingTypes.Woodcutter);
 
@@ -217,7 +246,7 @@ namespace Scripts.Game
                         }
                     }
 
-                    else if (curBuilCom.IsBuildType(BuildingTypes.Mine))
+                    else if (curBuilCom.Is(BuildingTypes.Mine))
                     {
                         minus = amountUpgradesCom.GetExtractOneBuild(curOwnUnitCom.PlayerType, BuildingTypes.Mine);
 
@@ -251,7 +280,7 @@ namespace Scripts.Game
                         {
                             if (curUnitCom.Is(UnitTypes.King))
                             {
-                                if (curOwnUnitCom.IsPlayerType(PlayerTypes.First))
+                                if (curOwnUnitCom.Is(PlayerTypes.First))
                                 {
                                     _endGameDataUIFilt.Get1(0).PlayerWinner = PlayerTypes.Second;
                                 }
@@ -295,19 +324,6 @@ namespace Scripts.Game
                             }
                         }
                     }
-                }
-
-                if(curWeathCom.IsCenter)
-                {
-                    //var newXy = CellSpaceSupport.GetXyCellByDirect(curXy, _windFilt.Get1(0).DirectWind);
-                    //var newIdxCell = _xyCellFilter.GetIdxCell(newXy);
-
-                    //ref var newWeathCom = ref _cellWeatherFilt.Get1(newIdxCell);
-                    //newWeathCom.EnabledCloud = true;
-                    //newWeathCom.CloudWidthType = curWeathCom.CloudWidthType;
-
-                    //curWeathCom.CloudWidthType = default;
-                    //curWeathCom.EnabledCloud = default;
                 }
             }
 
@@ -362,7 +378,7 @@ namespace Scripts.Game
 
                     if (curEnvrDatCom.Have(EnvirTypes.Hill))
                     {
-                        if (!curBuildDatCom.IsBuildType(BuildingTypes.Mine))
+                        if (!curBuildDatCom.Is(BuildingTypes.Mine))
                         {
                             if (!curEnvrDatCom.HaveMaxRes(EnvirTypes.Hill))
                             {
@@ -384,7 +400,7 @@ namespace Scripts.Game
         {
             ref var windCom = ref _windFilt.Get1(0);
 
-            if (UnityEngine.Random.Range(0, 100) < 30)
+            if (UnityEngine.Random.Range(0, 100) < 70)
             {
                 ref var envDatCom = ref _cellEnvDataFilter.Get1(idxCellStart);
                 envDatCom.SetEnvironment(EnvirTypes.YoungForest);

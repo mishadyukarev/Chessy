@@ -8,6 +8,7 @@ namespace Scripts.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilt = default;
+        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuldFilt = default;
 
         private EcsFilter<CellsForSetUnitComp> _cellsForSetUnitFilter = default;
         private EcsFilter<BuildsInGameCom> _buildsInGameFilt = default;
@@ -21,7 +22,7 @@ namespace Scripts.Game
             forSetUnitCom.ClearIdxCells(PlayerTypes.First);
             forSetUnitCom.ClearIdxCells(PlayerTypes.Second);
 
-            for (PlayerTypes playerType = (PlayerTypes)1; playerType < (PlayerTypes)Enum.GetNames(typeof(PlayerTypes)).Length; playerType++)
+            for (var playerType = Support.MinPlayerType; playerType < Support.MaxPlayerType; playerType++)
             {
                 if (buildsInGameCom.IsSettedCity(playerType))
                 {
@@ -40,6 +41,7 @@ namespace Scripts.Game
                         }
                     }
                 }
+
                 else
                 {
                     foreach (byte curIdx in _xyCellFilter)
@@ -66,7 +68,31 @@ namespace Scripts.Game
                                 {
                                     forSetUnitCom.AddIdxCell(PlayerTypes.Second, curIdx);
                                 }
-                            }  
+                            }
+                        }
+                    }
+                }
+            }
+
+            foreach (byte curIdx in _xyCellFilter)
+            {
+                ref var curBuldCom = ref _cellBuldFilt.Get1(curIdx);
+                ref var curOwnBuldCom = ref _cellBuldFilt.Get2(curIdx);
+
+                if (curBuldCom.Is(BuildingTypes.Camp))
+                {
+                    var aroundXys = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdx));
+
+                    foreach (var xy in aroundXys)
+                    {
+                        var curIdx_2 = _xyCellFilter.GetIdxCell(xy);
+
+                        ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdx_2);
+                        ref var curEnvDatCom = ref _cellEnvFilt.Get1(curIdx_2);
+
+                        if (!curEnvDatCom.Have(EnvirTypes.Mountain) && !curUnitDatCom.HaveUnit)
+                        {
+                            forSetUnitCom.AddIdxCell(curOwnBuldCom.PlayerType, curIdx_2);
                         }
                     }
                 }

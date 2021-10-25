@@ -30,6 +30,8 @@
         WoodcutterBack,
         Mine,
         MineBack,
+        Camp,
+        CampBack,
 
         YoungForest,
 

@@ -38,7 +38,7 @@ namespace Scripts.Game
                             {
                                 if (arouUnitDatCom.HaveUnit)
                                 {
-                                    if (!arouOwnUnitCom.IsPlayerType(curOwnUnitCom.PlayerType))
+                                    if (!arouOwnUnitCom.Is(curOwnUnitCom.PlayerType))
                                     {
                                         cellsAttackCom.Add(curOwnUnitCom.PlayerType, AttackTypes.Simple, curIdxCell, idxCellAround);
                                     }

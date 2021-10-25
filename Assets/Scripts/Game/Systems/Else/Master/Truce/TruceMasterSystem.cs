@@ -12,7 +12,7 @@ namespace Scripts.Game
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
         private EcsFilter<CellViewComponent> _cellViewFilt = default;
@@ -53,7 +53,7 @@ namespace Scripts.Game
                     {
                         if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                         {
-                            if (curOwnUnitCom.IsPlayerType(PlayerTypes.First))
+                            if (curOwnUnitCom.Is(PlayerTypes.First))
                             {
                                 invUnitsCom.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType, curUnitDatCom.LevelUnitType);
                                 curUnitDatCom.DefUnitType();
@@ -89,15 +89,6 @@ namespace Scripts.Game
                             if (random <= 3)
                             {
                                 curEnvDatCom.SetNewEnvir(EnvirTypes.Fertilizer);
-                            }
-                            else
-                            {
-                                random = Random.Range(0, 100);
-
-                                if (random <= 30)
-                                {
-                                    curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
-                                }
                             }
                         }
                     }

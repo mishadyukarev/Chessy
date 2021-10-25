@@ -26,7 +26,7 @@ namespace Scripts.Game
                 {
 
                 }
-                else if (selOnUnitCom.IsPlayerType(WhoseMoveCom.CurPlayer))
+                else if (selOnUnitCom.Is(WhoseMoveCom.CurPlayer))
                 {
                     isEnableButt = true;
                 }

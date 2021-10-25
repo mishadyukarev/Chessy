@@ -9,7 +9,7 @@ namespace Scripts.Game
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
 
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataComponent, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
 
         private EcsFilter<EndGameDataUIComponent> _endGameFilter = default;
@@ -30,13 +30,13 @@ namespace Scripts.Game
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
 
-                if (curBuildDataCom.IsBuildType(BuildingTypes.City))
+                if (curBuildDataCom.Is(BuildingTypes.City))
                 {
                     _endGameFilter.Get1(0).PlayerWinner = curOwnUnitCom.PlayerType;
                 }
                 curUnitDataCom.TakeAmountSteps();
 
-                if (curBuildDataCom.IsBuildType(BuildingTypes.Farm)) curEnvDataCom.ResetEnvironment(EnvirTypes.Fertilizer);
+                if (curBuildDataCom.Is(BuildingTypes.Farm)) curEnvDataCom.ResetEnvironment(EnvirTypes.Fertilizer);
 
                 curBuildDataCom.DefBuildType();
             }

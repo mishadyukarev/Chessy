@@ -18,7 +18,7 @@ namespace Scripts.Game
             RpcGameSys = PhotonRpcViewGameCom.RpcSys;
 
             SyncCellViewSyss = new EcsSystems(gameWorld)
-                .Add(new VisibUnitsSys())
+                .Add(new VisibUnitsBuildsSys())
                 .Add(new SyncCellUnitViewSys())
                 .Add(new SyncCellSelUnitViewSys())
                 .Add(new SyncCellUnitSupVisSystem())

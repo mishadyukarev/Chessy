@@ -39,7 +39,7 @@ namespace Scripts.Game
                             {
                                 if (aroUnitDatCom.HaveUnit)
                                 {
-                                    if (!aroOwnUnitCom.IsPlayerType(curOnUnitCom.PlayerType))
+                                    if (!aroOwnUnitCom.Is(curOnUnitCom.PlayerType))
                                     {
                                         if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
                                             || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)

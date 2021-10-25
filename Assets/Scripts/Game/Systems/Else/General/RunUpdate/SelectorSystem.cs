@@ -5,7 +5,7 @@ namespace Scripts.Game
 {
     internal sealed class SelectorSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleCom> _cellUnitFilter = default;
 
         private EcsFilter<SelectorCom> _selectorFilter = default;
         private EcsFilter<InputComponent> _inputFilter = default;
@@ -17,6 +17,7 @@ namespace Scripts.Game
         {
             CellUnitDataCom UnitDatCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
             OwnerCom OwnUnitCom(byte idxCell) => _cellUnitFilter.Get2(idxCell);
+            VisibleCom VisUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
 
 
             ref var selCom = ref _selectorFilter.Get1(0);
@@ -212,7 +213,7 @@ namespace Scripts.Game
                 {
                     if (selCom.IsSelUnit)
                     {
-                        if (!UnitDatCom(selCom.IdxCurCell).HaveUnit || !UnitDatCom(selCom.IdxCurCell).IsVisibleUnit(WhoseMoveCom.CurPlayer))
+                        if (!UnitDatCom(selCom.IdxCurCell).HaveUnit || !VisUnitCom(selCom.IdxCurCell).IsVisibled(WhoseMoveCom.CurPlayer))
                         {
                             if (selCom.IsStartDirectToCell)
                             {
