@@ -5,18 +5,17 @@ namespace Scripts.Game
 {
     internal sealed class DestroyMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
 
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
 
-        private EcsFilter<EndGameDataUIComponent> _endGameFilter = default;
+        private EcsFilter<EndGameDataUIC> _endGameFilter = default;
 
         public void Run()
         {
-            var sender = _infoFilter.Get1(0).FromInfo.Sender;
+            var sender = InfoC.Sender(MasGenOthTypes.Master);
             var idxCellForDestory = _destroyFilter.Get1(0).IdxForDestroy;
 
             ref var curUnitDataCom = ref _cellUnitFilter.Get1(idxCellForDestory);
@@ -32,11 +31,15 @@ namespace Scripts.Game
 
                 if (curBuildDataCom.Is(BuildingTypes.City))
                 {
-                    _endGameFilter.Get1(0).PlayerWinner = curOwnUnitCom.PlayerType;
+                    EndGameDataUIC.PlayerWinner = curOwnUnitCom.PlayerType;
                 }
                 curUnitDataCom.TakeAmountSteps();
 
-                if (curBuildDataCom.Is(BuildingTypes.Farm)) curEnvDataCom.ResetEnvironment(EnvirTypes.Fertilizer);
+                if (curBuildDataCom.Is(BuildingTypes.Farm))
+                {
+                    curEnvDataCom.Reset(EnvirTypes.Fertilizer);
+                    WhereEnvironmentC.Remove(EnvirTypes.Fertilizer, idxCellForDestory);
+                }
 
                 curBuildDataCom.DefBuildType();
             }

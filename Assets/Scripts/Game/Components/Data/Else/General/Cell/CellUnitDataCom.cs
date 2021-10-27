@@ -76,76 +76,71 @@ namespace Scripts.Game
         internal void AddAmountHealth(int adding = 1) => AmountHealth += adding;
         internal void TakeAmountHealth(int taking = 1) => AmountHealth -= taking;
 
-        internal int MaxAmountHealth => UnitValues.StandartAmountHealth(UnitType, LevelUnitType);
+        internal int MaxAmountHealth => UnitValues.StandAmountHealthAll;
         internal bool HaveMaxAmountHealth => AmountHealth >= MaxAmountHealth;
         internal bool HaveAmountHealth => AmountHealth > 0;
-        internal void AddStandartHeal() => AddAmountHealth((int)(UnitValues.StandartAmountHealth(UnitType, LevelUnitType) * UnitValues.ForAddingHealth(UnitType)));
+        internal void AddStandartHeal() => AddAmountHealth((int)(UnitValues.StandAmountHealthAll * UnitValues.ForAddingHealth(UnitType)));
         internal void SetMaxAmountHealth() => AmountHealth = MaxAmountHealth;
 
-        internal int PowerProtection(BuildingTypes buildingType, Dictionary<EnvirTypes, bool> envrs)
+
+        internal int PowerDamageAttack(AttackTypes attackType)
         {
-            int powerProt = 0;
+            float powerDamege = UnitValues.StandPowerDamage(UnitType, LevelUnitType);
 
-            if (Is(CondUnitTypes.Protected)) powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, LevelUnitType) * UnitValues.PercentForProtection(UnitType));
-            else if (Is(CondUnitTypes.Relaxed)) powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, LevelUnitType) * UnitValues.PercentForRelax(UnitType));
+            if (UnitType.Is(UnitTypes.Pawn))
+            {
+                switch (TWExtraType)
+                {
+                    case ToolWeaponTypes.None:
+                        break;
 
-            powerProt += (int)(PowerDamageWithTW * UnitValues.ProtectionPercentBuild(UnitType, buildingType));
+                    case ToolWeaponTypes.Hoe:
+                        throw new Exception();
+
+                    case ToolWeaponTypes.Pick:
+                        //simplePowerDamege -= simplePowerDamege * 0.5f;
+                        break;
+
+                    case ToolWeaponTypes.Sword:
+                        powerDamege += UnitValues.StandPowerDamage(UnitType, LevelUnitType) * 0.5f;
+                        break;
+
+                    case ToolWeaponTypes.Shield:
+                        break;
+
+                    default:
+                        throw new Exception();
+                }
+            }
+
+            if(attackType == AttackTypes.Unique) powerDamege += powerDamege * UnitValues.UniqueRatioPowerDamage;
+
+            return (int)powerDamege;
+        }
+
+        internal int PowerDamageOnCell(BuildingTypes buildType, Dictionary<EnvirTypes, bool> envrs)
+        {
+            float powerDamege = PowerDamageAttack(AttackTypes.Simple);
+
+            if (Is(CondUnitTypes.Protected)) powerDamege += UnitValues.StandPowerDamage(UnitType, LevelUnitType) * UnitValues.PercentForProtection;
+            else if (Is(CondUnitTypes.Relaxed)) powerDamege += UnitValues.StandPowerDamage(UnitType, LevelUnitType) * UnitValues.PercentForRelax;
+
+
+            powerDamege += UnitValues.StandPowerDamage(UnitType, LevelUnitType) * UnitValues.ProtectionPercentBuild(UnitType, buildType);
+
 
             if (envrs[EnvirTypes.Fertilizer])
-                powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, LevelUnitType) 
-                    * UnitValues.ProtectionPercentEnvir(UnitType, EnvirTypes.Fertilizer));
+                powerDamege += UnitValues.StandPowerDamage(UnitType, LevelUnitType) * UnitValues.ProtectionPercentEnvir(UnitType, EnvirTypes.Fertilizer);
 
             if (envrs[EnvirTypes.AdultForest])
-                powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, LevelUnitType) 
-                    * UnitValues.ProtectionPercentEnvir(UnitType, EnvirTypes.AdultForest));
+                powerDamege += UnitValues.StandPowerDamage(UnitType, LevelUnitType) * UnitValues.ProtectionPercentEnvir(UnitType, EnvirTypes.AdultForest);
 
             if (envrs[EnvirTypes.Hill])
-                powerProt += (int)(UnitValues.SimplePowerDamage(UnitType, LevelUnitType) 
-                    * UnitValues.ProtectionPercentEnvir(UnitType, EnvirTypes.Hill));
+                powerDamege += UnitValues.StandPowerDamage(UnitType, LevelUnitType) * UnitValues.ProtectionPercentEnvir(UnitType, EnvirTypes.Hill);
 
 
-            //if (TWExtraType == ToolWeaponTypes.Shield) powerProt += (int)(SimplePowerDamage * 0.3f);
-
-
-            return powerProt;
+            return (int)powerDamege;
         }
-
-        internal int PowerDamageWithTW
-        {
-            get
-            {
-                float powerDamege = UnitValues.SimplePowerDamage(UnitType, LevelUnitType);
-
-                if (UnitType.Is(UnitTypes.Pawn))
-                {
-                    switch (TWExtraType)
-                    {
-                        case ToolWeaponTypes.None:
-                            break;
-
-                        case ToolWeaponTypes.Hoe:
-                            throw new Exception();
-
-                        case ToolWeaponTypes.Pick:
-                            //simplePowerDamege -= simplePowerDamege * 0.5f;
-                            break;
-
-                        case ToolWeaponTypes.Sword:
-                            powerDamege += powerDamege * 0.5f;
-                            break;
-
-                        case ToolWeaponTypes.Shield:
-                            break;
-
-                        default:
-                            throw new Exception();
-                    }
-                }
-
-                return (int)powerDamege;
-            }
-        }
-        internal int UniquePowerDamage => (int)(PowerDamageWithTW * UnitValues.UniqueRatioPowerDamage(UnitType));
 
         internal void ReplaceUnit(CellUnitDataCom newUnit)
         {

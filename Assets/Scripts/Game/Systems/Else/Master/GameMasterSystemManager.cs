@@ -25,7 +25,7 @@ namespace Scripts.Game
             _rpcSystems.Add(RpcMasterTypes.Attack, new EcsSystems(gameWorld).Add(new AttackMastSys()));
             _rpcSystems.Add(RpcMasterTypes.ConditionUnit, new EcsSystems(gameWorld).Add(new ConditionMasterSystem()));
             _rpcSystems.Add(RpcMasterTypes.Ready, new EcsSystems(gameWorld).Add(new ReadyMasterSystem()));
-            _rpcSystems.Add(RpcMasterTypes.Done, new EcsSystems(gameWorld).Add(new DonerMasterSystem()));
+            _rpcSystems.Add(RpcMasterTypes.Done, new EcsSystems(gameWorld).Add(new DonerMastSys()));
             _rpcSystems.Add(RpcMasterTypes.CreateUnit, new EcsSystems(gameWorld).Add(new CreateUnitMastSys()));
             _rpcSystems.Add(RpcMasterTypes.MeltOre, new EcsSystems(gameWorld).Add(new MeltOreMasterSystem()));
             _rpcSystems.Add(RpcMasterTypes.SetUnit, new EcsSystems(gameWorld).Add(new SetterUnitMastSys()));
@@ -42,7 +42,8 @@ namespace Scripts.Game
 
 
             UpdateMotion = new EcsSystems(gameWorld)
-                .Add(new UpdatorMastSys());
+                .Add(new UpdatorMastSys())
+                .Add(new CloudUpdMasSys());
 
             TruceSystems = new EcsSystems(gameWorld)
                 .Add(new TruceMasterSystem());

@@ -4,25 +4,21 @@ namespace Scripts.Game
 {
     internal sealed class ReadyMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<InfoCom> _infoFilter = default;
-        private EcsFilter<ReadyDataUICom, ReadyViewUICom> _readyUIFilter = default;
-
         public void Run()
         {
-            var sender = _infoFilter.Get1(0).FromInfo.Sender;
-            ref var readyDataUICom = ref _readyUIFilter.Get1(0);
+            var sender = InfoC.Sender(MasGenOthTypes.Master);
 
 
-            readyDataUICom.SetIsReady(sender.IsMasterClient, !readyDataUICom.IsReady(sender.IsMasterClient));
+            ReadyDataUIC.SetIsReady(sender.IsMasterClient, !ReadyDataUIC.IsReady(sender.IsMasterClient));
 
-            if (readyDataUICom.IsReady(true) && readyDataUICom.IsReady(false))
+            if (ReadyDataUIC.IsReady(true) && ReadyDataUIC.IsReady(false))
             {
-                readyDataUICom.IsStartedGame = true;
+                ReadyDataUIC.IsStartedGame = true;
             }
 
             else
             {
-                readyDataUICom.IsStartedGame = false;
+                ReadyDataUIC.IsStartedGame = false;
             }
         }
     }

@@ -7,52 +7,45 @@ namespace Scripts.Game
 {
     internal sealed class EventUnitBuildUISys : IEcsInitSystem
     {
-        private EcsFilter<SelectorCom> _selFilt = default;
-        private EcsFilter<BuildAbilitUICom> _buildAbilUIFilt = default;
-
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
 
 
         public void Init()
         {
-            _buildAbilUIFilt.Get1(0).AddListener_Button(BuildButtonTypes.First, delegate { ExecuteButton(BuildButtonTypes.First); });
-            _buildAbilUIFilt.Get1(0).AddListener_Button(BuildButtonTypes.Second, delegate { ExecuteButton(BuildButtonTypes.Second); });
-            _buildAbilUIFilt.Get1(0).AddListener_Button(BuildButtonTypes.Third, delegate { ExecuteButton(BuildButtonTypes.Third); });
+            BuildAbilitUIC.AddListener_Button(BuildButtonTypes.First, delegate { ExecuteButton(BuildButtonTypes.First); });
+            BuildAbilitUIC.AddListener_Button(BuildButtonTypes.Second, delegate { ExecuteButton(BuildButtonTypes.Second); });
+            BuildAbilitUIC.AddListener_Button(BuildButtonTypes.Third, delegate { ExecuteButton(BuildButtonTypes.Third); });
         }
 
         private void ExecuteButton(BuildButtonTypes buildButtonType)
         {
-            if (WhoseMoveCom.IsMyOnlineMove || PhotonNetwork.OfflineMode/*GameModesCom.IsOfflineMode*/)
+            if (WhoseMoveC.IsMyMove)
             {
-                var idxSelCell = _selFilt.Get1(0).IdxSelCell;
-
-
                 switch (buildButtonType)
                 {
                     case BuildButtonTypes.None:
                         throw new Exception();
 
                     case BuildButtonTypes.First:
-                        RpcSys.BuildToMaster(idxSelCell, BuildingTypes.Farm);
+                        RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildingTypes.Farm);
                         break;
 
                     case BuildButtonTypes.Second:
-                        RpcSys.BuildToMaster(idxSelCell, BuildingTypes.Mine);
+                        RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildingTypes.Mine);
                         break;
 
                     case BuildButtonTypes.Third:
                         {
-                            ref var selBuildDataCom = ref _cellBuildFilter.Get1(idxSelCell);
+                            ref var selBuildDataCom = ref _cellBuildFilter.Get1(SelectorC.IdxSelCell);
 
                             if (selBuildDataCom.HaveBuild)
                             {
-                                RpcSys.DestroyBuildingToMaster(idxSelCell);
+                                RpcSys.DestroyBuildingToMaster(SelectorC.IdxSelCell);
                             }
 
                             else
                             {
-                                RpcSys.BuildToMaster(idxSelCell, BuildingTypes.City);
+                                RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildingTypes.City);
                             }
                         }
                         break;

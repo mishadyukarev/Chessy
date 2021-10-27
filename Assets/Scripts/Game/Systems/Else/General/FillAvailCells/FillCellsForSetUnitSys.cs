@@ -7,11 +7,11 @@ namespace Scripts.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvFilt = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvFilt = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuldFilt = default;
 
         private EcsFilter<CellsForSetUnitComp> _cellsForSetUnitFilter = default;
-        private EcsFilter<BuildsInGameCom> _buildsInGameFilt = default;
+        private EcsFilter<BuildsInGameC> _buildsInGameFilt = default;
 
 
         public void Run()
@@ -24,9 +24,9 @@ namespace Scripts.Game
 
             for (var playerType = Support.MinPlayerType; playerType < Support.MaxPlayerType; playerType++)
             {
-                if (buildsInGameCom.IsSettedCity(playerType))
+                if (BuildsInGameC.IsSettedCity(playerType))
                 {
-                    var listAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(buildsInGameCom.IdxCity(playerType)));
+                    var listAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(BuildsInGameC.IdxCity(playerType)));
 
                     foreach (var xy in listAround)
                     {

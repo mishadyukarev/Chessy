@@ -4,18 +4,12 @@ namespace Scripts.Game
 {
     internal class ProtectUISys : IEcsRunSystem
     {
-        private EcsFilter<CondUnitUICom> _condUnitUIFilt = default;
-        private EcsFilter<SelectorCom> _selectorFilter = default;
-
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
-            var idxSelCell = _selectorFilter.Get1(0).IdxSelCell;
-            ref var condUnitUICom = ref _condUnitUIFilt.Get1(0);
-
-            ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
-            ref var selOnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
+            ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelectorC.IdxSelCell);
+            ref var selOnUnitCom = ref _cellUnitFilter.Get2(SelectorC.IdxSelCell);
 
 
             var isEnableButt = false;
@@ -26,14 +20,14 @@ namespace Scripts.Game
                 {
 
                 }
-                else if (selOnUnitCom.Is(WhoseMoveCom.CurPlayer))
+                else if (selOnUnitCom.Is(WhoseMoveC.CurPlayer))
                 {
                     isEnableButt = true;
                 }
             }
 
 
-            condUnitUICom.SetActive(CondUnitTypes.Protected, isEnableButt);
+            CondUnitUIC.SetActive(CondUnitTypes.Protected, isEnableButt);
         }
     }
 }

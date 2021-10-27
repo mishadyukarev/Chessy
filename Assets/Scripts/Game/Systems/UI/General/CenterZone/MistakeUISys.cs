@@ -6,36 +6,29 @@ namespace Scripts.Game
 {
     internal sealed class MistakeUISys : IEcsRunSystem
     {
-        private EcsFilter<MistakeDataUICom, MistakeViewUICom> _mistakeUIFilter = default;
-        private EcsFilter<EconomyViewUICom> _economyUIFilter = default;
-
         private float _neededTimeForFading = 1.3f;
 
         public void Run()
         {
-            ref var mistDatUICom = ref _mistakeUIFilter.Get1(0);
-            ref var mistakeViewUICom = ref _mistakeUIFilter.Get2(0);
-
-
-            if (mistDatUICom.MistakeType == MistakeTypes.None)
+            if ( MistakeDataUIC.MistakeType == MistakeTypes.None)
             {
                 ResetAll();
             }
             else
             {
-                mistDatUICom.CurTime += Time.deltaTime;
+                 MistakeDataUIC.CurTime += Time.deltaTime;
 
-                if (mistDatUICom.MistakeType == MistakeTypes.Economy)
+                if ( MistakeDataUIC.MistakeType == MistakeTypes.Economy)
                 {
-                    if (mistDatUICom.CurTime >= _neededTimeForFading)
+                    if ( MistakeDataUIC.CurTime >= _neededTimeForFading)
                     {
-                        mistDatUICom.CurTime = 0;
-                        mistDatUICom.ResetMistakeType();
-                        mistDatUICom.ClearAllNeeds();
+                         MistakeDataUIC.CurTime = 0;
+                         MistakeDataUIC.ResetMistakeType();
+                         MistakeDataUIC.ClearAllNeeds();
 
                         for (var resType = Support.MinResType; resType < Support.MaxResType; resType++)
                         {
-                            _economyUIFilter.Get1(0).SetMainColor(resType, Color.white);
+                            EconomyViewUIC.SetMainColor(resType, Color.white);
                         }
                     }
 
@@ -43,16 +36,16 @@ namespace Scripts.Game
                     {
                         for (var resType = Support.MinResType; resType < Support.MaxResType; resType++)
                         {
-                            if (mistDatUICom.NeedRes(resType))
+                            if ( MistakeDataUIC.NeedRes(resType))
                             {
-                                _economyUIFilter.Get1(0).SetMainColor(resType, Color.red);
-                                mistakeViewUICom.SetActiveRes(resType, true);
-                                mistakeViewUICom.SetText(resType, "<= " + (-mistDatUICom.NeedResAmount(resType)).ToString());
+                                EconomyViewUIC.SetMainColor(resType, Color.red);
+                                MistakeViewUIC.SetActiveRes(resType, true);
+                                MistakeViewUIC.SetText(resType, "<= " + (- MistakeDataUIC.NeedResAmount(resType)).ToString());
                             }
                             else
                             {
-                                _economyUIFilter.Get1(0).SetMainColor(resType, Color.white);
-                                mistakeViewUICom.SetActiveRes(resType, false);
+                                EconomyViewUIC.SetMainColor(resType, Color.white);
+                                MistakeViewUIC.SetActiveRes(resType, false);
                             }
                         }
                     }
@@ -62,15 +55,15 @@ namespace Scripts.Game
                 {
                     ResetAll();
 
-                    mistakeViewUICom.ActiveBackgroud(true);
+                    MistakeViewUIC.ActiveBackgroud(true);
 
-                    if (mistDatUICom.CurTime >= _neededTimeForFading)
+                    if ( MistakeDataUIC.CurTime >= _neededTimeForFading)
                     {
-                        mistDatUICom.CurTime = 0;
-                        mistDatUICom.ResetMistakeType();
+                         MistakeDataUIC.CurTime = 0;
+                         MistakeDataUIC.ResetMistakeType();
                     }
 
-                    switch (mistDatUICom.MistakeType)
+                    switch ( MistakeDataUIC.MistakeType)
                     {
                         case MistakeTypes.None:
                             break;
@@ -79,27 +72,27 @@ namespace Scripts.Game
                             throw new Exception();
 
                         case MistakeTypes.NeedMoreSteps:
-                            mistakeViewUICom.ActiveNeedSteps(true);
+                            MistakeViewUIC.ActiveNeedSteps(true);
                             break;
 
                         case MistakeTypes.NeedOtherPlace:
-                            mistakeViewUICom.ActiveNeedOtherPlace(true);
+                            MistakeViewUIC.ActiveNeedOtherPlace(true);
                             break;
 
                         case MistakeTypes.NeedMoreHealth:
-                            mistakeViewUICom.ActiveNeedMoreHealth(true);
+                            MistakeViewUIC.ActiveNeedMoreHealth(true);
                             break;
 
                         case MistakeTypes.NeedCity:
-                            mistakeViewUICom.ActiveNeedCity(true);
+                            MistakeViewUIC.ActiveNeedCity(true);
                             break;
 
                         case MistakeTypes.ThatIsForOtherUnit:
-                            mistakeViewUICom.ActiveThatsForOtherUnit(true);
+                            MistakeViewUIC.ActiveThatsForOtherUnit(true);
                             break;
 
                         case MistakeTypes.NearBorder:
-                            mistakeViewUICom.ActiveNearBorderZone(true);
+                            MistakeViewUIC.ActiveNearBorderZone(true);
                             break;
 
                         default:
@@ -111,22 +104,20 @@ namespace Scripts.Game
 
         private void ResetAll()
         {
-            ref var mistakeViewUICom = ref _mistakeUIFilter.Get2(0);
+            MistakeViewUIC.ActiveBackgroud(false);
 
-            mistakeViewUICom.ActiveBackgroud(false);
-
-            mistakeViewUICom.ActiveTextZone(false);
-            mistakeViewUICom.ActiveNeedSteps(false);
-            mistakeViewUICom.ActiveNeedMoreHealth(false);
-            mistakeViewUICom.ActiveNeedOtherPlace(false);
-            mistakeViewUICom.ActiveNeedCity(false);
-            mistakeViewUICom.ActiveThatsForOtherUnit(false);
-            mistakeViewUICom.ActiveNearBorderZone(false);
+            MistakeViewUIC.ActiveTextZone(false);
+            MistakeViewUIC.ActiveNeedSteps(false);
+            MistakeViewUIC.ActiveNeedMoreHealth(false);
+            MistakeViewUIC.ActiveNeedOtherPlace(false);
+            MistakeViewUIC.ActiveNeedCity(false);
+            MistakeViewUIC.ActiveThatsForOtherUnit(false);
+            MistakeViewUIC.ActiveNearBorderZone(false);
 
             for (var resType = Support.MinResType; resType < Support.MaxResType; resType++)
             {
-                _economyUIFilter.Get1(0).SetMainColor(resType, Color.white);
-                mistakeViewUICom.SetActiveRes(resType, false);
+                EconomyViewUIC.SetMainColor(resType, Color.white);
+                MistakeViewUIC.SetActiveRes(resType, false);
             }
         }
     }

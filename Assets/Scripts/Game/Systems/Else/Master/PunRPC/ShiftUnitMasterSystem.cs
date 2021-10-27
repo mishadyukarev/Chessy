@@ -5,26 +5,22 @@ namespace Scripts.Game
 {
     internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForShiftMasCom> _forShiftFilter = default;
 
         private EcsFilter<CellsForShiftCom> _cellsShiftFilter = default;
 
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvrDataFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvrDataFilter = default;
 
         public void Run()
         {
-            var fromInfo = _infoFilter.Get1(0).FromInfo;
 
             var fromIdx = _forShiftFilter.Get1(0).IdxFrom;
             var toIdx = _forShiftFilter.Get1(0).IdxTo;
 
 
 
-            PlayerTypes playerType = default;
-            if (PhotonNetwork.OfflineMode) playerType = WhoseMoveCom.WhoseMoveOffline;
-            else playerType = fromInfo.Sender.GetPlayerType();
+            var playerType = WhoseMoveC.WhoseMove;
 
 
             if (_cellsShiftFilter.Get1(0).HaveIdxCell(playerType, fromIdx, toIdx))
@@ -48,7 +44,7 @@ namespace Scripts.Game
 
                 fromUnitDatCom.DefUnitType();
 
-                RpcSys.SoundToGeneral(fromInfo.Sender, SoundEffectTypes.ClickToTable);
+                RpcSys.SoundToGeneral(InfoC.Sender(MasGenOthTypes.Master), SoundEffectTypes.ClickToTable);
             }
         }
     }

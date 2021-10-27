@@ -14,16 +14,14 @@ namespace Scripts.Game
     {
         private EcsWorld _curGameWorld = default;
 
-        private EcsFilter<InventResourCom> _inventorResFilter = default;
-        private EcsFilter<InventorUnitsCom> _inventorUnitsFilter = default;
-        private EcsFilter<FriendZoneDataUICom> _friendZoneUIFilt = default;
+        private EcsFilter<InventorUnitsC> _inventorUnitsFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
         private EcsFilter<CellViewComponent> _cellViewFilt = default;
         private EcsFilter<CellUnitDataCom, CellUnitExtraViewComp, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
-        private EcsFilter<CellWeatherDataCom> _cellWeatherFilt = default;
+        private EcsFilter<CellCloudsDataC> _cellWeatherFilt = default;
 
 
         public void Init()
@@ -117,28 +115,28 @@ namespace Scripts.Game
 
                         .Replace(new CellViewComponent(cellView_GO))
 
-                        .Replace(new CellEnvironDataCom(new Dictionary<EnvirTypes, bool>()))
+                        .Replace(new CellEnvironmentDataC(new Dictionary<EnvirTypes, bool>()))
                         .Replace(new CellEnvironViewCom(curCell_GO))
                         .Replace(new CellFireDataComponent())
                         .Replace(new CellFireViewComponent(curCell_GO))
                         .Replace(new CellBlocksViewComponent(curCell_GO))
                         .Replace(new CellBarsViewComponent(curCell_GO))
                         .Replace(new CellSupViewComponent(curCell_GO))
-                        .Replace(new CellWeatherDataCom())
+                        .Replace(new CellCloudsDataC())
                         .Replace(new CellWeatherViewCom(curCell_GO));
 
 
                     _curGameWorld.NewEntity()
                          .Replace(new CellBuildDataCom())
                          .Replace(new OwnerCom())
-                         .Replace(new VisibleCom(true))
+                         .Replace(new VisibleC(true))
                          .Replace(new CellBuildViewComponent(curCell_GO));
 
 
                     _curGameWorld.NewEntity()
                          .Replace(new CellUnitDataCom())
                          .Replace(new OwnerCom())
-                         .Replace(new VisibleCom(true))
+                         .Replace(new VisibleC(true))
                          .Replace(new CellUnitMainViewCom(curCell_GO))
                          .Replace(new CellUnitExtraViewComp(curCell_GO));
 
@@ -158,30 +156,32 @@ namespace Scripts.Game
 
 
             var infoEnt = _curGameWorld.NewEntity()
-                .Replace(new InputComponent())
-                .Replace(new SelectorCom(ToolWeaponTypes.Pick))
-                .Replace(new GenerZoneViewCom(generalZoneGO))
-                .Replace(new BackgroundComponent(backGroundGO, PhotonNetwork.IsMasterClient))
+                .Replace(new InputC())
+                .Replace(new SelectorC(ToolWeaponTypes.Pick))
+                .Replace(new GenerZoneViewC(generalZoneGO))
+                .Replace(new BackgroundC(backGroundGO, PhotonNetwork.IsMasterClient))
+                .Replace(new WhoseMoveC(PlayerTypes.First))
+                .Replace(new BuildsInGameC(true))
+                .Replace(new WindC(DirectTypes.Right))
+                .Replace(new CameraC(Camera.main, new Vector3(7.4f, 4.8f, -2)))
+                .Replace(new UpgBuildsC(true))
+                .Replace(new SoundEffectC(audioSourceParentGO))
 
                 .Replace(new CellsForSetUnitComp(true))
                 .Replace(new CellsForShiftCom(true))
                 .Replace(new CellsArsonArcherComp(true))
-                .Replace(new CellsForAttackCom(true))
+                .Replace(new CellsAttackC(true))
                 .Replace(new CellsGiveTWComp(true))
-                .Replace(new WhoseMoveCom(PlayerTypes.First))
-                .Replace(new BuildsInGameCom(true))
-                .Replace(new WindCom(DirectTypes.Right))
 
-                .Replace(new UpgradesBuildsCom(true))
+                .Replace(new WhereCloudsC(true))
+                .Replace(new WhereEnvironmentC(true))
 
-                .Replace(new InventorUnitsCom(true))
-                .Replace(new InventResourCom(true))
-                .Replace(new InventorTWCom(true))
-
-                .Replace(new SoundEffectsComp(audioSourceParentGO));
+                .Replace(new InventorUnitsC(true))
+                .Replace(new InventResourcesC(true))
+                .Replace(new InventorTWCom(true));
 
 
-            infoEnt.Get<GenerZoneViewCom>().Attach(backGroundGO.transform);
+            GenerZoneViewC.Attach(backGroundGO.transform);
 
 
 
@@ -198,62 +198,59 @@ namespace Scripts.Game
 
             var canvasEnt = _curGameWorld.NewEntity()
                 ///Up
-                .Replace(new EconomyViewUICom(upZone_GO))
-                .Replace(new LeaveViewUIComponent(CanvasCom.FindUnderParent<Button>("ButtonLeave")))
-                .Replace(new WindZoneUICom(upZone_GO.transform))
+                .Replace(new EconomyViewUIC(upZone_GO))
+                .Replace(new LeaveViewUIC(CanvasCom.FindUnderParent<Button>("ButtonLeave")))
+                .Replace(new WindUIC(upZone_GO.transform))
 
                 ///Center
-                .Replace(new EndGameDataUIComponent())
-                .Replace(new EndGameViewUIComponent(centerZone_GO))
-                .Replace(new ReadyViewUICom(centerZone_GO.transform.Find("ReadyZone").gameObject))
-                .Replace(new ReadyDataUICom(new Dictionary<bool, bool>()))
-                .Replace(new MotionsViewUIComponent(centerZone_GO))
-                .Replace(new MotionsDataUIComponent())
-                .Replace(new MistakeViewUICom(centerZone_GO))
-                .Replace(new MistakeDataUICom(new Dictionary<ResourceTypes, int>()))
-                .Replace(new KingZoneViewUIComp(centerZone_GO))
-                .Replace(new SelectorTypeViewUIComp(centerZone_GO))
-                .Replace(new FriendZoneViewUICom(centerZone_GO.transform))
-                .Replace(new FriendZoneDataUICom())
-                .Replace(new HintDataUICom(1))
-                .Replace(new HintViewUICom(centerZone_GO.transform))
+                .Replace(new EndGameDataUIC())
+                .Replace(new EndGameViewUIC(centerZone_GO))
+                .Replace(new ReadyViewUIC(centerZone_GO.transform.Find("ReadyZone").gameObject))
+                .Replace(new ReadyDataUIC(new Dictionary<bool, bool>()))
+                .Replace(new MotionsViewUIC(centerZone_GO))
+                .Replace(new MotionsDataUIC())
+                .Replace(new MistakeViewUIC(centerZone_GO))
+                .Replace(new MistakeDataUIC(new Dictionary<ResourceTypes, int>()))
+                .Replace(new KingZoneViewUIC(centerZone_GO))
+                .Replace(new SelectorUIC(centerZone_GO))
+                .Replace(new FriendZoneViewUIC(centerZone_GO.transform))
+                .Replace(new FriendZoneDataUIC(false))
+                .Replace(new HintDataUIC(1))
+                .Replace(new HintViewUIC(centerZone_GO.transform))
 
                 ///Down
-                .Replace(new GetterUnitsDataUICom(new Dictionary<UnitTypes, bool>()))
-                .Replace(new GetterUnitsViewUICom(downZone_GO))
+                .Replace(new GetterUnitsDataUIC(new Dictionary<UnitTypes, bool>()))
+                .Replace(new GetterUnitsViewUIC(downZone_GO))
                 .Replace(new DonerUICom(downZone_GO))
-                .Replace(new GiveTakeViewUICom(downZone_GO))
-                .Replace(new HeroZoneUICom(downZone_GO.transform))
+                .Replace(new GiveTakeViewUIC(downZone_GO))
+                .Replace(new HeroZoneUIC(downZone_GO.transform))
 
                 ///Left
                 .Replace(new BuildLeftZoneViewUICom(leftZone_GO))
-                .Replace(new EnvirZoneDataUICom())
+                .Replace(new EnvirZoneDataUIC())
                 .Replace(new EnvirZoneViewUICom(leftZone_GO))
 
                 ///Right
-                .Replace(new StatZoneViewUICom(rightZone_GO))
-                .Replace(new CondUnitUICom(rightZone_GO.transform.Find("ConditionZone")))
-                .Replace(new UniqueAbiltUICom(rightZone_GO.transform.Find("UniqueAbilitiesZone")))
-                .Replace(new BuildAbilitUICom(rightZone_GO.transform.Find("BuildingZone")));
+                .Replace(new StatZoneViewUIC(rightZone_GO))
+                .Replace(new CondUnitUIC(rightZone_GO.transform.Find("ConditionZone")))
+                .Replace(new UniqueAbiltUIC(rightZone_GO.transform.Find("UniqueAbilitiesZone")))
+                .Replace(new BuildAbilitUIC(rightZone_GO.transform.Find("BuildingZone")));
 
-
-            ref var invResCom = ref _inventorResFilter.Get1(0);
-
-            //_curGameWorld.NewEntity()
-            //   .Replace(new InfoCom())
-            //   .Replace(new ForSettingUnitMasCom())
-            //   .Replace(new ForAttackMasCom())
-            //   .Replace(new ForShiftMasCom())
-            //   .Replace(new ForBuildingMasCom())
-            //   .Replace(new ForSeedingMasCom())
-            //   .Replace(new ConditionMasCom())
-            //   .Replace(new ForCircularAttackMasCom())
-            //   .Replace(new ForCreatingUnitMasCom())
-            //   .Replace(new ForDestroyMasCom())
-            //   .Replace(new ForFireMasCom())
-            //   .Replace(new ForUpgradeMasCom())
-            //   .Replace(new ForGiveTakeToolWeaponComp())
-            //   .Replace(new UpdatedMasCom());
+            _curGameWorld.NewEntity()
+               .Replace(new InfoC(true))
+               .Replace(new ForSettingUnitMasCom())
+               .Replace(new ForAttackMasCom())
+               .Replace(new ForShiftMasCom())
+               .Replace(new ForBuildingMasCom())
+               .Replace(new ForSeedingMasCom())
+               .Replace(new ForCondMasCom())
+               .Replace(new ForCircularAttackMasCom())
+               .Replace(new ForCreatingUnitMasCom())
+               .Replace(new ForDestroyMasCom())
+               .Replace(new ForFireMasCom())
+               .Replace(new ForUpgradeMasCom())
+               .Replace(new ForGiveTakeToolWeaponComp())
+               .Replace(new UpdatedMasCom());
 
 
             if (PhotonNetwork.IsMasterClient)
@@ -272,41 +269,52 @@ namespace Scripts.Game
                         if (curXyCell[1] >= 4 && curXyCell[1] <= 6)
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= EnvironmentValues.START_MOUNTAIN_PERCENT)
-                                curEnvDatCom.SetNewEnvir(EnvirTypes.Mountain);
+                            if (random <= EnvironValues.START_MOUNTAIN_PERCENT)
+                            {
+                                curEnvDatCom.SetNew(EnvirTypes.Mountain);
+                                WhereEnvironmentC.Add(EnvirTypes.Mountain, curIdxCell);
+                            }
+
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= EnvironmentValues.START_FOREST_PERCENT)
+                                if (random <= EnvironValues.START_FOREST_PERCENT)
                                 {
-                                    curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
+                                    curEnvDatCom.SetNew(EnvirTypes.AdultForest);
+                                    WhereEnvironmentC.Add(EnvirTypes.AdultForest, curIdxCell);
                                 }
 
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= EnvironmentValues.START_HILL_PERCENT)
-                                    curEnvDatCom.SetNewEnvir(EnvirTypes.Hill);
+                                if (random <= EnvironValues.START_HILL_PERCENT)
+                                {
+                                    curEnvDatCom.SetNew(EnvirTypes.Hill);
+                                    WhereEnvironmentC.Add(EnvirTypes.Hill, curIdxCell);
+                                }
                             }
                         }
                         else
                         {
                             random = UnityEngine.Random.Range(1, 100);
-                            if (random <= EnvironmentValues.START_FOREST_PERCENT)
+                            if (random <= EnvironValues.START_FOREST_PERCENT)
                             {
-                                curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
+                                curEnvDatCom.SetNew(EnvirTypes.AdultForest);
+                                WhereEnvironmentC.Add(EnvirTypes.AdultForest, curIdxCell);
                             }
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
-                                if (random <= EnvironmentValues.START_FERTILIZER_PERCENT)
+                                if (random <= EnvironValues.START_FERTILIZER_PERCENT)
                                 {
-                                    curEnvDatCom.SetNewEnvir(EnvirTypes.Fertilizer);
+                                    curEnvDatCom.SetNew(EnvirTypes.Fertilizer);
+                                    WhereEnvironmentC.Add(EnvirTypes.Fertilizer, curIdxCell);
                                 }
                             }
                         }
                         if (curXyCell[0] == 5 && curXyCell[1] == 5)
                         {
-                            curWeatherDatCom.EnabledCloud = true;
+                            curWeatherDatCom.HaveCloud = true;
                             curWeatherDatCom.CloudWidthType = CloudWidthTypes.OneBlock;
+                            WhereCloudsC.Add(curIdxCell);
                         }
                     }
 
@@ -319,32 +327,19 @@ namespace Scripts.Game
 
                 for (UnitTypes unitType = (UnitTypes)1; unitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; unitType++)
                 {
-                    unitInvCom.SetAmountUnitsInInvAll(unitType, LevelUnitTypes.Wood, EconomyValues.AmountUnits(unitType));
+                    InventorUnitsC.SetAmountUnitsInInvAll(unitType, LevelUnitTypes.Wood, EconomyValues.AmountUnits(unitType));
                 }
 
                 for (ResourceTypes resourceTypes = Support.MinResType; resourceTypes < Support.MaxResType; resourceTypes++)
                 {
-                    invResCom.SetAmountResAll(resourceTypes, EconomyValues.AmountResources(resourceTypes));
+                    InventResourcesC.SetAmountResAll(resourceTypes, EconomyValues.AmountResources(resourceTypes));
                 }
             }
 
 
-            if (GameModesCom.IsOnlineMode)
+            if (PhotonNetwork.OfflineMode)
             {
-                var isMaster = PhotonNetwork.IsMasterClient;
-                CameraComComp.SetPosRotClient(isMaster, SpawnInitComSys.Main_GO.transform.position);
-
-                foreach (byte curIdxCell in _xyCellFilter)
-                {
-                    _cellViewFilt.Get1(curIdxCell).SetRotForClient(isMaster);
-                }
-
-                WhoseMoveCom.WhoseMoveOnline = PlayerTypes.First;
-            }
-
-            else
-            {
-                CameraComComp.SetPosRotClient(true, SpawnInitComSys.Main_GO.transform.position);
+                CameraC.SetPosRotClient(PlayerTypes.First, SpawnInitComSys.Main_GO.transform.position);
 
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
@@ -364,8 +359,18 @@ namespace Scripts.Game
 
                         if (x == 7 && y == 6)
                         {
-                            curEnvDatCom.ResetEnvironment(EnvirTypes.Mountain);
-                            curEnvDatCom.ResetEnvironment(EnvirTypes.AdultForest);
+                            if (curEnvDatCom.Have(EnvirTypes.Mountain))
+                            {
+                                curEnvDatCom.Reset(EnvirTypes.Mountain);
+                                WhereEnvironmentC.Remove(EnvirTypes.Mountain, curIdxCell);
+                            }
+                            if (curEnvDatCom.Have(EnvirTypes.AdultForest))
+                            {
+                                curEnvDatCom.Reset(EnvirTypes.AdultForest);
+                                WhereEnvironmentC.Remove(EnvirTypes.AdultForest, curIdxCell);
+                            }
+
+
 
                             curUnitCom.UnitType = UnitTypes.King;
                             curUnitCom.LevelUnitType = LevelUnitTypes.Wood;
@@ -376,8 +381,16 @@ namespace Scripts.Game
 
                         else if (x == 8 && y == 6)
                         {
-                            curEnvDatCom.ResetEnvironment(EnvirTypes.Mountain);
-                            curEnvDatCom.ResetEnvironment(EnvirTypes.AdultForest);
+                            if (curEnvDatCom.Have(EnvirTypes.Mountain))
+                            {
+                                curEnvDatCom.Reset(EnvirTypes.Mountain);
+                                WhereEnvironmentC.Remove(EnvirTypes.Mountain, curIdxCell);
+                            }
+                            if (curEnvDatCom.Have(EnvirTypes.AdultForest))
+                            {
+                                curEnvDatCom.Reset(EnvirTypes.AdultForest);
+                                WhereEnvironmentC.Remove(EnvirTypes.AdultForest, curIdxCell);
+                            }
 
                             curBuildCom.BuildType = BuildingTypes.City;
                             curOwnBuildCom.PlayerType = PlayerTypes.Second;
@@ -385,7 +398,11 @@ namespace Scripts.Game
 
                         else if (x == 6 && y == 6 || x == 9 && y == 6 || x <= 9 && x >= 6 && y == 5 || x <= 9 && x >= 6 && y == 7)
                         {
-                            curEnvDatCom.ResetEnvironment(EnvirTypes.Mountain);
+                            if (curEnvDatCom.Have(EnvirTypes.Mountain))
+                            {
+                                curEnvDatCom.Reset(EnvirTypes.Mountain);
+                                WhereEnvironmentC.Remove(EnvirTypes.Mountain, curIdxCell);
+                            }
 
                             curUnitCom.UnitType = UnitTypes.Pawn;
                             curUnitCom.LevelUnitType = LevelUnitTypes.Wood;
@@ -412,14 +429,28 @@ namespace Scripts.Game
 
                 else if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
                 {
-                    _friendZoneUIFilt.Get1(0).IsActiveFriendZone = true;
+                    FriendZoneDataUIC.IsActiveFriendZone = true;
                 }
 
 
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
-                    invResCom.SetAmountRes(PlayerTypes.Second, ResourceTypes.Food, 999999);
+                    InventResourcesC.Set(PlayerTypes.Second, ResourceTypes.Food, 999999);
                 }
+            }
+
+            else
+            {
+                CameraC.SetPosRotClient(WhoseMoveC.CurPlayer, SpawnInitComSys.Main_GO.transform.position);
+
+                foreach (byte curIdxCell in _xyCellFilter)
+                {
+                    _cellViewFilt.Get1(curIdxCell).SetRotForClient(WhoseMoveC.CurPlayer);
+                }
+
+                //WhoseMoveCom.WhoseMoveOnline = PlayerTypes.First;
+
+
             }
         }
     }

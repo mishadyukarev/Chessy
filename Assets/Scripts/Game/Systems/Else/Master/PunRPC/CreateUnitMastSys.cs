@@ -6,51 +6,42 @@ namespace Scripts.Game
 {
     internal sealed class CreateUnitMastSys : IEcsRunSystem
     {
-        private EcsFilter<InfoCom> _mastInfoFilter = default;
         private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
-        private EcsFilter<InventorUnitsCom, InventResourCom> _inventorFilter = default;
-        private EcsFilter<SoundEffectsComp> _soundEffFilt = default;
-        private EcsFilter<BuildsInGameCom> _buildsInGameFilt = default;
-
-
-        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilt = default;
+        private EcsFilter<SoundEffectC> _soundEffFilt = default;
 
 
         public void Run()
         {
-            ref var infoCom = ref _mastInfoFilter.Get1(0);
-            ref var amountResCom = ref _inventorFilter.Get2(0);
-            ref var unitInventorCom = ref _inventorFilter.Get1(0);
+            var sender = InfoC.Sender(MasGenOthTypes.Master);
+
             ref var soundEffecCom = ref _soundEffFilt.Get1(0);
 
 
             var unitTypeForCreating = _creatorUnitFilter.Get1(0).UnitTypeForCreating;
 
 
-            PlayerTypes playerSender = default;
-            if (PhotonNetwork.OfflineMode) playerSender = WhoseMoveCom.WhoseMoveOffline;
-            else playerSender = infoCom.FromInfo.Sender.GetPlayerType();
+            var playerSend = WhoseMoveC.WhoseMove;
 
 
-            if (_buildsInGameFilt.Get1(0).IsSettedCity(playerSender))
+            if (BuildsInGameC.IsSettedCity(playerSend))
             {
-                if (amountResCom.CanCreateUnit(playerSender, unitTypeForCreating, out var needRes))
+                if (InventResourcesC.CanCreateUnit(playerSend, unitTypeForCreating, out var needRes))
                 {
-                    amountResCom.BuyCreateUnit(playerSender, unitTypeForCreating);
-                    unitInventorCom.AddUnitsInInventor(playerSender, unitTypeForCreating, LevelUnitTypes.Wood);
+                    InventResourcesC.BuyCreateUnit(playerSend, unitTypeForCreating);
+                    InventorUnitsC.AddUnitsInInventor(playerSend, unitTypeForCreating, LevelUnitTypes.Wood);
 
-                    RpcSys.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.SoundGoldPack);
+                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
                 }
                 else
                 {
-                    RpcSys.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.Mistake);
-                    RpcSys.MistakeEconomyToGeneral(infoCom.FromInfo.Sender, needRes);
+                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                    RpcSys.MistakeEconomyToGeneral(sender, needRes);
                 }
             }
             else
             {
-                RpcSys.SoundToGeneral(infoCom.FromInfo.Sender, SoundEffectTypes.Mistake);
-                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedCity, infoCom.FromInfo.Sender);
+                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
             }
         }
     }

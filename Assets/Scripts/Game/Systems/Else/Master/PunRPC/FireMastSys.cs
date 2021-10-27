@@ -6,20 +6,18 @@ namespace Scripts.Game
 {
     internal sealed class FireMastSys : IEcsRunSystem
     {
-        private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForFireMasCom> _fireFilter = default;
 
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
 
         private EcsFilter<CellsArsonArcherComp> _cellsArcherArsonFilt = default;
 
 
         public void Run()
         {
-            var sender = _infoFilter.Get1(0).FromInfo.Sender;
+            var sender = InfoC.Sender(MasGenOthTypes.Master);
             var fromIdx = _fireFilter.Get1(0).FromIdx;
             var toIdx = _fireFilter.Get1(0).ToIdx;
 

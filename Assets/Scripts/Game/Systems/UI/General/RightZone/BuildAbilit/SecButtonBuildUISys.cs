@@ -4,26 +4,19 @@ namespace Scripts.Game
 {
     internal sealed class SecButtonBuildUISys : IEcsRunSystem
     {
-        private EcsFilter<SelectorCom> _selFilt = default;
-        private EcsFilter<BuildAbilitUICom> _buildAbilUIFilt = default;
-
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilt = default;
 
         public void Run()
         {
-            ref var selCom = ref _selFilt.Get1(0);
-            ref var buildAbilUICom = ref _buildAbilUIFilt.Get1(0);
-
-
             var needActiveButton = false;
 
-            if (selCom.IsSelCell)
+            if (SelectorC.IsSelCell)
             {
-                ref var selUnitDatCom = ref _cellUnitFilt.Get1(selCom.IdxSelCell);
+                ref var selUnitDatCom = ref _cellUnitFilt.Get1(SelectorC.IdxSelCell);
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    ref var sellOnUnitCom = ref _cellUnitFilt.Get2(selCom.IdxSelCell);
+                    ref var sellOnUnitCom = ref _cellUnitFilt.Get2(SelectorC.IdxSelCell);
 
                     if (sellOnUnitCom.IsMine)
                     {
@@ -32,7 +25,7 @@ namespace Scripts.Game
                 }
             }
 
-            buildAbilUICom.SetActive_Button(BuildButtonTypes.Second, needActiveButton);
+            BuildAbilitUIC.SetActive_Button(BuildButtonTypes.Second, needActiveButton);
         }
     }
 }

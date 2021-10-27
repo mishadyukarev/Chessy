@@ -7,7 +7,7 @@ namespace Scripts.Game
         private EcsFilter<CellsForShiftCom> _cellsForShiftFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
         public void Run()

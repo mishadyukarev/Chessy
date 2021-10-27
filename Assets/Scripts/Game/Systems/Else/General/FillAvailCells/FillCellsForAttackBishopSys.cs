@@ -7,10 +7,8 @@ namespace Scripts.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellViewComponent> _cellViewFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleCom> _cellUnitFilter = default;
-
-        private EcsFilter<CellsForAttackCom> _cellsForAttackFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleC> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -20,8 +18,6 @@ namespace Scripts.Game
 
                 ref var unitDataCom_0 = ref _cellUnitFilter.Get1(idxCell_0);
                 ref var ownUnitCom_0 = ref _cellUnitFilter.Get2(idxCell_0);
-
-                ref var cellsForAttackComp = ref _cellsForAttackFilter.Get1(0);
 
 
                 if (unitDataCom_0.Is(UnitTypes.Bishop))
@@ -49,9 +45,9 @@ namespace Scripts.Game
                                         {
                                             if (dirType_1 == DirectTypes.LeftDown || dirType_1 == DirectTypes.LeftUp || dirType_1 == DirectTypes.RightUp || dirType_1 == DirectTypes.RightDown)
                                             {
-                                                cellsForAttackComp.Add(ownUnitCom_0.PlayerType, AttackTypes.Unique, idxCell_0, idxCell_1);
+                                                CellsAttackC.Add(ownUnitCom_0.PlayerType, AttackTypes.Unique, idxCell_0, idxCell_1);
                                             }
-                                            else cellsForAttackComp.Add(ownUnitCom_0.PlayerType, AttackTypes.Simple, idxCell_0, idxCell_1);
+                                            else CellsAttackC.Add(ownUnitCom_0.PlayerType, AttackTypes.Simple, idxCell_0, idxCell_1);
                                         }
 
                                     }
@@ -73,7 +69,7 @@ namespace Scripts.Game
                                             {
                                                 if (!ownUnitCom_2.Is(ownUnitCom_0.PlayerType))
                                                 {
-                                                    cellsForAttackComp.Add(ownUnitCom_0.PlayerType, AttackTypes.Simple, idxCell_0, idxCell_2);
+                                                    CellsAttackC.Add(ownUnitCom_0.PlayerType, AttackTypes.Simple, idxCell_0, idxCell_2);
                                                 }
                                             }
 
@@ -81,7 +77,7 @@ namespace Scripts.Game
                                             {
                                                 if (!ownUnitCom_2.Is(ownUnitCom_0.PlayerType))
                                                 {
-                                                    cellsForAttackComp.Add(ownUnitCom_0.PlayerType, AttackTypes.Unique, idxCell_0, idxCell_2);
+                                                    CellsAttackC.Add(ownUnitCom_0.PlayerType, AttackTypes.Unique, idxCell_0, idxCell_2);
                                                 }
                                             }
                                     }

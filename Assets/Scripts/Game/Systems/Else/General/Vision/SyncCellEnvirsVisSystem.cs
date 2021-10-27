@@ -5,7 +5,7 @@ namespace Scripts.Game
 {
     internal sealed class SyncCellEnvirsVisSystem : IEcsRunSystem
     {
-        private EcsFilter<CellEnvironDataCom, CellEnvironViewCom> _cellEnvFilter = default;
+        private EcsFilter<CellEnvironmentDataC, CellEnvironViewCom> _cellEnvFilter = default;
 
         public void Run()
         {

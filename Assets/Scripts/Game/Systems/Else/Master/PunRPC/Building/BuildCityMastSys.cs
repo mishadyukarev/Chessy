@@ -5,17 +5,16 @@ namespace Scripts.Game
 {
     internal sealed class BuildCityMastSys : IEcsRunSystem
     {
-        private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilt = default;
         private EcsFilter<CellViewComponent> _cellViewFilt = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
-        private EcsFilter<BuildsInGameCom> _buildsFilt = default;
+        private EcsFilter<BuildsInGameC> _buildsFilt = default;
 
         public void Run()
         {
@@ -25,10 +24,9 @@ namespace Scripts.Game
 
             if (forBuildType == BuildingTypes.City)
             {
-                ref var infoMasCom = ref _infoFilter.Get1(0);
                 ref var buildsInGameCom = ref _buildsFilt.Get1(0);
 
-                var sender = infoMasCom.FromInfo.Sender;
+                var sender = InfoC.Sender(MasGenOthTypes.Master);
                 var idxForBuild = forBuildMasCom.IdxForBuild;
 
                 ref var curBuildCom = ref _cellBuildFilter.Get1(idxForBuild);
@@ -39,9 +37,7 @@ namespace Scripts.Game
                 ref var curFireCom = ref _cellFireFilter.Get1(idxForBuild);
 
 
-                PlayerTypes playerTypeSender = default;
-                if (PhotonNetwork.OfflineMode) playerTypeSender = WhoseMoveCom.WhoseMoveOffline;
-                else playerTypeSender = sender.GetPlayerType();
+                var playerSend = WhoseMoveC.WhoseMove;
 
 
 
@@ -62,19 +58,27 @@ namespace Scripts.Game
 
                     if (!haveNearBorder)
                     {
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
+                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                            curBuildCom.BuildType = forBuildType;
-                            curOwnBuildCom.PlayerType = playerTypeSender;
+                        curBuildCom.BuildType = forBuildType;
+                        curOwnBuildCom.PlayerType = playerSend;
 
-                            buildsInGameCom.Add(playerTypeSender, forBuildType, idxForBuild);
+                        BuildsInGameC.Add(playerSend, forBuildType, idxForBuild);
 
-                            curUnitDatCom.DefAmountSteps();
+                        curUnitDatCom.DefAmountSteps();
 
-                            curFireCom.DisableFire();
+                        curFireCom.DisableFire();
 
-                            if (curCellEnvCom.Have(EnvirTypes.AdultForest)) curCellEnvCom.ResetEnvironment(EnvirTypes.AdultForest);
-                            if (curCellEnvCom.Have(EnvirTypes.Fertilizer)) curCellEnvCom.ResetEnvironment(EnvirTypes.Fertilizer);
+                        if (curCellEnvCom.Have(EnvirTypes.AdultForest))
+                        {
+                            curCellEnvCom.Reset(EnvirTypes.AdultForest);
+                            WhereEnvironmentC.Remove(EnvirTypes.AdultForest, idxForBuild);
+                        }
+                        if (curCellEnvCom.Have(EnvirTypes.Fertilizer))
+                        {
+                            curCellEnvCom.Reset(EnvirTypes.Fertilizer);
+                            WhereEnvironmentC.Remove(EnvirTypes.Fertilizer, idxForBuild);
+                        }
                     }
 
                     else

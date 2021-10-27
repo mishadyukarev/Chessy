@@ -5,27 +5,22 @@ namespace Scripts.Game
 {
     internal sealed class TheEndGameUISystem : IEcsRunSystem
     {
-        private EcsFilter<EndGameDataUIComponent, EndGameViewUIComponent> _endGameUIFilter = default;
-
         public void Run()
         {
-            ref var endGameDataUIComp = ref _endGameUIFilter.Get1(0);
-            ref var endGameViewUIComp = ref _endGameUIFilter.Get2(0);
-
-            if (endGameDataUIComp.PlayerWinner == default)
+            if (EndGameDataUIC.PlayerWinner == default)
             {
-                endGameViewUIComp.SetActiveZone(false);
+                EndGameViewUIC.SetActiveZone(false);
             }
 
-            else if (endGameDataUIComp.PlayerWinner == WhoseMoveCom.CurPlayer)
+            else if (EndGameDataUIC.PlayerWinner == WhoseMoveC.CurPlayer)
             {
-                endGameViewUIComp.Text = LanguageComCom.GetText(GameLanguageTypes.YouAreWinner);
-                endGameViewUIComp.SetActiveZone(true);
+                EndGameViewUIC.Text = LanguageComCom.GetText(GameLanguageTypes.YouAreWinner);
+                EndGameViewUIC.SetActiveZone(true);
             }
             else
             {
-                endGameViewUIComp.Text = LanguageComCom.GetText(GameLanguageTypes.YouAreLoser);
-                endGameViewUIComp.SetActiveZone(true);
+                EndGameViewUIC.Text = LanguageComCom.GetText(GameLanguageTypes.YouAreLoser);
+                EndGameViewUIC.SetActiveZone(true);
             }
         }
     }

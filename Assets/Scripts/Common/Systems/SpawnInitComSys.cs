@@ -55,7 +55,7 @@ namespace Scripts.Common
             commonZoneEnt
                 //Common
                 .Replace(new ComZoneComp(new GameObject(NameConst.COMMON_ZONE)))
-                .Replace(new CameraComComp(camera, new Vector3(7.4f, 4.8f, -2)))
+                //.Replace(new CameraComC(camera))
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
                 .Replace(new CanvasCom(canvas))
                 .Replace(new SoundComComp(audioSource))

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Scripts.Common;
+using System.Collections.Generic;
 
 namespace Scripts.Game
 {

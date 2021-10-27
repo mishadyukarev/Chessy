@@ -8,44 +8,41 @@ namespace Scripts.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellViewComponent> _cellViewFilter = default;
-        private EcsFilter<SelectorCom> _selectorFilter = default;
 
         private Ray _ray;
         private const float RAY_DISTANCE = 100;
 
         public void Run()
         {
-            ref var selCom = ref _selectorFilter.Get1(0);
-
             _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            selCom.RaycastHit2D = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
+            SelectorC.RaycastHit2D = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
 
 #if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
 
         if (EventSystem.current.IsPointerOverGameObject())
         {
-            selCom.RaycastGettedType = RaycastGettedTypes.UI;
+            SelectorC.RaycastGettedType = RaycastGettedTypes.UI;
             return;
         }
 
 #endif
 
-            if (selCom.RaycastHit2D)
+            if (SelectorC.RaycastHit2D)
             {
                 foreach (byte idx in _xyCellFilter)
                 {
                     int one = _cellViewFilter.Get1(idx).InstanceID;
-                    int two = selCom.RaycastHit2D.transform.gameObject.GetInstanceID();
+                    int two = SelectorC.RaycastHit2D.transform.gameObject.GetInstanceID();
 
                     if (one == two)
                     {
-                        selCom.IdxCurCell = idx;
-                        selCom.RaycastGettedType = RaycastGettedTypes.Cell;
+                        SelectorC.IdxCurCell = idx;
+                        SelectorC.RaycastGettedType = RaycastGettedTypes.Cell;
                         return;
                     }
                 }
 
-                selCom.RaycastGettedType = default;
+                SelectorC.RaycastGettedType = default;
             }
 
 
@@ -55,7 +52,7 @@ namespace Scripts.Game
         {
             if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             {
-                selCom.RaycastGettedType = RaycastGettedTypes.UI;
+                SelectorCom.RaycastGettedType = RaycastGettedTypes.UI;
             }
         }
 #endif

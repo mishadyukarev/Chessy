@@ -5,7 +5,7 @@ namespace Scripts.Game
 {
     internal sealed class SyncCellUnitViewSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, VisibleCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, VisibleC> _cellUnitFilter = default;
         private EcsFilter<CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilt = default;
 
         public void Run()
@@ -24,7 +24,7 @@ namespace Scripts.Game
 
                 if (curUnitDatCom.HaveUnit)
                 {
-                    if (curVisUnitCom.IsVisibled(WhoseMoveCom.CurPlayer))
+                    if (curVisUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
                     {
                         curMainUnitViewCom.Enable_SR();
                         curMainUnitViewCom.SetSprite(curUnitDatCom.UnitType, curUnitDatCom.LevelUnitType);
@@ -44,8 +44,8 @@ namespace Scripts.Game
                         }
 
 
-                        curMainUnitViewCom.SetAlpha(curVisUnitCom.IsVisibled(WhoseMoveCom.NextPlayerFrom(WhoseMoveCom.CurPlayer)));
-                        curExtraUnitViewCom.SetAlpha(curVisUnitCom.IsVisibled(WhoseMoveCom.NextPlayerFrom(WhoseMoveCom.CurPlayer)));
+                        curMainUnitViewCom.SetAlpha(curVisUnitCom.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayer)));
+                        curExtraUnitViewCom.SetAlpha(curVisUnitCom.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayer)));
                     }
                 }
             }

@@ -6,7 +6,6 @@
 
         Health,
         Damage,
-        Protection,
         Steps
     }
 }

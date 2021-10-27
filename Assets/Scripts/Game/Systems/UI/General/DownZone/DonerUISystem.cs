@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Photon.Pun;
 using Scripts.Common;
 using UnityEngine;
 
@@ -12,9 +13,9 @@ namespace Scripts.Game
         {
             ref var donerViewUICom = ref _donerUIFilter.Get1(0);
 
-            if (GameModesCom.IsOnlineMode)
-            {
-                if (WhoseMoveCom.IsMyOnlineMove)
+            //if (!PhotonNetwork.OfflineMode)
+            //{
+                if (WhoseMoveC.IsMyMove)
                 {
                     donerViewUICom.DisableWait();
                     donerViewUICom.SetColor(Color.white);
@@ -24,12 +25,12 @@ namespace Scripts.Game
                     donerViewUICom.EnableWait();
                     donerViewUICom.SetColor(Color.red);
                 }
-            }
+            //}
 
-            else
-            {
-                donerViewUICom.DisableWait();
-            }
+            //else
+            //{
+            //    donerViewUICom.DisableWait();
+            //}
         }
     }
 }

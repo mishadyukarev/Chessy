@@ -5,9 +5,9 @@ namespace Scripts.Game
     internal sealed class VisibUnitsBuildsSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleCom> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataCom, OwnerCom, VisibleCom> _cellBuildFilt = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellBuildDataCom, OwnerCom, VisibleC> _cellBuildFilt = default;
 
         public void Run()
         {
@@ -51,11 +51,11 @@ namespace Scripts.Game
                             }
                         }
 
-                        curVisUnitCom.SetVisibled(WhoseMoveCom.NextPlayerFrom(curOwnUnitCom.PlayerType), isVisibledNextPlayer);
+                        curVisUnitCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnUnitCom.PlayerType), isVisibledNextPlayer);
                     }
                     else
                     {
-                        curVisUnitCom.SetVisibled(WhoseMoveCom.NextPlayerFrom(curOwnUnitCom.PlayerType), true);
+                        curVisUnitCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnUnitCom.PlayerType), true);
                     }
 
                 }
@@ -93,9 +93,9 @@ namespace Scripts.Game
                             }
                         }
 
-                        curVisBuildCom.SetVisibled(WhoseMoveCom.NextPlayerFrom(curOwnBuildCom.PlayerType), isVisibledNextPlayer);
+                        curVisBuildCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnBuildCom.PlayerType), isVisibledNextPlayer);
                     }
-                    else curVisBuildCom.SetVisibled(WhoseMoveCom.NextPlayerFrom(curOwnBuildCom.PlayerType), true);
+                    else curVisBuildCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnBuildCom.PlayerType), true);
                 }
 
             }

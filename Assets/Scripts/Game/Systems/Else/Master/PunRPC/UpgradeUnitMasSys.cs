@@ -5,15 +5,14 @@ namespace Scripts.Game
 {
     public sealed class UpgradeUnitMasSys : IEcsRunSystem
     {
-        private EcsFilter<InfoCom> _fromInfoFilt = default;
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
 
         private EcsFilter<CellUnitDataCom> _cellUnitDataFilt = default;
-        private EcsFilter<InventResourCom> _invResFilt = default;
+        private EcsFilter<InventResourcesC> _invResFilt = default;
 
         public void Run()
         {
-            var sender = _fromInfoFilt.Get1(0).FromInfo.Sender;
+            var sender = InfoC.Sender(MasGenOthTypes.Master);
             ref var idxUpgUnit = ref _forUpgradeUnitFilt.Get1(0).idxCellForUpgrade;
 
             ref var unitDatForUpg = ref _cellUnitDataFilt.Get1(idxUpgUnit);
@@ -21,17 +20,15 @@ namespace Scripts.Game
 
 
 
-            PlayerTypes playSend = default;
-            if (GameModesCom.IsOfflineMode) playSend = WhoseMoveCom.WhoseMoveOffline;
-            else playSend = sender.GetPlayerType();
+            var playSend = WhoseMoveC.WhoseMove;
 
             if (unitDatForUpg.HaveMaxAmountHealth)
             {
                 if (unitDatForUpg.HaveMinAmountSteps)
                 {
-                    if(invResCom.CanUpgradeUnit(playSend, unitDatForUpg.UnitType, out var needRes))
+                    if (InventResourcesC.CanUpgradeUnit(playSend, unitDatForUpg.UnitType, out var needRes))
                     {
-                        invResCom.BuyUpgradeUnit(playSend, unitDatForUpg.UnitType);
+                        InventResourcesC.BuyUpgradeUnit(playSend, unitDatForUpg.UnitType);
 
                         unitDatForUpg.LevelUnitType = LevelUnitTypes.Iron;
                         unitDatForUpg.TakeAmountSteps();

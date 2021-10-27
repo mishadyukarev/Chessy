@@ -5,15 +5,13 @@ namespace Scripts.Game
 {
     internal class FliperAndRotatorUnitSystem : IEcsRunSystem
     {
-        private EcsFilter<SelectorCom> _selComFilter = default;
+        private EcsFilter<SelectorC> _selComFilter = default;
 
         private EcsFilter<CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
-            ref var selCom = ref _selComFilter.Get1(0);
-
             foreach (byte idxCurCell in _cellUnitFilter)
             {
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxCurCell);
@@ -23,7 +21,7 @@ namespace Scripts.Game
                 ref var curExtraUnitViewCom = ref _cellUnitViewFilter.Get2(idxCurCell);
 
 
-                if (selCom.IdxSelCell == idxCurCell)
+                if (SelectorC.IdxSelCell == idxCurCell)
                 {
                     if (curUnitDatCom.HaveUnit)
                     {

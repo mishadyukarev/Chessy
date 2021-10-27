@@ -61,7 +61,7 @@ namespace Scripts.Game
             .Add(new WindUISys())
 
             ///center
-            .Add(new SelectorTypeUISystem())
+            .Add(new SelectorUISys())
                 .Add(new TheEndGameUISystem())
                 .Add(new MotionCenterUISystem())
                 .Add(new ReadyZoneUISystem())

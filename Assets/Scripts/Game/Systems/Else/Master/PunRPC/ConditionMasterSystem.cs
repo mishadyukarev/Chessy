@@ -5,16 +5,14 @@ namespace Scripts.Game
 {
     internal sealed class ConditionMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<InfoCom> _infoFilter = default;
-        private EcsFilter<ConditionMasCom> _conditionFilter = default;
-
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
-            var sender = _infoFilter.Get1(0).FromInfo.Sender;
-            var neededCondType = _conditionFilter.Get1(0).NeededCondUnitType;
-            var idxForCondit = _conditionFilter.Get1(0).IdxForCondition;
+            var sender = InfoC.Sender(MasGenOthTypes.Master);
+
+            var neededCondType = ForCondMasCom.NeededCondUnitType;
+            var idxForCondit = ForCondMasCom.IdxForCondition;
 
             ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxForCondit);
             ref var curOwnerCellUnitDataCom = ref _cellUnitFilter.Get2(idxForCondit);

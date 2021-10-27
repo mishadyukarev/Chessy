@@ -4,33 +4,22 @@ namespace Scripts.Game
 {
     internal sealed class GiveTakeUISystem : IEcsRunSystem
     {
-        private EcsFilter<GiveTakeViewUICom> _giveThingUIFilter = default;
-        private EcsFilter<SelectorCom> _selectorFilter = default;
-        private EcsFilter<InventorTWCom> _inventToolsFilter = default;
-
-
-
         public void Run()
         {
-            ref var inventToolsCom = ref _inventToolsFilter.Get1(0);
-            ref var giveTakeViewCom = ref _giveThingUIFilter.Get1(0);
-            ref var selCom = ref _selectorFilter.Get1(0);
+            GiveTakeViewUIC.SetView_ButtonImage(ToolWeaponTypes.Pick, false);
+            GiveTakeViewUIC.SetView_ButtonImage(ToolWeaponTypes.Sword, false);
+            GiveTakeViewUIC.SetView_ButtonImage(ToolWeaponTypes.Shield, false);
 
-
-            giveTakeViewCom.SetView_ButtonImage(ToolWeaponTypes.Pick, false);
-            giveTakeViewCom.SetView_ButtonImage(ToolWeaponTypes.Sword, false);
-            giveTakeViewCom.SetView_ButtonImage(ToolWeaponTypes.Shield, false);
-
-            if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
-                if (selCom.TWTypeForGive != default)
+            if (SelectorC.IsCellClickType(CellClickTypes.GiveTakeTW))
+                if (SelectorC.TWTypeForGive != default)
                 {
-                    giveTakeViewCom.SetView_ButtonImage(selCom.TWTypeForGive, true);
-                    giveTakeViewCom.SetImage(selCom.TWTypeForGive, selCom.LevelTWType);
+                    GiveTakeViewUIC.SetView_ButtonImage(SelectorC.TWTypeForGive, true);
+                    GiveTakeViewUIC.SetImage(SelectorC.TWTypeForGive, SelectorC.LevelTWType);
                 }
 
-            giveTakeViewCom.SetText(ToolWeaponTypes.Pick, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Pick, selCom.LevelTWType).ToString());
-            giveTakeViewCom.SetText(ToolWeaponTypes.Sword, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Sword, selCom.LevelTWType).ToString());
-            giveTakeViewCom.SetText(ToolWeaponTypes.Shield, inventToolsCom.GetAmountTools(WhoseMoveCom.CurPlayer, ToolWeaponTypes.Shield, selCom.LevelTWType).ToString());
+            GiveTakeViewUIC.SetText(ToolWeaponTypes.Pick, InventorTWCom.GetAmountTools(WhoseMoveC.CurPlayer, ToolWeaponTypes.Pick, SelectorC.LevelTWType).ToString());
+            GiveTakeViewUIC.SetText(ToolWeaponTypes.Sword, InventorTWCom.GetAmountTools(WhoseMoveC.CurPlayer, ToolWeaponTypes.Sword, SelectorC.LevelTWType).ToString());
+            GiveTakeViewUIC.SetText(ToolWeaponTypes.Shield, InventorTWCom.GetAmountTools(WhoseMoveC.CurPlayer, ToolWeaponTypes.Shield, SelectorC.LevelTWType).ToString());
         }
     } 
 }

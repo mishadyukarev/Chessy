@@ -5,7 +5,7 @@ namespace Scripts.Game
 {
     internal sealed class SyncCellUnitSupVisSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleC> _cellUnitFilter = default;
         private EcsFilter<CellUnitMainViewCom> _cellUnitViewFilter = default;
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
         private EcsFilter<CellBlocksViewComponent> _cellBlocksFilter = default;
@@ -30,7 +30,7 @@ namespace Scripts.Game
                 blocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
 
 
-                if (curVisUnitCom.IsVisibled(WhoseMoveCom.CurPlayer))
+                if (curVisUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
                 {
 
                     if (curUnitDataCom.HaveUnit)

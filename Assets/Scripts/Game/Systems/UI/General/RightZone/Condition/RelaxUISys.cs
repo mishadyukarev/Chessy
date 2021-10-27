@@ -6,19 +6,12 @@ namespace Scripts.Game
 {
     internal sealed class RelaxUISys : IEcsRunSystem
     {
-        private EcsFilter<CondUnitUICom> _condUIFilt = default;
-        private EcsFilter<SelectorCom> _selectorFilter = default;
-
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-
 
         public void Run()
         {
-            var idxSelCell = _selectorFilter.Get1(0).IdxSelCell;
-            ref var condUnitUICom = ref _condUIFilt.Get1(0);
-
-            ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
-            ref var selOnUnitCom = ref _cellUnitFilter.Get2(idxSelCell);
+            ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelectorC.IdxSelCell);
+            ref var selOnUnitCom = ref _cellUnitFilter.Get2(SelectorC.IdxSelCell);
 
 
             var activeButt = false;
@@ -27,34 +20,34 @@ namespace Scripts.Game
             {
                 if (!selUnitDatCom.Is(UnitTypes.Scout))
                 {
-                    if (selOnUnitCom.Is(WhoseMoveCom.CurPlayer))
+                    if (selOnUnitCom.Is(WhoseMoveC.CurPlayer))
                     {
                         activeButt = true;
 
                         if (selUnitDatCom.Is(CondUnitTypes.Protected))
                         {
-                            condUnitUICom.SetColor(CondUnitTypes.Protected, Color.yellow);
+                            CondUnitUIC.SetColor(CondUnitTypes.Protected, Color.yellow);
                         }
 
                         else
                         {
-                            condUnitUICom.SetColor(CondUnitTypes.Protected, Color.white);
+                            CondUnitUIC.SetColor(CondUnitTypes.Protected, Color.white);
                         }
 
                         if (selUnitDatCom.Is(CondUnitTypes.Relaxed))
                         {
-                            condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.green);
+                            CondUnitUIC.SetColor(CondUnitTypes.Relaxed, Color.green);
                         }
                         else
                         {
-                            condUnitUICom.SetColor(CondUnitTypes.Relaxed, Color.white);
+                            CondUnitUIC.SetColor(CondUnitTypes.Relaxed, Color.white);
                         }
                     }
                 }
             }
 
 
-            condUnitUICom.SetActive(CondUnitTypes.Relaxed, activeButt);
+            CondUnitUIC.SetActive(CondUnitTypes.Relaxed, activeButt);
         }
     }
 }

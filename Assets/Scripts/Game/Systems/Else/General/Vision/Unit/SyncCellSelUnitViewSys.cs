@@ -4,20 +4,16 @@ namespace Scripts.Game
 {
     internal sealed class SyncCellSelUnitViewSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, VisibleCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, VisibleC> _cellUnitFilter = default;
         private EcsFilter<CellUnitMainViewCom> _cellUnitViewFilt = default;
-        private EcsFilter<SelectorCom> _selectorFilter = default;
+        private EcsFilter<SelectorC> _selectorFilter = default;
 
         public void Run()
         {
-            ref var selCom = ref _selectorFilter.Get1(0);
-
-
-
-            if (selCom.IsSelUnit)
+            if (SelectorC.IsSelUnit)
             {
-                var idxCurCell = selCom.IdxCurCell;
-                var idxPreCell = selCom.IdxPreVisionCell;
+                var idxCurCell = SelectorC.IdxCurCell;
+                var idxPreCell = SelectorC.IdxPreVisionCell;
 
 
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxCurCell);
@@ -29,23 +25,23 @@ namespace Scripts.Game
 
                 if (curUnitDatCom.HaveUnit)
                 {
-                    if (curOwnUnitCom.IsVisibled(WhoseMoveCom.CurPlayer))
+                    if (curOwnUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
                     {
                         preVisMainUnitViewCom.Enable_SR();
-                        preVisMainUnitViewCom.SetSprite(selCom.SelUnitType, selCom.LevelSelUnitType);
+                        preVisMainUnitViewCom.SetSprite(SelectorC.SelUnitType, SelectorC.LevelSelUnitType);
                     }
 
                     else
                     {
                         curMainUnitViewCom.Enable_SR();
-                        curMainUnitViewCom.SetSprite(selCom.SelUnitType, selCom.LevelSelUnitType);
+                        curMainUnitViewCom.SetSprite(SelectorC.SelUnitType, SelectorC.LevelSelUnitType);
                     }
                 }
 
                 else
                 {
                     curMainUnitViewCom.Enable_SR();
-                    curMainUnitViewCom.SetSprite(selCom.SelUnitType, selCom.LevelSelUnitType);
+                    curMainUnitViewCom.SetSprite(SelectorC.SelUnitType, SelectorC.LevelSelUnitType);
                 }
             }
         }

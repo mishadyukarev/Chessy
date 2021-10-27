@@ -5,10 +5,10 @@ namespace Scripts.Game
     internal sealed class FillCellsForAttackKingSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
-        private EcsFilter<CellsForAttackCom> _cellsForAttackFilter = default;
+        private EcsFilter<CellsAttackC> _cellsForAttackFilter = default;
 
         public void Run()
         {
@@ -40,7 +40,7 @@ namespace Scripts.Game
                                 {
                                     if (!arouOwnUnitCom.Is(curOwnUnitCom.PlayerType))
                                     {
-                                        cellsAttackCom.Add(curOwnUnitCom.PlayerType, AttackTypes.Simple, curIdxCell, idxCellAround);
+                                        CellsAttackC.Add(curOwnUnitCom.PlayerType, AttackTypes.Simple, curIdxCell, idxCellAround);
                                     }
                                 }
                             }

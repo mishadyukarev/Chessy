@@ -5,29 +5,23 @@ namespace Scripts.Game
 {
     internal sealed class FriendZoneUISys : IEcsRunSystem
     {
-        private EcsFilter<FriendZoneDataUICom, FriendZoneViewUICom> _friendZoneUIFilt = default;
-
         public void Run()
         {
-            ref var friendViewCom = ref _friendZoneUIFilt.Get2(0);
-
-            friendViewCom.SetActiveParent(false);
+            FriendZoneViewUIC.SetActiveParent(false);
 
             if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
             {
-                ref var friendDataCom = ref _friendZoneUIFilt.Get1(0);
-
-                if (friendDataCom.IsActiveFriendZone)
+                if (FriendZoneDataUIC.IsActiveFriendZone)
                 {
-                    friendViewCom.SetActiveParent(true);
+                    FriendZoneViewUIC.SetActiveParent(true);
 
-                    if (WhoseMoveCom.CurPlayer == PlayerTypes.First)
+                    if (WhoseMoveC.CurPlayer == PlayerTypes.First)
                     {
-                        friendViewCom.SetTextPlayerMotion("1");
+                        FriendZoneViewUIC.SetTextPlayerMotion("1");
                     }
                     else
                     {
-                        friendViewCom.SetTextPlayerMotion("2");
+                        FriendZoneViewUIC.SetTextPlayerMotion("2");
                     }
                 }
             }

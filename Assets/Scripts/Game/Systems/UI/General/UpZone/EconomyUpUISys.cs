@@ -5,21 +5,15 @@ namespace Scripts.Game
 {
     internal sealed class EconomyUpUISys : IEcsRunSystem
     {
-        private EcsFilter<EconomyViewUICom> _economyUIFilter = default;
-
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitsFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvDatFilt = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvDatFilt = default;
 
-        private EcsFilter<InventResourCom> _amountResFilter = default;
-        private EcsFilter<UpgradesBuildsCom> _upgradeBuildsFilter = default;
+        private EcsFilter<UpgBuildsC> _upgradeBuildsFilter = default;
 
 
         public void Run()
         {
-            ref var econViewUICom = ref _economyUIFilter.Get1(0);
-
-            ref var amountResCom = ref _amountResFilter.Get1(0);
             ref var amountBuildUpgsCom = ref _upgradeBuildsFilter.Get1(0);
 
             var builds = new Dictionary<BuildingTypes, int>();
@@ -79,31 +73,31 @@ namespace Scripts.Game
                     }
                 }
             }
-            var extractOneFarm = amountBuildUpgsCom.GetExtractOneBuild(WhoseMoveCom.CurPlayer, BuildingTypes.Farm);
+            var extractOneFarm = UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildingTypes.Farm);
 
             var amountAddFood = 3 + builds[BuildingTypes.Farm] * extractOneFarm - amountUnitsInGame;
 
 
-            if (amountAddFood < 0) econViewUICom.SetAddText(ResourceTypes.Food, amountAddFood.ToString());
+            if (amountAddFood < 0) EconomyViewUIC.SetAddText(ResourceTypes.Food, amountAddFood.ToString());
 
-            else econViewUICom.SetAddText(ResourceTypes.Food, "+ " + amountAddFood.ToString());
-
-
-
-            amountAddWood += (byte)(builds[BuildingTypes.Woodcutter] * amountBuildUpgsCom.GetExtractOneBuild(WhoseMoveCom.CurPlayer, BuildingTypes.Woodcutter));
-            econViewUICom.SetAddText(ResourceTypes.Wood, "+ " + amountAddWood);
-
-            var amountAddOre = builds[BuildingTypes.Mine] * amountBuildUpgsCom.GetExtractOneBuild(WhoseMoveCom.CurPlayer, BuildingTypes.Mine);
-            econViewUICom.SetAddText(ResourceTypes.Ore, "+ " + amountAddOre);
+            else EconomyViewUIC.SetAddText(ResourceTypes.Food, "+ " + amountAddFood.ToString());
 
 
 
+            amountAddWood += (byte)(builds[BuildingTypes.Woodcutter] * UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildingTypes.Woodcutter));
+            EconomyViewUIC.SetAddText(ResourceTypes.Wood, "+ " + amountAddWood);
 
-            econViewUICom.SetMainText(ResourceTypes.Food, amountResCom.AmountRes(WhoseMoveCom.CurPlayer, ResourceTypes.Food).ToString());
-            econViewUICom.SetMainText(ResourceTypes.Wood, amountResCom.AmountRes(WhoseMoveCom.CurPlayer, ResourceTypes.Wood).ToString());
-            econViewUICom.SetMainText(ResourceTypes.Ore, amountResCom.AmountRes(WhoseMoveCom.CurPlayer, ResourceTypes.Ore).ToString());
-            econViewUICom.SetMainText(ResourceTypes.Iron, amountResCom.AmountRes(WhoseMoveCom.CurPlayer, ResourceTypes.Iron).ToString());
-            econViewUICom.SetMainText(ResourceTypes.Gold, amountResCom.AmountRes(WhoseMoveCom.CurPlayer, ResourceTypes.Gold).ToString());
+            var amountAddOre = builds[BuildingTypes.Mine] * UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildingTypes.Mine);
+            EconomyViewUIC.SetAddText(ResourceTypes.Ore, "+ " + amountAddOre);
+
+
+
+
+            EconomyViewUIC.SetMainText(ResourceTypes.Food, InventResourcesC.AmountRes(WhoseMoveC.CurPlayer, ResourceTypes.Food).ToString());
+            EconomyViewUIC.SetMainText(ResourceTypes.Wood, InventResourcesC.AmountRes(WhoseMoveC.CurPlayer, ResourceTypes.Wood).ToString());
+            EconomyViewUIC.SetMainText(ResourceTypes.Ore, InventResourcesC.AmountRes(WhoseMoveC.CurPlayer, ResourceTypes.Ore).ToString());
+            EconomyViewUIC.SetMainText(ResourceTypes.Iron, InventResourcesC.AmountRes(WhoseMoveC.CurPlayer, ResourceTypes.Iron).ToString());
+            EconomyViewUIC.SetMainText(ResourceTypes.Gold, InventResourcesC.AmountRes(WhoseMoveC.CurPlayer, ResourceTypes.Gold).ToString());
 
         }
     }

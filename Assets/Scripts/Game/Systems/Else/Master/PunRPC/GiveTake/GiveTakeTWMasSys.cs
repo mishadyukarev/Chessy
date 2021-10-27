@@ -4,11 +4,7 @@ namespace Scripts.Game
 {
     internal sealed class GiveTakeTWMasSys : IEcsRunSystem
     {
-        private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGiveTakeToolWeapFilter = default;
-
-        private EcsFilter<InventResourCom> _inventResFilter = default;
-        private EcsFilter<InventorTWCom> _inventTWFilt = default;
 
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
 
@@ -21,10 +17,7 @@ namespace Scripts.Game
                 var tWTypeForGive = _forGiveTakeToolWeapFilter.Get1(0).ToolWeapType;
                 var levelTWType = _forGiveTakeToolWeapFilter.Get1(0).LevelTWType;
 
-                ref var inventTWCom = ref _inventTWFilt.Get1(0);
-                ref var invResCom = ref _inventResFilter.Get1(0);
-
-                var sender = _infoFilter.Get1(0).FromInfo.Sender;
+                var sender = InfoC.Sender(MasGenOthTypes.Master);
 
                 ref var unitDatComForGive = ref _cellUnitFilter.Get1(neededIdxCell);
                 ref var ownUnitCom = ref _cellUnitFilter.Get2(neededIdxCell);
@@ -38,7 +31,7 @@ namespace Scripts.Game
                         {
                             if (unitDatComForGive.HaveExtraTW)
                             {
-                                inventTWCom.AddAmountTools(ownUnitCom.PlayerType, unitDatComForGive.TWExtraType, unitDatComForGive.LevelTWType);
+                                InventorTWCom.AddAmountTools(ownUnitCom.PlayerType, unitDatComForGive.TWExtraType, unitDatComForGive.LevelTWType);
 
                                 unitDatComForGive.TWExtraType = default;
                                 unitDatComForGive.LevelTWType = default;
@@ -51,9 +44,9 @@ namespace Scripts.Game
 
                             else
                             {
-                                if (inventTWCom.HaveTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType))
+                                if (InventorTWCom.HaveTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType))
                                 {
-                                    inventTWCom.TakeAmountTools(ownUnitCom.PlayerType, tWTypeForGive, levelTWType);
+                                    InventorTWCom.TakeAmountTools(ownUnitCom.PlayerType, tWTypeForGive, levelTWType);
 
                                     unitDatComForGive.TWExtraType = tWTypeForGive;
                                     unitDatComForGive.LevelTWType = levelTWType;
@@ -66,9 +59,9 @@ namespace Scripts.Game
 
                                 else if (tWTypeForGive == ToolWeaponTypes.Pick)
                                 {
-                                    if (invResCom.CanBuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Pick, levelTWType, out var needRes))
+                                    if (InventResourcesC.CanBuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Pick, levelTWType, out var needRes))
                                     {
-                                        invResCom.BuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Pick, levelTWType);
+                                        InventResourcesC.BuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Pick, levelTWType);
 
                                         unitDatComForGive.TWExtraType = tWTypeForGive;
                                         unitDatComForGive.LevelTWType = levelTWType;
@@ -86,9 +79,9 @@ namespace Scripts.Game
 
                                 else if (tWTypeForGive == ToolWeaponTypes.Sword)
                                 {
-                                    if (invResCom.CanBuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Sword, levelTWType, out var needRes))
+                                    if (InventResourcesC.CanBuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Sword, levelTWType, out var needRes))
                                     {
-                                        invResCom.BuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Sword, levelTWType);
+                                        InventResourcesC.BuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Sword, levelTWType);
 
                                         unitDatComForGive.TWExtraType = tWTypeForGive;
                                         unitDatComForGive.LevelTWType = levelTWType;
@@ -106,9 +99,9 @@ namespace Scripts.Game
 
                                 else if (tWTypeForGive == ToolWeaponTypes.Shield)
                                 {
-                                    if (invResCom.CanBuyTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType, out var needRes))
+                                    if (InventResourcesC.CanBuyTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType, out var needRes))
                                     {
-                                        invResCom.BuyTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType);
+                                        InventResourcesC.BuyTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType);
 
                                         unitDatComForGive.TWExtraType = tWTypeForGive;
                                         unitDatComForGive.LevelTWType = levelTWType;

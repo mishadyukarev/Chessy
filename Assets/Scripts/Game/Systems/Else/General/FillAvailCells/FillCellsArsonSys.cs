@@ -8,7 +8,7 @@ namespace Scripts.Game
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
         public void Run()

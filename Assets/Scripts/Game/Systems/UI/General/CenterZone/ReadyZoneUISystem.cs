@@ -7,29 +7,24 @@ namespace Scripts.Game
 {
     internal sealed class ReadyZoneUISystem : IEcsRunSystem
     {
-        private EcsFilter<ReadyDataUICom, ReadyViewUICom> _readyUIFilter = default;
-
         public void Run()
         {
-            ref var readyDataUICom = ref _readyUIFilter.Get1(0);
-            ref var readyViewUICom = ref _readyUIFilter.Get2(0);
-
-            if (readyDataUICom.IsReady(PhotonNetwork.IsMasterClient))
+            if (ReadyDataUIC.IsReady(PhotonNetwork.IsMasterClient))
             {
-                readyViewUICom.SetColorReadyButton(Color.red);
+                ReadyViewUIC.SetColorReadyButton(Color.red);
             }
             else
             {
-                readyViewUICom.SetColorReadyButton(Color.white);
+                ReadyViewUIC.SetColorReadyButton(Color.white);
             }
 
-            if (readyDataUICom.IsStartedGame || PhotonNetwork.OfflineMode)
+            if (ReadyDataUIC.IsStartedGame || PhotonNetwork.OfflineMode)
             {
-                readyViewUICom.SetActiveParent(false);
+                ReadyViewUIC.SetActiveParent(false);
             }
             else
             {
-                readyViewUICom.SetActiveParent(true);
+                ReadyViewUIC.SetActiveParent(true);
             }
         }
     }

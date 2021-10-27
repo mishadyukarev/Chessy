@@ -13,29 +13,22 @@ namespace Scripts.Game
     {
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvrFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvrFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
-        private EcsFilter<InventResourCom> _inventorResFilter = default;
-        private EcsFilter<InventorUnitsCom> _invUnitsFilter = default;
-        private EcsFilter<InventorTWCom> _invToolsFilter = default;
-
-        private EcsFilter<SelectorCom> _selectorFilter = default;
-        private EcsFilter<UpgradesBuildsCom> _upgradesBuildFilter = default;
-        private EcsFilter<EndGameDataUIComponent> _endGameFilter = default;
-        private EcsFilter<ReadyDataUICom> _readyUIFilter = default;
-        private EcsFilter<MotionsDataUIComponent> _motionsFilter = default;
-        private EcsFilter<MistakeDataUICom> _mistakeUIFilter = default;
-        private EcsFilter<SoundEffectsComp> _soundFilter = default;
+        private EcsFilter<SelectorC> _selectorFilter = default;
+        private EcsFilter<EndGameDataUIC> _endGameFilter = default;
+        private EcsFilter<ReadyDataUIC> _readyUIFilter = default;
+        private EcsFilter<MotionsDataUIC> _motionsFilter = default;
+        private EcsFilter<MistakeDataUIC> _mistakeUIFilter = default;
 
 
 
-        private EcsFilter<InfoCom> _fromInfoFilt = default;
         private EcsFilter<ForBuildingMasCom, XyCellForDoingMasCom> _buildFilter = default;
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
         private EcsFilter<ForShiftMasCom> _shiftFilter = default;
         private EcsFilter<ForAttackMasCom> _attackFilter = default;
-        private EcsFilter<ConditionMasCom, XyCellForDoingMasCom> _conditionFilter = default;
+        private EcsFilter<ForCondMasCom, XyCellForDoingMasCom> _conditionFilter = default;
         private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
         private EcsFilter<ForSettingUnitMasCom, XyCellForDoingMasCom> _settingUnitFilter = default;
         private EcsFilter<ForSeedingMasCom, XyCellForDoingMasCom> _seedingFilter = default;
@@ -44,7 +37,6 @@ namespace Scripts.Game
         private EcsFilter<ForCircularAttackMasCom, XyCellForDoingMasCom> _circularAttackFilter = default;
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGivePawnToolFilter = default;
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
-        private EcsFilter<UpdatedMasCom> _updatedMotMasFilt = default;
         private EcsFilter<ForOldNewUnitCom> _forOldToNewUnitFilt = default;
 
         private static PhotonView PhotonView => PhotonRpcViewGameCom.PhotonView;
@@ -123,7 +115,7 @@ namespace Scripts.Game
         {
             _curNumber = default;
 
-            _fromInfoFilt.Get1(0).FromInfo = infoFrom;
+            InfoC.AddInfo(MasGenOthTypes.Master, infoFrom);
 
             switch (rpcType)
             {
@@ -156,8 +148,8 @@ namespace Scripts.Game
                     break;
 
                 case RpcMasterTypes.ConditionUnit:
-                    _conditionFilter.Get1(0).NeededCondUnitType = (CondUnitTypes)objects[0];
-                    _conditionFilter.Get1(0).IdxForCondition = (byte)objects[1];
+                    ForCondMasCom.NeededCondUnitType = (CondUnitTypes)objects[0];
+                    ForCondMasCom.IdxForCondition = (byte)objects[1];
                     break;
 
                 case RpcMasterTypes.CreateUnit:
@@ -218,7 +210,7 @@ namespace Scripts.Game
         private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _curNumber = 0;
-            _fromInfoFilt.Get1(0).FromInfo = infoFrom;
+            InfoC.AddInfo(MasGenOthTypes.General, infoFrom);
 
             ref var selectorCom = ref _selectorFilter.Get1(0);
 
@@ -228,33 +220,33 @@ namespace Scripts.Game
                     throw new Exception();
 
                 case RpcGeneralTypes.ActiveAmountMotionUI:
-                    _motionsFilter.Get1(0).IsActivatedUI = true;
+                    MotionsDataUIC.IsActivatedUI = true;
                     break;
 
                 case RpcGeneralTypes.Mistake:
                     var mistakeType = (MistakeTypes)objects[_curNumber++];
-                    _mistakeUIFilter.Get1(0).MistakeType = mistakeType;
-                    _mistakeUIFilter.Get1(0).CurTime = default;
+                     MistakeDataUIC.MistakeType = mistakeType;
+                     MistakeDataUIC.CurTime = default;
 
                     if(mistakeType == MistakeTypes.Economy)
                     {
-                        _mistakeUIFilter.Get1(0).ClearAllNeeds();
+                         MistakeDataUIC.ClearAllNeeds();
 
                         var needRes = (int[])objects[_curNumber++];
 
-                        _mistakeUIFilter.Get1(0).AddNeedRes(ResourceTypes.Food, needRes[0]);
-                        _mistakeUIFilter.Get1(0).AddNeedRes(ResourceTypes.Wood, needRes[1]);
-                        _mistakeUIFilter.Get1(0).AddNeedRes(ResourceTypes.Ore, needRes[2]);
-                        _mistakeUIFilter.Get1(0).AddNeedRes(ResourceTypes.Iron, needRes[3]);
-                        _mistakeUIFilter.Get1(0).AddNeedRes(ResourceTypes.Gold, needRes[4]);
+                         MistakeDataUIC.AddNeedRes(ResourceTypes.Food, needRes[0]);
+                         MistakeDataUIC.AddNeedRes(ResourceTypes.Wood, needRes[1]);
+                         MistakeDataUIC.AddNeedRes(ResourceTypes.Ore, needRes[2]);
+                         MistakeDataUIC.AddNeedRes(ResourceTypes.Iron, needRes[3]);
+                         MistakeDataUIC.AddNeedRes(ResourceTypes.Gold, needRes[4]);
                     }
 
-                    _soundFilter.Get1(0).Play(SoundEffectTypes.Mistake);
+                    SoundEffectC.Play(SoundEffectTypes.Mistake);
                     break;
 
                 case RpcGeneralTypes.Sound:
                     var soundEffectType = (SoundEffectTypes)objects[_curNumber++];
-                    _soundFilter.Get1(0).Play(soundEffectType);
+                    SoundEffectC.Play(soundEffectType);
                     break;
 
                 default:
@@ -266,7 +258,7 @@ namespace Scripts.Game
         private void OtherRPC(RpcOtherTypes rpcOtherType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _curNumber = 0;
-            _fromInfoFilt.Get1(0).FromInfo = infoFrom;
+            InfoC.AddInfo(MasGenOthTypes.Other, infoFrom);
 
             switch (rpcOtherType)
             {
@@ -290,14 +282,14 @@ namespace Scripts.Game
         {
             var listObjects = new List<object>();
 
-            listObjects.Add(WhoseMoveCom.WhoseMoveOnline);
+            listObjects.Add(WhoseMoveC.WhoseMove);
 
-            listObjects.Add(_endGameFilter.Get1(0).PlayerWinner);
+            listObjects.Add(EndGameDataUIC.PlayerWinner);
 
-            listObjects.Add(_readyUIFilter.Get1(0).IsStartedGame);
-            listObjects.Add(_readyUIFilter.Get1(0).IsReady(false));
+            listObjects.Add(ReadyDataUIC.IsStartedGame);
+            listObjects.Add(ReadyDataUIC.IsReady(false));
 
-            listObjects.Add(_motionsFilter.Get1(0).AmountMotions);
+            listObjects.Add(MotionsDataUIC.AmountMotions);
 
             foreach (var curIdxCell in _cellUnitFilter)
             {
@@ -315,19 +307,17 @@ namespace Scripts.Game
                 listObjects.Add(_cellBuildFilter.Get1(curIdxCell).BuildType);
                 listObjects.Add(_cellBuildFilter.Get2(curIdxCell).PlayerType);
 
-
                 ref var curEnvDatCom = ref _cellEnvrFilter.Get1(curIdxCell);
                 listObjects.Add(curEnvDatCom.Have(EnvirTypes.Fertilizer));
+                listObjects.Add(curEnvDatCom.AmountRes(EnvirTypes.Fertilizer));
                 listObjects.Add(curEnvDatCom.Have(EnvirTypes.YoungForest));
+                listObjects.Add(curEnvDatCom.AmountRes(EnvirTypes.YoungForest));
                 listObjects.Add(curEnvDatCom.Have(EnvirTypes.AdultForest));
+                listObjects.Add(curEnvDatCom.AmountRes(EnvirTypes.AdultForest));
                 listObjects.Add(curEnvDatCom.Have(EnvirTypes.Hill));
+                listObjects.Add(curEnvDatCom.AmountRes(EnvirTypes.Hill));
                 listObjects.Add(curEnvDatCom.Have(EnvirTypes.Mountain));
-
-                listObjects.Add(curEnvDatCom.AmountResources(EnvirTypes.Fertilizer));
-                listObjects.Add(curEnvDatCom.AmountResources(EnvirTypes.YoungForest));
-                listObjects.Add(curEnvDatCom.AmountResources(EnvirTypes.AdultForest));
-                listObjects.Add(curEnvDatCom.AmountResources(EnvirTypes.Hill));
-                listObjects.Add(curEnvDatCom.AmountResources(EnvirTypes.Mountain));
+                listObjects.Add(curEnvDatCom.AmountRes(EnvirTypes.Mountain));
 
 
                 listObjects.Add(_cellFireFilter.Get1(curIdxCell).HaveFire);
@@ -335,36 +325,33 @@ namespace Scripts.Game
 
 
 
-            ref var inventResComp = ref _inventorResFilter.Get1(0);
-            listObjects.Add(inventResComp.AmountRes(PlayerTypes.Second, ResourceTypes.Food));
-            listObjects.Add(inventResComp.AmountRes(PlayerTypes.Second, ResourceTypes.Wood));
-            listObjects.Add(inventResComp.AmountRes(PlayerTypes.Second, ResourceTypes.Ore));
-            listObjects.Add(inventResComp.AmountRes(PlayerTypes.Second, ResourceTypes.Iron));
-            listObjects.Add(inventResComp.AmountRes(PlayerTypes.Second, ResourceTypes.Gold));
+            listObjects.Add(InventResourcesC.AmountRes(PlayerTypes.Second, ResourceTypes.Food));
+            listObjects.Add(InventResourcesC.AmountRes(PlayerTypes.Second, ResourceTypes.Wood));
+            listObjects.Add(InventResourcesC.AmountRes(PlayerTypes.Second, ResourceTypes.Ore));
+            listObjects.Add(InventResourcesC.AmountRes(PlayerTypes.Second, ResourceTypes.Iron));
+            listObjects.Add(InventResourcesC.AmountRes(PlayerTypes.Second, ResourceTypes.Gold));
 
 
 
-            ref var invUnitsCom = ref _invUnitsFilter.Get1(0);
-            listObjects.Add(invUnitsCom.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.King, LevelUnitTypes.Wood));
-            listObjects.Add(invUnitsCom.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Pawn, LevelUnitTypes.Wood));
-            listObjects.Add(invUnitsCom.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Rook, LevelUnitTypes.Wood));
-            listObjects.Add(invUnitsCom.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Bishop, LevelUnitTypes.Wood));
+            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.King, LevelUnitTypes.Wood));
+            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Pawn, LevelUnitTypes.Wood));
+            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Rook, LevelUnitTypes.Wood));
+            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Bishop, LevelUnitTypes.Wood));
 
-            listObjects.Add(invUnitsCom.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.King, LevelUnitTypes.Iron));
-            listObjects.Add(invUnitsCom.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Pawn, LevelUnitTypes.Iron));
-            listObjects.Add(invUnitsCom.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Rook, LevelUnitTypes.Iron));
-            listObjects.Add(invUnitsCom.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Bishop, LevelUnitTypes.Iron));
-
+            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.King, LevelUnitTypes.Iron));
+            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Pawn, LevelUnitTypes.Iron));
+            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Rook, LevelUnitTypes.Iron));
+            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Bishop, LevelUnitTypes.Iron));
 
 
-            ref var invToolsComp = ref _invToolsFilter.Get1(0);
-            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick, LevelTWTypes.Wood));
-            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword, LevelTWTypes.Wood));
-            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Shield, LevelTWTypes.Wood));
 
-            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick, LevelTWTypes.Iron));
-            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword, LevelTWTypes.Iron));
-            listObjects.Add(invToolsComp.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Shield, LevelTWTypes.Iron));
+            listObjects.Add(InventorTWCom.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick, LevelTWTypes.Wood));
+            listObjects.Add(InventorTWCom.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword, LevelTWTypes.Wood));
+            listObjects.Add(InventorTWCom.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Shield, LevelTWTypes.Wood));
+
+            listObjects.Add(InventorTWCom.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick, LevelTWTypes.Iron));
+            listObjects.Add(InventorTWCom.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword, LevelTWTypes.Iron));
+            listObjects.Add(InventorTWCom.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Shield, LevelTWTypes.Iron));
 
 
             var objects = new object[listObjects.Count];
@@ -379,14 +366,14 @@ namespace Scripts.Game
         {
             _curNumber = 0;
 
-            WhoseMoveCom.WhoseMoveOnline = (PlayerTypes)objects[_curNumber++];
+            WhoseMoveC.SetWhoseMove((PlayerTypes)objects[_curNumber++]);
 
-            _endGameFilter.Get1(0).PlayerWinner = (PlayerTypes)objects[_curNumber++];
+            EndGameDataUIC.PlayerWinner = (PlayerTypes)objects[_curNumber++];
 
-            _readyUIFilter.Get1(0).IsStartedGame = (bool)objects[_curNumber++];
-            _readyUIFilter.Get1(0).SetIsReady(PhotonNetwork.IsMasterClient, (bool)objects[_curNumber++]);
+            ReadyDataUIC.IsStartedGame = (bool)objects[_curNumber++];
+            ReadyDataUIC.SetIsReady(PhotonNetwork.IsMasterClient, (bool)objects[_curNumber++]);
 
-            _motionsFilter.Get1(0).AmountMotions = (int)objects[_curNumber++];
+            MotionsDataUIC.AmountMotions = (int)objects[_curNumber++];
 
             foreach (var curIdxCell in _cellUnitFilter)
             {
@@ -406,17 +393,11 @@ namespace Scripts.Game
 
 
                 ref var curEnvrDatCom = ref _cellEnvrFilter.Get1(curIdxCell);
-                curEnvrDatCom.SetHaveEnvironment(EnvirTypes.Fertilizer, (bool)objects[_curNumber++]);
-                curEnvrDatCom.SetHaveEnvironment(EnvirTypes.YoungForest, (bool)objects[_curNumber++]);
-                curEnvrDatCom.SetHaveEnvironment(EnvirTypes.AdultForest, (bool)objects[_curNumber++]);
-                curEnvrDatCom.SetHaveEnvironment(EnvirTypes.Hill, (bool)objects[_curNumber++]);
-                curEnvrDatCom.SetHaveEnvironment(EnvirTypes.Mountain, (bool)objects[_curNumber++]);
-
-                curEnvrDatCom.SetAmountResources(EnvirTypes.Fertilizer, (int)objects[_curNumber++]);
-                curEnvrDatCom.SetAmountResources(EnvirTypes.YoungForest, (int)objects[_curNumber++]);
-                curEnvrDatCom.SetAmountResources(EnvirTypes.AdultForest, (int)objects[_curNumber++]);
-                curEnvrDatCom.SetAmountResources(EnvirTypes.Hill, (int)objects[_curNumber++]);
-                curEnvrDatCom.SetAmountResources(EnvirTypes.Mountain, (int)objects[_curNumber++]);
+                curEnvrDatCom.Sync(EnvirTypes.Fertilizer, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
+                curEnvrDatCom.Sync(EnvirTypes.YoungForest, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
+                curEnvrDatCom.Sync(EnvirTypes.AdultForest, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
+                curEnvrDatCom.Sync(EnvirTypes.Hill, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
+                curEnvrDatCom.Sync(EnvirTypes.Mountain, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
 
 
 
@@ -426,35 +407,32 @@ namespace Scripts.Game
 
 
 
-            ref var inventResComp = ref _inventorResFilter.Get1(0);
-            inventResComp.SetAmountRes(WhoseMoveCom.CurOnlinePlayer, ResourceTypes.Food, (int)objects[_curNumber++]);
-            inventResComp.SetAmountRes(WhoseMoveCom.CurOnlinePlayer, ResourceTypes.Wood, (int)objects[_curNumber++]);
-            inventResComp.SetAmountRes(WhoseMoveCom.CurOnlinePlayer, ResourceTypes.Ore, (int)objects[_curNumber++]);
-            inventResComp.SetAmountRes(WhoseMoveCom.CurOnlinePlayer, ResourceTypes.Iron, (int)objects[_curNumber++]);
-            inventResComp.SetAmountRes(WhoseMoveCom.CurOnlinePlayer, ResourceTypes.Gold, (int)objects[_curNumber++]);
+            InventResourcesC.Set(WhoseMoveC.CurPlayer, ResourceTypes.Food, (int)objects[_curNumber++]);
+            InventResourcesC.Set(WhoseMoveC.CurPlayer, ResourceTypes.Wood, (int)objects[_curNumber++]);
+            InventResourcesC.Set(WhoseMoveC.CurPlayer, ResourceTypes.Ore, (int)objects[_curNumber++]);
+            InventResourcesC.Set(WhoseMoveC.CurPlayer, ResourceTypes.Iron, (int)objects[_curNumber++]);
+            InventResourcesC.Set(WhoseMoveC.CurPlayer, ResourceTypes.Gold, (int)objects[_curNumber++]);
 
 
 
-            ref var invUnitsCom = ref _invUnitsFilter.Get1(0);
-            invUnitsCom.SetAmountUnitsInInvent(WhoseMoveCom.CurOnlinePlayer, UnitTypes.King, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
-            invUnitsCom.SetAmountUnitsInInvent(WhoseMoveCom.CurOnlinePlayer, UnitTypes.Pawn, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
-            invUnitsCom.SetAmountUnitsInInvent(WhoseMoveCom.CurOnlinePlayer, UnitTypes.Rook, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
-            invUnitsCom.SetAmountUnitsInInvent(WhoseMoveCom.CurOnlinePlayer, UnitTypes.Bishop, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.King, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.Pawn, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.Rook, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.Bishop, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
 
-            invUnitsCom.SetAmountUnitsInInvent(WhoseMoveCom.CurOnlinePlayer, UnitTypes.King, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
-            invUnitsCom.SetAmountUnitsInInvent(WhoseMoveCom.CurOnlinePlayer, UnitTypes.Pawn, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
-            invUnitsCom.SetAmountUnitsInInvent(WhoseMoveCom.CurOnlinePlayer, UnitTypes.Rook, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
-            invUnitsCom.SetAmountUnitsInInvent(WhoseMoveCom.CurOnlinePlayer, UnitTypes.Bishop, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.King, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.Pawn, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.Rook, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.Bishop, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
 
 
-            ref var invToolsComp = ref _invToolsFilter.Get1(0);
-            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Pick, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
-            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Sword, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
-            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Shield, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
+            InventorTWCom.Set(WhoseMoveC.CurPlayer, ToolWeaponTypes.Pick, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
+            InventorTWCom.Set(WhoseMoveC.CurPlayer, ToolWeaponTypes.Sword, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
+            InventorTWCom.Set(WhoseMoveC.CurPlayer, ToolWeaponTypes.Shield, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
 
-            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Pick, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
-            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Sword, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
-            invToolsComp.SetAmountTW(WhoseMoveCom.CurOnlinePlayer, ToolWeaponTypes.Shield, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
+            InventorTWCom.Set(WhoseMoveC.CurPlayer, ToolWeaponTypes.Pick, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
+            InventorTWCom.Set(WhoseMoveC.CurPlayer, ToolWeaponTypes.Sword, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
+            InventorTWCom.Set(WhoseMoveC.CurPlayer, ToolWeaponTypes.Shield, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
         }
 
         #endregion

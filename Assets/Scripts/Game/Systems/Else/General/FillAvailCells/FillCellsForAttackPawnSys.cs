@@ -5,10 +5,8 @@ namespace Scripts.Game
     internal sealed class FillCellsForAttackPawnSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-
-        private EcsFilter<CellsForAttackCom> _cellsForAttackFilter = default;
 
         public void Run()
         {
@@ -16,9 +14,6 @@ namespace Scripts.Game
             {
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdx);
                 ref var curOnUnitCom = ref _cellUnitFilter.Get2(curIdx);
-
-                ref var cellsAttackCom = ref _cellsForAttackFilter.Get1(0);
-
 
                 if (curUnitDatCom.Is(UnitTypes.Pawn))
                 {
@@ -44,9 +39,9 @@ namespace Scripts.Game
                                         if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
                                             || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
                                         {
-                                            cellsAttackCom.Add(curOnUnitCom.PlayerType, AttackTypes.Simple, curIdx, idxAround);
+                                            CellsAttackC.Add(curOnUnitCom.PlayerType, AttackTypes.Simple, curIdx, idxAround);
                                         }
-                                        else cellsAttackCom.Add(curOnUnitCom.PlayerType, AttackTypes.Unique, curIdx, idxAround);
+                                        else CellsAttackC.Add(curOnUnitCom.PlayerType, AttackTypes.Unique, curIdx, idxAround);
                                     }
                                 }
                             }

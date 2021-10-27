@@ -4,35 +4,28 @@ namespace Scripts.Game
 {
     internal sealed class RightZoneUISys : IEcsRunSystem
     {
-        private EcsFilter<SelectorCom> _selFilt = default;
-        private EcsFilter<StatZoneViewUICom> _unitZoneFilter = default;
-
-        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleCom> _cellUnitFilter = default;
-
+        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleC> _cellUnitFilter = default;
 
         public void Run()
         {
-            var idxSelCell = _selFilt.Get1(0).IdxSelCell;
-            ref var unitZoneViewCom = ref _unitZoneFilter.Get1(0);
-
-            ref var selUnitDatCom = ref _cellUnitFilter.Get1(idxSelCell);
-            ref var selVisUnitCom = ref _cellUnitFilter.Get3(idxSelCell);
+            ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelectorC.IdxSelCell);
+            ref var selVisUnitCom = ref _cellUnitFilter.Get3(SelectorC.IdxSelCell);
 
             var activeParent = false;
 
 
-            if (_selFilt.Get1(0).IsSelCell)
+            if (SelectorC.IsSelCell)
             {
                 if (selUnitDatCom.HaveUnit)
                 {
-                    if (selVisUnitCom.IsVisibled(WhoseMoveCom.CurPlayer))
+                    if (selVisUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
                     {
                         activeParent = true;
                     }
                 }
             }
 
-            unitZoneViewCom.SetActiveParentZone(activeParent);
+            StatZoneViewUIC.SetActiveParentZone(activeParent);
         }
     }
 }

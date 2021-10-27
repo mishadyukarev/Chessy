@@ -5,16 +5,15 @@ namespace Scripts.Game
 {
     internal sealed class SeedingMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForSeedingMasCom> _seedingFilter = default;
 
         private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
 
         public void Run()
         {
-            var sender = _infoFilter.Get1(0).FromInfo.Sender;
+            var sender = InfoC.Sender(MasGenOthTypes.Master);
             var envTypeForSeeding = _seedingFilter.Get1(0).EnvTypeForSeeding;
             var idxCellForSeeding = _seedingFilter.Get1(0).IdxForSeeding;
 
@@ -47,7 +46,9 @@ namespace Scripts.Game
                                     if (!curCellEnvDataCom.Have(EnvirTypes.YoungForest))
                                     {
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.Seeding);
-                                        curCellEnvDataCom.SetNewEnvir(EnvirTypes.YoungForest);
+
+                                        curCellEnvDataCom.SetNew(EnvirTypes.YoungForest);
+                                        WhereEnvironmentC.Add(EnvirTypes.YoungForest, idxCellForSeeding);
 
                                         curCellUnitDataCom.TakeAmountSteps();
                                     }

@@ -9,36 +9,23 @@ namespace Scripts.Game
     {
         private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
 
-        private EcsFilter<ReadyDataUICom, ReadyViewUICom> _readyFilter = default;
-        private EcsFilter<SelectorCom> _selectorFilter = default;
-        private EcsFilter<LeaveViewUIComponent> _leaveUIFilter = default;
-        private EcsFilter<GetterUnitsDataUICom, GetterUnitsViewUICom> _takerUIFilter = default;
+        private EcsFilter<LeaveViewUIC> _leaveUIFilter = default;
         private EcsFilter<DonerUICom> _donerUIFilter = default;
-        private EcsFilter<EnvirZoneDataUICom, EnvirZoneViewUICom> _envirZoneUIFilter = default;
-        private EcsFilter<CondUnitUICom> _condUnitZoneUIFilt = default;
+        private EcsFilter<EnvirZoneDataUIC, EnvirZoneViewUICom> _envirZoneUIFilter = default;
         private EcsFilter<BuildLeftZoneViewUICom> _buildLeftZoneViewUICom = default;
-        private EcsFilter<KingZoneViewUIComp> _kingZoneUIFilter = default;
-        private EcsFilter<GiveTakeViewUICom> _giveTakeZoneUIFilter = default;
-        private EcsFilter<SoundEffectsComp> _soundEffFilt = default;
-        private EcsFilter<FriendZoneDataUICom, FriendZoneViewUICom> _friendZoneFilt = default;
-        private EcsFilter<HintDataUICom, HintViewUICom> _hintUIFilt = default;
-
-        private EcsFilter<InventorUnitsCom> _invUnitsFilt = default;
-
-        private byte IdxSelectedCell => _selectorFilter.Get1(0).IdxSelCell;
 
         public void Init()
         {
-            _readyFilter.Get2(0).AddListenerToReadyButton(Ready);
+            ReadyViewUIC.AddListenerToReadyButton(Ready);
 
-            _kingZoneUIFilter.Get1(0).AddListenerToSetKing_Button(delegate { GetUnit(UnitTypes.King); });
-            _takerUIFilter.Get2(0).AddListener(UnitTypes.Pawn, delegate { GetUnit(UnitTypes.Pawn); });
-            _takerUIFilter.Get2(0).AddListener(UnitTypes.Rook, delegate { GetUnit(UnitTypes.Rook); });
-            _takerUIFilter.Get2(0).AddListener(UnitTypes.Bishop, delegate { GetUnit(UnitTypes.Bishop); });
+            KingZoneViewUIC.AddListenerToSetKing_Button(delegate { GetUnit(UnitTypes.King); });
+            GetterUnitsViewUIC.AddListener(UnitTypes.Pawn, delegate { GetUnit(UnitTypes.Pawn); });
+            GetterUnitsViewUIC.AddListener(UnitTypes.Rook, delegate { GetUnit(UnitTypes.Rook); });
+            GetterUnitsViewUIC.AddListener(UnitTypes.Bishop, delegate { GetUnit(UnitTypes.Bishop); });
 
-            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Pawn, delegate { CreateUnit(UnitTypes.Pawn); });
-            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Rook, delegate { CreateUnit(UnitTypes.Rook); });
-            _takerUIFilter.Get2(0).AddListenerToCreateUnit(UnitTypes.Bishop, delegate { CreateUnit(UnitTypes.Bishop); });
+            GetterUnitsViewUIC.AddListenerToCreateUnit(UnitTypes.Pawn, delegate { CreateUnit(UnitTypes.Pawn); });
+            GetterUnitsViewUIC.AddListenerToCreateUnit(UnitTypes.Rook, delegate { CreateUnit(UnitTypes.Rook); });
+            GetterUnitsViewUIC.AddListenerToCreateUnit(UnitTypes.Bishop, delegate { CreateUnit(UnitTypes.Bishop); });
 
             _donerUIFilter.Get1(0).AddListener(Done);
 
@@ -46,17 +33,17 @@ namespace Scripts.Game
 
             _leaveUIFilter.Get1(0).AddListener(delegate { PhotonNetwork.LeaveRoom(); });
 
-            _condUnitZoneUIFilt.Get1(0).AddListener(CondUnitTypes.Protected, delegate { ConditionAbilityButton(CondUnitTypes.Protected); });
-            _condUnitZoneUIFilt.Get1(0).AddListener(CondUnitTypes.Relaxed, delegate { ConditionAbilityButton(CondUnitTypes.Relaxed); });
+            CondUnitUIC.AddListener(CondUnitTypes.Protected, delegate { ConditionAbilityButton(CondUnitTypes.Protected); });
+            CondUnitUIC.AddListener(CondUnitTypes.Relaxed, delegate { ConditionAbilityButton(CondUnitTypes.Relaxed); });
 
 
-            _giveTakeZoneUIFilter.Get1(0).AddListUpgradeButton(ToggleUpgradeUnit);
-            _giveTakeZoneUIFilter.Get1(0).AddList_Button(ToolWeaponTypes.Pick, delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
-            _giveTakeZoneUIFilter.Get1(0).AddList_Button(ToolWeaponTypes.Sword, delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
-            _giveTakeZoneUIFilter.Get1(0).AddList_Button(ToolWeaponTypes.Shield, delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
+            GiveTakeViewUIC.AddListUpgradeButton(ToggleUpgradeUnit);
+            GiveTakeViewUIC.AddList_Button(ToolWeaponTypes.Pick, delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
+            GiveTakeViewUIC.AddList_Button(ToolWeaponTypes.Sword, delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
+            GiveTakeViewUIC.AddList_Button(ToolWeaponTypes.Shield, delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
 
 
-            _friendZoneFilt.Get2(0).AddListenerReady(ReadyFriend);
+            FriendZoneViewUIC.AddListenerReady(ReadyFriend);
 
 
 
@@ -74,7 +61,7 @@ namespace Scripts.Game
 
 
 
-            _hintUIFilt.Get2(0).AddListHint_But(ExecuteHint);
+            HintViewUIC.AddListHint_But(ExecuteHint);
         }
 
 
@@ -83,31 +70,27 @@ namespace Scripts.Game
 
         private void GetUnit(UnitTypes unitType)
         {
-            ref var selCom = ref _selectorFilter.Get1(0);
-            ref var invUnitCom = ref _invUnitsFilt.Get1(0);
-            ref var takerUnitDatCom = ref _takerUIFilter.Get1(0);
+            SelectorC.DefCellClickType();
+            SelectorC.IdxCurCell = default;
+            SelectorC.IdxPreVisionCell = default;
+            SelectorC.DefSelectedCell();
+            GetterUnitsDataUIC.ResetCurTimer(unitType);
 
-            selCom.DefCellClickType();
-            selCom.IdxCurCell = default;
-            selCom.IdxPreVisionCell = default;
-            selCom.DefSelectedCell();
-            takerUnitDatCom.ResetCurTimer(unitType);
-
-            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode)
+            if (WhoseMoveC.IsMyMove)
             {
-                if (invUnitCom.HaveUnitInInv(WhoseMoveCom.CurPlayer, unitType, LevelUnitTypes.Iron))
+                if (InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayer, unitType, LevelUnitTypes.Iron))
                 {
-                    selCom.SelUnitType = unitType;
-                    selCom.LevelSelUnitType = LevelUnitTypes.Iron;
+                    SelectorC.SelUnitType = unitType;
+                    SelectorC.LevelSelUnitType = LevelUnitTypes.Iron;
                 }
-                else if (invUnitCom.HaveUnitInInv(WhoseMoveCom.CurPlayer, unitType, LevelUnitTypes.Wood))
+                else if (InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayer, unitType, LevelUnitTypes.Wood))
                 {
-                    selCom.SelUnitType = unitType;
-                    selCom.LevelSelUnitType = LevelUnitTypes.Wood;
+                    SelectorC.SelUnitType = unitType;
+                    SelectorC.LevelSelUnitType = LevelUnitTypes.Wood;
                 }
                 else
                 {
-                    takerUnitDatCom.ActiveNeedCreateButton(unitType, true);
+                    GetterUnitsDataUIC.ActiveNeedCreateButton(unitType, true);
                 }
 
             }
@@ -115,118 +98,112 @@ namespace Scripts.Game
 
         internal void ReadyFriend()
         {
-            _friendZoneFilt.Get1(0).IsActiveFriendZone = false;
+            FriendZoneDataUIC.IsActiveFriendZone = false;
         }
 
         private void Done()
         {
-            if (!_invUnitsFilt.Get1(0).HaveUnitInInv(WhoseMoveCom.CurPlayer, UnitTypes.King, LevelUnitTypes.Wood))
+            if (!InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayer, UnitTypes.King, LevelUnitTypes.Wood))
             {
                 RpcSys.DoneToMaster();
             }
             else
             {
-                _soundEffFilt.Get1(0).Play(SoundEffectTypes.Mistake);
+                SoundEffectC.Play(SoundEffectTypes.Mistake);
             }
 
-            _selectorFilter.Get1(0).DefCellClickType();
-            _selectorFilter.Get1(0).DefSelectedUnit();
+            SelectorC.DefCellClickType();
+            SelectorC.DefSelectedUnit();
         }
 
         private void EnvironmentInfo()
         {
-            _envirZoneUIFilter.Get1(0).IsActivatedInfo = !_envirZoneUIFilter.Get1(0).IsActivatedInfo;
+            EnvirZoneDataUIC.IsActivatedInfo = !EnvirZoneDataUIC.IsActivatedInfo;
         }
 
         private void ConditionAbilityButton(CondUnitTypes conditionUnitType)
         {
-            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode)
+            if (WhoseMoveC.IsMyMove)
             {
-                if (_cellUnitFilter.Get1(IdxSelectedCell).Is(conditionUnitType))
+                if (_cellUnitFilter.Get1(SelectorC.IdxSelCell).Is(conditionUnitType))
                 {
-                    RpcSys.ConditionUnitToMaster(CondUnitTypes.None, IdxSelectedCell);
+                    RpcSys.ConditionUnitToMaster(CondUnitTypes.None, SelectorC.IdxSelCell);
                 }
                 else
                 {
-                    RpcSys.ConditionUnitToMaster(conditionUnitType, IdxSelectedCell);
+                    RpcSys.ConditionUnitToMaster(conditionUnitType, SelectorC.IdxSelCell);
                 }
             }
         }
 
         private void CreateUnit(UnitTypes unitType)
         {
-            _takerUIFilter.Get1(0).ResetCurTimer(unitType);
+            GetterUnitsDataUIC.ResetCurTimer(unitType);
 
-            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode) RpcSys.CreateUnitToMaster(unitType);
+            if (WhoseMoveC.IsMyMove) RpcSys.CreateUnitToMaster(unitType);
         }
 
         private void MeltOre()
         {
-            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode) RpcSys.MeltOreToMaster();
+            if (WhoseMoveC.IsMyMove) RpcSys.MeltOreToMaster();
         }
 
         private void UpgradeBuilding(BuildingTypes buildingType)
         {
-            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode) RpcSys.UpgradeBuildingToMaster(buildingType);
+            if (WhoseMoveC.IsMyMove) RpcSys.UpgradeBuildingToMaster(buildingType);
         }
 
         private void ToggleToolWeapon(ToolWeaponTypes tWType)
         {
-            if (WhoseMoveCom.IsMyOnlineMove || GameModesCom.IsOfflineMode)
+            if (WhoseMoveC.IsMyMove)
             {
-                ref var selCom = ref _selectorFilter.Get1(0);
-
-                if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW))
+                if (SelectorC.IsCellClickType(CellClickTypes.GiveTakeTW))
                 {
                     if (tWType == ToolWeaponTypes.Shield)
                     {
-                        if (selCom.TWTypeForGive == tWType)
+                        if (SelectorC.TWTypeForGive == tWType)
                         {
-                            if (selCom.LevelTWType == LevelTWTypes.Wood) selCom.LevelTWType = LevelTWTypes.Iron;
-                            else selCom.LevelTWType = LevelTWTypes.Wood;
+                            if (SelectorC.LevelTWType == LevelTWTypes.Wood) SelectorC.LevelTWType = LevelTWTypes.Iron;
+                            else SelectorC.LevelTWType = LevelTWTypes.Wood;
                         }
                         else
                         {
-                            selCom.TWTypeForGive = tWType;
-                            selCom.LevelTWType = LevelTWTypes.Wood;
+                            SelectorC.TWTypeForGive = tWType;
+                            SelectorC.LevelTWType = LevelTWTypes.Wood;
                         }
                     }
                     else
                     {
-                        selCom.TWTypeForGive = tWType;
-                        selCom.LevelTWType = LevelTWTypes.Iron;
+                        SelectorC.TWTypeForGive = tWType;
+                        SelectorC.LevelTWType = LevelTWTypes.Iron;
                     }
                 }
                 else
                 {
-                    selCom.CellClickType = CellClickTypes.GiveTakeTW;
-                    selCom.TWTypeForGive = tWType;
+                    SelectorC.CellClickType = CellClickTypes.GiveTakeTW;
+                    SelectorC.TWTypeForGive = tWType;
 
-                    if (tWType == ToolWeaponTypes.Shield) selCom.LevelTWType = LevelTWTypes.Wood;
-                    else selCom.LevelTWType = LevelTWTypes.Iron; 
+                    if (tWType == ToolWeaponTypes.Shield) SelectorC.LevelTWType = LevelTWTypes.Wood;
+                    else SelectorC.LevelTWType = LevelTWTypes.Iron; 
                 }
             }
         }
 
         private void ExecuteHint()
         {
-            ref var hintDataUICom = ref _hintUIFilt.Get1(0);
-            ref var hintViewUICom = ref _hintUIFilt.Get2(0);
+            HintDataUIC.CurNumber++;
 
-
-            hintDataUICom.CurNumber++;
-
-            if (hintDataUICom.CurNumber < System.Enum.GetNames(typeof(VideoClipTypes)).Length)
+            if (HintDataUIC.CurNumber < System.Enum.GetNames(typeof(VideoClipTypes)).Length)
             {
-                hintViewUICom.SetVideoClip((VideoClipTypes)hintDataUICom.CurNumber);
-                hintViewUICom.SetPos(new Vector3(Random.Range(-500f, 500f), Random.Range(-300f, 300f)));
+                HintViewUIC.SetVideoClip((VideoClipTypes)HintDataUIC.CurNumber);
+                HintViewUIC.SetPos(new Vector3(Random.Range(-500f, 500f), Random.Range(-300f, 300f)));
             }
             else
             {
-                hintViewUICom.SetActiveHintZone(false);
+                HintViewUIC.SetActiveHintZone(false);
             }
         }
 
-        private void ToggleUpgradeUnit() => _selectorFilter.Get1(0).CellClickType = CellClickTypes.UpgradeUnit;
+        private void ToggleUpgradeUnit() => SelectorC.CellClickType = CellClickTypes.UpgradeUnit;
     }
 }

@@ -5,28 +5,24 @@ namespace Scripts.Game
 {
     internal sealed class EnvironmentUISystem : IEcsRunSystem
     {
-        private EcsFilter<SelectorCom> _selectorFilter = default;
+        private EcsFilter<SelectorC> _selectorFilter = default;
 
         private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
 
-        private EcsFilter<EnvirZoneDataUICom, EnvirZoneViewUICom> _envirZoneUIFilter = default;
+        private EcsFilter<EnvirZoneDataUIC, EnvirZoneViewUICom> _envirZoneUIFilter = default;
 
         public void Run()
         {
-            ref var selCom = ref _selectorFilter.Get1(0);
-
-            var idxSelCell = selCom.IdxSelCell;
-
             ref var cellEnvZoneDataUICom = ref _envirZoneUIFilter.Get1(0);
             ref var envViewUICom = ref _envirZoneUIFilter.Get2(0);
 
-            ref var selCellBuildDataCom = ref _cellBuildFilter.Get1(idxSelCell);
-            ref var selCellEnvDataCom = ref _cellEnvFilter.Get1(idxSelCell);
+            ref var selCellBuildDataCom = ref _cellBuildFilter.Get1(SelectorC.IdxSelCell);
+            ref var selCellEnvDataCom = ref _cellEnvFilter.Get1(SelectorC.IdxSelCell);
 
 
-            if (selCom.IsSelCell && !selCellBuildDataCom.Is(BuildingTypes.City))
+            if (SelectorC.IsSelCell && !selCellBuildDataCom.Is(BuildingTypes.City))
             {
                 envViewUICom.SetActiveParent(true);
             }
@@ -38,45 +34,45 @@ namespace Scripts.Game
             //var v = selCellEnvDataCom.GetAmountResources(EnvironmentTypes.Fertilizer);
 
 
-            envViewUICom.SetTextResour(ResourceTypes.Food, selCellEnvDataCom.AmountResources(EnvirTypes.Fertilizer).ToString());
-            envViewUICom.SetTextResour(ResourceTypes.Wood, selCellEnvDataCom.AmountResources(EnvirTypes.AdultForest).ToString());
-            envViewUICom.SetTextResour(ResourceTypes.Ore, selCellEnvDataCom.AmountResources(EnvirTypes.Hill).ToString());
+            envViewUICom.SetTextResour(ResourceTypes.Food, selCellEnvDataCom.AmountRes(EnvirTypes.Fertilizer).ToString());
+            envViewUICom.SetTextResour(ResourceTypes.Wood, selCellEnvDataCom.AmountRes(EnvirTypes.AdultForest).ToString());
+            envViewUICom.SetTextResour(ResourceTypes.Ore, selCellEnvDataCom.AmountRes(EnvirTypes.Hill).ToString());
 
 
 
 
             foreach (var curIdxCell in _cellBuildFilter)
             {
-                ref var curCellEnvDataCom = ref _cellEnvFilter.Get1(curIdxCell);
+                ref var curEnvCom = ref _cellEnvFilter.Get1(curIdxCell);
                 ref var curCellBarsViewCom = ref _cellBarsFilter.Get1(curIdxCell);
 
-                if (_envirZoneUIFilter.Get1(0).IsActivatedInfo)
+                if (EnvirZoneDataUIC.IsActivatedInfo)
                 {
-                    if (curCellEnvDataCom.Have(EnvirTypes.Fertilizer))
+                    if (curEnvCom.Have(EnvirTypes.Fertilizer))
                     {
                         curCellBarsViewCom.EnableSR(CellBarTypes.Food);
 
-                        curCellBarsViewCom.SetScale(CellBarTypes.Food, new Vector3(curCellEnvDataCom.AmountResources(EnvirTypes.Fertilizer) / (float)(curCellEnvDataCom.MaxAmountRes(EnvirTypes.Fertilizer) + curCellEnvDataCom.MaxAmountRes(EnvirTypes.Fertilizer)), 0.15f, 1));
+                        curCellBarsViewCom.SetScale(CellBarTypes.Food, new Vector3(curEnvCom.AmountRes(EnvirTypes.Fertilizer) / (float)(curEnvCom.MaxAmountRes(EnvirTypes.Fertilizer) + curEnvCom.MaxAmountRes(EnvirTypes.Fertilizer)), 0.15f, 1));
                     }
                     else
                     {
                         curCellBarsViewCom.DisableSR(CellBarTypes.Food);
                     }
 
-                    if (curCellEnvDataCom.Have(EnvirTypes.AdultForest))
+                    if (curEnvCom.Have(EnvirTypes.AdultForest))
                     {
                         curCellBarsViewCom.EnableSR(CellBarTypes.Wood);
-                        curCellBarsViewCom.SetScale(CellBarTypes.Wood, new Vector3(curCellEnvDataCom.AmountResources(EnvirTypes.AdultForest) / (float)curCellEnvDataCom.MaxAmountRes(EnvirTypes.AdultForest), 0.15f, 1));
+                        curCellBarsViewCom.SetScale(CellBarTypes.Wood, new Vector3(curEnvCom.AmountRes(EnvirTypes.AdultForest) / (float)curEnvCom.MaxAmountRes(EnvirTypes.AdultForest), 0.15f, 1));
                     }
                     else
                     {
                         curCellBarsViewCom.DisableSR(CellBarTypes.Wood);
                     }
 
-                    if (curCellEnvDataCom.Have(EnvirTypes.Hill))
+                    if (curEnvCom.Have(EnvirTypes.Hill))
                     {
                         curCellBarsViewCom.EnableSR(CellBarTypes.Ore);
-                        curCellBarsViewCom.SetScale(CellBarTypes.Ore, new Vector3(curCellEnvDataCom.AmountResources(EnvirTypes.Hill) / (float)curCellEnvDataCom.MaxAmountRes(EnvirTypes.Hill), 0.15f, 1));
+                        curCellBarsViewCom.SetScale(CellBarTypes.Ore, new Vector3(curEnvCom.AmountRes(EnvirTypes.Hill) / (float)curEnvCom.MaxAmountRes(EnvirTypes.Hill), 0.15f, 1));
                     }
                     else
                     {

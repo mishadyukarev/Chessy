@@ -11,24 +11,20 @@ namespace Scripts.Game
 {
     internal sealed class BuildFarmMastSys : IEcsRunSystem
     {
-        private EcsFilter<InfoCom> _infoFilter = default;
         private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
 
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
 
-        private EcsFilter<InventResourCom> _amountResFilt = default;
-        private EcsFilter<BuildsInGameCom> _buildsFilt = default;
+        private EcsFilter<BuildsInGameC> _buildsFilt = default;
 
         public void Run()
         {
-            ref var infoMasCom = ref _infoFilter.Get1(0);
             ref var forBuildMasCom = ref _forBuilderFilter.Get1(0);
             ref var buildsInGameCom = ref _buildsFilt.Get1(0);
-            ref var invResCom = ref _amountResFilt.Get1(0);
 
-            var sender = infoMasCom.FromInfo.Sender;
+            var sender = InfoC.Sender(MasGenOthTypes.Master);
             var idxForBuild = forBuildMasCom.IdxForBuild;
             var forBuildType = forBuildMasCom.BuildingTypeForBuidling;
 
@@ -39,11 +35,7 @@ namespace Scripts.Game
             ref var curCellEnvCom = ref _cellEnvFilter.Get1(idxForBuild);
 
 
-            PlayerTypes playerTypeSender = default;
-            if (PhotonNetwork.OfflineMode) playerTypeSender = WhoseMoveCom.WhoseMoveOffline;
-            else playerTypeSender = sender.GetPlayerType();
-
-            GameModesCom
+            var playerSend = WhoseMoveC.WhoseMove;
 
             if (forBuildType == BuildingTypes.Farm)
             {
@@ -51,23 +43,24 @@ namespace Scripts.Game
                 {
                     if (!curCellEnvCom.Have(EnvirTypes.AdultForest) && !curCellEnvCom.Have(EnvirTypes.YoungForest))
                     {
-                        if (invResCom.CanCreateBuild(playerTypeSender, forBuildType, out var needRes))
+                        if (InventResourcesC.CanCreateBuild(playerSend, forBuildType, out var needRes))
                         {
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
                             if (curCellEnvCom.Have(EnvirTypes.Fertilizer))
                             {
-                                curCellEnvCom.AddAmountRes(EnvirTypes.Fertilizer, curCellEnvCom.MaxAmountRes(EnvirTypes.Fertilizer));
+                                curCellEnvCom.AddMaxAmountRes(EnvirTypes.Fertilizer);
                             }
                             else
                             {
-                                curCellEnvCom.SetNewEnvir(EnvirTypes.Fertilizer);
+                                curCellEnvCom.SetNew(EnvirTypes.Fertilizer);
+                                WhereEnvironmentC.Add(EnvirTypes.Fertilizer, idxForBuild);
                             }
 
-                            invResCom.BuyBuild(playerTypeSender, forBuildType);
+                            InventResourcesC.BuyBuild(playerSend, forBuildType);
 
                             curBuildDatCom.BuildType = forBuildType;
-                            curOwnBuildCom.PlayerType = playerTypeSender;
+                            curOwnBuildCom.PlayerType = playerSend;
 
                             curUnitDatCom.TakeAmountSteps();
                         }

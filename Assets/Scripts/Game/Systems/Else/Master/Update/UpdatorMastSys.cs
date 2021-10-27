@@ -11,34 +11,25 @@ namespace Scripts.Game
         private EcsFilter<CellViewComponent> _cellViewFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvDataFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilt = default;
-        private EcsFilter<CellWeatherDataCom> _cellWeatherFilt = default;
-
-        private EcsFilter<UpgradesBuildsCom> _upgradeBuildsFilter = default;
-        private EcsFilter<InventResourCom> _invResFilt = default;
-        private EcsFilter<InventorUnitsCom> _invUnitsFilt = default;
-        private EcsFilter<MotionsDataUIComponent> _motionsUIFilt = default;
-        private EcsFilter<EndGameDataUIComponent> _endGameDataUIFilt = default;
-        private EcsFilter<WindCom> _windFilt = default;
 
         public void Run()
         {
-            ref var invResCom = ref _invResFilt.Get1(0);
-            ref var invUnitsCom = ref _invUnitsFilt.Get1(0);
-            ref var amountUpgradesCom = ref _upgradeBuildsFilter.Get1(0);
             int minus;
             int amountAdultForest = 0;
 
 
-            invResCom.AddAmountRes(PlayerTypes.First, ResourceTypes.Food, 3);
-            invResCom.AddAmountRes(PlayerTypes.Second, ResourceTypes.Food, 3);
+            var curXy = new byte[0];
+
+            InventResourcesC.AddAmountRes(PlayerTypes.First, ResourceTypes.Food, 3);
+            InventResourcesC.AddAmountRes(PlayerTypes.Second, ResourceTypes.Food, 3);
 
             RpcSys.ActiveAmountMotionUIToGeneral(RpcTarget.MasterClient);
 
             foreach (byte curIdxCell in _xyCellFilter)
             {
-                var curXy = _xyCellFilter.GetXyCell(curIdxCell);
+                curXy = _xyCellFilter.GetXyCell(curIdxCell);
 
                 ref var curCellViewCom = ref _cellViewFilter.Get1(curIdxCell);
 
@@ -51,11 +42,10 @@ namespace Scripts.Game
                 ref var curFireDatCom = ref _cellFireDataFilter.Get1(curIdxCell);
                 ref var curEnvrDatCom = ref _cellEnvDataFilter.Get1(curIdxCell);
 
-                ref var curWeathCom = ref _cellWeatherFilt.Get1(curIdxCell);
 
                 if (curUnitCom.HaveUnit)
                 {
-                    if (!curUnitCom.Is(UnitTypes.King)) invResCom.TakeAmountRes(curOwnUnitCom.PlayerType, ResourceTypes.Food);
+                    if (!curUnitCom.Is(UnitTypes.King)) InventResourcesC.TakeAmountRes(curOwnUnitCom.PlayerType, ResourceTypes.Food);
 
                     if (!curUnitCom.Is(UnitTypes.Scout))
                     {
@@ -93,10 +83,10 @@ namespace Scripts.Game
                                     {
                                         if (curEnvrDatCom.Have(EnvirTypes.AdultForest))
                                         {
-                                            invResCom.AddAmountRes(curOwnUnitCom.PlayerType, ResourceTypes.Wood);
-                                            curEnvrDatCom.TakeAmountResources(EnvirTypes.AdultForest);
+                                            InventResourcesC.AddAmountRes(curOwnUnitCom.PlayerType, ResourceTypes.Wood);
+                                            curEnvrDatCom.TakeAmountRes(EnvirTypes.AdultForest);
 
-                                            if (curEnvrDatCom.HaveResources(EnvirTypes.AdultForest))
+                                            if (curEnvrDatCom.HaveRes(EnvirTypes.AdultForest))
                                             {
                                                 if (curBuilCom.Is(BuildingTypes.Camp) || !curBuilCom.HaveBuild)
                                                 {
@@ -111,7 +101,9 @@ namespace Scripts.Game
                                             else
                                             {
                                                 curBuilCom.DefBuildType();
-                                                curEnvrDatCom.ResetEnvironment(EnvirTypes.AdultForest);
+
+                                                curEnvrDatCom.Reset(EnvirTypes.AdultForest);
+                                                WhereEnvironmentC.Remove(EnvirTypes.AdultForest, curIdxCell);
                                             }
                                         }
 
@@ -131,7 +123,7 @@ namespace Scripts.Game
                                                     }
                                                     else
                                                     {
-                                                        curEnvrDatCom.SetAmountResources(EnvirTypes.Hill, curEnvrDatCom.MaxAmountRes(EnvirTypes.Hill));
+                                                        curEnvrDatCom.SetMaxAmountRes(EnvirTypes.Hill);
                                                     }
                                                 }
                                             }
@@ -184,7 +176,7 @@ namespace Scripts.Game
                                                 curBuilCom.BuildType = BuildingTypes.Camp;
                                                 curOwnBuilCom.PlayerType = curOwnUnitCom.PlayerType;
                                             }
-                                        }   
+                                        }
                                     }
                                 }
                             }
@@ -212,14 +204,15 @@ namespace Scripts.Game
 
                     if (curBuilCom.Is(BuildingTypes.Farm))
                     {
-                        minus = amountUpgradesCom.GetExtractOneBuild(curOwnUnitCom.PlayerType, BuildingTypes.Farm);
+                        minus = UpgBuildsC.GetExtractOneBuild(curOwnUnitCom.PlayerType, BuildingTypes.Farm);
 
-                        curEnvrDatCom.TakeAmountResources(EnvirTypes.Fertilizer, minus);
-                        invResCom.AddAmountRes(curOwnUnitCom.PlayerType, ResourceTypes.Food, minus);
+                        curEnvrDatCom.TakeAmountRes(EnvirTypes.Fertilizer, minus);
+                        InventResourcesC.AddAmountRes(curOwnUnitCom.PlayerType, ResourceTypes.Food, minus);
 
-                        if (!curEnvrDatCom.HaveResources(EnvirTypes.Fertilizer))
+                        if (!curEnvrDatCom.HaveRes(EnvirTypes.Fertilizer))
                         {
-                            curEnvrDatCom.ResetEnvironment(EnvirTypes.Fertilizer);
+                            curEnvrDatCom.Reset(EnvirTypes.Fertilizer);
+                            WhereEnvironmentC.Remove(EnvirTypes.Fertilizer, curIdxCell);
 
                             curBuilCom.DefBuildType();
                         }
@@ -227,14 +220,16 @@ namespace Scripts.Game
 
                     else if (curBuilCom.Is(BuildingTypes.Woodcutter))
                     {
-                        minus = amountUpgradesCom.GetExtractOneBuild(curOwnUnitCom.PlayerType, BuildingTypes.Woodcutter);
+                        minus = UpgBuildsC.GetExtractOneBuild(curOwnUnitCom.PlayerType, BuildingTypes.Woodcutter);
 
-                        curEnvrDatCom.TakeAmountResources(EnvirTypes.AdultForest, minus);
-                        invResCom.AddAmountRes(curOwnUnitCom.PlayerType, ResourceTypes.Wood, minus);
+                        curEnvrDatCom.TakeAmountRes(EnvirTypes.AdultForest, minus);
+                        InventResourcesC.AddAmountRes(curOwnUnitCom.PlayerType, ResourceTypes.Wood, minus);
 
-                        if (!curEnvrDatCom.HaveResources(EnvirTypes.AdultForest))
+                        if (!curEnvrDatCom.HaveRes(EnvirTypes.AdultForest))
                         {
-                            curEnvrDatCom.ResetEnvironment(EnvirTypes.AdultForest);
+                            curEnvrDatCom.Reset(EnvirTypes.AdultForest);
+                            WhereEnvironmentC.Remove(EnvirTypes.AdultForest, curIdxCell);
+
                             SpawnNewSeed(curIdxCell);
 
                             curBuilCom.DefBuildType();
@@ -248,12 +243,12 @@ namespace Scripts.Game
 
                     else if (curBuilCom.Is(BuildingTypes.Mine))
                     {
-                        minus = amountUpgradesCom.GetExtractOneBuild(curOwnUnitCom.PlayerType, BuildingTypes.Mine);
+                        minus = UpgBuildsC.GetExtractOneBuild(curOwnUnitCom.PlayerType, BuildingTypes.Mine);
 
-                        curEnvrDatCom.TakeAmountResources(EnvirTypes.Hill, minus);
-                        invResCom.AddAmountRes(curOwnUnitCom.PlayerType, ResourceTypes.Ore, minus);
+                        curEnvrDatCom.TakeAmountRes(EnvirTypes.Hill, minus);
+                        InventResourcesC.AddAmountRes(curOwnUnitCom.PlayerType, ResourceTypes.Ore, minus);
 
-                        if (!curEnvrDatCom.HaveResources(EnvirTypes.Hill))
+                        if (!curEnvrDatCom.HaveRes(EnvirTypes.Hill))
                         {
                             curBuilCom.DefBuildType();
                         }
@@ -270,7 +265,7 @@ namespace Scripts.Game
 
                 if (curFireDatCom.HaveFire)
                 {
-                    curEnvrDatCom.TakeAmountResources(EnvirTypes.AdultForest, 2);
+                    curEnvrDatCom.TakeAmountRes(EnvirTypes.AdultForest, 2);
 
                     if (curUnitCom.HaveUnit)
                     {
@@ -282,11 +277,11 @@ namespace Scripts.Game
                             {
                                 if (curOwnUnitCom.Is(PlayerTypes.First))
                                 {
-                                    _endGameDataUIFilt.Get1(0).PlayerWinner = PlayerTypes.Second;
+                                    EndGameDataUIC.PlayerWinner = PlayerTypes.Second;
                                 }
                                 else
                                 {
-                                    _endGameDataUIFilt.Get1(0).PlayerWinner = PlayerTypes.First;
+                                    EndGameDataUIC.PlayerWinner = PlayerTypes.First;
                                 }
 
                             }
@@ -297,14 +292,16 @@ namespace Scripts.Game
 
 
 
-                    if (!curEnvrDatCom.HaveResources(EnvirTypes.AdultForest))
+                    if (!curEnvrDatCom.HaveRes(EnvirTypes.AdultForest))
                     {
                         if (curBuilCom.HaveBuild)
                         {
                             curBuilCom.BuildType = default;
                         }
 
-                        curEnvrDatCom.ResetEnvironment(EnvirTypes.AdultForest);
+                        curEnvrDatCom.Reset(EnvirTypes.AdultForest);
+                        WhereEnvironmentC.Remove(EnvirTypes.AdultForest, curIdxCell);
+
                         SpawnNewSeed(curIdxCell);
 
                         curFireDatCom.HaveFire = false;
@@ -327,6 +324,7 @@ namespace Scripts.Game
                 }
             }
 
+
             if (amountAdultForest <= 6)
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
@@ -335,9 +333,9 @@ namespace Scripts.Game
 
             for (PlayerTypes playerType = (PlayerTypes)1; playerType < (PlayerTypes)Enum.GetNames(typeof(PlayerTypes)).Length; playerType++)
             {
-                if (invResCom.AmountRes(playerType, ResourceTypes.Food) < 0)
+                if (InventResourcesC.AmountRes(playerType, ResourceTypes.Food) < 0)
                 {
-                    invResCom.SetAmountRes(playerType, ResourceTypes.Food, 0);
+                    InventResourcesC.Set(playerType, ResourceTypes.Food, 0);
 
                     for (UnitTypes unitType = UnitTypes.Scout; unitType >= UnitTypes.Pawn; unitType--)
                     {
@@ -353,7 +351,7 @@ namespace Scripts.Game
                                 if (curOnUnitCom.PlayerType == playerType)
                                 {
                                     if (curUnitDatCom.Is(UnitTypes.Scout))
-                                        invUnitsCom.AddUnitsInInventor(playerType, UnitTypes.Scout, LevelUnitTypes.Wood);
+                                        InventorUnitsC.AddUnitsInInventor(playerType, UnitTypes.Scout, LevelUnitTypes.Wood);
                                     curUnitDatCom.DefUnitType();
 
 
@@ -369,7 +367,7 @@ namespace Scripts.Game
                 }
             }
 
-            if (_motionsUIFilt.Get1(0).AmountMotions % 3 == 0)
+            if (MotionsDataUIC.AmountMotions % 3 == 0)
             {
                 foreach (byte curIdxCell in _xyCellFilter)
                 {
@@ -389,21 +387,17 @@ namespace Scripts.Game
                 }
             }
 
-            _motionsUIFilt.Get1(0).AmountMotions += 1;
-
-            var rand = UnityEngine.Random.Range(0, 100);
-            if (rand <= 30) _windFilt.Get1(0).DirectWind = (DirectTypes)UnityEngine.Random.Range(1, Enum.GetNames(typeof(DirectTypes)).Length);         
+            MotionsDataUIC.AmountMotions += 1;
         }
-
 
         private void SpawnNewSeed(byte idxCellStart)
         {
-            ref var windCom = ref _windFilt.Get1(0);
-
             if (UnityEngine.Random.Range(0, 100) < 70)
             {
                 ref var envDatCom = ref _cellEnvDataFilter.Get1(idxCellStart);
-                envDatCom.SetEnvironment(EnvirTypes.YoungForest);
+
+                envDatCom.SetNew(EnvirTypes.YoungForest);
+                WhereEnvironmentC.Add(EnvirTypes.YoungForest, idxCellStart);
             }
         }
     }

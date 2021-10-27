@@ -7,13 +7,13 @@ namespace Scripts.Game
 {
     internal sealed class TruceMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<InventorUnitsCom> _inventorUnitsFilter = default;
+        private EcsFilter<InventorUnitsC> _inventorUnitsFilter = default;
         private EcsFilter<InventorTWCom> _invTWFilt = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
-        private EcsFilter<CellEnvironDataCom> _cellEnvFilter = default;
+        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
         private EcsFilter<CellViewComponent> _cellViewFilt = default;
 
@@ -55,13 +55,13 @@ namespace Scripts.Game
                         {
                             if (curOwnUnitCom.Is(PlayerTypes.First))
                             {
-                                invUnitsCom.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType, curUnitDatCom.LevelUnitType);
+                                InventorUnitsC.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType, curUnitDatCom.LevelUnitType);
                                 curUnitDatCom.DefUnitType();
                             }
                         }
                         else
                         {
-                            invUnitsCom.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType, curUnitDatCom.LevelUnitType);
+                            InventorUnitsC.AddUnitsInInventor(curOwnUnitCom.PlayerType, curUnitDatCom.UnitType, curUnitDatCom.LevelUnitType);
                             curUnitDatCom.DefUnitType();
                         }
                     }
@@ -76,8 +76,11 @@ namespace Scripts.Game
                     {
                         if (curEnvDatCom.Have(EnvirTypes.YoungForest))
                         {
-                            curEnvDatCom.ResetEnvironment(EnvirTypes.YoungForest);
-                            curEnvDatCom.SetNewEnvir(EnvirTypes.AdultForest);
+                            curEnvDatCom.Reset(EnvirTypes.YoungForest);
+                            WhereEnvironmentC.Remove(EnvirTypes.YoungForest, curIdxCell);
+
+                            curEnvDatCom.SetNew(EnvirTypes.AdultForest);
+                            WhereEnvironmentC.Add(EnvirTypes.AdultForest, curIdxCell);
                         }
 
                         if (!curEnvDatCom.Have(EnvirTypes.Fertilizer)
@@ -88,7 +91,8 @@ namespace Scripts.Game
 
                             if (random <= 3)
                             {
-                                curEnvDatCom.SetNewEnvir(EnvirTypes.Fertilizer);
+                                curEnvDatCom.SetNew(EnvirTypes.Fertilizer);
+                                WhereEnvironmentC.Add(EnvirTypes.Fertilizer, curIdxCell);
                             }
                         }
                     }

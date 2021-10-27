@@ -8,17 +8,12 @@ namespace Scripts.Game
         private EcsFilter<CellUnitDataCom, OwnerCom, CellUnitMainViewCom> _cellUnitFilter = default;
         private EcsFilter<CellSupViewComponent> _supViewFilter = default;
 
-        private EcsFilter<SelectorCom> _selectorFilter = default;
         private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
         private EcsFilter<CellsForShiftCom> _cellsShiftFilter = default;
         private EcsFilter<CellsArsonArcherComp> _cellsArcherArsonFilt = default;
-        private EcsFilter<CellsForAttackCom> _cellsSimpleFilter = default;
 
         public void Run()
         {
-            ref var selCom = ref _selectorFilter.Get1(0);
-
-
             foreach (var idxCurCell in _xyCellFilter)
             {
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxCurCell);
@@ -29,9 +24,9 @@ namespace Scripts.Game
 
                 curSupViewCom.DisableSR();
 
-                if (selCom.IsSelCell)
+                if (SelectorC.IsSelCell)
                 {
-                    if (selCom.IdxSelCell == idxCurCell)
+                    if (SelectorC.IdxSelCell == idxCurCell)
                     {
                         curSupViewCom.EnableSR();
                         curSupViewCom.SetColor(SupVisTypes.Selector);
@@ -45,8 +40,8 @@ namespace Scripts.Game
                         {
                             if (curUnitDatCom.Is(UnitTypes.Pawn))
                             {
-                                if (selCom.IsCellClickType(CellClickTypes.GiveTakeTW) 
-                                    || selCom.IsCellClickType(CellClickTypes.OldToNewUnit))
+                                if (SelectorC.IsCellClickType(CellClickTypes.GiveTakeTW) 
+                                    || SelectorC.IsCellClickType(CellClickTypes.OldToNewUnit))
                                 {
                                     curSupViewCom.EnableSR();
                                     curSupViewCom.SetColor(SupVisTypes.GivePawnTool);
@@ -56,7 +51,7 @@ namespace Scripts.Game
 
                             if (curUnitDatCom.LevelUnitType == LevelUnitTypes.Wood)
                             {
-                                if (selCom.IsCellClickType(CellClickTypes.UpgradeUnit))
+                                if (SelectorC.IsCellClickType(CellClickTypes.UpgradeUnit))
                                 {
                                     curSupViewCom.EnableSR();
                                     curSupViewCom.SetColor(SupVisTypes.GivePawnTool);
@@ -68,42 +63,42 @@ namespace Scripts.Game
             }
 
 
-            if (selCom.IsSelCell)
+            if (SelectorC.IsSelCell)
             {
-                ref var selUnitDatCom = ref _cellUnitFilter.Get1(selCom.IdxSelCell);
-                ref var selOffUnitCom = ref _cellUnitFilter.Get3(selCom.IdxSelCell);
+                ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelectorC.IdxSelCell);
+                ref var selOffUnitCom = ref _cellUnitFilter.Get3(SelectorC.IdxSelCell);
 
                 ref var cellsShiftCom = ref _cellsShiftFilter.Get1(0);
 
 
                 if (selUnitDatCom.HaveUnit)
                 {
-                    if (_cellUnitFilter.Get2(selCom.IdxSelCell).IsMine)
+                    if (_cellUnitFilter.Get2(SelectorC.IdxSelCell).IsMine)
                     {
-                        if (selCom.IsCellClickType(CellClickTypes.PickFire))
+                        if (SelectorC.IsCellClickType(CellClickTypes.PickFire))
                         {
-                            foreach (var curIdxCell in _cellsArcherArsonFilt.Get1(0).GetListCopy(WhoseMoveCom.CurPlayer, selCom.IdxSelCell))
+                            foreach (var curIdxCell in _cellsArcherArsonFilt.Get1(0).GetListCopy(WhoseMoveC.CurPlayer, SelectorC.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.FireSelector);
                             }
                         }
 
-                        else if (selCom.IsCellClickType(CellClickTypes.None))
+                        else if (SelectorC.IsCellClickType(CellClickTypes.None))
                         {
-                            foreach (var curIdxCell in cellsShiftCom.GetListCopy(WhoseMoveCom.CurPlayer, selCom.IdxSelCell))
+                            foreach (var curIdxCell in cellsShiftCom.GetListCopy(WhoseMoveC.CurPlayer, SelectorC.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.Shift);
                             }
 
-                            foreach (var curIdxCell in _cellsSimpleFilter.Get1(0).GetListCopy(WhoseMoveCom.CurPlayer, AttackTypes.Simple, selCom.IdxSelCell))
+                            foreach (var curIdxCell in CellsAttackC.GetListCopy(WhoseMoveC.CurPlayer, AttackTypes.Simple, SelectorC.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.SimpleAttack);
                             }
 
-                            foreach (var curIdxCell in _cellsSimpleFilter.Get1(0).GetListCopy(WhoseMoveCom.CurPlayer, AttackTypes.Unique, selCom.IdxSelCell))
+                            foreach (var curIdxCell in CellsAttackC.GetListCopy(WhoseMoveC.CurPlayer, AttackTypes.Unique, SelectorC.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.UniqueAttack);
@@ -112,11 +107,11 @@ namespace Scripts.Game
                     }
                 }
             }
-            if (selCom.IsSelUnit)
+            if (SelectorC.IsSelUnit)
             {
                 ref var cellsSetUnitCom = ref _cellsSetUnitFilter.Get1(0);
 
-                foreach (var curIdxCell in cellsSetUnitCom.GetListCells(WhoseMoveCom.CurPlayer))
+                foreach (var curIdxCell in cellsSetUnitCom.GetListCells(WhoseMoveC.CurPlayer))
                 {
                     _supViewFilter.Get1(curIdxCell).EnableSR();
                     _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.Spawn);

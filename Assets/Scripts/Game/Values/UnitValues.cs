@@ -6,54 +6,7 @@ namespace Scripts.Game
     {
         #region Health
 
-        internal static int StandartAmountHealth(UnitTypes unitType, LevelUnitTypes levelUnitType)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None: throw new Exception();
-                case UnitTypes.King:
-                    switch (levelUnitType)
-                    {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 500;
-                        case LevelUnitTypes.Iron: throw new Exception();
-                        default: throw new Exception();
-                    }
-                case UnitTypes.Pawn:
-                    switch (levelUnitType)
-                    {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 100;
-                        case LevelUnitTypes.Iron: return 100;
-                        default: throw new Exception();
-                    }  
-                case UnitTypes.Rook:
-                    switch (levelUnitType)
-                    {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 100;
-                        case LevelUnitTypes.Iron: return 100;
-                        default: throw new Exception();
-                    }
-                case UnitTypes.Bishop:
-                    switch (levelUnitType)
-                    {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 100;
-                        case LevelUnitTypes.Iron: return 100;
-                        default: throw new Exception();
-                    }
-                case UnitTypes.Scout:
-                    switch (levelUnitType)
-                    {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 1;
-                        case LevelUnitTypes.Iron: throw new Exception();
-                        default: throw new Exception();
-                    }
-                default: throw new Exception();
-            }
-        }
+        internal const int StandAmountHealthAll = 100;
         internal static float ForAddingHealth(UnitTypes unitType)
         {
             switch (unitType)
@@ -73,7 +26,7 @@ namespace Scripts.Game
 
         #region Damage
 
-        internal static int SimplePowerDamage(UnitTypes unitType, LevelUnitTypes upgUnitType)
+        internal static int StandPowerDamage(UnitTypes unitType, LevelUnitTypes upgUnitType)
         {
             switch (unitType)
             {
@@ -82,7 +35,7 @@ namespace Scripts.Game
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 180;
+                        case LevelUnitTypes.Wood: return 200;
                         case LevelUnitTypes.Iron: throw new Exception();
                         default: throw new Exception();
                     }         
@@ -91,23 +44,23 @@ namespace Scripts.Game
                     {
                         case LevelUnitTypes.None: throw new Exception();
                         case LevelUnitTypes.Wood: return 100;
-                        case LevelUnitTypes.Iron: return 120;
+                        case LevelUnitTypes.Iron: return 150;
                         default: throw new Exception();
                     }
                 case UnitTypes.Rook:
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 70;
-                        case LevelUnitTypes.Iron: return 90;
+                        case LevelUnitTypes.Wood: return 100;
+                        case LevelUnitTypes.Iron: return 150;
                         default: throw new Exception();
                     }
                 case UnitTypes.Bishop:
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 70;
-                        case LevelUnitTypes.Iron: return 90;
+                        case LevelUnitTypes.Wood: return 100;
+                        case LevelUnitTypes.Iron: return 150;
                         default: throw new Exception();
                     }
                 case UnitTypes.Scout:
@@ -122,24 +75,15 @@ namespace Scripts.Game
             }
         }
 
-        internal static float UniqueRatioPowerDamage(UnitTypes unitType)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None: throw new Exception();
-                case UnitTypes.King: throw new Exception();
-                case UnitTypes.Pawn: return 0.5f;
-                case UnitTypes.Rook: return 0.5f;
-                case UnitTypes.Bishop: return 0.5f;
-                case UnitTypes.Scout: throw new Exception();
-                default: throw new Exception();
-            }
-        }
+        internal static float UniqueRatioPowerDamage = 0.5f;
 
         #endregion
 
 
         #region Protection
+
+        internal const float PercentForProtection = 0.5f;
+        internal const float PercentForRelax = -0.5f;
 
         internal static float ProtectionPercentEnvir(UnitTypes unitType, EnvirTypes envirType)
         {
@@ -249,32 +193,7 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
         }
-        internal static float PercentForProtection(UnitTypes unitType)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None: throw new Exception();
-                case UnitTypes.King: return 0.5f;
-                case UnitTypes.Pawn: return 0.5f;
-                case UnitTypes.Rook: return 0.5f;
-                case UnitTypes.Bishop: return 0.5f;
-                case UnitTypes.Scout: return 0;
-                default: throw new Exception();
-            }
-        }
-        internal static float PercentForRelax(UnitTypes unitType)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None: throw new Exception();
-                case UnitTypes.King: return -0.5f;
-                case UnitTypes.Pawn: return -0.5f;
-                case UnitTypes.Rook: return -0.5f;
-                case UnitTypes.Bishop: return -0.5f;
-                case UnitTypes.Scout: return 0;
-                default: throw new Exception();
-            }
-        }
+
 
         #endregion
 

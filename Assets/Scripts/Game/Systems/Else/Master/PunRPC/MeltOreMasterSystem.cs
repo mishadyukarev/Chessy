@@ -5,22 +5,15 @@ namespace Scripts.Game
 {
     internal sealed class MeltOreMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<InfoCom> _infoMasFilter = default;
-        private EcsFilter<InventResourCom> _invResFilt = default;
-
         public void Run()
         {
-            var sender = _infoMasFilter.Get1(0).FromInfo.Sender;
-            ref var invResCom = ref _invResFilt.Get1(0);
+            var sender = InfoC.Sender(MasGenOthTypes.Master);
 
-            PlayerTypes isMastSender = default;
-            if (PhotonNetwork.OfflineMode) isMastSender = WhoseMoveCom.WhoseMoveOffline;
-            else isMastSender = sender.GetPlayerType();
+            var playerSend = WhoseMoveC.WhoseMove;
 
-
-            if (invResCom.CanMeltOre(isMastSender, out var needRes))
+            if (InventResourcesC.CanMeltOre(playerSend, out var needRes))
             {
-                invResCom.BuyMeltOre(isMastSender);
+                InventResourcesC.BuyMeltOre(playerSend);
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Melting);
             }
             else

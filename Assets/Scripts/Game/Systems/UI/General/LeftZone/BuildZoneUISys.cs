@@ -4,22 +4,19 @@ namespace Scripts.Game
 {
     internal sealed class BuildZoneUISys : IEcsRunSystem
     {
-        private EcsFilter<SelectorCom> _selectorFilter = default;
         private EcsFilter<BuildLeftZoneViewUICom> _buildZoneUIFilter = default;
 
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
 
         public void Run()
         {
-            ref var selCom = ref _selectorFilter.Get1(0);
-
-            ref var selUnitDataCom = ref _cellBuildFilter.Get1(selCom.IdxSelCell);
-            ref var selOwnUnitCom = ref _cellBuildFilter.Get2(selCom.IdxSelCell);
+            ref var selUnitDataCom = ref _cellBuildFilter.Get1(SelectorC.IdxSelCell);
+            ref var selOwnUnitCom = ref _cellBuildFilter.Get2(SelectorC.IdxSelCell);
 
             ref var buildZoneViewCom = ref _buildZoneUIFilter.Get1(0);
 
 
-            if (selCom.IsSelCell && selUnitDataCom.Is(BuildingTypes.City))
+            if (SelectorC.IsSelCell && selUnitDataCom.Is(BuildingTypes.City))
             {
                 if (selOwnUnitCom.IsMine)
                 {
