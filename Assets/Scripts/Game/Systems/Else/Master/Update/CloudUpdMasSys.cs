@@ -27,7 +27,7 @@ namespace Scripts.Game
 
             var xyNext = CellSpaceSupport.GetXyCellByDirect(xyStart, WindC.DirectWind);
 
-            if (xyNext[0] > 5 && xyNext[0] < 11 && xyNext[1] > 1 && xyNext[1] < 9)
+            if (xyNext[0] > 3 && xyNext[0] < 12 && xyNext[1] > 0 && xyNext[1] < 10)
             {
                 startWeatherC.CloudWidthType = CloudWidthTypes.None;
                 WhereCloudsC.Remove(WhereCloudsC.Cloud);
@@ -54,12 +54,17 @@ namespace Scripts.Game
             else
             {
                 startWeatherC.HaveCloud = false;
+
+                RandomCloud();
             }
+           
+        }
 
-
-            var rand = UnityEngine.Random.Range(0, 100);
-            if (rand <= 80) WindC.DirectWind = (DirectTypes)UnityEngine.Random.Range(1, Enum.GetNames(typeof(DirectTypes)).Length);
-
+        private void RandomCloud()
+        {
+            //var rand = UnityEngine.Random.Range(0, 100);
+            //if (rand <= 30) 
+                WindC.DirectWind = (DirectTypes)UnityEngine.Random.Range(1, Enum.GetNames(typeof(DirectTypes)).Length);
         }
     }
 }

@@ -23,6 +23,9 @@ namespace Scripts.Game
                 {
                     InventorUnitsC.TakeUnitsInInv(playerSender, UnitTypes.Scout, LevelUnitTypes.Wood);
 
+                    if (unitCom.HaveExtraTW) InventorTWCom.AddAmountTools(playerSender, unitCom.TWExtraType, unitCom.LevelTWType);
+                    
+
                     unitCom.UnitType = _forOldNewUnitCom.Get1(0).UnitType;
                     unitCom.SetMaxAmountHealth();
                     unitCom.SetMaxAmountSteps();

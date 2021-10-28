@@ -11,7 +11,7 @@ namespace Scripts.Game
 
         public void Init()
         {
-            UniqueAbiltUIC.AddListener_Button(UniqueButtonTypes.First, delegate { ExecuteUniqueButton(UniqueButtonTypes.First); });
+            RightUniqueViewUIC.AddListener_Button(UniqueButtonTypes.First, delegate { ExecuteUniqueButton(UniqueButtonTypes.First); });
         }
 
         private void ExecuteUniqueButton(UniqueButtonTypes uniqueButtonType)

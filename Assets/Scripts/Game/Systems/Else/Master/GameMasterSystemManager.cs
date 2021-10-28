@@ -43,6 +43,7 @@ namespace Scripts.Game
 
             UpdateMotion = new EcsSystems(gameWorld)
                 .Add(new UpdatorMastSys())
+                .Add(new FireUpdMasSys())
                 .Add(new CloudUpdMasSys());
 
             TruceSystems = new EcsSystems(gameWorld)

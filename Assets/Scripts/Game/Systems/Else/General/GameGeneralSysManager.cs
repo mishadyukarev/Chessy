@@ -13,9 +13,9 @@ namespace Scripts.Game
 
         public GameGeneralSysManager(EcsWorld gameWorld, EcsSystems allGameSystems) : base(gameWorld, allGameSystems)
         {
-            new PhotonRpcViewGameCom(true);
+            new PhotonRpcViewC(true);
 
-            RpcGameSys = PhotonRpcViewGameCom.RpcSys;
+            RpcGameSys = PhotonRpcViewC.RpcView_GO.AddComponent<RpcSys>();
 
             SyncCellViewSyss = new EcsSystems(gameWorld)
                 .Add(new VisibUnitsBuildsSys())
@@ -49,6 +49,8 @@ namespace Scripts.Game
                 .Add(new FirstButtonBuildUISys())
                 .Add(new SecButtonBuildUISys())
                 .Add(new ThirdButtonBuildUISys())
+                .Add(new ShieldUISys())
+                .Add(new EffectsUISys())
 
             ///down
             .Add(new DonerUISystem())
@@ -85,8 +87,9 @@ namespace Scripts.Game
             var eventExecuters = new EcsSystems(gameWorld)
                 .Add(new EventsGameSys())
                 .Add(new EventDownSys())
+                .Add(new EventRightUniqueUISys())
                 .Add(new UnitUniqueEventSys())
-                .Add(new EventUnitBuildUISys());
+                .Add(new EventRightBuildUISys());
 
 
             InitOnlySystems
@@ -110,7 +113,7 @@ namespace Scripts.Game
 
         public void Dispose()
         {
-            UnityEngine.Object.Destroy(PhotonRpcViewGameCom.RpcView_GO);
+            UnityEngine.Object.Destroy(PhotonRpcViewC.RpcView_GO);
         }
     }
 }

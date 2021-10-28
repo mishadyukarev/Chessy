@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.ECS.Components.Data.Else.Game.Master;
-using ExitGames.Client.Photon;
+﻿using ExitGames.Client.Photon;
 using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
@@ -39,7 +38,7 @@ namespace Scripts.Game
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
         private EcsFilter<ForOldNewUnitCom> _forOldToNewUnitFilt = default;
 
-        private static PhotonView PhotonView => PhotonRpcViewGameCom.PhotonView;
+        private static PhotonView PhotonView => PhotonRpcViewC.PhotonView;
 
         private static string MasterRPCName => nameof(MasterRPC);
         private static string GeneralRPCName => nameof(GeneralRPC);
@@ -225,20 +224,20 @@ namespace Scripts.Game
 
                 case RpcGeneralTypes.Mistake:
                     var mistakeType = (MistakeTypes)objects[_curNumber++];
-                     MistakeDataUIC.MistakeType = mistakeType;
-                     MistakeDataUIC.CurTime = default;
+                    MistakeDataUIC.MistakeType = mistakeType;
+                    MistakeDataUIC.CurTime = default;
 
-                    if(mistakeType == MistakeTypes.Economy)
+                    if (mistakeType == MistakeTypes.Economy)
                     {
-                         MistakeDataUIC.ClearAllNeeds();
+                        MistakeDataUIC.ClearAllNeeds();
 
                         var needRes = (int[])objects[_curNumber++];
 
-                         MistakeDataUIC.AddNeedRes(ResourceTypes.Food, needRes[0]);
-                         MistakeDataUIC.AddNeedRes(ResourceTypes.Wood, needRes[1]);
-                         MistakeDataUIC.AddNeedRes(ResourceTypes.Ore, needRes[2]);
-                         MistakeDataUIC.AddNeedRes(ResourceTypes.Iron, needRes[3]);
-                         MistakeDataUIC.AddNeedRes(ResourceTypes.Gold, needRes[4]);
+                        MistakeDataUIC.AddNeedRes(ResourceTypes.Food, needRes[0]);
+                        MistakeDataUIC.AddNeedRes(ResourceTypes.Wood, needRes[1]);
+                        MistakeDataUIC.AddNeedRes(ResourceTypes.Ore, needRes[2]);
+                        MistakeDataUIC.AddNeedRes(ResourceTypes.Iron, needRes[3]);
+                        MistakeDataUIC.AddNeedRes(ResourceTypes.Gold, needRes[4]);
                     }
 
                     SoundEffectC.Play(SoundEffectTypes.Mistake);

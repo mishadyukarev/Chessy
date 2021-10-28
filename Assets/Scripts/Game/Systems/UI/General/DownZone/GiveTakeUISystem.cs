@@ -10,7 +10,7 @@ namespace Scripts.Game
             GiveTakeViewUIC.SetView_ButtonImage(ToolWeaponTypes.Sword, false);
             GiveTakeViewUIC.SetView_ButtonImage(ToolWeaponTypes.Shield, false);
 
-            if (SelectorC.IsCellClickType(CellClickTypes.GiveTakeTW))
+            if (SelectorC.Is(CellClickTypes.GiveTakeTW))
                 if (SelectorC.TWTypeForGive != default)
                 {
                     GiveTakeViewUIC.SetView_ButtonImage(SelectorC.TWTypeForGive, true);

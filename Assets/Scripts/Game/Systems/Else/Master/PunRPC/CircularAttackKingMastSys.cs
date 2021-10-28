@@ -29,40 +29,35 @@ namespace Scripts.Game
                 {
                     var idxCurDirect = _xyCellFilter.GetIdxCell(xy1);
 
-                    ref var unitComDirect = ref _cellUnitFilter.Get1(idxCurDirect);
+                    ref var dirUnitC = ref _cellUnitFilter.Get1(idxCurDirect);
                     ref var ownUnitComDir = ref _cellUnitFilter.Get2(idxCurDirect);
                     ref var envComDir = ref _cellEnvFilt.Get1(idxCurDirect);
                     ref var buildComDir = ref _cellBuildFilt.Get1(idxCurDirect);
 
-                    if (unitComDirect.HaveUnit)
+                    if (dirUnitC.HaveUnit)
                     {
-                        if (unitComDirect.TWExtraType == ToolWeaponTypes.Shield)
+                        if (dirUnitC.HaveShield)
                         {
-                            unitComDirect.TakeShieldProtect();
-
-                            if (unitComDirect.ShieldProtection == 0)
-                            {
-                                unitComDirect.TWExtraType = ToolWeaponTypes.None;
-                            }
+                            dirUnitC.TakeShieldProtect();
                         }
                         else
                         {
-                            unitComDirect.TakeAmountHealth(starUnitCom.PowerDamageOnCell(buildComDir.BuildType, envComDir.Envronments) / 4);
-                            unitComDirect.TakeAmountHealth(2);
+                            if (dirUnitC.IsMelee) dirUnitC.TakeAmountHealth(100, 0.25f);
+                            else dirUnitC.DefUnitType();
                         }
                         
 
-                        if (!unitComDirect.HaveAmountHealth)
+                        if (!dirUnitC.HaveAmountHealth)
                         {
-                            if (unitComDirect.Is(UnitTypes.King))
+                            if (dirUnitC.Is(UnitTypes.King))
                             {
                                 EndGameDataUIC.PlayerWinner = starOwnUnitCom.PlayerType;
                             }
-                            else if (unitComDirect.Is(UnitTypes.Scout))
+                            else if (dirUnitC.Is(UnitTypes.Scout))
                             {
                                 InventorUnitsC.AddUnitsInInventor(ownUnitComDir.PlayerType, UnitTypes.Scout, LevelUnitTypes.Wood);
                             }
-                            unitComDirect.DefUnitType();
+                            dirUnitC.DefUnitType();
                         }
                     }
                 }

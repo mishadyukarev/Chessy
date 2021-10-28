@@ -23,6 +23,10 @@ namespace Scripts.Game
                 StatZoneViewUIC.SetTextToStat(StatTypes.Health, selUnitC.AmountHealth.ToString());
                 StatZoneViewUIC.SetTextToStat(StatTypes.Damage, selUnitC.PowerDamageOnCell(selBuildC.BuildType, selEnvC.Envronments).ToString());
                 StatZoneViewUIC.SetTextToStat(StatTypes.Steps, selUnitC.AmountSteps.ToString());
+
+                StatZoneViewUIC.FillAmountHp(StatTypes.Health, selUnitC.AmountHealth, selUnitC.MaxAmountHealth);
+                StatZoneViewUIC.FillAmountHp(StatTypes.Damage, selUnitC.PowerDamageOnCell(selBuildC.BuildType, selEnvC.Envronments), selUnitC.StandPowerDamage);
+                StatZoneViewUIC.FillAmountHp(StatTypes.Steps, selUnitC.AmountSteps, selUnitC.MaxAmountSteps);
             }
 
             else

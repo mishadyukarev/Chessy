@@ -40,8 +40,8 @@ namespace Scripts.Game
                         {
                             if (curUnitDatCom.Is(UnitTypes.Pawn))
                             {
-                                if (SelectorC.IsCellClickType(CellClickTypes.GiveTakeTW) 
-                                    || SelectorC.IsCellClickType(CellClickTypes.OldToNewUnit))
+                                if (SelectorC.Is(CellClickTypes.GiveTakeTW) 
+                                    || SelectorC.Is(CellClickTypes.OldToNewUnit))
                                 {
                                     curSupViewCom.EnableSR();
                                     curSupViewCom.SetColor(SupVisTypes.GivePawnTool);
@@ -51,7 +51,7 @@ namespace Scripts.Game
 
                             if (curUnitDatCom.LevelUnitType == LevelUnitTypes.Wood)
                             {
-                                if (SelectorC.IsCellClickType(CellClickTypes.UpgradeUnit))
+                                if (SelectorC.Is(CellClickTypes.UpgradeUnit))
                                 {
                                     curSupViewCom.EnableSR();
                                     curSupViewCom.SetColor(SupVisTypes.GivePawnTool);
@@ -75,7 +75,7 @@ namespace Scripts.Game
                 {
                     if (_cellUnitFilter.Get2(SelectorC.IdxSelCell).IsMine)
                     {
-                        if (SelectorC.IsCellClickType(CellClickTypes.PickFire))
+                        if (SelectorC.Is(CellClickTypes.PickFire))
                         {
                             foreach (var curIdxCell in _cellsArcherArsonFilt.Get1(0).GetListCopy(WhoseMoveC.CurPlayer, SelectorC.IdxSelCell))
                             {
@@ -84,7 +84,7 @@ namespace Scripts.Game
                             }
                         }
 
-                        else if (SelectorC.IsCellClickType(CellClickTypes.None))
+                        else if (SelectorC.Is(CellClickTypes.None))
                         {
                             foreach (var curIdxCell in cellsShiftCom.GetListCopy(WhoseMoveC.CurPlayer, SelectorC.IdxSelCell))
                             {

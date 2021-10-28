@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.ECS.Components.Data.Else.Game.Master;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using Photon.Pun;
 using Scripts.Common;
 using System;
@@ -98,11 +97,11 @@ namespace Scripts.Game
                         if (yy == 0 || yy == 10 && xx >= 0 && xx < 15 ||
                             yy >= 1 && yy < 10 && xx >= 0 && xx <= 2 || xx >= 13 && xx < 15 ||
 
-                            yy == 1 && xx == 3 || yy == 1 && xx == 12 || 
+                            yy == 1 && xx == 3 || yy == 1 && xx == 12 ||
                             yy == 9 && xx == 3 || yy == 9 && xx == 12)
                         {
                             go.SetActive(false);
-                        }        
+                        }
                     }
 
                     curCell_GO.transform.SetParent(supportParentForCells.transform);
@@ -134,7 +133,7 @@ namespace Scripts.Game
 
 
                     _curGameWorld.NewEntity()
-                         .Replace(new CellUnitDataCom())
+                         .Replace(new CellUnitDataCom(true))
                          .Replace(new OwnerCom())
                          .Replace(new VisibleC(true))
                          .Replace(new CellUnitMainViewCom(curCell_GO))
@@ -203,12 +202,12 @@ namespace Scripts.Game
                 .Replace(new WindUIC(upZone_GO.transform))
 
                 ///Center
-                .Replace(new EndGameDataUIC())
+                .Replace(new EndGameDataUIC(default))
                 .Replace(new EndGameViewUIC(centerZone_GO))
                 .Replace(new ReadyViewUIC(centerZone_GO.transform.Find("ReadyZone").gameObject))
                 .Replace(new ReadyDataUIC(new Dictionary<bool, bool>()))
                 .Replace(new MotionsViewUIC(centerZone_GO))
-                .Replace(new MotionsDataUIC())
+                .Replace(new MotionsDataUIC(default))
                 .Replace(new MistakeViewUIC(centerZone_GO))
                 .Replace(new MistakeDataUIC(new Dictionary<ResourceTypes, int>()))
                 .Replace(new KingZoneViewUIC(centerZone_GO))
@@ -233,8 +232,10 @@ namespace Scripts.Game
                 ///Right
                 .Replace(new StatZoneViewUIC(rightZone_GO))
                 .Replace(new CondUnitUIC(rightZone_GO.transform.Find("ConditionZone")))
-                .Replace(new UniqueAbiltUIC(rightZone_GO.transform.Find("UniqueAbilitiesZone")))
-                .Replace(new BuildAbilitUIC(rightZone_GO.transform.Find("BuildingZone")));
+                .Replace(new RightUniqueViewUIC(rightZone_GO.transform.Find("UniqueAbilitiesZone")))
+                .Replace(new BuildAbilitUIC(rightZone_GO.transform.Find("BuildingZone")))
+                .Replace(new ExtraTWZoneUIC(rightZone_GO.transform))
+                .Replace(new EffectsIUC(rightZone_GO.transform));
 
             _curGameWorld.NewEntity()
                .Replace(new InfoC(true))
@@ -318,7 +319,7 @@ namespace Scripts.Game
                         }
                     }
 
-                    
+
 
                     //_cellViewFilt.Get1(curIdxCell).SetRotForClient(PhotonNetwork.IsMasterClient);
                 }

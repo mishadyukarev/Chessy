@@ -157,7 +157,7 @@ namespace Scripts.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                if (SelectorC.IsCellClickType(CellClickTypes.GiveTakeTW))
+                if (SelectorC.Is(CellClickTypes.GiveTakeTW))
                 {
                     if (tWType == ToolWeaponTypes.Shield)
                     {
@@ -183,7 +183,11 @@ namespace Scripts.Game
                     SelectorC.CellClickType = CellClickTypes.GiveTakeTW;
                     SelectorC.TWTypeForGive = tWType;
 
-                    if (tWType == ToolWeaponTypes.Shield) SelectorC.LevelTWType = LevelTWTypes.Wood;
+                    if (tWType == ToolWeaponTypes.Shield)
+                    {
+                        //if(SelectorC.LevelTWType == LevelTWTypes.Iron)
+                        //SelectorC.LevelTWType = LevelTWTypes.Wood;
+                    }
                     else SelectorC.LevelTWType = LevelTWTypes.Iron; 
                 }
             }

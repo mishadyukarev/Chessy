@@ -19,8 +19,8 @@ namespace Scripts.Game
             var idxForSet = _setterFilter.Get1(0).IdxCellForSetting;
 
             ref var curEnvDatCom = ref _cellEnvirDataFilter.Get1(idxForSet);
-            ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForSet);
-            ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxForSet);
+            ref var curUnitC = ref _cellUnitFilter.Get1(idxForSet);
+            ref var curOwnUnitC = ref _cellUnitFilter.Get2(idxForSet);
 
 
             var playerSend = WhoseMoveC.WhoseMove;
@@ -28,28 +28,23 @@ namespace Scripts.Game
 
             if (_cellsSetUnitFilter.Get1(0).HaveIdxCell(playerSend, idxForSet))
             {
-                int newAmountHealth;
-                int newAmountSteps;
-
-                newAmountSteps = UnitValues.StandartAmountSteps(unitTypeForSet);
-                curUnitDatCom.LevelUnitType = LevelUnitTypes.Wood;
-                newAmountHealth = UnitValues.StandAmountHealthAll;
-
-                curUnitDatCom.UnitType = unitTypeForSet;
-                curUnitDatCom.AmountHealth = newAmountHealth;
-                curUnitDatCom.AmountSteps = newAmountSteps;
-                curUnitDatCom.CondUnitType = default;
-                curOwnUnitCom.PlayerType = playerSend;
+                curUnitC.UnitType = unitTypeForSet;
+                curUnitC.LevelUnitType = LevelUnitTypes.Wood;
+                curUnitC.TWExtraType = default;
+                curUnitC.AmountHealth = UnitValues.StandAmountHealth(unitTypeForSet);
+                curUnitC.AmountSteps = UnitValues.StandartAmountSteps(unitTypeForSet);
+                curUnitC.CondUnitType = default;
+                curOwnUnitC.PlayerType = playerSend;
 
                 if(InventorUnitsC.HaveUnitInInv(playerSend, unitTypeForSet, LevelUnitTypes.Iron))
                 {
                     InventorUnitsC.TakeUnitsInInv(playerSend, unitTypeForSet, LevelUnitTypes.Iron);
-                    curUnitDatCom.LevelUnitType = LevelUnitTypes.Iron;
+                    curUnitC.LevelUnitType = LevelUnitTypes.Iron;
                 }
                 else
                 {
                     InventorUnitsC.TakeUnitsInInv(playerSend, unitTypeForSet, LevelUnitTypes.Wood);
-                    curUnitDatCom.LevelUnitType = LevelUnitTypes.Wood;
+                    curUnitC.LevelUnitType = LevelUnitTypes.Wood;
                 }
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);

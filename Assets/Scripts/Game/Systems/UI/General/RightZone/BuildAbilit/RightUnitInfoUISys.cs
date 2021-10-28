@@ -7,7 +7,7 @@ namespace Scripts.Game
     {
         private EcsFilter<BuildAbilitUIC> _buildAbilUIFilt = default;
         private EcsFilter<CondUnitUIC> _condUnitUIFilt = default;
-        private EcsFilter<UniqueAbiltUIC> _uniqueAbilUIFilt = default;
+        private EcsFilter<RightUniqueViewUIC> _uniqueAbilUIFilt = default;
 
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilt = default;
 

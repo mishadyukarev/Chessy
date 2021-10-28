@@ -6,24 +6,13 @@ namespace Scripts.Game
     {
         public void Run()
         {
-            if (SelectorC.IsCellClickType(CellClickTypes.GiveTakeTW))
+            if (!SelectorC.Is(CellClickTypes.None))
             {
-                SelectorUIC.SetActiveBack(true);
-                SelectorUIC.SetActiveGiveTake(true);
+                SelectorUIC.SetActive(SelectorC.CellClickType, true);
             }
-
-            else if (SelectorC.IsCellClickType(CellClickTypes.PickFire))
-            {
-                SelectorUIC.SetActiveBack(true);
-                SelectorUIC.SetActivePickAdultForest(true);
-            }
-
             else
             {
-                SelectorUIC.SetActiveBack(false);
-
-                SelectorUIC.SetActivePickAdultForest(false);
-                SelectorUIC.SetActiveGiveTake(false);
+                SelectorUIC.DisableAll();
             }
         }
     }

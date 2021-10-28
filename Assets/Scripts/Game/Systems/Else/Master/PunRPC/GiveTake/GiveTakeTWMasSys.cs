@@ -19,106 +19,113 @@ namespace Scripts.Game
 
                 var sender = InfoC.Sender(MasGenOthTypes.Master);
 
-                ref var unitDatComForGive = ref _cellUnitFilter.Get1(neededIdxCell);
-                ref var ownUnitCom = ref _cellUnitFilter.Get2(neededIdxCell);
+                ref var unitCForGive = ref _cellUnitFilter.Get1(neededIdxCell);
+                ref var ownUnitC = ref _cellUnitFilter.Get2(neededIdxCell);
 
 
-                if (unitDatComForGive.Is(UnitTypes.Pawn))
+                if (unitCForGive.Is(UnitTypes.Pawn))
                 {
-                    if (unitDatComForGive.HaveMinAmountSteps)
+                    if (unitCForGive.HaveMinAmountSteps)
                     {
-                        if (unitDatComForGive.HaveMaxAmountHealth)
+                        if (unitCForGive.HaveMaxAmountHealth)
                         {
-                            if (unitDatComForGive.HaveExtraTW)
+                            if (unitCForGive.HaveExtraTW)
                             {
-                                InventorTWCom.AddAmountTools(ownUnitCom.PlayerType, unitDatComForGive.TWExtraType, unitDatComForGive.LevelTWType);
+                                InventorTWCom.AddAmountTools(ownUnitC.PlayerType, unitCForGive.TWExtraType, unitCForGive.LevelTWType);
+                                unitCForGive.TakeAmountSteps();
+                                unitCForGive.CondUnitType = default;
 
-                                unitDatComForGive.TWExtraType = default;
-                                unitDatComForGive.LevelTWType = default;
-
-                                unitDatComForGive.CondUnitType = default;
-                                unitDatComForGive.TakeAmountSteps();
+                                if (unitCForGive.HaveShield 
+                                    && tWTypeForGive == ToolWeaponTypes.Shield
+                                    && unitCForGive.LevelTWType != levelTWType)
+                                {
+                                    unitCForGive.LevelTWType = levelTWType;
+                                }
+                                else
+                                {
+                                    unitCForGive.TWExtraType = default;
+                                    unitCForGive.LevelTWType = default;
+                                }
+     
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                             }
 
-                            else
+
+                            else if (InventorTWCom.HaveTW(ownUnitC.PlayerType, tWTypeForGive, levelTWType))
                             {
-                                if (InventorTWCom.HaveTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType))
+                                InventorTWCom.TakeAmountTools(ownUnitC.PlayerType, tWTypeForGive, levelTWType);
+
+                                unitCForGive.TWExtraType = tWTypeForGive;
+                                unitCForGive.LevelTWType = levelTWType;
+                                if(unitCForGive.HaveShield) unitCForGive.AddShieldProtect(levelTWType);
+
+                                unitCForGive.TakeAmountSteps();
+                                unitCForGive.CondUnitType = default;
+
+                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
+                            }
+
+                            else if (tWTypeForGive == ToolWeaponTypes.Pick)
+                            {
+                                if (InventResourcesC.CanBuyTW(ownUnitC.PlayerType, ToolWeaponTypes.Pick, levelTWType, out var needRes))
                                 {
-                                    InventorTWCom.TakeAmountTools(ownUnitCom.PlayerType, tWTypeForGive, levelTWType);
+                                    InventResourcesC.BuyTW(ownUnitC.PlayerType, ToolWeaponTypes.Pick, levelTWType);
 
-                                    unitDatComForGive.TWExtraType = tWTypeForGive;
-                                    unitDatComForGive.LevelTWType = levelTWType;
+                                    unitCForGive.TWExtraType = tWTypeForGive;
+                                    unitCForGive.LevelTWType = levelTWType;
 
-                                    unitDatComForGive.TakeAmountSteps();
-                                    unitDatComForGive.CondUnitType = default;
+                                    unitCForGive.CondUnitType = default;
+                                    unitCForGive.TakeAmountSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                 }
-
-                                else if (tWTypeForGive == ToolWeaponTypes.Pick)
+                                else
                                 {
-                                    if (InventResourcesC.CanBuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Pick, levelTWType, out var needRes))
-                                    {
-                                        InventResourcesC.BuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Pick, levelTWType);
-
-                                        unitDatComForGive.TWExtraType = tWTypeForGive;
-                                        unitDatComForGive.LevelTWType = levelTWType;
-
-                                        unitDatComForGive.CondUnitType = default;
-                                        unitDatComForGive.TakeAmountSteps();
-
-                                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
-                                    }
-                                    else
-                                    {
-                                        RpcSys.MistakeEconomyToGeneral(sender, needRes);
-                                    }
-                                }
-
-                                else if (tWTypeForGive == ToolWeaponTypes.Sword)
-                                {
-                                    if (InventResourcesC.CanBuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Sword, levelTWType, out var needRes))
-                                    {
-                                        InventResourcesC.BuyTW(ownUnitCom.PlayerType, ToolWeaponTypes.Sword, levelTWType);
-
-                                        unitDatComForGive.TWExtraType = tWTypeForGive;
-                                        unitDatComForGive.LevelTWType = levelTWType;
-
-                                        unitDatComForGive.CondUnitType = default;
-                                        unitDatComForGive.TakeAmountSteps();
-
-                                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
-                                    }
-                                    else
-                                    {
-                                        RpcSys.MistakeEconomyToGeneral(sender, needRes);
-                                    }
-                                }
-
-                                else if (tWTypeForGive == ToolWeaponTypes.Shield)
-                                {
-                                    if (InventResourcesC.CanBuyTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType, out var needRes))
-                                    {
-                                        InventResourcesC.BuyTW(ownUnitCom.PlayerType, tWTypeForGive, levelTWType);
-
-                                        unitDatComForGive.TWExtraType = tWTypeForGive;
-                                        unitDatComForGive.LevelTWType = levelTWType;
-                                        unitDatComForGive.AddShieldProtect(levelTWType);
-
-                                        unitDatComForGive.CondUnitType = default;
-                                        unitDatComForGive.TakeAmountSteps();
-
-                                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
-                                    }
-                                    else
-                                    {
-                                        RpcSys.MistakeEconomyToGeneral(sender, needRes);
-                                    }
+                                    RpcSys.MistakeEconomyToGeneral(sender, needRes);
                                 }
                             }
 
+                            else if (tWTypeForGive == ToolWeaponTypes.Sword)
+                            {
+                                if (InventResourcesC.CanBuyTW(ownUnitC.PlayerType, ToolWeaponTypes.Sword, levelTWType, out var needRes))
+                                {
+                                    InventResourcesC.BuyTW(ownUnitC.PlayerType, ToolWeaponTypes.Sword, levelTWType);
+
+                                    unitCForGive.TWExtraType = tWTypeForGive;
+                                    unitCForGive.LevelTWType = levelTWType;
+
+                                    unitCForGive.CondUnitType = default;
+                                    unitCForGive.TakeAmountSteps();
+
+                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
+                                }
+                                else
+                                {
+                                    RpcSys.MistakeEconomyToGeneral(sender, needRes);
+                                }
+                            }
+
+                            else if (tWTypeForGive == ToolWeaponTypes.Shield)
+                            {
+                                if (InventResourcesC.CanBuyTW(ownUnitC.PlayerType, tWTypeForGive, levelTWType, out var needRes))
+                                {
+                                    InventResourcesC.BuyTW(ownUnitC.PlayerType, tWTypeForGive, levelTWType);
+
+                                    unitCForGive.TWExtraType = tWTypeForGive;
+                                    unitCForGive.LevelTWType = levelTWType;
+                                    unitCForGive.AddShieldProtect(levelTWType);
+
+                                    unitCForGive.CondUnitType = default;
+                                    unitCForGive.TakeAmountSteps();
+
+                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
+                                }
+                                else
+                                {
+                                    RpcSys.MistakeEconomyToGeneral(sender, needRes);
+                                }
+                            }
                         }
                         else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
                     }

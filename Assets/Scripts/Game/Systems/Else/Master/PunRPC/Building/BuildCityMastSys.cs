@@ -79,6 +79,11 @@ namespace Scripts.Game
                             curCellEnvCom.Reset(EnvirTypes.Fertilizer);
                             WhereEnvironmentC.Remove(EnvirTypes.Fertilizer, idxForBuild);
                         }
+                        if (curCellEnvCom.Have(EnvirTypes.YoungForest))
+                        {
+                            curCellEnvCom.Reset(EnvirTypes.YoungForest);
+                            WhereEnvironmentC.Remove(EnvirTypes.YoungForest, idxForBuild);
+                        }
                     }
 
                     else

@@ -7,7 +7,6 @@ namespace Scripts.Game
     {
         private EcsFilter<CellUnitDataCom, OwnerCom, VisibleC> _cellUnitFilter = default;
 
-        private EcsFilter<CellsAttackC> _cellsAttackFilt = default;
         private EcsFilter<CellsForShiftCom> _cellsShiftFilt = default;
 
         public void Run()
@@ -17,7 +16,7 @@ namespace Scripts.Game
             VisibleC VisUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
 
 
-            ref var cellsAttackCom = ref _cellsAttackFilt.Get1(0);
+            //ref var cellsAttackCom = ref _cellsAttackFilt.Get1(0);
             ref var cellsShiftCom = ref _cellsShiftFilt.Get1(0);
 
 
@@ -62,7 +61,7 @@ namespace Scripts.Game
                         SelectorC.SelUnitType = default;
                     }
 
-                    else if (SelectorC.IsCellClickType(CellClickTypes.PickFire))
+                    else if (SelectorC.Is(CellClickTypes.PickFire))
                     {
                         RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxCurCell);
 
@@ -70,7 +69,7 @@ namespace Scripts.Game
                         SelectorC.IdxSelCell = SelectorC.IdxCurCell;
                     }
 
-                    else if (SelectorC.IsCellClickType(CellClickTypes.GiveTakeTW))
+                    else if (SelectorC.Is(CellClickTypes.GiveTakeTW))
                     {
                         if (UnitDatCom(SelectorC.IdxCurCell).Is(UnitTypes.Pawn) && OwnUnitCom(SelectorC.IdxCurCell).IsMine)
                         {
@@ -84,7 +83,7 @@ namespace Scripts.Game
                         }
                     }
 
-                    else if (SelectorC.IsCellClickType(CellClickTypes.UpgradeUnit))
+                    else if (SelectorC.Is(CellClickTypes.UpgradeUnit))
                     {
                         if (UnitDatCom(SelectorC.IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop })
                             && OwnUnitCom(SelectorC.IdxCurCell).IsMine
@@ -99,11 +98,12 @@ namespace Scripts.Game
                         }
                     }
 
-                    else if (SelectorC.IsCellClickType(CellClickTypes.OldToNewUnit))
+                    else if (SelectorC.Is(CellClickTypes.OldToNewUnit))
                     {
                         if (UnitDatCom(SelectorC.IdxCurCell).Is(UnitTypes.Pawn) && OwnUnitCom(SelectorC.IdxCurCell).IsMine)
                         {
                             RpcSys.OldToNewToMaster(SelectorC.UnitTypeOldToNew, SelectorC.IdxCurCell);
+                            SelectorC.DefCellClickType();
                         }
                         else
                         {

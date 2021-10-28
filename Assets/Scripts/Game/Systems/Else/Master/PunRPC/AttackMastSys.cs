@@ -18,10 +18,10 @@ namespace Scripts.Game
             var fromIdx = forAttackMasCom.IdxFromCell;
             var toIdxAttack = forAttackMasCom.IdxToCell;
 
-            ref var fromUnitDatCom = ref _cellUnitFilter.Get1(fromIdx);
+            ref var fromUnitC = ref _cellUnitFilter.Get1(fromIdx);
             ref var fromOwnUnitCom = ref _cellUnitFilter.Get2(fromIdx);
 
-            ref var toUnitDatCom = ref _cellUnitFilter.Get1(toIdxAttack);
+            ref var toUnitC = ref _cellUnitFilter.Get1(toIdxAttack);
             ref var toOwnUnitCom = ref _cellUnitFilter.Get2(toIdxAttack);
             ref var toBuildDatCom = ref _cellBuildFilter.Get1(toIdxAttack);
             ref var toEnvDatCom = ref _cellEnvFilter.Get1(toIdxAttack);
@@ -41,114 +41,127 @@ namespace Scripts.Game
 
             if (simpUniqueType != default)
             {
-                fromUnitDatCom.DefAmountSteps();
-                fromUnitDatCom.DefCondType();
+                fromUnitC.DefAmountSteps();
+                fromUnitC.DefCondType();
 
 
                 float powerDamFrom = 0;
                 float powerDamTo = 0;
 
       
-                powerDamFrom += fromUnitDatCom.PowerDamageAttack(simpUniqueType);
+                powerDamFrom += fromUnitC.PowerDamageAttack(simpUniqueType);
 
-                if (fromUnitDatCom.IsMelee)
+                if (fromUnitC.IsMelee)
                     RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
                 else RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
                 
 
-                if (toUnitDatCom.IsMelee)
+                if (toUnitC.IsMelee)
                 {
-                    powerDamTo += toUnitDatCom.PowerDamageOnCell(toBuildDatCom.BuildType, toEnvDatCom.Envronments);
+                    powerDamTo += toUnitC.PowerDamageOnCell(toBuildDatCom.BuildType, toEnvDatCom.Envronments);
                 }
 
 
-                float maxPowerDamage = powerDamTo * 1.5f;
+                float min = 0;
+                float max = 0;
+                float minusTo = 0;
+                float minusFrom = 0;
 
-
-                var percentFrom = powerDamFrom * 100 / maxPowerDamage;
-                float minusFrom = powerDamTo * percentFrom / 100;
-
-
-                var percentTo = powerDamFrom * 100 / maxPowerDamage;
-                float minusTo = powerDamFrom * percentTo / 100;
-
-
-                if (minusFrom > 0) fromUnitDatCom.TakeAmountHealth((int)minusFrom);
-                if (minusTo > 0) toUnitDatCom.TakeAmountHealth((int)minusTo);
-
-
-                //if (toUnitDatCom.Is(UnitTypes.Pawn))
-                //{
-                //    if (toUnitDatCom.TWExtraType == ToolWeaponTypes.Shield)
-                //    {
-                //        if (toUnitDatCom.ShieldProtection >= 1)
-                //        {
-                //            toUnitDatCom.TakeShieldProtect();
-                //            damageTo = 0;
-
-                //            if (toUnitDatCom.ShieldProtection == 0)
-                //            {
-                //                toUnitDatCom.TWExtraType = ToolWeaponTypes.None;
-                //            }
-                //        }
-                //    }
-                //}
-                //if (fromUnitDatCom.Is(UnitTypes.Pawn))
-                //{
-                //    if (fromUnitDatCom.TWExtraType == ToolWeaponTypes.Shield)
-                //    {
-                //        if (fromUnitDatCom.ShieldProtection >= 1)
-                //        {
-                //            fromUnitDatCom.TakeShieldProtect();
-                //            damageFrom = 0;
-
-                //            if (fromUnitDatCom.ShieldProtection == 0)
-                //            {
-                //                fromUnitDatCom.TWExtraType = ToolWeaponTypes.None;
-                //            }
-                //        }
-                //    }
-                //}
-
-
-
-                if (!toUnitDatCom.HaveAmountHealth)
+                if (powerDamTo > powerDamFrom)
                 {
-                    if (toUnitDatCom.Is(UnitTypes.King))
+                    max = powerDamTo * 2f;
+                    min = powerDamTo / 2f;
+                    if(min < powerDamFrom) minusTo = 100 * powerDamFrom / max;
+
+                    max = powerDamFrom * 2;
+                    minusFrom = 100 * powerDamTo / max;
+                }
+                else
+                {
+                    max = powerDamTo * 2f;
+                    minusTo = 100 * powerDamFrom / max;
+
+                    max = powerDamFrom * 2;
+                    min = powerDamFrom / 2;
+                    if (min < powerDamTo) minusFrom = 100 * powerDamTo / max;
+                }
+
+
+
+
+
+
+
+                if (!fromUnitC.IsMelee) minusFrom = 0;
+                if (fromUnitC.HaveShield)
+                {
+                    minusFrom = 0;
+                    fromUnitC.TakeShieldProtect();
+                }
+
+                if (minusFrom >= 0)
+                {
+                    fromUnitC.TakeAmountHealth((int)minusFrom);
+                    if (toUnitC.AmountHealth <= 10) toUnitC.TakeAmountHealth(10);
+                }
+                else throw new System.Exception();
+                
+
+
+
+                if (!toUnitC.IsMelee) minusTo = UnitValues.StandAmountHealth(toUnitC.UnitType);
+                if (toUnitC.HaveShield)
+                {
+                    minusTo = 0;
+                    toUnitC.TakeShieldProtect();
+                }
+
+                if (minusTo >= 0)
+                {
+                    toUnitC.TakeAmountHealth((int)minusTo);
+                    if (toUnitC.AmountHealth <= 10) toUnitC.TakeAmountHealth(10);
+                }
+                else throw new System.Exception();
+                
+
+
+                if (!toUnitC.HaveAmountHealth)
+                {
+                    if (toUnitC.Is(UnitTypes.King))
                     {
                         EndGameDataUIC.PlayerWinner = fromOwnUnitCom.PlayerType;
                     }
-                    else if(toUnitDatCom.Is(UnitTypes.Scout))
+                    else if(toUnitC.Is(UnitTypes.Scout))
                     {
-                        InventorUnitsC.AddUnitsInInventor(toOwnUnitCom.PlayerType, toUnitDatCom.UnitType, LevelUnitTypes.Wood);
+                        InventorUnitsC.AddUnitsInInventor(toOwnUnitCom.PlayerType, toUnitC.UnitType, LevelUnitTypes.Wood);
                     }
 
-                    toUnitDatCom.DefUnitType();
+                    toUnitC.DefUnitType();
 
 
-                    if (fromUnitDatCom.IsMelee)
+                    if (fromUnitC.IsMelee)
                     {
-                        toUnitDatCom.ReplaceUnit(fromUnitDatCom);
+                        toUnitC.ReplaceUnit(fromUnitC);
                         toOwnUnitCom.PlayerType = fromOwnUnitCom.PlayerType;
 
-                        fromUnitDatCom.DefUnitType();
+                        fromUnitC.DefUnitType();
 
-                        if (!toUnitDatCom.HaveAmountHealth)
+                        if (!toUnitC.HaveAmountHealth)
                         {
-                            toUnitDatCom.DefUnitType();
+                            toUnitC.DefUnitType();
                         }
                     }
                 }
 
-                else if (!fromUnitDatCom.HaveAmountHealth)
+                else if (!fromUnitC.HaveAmountHealth)
                 {
-                    if (fromUnitDatCom.Is(UnitTypes.King))
+                    if (fromUnitC.Is(UnitTypes.King))
                     {
                         fromOwnUnitCom.PlayerType = toOwnUnitCom.PlayerType;
                         EndGameDataUIC.PlayerWinner = toOwnUnitCom.PlayerType;
                     }
 
-                    fromUnitDatCom.DefUnitType();
+                    fromUnitC.DefUnitType();
                 }
             }
         }

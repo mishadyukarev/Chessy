@@ -30,7 +30,7 @@ namespace Scripts.Game
                     if (selUnitDatCom.Is(UnitTypes.King))
                     {
                         activeFirst = true;
-                        UniqueAbiltUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.CircularAttack);
+                        RightUniqueViewUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.CircularAttack);
                     }
                     else if (selUnitDatCom.Is(UnitTypes.Scout))
                     {
@@ -46,30 +46,30 @@ namespace Scripts.Game
                             {
                                 if (selFireDatCom.HaveFire)
                                 {
-                                    UniqueAbiltUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.FireNone);
+                                    RightUniqueViewUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.FireNone);
                                 }
                                 else
                                 {
-                                    UniqueAbiltUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.Fire);     
+                                    RightUniqueViewUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.Fire);     
                                 }
                             }
                             else
                             {
-                                UniqueAbiltUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.YoungForest);
+                                RightUniqueViewUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.YoungForest);
                             }
                         }
 
                         else
                         {
                             activeFirst = true;
-                            UniqueAbiltUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.Fire);
+                            RightUniqueViewUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.Fire);
                         }
                     }
                 }
             }
 
-            UniqueAbiltUIC.SetActive_Button(UniqueButtonTypes.First, activeFirst);
-            UniqueAbiltUIC.SetActive_Button(UniqueButtonTypes.Second, activeSecond);
+            RightUniqueViewUIC.SetActive_Button(UniqueButtonTypes.First, activeFirst);
+            RightUniqueViewUIC.SetActive_Button(UniqueButtonTypes.Second, activeSecond);
         }
 
 
