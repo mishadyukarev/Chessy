@@ -6,7 +6,7 @@ namespace Scripts.Game
     internal sealed class FillCellsForAttackBishopSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellViewComponent> _cellViewFilter = default;
+        private EcsFilter<CellDataC> _cellDataFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom, VisibleC> _cellUnitFilter = default;
 
@@ -22,7 +22,7 @@ namespace Scripts.Game
 
                 if (unitDataCom_0.Is(UnitTypes.Bishop))
                 {
-                    if (unitDataCom_0.HaveMinAmountSteps)
+                    if (unitDataCom_0.HaveMinAmountSteps || unitDataCom_0.Have(StatTypes.Steps))
 
                         for (DirectTypes dirType_1 = (DirectTypes)1; dirType_1 < (DirectTypes)Enum.GetNames(typeof(DirectTypes)).Length; dirType_1++)
                         {
@@ -35,7 +35,7 @@ namespace Scripts.Game
                             ref var ownUnitCom_1 = ref _cellUnitFilter.Get2(idxCell_1);
 
 
-                            if (_cellViewFilter.Get1(idxCell_1).IsActiveParent)
+                            if (_cellDataFilter.Get1(idxCell_1).IsActiveCell)
                             {
                                 if (!envrDataCom_1.Have(EnvirTypes.Mountain))
                                 {

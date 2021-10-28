@@ -7,15 +7,10 @@ namespace Scripts.Game
     internal sealed class CreateUnitMastSys : IEcsRunSystem
     {
         private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
-        private EcsFilter<SoundEffectC> _soundEffFilt = default;
-
 
         public void Run()
         {
             var sender = InfoC.Sender(MasGenOthTypes.Master);
-
-            ref var soundEffecCom = ref _soundEffFilt.Get1(0);
-
 
             var unitTypeForCreating = _creatorUnitFilter.Get1(0).UnitTypeForCreating;
 

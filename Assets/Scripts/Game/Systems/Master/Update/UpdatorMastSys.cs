@@ -8,7 +8,7 @@ namespace Scripts.Game
     internal sealed class UpdatorMastSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellViewComponent> _cellViewFilter = default;
+        private EcsFilter<CellDataC> _cellDataFilt = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
@@ -31,7 +31,7 @@ namespace Scripts.Game
             {
                 curXy = _xyCellFilter.GetXyCell(curIdxCell);
 
-                ref var curCellViewCom = ref _cellViewFilter.Get1(curIdxCell);
+                ref var curCellDatC = ref _cellDataFilt.Get1(curIdxCell);
 
                 ref var curUnitCom = ref _cellUnitFilter.Get1(curIdxCell);
                 ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
@@ -259,7 +259,7 @@ namespace Scripts.Game
                     }
                 }
 
-                if (curCellViewCom.IsActiveParent)
+                if (curCellDatC.IsActiveCell)
                 {
                     if (curEnvrC.Have(EnvirTypes.AdultForest))
                     {

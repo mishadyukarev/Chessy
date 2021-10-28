@@ -17,7 +17,7 @@ namespace Scripts.Game
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
-        private EcsFilter<CellViewComponent> _cellViewFilt = default;
+        private EcsFilter<CellViewC, CellDataC> _cellViewFilt = default;
         private EcsFilter<CellUnitDataCom, CellUnitExtraViewComp, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellCloudsDataC> _cellWeatherFilt = default;
@@ -112,7 +112,8 @@ namespace Scripts.Game
                     _curGameWorld.NewEntity()
                         .Replace(new XyCellComponent(new byte[] { x, y }))
 
-                        .Replace(new CellViewComponent(cellView_GO))
+                        .Replace(new CellDataC(cellView_GO))
+                        .Replace(new CellViewC(cellView_GO))
 
                         .Replace(new CellEnvironmentDataC(new Dictionary<EnvirTypes, bool>()))
                         .Replace(new CellEnvironViewCom(curCell_GO))
@@ -232,8 +233,10 @@ namespace Scripts.Game
                 ///Right
                 .Replace(new StatZoneViewUIC(rightZone_GO))
                 .Replace(new CondUnitUIC(rightZone_GO.transform.Find("ConditionZone")))
+                .Replace(new RightUniqueDataUIC(true))
                 .Replace(new RightUniqueViewUIC(rightZone_GO.transform.Find("UniqueAbilitiesZone")))
-                .Replace(new BuildAbilitUIC(rightZone_GO.transform.Find("BuildingZone")))
+                .Replace(new BuildAbilitDataUIC(true))
+                .Replace(new BuildAbilitViewUIC(rightZone_GO.transform.Find("BuildingZone")))
                 .Replace(new ExtraTWZoneUIC(rightZone_GO.transform))
                 .Replace(new EffectsIUC(rightZone_GO.transform));
 
@@ -274,7 +277,7 @@ namespace Scripts.Game
                     ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
                     ref var curWeatherDatCom = ref _cellWeatherFilt.Get1(curIdxCell);
 
-                    if (_cellViewFilt.Get1(curIdxCell).IsActiveParent)
+                    if (_cellViewFilt.Get2(curIdxCell).IsActiveCell)
                     {
                         if (curXyCell[1] >= 4 && curXyCell[1] <= 6)
                         {

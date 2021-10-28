@@ -35,6 +35,7 @@ namespace Scripts.Game
             _rpcSystems.Add(RpcMasterTypes.CircularAttackKing, new EcsSystems(gameWorld).Add(new CircularAttackKingMastSys()));
             _rpcSystems.Add(RpcMasterTypes.UpgradeUnit, new EcsSystems(gameWorld).Add(new UpgradeUnitMasSys()));
             _rpcSystems.Add(RpcMasterTypes.OldToNewUnit, new EcsSystems(gameWorld).Add(new OldNewScoutSys()));
+            _rpcSystems.Add(RpcMasterTypes.BonusNearUnitKing, new EcsSystems(gameWorld).Add(new BonusNearUnitKingMasSys()));
 
             var giveTakeSystems = new EcsSystems(gameWorld)
                 .Add(new GiveTakeTWMasSys());
@@ -57,6 +58,10 @@ namespace Scripts.Game
             foreach (var system in _rpcSystems.Values) allGameSystems.Add(system);
         }
 
-        public static void RunRpcSystem(RpcMasterTypes rpcMasterType) => _rpcSystems[rpcMasterType].Run();
+        public static void RunRpcSystem(RpcMasterTypes rpcMasterType)
+        {
+            if (_rpcSystems.ContainsKey(rpcMasterType)) _rpcSystems[rpcMasterType].Run();
+            else throw new System.Exception();
+        }
     }
 }

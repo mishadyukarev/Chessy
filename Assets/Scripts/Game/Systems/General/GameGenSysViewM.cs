@@ -30,11 +30,11 @@ namespace Scripts.Game
 
             ///right
             .Add(new RightZoneUISys())
-                .Add(new RightUnitInfoUISys())
                 .Add(new StatsUISystem())
                 .Add(new ProtectUISys())
                 .Add(new RelaxUISys())
                 .Add(new UniqueAbilitUISys())
+                .Add(new SecondUniqueUISys())
                 .Add(new FirstButtonBuildUISys())
                 .Add(new SecButtonBuildUISys())
                 .Add(new ThirdButtonBuildUISys())

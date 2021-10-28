@@ -1,5 +1,5 @@
 {
-    "name": "Game.System.Data",
+    "name": "Game.System",
     "references": [
         "GUID:f8b9587ab9104e74586dec6b8477f11e",
         "GUID:1d5fae58364006c499401c7d1bafb393",

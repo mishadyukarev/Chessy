@@ -34,20 +34,24 @@ namespace Scripts.Game
 
             if (forBuildType == BuildingTypes.Mine)
             {
-                if (curUnitDatCom.HaveMinAmountSteps)
+                if (curUnitDatCom.HaveMinAmountSteps || curUnitDatCom.Have(StatTypes.Steps))
                 {
                     if (curCellEnvCom.Have(EnvirTypes.Hill) && curCellEnvCom.HaveRes(EnvirTypes.Hill))
                     {
                         if (InventResourcesC.CanCreateBuild(playerSend, forBuildType, out var needRes))
                         {
-                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
+                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                                InventResourcesC.BuyBuild(playerSend, forBuildType);
+                            InventResourcesC.BuyBuild(playerSend, forBuildType);
 
-                                curBuildDatCom.BuildType = forBuildType;
-                                curOwnBuildCom.PlayerType = playerSend;
+                            curBuildDatCom.BuildType = forBuildType;
+                            curOwnBuildCom.PlayerType = playerSend;
 
-                                curUnitDatCom.TakeAmountSteps();
+                            if (curUnitDatCom.Have(StatTypes.Steps))
+                            {
+                                curUnitDatCom.DefStat(StatTypes.Steps);
+                            }
+                            else curUnitDatCom.TakeAmountSteps();
                         }
 
                         else RpcSys.MistakeEconomyToGeneral(sender, needRes);

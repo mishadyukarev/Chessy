@@ -85,6 +85,7 @@ namespace Scripts.Game
             if (_effects.ContainsKey(statType)) _effects[statType] = isActive;
             else throw new Exception();
         }
+        public void DefStat(StatTypes statType) => Set(statType, default);
         public bool Have(StatTypes statType)
         {
             if (_effects.ContainsKey(statType)) return _effects[statType];
@@ -167,6 +168,9 @@ namespace Scripts.Game
             UnitType = newUnit.UnitType;
             LevelUnitType = newUnit.LevelUnitType;
             TWExtraType = newUnit.TWExtraType;
+            _effects[StatTypes.Health] = newUnit.Have(StatTypes.Health);
+            _effects[StatTypes.Damage] = newUnit.Have(StatTypes.Damage);
+            _effects[StatTypes.Steps] = newUnit.Have(StatTypes.Steps);
             LevelTWType = newUnit.LevelTWType;
             ShieldProtection = newUnit.ShieldProtection;
             AmountHealth = newUnit.AmountHealth;

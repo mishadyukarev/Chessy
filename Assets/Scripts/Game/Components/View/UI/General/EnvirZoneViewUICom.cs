@@ -8,8 +8,8 @@ namespace Scripts.Game
 {
     public struct EnvirZoneViewUICom
     {
-        private Button _info_Button;
-        private Dictionary<ResourceTypes, TextMeshProUGUI> _environment_TextMPs;
+        private static Button _info_Button;
+        private static Dictionary<ResourceTypes, TextMeshProUGUI> _environment_TextMPs;
 
 
         public EnvirZoneViewUICom(GameObject leftZone_GO)
@@ -24,9 +24,9 @@ namespace Scripts.Game
             _environment_TextMPs.Add(ResourceTypes.Ore, environmentZone_GO.transform.Find("OreResources_TextMP").GetComponent<TextMeshProUGUI>());
         }
 
-        public void SetActiveParent(bool isActive) => _info_Button.transform.parent.gameObject.SetActive(isActive);
-        public void AddListenerToEnvInfo(UnityAction unityAction) => _info_Button.onClick.AddListener(unityAction);
+        public static void SetActiveParent(bool isActive) => _info_Button.transform.parent.gameObject.SetActive(isActive);
+        public static void AddListenerToEnvInfo(UnityAction unityAction) => _info_Button.onClick.AddListener(unityAction);
 
-        public void SetTextResour(ResourceTypes resourceType, string text) => _environment_TextMPs[resourceType].text = text;
+        public static void SetTextResour(ResourceTypes resourceType, string text) => _environment_TextMPs[resourceType].text = text;
     }
 }

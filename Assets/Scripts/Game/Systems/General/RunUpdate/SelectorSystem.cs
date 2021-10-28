@@ -6,18 +6,11 @@ namespace Scripts.Game
     internal sealed class SelectorSystem : IEcsRunSystem
     {
         private EcsFilter<CellUnitDataCom, OwnerCom, VisibleC> _cellUnitFilter = default;
-
-        private EcsFilter<CellsForShiftCom> _cellsShiftFilt = default;
-
         public void Run()
         {
             CellUnitDataCom UnitDatCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
             OwnerCom OwnUnitCom(byte idxCell) => _cellUnitFilter.Get2(idxCell);
             VisibleC VisUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
-
-
-            //ref var cellsAttackCom = ref _cellsAttackFilt.Get1(0);
-            ref var cellsShiftCom = ref _cellsShiftFilt.Get1(0);
 
 
             if (InputC.IsClicked)
@@ -127,7 +120,7 @@ namespace Scripts.Game
                             RpcSys.AttackUnitToMaster(SelectorC.IdxPreCell, SelectorC.IdxSelCell);
                         }
 
-                        if (cellsShiftCom.HaveIdxCell(WhoseMoveC.CurPlayer, SelectorC.IdxPreCell, SelectorC.IdxSelCell))
+                        if (CellsForShiftCom.HaveIdxCell(WhoseMoveC.CurPlayer, SelectorC.IdxPreCell, SelectorC.IdxSelCell))
                         {
                             RpcSys.ShiftUnitToMaster(SelectorC.IdxPreCell, SelectorC.IdxSelCell);
                         }

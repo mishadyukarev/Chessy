@@ -39,7 +39,7 @@ namespace Scripts.Game
 
             if (forBuildType == BuildingTypes.Farm)
             {
-                if (curUnitDatCom.HaveMinAmountSteps)
+                if (curUnitDatCom.HaveMinAmountSteps || curUnitDatCom.Have(StatTypes.Steps))
                 {
                     if (!curCellEnvCom.Have(EnvirTypes.AdultForest) && !curCellEnvCom.Have(EnvirTypes.YoungForest))
                     {
@@ -62,7 +62,11 @@ namespace Scripts.Game
                             curBuildDatCom.BuildType = forBuildType;
                             curOwnBuildCom.PlayerType = playerSend;
 
-                            curUnitDatCom.TakeAmountSteps();
+                            if (curUnitDatCom.Have(StatTypes.Steps))
+                            {
+                                curUnitDatCom.DefStat(StatTypes.Steps);
+                            }
+                            else curUnitDatCom.TakeAmountSteps();
                         }
                         else
                         {

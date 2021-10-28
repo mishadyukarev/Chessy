@@ -41,6 +41,7 @@ namespace Scripts.Game
 
             if (simpUniqueType != default)
             {
+                fromUnitC.DefStat(StatTypes.Steps);
                 fromUnitC.DefAmountSteps();
                 fromUnitC.DefCondType();
 
@@ -102,7 +103,7 @@ namespace Scripts.Game
                 if (minusFrom >= 0)
                 {
                     fromUnitC.TakeAmountHealth((int)minusFrom);
-                    if (toUnitC.AmountHealth <= 10) toUnitC.TakeAmountHealth(10);
+                    if (fromUnitC.AmountHealth <= 10) fromUnitC.TakeAmountHealth(10);
                 }
                 else throw new System.Exception();
                 

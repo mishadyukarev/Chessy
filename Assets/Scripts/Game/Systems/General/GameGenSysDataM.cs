@@ -32,11 +32,11 @@ namespace Scripts.Game
 
 
             var eventExecuters = new EcsSystems(gameWorld)
-                .Add(new EventsGameSys())
-                .Add(new EventDownSys())
-                .Add(new EventRightUniqueUISys())
-                .Add(new UnitUniqueEventSys())
-                .Add(new EventRightBuildUISys());
+                .Add(new CenterEventUISys())
+                .Add(new LeftCityEventUISys())
+                .Add(new LeftEnvEventUISys())
+                .Add(new DownEventUISys())
+                .Add(new RightUnitEventUISys());
 
 
             InitOnlySystems

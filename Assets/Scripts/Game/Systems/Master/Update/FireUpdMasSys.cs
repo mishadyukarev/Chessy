@@ -7,7 +7,7 @@ namespace Scripts.Game
     internal sealed class FireUpdMasSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellViewComponent> _cellViewFilter = default;
+        private EcsFilter<CellDataC> _cellDataFilt = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
@@ -92,7 +92,7 @@ namespace Scripts.Game
                         {
                             var curIdxCell1 = _xyCellFilter.GetIdxCell(xy1);
 
-                            if (_cellViewFilter.Get1(curIdxCell1).IsActiveParent)
+                            if (_cellDataFilt.Get1(curIdxCell1).IsActiveCell)
                             {
                                 if (_cellEnvDataFilter.Get1(curIdxCell1).Have(EnvirTypes.AdultForest))
                                 {

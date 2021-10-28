@@ -4,7 +4,7 @@ namespace Scripts.Game
 {
     public struct CellsForShiftCom
     {
-        private Dictionary<PlayerTypes, Dictionary<byte, List<byte>>> _availCellsForShift;
+        private static Dictionary<PlayerTypes, Dictionary<byte, List<byte>>> _availCellsForShift;
 
         public CellsForShiftCom(bool needNew) : this()
         {
@@ -30,9 +30,9 @@ namespace Scripts.Game
             }
         }
 
-        public List<byte> GetListCopy(PlayerTypes playerType, byte startIdxCell) => _availCellsForShift[playerType][startIdxCell].Copy();
-        public void AddIdxCell(PlayerTypes playerType, byte startIdxCell, byte idxCell) => _availCellsForShift[playerType][startIdxCell].Add(idxCell);
-        public void Clear(PlayerTypes playerType, byte startIdxCell) => _availCellsForShift[playerType][startIdxCell].Clear();
-        public bool HaveIdxCell(PlayerTypes playerType, byte startIdxCell, byte idxCell) => _availCellsForShift[playerType][startIdxCell].Contains(idxCell);
+        public static List<byte> GetListCopy(PlayerTypes playerType, byte startIdxCell) => _availCellsForShift[playerType][startIdxCell].Copy();
+        public static void AddIdxCell(PlayerTypes playerType, byte startIdxCell, byte idxCell) => _availCellsForShift[playerType][startIdxCell].Add(idxCell);
+        public static void Clear(PlayerTypes playerType, byte startIdxCell) => _availCellsForShift[playerType][startIdxCell].Clear();
+        public static bool HaveIdxCell(PlayerTypes playerType, byte startIdxCell, byte idxCell) => _availCellsForShift[playerType][startIdxCell].Contains(idxCell);
     }
 }

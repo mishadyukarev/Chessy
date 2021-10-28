@@ -90,6 +90,8 @@ namespace Scripts.Game
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
         public static void SeedEnvironmentToMaster(byte idxCell, EnvirTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
+        public static void BonusNearUnits(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.BonusNearUnitKing, new object[] { idxCell });
+
         internal static void OldToNewToMaster(UnitTypes unitType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.OldToNewUnit, new object[] { unitType, idxCell });
         internal static void UpgradeUnitToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeUnit, new object[] { idxCell });
         internal static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, LevelTWTypes levelTWType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, levelTWType, idxCell });
@@ -137,8 +139,8 @@ namespace Scripts.Game
                     break;
 
                 case RpcMasterTypes.Shift:
-                    _shiftFilter.Get1(0).IdxFrom = (byte)objects[0];
-                    _shiftFilter.Get1(0).IdxTo = (byte)objects[1];
+                    ForShiftMasCom.IdxFrom = (byte)objects[0];
+                    ForShiftMasCom.IdxTo = (byte)objects[1];
                     break;
 
                 case RpcMasterTypes.Attack:
@@ -179,6 +181,10 @@ namespace Scripts.Game
 
                 case RpcMasterTypes.CircularAttackKing:
                     _circularAttackFilter.Get1(0).IdxUnitForCirculAttack = (byte)objects[0];
+                    break;
+
+                case RpcMasterTypes.BonusNearUnitKing:
+                    ForBonusNearUnitC.IdxCell = (byte)objects[0];
                     break;
 
                 case RpcMasterTypes.OldToNewUnit:

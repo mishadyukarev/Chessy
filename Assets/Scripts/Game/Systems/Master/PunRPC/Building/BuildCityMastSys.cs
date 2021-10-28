@@ -8,13 +8,12 @@ namespace Scripts.Game
         private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilt = default;
-        private EcsFilter<CellViewComponent> _cellViewFilt = default;
+        private EcsFilter<CellDataC> _cellDataFilt = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
-        private EcsFilter<BuildsInGameC> _buildsFilt = default;
 
         public void Run()
         {
@@ -24,8 +23,6 @@ namespace Scripts.Game
 
             if (forBuildType == BuildingTypes.City)
             {
-                ref var buildsInGameCom = ref _buildsFilt.Get1(0);
-
                 var sender = InfoC.Sender(MasGenOthTypes.Master);
                 var idxForBuild = forBuildMasCom.IdxForBuild;
 
@@ -41,7 +38,7 @@ namespace Scripts.Game
 
 
 
-                if (curUnitDatCom.HaveMinAmountSteps)
+                if (curUnitDatCom.HaveMinAmountSteps || curUnitDatCom.Have(StatTypes.Steps))
                 {
                     bool haveNearBorder = false;
 
@@ -49,7 +46,7 @@ namespace Scripts.Game
                     {
                         var curIdx = _xyCellFilt.GetIdxCell(xy);
 
-                        if (!_cellViewFilt.Get1(curIdx).IsActiveParent)
+                        if (!_cellDataFilt.Get1(curIdx).IsActiveCell)
                         {
                             haveNearBorder = true;
                             break;
@@ -65,7 +62,11 @@ namespace Scripts.Game
 
                         BuildsInGameC.Add(playerSend, forBuildType, idxForBuild);
 
+
+
+                        curUnitDatCom.DefStat(StatTypes.Steps);
                         curUnitDatCom.DefAmountSteps();
+
 
                         curFireCom.DisableFire();
 

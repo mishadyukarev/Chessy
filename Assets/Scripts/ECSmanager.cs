@@ -81,9 +81,8 @@ namespace Scripts
                     }
 
                     _gameWorld = new EcsWorld();
-                    _allGameSystems = new EcsSystems(_gameWorld);
-
-                    _allGameSystems.Add(new Game.InitSpawnSys());
+                    _allGameSystems = new EcsSystems(_gameWorld)
+                        .Add(new Game.InitSpawnSys());
 
                     _gameGenSysDataM = new GameGenSysDataM(_gameWorld, _allGameSystems);
                     _gameMasSysDataM = new GameMasSysDataM(_gameWorld, _allGameSystems);

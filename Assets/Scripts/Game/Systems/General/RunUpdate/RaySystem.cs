@@ -7,7 +7,7 @@ namespace Scripts.Game
     internal sealed class RaySystem : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellViewComponent> _cellViewFilter = default;
+        private EcsFilter<CellDataC> _cellDataFilt = default;
 
         private Ray _ray;
         private const float RAY_DISTANCE = 100;
@@ -31,7 +31,7 @@ namespace Scripts.Game
             {
                 foreach (byte idx in _xyCellFilter)
                 {
-                    int one = _cellViewFilter.Get1(idx).InstanceID;
+                    int one = _cellDataFilt.Get1(idx).InstanceID;
                     int two = SelectorC.RaycastHit2D.transform.gameObject.GetInstanceID();
 
                     if (one == two)

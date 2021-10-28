@@ -25,14 +25,16 @@ namespace Scripts.Game
 
                 if (unitCForGive.Is(UnitTypes.Pawn))
                 {
-                    if (unitCForGive.HaveMinAmountSteps)
+                    if (unitCForGive.HaveMinAmountSteps || unitCForGive.Have(StatTypes.Steps))
                     {
                         if (unitCForGive.HaveMaxAmountHealth)
                         {
                             if (unitCForGive.HaveExtraTW)
                             {
                                 InventorTWCom.AddAmountTools(ownUnitC.PlayerType, unitCForGive.TWExtraType, unitCForGive.LevelTWType);
-                                unitCForGive.TakeAmountSteps();
+
+                                if (unitCForGive.Have(StatTypes.Steps)) unitCForGive.DefStat(StatTypes.Steps);
+                                else unitCForGive.TakeAmountSteps();
                                 unitCForGive.CondUnitType = default;
 
                                 if (unitCForGive.HaveShield 
@@ -60,7 +62,9 @@ namespace Scripts.Game
                                 unitCForGive.LevelTWType = levelTWType;
                                 if(unitCForGive.HaveShield) unitCForGive.AddShieldProtect(levelTWType);
 
-                                unitCForGive.TakeAmountSteps();
+                                if (unitCForGive.Have(StatTypes.Steps)) unitCForGive.DefStat(StatTypes.Steps);
+                                else unitCForGive.TakeAmountSteps();
+
                                 unitCForGive.CondUnitType = default;
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
@@ -76,7 +80,8 @@ namespace Scripts.Game
                                     unitCForGive.LevelTWType = levelTWType;
 
                                     unitCForGive.CondUnitType = default;
-                                    unitCForGive.TakeAmountSteps();
+                                    if (unitCForGive.Have(StatTypes.Steps)) unitCForGive.DefStat(StatTypes.Steps);
+                                    else unitCForGive.TakeAmountSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                 }
@@ -96,7 +101,8 @@ namespace Scripts.Game
                                     unitCForGive.LevelTWType = levelTWType;
 
                                     unitCForGive.CondUnitType = default;
-                                    unitCForGive.TakeAmountSteps();
+                                    if (unitCForGive.Have(StatTypes.Steps)) unitCForGive.DefStat(StatTypes.Steps);
+                                    else unitCForGive.TakeAmountSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                 }
@@ -117,7 +123,8 @@ namespace Scripts.Game
                                     unitCForGive.AddShieldProtect(levelTWType);
 
                                     unitCForGive.CondUnitType = default;
-                                    unitCForGive.TakeAmountSteps();
+                                    if (unitCForGive.Have(StatTypes.Steps)) unitCForGive.DefStat(StatTypes.Steps);
+                                    else unitCForGive.TakeAmountSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                 }

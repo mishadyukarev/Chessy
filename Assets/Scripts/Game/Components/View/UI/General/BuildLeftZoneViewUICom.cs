@@ -7,9 +7,9 @@ namespace Scripts.Game
 {
     public struct BuildLeftZoneViewUICom
     {
-        private Button _melt_Button;
+        private static Button _melt_Button;
 
-        private Dictionary<BuildingTypes, Button> _upgradeBuild_Buttons;
+        private static Dictionary<BuildingTypes, Button> _upgradeBuild_Buttons;
 
         public BuildLeftZoneViewUICom(GameObject leftZone_GO)
         {
@@ -23,8 +23,8 @@ namespace Scripts.Game
             _upgradeBuild_Buttons.Add(BuildingTypes.Mine, buildingZone_GO.transform.Find("UpgradeMine_Button").GetComponent<Button>());
         }
 
-        public void SetActiveZone(bool isActive) => _melt_Button.transform.parent.gameObject.SetActive(isActive);
-        public void AddListenerToMelt(UnityAction unityAction) => _melt_Button.onClick.AddListener(unityAction);
-        public void AddListBuildUpgrade(BuildingTypes buildingType, UnityAction unityAction) => _upgradeBuild_Buttons[buildingType].onClick.AddListener(unityAction);
+        public static void SetActiveZone(bool isActive) => _melt_Button.transform.parent.gameObject.SetActive(isActive);
+        public static void AddListenerToMelt(UnityAction unityAction) => _melt_Button.onClick.AddListener(unityAction);
+        public static void AddListBuildUpgrade(BuildingTypes buildingType, UnityAction unityAction) => _upgradeBuild_Buttons[buildingType].onClick.AddListener(unityAction);
     }
 }

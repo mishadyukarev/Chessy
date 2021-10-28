@@ -17,7 +17,7 @@ namespace Scripts.Game
             var envTypeForSeeding = _seedingFilter.Get1(0).EnvTypeForSeeding;
             var idxCellForSeeding = _seedingFilter.Get1(0).IdxForSeeding;
 
-            ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxCellForSeeding);
+            ref var curUnitDatC = ref _cellUnitFilter.Get1(idxCellForSeeding);
             ref var curCellBuildDataCom = ref _cellBuildFilter.Get1(idxCellForSeeding);
             ref var curCellEnvDataCom = ref _cellEnvFilter.Get1(idxCellForSeeding);
 
@@ -31,7 +31,7 @@ namespace Scripts.Game
                     throw new Exception();
 
                 case EnvirTypes.YoungForest:
-                    if (curCellUnitDataCom.HaveMinAmountSteps)
+                    if (curUnitDatC.HaveMinAmountSteps)
                     {
                         if (curCellBuildDataCom.HaveBuild)
                         {
@@ -50,7 +50,8 @@ namespace Scripts.Game
                                         curCellEnvDataCom.SetNew(EnvirTypes.YoungForest);
                                         WhereEnvironmentC.Add(EnvirTypes.YoungForest, idxCellForSeeding);
 
-                                        curCellUnitDataCom.TakeAmountSteps();
+                                        if (curUnitDatC.Have(StatTypes.Steps)) curUnitDatC.DefStat(StatTypes.Steps);
+                                        else curUnitDatC.TakeAmountSteps();
                                     }
                                     else
                                     {

@@ -5,28 +5,19 @@ namespace Scripts.Game
 {
     internal sealed class ShiftUnitMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<ForShiftMasCom> _forShiftFilter = default;
-
-        private EcsFilter<CellsForShiftCom> _cellsShiftFilter = default;
-
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvrDataFilter = default;
 
         public void Run()
         {
-
-            var fromIdx = _forShiftFilter.Get1(0).IdxFrom;
-            var toIdx = _forShiftFilter.Get1(0).IdxTo;
-
-
+            var fromIdx = ForShiftMasCom.IdxFrom;
+            var toIdx = ForShiftMasCom.IdxTo;
 
             var playerType = WhoseMoveC.WhoseMove;
 
 
-            if (_cellsShiftFilter.Get1(0).HaveIdxCell(playerType, fromIdx, toIdx))
+            if (CellsForShiftCom.HaveIdxCell(playerType, fromIdx, toIdx))
             {
-                ref var forShiftMasCom = ref _forShiftFilter.Get1(0);
-
                 ref var fromUnitDatCom = ref _cellUnitFilter.Get1(fromIdx);
                 ref var fromOnlineUnitCom = ref _cellUnitFilter.Get2(fromIdx);
 
@@ -35,8 +26,17 @@ namespace Scripts.Game
                 ref var toEnvDatCom = ref _cellEnvrDataFilter.Get1(toIdx);
 
 
-                fromUnitDatCom.TakeAmountSteps(toEnvDatCom.NeedAmountSteps);
-                if (fromUnitDatCom.AmountSteps < 0) fromUnitDatCom.DefAmountSteps();
+
+                if (fromUnitDatCom.Have(StatTypes.Steps) && toEnvDatCom.NeedAmountSteps < 2)
+                {
+                    fromUnitDatCom.Set(StatTypes.Steps, false);
+                }
+                else
+                {
+                    fromUnitDatCom.TakeAmountSteps(toEnvDatCom.NeedAmountSteps);
+                    if (fromUnitDatCom.AmountSteps < 0) fromUnitDatCom.DefAmountSteps();
+                }
+                
 
                 toUnitDatCom.ReplaceUnit(fromUnitDatCom);
                 toUnitDatCom.CondUnitType = default;

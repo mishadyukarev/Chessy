@@ -2,7 +2,7 @@
 {
     public struct ForShiftMasCom
     {
-        public byte IdxFrom { get; set; }
-        public byte IdxTo { get; set; }
+        public static byte IdxFrom { get; set; }
+        public static byte IdxTo { get; set; }
     }
 }

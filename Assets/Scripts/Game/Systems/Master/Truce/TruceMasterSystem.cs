@@ -15,7 +15,7 @@ namespace Scripts.Game
         private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
-        private EcsFilter<CellViewComponent> _cellViewFilt = default;
+        private EcsFilter<CellDataC> _cellDataFilt = default;
 
         public void Run()
         {
@@ -47,7 +47,7 @@ namespace Scripts.Game
                 curFireCom.DisableFire();
 
 
-                if (_cellViewFilt.Get1(curIdxCell).IsActiveParent)
+                if (_cellDataFilt.Get1(curIdxCell).IsActiveCell)
                 {
                     if (curUnitDatCom.HaveUnit)
                     {

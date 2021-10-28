@@ -6,7 +6,7 @@ namespace Scripts.Game
 {
     internal sealed class DonerMastSys : IEcsRunSystem
     {
-        private EcsFilter<CellViewComponent> _cellViewFilter = default;
+        //private EcsFilter<CellViewComponent> _cellViewFilter = default;
 
         public void Run()
         {
@@ -32,9 +32,9 @@ namespace Scripts.Game
 
                     curPlayer = WhoseMoveC.CurPlayer;
 
-                    CameraC.SetPosRotClient(curPlayer, SpawnInitComSys.Main_GO.transform.position);
-                    foreach (byte curIdxCell in _cellViewFilter)
-                        _cellViewFilter.Get1(curIdxCell).SetRotForClient(curPlayer);
+                    //CameraC.SetPosRotClient(curPlayer, SpawnInitComSys.Main_GO.transform.position);
+                    //foreach (byte curIdxCell in _cellViewFilter)
+                    //    _cellViewFilter.Get1(curIdxCell).SetRotForClient(curPlayer);
 
 
 

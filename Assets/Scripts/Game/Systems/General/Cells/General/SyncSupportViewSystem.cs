@@ -9,7 +9,6 @@ namespace Scripts.Game
         private EcsFilter<CellSupViewComponent> _supViewFilter = default;
 
         private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
-        private EcsFilter<CellsForShiftCom> _cellsShiftFilter = default;
         private EcsFilter<CellsArsonArcherComp> _cellsArcherArsonFilt = default;
 
         public void Run()
@@ -68,8 +67,6 @@ namespace Scripts.Game
                 ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelectorC.IdxSelCell);
                 ref var selOffUnitCom = ref _cellUnitFilter.Get3(SelectorC.IdxSelCell);
 
-                ref var cellsShiftCom = ref _cellsShiftFilter.Get1(0);
-
 
                 if (selUnitDatCom.HaveUnit)
                 {
@@ -86,7 +83,7 @@ namespace Scripts.Game
 
                         else if (SelectorC.Is(CellClickTypes.None))
                         {
-                            foreach (var curIdxCell in cellsShiftCom.GetListCopy(WhoseMoveC.CurPlayer, SelectorC.IdxSelCell))
+                            foreach (var curIdxCell in CellsForShiftCom.GetListCopy(WhoseMoveC.CurPlayer, SelectorC.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.Shift);
