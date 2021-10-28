@@ -1,0 +1,18 @@
+{
+    "name": "Game.Component.Data",
+    "references": [
+        "GUID:f8b9587ab9104e74586dec6b8477f11e",
+        "GUID:1d5fae58364006c499401c7d1bafb393",
+        "GUID:57c32fc907df0f54e8e6e8f0d2488336",
+        "GUID:831409e8f9d13b5479a3baef9822ad34"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

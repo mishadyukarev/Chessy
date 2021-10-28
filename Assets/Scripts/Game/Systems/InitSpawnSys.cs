@@ -254,6 +254,15 @@ namespace Scripts.Game
                .Replace(new UpdatedMasCom());
 
 
+
+            if (!HintComC.EnabledHint)
+            {
+                HintViewUIC.SetActiveHintZone(false);
+            }
+
+
+
+
             if (PhotonNetwork.IsMasterClient)
             {
                 int random;

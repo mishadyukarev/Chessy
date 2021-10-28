@@ -20,11 +20,12 @@ namespace Scripts
         private EcsSystems _allMenuSystems;
         private EcsSystems _allGameSystems;
 
-        private ComSysManager _comSysManag;
+        private ComSysDataM _comSysDataM;
         private MenuSystemManager _menuSysManag;
-        private GameGeneralSysManager _gameGenSysManag;
-        private GameMasterSystemManager _gameMasSysManag;
-        private GameOtherSystemManager _gameOthSysmManag;
+        private GameGenSysDataM _gameGenSysDataM;
+        private GameGenSysViewM _gameGenSysViewM;
+        private GameMasSysDataM _gameMasSysDataM;
+        private GameOthSysDataM _gameOthSysDataM;
 
         #endregion
 
@@ -35,7 +36,7 @@ namespace Scripts
             _allComSystems = new EcsSystems(_comWorld);
 
             _allComSystems.Add(new SpawnInitComSys(toggleScene_Action, main_GO));
-            _comSysManag = new ComSysManager(_comWorld, _allComSystems);
+            _comSysDataM = new ComSysDataM(_comWorld, _allComSystems);
             _allComSystems.Init();
         }
 
@@ -51,10 +52,10 @@ namespace Scripts
                     {
                         _gameWorld.Destroy();
 
-                        _gameGenSysManag.Dispose();
-                        _gameGenSysManag = default;
-                        _gameMasSysManag = default;
-                        _gameOthSysmManag = default;
+                        _gameGenSysDataM.Dispose();
+                        _gameGenSysDataM = default;
+                        _gameMasSysDataM = default;
+                        _gameOthSysDataM = default;
                         _allGameSystems.Destroy();
                     }
 
@@ -66,7 +67,7 @@ namespace Scripts
                     _allMenuSystems.Init();
 
 
-                    _comSysManag.LaunchAdSys.Run();
+                    _comSysDataM.LaunchAdSys.Run();
                     _menuSysManag.LaunchLikeGameSys.Run();
                     break;
 
@@ -84,9 +85,11 @@ namespace Scripts
 
                     _allGameSystems.Add(new Game.InitSpawnSys());
 
-                    _gameGenSysManag = new GameGeneralSysManager(_gameWorld, _allGameSystems);
-                    _gameMasSysManag = new GameMasterSystemManager(_gameWorld, _allGameSystems);
-                    _gameOthSysmManag = new GameOtherSystemManager(_gameWorld, _allGameSystems);
+                    _gameGenSysDataM = new GameGenSysDataM(_gameWorld, _allGameSystems);
+                    _gameMasSysDataM = new GameMasSysDataM(_gameWorld, _allGameSystems);
+                    _gameOthSysDataM = new GameOthSysDataM(_gameWorld, _allGameSystems);
+
+                    _gameGenSysViewM = new GameGenSysViewM(_gameWorld, _allGameSystems);
 
                     _allGameSystems.Init();
                     break;
@@ -99,7 +102,7 @@ namespace Scripts
 
         public void OwnUpdate(SceneTypes sceneType)
         {
-            _comSysManag.RunUpdate();
+            _comSysDataM.RunUpdate();
 
             switch (sceneType)
             {
@@ -111,10 +114,11 @@ namespace Scripts
                     break;
 
                 case SceneTypes.Game:
-                    _gameGenSysManag.RunUpdate();
+                    _gameGenSysDataM.RunUpdate();
+                    _gameGenSysViewM.RunUpdate();
 
-                    if (PhotonNetwork.IsMasterClient) _gameMasSysManag.RunUpdate();
-                    else _gameOthSysmManag.RunUpdate();
+                    if (PhotonNetwork.IsMasterClient) _gameMasSysDataM.RunUpdate();
+                    else _gameOthSysDataM.RunUpdate();
                     break;
 
                 default:
