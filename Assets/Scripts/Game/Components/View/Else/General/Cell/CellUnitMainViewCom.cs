@@ -14,8 +14,7 @@ namespace Scripts.Game
         }
 
 
-        public void Enable_SR() => _main_SR.enabled = true;
-        public void Disable_SR() => _main_SR.enabled = false;
+        public void Enable_SR(bool enabled) => _main_SR.enabled = enabled;
 
         public void SetSprite(UnitTypes unitType, LevelUnitTypes upgradeUnitType)
         {   

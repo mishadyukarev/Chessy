@@ -7,7 +7,7 @@ namespace Scripts.Game
 {
     internal sealed class RightUnitEventUISys : IEcsInitSystem
     {
-        private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC> _cellUnitFilter = default;
 
         public void Init()
         {
@@ -22,17 +22,17 @@ namespace Scripts.Game
             CondUnitUIC.AddListener(CondUnitTypes.Relaxed, delegate { ConditionAbilityButton(CondUnitTypes.Relaxed); });
         }
 
-        private void ConditionAbilityButton(CondUnitTypes conditionUnitType)
+        private void ConditionAbilityButton(CondUnitTypes condUnitType)
         {
             if (WhoseMoveC.IsMyMove)
             {
-                if (_cellUnitFilter.Get1(SelectorC.IdxSelCell).Is(conditionUnitType))
+                if (_cellUnitFilter.Get2(SelectorC.IdxSelCell).Is(condUnitType))
                 {
                     RpcSys.ConditionUnitToMaster(CondUnitTypes.None, SelectorC.IdxSelCell);
                 }
                 else
                 {
-                    RpcSys.ConditionUnitToMaster(conditionUnitType, SelectorC.IdxSelCell);
+                    RpcSys.ConditionUnitToMaster(condUnitType, SelectorC.IdxSelCell);
                 }
             }
         }

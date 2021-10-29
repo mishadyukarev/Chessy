@@ -18,7 +18,7 @@ namespace Scripts.Game
                 ref var curMainUnitViewCom = ref _cellUnitViewFilt.Get1(idxCurCell);
                 ref var curExtraUnitViewCom = ref _cellUnitViewFilt.Get2(idxCurCell);
 
-                curMainUnitViewCom.Disable_SR();
+                curMainUnitViewCom.Enable_SR(false);
                 curExtraUnitViewCom.Disable_SR();
 
 
@@ -26,16 +26,16 @@ namespace Scripts.Game
                 {
                     if (curVisUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
                     {
-                        curMainUnitViewCom.Enable_SR();
+                        curMainUnitViewCom.Enable_SR(true);
                         curMainUnitViewCom.SetSprite(curUnitDatCom.UnitType, curUnitDatCom.LevelUnitType);
 
 
                         if (curUnitDatCom.Is(UnitTypes.Pawn))
                         {
-                            if (twUnitC.HaveExtraTW)
+                            if (twUnitC.HaveToolWeap)
                             {
                                 curExtraUnitViewCom.Enable_SR();
-                                curExtraUnitViewCom.SetToolWeapon_Sprite(twUnitC.TWExtraType, twUnitC.LevelTWType);
+                                curExtraUnitViewCom.SetToolWeapon_Sprite(twUnitC.ToolWeapType, twUnitC.LevelTWType);
                             }
                         }
 

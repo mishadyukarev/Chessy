@@ -6,12 +6,13 @@ namespace Scripts.Game
 {
     internal sealed class RelaxUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
             ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelectorC.IdxSelCell);
-            ref var selOnUnitCom = ref _cellUnitFilter.Get2(SelectorC.IdxSelCell);
+            ref var selCondUnitC = ref _cellUnitFilter.Get2(SelectorC.IdxSelCell);
+            ref var selOnUnitCom = ref _cellUnitFilter.Get3(SelectorC.IdxSelCell);
 
 
             var activeButt = false;
@@ -24,7 +25,7 @@ namespace Scripts.Game
                     {
                         activeButt = true;
 
-                        if (selUnitDatCom.Is(CondUnitTypes.Protected))
+                        if (selCondUnitC.Is(CondUnitTypes.Protected))
                         {
                             CondUnitUIC.SetColor(CondUnitTypes.Protected, Color.yellow);
                         }
@@ -34,7 +35,7 @@ namespace Scripts.Game
                             CondUnitUIC.SetColor(CondUnitTypes.Protected, Color.white);
                         }
 
-                        if (selUnitDatCom.Is(CondUnitTypes.Relaxed))
+                        if (selCondUnitC.Is(CondUnitTypes.Relaxed))
                         {
                             CondUnitUIC.SetColor(CondUnitTypes.Relaxed, Color.green);
                         }

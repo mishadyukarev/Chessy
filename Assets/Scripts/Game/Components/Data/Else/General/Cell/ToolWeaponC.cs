@@ -4,32 +4,41 @@ namespace Scripts.Game
 {
     public struct ToolWeaponC
     {
-        public ToolWeaponTypes TWExtraType;
-        public bool IsTWExtraType(ToolWeaponTypes toolWeaponType) => TWExtraType == toolWeaponType;
-        public bool HaveExtraTW => TWExtraType != default;
-        public bool HaveShield => TWExtraType == ToolWeaponTypes.Shield;
+        public ToolWeaponTypes ToolWeapType;
+        public bool Is(ToolWeaponTypes tWType) => ToolWeapType == tWType;
+        public bool HaveToolWeap => ToolWeapType != default;
+
 
         public LevelTWTypes LevelTWType;
-        public bool IsLevelTWType(LevelTWTypes levelTWType) => LevelTWType == levelTWType;
+        public bool Is(LevelTWTypes levelTWType) => LevelTWType == levelTWType;
 
-        public int ShieldProtection;
+
+        private int _shieldProt;
+        public int ShieldProt => _shieldProt;
         public void AddShieldProtect(LevelTWTypes levelTWType)
         {
             switch (levelTWType)
             {
                 case LevelTWTypes.None: throw new Exception();
-                case LevelTWTypes.Wood: ShieldProtection = 1; return;
-                case LevelTWTypes.Iron: ShieldProtection = 3; return;
+                case LevelTWTypes.Wood: _shieldProt = 1; return;
+                case LevelTWTypes.Iron: _shieldProt = 3; return;
                 default: throw new Exception();
             }
         }
         public void TakeShieldProtect(int taking = 1)
         {
-            ShieldProtection -= taking;
-            if (ShieldProtection <= 0)
+            _shieldProt -= taking;
+            if (ShieldProt <= 0)
             {
-                TWExtraType = ToolWeaponTypes.None;
+                ToolWeapType = ToolWeaponTypes.None;
             }
+        }
+
+        public void Set(ToolWeaponC tWC)
+        {
+            ToolWeapType = tWC.ToolWeapType;
+            LevelTWType = tWC.LevelTWType;
+            _shieldProt = tWC.ShieldProt;
         }
     }
 }

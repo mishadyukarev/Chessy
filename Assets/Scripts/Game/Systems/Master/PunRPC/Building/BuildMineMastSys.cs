@@ -1,6 +1,4 @@
 ﻿using Leopotam.Ecs;
-using Photon.Pun;
-using System;
 
 namespace Scripts.Game
 {
@@ -35,7 +33,7 @@ namespace Scripts.Game
 
             if (forBuildType == BuildingTypes.Mine)
             {
-                if (curStepUnitC.HaveMinAmountSteps || curUnitDatCom.Have(StatTypes.Steps))
+                if (curStepUnitC.HaveMinSteps)
                 {
                     if (curCellEnvCom.Have(EnvirTypes.Hill) && curCellEnvCom.HaveRes(EnvirTypes.Hill))
                     {
@@ -48,11 +46,7 @@ namespace Scripts.Game
                             curBuildDatCom.BuildType = forBuildType;
                             curOwnBuildCom.PlayerType = playerSend;
 
-                            if (curUnitDatCom.Have(StatTypes.Steps))
-                            {
-                                curUnitDatCom.DefStat(StatTypes.Steps);
-                            }
-                            else curStepUnitC.TakeAmountSteps();
+                            curStepUnitC.TakeSteps();
                         }
 
                         else RpcSys.MistakeEconomyToGeneral(sender, needRes);

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Scripts.Game
 {
@@ -30,54 +29,10 @@ namespace Scripts.Game
         public LevelUnitTypes LevelUnitType;
 
 
-        public CondUnitTypes CondUnitType { get; set; }
-        public void DefCondType() => CondUnitType = default;
-        public bool Is(CondUnitTypes condUnitType) => CondUnitType == condUnitType;
-        public bool Is(CondUnitTypes[] condUnitTypes)
-        {
-            foreach (var conditionUnitType in condUnitTypes)
-                if (Is(conditionUnitType)) return true;
-            return false;
-        }
-
-
-
-
-
-        private Dictionary<StatTypes, bool> _effects;
-        public void Set(StatTypes statType, bool isActive)
-        {
-            if (_effects.ContainsKey(statType)) _effects[statType] = isActive;
-            else throw new Exception();
-        }
-        public void DefStat(StatTypes statType) => Set(statType, default);
-        public bool Have(StatTypes statType)
-        {
-            if (_effects.ContainsKey(statType)) return _effects[statType];
-            else throw new Exception();
-        }
-
-
-
-        public void ReplaceUnit(CellUnitDataCom newUnit)
+        public void Set(CellUnitDataCom newUnit)
         {
             UnitType = newUnit.UnitType;
             LevelUnitType = newUnit.LevelUnitType;
-            _effects[StatTypes.Health] = newUnit.Have(StatTypes.Health);
-            _effects[StatTypes.Damage] = newUnit.Have(StatTypes.Damage);
-            _effects[StatTypes.Steps] = newUnit.Have(StatTypes.Steps);
-            CondUnitType = newUnit.CondUnitType;
-        }
-
-        public CellUnitDataCom(bool needNew) : this()
-        {
-            if (needNew)
-            {
-                _effects = new Dictionary<StatTypes, bool>();
-                _effects.Add(StatTypes.Health, default);
-                _effects.Add(StatTypes.Damage, default);
-                _effects.Add(StatTypes.Steps, default);
-            }
         }
     }
 }

@@ -13,22 +13,21 @@ namespace Scripts.Game
     {
         private EcsWorld _curGameWorld = default;
 
-        private EcsFilter<InventorUnitsC> _inventorUnitsFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
         private EcsFilter<CellViewC, CellDataC> _cellViewFilt = default;
-        private EcsFilter<CellUnitDataCom, HpComponent, ToolWeaponC, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellCloudsDataC> _cellWeatherFilt = default;
+
+        private readonly EcsFilter<CellUnitDataCom, HpUnitC, DamageComponent, StepComponent> _cellUnitBaseFilt;
+        private readonly EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, OwnerCom> _cellUnitOtherFilt;
+        private readonly EcsFilter<CellUnitDataCom, VisibleC, CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilt;
 
 
         public void Init()
         {
             ToggleZoneComponent.ReplaceZone(SceneTypes.Game);
-
-
-
 
             SoundComComp.SavedVolume = SoundComComp.Volume;
 
@@ -109,6 +108,7 @@ namespace Scripts.Game
 
                     var cellView_GO = curCell_GO.transform.Find("Cell").gameObject;
 
+                    
                     _curGameWorld.NewEntity()
                         .Replace(new XyCellComponent(new byte[] { x, y }))
 
@@ -134,19 +134,24 @@ namespace Scripts.Game
 
 
                     _curGameWorld.NewEntity()
-                         .Replace(new CellUnitDataCom(true))
-                         .Replace(new HpComponent())
+                         .Replace(new CellUnitDataCom())
+
+                         .Replace(new HpUnitC())
                          .Replace(new DamageComponent())
                          .Replace(new StepComponent())
+
+                         .Replace(new ConditionUnitC())
                          .Replace(new ToolWeaponC())
+                         .Replace(new UnitEffectsC(true))
                          .Replace(new OwnerCom())
+
                          .Replace(new VisibleC(true))
                          .Replace(new CellUnitMainViewCom(curCell_GO))
                          .Replace(new CellUnitExtraViewComp(curCell_GO));
 
+
                     ++curIdx;
                 }
-
 
 
             ///Else
@@ -340,8 +345,6 @@ namespace Scripts.Game
                     //_cellViewFilt.Get1(curIdxCell).SetRotForClient(PhotonNetwork.IsMasterClient);
                 }
 
-                ref var unitInvCom = ref _inventorUnitsFilter.Get1(0);
-
                 for (UnitTypes unitType = (UnitTypes)1; unitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; unitType++)
                 {
                     InventorUnitsC.SetAmountUnitsInInvAll(unitType, LevelUnitTypes.Wood, EconomyValues.AmountUnits(unitType));
@@ -368,10 +371,12 @@ namespace Scripts.Game
 
                         ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
 
-                        ref var curUnitCom = ref _cellUnitFilter.Get1(curIdxCell);
-                        ref var curHpUnitC = ref _cellUnitFilter.Get2(curIdxCell);
-                        ref var twUnitC = ref _cellUnitFilter.Get3(curIdxCell);
-                        ref var curOwnUnitCom = ref _cellUnitFilter.Get4(curIdxCell);
+                        ref var curUnitCom = ref _cellUnitBaseFilt.Get1(curIdxCell);
+                        ref var curHpUnitC = ref _cellUnitBaseFilt.Get2(curIdxCell);
+
+                        ref var condUnitC = ref _cellUnitOtherFilt.Get2(curIdxCell);
+                        ref var twUnitC = ref _cellUnitOtherFilt.Get3(curIdxCell);
+                        ref var curOwnUnitCom = ref _cellUnitOtherFilt.Get4(curIdxCell);
 
                         ref var curBuildCom = ref _cellBuildFilter.Get1(curIdxCell);
                         ref var curOwnBuildCom = ref _cellBuildFilter.Get2(curIdxCell);
@@ -393,8 +398,8 @@ namespace Scripts.Game
 
                             curUnitCom.UnitType = UnitTypes.King;
                             curUnitCom.LevelUnitType = LevelUnitTypes.Wood;
-                            curHpUnitC.AmountHealth = 1;
-                            curUnitCom.CondUnitType = CondUnitTypes.Protected;
+                            curHpUnitC.AmountHp = 1;
+                            condUnitC.CondUnitType = CondUnitTypes.Protected;
                             curOwnUnitCom.PlayerType = PlayerTypes.Second;
                         }
 
@@ -430,17 +435,17 @@ namespace Scripts.Game
 
                             if (rand >= 50)
                             {
-                                twUnitC.TWExtraType = ToolWeaponTypes.Sword;
+                                twUnitC.ToolWeapType = ToolWeaponTypes.Sword;
                                 twUnitC.LevelTWType = LevelTWTypes.Iron;
                             }
                             else
                             {
-                                twUnitC.TWExtraType = ToolWeaponTypes.Shield;
+                                twUnitC.ToolWeapType = ToolWeaponTypes.Shield;
                                 twUnitC.LevelTWType = LevelTWTypes.Wood;
                                 twUnitC.AddShieldProtect(LevelTWTypes.Wood);
                             }
-                            curHpUnitC.AmountHealth = 100;
-                            curUnitCom.CondUnitType = CondUnitTypes.Protected;
+                            curHpUnitC.AmountHp = 100;
+                            condUnitC.CondUnitType = CondUnitTypes.Protected;
                             curOwnUnitCom.PlayerType = PlayerTypes.Second;
                         }
                     }

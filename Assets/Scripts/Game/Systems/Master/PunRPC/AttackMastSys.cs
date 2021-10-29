@@ -7,7 +7,9 @@ namespace Scripts.Game
     {
         private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
-        private EcsFilter<CellUnitDataCom, HpComponent, DamageComponent, StepComponent, ToolWeaponC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, HpUnitC, DamageComponent, StepComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, OwnerCom> _cellUnitEffFilt = default;
+
         private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
 
@@ -21,16 +23,25 @@ namespace Scripts.Game
             ref var fromUnitC = ref _cellUnitFilter.Get1(fromIdx);
             ref var fromHpUnitC = ref _cellUnitFilter.Get2(fromIdx);
             ref var fromDamUnitC = ref _cellUnitFilter.Get3(fromIdx);
-            ref var fromStepUnitC = ref _cellUnitFilter.Get4(fromIdx);
-            ref var twUnitC_from = ref _cellUnitFilter.Get5(fromIdx);
-            ref var fromOwnUnitCom = ref _cellUnitFilter.Get6(fromIdx);
+            ref var stepUnitC_from = ref _cellUnitFilter.Get4(fromIdx);
+
+            ref var condUnitC_from = ref _cellUnitEffFilt.Get2(fromIdx);
+            ref var twUnitC_from = ref _cellUnitEffFilt.Get3(fromIdx);
+            ref var effUnitC_from = ref _cellUnitEffFilt.Get4(fromIdx);
+            ref var fromOwnUnitCom = ref _cellUnitEffFilt.Get5(fromIdx);
+
 
             ref var toUnitC = ref _cellUnitFilter.Get1(toIdxAttack);
             ref var toHpUnitC = ref _cellUnitFilter.Get2(toIdxAttack);
             ref var toDamUnitC =ref _cellUnitFilter.Get3(toIdxAttack);
             ref var toStepUnitC = ref _cellUnitFilter.Get4(toIdxAttack);
-            ref var twUnitC_to = ref _cellUnitFilter.Get5(toIdxAttack);
-            ref var toOwnUnitCom = ref _cellUnitFilter.Get6(toIdxAttack);
+
+            ref var condUnitC_to = ref _cellUnitEffFilt.Get2(toIdxAttack);
+            ref var twUnitC_to = ref _cellUnitEffFilt.Get3(toIdxAttack);
+            ref var effUnitC_to = ref _cellUnitEffFilt.Get4(toIdxAttack);
+            ref var ownUnitC_to = ref _cellUnitEffFilt.Get5(toIdxAttack);
+
+
             ref var toBuildDatCom = ref _cellBuildFilter.Get1(toIdxAttack);
             ref var toEnvDatCom = ref _cellEnvFilter.Get1(toIdxAttack);
 
@@ -39,16 +50,22 @@ namespace Scripts.Game
 
             if (simpUniqueType != default)
             {
-                fromUnitC.DefStat(StatTypes.Steps);
-                fromStepUnitC.DefAmountSteps();
-                fromUnitC.DefCondType();
+                effUnitC_from.Def(StatTypes.Health);
+                effUnitC_from.Def(StatTypes.Damage);
+                effUnitC_from.Def(StatTypes.Steps);
+                stepUnitC_from.DefSteps();
+                condUnitC_from.DefCondition();
+
+                effUnitC_to.Def(StatTypes.Health);
+                effUnitC_to.Def(StatTypes.Damage);
+                effUnitC_to.Def(StatTypes.Steps);
 
 
                 float powerDamFrom = 0;
                 float powerDamTo = 0;
 
       
-                powerDamFrom += fromDamUnitC.PowerDamageAttack(fromUnitC, twUnitC_from, simpUniqueType);
+                powerDamFrom += fromDamUnitC.DamageAttack(fromUnitC, twUnitC_from, effUnitC_from, simpUniqueType);
 
                 if (fromUnitC.IsMelee)
                     RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
@@ -57,7 +74,7 @@ namespace Scripts.Game
 
                 if (toUnitC.IsMelee)
                 {
-                    powerDamTo += toDamUnitC.PowerDamageOnCell(toUnitC, twUnitC_to, toBuildDatCom.BuildType, toEnvDatCom.Envronments);
+                    powerDamTo += toDamUnitC.DamageOnCell(toUnitC, condUnitC_to, twUnitC_to, effUnitC_to, toBuildDatCom.BuildType, toEnvDatCom.Envronments);
                 }
 
 
@@ -87,44 +104,38 @@ namespace Scripts.Game
 
 
 
-
-
-
-
                 if (!fromUnitC.IsMelee) minusFrom = 0;
-                if (twUnitC_from.HaveShield)
+                if (twUnitC_from.Is(ToolWeaponTypes.Shield))
                 {
                     minusFrom = 0;
                     twUnitC_from.TakeShieldProtect();
                 }
 
-                if (minusFrom >= 0)
+                if (minusFrom > 0)
                 {
-                    fromHpUnitC.TakeAmountHealth((int)minusFrom);
-                    if (fromHpUnitC.AmountHealth <= 10) fromHpUnitC.TakeAmountHealth(10);
+                    fromHpUnitC.TakeHp((int)minusFrom);
+                    if (fromHpUnitC.AmountHp <= UnitValues.HP_FOR_DEATH_AFTER_ATTACK) fromHpUnitC.DefHp();
                 }
-                else throw new System.Exception();
                 
 
 
 
-                if (!toUnitC.IsMelee) minusTo = UnitValues.StandAmountHealth(toUnitC.UnitType);
-                if (twUnitC_to.HaveShield)
+                if (!toUnitC.IsMelee) minusTo = UnitValues.StandMaxHpUnit(toUnitC.UnitType);
+                if (twUnitC_to.Is(ToolWeaponTypes.Shield))
                 {
                     minusTo = 0;
                     twUnitC_to.TakeShieldProtect();
                 }
 
-                if (minusTo >= 0)
+                if (minusTo > 0)
                 {
-                    toHpUnitC.TakeAmountHealth((int)minusTo);
-                    if (toHpUnitC.AmountHealth <= 10) toHpUnitC.TakeAmountHealth(10);
+                    toHpUnitC.TakeHp((int)minusTo);
+                    if (toHpUnitC.AmountHp <= UnitValues.HP_FOR_DEATH_AFTER_ATTACK) toHpUnitC.DefHp();
                 }
-                else throw new System.Exception();
                 
 
 
-                if (!toHpUnitC.HaveAmountHealth)
+                if (!toHpUnitC.HaveHp)
                 {
                     if (toUnitC.Is(UnitTypes.King))
                     {
@@ -132,7 +143,7 @@ namespace Scripts.Game
                     }
                     else if(toUnitC.Is(UnitTypes.Scout))
                     {
-                        InventorUnitsC.AddUnitsInInventor(toOwnUnitCom.PlayerType, toUnitC.UnitType, LevelUnitTypes.Wood);
+                        InventorUnitsC.AddUnitsInInventor(ownUnitC_to.PlayerType, toUnitC.UnitType, LevelUnitTypes.Wood);
                     }
 
                     toUnitC.DefUnitType();
@@ -140,26 +151,28 @@ namespace Scripts.Game
 
                     if (fromUnitC.IsMelee)
                     {
-                        toUnitC.ReplaceUnit(fromUnitC);
-                        toHpUnitC.AmountHealth = fromHpUnitC.AmountHealth;
-                        toStepUnitC.AmountSteps = fromStepUnitC.AmountSteps;
-                        toOwnUnitCom.PlayerType = fromOwnUnitCom.PlayerType;
+                        toUnitC.Set(fromUnitC);
+                        toHpUnitC.AmountHp = fromHpUnitC.AmountHp;
+                        toStepUnitC.AmountSteps = stepUnitC_from.AmountSteps;
+                        condUnitC_to.CondUnitType = condUnitC_from.CondUnitType;
+                        twUnitC_to.Set(twUnitC_from);
+                        ownUnitC_to.PlayerType = fromOwnUnitCom.PlayerType;
 
                         fromUnitC.DefUnitType();
 
-                        if (!toHpUnitC.HaveAmountHealth)
+                        if (!toHpUnitC.HaveHp)
                         {
                             toUnitC.DefUnitType();
                         }
                     }
                 }
 
-                else if (!fromHpUnitC.HaveAmountHealth)
+                else if (!fromHpUnitC.HaveHp)
                 {
                     if (fromUnitC.Is(UnitTypes.King))
                     {
-                        fromOwnUnitCom.PlayerType = toOwnUnitCom.PlayerType;
-                        EndGameDataUIC.PlayerWinner = toOwnUnitCom.PlayerType;
+                        fromOwnUnitCom.PlayerType = ownUnitC_to.PlayerType;
+                        EndGameDataUIC.PlayerWinner = ownUnitC_to.PlayerType;
                     }
 
                     fromUnitC.DefUnitType();

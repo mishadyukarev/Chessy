@@ -6,15 +6,15 @@ namespace Scripts.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom> _cellUnitFilt = default;
 
         public void Run()
         {
             foreach (byte curIdx in _xyCellFilter)
             {
-                ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdx);
-                ref var curStepUnitC = ref _cellUnitFilter.Get2(curIdx);
-                ref var curOnUnitCom = ref _cellUnitFilter.Get3(curIdx);
+                ref var curUnitDatCom = ref _cellUnitFilt.Get1(curIdx);
+                ref var curStepUnitC = ref _cellUnitFilt.Get2(curIdx);
+                ref var curOnUnitCom = ref _cellUnitFilt.Get3(curIdx);
 
                 if (curUnitDatCom.Is(UnitTypes.Pawn))
                 {
@@ -26,14 +26,13 @@ namespace Scripts.Game
                         var idxAround = _xyCellFilter.GetIdxCell(xy1);
 
                         ref var aroEnvrDatCom = ref _cellEnvDataFilter.Get1(idxAround);
-                        ref var aroUnitDatCom = ref _cellUnitFilter.Get1(idxAround);
-                        ref var aroOwnUnitCom = ref _cellUnitFilter.Get3(idxAround);
+                        ref var aroUnitDatCom = ref _cellUnitFilt.Get1(idxAround);
+                        ref var aroOwnUnitCom = ref _cellUnitFilt.Get3(idxAround);
 
                         if (!aroEnvrDatCom.Have(EnvirTypes.Mountain))
                         {
                             if (aroEnvrDatCom.NeedAmountSteps <= curStepUnitC.AmountSteps 
-                                || curStepUnitC.HaveMaxAmountSteps(curUnitDatCom.UnitType) 
-                                || curUnitDatCom.Have(StatTypes.Steps))
+                                || curStepUnitC.HaveMaxSteps(curUnitDatCom.UnitType))
                             {
                                 if (aroUnitDatCom.HaveUnit)
                                 {

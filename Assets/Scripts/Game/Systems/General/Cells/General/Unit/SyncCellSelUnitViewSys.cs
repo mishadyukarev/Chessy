@@ -27,20 +27,20 @@ namespace Scripts.Game
                 {
                     if (curOwnUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
                     {
-                        preVisMainUnitViewCom.Enable_SR();
+                        preVisMainUnitViewCom.Enable_SR(true);
                         preVisMainUnitViewCom.SetSprite(SelectorC.SelUnitType, SelectorC.LevelSelUnitType);
                     }
 
                     else
                     {
-                        curMainUnitViewCom.Enable_SR();
+                        curMainUnitViewCom.Enable_SR(true);
                         curMainUnitViewCom.SetSprite(SelectorC.SelUnitType, SelectorC.LevelSelUnitType);
                     }
                 }
 
                 else
                 {
-                    curMainUnitViewCom.Enable_SR();
+                    curMainUnitViewCom.Enable_SR(true);
                     curMainUnitViewCom.SetSprite(SelectorC.SelUnitType, SelectorC.LevelSelUnitType);
                 }
             }

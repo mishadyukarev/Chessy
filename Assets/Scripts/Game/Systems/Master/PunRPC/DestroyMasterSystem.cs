@@ -25,7 +25,7 @@ namespace Scripts.Game
             ref var curEnvDataCom = ref _cellEnvFilter.Get1(idxCellForDestory);
 
 
-            if (_cellUnitFilter.Get2(idxCellForDestory).HaveMinAmountSteps)
+            if (_cellUnitFilter.Get2(idxCellForDestory).HaveMinSteps)
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
 
@@ -33,7 +33,7 @@ namespace Scripts.Game
                 {
                     EndGameDataUIC.PlayerWinner = curOwnUnitCom.PlayerType;
                 }
-                _cellUnitFilter.Get2(idxCellForDestory).TakeAmountSteps();
+                _cellUnitFilter.Get2(idxCellForDestory).TakeSteps();
 
                 if (curBuildDataCom.Is(BuildingTypes.Farm))
                 {
@@ -41,7 +41,7 @@ namespace Scripts.Game
                     WhereEnvironmentC.Remove(EnvirTypes.Fertilizer, idxCellForDestory);
                 }
 
-                curBuildDataCom.DefBuildType();
+                curBuildDataCom.Def();
             }
             else
             {

@@ -1,11 +1,4 @@
 ﻿using Leopotam.Ecs;
-using Photon.Pun;
-using Scripts.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Scripts.Game
 {
@@ -40,7 +33,7 @@ namespace Scripts.Game
 
             if (forBuildType == BuildingTypes.Farm)
             {
-                if (curStepUnitC.HaveMinAmountSteps || curUnitDatCom.Have(StatTypes.Steps))
+                if (curStepUnitC.HaveMinSteps)
                 {
                     if (!curCellEnvCom.Have(EnvirTypes.AdultForest) && !curCellEnvCom.Have(EnvirTypes.YoungForest))
                     {
@@ -63,11 +56,7 @@ namespace Scripts.Game
                             curBuildDatCom.BuildType = forBuildType;
                             curOwnBuildCom.PlayerType = playerSend;
 
-                            if (curUnitDatCom.Have(StatTypes.Steps))
-                            {
-                                curUnitDatCom.DefStat(StatTypes.Steps);
-                            }
-                            else curStepUnitC.TakeAmountSteps();
+                            curStepUnitC.TakeSteps();
                         }
                         else
                         {

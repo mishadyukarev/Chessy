@@ -5,7 +5,7 @@ namespace Scripts.Game
 {
     internal sealed class ConditionMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, StepComponent, ConditionUnitC, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -21,34 +21,34 @@ namespace Scripts.Game
             switch (neededCondType)
             {
                 case CondUnitTypes.None:
-                    curCellUnitDataCom.DefCondType();
+                    _cellUnitFilter.Get3(idxForCondit).DefCondition();
                     break;
 
                 case CondUnitTypes.Protected:
-                    if (curCellUnitDataCom.Is(CondUnitTypes.Protected))
+                    if (_cellUnitFilter.Get3(idxForCondit).Is(CondUnitTypes.Protected))
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-                        curCellUnitDataCom.DefCondType();
+                        _cellUnitFilter.Get3(idxForCondit).DefCondition();
                     }
 
-                    else if (_cellUnitFilter.Get2(idxForCondit).HaveMinAmountSteps)
+                    else if (_cellUnitFilter.Get2(idxForCondit).HaveMinSteps)
                     {
-                        if (curCellUnitDataCom.Is(CondUnitTypes.Relaxed))
+                        if (_cellUnitFilter.Get3(idxForCondit).Is(CondUnitTypes.Relaxed))
                         {
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-                            curCellUnitDataCom.CondUnitType = neededCondType;
+                            _cellUnitFilter.Get3(idxForCondit).CondUnitType = neededCondType;
 
-                            _cellUnitFilter.Get2(idxForCondit).TakeAmountSteps();
+                            _cellUnitFilter.Get2(idxForCondit).TakeSteps();
                         }
                         else
                         {
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 
-                            curCellUnitDataCom.CondUnitType = neededCondType;
+                            _cellUnitFilter.Get3(idxForCondit).CondUnitType = neededCondType;
 
-                            _cellUnitFilter.Get2(idxForCondit).TakeAmountSteps();
+                            _cellUnitFilter.Get2(idxForCondit).TakeSteps();
                         }
                     }
 
@@ -60,25 +60,25 @@ namespace Scripts.Game
 
 
                 case CondUnitTypes.Relaxed:
-                    if (curCellUnitDataCom.Is(CondUnitTypes.Relaxed))
+                    if (_cellUnitFilter.Get3(idxForCondit).Is(CondUnitTypes.Relaxed))
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-                        curCellUnitDataCom.DefCondType();
+                        _cellUnitFilter.Get3(idxForCondit).DefCondition();
                     }
 
-                    else if (_cellUnitFilter.Get2(idxForCondit).HaveMinAmountSteps)
+                    else if (_cellUnitFilter.Get2(idxForCondit).HaveMinSteps)
                     {
-                        if (curCellUnitDataCom.Is(CondUnitTypes.Protected))
+                        if (_cellUnitFilter.Get3(idxForCondit).Is(CondUnitTypes.Protected))
                         {
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-                            curCellUnitDataCom.CondUnitType = neededCondType;
-                            _cellUnitFilter.Get2(idxForCondit).TakeAmountSteps();
+                            _cellUnitFilter.Get3(idxForCondit).CondUnitType = neededCondType;
+                            _cellUnitFilter.Get2(idxForCondit).TakeSteps();
                         }
                         else
                         {
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
-                            curCellUnitDataCom.CondUnitType = neededCondType;
-                            _cellUnitFilter.Get2(idxForCondit).TakeAmountSteps();
+                            _cellUnitFilter.Get3(idxForCondit).CondUnitType = neededCondType;
+                            _cellUnitFilter.Get2(idxForCondit).TakeSteps();
                         }
                     }
 

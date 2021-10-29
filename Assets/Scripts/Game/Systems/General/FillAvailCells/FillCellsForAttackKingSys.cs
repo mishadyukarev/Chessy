@@ -35,7 +35,7 @@ namespace Scripts.Game
 
                         if (!arouEnvrDatCom.Have(EnvirTypes.Mountain))
                         {
-                            if (arouEnvrDatCom.NeedAmountSteps <= curStepUnitC.AmountSteps || curStepUnitC.HaveMaxAmountSteps(arouUnitDatCom.UnitType))
+                            if (arouEnvrDatCom.NeedAmountSteps <= curStepUnitC.AmountSteps || curStepUnitC.HaveMaxSteps(arouUnitDatCom.UnitType))
                             {
                                 if (arouUnitDatCom.HaveUnit)
                                 {

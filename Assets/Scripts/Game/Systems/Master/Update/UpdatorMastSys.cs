@@ -9,7 +9,8 @@ namespace Scripts.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
-        private EcsFilter<CellUnitDataCom, HpComponent, StepComponent, ToolWeaponC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
         private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellBuildDataCom,  OwnerCom> _cellBuildFilt = default;
@@ -36,8 +37,10 @@ namespace Scripts.Game
                 ref var curUnitCom = ref _cellUnitFilter.Get1(curIdxCell);
                 ref var curHpUnitC = ref _cellUnitFilter.Get2(curIdxCell);
                 ref var curStepUnitC = ref _cellUnitFilter.Get3(curIdxCell);
-                ref var twUnitC = ref _cellUnitFilter.Get4(curIdxCell);
-                ref var curOwnUnitCom = ref _cellUnitFilter.Get5(curIdxCell);
+                ref var condUnitC = ref _cellUnitOthFilt.Get2(curIdxCell);
+                ref var twUnitC = ref _cellUnitOthFilt.Get3(curIdxCell);
+                ref var effUnitC = ref _cellUnitOthFilt.Get4(curIdxCell);
+                ref var curOwnUnitCom = ref _cellUnitOthFilt.Get5(curIdxCell);
 
                 ref var curBuilCom = ref _cellBuildFilt.Get1(curIdxCell);
                 ref var curOwnBuilCom = ref _cellBuildFilt.Get2(curIdxCell);
@@ -56,13 +59,13 @@ namespace Scripts.Game
                         {
                             if (curOwnUnitCom.Is(PlayerTypes.Second))
                             {
-                                if (!curHpUnitC.HaveMaxAmountHealth(curUnitCom.UnitType))
+                                if (!curHpUnitC.HaveCurMaxHpUnit(effUnitC, curUnitCom.UnitType))
                                 {
-                                    curHpUnitC.AddAmountHealth(100);
+                                    curHpUnitC.AddHp(100);
 
-                                    if (curHpUnitC.MaxAmountHealth(curUnitCom.UnitType) < curHpUnitC.AmountHealth)
+                                    if (curHpUnitC.StandMaxHpUnit(curUnitCom.UnitType) < curHpUnitC.AmountHp)
                                     {
-                                        curHpUnitC.AmountHealth = curHpUnitC.MaxAmountHealth(curUnitCom.UnitType);
+                                        curHpUnitC.AmountHp = curHpUnitC.StandMaxHpUnit(curUnitCom.UnitType);
                                     }
                                 }
                             }
@@ -73,14 +76,14 @@ namespace Scripts.Game
 
                         if (curFireC.HaveFire)
                         {
-                            curUnitCom.CondUnitType = CondUnitTypes.None;
+                            condUnitC.CondUnitType = CondUnitTypes.None;
                         }
 
                         else
                         {
-                            if (curUnitCom.Is(CondUnitTypes.Relaxed))
+                            if (condUnitC.Is(CondUnitTypes.Relaxed))
                             {
-                                if (curHpUnitC.HaveMaxAmountHealth(curUnitCom.UnitType))
+                                if (curHpUnitC.HaveCurMaxHpUnit(effUnitC, curUnitCom.UnitType))
                                 {
                                     if (curUnitCom.Is(UnitTypes.Pawn))
                                     {
@@ -102,31 +105,31 @@ namespace Scripts.Game
                                                 }
                                                 else
                                                 {
-                                                    curUnitCom.CondUnitType = CondUnitTypes.Protected;
+                                                    condUnitC.CondUnitType = CondUnitTypes.Protected;
                                                 }
                                             }
                                             else
                                             {
-                                                curBuilCom.DefBuildType();
+                                                curBuilCom.Def();
 
                                                 curEnvrC.Reset(EnvirTypes.AdultForest);
                                                 WhereEnvironmentC.Remove(EnvirTypes.AdultForest, curIdxCell);
                                             }
                                         }
 
-                                        else if (twUnitC.TWExtraType == ToolWeaponTypes.Pick)
+                                        else if (twUnitC.ToolWeapType == ToolWeaponTypes.Pick)
                                         {
                                             if (curEnvrC.Have(EnvirTypes.Hill))
                                             {
                                                 if (curBuilCom.HaveBuild)
                                                 {
-                                                    curUnitCom.CondUnitType = CondUnitTypes.Protected;
+                                                    condUnitC.CondUnitType = CondUnitTypes.Protected;
                                                 }
                                                 else
                                                 {
                                                     if (curEnvrC.HaveMaxRes(EnvirTypes.Hill))
                                                     {
-                                                        curUnitCom.CondUnitType = CondUnitTypes.Protected;
+                                                        condUnitC.CondUnitType = CondUnitTypes.Protected;
                                                     }
                                                     else
                                                     {
@@ -136,35 +139,35 @@ namespace Scripts.Game
                                             }
                                             else
                                             {
-                                                curUnitCom.CondUnitType = CondUnitTypes.Protected;
+                                                condUnitC.CondUnitType = CondUnitTypes.Protected;
                                             }
                                         }
 
                                         else
                                         {
-                                            curUnitCom.CondUnitType = CondUnitTypes.Protected;
+                                            condUnitC.CondUnitType = CondUnitTypes.Protected;
                                         }
                                     }
 
                                     else
                                     {
-                                        curUnitCom.CondUnitType = CondUnitTypes.Protected;
+                                        condUnitC.CondUnitType = CondUnitTypes.Protected;
                                     }
                                 }
 
                                 else
                                 {
-                                    curHpUnitC.AddStandartHeal(curUnitCom.UnitType);
-                                    if (curHpUnitC.AmountHealth > curHpUnitC.MaxAmountHealth(curUnitCom.UnitType))
+                                    curHpUnitC.AddStandartHp(effUnitC, curUnitCom.UnitType);
+                                    if (curHpUnitC.AmountHp > curHpUnitC.CurMaxHpUnit(effUnitC, curUnitCom.UnitType))
                                     {
-                                        curHpUnitC.AmountHealth = curHpUnitC.MaxAmountHealth(curUnitCom.UnitType);
+                                        curHpUnitC.AmountHp = curHpUnitC.CurMaxHpUnit(effUnitC, curUnitCom.UnitType);
                                     }
                                 }
                             }
 
-                            else if (curUnitCom.Is(CondUnitTypes.Protected))
+                            else if (condUnitC.Is(CondUnitTypes.Protected))
                             {
-                                if (curHpUnitC.HaveMaxAmountHealth(curUnitCom.UnitType))
+                                if (curHpUnitC.HaveCurMaxHpUnit(effUnitC, curUnitCom.UnitType))
                                 {
                                     if (curUnitCom.Is(UnitTypes.Pawn))
                                     {
@@ -190,20 +193,20 @@ namespace Scripts.Game
 
                             else
                             {
-                                if (curStepUnitC.HaveMinAmountSteps)
+                                if (curStepUnitC.HaveMinSteps)
                                 {
-                                    curUnitCom.CondUnitType = CondUnitTypes.Protected;
+                                    condUnitC.CondUnitType = CondUnitTypes.Protected;
                                 }
                             }
                         }
                     }
 
-                    curStepUnitC.SetMaxAmountSteps(curUnitCom.UnitType);
+                    curStepUnitC.SetMaxSteps(curUnitCom.UnitType);
                 }
 
                 else
                 {
-                    if (curBuilCom.Is(BuildingTypes.Camp)) curBuilCom.DefBuildType();
+                    if (curBuilCom.Is(BuildingTypes.Camp)) curBuilCom.Def();
                 }
 
                 if (curBuilCom.HaveBuild)
@@ -221,7 +224,7 @@ namespace Scripts.Game
                             curEnvrC.Reset(EnvirTypes.Fertilizer);
                             WhereEnvironmentC.Remove(EnvirTypes.Fertilizer, curIdxCell);
 
-                            curBuilCom.DefBuildType();
+                            curBuilCom.Def();
                         }
                     }
 
@@ -239,7 +242,7 @@ namespace Scripts.Game
 
                             SpawnNewSeed(curIdxCell);
 
-                            curBuilCom.DefBuildType();
+                            curBuilCom.Def();
 
                             if (curFireC.HaveFire)
                             {
@@ -257,7 +260,7 @@ namespace Scripts.Game
 
                         if (!curEnvrC.HaveRes(EnvirTypes.Hill))
                         {
-                            curBuilCom.DefBuildType();
+                            curBuilCom.Def();
                         }
                     }
                 }
@@ -291,11 +294,11 @@ namespace Scripts.Game
                         foreach (byte curIdxCell in _xyCellFilter)
                         {
                             ref var curUnitDatC = ref _cellUnitFilter.Get1(curIdxCell);
-                            ref var curOwnUnitC = ref _cellUnitFilter.Get5(curIdxCell);
+                            ref var curOwnUnitC = ref _cellUnitOthFilt.Get5(curIdxCell);
 
                             if (curUnitDatC.Is(unitType))
                             {
-                                if (curOwnUnitC.PlayerType == playerType)
+                                if (curOwnUnitC.Is(playerType))
                                 {
                                     if (curUnitDatC.Is(UnitTypes.Scout))
                                         InventorUnitsC.AddUnitsInInventor(playerType, UnitTypes.Scout, LevelUnitTypes.Wood);

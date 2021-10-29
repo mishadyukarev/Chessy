@@ -8,7 +8,7 @@ namespace Scripts.Game
         private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
 
         private EcsFilter<CellEnvironmentDataC> _cellEnvirDataFilter = default;
-        private EcsFilter<CellUnitDataCom, HpComponent, StepComponent, ToolWeaponC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent, ConditionUnitC, ToolWeaponC, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -21,8 +21,9 @@ namespace Scripts.Game
             ref var curUnitC = ref _cellUnitFilter.Get1(idxForSet);
             ref var curHpUnitC = ref _cellUnitFilter.Get2(idxForSet);
             ref var stepUnitC = ref _cellUnitFilter.Get3(idxForSet);
-            ref var curTwUnitC = ref _cellUnitFilter.Get4(idxForSet);
-            ref var curOwnUnitC = ref _cellUnitFilter.Get5(idxForSet);
+            ref var condUnitC = ref _cellUnitFilter.Get4(idxForSet);
+            ref var curTwUnitC = ref _cellUnitFilter.Get5(idxForSet);
+            ref var curOwnUnitC = ref _cellUnitFilter.Get6(idxForSet);
 
 
             var playerSend = WhoseMoveC.WhoseMove;
@@ -32,10 +33,10 @@ namespace Scripts.Game
             {
                 curUnitC.UnitType = unitTypeForSet;
                 curUnitC.LevelUnitType = LevelUnitTypes.Wood;
-                curTwUnitC.TWExtraType = default;
-                curHpUnitC.AmountHealth = UnitValues.StandAmountHealth(unitTypeForSet);
+                curTwUnitC.ToolWeapType = default;
+                curHpUnitC.AmountHp = UnitValues.StandMaxHpUnit(unitTypeForSet);
                 stepUnitC.AmountSteps = UnitValues.StandartAmountSteps(unitTypeForSet);
-                curUnitC.CondUnitType = default;
+                condUnitC.DefCondition();
                 curOwnUnitC.PlayerType = playerSend;
 
                 if (InventorUnitsC.HaveUnitInInv(playerSend, unitTypeForSet, LevelUnitTypes.Iron))

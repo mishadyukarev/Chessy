@@ -33,11 +33,7 @@ namespace Scripts.Game
                             if (!_cellUnitFilter.Get1(idxCell_1).HaveUnit)
                             {
                                 if (curStepUnitC.AmountSteps >= _cellEnvDataFilter.Get1(idxCell_1).NeedAmountSteps
-                                    || curStepUnitC.HaveMaxAmountSteps(curUnitDatCom.UnitType))
-                                {
-                                    CellsForShiftCom.AddIdxCell(curOwnUnitCom.PlayerType, curIdxCell, idxCell_1);
-                                }
-                                else if (curUnitDatCom.Have(StatTypes.Steps) && _cellEnvDataFilter.Get1(idxCell_1).NeedAmountSteps < 2 )
+                                    || curStepUnitC.HaveMaxSteps(curUnitDatCom.UnitType))
                                 {
                                     CellsForShiftCom.AddIdxCell(curOwnUnitCom.PlayerType, curIdxCell, idxCell_1);
                                 }

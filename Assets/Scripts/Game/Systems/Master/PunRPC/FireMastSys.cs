@@ -34,20 +34,20 @@ namespace Scripts.Game
 
             if (fromUnitDatCom.IsMelee)
             {
-                if (stepUnitC_from.HaveMinAmountSteps)
+                if (stepUnitC_from.HaveMinSteps)
                 {
                     if (toFireDatCom.HaveFire)
                     {
                         toFireDatCom.HaveFire = default;
 
-                        stepUnitC_to.TakeAmountSteps();
+                        stepUnitC_to.TakeSteps();
                     }
                     else if (toEnvDatCom.Have(EnvirTypes.AdultForest))
                     {
                         RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
                         toFireDatCom.EnabFire();
-                        stepUnitC_to.TakeAmountSteps();
+                        stepUnitC_to.TakeSteps();
                     }
                     else
                     {
@@ -63,13 +63,13 @@ namespace Scripts.Game
 
             else
             {
-                if (stepUnitC_from.HaveMaxAmountSteps(fromUnitDatCom.UnitType))
+                if (stepUnitC_from.HaveMaxSteps(fromUnitDatCom.UnitType))
                 {
                     if (_cellsArcherArsonFilt.Get1(0).HaveIdxCell(sender.GetPlayerType(), fromIdx, toIdx))
                     {
                         RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
-                        stepUnitC_from.DefAmountSteps();
+                        stepUnitC_from.DefSteps();
                         toFireDatCom.HaveFire = true;
                     }
                 }

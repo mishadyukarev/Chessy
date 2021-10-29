@@ -23,7 +23,7 @@ namespace Scripts.Game
 
                 if (unitDataCom_0.HaveUnit && unitDataCom_0.Is(UnitTypes.Rook))
                 {
-                    if (stepUnitC_0.HaveMinAmountSteps || unitDataCom_0.Have(StatTypes.Steps))
+                    if (stepUnitC_0.HaveMinSteps)
 
                         for (DirectTypes dirType_1 = (DirectTypes)1; dirType_1 < (DirectTypes)Enum.GetNames(typeof(DirectTypes)).Length; dirType_1++)
                         {

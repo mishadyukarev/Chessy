@@ -29,7 +29,7 @@ namespace Scripts.Game
             {
                 var envrs = new Dictionary<EnvirTypes, bool>();
 
-                for (EnvirTypes envType = (EnvirTypes)1; envType < (EnvirTypes)Enum.GetNames(typeof(EnvirTypes)).Length; envType++)
+                for (var envType = Support.MinEnvironType; envType < Support.MaxEnvironType; envType++)
                 {
                     if (_haveEnvir[envType]) envrs.Add(envType, true);
                     else envrs.Add(envType, false);

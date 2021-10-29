@@ -1,13 +1,11 @@
-﻿using System;
-
-namespace Scripts.Game
+﻿namespace Scripts.Game
 {
     public struct CellBuildDataCom
     {
-        public BuildingTypes BuildType;
-
+        public BuildingTypes BuildType { get; set; }
         public bool HaveBuild => BuildType != BuildingTypes.None;
+
         public bool Is(BuildingTypes buildingType) => BuildType == buildingType;
-        public void DefBuildType() => BuildType = default;   
+        public void Def() => BuildType = default;
     }
 }

@@ -39,7 +39,7 @@ namespace Scripts.Game
 
 
 
-                if (curStepUnitC.HaveMinAmountSteps || curUnitDatCom.Have(StatTypes.Steps))
+                if (curStepUnitC.HaveMinSteps)
                 {
                     bool haveNearBorder = false;
 
@@ -64,9 +64,7 @@ namespace Scripts.Game
                         BuildsInGameC.Add(playerSend, forBuildType, idxForBuild);
 
 
-
-                        curUnitDatCom.DefStat(StatTypes.Steps);
-                        curStepUnitC.DefAmountSteps();
+                        curStepUnitC.DefSteps();
 
 
                         curFireCom.DisableFire();

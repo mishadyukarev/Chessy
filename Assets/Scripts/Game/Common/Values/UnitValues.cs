@@ -6,11 +6,11 @@ namespace Scripts.Game
     {
         #region Health
 
-        public static int StandAmountHealth(UnitTypes unitType)
+        public static int StandMaxHpUnit(UnitTypes unitType)
         {
             switch (unitType)
             {
-                case UnitTypes.None: throw new Exception();
+                case UnitTypes.None: return 0;
                 case UnitTypes.King: return 300;
                 case UnitTypes.Pawn: return 100;
                 case UnitTypes.Rook: return 30;
@@ -20,7 +20,7 @@ namespace Scripts.Game
             }
         }
 
-        public static float ForAddingHealth(UnitTypes unitType)
+        public static float PercentForAddingHp(UnitTypes unitType)
         {
             switch (unitType)
             {
@@ -34,12 +34,26 @@ namespace Scripts.Game
             }
         }
 
+        public static float PercentForBonusHp(UnitTypes unitType)
+        {
+            switch (unitType)
+            {
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King: throw new Exception();
+                case UnitTypes.Pawn: return 0.5f;
+                case UnitTypes.Rook: return 0.5f;
+                case UnitTypes.Bishop: return 0.5f;
+                case UnitTypes.Scout: return 0.5f;
+                default: throw new Exception();
+            }
+        }
+
         #endregion
 
 
         #region Damage
 
-        public static int StandPowerDamage(UnitTypes unitType, LevelUnitTypes upgUnitType)
+        public static int StandDamage(UnitTypes unitType, LevelUnitTypes upgUnitType)
         {
             switch (unitType)
             {
@@ -87,8 +101,21 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
         }
+        public static float PercentTW(ToolWeaponTypes tlWType)
+        {
+            switch (tlWType)
+            {
+                case ToolWeaponTypes.None: return 0;
+                case ToolWeaponTypes.Hoe: throw new Exception();
+                case ToolWeaponTypes.Pick: return 0;
+                case ToolWeaponTypes.Sword: return 0.5f;
+                case ToolWeaponTypes.Shield: return 0;
+                default: throw new Exception();
+            }
+        }
 
-        public static float UniqueRatioPowerDamage = 0.5f;
+        public const float UNIQUE_PERCENT_DAMAGE = 0.5f;
+        public const int HP_FOR_DEATH_AFTER_ATTACK = 15;
 
         #endregion
 
@@ -100,7 +127,7 @@ namespace Scripts.Game
         {
             switch (condUnitType)
             {
-                case CondUnitTypes.None: throw new Exception();
+                case CondUnitTypes.None: return 0;
                 case CondUnitTypes.Protected: return 0.2f;
                 case CondUnitTypes.Relaxed: return -0.2f;
                 default: throw new Exception();
@@ -112,10 +139,10 @@ namespace Scripts.Game
             {
                 case EnvirTypes.None: throw new Exception();
                 case EnvirTypes.Fertilizer: return -0.2f;
-                case EnvirTypes.YoungForest: throw new Exception();
+                case EnvirTypes.YoungForest: return 0;
                 case EnvirTypes.AdultForest: return 0.2f;
                 case EnvirTypes.Hill: return 0.2f;
-                case EnvirTypes.Mountain: throw new Exception();
+                case EnvirTypes.Mountain: return 0;
                 default: throw new Exception();
             }
         }
@@ -152,7 +179,6 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
         }
-
         public static int StandartAmountSteps(UnitTypes unitType)
         {
             switch (unitType)

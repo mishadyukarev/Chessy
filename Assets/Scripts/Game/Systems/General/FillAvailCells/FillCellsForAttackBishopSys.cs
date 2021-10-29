@@ -8,7 +8,7 @@ namespace Scripts.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellDataC> _cellDataFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom,StepComponent, OwnerCom, VisibleC> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -23,7 +23,7 @@ namespace Scripts.Game
 
                 if (unitDataCom_0.Is(UnitTypes.Bishop))
                 {
-                    if (stepUnitC_0.HaveMinAmountSteps || unitDataCom_0.Have(StatTypes.Steps))
+                    if (stepUnitC_0.HaveMinSteps)
 
                         for (DirectTypes dirType_1 = (DirectTypes)1; dirType_1 < (DirectTypes)Enum.GetNames(typeof(DirectTypes)).Length; dirType_1++)
                         {

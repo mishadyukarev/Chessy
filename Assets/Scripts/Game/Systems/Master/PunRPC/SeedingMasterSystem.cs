@@ -33,7 +33,7 @@ namespace Scripts.Game
                     throw new Exception();
 
                 case EnvirTypes.YoungForest:
-                    if (stepUnitC.HaveMinAmountSteps)
+                    if (stepUnitC.HaveMinSteps)
                     {
                         if (curCellBuildDataCom.HaveBuild)
                         {
@@ -52,8 +52,7 @@ namespace Scripts.Game
                                         curCellEnvDataCom.SetNew(EnvirTypes.YoungForest);
                                         WhereEnvironmentC.Add(EnvirTypes.YoungForest, idxCellForSeeding);
 
-                                        if (curUnitDatC.Have(StatTypes.Steps)) curUnitDatC.DefStat(StatTypes.Steps);
-                                        else stepUnitC.TakeAmountSteps();
+                                        stepUnitC.TakeSteps();
                                     }
                                     else
                                     {

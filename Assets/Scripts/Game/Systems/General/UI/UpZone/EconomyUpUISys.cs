@@ -5,7 +5,7 @@ namespace Scripts.Game
 {
     internal sealed class EconomyUpUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitsFilter = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, OwnerCom> _cellUnitsFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvDatFilt = default;
 
@@ -27,7 +27,8 @@ namespace Scripts.Game
             foreach (var curIdxCell in _cellBuildFilter)
             {
                 ref var curUnitDatCom = ref _cellUnitsFilter.Get1(curIdxCell);
-                ref var curOwnUnitCom = ref _cellUnitsFilter.Get2(curIdxCell);
+                ref var condUnitC = ref _cellUnitsFilter.Get2(curIdxCell);
+                ref var curOwnUnitCom = ref _cellUnitsFilter.Get3(curIdxCell);
 
                 ref var curBuildDatCom = ref _cellBuildFilter.Get1(curIdxCell);
                 ref var curOnBuildCom = ref _cellBuildFilter.Get2(curIdxCell);
@@ -41,7 +42,7 @@ namespace Scripts.Game
 
                         if (curUnitDatCom.Is(UnitTypes.Pawn))
                         {
-                            if (curUnitDatCom.Is(CondUnitTypes.Relaxed))
+                            if (condUnitC.Is(CondUnitTypes.Relaxed))
                             {
                                 if (_cellEnvDatFilt.Get1(curIdxCell).Have(EnvirTypes.AdultForest))
                                 {
