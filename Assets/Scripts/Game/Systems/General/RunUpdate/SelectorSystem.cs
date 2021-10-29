@@ -112,10 +112,8 @@ namespace Scripts.Game
 
                         SelectorC.IdxSelCell = SelectorC.IdxCurCell;
 
-                        var b1 = CellsAttackC.FindByIdx(WhoseMoveC.CurPlayer, AttackTypes.Simple, SelectorC.IdxPreCell, SelectorC.IdxSelCell);
-                        var b2 = CellsAttackC.FindByIdx(WhoseMoveC.CurPlayer, AttackTypes.Unique, SelectorC.IdxPreCell, SelectorC.IdxSelCell);
-
-                        if (b1 || b2)
+                       
+                        if (CellsAttackC.FindByIdx(WhoseMoveC.CurPlayer, SelectorC.IdxPreCell, SelectorC.IdxSelCell) != default)
                         {
                             RpcSys.AttackUnitToMaster(SelectorC.IdxPreCell, SelectorC.IdxSelCell);
                         }

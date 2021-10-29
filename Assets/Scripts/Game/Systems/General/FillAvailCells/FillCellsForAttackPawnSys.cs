@@ -6,14 +6,15 @@ namespace Scripts.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
             foreach (byte curIdx in _xyCellFilter)
             {
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdx);
-                ref var curOnUnitCom = ref _cellUnitFilter.Get2(curIdx);
+                ref var curStepUnitC = ref _cellUnitFilter.Get2(curIdx);
+                ref var curOnUnitCom = ref _cellUnitFilter.Get3(curIdx);
 
                 if (curUnitDatCom.Is(UnitTypes.Pawn))
                 {
@@ -26,11 +27,13 @@ namespace Scripts.Game
 
                         ref var aroEnvrDatCom = ref _cellEnvDataFilter.Get1(idxAround);
                         ref var aroUnitDatCom = ref _cellUnitFilter.Get1(idxAround);
-                        ref var aroOwnUnitCom = ref _cellUnitFilter.Get2(idxAround);
+                        ref var aroOwnUnitCom = ref _cellUnitFilter.Get3(idxAround);
 
                         if (!aroEnvrDatCom.Have(EnvirTypes.Mountain))
                         {
-                            if (aroEnvrDatCom.NeedAmountSteps <= curUnitDatCom.AmountSteps || curUnitDatCom.HaveMaxAmountSteps || curUnitDatCom.Have(StatTypes.Steps))
+                            if (aroEnvrDatCom.NeedAmountSteps <= curStepUnitC.AmountSteps 
+                                || curStepUnitC.HaveMaxAmountSteps(curUnitDatCom.UnitType) 
+                                || curUnitDatCom.Have(StatTypes.Steps))
                             {
                                 if (aroUnitDatCom.HaveUnit)
                                 {

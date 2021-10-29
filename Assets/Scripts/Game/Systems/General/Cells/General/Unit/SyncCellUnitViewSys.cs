@@ -1,11 +1,10 @@
 ﻿using Leopotam.Ecs;
-using System;
 
 namespace Scripts.Game
 {
     internal sealed class SyncCellUnitViewSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, ToolWeaponC, VisibleC> _cellUnitFilter = default;
         private EcsFilter<CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilt = default;
 
         public void Run()
@@ -13,7 +12,8 @@ namespace Scripts.Game
             foreach (byte idxCurCell in _cellUnitFilter)
             {
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxCurCell);
-                ref var curVisUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
+                ref var twUnitC = ref _cellUnitFilter.Get2(idxCurCell);
+                ref var curVisUnitCom = ref _cellUnitFilter.Get3(idxCurCell);
 
                 ref var curMainUnitViewCom = ref _cellUnitViewFilt.Get1(idxCurCell);
                 ref var curExtraUnitViewCom = ref _cellUnitViewFilt.Get2(idxCurCell);
@@ -32,10 +32,10 @@ namespace Scripts.Game
 
                         if (curUnitDatCom.Is(UnitTypes.Pawn))
                         {
-                            if (curUnitDatCom.HaveExtraTW)
+                            if (twUnitC.HaveExtraTW)
                             {
                                 curExtraUnitViewCom.Enable_SR();
-                                curExtraUnitViewCom.SetToolWeapon_Sprite(curUnitDatCom.TWExtraType, curUnitDatCom.LevelTWType);
+                                curExtraUnitViewCom.SetToolWeapon_Sprite(twUnitC.TWExtraType, twUnitC.LevelTWType);
                             }
                         }
 

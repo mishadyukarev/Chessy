@@ -6,7 +6,7 @@ namespace Scripts.Game
     {
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGiveTakeToolWeapFilter = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, HpComponent, StepComponent, ToolWeaponC, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -20,33 +20,35 @@ namespace Scripts.Game
                 var sender = InfoC.Sender(MasGenOthTypes.Master);
 
                 ref var unitCForGive = ref _cellUnitFilter.Get1(neededIdxCell);
-                ref var ownUnitC = ref _cellUnitFilter.Get2(neededIdxCell);
+                ref var stepUnitC_forGive = ref _cellUnitFilter.Get3(neededIdxCell);
+                ref var twUnitC_forGive = ref _cellUnitFilter.Get4(neededIdxCell);
+                ref var ownUnitC = ref _cellUnitFilter.Get5(neededIdxCell);
 
 
                 if (unitCForGive.Is(UnitTypes.Pawn))
                 {
-                    if (unitCForGive.HaveMinAmountSteps || unitCForGive.Have(StatTypes.Steps))
+                    if (stepUnitC_forGive.HaveMinAmountSteps || unitCForGive.Have(StatTypes.Steps))
                     {
-                        if (unitCForGive.HaveMaxAmountHealth)
+                        if (_cellUnitFilter.Get2(neededIdxCell).HaveMaxAmountHealth(unitCForGive.UnitType))
                         {
-                            if (unitCForGive.HaveExtraTW)
+                            if (twUnitC_forGive.HaveExtraTW)
                             {
-                                InventorTWCom.AddAmountTools(ownUnitC.PlayerType, unitCForGive.TWExtraType, unitCForGive.LevelTWType);
+                                InventorTWCom.AddAmountTools(ownUnitC.PlayerType, twUnitC_forGive.TWExtraType, twUnitC_forGive.LevelTWType);
 
                                 if (unitCForGive.Have(StatTypes.Steps)) unitCForGive.DefStat(StatTypes.Steps);
-                                else unitCForGive.TakeAmountSteps();
+                                else stepUnitC_forGive.TakeAmountSteps();
                                 unitCForGive.CondUnitType = default;
 
-                                if (unitCForGive.HaveShield 
+                                if (twUnitC_forGive.HaveShield 
                                     && tWTypeForGive == ToolWeaponTypes.Shield
-                                    && unitCForGive.LevelTWType != levelTWType)
+                                    && twUnitC_forGive.LevelTWType != levelTWType)
                                 {
-                                    unitCForGive.LevelTWType = levelTWType;
+                                    twUnitC_forGive.LevelTWType = levelTWType;
                                 }
                                 else
                                 {
-                                    unitCForGive.TWExtraType = default;
-                                    unitCForGive.LevelTWType = default;
+                                    twUnitC_forGive.TWExtraType = default;
+                                    twUnitC_forGive.LevelTWType = default;
                                 }
      
 
@@ -58,12 +60,12 @@ namespace Scripts.Game
                             {
                                 InventorTWCom.TakeAmountTools(ownUnitC.PlayerType, tWTypeForGive, levelTWType);
 
-                                unitCForGive.TWExtraType = tWTypeForGive;
-                                unitCForGive.LevelTWType = levelTWType;
-                                if(unitCForGive.HaveShield) unitCForGive.AddShieldProtect(levelTWType);
+                                twUnitC_forGive.TWExtraType = tWTypeForGive;
+                                twUnitC_forGive.LevelTWType = levelTWType;
+                                if(twUnitC_forGive.HaveShield) twUnitC_forGive.AddShieldProtect(levelTWType);
 
                                 if (unitCForGive.Have(StatTypes.Steps)) unitCForGive.DefStat(StatTypes.Steps);
-                                else unitCForGive.TakeAmountSteps();
+                                else stepUnitC_forGive.TakeAmountSteps();
 
                                 unitCForGive.CondUnitType = default;
 
@@ -76,12 +78,12 @@ namespace Scripts.Game
                                 {
                                     InventResourcesC.BuyTW(ownUnitC.PlayerType, ToolWeaponTypes.Pick, levelTWType);
 
-                                    unitCForGive.TWExtraType = tWTypeForGive;
-                                    unitCForGive.LevelTWType = levelTWType;
+                                    twUnitC_forGive.TWExtraType = tWTypeForGive;
+                                    twUnitC_forGive.LevelTWType = levelTWType;
 
                                     unitCForGive.CondUnitType = default;
                                     if (unitCForGive.Have(StatTypes.Steps)) unitCForGive.DefStat(StatTypes.Steps);
-                                    else unitCForGive.TakeAmountSteps();
+                                    else stepUnitC_forGive.TakeAmountSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                 }
@@ -97,12 +99,12 @@ namespace Scripts.Game
                                 {
                                     InventResourcesC.BuyTW(ownUnitC.PlayerType, ToolWeaponTypes.Sword, levelTWType);
 
-                                    unitCForGive.TWExtraType = tWTypeForGive;
-                                    unitCForGive.LevelTWType = levelTWType;
+                                    twUnitC_forGive.TWExtraType = tWTypeForGive;
+                                    twUnitC_forGive.LevelTWType = levelTWType;
 
                                     unitCForGive.CondUnitType = default;
                                     if (unitCForGive.Have(StatTypes.Steps)) unitCForGive.DefStat(StatTypes.Steps);
-                                    else unitCForGive.TakeAmountSteps();
+                                    else stepUnitC_forGive.TakeAmountSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                 }
@@ -118,13 +120,13 @@ namespace Scripts.Game
                                 {
                                     InventResourcesC.BuyTW(ownUnitC.PlayerType, tWTypeForGive, levelTWType);
 
-                                    unitCForGive.TWExtraType = tWTypeForGive;
-                                    unitCForGive.LevelTWType = levelTWType;
-                                    unitCForGive.AddShieldProtect(levelTWType);
+                                    twUnitC_forGive.TWExtraType = tWTypeForGive;
+                                    twUnitC_forGive.LevelTWType = levelTWType;
+                                    twUnitC_forGive.AddShieldProtect(levelTWType);
 
                                     unitCForGive.CondUnitType = default;
                                     if (unitCForGive.Have(StatTypes.Steps)) unitCForGive.DefStat(StatTypes.Steps);
-                                    else unitCForGive.TakeAmountSteps();
+                                    else stepUnitC_forGive.TakeAmountSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                 }

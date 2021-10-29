@@ -7,7 +7,7 @@ namespace Scripts.Game
     {
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
 
-        private EcsFilter<CellUnitDataCom> _cellUnitDataFilt = default;
+        private EcsFilter<CellUnitDataCom, HpComponent, StepComponent> _cellUnitDataFilt = default;
         private EcsFilter<InventResourcesC> _invResFilt = default;
 
         public void Run()
@@ -16,24 +16,27 @@ namespace Scripts.Game
             ref var idxUpgUnit = ref _forUpgradeUnitFilt.Get1(0).idxCellForUpgrade;
 
             ref var unitDatForUpg = ref _cellUnitDataFilt.Get1(idxUpgUnit);
+            ref var stepUnitC_0 = ref _cellUnitDataFilt.Get3(idxUpgUnit);
+
+            ref var hpUnitC = ref _cellUnitDataFilt.Get2(idxUpgUnit);
             ref var invResCom = ref _invResFilt.Get1(0);
 
 
 
             var playSend = WhoseMoveC.WhoseMove;
 
-            if (unitDatForUpg.HaveMaxAmountHealth)
+            if (hpUnitC.HaveMaxAmountHealth(unitDatForUpg.UnitType))
             {
-                if (unitDatForUpg.HaveMinAmountSteps)
+                if (stepUnitC_0.HaveMinAmountSteps)
                 {
                     if (InventResourcesC.CanUpgradeUnit(playSend, unitDatForUpg.UnitType, out var needRes))
                     {
                         InventResourcesC.BuyUpgradeUnit(playSend, unitDatForUpg.UnitType);
 
                         unitDatForUpg.LevelUnitType = LevelUnitTypes.Iron;
-                        unitDatForUpg.TakeAmountSteps();
+                        stepUnitC_0.TakeAmountSteps();
 
-                        unitDatForUpg.AmountHealth = unitDatForUpg.MaxAmountHealth;
+                        hpUnitC.AmountHealth = hpUnitC.MaxAmountHealth(unitDatForUpg.UnitType);
 
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitMelee);
                     }

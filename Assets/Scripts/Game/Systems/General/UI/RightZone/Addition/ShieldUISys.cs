@@ -4,17 +4,17 @@ namespace Scripts.Game
 {
     internal sealed class ShieldUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataCom, ToolWeaponC> _cellUnitFilt = default;
 
         public void Run()
         {
-            ref var selUnitC = ref _cellUnitFilt.Get1(SelectorC.IdxSelCell);
+            ref var selTwUnitC = ref _cellUnitFilt.Get2(SelectorC.IdxSelCell);
 
             ExtraTWZoneUIC.DisableAll();
 
-            if (selUnitC.HaveExtraTW)
+            if (selTwUnitC.HaveExtraTW)
             {
-                ExtraTWZoneUIC.Toggle(selUnitC.TWExtraType, selUnitC.LevelTWType, true);
+                ExtraTWZoneUIC.Toggle(selTwUnitC.TWExtraType, selTwUnitC.LevelTWType, true);
             }
         }
     }

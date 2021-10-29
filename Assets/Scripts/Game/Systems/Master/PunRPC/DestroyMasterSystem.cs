@@ -7,7 +7,7 @@ namespace Scripts.Game
     {
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
 
@@ -19,13 +19,13 @@ namespace Scripts.Game
             var idxCellForDestory = _destroyFilter.Get1(0).IdxForDestroy;
 
             ref var curUnitDataCom = ref _cellUnitFilter.Get1(idxCellForDestory);
-            ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxCellForDestory);
+            ref var curOwnUnitCom = ref _cellUnitFilter.Get3(idxCellForDestory);
             ref var curBuildDataCom = ref _cellBuildFilter.Get1(idxCellForDestory);
             ref var curOwnerBuildCom = ref _cellBuildFilter.Get2(idxCellForDestory);
             ref var curEnvDataCom = ref _cellEnvFilter.Get1(idxCellForDestory);
 
 
-            if (curUnitDataCom.HaveMinAmountSteps)
+            if (_cellUnitFilter.Get2(idxCellForDestory).HaveMinAmountSteps)
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
 
@@ -33,7 +33,7 @@ namespace Scripts.Game
                 {
                     EndGameDataUIC.PlayerWinner = curOwnUnitCom.PlayerType;
                 }
-                curUnitDataCom.TakeAmountSteps();
+                _cellUnitFilter.Get2(idxCellForDestory).TakeAmountSteps();
 
                 if (curBuildDataCom.Is(BuildingTypes.Farm))
                 {

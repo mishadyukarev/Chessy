@@ -1,4 +1,5 @@
 ﻿using Scripts.Common;
+using System;
 using System.Collections.Generic;
 
 namespace Scripts.Game
@@ -14,36 +15,30 @@ namespace Scripts.Game
                 _cellsForAttack = new Dictionary<PlayerTypes, Dictionary<AttackTypes, Dictionary<byte, List<byte>>>>();
 
 
-                _cellsForAttack[PlayerTypes.First] = new Dictionary<AttackTypes, Dictionary<byte, List<byte>>>();
-                _cellsForAttack[PlayerTypes.Second] = new Dictionary<AttackTypes, Dictionary<byte, List<byte>>>();
-
-
-                _cellsForAttack[PlayerTypes.First].Add(AttackTypes.Simple, new Dictionary<byte, List<byte>>());
-                _cellsForAttack[PlayerTypes.Second].Add(AttackTypes.Simple, new Dictionary<byte, List<byte>>());
-
-                _cellsForAttack[PlayerTypes.First].Add(AttackTypes.Unique, new Dictionary<byte, List<byte>>());
-                _cellsForAttack[PlayerTypes.Second].Add(AttackTypes.Unique, new Dictionary<byte, List<byte>>());
-
-
-                for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
+                for (var playerType = Support.MinPlayerType; playerType < Support.MaxPlayerType; playerType++)
                 {
-                    _cellsForAttack[PlayerTypes.First][AttackTypes.Simple].Add(idx, new List<byte>());
-                    _cellsForAttack[PlayerTypes.Second][AttackTypes.Simple].Add(idx, new List<byte>());
+                    _cellsForAttack[playerType] = new Dictionary<AttackTypes, Dictionary<byte, List<byte>>>();
+                    _cellsForAttack[playerType].Add(AttackTypes.Simple, new Dictionary<byte, List<byte>>());
+                    _cellsForAttack[playerType].Add(AttackTypes.Unique, new Dictionary<byte, List<byte>>());
 
-                    _cellsForAttack[PlayerTypes.First][AttackTypes.Unique].Add(idx, new List<byte>());
-                    _cellsForAttack[PlayerTypes.Second][AttackTypes.Unique].Add(idx, new List<byte>());
+                    for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
+                    {
+                        _cellsForAttack[playerType][AttackTypes.Simple].Add(idx, new List<byte>());
+                        _cellsForAttack[playerType][AttackTypes.Unique].Add(idx, new List<byte>());
+                    }
                 }
             }
         }
 
         public static List<byte> GetListCopy(PlayerTypes playerType, AttackTypes attackType, byte idxCell) => _cellsForAttack[playerType][attackType][idxCell].Copy();
-        public static bool FindByIdx(PlayerTypes playerType, AttackTypes attackType, byte idxCell, byte idxForFind)
+        public static AttackTypes FindByIdx(PlayerTypes playerType, byte idxCell, byte idxForFind)
         {
-            foreach (var idx in _cellsForAttack[playerType][attackType][idxCell])
+            for (var attackType = Support.MinAttackType; attackType < Support.MaxAttackType; attackType++)
             {
-                if (idxForFind == idx) return true;
+                if(_cellsForAttack[playerType][attackType][idxCell].Contains(idxForFind)) return attackType;
             }
-            return false;
+
+            return AttackTypes.None;
         }
         public static void Add(PlayerTypes playerType, AttackTypes attackType, byte idxCell, byte value) => _cellsForAttack[playerType][attackType][idxCell].Add(value);
         public static void Clear(PlayerTypes playerType, AttackTypes attackType, byte idxCell) => _cellsForAttack[playerType][attackType][idxCell].Clear();

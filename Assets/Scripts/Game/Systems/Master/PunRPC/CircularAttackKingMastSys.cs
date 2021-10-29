@@ -8,7 +8,7 @@ namespace Scripts.Game
         private EcsFilter<ForCircularAttackMasCom> _forCircAttackFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, HpComponent, StepComponent, ToolWeaponC, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilt = default;
         private EcsFilter<CellBuildDataCom> _cellBuildFilt = default;
 
@@ -18,10 +18,11 @@ namespace Scripts.Game
             var idxCurculAttack = _forCircAttackFilter.Get1(0).IdxUnitForCirculAttack;
 
             ref var starUnitCom = ref _cellUnitFilter.Get1(idxCurculAttack);
-            ref var starOwnUnitCom = ref _cellUnitFilter.Get2(idxCurculAttack);
+            ref var stepUnitC_0 = ref _cellUnitFilter.Get3(idxCurculAttack);
+            ref var starOwnUnitCom = ref _cellUnitFilter.Get5(idxCurculAttack);
 
 
-            if (starUnitCom.HaveMaxAmountSteps)
+            if (stepUnitC_0.HaveMaxAmountSteps(starUnitCom.UnitType))
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
@@ -30,24 +31,27 @@ namespace Scripts.Game
                     var idxCurDirect = _xyCellFilter.GetIdxCell(xy1);
 
                     ref var dirUnitC = ref _cellUnitFilter.Get1(idxCurDirect);
-                    ref var ownUnitComDir = ref _cellUnitFilter.Get2(idxCurDirect);
+                    ref var dirHpUnitC = ref _cellUnitFilter.Get2(idxCurDirect);
+                    ref var twUnitC_dir = ref _cellUnitFilter.Get4(idxCurDirect);
+                    ref var ownUnitComDir = ref _cellUnitFilter.Get5(idxCurDirect);
+
                     ref var envComDir = ref _cellEnvFilt.Get1(idxCurDirect);
                     ref var buildComDir = ref _cellBuildFilt.Get1(idxCurDirect);
 
                     if (dirUnitC.HaveUnit)
                     {
-                        if (dirUnitC.HaveShield)
+                        if (twUnitC_dir.HaveShield)
                         {
-                            dirUnitC.TakeShieldProtect();
+                            twUnitC_dir.TakeShieldProtect();
                         }
                         else
                         {
-                            if (dirUnitC.IsMelee) dirUnitC.TakeAmountHealth(100, 0.25f);
+                            if (dirUnitC.IsMelee) dirHpUnitC.TakeAmountHealth(100, 0.25f);
                             else dirUnitC.DefUnitType();
                         }
                         
 
-                        if (!dirUnitC.HaveAmountHealth)
+                        if (!dirHpUnitC.HaveAmountHealth)
                         {
                             if (dirUnitC.Is(UnitTypes.King))
                             {
@@ -62,7 +66,7 @@ namespace Scripts.Game
                     }
                 }
 
-                starUnitCom.TakeAmountSteps();
+                stepUnitC_0.TakeAmountSteps();
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.AttackMelee);
 

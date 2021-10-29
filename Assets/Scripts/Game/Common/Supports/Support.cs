@@ -36,5 +36,8 @@ namespace Scripts.Game
 
         public static EnvirTypes MinEnvironType => (EnvirTypes)1;
         public static EnvirTypes MaxEnvironType => (EnvirTypes)Enum.GetNames(typeof(EnvirTypes)).Length;
+
+        public static AttackTypes MinAttackType => (AttackTypes)1;
+        public static AttackTypes MaxAttackType => (AttackTypes)Enum.GetNames(typeof(AttackTypes)).Length;
     }
 }

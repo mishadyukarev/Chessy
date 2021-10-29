@@ -7,7 +7,7 @@ namespace Scripts.Game
     {
         private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, HpComponent, DamageComponent, StepComponent, ToolWeaponC, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
 
@@ -19,30 +19,28 @@ namespace Scripts.Game
             var toIdxAttack = forAttackMasCom.IdxToCell;
 
             ref var fromUnitC = ref _cellUnitFilter.Get1(fromIdx);
-            ref var fromOwnUnitCom = ref _cellUnitFilter.Get2(fromIdx);
+            ref var fromHpUnitC = ref _cellUnitFilter.Get2(fromIdx);
+            ref var fromDamUnitC = ref _cellUnitFilter.Get3(fromIdx);
+            ref var fromStepUnitC = ref _cellUnitFilter.Get4(fromIdx);
+            ref var twUnitC_from = ref _cellUnitFilter.Get5(fromIdx);
+            ref var fromOwnUnitCom = ref _cellUnitFilter.Get6(fromIdx);
 
             ref var toUnitC = ref _cellUnitFilter.Get1(toIdxAttack);
-            ref var toOwnUnitCom = ref _cellUnitFilter.Get2(toIdxAttack);
+            ref var toHpUnitC = ref _cellUnitFilter.Get2(toIdxAttack);
+            ref var toDamUnitC =ref _cellUnitFilter.Get3(toIdxAttack);
+            ref var toStepUnitC = ref _cellUnitFilter.Get4(toIdxAttack);
+            ref var twUnitC_to = ref _cellUnitFilter.Get5(toIdxAttack);
+            ref var toOwnUnitCom = ref _cellUnitFilter.Get6(toIdxAttack);
             ref var toBuildDatCom = ref _cellBuildFilter.Get1(toIdxAttack);
             ref var toEnvDatCom = ref _cellEnvFilter.Get1(toIdxAttack);
 
-            AttackTypes simpUniqueType = default;
 
-
-            if (CellsAttackC.FindByIdx(fromOwnUnitCom.PlayerType, AttackTypes.Simple, fromIdx, toIdxAttack))
-                simpUniqueType = AttackTypes.Simple;
-
-            if (CellsAttackC.FindByIdx(fromOwnUnitCom.PlayerType, AttackTypes.Unique, fromIdx, toIdxAttack))
-                simpUniqueType = AttackTypes.Unique;
-
-
-
-
+            var simpUniqueType = CellsAttackC.FindByIdx(fromOwnUnitCom.PlayerType, fromIdx, toIdxAttack);
 
             if (simpUniqueType != default)
             {
                 fromUnitC.DefStat(StatTypes.Steps);
-                fromUnitC.DefAmountSteps();
+                fromStepUnitC.DefAmountSteps();
                 fromUnitC.DefCondType();
 
 
@@ -50,7 +48,7 @@ namespace Scripts.Game
                 float powerDamTo = 0;
 
       
-                powerDamFrom += fromUnitC.PowerDamageAttack(simpUniqueType);
+                powerDamFrom += fromDamUnitC.PowerDamageAttack(fromUnitC, twUnitC_from, simpUniqueType);
 
                 if (fromUnitC.IsMelee)
                     RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
@@ -59,7 +57,7 @@ namespace Scripts.Game
 
                 if (toUnitC.IsMelee)
                 {
-                    powerDamTo += toUnitC.PowerDamageOnCell(toBuildDatCom.BuildType, toEnvDatCom.Envronments);
+                    powerDamTo += toDamUnitC.PowerDamageOnCell(toUnitC, twUnitC_to, toBuildDatCom.BuildType, toEnvDatCom.Envronments);
                 }
 
 
@@ -94,16 +92,16 @@ namespace Scripts.Game
 
 
                 if (!fromUnitC.IsMelee) minusFrom = 0;
-                if (fromUnitC.HaveShield)
+                if (twUnitC_from.HaveShield)
                 {
                     minusFrom = 0;
-                    fromUnitC.TakeShieldProtect();
+                    twUnitC_from.TakeShieldProtect();
                 }
 
                 if (minusFrom >= 0)
                 {
-                    fromUnitC.TakeAmountHealth((int)minusFrom);
-                    if (fromUnitC.AmountHealth <= 10) fromUnitC.TakeAmountHealth(10);
+                    fromHpUnitC.TakeAmountHealth((int)minusFrom);
+                    if (fromHpUnitC.AmountHealth <= 10) fromHpUnitC.TakeAmountHealth(10);
                 }
                 else throw new System.Exception();
                 
@@ -111,22 +109,22 @@ namespace Scripts.Game
 
 
                 if (!toUnitC.IsMelee) minusTo = UnitValues.StandAmountHealth(toUnitC.UnitType);
-                if (toUnitC.HaveShield)
+                if (twUnitC_to.HaveShield)
                 {
                     minusTo = 0;
-                    toUnitC.TakeShieldProtect();
+                    twUnitC_to.TakeShieldProtect();
                 }
 
                 if (minusTo >= 0)
                 {
-                    toUnitC.TakeAmountHealth((int)minusTo);
-                    if (toUnitC.AmountHealth <= 10) toUnitC.TakeAmountHealth(10);
+                    toHpUnitC.TakeAmountHealth((int)minusTo);
+                    if (toHpUnitC.AmountHealth <= 10) toHpUnitC.TakeAmountHealth(10);
                 }
                 else throw new System.Exception();
                 
 
 
-                if (!toUnitC.HaveAmountHealth)
+                if (!toHpUnitC.HaveAmountHealth)
                 {
                     if (toUnitC.Is(UnitTypes.King))
                     {
@@ -143,18 +141,20 @@ namespace Scripts.Game
                     if (fromUnitC.IsMelee)
                     {
                         toUnitC.ReplaceUnit(fromUnitC);
+                        toHpUnitC.AmountHealth = fromHpUnitC.AmountHealth;
+                        toStepUnitC.AmountSteps = fromStepUnitC.AmountSteps;
                         toOwnUnitCom.PlayerType = fromOwnUnitCom.PlayerType;
 
                         fromUnitC.DefUnitType();
 
-                        if (!toUnitC.HaveAmountHealth)
+                        if (!toHpUnitC.HaveAmountHealth)
                         {
                             toUnitC.DefUnitType();
                         }
                     }
                 }
 
-                else if (!fromUnitC.HaveAmountHealth)
+                else if (!fromHpUnitC.HaveAmountHealth)
                 {
                     if (fromUnitC.Is(UnitTypes.King))
                     {

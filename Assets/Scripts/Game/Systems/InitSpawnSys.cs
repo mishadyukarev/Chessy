@@ -18,7 +18,7 @@ namespace Scripts.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
         private EcsFilter<CellViewC, CellDataC> _cellViewFilt = default;
-        private EcsFilter<CellUnitDataCom, CellUnitExtraViewComp, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, HpComponent, ToolWeaponC, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellCloudsDataC> _cellWeatherFilt = default;
 
@@ -135,6 +135,10 @@ namespace Scripts.Game
 
                     _curGameWorld.NewEntity()
                          .Replace(new CellUnitDataCom(true))
+                         .Replace(new HpComponent())
+                         .Replace(new DamageComponent())
+                         .Replace(new StepComponent())
+                         .Replace(new ToolWeaponC())
                          .Replace(new OwnerCom())
                          .Replace(new VisibleC(true))
                          .Replace(new CellUnitMainViewCom(curCell_GO))
@@ -365,7 +369,9 @@ namespace Scripts.Game
                         ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
 
                         ref var curUnitCom = ref _cellUnitFilter.Get1(curIdxCell);
-                        ref var curOwnUnitCom = ref _cellUnitFilter.Get3(curIdxCell);
+                        ref var curHpUnitC = ref _cellUnitFilter.Get2(curIdxCell);
+                        ref var twUnitC = ref _cellUnitFilter.Get3(curIdxCell);
+                        ref var curOwnUnitCom = ref _cellUnitFilter.Get4(curIdxCell);
 
                         ref var curBuildCom = ref _cellBuildFilter.Get1(curIdxCell);
                         ref var curOwnBuildCom = ref _cellBuildFilter.Get2(curIdxCell);
@@ -387,7 +393,7 @@ namespace Scripts.Game
 
                             curUnitCom.UnitType = UnitTypes.King;
                             curUnitCom.LevelUnitType = LevelUnitTypes.Wood;
-                            curUnitCom.AmountHealth = 1;
+                            curHpUnitC.AmountHealth = 1;
                             curUnitCom.CondUnitType = CondUnitTypes.Protected;
                             curOwnUnitCom.PlayerType = PlayerTypes.Second;
                         }
@@ -424,16 +430,16 @@ namespace Scripts.Game
 
                             if (rand >= 50)
                             {
-                                curUnitCom.TWExtraType = ToolWeaponTypes.Sword;
-                                curUnitCom.LevelTWType = LevelTWTypes.Iron;
+                                twUnitC.TWExtraType = ToolWeaponTypes.Sword;
+                                twUnitC.LevelTWType = LevelTWTypes.Iron;
                             }
                             else
                             {
-                                curUnitCom.TWExtraType = ToolWeaponTypes.Shield;
-                                curUnitCom.LevelTWType = LevelTWTypes.Wood;
-                                curUnitCom.AddShieldProtect(LevelTWTypes.Wood);
+                                twUnitC.TWExtraType = ToolWeaponTypes.Shield;
+                                twUnitC.LevelTWType = LevelTWTypes.Wood;
+                                twUnitC.AddShieldProtect(LevelTWTypes.Wood);
                             }
-                            curUnitCom.AmountHealth = 100;
+                            curHpUnitC.AmountHealth = 100;
                             curUnitCom.CondUnitType = CondUnitTypes.Protected;
                             curOwnUnitCom.PlayerType = PlayerTypes.Second;
                         }

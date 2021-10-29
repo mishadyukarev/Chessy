@@ -6,7 +6,7 @@ namespace Scripts.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -16,7 +16,8 @@ namespace Scripts.Game
                 CellsForShiftCom.Clear(PlayerTypes.Second, curIdxCell);
 
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
-                ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
+                ref var curStepUnitC = ref _cellUnitFilter.Get2(curIdxCell);
+                ref var curOwnUnitCom = ref _cellUnitFilter.Get3(curIdxCell);
 
 
                 if (curUnitDatCom.HaveUnit)
@@ -31,8 +32,8 @@ namespace Scripts.Game
                         {
                             if (!_cellUnitFilter.Get1(idxCell_1).HaveUnit)
                             {
-                                if (curUnitDatCom.AmountSteps >= _cellEnvDataFilter.Get1(idxCell_1).NeedAmountSteps
-                                    || _cellUnitFilter.Get1(curIdxCell).HaveMaxAmountSteps)
+                                if (curStepUnitC.AmountSteps >= _cellEnvDataFilter.Get1(idxCell_1).NeedAmountSteps
+                                    || curStepUnitC.HaveMaxAmountSteps(curUnitDatCom.UnitType))
                                 {
                                     CellsForShiftCom.AddIdxCell(curOwnUnitCom.PlayerType, curIdxCell, idxCell_1);
                                 }

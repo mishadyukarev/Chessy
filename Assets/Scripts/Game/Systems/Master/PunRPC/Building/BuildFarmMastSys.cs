@@ -14,7 +14,7 @@ namespace Scripts.Game
         private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
 
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
-        private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
 
         private EcsFilter<BuildsInGameC> _buildsFilt = default;
@@ -32,6 +32,7 @@ namespace Scripts.Game
             ref var curOwnBuildCom = ref _cellBuildFilter.Get2(idxForBuild);
 
             ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForBuild);
+            ref var curStepUnitC = ref _cellUnitFilter.Get2(idxForBuild);
             ref var curCellEnvCom = ref _cellEnvFilter.Get1(idxForBuild);
 
 
@@ -39,7 +40,7 @@ namespace Scripts.Game
 
             if (forBuildType == BuildingTypes.Farm)
             {
-                if (curUnitDatCom.HaveMinAmountSteps || curUnitDatCom.Have(StatTypes.Steps))
+                if (curStepUnitC.HaveMinAmountSteps || curUnitDatCom.Have(StatTypes.Steps))
                 {
                     if (!curCellEnvCom.Have(EnvirTypes.AdultForest) && !curCellEnvCom.Have(EnvirTypes.YoungForest))
                     {
@@ -66,7 +67,7 @@ namespace Scripts.Game
                             {
                                 curUnitDatCom.DefStat(StatTypes.Steps);
                             }
-                            else curUnitDatCom.TakeAmountSteps();
+                            else curStepUnitC.TakeAmountSteps();
                         }
                         else
                         {

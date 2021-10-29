@@ -27,6 +27,9 @@ namespace Scripts.Game
             }
         }
 
+        public LevelUnitTypes LevelUnitType;
+
+
         public CondUnitTypes CondUnitType { get; set; }
         public void DefCondType() => CondUnitType = default;
         public bool Is(CondUnitTypes condUnitType) => CondUnitType == condUnitType;
@@ -38,45 +41,7 @@ namespace Scripts.Game
         }
 
 
-        public LevelUnitTypes LevelUnitType;
 
-
-        public ToolWeaponTypes TWExtraType;
-        public bool IsTWExtraType(ToolWeaponTypes toolWeaponType) => TWExtraType == toolWeaponType;
-        public bool HaveExtraTW => TWExtraType != default;
-        public bool HaveShield => TWExtraType == ToolWeaponTypes.Shield;
-
-        public LevelTWTypes LevelTWType;
-        public bool IsLevelTWType(LevelTWTypes levelTWType) => LevelTWType == levelTWType;
-
-        public int ShieldProtection;
-        public void AddShieldProtect(LevelTWTypes levelTWType)
-        {
-            switch (levelTWType)
-            {
-                case LevelTWTypes.None: throw new Exception();
-                case LevelTWTypes.Wood: ShieldProtection = 1; return;
-                case LevelTWTypes.Iron: ShieldProtection = 3; return;
-                default: throw new Exception();
-            }
-        }
-        public void TakeShieldProtect(int taking = 1)
-        {
-            ShieldProtection -= taking;
-            if(ShieldProtection <= 0)
-            {
-                TWExtraType = ToolWeaponTypes.None;
-            }
-        }
-
-        public int AmountSteps { get; set; }
-        public void AddAmountSteps(int adding = 1) => AmountSteps += adding;
-        public void TakeAmountSteps(int taking = 1) => AmountSteps -= taking;
-        public int MaxAmountSteps => UnitValues.StandartAmountSteps(UnitType);
-        public bool HaveMaxAmountSteps => AmountSteps == MaxAmountSteps;
-        public bool HaveMinAmountSteps => AmountSteps >= 1;
-        public void DefAmountSteps() => AmountSteps = default;
-        public void SetMaxAmountSteps() => AmountSteps = MaxAmountSteps;
 
 
         private Dictionary<StatTypes, bool> _effects;
@@ -93,88 +58,14 @@ namespace Scripts.Game
         }
 
 
-        public int AmountHealth { get; set; }
-        public void AddAmountHealth(int adding = 1) => AmountHealth += adding;
-        public void TakeAmountHealth(int taking = 1) => AmountHealth -= taking;
-        public void TakeAmountHealth(int max, float taking) => AmountHealth -= (int)(max * taking);
-
-        public int MaxAmountHealth => UnitValues.StandAmountHealth(UnitType);
-        public bool HaveMaxAmountHealth => AmountHealth >= MaxAmountHealth;
-        public bool HaveAmountHealth => AmountHealth > 0;
-        public void AddStandartHeal() => AddAmountHealth((int)(UnitValues.StandAmountHealth(UnitType) * UnitValues.ForAddingHealth(UnitType)));
-        public void SetMaxAmountHealth() => AmountHealth = MaxAmountHealth;
-
-        public int StandPowerDamage => UnitValues.StandPowerDamage(UnitType, LevelUnitType);
-        public int PowerDamageAttack(AttackTypes attackType)
-        {
-            float powerDamege = StandPowerDamage;
-
-            if (UnitType.Is(UnitTypes.Pawn))
-            {
-                switch (TWExtraType)
-                {
-                    case ToolWeaponTypes.None:
-                        break;
-
-                    case ToolWeaponTypes.Hoe:
-                        throw new Exception();
-
-                    case ToolWeaponTypes.Pick:
-                        //simplePowerDamege -= simplePowerDamege * 0.5f;
-                        break;
-
-                    case ToolWeaponTypes.Sword:
-                        powerDamege += UnitValues.StandPowerDamage(UnitType, LevelUnitType) * 0.5f;
-                        break;
-
-                    case ToolWeaponTypes.Shield:
-                        break;
-
-                    default:
-                        throw new Exception();
-                }
-            }
-
-            if(attackType == AttackTypes.Unique) powerDamege += powerDamege * UnitValues.UniqueRatioPowerDamage;
-
-            return (int)powerDamege;
-        }
-        public int PowerDamageOnCell(BuildingTypes buildType, Dictionary<EnvirTypes, bool> envrs)
-        {
-            float powerDamege = PowerDamageAttack(AttackTypes.Simple);
-
-            if (Is(CondUnitTypes.Protected)) powerDamege += StandPowerDamage * UnitValues.PercentForProtection;
-            else if (Is(CondUnitTypes.Relaxed)) powerDamege += StandPowerDamage * UnitValues.PercentForRelax;
-
-
-            powerDamege += StandPowerDamage * UnitValues.ProtectionPercentBuild(buildType);
-
-
-            if (envrs[EnvirTypes.Fertilizer])
-                powerDamege += StandPowerDamage * UnitValues.ProtectionPercentEnvir(EnvirTypes.Fertilizer);
-
-            if (envrs[EnvirTypes.AdultForest])
-                powerDamege += StandPowerDamage * UnitValues.ProtectionPercentEnvir(EnvirTypes.AdultForest);
-
-            if (envrs[EnvirTypes.Hill])
-                powerDamege += StandPowerDamage * UnitValues.ProtectionPercentEnvir(EnvirTypes.Hill);
-
-
-            return (int)powerDamege;
-        }
 
         public void ReplaceUnit(CellUnitDataCom newUnit)
         {
             UnitType = newUnit.UnitType;
             LevelUnitType = newUnit.LevelUnitType;
-            TWExtraType = newUnit.TWExtraType;
             _effects[StatTypes.Health] = newUnit.Have(StatTypes.Health);
             _effects[StatTypes.Damage] = newUnit.Have(StatTypes.Damage);
             _effects[StatTypes.Steps] = newUnit.Have(StatTypes.Steps);
-            LevelTWType = newUnit.LevelTWType;
-            ShieldProtection = newUnit.ShieldProtection;
-            AmountHealth = newUnit.AmountHealth;
-            AmountSteps = newUnit.AmountSteps;
             CondUnitType = newUnit.CondUnitType;
         }
 

@@ -7,7 +7,7 @@ namespace Scripts.Game
     {
         private EcsFilter<ForSeedingMasCom> _seedingFilter = default;
 
-        private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
 
@@ -18,6 +18,8 @@ namespace Scripts.Game
             var idxCellForSeeding = _seedingFilter.Get1(0).IdxForSeeding;
 
             ref var curUnitDatC = ref _cellUnitFilter.Get1(idxCellForSeeding);
+            ref var stepUnitC = ref _cellUnitFilter.Get2(idxCellForSeeding);
+
             ref var curCellBuildDataCom = ref _cellBuildFilter.Get1(idxCellForSeeding);
             ref var curCellEnvDataCom = ref _cellEnvFilter.Get1(idxCellForSeeding);
 
@@ -31,7 +33,7 @@ namespace Scripts.Game
                     throw new Exception();
 
                 case EnvirTypes.YoungForest:
-                    if (curUnitDatC.HaveMinAmountSteps)
+                    if (stepUnitC.HaveMinAmountSteps)
                     {
                         if (curCellBuildDataCom.HaveBuild)
                         {
@@ -51,7 +53,7 @@ namespace Scripts.Game
                                         WhereEnvironmentC.Add(EnvirTypes.YoungForest, idxCellForSeeding);
 
                                         if (curUnitDatC.Have(StatTypes.Steps)) curUnitDatC.DefStat(StatTypes.Steps);
-                                        else curUnitDatC.TakeAmountSteps();
+                                        else stepUnitC.TakeAmountSteps();
                                     }
                                     else
                                     {

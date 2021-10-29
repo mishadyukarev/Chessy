@@ -8,7 +8,7 @@ namespace Scripts.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellDataC> _cellDataFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom, VisibleC> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -17,12 +17,13 @@ namespace Scripts.Game
                 var xy_0 = _xyCellFilter.GetXyCell(idxCell_0);
 
                 ref var unitDataCom_0 = ref _cellUnitFilter.Get1(idxCell_0);
-                ref var ownUnitCom_0 = ref _cellUnitFilter.Get2(idxCell_0);
+                ref var stepUnitC_0 = ref _cellUnitFilter.Get2(idxCell_0);
+                ref var ownUnitCom_0 = ref _cellUnitFilter.Get3(idxCell_0);
 
 
                 if (unitDataCom_0.Is(UnitTypes.Bishop))
                 {
-                    if (unitDataCom_0.HaveMinAmountSteps || unitDataCom_0.Have(StatTypes.Steps))
+                    if (stepUnitC_0.HaveMinAmountSteps || unitDataCom_0.Have(StatTypes.Steps))
 
                         for (DirectTypes dirType_1 = (DirectTypes)1; dirType_1 < (DirectTypes)Enum.GetNames(typeof(DirectTypes)).Length; dirType_1++)
                         {
@@ -32,7 +33,7 @@ namespace Scripts.Game
 
                             ref var envrDataCom_1 = ref _cellEnvDataFilter.Get1(idxCell_1);
                             ref var unitDataCom_1 = ref _cellUnitFilter.Get1(idxCell_1);
-                            ref var ownUnitCom_1 = ref _cellUnitFilter.Get2(idxCell_1);
+                            ref var ownUnitCom_1 = ref _cellUnitFilter.Get3(idxCell_1);
 
 
                             if (_cellDataFilter.Get1(idxCell_1).IsActiveCell)
@@ -58,8 +59,8 @@ namespace Scripts.Game
 
                                     ref var envrDataCom_2 = ref _cellEnvDataFilter.Get1(idxCell_2);
                                     ref var unitDataCom_2 = ref _cellUnitFilter.Get1(idxCell_2);
-                                    ref var ownUnitCom_2 = ref _cellUnitFilter.Get2(idxCell_2);
-                                    ref var visUnitCom_2 = ref _cellUnitFilter.Get3(idxCell_2);
+                                    ref var ownUnitCom_2 = ref _cellUnitFilter.Get3(idxCell_2);
+                                    ref var visUnitCom_2 = ref _cellUnitFilter.Get4(idxCell_2);
 
                                     if (unitDataCom_2.HaveUnit)
                                     {

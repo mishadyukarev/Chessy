@@ -34,12 +34,12 @@ namespace Scripts.Game
             }
         }
 
-#endregion
+        #endregion
 
 
-#region Damage
+        #region Damage
 
-public static int StandPowerDamage(UnitTypes unitType, LevelUnitTypes upgUnitType)
+        public static int StandPowerDamage(UnitTypes unitType, LevelUnitTypes upgUnitType)
         {
             switch (unitType)
             {
@@ -51,7 +51,7 @@ public static int StandPowerDamage(UnitTypes unitType, LevelUnitTypes upgUnitTyp
                         case LevelUnitTypes.Wood: return 300;
                         case LevelUnitTypes.Iron: throw new Exception();
                         default: throw new Exception();
-                    }         
+                    }
                 case UnitTypes.Pawn:
                     switch (upgUnitType)
                     {
@@ -95,10 +95,18 @@ public static int StandPowerDamage(UnitTypes unitType, LevelUnitTypes upgUnitTyp
 
         #region Protection
 
-        public const float PercentForProtection = 0.2f;
-        public const float PercentForRelax = -0.2f;
 
-        public static float ProtectionPercentEnvir(EnvirTypes envirType)
+        public static float Percent(CondUnitTypes condUnitType)
+        {
+            switch (condUnitType)
+            {
+                case CondUnitTypes.None: throw new Exception();
+                case CondUnitTypes.Protected: return 0.2f;
+                case CondUnitTypes.Relaxed: return -0.2f;
+                default: throw new Exception();
+            }
+        }
+        public static float ProtectionPercent(EnvirTypes envirType)
         {
             switch (envirType)
             {
@@ -111,7 +119,7 @@ public static int StandPowerDamage(UnitTypes unitType, LevelUnitTypes upgUnitTyp
                 default: throw new Exception();
             }
         }
-        public static float ProtectionPercentBuild(BuildingTypes buildType)
+        public static float ProtectionPercent(BuildingTypes buildType)
         {
             switch (buildType)
             {
@@ -149,7 +157,7 @@ public static int StandPowerDamage(UnitTypes unitType, LevelUnitTypes upgUnitTyp
         {
             switch (unitType)
             {
-                case UnitTypes.None: throw new Exception();
+                case UnitTypes.None: return 0;
                 case UnitTypes.King: return 1;
                 case UnitTypes.Pawn: return 2;
                 case UnitTypes.Rook:  return 3;

@@ -8,7 +8,7 @@ namespace Scripts.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, HpComponent, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilt = default;
@@ -21,7 +21,8 @@ namespace Scripts.Game
                 var curXy = _xyCellFilter.GetXyCell(curIdxCell);
 
                 ref var curUnitCom = ref _cellUnitFilter.Get1(curIdxCell);
-                ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
+                ref var curHpUnitC = ref _cellUnitFilter.Get2(curIdxCell);
+                ref var curOwnUnitCom = ref _cellUnitFilter.Get3(curIdxCell);
 
                 ref var curBuilCom = ref _cellBuildFilt.Get1(curIdxCell);
 
@@ -42,9 +43,9 @@ namespace Scripts.Game
 
                     if (curUnitCom.HaveUnit)
                     {
-                        curUnitCom.TakeAmountHealth(40);
+                        curHpUnitC.TakeAmountHealth(40);
 
-                        if (!curUnitCom.HaveAmountHealth)
+                        if (!curHpUnitC.HaveAmountHealth)
                         {
                             if (curUnitCom.Is(UnitTypes.King))
                             {

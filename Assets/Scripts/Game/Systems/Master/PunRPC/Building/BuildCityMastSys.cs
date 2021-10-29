@@ -10,7 +10,7 @@ namespace Scripts.Game
         private EcsFilter<XyCellComponent> _xyCellFilt = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
-        private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
@@ -30,6 +30,7 @@ namespace Scripts.Game
                 ref var curOwnBuildCom = ref _cellBuildFilter.Get2(idxForBuild);
 
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForBuild);
+                ref var curStepUnitC = ref _cellUnitFilter.Get2(idxForBuild);
                 ref var curCellEnvCom = ref _cellEnvFilter.Get1(idxForBuild);
                 ref var curFireCom = ref _cellFireFilter.Get1(idxForBuild);
 
@@ -38,7 +39,7 @@ namespace Scripts.Game
 
 
 
-                if (curUnitDatCom.HaveMinAmountSteps || curUnitDatCom.Have(StatTypes.Steps))
+                if (curStepUnitC.HaveMinAmountSteps || curUnitDatCom.Have(StatTypes.Steps))
                 {
                     bool haveNearBorder = false;
 
@@ -65,7 +66,7 @@ namespace Scripts.Game
 
 
                         curUnitDatCom.DefStat(StatTypes.Steps);
-                        curUnitDatCom.DefAmountSteps();
+                        curStepUnitC.DefAmountSteps();
 
 
                         curFireCom.DisableFire();

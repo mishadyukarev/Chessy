@@ -10,7 +10,7 @@ namespace Scripts.Game
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, HpComponent, StepComponent, ToolWeaponC, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvrFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
@@ -298,19 +298,25 @@ namespace Scripts.Game
 
             foreach (var curIdxCell in _cellUnitFilter)
             {
-                ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
-                listObjects.Add(curUnitDatCom.UnitType);
-                listObjects.Add(curUnitDatCom.AmountHealth);
-                listObjects.Add(curUnitDatCom.AmountSteps);
+                ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);               
+                listObjects.Add(curUnitDatCom.UnitType);        
                 listObjects.Add(curUnitDatCom.CondUnitType);
                 listObjects.Add(curUnitDatCom.LevelUnitType);
-                listObjects.Add(curUnitDatCom.TWExtraType);
 
-                listObjects.Add(_cellUnitFilter.Get2(curIdxCell).PlayerType);
+                ref var curHpUnitC = ref _cellUnitFilter.Get2(curIdxCell);
+                listObjects.Add(curHpUnitC.AmountHealth);
+
+                listObjects.Add(_cellUnitFilter.Get3(curIdxCell).AmountSteps);
+                listObjects.Add(_cellUnitFilter.Get4(curIdxCell).TWExtraType);
+
+                listObjects.Add(_cellUnitFilter.Get5(curIdxCell).PlayerType);
+
 
 
                 listObjects.Add(_cellBuildFilter.Get1(curIdxCell).BuildType);
                 listObjects.Add(_cellBuildFilter.Get2(curIdxCell).PlayerType);
+
+
 
                 ref var curEnvDatCom = ref _cellEnvrFilter.Get1(curIdxCell);
                 listObjects.Add(curEnvDatCom.Have(EnvirTypes.Fertilizer));
@@ -382,14 +388,14 @@ namespace Scripts.Game
 
             foreach (var curIdxCell in _cellUnitFilter)
             {
-                ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
-                curUnitDatCom.UnitType = (UnitTypes)objects[_curNumber++];
-                curUnitDatCom.AmountHealth = (int)objects[_curNumber++];
-                curUnitDatCom.AmountSteps = (int)objects[_curNumber++];
-                curUnitDatCom.CondUnitType = (CondUnitTypes)objects[_curNumber++];
-                curUnitDatCom.LevelUnitType = (LevelUnitTypes)objects[_curNumber++];
-                curUnitDatCom.TWExtraType = (ToolWeaponTypes)objects[_curNumber++];
-                _cellUnitFilter.Get2(curIdxCell).PlayerType = (PlayerTypes)objects[_curNumber++];
+                ref var curUnitDatC = ref _cellUnitFilter.Get1(curIdxCell);
+                curUnitDatC.UnitType = (UnitTypes)objects[_curNumber++];
+                curUnitDatC.CondUnitType = (CondUnitTypes)objects[_curNumber++];
+                curUnitDatC.LevelUnitType = (LevelUnitTypes)objects[_curNumber++];
+                _cellUnitFilter.Get2(curIdxCell).AmountHealth = (int)objects[_curNumber++];
+                _cellUnitFilter.Get3(curIdxCell).AmountSteps = (int)objects[_curNumber++];
+                _cellUnitFilter.Get4(curIdxCell).TWExtraType = (ToolWeaponTypes)objects[_curNumber++];
+                _cellUnitFilter.Get5(curIdxCell).PlayerType = (PlayerTypes)objects[_curNumber++];
 
 
                 _cellBuildFilter.Get1(curIdxCell).BuildType = (BuildingTypes)objects[_curNumber++];
