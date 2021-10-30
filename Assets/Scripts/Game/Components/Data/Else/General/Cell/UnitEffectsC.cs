@@ -18,6 +18,12 @@ namespace Scripts.Game
             Set(StatTypes.Steps, effectsC.Have(StatTypes.Steps));
         }
         public void Def(StatTypes statType) => Set(statType, false);
+        public void DefAllEffects()
+        {
+            Set(StatTypes.Health, false);
+            Set(StatTypes.Damage, false);
+            Set(StatTypes.Steps, false);
+        }
         public bool Have(StatTypes statType)
         {
             if (_effects.ContainsKey(statType)) return _effects[statType];

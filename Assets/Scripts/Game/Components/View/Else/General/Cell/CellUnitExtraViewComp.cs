@@ -27,7 +27,7 @@ namespace Scripts.Game
                     {
                         case LevelTWTypes.None: throw new Exception();
                         case LevelTWTypes.Wood: throw new Exception();
-                        case LevelTWTypes.Iron: _extraUnit_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.PickWood); return;
+                        case LevelTWTypes.Iron: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PickWood); return;
                         default: throw new Exception();
                     }
                 case ToolWeaponTypes.Sword:
@@ -35,15 +35,15 @@ namespace Scripts.Game
                     {
                         case LevelTWTypes.None: throw new Exception();
                         case LevelTWTypes.Wood: throw new Exception();
-                        case LevelTWTypes.Iron: _extraUnit_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.SwordIron); return;
+                        case LevelTWTypes.Iron: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.SwordIron); return;
                         default: throw new Exception();
                     }
                 case ToolWeaponTypes.Shield:
                     switch (levelTWType)
                     {
                         case LevelTWTypes.None: throw new Exception();
-                        case LevelTWTypes.Wood: _extraUnit_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.ShieldWood); return;
-                        case LevelTWTypes.Iron: _extraUnit_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.ShieldIron); return;
+                        case LevelTWTypes.Wood: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.ShieldWood); return;
+                        case LevelTWTypes.Iron: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.ShieldIron); return;
                         default: throw new Exception();
                     }
                 default: throw new Exception();

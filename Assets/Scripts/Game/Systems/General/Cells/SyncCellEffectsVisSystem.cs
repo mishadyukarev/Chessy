@@ -20,21 +20,6 @@ namespace Scripts.Game
                     _cellFireFilter.Get2(idx).DisableSR();
                 }
             }
-
-            //for (int x = 0; x < CellValues.CELL_COUNT_X; x++)
-            //    for (int y = 0; y < CellValues.CELL_COUNT_Y; y++)
-            //    {
-            //        var xy = new int[] { x, y };
-
-            //        if (CellFireDataSystem.HaveFireCom(xy).HaveFire)
-            //        {
-
-            //        }
-            //        else
-            //        {
-            //            CellFireViewSystem.DisableSR(xy);
-            //        }
-            //    }
         }
     }
 }

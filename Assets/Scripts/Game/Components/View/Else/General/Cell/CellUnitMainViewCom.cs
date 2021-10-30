@@ -24,15 +24,15 @@ namespace Scripts.Game
                     throw new Exception();
 
                 case UnitTypes.King:
-                    _main_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.King);
+                    _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.King);
                     break;
 
                 case UnitTypes.Pawn:
                     switch (upgradeUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.PawnWood); break;
-                        case LevelUnitTypes.Iron: _main_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.PawnIron); break;
+                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnWood); break;
+                        case LevelUnitTypes.Iron: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnIron); break;
                         default: throw new Exception();
                     }                  
                     break;
@@ -40,8 +40,8 @@ namespace Scripts.Game
                     switch (upgradeUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.RookBow); break;
-                        case LevelUnitTypes.Iron: _main_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.RookCrossbow); break;
+                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.RookBow); break;
+                        case LevelUnitTypes.Iron: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.RookCrossbow); break;
                         default: throw new Exception();
                     }      
                     break;
@@ -49,8 +49,8 @@ namespace Scripts.Game
                     switch (upgradeUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.BishopBow); break;
-                        case LevelUnitTypes.Iron: _main_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.BishopCrossbow); break;
+                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.BishopBow); break;
+                        case LevelUnitTypes.Iron: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.BishopCrossbow); break;
                         default: throw new Exception();
                     }
                     break;
@@ -58,7 +58,7 @@ namespace Scripts.Game
                     switch (upgradeUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComCom.Sprite(SpriteGameTypes.Scout); break;
+                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Scout); break;
                         case LevelUnitTypes.Iron: throw new Exception();
                         default: throw new Exception();
                     }

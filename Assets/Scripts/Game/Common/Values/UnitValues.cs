@@ -6,18 +6,23 @@ namespace Scripts.Game
     {
         #region Health
 
-        public static int StandMaxHpUnit(UnitTypes unitType)
+        public static int StandMaxHpUnit(bool haveEffect, UnitTypes unitType)
         {
+            float amountHp = 0;
             switch (unitType)
             {
-                case UnitTypes.None: return 0;
-                case UnitTypes.King: return 300;
-                case UnitTypes.Pawn: return 100;
-                case UnitTypes.Rook: return 30;
-                case UnitTypes.Bishop: return 30;
-                case UnitTypes.Scout: return 1;
+                case UnitTypes.None: amountHp = 0; break;
+                case UnitTypes.King: amountHp = 300; break;
+                case UnitTypes.Pawn: amountHp = 100; break;
+                case UnitTypes.Rook: amountHp = 30; break;
+                case UnitTypes.Bishop: amountHp = 30; break;
+                case UnitTypes.Scout: amountHp = 1; break;
                 default: throw new Exception();
             }
+
+            if (haveEffect) amountHp += amountHp* 0.5f;
+
+            return (int)amountHp;
         }
 
         public static float PercentForAddingHp(UnitTypes unitType)
@@ -30,20 +35,6 @@ namespace Scripts.Game
                 case UnitTypes.Rook: return 1;
                 case UnitTypes.Bishop: return 1;
                 case UnitTypes.Scout: return 1;
-                default: throw new Exception();
-            }
-        }
-
-        public static float PercentForBonusHp(UnitTypes unitType)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None: throw new Exception();
-                case UnitTypes.King: throw new Exception();
-                case UnitTypes.Pawn: return 0.5f;
-                case UnitTypes.Rook: return 0.5f;
-                case UnitTypes.Bishop: return 0.5f;
-                case UnitTypes.Scout: return 0.5f;
                 default: throw new Exception();
             }
         }
@@ -179,16 +170,40 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
         }
-        public static int StandartAmountSteps(UnitTypes unitType)
+        public static int StandartAmountSteps(bool haveEffect, UnitTypes unitType)
+        {
+            var steps = 0;
+
+            switch (unitType)
+            {
+                case UnitTypes.None: steps = 0; break;
+                case UnitTypes.King: steps = 2; break;
+                case UnitTypes.Pawn: steps = 2; break;
+                case UnitTypes.Rook: steps = 3; break;
+                case UnitTypes.Bishop: steps = 3; break;
+                case UnitTypes.Scout: steps = 4; break;
+                default: throw new Exception();
+            }
+
+            if (haveEffect) steps += 1;
+            return steps;
+        }
+
+        #endregion
+
+
+        #region
+
+        public static int MaxAmountWater(UnitTypes unitType)
         {
             switch (unitType)
             {
-                case UnitTypes.None: return 0;
-                case UnitTypes.King: return 1;
-                case UnitTypes.Pawn: return 2;
-                case UnitTypes.Rook:  return 3;
-                case UnitTypes.Bishop: return 3;
-                case UnitTypes.Scout: return 4;
+                case UnitTypes.None: throw new Exception();
+                case UnitTypes.King: return 100;
+                case UnitTypes.Pawn: return 100;
+                case UnitTypes.Rook: return 100;
+                case UnitTypes.Bishop: return 100;
+                case UnitTypes.Scout: return 100;
                 default: throw new Exception();
             }
         }

@@ -7,6 +7,7 @@ namespace Scripts.Game
         public int AmountSteps { get; set; }
 
         public bool HaveMinSteps => AmountSteps > 0;
+        public bool IsMinusSteps => AmountSteps < 0;
 
         public void AddSteps(int adding = 1)
         {
@@ -19,12 +20,13 @@ namespace Scripts.Game
             if (taking < 0) throw new Exception("Need a positive number");
             else if (taking == 0) throw new Exception("You're taking zero");
             AmountSteps -= taking;
+            if (IsMinusSteps) ZeroSteps();
         }
 
-        public int MaxSteps(UnitTypes unitType) => UnitValues.StandartAmountSteps(unitType);
-        public bool HaveMaxSteps(UnitTypes unitType) => AmountSteps >= MaxSteps(unitType);
-        public void DefSteps() => AmountSteps = default;
-        public void SetMaxSteps(UnitTypes unitType) => AmountSteps = MaxSteps(unitType);
+        public int MaxSteps(UnitEffectsC unitEffectsC, UnitTypes unitType) => UnitValues.StandartAmountSteps(unitEffectsC.Have(StatTypes.Steps), unitType);
+        public bool HaveMaxSteps(UnitEffectsC unitEffectsC, UnitTypes unitType) => AmountSteps >= MaxSteps(unitEffectsC, unitType);
+        public void ZeroSteps() => AmountSteps = 0;
+        public void SetMaxSteps(UnitEffectsC unitEffectsC, UnitTypes unitType) => AmountSteps = MaxSteps(unitEffectsC, unitType);
 
         public void AddBonus() => AmountSteps += 1;
     }

@@ -64,7 +64,7 @@ namespace Scripts.Game
                         BuildsInGameC.Add(playerSend, forBuildType, idxForBuild);
 
 
-                        curStepUnitC.DefSteps();
+                        curStepUnitC.ZeroSteps();
 
 
                         curFireCom.DisableFire();

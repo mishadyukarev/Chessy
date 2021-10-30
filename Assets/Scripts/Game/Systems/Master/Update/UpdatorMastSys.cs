@@ -59,13 +59,13 @@ namespace Scripts.Game
                         {
                             if (curOwnUnitCom.Is(PlayerTypes.Second))
                             {
-                                if (!curHpUnitC.HaveCurMaxHpUnit(effUnitC, curUnitCom.UnitType))
+                                if (!curHpUnitC.HaveMaxHpUnit(effUnitC, curUnitCom.UnitType))
                                 {
                                     curHpUnitC.AddHp(100);
 
-                                    if (curHpUnitC.StandMaxHpUnit(curUnitCom.UnitType) < curHpUnitC.AmountHp)
+                                    if (curHpUnitC.MaxHpUnit(effUnitC, curUnitCom.UnitType) < curHpUnitC.AmountHp)
                                     {
-                                        curHpUnitC.AmountHp = curHpUnitC.StandMaxHpUnit(curUnitCom.UnitType);
+                                        curHpUnitC.AmountHp = curHpUnitC.MaxHpUnit(effUnitC, curUnitCom.UnitType);
                                     }
                                 }
                             }
@@ -83,7 +83,7 @@ namespace Scripts.Game
                         {
                             if (condUnitC.Is(CondUnitTypes.Relaxed))
                             {
-                                if (curHpUnitC.HaveCurMaxHpUnit(effUnitC, curUnitCom.UnitType))
+                                if (curHpUnitC.HaveMaxHpUnit(effUnitC, curUnitCom.UnitType))
                                 {
                                     if (curUnitCom.Is(UnitTypes.Pawn))
                                     {
@@ -157,17 +157,17 @@ namespace Scripts.Game
 
                                 else
                                 {
-                                    curHpUnitC.AddStandartHp(effUnitC, curUnitCom.UnitType);
-                                    if (curHpUnitC.AmountHp > curHpUnitC.CurMaxHpUnit(effUnitC, curUnitCom.UnitType))
+                                    curHpUnitC.AddHealHp(effUnitC, curUnitCom.UnitType);
+                                    if (curHpUnitC.AmountHp > curHpUnitC.MaxHpUnit(effUnitC, curUnitCom.UnitType))
                                     {
-                                        curHpUnitC.AmountHp = curHpUnitC.CurMaxHpUnit(effUnitC, curUnitCom.UnitType);
+                                        curHpUnitC.AmountHp = curHpUnitC.MaxHpUnit(effUnitC, curUnitCom.UnitType);
                                     }
                                 }
                             }
 
                             else if (condUnitC.Is(CondUnitTypes.Protected))
                             {
-                                if (curHpUnitC.HaveCurMaxHpUnit(effUnitC, curUnitCom.UnitType))
+                                if (curHpUnitC.HaveMaxHpUnit(effUnitC, curUnitCom.UnitType))
                                 {
                                     if (curUnitCom.Is(UnitTypes.Pawn))
                                     {
@@ -201,7 +201,7 @@ namespace Scripts.Game
                         }
                     }
 
-                    curStepUnitC.SetMaxSteps(curUnitCom.UnitType);
+                    curStepUnitC.SetMaxSteps(effUnitC, curUnitCom.UnitType);
                 }
 
                 else

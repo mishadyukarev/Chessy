@@ -27,7 +27,7 @@ namespace Scripts.Game
 
             var playSend = WhoseMoveC.WhoseMove;
 
-            if (hpUnitC.HaveCurMaxHpUnit(effUnitC_0, unitDatForUpg.UnitType))
+            if (hpUnitC.HaveMaxHpUnit(effUnitC_0, unitDatForUpg.UnitType))
             {
                 if (stepUnitC_0.HaveMinSteps)
                 {
@@ -38,7 +38,7 @@ namespace Scripts.Game
                         unitDatForUpg.LevelUnitType = LevelUnitTypes.Iron;
                         stepUnitC_0.TakeSteps();
 
-                        hpUnitC.AmountHp = hpUnitC.StandMaxHpUnit(unitDatForUpg.UnitType);
+                        hpUnitC.AmountHp = hpUnitC.MaxHpUnit(effUnitC_0, unitDatForUpg.UnitType);
 
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitMelee);
                     }

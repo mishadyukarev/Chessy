@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Scripts.Common
 {
-    public struct SpritesResComCom
+    public struct SpritesResComC
     {
         private static Dictionary<SpriteGameTypes, Sprite> _gameSprites;
 
 
-        internal SpritesResComCom(bool needUpload)
+        internal SpritesResComC(bool needUpload)
         {
             if (needUpload)
             {

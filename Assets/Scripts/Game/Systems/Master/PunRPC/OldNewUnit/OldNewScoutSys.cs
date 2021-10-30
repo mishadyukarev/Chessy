@@ -6,7 +6,8 @@ namespace Scripts.Game
     {
         private EcsFilter<ForOldNewUnitCom> _forOldNewUnitCom = default;
 
-        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent, ConditionUnitC, ToolWeaponC> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
 
         public void Run()
         {
@@ -16,13 +17,15 @@ namespace Scripts.Game
             ref var unitCom = ref _cellUnitFilt.Get1(idxCell);
             ref var hpUnitC = ref _cellUnitFilt.Get2(idxCell);
             ref var stepUnitC = ref _cellUnitFilt.Get3(idxCell);
-            ref var twUnitC = ref _cellUnitFilt.Get5(idxCell);
+
+            ref var twUnitC = ref _cellUnitOthFilt.Get3(idxCell);
+            ref var effUnitC = ref _cellUnitOthFilt.Get4(idxCell);
 
             var playerSender = WhoseMoveC.WhoseMove;
 
-            if (hpUnitC.HaveHp)
+            if (hpUnitC.HaveMaxHpUnit(effUnitC, unitCom.UnitType))
             {
-                if (stepUnitC.HaveMinSteps)
+                if (stepUnitC.HaveMaxSteps(effUnitC, unitCom.UnitType))
                 {
                     InventorUnitsC.TakeUnitsInInv(playerSender, UnitTypes.Scout, LevelUnitTypes.Wood);
 
@@ -30,9 +33,9 @@ namespace Scripts.Game
 
 
                     unitCom.UnitType = _forOldNewUnitCom.Get1(0).UnitType;
-                    hpUnitC.SetStandMaxHp(unitCom.UnitType);
-                    stepUnitC.SetMaxSteps(unitCom.UnitType);
-                    _cellUnitFilt.Get4(idxCell).DefCondition();
+                    hpUnitC.SetStandMaxHp(effUnitC, unitCom.UnitType);
+                    stepUnitC.SetMaxSteps(effUnitC, unitCom.UnitType);
+                    _cellUnitOthFilt.Get2(idxCell).DefCondition();
                 }
 
                 else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);

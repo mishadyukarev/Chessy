@@ -8,7 +8,8 @@ namespace Scripts.Game
         private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
 
         private EcsFilter<CellEnvironmentDataC> _cellEnvirDataFilter = default;
-        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent, ConditionUnitC, ToolWeaponC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, ThirstyC, OwnerCom> _cellUnitOthFilt = default;
 
         public void Run()
         {
@@ -21,9 +22,12 @@ namespace Scripts.Game
             ref var curUnitC = ref _cellUnitFilter.Get1(idxForSet);
             ref var curHpUnitC = ref _cellUnitFilter.Get2(idxForSet);
             ref var stepUnitC = ref _cellUnitFilter.Get3(idxForSet);
-            ref var condUnitC = ref _cellUnitFilter.Get4(idxForSet);
-            ref var curTwUnitC = ref _cellUnitFilter.Get5(idxForSet);
-            ref var curOwnUnitC = ref _cellUnitFilter.Get6(idxForSet);
+
+            ref var condUnitC = ref _cellUnitOthFilt.Get2(idxForSet);
+            ref var curTwUnitC = ref _cellUnitOthFilt.Get3(idxForSet);
+            ref var curEffUnitC = ref _cellUnitOthFilt.Get4(idxForSet);
+            ref var thirUnitC_0 =ref _cellUnitOthFilt.Get5(idxForSet);
+            ref var curOwnUnitC = ref _cellUnitOthFilt.Get6(idxForSet);
 
 
             var playerSend = WhoseMoveC.WhoseMove;
@@ -34,10 +38,11 @@ namespace Scripts.Game
                 curUnitC.UnitType = unitTypeForSet;
                 curUnitC.LevelUnitType = LevelUnitTypes.Wood;
                 curTwUnitC.ToolWeapType = default;
-                curHpUnitC.AmountHp = UnitValues.StandMaxHpUnit(unitTypeForSet);
-                stepUnitC.AmountSteps = UnitValues.StandartAmountSteps(unitTypeForSet);
+                curHpUnitC.AmountHp = curHpUnitC.MaxHpUnit(curEffUnitC, unitTypeForSet);
+                stepUnitC.AmountSteps = UnitValues.StandartAmountSteps(false, unitTypeForSet);
                 condUnitC.DefCondition();
                 curOwnUnitC.PlayerType = playerSend;
+                thirUnitC_0.SetMaxWater(unitTypeForSet);
 
                 if (InventorUnitsC.HaveUnitInInv(playerSend, unitTypeForSet, LevelUnitTypes.Iron))
                 {

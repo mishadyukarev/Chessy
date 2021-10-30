@@ -20,6 +20,7 @@ namespace Scripts.Game
                 .Add(new SyncCellEffectsVisSystem())
                 .Add(new SyncSupportViewSystem())
                 .Add(new CellWeatherViewSys())
+                .Add(new CellRiverViewSys())
                 .Add(new FliperAndRotatorUnitSystem());
 
 

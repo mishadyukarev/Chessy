@@ -34,9 +34,9 @@ namespace Scripts.Game
                 StatZoneViewUIC.SetTextToStat(StatTypes.Damage, selDamUnitC.DamageOnCell(selUnitC, selConUnitC, selTwUnitC, selEffUnitC, selBuildC.BuildType, selEnvC.Envronments).ToString());
                 StatZoneViewUIC.SetTextToStat(StatTypes.Steps, selStepUnitC.AmountSteps.ToString());
 
-                StatZoneViewUIC.FillAmountHp(StatTypes.Health, selHpUnitC.AmountHp, selHpUnitC.CurMaxHpUnit(selEffUnitC, selUnitC.UnitType));
+                StatZoneViewUIC.FillAmountHp(StatTypes.Health, selHpUnitC.AmountHp, selHpUnitC.MaxHpUnit(selEffUnitC, selUnitC.UnitType));
                 StatZoneViewUIC.FillAmountHp(StatTypes.Damage, selDamUnitC.DamageOnCell(selUnitC, selConUnitC, selTwUnitC, selEffUnitC, selBuildC.BuildType, selEnvC.Envronments), selDamUnitC.StandDamage(selUnitC));
-                StatZoneViewUIC.FillAmountHp(StatTypes.Steps, selStepUnitC.AmountSteps, selStepUnitC.MaxSteps(selUnitC.UnitType));
+                StatZoneViewUIC.FillAmountHp(StatTypes.Steps, selStepUnitC.AmountSteps, selStepUnitC.MaxSteps(selEffUnitC, selUnitC.UnitType));
             }
 
             else

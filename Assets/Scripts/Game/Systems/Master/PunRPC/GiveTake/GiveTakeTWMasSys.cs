@@ -33,7 +33,7 @@ namespace Scripts.Game
                 {
                     if (stepUnitC_forGive.HaveMinSteps)
                     {
-                        if (_cellUnitFilter.Get2(neededIdxCell).HaveCurMaxHpUnit(effUnitC_forGive, unitCForGive.UnitType))
+                        if (_cellUnitFilter.Get2(neededIdxCell).HaveMaxHpUnit(effUnitC_forGive, unitCForGive.UnitType))
                         {
                             if (twUnitC_forGive.HaveToolWeap)
                             {

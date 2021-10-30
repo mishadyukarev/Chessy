@@ -29,7 +29,7 @@ namespace Scripts.Game
         public static void SetActive_Button(BuildButtonTypes buildingButtonType, bool isActive) => _building_Buttons[buildingButtonType].gameObject.SetActive(isActive);
 
 
-        public static void SetSpriteThird(SpriteGameTypes spriteGameType) => _third_Image.sprite = SpritesResComCom.Sprite(spriteGameType);
+        public static void SetSpriteThird(SpriteGameTypes spriteGameType) => _third_Image.sprite = SpritesResComC.Sprite(spriteGameType);
 
         public static void AddListener_Button(BuildButtonTypes buildingButtonType, UnityAction unityAction) => _building_Buttons[buildingButtonType].onClick.AddListener(unityAction);
     }

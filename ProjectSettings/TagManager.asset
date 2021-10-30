@@ -47,6 +47,9 @@ TagManager:
   - name: Cell
     uniqueID: 3112104483
     locked: 0
+  - name: Water
+    uniqueID: 3922430727
+    locked: 0
   - name: Environment
     uniqueID: 156443979
     locked: 0
@@ -73,4 +76,7 @@ TagManager:
     locked: 0
   - name: ProtectRelax
     uniqueID: 878055947
+    locked: 0
+  - name: NeedWater
+    uniqueID: 2241910129
     locked: 0

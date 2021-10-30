@@ -6,5 +6,6 @@
 
         Condition,
         MaxSteps,
+        NeedWater,
     }
 }

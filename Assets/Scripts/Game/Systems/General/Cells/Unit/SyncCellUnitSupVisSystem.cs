@@ -6,7 +6,8 @@ namespace Scripts.Game
     internal sealed class SyncCellUnitSupVisSystem : IEcsRunSystem
     {
         private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent, ConditionUnitC, OwnerCom, VisibleC> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, UnitEffectsC, OwnerCom, VisibleC> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, UnitEffectsC, ThirstyC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataCom, VisibleC> _cellUnitViewFilt = default;
         private EcsFilter<CellUnitMainViewCom> _cellUnitViewFilter = default;
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
         private EcsFilter<CellBlocksViewComponent> _cellBlocksFilter = default;
@@ -20,8 +21,9 @@ namespace Scripts.Game
                 ref var curStepUnitC = ref _cellUnitFilter.Get3(idx);
                 ref var condUnitC = ref _cellUnitOthFilt.Get2(idx);
                 ref var effUnitC = ref _cellUnitOthFilt.Get3(idx);
-                ref var curOwnUnitCom = ref _cellUnitOthFilt.Get4(idx);
-                ref var curVisUnitCom = ref _cellUnitOthFilt.Get5(idx);
+                ref var thirUnitC_0 = ref _cellUnitOthFilt.Get4(idx);
+                ref var curOwnUnitCom = ref _cellUnitOthFilt.Get5(idx);
+                ref var curVisUnitCom = ref _cellUnitViewFilt.Get2(idx);
 
                 ref var curUnitViewCom = ref _cellUnitViewFilter.Get1(idx);
 
@@ -33,11 +35,11 @@ namespace Scripts.Game
 
                 blocksViewCom.DisableBlockSR(CellBlockTypes.Condition);
                 blocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
+                blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
 
 
                 if (curVisUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
                 {
-
                     if (curUnitDatC.HaveUnit)
                     {
                         if (!curUnitDatC.Is(UnitTypes.Scout))
@@ -45,11 +47,20 @@ namespace Scripts.Game
                             barsViewCom.EnableSR(CellBarTypes.Hp);
                             barsViewCom.SetColorHp(Color.red);
 
-                            float xCordinate = (float)curHpUnitC.AmountHp / curHpUnitC.CurMaxHpUnit(effUnitC, curUnitDatC.UnitType);
+                            float xCordinate = (float)curHpUnitC.AmountHp / curHpUnitC.MaxHpUnit(effUnitC, curUnitDatC.UnitType);
                             barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
                         }
 
-                        if (curStepUnitC.HaveMaxSteps(curUnitDatC.UnitType))
+                        if (thirUnitC_0.NeedWater(curUnitDatC.UnitType))
+                        {
+                            blocksViewCom.EnableBlockSR(CellBlockTypes.NeedWater);
+                        }
+                        else
+                        {
+                            blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
+                        }
+
+                        if (curStepUnitC.HaveMaxSteps(effUnitC, curUnitDatC.UnitType))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.MaxSteps);
                         }

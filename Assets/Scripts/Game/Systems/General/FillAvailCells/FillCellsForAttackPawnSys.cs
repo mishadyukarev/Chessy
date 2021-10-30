@@ -7,6 +7,7 @@ namespace Scripts.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataCom, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
 
         public void Run()
         {
@@ -14,7 +15,9 @@ namespace Scripts.Game
             {
                 ref var curUnitDatCom = ref _cellUnitFilt.Get1(curIdx);
                 ref var curStepUnitC = ref _cellUnitFilt.Get2(curIdx);
-                ref var curOnUnitCom = ref _cellUnitFilt.Get3(curIdx);
+
+                ref var effUnitC_0 = ref _cellUnitOthFilt.Get2(curIdx);
+                ref var curOnUnitCom = ref _cellUnitOthFilt.Get3(curIdx);
 
                 if (curUnitDatCom.Is(UnitTypes.Pawn))
                 {
@@ -32,7 +35,7 @@ namespace Scripts.Game
                         if (!aroEnvrDatCom.Have(EnvirTypes.Mountain))
                         {
                             if (aroEnvrDatCom.NeedAmountSteps <= curStepUnitC.AmountSteps 
-                                || curStepUnitC.HaveMaxSteps(curUnitDatCom.UnitType))
+                                || curStepUnitC.HaveMaxSteps(effUnitC_0, curUnitDatCom.UnitType))
                             {
                                 if (aroUnitDatCom.HaveUnit)
                                 {

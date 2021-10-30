@@ -19,14 +19,20 @@ namespace Scripts.Game
         private EcsFilter<CellViewC, CellDataC> _cellViewFilt = default;
         private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellCloudsDataC> _cellWeatherFilt = default;
+        private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
 
         private readonly EcsFilter<CellUnitDataCom, HpUnitC, DamageComponent, StepComponent> _cellUnitBaseFilt;
-        private readonly EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, OwnerCom> _cellUnitOtherFilt;
+        private readonly EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, ThirstyC, OwnerCom> _cellUnitOtherFilt;
         private readonly EcsFilter<CellUnitDataCom, VisibleC, CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilt;
 
 
+        //internal static Dictionary<byte, EcsComponentRef<CellUnitDataCom>> CellUnitDataCRefs { get; private set; }
+
         public void Init()
         {
+            //CellUnitDataCRefs = new Dictionary<byte, EcsComponentRef<CellUnitDataCom>>();
+            //CellUnitDataCRef = _cellUnitBaseFilt.Get1Ref(0);
+
             ToggleZoneComponent.ReplaceZone(SceneTypes.Game);
 
             SoundComComp.SavedVolume = SoundComComp.Volume;
@@ -39,8 +45,8 @@ namespace Scripts.Game
             ///Cells
             ///
             var cellGO = PrefabsResComCom.CellGO;
-            var whiteCellSR = SpritesResComCom.Sprite(SpriteGameTypes.WhiteCell);
-            var blackCellSR = SpritesResComCom.Sprite(SpriteGameTypes.BlackCell);
+            var whiteCellSR = SpritesResComC.Sprite(SpriteGameTypes.WhiteCell);
+            var blackCellSR = SpritesResComC.Sprite(SpriteGameTypes.BlackCell);
 
             var cell_GOs = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
 
@@ -53,32 +59,32 @@ namespace Scripts.Game
             for (byte x = 0; x < CELL_COUNT_X; x++)
                 for (byte y = 0; y < CELL_COUNT_Y; y++)
                 {
-                    var curCell_GO = cell_GOs[x, y];
+                    var curParentCell_GO = cell_GOs[x, y];
 
                     if (y % 2 == 0)
                     {
                         if (x % 2 == 0)
                         {
-                            curCell_GO = CreateGameObject(cellGO, blackCellSR, x, y, SpawnInitComSys.Main_GO);
-                            SetActive(curCell_GO, x, y);
+                            curParentCell_GO = CreateGameObject(cellGO, blackCellSR, x, y, SpawnInitComSys.Main_GO);
+                            SetActive(curParentCell_GO, x, y);
                         }
                         if (x % 2 != 0)
                         {
-                            curCell_GO = CreateGameObject(cellGO, whiteCellSR, x, y, SpawnInitComSys.Main_GO);
-                            SetActive(curCell_GO, x, y);
+                            curParentCell_GO = CreateGameObject(cellGO, whiteCellSR, x, y, SpawnInitComSys.Main_GO);
+                            SetActive(curParentCell_GO, x, y);
                         }
                     }
                     if (y % 2 != 0)
                     {
                         if (x % 2 != 0)
                         {
-                            curCell_GO = CreateGameObject(cellGO, blackCellSR, x, y, SpawnInitComSys.Main_GO);
-                            SetActive(curCell_GO, x, y);
+                            curParentCell_GO = CreateGameObject(cellGO, blackCellSR, x, y, SpawnInitComSys.Main_GO);
+                            SetActive(curParentCell_GO, x, y);
                         }
                         if (x % 2 == 0)
                         {
-                            curCell_GO = CreateGameObject(cellGO, whiteCellSR, x, y, SpawnInitComSys.Main_GO);
-                            SetActive(curCell_GO, x, y);
+                            curParentCell_GO = CreateGameObject(cellGO, whiteCellSR, x, y, SpawnInitComSys.Main_GO);
+                            SetActive(curParentCell_GO, x, y);
                         }
                     }
 
@@ -103,11 +109,10 @@ namespace Scripts.Game
                         }
                     }
 
-                    curCell_GO.transform.SetParent(supportParentForCells.transform);
+                    curParentCell_GO.transform.SetParent(supportParentForCells.transform);
 
 
-                    var cellView_GO = curCell_GO.transform.Find("Cell").gameObject;
-
+                    var cellView_GO = curParentCell_GO.transform.Find("Cell").gameObject;
                     
                     _curGameWorld.NewEntity()
                         .Replace(new XyCellComponent(new byte[] { x, y }))
@@ -116,21 +121,23 @@ namespace Scripts.Game
                         .Replace(new CellViewC(cellView_GO))
 
                         .Replace(new CellEnvironmentDataC(new Dictionary<EnvirTypes, bool>()))
-                        .Replace(new CellEnvironViewCom(curCell_GO))
+                        .Replace(new CellEnvironViewCom(curParentCell_GO))
                         .Replace(new CellFireDataComponent())
-                        .Replace(new CellFireViewComponent(curCell_GO))
-                        .Replace(new CellBlocksViewComponent(curCell_GO))
-                        .Replace(new CellBarsViewComponent(curCell_GO))
-                        .Replace(new CellSupViewComponent(curCell_GO))
+                        .Replace(new CellFireViewComponent(curParentCell_GO))
+                        .Replace(new CellBlocksViewComponent(curParentCell_GO))
+                        .Replace(new CellBarsViewComponent(curParentCell_GO))
+                        .Replace(new CellSupViewComponent(curParentCell_GO))
                         .Replace(new CellCloudsDataC())
-                        .Replace(new CellWeatherViewCom(curCell_GO));
+                        .Replace(new CellWeatherViewCom(curParentCell_GO))
+                        .Replace(new CellRiverDataC(new List<byte>()))
+                        .Replace(new CellRiverViewC(curParentCell_GO.transform));
 
 
                     _curGameWorld.NewEntity()
                          .Replace(new CellBuildDataCom())
                          .Replace(new OwnerCom())
                          .Replace(new VisibleC(true))
-                         .Replace(new CellBuildViewComponent(curCell_GO));
+                         .Replace(new CellBuildViewComponent(curParentCell_GO));
 
 
                     _curGameWorld.NewEntity()
@@ -143,11 +150,12 @@ namespace Scripts.Game
                          .Replace(new ConditionUnitC())
                          .Replace(new ToolWeaponC())
                          .Replace(new UnitEffectsC(true))
+                         .Replace(new ThirstyC())
                          .Replace(new OwnerCom())
 
                          .Replace(new VisibleC(true))
-                         .Replace(new CellUnitMainViewCom(curCell_GO))
-                         .Replace(new CellUnitExtraViewComp(curCell_GO));
+                         .Replace(new CellUnitMainViewCom(curParentCell_GO))
+                         .Replace(new CellUnitExtraViewComp(curParentCell_GO));
 
 
                     ++curIdx;
@@ -282,6 +290,8 @@ namespace Scripts.Game
                 foreach (byte curIdxCell in _xyCellFilter)
                 {
                     var curXyCell = _xyCellFilter.GetXyCell(curIdxCell);
+                    var x = curXyCell[0];
+                    var y = curXyCell[1];
 
                     ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
                     ref var curWeatherDatCom = ref _cellWeatherFilt.Get1(curIdxCell);
@@ -314,6 +324,7 @@ namespace Scripts.Game
                                 }
                             }
                         }
+
                         else
                         {
                             random = UnityEngine.Random.Range(1, 100);
@@ -332,11 +343,73 @@ namespace Scripts.Game
                                 }
                             }
                         }
+
                         if (curXyCell[0] == 5 && curXyCell[1] == 5)
                         {
                             curWeatherDatCom.HaveCloud = true;
                             curWeatherDatCom.CloudWidthType = CloudWidthTypes.OneBlock;
                             WhereCloudsC.Add(curIdxCell);
+                        }
+
+
+                        var riverType = RiverTypes.None;
+                        var dirTypes = new List<DirectTypes>();
+                        var corners = new List<DirectTypes>();
+
+                        if (x >= 3 && x <= 6 && y == 5)
+                        {
+                            riverType = RiverTypes.Start;
+                            dirTypes.Add(DirectTypes.Up);
+                        }
+                        else if (x == 7 && y == 5)
+                        {
+                            riverType = RiverTypes.Start;
+                            dirTypes.Add(DirectTypes.Up);
+                            dirTypes.Add(DirectTypes.Right);
+                            corners.Add(DirectTypes.RightUp);
+                            corners.Add(DirectTypes.Down);
+                        }
+                        else if (x >= 8 && x <= 12 && y == 4)
+                        {
+                            riverType = RiverTypes.Start;
+                            dirTypes.Add(DirectTypes.Up);
+                        }
+
+                        if (riverType != default)
+                        {
+                            foreach (var dirType in dirTypes)
+                            {
+                                _cellRiverFilt.Get1(curIdxCell).RiverType = riverType;
+                                _cellRiverFilt.Get1(curIdxCell).DirectTypes.Add(dirType);
+
+                                var xy_next = CellSpaceSupport.GetXyCellByDirect(_xyCellFilter.Get1(curIdxCell).XyCell, dirType);
+                                var idx_next = _xyCellFilter.GetIdxCell(xy_next);
+
+                                _cellRiverFilt.Get1(idx_next).RiverType = RiverTypes.End;
+
+                                if (dirType == DirectTypes.Up)
+                                {
+                                    _cellRiverFilt.Get1(idx_next).DirectTypes.Add(DirectTypes.Down);
+                                }
+                                else if (dirType == DirectTypes.Right)
+                                {
+                                    _cellRiverFilt.Get1(idx_next).DirectTypes.Add(DirectTypes.Left);
+                                }
+
+                                _cellRiverFilt.Get1(idx_next).IdxsNextCells.Add(curIdxCell);
+
+                                _cellRiverFilt.Get1(curIdxCell).IdxsNextCells.Add(idx_next);
+                            }
+
+
+                            foreach (var dirType in corners)
+                            {
+                                var xy_next = CellSpaceSupport.GetXyCellByDirect(_xyCellFilter.Get1(curIdxCell).XyCell, dirType);
+                                var idx_next = _xyCellFilter.GetIdxCell(xy_next);
+
+                                _cellRiverFilt.Get1(idx_next).RiverType = RiverTypes.Corner;
+                            }
+
                         }
                     }
 
@@ -376,7 +449,8 @@ namespace Scripts.Game
 
                         ref var condUnitC = ref _cellUnitOtherFilt.Get2(curIdxCell);
                         ref var twUnitC = ref _cellUnitOtherFilt.Get3(curIdxCell);
-                        ref var curOwnUnitCom = ref _cellUnitOtherFilt.Get4(curIdxCell);
+                        ref var thirUnitC_0 = ref _cellUnitOtherFilt.Get4(curIdxCell);
+                        ref var curOwnUnitCom = ref _cellUnitOtherFilt.Get5(curIdxCell);
 
                         ref var curBuildCom = ref _cellBuildFilter.Get1(curIdxCell);
                         ref var curOwnBuildCom = ref _cellBuildFilter.Get2(curIdxCell);
@@ -399,6 +473,7 @@ namespace Scripts.Game
                             curUnitCom.UnitType = UnitTypes.King;
                             curUnitCom.LevelUnitType = LevelUnitTypes.Wood;
                             curHpUnitC.AmountHp = 1;
+                            thirUnitC_0.SetMaxWater(curUnitCom.UnitType);
                             condUnitC.CondUnitType = CondUnitTypes.Protected;
                             curOwnUnitCom.PlayerType = PlayerTypes.Second;
                         }
@@ -429,6 +504,7 @@ namespace Scripts.Game
                             }
 
                             curUnitCom.UnitType = UnitTypes.Pawn;
+                            thirUnitC_0.SetMaxWater(curUnitCom.UnitType);
                             curUnitCom.LevelUnitType = LevelUnitTypes.Wood;
 
                             int rand = UnityEngine.Random.Range(0, 100);

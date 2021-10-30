@@ -13,6 +13,7 @@ namespace Scripts.Game
 
             _block_SRs.Add(CellBlockTypes.Condition, cell.transform.Find("ProtectRelax").GetComponent<SpriteRenderer>());
             _block_SRs.Add(CellBlockTypes.MaxSteps, cell.transform.Find("MaxSteps").GetComponent<SpriteRenderer>());
+            _block_SRs.Add(CellBlockTypes.NeedWater, cell.transform.Find("NeedWater_SR").GetComponent<SpriteRenderer>());
         }
 
         public void EnableBlockSR(CellBlockTypes cellBlockType) => _block_SRs[cellBlockType].enabled = true;

@@ -31,7 +31,7 @@ namespace Scripts.Common
         {
             var commonZoneEnt = _curComWorld.NewEntity()
                 .Replace(new VideoClipsResCom(true))
-                .Replace(new SpritesResComCom(true))
+                .Replace(new SpritesResComC(true))
                 .Replace(new PrefabsResComCom(true))
                 .Replace(new ClipsResComCom(true));
 

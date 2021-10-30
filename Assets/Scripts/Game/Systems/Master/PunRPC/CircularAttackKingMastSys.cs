@@ -8,7 +8,8 @@ namespace Scripts.Game
         private EcsFilter<ForCircularAttackMasCom> _forCircAttackFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent, ConditionUnitC, ToolWeaponC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
         private EcsFilter<CellEnvironmentDataC> _cellEnvFilt = default;
         private EcsFilter<CellBuildDataCom> _cellBuildFilt = default;
 
@@ -19,11 +20,13 @@ namespace Scripts.Game
 
             ref var starUnitCom = ref _cellUnitFilter.Get1(idxCurculAttack);
             ref var stepUnitC_0 = ref _cellUnitFilter.Get3(idxCurculAttack);
-            ref var condUnitC_0 = ref _cellUnitFilter.Get4(idxCurculAttack);
-            ref var starOwnUnitCom = ref _cellUnitFilter.Get6(idxCurculAttack);
+
+            ref var condUnitC_0 = ref _cellUnitOthFilt.Get2(idxCurculAttack);
+            ref var effUnitC_0 = ref _cellUnitOthFilt.Get4(idxCurculAttack);
+            ref var starOwnUnitCom = ref _cellUnitOthFilt.Get5(idxCurculAttack);
 
 
-            if (stepUnitC_0.HaveMaxSteps(starUnitCom.UnitType))
+            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, starUnitCom.UnitType))
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
@@ -33,40 +36,43 @@ namespace Scripts.Game
 
                     ref var dirUnitC = ref _cellUnitFilter.Get1(idxCurDirect);
                     ref var dirHpUnitC = ref _cellUnitFilter.Get2(idxCurDirect);
-                    ref var twUnitC_dir = ref _cellUnitFilter.Get5(idxCurDirect);
-                    ref var ownUnitComDir = ref _cellUnitFilter.Get6(idxCurDirect);
+                    ref var twUnitC_dir = ref _cellUnitOthFilt.Get3(idxCurDirect);
+                    ref var effUnitC_1 = ref _cellUnitOthFilt.Get4(idxCurDirect);
+                    ref var ownUnitComDir = ref _cellUnitOthFilt.Get5(idxCurDirect);
 
                     ref var envComDir = ref _cellEnvFilt.Get1(idxCurDirect);
                     ref var buildComDir = ref _cellBuildFilt.Get1(idxCurDirect);
 
                     if (dirUnitC.HaveUnit)
                     {
-                        if (twUnitC_dir.Is(ToolWeaponTypes.Shield))
+                        if (!ownUnitComDir.Is(starOwnUnitCom.PlayerType))
                         {
-                            twUnitC_dir.TakeShieldProtect();
-                        }
-                        else
-                        {
-                            if (dirUnitC.IsMelee)
-                            {
-                                dirHpUnitC.TakeHp(25);
-                                if (dirHpUnitC.AmountHp <= UnitValues.HP_FOR_DEATH_AFTER_ATTACK) dirHpUnitC.DefHp();
-                            }
-                            else dirUnitC.DefUnitType();
-                        }
-                        
+                            effUnitC_1.DefAllEffects();
 
-                        if (!dirHpUnitC.HaveHp)
-                        {
-                            if (dirUnitC.Is(UnitTypes.King))
+                            if (twUnitC_dir.Is(ToolWeaponTypes.Shield))
                             {
-                                EndGameDataUIC.PlayerWinner = starOwnUnitCom.PlayerType;
+                                twUnitC_dir.TakeShieldProtect();
                             }
-                            else if (dirUnitC.Is(UnitTypes.Scout))
+                            else
                             {
-                                InventorUnitsC.AddUnitsInInventor(ownUnitComDir.PlayerType, UnitTypes.Scout, LevelUnitTypes.Wood);
+                                if (dirUnitC.IsMelee)
+                                {
+                                    dirHpUnitC.TakeHp(25);
+                                    if (dirHpUnitC.IsHpDeathAfterAttack || !dirHpUnitC.HaveHp)
+                                    {
+                                        if (dirUnitC.Is(UnitTypes.King))
+                                        {
+                                            EndGameDataUIC.PlayerWinner = starOwnUnitCom.PlayerType;
+                                        }
+                                        else if (dirUnitC.Is(UnitTypes.Scout))
+                                        {
+                                            InventorUnitsC.AddUnitsInInventor(ownUnitComDir.PlayerType, UnitTypes.Scout, LevelUnitTypes.Wood);
+                                        }
+                                        dirUnitC.DefUnitType();
+                                    }
+                                }
+                                else dirUnitC.DefUnitType();
                             }
-                            dirUnitC.DefUnitType();
                         }
                     }
                 }
