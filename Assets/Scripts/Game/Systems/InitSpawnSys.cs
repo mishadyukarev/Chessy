@@ -123,7 +123,7 @@ namespace Scripts.Game
 
                         .Replace(new CellEnvDataC(new Dictionary<EnvTypes, bool>()))
                         .Replace(new CellEnvironViewCom(curParentCell_GO))
-                        .Replace(new CellFireDataComponent())
+                        .Replace(new CellFireDataC())
                         .Replace(new CellFireViewComponent(curParentCell_GO))
                         .Replace(new CellBlocksViewComponent(curParentCell_GO))
                         .Replace(new CellBarsViewComponent(curParentCell_GO))

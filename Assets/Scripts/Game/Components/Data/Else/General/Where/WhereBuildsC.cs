@@ -37,7 +37,7 @@ namespace Scripts.Game
             else throw new Exception();
         }
         public static byte AmountBuilds(PlayerTypes playerType, BuildTypes buildType) => (byte)_buildsInGame[playerType][buildType].Count;
-
+        public static List<byte> IdxBuilds(PlayerTypes playerType, BuildTypes buildType) => _buildsInGame[playerType][buildType].Copy();
 
         public static bool IsSettedCity(PlayerTypes playerType) => _buildsInGame[playerType][BuildTypes.City].Count >= 1;
         public static byte IdxCity(PlayerTypes playerType) => _buildsInGame[playerType][BuildTypes.City][0];
