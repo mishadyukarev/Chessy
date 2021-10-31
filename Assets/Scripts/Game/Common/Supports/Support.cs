@@ -28,16 +28,19 @@ namespace Scripts.Game
 
         public static byte AmountTypes(Type type) => (byte)Enum.GetNames(type).Length;
 
-        public static ResourceTypes MinResType => (ResourceTypes)1;
-        public static ResourceTypes MaxResType => (ResourceTypes)Enum.GetNames(typeof(ResourceTypes)).Length;
+        public static ResTypes MinResType => (ResTypes)1;
+        public static ResTypes MaxResType => (ResTypes)Enum.GetNames(typeof(ResTypes)).Length;
 
         public static PlayerTypes MinPlayerType => (PlayerTypes)1;
         public static PlayerTypes MaxPlayerType => (PlayerTypes)Enum.GetNames(typeof(PlayerTypes)).Length;
 
-        public static EnvirTypes MinEnvironType => (EnvirTypes)1;
-        public static EnvirTypes MaxEnvironType => (EnvirTypes)Enum.GetNames(typeof(EnvirTypes)).Length;
+        public static EnvTypes MinEnvironType => (EnvTypes)1;
+        public static EnvTypes MaxEnvironType => (EnvTypes)Enum.GetNames(typeof(EnvTypes)).Length;
 
         public static AttackTypes MinAttackType => (AttackTypes)1;
         public static AttackTypes MaxAttackType => (AttackTypes)Enum.GetNames(typeof(AttackTypes)).Length;
+
+        public static UnitTypes MinUnitType => (UnitTypes)1;
+        public static UnitTypes MaxUnitType => (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length;
     }
 }

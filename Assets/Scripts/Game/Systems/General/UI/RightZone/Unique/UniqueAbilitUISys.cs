@@ -42,7 +42,7 @@ namespace Scripts.Game
                         {
                             activeFirst = true;
 
-                            if (selEnvDataCom.Have(EnvirTypes.AdultForest))
+                            if (selEnvDataCom.Have(EnvTypes.AdultForest))
                             {
                                 if (selFireDatCom.HaveFire)
                                 {

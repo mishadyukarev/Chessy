@@ -18,7 +18,7 @@ namespace Scripts.Game
         private static GameObject _thatsForOtherUnit_GO;
         private static GameObject _nearBorder_GO;
 
-        private static Dictionary<ResourceTypes, TextMeshProUGUI> _needAmountRes_TextMP;
+        private static Dictionary<ResTypes, TextMeshProUGUI> _needAmountRes_TextMP;
 
         public static string Text
         {
@@ -44,13 +44,13 @@ namespace Scripts.Game
 
 
 
-            _needAmountRes_TextMP = new Dictionary<ResourceTypes, TextMeshProUGUI>();
+            _needAmountRes_TextMP = new Dictionary<ResTypes, TextMeshProUGUI>();
             var economyZone_trans = mistakeZone_GO.transform.Find("NeedMoreResourcesZone");
-            _needAmountRes_TextMP.Add(ResourceTypes.Food, economyZone_trans.Find("NeedFood_Image").Find("TMP").GetComponent<TextMeshProUGUI>());
-            _needAmountRes_TextMP.Add(ResourceTypes.Wood, economyZone_trans.Find("NeedWood_Image").Find("TMP").GetComponent<TextMeshProUGUI>());
-            _needAmountRes_TextMP.Add(ResourceTypes.Ore, economyZone_trans.Find("NeedOre_Image").Find("TMP").GetComponent<TextMeshProUGUI>());
-            _needAmountRes_TextMP.Add(ResourceTypes.Iron, economyZone_trans.Find("NeedIron_Image").Find("TMP").GetComponent<TextMeshProUGUI>());
-            _needAmountRes_TextMP.Add(ResourceTypes.Gold, economyZone_trans.Find("NeedGold_Image").Find("TMP").GetComponent<TextMeshProUGUI>());
+            _needAmountRes_TextMP.Add(ResTypes.Food, economyZone_trans.Find("NeedFood_Image").Find("TMP").GetComponent<TextMeshProUGUI>());
+            _needAmountRes_TextMP.Add(ResTypes.Wood, economyZone_trans.Find("NeedWood_Image").Find("TMP").GetComponent<TextMeshProUGUI>());
+            _needAmountRes_TextMP.Add(ResTypes.Ore, economyZone_trans.Find("NeedOre_Image").Find("TMP").GetComponent<TextMeshProUGUI>());
+            _needAmountRes_TextMP.Add(ResTypes.Iron, economyZone_trans.Find("NeedIron_Image").Find("TMP").GetComponent<TextMeshProUGUI>());
+            _needAmountRes_TextMP.Add(ResTypes.Gold, economyZone_trans.Find("NeedGold_Image").Find("TMP").GetComponent<TextMeshProUGUI>());
         }
 
         public static void ActiveBackgroud(bool isActive) => _backgroud_GO.SetActive(isActive);
@@ -63,7 +63,7 @@ namespace Scripts.Game
         public static void ActiveThatsForOtherUnit(bool isActive) => _thatsForOtherUnit_GO.SetActive(isActive);
         public static void ActiveNearBorderZone(bool isActive) => _nearBorder_GO.SetActive(isActive);
 
-        public static void SetActiveRes(ResourceTypes resType, bool isActive) => _needAmountRes_TextMP[resType].transform.parent.gameObject.SetActive(isActive);
-        public static void SetText(ResourceTypes resType, string text) => _needAmountRes_TextMP[resType].text = text;
+        public static void SetActiveRes(ResTypes resType, bool isActive) => _needAmountRes_TextMP[resType].transform.parent.gameObject.SetActive(isActive);
+        public static void SetText(ResTypes resType, string text) => _needAmountRes_TextMP[resType].text = text;
     }
 }

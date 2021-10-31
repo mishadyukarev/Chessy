@@ -40,7 +40,7 @@ namespace Scripts.Game
                         {
                             if (condUnitC_0.Is(CondUnitTypes.Relaxed))
                             {
-                                if (_cellEnvDatFilt.Get1(curIdxCell).Have(EnvirTypes.AdultForest))
+                                if (_cellEnvDatFilt.Get1(curIdxCell).Have(EnvTypes.AdultForest))
                                 {
                                     amountAddWood += 1;
                                 }
@@ -54,28 +54,28 @@ namespace Scripts.Game
                 * UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildTypes.Farm) - amountUnitsInGame;
 
 
-            if (amountAddFood < 0) EconomyViewUIC.SetAddText(ResourceTypes.Food, amountAddFood.ToString());
+            if (amountAddFood < 0) EconomyViewUIC.SetAddText(ResTypes.Food, amountAddFood.ToString());
 
-            else EconomyViewUIC.SetAddText(ResourceTypes.Food, "+ " + amountAddFood.ToString());
+            else EconomyViewUIC.SetAddText(ResTypes.Food, "+ " + amountAddFood.ToString());
 
 
 
             amountAddWood += (byte)(UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildTypes.Woodcutter) 
                 * UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildTypes.Woodcutter));
-            EconomyViewUIC.SetAddText(ResourceTypes.Wood, "+ " + amountAddWood);
+            EconomyViewUIC.SetAddText(ResTypes.Wood, "+ " + amountAddWood);
 
             var amountAddOre = UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildTypes.Mine)
                 * UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildTypes.Mine);
-            EconomyViewUIC.SetAddText(ResourceTypes.Ore, "+ " + amountAddOre);
+            EconomyViewUIC.SetAddText(ResTypes.Ore, "+ " + amountAddOre);
 
 
 
 
-            EconomyViewUIC.SetMainText(ResourceTypes.Food, InventResC.AmountRes(WhoseMoveC.CurPlayer, ResourceTypes.Food).ToString());
-            EconomyViewUIC.SetMainText(ResourceTypes.Wood, InventResC.AmountRes(WhoseMoveC.CurPlayer, ResourceTypes.Wood).ToString());
-            EconomyViewUIC.SetMainText(ResourceTypes.Ore, InventResC.AmountRes(WhoseMoveC.CurPlayer, ResourceTypes.Ore).ToString());
-            EconomyViewUIC.SetMainText(ResourceTypes.Iron, InventResC.AmountRes(WhoseMoveC.CurPlayer, ResourceTypes.Iron).ToString());
-            EconomyViewUIC.SetMainText(ResourceTypes.Gold, InventResC.AmountRes(WhoseMoveC.CurPlayer, ResourceTypes.Gold).ToString());
+            EconomyViewUIC.SetMainText(ResTypes.Food, InventResC.AmountRes(WhoseMoveC.CurPlayer, ResTypes.Food).ToString());
+            EconomyViewUIC.SetMainText(ResTypes.Wood, InventResC.AmountRes(WhoseMoveC.CurPlayer, ResTypes.Wood).ToString());
+            EconomyViewUIC.SetMainText(ResTypes.Ore, InventResC.AmountRes(WhoseMoveC.CurPlayer, ResTypes.Ore).ToString());
+            EconomyViewUIC.SetMainText(ResTypes.Iron, InventResC.AmountRes(WhoseMoveC.CurPlayer, ResTypes.Iron).ToString());
+            EconomyViewUIC.SetMainText(ResTypes.Gold, InventResC.AmountRes(WhoseMoveC.CurPlayer, ResTypes.Gold).ToString());
 
         }
     }

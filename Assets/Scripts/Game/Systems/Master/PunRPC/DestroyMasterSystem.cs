@@ -37,8 +37,8 @@ namespace Scripts.Game
 
                 if (buildC_0.Is(BuildTypes.Farm))
                 {
-                    curEnvDataCom.Reset(EnvirTypes.Fertilizer);
-                    WhereEnvironmentC.Remove(EnvirTypes.Fertilizer, idxCellForDestory);
+                    curEnvDataCom.Reset(EnvTypes.Fertilizer);
+                    WhereEnvC.Remove(EnvTypes.Fertilizer, idxCellForDestory);
                 }
 
                 WhereBuildsC.Remove(ownBuildC_0.Owner, buildC_0.BuildType, idxCellForDestory);

@@ -59,7 +59,7 @@ namespace Scripts.Game
                                     SelectorC.CellClickType = CellClickTypes.PickFire; 
                                     break;
                                 case UniqueAbilTypes.Seed: 
-                                    RpcSys.SeedEnvironmentToMaster(SelectorC.IdxSelCell, EnvirTypes.YoungForest); 
+                                    RpcSys.SeedEnvironmentToMaster(SelectorC.IdxSelCell, EnvTypes.YoungForest); 
                                     break;
                                 case UniqueAbilTypes.CircularAttack: 
                                     RpcSys.CircularAttackKingToMaster(SelectorC.IdxSelCell); 

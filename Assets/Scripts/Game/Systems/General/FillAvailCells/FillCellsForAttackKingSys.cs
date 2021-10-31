@@ -35,9 +35,9 @@ namespace Scripts.Game
                         ref var effUnitC_1 = ref _cellUnitOthFilt.Get2(idx_1);
                         ref var ownUnitC_1 = ref _cellUnitOthFilt.Get3(idx_1);
 
-                        if (!envrDatC_1.Have(EnvirTypes.Mountain))
+                        if (!envrDatC_1.Have(EnvTypes.Mountain))
                         {
-                            if (stepUnitC_0.HaveStepsForDoing(envrDatC_1) || stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.UnitType))
+                            if (stepUnitC_0.HaveStepsForDoing(envrDatC_1) || stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.Unit))
                             {
                                 if (unitDatC_1.HaveUnit)
                                 {

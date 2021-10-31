@@ -46,13 +46,13 @@ namespace Scripts.Game
                         {
                             if (ownUnitC_0.Is(PlayerTypes.First))
                             {
-                                InventorUnitsC.AddUnitsInInventor(ownUnitC_0.Owner, unitC_0.UnitType, levUnitC_0.LevelUnitType);
+                                InventorUnitsC.AddUnit(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level);
                                 unitC_0.NoneUnit();
                             }
                         }
                         else
                         {
-                            InventorUnitsC.AddUnitsInInventor(ownUnitC_0.Owner, unitC_0.UnitType, levUnitC_0.LevelUnitType);
+                            InventorUnitsC.AddUnit(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level);
                             unitC_0.NoneUnit();
                         }
                     }
@@ -65,25 +65,25 @@ namespace Scripts.Game
 
                     else
                     {
-                        if (curEnvDatCom.Have(EnvirTypes.YoungForest))
+                        if (curEnvDatCom.Have(EnvTypes.YoungForest))
                         {
-                            curEnvDatCom.Reset(EnvirTypes.YoungForest);
-                            WhereEnvironmentC.Remove(EnvirTypes.YoungForest, idx_0);
+                            curEnvDatCom.Reset(EnvTypes.YoungForest);
+                            WhereEnvC.Remove(EnvTypes.YoungForest, idx_0);
 
-                            curEnvDatCom.SetNew(EnvirTypes.AdultForest);
-                            WhereEnvironmentC.Add(EnvirTypes.AdultForest, idx_0);
+                            curEnvDatCom.SetNew(EnvTypes.AdultForest);
+                            WhereEnvC.Add(EnvTypes.AdultForest, idx_0);
                         }
 
-                        if (!curEnvDatCom.Have(EnvirTypes.Fertilizer)
-                            && !curEnvDatCom.Have(EnvirTypes.Mountain)
-                            && !curEnvDatCom.Have(EnvirTypes.AdultForest))
+                        if (!curEnvDatCom.Have(EnvTypes.Fertilizer)
+                            && !curEnvDatCom.Have(EnvTypes.Mountain)
+                            && !curEnvDatCom.Have(EnvTypes.AdultForest))
                         {
                             random = Random.Range(0, 100);
 
                             if (random <= 3)
                             {
-                                curEnvDatCom.SetNew(EnvirTypes.Fertilizer);
-                                WhereEnvironmentC.Add(EnvirTypes.Fertilizer, idx_0);
+                                curEnvDatCom.SetNew(EnvTypes.Fertilizer);
+                                WhereEnvC.Add(EnvTypes.Fertilizer, idx_0);
                             }
                         }
                     }

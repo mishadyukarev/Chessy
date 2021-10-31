@@ -7,22 +7,23 @@ namespace Scripts.Game
     {
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
 
-        private EcsFilter<CellUnitDataCom, LevelUnitC> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent, UnitEffectsC> _cellUnitDataFilt = default;
         private EcsFilter<InventResC> _invResFilt = default;
 
         public void Run()
         {
             var sender = InfoC.Sender(MasGenOthTypes.Master);
-            ref var idxUpgUnit = ref _forUpgradeUnitFilt.Get1(0).idxCellForUpgrade;
+            ref var idx_0 = ref _forUpgradeUnitFilt.Get1(0).idxCellForUpgrade;
 
-            ref var unitDatForUpg = ref _cellUnitDataFilt.Get1(idxUpgUnit);
+            ref var unit_0 = ref _cellUnitDataFilt.Get1(idx_0);
 
-            ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idxUpgUnit);
+            ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
+            ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
 
-            ref var hpUnitC = ref _cellUnitDataFilt.Get2(idxUpgUnit);
-            ref var stepUnitC_0 = ref _cellUnitDataFilt.Get3(idxUpgUnit);
-            ref var effUnitC_0 =ref _cellUnitDataFilt.Get4(idxUpgUnit);
+            ref var hpUnitC = ref _cellUnitDataFilt.Get2(idx_0);
+            ref var stepUnitC_0 = ref _cellUnitDataFilt.Get3(idx_0);
+            ref var effUnitC_0 =ref _cellUnitDataFilt.Get4(idx_0);
 
 
             ref var invResCom = ref _invResFilt.Get1(0);
@@ -31,18 +32,21 @@ namespace Scripts.Game
 
             var playSend = WhoseMoveC.WhoseMove;
 
-            if (hpUnitC.HaveMaxHpUnit(effUnitC_0, unitDatForUpg.UnitType))
+            if (hpUnitC.HaveMaxHpUnit(effUnitC_0, unit_0.Unit))
             {
                 if (stepUnitC_0.HaveMinSteps)
                 {
-                    if (InventResC.CanUpgradeUnit(playSend, unitDatForUpg.UnitType, out var needRes))
+                    if (InventResC.CanUpgradeUnit(playSend, unit_0.Unit, out var needRes))
                     {
-                        InventResC.BuyUpgradeUnit(playSend, unitDatForUpg.UnitType);
+                        InventResC.BuyUpgradeUnit(playSend, unit_0.Unit);
 
-                        levUnit_0.SetNewLevel(LevelUnitTypes.Iron);
+                        WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+                        levUnit_0.SetLevel(LevelUnitTypes.Iron);
+                        WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+
                         stepUnitC_0.TakeSteps();
 
-                        hpUnitC.AmountHp = hpUnitC.MaxHpUnit(effUnitC_0, unitDatForUpg.UnitType);
+                        hpUnitC.AmountHp = hpUnitC.MaxHpUnit(effUnitC_0, unit_0.Unit);
 
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitMelee);
                     }

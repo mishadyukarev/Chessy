@@ -44,7 +44,7 @@ namespace Scripts.Game
 
                         stepUnitC_to.TakeSteps();
                     }
-                    else if (toEnvDatCom.Have(EnvirTypes.AdultForest))
+                    else if (toEnvDatCom.Have(EnvTypes.AdultForest))
                     {
                         RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
 
@@ -65,7 +65,7 @@ namespace Scripts.Game
 
             else
             {
-                if (stepUnitC_from.HaveMaxSteps(effUnitC_from, unitDatC_from.UnitType))
+                if (stepUnitC_from.HaveMaxSteps(effUnitC_from, unitDatC_from.Unit))
                 {
                     if (_cellsArcherArsonFilt.Get1(0).HaveIdxCell(sender.GetPlayerType(), fromIdx, toIdx))
                     {

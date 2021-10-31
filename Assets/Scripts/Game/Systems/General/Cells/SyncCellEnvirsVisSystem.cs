@@ -14,7 +14,7 @@ namespace Scripts.Game
                 ref var cellEnvrDataCom = ref _cellEnvFilter.Get1(idx);
                 ref var cellEnvrViewCom = ref _cellEnvFilter.Get2(idx);
 
-                for (EnvirTypes curEnvirType = (EnvirTypes)1; curEnvirType < (EnvirTypes)Enum.GetNames(typeof(EnvirTypes)).Length; curEnvirType++)
+                for (EnvTypes curEnvirType = (EnvTypes)1; curEnvirType < (EnvTypes)Enum.GetNames(typeof(EnvTypes)).Length; curEnvirType++)
                 {
                     if (cellEnvrDataCom.Have(curEnvirType))
                     {

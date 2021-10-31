@@ -35,7 +35,7 @@ namespace Scripts.Game
                         ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdx);
                         ref var curEnvDatCom = ref _cellEnvFilt.Get1(curIdx);
 
-                        if (!curEnvDatCom.Have(EnvirTypes.Mountain) && !curUnitDatCom.HaveUnit)
+                        if (!curEnvDatCom.Have(EnvTypes.Mountain) && !curUnitDatCom.HaveUnit)
                         {
                             forSetUnitCom.AddIdxCell(playerType, curIdx);
                         }
@@ -90,7 +90,7 @@ namespace Scripts.Game
                         ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdx_2);
                         ref var curEnvDatCom = ref _cellEnvFilt.Get1(curIdx_2);
 
-                        if (!curEnvDatCom.Have(EnvirTypes.Mountain) && !curUnitDatCom.HaveUnit)
+                        if (!curEnvDatCom.Have(EnvTypes.Mountain) && !curUnitDatCom.HaveUnit)
                         {
                             forSetUnitCom.AddIdxCell(curOwnBuldCom.Owner, curIdx_2);
                         }

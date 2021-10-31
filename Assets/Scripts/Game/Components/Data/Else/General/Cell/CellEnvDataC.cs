@@ -5,14 +5,14 @@ namespace Scripts.Game
 {
     public struct CellEnvDataC
     {
-        private Dictionary<EnvirTypes, bool> _haveEnvir;
-        private Dictionary<EnvirTypes, int> _amountResours;
+        private Dictionary<EnvTypes, bool> _haveEnvir;
+        private Dictionary<EnvTypes, int> _amountResours;
 
-        public Dictionary<EnvirTypes, bool> Envronments
+        public Dictionary<EnvTypes, bool> Envronments
         {
             get
             {
-                var envrs = new Dictionary<EnvirTypes, bool>();
+                var envrs = new Dictionary<EnvTypes, bool>();
 
                 for (var envType = Support.MinEnvironType; envType < Support.MaxEnvironType; envType++)
                 {
@@ -24,10 +24,10 @@ namespace Scripts.Game
             }
         }
 
-        public CellEnvDataC(Dictionary<EnvirTypes, bool> haveCellEnvironments)
+        public CellEnvDataC(Dictionary<EnvTypes, bool> haveCellEnvironments)
         {
             _haveEnvir = haveCellEnvironments;
-            _amountResours = new Dictionary<EnvirTypes, int>();
+            _amountResours = new Dictionary<EnvTypes, int>();
 
             for (var envirType = Support.MinEnvironType; envirType < Support.MaxEnvironType; envirType++)
             {
@@ -36,73 +36,73 @@ namespace Scripts.Game
             }
         }
 
-        public bool Have(EnvirTypes envType)
+        public bool Have(EnvTypes envType)
         {
             if (envType == default) throw new Exception();
             return _haveEnvir[envType];
         }
-        public bool Have(EnvirTypes[] envTypes)
+        public bool Have(EnvTypes[] envTypes)
         {
             foreach (var envType in envTypes) if (Have(envType)) return true;
             return false;
         }
-        public int AmountRes(EnvirTypes envType)
+        public int AmountRes(EnvTypes envType)
         {
             if (envType == default) throw new Exception();
             return _amountResours[envType];
         }
-        public void SetAmountRes(EnvirTypes envType, int value)
+        public void SetAmountRes(EnvTypes envType, int value)
         {
             if (envType == default) throw new Exception();
             _amountResours[envType] = value;
         }
-        public byte MaxAmountRes(EnvirTypes envType)
+        public byte MaxAmountRes(EnvTypes envType)
         {
             if (envType == default) throw new Exception();
             return EnvironValues.MaxAmount(envType);
         }
-        public void SetMaxAmountRes(EnvirTypes envType) => SetAmountRes(envType, MaxAmountRes(envType));
-        public void AddAmountRes(EnvirTypes envType, int adding = 1) => SetAmountRes(envType, AmountRes(envType) + adding);
-        public void AddMaxAmountRes(EnvirTypes envType) => SetAmountRes(envType, AmountRes(envType) + MaxAmountRes(envType));
-        public void TakeAmountRes(EnvirTypes envType, int taking = 1) => SetAmountRes(envType, AmountRes(envType) - taking);
-        public bool HaveRes(EnvirTypes envType) => AmountRes(envType) > 0;
-        public bool HaveMaxRes(EnvirTypes envType) => AmountRes(envType) >= MaxAmountRes(envType);
-        public void Set(EnvirTypes envType, bool haveEnv, byte amountRes)
+        public void SetMaxAmountRes(EnvTypes envType) => SetAmountRes(envType, MaxAmountRes(envType));
+        public void AddAmountRes(EnvTypes envType, int adding = 1) => SetAmountRes(envType, AmountRes(envType) + adding);
+        public void AddMaxAmountRes(EnvTypes envType) => SetAmountRes(envType, AmountRes(envType) + MaxAmountRes(envType));
+        public void TakeAmountRes(EnvTypes envType, int taking = 1) => SetAmountRes(envType, AmountRes(envType) - taking);
+        public bool HaveRes(EnvTypes envType) => AmountRes(envType) > 0;
+        public bool HaveMaxRes(EnvTypes envType) => AmountRes(envType) >= MaxAmountRes(envType);
+        public void Set(EnvTypes envType, bool haveEnv, byte amountRes)
         {
             _haveEnvir[envType] = haveEnv;
             _amountResours[envType] = amountRes;
         }
-        public void Reset(EnvirTypes envType)
+        public void Reset(EnvTypes envType)
         {
             if (!Have(envType)) throw new Exception();
             Set(envType, default, default);
         }
-        public void SetNew(EnvirTypes envType)
+        public void SetNew(EnvTypes envType)
         {
             if (Have(envType)) throw new Exception();
 
             byte randAmountRes = 0;
             switch (envType)
             {
-                case EnvirTypes.None:
+                case EnvTypes.None:
                     throw new Exception();
 
-                case EnvirTypes.Fertilizer:
+                case EnvTypes.Fertilizer:
                     randAmountRes = (byte)UnityEngine.Random.Range(EnvironValues.MinAmount(envType), EnvironValues.MaxAmount(envType) + 1);
                     break;
 
-                case EnvirTypes.YoungForest:
+                case EnvTypes.YoungForest:
                     break;
 
-                case EnvirTypes.AdultForest:
+                case EnvTypes.AdultForest:
                     randAmountRes = (byte)UnityEngine.Random.Range(EnvironValues.MinAmount(envType), EnvironValues.MaxAmount(envType) + 1);
                     break;
 
-                case EnvirTypes.Hill:
+                case EnvTypes.Hill:
                     randAmountRes = 0;
                     break;
 
-                case EnvirTypes.Mountain:
+                case EnvTypes.Mountain:
                     break;
 
                 default:

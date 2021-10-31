@@ -2,7 +2,7 @@
 {
     public struct ForSeedingMasCom
     {
-        public EnvirTypes EnvTypeForSeeding { get; set; }
+        public EnvTypes EnvTypeForSeeding { get; set; }
         public byte IdxForSeeding { get; set; }
     }
 }

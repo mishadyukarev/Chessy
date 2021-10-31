@@ -38,7 +38,7 @@ namespace Scripts.Game
         public bool HaveMaxHpUnit(UnitEffectsC effectsC, UnitTypes unitType) => AmountHp >= MaxHpUnit(effectsC, unitType);
         public bool HaveMaxHpUnit(bool haveBonus, UnitTypes unitType) => AmountHp >= MaxHpUnit(haveBonus, unitType);
         public void AddHealHp(UnitEffectsC unitEffC, UnitTypes unitType) => AmountHp += (int)(MaxHpUnit(unitEffC, unitType) * UnitValues.PercentForAddingHp(unitType));
-        public void SetStandMaxHp(UnitEffectsC unitEffC, UnitTypes unitType) => AmountHp = MaxHpUnit(unitEffC, unitType);
+        public void SetMaxHp(UnitEffectsC unitEffC, UnitTypes unitType) => AmountHp = MaxHpUnit(unitEffC, unitType);
 
         public bool TryAddBonusHp(UnitEffectsC unitEffC, UnitTypes unitType)
         {

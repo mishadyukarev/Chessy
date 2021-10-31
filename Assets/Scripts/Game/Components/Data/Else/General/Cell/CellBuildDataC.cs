@@ -17,11 +17,16 @@ namespace Scripts.Game
         }
         public void SetBuild(BuildTypes buildType)
         {
-            if (_buildType == buildType) throw new Exception("It's got yet");
+            if(buildType == BuildTypes.None) throw new Exception("BuildType is None");
+            if (Is(buildType)) throw new Exception("It's got yet");
             if (HaveBuild) throw new Exception("It's got building");
             _buildType = buildType;
         }
         public void Sync(BuildTypes buildType) => _buildType = buildType;
-        public void NoneBuild() => SetBuild(BuildTypes.None);
+        public void NoneBuild()
+        {
+            if (!HaveBuild) throw new Exception();
+            _buildType = BuildTypes.None;
+        }
     }
 }

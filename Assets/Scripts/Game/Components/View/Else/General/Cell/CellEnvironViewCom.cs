@@ -5,38 +5,38 @@ namespace Scripts.Game
 {
     public struct CellEnvironViewCom
     {
-        private Dictionary<EnvirTypes, SpriteRenderer> _cellEnviron_SRs;
+        private Dictionary<EnvTypes, SpriteRenderer> _cellEnviron_SRs;
 
         public CellEnvironViewCom(GameObject cell)
         {
-            _cellEnviron_SRs = new Dictionary<EnvirTypes, SpriteRenderer>();
+            _cellEnviron_SRs = new Dictionary<EnvTypes, SpriteRenderer>();
 
 
             var parentGO = cell.transform.Find("Environments").gameObject;
 
             var sr = parentGO.transform.Find("Fertilizer").GetComponent<SpriteRenderer>();
-            _cellEnviron_SRs.Add(EnvirTypes.Fertilizer, sr);
+            _cellEnviron_SRs.Add(EnvTypes.Fertilizer, sr);
 
 
             sr = parentGO.transform.Find("YoungForest").GetComponent<SpriteRenderer>();
-            _cellEnviron_SRs.Add(EnvirTypes.YoungForest, sr);
+            _cellEnviron_SRs.Add(EnvTypes.YoungForest, sr);
 
 
             sr = parentGO.transform.Find("AdultForest").GetComponent<SpriteRenderer>();
-            _cellEnviron_SRs.Add(EnvirTypes.AdultForest, sr);
+            _cellEnviron_SRs.Add(EnvTypes.AdultForest, sr);
 
 
             sr = parentGO.transform.Find("Hill").GetComponent<SpriteRenderer>();
-            _cellEnviron_SRs.Add(EnvirTypes.Hill, sr);
+            _cellEnviron_SRs.Add(EnvTypes.Hill, sr);
 
 
             sr = parentGO.transform.Find("Mountain").GetComponent<SpriteRenderer>();
-            _cellEnviron_SRs.Add(EnvirTypes.Mountain, sr);
+            _cellEnviron_SRs.Add(EnvTypes.Mountain, sr);
         }
 
-        private void ActiveSR(EnvirTypes environmentType, bool isEnabled) => _cellEnviron_SRs[environmentType].enabled = isEnabled;
+        private void ActiveSR(EnvTypes environmentType, bool isEnabled) => _cellEnviron_SRs[environmentType].enabled = isEnabled;
 
-        public void EnableSR(EnvirTypes environmentType) => ActiveSR(environmentType, true);
-        public void DisableSR(EnvirTypes environmentType) => ActiveSR(environmentType, false);
+        public void EnableSR(EnvTypes environmentType) => ActiveSR(environmentType, true);
+        public void DisableSR(EnvTypes environmentType) => ActiveSR(environmentType, false);
     }
 }

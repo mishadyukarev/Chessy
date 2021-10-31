@@ -28,7 +28,7 @@ namespace Scripts.Game
 
                     curVisUnitCom.SetVisibled(curOwnUnitCom.Owner, true);
 
-                    if (curEnvDataCom.Have(EnvirTypes.AdultForest))
+                    if (curEnvDataCom.Have(EnvTypes.AdultForest))
                     {
                         var isVisibledNextPlayer = false;
 
@@ -70,7 +70,7 @@ namespace Scripts.Game
 
                     curVisBuildCom.SetVisibled(curOwnBuildCom.Owner, true);
 
-                    if (curEnvDataCom.Have(EnvirTypes.AdultForest))
+                    if (curEnvDataCom.Have(EnvTypes.AdultForest))
                     {
                         var isVisibledNextPlayer = false;
 

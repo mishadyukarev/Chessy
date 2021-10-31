@@ -8,8 +8,9 @@ namespace Scripts.Game
         private EcsFilter<ForCircularAttackMasCom> _forCircAttackFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
+        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilt = default;
         private EcsFilter<CellBuildDataC> _cellBuildFilt = default;
 
@@ -19,29 +20,35 @@ namespace Scripts.Game
             var idxCurculAttack = _forCircAttackFilter.Get1(0).IdxUnitForCirculAttack;
 
             ref var unitC_0 = ref _cellUnitFilter.Get1(idxCurculAttack);
+
+            ref var levUnitC_0 = ref _cellUnitMainFilt.Get2(idxCurculAttack);
+            ref var ownUnitC_0 = ref _cellUnitMainFilt.Get3(idxCurculAttack);
+
             ref var stepUnitC_0 = ref _cellUnitFilter.Get3(idxCurculAttack);
 
             ref var condUnitC_0 = ref _cellUnitOthFilt.Get2(idxCurculAttack);
             ref var effUnitC_0 = ref _cellUnitOthFilt.Get4(idxCurculAttack);
-            ref var ownUnitC_0 = ref _cellUnitOthFilt.Get5(idxCurculAttack);
 
 
-            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.UnitType))
+            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.Unit))
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
                 foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(idxCurculAttack)))
                 {
-                    var idxCurDirect = _xyCellFilter.GetIdxCell(xy1);
+                    var idx_1 = _xyCellFilter.GetIdxCell(xy1);
 
-                    ref var unitC_1 = ref _cellUnitFilter.Get1(idxCurDirect);
-                    ref var hpUnitC_1 = ref _cellUnitFilter.Get2(idxCurDirect);
-                    ref var twUnitC_1 = ref _cellUnitOthFilt.Get3(idxCurDirect);
-                    ref var effUnitC_1 = ref _cellUnitOthFilt.Get4(idxCurDirect);
-                    ref var ownUnitC_1 = ref _cellUnitOthFilt.Get5(idxCurDirect);
+                    ref var unitC_1 = ref _cellUnitFilter.Get1(idx_1);
 
-                    ref var envC_1 = ref _cellEnvFilt.Get1(idxCurDirect);
-                    ref var buildC_1 = ref _cellBuildFilt.Get1(idxCurDirect);
+                    ref var levUnitC_1 = ref _cellUnitMainFilt.Get2(idx_1);
+                    ref var ownUnitC_1 = ref _cellUnitMainFilt.Get3(idx_1);
+
+                    ref var hpUnitC_1 = ref _cellUnitFilter.Get2(idx_1);
+                    ref var twUnitC_1 = ref _cellUnitOthFilt.Get3(idx_1);
+                    ref var effUnitC_1 = ref _cellUnitOthFilt.Get4(idx_1);
+
+                    ref var envC_1 = ref _cellEnvFilt.Get1(idx_1);
+                    ref var buildC_1 = ref _cellBuildFilt.Get1(idx_1);
 
                     if (unitC_1.HaveUnit)
                     {
@@ -66,12 +73,16 @@ namespace Scripts.Game
                                         }
                                         else if (unitC_1.Is(UnitTypes.Scout))
                                         {
-                                            InventorUnitsC.AddUnitsInInventor(ownUnitC_1.Owner, UnitTypes.Scout, LevelUnitTypes.Wood);
+                                            InventorUnitsC.AddUnit(ownUnitC_1.Owner, UnitTypes.Scout, LevelUnitTypes.Wood);
                                         }
+
                                         unitC_1.NoneUnit();
                                     }
                                 }
-                                else unitC_1.NoneUnit();
+                                else
+                                {
+                                    unitC_1.NoneUnit();
+                                }
                             }
                         }
                     }

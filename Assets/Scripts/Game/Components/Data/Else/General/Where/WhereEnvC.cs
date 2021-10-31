@@ -3,15 +3,15 @@ using System.Collections.Generic;
 
 namespace Scripts.Game
 {
-    public readonly struct WhereEnvironmentC
+    public readonly struct WhereEnvC
     {
-        private static Dictionary<EnvirTypes, List<byte>> _whereEnviron;
+        private static Dictionary<EnvTypes, List<byte>> _whereEnviron;
 
-        public WhereEnvironmentC(bool needNew) : this()
+        public WhereEnvC(bool needNew) : this()
         {
             if (needNew)
             {
-                _whereEnviron = new Dictionary<EnvirTypes, List<byte>>();
+                _whereEnviron = new Dictionary<EnvTypes, List<byte>>();
 
                 for (var environType = Support.MinEnvironType; environType < Support.MaxEnvironType; environType++)
                 {
@@ -20,18 +20,20 @@ namespace Scripts.Game
             }
         }
 
-        public static void Add(EnvirTypes envirType, byte idx) 
+        public static void Add(EnvTypes envirType, byte idx) 
         {
-            if (envirType == EnvirTypes.None) throw new Exception(); 
+            if (envirType == EnvTypes.None) throw new Exception(); 
             _whereEnviron[envirType].Add(idx);
         }
 
-        public static void Remove(EnvirTypes envirType, byte idx)
+        public static void Remove(EnvTypes envirType, byte idx)
         {
-            if (envirType == EnvirTypes.None) throw new Exception();
+            if (envirType == EnvTypes.None) throw new Exception();
 
             if (_whereEnviron[envirType].Contains(idx)) _whereEnviron[envirType].Remove(idx);
             else throw new Exception();
         }
+
+        public static byte Amount(EnvTypes env) => (byte)_whereEnviron[env].Count;
     }
 }

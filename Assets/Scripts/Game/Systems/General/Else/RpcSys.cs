@@ -75,21 +75,21 @@ namespace Scripts.Game
 
         public static void ConditionUnitToMaster(CondUnitTypes neededCondtionType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ConditionUnit, new object[] { neededCondtionType, idxCell });
 
-        public static void MistakeEconomyToGeneral(Player playerTo, Dictionary<ResourceTypes, int> needRes)
+        public static void MistakeEconomyToGeneral(Player playerTo, Dictionary<ResTypes, int> needRes)
         {
             int[] needRes2 = new int[(int)Support.MaxResType];
-            needRes2[0] = needRes[ResourceTypes.Food];
-            needRes2[1] = needRes[ResourceTypes.Wood];
-            needRes2[2] = needRes[ResourceTypes.Ore];
-            needRes2[3] = needRes[ResourceTypes.Iron];
-            needRes2[4] = needRes[ResourceTypes.Gold];
+            needRes2[0] = needRes[ResTypes.Food];
+            needRes2[1] = needRes[ResTypes.Wood];
+            needRes2[2] = needRes[ResTypes.Ore];
+            needRes2[3] = needRes[ResTypes.Iron];
+            needRes2[4] = needRes[ResTypes.Gold];
 
             PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { MistakeTypes.Economy, needRes2 });
         }
         public static void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { mistakeType });
 
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
-        public static void SeedEnvironmentToMaster(byte idxCell, EnvirTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
+        public static void SeedEnvironmentToMaster(byte idxCell, EnvTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
 
         public static void BonusNearUnits(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.BonusNearUnitKing, new object[] { idxCell });
 
@@ -168,7 +168,7 @@ namespace Scripts.Game
 
                 case RpcMasterTypes.SeedEnvironment:
                     _seedingFilter.Get1(0).IdxForSeeding = (byte)objects[0];
-                    _seedingFilter.Get1(0).EnvTypeForSeeding = (EnvirTypes)objects[1];
+                    _seedingFilter.Get1(0).EnvTypeForSeeding = (EnvTypes)objects[1];
                     break;
 
                 case RpcMasterTypes.Fire:
@@ -240,11 +240,11 @@ namespace Scripts.Game
 
                         var needRes = (int[])objects[_curNumber++];
 
-                        MistakeDataUIC.AddNeedRes(ResourceTypes.Food, needRes[0]);
-                        MistakeDataUIC.AddNeedRes(ResourceTypes.Wood, needRes[1]);
-                        MistakeDataUIC.AddNeedRes(ResourceTypes.Ore, needRes[2]);
-                        MistakeDataUIC.AddNeedRes(ResourceTypes.Iron, needRes[3]);
-                        MistakeDataUIC.AddNeedRes(ResourceTypes.Gold, needRes[4]);
+                        MistakeDataUIC.AddNeedRes(ResTypes.Food, needRes[0]);
+                        MistakeDataUIC.AddNeedRes(ResTypes.Wood, needRes[1]);
+                        MistakeDataUIC.AddNeedRes(ResTypes.Ore, needRes[2]);
+                        MistakeDataUIC.AddNeedRes(ResTypes.Iron, needRes[3]);
+                        MistakeDataUIC.AddNeedRes(ResTypes.Gold, needRes[4]);
                     }
 
                     SoundEffectC.Play(SoundEffectTypes.Mistake);
@@ -300,8 +300,8 @@ namespace Scripts.Game
             foreach (var idx_0 in _cellUnitFilter)
             {
                 ref var unitC_0 = ref _cellUnitFilter.Get1(idx_0);            
-                listObjects.Add(unitC_0.UnitType);
-                listObjects.Add(_cellUnitMainFilt.Get2(idx_0).LevelUnitType);
+                listObjects.Add(unitC_0.Unit);
+                listObjects.Add(_cellUnitMainFilt.Get2(idx_0).Level);
 
                 ref var curHpUnitC = ref _cellUnitFilter.Get2(idx_0);
                 listObjects.Add(curHpUnitC.AmountHp);
@@ -320,16 +320,16 @@ namespace Scripts.Game
 
 
                 ref var curEnvDatCom = ref _cellEnvrFilter.Get1(idx_0);
-                listObjects.Add(curEnvDatCom.Have(EnvirTypes.Fertilizer));
-                listObjects.Add(curEnvDatCom.AmountRes(EnvirTypes.Fertilizer));
-                listObjects.Add(curEnvDatCom.Have(EnvirTypes.YoungForest));
-                listObjects.Add(curEnvDatCom.AmountRes(EnvirTypes.YoungForest));
-                listObjects.Add(curEnvDatCom.Have(EnvirTypes.AdultForest));
-                listObjects.Add(curEnvDatCom.AmountRes(EnvirTypes.AdultForest));
-                listObjects.Add(curEnvDatCom.Have(EnvirTypes.Hill));
-                listObjects.Add(curEnvDatCom.AmountRes(EnvirTypes.Hill));
-                listObjects.Add(curEnvDatCom.Have(EnvirTypes.Mountain));
-                listObjects.Add(curEnvDatCom.AmountRes(EnvirTypes.Mountain));
+                listObjects.Add(curEnvDatCom.Have(EnvTypes.Fertilizer));
+                listObjects.Add(curEnvDatCom.AmountRes(EnvTypes.Fertilizer));
+                listObjects.Add(curEnvDatCom.Have(EnvTypes.YoungForest));
+                listObjects.Add(curEnvDatCom.AmountRes(EnvTypes.YoungForest));
+                listObjects.Add(curEnvDatCom.Have(EnvTypes.AdultForest));
+                listObjects.Add(curEnvDatCom.AmountRes(EnvTypes.AdultForest));
+                listObjects.Add(curEnvDatCom.Have(EnvTypes.Hill));
+                listObjects.Add(curEnvDatCom.AmountRes(EnvTypes.Hill));
+                listObjects.Add(curEnvDatCom.Have(EnvTypes.Mountain));
+                listObjects.Add(curEnvDatCom.AmountRes(EnvTypes.Mountain));
 
 
                 listObjects.Add(_cellFireFilter.Get1(idx_0).HaveFire);
@@ -337,11 +337,11 @@ namespace Scripts.Game
 
 
 
-            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResourceTypes.Food));
-            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResourceTypes.Wood));
-            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResourceTypes.Ore));
-            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResourceTypes.Iron));
-            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResourceTypes.Gold));
+            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResTypes.Food));
+            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResTypes.Wood));
+            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResTypes.Ore));
+            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResTypes.Iron));
+            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResTypes.Gold));
 
 
 
@@ -407,11 +407,11 @@ namespace Scripts.Game
 
 
                 ref var curEnvrDatCom = ref _cellEnvrFilter.Get1(idx_0);
-                curEnvrDatCom.Set(EnvirTypes.Fertilizer, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
-                curEnvrDatCom.Set(EnvirTypes.YoungForest, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
-                curEnvrDatCom.Set(EnvirTypes.AdultForest, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
-                curEnvrDatCom.Set(EnvirTypes.Hill, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
-                curEnvrDatCom.Set(EnvirTypes.Mountain, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
+                curEnvrDatCom.Set(EnvTypes.Fertilizer, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
+                curEnvrDatCom.Set(EnvTypes.YoungForest, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
+                curEnvrDatCom.Set(EnvTypes.AdultForest, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
+                curEnvrDatCom.Set(EnvTypes.Hill, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
+                curEnvrDatCom.Set(EnvTypes.Mountain, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
 
 
 
@@ -421,11 +421,11 @@ namespace Scripts.Game
 
 
 
-            InventResC.Set(WhoseMoveC.CurPlayer, ResourceTypes.Food, (int)objects[_curNumber++]);
-            InventResC.Set(WhoseMoveC.CurPlayer, ResourceTypes.Wood, (int)objects[_curNumber++]);
-            InventResC.Set(WhoseMoveC.CurPlayer, ResourceTypes.Ore, (int)objects[_curNumber++]);
-            InventResC.Set(WhoseMoveC.CurPlayer, ResourceTypes.Iron, (int)objects[_curNumber++]);
-            InventResC.Set(WhoseMoveC.CurPlayer, ResourceTypes.Gold, (int)objects[_curNumber++]);
+            InventResC.Set(WhoseMoveC.CurPlayer, ResTypes.Food, (int)objects[_curNumber++]);
+            InventResC.Set(WhoseMoveC.CurPlayer, ResTypes.Wood, (int)objects[_curNumber++]);
+            InventResC.Set(WhoseMoveC.CurPlayer, ResTypes.Ore, (int)objects[_curNumber++]);
+            InventResC.Set(WhoseMoveC.CurPlayer, ResTypes.Iron, (int)objects[_curNumber++]);
+            InventResC.Set(WhoseMoveC.CurPlayer, ResTypes.Gold, (int)objects[_curNumber++]);
 
 
 

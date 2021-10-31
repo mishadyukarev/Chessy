@@ -121,7 +121,7 @@ namespace Scripts.Game
                         .Replace(new CellDataC(cellView_GO))
                         .Replace(new CellViewC(cellView_GO))
 
-                        .Replace(new CellEnvDataC(new Dictionary<EnvirTypes, bool>()))
+                        .Replace(new CellEnvDataC(new Dictionary<EnvTypes, bool>()))
                         .Replace(new CellEnvironViewCom(curParentCell_GO))
                         .Replace(new CellFireDataComponent())
                         .Replace(new CellFireViewComponent(curParentCell_GO))
@@ -194,7 +194,7 @@ namespace Scripts.Game
                 .Replace(new CellsGiveTWComp(true))
 
                 .Replace(new WhereCloudsC(true))
-                .Replace(new WhereEnvironmentC(true))
+                .Replace(new WhereEnvC(true))
                 .Replace(new WhereUnitsC(true))
 
                 .Replace(new InventorUnitsC(true))
@@ -231,7 +231,7 @@ namespace Scripts.Game
                 .Replace(new MotionsViewUIC(centerZone_GO))
                 .Replace(new MotionsDataUIC(default))
                 .Replace(new MistakeViewUIC(centerZone_GO))
-                .Replace(new MistakeDataUIC(new Dictionary<ResourceTypes, int>()))
+                .Replace(new MistakeDataUIC(new Dictionary<ResTypes, int>()))
                 .Replace(new KingZoneViewUIC(centerZone_GO))
                 .Replace(new SelectorUIC(centerZone_GO))
                 .Replace(new FriendZoneViewUIC(centerZone_GO.transform))
@@ -307,8 +307,8 @@ namespace Scripts.Game
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= EnvironValues.START_MOUNTAIN_PERCENT)
                             {
-                                curEnvDatCom.SetNew(EnvirTypes.Mountain);
-                                WhereEnvironmentC.Add(EnvirTypes.Mountain, curIdxCell);
+                                curEnvDatCom.SetNew(EnvTypes.Mountain);
+                                WhereEnvC.Add(EnvTypes.Mountain, curIdxCell);
                             }
 
                             else
@@ -316,15 +316,15 @@ namespace Scripts.Game
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= EnvironValues.START_FOREST_PERCENT)
                                 {
-                                    curEnvDatCom.SetNew(EnvirTypes.AdultForest);
-                                    WhereEnvironmentC.Add(EnvirTypes.AdultForest, curIdxCell);
+                                    curEnvDatCom.SetNew(EnvTypes.AdultForest);
+                                    WhereEnvC.Add(EnvTypes.AdultForest, curIdxCell);
                                 }
 
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= EnvironValues.START_HILL_PERCENT)
                                 {
-                                    curEnvDatCom.SetNew(EnvirTypes.Hill);
-                                    WhereEnvironmentC.Add(EnvirTypes.Hill, curIdxCell);
+                                    curEnvDatCom.SetNew(EnvTypes.Hill);
+                                    WhereEnvC.Add(EnvTypes.Hill, curIdxCell);
                                 }
                             }
                         }
@@ -334,16 +334,16 @@ namespace Scripts.Game
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= EnvironValues.START_FOREST_PERCENT)
                             {
-                                curEnvDatCom.SetNew(EnvirTypes.AdultForest);
-                                WhereEnvironmentC.Add(EnvirTypes.AdultForest, curIdxCell);
+                                curEnvDatCom.SetNew(EnvTypes.AdultForest);
+                                WhereEnvC.Add(EnvTypes.AdultForest, curIdxCell);
                             }
                             else
                             {
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= EnvironValues.START_FERTILIZER_PERCENT)
                                 {
-                                    curEnvDatCom.SetNew(EnvirTypes.Fertilizer);
-                                    WhereEnvironmentC.Add(EnvirTypes.Fertilizer, curIdxCell);
+                                    curEnvDatCom.SetNew(EnvTypes.Fertilizer);
+                                    WhereEnvC.Add(EnvTypes.Fertilizer, curIdxCell);
                                 }
                             }
                         }
@@ -427,7 +427,7 @@ namespace Scripts.Game
                     InventorUnitsC.SetAmountUnitsInInvAll(unitType, LevelUnitTypes.Wood, EconomyValues.AmountUnits(unitType));
                 }
 
-                for (ResourceTypes resourceTypes = Support.MinResType; resourceTypes < Support.MaxResType; resourceTypes++)
+                for (ResTypes resourceTypes = Support.MinResType; resourceTypes < Support.MaxResType; resourceTypes++)
                 {
                     InventResC.SetAmountResAll(resourceTypes, EconomyValues.AmountResources(resourceTypes));
                 }
@@ -453,9 +453,9 @@ namespace Scripts.Game
                         ref var levUnitC_0 = ref _cellUnitMainFilt.Get2(idx_0);
                         ref var ownUnitC_0 = ref _cellUnitMainFilt.Get3(idx_0);
 
-                        ref var curHpUnitC = ref _cellUnitStatsFilt.Get2(idx_0);
+                        ref var hpUnitC_0 = ref _cellUnitStatsFilt.Get2(idx_0);
 
-                        ref var condUnitC = ref _cellUnitOtherFilt.Get2(idx_0);
+                        ref var condUnitC_0 = ref _cellUnitOtherFilt.Get2(idx_0);
                         ref var twUnitC = ref _cellUnitOtherFilt.Get3(idx_0);
                         ref var thirUnitC_0 = ref _cellUnitOtherFilt.Get4(idx_0);
 
@@ -464,38 +464,39 @@ namespace Scripts.Game
 
                         if (x == 7 && y == 6)
                         {
-                            if (curEnvDatCom.Have(EnvirTypes.Mountain))
+                            if (curEnvDatCom.Have(EnvTypes.Mountain))
                             {
-                                curEnvDatCom.Reset(EnvirTypes.Mountain);
-                                WhereEnvironmentC.Remove(EnvirTypes.Mountain, idx_0);
+                                curEnvDatCom.Reset(EnvTypes.Mountain);
+                                WhereEnvC.Remove(EnvTypes.Mountain, idx_0);
                             }
-                            if (curEnvDatCom.Have(EnvirTypes.AdultForest))
+                            if (curEnvDatCom.Have(EnvTypes.AdultForest))
                             {
-                                curEnvDatCom.Reset(EnvirTypes.AdultForest);
-                                WhereEnvironmentC.Remove(EnvirTypes.AdultForest, idx_0);
+                                curEnvDatCom.Reset(EnvTypes.AdultForest);
+                                WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
                             }
 
 
 
                             unitC_0.SetUnit(UnitTypes.King);
-                            levUnitC_0.SetNewLevel(LevelUnitTypes.Wood);
-                            curHpUnitC.AmountHp = 1;
-                            thirUnitC_0.SetMaxWater(unitC_0.UnitType);
-                            condUnitC.CondUnitType = CondUnitTypes.Protected;
+                            levUnitC_0.SetLevel(LevelUnitTypes.Wood);
                             ownUnitC_0.SetOwner(PlayerTypes.Second);
+                            hpUnitC_0.AmountHp = 1;
+                            thirUnitC_0.SetMaxWater(unitC_0.Unit);
+                            condUnitC_0.CondUnitType = CondUnitTypes.Protected;
+                            WhereUnitsC.Add(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level, idx_0);
                         }
 
                         else if (x == 8 && y == 6)
                         {
-                            if (curEnvDatCom.Have(EnvirTypes.Mountain))
+                            if (curEnvDatCom.Have(EnvTypes.Mountain))
                             {
-                                curEnvDatCom.Reset(EnvirTypes.Mountain);
-                                WhereEnvironmentC.Remove(EnvirTypes.Mountain, idx_0);
+                                curEnvDatCom.Reset(EnvTypes.Mountain);
+                                WhereEnvC.Remove(EnvTypes.Mountain, idx_0);
                             }
-                            if (curEnvDatCom.Have(EnvirTypes.AdultForest))
+                            if (curEnvDatCom.Have(EnvTypes.AdultForest))
                             {
-                                curEnvDatCom.Reset(EnvirTypes.AdultForest);
-                                WhereEnvironmentC.Remove(EnvirTypes.AdultForest, idx_0);
+                                curEnvDatCom.Reset(EnvTypes.AdultForest);
+                                WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
                             }
 
                             buildC_0.SetBuild(BuildTypes.City);
@@ -505,15 +506,15 @@ namespace Scripts.Game
 
                         else if (x == 6 && y == 6 || x == 9 && y == 6 || x <= 9 && x >= 6 && y == 5 || x <= 9 && x >= 6 && y == 7)
                         {
-                            if (curEnvDatCom.Have(EnvirTypes.Mountain))
+                            if (curEnvDatCom.Have(EnvTypes.Mountain))
                             {
-                                curEnvDatCom.Reset(EnvirTypes.Mountain);
-                                WhereEnvironmentC.Remove(EnvirTypes.Mountain, idx_0);
+                                curEnvDatCom.Reset(EnvTypes.Mountain);
+                                WhereEnvC.Remove(EnvTypes.Mountain, idx_0);
                             }
 
                             unitC_0.SetUnit(UnitTypes.Pawn);
-                            levUnitC_0.SetNewLevel(LevelUnitTypes.Wood);
-                            thirUnitC_0.SetMaxWater(unitC_0.UnitType);
+                            levUnitC_0.SetLevel(LevelUnitTypes.Wood);
+                            thirUnitC_0.SetMaxWater(unitC_0.Unit);
 
                             int rand = UnityEngine.Random.Range(0, 100);
 
@@ -528,9 +529,11 @@ namespace Scripts.Game
                                 twUnitC.LevelTWType = LevelTWTypes.Wood;
                                 twUnitC.AddShieldProtect(LevelTWTypes.Wood);
                             }
-                            curHpUnitC.AmountHp = 100;
-                            condUnitC.CondUnitType = CondUnitTypes.Protected;
+                            hpUnitC_0.AmountHp = 100;
+                            condUnitC_0.CondUnitType = CondUnitTypes.Protected;
                             ownUnitC_0.SetOwner(PlayerTypes.Second);
+
+                            WhereUnitsC.Add(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level, idx_0);
                         }
                     }
                 }
@@ -543,7 +546,7 @@ namespace Scripts.Game
 
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
-                    InventResC.Set(PlayerTypes.Second, ResourceTypes.Food, 999999);
+                    InventResC.Set(PlayerTypes.Second, ResTypes.Food, 999999);
                 }
             }
 

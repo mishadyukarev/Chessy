@@ -37,14 +37,14 @@ namespace Scripts.Game
                 StatZoneViewUIC.SetActiveStatZone(true);
 
                 StatZoneViewUIC.SetTextToStat(StatTypes.Health, selHpUnitC.AmountHp.ToString());
-                StatZoneViewUIC.SetTextToStat(StatTypes.Damage, selDamUnitC.DamageOnCell(selUnitC.UnitType, levUnitC_sel.LevelUnitType, selConUnitC, selTwUnitC, selEffUnitC, selBuildC.BuildType, selEnvC.Envronments).ToString());
+                StatZoneViewUIC.SetTextToStat(StatTypes.Damage, selDamUnitC.DamageOnCell(selUnitC.Unit, levUnitC_sel.Level, selConUnitC, selTwUnitC, selEffUnitC, selBuildC.BuildType, selEnvC.Envronments).ToString());
                 StatZoneViewUIC.SetTextToStat(StatTypes.Steps, selStepUnitC.StepsAmount.ToString());
                 StatZoneViewUIC.SetTextToStat(StatTypes.Water, thirUnitC_sel.WaterAmount.ToString());
 
-                StatZoneViewUIC.FillAmount(StatTypes.Health, selHpUnitC.AmountHp, selHpUnitC.MaxHpUnit(selEffUnitC, selUnitC.UnitType));
-                StatZoneViewUIC.FillAmount(StatTypes.Damage, selDamUnitC.DamageOnCell(selUnitC.UnitType, levUnitC_sel.LevelUnitType, selConUnitC, selTwUnitC, selEffUnitC, selBuildC.BuildType, selEnvC.Envronments), selDamUnitC.StandDamage(selUnitC.UnitType, levUnitC_sel.LevelUnitType));
-                StatZoneViewUIC.FillAmount(StatTypes.Steps, selStepUnitC.StepsAmount, selStepUnitC.MaxSteps(selEffUnitC, selUnitC.UnitType));
-                StatZoneViewUIC.FillAmount(StatTypes.Water, thirUnitC_sel.WaterAmount, thirUnitC_sel.MaxWater(selUnitC.UnitType));
+                StatZoneViewUIC.FillAmount(StatTypes.Health, selHpUnitC.AmountHp, selHpUnitC.MaxHpUnit(selEffUnitC, selUnitC.Unit));
+                StatZoneViewUIC.FillAmount(StatTypes.Damage, selDamUnitC.DamageOnCell(selUnitC.Unit, levUnitC_sel.Level, selConUnitC, selTwUnitC, selEffUnitC, selBuildC.BuildType, selEnvC.Envronments), selDamUnitC.StandDamage(selUnitC.Unit, levUnitC_sel.Level));
+                StatZoneViewUIC.FillAmount(StatTypes.Steps, selStepUnitC.StepsAmount, selStepUnitC.MaxSteps(selEffUnitC, selUnitC.Unit));
+                StatZoneViewUIC.FillAmount(StatTypes.Water, thirUnitC_sel.WaterAmount, thirUnitC_sel.MaxWater(selUnitC.Unit));
             }
 
             else

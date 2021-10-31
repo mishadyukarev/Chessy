@@ -38,7 +38,7 @@ namespace Scripts.Game
 
                             if (_cellDataFilter.Get1(idxCell_1).IsActiveCell)
                             {
-                                if (!envrDataCom_1.Have(EnvirTypes.Mountain))
+                                if (!envrDataCom_1.Have(EnvTypes.Mountain))
                                 {
                                     if (unitDataCom_1.HaveUnit)
                                     {

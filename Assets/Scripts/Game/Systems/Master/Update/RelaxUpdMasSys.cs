@@ -1,0 +1,150 @@
+﻿using Leopotam.Ecs;
+
+namespace Scripts.Game
+{
+    public sealed class RelaxUpdMasSys : IEcsRunSystem
+    {
+        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataCom, HpUnitC> _cellUnitStatFilt = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, UnitEffectsC> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataCom, ToolWeaponC> _cellUnitTWFilt = default;
+
+        private EcsFilter<CellEnvDataC> _cellEnvFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerCom> _cellbuildFilt = default;
+
+        public void Run()
+        {
+            for (var player = Support.MinPlayerType; player < Support.MaxPlayerType; player++)
+            {
+                for (var unit = Support.MinUnitType; unit < Support.MaxUnitType; unit++)
+                {
+                    for (var levUnit = (LevelUnitTypes)1; levUnit < (LevelUnitTypes)typeof(LevelUnitTypes).GetEnumNames().Length; levUnit++)
+                    {
+                        foreach (var idx_0 in WhereUnitsC.IdxsUnits(player, unit, levUnit))
+                        {
+                            ref var unit_0 = ref _cellUnitMainFilt.Get1(idx_0);
+
+                            ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
+                            ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
+
+                            ref var hpUnit_0 = ref _cellUnitStatFilt.Get2(idx_0);
+
+                            ref var condUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
+                            ref var effUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
+
+                            ref var twUnit_0 = ref _cellUnitTWFilt.Get2(idx_0);
+
+
+                            ref var env_0 = ref _cellEnvFilt.Get1(idx_0);
+
+
+                            ref var buil_0 = ref _cellbuildFilt.Get1(idx_0);
+                            ref var ownBuil_0 = ref _cellbuildFilt.Get2(idx_0);
+
+
+                            if (condUnit_0.Is(CondUnitTypes.Relaxed))
+                            {
+                                if (hpUnit_0.HaveMaxHpUnit(effUnit_0, unit_0.Unit))
+                                {
+                                    if (unit_0.Is(UnitTypes.Pawn))
+                                    {
+                                        var env = EnvTypes.AdultForest;
+
+                                        if (env_0.Have(env))
+                                        {
+                                            InventResC.AddAmountRes(ownUnit_0.Owner, ResTypes.Wood);
+                                            env_0.TakeAmountRes(env);
+
+                                            if (env_0.HaveRes(env))
+                                            {
+                                                if (buil_0.Is(BuildTypes.Camp))
+                                                {
+                                                    WhereBuildsC.Remove(ownUnit_0.Owner, BuildTypes.Camp, idx_0);
+                                                    buil_0.NoneBuild();
+
+                                                    buil_0.SetBuild(BuildTypes.Woodcutter);
+                                                    ownBuil_0.SetOwner(ownUnit_0.Owner);
+                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.BuildType, idx_0);
+                                                }
+                                                else if (!buil_0.HaveBuild)
+                                                {
+                                                    buil_0.SetBuild(BuildTypes.Woodcutter);
+                                                    ownBuil_0.SetOwner(ownUnit_0.Owner);
+                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.BuildType, idx_0);
+                                                }
+                                                else if (buil_0.Is(BuildTypes.Woodcutter))
+                                                {
+
+                                                }
+                                                else
+                                                {
+                                                    condUnit_0.CondUnitType = CondUnitTypes.Protected;
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (buil_0.HaveBuild)
+                                                {
+                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.BuildType, idx_0);
+                                                    buil_0.NoneBuild();
+                                                }
+
+                                                env_0.Reset(env);
+                                                WhereEnvC.Remove(env, idx_0);
+                                            }
+                                        }
+
+                                        else if (twUnit_0.Is(ToolWeaponTypes.Pick))
+                                        {
+                                            if (env_0.Have(EnvTypes.Hill))
+                                            {
+                                                if (buil_0.HaveBuild)
+                                                {
+                                                    condUnit_0.CondUnitType = CondUnitTypes.Protected;
+                                                }
+                                                else
+                                                {
+                                                    if (env_0.HaveMaxRes(EnvTypes.Hill))
+                                                    {
+                                                        condUnit_0.CondUnitType = CondUnitTypes.Protected;
+                                                    }
+                                                    else
+                                                    {
+                                                        env_0.SetMaxAmountRes(EnvTypes.Hill);
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                condUnit_0.CondUnitType = CondUnitTypes.Protected;
+                                            }
+                                        }
+
+                                        else
+                                        {
+                                            condUnit_0.CondUnitType = CondUnitTypes.Protected;
+                                        }
+                                    }
+
+                                    else
+                                    {
+                                        condUnit_0.CondUnitType = CondUnitTypes.Protected;
+                                    }
+                                }
+
+                                else
+                                {
+                                    hpUnit_0.AddHealHp(effUnit_0, unit_0.Unit);
+                                    if (hpUnit_0.HaveMaxHpUnit(effUnit_0, unit_0.Unit))
+                                    {
+                                        hpUnit_0.SetMaxHp(effUnit_0, unit_0.Unit);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

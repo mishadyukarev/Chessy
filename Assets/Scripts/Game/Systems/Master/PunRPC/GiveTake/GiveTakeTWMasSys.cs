@@ -6,85 +6,96 @@ namespace Scripts.Game
     {
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGiveTakeToolWeapFilter = default;
 
+        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
 
         public void Run()
         {
-            var neededIdxCell = _forGiveTakeToolWeapFilter.Get1(0).IdxCell;
+            var idx_0 = _forGiveTakeToolWeapFilter.Get1(0).IdxCell;
 
-            if (neededIdxCell != default)
+            if (idx_0 != default)
             {
                 var tWTypeForGive = _forGiveTakeToolWeapFilter.Get1(0).ToolWeapType;
                 var levelTWType = _forGiveTakeToolWeapFilter.Get1(0).LevelTWType;
 
                 var sender = InfoC.Sender(MasGenOthTypes.Master);
 
-                ref var unitCForGive = ref _cellUnitFilter.Get1(neededIdxCell);
-                ref var stepUnitC_forGive = ref _cellUnitFilter.Get3(neededIdxCell);
+                ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
 
-                ref var condUnitC_forGive = ref _cellUnitOthFilt.Get2(neededIdxCell);
-                ref var twUnitC_forGive = ref _cellUnitOthFilt.Get3(neededIdxCell);
-                ref var effUnitC_forGive = ref _cellUnitOthFilt.Get4(neededIdxCell);
-                ref var ownUnitC = ref _cellUnitOthFilt.Get5(neededIdxCell);
+                ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
+                ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
+
+                ref var stepUnit_0 = ref _cellUnitFilter.Get3(idx_0);
+
+                ref var condUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
+                ref var twUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
+                ref var effUnit_0 = ref _cellUnitOthFilt.Get4(idx_0);
 
 
-                if (unitCForGive.Is(UnitTypes.Pawn))
+                if (unit_0.Is(UnitTypes.Pawn))
                 {
-                    if (stepUnitC_forGive.HaveMinSteps)
+                    if (stepUnit_0.HaveMinSteps)
                     {
-                        if (_cellUnitFilter.Get2(neededIdxCell).HaveMaxHpUnit(effUnitC_forGive, unitCForGive.UnitType))
+                        if (_cellUnitFilter.Get2(idx_0).HaveMaxHpUnit(effUnit_0, unit_0.Unit))
                         {
-                            if (twUnitC_forGive.HaveToolWeap)
+                            if (twUnit_0.HaveToolWeap)
                             {
-                                InventorTWCom.AddAmountTools(ownUnitC.Owner, twUnitC_forGive.ToolWeapType, twUnitC_forGive.LevelTWType);
+                                InventorTWCom.AddAmountTools(ownUnit_0.Owner, twUnit_0.ToolWeapType, twUnit_0.LevelTWType);
+                                WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                                stepUnitC_forGive.TakeSteps();
-                                condUnitC_forGive.DefCondition();
+                                stepUnit_0.TakeSteps();
+                                condUnit_0.DefCondition();
 
-                                if (twUnitC_forGive.Is(ToolWeaponTypes.Shield)
+                                if (twUnit_0.Is(ToolWeaponTypes.Shield)
                                     && tWTypeForGive == ToolWeaponTypes.Shield
-                                    && twUnitC_forGive.LevelTWType != levelTWType)
+                                    && twUnit_0.LevelTWType != levelTWType)
                                 {
-                                    twUnitC_forGive.LevelTWType = levelTWType;
+                                    twUnit_0.LevelTWType = levelTWType;
                                 }
                                 else
                                 {
-                                    twUnitC_forGive.ToolWeapType = default;
-                                    twUnitC_forGive.LevelTWType = default;
+                                    twUnit_0.ToolWeapType = default;
+                                    twUnit_0.LevelTWType = default;
                                 }
-     
+                                WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                             }
 
 
-                            else if (InventorTWCom.HaveTW(ownUnitC.Owner, tWTypeForGive, levelTWType))
+                            else if (InventorTWCom.HaveTW(ownUnit_0.Owner, tWTypeForGive, levelTWType))
                             {
-                                InventorTWCom.TakeAmountTools(ownUnitC.Owner, tWTypeForGive, levelTWType);
+                                InventorTWCom.TakeAmountTools(ownUnit_0.Owner, tWTypeForGive, levelTWType);
+                                WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                                twUnitC_forGive.ToolWeapType = tWTypeForGive;
-                                twUnitC_forGive.LevelTWType = levelTWType;
-                                if(twUnitC_forGive.Is(ToolWeaponTypes.Shield)) twUnitC_forGive.AddShieldProtect(levelTWType);
+                                twUnit_0.ToolWeapType = tWTypeForGive;
+                                twUnit_0.LevelTWType = levelTWType;
+                                if(twUnit_0.Is(ToolWeaponTypes.Shield)) twUnit_0.AddShieldProtect(levelTWType);
+                                WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                                stepUnitC_forGive.TakeSteps();
+                                stepUnit_0.TakeSteps();
 
-                                condUnitC_forGive.DefCondition();
+                                condUnit_0.DefCondition();
+
+                               
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                             }
 
                             else if (tWTypeForGive == ToolWeaponTypes.Pick)
                             {
-                                if (InventResC.CanBuyTW(ownUnitC.Owner, ToolWeaponTypes.Pick, levelTWType, out var needRes))
+                                if (InventResC.CanBuyTW(ownUnit_0.Owner, ToolWeaponTypes.Pick, levelTWType, out var needRes))
                                 {
-                                    InventResC.BuyTW(ownUnitC.Owner, ToolWeaponTypes.Pick, levelTWType);
+                                    InventResC.BuyTW(ownUnit_0.Owner, ToolWeaponTypes.Pick, levelTWType);
 
-                                    twUnitC_forGive.ToolWeapType = tWTypeForGive;
-                                    twUnitC_forGive.LevelTWType = levelTWType;
+                                    WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+                                    twUnit_0.ToolWeapType = tWTypeForGive;
+                                    twUnit_0.LevelTWType = levelTWType;
+                                    WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                                    condUnitC_forGive.DefCondition();
-                                    stepUnitC_forGive.TakeSteps();
+                                    condUnit_0.DefCondition();
+                                    stepUnit_0.TakeSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                 }
@@ -96,15 +107,17 @@ namespace Scripts.Game
 
                             else if (tWTypeForGive == ToolWeaponTypes.Sword)
                             {
-                                if (InventResC.CanBuyTW(ownUnitC.Owner, ToolWeaponTypes.Sword, levelTWType, out var needRes))
+                                if (InventResC.CanBuyTW(ownUnit_0.Owner, ToolWeaponTypes.Sword, levelTWType, out var needRes))
                                 {
-                                    InventResC.BuyTW(ownUnitC.Owner, ToolWeaponTypes.Sword, levelTWType);
+                                    InventResC.BuyTW(ownUnit_0.Owner, ToolWeaponTypes.Sword, levelTWType);
 
-                                    twUnitC_forGive.ToolWeapType = tWTypeForGive;
-                                    twUnitC_forGive.LevelTWType = levelTWType;
+                                    WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+                                    twUnit_0.ToolWeapType = tWTypeForGive;
+                                    twUnit_0.LevelTWType = levelTWType;
+                                    WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                                    condUnitC_forGive.DefCondition();
-                                    stepUnitC_forGive.TakeSteps();
+                                    condUnit_0.DefCondition();
+                                    stepUnit_0.TakeSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                 }
@@ -116,16 +129,18 @@ namespace Scripts.Game
 
                             else if (tWTypeForGive == ToolWeaponTypes.Shield)
                             {
-                                if (InventResC.CanBuyTW(ownUnitC.Owner, tWTypeForGive, levelTWType, out var needRes))
+                                if (InventResC.CanBuyTW(ownUnit_0.Owner, tWTypeForGive, levelTWType, out var needRes))
                                 {
-                                    InventResC.BuyTW(ownUnitC.Owner, tWTypeForGive, levelTWType);
+                                    InventResC.BuyTW(ownUnit_0.Owner, tWTypeForGive, levelTWType);
 
-                                    twUnitC_forGive.ToolWeapType = tWTypeForGive;
-                                    twUnitC_forGive.LevelTWType = levelTWType;
-                                    twUnitC_forGive.AddShieldProtect(levelTWType);
+                                    WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+                                    twUnit_0.ToolWeapType = tWTypeForGive;
+                                    twUnit_0.LevelTWType = levelTWType;
+                                    twUnit_0.AddShieldProtect(levelTWType);
+                                    WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                                    condUnitC_forGive.DefCondition();
-                                    stepUnitC_forGive.TakeSteps();
+                                    condUnit_0.DefCondition();
+                                    stepUnit_0.TakeSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                                 }

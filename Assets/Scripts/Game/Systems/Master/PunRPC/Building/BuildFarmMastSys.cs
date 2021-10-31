@@ -35,20 +35,20 @@ namespace Scripts.Game
             {
                 if (curStepUnitC.HaveMinSteps)
                 {
-                    if (!curCellEnvCom.Have(EnvirTypes.AdultForest) && !curCellEnvCom.Have(EnvirTypes.YoungForest))
+                    if (!curCellEnvCom.Have(EnvTypes.AdultForest) && !curCellEnvCom.Have(EnvTypes.YoungForest))
                     {
                         if (InventResC.CanCreateBuild(playerSend, forBuildType, out var needRes))
                         {
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                            if (curCellEnvCom.Have(EnvirTypes.Fertilizer))
+                            if (curCellEnvCom.Have(EnvTypes.Fertilizer))
                             {
-                                curCellEnvCom.AddMaxAmountRes(EnvirTypes.Fertilizer);
+                                curCellEnvCom.AddMaxAmountRes(EnvTypes.Fertilizer);
                             }
                             else
                             {
-                                curCellEnvCom.SetNew(EnvirTypes.Fertilizer);
-                                WhereEnvironmentC.Add(EnvirTypes.Fertilizer, idxForBuild);
+                                curCellEnvCom.SetNew(EnvTypes.Fertilizer);
+                                WhereEnvC.Add(EnvTypes.Fertilizer, idxForBuild);
                             }
 
                             InventResC.BuyBuild(playerSend, forBuildType);

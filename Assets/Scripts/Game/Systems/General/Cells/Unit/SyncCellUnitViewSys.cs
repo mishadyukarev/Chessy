@@ -30,7 +30,7 @@ namespace Scripts.Game
                     if (visUnitC_0.IsVisibled(WhoseMoveC.CurPlayer))
                     {
                         mainUnitC_0.Enable_SR(true);
-                        mainUnitC_0.SetSprite(unitC_0.UnitType, levelUnitC_0.LevelUnitType);
+                        mainUnitC_0.SetSprite(unitC_0.Unit, levelUnitC_0.Level);
 
 
                         if (unitC_0.Is(UnitTypes.Pawn))

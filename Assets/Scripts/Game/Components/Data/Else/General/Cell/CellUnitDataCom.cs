@@ -6,13 +6,13 @@ namespace Scripts.Game
     {
         private UnitTypes _unitType;
 
-        public UnitTypes UnitType => _unitType;
-        public bool HaveUnit => UnitType != UnitTypes.None;
+        public UnitTypes Unit => _unitType;
+        public bool HaveUnit => Unit != UnitTypes.None;
         public bool IsMelee
         {
             get
             {
-                switch (UnitType)
+                switch (Unit)
                 {
                     case UnitTypes.None: throw new Exception();
                     case UnitTypes.King: return true;
@@ -29,6 +29,7 @@ namespace Scripts.Game
 
         public void SetUnit(UnitTypes unitType) 
         {
+            if(unitType == UnitTypes.None) throw new Exception();
             if (HaveUnit) throw new Exception("It's got unit");
 
             _unitType = unitType;
@@ -44,7 +45,7 @@ namespace Scripts.Game
             _unitType = unitType;
         }
 
-        public bool Is(UnitTypes unitType) => UnitType.Is(unitType);
-        public bool Is(UnitTypes[] unitTypes) => UnitType.Is(unitTypes);
+        public bool Is(UnitTypes unitType) => Unit.Is(unitType);
+        public bool Is(UnitTypes[] unitTypes) => Unit.Is(unitTypes);
     }
 }

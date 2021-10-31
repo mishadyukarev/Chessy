@@ -124,16 +124,16 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
         }
-        public static float ProtectionPercent(EnvirTypes envirType)
+        public static float ProtectionPercent(EnvTypes envirType)
         {
             switch (envirType)
             {
-                case EnvirTypes.None: throw new Exception();
-                case EnvirTypes.Fertilizer: return -0.2f;
-                case EnvirTypes.YoungForest: return 0;
-                case EnvirTypes.AdultForest: return 0.2f;
-                case EnvirTypes.Hill: return 0.2f;
-                case EnvirTypes.Mountain: return 0;
+                case EnvTypes.None: throw new Exception();
+                case EnvTypes.Fertilizer: return -0.2f;
+                case EnvTypes.YoungForest: return 0;
+                case EnvTypes.AdultForest: return 0.2f;
+                case EnvTypes.Hill: return 0.2f;
+                case EnvTypes.Mountain: return 0;
                 default: throw new Exception();
             }
         }
@@ -157,16 +157,16 @@ namespace Scripts.Game
 
         #region Steps
 
-        public static int NeedAmountSteps(EnvirTypes envirType)
+        public static int NeedAmountSteps(EnvTypes envirType)
         {
             switch (envirType)
             {
-                case EnvirTypes.None: throw new Exception();
-                case EnvirTypes.Fertilizer:  throw new Exception();
-                case EnvirTypes.YoungForest:  throw new Exception();
-                case EnvirTypes.AdultForest: return 1;
-                case EnvirTypes.Hill: return 1;
-                case EnvirTypes.Mountain: throw new Exception();
+                case EnvTypes.None: throw new Exception();
+                case EnvTypes.Fertilizer:  throw new Exception();
+                case EnvTypes.YoungForest:  throw new Exception();
+                case EnvTypes.AdultForest: return 1;
+                case EnvTypes.Hill: return 1;
+                case EnvTypes.Mountain: throw new Exception();
                 default: throw new Exception();
             }
         }
@@ -198,7 +198,7 @@ namespace Scripts.Game
         {
             switch (unitType)
             {
-                case UnitTypes.None: throw new Exception();
+                case UnitTypes.None: return 0;
                 case UnitTypes.King: return 100;
                 case UnitTypes.Pawn: return 100;
                 case UnitTypes.Rook: return 100;

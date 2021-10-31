@@ -31,11 +31,11 @@ namespace Scripts.Game
         {
             var needSteps = 1;
 
-            if (cellEnvC.Have(EnvirTypes.AdultForest))
-                needSteps += UnitValues.NeedAmountSteps(EnvirTypes.AdultForest);
+            if (cellEnvC.Have(EnvTypes.AdultForest))
+                needSteps += UnitValues.NeedAmountSteps(EnvTypes.AdultForest);
 
-            if (cellEnvC.Have(EnvirTypes.Hill))
-                needSteps += UnitValues.NeedAmountSteps(EnvirTypes.Hill);
+            if (cellEnvC.Have(EnvTypes.Hill))
+                needSteps += UnitValues.NeedAmountSteps(EnvTypes.Hill);
 
             return needSteps;
         }

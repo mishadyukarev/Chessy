@@ -35,7 +35,7 @@ namespace Scripts.Game
             {
                 if (curStepUnitC.HaveMinSteps)
                 {
-                    if (curCellEnvCom.Have(EnvirTypes.Hill) && curCellEnvCom.HaveRes(EnvirTypes.Hill))
+                    if (curCellEnvCom.Have(EnvTypes.Hill) && curCellEnvCom.HaveRes(EnvTypes.Hill))
                     {
                         if (InventResC.CanCreateBuild(playerSend, forBuildType, out var needRes))
                         {

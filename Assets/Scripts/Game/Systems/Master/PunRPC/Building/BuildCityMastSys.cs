@@ -74,20 +74,20 @@ namespace Scripts.Game
 
                         curFireCom.DisableFire();
 
-                        if (curCellEnvCom.Have(EnvirTypes.AdultForest))
+                        if (curCellEnvCom.Have(EnvTypes.AdultForest))
                         {
-                            curCellEnvCom.Reset(EnvirTypes.AdultForest);
-                            WhereEnvironmentC.Remove(EnvirTypes.AdultForest, idxForBuild);
+                            curCellEnvCom.Reset(EnvTypes.AdultForest);
+                            WhereEnvC.Remove(EnvTypes.AdultForest, idxForBuild);
                         }
-                        if (curCellEnvCom.Have(EnvirTypes.Fertilizer))
+                        if (curCellEnvCom.Have(EnvTypes.Fertilizer))
                         {
-                            curCellEnvCom.Reset(EnvirTypes.Fertilizer);
-                            WhereEnvironmentC.Remove(EnvirTypes.Fertilizer, idxForBuild);
+                            curCellEnvCom.Reset(EnvTypes.Fertilizer);
+                            WhereEnvC.Remove(EnvTypes.Fertilizer, idxForBuild);
                         }
-                        if (curCellEnvCom.Have(EnvirTypes.YoungForest))
+                        if (curCellEnvCom.Have(EnvTypes.YoungForest))
                         {
-                            curCellEnvCom.Reset(EnvirTypes.YoungForest);
-                            WhereEnvironmentC.Remove(EnvirTypes.YoungForest, idxForBuild);
+                            curCellEnvCom.Reset(EnvTypes.YoungForest);
+                            WhereEnvC.Remove(EnvTypes.YoungForest, idxForBuild);
                         }
                     }
 

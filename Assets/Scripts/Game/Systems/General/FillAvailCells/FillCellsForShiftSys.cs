@@ -35,11 +35,11 @@ namespace Scripts.Game
                         ref var envC_1 = ref _cellEnvDataFilter.Get1(idxCell_1);
 
 
-                        if (!envC_1.Have(EnvirTypes.Mountain))
+                        if (!envC_1.Have(EnvTypes.Mountain))
                         {
                             if (!unitC_1.HaveUnit)
                             {
-                                if (stepUnitC_0.HaveStepsForDoing(envC_1) || stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.UnitType))
+                                if (stepUnitC_0.HaveStepsForDoing(envC_1) || stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.Unit))
                                 {
                                     CellsForShiftCom.AddIdxCell(ownUnitC_0.Owner, curIdxCell, idxCell_1);
                                 }

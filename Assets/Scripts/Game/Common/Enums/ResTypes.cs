@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Game
 {
-    public enum ResourceTypes
+    public enum ResTypes
     {
         None,
 

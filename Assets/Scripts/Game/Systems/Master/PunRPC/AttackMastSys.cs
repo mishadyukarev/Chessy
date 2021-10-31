@@ -21,48 +21,48 @@ namespace Scripts.Game
 
 
 
-            var fromIdx = forAttackMasCom.IdxFromCell;
-            var toIdxAttack = forAttackMasCom.IdxToCell;
+            var idx_from = forAttackMasCom.IdxFromCell;
+            var idx_to = forAttackMasCom.IdxToCell;
 
-            ref var unitC_from = ref _cellUnitFilter.Get1(fromIdx);
+            ref var unitC_from = ref _cellUnitFilter.Get1(idx_from);
 
-            ref var levUnitC_from = ref _cellUnitMainFilt.Get2(fromIdx);
-            ref var ownUnitC_from = ref _cellUnitMainFilt.Get3(fromIdx);
+            ref var levUnitC_from = ref _cellUnitMainFilt.Get2(idx_from);
+            ref var ownUnitC_from = ref _cellUnitMainFilt.Get3(idx_from);
 
-            ref var hpUnitC_from = ref _cellUnitFilter.Get2(fromIdx);
-            ref var fromDamUnitC = ref _cellUnitFilter.Get3(fromIdx);
-            ref var stepUnitC_from = ref _cellUnitFilter.Get4(fromIdx);
+            ref var hpUnitC_from = ref _cellUnitFilter.Get2(idx_from);
+            ref var fromDamUnitC = ref _cellUnitFilter.Get3(idx_from);
+            ref var stepUnitC_from = ref _cellUnitFilter.Get4(idx_from);
 
-            ref var condUnitC_from = ref _cellUnitEffFilt.Get2(fromIdx);
-            ref var twUnitC_from = ref _cellUnitEffFilt.Get3(fromIdx);
-            ref var effUnitC_from = ref _cellUnitEffFilt.Get4(fromIdx);
-            ref var thirUnitC_from = ref _cellUnitEffFilt.Get5(fromIdx);
+            ref var condUnitC_from = ref _cellUnitEffFilt.Get2(idx_from);
+            ref var twUnitC_from = ref _cellUnitEffFilt.Get3(idx_from);
+            ref var effUnitC_from = ref _cellUnitEffFilt.Get4(idx_from);
+            ref var thirUnitC_from = ref _cellUnitEffFilt.Get5(idx_from);
 
-            ref var riverC_from = ref _cellRiverFilt.Get1(fromIdx);
-
-
-            ref var unitC_to = ref _cellUnitFilter.Get1(toIdxAttack);
-
-            ref var levUnitC_to = ref _cellUnitMainFilt.Get2(toIdxAttack);
-            ref var ownUnitC_to = ref _cellUnitMainFilt.Get3(toIdxAttack);
-
-            ref var hpUnitC_to = ref _cellUnitFilter.Get2(toIdxAttack);
-            ref var toDamUnitC =ref _cellUnitFilter.Get3(toIdxAttack);
-            ref var stepUnitC_to = ref _cellUnitFilter.Get4(toIdxAttack);
-
-            ref var condUnitC_to = ref _cellUnitEffFilt.Get2(toIdxAttack);
-            ref var twUnitC_to = ref _cellUnitEffFilt.Get3(toIdxAttack);
-            ref var effUnitC_to = ref _cellUnitEffFilt.Get4(toIdxAttack);
-            ref var thirUnitC_to = ref _cellUnitEffFilt.Get5(toIdxAttack);
-
-            ref var riverC_to = ref _cellRiverFilt.Get1(toIdxAttack);
+            ref var riverC_from = ref _cellRiverFilt.Get1(idx_from);
 
 
-            ref var toBuildDatCom = ref _cellBuildFilter.Get1(toIdxAttack);
-            ref var toEnvDatCom = ref _cellEnvFilter.Get1(toIdxAttack);
+            ref var unitC_to = ref _cellUnitFilter.Get1(idx_to);
+
+            ref var levUnitC_to = ref _cellUnitMainFilt.Get2(idx_to);
+            ref var ownUnitC_to = ref _cellUnitMainFilt.Get3(idx_to);
+
+            ref var hpUnitC_to = ref _cellUnitFilter.Get2(idx_to);
+            ref var toDamUnitC =ref _cellUnitFilter.Get3(idx_to);
+            ref var stepUnitC_to = ref _cellUnitFilter.Get4(idx_to);
+
+            ref var condUnitC_to = ref _cellUnitEffFilt.Get2(idx_to);
+            ref var twUnitC_to = ref _cellUnitEffFilt.Get3(idx_to);
+            ref var effUnitC_to = ref _cellUnitEffFilt.Get4(idx_to);
+            ref var thirUnitC_to = ref _cellUnitEffFilt.Get5(idx_to);
+
+            ref var riverC_to = ref _cellRiverFilt.Get1(idx_to);
 
 
-            var simpUniqueType = CellsAttackC.FindByIdx(ownUnitC_from.Owner, fromIdx, toIdxAttack);
+            ref var toBuildDatCom = ref _cellBuildFilter.Get1(idx_to);
+            ref var toEnvDatCom = ref _cellEnvFilter.Get1(idx_to);
+
+
+            var simpUniqueType = CellsAttackC.FindByIdx(ownUnitC_from.Owner, idx_from, idx_to);
 
             if (simpUniqueType != default)
             {
@@ -76,7 +76,7 @@ namespace Scripts.Game
                 float powerDamTo = 0;
 
 
-                powerDamFrom += fromDamUnitC.DamageAttack(unitC_from.UnitType, levUnitC_from.LevelUnitType, twUnitC_from, effUnitC_from, simpUniqueType);
+                powerDamFrom += fromDamUnitC.DamageAttack(unitC_from.Unit, levUnitC_from.Level, twUnitC_from, effUnitC_from, simpUniqueType);
 
                 if (unitC_from.IsMelee)
                     RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
@@ -85,7 +85,7 @@ namespace Scripts.Game
 
                 if (unitC_to.IsMelee)
                 {
-                    powerDamTo += toDamUnitC.DamageOnCell(unitC_to.UnitType, levUnitC_to.LevelUnitType, condUnitC_to, twUnitC_to, effUnitC_to, toBuildDatCom.BuildType, toEnvDatCom.Envronments);
+                    powerDamTo += toDamUnitC.DamageOnCell(unitC_to.Unit, levUnitC_to.Level, condUnitC_to, twUnitC_to, effUnitC_to, toBuildDatCom.BuildType, toEnvDatCom.Envronments);
                 }
 
 
@@ -131,7 +131,7 @@ namespace Scripts.Game
 
 
 
-                if (!unitC_to.IsMelee) minusTo = hpUnitC_to.MaxHpUnit(effUnitC_to, unitC_to.UnitType);
+                if (!unitC_to.IsMelee) minusTo = hpUnitC_to.MaxHpUnit(effUnitC_to, unitC_to.Unit);
                 if (twUnitC_to.Is(ToolWeaponTypes.Shield))
                 {
                     minusTo = 0;
@@ -154,7 +154,7 @@ namespace Scripts.Game
                     }
                     else if (unitC_to.Is(UnitTypes.Scout))
                     {
-                        InventorUnitsC.AddUnitsInInventor(ownUnitC_to.Owner, unitC_to.UnitType, LevelUnitTypes.Wood);
+                        InventorUnitsC.AddUnit(ownUnitC_to.Owner, unitC_to.Unit, LevelUnitTypes.Wood);
                     }
 
                     unitC_to.NoneUnit();
@@ -162,19 +162,26 @@ namespace Scripts.Game
 
                     if (unitC_from.IsMelee)
                     {
-                        unitC_to.SetUnit(unitC_from.UnitType);
-                        levUnitC_to.SetNewLevel(levUnitC_from.LevelUnitType);
+                        unitC_to.SetUnit(unitC_from.Unit);
+                        levUnitC_to.SetLevel(levUnitC_from.Level);
                         hpUnitC_to.AmountHp = hpUnitC_from.AmountHp;
                         stepUnitC_to.StepsAmount = stepUnitC_from.StepsAmount;
                         condUnitC_to.CondUnitType = condUnitC_from.CondUnitType;
                         twUnitC_to.Set(twUnitC_from);
                         ownUnitC_to.SetOwner(ownUnitC_from.Owner);
+                        if (riverC_to.HaveNearRiver) thirUnitC_to.SetMaxWater(unitC_to.Unit);
+                        WhereUnitsC.Add(ownUnitC_to.Owner, unitC_to.Unit, levUnitC_to.Level, idx_to);
 
+
+                        WhereUnitsC.Remove(ownUnitC_from.Owner, unitC_from.Unit, levUnitC_from.Level, idx_from);
                         unitC_from.NoneUnit();
+                        
 
-                        if (!hpUnitC_to.HaveHp) unitC_to.NoneUnit();
-
-                        if (riverC_to.HaveNearRiver) thirUnitC_to.SetMaxWater(unitC_to.UnitType);
+                        if (!hpUnitC_to.HaveHp)
+                        {
+                            WhereUnitsC.Remove(ownUnitC_to.Owner, unitC_to.Unit, levUnitC_to.Level, idx_to);
+                            unitC_to.NoneUnit();
+                        }
                     }
                 }
 
@@ -186,11 +193,12 @@ namespace Scripts.Game
                         EndGameDataUIC.PlayerWinner = ownUnitC_to.Owner;
                     }
 
+                    WhereUnitsC.Remove(ownUnitC_from.Owner, unitC_from.Unit, levUnitC_from.Level, idx_from);
                     unitC_from.NoneUnit();
                 }
 
-                hpUnitC_to.TryTakeBonusHp(effUnitC_to, unitC_to.UnitType);
-                hpUnitC_from.TryTakeBonusHp(effUnitC_from, unitC_from.UnitType);
+                hpUnitC_to.TryTakeBonusHp(effUnitC_to, unitC_to.Unit);
+                hpUnitC_from.TryTakeBonusHp(effUnitC_from, unitC_from.Unit);
 
                 effUnitC_from.DefAllEffects();
                 effUnitC_to.DefAllEffects();

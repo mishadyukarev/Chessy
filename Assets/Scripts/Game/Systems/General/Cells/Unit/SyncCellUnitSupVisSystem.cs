@@ -16,7 +16,7 @@ namespace Scripts.Game
         {
             foreach (byte idx in _cellUnitFilter)
             {
-                ref var curUnitDatC = ref _cellUnitFilter.Get1(idx);
+                ref var unitC_0 = ref _cellUnitFilter.Get1(idx);
                 ref var curHpUnitC = ref _cellUnitFilter.Get2(idx);
                 ref var curStepUnitC = ref _cellUnitFilter.Get3(idx);
                 ref var condUnitC = ref _cellUnitOthFilt.Get2(idx);
@@ -40,18 +40,18 @@ namespace Scripts.Game
 
                 if (curVisUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
                 {
-                    if (curUnitDatC.HaveUnit)
+                    if (unitC_0.HaveUnit)
                     {
-                        if (!curUnitDatC.Is(UnitTypes.Scout))
+                        if (!unitC_0.Is(UnitTypes.Scout))
                         {
                             barsViewCom.EnableSR(CellBarTypes.Hp);
                             barsViewCom.SetColorHp(Color.red);
 
-                            float xCordinate = (float)curHpUnitC.AmountHp / curHpUnitC.MaxHpUnit(effUnitC, curUnitDatC.UnitType);
+                            float xCordinate = (float)curHpUnitC.AmountHp / curHpUnitC.MaxHpUnit(effUnitC, unitC_0.Unit);
                             barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
                         }
 
-                        if (thirUnitC_0.NeedWater(curUnitDatC.UnitType))
+                        if (thirUnitC_0.NeedWater(unitC_0.Unit))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.NeedWater);
                         }
@@ -60,7 +60,7 @@ namespace Scripts.Game
                             blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
                         }
 
-                        if (curStepUnitC.HaveMaxSteps(effUnitC, curUnitDatC.UnitType))
+                        if (curStepUnitC.HaveMaxSteps(effUnitC, unitC_0.Unit))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.MaxSteps);
                         }

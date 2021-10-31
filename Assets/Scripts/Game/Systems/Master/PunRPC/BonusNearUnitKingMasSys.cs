@@ -20,7 +20,7 @@ namespace Scripts.Game
             var sender = InfoC.Sender(MasGenOthTypes.Master);
 
 
-            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.UnitType))
+            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.Unit))
             {
                 var around = CellSpaceSupport.TryGetXyAround(_cellXyFilt.GetXyCell(idx_0));
 
@@ -47,7 +47,7 @@ namespace Scripts.Game
                             if (!effUnitC_1.Have(StatTypes.Health))
                             {
                                 effUnitC_1.Set(StatTypes.Health);
-                                hpUnitC_1.TryAddBonusHp(effUnitC_1, unitC_1.UnitType);
+                                hpUnitC_1.TryAddBonusHp(effUnitC_1, unitC_1.Unit);
                             }
                             if (!effUnitC_1.Have(StatTypes.Damage))
                             {

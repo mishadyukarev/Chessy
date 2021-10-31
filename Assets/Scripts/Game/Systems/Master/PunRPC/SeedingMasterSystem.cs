@@ -26,13 +26,13 @@ namespace Scripts.Game
 
             switch (envTypeForSeeding)
             {
-                case EnvirTypes.None:
+                case EnvTypes.None:
                     throw new Exception();
 
-                case EnvirTypes.Fertilizer:
+                case EnvTypes.Fertilizer:
                     throw new Exception();
 
-                case EnvirTypes.YoungForest:
+                case EnvTypes.YoungForest:
                     if (stepUnitC.HaveMinSteps)
                     {
                         if (curCellBuildDataCom.HaveBuild)
@@ -41,16 +41,16 @@ namespace Scripts.Game
                         }
                         else
                         {
-                            if (!curCellEnvDataCom.Have(EnvirTypes.Fertilizer))
+                            if (!curCellEnvDataCom.Have(EnvTypes.Fertilizer))
                             {
-                                if (!curCellEnvDataCom.Have(EnvirTypes.AdultForest))
+                                if (!curCellEnvDataCom.Have(EnvTypes.AdultForest))
 
-                                    if (!curCellEnvDataCom.Have(EnvirTypes.YoungForest))
+                                    if (!curCellEnvDataCom.Have(EnvTypes.YoungForest))
                                     {
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.Seeding);
 
-                                        curCellEnvDataCom.SetNew(EnvirTypes.YoungForest);
-                                        WhereEnvironmentC.Add(EnvirTypes.YoungForest, idxCellForSeeding);
+                                        curCellEnvDataCom.SetNew(EnvTypes.YoungForest);
+                                        WhereEnvC.Add(EnvTypes.YoungForest, idxCellForSeeding);
 
                                         stepUnitC.TakeSteps();
                                     }
@@ -77,13 +77,13 @@ namespace Scripts.Game
                     }
                     break;
 
-                case EnvirTypes.AdultForest:
+                case EnvTypes.AdultForest:
                     throw new Exception();
 
-                case EnvirTypes.Hill:
+                case EnvTypes.Hill:
                     throw new Exception();
 
-                case EnvirTypes.Mountain:
+                case EnvTypes.Mountain:
                     throw new Exception();
 
                 default:

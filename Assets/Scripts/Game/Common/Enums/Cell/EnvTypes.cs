@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Game
 {
-    public enum EnvirTypes
+    public enum EnvTypes
     {
         None,
 

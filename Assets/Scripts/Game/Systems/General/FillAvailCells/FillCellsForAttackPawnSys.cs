@@ -32,9 +32,9 @@ namespace Scripts.Game
                         ref var unitC_1 = ref _cellUnitFilt.Get1(idxAround);
                         ref var ownUnitC_1 = ref _cellUnitFilt.Get3(idxAround);
 
-                        if (!envC_1.Have(EnvirTypes.Mountain))
+                        if (!envC_1.Have(EnvTypes.Mountain))
                         {
-                            if (curStepUnitC.HaveStepsForDoing(envC_1) || curStepUnitC.HaveMaxSteps(effUnitC_0, curUnitDatCom.UnitType))
+                            if (curStepUnitC.HaveStepsForDoing(envC_1) || curStepUnitC.HaveMaxSteps(effUnitC_0, curUnitDatCom.Unit))
                             {
                                 if (unitC_1.HaveUnit)
                                 {

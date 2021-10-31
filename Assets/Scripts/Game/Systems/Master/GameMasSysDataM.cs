@@ -46,7 +46,9 @@ namespace Scripts.Game
                 .Add(new UpdatorMastSys())
                 .Add(new FireUpdMasSys())
                 .Add(new CloudUpdMasSys())
-                .Add(new ThirstyUpdMasSys());
+                .Add(new ThirstyUpdMasSys())
+                .Add(new RelaxUpdMasSys())
+                .Add(new HungryUpdMasSys());
 
             TruceSystems = new EcsSystems(gameWorld)
                 .Add(new TruceMasterSystem());
