@@ -8,7 +8,7 @@ namespace Scripts.Game
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
         public void Run()
@@ -34,7 +34,7 @@ namespace Scripts.Game
                         {
                             if (arounEnvDatCom.Have(EnvirTypes.AdultForest))
                             {
-                                cellsArsonCom.Add(curOwnUnitCom.PlayerType, curIdxCell, arouIdx);
+                                cellsArsonCom.Add(curOwnUnitCom.Owner, curIdxCell, arouIdx);
                             }
                         }
                     }

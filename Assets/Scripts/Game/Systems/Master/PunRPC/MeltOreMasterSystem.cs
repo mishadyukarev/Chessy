@@ -11,9 +11,9 @@ namespace Scripts.Game
 
             var playerSend = WhoseMoveC.WhoseMove;
 
-            if (InventResourcesC.CanMeltOre(playerSend, out var needRes))
+            if (InventResC.CanMeltOre(playerSend, out var needRes))
             {
-                InventResourcesC.BuyMeltOre(playerSend);
+                InventResC.BuyMeltOre(playerSend);
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Melting);
             }
             else

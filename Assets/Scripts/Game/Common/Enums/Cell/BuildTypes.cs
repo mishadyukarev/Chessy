@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Game
 {
-    public enum BuildingTypes
+    public enum BuildTypes
     {
         None,
 

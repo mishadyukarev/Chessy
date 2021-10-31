@@ -7,11 +7,12 @@ namespace Scripts.Game
     {
         private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
+        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataCom, HpUnitC, DamageComponent, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, ThirstyC, OwnerCom> _cellUnitEffFilt = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, ThirstyUnitC> _cellUnitEffFilt = default;
 
-        private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
+        private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
 
         public void Run()
@@ -24,6 +25,10 @@ namespace Scripts.Game
             var toIdxAttack = forAttackMasCom.IdxToCell;
 
             ref var unitC_from = ref _cellUnitFilter.Get1(fromIdx);
+
+            ref var levUnitC_from = ref _cellUnitMainFilt.Get2(fromIdx);
+            ref var ownUnitC_from = ref _cellUnitMainFilt.Get3(fromIdx);
+
             ref var hpUnitC_from = ref _cellUnitFilter.Get2(fromIdx);
             ref var fromDamUnitC = ref _cellUnitFilter.Get3(fromIdx);
             ref var stepUnitC_from = ref _cellUnitFilter.Get4(fromIdx);
@@ -32,12 +37,15 @@ namespace Scripts.Game
             ref var twUnitC_from = ref _cellUnitEffFilt.Get3(fromIdx);
             ref var effUnitC_from = ref _cellUnitEffFilt.Get4(fromIdx);
             ref var thirUnitC_from = ref _cellUnitEffFilt.Get5(fromIdx);
-            ref var fromOwnUnitCom = ref _cellUnitEffFilt.Get6(fromIdx);
 
             ref var riverC_from = ref _cellRiverFilt.Get1(fromIdx);
 
 
             ref var unitC_to = ref _cellUnitFilter.Get1(toIdxAttack);
+
+            ref var levUnitC_to = ref _cellUnitMainFilt.Get2(toIdxAttack);
+            ref var ownUnitC_to = ref _cellUnitMainFilt.Get3(toIdxAttack);
+
             ref var hpUnitC_to = ref _cellUnitFilter.Get2(toIdxAttack);
             ref var toDamUnitC =ref _cellUnitFilter.Get3(toIdxAttack);
             ref var stepUnitC_to = ref _cellUnitFilter.Get4(toIdxAttack);
@@ -46,7 +54,6 @@ namespace Scripts.Game
             ref var twUnitC_to = ref _cellUnitEffFilt.Get3(toIdxAttack);
             ref var effUnitC_to = ref _cellUnitEffFilt.Get4(toIdxAttack);
             ref var thirUnitC_to = ref _cellUnitEffFilt.Get5(toIdxAttack);
-            ref var ownUnitC_to = ref _cellUnitEffFilt.Get6(toIdxAttack);
 
             ref var riverC_to = ref _cellRiverFilt.Get1(toIdxAttack);
 
@@ -55,7 +62,7 @@ namespace Scripts.Game
             ref var toEnvDatCom = ref _cellEnvFilter.Get1(toIdxAttack);
 
 
-            var simpUniqueType = CellsAttackC.FindByIdx(fromOwnUnitCom.PlayerType, fromIdx, toIdxAttack);
+            var simpUniqueType = CellsAttackC.FindByIdx(ownUnitC_from.Owner, fromIdx, toIdxAttack);
 
             if (simpUniqueType != default)
             {
@@ -69,7 +76,7 @@ namespace Scripts.Game
                 float powerDamTo = 0;
 
 
-                powerDamFrom += fromDamUnitC.DamageAttack(unitC_from, twUnitC_from, effUnitC_from, simpUniqueType);
+                powerDamFrom += fromDamUnitC.DamageAttack(unitC_from.UnitType, levUnitC_from.LevelUnitType, twUnitC_from, effUnitC_from, simpUniqueType);
 
                 if (unitC_from.IsMelee)
                     RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
@@ -78,7 +85,7 @@ namespace Scripts.Game
 
                 if (unitC_to.IsMelee)
                 {
-                    powerDamTo += toDamUnitC.DamageOnCell(unitC_to, condUnitC_to, twUnitC_to, effUnitC_to, toBuildDatCom.BuildType, toEnvDatCom.Envronments);
+                    powerDamTo += toDamUnitC.DamageOnCell(unitC_to.UnitType, levUnitC_to.LevelUnitType, condUnitC_to, twUnitC_to, effUnitC_to, toBuildDatCom.BuildType, toEnvDatCom.Envronments);
                 }
 
 
@@ -143,28 +150,29 @@ namespace Scripts.Game
                 {
                     if (unitC_to.Is(UnitTypes.King))
                     {
-                        EndGameDataUIC.PlayerWinner = fromOwnUnitCom.PlayerType;
+                        EndGameDataUIC.PlayerWinner = ownUnitC_from.Owner;
                     }
                     else if (unitC_to.Is(UnitTypes.Scout))
                     {
-                        InventorUnitsC.AddUnitsInInventor(ownUnitC_to.PlayerType, unitC_to.UnitType, LevelUnitTypes.Wood);
+                        InventorUnitsC.AddUnitsInInventor(ownUnitC_to.Owner, unitC_to.UnitType, LevelUnitTypes.Wood);
                     }
 
-                    unitC_to.DefUnitType();
+                    unitC_to.NoneUnit();
 
 
                     if (unitC_from.IsMelee)
                     {
-                        unitC_to.Set(unitC_from);
+                        unitC_to.SetUnit(unitC_from.UnitType);
+                        levUnitC_to.SetNewLevel(levUnitC_from.LevelUnitType);
                         hpUnitC_to.AmountHp = hpUnitC_from.AmountHp;
-                        stepUnitC_to.AmountSteps = stepUnitC_from.AmountSteps;
+                        stepUnitC_to.StepsAmount = stepUnitC_from.StepsAmount;
                         condUnitC_to.CondUnitType = condUnitC_from.CondUnitType;
                         twUnitC_to.Set(twUnitC_from);
-                        ownUnitC_to.PlayerType = fromOwnUnitCom.PlayerType;
+                        ownUnitC_to.SetOwner(ownUnitC_from.Owner);
 
-                        unitC_from.DefUnitType();
+                        unitC_from.NoneUnit();
 
-                        if (!hpUnitC_to.HaveHp) unitC_to.DefUnitType();
+                        if (!hpUnitC_to.HaveHp) unitC_to.NoneUnit();
 
                         if (riverC_to.HaveNearRiver) thirUnitC_to.SetMaxWater(unitC_to.UnitType);
                     }
@@ -174,11 +182,11 @@ namespace Scripts.Game
                 {
                     if (unitC_from.Is(UnitTypes.King))
                     {
-                        fromOwnUnitCom.PlayerType = ownUnitC_to.PlayerType;
-                        EndGameDataUIC.PlayerWinner = ownUnitC_to.PlayerType;
+                        ownUnitC_from.SetOwner(ownUnitC_to.Owner);
+                        EndGameDataUIC.PlayerWinner = ownUnitC_to.Owner;
                     }
 
-                    unitC_from.DefUnitType();
+                    unitC_from.NoneUnit();
                 }
 
                 hpUnitC_to.TryTakeBonusHp(effUnitC_to, unitC_to.UnitType);

@@ -5,7 +5,7 @@ namespace Scripts.Game
 {
     internal sealed class SyncCellBuildViewSystem : IEcsRunSystem
     {
-        private EcsFilter<CellBuildDataCom, OwnerCom, VisibleC> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerCom, VisibleC> _cellBuildFilter = default;
         private EcsFilter<CellBuildViewComponent> _cellBuildViewFilt = default;
 
         public void Run()
@@ -30,7 +30,7 @@ namespace Scripts.Game
                         curBuildViewCom.SetSpriteBack(curBuildDatCom.BuildType);
 
                         curBuildViewCom.SetAlpha(curVisBuildCom.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayer)));
-                        curBuildViewCom.SetBackColor(curOwnBuildCom.PlayerType);
+                        curBuildViewCom.SetBackColor(curOwnBuildCom.Owner);
                     }
                     else
                     {

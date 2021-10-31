@@ -6,6 +6,7 @@
 
         Health,
         Damage,
-        Steps
+        Steps,
+        Water,
     }
 }

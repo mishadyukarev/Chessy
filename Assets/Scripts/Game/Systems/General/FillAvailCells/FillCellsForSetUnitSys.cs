@@ -7,11 +7,11 @@ namespace Scripts.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvFilt = default;
-        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuldFilt = default;
+        private EcsFilter<CellEnvDataC> _cellEnvFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuldFilt = default;
 
         private EcsFilter<CellsForSetUnitComp> _cellsForSetUnitFilter = default;
-        private EcsFilter<BuildsInGameC> _buildsInGameFilt = default;
+        private EcsFilter<WhereBuildsC> _buildsInGameFilt = default;
 
 
         public void Run()
@@ -24,9 +24,9 @@ namespace Scripts.Game
 
             for (var playerType = Support.MinPlayerType; playerType < Support.MaxPlayerType; playerType++)
             {
-                if (BuildsInGameC.IsSettedCity(playerType))
+                if (WhereBuildsC.IsSettedCity(playerType))
                 {
-                    var listAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(BuildsInGameC.IdxCity(playerType)));
+                    var listAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(WhereBuildsC.IdxCity(playerType)));
 
                     foreach (var xy in listAround)
                     {
@@ -79,7 +79,7 @@ namespace Scripts.Game
                 ref var curBuldCom = ref _cellBuldFilt.Get1(curIdx);
                 ref var curOwnBuldCom = ref _cellBuldFilt.Get2(curIdx);
 
-                if (curBuldCom.Is(BuildingTypes.Camp))
+                if (curBuldCom.Is(BuildTypes.Camp))
                 {
                     var aroundXys = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdx));
 
@@ -92,7 +92,7 @@ namespace Scripts.Game
 
                         if (!curEnvDatCom.Have(EnvirTypes.Mountain) && !curUnitDatCom.HaveUnit)
                         {
-                            forSetUnitCom.AddIdxCell(curOwnBuldCom.PlayerType, curIdx_2);
+                            forSetUnitCom.AddIdxCell(curOwnBuldCom.Owner, curIdx_2);
                         }
                     }
                 }

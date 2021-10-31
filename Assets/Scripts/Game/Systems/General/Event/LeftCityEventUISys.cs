@@ -10,9 +10,9 @@ namespace Scripts.Game
         {
             BuildLeftZoneViewUICom.AddListenerToMelt(delegate { MeltOre(); });
 
-            BuildLeftZoneViewUICom.AddListBuildUpgrade(BuildingTypes.Farm, delegate { UpgradeBuilding(BuildingTypes.Farm); });
-            BuildLeftZoneViewUICom.AddListBuildUpgrade(BuildingTypes.Woodcutter, delegate { UpgradeBuilding(BuildingTypes.Woodcutter); });
-            BuildLeftZoneViewUICom.AddListBuildUpgrade(BuildingTypes.Mine, delegate { UpgradeBuilding(BuildingTypes.Mine); });
+            BuildLeftZoneViewUICom.AddListBuildUpgrade(BuildTypes.Farm, delegate { UpgradeBuilding(BuildTypes.Farm); });
+            BuildLeftZoneViewUICom.AddListBuildUpgrade(BuildTypes.Woodcutter, delegate { UpgradeBuilding(BuildTypes.Woodcutter); });
+            BuildLeftZoneViewUICom.AddListBuildUpgrade(BuildTypes.Mine, delegate { UpgradeBuilding(BuildTypes.Mine); });
         }
 
         private void MeltOre()
@@ -20,7 +20,7 @@ namespace Scripts.Game
             if (WhoseMoveC.IsMyMove) RpcSys.MeltOreToMaster();
         }
 
-        private void UpgradeBuilding(BuildingTypes buildingType)
+        private void UpgradeBuilding(BuildTypes buildingType)
         {
             if (WhoseMoveC.IsMyMove) RpcSys.UpgradeBuildingToMaster(buildingType);
         }

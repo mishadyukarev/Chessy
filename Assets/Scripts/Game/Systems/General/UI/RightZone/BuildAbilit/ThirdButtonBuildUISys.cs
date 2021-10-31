@@ -6,7 +6,7 @@ namespace Scripts.Game
     internal sealed class ThirdButtonBuildUISys : IEcsRunSystem
     {
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
 
         public void Run()
         {
@@ -18,7 +18,7 @@ namespace Scripts.Game
                 ref var selOwnUnitCom = ref _cellUnitFilter.Get2(SelectorC.IdxSelCell);
 
                 ref var selBuildDatCom = ref _cellBuildFilt.Get1(SelectorC.IdxSelCell);
-                ref var selOwnBuildCom = ref _cellBuildFilt.Get2(SelectorC.IdxSelCell);
+                ref var ownBuildC_sel = ref _cellBuildFilt.Get2(SelectorC.IdxSelCell);
 
                 var needActiveThirdButt = false;
 
@@ -29,25 +29,30 @@ namespace Scripts.Game
                     {
                         if (selBuildDatCom.HaveBuild)
                         {
-                            if (!selOwnBuildCom.IsMine)
+                            if (ownBuildC_sel.IsMine)
+                            {
+                                if (!WhereBuildsC.IsSettedCity(WhoseMoveC.CurPlayer))
+                                {
+                                    needActiveThirdButt = true;
+                                    BuildAbilitViewUIC.SetSpriteThird(SpriteGameTypes.City);
+                                    BuildAbilitDataUIC.SetAbilityType(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
+                                }
+                            }
+                            else
                             {
                                 needActiveThirdButt = true;
                                 BuildAbilitViewUIC.SetSpriteThird(SpriteGameTypes.CityNone);
-                                BuildAbilitDataUIC.SetAbilityType(BuildButtonTypes.Third, AbilityTypes.Destroy);
+                                BuildAbilitDataUIC.SetAbilityType(BuildButtonTypes.Third, BuildAbilTypes.Destroy);
                             }
                         }
 
                         else
                         {
-                            if (BuildsInGameC.IsSettedCity(WhoseMoveC.CurPlayer))
-                            {
-                                needActiveThirdButt = false;
-                            }
-                            else
+                            if (!WhereBuildsC.IsSettedCity(WhoseMoveC.CurPlayer))
                             {
                                 needActiveThirdButt = true;
                                 BuildAbilitViewUIC.SetSpriteThird(SpriteGameTypes.City);
-                                BuildAbilitDataUIC.SetAbilityType(BuildButtonTypes.Third, AbilityTypes.CityBuild);
+                                BuildAbilitDataUIC.SetAbilityType(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
                             }
                         }
                     }

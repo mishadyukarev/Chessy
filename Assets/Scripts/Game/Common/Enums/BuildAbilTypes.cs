@@ -1,14 +1,8 @@
 ﻿namespace Scripts.Game
 {
-    public enum AbilityTypes
+    public enum BuildAbilTypes
     {
         None,
-
-        FirePawn,
-        NoneFirePawn,
-        FireArcher,
-        Seed,
-        CircularAttack,
 
         FarmBuild,
         MineBuild,

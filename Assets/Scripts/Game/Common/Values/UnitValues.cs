@@ -137,16 +137,16 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
         }
-        public static float ProtectionPercent(BuildingTypes buildType)
+        public static float ProtectionPercent(BuildTypes buildType)
         {
             switch (buildType)
             {
-                case BuildingTypes.None: return 0;
-                case BuildingTypes.City: return 0.25f;
-                case BuildingTypes.Farm: return -0.1f;
-                case BuildingTypes.Woodcutter: return -0.1f;
-                case BuildingTypes.Mine: return -0.1f;
-                case BuildingTypes.Camp: return 0.1f;
+                case BuildTypes.None: return 0;
+                case BuildTypes.City: return 0.25f;
+                case BuildTypes.Farm: return -0.1f;
+                case BuildTypes.Woodcutter: return -0.1f;
+                case BuildTypes.Mine: return -0.1f;
+                case BuildTypes.Camp: return 0.1f;
                 default: throw new Exception();
             }
         }

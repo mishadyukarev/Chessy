@@ -5,12 +5,13 @@ namespace Scripts.Game
 {
     internal sealed class SelectorSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom, VisibleC> _cellUnitFilter = default;
         public void Run()
         {
             CellUnitDataCom UnitDatCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
-            OwnerCom OwnUnitCom(byte idxCell) => _cellUnitFilter.Get2(idxCell);
-            VisibleC VisUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
+            LevelUnitC LevelUnitC(byte idx) => _cellUnitFilter.Get2(idx);
+            OwnerCom OwnUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
+            VisibleC VisUnitCom(byte idxCell) => _cellUnitFilter.Get4(idxCell);
 
 
             if (InputC.IsClicked)
@@ -80,7 +81,7 @@ namespace Scripts.Game
                     {
                         if (UnitDatCom(SelectorC.IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop })
                             && OwnUnitCom(SelectorC.IdxCurCell).IsMine
-                            && UnitDatCom(SelectorC.IdxCurCell).LevelUnitType != LevelUnitTypes.Iron)
+                            && !LevelUnitC(SelectorC.IdxCurCell).Is(LevelUnitTypes.Iron))
                         {
                             RpcSys.UpgradeUnitToMaster(SelectorC.IdxCurCell);
                         }

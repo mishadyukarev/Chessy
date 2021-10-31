@@ -4,7 +4,7 @@ namespace Scripts.Game
 {
     internal sealed class BuildZoneUISys : IEcsRunSystem
     {
-        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
 
         public void Run()
         {
@@ -12,7 +12,7 @@ namespace Scripts.Game
             ref var selOwnUnitCom = ref _cellBuildFilter.Get2(SelectorC.IdxSelCell);
 
 
-            if (SelectorC.IsSelCell && selUnitDataCom.Is(BuildingTypes.City))
+            if (SelectorC.IsSelCell && selUnitDataCom.Is(BuildTypes.City))
             {
                 if (selOwnUnitCom.IsMine)
                 {

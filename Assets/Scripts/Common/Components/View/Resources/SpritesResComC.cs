@@ -15,61 +15,58 @@ namespace Scripts.Common
             {
                 _gameSprites = new Dictionary<SpriteGameTypes, Sprite>();
 
-                var sectionName = "Sprites/";
-
-
-                _gameSprites.Add(SpriteGameTypes.BlackCell, Resources.Load<Sprite>(sectionName + "Black_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.WhiteCell, Resources.Load<Sprite>(sectionName + "White_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.BlackCell, Resources.Load<Sprite>("Black_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.WhiteCell, Resources.Load<Sprite>("White_Sprite"));
 
 
 
-                _gameSprites.Add(SpriteGameTypes.King, Resources.Load<Sprite>(sectionName + "King_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.PawnWood, Resources.Load<Sprite>(sectionName + "PawnWood_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.PawnIron, Resources.Load<Sprite>(sectionName + "PawnIron_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.King, Resources.Load<Sprite>("King_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.PawnWood, Resources.Load<Sprite>("PawnWood_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.PawnIron, Resources.Load<Sprite>("PawnIron_Sprite"));
 
-                _gameSprites.Add(SpriteGameTypes.RookBow, Resources.Load<Sprite>(sectionName + "RookBow_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.RookCrossbow, Resources.Load<Sprite>(sectionName + "RookCrossbow_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.RookBow, Resources.Load<Sprite>("RookBow_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.RookCrossbow, Resources.Load<Sprite>("RookCrossbow_Sprite"));
 
-                _gameSprites.Add(SpriteGameTypes.BishopBow, Resources.Load<Sprite>(sectionName + "BishopBow_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.BishopCrossbow, Resources.Load<Sprite>(sectionName + "BishopCrossbow_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.BishopBow, Resources.Load<Sprite>("BishopBow_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.BishopCrossbow, Resources.Load<Sprite>("BishopCrossbow_Sprite"));
 
-                _gameSprites.Add(SpriteGameTypes.Scout, Resources.Load<Sprite>(sectionName + "Scout_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.Scout, Resources.Load<Sprite>("Scout_Sprite"));
 
-                _gameSprites.Add(SpriteGameTypes.PickWood, Resources.Load<Sprite>(sectionName + "Pick_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.SwordIron, Resources.Load<Sprite>(sectionName + "SwordIron_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.ShieldWood, Resources.Load<Sprite>(sectionName + "ShieldWood_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.ShieldIron, Resources.Load<Sprite>(sectionName + "ShieldIron_Sprite"));
-
-
-
-                _gameSprites.Add(SpriteGameTypes.City, Resources.Load<Sprite>(sectionName + "City_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.CityNone, Resources.Load<Sprite>(sectionName + "CityBack_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.CityBack, Resources.Load<Sprite>(sectionName + "CityBack_Sprite"));
-
-                _gameSprites.Add(SpriteGameTypes.Farm, Resources.Load<Sprite>(sectionName + "Farm_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.FarmBack, Resources.Load<Sprite>(sectionName + "FarmBack_Sprite"));
-
-                _gameSprites.Add(SpriteGameTypes.Woodcutter, Resources.Load<Sprite>(sectionName + "Woodcutter_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.WoodcutterBack, Resources.Load<Sprite>(sectionName + "WoodcutterBack_Sprite"));
-
-                _gameSprites.Add(SpriteGameTypes.Mine, Resources.Load<Sprite>(sectionName + "Mine_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.MineBack, Resources.Load<Sprite>(sectionName + "Mine_Back"));
-
-                _gameSprites.Add(SpriteGameTypes.Camp, Resources.Load<Sprite>(sectionName + "Camp_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.CampBack, Resources.Load<Sprite>(sectionName + "CampBack_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.PickWood, Resources.Load<Sprite>("Pick_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.SwordIron, Resources.Load<Sprite>("SwordIron_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.ShieldWood, Resources.Load<Sprite>("ShieldWood_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.ShieldIron, Resources.Load<Sprite>("ShieldIron_Sprite"));
 
 
 
-                _gameSprites.Add(SpriteGameTypes.YoungForest, Resources.Load<Sprite>(sectionName + "YoungForest_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.City, Resources.Load<Sprite>("City_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.CityNone, Resources.Load<Sprite>("CityNone_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.CityBack, Resources.Load<Sprite>("CityBack_Sprite"));
+
+                _gameSprites.Add(SpriteGameTypes.Farm, Resources.Load<Sprite>("Farm_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.FarmBack, Resources.Load<Sprite>("FarmBack_Sprite"));
+
+                _gameSprites.Add(SpriteGameTypes.Woodcutter, Resources.Load<Sprite>("Woodcutter_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.WoodcutterBack, Resources.Load<Sprite>("WoodcutterBack_Sprite"));
+
+                _gameSprites.Add(SpriteGameTypes.Mine, Resources.Load<Sprite>("Mine_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.MineBack, Resources.Load<Sprite>("Mine_Back"));
+
+                _gameSprites.Add(SpriteGameTypes.Camp, Resources.Load<Sprite>("Camp_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.CampBack, Resources.Load<Sprite>("CampBack_Sprite"));
 
 
 
-                _gameSprites.Add(SpriteGameTypes.Fire, Resources.Load<Sprite>(sectionName + "Fire_Sprite"));
-                _gameSprites.Add(SpriteGameTypes.FireNone, Resources.Load<Sprite>(sectionName + "FireNone_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.YoungForest, Resources.Load<Sprite>("YoungForest_Sprite"));
 
 
 
-                _gameSprites.Add(SpriteGameTypes.CircularAttack, Resources.Load<Sprite>(sectionName + "CircularAttack_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.Fire, Resources.Load<Sprite>("Fire_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.FireNone, Resources.Load<Sprite>("FireNone_Sprite"));
+
+
+
+                _gameSprites.Add(SpriteGameTypes.CircularAttack, Resources.Load<Sprite>("CircularAttack_Sprite"));
             }
         }
         public static Sprite Sprite(SpriteGameTypes spriteType)

@@ -7,7 +7,7 @@ namespace Scripts.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellDataC> _cellDataFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom, VisibleC> _cellUnitFilter = default;
 
         public void Run()
@@ -42,13 +42,13 @@ namespace Scripts.Game
                                 {
                                     if (unitDatCom_1.HaveUnit)
                                     {
-                                        if (!ownUnitCom_1.Is(ownUnitCom_0.PlayerType))
+                                        if (!ownUnitCom_1.Is(ownUnitCom_0.Owner))
                                         {
                                             if (dirType_1 == DirectTypes.Left || dirType_1 == DirectTypes.Right || dirType_1 == DirectTypes.Up || dirType_1 == DirectTypes.Down)
                                             {
-                                                CellsAttackC.Add(ownUnitCom_0.PlayerType, AttackTypes.Unique, idxCell_0, idxCell_1);
+                                                CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Unique, idxCell_0, idxCell_1);
                                             }
-                                            else CellsAttackC.Add(ownUnitCom_0.PlayerType, AttackTypes.Simple, idxCell_0, idxCell_1);
+                                            else CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Simple, idxCell_0, idxCell_1);
                                         }
                                     }
 
@@ -66,18 +66,18 @@ namespace Scripts.Game
 
                                     if (unitDataCom_2.HaveUnit)
                                     {
-                                        if (visUnitCom_2.IsVisibled(ownUnitCom_0.PlayerType))
+                                        if (visUnitCom_2.IsVisibled(ownUnitCom_0.Owner))
                                         {
-                                            if (!ownUnitCom_2.Is(ownUnitCom_0.PlayerType))
+                                            if (!ownUnitCom_2.Is(ownUnitCom_0.Owner))
                                             {
                                                 if (dirType_1 == DirectTypes.LeftDown || dirType_1 == DirectTypes.LeftUp || dirType_1 == DirectTypes.RightUp || dirType_1 == DirectTypes.RightDown)
                                                 {
-                                                    CellsAttackC.Add(ownUnitCom_0.PlayerType, AttackTypes.Simple, idxCell_0, idxCell_2);
+                                                    CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Simple, idxCell_0, idxCell_2);
                                                 }
 
                                                 else
                                                 {
-                                                    CellsAttackC.Add(ownUnitCom_0.PlayerType, AttackTypes.Unique, idxCell_0, idxCell_2);
+                                                    CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Unique, idxCell_0, idxCell_2);
                                                 }
                                             }
                                         }

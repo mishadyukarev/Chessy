@@ -7,8 +7,9 @@ namespace Scripts.Game
     {
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
 
+        private EcsFilter<CellUnitDataCom, LevelUnitC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent, UnitEffectsC> _cellUnitDataFilt = default;
-        private EcsFilter<InventResourcesC> _invResFilt = default;
+        private EcsFilter<InventResC> _invResFilt = default;
 
         public void Run()
         {
@@ -16,6 +17,9 @@ namespace Scripts.Game
             ref var idxUpgUnit = ref _forUpgradeUnitFilt.Get1(0).idxCellForUpgrade;
 
             ref var unitDatForUpg = ref _cellUnitDataFilt.Get1(idxUpgUnit);
+
+            ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idxUpgUnit);
+
             ref var hpUnitC = ref _cellUnitDataFilt.Get2(idxUpgUnit);
             ref var stepUnitC_0 = ref _cellUnitDataFilt.Get3(idxUpgUnit);
             ref var effUnitC_0 =ref _cellUnitDataFilt.Get4(idxUpgUnit);
@@ -31,11 +35,11 @@ namespace Scripts.Game
             {
                 if (stepUnitC_0.HaveMinSteps)
                 {
-                    if (InventResourcesC.CanUpgradeUnit(playSend, unitDatForUpg.UnitType, out var needRes))
+                    if (InventResC.CanUpgradeUnit(playSend, unitDatForUpg.UnitType, out var needRes))
                     {
-                        InventResourcesC.BuyUpgradeUnit(playSend, unitDatForUpg.UnitType);
+                        InventResC.BuyUpgradeUnit(playSend, unitDatForUpg.UnitType);
 
-                        unitDatForUpg.LevelUnitType = LevelUnitTypes.Iron;
+                        levUnit_0.SetNewLevel(LevelUnitTypes.Iron);
                         stepUnitC_0.TakeSteps();
 
                         hpUnitC.AmountHp = hpUnitC.MaxHpUnit(effUnitC_0, unitDatForUpg.UnitType);

@@ -10,23 +10,23 @@ namespace Scripts.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvFilt = default;
-        private EcsFilter<CellBuildDataCom> _cellBuildFilt = default;
+        private EcsFilter<CellEnvDataC> _cellEnvFilt = default;
+        private EcsFilter<CellBuildDataC> _cellBuildFilt = default;
 
         public void Run()
         {
             var sender = InfoC.Sender(MasGenOthTypes.Master);
             var idxCurculAttack = _forCircAttackFilter.Get1(0).IdxUnitForCirculAttack;
 
-            ref var starUnitCom = ref _cellUnitFilter.Get1(idxCurculAttack);
+            ref var unitC_0 = ref _cellUnitFilter.Get1(idxCurculAttack);
             ref var stepUnitC_0 = ref _cellUnitFilter.Get3(idxCurculAttack);
 
             ref var condUnitC_0 = ref _cellUnitOthFilt.Get2(idxCurculAttack);
             ref var effUnitC_0 = ref _cellUnitOthFilt.Get4(idxCurculAttack);
-            ref var starOwnUnitCom = ref _cellUnitOthFilt.Get5(idxCurculAttack);
+            ref var ownUnitC_0 = ref _cellUnitOthFilt.Get5(idxCurculAttack);
 
 
-            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, starUnitCom.UnitType))
+            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.UnitType))
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
@@ -34,50 +34,50 @@ namespace Scripts.Game
                 {
                     var idxCurDirect = _xyCellFilter.GetIdxCell(xy1);
 
-                    ref var dirUnitC = ref _cellUnitFilter.Get1(idxCurDirect);
-                    ref var dirHpUnitC = ref _cellUnitFilter.Get2(idxCurDirect);
-                    ref var twUnitC_dir = ref _cellUnitOthFilt.Get3(idxCurDirect);
+                    ref var unitC_1 = ref _cellUnitFilter.Get1(idxCurDirect);
+                    ref var hpUnitC_1 = ref _cellUnitFilter.Get2(idxCurDirect);
+                    ref var twUnitC_1 = ref _cellUnitOthFilt.Get3(idxCurDirect);
                     ref var effUnitC_1 = ref _cellUnitOthFilt.Get4(idxCurDirect);
-                    ref var ownUnitComDir = ref _cellUnitOthFilt.Get5(idxCurDirect);
+                    ref var ownUnitC_1 = ref _cellUnitOthFilt.Get5(idxCurDirect);
 
-                    ref var envComDir = ref _cellEnvFilt.Get1(idxCurDirect);
-                    ref var buildComDir = ref _cellBuildFilt.Get1(idxCurDirect);
+                    ref var envC_1 = ref _cellEnvFilt.Get1(idxCurDirect);
+                    ref var buildC_1 = ref _cellBuildFilt.Get1(idxCurDirect);
 
-                    if (dirUnitC.HaveUnit)
+                    if (unitC_1.HaveUnit)
                     {
-                        if (!ownUnitComDir.Is(starOwnUnitCom.PlayerType))
+                        if (!ownUnitC_1.Is(ownUnitC_0.Owner))
                         {
                             effUnitC_1.DefAllEffects();
 
-                            if (twUnitC_dir.Is(ToolWeaponTypes.Shield))
+                            if (twUnitC_1.Is(ToolWeaponTypes.Shield))
                             {
-                                twUnitC_dir.TakeShieldProtect();
+                                twUnitC_1.TakeShieldProtect();
                             }
                             else
                             {
-                                if (dirUnitC.IsMelee)
+                                if (unitC_1.IsMelee)
                                 {
-                                    dirHpUnitC.TakeHp(25);
-                                    if (dirHpUnitC.IsHpDeathAfterAttack || !dirHpUnitC.HaveHp)
+                                    hpUnitC_1.TakeHp(25);
+                                    if (hpUnitC_1.IsHpDeathAfterAttack || !hpUnitC_1.HaveHp)
                                     {
-                                        if (dirUnitC.Is(UnitTypes.King))
+                                        if (unitC_1.Is(UnitTypes.King))
                                         {
-                                            EndGameDataUIC.PlayerWinner = starOwnUnitCom.PlayerType;
+                                            EndGameDataUIC.PlayerWinner = ownUnitC_0.Owner;
                                         }
-                                        else if (dirUnitC.Is(UnitTypes.Scout))
+                                        else if (unitC_1.Is(UnitTypes.Scout))
                                         {
-                                            InventorUnitsC.AddUnitsInInventor(ownUnitComDir.PlayerType, UnitTypes.Scout, LevelUnitTypes.Wood);
+                                            InventorUnitsC.AddUnitsInInventor(ownUnitC_1.Owner, UnitTypes.Scout, LevelUnitTypes.Wood);
                                         }
-                                        dirUnitC.DefUnitType();
+                                        unitC_1.NoneUnit();
                                     }
                                 }
-                                else dirUnitC.DefUnitType();
+                                else unitC_1.NoneUnit();
                             }
                         }
                     }
                 }
 
-                stepUnitC_0.TakeSteps();
+                stepUnitC_0.ZeroSteps();
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.AttackMelee);
 

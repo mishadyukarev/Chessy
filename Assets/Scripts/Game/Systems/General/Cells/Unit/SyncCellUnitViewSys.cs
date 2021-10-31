@@ -4,48 +4,51 @@ namespace Scripts.Game
 {
     internal sealed class SyncCellUnitViewSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, ToolWeaponC, VisibleC> _cellUnitFilter = default;
-        private EcsFilter<CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilt = default;
+        private EcsFilter<CellUnitDataCom, ToolWeaponC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitLevFilter = default;
+        private EcsFilter<VisibleC, CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilt = default;
 
         public void Run()
         {
-            foreach (byte idxCurCell in _cellUnitFilter)
+            foreach (byte idx_0 in _cellUnitFilter)
             {
-                ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxCurCell);
-                ref var twUnitC = ref _cellUnitFilter.Get2(idxCurCell);
-                ref var curVisUnitCom = ref _cellUnitFilter.Get3(idxCurCell);
+                ref var unitC_0 = ref _cellUnitFilter.Get1(idx_0);
+                ref var levelUnitC_0 = ref _cellUnitLevFilter.Get2(idx_0);
 
-                ref var curMainUnitViewCom = ref _cellUnitViewFilt.Get1(idxCurCell);
-                ref var curExtraUnitViewCom = ref _cellUnitViewFilt.Get2(idxCurCell);
+                ref var twUnitC_0 = ref _cellUnitFilter.Get2(idx_0);
 
-                curMainUnitViewCom.Enable_SR(false);
-                curExtraUnitViewCom.Disable_SR();
+                ref var visUnitC_0 = ref _cellUnitViewFilt.Get1(idx_0);
+                ref var mainUnitC_0 = ref _cellUnitViewFilt.Get2(idx_0);
+                ref var extraUnitC_0 = ref _cellUnitViewFilt.Get3(idx_0);
 
 
-                if (curUnitDatCom.HaveUnit)
+                mainUnitC_0.Enable_SR(false);
+                extraUnitC_0.Disable_SR();
+
+                if (unitC_0.HaveUnit)
                 {
-                    if (curVisUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
+                    if (visUnitC_0.IsVisibled(WhoseMoveC.CurPlayer))
                     {
-                        curMainUnitViewCom.Enable_SR(true);
-                        curMainUnitViewCom.SetSprite(curUnitDatCom.UnitType, curUnitDatCom.LevelUnitType);
+                        mainUnitC_0.Enable_SR(true);
+                        mainUnitC_0.SetSprite(unitC_0.UnitType, levelUnitC_0.LevelUnitType);
 
 
-                        if (curUnitDatCom.Is(UnitTypes.Pawn))
+                        if (unitC_0.Is(UnitTypes.Pawn))
                         {
-                            if (twUnitC.HaveToolWeap)
+                            if (twUnitC_0.HaveToolWeap)
                             {
-                                curExtraUnitViewCom.Enable_SR();
-                                curExtraUnitViewCom.SetToolWeapon_Sprite(twUnitC.ToolWeapType, twUnitC.LevelTWType);
+                                extraUnitC_0.Enable_SR();
+                                extraUnitC_0.SetToolWeapon_Sprite(twUnitC_0.ToolWeapType, twUnitC_0.LevelTWType);
                             }
                         }
 
-                        else if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                        else if (unitC_0.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                         {
                         }
 
 
-                        curMainUnitViewCom.SetAlpha(curVisUnitCom.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayer)));
-                        curExtraUnitViewCom.SetAlpha(curVisUnitCom.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayer)));
+                        mainUnitC_0.SetAlpha(visUnitC_0.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayer)));
+                        extraUnitC_0.SetAlpha(visUnitC_0.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayer)));
                     }
                 }
             }

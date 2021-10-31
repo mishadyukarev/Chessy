@@ -4,11 +4,10 @@ namespace Scripts.Game
 {
     public struct CellUnitDataCom
     {
-        public UnitTypes UnitType;
+        private UnitTypes _unitType;
+
+        public UnitTypes UnitType => _unitType;
         public bool HaveUnit => UnitType != UnitTypes.None;
-        public void DefUnitType() => UnitType = default;
-        public bool Is(UnitTypes unitType) => UnitType.Is(unitType);
-        public bool Is(UnitTypes[] unitTypes) => UnitType.Is(unitTypes);
         public bool IsMelee
         {
             get
@@ -26,13 +25,26 @@ namespace Scripts.Game
             }
         }
 
-        public LevelUnitTypes LevelUnitType;
 
 
-        public void Set(CellUnitDataCom newUnit)
+        public void SetUnit(UnitTypes unitType) 
         {
-            UnitType = newUnit.UnitType;
-            LevelUnitType = newUnit.LevelUnitType;
+            if (HaveUnit) throw new Exception("It's got unit");
+
+            _unitType = unitType;
         }
+        public void NoneUnit()
+        {
+            if (!HaveUnit) throw new Exception("It's not got unit");
+
+            _unitType = UnitTypes.None;
+        }
+        public void Sync(UnitTypes unitType)
+        {
+            _unitType = unitType;
+        }
+
+        public bool Is(UnitTypes unitType) => UnitType.Is(unitType);
+        public bool Is(UnitTypes[] unitTypes) => UnitType.Is(unitTypes);
     }
 }

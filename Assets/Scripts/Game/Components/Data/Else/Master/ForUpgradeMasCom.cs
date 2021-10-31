@@ -4,6 +4,6 @@
     {
         public byte IdxForUpgradeUnit { get; set; }
 
-        public BuildingTypes BuildingType { get; set; }
+        public BuildTypes BuildingType { get; set; }
     }
 }

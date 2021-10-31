@@ -3,26 +3,11 @@ using System.Collections.Generic;
 
 namespace Scripts.Game
 {
-    public struct CellEnvironmentDataC
+    public struct CellEnvDataC
     {
         private Dictionary<EnvirTypes, bool> _haveEnvir;
         private Dictionary<EnvirTypes, int> _amountResours;
 
-        public int NeedAmountSteps
-        {
-            get
-            {
-                int amountSteps = 1;         
-
-                if (Have(EnvirTypes.AdultForest))
-                    amountSteps += UnitValues.NeedAmountSteps(EnvirTypes.AdultForest);
-
-                if (Have(EnvirTypes.Hill))
-                    amountSteps += UnitValues.NeedAmountSteps(EnvirTypes.Hill);
-
-                return amountSteps;
-            }
-        }
         public Dictionary<EnvirTypes, bool> Envronments
         {
             get
@@ -39,7 +24,7 @@ namespace Scripts.Game
             }
         }
 
-        public CellEnvironmentDataC(Dictionary<EnvirTypes, bool> haveCellEnvironments)
+        public CellEnvDataC(Dictionary<EnvirTypes, bool> haveCellEnvironments)
         {
             _haveEnvir = haveCellEnvironments;
             _amountResours = new Dictionary<EnvirTypes, int>();
@@ -51,30 +36,29 @@ namespace Scripts.Game
             }
         }
 
-        private void CheckDef(EnvirTypes envType)
-        {
-            if (envType == default) throw new Exception();
-        }
-
         public bool Have(EnvirTypes envType)
         {
             if (envType == default) throw new Exception();
             return _haveEnvir[envType];
         }
-
+        public bool Have(EnvirTypes[] envTypes)
+        {
+            foreach (var envType in envTypes) if (Have(envType)) return true;
+            return false;
+        }
         public int AmountRes(EnvirTypes envType)
         {
-            CheckDef(envType);
+            if (envType == default) throw new Exception();
             return _amountResours[envType];
         }
         public void SetAmountRes(EnvirTypes envType, int value)
         {
-            CheckDef(envType);
+            if (envType == default) throw new Exception();
             _amountResours[envType] = value;
         }
         public byte MaxAmountRes(EnvirTypes envType)
         {
-            CheckDef(envType);
+            if (envType == default) throw new Exception();
             return EnvironValues.MaxAmount(envType);
         }
         public void SetMaxAmountRes(EnvirTypes envType) => SetAmountRes(envType, MaxAmountRes(envType));
@@ -83,21 +67,20 @@ namespace Scripts.Game
         public void TakeAmountRes(EnvirTypes envType, int taking = 1) => SetAmountRes(envType, AmountRes(envType) - taking);
         public bool HaveRes(EnvirTypes envType) => AmountRes(envType) > 0;
         public bool HaveMaxRes(EnvirTypes envType) => AmountRes(envType) >= MaxAmountRes(envType);
-
-
-
-        public void Sync(EnvirTypes envType, bool haveEnv, byte amountRes)
+        public void Set(EnvirTypes envType, bool haveEnv, byte amountRes)
         {
             _haveEnvir[envType] = haveEnv;
             _amountResours[envType] = amountRes;
         }
         public void Reset(EnvirTypes envType)
         {
-            if (_haveEnvir[envType] == false) throw new Exception();
-            Sync(envType, default, default);
+            if (!Have(envType)) throw new Exception();
+            Set(envType, default, default);
         }
         public void SetNew(EnvirTypes envType)
         {
+            if (Have(envType)) throw new Exception();
+
             byte randAmountRes = 0;
             switch (envType)
             {
@@ -125,7 +108,7 @@ namespace Scripts.Game
                 default:
                     throw new Exception();
             }
-            Sync(envType, true, randAmountRes);
+            Set(envType, true, randAmountRes);
         }
     }
 }

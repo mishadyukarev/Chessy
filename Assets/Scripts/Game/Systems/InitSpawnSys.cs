@@ -15,14 +15,15 @@ namespace Scripts.Game
 
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellViewC, CellDataC> _cellViewFilt = default;
-        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellCloudsDataC> _cellWeatherFilt = default;
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
 
-        private readonly EcsFilter<CellUnitDataCom, HpUnitC, DamageComponent, StepComponent> _cellUnitBaseFilt;
-        private readonly EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, ThirstyC, OwnerCom> _cellUnitOtherFilt;
+        private readonly EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt;
+        private readonly EcsFilter<CellUnitDataCom, HpUnitC, DamageComponent, StepComponent> _cellUnitStatsFilt;
+        private readonly EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, ThirstyUnitC> _cellUnitOtherFilt;
         private readonly EcsFilter<CellUnitDataCom, VisibleC, CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilt;
 
 
@@ -120,7 +121,7 @@ namespace Scripts.Game
                         .Replace(new CellDataC(cellView_GO))
                         .Replace(new CellViewC(cellView_GO))
 
-                        .Replace(new CellEnvironmentDataC(new Dictionary<EnvirTypes, bool>()))
+                        .Replace(new CellEnvDataC(new Dictionary<EnvirTypes, bool>()))
                         .Replace(new CellEnvironViewCom(curParentCell_GO))
                         .Replace(new CellFireDataComponent())
                         .Replace(new CellFireViewComponent(curParentCell_GO))
@@ -134,7 +135,7 @@ namespace Scripts.Game
 
 
                     _curGameWorld.NewEntity()
-                         .Replace(new CellBuildDataCom())
+                         .Replace(new CellBuildDataC())
                          .Replace(new OwnerCom())
                          .Replace(new VisibleC(true))
                          .Replace(new CellBuildViewComponent(curParentCell_GO));
@@ -143,6 +144,9 @@ namespace Scripts.Game
                     _curGameWorld.NewEntity()
                          .Replace(new CellUnitDataCom())
 
+                         .Replace(new LevelUnitC())
+                         .Replace(new OwnerCom())
+
                          .Replace(new HpUnitC())
                          .Replace(new DamageComponent())
                          .Replace(new StepComponent())
@@ -150,8 +154,7 @@ namespace Scripts.Game
                          .Replace(new ConditionUnitC())
                          .Replace(new ToolWeaponC())
                          .Replace(new UnitEffectsC(true))
-                         .Replace(new ThirstyC())
-                         .Replace(new OwnerCom())
+                         .Replace(new ThirstyUnitC())
 
                          .Replace(new VisibleC(true))
                          .Replace(new CellUnitMainViewCom(curParentCell_GO))
@@ -178,7 +181,7 @@ namespace Scripts.Game
                 .Replace(new GenerZoneViewC(generalZoneGO))
                 .Replace(new BackgroundC(backGroundGO, PhotonNetwork.IsMasterClient))
                 .Replace(new WhoseMoveC(PlayerTypes.First))
-                .Replace(new BuildsInGameC(true))
+                .Replace(new WhereBuildsC(true))
                 .Replace(new WindC(DirectTypes.Right))
                 .Replace(new CameraC(Camera.main, new Vector3(7.4f, 4.8f, -2)))
                 .Replace(new UpgBuildsC(true))
@@ -192,9 +195,10 @@ namespace Scripts.Game
 
                 .Replace(new WhereCloudsC(true))
                 .Replace(new WhereEnvironmentC(true))
+                .Replace(new WhereUnitsC(true))
 
                 .Replace(new InventorUnitsC(true))
-                .Replace(new InventResourcesC(true))
+                .Replace(new InventResC(true))
                 .Replace(new InventorTWCom(true));
 
 
@@ -425,7 +429,7 @@ namespace Scripts.Game
 
                 for (ResourceTypes resourceTypes = Support.MinResType; resourceTypes < Support.MaxResType; resourceTypes++)
                 {
-                    InventResourcesC.SetAmountResAll(resourceTypes, EconomyValues.AmountResources(resourceTypes));
+                    InventResC.SetAmountResAll(resourceTypes, EconomyValues.AmountResources(resourceTypes));
                 }
             }
 
@@ -436,46 +440,49 @@ namespace Scripts.Game
 
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
-                    foreach (byte curIdxCell in _xyCellFilter)
+                    foreach (byte idx_0 in _xyCellFilter)
                     {
-                        var curXyCell = _xyCellFilter.GetXyCell(curIdxCell);
+                        var curXyCell = _xyCellFilter.GetXyCell(idx_0);
                         var x = curXyCell[0];
                         var y = curXyCell[1];
 
-                        ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
+                        ref var curEnvDatCom = ref _cellEnvFilter.Get1(idx_0);
 
-                        ref var curUnitCom = ref _cellUnitBaseFilt.Get1(curIdxCell);
-                        ref var curHpUnitC = ref _cellUnitBaseFilt.Get2(curIdxCell);
+                        ref var unitC_0 = ref _cellUnitStatsFilt.Get1(idx_0);
 
-                        ref var condUnitC = ref _cellUnitOtherFilt.Get2(curIdxCell);
-                        ref var twUnitC = ref _cellUnitOtherFilt.Get3(curIdxCell);
-                        ref var thirUnitC_0 = ref _cellUnitOtherFilt.Get4(curIdxCell);
-                        ref var curOwnUnitCom = ref _cellUnitOtherFilt.Get5(curIdxCell);
+                        ref var levUnitC_0 = ref _cellUnitMainFilt.Get2(idx_0);
+                        ref var ownUnitC_0 = ref _cellUnitMainFilt.Get3(idx_0);
 
-                        ref var curBuildCom = ref _cellBuildFilter.Get1(curIdxCell);
-                        ref var curOwnBuildCom = ref _cellBuildFilter.Get2(curIdxCell);
+                        ref var curHpUnitC = ref _cellUnitStatsFilt.Get2(idx_0);
+
+                        ref var condUnitC = ref _cellUnitOtherFilt.Get2(idx_0);
+                        ref var twUnitC = ref _cellUnitOtherFilt.Get3(idx_0);
+                        ref var thirUnitC_0 = ref _cellUnitOtherFilt.Get4(idx_0);
+
+                        ref var buildC_0 = ref _cellBuildFilter.Get1(idx_0);
+                        ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idx_0);
 
                         if (x == 7 && y == 6)
                         {
                             if (curEnvDatCom.Have(EnvirTypes.Mountain))
                             {
                                 curEnvDatCom.Reset(EnvirTypes.Mountain);
-                                WhereEnvironmentC.Remove(EnvirTypes.Mountain, curIdxCell);
+                                WhereEnvironmentC.Remove(EnvirTypes.Mountain, idx_0);
                             }
                             if (curEnvDatCom.Have(EnvirTypes.AdultForest))
                             {
                                 curEnvDatCom.Reset(EnvirTypes.AdultForest);
-                                WhereEnvironmentC.Remove(EnvirTypes.AdultForest, curIdxCell);
+                                WhereEnvironmentC.Remove(EnvirTypes.AdultForest, idx_0);
                             }
 
 
 
-                            curUnitCom.UnitType = UnitTypes.King;
-                            curUnitCom.LevelUnitType = LevelUnitTypes.Wood;
+                            unitC_0.SetUnit(UnitTypes.King);
+                            levUnitC_0.SetNewLevel(LevelUnitTypes.Wood);
                             curHpUnitC.AmountHp = 1;
-                            thirUnitC_0.SetMaxWater(curUnitCom.UnitType);
+                            thirUnitC_0.SetMaxWater(unitC_0.UnitType);
                             condUnitC.CondUnitType = CondUnitTypes.Protected;
-                            curOwnUnitCom.PlayerType = PlayerTypes.Second;
+                            ownUnitC_0.SetOwner(PlayerTypes.Second);
                         }
 
                         else if (x == 8 && y == 6)
@@ -483,16 +490,17 @@ namespace Scripts.Game
                             if (curEnvDatCom.Have(EnvirTypes.Mountain))
                             {
                                 curEnvDatCom.Reset(EnvirTypes.Mountain);
-                                WhereEnvironmentC.Remove(EnvirTypes.Mountain, curIdxCell);
+                                WhereEnvironmentC.Remove(EnvirTypes.Mountain, idx_0);
                             }
                             if (curEnvDatCom.Have(EnvirTypes.AdultForest))
                             {
                                 curEnvDatCom.Reset(EnvirTypes.AdultForest);
-                                WhereEnvironmentC.Remove(EnvirTypes.AdultForest, curIdxCell);
+                                WhereEnvironmentC.Remove(EnvirTypes.AdultForest, idx_0);
                             }
 
-                            curBuildCom.BuildType = BuildingTypes.City;
-                            curOwnBuildCom.PlayerType = PlayerTypes.Second;
+                            buildC_0.SetBuild(BuildTypes.City);
+                            ownBuildC_0.SetOwner(PlayerTypes.Second);
+                            WhereBuildsC.Add(ownBuildC_0.Owner, buildC_0.BuildType, idx_0);
                         }
 
                         else if (x == 6 && y == 6 || x == 9 && y == 6 || x <= 9 && x >= 6 && y == 5 || x <= 9 && x >= 6 && y == 7)
@@ -500,12 +508,12 @@ namespace Scripts.Game
                             if (curEnvDatCom.Have(EnvirTypes.Mountain))
                             {
                                 curEnvDatCom.Reset(EnvirTypes.Mountain);
-                                WhereEnvironmentC.Remove(EnvirTypes.Mountain, curIdxCell);
+                                WhereEnvironmentC.Remove(EnvirTypes.Mountain, idx_0);
                             }
 
-                            curUnitCom.UnitType = UnitTypes.Pawn;
-                            thirUnitC_0.SetMaxWater(curUnitCom.UnitType);
-                            curUnitCom.LevelUnitType = LevelUnitTypes.Wood;
+                            unitC_0.SetUnit(UnitTypes.Pawn);
+                            levUnitC_0.SetNewLevel(LevelUnitTypes.Wood);
+                            thirUnitC_0.SetMaxWater(unitC_0.UnitType);
 
                             int rand = UnityEngine.Random.Range(0, 100);
 
@@ -522,7 +530,7 @@ namespace Scripts.Game
                             }
                             curHpUnitC.AmountHp = 100;
                             condUnitC.CondUnitType = CondUnitTypes.Protected;
-                            curOwnUnitCom.PlayerType = PlayerTypes.Second;
+                            ownUnitC_0.SetOwner(PlayerTypes.Second);
                         }
                     }
                 }
@@ -535,7 +543,7 @@ namespace Scripts.Game
 
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
-                    InventResourcesC.Set(PlayerTypes.Second, ResourceTypes.Food, 999999);
+                    InventResC.Set(PlayerTypes.Second, ResourceTypes.Food, 999999);
                 }
             }
 

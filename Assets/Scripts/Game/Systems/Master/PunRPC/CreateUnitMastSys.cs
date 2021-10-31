@@ -18,11 +18,11 @@ namespace Scripts.Game
             var playerSend = WhoseMoveC.WhoseMove;
 
 
-            if (BuildsInGameC.IsSettedCity(playerSend))
+            if (WhereBuildsC.IsSettedCity(playerSend))
             {
-                if (InventResourcesC.CanCreateUnit(playerSend, unitTypeForCreating, out var needRes))
+                if (InventResC.CanCreateUnit(playerSend, unitTypeForCreating, out var needRes))
                 {
-                    InventResourcesC.BuyCreateUnit(playerSend, unitTypeForCreating);
+                    InventResC.BuyCreateUnit(playerSend, unitTypeForCreating);
                     InventorUnitsC.AddUnitsInInventor(playerSend, unitTypeForCreating, LevelUnitTypes.Wood);
 
                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);

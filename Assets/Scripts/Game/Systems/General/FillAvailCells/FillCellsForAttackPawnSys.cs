@@ -5,7 +5,7 @@ namespace Scripts.Game
     internal sealed class FillCellsForAttackPawnSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom> _cellUnitFilt = default;
         private EcsFilter<CellUnitDataCom, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
 
@@ -28,25 +28,24 @@ namespace Scripts.Game
                         curDurect1 += 1;
                         var idxAround = _xyCellFilter.GetIdxCell(xy1);
 
-                        ref var aroEnvrDatCom = ref _cellEnvDataFilter.Get1(idxAround);
-                        ref var aroUnitDatCom = ref _cellUnitFilt.Get1(idxAround);
-                        ref var aroOwnUnitCom = ref _cellUnitFilt.Get3(idxAround);
+                        ref var envC_1 = ref _cellEnvDataFilter.Get1(idxAround);
+                        ref var unitC_1 = ref _cellUnitFilt.Get1(idxAround);
+                        ref var ownUnitC_1 = ref _cellUnitFilt.Get3(idxAround);
 
-                        if (!aroEnvrDatCom.Have(EnvirTypes.Mountain))
+                        if (!envC_1.Have(EnvirTypes.Mountain))
                         {
-                            if (aroEnvrDatCom.NeedAmountSteps <= curStepUnitC.AmountSteps 
-                                || curStepUnitC.HaveMaxSteps(effUnitC_0, curUnitDatCom.UnitType))
+                            if (curStepUnitC.HaveStepsForDoing(envC_1) || curStepUnitC.HaveMaxSteps(effUnitC_0, curUnitDatCom.UnitType))
                             {
-                                if (aroUnitDatCom.HaveUnit)
+                                if (unitC_1.HaveUnit)
                                 {
-                                    if (!aroOwnUnitCom.Is(curOnUnitCom.PlayerType))
+                                    if (!ownUnitC_1.Is(curOnUnitCom.Owner))
                                     {
                                         if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
                                             || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
                                         {
-                                            CellsAttackC.Add(curOnUnitCom.PlayerType, AttackTypes.Simple, curIdx, idxAround);
+                                            CellsAttackC.Add(curOnUnitCom.Owner, AttackTypes.Simple, curIdx, idxAround);
                                         }
-                                        else CellsAttackC.Add(curOnUnitCom.PlayerType, AttackTypes.Unique, curIdx, idxAround);
+                                        else CellsAttackC.Add(curOnUnitCom.Owner, AttackTypes.Unique, curIdx, idxAround);
                                     }
                                 }
                             }

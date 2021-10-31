@@ -25,10 +25,10 @@ namespace Scripts.Game
 
             var buildTypeForUpgrade = _forUpgradeFilter.Get1(0).BuildingType;
 
-            if (InventResourcesC.CanUpgradeBuildings(playerSend, buildTypeForUpgrade, out var needRes))
+            if (InventResC.CanUpgradeBuildings(playerSend, buildTypeForUpgrade, out var needRes))
             {
-                InventResourcesC.BuyUpgradeBuildings(playerSend, buildTypeForUpgrade);
-                UpgBuildsC.AddAmountUpgrades(playerSend, buildTypeForUpgrade);
+                InventResC.BuyUpgradeBuildings(playerSend, buildTypeForUpgrade);
+                UpgBuildsC.AddAmountUpgs(playerSend, buildTypeForUpgrade);
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
             }

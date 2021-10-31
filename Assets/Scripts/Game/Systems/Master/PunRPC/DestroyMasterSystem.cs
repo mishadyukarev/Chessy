@@ -8,8 +8,8 @@ namespace Scripts.Game
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
 
         private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
 
         private EcsFilter<EndGameDataUIC> _endGameFilter = default;
 
@@ -20,8 +20,8 @@ namespace Scripts.Game
 
             ref var curUnitDataCom = ref _cellUnitFilter.Get1(idxCellForDestory);
             ref var curOwnUnitCom = ref _cellUnitFilter.Get3(idxCellForDestory);
-            ref var curBuildDataCom = ref _cellBuildFilter.Get1(idxCellForDestory);
-            ref var curOwnerBuildCom = ref _cellBuildFilter.Get2(idxCellForDestory);
+            ref var buildC_0 = ref _cellBuildFilter.Get1(idxCellForDestory);
+            ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idxCellForDestory);
             ref var curEnvDataCom = ref _cellEnvFilter.Get1(idxCellForDestory);
 
 
@@ -29,19 +29,20 @@ namespace Scripts.Game
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
 
-                if (curBuildDataCom.Is(BuildingTypes.City))
+                if (buildC_0.Is(BuildTypes.City))
                 {
-                    EndGameDataUIC.PlayerWinner = curOwnUnitCom.PlayerType;
+                    EndGameDataUIC.PlayerWinner = curOwnUnitCom.Owner;
                 }
                 _cellUnitFilter.Get2(idxCellForDestory).TakeSteps();
 
-                if (curBuildDataCom.Is(BuildingTypes.Farm))
+                if (buildC_0.Is(BuildTypes.Farm))
                 {
                     curEnvDataCom.Reset(EnvirTypes.Fertilizer);
                     WhereEnvironmentC.Remove(EnvirTypes.Fertilizer, idxCellForDestory);
                 }
 
-                curBuildDataCom.Def();
+                WhereBuildsC.Remove(ownBuildC_0.Owner, buildC_0.BuildType, idxCellForDestory);
+                buildC_0.NoneBuild();
             }
             else
             {

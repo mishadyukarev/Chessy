@@ -77,13 +77,13 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
         }
-        public static int AmountResForUpgrade(BuildingTypes buildingType, ResourceTypes resourceType)
+        public static int AmountResForUpgrade(BuildTypes buildingType, ResourceTypes resourceType)
         {
             switch (buildingType)
             {
-                case BuildingTypes.None: throw new Exception();
-                case BuildingTypes.City: throw new Exception();
-                case BuildingTypes.Farm:
+                case BuildTypes.None: throw new Exception();
+                case BuildTypes.City: throw new Exception();
+                case BuildTypes.Farm:
                     switch (resourceType)
                     {
                         case ResourceTypes.None: throw new Exception();
@@ -94,7 +94,7 @@ namespace Scripts.Game
                         case ResourceTypes.Gold: return 3;
                         default: throw new Exception();
                     }
-                case BuildingTypes.Woodcutter:
+                case BuildTypes.Woodcutter:
                     switch (resourceType)
                     {
                         case ResourceTypes.None: throw new Exception();
@@ -105,7 +105,7 @@ namespace Scripts.Game
                         case ResourceTypes.Gold: return 3;
                         default: throw new Exception();
                     }
-                case BuildingTypes.Mine:
+                case BuildTypes.Mine:
                     switch (resourceType)
                     {
                         case ResourceTypes.None: throw new Exception();
@@ -133,7 +133,7 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
         }
-        public static int AmountResForBuild(BuildingTypes buildingType, ResourceTypes resourceType)
+        public static int AmountResForBuild(BuildTypes buildingType, ResourceTypes resourceType)
         {
             switch (resourceType)
             {
@@ -142,51 +142,51 @@ namespace Scripts.Game
                 case ResourceTypes.Food:
                     switch (buildingType)
                     {
-                        case BuildingTypes.None: throw new Exception();
-                        case BuildingTypes.City: throw new Exception();
-                        case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.Woodcutter: throw new Exception();
-                        case BuildingTypes.Mine: return 0;
+                        case BuildTypes.None: throw new Exception();
+                        case BuildTypes.City: throw new Exception();
+                        case BuildTypes.Farm: return 0;
+                        case BuildTypes.Woodcutter: throw new Exception();
+                        case BuildTypes.Mine: return 0;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Wood:
                     switch (buildingType)
                     {
-                        case BuildingTypes.None: throw new Exception();
-                        case BuildingTypes.City: throw new Exception();
-                        case BuildingTypes.Farm: return 5;
-                        case BuildingTypes.Woodcutter: throw new Exception();
-                        case BuildingTypes.Mine: return 5;
+                        case BuildTypes.None: throw new Exception();
+                        case BuildTypes.City: throw new Exception();
+                        case BuildTypes.Farm: return 5;
+                        case BuildTypes.Woodcutter: throw new Exception();
+                        case BuildTypes.Mine: return 5;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Ore:
                     switch (buildingType)
                     {
-                        case BuildingTypes.None: throw new Exception();
-                        case BuildingTypes.City: throw new Exception();
-                        case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.Woodcutter: throw new Exception();
-                        case BuildingTypes.Mine: return 0;
+                        case BuildTypes.None: throw new Exception();
+                        case BuildTypes.City: throw new Exception();
+                        case BuildTypes.Farm: return 0;
+                        case BuildTypes.Woodcutter: throw new Exception();
+                        case BuildTypes.Mine: return 0;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Iron:
                     switch (buildingType)
                     {
-                        case BuildingTypes.None: throw new Exception();
-                        case BuildingTypes.City: throw new Exception();
-                        case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.Woodcutter: throw new Exception();
-                        case BuildingTypes.Mine: return 0;
+                        case BuildTypes.None: throw new Exception();
+                        case BuildTypes.City: throw new Exception();
+                        case BuildTypes.Farm: return 0;
+                        case BuildTypes.Woodcutter: throw new Exception();
+                        case BuildTypes.Mine: return 0;
                         default: throw new Exception();
                     }
                 case ResourceTypes.Gold:
                     switch (buildingType)
                     {
-                        case BuildingTypes.None: throw new Exception();
-                        case BuildingTypes.City: throw new Exception();
-                        case BuildingTypes.Farm: return 0;
-                        case BuildingTypes.Woodcutter: throw new Exception();
-                        case BuildingTypes.Mine: return 0;
+                        case BuildTypes.None: throw new Exception();
+                        case BuildTypes.City: throw new Exception();
+                        case BuildTypes.Farm: return 0;
+                        case BuildTypes.Woodcutter: throw new Exception();
+                        case BuildTypes.Mine: return 0;
                         default: throw new Exception();
                     }
                 default: throw new Exception();
@@ -312,9 +312,6 @@ namespace Scripts.Game
 
         #region Benefit
 
-        public const int BENEFIT_FOOD_FARM = 1;
-        public const int BENEFIT_WOOD_WOODCUTTER = 1;
-        public const int BENEFIT_ORE_MINE = 1;
 
         #endregion
     }

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Scripts.Game
 {
-    public readonly struct InventResourcesC
+    public readonly struct InventResC
     {
         private static Dictionary<PlayerTypes, Dictionary<ResourceTypes, int>> _amountResources;
 
-        public InventResourcesC(bool needNew) : this()
+        public InventResC(bool needNew) : this()
         {
             if (needNew)
             {
@@ -42,7 +42,7 @@ namespace Scripts.Game
 
 
 
-        public static bool CanCreateBuild(PlayerTypes playerType, BuildingTypes buildingType, out Dictionary<ResourceTypes, int> needRes)
+        public static bool CanCreateBuild(PlayerTypes playerType, BuildTypes buildingType, out Dictionary<ResourceTypes, int> needRes)
         {
             needRes = new Dictionary<ResourceTypes, int>();
             var canCreatBuild = true;
@@ -57,7 +57,7 @@ namespace Scripts.Game
 
             return canCreatBuild;
         }
-        public static void BuyBuild(PlayerTypes playerType, BuildingTypes buildingType)
+        public static void BuyBuild(PlayerTypes playerType, BuildTypes buildingType)
         {
             for (ResourceTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
                 Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForBuild(buildingType, resType));
@@ -108,7 +108,7 @@ namespace Scripts.Game
             AddAmountRes(playerType, ResourceTypes.Gold, 1);
         }
 
-        public static bool CanUpgradeBuildings(PlayerTypes playerType, BuildingTypes buildingType, out Dictionary<ResourceTypes, int> needRes)
+        public static bool CanUpgradeBuildings(PlayerTypes playerType, BuildTypes buildingType, out Dictionary<ResourceTypes, int> needRes)
         {
             needRes = new Dictionary<ResourceTypes, int>();
             var canCreatBuild = true;
@@ -123,7 +123,7 @@ namespace Scripts.Game
 
             return canCreatBuild;
         }
-        public static void BuyUpgradeBuildings(PlayerTypes playerType, BuildingTypes buildingType)
+        public static void BuyUpgradeBuildings(PlayerTypes playerType, BuildTypes buildingType)
         {
             for (ResourceTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
                 Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForUpgrade(buildingType, resType));

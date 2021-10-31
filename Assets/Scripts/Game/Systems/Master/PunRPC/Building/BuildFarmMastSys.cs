@@ -6,11 +6,11 @@ namespace Scripts.Game
     {
         private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
 
-        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellUnitDataCom, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
 
-        private EcsFilter<BuildsInGameC> _buildsFilt = default;
+        private EcsFilter<WhereBuildsC> _buildsFilt = default;
 
         public void Run()
         {
@@ -21,8 +21,8 @@ namespace Scripts.Game
             var idxForBuild = forBuildMasCom.IdxForBuild;
             var forBuildType = forBuildMasCom.BuildingTypeForBuidling;
 
-            ref var curBuildDatCom = ref _cellBuildFilter.Get1(idxForBuild);
-            ref var curOwnBuildCom = ref _cellBuildFilter.Get2(idxForBuild);
+            ref var buildC_0 = ref _cellBuildFilter.Get1(idxForBuild);
+            ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idxForBuild);
 
             ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForBuild);
             ref var curStepUnitC = ref _cellUnitFilter.Get2(idxForBuild);
@@ -31,13 +31,13 @@ namespace Scripts.Game
 
             var playerSend = WhoseMoveC.WhoseMove;
 
-            if (forBuildType == BuildingTypes.Farm)
+            if (forBuildType == BuildTypes.Farm)
             {
                 if (curStepUnitC.HaveMinSteps)
                 {
                     if (!curCellEnvCom.Have(EnvirTypes.AdultForest) && !curCellEnvCom.Have(EnvirTypes.YoungForest))
                     {
-                        if (InventResourcesC.CanCreateBuild(playerSend, forBuildType, out var needRes))
+                        if (InventResC.CanCreateBuild(playerSend, forBuildType, out var needRes))
                         {
                             RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
@@ -51,10 +51,11 @@ namespace Scripts.Game
                                 WhereEnvironmentC.Add(EnvirTypes.Fertilizer, idxForBuild);
                             }
 
-                            InventResourcesC.BuyBuild(playerSend, forBuildType);
+                            InventResC.BuyBuild(playerSend, forBuildType);
 
-                            curBuildDatCom.BuildType = forBuildType;
-                            curOwnBuildCom.PlayerType = playerSend;
+                            buildC_0.SetBuild(forBuildType);
+                            ownBuildC_0.SetOwner(playerSend);
+                            WhereBuildsC.Add(ownBuildC_0.Owner, buildC_0.BuildType, idxForBuild);
 
                             curStepUnitC.TakeSteps();
                         }

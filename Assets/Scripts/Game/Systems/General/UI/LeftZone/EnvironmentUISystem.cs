@@ -5,8 +5,8 @@ namespace Scripts.Game
 {
     internal sealed class EnvironmentUISystem : IEcsRunSystem
     {
-        private EcsFilter<CellBuildDataCom> _cellBuildFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
+        private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
 
         public void Run()
@@ -15,7 +15,7 @@ namespace Scripts.Game
             ref var selEnvDatC = ref _cellEnvFilter.Get1(SelectorC.IdxSelCell);
 
 
-            if (SelectorC.IsSelCell && !selBuildDatC.Is(BuildingTypes.City))
+            if (SelectorC.IsSelCell && !selBuildDatC.Is(BuildTypes.City))
             {
                 EnvirZoneViewUICom.SetActiveParent(true);
             }

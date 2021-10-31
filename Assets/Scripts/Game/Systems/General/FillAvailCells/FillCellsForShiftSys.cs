@@ -5,7 +5,7 @@ namespace Scripts.Game
     internal sealed class FillCellsForShiftSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellUnitDataCom, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataCom, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
 
@@ -16,14 +16,14 @@ namespace Scripts.Game
                 CellsForShiftCom.Clear(PlayerTypes.First, curIdxCell);
                 CellsForShiftCom.Clear(PlayerTypes.Second, curIdxCell);
 
-                ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
-                ref var curStepUnitC = ref _cellUnitFilter.Get2(curIdxCell);
+                ref var unitC_0 = ref _cellUnitFilter.Get1(curIdxCell);
+                ref var stepUnitC_0 = ref _cellUnitFilter.Get2(curIdxCell);
 
-                ref var effUnitC = ref _cellUnitOthFilt.Get2(curIdxCell);
-                ref var curOwnUnitCom = ref _cellUnitOthFilt.Get3(curIdxCell);
+                ref var effUnitC_0 = ref _cellUnitOthFilt.Get2(curIdxCell);
+                ref var ownUnitC_0 = ref _cellUnitOthFilt.Get3(curIdxCell);
 
 
-                if (curUnitDatCom.HaveUnit)
+                if (unitC_0.HaveUnit)
                 {
                     var xyCellsAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdxCell));
 
@@ -31,14 +31,17 @@ namespace Scripts.Game
                     {
                         var idxCell_1= _xyCellFilter.GetIdxCell(xy1);
 
-                        if (!_cellEnvDataFilter.Get1(idxCell_1).Have(EnvirTypes.Mountain))
+                        ref var unitC_1 = ref _cellUnitFilter.Get1(idxCell_1);
+                        ref var envC_1 = ref _cellEnvDataFilter.Get1(idxCell_1);
+
+
+                        if (!envC_1.Have(EnvirTypes.Mountain))
                         {
-                            if (!_cellUnitFilter.Get1(idxCell_1).HaveUnit)
+                            if (!unitC_1.HaveUnit)
                             {
-                                if (curStepUnitC.AmountSteps >= _cellEnvDataFilter.Get1(idxCell_1).NeedAmountSteps
-                                    || curStepUnitC.HaveMaxSteps(effUnitC, curUnitDatCom.UnitType))
+                                if (stepUnitC_0.HaveStepsForDoing(envC_1) || stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.UnitType))
                                 {
-                                    CellsForShiftCom.AddIdxCell(curOwnUnitCom.PlayerType, curIdxCell, idxCell_1);
+                                    CellsForShiftCom.AddIdxCell(ownUnitC_0.Owner, curIdxCell, idxCell_1);
                                 }
                             }
                         }

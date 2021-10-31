@@ -37,7 +37,7 @@ namespace Scripts.Game
                         {
                             if (twUnitC_forGive.HaveToolWeap)
                             {
-                                InventorTWCom.AddAmountTools(ownUnitC.PlayerType, twUnitC_forGive.ToolWeapType, twUnitC_forGive.LevelTWType);
+                                InventorTWCom.AddAmountTools(ownUnitC.Owner, twUnitC_forGive.ToolWeapType, twUnitC_forGive.LevelTWType);
 
                                 stepUnitC_forGive.TakeSteps();
                                 condUnitC_forGive.DefCondition();
@@ -59,9 +59,9 @@ namespace Scripts.Game
                             }
 
 
-                            else if (InventorTWCom.HaveTW(ownUnitC.PlayerType, tWTypeForGive, levelTWType))
+                            else if (InventorTWCom.HaveTW(ownUnitC.Owner, tWTypeForGive, levelTWType))
                             {
-                                InventorTWCom.TakeAmountTools(ownUnitC.PlayerType, tWTypeForGive, levelTWType);
+                                InventorTWCom.TakeAmountTools(ownUnitC.Owner, tWTypeForGive, levelTWType);
 
                                 twUnitC_forGive.ToolWeapType = tWTypeForGive;
                                 twUnitC_forGive.LevelTWType = levelTWType;
@@ -76,9 +76,9 @@ namespace Scripts.Game
 
                             else if (tWTypeForGive == ToolWeaponTypes.Pick)
                             {
-                                if (InventResourcesC.CanBuyTW(ownUnitC.PlayerType, ToolWeaponTypes.Pick, levelTWType, out var needRes))
+                                if (InventResC.CanBuyTW(ownUnitC.Owner, ToolWeaponTypes.Pick, levelTWType, out var needRes))
                                 {
-                                    InventResourcesC.BuyTW(ownUnitC.PlayerType, ToolWeaponTypes.Pick, levelTWType);
+                                    InventResC.BuyTW(ownUnitC.Owner, ToolWeaponTypes.Pick, levelTWType);
 
                                     twUnitC_forGive.ToolWeapType = tWTypeForGive;
                                     twUnitC_forGive.LevelTWType = levelTWType;
@@ -96,9 +96,9 @@ namespace Scripts.Game
 
                             else if (tWTypeForGive == ToolWeaponTypes.Sword)
                             {
-                                if (InventResourcesC.CanBuyTW(ownUnitC.PlayerType, ToolWeaponTypes.Sword, levelTWType, out var needRes))
+                                if (InventResC.CanBuyTW(ownUnitC.Owner, ToolWeaponTypes.Sword, levelTWType, out var needRes))
                                 {
-                                    InventResourcesC.BuyTW(ownUnitC.PlayerType, ToolWeaponTypes.Sword, levelTWType);
+                                    InventResC.BuyTW(ownUnitC.Owner, ToolWeaponTypes.Sword, levelTWType);
 
                                     twUnitC_forGive.ToolWeapType = tWTypeForGive;
                                     twUnitC_forGive.LevelTWType = levelTWType;
@@ -116,9 +116,9 @@ namespace Scripts.Game
 
                             else if (tWTypeForGive == ToolWeaponTypes.Shield)
                             {
-                                if (InventResourcesC.CanBuyTW(ownUnitC.PlayerType, tWTypeForGive, levelTWType, out var needRes))
+                                if (InventResC.CanBuyTW(ownUnitC.Owner, tWTypeForGive, levelTWType, out var needRes))
                                 {
-                                    InventResourcesC.BuyTW(ownUnitC.PlayerType, tWTypeForGive, levelTWType);
+                                    InventResC.BuyTW(ownUnitC.Owner, tWTypeForGive, levelTWType);
 
                                     twUnitC_forGive.ToolWeapType = tWTypeForGive;
                                     twUnitC_forGive.LevelTWType = levelTWType;

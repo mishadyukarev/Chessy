@@ -5,9 +5,9 @@ namespace Scripts.Game
     internal sealed class VisibUnitsBuildsSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellUnitDataCom, OwnerCom, VisibleC> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataCom, OwnerCom, VisibleC> _cellBuildFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerCom, VisibleC> _cellBuildFilt = default;
 
         public void Run()
         {
@@ -26,7 +26,7 @@ namespace Scripts.Game
                     ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
                     ref var curVisUnitCom = ref _cellUnitFilter.Get3(idxCurCell);
 
-                    curVisUnitCom.SetVisibled(curOwnUnitCom.PlayerType, true);
+                    curVisUnitCom.SetVisibled(curOwnUnitCom.Owner, true);
 
                     if (curEnvDataCom.Have(EnvirTypes.AdultForest))
                     {
@@ -43,7 +43,7 @@ namespace Scripts.Game
 
                             if (unitCom_1.HaveUnit)
                             {
-                                if (!ownUnitCom_1.Is(curOwnUnitCom.PlayerType))
+                                if (!ownUnitCom_1.Is(curOwnUnitCom.Owner))
                                 {
                                     isVisibledNextPlayer = true;
                                     break;
@@ -51,11 +51,11 @@ namespace Scripts.Game
                             }
                         }
 
-                        curVisUnitCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnUnitCom.PlayerType), isVisibledNextPlayer);
+                        curVisUnitCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnUnitCom.Owner), isVisibledNextPlayer);
                     }
                     else
                     {
-                        curVisUnitCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnUnitCom.PlayerType), true);
+                        curVisUnitCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnUnitCom.Owner), true);
                     }
 
                 }
@@ -68,7 +68,7 @@ namespace Scripts.Game
                     ref var curOwnBuildCom = ref _cellBuildFilt.Get2(idxCurCell);
                     ref var curVisBuildCom = ref _cellBuildFilt.Get3(idxCurCell);
 
-                    curVisBuildCom.SetVisibled(curOwnBuildCom.PlayerType, true);
+                    curVisBuildCom.SetVisibled(curOwnBuildCom.Owner, true);
 
                     if (curEnvDataCom.Have(EnvirTypes.AdultForest))
                     {
@@ -85,7 +85,7 @@ namespace Scripts.Game
 
                             if (aroUnitDataCom.HaveUnit)
                             {
-                                if (!arouOnUnitCom.Is(curOwnBuildCom.PlayerType))
+                                if (!arouOnUnitCom.Is(curOwnBuildCom.Owner))
                                 {
                                     isVisibledNextPlayer = true;
                                     break;
@@ -93,9 +93,9 @@ namespace Scripts.Game
                             }
                         }
 
-                        curVisBuildCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnBuildCom.PlayerType), isVisibledNextPlayer);
+                        curVisBuildCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnBuildCom.Owner), isVisibledNextPlayer);
                     }
-                    else curVisBuildCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnBuildCom.PlayerType), true);
+                    else curVisBuildCom.SetVisibled(WhoseMoveC.NextPlayerFrom(curOwnBuildCom.Owner), true);
                 }
 
             }

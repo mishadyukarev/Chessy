@@ -10,8 +10,8 @@ namespace Scripts.Game
         private EcsFilter<CellDataC> _cellDataFilt = default;
         private EcsFilter<CellUnitDataCom, HpUnitC, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireDataFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
-        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilt = default;
+        private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
         private EcsFilter<CellCloudsDataC> _cellCloudsFilt = default;
 
         public void Run()
@@ -60,7 +60,7 @@ namespace Scripts.Game
 
                             }
 
-                            curUnitCom.DefUnitType();
+                            curUnitCom.NoneUnit();
                         }
                     }
 
@@ -70,7 +70,7 @@ namespace Scripts.Game
                     {
                         if (curBuilCom.HaveBuild)
                         {
-                            curBuilCom.BuildType = default;
+                            curBuilCom.NoneBuild();
                         }
 
                         curEnvrC.Reset(EnvirTypes.AdultForest);

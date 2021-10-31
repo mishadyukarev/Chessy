@@ -9,9 +9,9 @@ namespace Scripts.Game
 
         private EcsFilter<XyCellComponent> _xyCellFilt = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
-        private EcsFilter<CellBuildDataCom, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellUnitDataCom, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
 
@@ -21,13 +21,13 @@ namespace Scripts.Game
             var forBuildType = forBuildMasCom.BuildingTypeForBuidling;
 
 
-            if (forBuildType == BuildingTypes.City)
+            if (forBuildType == BuildTypes.City)
             {
                 var sender = InfoC.Sender(MasGenOthTypes.Master);
                 var idxForBuild = forBuildMasCom.IdxForBuild;
 
-                ref var curBuildCom = ref _cellBuildFilter.Get1(idxForBuild);
-                ref var curOwnBuildCom = ref _cellBuildFilter.Get2(idxForBuild);
+                ref var buildC_0 = ref _cellBuildFilter.Get1(idxForBuild);
+                ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idxForBuild);
 
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForBuild);
                 ref var curStepUnitC = ref _cellUnitFilter.Get2(idxForBuild);
@@ -58,10 +58,15 @@ namespace Scripts.Game
                     {
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                        curBuildCom.BuildType = forBuildType;
-                        curOwnBuildCom.PlayerType = playerSend;
+                        if (buildC_0.HaveBuild)
+                        {
+                            WhereBuildsC.Remove(ownBuildC_0.Owner, buildC_0.BuildType, idxForBuild);
+                            buildC_0.NoneBuild();
+                        }
 
-                        BuildsInGameC.Add(playerSend, forBuildType, idxForBuild);
+                        buildC_0.SetBuild(forBuildType);
+                        ownBuildC_0.SetOwner(playerSend);
+                        WhereBuildsC.Add(playerSend, forBuildType, idxForBuild);
 
 
                         curStepUnitC.ZeroSteps();

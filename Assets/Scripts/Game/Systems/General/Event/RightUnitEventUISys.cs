@@ -11,12 +11,12 @@ namespace Scripts.Game
 
         public void Init()
         {
-            RightUniqueViewUIC.AddListener_Button(UniqueButtonTypes.First, delegate { ExecuteUniqueButton(UniqueButtonTypes.First); });
-            RightUniqueViewUIC.AddListener_Button(UniqueButtonTypes.Second, delegate { ExecuteUniqueButton(UniqueButtonTypes.Second); });
+            RightUniqueViewUIC.AddListener_Button(UniqueButtonTypes.First, delegate { ExecuteUnique_Button(UniqueButtonTypes.First); });
+            RightUniqueViewUIC.AddListener_Button(UniqueButtonTypes.Second, delegate { ExecuteUnique_Button(UniqueButtonTypes.Second); });
 
-            BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.First, delegate { ExecuteButton(BuildButtonTypes.First); });
-            BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.Second, delegate { ExecuteButton(BuildButtonTypes.Second); });
-            BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.Third, delegate { ExecuteButton(BuildButtonTypes.Third); });
+            BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.First, delegate { ExecuteBuild_Button(BuildButtonTypes.First); });
+            BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.Second, delegate { ExecuteBuild_Button(BuildButtonTypes.Second); });
+            BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.Third, delegate { ExecuteBuild_Button(BuildButtonTypes.Third); });
 
             CondUnitUIC.AddListener(CondUnitTypes.Protected, delegate { ConditionAbilityButton(CondUnitTypes.Protected); });
             CondUnitUIC.AddListener(CondUnitTypes.Relaxed, delegate { ConditionAbilityButton(CondUnitTypes.Relaxed); });
@@ -37,7 +37,7 @@ namespace Scripts.Game
             }
         }
 
-        private void ExecuteUniqueButton(UniqueButtonTypes uniqueButtonType)
+        private void ExecuteUnique_Button(UniqueButtonTypes uniqueButtonType)
         {
             if (WhoseMoveC.IsMyMove)
             {
@@ -48,26 +48,22 @@ namespace Scripts.Game
                         {
                             switch (RightUniqueDataUIC.AbilityType(UniqueButtonTypes.First))
                             {
-                                case AbilityTypes.None: throw new Exception();
-                                case AbilityTypes.FirePawn: 
+                                case UniqueAbilTypes.None: throw new Exception();
+                                case UniqueAbilTypes.FirePawn: 
                                     RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxSelCell); 
                                     break;
-                                case AbilityTypes.NoneFirePawn: 
+                                case UniqueAbilTypes.NoneFirePawn: 
                                     RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxSelCell); 
                                     break;
-                                case AbilityTypes.FireArcher: 
+                                case UniqueAbilTypes.FireArcher: 
                                     SelectorC.CellClickType = CellClickTypes.PickFire; 
                                     break;
-                                case AbilityTypes.Seed: 
+                                case UniqueAbilTypes.Seed: 
                                     RpcSys.SeedEnvironmentToMaster(SelectorC.IdxSelCell, EnvirTypes.YoungForest); 
                                     break;
-                                case AbilityTypes.CircularAttack: 
+                                case UniqueAbilTypes.CircularAttack: 
                                     RpcSys.CircularAttackKingToMaster(SelectorC.IdxSelCell); 
                                     break;
-                                case AbilityTypes.FarmBuild: throw new Exception();
-                                case AbilityTypes.MineBuild: throw new Exception();
-                                case AbilityTypes.CityBuild: throw new Exception();
-                                case AbilityTypes.Destroy: throw new Exception();
                                 default: throw new Exception();
                             }
                         }
@@ -108,7 +104,7 @@ namespace Scripts.Game
             }
         }
 
-        private void ExecuteButton(BuildButtonTypes buildButtonType)
+        private void ExecuteBuild_Button(BuildButtonTypes buildButtonType)
         {
             if (WhoseMoveC.IsMyMove)
             {
@@ -118,26 +114,27 @@ namespace Scripts.Game
                         throw new Exception();
 
                     case BuildButtonTypes.First:
-                        RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildingTypes.Farm);
+                        RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildTypes.Farm);
                         break;
 
                     case BuildButtonTypes.Second:
-                        RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildingTypes.Mine);
+                        RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildTypes.Mine);
                         break;
 
                     case BuildButtonTypes.Third:
                         switch (BuildAbilitDataUIC.AbilityType(buildButtonType))
                         {
-                            case AbilityTypes.CityBuild:
-                                {
-                                    RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildingTypes.City); 
-                                }
+                            case BuildAbilTypes.None: throw new Exception();
+                            case BuildAbilTypes.FarmBuild: throw new Exception();
+                            case BuildAbilTypes.MineBuild: throw new Exception();
+                            case BuildAbilTypes.CityBuild:
+                                RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildTypes.City);
                                 break;
-                            case AbilityTypes.Destroy:
-                                {
-                                    RpcSys.DestroyBuildingToMaster(SelectorC.IdxSelCell);
-                                }
+
+                            case BuildAbilTypes.Destroy:
+                                RpcSys.DestroyBuildingToMaster(SelectorC.IdxSelCell);
                                 break;
+
                             default: throw new Exception();
                         }
                         break;

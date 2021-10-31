@@ -5,7 +5,7 @@ namespace Scripts.Game
     internal sealed class FillCellsForAttackKingSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvDataFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellUnitDataCom, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataCom, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
 
@@ -37,13 +37,13 @@ namespace Scripts.Game
 
                         if (!envrDatC_1.Have(EnvirTypes.Mountain))
                         {
-                            if (envrDatC_1.NeedAmountSteps <= stepUnitC_0.AmountSteps || stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.UnitType))
+                            if (stepUnitC_0.HaveStepsForDoing(envrDatC_1) || stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.UnitType))
                             {
                                 if (unitDatC_1.HaveUnit)
                                 {
-                                    if (!ownUnitC_1.Is(ownUnitC_0.PlayerType))
+                                    if (!ownUnitC_1.Is(ownUnitC_0.Owner))
                                     {
-                                        CellsAttackC.Add(ownUnitC_0.PlayerType, AttackTypes.Simple, curIdxCell, idx_1);
+                                        CellsAttackC.Add(ownUnitC_0.Owner, AttackTypes.Simple, curIdxCell, idx_1);
                                     }
                                 }
                             }

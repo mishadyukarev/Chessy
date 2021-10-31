@@ -6,7 +6,7 @@ namespace Scripts.Game
     internal sealed class UniqueAbilitUISys : IEcsRunSystem
     {
         private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellEnvironmentDataC> _cellEnvFilter = default;
+        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataComponent> _cellFireFilter = default;
 
         public void Run()
@@ -30,7 +30,7 @@ namespace Scripts.Game
                     {
                         activeFirst = true;
                         RightUniqueViewUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.CircularAttack);
-                        RightUniqueDataUIC.SetAbilityType(UniqueButtonTypes.First, AbilityTypes.CircularAttack);
+                        RightUniqueDataUIC.SetAbilityType(UniqueButtonTypes.First, UniqueAbilTypes.CircularAttack);
                     }
                     else if (selUnitDatCom.Is(UnitTypes.Scout))
                     {
@@ -47,18 +47,18 @@ namespace Scripts.Game
                                 if (selFireDatCom.HaveFire)
                                 {
                                     RightUniqueViewUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.FireNone);
-                                    RightUniqueDataUIC.SetAbilityType(UniqueButtonTypes.First, AbilityTypes.NoneFirePawn);
+                                    RightUniqueDataUIC.SetAbilityType(UniqueButtonTypes.First, UniqueAbilTypes.NoneFirePawn);
                                 }
                                 else
                                 {
                                     RightUniqueViewUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.Fire);
-                                    RightUniqueDataUIC.SetAbilityType(UniqueButtonTypes.First, AbilityTypes.FirePawn);
+                                    RightUniqueDataUIC.SetAbilityType(UniqueButtonTypes.First, UniqueAbilTypes.FirePawn);
                                 }
                             }
                             else
                             {
                                 RightUniqueViewUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.YoungForest);
-                                RightUniqueDataUIC.SetAbilityType(UniqueButtonTypes.First, AbilityTypes.Seed);
+                                RightUniqueDataUIC.SetAbilityType(UniqueButtonTypes.First, UniqueAbilTypes.Seed);
                             }
                         }
 
@@ -66,7 +66,7 @@ namespace Scripts.Game
                         {
                             activeFirst = true;
                             RightUniqueViewUIC.Set_Sprite(UniqueButtonTypes.First, SpriteGameTypes.Fire);
-                            RightUniqueDataUIC.SetAbilityType(UniqueButtonTypes.First, AbilityTypes.FireArcher);
+                            RightUniqueDataUIC.SetAbilityType(UniqueButtonTypes.First, UniqueAbilTypes.FireArcher);
                         }
                     }
                 }

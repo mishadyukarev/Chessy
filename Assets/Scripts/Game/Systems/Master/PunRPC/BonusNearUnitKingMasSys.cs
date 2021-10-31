@@ -10,24 +10,24 @@ namespace Scripts.Game
 
         public void Run()
         {
-            var idxFromStart = ForBonusNearUnitC.IdxCell;
-            ref var unitC_0 = ref _cellUnitFilt.Get1(idxFromStart);
-            ref var stepUnitC_0 =ref _cellUnitFilt.Get3(idxFromStart);
+            var idx_0 = ForBonusNearUnitC.IdxCell;
+            ref var unitC_0 = ref _cellUnitFilt.Get1(idx_0);
+            ref var stepUnitC_0 =ref _cellUnitFilt.Get3(idx_0);
 
-            ref var effUnitC_0 = ref _cellUnitOthFilt.Get3(idxFromStart);
-            ref var ownUnitC_0 = ref _cellUnitOthFilt.Get4(idxFromStart);
+            ref var effUnitC_0 = ref _cellUnitOthFilt.Get3(idx_0);
+            ref var ownUnitC_0 = ref _cellUnitOthFilt.Get4(idx_0);
 
             var sender = InfoC.Sender(MasGenOthTypes.Master);
 
 
             if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.UnitType))
             {
-                var around = CellSpaceSupport.TryGetXyAround(_cellXyFilt.GetXyCell(idxFromStart));
+                var around = CellSpaceSupport.TryGetXyAround(_cellXyFilt.GetXyCell(idx_0));
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
                 stepUnitC_0.ZeroSteps();
-                _cellUnitOthFilt.Get2(idxFromStart).DefCondition();
+                _cellUnitOthFilt.Get2(idx_0).DefCondition();
 
                 foreach (var xy in around)
                 {
@@ -42,7 +42,7 @@ namespace Scripts.Game
 
                     if (unitC_1.HaveUnit)
                     {
-                        if (curOwnUnitC.Is(ownUnitC_0.PlayerType))
+                        if (curOwnUnitC.Is(ownUnitC_0.Owner))
                         {
                             if (!effUnitC_1.Have(StatTypes.Health))
                             {
@@ -57,12 +57,10 @@ namespace Scripts.Game
                             if (!effUnitC_1.Have(StatTypes.Steps))
                             {
                                 effUnitC_1.Set(StatTypes.Steps);
-
-                                if (!stepUnitC_1.HaveMaxSteps(effUnitC_1, unitC_1.UnitType))
-                                {
-                                    stepUnitC_1.AddBonus();
-                                }
-
+                                //if (!stepUnitC_1.HaveMaxSteps(effUnitC_1, unitC_1.UnitType))
+                                //{
+                                //    stepUnitC_1.AddBonus();
+                                //}
                             }
                         }
                     }

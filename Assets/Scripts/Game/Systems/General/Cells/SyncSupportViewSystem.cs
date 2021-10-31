@@ -5,7 +5,8 @@ namespace Scripts.Game
     internal sealed class SyncSupportViewSystem : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerCom, CellUnitMainViewCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, CellUnitMainViewCom> _cellUnitViewFilt = default;
         private EcsFilter<CellSupViewComponent> _supViewFilter = default;
 
         private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
@@ -13,47 +14,49 @@ namespace Scripts.Game
 
         public void Run()
         {
-            foreach (var idxCurCell in _xyCellFilter)
+            foreach (var idx_0 in _xyCellFilter)
             {
-                ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxCurCell);
-                ref var curOnUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
-                ref var curUnitViewCom = ref _cellUnitFilter.Get3(idxCurCell);
+                ref var unitC_0 = ref _cellUnitFilter.Get1(idx_0);
+                ref var levUnitC_0 = ref _cellUnitFilter.Get2(idx_0);
+                ref var ownUnitC_0 = ref _cellUnitFilter.Get3(idx_0);
 
-                ref var curSupViewCom = ref _supViewFilter.Get1(idxCurCell);
+                ref var mainUnitC_0 = ref _cellUnitViewFilt.Get2(idx_0);
 
-                curSupViewCom.DisableSR();
+                ref var supViewC_0 = ref _supViewFilter.Get1(idx_0);
+
+                supViewC_0.DisableSR();
 
                 if (SelectorC.IsSelCell)
                 {
-                    if (SelectorC.IdxSelCell == idxCurCell)
+                    if (SelectorC.IdxSelCell == idx_0)
                     {
-                        curSupViewCom.EnableSR();
-                        curSupViewCom.SetColor(SupVisTypes.Selector);
+                        supViewC_0.EnableSR();
+                        supViewC_0.SetColor(SupVisTypes.Selector);
                     }
                 }
-                if (curUnitDatCom.HaveUnit)
+                if (unitC_0.HaveUnit)
                 {
-                    if (curOnUnitCom.IsMine)
+                    if (ownUnitC_0.IsMine)
                     {
-                        if (curUnitDatCom.Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop}))
+                        if (unitC_0.Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop}))
                         {
-                            if (curUnitDatCom.Is(UnitTypes.Pawn))
+                            if (unitC_0.Is(UnitTypes.Pawn))
                             {
                                 if (SelectorC.Is(CellClickTypes.GiveTakeTW) 
                                     || SelectorC.Is(CellClickTypes.OldToNewUnit))
                                 {
-                                    curSupViewCom.EnableSR();
-                                    curSupViewCom.SetColor(SupVisTypes.GivePawnTool);
+                                    supViewC_0.EnableSR();
+                                    supViewC_0.SetColor(SupVisTypes.GivePawnTool);
                                 }
 
                             }
 
-                            if (curUnitDatCom.LevelUnitType == LevelUnitTypes.Wood)
+                            if (levUnitC_0.Is(LevelUnitTypes.Wood))
                             {
                                 if (SelectorC.Is(CellClickTypes.UpgradeUnit))
                                 {
-                                    curSupViewCom.EnableSR();
-                                    curSupViewCom.SetColor(SupVisTypes.GivePawnTool);
+                                    supViewC_0.EnableSR();
+                                    supViewC_0.SetColor(SupVisTypes.GivePawnTool);
                                 }
                             }
                         }
@@ -70,7 +73,7 @@ namespace Scripts.Game
 
                 if (selUnitDatCom.HaveUnit)
                 {
-                    if (_cellUnitFilter.Get2(SelectorC.IdxSelCell).IsMine)
+                    if (_cellUnitFilter.Get3(SelectorC.IdxSelCell).IsMine)
                     {
                         if (SelectorC.Is(CellClickTypes.PickFire))
                         {

@@ -18,30 +18,30 @@ namespace Scripts.Game
             _buildBack_SR = parentGO.transform.Find("BackBuilding").GetComponent<SpriteRenderer>();
         }
 
-        public void SetSpriteFront(BuildingTypes buildingType)
+        public void SetSpriteFront(BuildTypes buildingType)
         {
             switch (buildingType)
             {
-                case BuildingTypes.None:
+                case BuildTypes.None:
                     throw new Exception();
 
-                case BuildingTypes.City:
+                case BuildTypes.City:
                     _build_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.City);
                     break;
 
-                case BuildingTypes.Farm:
+                case BuildTypes.Farm:
                     _build_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Farm);
                     break;
 
-                case BuildingTypes.Woodcutter:
+                case BuildTypes.Woodcutter:
                     _build_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Woodcutter);
                     break;
 
-                case BuildingTypes.Mine:
+                case BuildTypes.Mine:
                     _build_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Mine);
                     break;
 
-                case BuildingTypes.Camp:
+                case BuildTypes.Camp:
                     _build_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Camp);
                     break;
 
@@ -62,30 +62,30 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
         }
-        public void SetSpriteBack(BuildingTypes buildingType)
+        public void SetSpriteBack(BuildTypes buildingType)
         {
             switch (buildingType)
             {
-                case BuildingTypes.None:
+                case BuildTypes.None:
                     throw new Exception();
 
-                case BuildingTypes.City:
+                case BuildTypes.City:
                     _buildBack_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.CityBack);
                     break;
 
-                case BuildingTypes.Farm:
+                case BuildTypes.Farm:
                     _buildBack_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.FarmBack);
                     break;
 
-                case BuildingTypes.Woodcutter:
+                case BuildTypes.Woodcutter:
                     _buildBack_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.WoodcutterBack);
                     break;
 
-                case BuildingTypes.Mine:
+                case BuildTypes.Mine:
                     _buildBack_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.MineBack);
                     break;
 
-                case BuildingTypes.Camp:
+                case BuildTypes.Camp:
                     _buildBack_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.CampBack);
                     break;
 

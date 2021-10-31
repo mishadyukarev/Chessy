@@ -6,7 +6,7 @@ namespace Scripts.Game
     public sealed class ThirstyUpdMasSys : IEcsRunSystem
     {
         private EcsFilter<CellUnitDataCom, HpUnitC> _cellUnitFilt = default;
-        private EcsFilter<CellUnitDataCom, UnitEffectsC, ThirstyC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataCom, UnitEffectsC, ThirstyUnitC, OwnerCom> _cellUnitOthFilt = default;
         private EcsFilter<CellRiverDataC, CellRiverViewC> _cellRiverFilt = default;
 
         public void Run()
@@ -51,9 +51,9 @@ namespace Scripts.Game
                                 {
                                     if (unitC_0.Is(UnitTypes.King))
                                     {
-                                        EndGameDataUIC.PlayerWinner = WhoseMoveC.NextPlayerFrom(ownUnitC_0.PlayerType);
+                                        EndGameDataUIC.PlayerWinner = WhoseMoveC.NextPlayerFrom(ownUnitC_0.Owner);
                                     }
-                                    unitC_0.DefUnitType();
+                                    unitC_0.NoneUnit();
                                 }
                             }
                         }
