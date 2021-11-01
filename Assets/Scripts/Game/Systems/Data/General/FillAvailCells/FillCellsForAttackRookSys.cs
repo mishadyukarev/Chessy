@@ -14,7 +14,7 @@ namespace Scripts.Game
         {
             foreach (byte idxCell_0 in _xyCellFilter)
             {
-                var xy_0 = _xyCellFilter.GetXyCell(idxCell_0);
+                var xy_0 = _xyCellFilter.Get1(idxCell_0).XyCell;
 
                 ref var unitDataCom_0 = ref _cellUnitFilter.Get1(idxCell_0);
                 ref var stepUnitC_0 = ref _cellUnitFilter.Get2(idxCell_0);
@@ -70,7 +70,7 @@ namespace Scripts.Game
                                         {
                                             if (!ownUnitCom_2.Is(ownUnitCom_0.Owner))
                                             {
-                                                if (dirType_1 == DirectTypes.LeftDown || dirType_1 == DirectTypes.LeftUp || dirType_1 == DirectTypes.RightUp || dirType_1 == DirectTypes.RightDown)
+                                                if (dirType_1 == DirectTypes.DownLeft || dirType_1 == DirectTypes.UpLeft || dirType_1 == DirectTypes.UpRight || dirType_1 == DirectTypes.DownRight)
                                                 {
                                                     CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Simple, idxCell_0, idxCell_2);
                                                 }

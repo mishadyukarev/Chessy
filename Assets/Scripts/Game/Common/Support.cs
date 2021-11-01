@@ -25,6 +25,22 @@ namespace Scripts.Game
             if (playerType == PlayerTypes.First) return PhotonNetwork.PlayerList[0];//PhotonNetwork.PlayerList[0];
             else return PhotonNetwork.PlayerList[1];
         }
+        public static DirectTypes Invert(this DirectTypes dir)
+        {
+            switch (dir)
+            {
+                case DirectTypes.None: throw new Exception();
+                case DirectTypes.Up: return DirectTypes.Down;
+                case DirectTypes.UpRight: return DirectTypes.DownLeft;
+                case DirectTypes.Right: return DirectTypes.Left;
+                case DirectTypes.DownRight: return DirectTypes.UpLeft;
+                case DirectTypes.Down: return DirectTypes.Up;
+                case DirectTypes.DownLeft: return DirectTypes.UpRight;
+                case DirectTypes.Left: return DirectTypes.Right;
+                case DirectTypes.UpLeft: return DirectTypes.DownRight;
+                default: throw new Exception();
+            }
+        }
 
         public static byte AmountTypes(Type type) => (byte)Enum.GetNames(type).Length;
 

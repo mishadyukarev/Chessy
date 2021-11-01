@@ -27,20 +27,23 @@ namespace Scripts.Game
         public bool HaveMaxSteps(UnitEffectsC unitEffectsC, UnitTypes unitType) => StepsAmount >= MaxSteps(unitEffectsC, unitType);
         public void ZeroSteps() => StepsAmount = 0;
         public void SetMaxSteps(UnitEffectsC unitEffectsC, UnitTypes unitType) => StepsAmount = MaxSteps(unitEffectsC, unitType);
-        public int StepsForDoing(CellEnvDataC cellEnvC)
+        public int StepsForDoing(CellEnvDataC cellEnvC, DirectTypes dir_cur, CellTrailDataC trailC)
         {
             var needSteps = 1;
 
             if (cellEnvC.Have(EnvTypes.AdultForest))
+            {
                 needSteps += UnitValues.NeedAmountSteps(EnvTypes.AdultForest);
+                if (trailC.Have(dir_cur.Invert())) needSteps -= 1;
+            }
 
             if (cellEnvC.Have(EnvTypes.Hill))
                 needSteps += UnitValues.NeedAmountSteps(EnvTypes.Hill);
 
             return needSteps;
         }
-        public  bool HaveStepsForDoing(CellEnvDataC cellEnvC) => StepsAmount >= StepsForDoing(cellEnvC);
-        public void TakeStepsForDoing(CellEnvDataC cellEnvC) => StepsAmount -= StepsForDoing(cellEnvC);
+        public  bool HaveStepsForDoing(CellEnvDataC cellEnvC, DirectTypes dir_cur, CellTrailDataC trailC) => StepsAmount >= StepsForDoing(cellEnvC, dir_cur, trailC);
+        public void TakeStepsForDoing(CellEnvDataC cellEnvC, DirectTypes dir_cur, CellTrailDataC trailC) => StepsAmount -= StepsForDoing(cellEnvC, dir_cur, trailC);
 
         public void AddBonus() => StepsAmount += 1;
     }

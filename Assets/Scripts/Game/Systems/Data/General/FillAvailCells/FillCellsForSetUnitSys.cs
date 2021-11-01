@@ -26,7 +26,7 @@ namespace Scripts.Game
             {
                 if (WhereBuildsC.IsSettedCity(playerType))
                 {
-                    var listAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(WhereBuildsC.IdxCity(playerType)));
+                    var listAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(WhereBuildsC.IdxCity(playerType)).XyCell);
 
                     foreach (var xy in listAround)
                     {
@@ -46,7 +46,7 @@ namespace Scripts.Game
                 {
                     foreach (byte curIdx in _xyCellFilter)
                     {
-                        var xy = _xyCellFilter.GetXyCell(curIdx);
+                        var xy = _xyCellFilter.Get1(curIdx).XyCell;
                         var x = xy[0];
                         var y = xy[1];
 
@@ -81,7 +81,7 @@ namespace Scripts.Game
 
                 if (curBuldCom.Is(BuildTypes.Camp))
                 {
-                    var aroundXys = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdx));
+                    var aroundXys = CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(curIdx).XyCell);
 
                     foreach (var xy in aroundXys)
                     {

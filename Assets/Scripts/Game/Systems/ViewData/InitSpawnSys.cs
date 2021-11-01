@@ -55,7 +55,7 @@ namespace Scripts.Game
 
             supportParentForCells.transform.SetParent(generalZoneGO.transform);
 
-            var curIdx = 0;
+            byte curIdx = 0;
 
             for (byte x = 0; x < CELL_COUNT_X; x++)
                 for (byte y = 0; y < CELL_COUNT_Y; y++)
@@ -116,7 +116,7 @@ namespace Scripts.Game
                     var cellView_GO = curParentCell_GO.transform.Find("Cell").gameObject;
                     
                     _curGameWorld.NewEntity()
-                        .Replace(new XyCellComponent(new byte[] { x, y }))
+                        .Replace(new XyCellComponent(curIdx, new byte[] { x, y }))
 
                         .Replace(new CellDataC(cellView_GO))
                         .Replace(new CellViewC(cellView_GO))
@@ -159,6 +159,12 @@ namespace Scripts.Game
                          .Replace(new VisibleC(true))
                          .Replace(new CellUnitMainViewCom(curParentCell_GO))
                          .Replace(new CellUnitExtraViewComp(curParentCell_GO));
+
+
+                    _curGameWorld.NewEntity()
+                        .Replace(new CellTrailDataC(new Dictionary<DirectTypes, int>()))
+                        .Replace(new CellTrailViewC(curParentCell_GO.transform))
+                        .Replace(new VisibleC(true));
 
 
                     ++curIdx;
@@ -293,7 +299,7 @@ namespace Scripts.Game
 
                 foreach (byte curIdxCell in _xyCellFilter)
                 {
-                    var curXyCell = _xyCellFilter.GetXyCell(curIdxCell);
+                    var curXyCell = _xyCellFilter.Get1(curIdxCell).XyCell;
                     var x = curXyCell[0];
                     var y = curXyCell[1];
 
@@ -370,7 +376,7 @@ namespace Scripts.Game
                             riverType = RiverTypes.Start;
                             dirTypes.Add(DirectTypes.Up);
                             dirTypes.Add(DirectTypes.Right);
-                            corners.Add(DirectTypes.RightUp);
+                            corners.Add(DirectTypes.UpRight);
                             corners.Add(DirectTypes.Down);
                         }
                         else if (x >= 8 && x <= 12 && y == 4)
@@ -442,7 +448,7 @@ namespace Scripts.Game
                 {
                     foreach (byte idx_0 in _xyCellFilter)
                     {
-                        var curXyCell = _xyCellFilter.GetXyCell(idx_0);
+                        var curXyCell = _xyCellFilter.Get1(idx_0).XyCell;
                         var x = curXyCell[0];
                         var y = curXyCell[1];
 

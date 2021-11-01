@@ -21,41 +21,41 @@ namespace Scripts.Game
         {
             foreach (byte idx_0 in _xyCellFilter)
             {
-                var curXy = _xyCellFilter.GetXyCell(idx_0);
+                var curXy = _xyCellFilter.Get1(idx_0).XyCell;
 
-                ref var unitC_0 = ref _cellUnitFilter.Get1(idx_0);
+                ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
 
-                ref var levUnitC_0 = ref _cellUnitMainFilt.Get2(idx_0);
-                ref var ownUnitC_0 = ref _cellUnitMainFilt.Get3(idx_0);
+                ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
+                ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
 
-                ref var curHpUnitC = ref _cellUnitFilter.Get2(idx_0);
+                ref var hpUnit_0 = ref _cellUnitFilter.Get2(idx_0);
 
-                ref var curBuilCom = ref _cellBuildFilt.Get1(idx_0);
+                ref var buil_0 = ref _cellBuildFilt.Get1(idx_0);
 
-                ref var curFireC = ref _cellFireDataFilter.Get1(idx_0);
-                ref var curEnvrC = ref _cellEnvDataFilter.Get1(idx_0);
+                ref var fire_0 = ref _cellFireDataFilter.Get1(idx_0);
+                ref var envr_0 = ref _cellEnvDataFilter.Get1(idx_0);
 
-                ref var curCloudC = ref _cellCloudsFilt.Get1(idx_0);
+                ref var cloud_0 = ref _cellCloudsFilt.Get1(idx_0);
 
 
-                if (curCloudC.HaveCloud)
+                if (cloud_0.HaveCloud)
                 {
-                    curFireC.DisableFire();
+                    fire_0.DisableFire();
                 }
 
-                if (curFireC.HaveFire)
+                if (fire_0.HaveFire)
                 {
-                    curEnvrC.TakeAmountRes(EnvTypes.AdultForest, 2);
+                    envr_0.TakeAmountRes(EnvTypes.AdultForest, 2);
 
-                    if (unitC_0.HaveUnit)
+                    if (unit_0.HaveUnit)
                     {
-                        curHpUnitC.TakeHp(40);
+                        hpUnit_0.TakeHp(40);
 
-                        if (!curHpUnitC.HaveHp)
+                        if (!hpUnit_0.HaveHp)
                         {
-                            if (unitC_0.Is(UnitTypes.King))
+                            if (unit_0.Is(UnitTypes.King))
                             {
-                                if (ownUnitC_0.Is(PlayerTypes.First))
+                                if (ownUnit_0.Is(PlayerTypes.First))
                                 {
                                     EndGameDataUIC.PlayerWinner = PlayerTypes.Second;
                                 }
@@ -63,23 +63,23 @@ namespace Scripts.Game
                                 {
                                     EndGameDataUIC.PlayerWinner = PlayerTypes.First;
                                 }
-
                             }
 
-                            unitC_0.NoneUnit();
+                            WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+                            unit_0.NoneUnit();
                         }
                     }
 
 
 
-                    if (!curEnvrC.HaveRes(EnvTypes.AdultForest))
+                    if (!envr_0.HaveRes(EnvTypes.AdultForest))
                     {
-                        if (curBuilCom.HaveBuild)
+                        if (buil_0.HaveBuild)
                         {
-                            curBuilCom.NoneBuild();
+                            buil_0.Reset();
                         }
 
-                        curEnvrC.Reset(EnvTypes.AdultForest);
+                        envr_0.Reset(EnvTypes.AdultForest);
                         WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
 
 
@@ -91,10 +91,10 @@ namespace Scripts.Game
                             WhereEnvC.Add(EnvTypes.YoungForest, idx_0);
                         }
 
-                        curFireC.HaveFire = false;
+                        fire_0.HaveFire = false;
 
 
-                        var aroundXYList = CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(idx_0));
+                        var aroundXYList = CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).XyCell);
                         foreach (var xy1 in aroundXYList)
                         {
                             var curIdxCell1 = _xyCellFilter.GetIdxCell(xy1);

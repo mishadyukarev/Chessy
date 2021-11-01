@@ -11,7 +11,7 @@ namespace Scripts.Game
         public void Run()
         {
             var startWeatherC = _cellWeatherFilt.Get1(WhereCloudsC.Cloud);
-            var xyStart = _xyCellFilter.GetXyCell(WhereCloudsC.Cloud);
+            var xyStart = _xyCellFilter.Get1(WhereCloudsC.Cloud).XyCell;
 
 
             var aroundList = CellSpaceSupport.TryGetXyAround(xyStart);

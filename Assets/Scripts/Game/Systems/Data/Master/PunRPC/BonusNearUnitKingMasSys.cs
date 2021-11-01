@@ -22,7 +22,7 @@ namespace Scripts.Game
 
             if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.Unit))
             {
-                var around = CellSpaceSupport.TryGetXyAround(_cellXyFilt.GetXyCell(idx_0));
+                var around = CellSpaceSupport.TryGetXyAround(_cellXyFilt.Get1(idx_0).XyCell);
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 

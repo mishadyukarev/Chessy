@@ -31,7 +31,7 @@ namespace Scripts.Game
 
             ref var condUnitC = ref _cellUnitOthFilt.Get2(idx_0);
             ref var curTwUnitC = ref _cellUnitOthFilt.Get3(idx_0);
-            ref var curEffUnitC = ref _cellUnitOthFilt.Get4(idx_0);
+            ref var effUnit_0 = ref _cellUnitOthFilt.Get4(idx_0);
             ref var thirUnitC_0 =ref _cellUnitOthFilt.Get5(idx_0);
 
 
@@ -43,7 +43,8 @@ namespace Scripts.Game
                 unitC_0.SetUnit(unitTypeForSet);
                 ownUnitC_0.SetOwner(playerSend);
                 curTwUnitC.ToolWeapType = default;
-                curHpUnitC.AmountHp = curHpUnitC.MaxHpUnit(curEffUnitC, unitTypeForSet);
+                effUnit_0.DefAllEffects();
+                curHpUnitC.AmountHp = curHpUnitC.MaxHpUnit(effUnit_0, unitTypeForSet);
                 stepUnitC.StepsAmount = UnitValues.StandartAmountSteps(false, unitTypeForSet);
                 condUnitC.DefCondition();
                 thirUnitC_0.SetMaxWater(unitTypeForSet);

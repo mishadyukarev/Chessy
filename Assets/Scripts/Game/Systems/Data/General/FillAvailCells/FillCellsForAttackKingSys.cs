@@ -6,6 +6,8 @@ namespace Scripts.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
+        private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
+
         private EcsFilter<CellUnitDataCom, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataCom, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
 
@@ -13,37 +15,42 @@ namespace Scripts.Game
         {
             foreach (byte curIdxCell in _xyCellFilter)
             {
-                ref var unitC_0 = ref _cellUnitFilter.Get1(curIdxCell);
-                ref var stepUnitC_0 = ref _cellUnitFilter.Get2(curIdxCell);
+                ref var unit_0 = ref _cellUnitFilter.Get1(curIdxCell);
+                ref var stepUnit_0 = ref _cellUnitFilter.Get2(curIdxCell);
 
-                ref var effUnitC_0 = ref _cellUnitOthFilt.Get2(curIdxCell);
-                ref var ownUnitC_0 = ref _cellUnitOthFilt.Get3(curIdxCell);
+                ref var effUnit_0 = ref _cellUnitOthFilt.Get2(curIdxCell);
+                ref var ownUnit_0 = ref _cellUnitOthFilt.Get3(curIdxCell);
 
-                if (unitC_0.Is(UnitTypes.King))
+                if (unit_0.Is(UnitTypes.King))
                 {
                     DirectTypes curDir_1 = default;
 
-                    foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(curIdxCell)))
+                    CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(curIdxCell).XyCell, out var dirs);
+
+                    foreach (var item_1 in dirs)
                     {
                         curDir_1 += 1;
 
-                        var idx_1 = _xyCellFilter.GetIdxCell(xy1);
+                        var idx_1 = _xyCellFilter.GetIdxCell(item_1.Value);
 
-                        ref var envrDatC_1 = ref _cellEnvDataFilter.Get1(idx_1);
-                        ref var unitDatC_1 = ref _cellUnitFilter.Get1(idx_1);
+                        ref var env_1 = ref _cellEnvDataFilter.Get1(idx_1);
+                        ref var unit_1 = ref _cellUnitFilter.Get1(idx_1);
 
-                        ref var effUnitC_1 = ref _cellUnitOthFilt.Get2(idx_1);
-                        ref var ownUnitC_1 = ref _cellUnitOthFilt.Get3(idx_1);
+                        ref var effUnit_1 = ref _cellUnitOthFilt.Get2(idx_1);
+                        ref var ownUnit_1 = ref _cellUnitOthFilt.Get3(idx_1);
 
-                        if (!envrDatC_1.Have(EnvTypes.Mountain))
+                        ref var trail_1 = ref _cellTrailFilt.Get1(idx_1);
+
+                        if (!env_1.Have(EnvTypes.Mountain))
                         {
-                            if (stepUnitC_0.HaveStepsForDoing(envrDatC_1) || stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.Unit))
+                            if (stepUnit_0.HaveStepsForDoing(env_1, item_1.Key, trail_1) 
+                                || stepUnit_0.HaveMaxSteps(effUnit_0, unit_0.Unit))
                             {
-                                if (unitDatC_1.HaveUnit)
+                                if (unit_1.HaveUnit)
                                 {
-                                    if (!ownUnitC_1.Is(ownUnitC_0.Owner))
+                                    if (!ownUnit_1.Is(ownUnit_0.Owner))
                                     {
-                                        CellsAttackC.Add(ownUnitC_0.Owner, AttackTypes.Simple, curIdxCell, idx_1);
+                                        CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, curIdxCell, idx_1);
                                     }
                                 }
                             }

@@ -17,7 +17,7 @@ namespace Scripts.Game
 
             foreach (byte curIdxCell in _cellEnvFilter)
             {
-                var curXy = _xyCellFilter.GetXyCell(curIdxCell);
+                var curXy = _xyCellFilter.Get1(curIdxCell).XyCell;
 
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
                 ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);

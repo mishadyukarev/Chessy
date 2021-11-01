@@ -11,9 +11,9 @@ namespace Scripts.Game
             var xyAvailableCells = new List<byte[]>();
             var xyResultCell = new byte[XY_FOR_ARRAY];
 
-            for (byte i = 1; i < (byte)DirectTypes.LeftDown + 1; i++)
+            for (var dir = (DirectTypes)1; dir < (DirectTypes)typeof(DirectTypes).GetEnumNames().Length; dir++)
             {
-                var xyDirectCell = GetXyDirect((DirectTypes)i);
+                var xyDirectCell = GetXyDirect(dir);
 
                 xyResultCell[X] = (byte)(xyStartCell[X] + xyDirectCell[X]);
                 xyResultCell[Y] = (byte)(xyStartCell[Y] + xyDirectCell[Y]);
@@ -22,16 +22,44 @@ namespace Scripts.Game
             }
 
             return xyAvailableCells;
-
         }
+        public static void TryGetXyAround(byte[] xyStartCell, out Dictionary<DirectTypes, byte[]> directs)
+        {
+            directs = new Dictionary<DirectTypes, byte[]>();
+            var xyResultCell = new byte[XY_FOR_ARRAY];
+
+            for (var dir = (DirectTypes)1; dir < (DirectTypes)typeof(DirectTypes).GetEnumNames().Length; dir++)
+            {
+                var xyDirectCell = GetXyDirect(dir);
+
+                xyResultCell[X] = (byte)(xyStartCell[X] + xyDirectCell[X]);
+                xyResultCell[Y] = (byte)(xyStartCell[Y] + xyDirectCell[Y]);
+
+                directs.Add(dir, (byte[])xyResultCell.Clone());
+            }
+        }
+
+        public static DirectTypes GetDirect(byte[] xy_from, byte[] xy_to)
+        {
+            TryGetXyAround(xy_from, out var xy_around);
+
+            foreach (var item_1 in xy_around)
+            {
+                if (item_1.Value.Compare(xy_to)) return item_1.Key;
+            }
+
+            throw new Exception();
+        }
+
+
         public static byte[] GetXyCellByDirect(byte[] xyStartCell, DirectTypes directType)
         {
             var xyResultCell = new byte[XY_FOR_ARRAY];
 
             var xyDirectCell = GetXyDirect(directType);
 
-            xyResultCell[0] = (byte)(xyStartCell[0] + xyDirectCell[0]);
-            xyResultCell[1] = (byte)(xyStartCell[1] + xyDirectCell[1]);
+            xyResultCell[X] = (byte)(xyStartCell[X] + xyDirectCell[X]);
+            xyResultCell[Y] = (byte)(xyStartCell[Y] + xyDirectCell[Y]);
 
             return xyResultCell;
         }
@@ -64,22 +92,22 @@ namespace Scripts.Game
                     xyDirectCell[Y] = -1;
                     break;
 
-                case DirectTypes.RightUp:
+                case DirectTypes.UpRight:
                     xyDirectCell[X] = 1;
                     xyDirectCell[Y] = 1;
                     break;
 
-                case DirectTypes.LeftUp:
+                case DirectTypes.UpLeft:
                     xyDirectCell[X] = -1;
                     xyDirectCell[Y] = 1;
                     break;
 
-                case DirectTypes.RightDown:
+                case DirectTypes.DownRight:
                     xyDirectCell[X] = 1;
                     xyDirectCell[Y] = -1;
                     break;
 
-                case DirectTypes.LeftDown:
+                case DirectTypes.DownLeft:
                     xyDirectCell[X] = -1;
                     xyDirectCell[Y] = -1;
                     break;

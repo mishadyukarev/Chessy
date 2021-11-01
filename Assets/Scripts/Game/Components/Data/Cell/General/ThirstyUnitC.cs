@@ -24,6 +24,6 @@ namespace Scripts.Game
         public bool HaveMaxWater(UnitTypes unitType) => WaterAmount == MaxWater(unitType);
         public void SetMaxWater(UnitTypes unitType) => WaterAmount = MaxWater(unitType);
         public bool NeedWater(UnitTypes unitType) => WaterAmount < MaxWater(unitType) * 0.3f;
-        public void TakeWater(UnitTypes unitType) => TakeWater((int)(MaxWater(unitType) * 0.15f));
+        public void TakeWater() => TakeWater(1);
     }
 }

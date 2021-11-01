@@ -19,16 +19,16 @@ namespace Scripts.Game
             throw new Exception();
         }
 
-        public static byte[] GetXyCell(this EcsFilter<XyCellComponent> xyCellFilter, byte idx)
-        {
-            for (byte curIdx = 0; curIdx < xyCellFilter.GetEntitiesCount(); curIdx++)
-            {
-                if (curIdx == idx)
-                {
-                    return xyCellFilter.Get1(curIdx).XyCell;
-                }
-            }
-            throw new Exception();
-        }
+        //public static byte[] GetXyCell(this EcsFilter<XyCellComponent> xyCellFilter, byte idx)
+        //{
+        //    for (byte curIdx = 0; curIdx < xyCellFilter.GetEntitiesCount(); curIdx++)
+        //    {
+        //        if (curIdx == idx)
+        //        {
+        //            return xyCellFilter.Get1(curIdx).XyCell;
+        //        }
+        //    }
+        //    throw new Exception();
+        //}
     }
 }

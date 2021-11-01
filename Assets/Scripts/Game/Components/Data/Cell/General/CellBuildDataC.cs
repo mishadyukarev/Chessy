@@ -23,7 +23,7 @@ namespace Scripts.Game
             _buildType = buildType;
         }
         public void Sync(BuildTypes buildType) => _buildType = buildType;
-        public void NoneBuild()
+        public void Reset()
         {
             if (!HaveBuild) throw new Exception();
             _buildType = BuildTypes.None;

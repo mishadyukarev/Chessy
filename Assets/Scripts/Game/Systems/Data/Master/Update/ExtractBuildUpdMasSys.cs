@@ -7,6 +7,7 @@ namespace Scripts.Game
         private EcsFilter<CellEnvDataC> _cellEnvFilt = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellbuildFilt = default;
         private EcsFilter<CellFireDataC> _cellFireFilt = default;
+        private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
         public void Run()
         {
@@ -16,73 +17,78 @@ namespace Scripts.Game
                 {
                     foreach (var idx_0 in WhereBuildsC.IdxBuilds(player, build))
                     {
+                        ref var build_0 = ref _cellbuildFilt.Get1(idx_0);
+                        ref var ownBuild_0 = ref _cellbuildFilt.Get2(idx_0);
+
                         ref var env_0 = ref _cellEnvFilt.Get1(idx_0);
-
-                        ref var buil_0 = ref _cellbuildFilt.Get1(idx_0);
-                        ref var ownBuil_0 = ref _cellbuildFilt.Get2(idx_0);
-
                         ref var fire_0 = ref _cellFireFilt.Get1(idx_0);
 
-                        var minus = 0;
+                        var minus_0 = 0;
 
-                        if (buil_0.HaveBuild)
+
+                        if (build_0.Is(BuildTypes.Farm))
                         {
-                            if (buil_0.Is(BuildTypes.Farm))
+                            minus_0 = UpgBuildsC.GetExtractOneBuild(ownBuild_0.Owner, BuildTypes.Farm);
+
+                            if (minus_0 > env_0.AmountRes(EnvTypes.Fertilizer)) 
+                                minus_0 = env_0.AmountRes(EnvTypes.Fertilizer);
+
+                            env_0.TakeAmountRes(EnvTypes.Fertilizer, minus_0);
+                            InventResC.AddAmountRes(ownBuild_0.Owner, ResTypes.Food, minus_0);
+
+                            if (!env_0.HaveRes(EnvTypes.Fertilizer))
                             {
-                                minus = UpgBuildsC.GetExtractOneBuild(ownBuil_0.Owner, BuildTypes.Farm);
+                                env_0.Reset(EnvTypes.Fertilizer);
+                                WhereEnvC.Remove(EnvTypes.Fertilizer, idx_0);
 
-                                env_0.TakeAmountRes(EnvTypes.Fertilizer, minus);
-                                InventResC.AddAmountRes(ownBuil_0.Owner, ResTypes.Food, minus);
-
-                                if (!env_0.HaveRes(EnvTypes.Fertilizer))
-                                {
-                                    env_0.Reset(EnvTypes.Fertilizer);
-                                    WhereEnvC.Remove(EnvTypes.Fertilizer, idx_0);
-
-                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.BuildType, idx_0);
-                                    buil_0.NoneBuild();
-                                }
+                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.BuildType, idx_0);
+                                build_0.Reset();
                             }
+                        }
 
-                            else if (buil_0.Is(BuildTypes.Woodcutter))
+                        else if (build_0.Is(BuildTypes.Woodcutter))
+                        {
+                            minus_0 = UpgBuildsC.GetExtractOneBuild(ownBuild_0.Owner, BuildTypes.Woodcutter);
+
+                            if (minus_0 > env_0.AmountRes(EnvTypes.AdultForest))
+                                minus_0 = env_0.AmountRes(EnvTypes.AdultForest);
+
+                            env_0.TakeAmountRes(EnvTypes.AdultForest, minus_0);
+                            InventResC.AddAmountRes(ownBuild_0.Owner, ResTypes.Wood, minus_0);
+
+                            if (!env_0.HaveRes(EnvTypes.AdultForest))
                             {
-                                minus = UpgBuildsC.GetExtractOneBuild(ownBuil_0.Owner, BuildTypes.Woodcutter);
+                                env_0.Reset(EnvTypes.AdultForest);
+                                WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
 
-                                env_0.TakeAmountRes(EnvTypes.AdultForest, minus);
-                                InventResC.AddAmountRes(ownBuil_0.Owner, ResTypes.Wood, minus);
+                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.BuildType, idx_0);
+                                build_0.Reset();
 
-                                if (!env_0.HaveRes(EnvTypes.AdultForest))
+                                _cellTrailFilt.Get1(idx_0).ResetAll();
+
+                                if (fire_0.HaveFire)
                                 {
-                                    env_0.Reset(EnvTypes.AdultForest);
-                                    WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
-
-                                    //SpawnNewSeed(idx_0);
-
-                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.BuildType, idx_0);
-                                    buil_0.NoneBuild();
-
-                                    if (fire_0.HaveFire)
-                                    {
-                                        fire_0.HaveFire = false;
-                                    }
-                                }
-                            }
-
-                            else if (buil_0.Is(BuildTypes.Mine))
-                            {
-                                minus = UpgBuildsC.GetExtractOneBuild(ownBuil_0.Owner, BuildTypes.Mine);
-
-                                env_0.TakeAmountRes(EnvTypes.Hill, minus);
-                                InventResC.AddAmountRes(ownBuil_0.Owner, ResTypes.Ore, minus);
-
-                                if (!env_0.HaveRes(EnvTypes.Hill))
-                                {
-                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.BuildType, idx_0);
-                                    buil_0.NoneBuild();
+                                    fire_0.HaveFire = false;
                                 }
                             }
                         }
 
+                        else if (build_0.Is(BuildTypes.Mine))
+                        {
+                            minus_0 = UpgBuildsC.GetExtractOneBuild(ownBuild_0.Owner, BuildTypes.Mine);
+
+                            if (minus_0 > env_0.AmountRes(EnvTypes.Hill))
+                                minus_0 = env_0.AmountRes(EnvTypes.Hill);
+
+                            env_0.TakeAmountRes(EnvTypes.Hill, minus_0);
+                            InventResC.AddAmountRes(ownBuild_0.Owner, ResTypes.Ore, minus_0);
+
+                            if (!env_0.HaveRes(EnvTypes.Hill))
+                            {
+                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.BuildType, idx_0);
+                                build_0.Reset();
+                            }
+                        }
                     }
                 }
             }

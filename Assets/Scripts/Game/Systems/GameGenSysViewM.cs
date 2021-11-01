@@ -11,7 +11,7 @@ namespace Scripts.Game
         public GameGenSysViewM(EcsWorld gameWorld, EcsSystems allSystems) : base(gameWorld, allSystems)
         {
             SyncCellViewSyss = new EcsSystems(gameWorld)
-                .Add(new VisibUnitsBuildsSys())
+                .Add(new VisibElseSys())
                 .Add(new SyncCellUnitViewSys())
                 .Add(new SyncCellSelUnitViewSys())
                 .Add(new SyncCellUnitSupVisSystem())
@@ -22,7 +22,8 @@ namespace Scripts.Game
                 .Add(new CellWeatherViewSys())
                 .Add(new CellRiverViewSys())
                 .Add(new FliperAndRotatorUnitSystem())
-                .Add(new CellBarsEnvSystem());
+                .Add(new CellBarsEnvSystem())
+                .Add(new SyncCellTrailSys());
 
 
             SyncCanvasViewSyss = new EcsSystems(gameWorld)

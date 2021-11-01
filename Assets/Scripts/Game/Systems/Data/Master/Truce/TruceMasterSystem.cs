@@ -26,9 +26,9 @@ namespace Scripts.Game
 
             foreach (byte idx_0 in _xyCellFilter)
             {
-                ref var unitC_0 = ref _cellUnitFilter.Get1(idx_0);
-                ref var levUnitC_0 = ref _cellUnitFilter.Get2(idx_0);
-                ref var ownUnitC_0 = ref _cellUnitFilter.Get3(idx_0);
+                ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
+                ref var levUnit_0 = ref _cellUnitFilter.Get2(idx_0);
+                ref var ownUnit_0 = ref _cellUnitFilter.Get3(idx_0);
 
                 ref var curBuildDatCom = ref _cellBuildFilter.Get1(idx_0);
                 ref var curEnvDatCom = ref _cellEnvFilter.Get1(idx_0);
@@ -40,20 +40,22 @@ namespace Scripts.Game
 
                 if (_cellDataFilt.Get1(idx_0).IsActiveCell)
                 {
-                    if (unitC_0.HaveUnit)
+                    if (unit_0.HaveUnit)
                     {
                         if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                         {
-                            if (ownUnitC_0.Is(PlayerTypes.First))
+                            if (ownUnit_0.Is(PlayerTypes.First))
                             {
-                                InventorUnitsC.AddUnit(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level);
-                                unitC_0.NoneUnit();
+                                InventorUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
+                                WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+                                unit_0.NoneUnit();
                             }
                         }
                         else
                         {
-                            InventorUnitsC.AddUnit(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level);
-                            unitC_0.NoneUnit();
+                            InventorUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
+                            WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+                            unit_0.NoneUnit();
                         }
                     }
 

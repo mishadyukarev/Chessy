@@ -18,15 +18,15 @@ namespace Scripts.Game
             ref var buildsInGameCom = ref _buildsFilt.Get1(0);
 
             var sender = InfoC.Sender(MasGenOthTypes.Master);
-            var idxForBuild = forBuildMasCom.IdxForBuild;
+            var idx_0 = forBuildMasCom.IdxForBuild;
             var forBuildType = forBuildMasCom.BuildingTypeForBuidling;
 
-            ref var buildC_0 = ref _cellBuildFilter.Get1(idxForBuild);
-            ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idxForBuild);
+            ref var build_0 = ref _cellBuildFilter.Get1(idx_0);
+            ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idx_0);
 
-            ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForBuild);
-            ref var curStepUnitC = ref _cellUnitFilter.Get2(idxForBuild);
-            ref var curCellEnvCom = ref _cellEnvFilter.Get1(idxForBuild);
+            ref var curUnitDatCom = ref _cellUnitFilter.Get1(idx_0);
+            ref var curStepUnitC = ref _cellUnitFilter.Get2(idx_0);
+            ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
 
 
             var playerSend = WhoseMoveC.WhoseMove;
@@ -35,33 +35,52 @@ namespace Scripts.Game
             {
                 if (curStepUnitC.HaveMinSteps)
                 {
-                    if (!curCellEnvCom.Have(EnvTypes.AdultForest) && !curCellEnvCom.Have(EnvTypes.YoungForest))
+                    if (!build_0.HaveBuild || build_0.Is(BuildTypes.Camp))
                     {
-                        if (InventResC.CanCreateBuild(playerSend, forBuildType, out var needRes))
+                        if (!env_0.Have(EnvTypes.AdultForest))
                         {
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
-
-                            if (curCellEnvCom.Have(EnvTypes.Fertilizer))
+                            if (InventResC.CanCreateBuild(playerSend, forBuildType, out var needRes))
                             {
-                                curCellEnvCom.AddMaxAmountRes(EnvTypes.Fertilizer);
+                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
+
+                                if (build_0.HaveBuild)
+                                {
+                                    WhereBuildsC.Remove(ownBuildC_0.Owner, build_0.BuildType, idx_0);
+                                    build_0.Reset();
+                                }
+
+                                if (env_0.Have(EnvTypes.YoungForest))
+                                {
+                                    WhereEnvC.Remove(EnvTypes.YoungForest, idx_0);
+                                    env_0.Reset(EnvTypes.YoungForest);
+                                }
+
+                                if (env_0.Have(EnvTypes.Fertilizer))
+                                {
+                                    env_0.AddMaxAmountRes(EnvTypes.Fertilizer);
+                                }
+                                else
+                                {
+                                    env_0.SetNew(EnvTypes.Fertilizer);
+                                    WhereEnvC.Add(EnvTypes.Fertilizer, idx_0);
+                                }
+
+                                InventResC.BuyBuild(playerSend, forBuildType);
+
+                                build_0.SetBuild(forBuildType);
+                                ownBuildC_0.SetOwner(playerSend);
+                                WhereBuildsC.Add(ownBuildC_0.Owner, build_0.BuildType, idx_0);
+
+                                curStepUnitC.TakeSteps();
                             }
                             else
                             {
-                                curCellEnvCom.SetNew(EnvTypes.Fertilizer);
-                                WhereEnvC.Add(EnvTypes.Fertilizer, idxForBuild);
+                                RpcSys.MistakeEconomyToGeneral(sender, needRes);
                             }
-
-                            InventResC.BuyBuild(playerSend, forBuildType);
-
-                            buildC_0.SetBuild(forBuildType);
-                            ownBuildC_0.SetOwner(playerSend);
-                            WhereBuildsC.Add(ownBuildC_0.Owner, buildC_0.BuildType, idxForBuild);
-
-                            curStepUnitC.TakeSteps();
                         }
                         else
                         {
-                            RpcSys.MistakeEconomyToGeneral(sender, needRes);
+                            RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                         }
                     }
                     else

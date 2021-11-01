@@ -42,7 +42,7 @@ namespace Scripts.Game
                 }
 
                 WhereBuildsC.Remove(ownBuildC_0.Owner, buildC_0.BuildType, idxCellForDestory);
-                buildC_0.NoneBuild();
+                buildC_0.Reset();
             }
             else
             {

@@ -3,6 +3,7 @@
     public struct XyCellComponent
     {
         private byte[] _xyCell;
+        public readonly byte Idx;
 
         public byte[] XyCell
         {
@@ -10,6 +11,10 @@
             set => _xyCell = (byte[])value.Clone();
         }
 
-        public XyCellComponent(byte[] xy) => _xyCell = xy;
+        public XyCellComponent(byte idx, byte[] xy)
+        {
+            Idx = idx;
+            _xyCell = xy;
+        }
     }
 }

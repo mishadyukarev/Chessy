@@ -6,7 +6,9 @@ namespace Scripts.Game
 {
     public sealed class DonerMastSys : IEcsRunSystem
     {
-        //private EcsFilter<CellViewComponent> _cellViewFilter = default;
+        private EcsFilter<CellViewC> _cellViewFilter = default;
+        private EcsFilter<CellRiverViewC> _cellRiverFilt = default;
+        private EcsFilter<CellTrailViewC> _cellTrailFilt = default;
 
         public void Run()
         {
@@ -27,20 +29,30 @@ namespace Scripts.Game
                     var curPlayer = WhoseMoveC.CurPlayer;
                     var nextPlayer = WhoseMoveC.NextPlayerFrom(curPlayer);
 
+                    if(nextPlayer == PlayerTypes.First)
+                    {
+                        MastDataSysContainer.Run(MastDataSysTypes.Update);
+                    }
+
                     WhoseMoveC.SetWhoseMove(nextPlayer);
 
 
                     curPlayer = WhoseMoveC.CurPlayer;
 
-                    //CameraC.SetPosRotClient(curPlayer, SpawnInitComSys.Main_GO.transform.position);
-                    //foreach (byte curIdxCell in _cellViewFilter)
-                    //    _cellViewFilter.Get1(curIdxCell).SetRotForClient(curPlayer);
+                    CameraC.SetPosRotClient(curPlayer, SpawnInitComSys.Main_GO.transform.position);
+                    foreach (byte curIdxCell in _cellViewFilter)
+                    {
+                        _cellViewFilter.Get1(curIdxCell).SetRotForClient(curPlayer);
+                        _cellRiverFilt.Get1(curIdxCell).Rotate();
+                        _cellTrailFilt.Get1(curIdxCell).Rotate();
+                    }
+                        
 
 
 
                     FriendZoneDataUIC.IsActiveFriendZone = true;
 
-                    MastDataSysContainer.Run(MastDataSysTypes.Update);
+                    
                 }
             }
             else

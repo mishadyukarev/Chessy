@@ -45,7 +45,6 @@ namespace Scripts.Game
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                                 stepUnit_0.TakeSteps();
-                                condUnit_0.DefCondition();
 
                                 if (twUnit_0.Is(ToolWeaponTypes.Shield)
                                     && tWTypeForGive == ToolWeaponTypes.Shield
@@ -74,11 +73,7 @@ namespace Scripts.Game
                                 if(twUnit_0.Is(ToolWeaponTypes.Shield)) twUnit_0.AddShieldProtect(levelTWType);
                                 WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                                stepUnit_0.TakeSteps();
-
-                                condUnit_0.DefCondition();
-
-                               
+                                stepUnit_0.TakeSteps();          
 
                                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
                             }
@@ -94,7 +89,6 @@ namespace Scripts.Game
                                     twUnit_0.LevelTWType = levelTWType;
                                     WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                                    condUnit_0.DefCondition();
                                     stepUnit_0.TakeSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
@@ -116,7 +110,6 @@ namespace Scripts.Game
                                     twUnit_0.LevelTWType = levelTWType;
                                     WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                                    condUnit_0.DefCondition();
                                     stepUnit_0.TakeSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
@@ -139,7 +132,6 @@ namespace Scripts.Game
                                     twUnit_0.AddShieldProtect(levelTWType);
                                     WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                                    condUnit_0.DefCondition();
                                     stepUnit_0.TakeSteps();
 
                                     RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);

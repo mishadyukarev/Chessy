@@ -22,10 +22,10 @@ namespace Scripts.Game
                 case DirectTypes.Left: _directWind_Image.rectTransform.eulerAngles = new Vector3(0, 0, 180); break;
                 case DirectTypes.Up: _directWind_Image.rectTransform.eulerAngles = new Vector3(0, 0, 90); break;
                 case DirectTypes.Down: _directWind_Image.rectTransform.eulerAngles = new Vector3(0, 0, 270); break;
-                case DirectTypes.RightUp: _directWind_Image.rectTransform.eulerAngles = new Vector3(0, 0, 45); break;
-                case DirectTypes.LeftUp: _directWind_Image.rectTransform.eulerAngles = new Vector3(0, 0, 135); break;
-                case DirectTypes.RightDown: _directWind_Image.rectTransform.eulerAngles = new Vector3(0, 0, 315); break;
-                case DirectTypes.LeftDown: _directWind_Image.rectTransform.eulerAngles = new Vector3(0, 0, 225); break;
+                case DirectTypes.UpRight: _directWind_Image.rectTransform.eulerAngles = new Vector3(0, 0, 45); break;
+                case DirectTypes.UpLeft: _directWind_Image.rectTransform.eulerAngles = new Vector3(0, 0, 135); break;
+                case DirectTypes.DownRight: _directWind_Image.rectTransform.eulerAngles = new Vector3(0, 0, 315); break;
+                case DirectTypes.DownLeft: _directWind_Image.rectTransform.eulerAngles = new Vector3(0, 0, 225); break;
                 default: throw new Exception();
             }
 

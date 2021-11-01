@@ -2,9 +2,9 @@
 
 namespace Scripts.Game
 {
-    public sealed class LeftCityEventUISys : IEcsRunSystem
+    public sealed class LeftCityEventUISys : IEcsInitSystem
     {
-        public void Run()
+        public void Init()
         {
             BuildLeftZoneViewUICom.AddListenerToMelt(delegate { MeltOre(); });
 

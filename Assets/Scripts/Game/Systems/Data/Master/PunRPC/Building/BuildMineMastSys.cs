@@ -18,15 +18,15 @@ namespace Scripts.Game
             ref var buildsInGameCom = ref _buildsFilt.Get1(0);
 
             var sender = InfoC.Sender(MasGenOthTypes.Master);
-            var idxForBuild = forBuildMasCom.IdxForBuild;
+            var idx_0 = forBuildMasCom.IdxForBuild;
             var forBuildType = forBuildMasCom.BuildingTypeForBuidling;
 
-            ref var buildC_0 = ref _cellBuildFilter.Get1(idxForBuild);
-            ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idxForBuild);
+            ref var build_0 = ref _cellBuildFilter.Get1(idx_0);
+            ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idx_0);
 
-            ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForBuild);
-            ref var curStepUnitC = ref _cellUnitFilter.Get2(idxForBuild);
-            ref var curCellEnvCom = ref _cellEnvFilter.Get1(idxForBuild);
+            ref var curUnitDatCom = ref _cellUnitFilter.Get1(idx_0);
+            ref var curStepUnitC = ref _cellUnitFilter.Get2(idx_0);
+            ref var curCellEnvCom = ref _cellEnvFilter.Get1(idx_0);
 
 
             var playerSend = WhoseMoveC.WhoseMove;
@@ -35,24 +35,34 @@ namespace Scripts.Game
             {
                 if (curStepUnitC.HaveMinSteps)
                 {
-                    if (curCellEnvCom.Have(EnvTypes.Hill) && curCellEnvCom.HaveRes(EnvTypes.Hill))
+                    if (!build_0.HaveBuild || build_0.Is(BuildTypes.Camp))
                     {
-                        if (InventResC.CanCreateBuild(playerSend, forBuildType, out var needRes))
+                        if (curCellEnvCom.Have(EnvTypes.Hill) && curCellEnvCom.HaveRes(EnvTypes.Hill))
                         {
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
+                            if (InventResC.CanCreateBuild(playerSend, forBuildType, out var needRes))
+                            {
+                                if (build_0.HaveBuild)
+                                {
+                                    WhereBuildsC.Remove(ownBuildC_0.Owner, build_0.BuildType, idx_0);
+                                    build_0.Reset();
+                                }
 
-                            InventResC.BuyBuild(playerSend, forBuildType);
+                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
 
-                            buildC_0.SetBuild(forBuildType);
-                            ownBuildC_0.SetOwner(playerSend);
-                            WhereBuildsC.Add(ownBuildC_0.Owner, buildC_0.BuildType, idxForBuild);
+                                InventResC.BuyBuild(playerSend, forBuildType);
 
-                            curStepUnitC.TakeSteps();
+                                build_0.SetBuild(forBuildType);
+                                ownBuildC_0.SetOwner(playerSend);
+                                WhereBuildsC.Add(ownBuildC_0.Owner, build_0.BuildType, idx_0);
+
+                                curStepUnitC.TakeSteps();
+                            }
+
+                            else RpcSys.MistakeEconomyToGeneral(sender, needRes);
                         }
 
-                        else RpcSys.MistakeEconomyToGeneral(sender, needRes);
+                        else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                     }
-
                     else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                 }
                 else

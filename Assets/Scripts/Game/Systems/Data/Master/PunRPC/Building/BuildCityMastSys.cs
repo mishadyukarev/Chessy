@@ -43,7 +43,7 @@ namespace Scripts.Game
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var xy in CellSpaceSupport.TryGetXyAround(_xyCellFilt.GetXyCell(idxForBuild)))
+                    foreach (var xy in CellSpaceSupport.TryGetXyAround(_xyCellFilt.Get1(idxForBuild).XyCell))
                     {
                         var curIdx = _xyCellFilt.GetIdxCell(xy);
 
@@ -61,7 +61,7 @@ namespace Scripts.Game
                         if (buildC_0.HaveBuild)
                         {
                             WhereBuildsC.Remove(ownBuildC_0.Owner, buildC_0.BuildType, idxForBuild);
-                            buildC_0.NoneBuild();
+                            buildC_0.Reset();
                         }
 
                         buildC_0.SetBuild(forBuildType);

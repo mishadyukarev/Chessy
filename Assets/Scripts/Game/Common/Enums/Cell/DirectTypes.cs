@@ -4,13 +4,13 @@
     {
         None,
 
-        Right,
-        Left,
         Up,
+        UpRight,
+        Right,
+        DownRight,
         Down,
-        RightUp,
-        LeftUp,
-        RightDown,
-        LeftDown
+        DownLeft,
+        Left,
+        UpLeft
     }
 }

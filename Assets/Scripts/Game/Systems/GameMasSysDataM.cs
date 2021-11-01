@@ -15,7 +15,7 @@ namespace Scripts.Game
                 .Add(new BuildFarmMastSys())
                 .Add(new BuildCityMastSys()));
             rpcSystems.Add(RpcMasterTypes.DestroyBuild, new EcsSystems(gameWorld).Add(new DestroyMasterSystem()));
-            rpcSystems.Add(RpcMasterTypes.Shift, new EcsSystems(gameWorld).Add(new ShiftUnitMasterSystem()));
+            rpcSystems.Add(RpcMasterTypes.Shift, new EcsSystems(gameWorld).Add(new ShiftUnitMasSys()));
             rpcSystems.Add(RpcMasterTypes.Attack, new EcsSystems(gameWorld).Add(new AttackMastSys()));
             rpcSystems.Add(RpcMasterTypes.ConditionUnit, new EcsSystems(gameWorld).Add(new ConditionMasterSystem()));
             rpcSystems.Add(RpcMasterTypes.Ready, new EcsSystems(gameWorld).Add(new ReadyMasterSystem()));
@@ -38,6 +38,7 @@ namespace Scripts.Game
 
             var updateMotion = new EcsSystems(gameWorld)
                 .Add(new UpdatorMastSys())
+                .Add(new ExtractBuildUpdMasSys())
                 .Add(new FireUpdMasSys())
                 .Add(new CloudUpdMasSys())
                 .Add(new ThirstyUpdMasSys())

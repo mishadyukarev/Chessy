@@ -14,17 +14,17 @@ namespace Scripts.Game
         public void Run()
         {
             var sender = InfoC.Sender(MasGenOthTypes.Master);
-            var envTypeForSeeding = _seedingFilter.Get1(0).EnvTypeForSeeding;
-            var idxCellForSeeding = _seedingFilter.Get1(0).IdxForSeeding;
+            var envType = _seedingFilter.Get1(0).EnvTypeForSeeding;
+            var idx_0 = _seedingFilter.Get1(0).IdxForSeeding;
 
-            ref var curUnitDatC = ref _cellUnitFilter.Get1(idxCellForSeeding);
-            ref var stepUnitC = ref _cellUnitFilter.Get2(idxCellForSeeding);
+            ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
+            ref var stepUnit_0 = ref _cellUnitFilter.Get2(idx_0);
 
-            ref var curCellBuildDataCom = ref _cellBuildFilter.Get1(idxCellForSeeding);
-            ref var curCellEnvDataCom = ref _cellEnvFilter.Get1(idxCellForSeeding);
+            ref var build_0 = ref _cellBuildFilter.Get1(idx_0);
+            ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
 
 
-            switch (envTypeForSeeding)
+            switch (envType)
             {
                 case EnvTypes.None:
                     throw new Exception();
@@ -33,26 +33,26 @@ namespace Scripts.Game
                     throw new Exception();
 
                 case EnvTypes.YoungForest:
-                    if (stepUnitC.HaveMinSteps)
+                    if (stepUnit_0.HaveMinSteps)
                     {
-                        if (curCellBuildDataCom.HaveBuild)
+                        if (build_0.HaveBuild && !build_0.Is(BuildTypes.Camp))
                         {
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                         }
                         else
                         {
-                            if (!curCellEnvDataCom.Have(EnvTypes.Fertilizer))
+                            if (!env_0.Have(EnvTypes.Fertilizer))
                             {
-                                if (!curCellEnvDataCom.Have(EnvTypes.AdultForest))
+                                if (!env_0.Have(EnvTypes.AdultForest))
 
-                                    if (!curCellEnvDataCom.Have(EnvTypes.YoungForest))
+                                    if (!env_0.Have(EnvTypes.YoungForest))
                                     {
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.Seeding);
 
-                                        curCellEnvDataCom.SetNew(EnvTypes.YoungForest);
-                                        WhereEnvC.Add(EnvTypes.YoungForest, idxCellForSeeding);
+                                        env_0.SetNew(EnvTypes.YoungForest);
+                                        WhereEnvC.Add(EnvTypes.YoungForest, idx_0);
 
-                                        stepUnitC.TakeSteps();
+                                        stepUnit_0.TakeSteps();
                                     }
                                     else
                                     {

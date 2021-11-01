@@ -34,14 +34,14 @@ namespace Scripts.Game
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
-                foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.GetXyCell(idxCurculAttack)))
+                foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idxCurculAttack).XyCell))
                 {
                     var idx_1 = _xyCellFilter.GetIdxCell(xy1);
 
                     ref var unitC_1 = ref _cellUnitFilter.Get1(idx_1);
 
-                    ref var levUnitC_1 = ref _cellUnitMainFilt.Get2(idx_1);
-                    ref var ownUnitC_1 = ref _cellUnitMainFilt.Get3(idx_1);
+                    ref var levUnit_1 = ref _cellUnitMainFilt.Get2(idx_1);
+                    ref var ownUnit_1 = ref _cellUnitMainFilt.Get3(idx_1);
 
                     ref var hpUnitC_1 = ref _cellUnitFilter.Get2(idx_1);
                     ref var twUnitC_1 = ref _cellUnitOthFilt.Get3(idx_1);
@@ -52,7 +52,7 @@ namespace Scripts.Game
 
                     if (unitC_1.HaveUnit)
                     {
-                        if (!ownUnitC_1.Is(ownUnitC_0.Owner))
+                        if (!ownUnit_1.Is(ownUnitC_0.Owner))
                         {
                             effUnitC_1.DefAllEffects();
 
@@ -73,14 +73,16 @@ namespace Scripts.Game
                                         }
                                         else if (unitC_1.Is(UnitTypes.Scout))
                                         {
-                                            InventorUnitsC.AddUnit(ownUnitC_1.Owner, UnitTypes.Scout, LevelUnitTypes.Wood);
+                                            InventorUnitsC.AddUnit(ownUnit_1.Owner, UnitTypes.Scout, LevelUnitTypes.Wood);
                                         }
 
+                                        WhereUnitsC.Remove(ownUnit_1.Owner, unitC_1.Unit, levUnit_1.Level, idx_1);
                                         unitC_1.NoneUnit();
                                     }
                                 }
                                 else
                                 {
+                                    WhereUnitsC.Remove(ownUnit_1.Owner, unitC_1.Unit, levUnit_1.Level, idx_1);
                                     unitC_1.NoneUnit();
                                 }
                             }

@@ -199,11 +199,11 @@ namespace Scripts.Game
             switch (unitType)
             {
                 case UnitTypes.None: return 0;
-                case UnitTypes.King: return 100;
-                case UnitTypes.Pawn: return 100;
-                case UnitTypes.Rook: return 100;
-                case UnitTypes.Bishop: return 100;
-                case UnitTypes.Scout: return 100;
+                case UnitTypes.King: return 7;
+                case UnitTypes.Pawn: return 7;
+                case UnitTypes.Rook: return 7;
+                case UnitTypes.Bishop: return 7;
+                case UnitTypes.Scout: return 7;
                 default: throw new Exception();
             }
         }

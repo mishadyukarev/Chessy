@@ -11,9 +11,11 @@ namespace Scripts.Game
         private EcsFilter<CellUnitDataCom, HpUnitC, DamageComponent, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, ThirstyUnitC> _cellUnitEffFilt = default;
 
-        private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
+        private EcsFilter<XyCellComponent> _cellXyFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
+        private EcsFilter<CellTrailDataC> _cellTrainFilt = default;
 
         public void Run()
         {
@@ -24,45 +26,43 @@ namespace Scripts.Game
             var idx_from = forAttackMasCom.IdxFromCell;
             var idx_to = forAttackMasCom.IdxToCell;
 
-            ref var unitC_from = ref _cellUnitFilter.Get1(idx_from);
 
-            ref var levUnitC_from = ref _cellUnitMainFilt.Get2(idx_from);
-            ref var ownUnitC_from = ref _cellUnitMainFilt.Get3(idx_from);
-
+            ref var unit_from = ref _cellUnitFilter.Get1(idx_from);
+            ref var levUnit_from = ref _cellUnitMainFilt.Get2(idx_from);
+            ref var ownUnit_from = ref _cellUnitMainFilt.Get3(idx_from);
             ref var hpUnitC_from = ref _cellUnitFilter.Get2(idx_from);
             ref var fromDamUnitC = ref _cellUnitFilter.Get3(idx_from);
             ref var stepUnitC_from = ref _cellUnitFilter.Get4(idx_from);
-
             ref var condUnitC_from = ref _cellUnitEffFilt.Get2(idx_from);
             ref var twUnitC_from = ref _cellUnitEffFilt.Get3(idx_from);
             ref var effUnitC_from = ref _cellUnitEffFilt.Get4(idx_from);
             ref var thirUnitC_from = ref _cellUnitEffFilt.Get5(idx_from);
 
             ref var riverC_from = ref _cellRiverFilt.Get1(idx_from);
+            ref var build_from = ref _cellBuildFilter.Get1(idx_from);
+            ref var ownBuild_from = ref _cellBuildFilter.Get2(idx_from);
 
 
             ref var unitC_to = ref _cellUnitFilter.Get1(idx_to);
-
             ref var levUnitC_to = ref _cellUnitMainFilt.Get2(idx_to);
-            ref var ownUnitC_to = ref _cellUnitMainFilt.Get3(idx_to);
-
+            ref var ownUnit_to = ref _cellUnitMainFilt.Get3(idx_to);
             ref var hpUnitC_to = ref _cellUnitFilter.Get2(idx_to);
             ref var toDamUnitC =ref _cellUnitFilter.Get3(idx_to);
             ref var stepUnitC_to = ref _cellUnitFilter.Get4(idx_to);
-
             ref var condUnitC_to = ref _cellUnitEffFilt.Get2(idx_to);
             ref var twUnitC_to = ref _cellUnitEffFilt.Get3(idx_to);
             ref var effUnitC_to = ref _cellUnitEffFilt.Get4(idx_to);
             ref var thirUnitC_to = ref _cellUnitEffFilt.Get5(idx_to);
 
+
             ref var riverC_to = ref _cellRiverFilt.Get1(idx_to);
+            ref var build_to = ref _cellBuildFilter.Get1(idx_to);
+            ref var env_to = ref _cellEnvFilter.Get1(idx_to);
+            ref var trail_to = ref _cellTrainFilt.Get1(idx_to);
 
 
-            ref var toBuildDatCom = ref _cellBuildFilter.Get1(idx_to);
-            ref var toEnvDatCom = ref _cellEnvFilter.Get1(idx_to);
 
-
-            var simpUniqueType = CellsAttackC.FindByIdx(ownUnitC_from.Owner, idx_from, idx_to);
+            var simpUniqueType = CellsAttackC.FindByIdx(ownUnit_from.Owner, idx_from, idx_to);
 
             if (simpUniqueType != default)
             {
@@ -76,16 +76,16 @@ namespace Scripts.Game
                 float powerDamTo = 0;
 
 
-                powerDamFrom += fromDamUnitC.DamageAttack(unitC_from.Unit, levUnitC_from.Level, twUnitC_from, effUnitC_from, simpUniqueType);
+                powerDamFrom += fromDamUnitC.DamageAttack(unit_from.Unit, levUnit_from.Level, twUnitC_from, effUnitC_from, simpUniqueType);
 
-                if (unitC_from.IsMelee)
+                if (unit_from.IsMelee)
                     RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
                 else RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
 
 
                 if (unitC_to.IsMelee)
                 {
-                    powerDamTo += toDamUnitC.DamageOnCell(unitC_to.Unit, levUnitC_to.Level, condUnitC_to, twUnitC_to, effUnitC_to, toBuildDatCom.BuildType, toEnvDatCom.Envronments);
+                    powerDamTo += toDamUnitC.DamageOnCell(unitC_to.Unit, levUnitC_to.Level, condUnitC_to, twUnitC_to, effUnitC_to, build_to.BuildType, env_to.Envronments);
                 }
 
 
@@ -115,7 +115,7 @@ namespace Scripts.Game
 
 
 
-                if (!unitC_from.IsMelee) minusFrom = 0;
+                if (!unit_from.IsMelee) minusFrom = 0;
                 if (twUnitC_from.Is(ToolWeaponTypes.Shield))
                 {
                     minusFrom = 0;
@@ -150,55 +150,67 @@ namespace Scripts.Game
                 {
                     if (unitC_to.Is(UnitTypes.King))
                     {
-                        EndGameDataUIC.PlayerWinner = ownUnitC_from.Owner;
+                        EndGameDataUIC.PlayerWinner = ownUnit_from.Owner;
                     }
                     else if (unitC_to.Is(UnitTypes.Scout))
                     {
-                        InventorUnitsC.AddUnit(ownUnitC_to.Owner, unitC_to.Unit, LevelUnitTypes.Wood);
+                        InventorUnitsC.AddUnit(ownUnit_to.Owner, unitC_to.Unit, LevelUnitTypes.Wood);
                     }
 
+                    WhereUnitsC.Remove(ownUnit_to.Owner, unitC_to.Unit, levUnitC_to.Level, idx_to);
                     unitC_to.NoneUnit();
 
 
-                    if (unitC_from.IsMelee)
+                    if (unit_from.IsMelee)
                     {
-                        unitC_to.SetUnit(unitC_from.Unit);
-                        levUnitC_to.SetLevel(levUnitC_from.Level);
-                        hpUnitC_to.AmountHp = hpUnitC_from.AmountHp;
-                        stepUnitC_to.StepsAmount = stepUnitC_from.StepsAmount;
-                        condUnitC_to.CondUnitType = condUnitC_from.CondUnitType;
-                        twUnitC_to.Set(twUnitC_from);
-                        ownUnitC_to.SetOwner(ownUnitC_from.Owner);
-                        if (riverC_to.HaveNearRiver) thirUnitC_to.SetMaxWater(unitC_to.Unit);
-                        WhereUnitsC.Add(ownUnitC_to.Owner, unitC_to.Unit, levUnitC_to.Level, idx_to);
-
-
-                        WhereUnitsC.Remove(ownUnitC_from.Owner, unitC_from.Unit, levUnitC_from.Level, idx_from);
-                        unitC_from.NoneUnit();
-                        
-
-                        if (!hpUnitC_to.HaveHp)
+                        if (!hpUnitC_from.HaveHp)
                         {
-                            WhereUnitsC.Remove(ownUnitC_to.Owner, unitC_to.Unit, levUnitC_to.Level, idx_to);
-                            unitC_to.NoneUnit();
+                            WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
+                            unit_from.NoneUnit();
+                        }
+                        else
+                        {
+                            unitC_to.SetUnit(unit_from.Unit);
+                            levUnitC_to.SetLevel(levUnit_from.Level);
+                            hpUnitC_to.AmountHp = hpUnitC_from.AmountHp;
+                            stepUnitC_to.StepsAmount = stepUnitC_from.StepsAmount;
+                            condUnitC_to.CondUnitType = condUnitC_from.CondUnitType;
+                            twUnitC_to.Set(twUnitC_from);
+                            ownUnit_to.SetOwner(ownUnit_from.Owner);
+                            if (riverC_to.HaveNearRiver) thirUnitC_to.SetMaxWater(unitC_to.Unit);
+                            WhereUnitsC.Add(ownUnit_to.Owner, unitC_to.Unit, levUnitC_to.Level, idx_to);
+
+                            var dir = CellSpaceSupport.GetDirect(_cellXyFilt.Get1(idx_from).XyCell, _cellXyFilt.Get1(idx_to).XyCell);
+                            trail_to.TrySetNewTrain(dir.Invert(), env_to);
+
+
+                            if (build_from.Is(BuildTypes.Camp))
+                            {
+                                WhereBuildsC.Remove(ownBuild_from.Owner, build_from.BuildType, idx_from);
+                                build_from.Reset();
+                            }
+
+
+                            WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
+                            unit_from.NoneUnit();
                         }
                     }
                 }
 
                 else if (!hpUnitC_from.HaveHp)
                 {
-                    if (unitC_from.Is(UnitTypes.King))
+                    if (unit_from.Is(UnitTypes.King))
                     {
-                        ownUnitC_from.SetOwner(ownUnitC_to.Owner);
-                        EndGameDataUIC.PlayerWinner = ownUnitC_to.Owner;
+                        ownUnit_from.SetOwner(ownUnit_to.Owner);
+                        EndGameDataUIC.PlayerWinner = ownUnit_to.Owner;
                     }
 
-                    WhereUnitsC.Remove(ownUnitC_from.Owner, unitC_from.Unit, levUnitC_from.Level, idx_from);
-                    unitC_from.NoneUnit();
+                    WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
+                    unit_from.NoneUnit();
                 }
 
                 hpUnitC_to.TryTakeBonusHp(effUnitC_to, unitC_to.Unit);
-                hpUnitC_from.TryTakeBonusHp(effUnitC_from, unitC_from.Unit);
+                hpUnitC_from.TryTakeBonusHp(effUnitC_from, unit_from.Unit);
 
                 effUnitC_from.DefAllEffects();
                 effUnitC_to.DefAllEffects();
