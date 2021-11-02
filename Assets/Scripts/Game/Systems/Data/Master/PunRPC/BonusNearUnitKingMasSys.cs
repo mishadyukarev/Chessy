@@ -11,16 +11,16 @@ namespace Scripts.Game
         public void Run()
         {
             var idx_0 = ForBonusNearUnitC.IdxCell;
-            ref var unitC_0 = ref _cellUnitFilt.Get1(idx_0);
+            ref var unit_0 = ref _cellUnitFilt.Get1(idx_0);
             ref var stepUnitC_0 =ref _cellUnitFilt.Get3(idx_0);
 
             ref var effUnitC_0 = ref _cellUnitOthFilt.Get3(idx_0);
-            ref var ownUnitC_0 = ref _cellUnitOthFilt.Get4(idx_0);
+            ref var ownUnit_0 = ref _cellUnitOthFilt.Get4(idx_0);
 
-            var sender = InfoC.Sender(MasGenOthTypes.Master);
+            var sender = InfoC.Sender(MGOTypes.Master);
 
 
-            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.Unit))
+            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
             {
                 var around = CellSpaceSupport.TryGetXyAround(_cellXyFilt.Get1(idx_0).XyCell);
 
@@ -33,30 +33,30 @@ namespace Scripts.Game
                 {
                     var idxCell = _cellXyFilt.GetIdxCell(xy);
 
-                    ref var unitC_1 = ref _cellUnitFilt.Get1(idxCell);
+                    ref var unit_1 = ref _cellUnitFilt.Get1(idxCell);
                     ref var hpUnitC_1 = ref _cellUnitFilt.Get2(idxCell);
                     ref var stepUnitC_1 = ref _cellUnitFilt.Get3(idxCell);
 
                     ref var effUnitC_1 = ref _cellUnitOthFilt.Get3(idxCell);
-                    ref var curOwnUnitC = ref _cellUnitOthFilt.Get4(idxCell);
+                    ref var ownUnit_1 = ref _cellUnitOthFilt.Get4(idxCell);
 
-                    if (unitC_1.HaveUnit)
+                    if (unit_1.HaveUnit)
                     {
-                        if (curOwnUnitC.Is(ownUnitC_0.Owner))
+                        if (ownUnit_1.Is(ownUnit_0.Owner))
                         {
-                            if (!effUnitC_1.Have(StatTypes.Health))
+                            if (!effUnitC_1.Have(UnitStatTypes.Hp))
                             {
-                                effUnitC_1.Set(StatTypes.Health);
-                                hpUnitC_1.TryAddBonusHp(effUnitC_1, unitC_1.Unit);
+                                effUnitC_1.Set(UnitStatTypes.Hp);
+                                hpUnitC_1.TryAddBonusHp(unit_1.Unit, effUnitC_1.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_1.Owner, unit_1.Unit, UnitStatTypes.Hp));
                             }
-                            if (!effUnitC_1.Have(StatTypes.Damage))
+                            if (!effUnitC_1.Have(UnitStatTypes.Damage))
                             {
-                                effUnitC_1.Set(StatTypes.Damage);
+                                effUnitC_1.Set(UnitStatTypes.Damage);
                             }
 
-                            if (!effUnitC_1.Have(StatTypes.Steps))
+                            if (!effUnitC_1.Have(UnitStatTypes.Steps))
                             {
-                                effUnitC_1.Set(StatTypes.Steps);
+                                effUnitC_1.Set(UnitStatTypes.Steps);
                                 //if (!stepUnitC_1.HaveMaxSteps(effUnitC_1, unitC_1.UnitType))
                                 //{
                                 //    stepUnitC_1.AddBonus();

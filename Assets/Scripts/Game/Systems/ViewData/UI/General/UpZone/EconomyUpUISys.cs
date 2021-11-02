@@ -45,22 +45,21 @@ namespace Scripts.Game
                 }
             }
 
-            var amountAddFood = 3 + WhereBuildsC.AmountBuilds(WhoseMoveC.CurPlayer, BuildTypes.Farm)
-                * UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildTypes.Farm) - amountUnitsInGame;
-
+            var haveUpgFarms = BuildsUpgC.HaveUpgrade(WhoseMoveC.CurPlayer, BuildTypes.Farm);
+            var amountFarms = WhereBuildsC.AmountBuilds(WhoseMoveC.CurPlayer, BuildTypes.Farm);
+            var amountAddFood = ExtractC.GetAddFood(haveUpgFarms, amountFarms, amountUnitsInGame);
 
             if (amountAddFood < 0) EconomyViewUIC.SetAddText(ResTypes.Food, amountAddFood.ToString());
-
             else EconomyViewUIC.SetAddText(ResTypes.Food, "+ " + amountAddFood.ToString());
 
 
 
-            amountAddWood += (byte)(UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildTypes.Woodcutter)
-                * UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildTypes.Woodcutter));
+            amountAddWood += (byte)(WhereBuildsC.AmountBuilds(WhoseMoveC.CurPlayer, BuildTypes.Woodcutter)
+                * ExtractC.GetExtractOneBuild(BuildsUpgC.HaveUpgrade(WhoseMoveC.CurPlayer, BuildTypes.Woodcutter)));
             EconomyViewUIC.SetAddText(ResTypes.Wood, "+ " + amountAddWood);
 
-            var amountAddOre = UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildTypes.Mine)
-                * UpgBuildsC.GetExtractOneBuild(WhoseMoveC.CurPlayer, BuildTypes.Mine);
+            var amountAddOre = WhereBuildsC.AmountBuilds(WhoseMoveC.CurPlayer, BuildTypes.Mine)
+                * ExtractC.GetExtractOneBuild(BuildsUpgC.HaveUpgrade(WhoseMoveC.CurPlayer, BuildTypes.Mine));
             EconomyViewUIC.SetAddText(ResTypes.Ore, "+ " + amountAddOre);
 
 

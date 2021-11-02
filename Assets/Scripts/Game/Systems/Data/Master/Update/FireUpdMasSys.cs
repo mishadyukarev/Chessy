@@ -13,7 +13,7 @@ namespace Scripts.Game
         private EcsFilter<CellUnitDataCom, HpUnitC> _cellUnitFilter = default;
 
         private EcsFilter<CellFireDataC> _cellFireDataFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
+        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvDataFilter = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
         private EcsFilter<CellCloudsDataC> _cellCloudsFilt = default;
 
@@ -33,7 +33,8 @@ namespace Scripts.Game
                 ref var buil_0 = ref _cellBuildFilt.Get1(idx_0);
 
                 ref var fire_0 = ref _cellFireDataFilter.Get1(idx_0);
-                ref var envr_0 = ref _cellEnvDataFilter.Get1(idx_0);
+                ref var env_0 = ref _cellEnvDataFilter.Get1(idx_0);
+                ref var envRes_0 = ref _cellEnvDataFilter.Get2(idx_0);
 
                 ref var cloud_0 = ref _cellCloudsFilt.Get1(idx_0);
 
@@ -45,7 +46,7 @@ namespace Scripts.Game
 
                 if (fire_0.HaveFire)
                 {
-                    envr_0.TakeAmountRes(EnvTypes.AdultForest, 2);
+                    envRes_0.TakeAmountRes(EnvTypes.AdultForest, 2);
 
                     if (unit_0.HaveUnit)
                     {
@@ -72,14 +73,14 @@ namespace Scripts.Game
 
 
 
-                    if (!envr_0.HaveRes(EnvTypes.AdultForest))
+                    if (!envRes_0.HaveRes(EnvTypes.AdultForest))
                     {
                         if (buil_0.HaveBuild)
                         {
                             buil_0.Reset();
                         }
 
-                        envr_0.Reset(EnvTypes.AdultForest);
+                        env_0.Reset(EnvTypes.AdultForest);
                         WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
 
 
@@ -87,7 +88,7 @@ namespace Scripts.Game
                         {
                             ref var envDatCom = ref _cellEnvDataFilter.Get1(idx_0);
 
-                            envDatCom.SetNew(EnvTypes.YoungForest);
+                            envDatCom.Set(EnvTypes.YoungForest);
                             WhereEnvC.Add(EnvTypes.YoungForest, idx_0);
                         }
 

@@ -8,11 +8,10 @@ namespace Scripts.Game
     public sealed class TruceMasterSystem : IEcsRunSystem
     {
         private EcsFilter<InventorUnitsC> _inventorUnitsFilter = default;
-        private EcsFilter<InventorTWCom> _invTWFilt = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
+        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
 
@@ -31,12 +30,12 @@ namespace Scripts.Game
                 ref var ownUnit_0 = ref _cellUnitFilter.Get3(idx_0);
 
                 ref var curBuildDatCom = ref _cellBuildFilter.Get1(idx_0);
-                ref var curEnvDatCom = ref _cellEnvFilter.Get1(idx_0);
+                ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
+                ref var envRes_0 = ref _cellEnvFilter.Get1(idx_0);
                 ref var curFireCom = ref _cellFireFilter.Get1(idx_0);
 
 
                 curFireCom.DisableFire();
-
 
                 if (_cellDataFilt.Get1(idx_0).IsActiveCell)
                 {
@@ -67,24 +66,26 @@ namespace Scripts.Game
 
                     else
                     {
-                        if (curEnvDatCom.Have(EnvTypes.YoungForest))
+                        if (env_0.Have(EnvTypes.YoungForest))
                         {
-                            curEnvDatCom.Reset(EnvTypes.YoungForest);
+                            env_0.Reset(EnvTypes.YoungForest);
                             WhereEnvC.Remove(EnvTypes.YoungForest, idx_0);
 
-                            curEnvDatCom.SetNew(EnvTypes.AdultForest);
+                            env_0.Set(EnvTypes.AdultForest);
+                            envRes_0.Set(EnvTypes.AdultForest);
                             WhereEnvC.Add(EnvTypes.AdultForest, idx_0);
                         }
 
-                        if (!curEnvDatCom.Have(EnvTypes.Fertilizer)
-                            && !curEnvDatCom.Have(EnvTypes.Mountain)
-                            && !curEnvDatCom.Have(EnvTypes.AdultForest))
+                        if (!env_0.Have(EnvTypes.Fertilizer)
+                            && !env_0.Have(EnvTypes.Mountain)
+                            && !env_0.Have(EnvTypes.AdultForest))
                         {
                             random = Random.Range(0, 100);
 
                             if (random <= 3)
                             {
-                                curEnvDatCom.SetNew(EnvTypes.Fertilizer);
+                                env_0.Set(EnvTypes.Fertilizer);
+                                envRes_0.Set(EnvTypes.Fertilizer);
                                 WhereEnvC.Add(EnvTypes.Fertilizer, idx_0);
                             }
                         }

@@ -13,7 +13,7 @@ namespace Scripts.Game
 
         public void Run()
         {
-            var sender = InfoC.Sender(MasGenOthTypes.Master);
+            var sender = InfoC.Sender(MGOTypes.Master);
             var envType = _seedingFilter.Get1(0).EnvTypeForSeeding;
             var idx_0 = _seedingFilter.Get1(0).IdxForSeeding;
 
@@ -49,7 +49,7 @@ namespace Scripts.Game
                                     {
                                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.Seeding);
 
-                                        env_0.SetNew(EnvTypes.YoungForest);
+                                        env_0.Set(EnvTypes.YoungForest);
                                         WhereEnvC.Add(EnvTypes.YoungForest, idx_0);
 
                                         stepUnit_0.TakeSteps();

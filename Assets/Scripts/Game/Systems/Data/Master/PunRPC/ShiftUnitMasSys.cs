@@ -12,7 +12,7 @@ namespace Scripts.Game
 
         private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, ThirstyUnitC> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
 
         public void Run()
         {
@@ -42,9 +42,9 @@ namespace Scripts.Game
                 ref var effUnitC_from = ref _cellUnitOthFilt.Get4(idx_from);
                 ref var thirUnitC_from = ref _cellUnitOthFilt.Get5(idx_from);
 
-                ref var unitC_to = ref _cellUnitFilter.Get1(idx_to);
+                ref var unit_to = ref _cellUnitFilter.Get1(idx_to);
                 ref var levUnitC_to = ref _cellUnitMainFilt.Get2(idx_to);
-                ref var ownUnitC_to = ref _cellUnitMainFilt.Get3(idx_to);
+                ref var ownUnit_to = ref _cellUnitMainFilt.Get3(idx_to);
                 ref var hpUnitC_to = ref _cellUnitFilter.Get2(idx_to);
                 ref var stepUnitC_to = ref _cellUnitFilter.Get3(idx_to);
                 ref var condUnitC_to = ref _cellUnitOthFilt.Get2(idx_to);
@@ -72,22 +72,22 @@ namespace Scripts.Game
 
 
 
-                unitC_to.SetUnit(unit_from.Unit);
+                unit_to.SetUnit(unit_from.Unit);
                 levUnitC_to.SetLevel(levUnit_from.Level);
-                ownUnitC_to.SetOwner(playerType);
+                ownUnit_to.SetOwner(playerType);
                 hpUnitC_to.AmountHp = hpUnitC_from.AmountHp;
                 stepUnitC_to.StepsAmount = stepUnitC_from.StepsAmount;
                 condUnitC_to.DefCondition();
                 twUnitC_to.Set(twUnitC_from);
                 effUnitC_to.Set(effUnitC_from);
                 thirUnitC_to.Set(thirUnitC_from);
-                if (river_to.HaveNearRiver) thirUnitC_to.SetMaxWater(unitC_to.Unit);
-                WhereUnitsC.Add(ownUnitC_to.Owner, unitC_to.Unit, levUnitC_to.Level, idx_to);
+                if (river_to.HaveNearRiver) thirUnitC_to.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Water));
+                WhereUnitsC.Add(ownUnit_to.Owner, unit_to.Unit, levUnitC_to.Level, idx_to);
 
                 WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
                 unit_from.NoneUnit();
 
-                RpcSys.SoundToGeneral(InfoC.Sender(MasGenOthTypes.Master), SoundEffectTypes.ClickToTable);
+                RpcSys.SoundToGeneral(InfoC.Sender(MGOTypes.Master), SoundEffectTypes.ClickToTable);
             }
         }
     }

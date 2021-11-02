@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Game
 {
-    public enum MasGenOthTypes
+    public enum MGOTypes
     {
         None,
 

@@ -11,31 +11,31 @@ namespace Scripts.Game
 
         public void Run()
         {
-            var forUpgradeCom = _forUpgradeFilter.Get1(0);
+            //var forUpgradeCom = _forUpgradeFilter.Get1(0);
 
-            var sender = InfoC.Sender(MasGenOthTypes.Master);
-            var idxForUpgradeUnit = forUpgradeCom.IdxForUpgradeUnit;
+            //var sender = InfoC.Sender(MGOTypes.Master);
+            //var idxForUpgradeUnit = forUpgradeCom.IdxForUpgradeUnit;
 
-            ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxForUpgradeUnit);
-            ref var curOwnerCellUnitDataCom = ref _cellUnitFilter.Get2(idxForUpgradeUnit);
-
-
-            var playerSend = WhoseMoveC.WhoseMove;
+            //ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxForUpgradeUnit);
+            //ref var curOwnerCellUnitDataCom = ref _cellUnitFilter.Get2(idxForUpgradeUnit);
 
 
-            var buildTypeForUpgrade = _forUpgradeFilter.Get1(0).BuildingType;
+            //var playerSend = WhoseMoveC.WhoseMove;
 
-            if (InventResC.CanUpgradeBuildings(playerSend, buildTypeForUpgrade, out var needRes))
-            {
-                InventResC.BuyUpgradeBuildings(playerSend, buildTypeForUpgrade);
-                UpgBuildsC.AddAmountUpgs(playerSend, buildTypeForUpgrade);
 
-                RpcSys.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
-            }
-            else
-            {
-                RpcSys.MistakeEconomyToGeneral(sender, needRes);
-            }
+            //var buildTypeForUpgrade = _forUpgradeFilter.Get1(0).BuildingType;
+
+            //if (InventResC.CanUpgradeBuildings(playerSend, buildTypeForUpgrade, out var needRes))
+            //{
+            //    InventResC.BuyUpgradeBuildings(playerSend, buildTypeForUpgrade);
+            //    BuildsUpgC.AddUpgrade(playerSend, buildTypeForUpgrade);
+
+            //    RpcSys.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
+            //}
+            //else
+            //{
+            //    RpcSys.MistakeEconomyToGeneral(sender, needRes);
+            //}
         }
     }
 }

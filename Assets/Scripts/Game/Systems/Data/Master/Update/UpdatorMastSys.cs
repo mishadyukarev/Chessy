@@ -10,7 +10,7 @@ namespace Scripts.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
         private EcsFilter<CellFireDataC> _cellFireDataFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
+        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvDataFilter = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
@@ -58,13 +58,13 @@ namespace Scripts.Game
                         {
                             if (ownUnit_0.Is(PlayerTypes.Second))
                             {
-                                if (!hpUnit_0.HaveMaxHpUnit(effUnit_0, unit_0.Unit))
+                                if (!hpUnit_0.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
                                 {
                                     hpUnit_0.AddHp(100);
 
-                                    if (hpUnit_0.HaveMaxHpUnit(effUnit_0, unit_0.Unit))
+                                    if (hpUnit_0.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
                                     {
-                                        hpUnit_0.SetMaxHp(effUnit_0, unit_0.Unit);
+                                        hpUnit_0.SetMaxHp(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
                                     }
                                 }
                             }
@@ -82,7 +82,7 @@ namespace Scripts.Game
                         {
                             if (condUnit_0.Is(CondUnitTypes.Protected))
                             {
-                                if (hpUnit_0.HaveMaxHpUnit(effUnit_0, unit_0.Unit))
+                                if (hpUnit_0.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
                                 {
                                     if (unit_0.Is(UnitTypes.Pawn))
                                     {
@@ -130,7 +130,7 @@ namespace Scripts.Game
                         }
                     }
 
-                    stepUnit_0.SetMaxSteps(effUnit_0, unit_0.Unit);
+                    stepUnit_0.SetMaxSteps(effUnit_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
                 }
 
                 else
@@ -152,18 +152,20 @@ namespace Scripts.Game
 
             if (MotionsDataUIC.AmountMotions % 3 == 0)
             {
-                foreach (byte curIdxCell in _xyCellFilter)
+                foreach (byte idx_0 in _xyCellFilter)
                 {
-                    ref var curEnvrDatCom = ref _cellEnvDataFilter.Get1(curIdxCell);
-                    ref var curBuildDatCom = ref _cellBuildFilt.Get1(curIdxCell);
+                    ref var env_0 = ref _cellEnvDataFilter.Get1(idx_0);
+                    ref var envRes_0 = ref _cellEnvDataFilter.Get2(idx_0);
 
-                    if (curEnvrDatCom.Have(EnvTypes.Hill))
+                    ref var build_0 = ref _cellBuildFilt.Get1(idx_0);
+
+                    if (env_0.Have(EnvTypes.Hill))
                     {
-                        if (!curBuildDatCom.Is(BuildTypes.Mine))
+                        if (!build_0.Is(BuildTypes.Mine))
                         {
-                            if (!curEnvrDatCom.HaveMaxRes(EnvTypes.Hill))
+                            if (!envRes_0.HaveMaxRes(EnvTypes.Hill))
                             {
-                                curEnvrDatCom.AddAmountRes(EnvTypes.Hill);
+                                envRes_0.AddAmountRes(EnvTypes.Hill);
                             }
                         }
                     }
@@ -179,7 +181,7 @@ namespace Scripts.Game
             {
                 ref var envDatCom = ref _cellEnvDataFilter.Get1(idxCellStart);
 
-                envDatCom.SetNew(EnvTypes.YoungForest);
+                envDatCom.Set(EnvTypes.YoungForest);
                 WhereEnvC.Add(EnvTypes.YoungForest, idxCellStart);
             }
         }

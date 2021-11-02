@@ -12,7 +12,7 @@ namespace Scripts.Game
 
         public void Run()
         {
-            var sender = InfoC.Sender(MasGenOthTypes.Master);
+            var sender = InfoC.Sender(MGOTypes.Master);
 
             RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
 

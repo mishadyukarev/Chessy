@@ -23,10 +23,10 @@ namespace Scripts.Game
             if (IsMinusSteps) ZeroSteps();
         }
 
-        public int MaxSteps(UnitEffectsC unitEffectsC, UnitTypes unitType) => UnitValues.StandartAmountSteps(unitEffectsC.Have(StatTypes.Steps), unitType);
-        public bool HaveMaxSteps(UnitEffectsC unitEffectsC, UnitTypes unitType) => StepsAmount >= MaxSteps(unitEffectsC, unitType);
+        public int MaxSteps(UnitEffectsC effC, UnitTypes unit, float upgPerc) => UnitValues.StandartAmountSteps(effC.Have(UnitStatTypes.Steps), unit, upgPerc);
+        public bool HaveMaxSteps(UnitEffectsC effC, UnitTypes unit, float upgPerc) => StepsAmount >= MaxSteps(effC, unit, upgPerc);
         public void ZeroSteps() => StepsAmount = 0;
-        public void SetMaxSteps(UnitEffectsC unitEffectsC, UnitTypes unitType) => StepsAmount = MaxSteps(unitEffectsC, unitType);
+        public void SetMaxSteps(UnitEffectsC effC, UnitTypes unit, float upgPerc) => StepsAmount = MaxSteps(effC, unit, upgPerc);
         public int StepsForDoing(CellEnvDataC cellEnvC, DirectTypes dir_cur, CellTrailDataC trailC)
         {
             var needSteps = 1;

@@ -44,7 +44,7 @@ namespace Scripts.Game
                         if (!env_1.Have(EnvTypes.Mountain))
                         {
                             if (stepUnit_0.HaveStepsForDoing(env_1, item_1.Key, trail_1) 
-                                || stepUnit_0.HaveMaxSteps(effUnit_0, unit_0.Unit))
+                                || stepUnit_0.HaveMaxSteps(effUnit_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                             {
                                 if (unit_1.HaveUnit)
                                 {

@@ -13,7 +13,7 @@ namespace Scripts.Game
 
         public void Run()
         {
-            var sender = InfoC.Sender(MasGenOthTypes.Master);
+            var sender = InfoC.Sender(MGOTypes.Master);
             ref var idx_0 = ref _forUpgradeUnitFilt.Get1(0).idxCellForUpgrade;
 
             ref var unit_0 = ref _cellUnitDataFilt.Get1(idx_0);
@@ -23,7 +23,7 @@ namespace Scripts.Game
 
             ref var hpUnitC = ref _cellUnitDataFilt.Get2(idx_0);
             ref var stepUnitC_0 = ref _cellUnitDataFilt.Get3(idx_0);
-            ref var effUnitC_0 =ref _cellUnitDataFilt.Get4(idx_0);
+            ref var effUnit_0 =ref _cellUnitDataFilt.Get4(idx_0);
 
 
             ref var invResCom = ref _invResFilt.Get1(0);
@@ -32,7 +32,7 @@ namespace Scripts.Game
 
             var playSend = WhoseMoveC.WhoseMove;
 
-            if (hpUnitC.HaveMaxHpUnit(effUnitC_0, unit_0.Unit))
+            if (hpUnitC.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
             {
                 if (stepUnitC_0.HaveMinSteps)
                 {
@@ -46,7 +46,7 @@ namespace Scripts.Game
 
                         stepUnitC_0.TakeSteps();
 
-                        hpUnitC.AmountHp = hpUnitC.MaxHpUnit(effUnitC_0, unit_0.Unit);
+                        hpUnitC.SetMaxHp(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
 
                         RpcSys.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitMelee);
                     }

@@ -13,14 +13,10 @@ namespace Scripts.Game
         private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent, ConditionUnitC, ToolWeaponC> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvrFilter = default;
+        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvrFilter = default;
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
 
         private EcsFilter<SelectorC> _selectorFilter = default;
-        private EcsFilter<EndGameDataUIC> _endGameFilter = default;
-        private EcsFilter<ReadyDataUIC> _readyUIFilter = default;
-        private EcsFilter<MotionsDataUIC> _motionsFilter = default;
-        private EcsFilter<MistakeDataUIC> _mistakeUIFilter = default;
 
 
 
@@ -66,6 +62,7 @@ namespace Scripts.Game
         public static void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
 
         public static void UpgradeBuildingToMaster(BuildTypes buildingType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeBuild, new object[] { buildingType });
+        public static void PickUpgradeToMaster(PickUpgradeTypes upgBut) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.PickUpgrade, new object[] { upgBut });
 
         public static void ShiftUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { idxPreviousCell, idxSelectedCell });
         public static void AttackUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Attack, new object[] { idxPreviousCell, idxSelectedCell });
@@ -117,7 +114,7 @@ namespace Scripts.Game
         {
             _curNumber = default;
 
-            InfoC.AddInfo(MasGenOthTypes.Master, infoFrom);
+            InfoC.AddInfo(MGOTypes.Master, infoFrom);
 
             switch (rpcType)
             {
@@ -188,6 +185,10 @@ namespace Scripts.Game
                     ForBonusNearUnitC.IdxCell = (byte)objects[0];
                     break;
 
+                case RpcMasterTypes.PickUpgrade:
+                    ForPickUpgMasC.UpgButType = (PickUpgradeTypes)objects[0];
+                    break;
+
                 case RpcMasterTypes.OldToNewUnit:
                     _forOldToNewUnitFilt.Get1(0).UnitType = (UnitTypes)objects[0];
                     _forOldToNewUnitFilt.Get1(0).IdxCell = (byte)objects[1];
@@ -216,7 +217,7 @@ namespace Scripts.Game
         private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _curNumber = 0;
-            InfoC.AddInfo(MasGenOthTypes.General, infoFrom);
+            InfoC.AddInfo(MGOTypes.General, infoFrom);
 
             ref var selectorCom = ref _selectorFilter.Get1(0);
 
@@ -264,7 +265,7 @@ namespace Scripts.Game
         private void OtherRPC(RpcOtherTypes rpcOtherType, object[] objects, PhotonMessageInfo infoFrom)
         {
             _curNumber = 0;
-            InfoC.AddInfo(MasGenOthTypes.Other, infoFrom);
+            InfoC.AddInfo(MGOTypes.Other, infoFrom);
 
             switch (rpcOtherType)
             {
@@ -319,17 +320,19 @@ namespace Scripts.Game
 
 
 
-                ref var curEnvDatCom = ref _cellEnvrFilter.Get1(idx_0);
-                listObjects.Add(curEnvDatCom.Have(EnvTypes.Fertilizer));
-                listObjects.Add(curEnvDatCom.AmountRes(EnvTypes.Fertilizer));
-                listObjects.Add(curEnvDatCom.Have(EnvTypes.YoungForest));
-                listObjects.Add(curEnvDatCom.AmountRes(EnvTypes.YoungForest));
-                listObjects.Add(curEnvDatCom.Have(EnvTypes.AdultForest));
-                listObjects.Add(curEnvDatCom.AmountRes(EnvTypes.AdultForest));
-                listObjects.Add(curEnvDatCom.Have(EnvTypes.Hill));
-                listObjects.Add(curEnvDatCom.AmountRes(EnvTypes.Hill));
-                listObjects.Add(curEnvDatCom.Have(EnvTypes.Mountain));
-                listObjects.Add(curEnvDatCom.AmountRes(EnvTypes.Mountain));
+                ref var env_0 = ref _cellEnvrFilter.Get1(idx_0);
+                ref var envRes_0 = ref _cellEnvrFilter.Get2(idx_0);
+
+                listObjects.Add(env_0.Have(EnvTypes.Fertilizer));
+                listObjects.Add(envRes_0.AmountRes(EnvTypes.Fertilizer));
+                listObjects.Add(env_0.Have(EnvTypes.YoungForest));
+                listObjects.Add(envRes_0.AmountRes(EnvTypes.YoungForest));
+                listObjects.Add(env_0.Have(EnvTypes.AdultForest));
+                listObjects.Add(envRes_0.AmountRes(EnvTypes.AdultForest));
+                listObjects.Add(env_0.Have(EnvTypes.Hill));
+                listObjects.Add(envRes_0.AmountRes(EnvTypes.Hill));
+                listObjects.Add(env_0.Have(EnvTypes.Mountain));
+                listObjects.Add(envRes_0.AmountRes(EnvTypes.Mountain));
 
 
                 listObjects.Add(_cellFireFilter.Get1(idx_0).HaveFire);
@@ -406,12 +409,23 @@ namespace Scripts.Game
 
 
 
-                ref var curEnvrDatCom = ref _cellEnvrFilter.Get1(idx_0);
-                curEnvrDatCom.Set(EnvTypes.Fertilizer, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
-                curEnvrDatCom.Set(EnvTypes.YoungForest, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
-                curEnvrDatCom.Set(EnvTypes.AdultForest, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
-                curEnvrDatCom.Set(EnvTypes.Hill, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
-                curEnvrDatCom.Set(EnvTypes.Mountain, (bool)objects[_curNumber++], (byte)objects[_curNumber++]);
+                ref var env_0 = ref _cellEnvrFilter.Get1(idx_0);
+                ref var envRes_0 = ref _cellEnvrFilter.Get2(idx_0);
+
+                env_0.Set(EnvTypes.Fertilizer, (bool)objects[_curNumber++]);
+                envRes_0.SetAmountRes(EnvTypes.Fertilizer, (byte)objects[_curNumber++]);
+
+                env_0.Set(EnvTypes.YoungForest, (bool)objects[_curNumber++]);
+                envRes_0.SetAmountRes(EnvTypes.YoungForest, (byte)objects[_curNumber++]);
+
+                env_0.Set(EnvTypes.AdultForest, (bool)objects[_curNumber++]);
+                envRes_0.SetAmountRes(EnvTypes.AdultForest, (byte)objects[_curNumber++]);
+
+                env_0.Set(EnvTypes.Hill, (bool)objects[_curNumber++]);
+                envRes_0.SetAmountRes(EnvTypes.Hill, (byte)objects[_curNumber++]);
+
+                env_0.Set(EnvTypes.Mountain, (bool)objects[_curNumber++]);
+                envRes_0.SetAmountRes(EnvTypes.Mountain, (byte)objects[_curNumber++]);
 
 
 

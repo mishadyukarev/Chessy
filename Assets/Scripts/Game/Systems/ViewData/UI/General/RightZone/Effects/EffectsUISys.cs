@@ -11,9 +11,9 @@ namespace Scripts.Game
             ref var unitC_sel = ref _cellUnitFilt.Get1(SelectorC.IdxSelCell);
             ref var effUnitC_sel = ref _cellUnitFilt.Get2(SelectorC.IdxSelCell);
 
-            EffectsIUC.SetColor(StatTypes.Health, effUnitC_sel.Have(StatTypes.Health));
-            EffectsIUC.SetColor(StatTypes.Damage, effUnitC_sel.Have(StatTypes.Damage));
-            EffectsIUC.SetColor(StatTypes.Steps, effUnitC_sel.Have(StatTypes.Steps));
+            EffectsIUC.SetColor(UnitStatTypes.Hp, effUnitC_sel.Have(UnitStatTypes.Hp));
+            EffectsIUC.SetColor(UnitStatTypes.Damage, effUnitC_sel.Have(UnitStatTypes.Damage));
+            EffectsIUC.SetColor(UnitStatTypes.Steps, effUnitC_sel.Have(UnitStatTypes.Steps));
         }
     }
 }

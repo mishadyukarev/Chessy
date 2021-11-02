@@ -1,10 +1,10 @@
 ﻿namespace Scripts.Game
 {
-    public enum StatTypes
+    public enum UnitStatTypes
     {
         None,
 
-        Health,
+        Hp,
         Damage,
         Steps,
         Water,

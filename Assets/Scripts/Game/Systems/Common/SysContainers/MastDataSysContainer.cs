@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Scripts.Game
 {
-    public sealed class MastDataSysContainer
+    public struct MastDataSysContainer
     {
         private static Dictionary<MastDataSysTypes, EcsSystems> _systems;
         private static Dictionary<RpcMasterTypes, EcsSystems> _rpcSysts;

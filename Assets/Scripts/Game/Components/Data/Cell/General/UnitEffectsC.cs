@@ -5,26 +5,26 @@ namespace Scripts.Game
 {
     public struct UnitEffectsC
     {
-        private Dictionary<StatTypes, bool> _effects;
-        public void Set(StatTypes statType, bool isActive = true)
+        private Dictionary<UnitStatTypes, bool> _effects;
+        public void Set(UnitStatTypes statType, bool isActive = true)
         {
             if (_effects.ContainsKey(statType)) _effects[statType] = isActive;
             else throw new Exception();
         }
         public void Set(UnitEffectsC effectsC)
         {
-            Set(StatTypes.Health, effectsC.Have(StatTypes.Health));
-            Set(StatTypes.Damage, effectsC.Have(StatTypes.Damage));
-            Set(StatTypes.Steps, effectsC.Have(StatTypes.Steps));
+            Set(UnitStatTypes.Hp, effectsC.Have(UnitStatTypes.Hp));
+            Set(UnitStatTypes.Damage, effectsC.Have(UnitStatTypes.Damage));
+            Set(UnitStatTypes.Steps, effectsC.Have(UnitStatTypes.Steps));
         }
-        public void Def(StatTypes statType) => Set(statType, false);
+        public void Def(UnitStatTypes statType) => Set(statType, false);
         public void DefAllEffects()
         {
-            Set(StatTypes.Health, false);
-            Set(StatTypes.Damage, false);
-            Set(StatTypes.Steps, false);
+            Set(UnitStatTypes.Hp, false);
+            Set(UnitStatTypes.Damage, false);
+            Set(UnitStatTypes.Steps, false);
         }
-        public bool Have(StatTypes statType)
+        public bool Have(UnitStatTypes statType)
         {
             if (_effects.ContainsKey(statType)) return _effects[statType];
             else throw new Exception();
@@ -34,10 +34,10 @@ namespace Scripts.Game
         {
             if (needNew)
             {
-                _effects = new Dictionary<StatTypes, bool>();
-                _effects.Add(StatTypes.Health, default);
-                _effects.Add(StatTypes.Damage, default);
-                _effects.Add(StatTypes.Steps, default);
+                _effects = new Dictionary<UnitStatTypes, bool>();
+                _effects.Add(UnitStatTypes.Hp, default);
+                _effects.Add(UnitStatTypes.Damage, default);
+                _effects.Add(UnitStatTypes.Steps, default);
             }
         }
     }

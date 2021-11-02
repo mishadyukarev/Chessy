@@ -6,7 +6,7 @@ namespace Scripts.Game
     public sealed class SyncCellUnitSupVisSystem : IEcsRunSystem
     {
         private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent, ConditionUnitC, OwnerCom, VisibleC> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, UnitEffectsC, ThirstyUnitC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, UnitEffectsC, WaterUnitC, OwnerCom> _cellUnitOthFilt = default;
         private EcsFilter<CellUnitDataCom, VisibleC> _cellUnitViewFilt = default;
         private EcsFilter<CellUnitMainViewCom> _cellUnitViewFilter = default;
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
@@ -16,13 +16,13 @@ namespace Scripts.Game
         {
             foreach (byte idx in _cellUnitFilter)
             {
-                ref var unitC_0 = ref _cellUnitFilter.Get1(idx);
-                ref var curHpUnitC = ref _cellUnitFilter.Get2(idx);
+                ref var unit_0 = ref _cellUnitFilter.Get1(idx);
+                ref var hpUnit_0 = ref _cellUnitFilter.Get2(idx);
                 ref var curStepUnitC = ref _cellUnitFilter.Get3(idx);
                 ref var condUnitC = ref _cellUnitOthFilt.Get2(idx);
-                ref var effUnitC = ref _cellUnitOthFilt.Get3(idx);
+                ref var effUnit_0 = ref _cellUnitOthFilt.Get3(idx);
                 ref var thirUnitC_0 = ref _cellUnitOthFilt.Get4(idx);
-                ref var curOwnUnitCom = ref _cellUnitOthFilt.Get5(idx);
+                ref var ownUnit_0 = ref _cellUnitOthFilt.Get5(idx);
                 ref var curVisUnitCom = ref _cellUnitViewFilt.Get2(idx);
 
                 ref var curUnitViewCom = ref _cellUnitViewFilter.Get1(idx);
@@ -40,18 +40,20 @@ namespace Scripts.Game
 
                 if (curVisUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
                 {
-                    if (unitC_0.HaveUnit)
+                    if (unit_0.HaveUnit)
                     {
-                        if (!unitC_0.Is(UnitTypes.Scout))
+                        if (!unit_0.Is(UnitTypes.Scout))
                         {
                             barsViewCom.EnableSR(CellBarTypes.Hp);
                             barsViewCom.SetColorHp(Color.red);
 
-                            float xCordinate = (float)curHpUnitC.AmountHp / curHpUnitC.MaxHpUnit(effUnitC, unitC_0.Unit);
+                            float maxHpUnit_0 = hpUnit_0.MaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
+
+                            float xCordinate = (float)hpUnit_0.AmountHp / maxHpUnit_0;
                             barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
                         }
 
-                        if (thirUnitC_0.NeedWater(unitC_0.Unit))
+                        if (thirUnitC_0.NeedWater)
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.NeedWater);
                         }
@@ -60,7 +62,7 @@ namespace Scripts.Game
                             blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
                         }
 
-                        if (curStepUnitC.HaveMaxSteps(effUnitC, unitC_0.Unit))
+                        if (curStepUnitC.HaveMaxSteps(effUnit_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.MaxSteps);
                         }
@@ -86,7 +88,7 @@ namespace Scripts.Game
                             blocksViewCom.DisableBlockSR(CellBlockTypes.Condition);
                         }
 
-                        if (curOwnUnitCom.Is(PlayerTypes.First))
+                        if (ownUnit_0.Is(PlayerTypes.First))
                         {
                             barsViewCom.SetColorHp(Color.blue);
                             blocksViewCom.SetColor(CellBlockTypes.MaxSteps, Color.blue);

@@ -9,10 +9,9 @@ namespace Scripts.Game
         private EcsFilter<CellUnitDataCom, ConditionUnitC, UnitEffectsC> _cellUnitOthFilt = default;
         private EcsFilter<CellUnitDataCom, ToolWeaponC> _cellUnitTWFilt = default;
 
-        private EcsFilter<CellEnvDataC> _cellEnvFilt = default;
+        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilt = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
-
         public void Run()
         {
             for (var player = Support.MinPlayerType; player < Support.MaxPlayerType; player++)
@@ -32,6 +31,7 @@ namespace Scripts.Game
                             ref var twUnit_0 = ref _cellUnitTWFilt.Get2(idx_0);
 
                             ref var env_0 = ref _cellEnvFilt.Get1(idx_0);
+                            ref var envRes_0 = ref _cellEnvFilt.Get2(idx_0);
 
                             ref var buil_0 = ref _cellBuildFilt.Get1(idx_0);
                             ref var ownBuil_0 = ref _cellBuildFilt.Get2(idx_0);
@@ -41,7 +41,7 @@ namespace Scripts.Game
 
                             if (condUnit_0.Is(CondUnitTypes.Relaxed))
                             {
-                                if (hpUnit_0.HaveMaxHpUnit(effUnit_0, unit_0.Unit))
+                                if (hpUnit_0.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
                                 {
                                     if (unit_0.Is(UnitTypes.Pawn))
                                     {
@@ -50,9 +50,9 @@ namespace Scripts.Game
                                         if (env_0.Have(adultForest))
                                         {
                                             InventResC.AddAmountRes(ownUnit_0.Owner, ResTypes.Wood);
-                                            env_0.TakeAmountRes(adultForest);
+                                            envRes_0.TakeAmountRes(adultForest);
 
-                                            if (env_0.HaveRes(adultForest))
+                                            if (envRes_0.HaveRes(adultForest))
                                             {
                                                 if (buil_0.Is(BuildTypes.Camp))
                                                 {
@@ -102,13 +102,13 @@ namespace Scripts.Game
                                                 }
                                                 else
                                                 {
-                                                    if (env_0.HaveMaxRes(EnvTypes.Hill))
+                                                    if (envRes_0.HaveMaxRes(EnvTypes.Hill))
                                                     {
                                                         condUnit_0.CondUnitType = CondUnitTypes.Protected;
                                                     }
                                                     else
                                                     {
-                                                        env_0.SetMaxAmountRes(EnvTypes.Hill);
+                                                        envRes_0.SetMaxAmountRes(EnvTypes.Hill);
                                                     }
                                                 }
                                             }
@@ -132,10 +132,10 @@ namespace Scripts.Game
 
                                 else
                                 {
-                                    hpUnit_0.AddHealHp(effUnit_0, unit_0.Unit);
-                                    if (hpUnit_0.HaveMaxHpUnit(effUnit_0, unit_0.Unit))
+                                    hpUnit_0.AddHealHp(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
+                                    if (hpUnit_0.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
                                     {
-                                        hpUnit_0.SetMaxHp(effUnit_0, unit_0.Unit);
+                                        hpUnit_0.SetMaxHp(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
                                     }
                                 }
                             }

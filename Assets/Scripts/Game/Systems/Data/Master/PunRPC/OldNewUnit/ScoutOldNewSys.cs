@@ -12,30 +12,30 @@ namespace Scripts.Game
 
         public void Run()
         {
-            var sender = InfoC.Sender(MasGenOthTypes.Master);
+            var sender = InfoC.Sender(MGOTypes.Master);
             var idx_0 = _forOldNewUnitCom.Get1(0).IdxCell;
 
-            ref var unitC_0 = ref _cellUnitFilt.Get1(idx_0);
+            ref var unit_0 = ref _cellUnitFilt.Get1(idx_0);
 
             ref var levUnitC_0 = ref _cellUnitMainFilt.Get2(idx_0);
-            ref var ownUnitC_0 = ref _cellUnitMainFilt.Get3(idx_0);
+            ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
 
             ref var hpUnitC = ref _cellUnitFilt.Get2(idx_0);
             ref var stepUnitC = ref _cellUnitFilt.Get3(idx_0);
 
             ref var twUnitC_0 = ref _cellUnitOthFilt.Get3(idx_0);
-            ref var effUnitC = ref _cellUnitOthFilt.Get4(idx_0);
+            ref var effUnit_0 = ref _cellUnitOthFilt.Get4(idx_0);
 
 
             var playerSender = WhoseMoveC.WhoseMove;
 
-            if (hpUnitC.HaveMaxHpUnit(effUnitC, unitC_0.Unit))
+            if (hpUnitC.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
             {
-                if (stepUnitC.HaveMaxSteps(effUnitC, unitC_0.Unit))
+                if (stepUnitC.HaveMaxSteps(effUnit_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                 {
                     InventorUnitsC.TakeUnitsInInv(playerSender, UnitTypes.Scout, LevelUnitTypes.Wood);
-                    WhereUnitsC.Remove(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level, idx_0);
-                    unitC_0.NoneUnit();
+                    WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
+                    unit_0.NoneUnit();
 
                     if (twUnitC_0.HaveToolWeap)
                     {
@@ -43,13 +43,13 @@ namespace Scripts.Game
                         twUnitC_0.ToolWeapType = default;
                     }
 
-                    unitC_0.SetUnit(_forOldNewUnitCom.Get1(0).UnitType);
+                    unit_0.SetUnit(_forOldNewUnitCom.Get1(0).UnitType);
                     levUnitC_0.SetLevel(LevelUnitTypes.Wood);
 
-                    hpUnitC.SetMaxHp(effUnitC, unitC_0.Unit);
-                    stepUnitC.SetMaxSteps(effUnitC, unitC_0.Unit);
+                    hpUnitC.SetMaxHp(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
+                    stepUnitC.SetMaxSteps(effUnit_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
                     _cellUnitOthFilt.Get2(idx_0).DefCondition();
-                    WhereUnitsC.Add(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level, idx_0);
+                    WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
                 }
 
                 else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);

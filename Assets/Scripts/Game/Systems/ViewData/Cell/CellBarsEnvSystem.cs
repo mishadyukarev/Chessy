@@ -6,57 +6,59 @@ namespace Scripts.Game
     public sealed class CellBarsEnvSystem : IEcsRunSystem
     {
         private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
+        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilter = default;
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
 
         public void Run()
         {
             ref var selBuildDatC = ref _cellBuildFilter.Get1(SelectorC.IdxSelCell);
-            ref var selEnvDatC = ref _cellEnvFilter.Get1(SelectorC.IdxSelCell);
+
+            ref var env_sel = ref _cellEnvFilter.Get1(SelectorC.IdxSelCell);
+            ref var envRes_sel = ref _cellEnvFilter.Get2(SelectorC.IdxSelCell);
 
             foreach (var curIdxCell in _cellBuildFilter)
             {
-                ref var curEnvCom = ref _cellEnvFilter.Get1(curIdxCell);
-                ref var curCellBarsViewCom = ref _cellBarsFilter.Get1(curIdxCell);
+                ref var env_0 = ref _cellEnvFilter.Get1(curIdxCell);
+                ref var barsView_0 = ref _cellBarsFilter.Get1(curIdxCell);
 
                 if (EnvirZoneDataUIC.IsActivatedInfo)
                 {
-                    if (curEnvCom.Have(EnvTypes.Fertilizer))
+                    if (env_0.Have(EnvTypes.Fertilizer))
                     {
-                        curCellBarsViewCom.EnableSR(CellBarTypes.Food);
+                        barsView_0.EnableSR(CellBarTypes.Food);
 
-                        curCellBarsViewCom.SetScale(CellBarTypes.Food, new Vector3(curEnvCom.AmountRes(EnvTypes.Fertilizer) / (float)(curEnvCom.MaxAmountRes(EnvTypes.Fertilizer) + curEnvCom.MaxAmountRes(EnvTypes.Fertilizer)), 0.15f, 1));
+                        barsView_0.SetScale(CellBarTypes.Food, new Vector3(envRes_sel.AmountRes(EnvTypes.Fertilizer) / (float)(envRes_sel.MaxAmountRes(EnvTypes.Fertilizer) + envRes_sel.MaxAmountRes(EnvTypes.Fertilizer)), 0.15f, 1));
                     }
                     else
                     {
-                        curCellBarsViewCom.DisableSR(CellBarTypes.Food);
+                        barsView_0.DisableSR(CellBarTypes.Food);
                     }
 
-                    if (curEnvCom.Have(EnvTypes.AdultForest))
+                    if (env_0.Have(EnvTypes.AdultForest))
                     {
-                        curCellBarsViewCom.EnableSR(CellBarTypes.Wood);
-                        curCellBarsViewCom.SetScale(CellBarTypes.Wood, new Vector3(curEnvCom.AmountRes(EnvTypes.AdultForest) / (float)curEnvCom.MaxAmountRes(EnvTypes.AdultForest), 0.15f, 1));
+                        barsView_0.EnableSR(CellBarTypes.Wood);
+                        barsView_0.SetScale(CellBarTypes.Wood, new Vector3(envRes_sel.AmountRes(EnvTypes.AdultForest) / (float)envRes_sel.MaxAmountRes(EnvTypes.AdultForest), 0.15f, 1));
                     }
                     else
                     {
-                        curCellBarsViewCom.DisableSR(CellBarTypes.Wood);
+                        barsView_0.DisableSR(CellBarTypes.Wood);
                     }
 
-                    if (curEnvCom.Have(EnvTypes.Hill))
+                    if (env_0.Have(EnvTypes.Hill))
                     {
-                        curCellBarsViewCom.EnableSR(CellBarTypes.Ore);
-                        curCellBarsViewCom.SetScale(CellBarTypes.Ore, new Vector3(curEnvCom.AmountRes(EnvTypes.Hill) / (float)curEnvCom.MaxAmountRes(EnvTypes.Hill), 0.15f, 1));
+                        barsView_0.EnableSR(CellBarTypes.Ore);
+                        barsView_0.SetScale(CellBarTypes.Ore, new Vector3(envRes_sel.AmountRes(EnvTypes.Hill) / (float)envRes_sel.MaxAmountRes(EnvTypes.Hill), 0.15f, 1));
                     }
                     else
                     {
-                        curCellBarsViewCom.DisableSR(CellBarTypes.Ore);
+                        barsView_0.DisableSR(CellBarTypes.Ore);
                     }
                 }
                 else
                 {
-                    curCellBarsViewCom.DisableSR(CellBarTypes.Food);
-                    curCellBarsViewCom.DisableSR(CellBarTypes.Wood);
-                    curCellBarsViewCom.DisableSR(CellBarTypes.Ore);
+                    barsView_0.DisableSR(CellBarTypes.Food);
+                    barsView_0.DisableSR(CellBarTypes.Wood);
+                    barsView_0.DisableSR(CellBarTypes.Ore);
                 }
             }
 

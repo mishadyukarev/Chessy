@@ -33,34 +33,46 @@ namespace Scripts.Game
 
         public int ZeroHp() => AmountHp = 0;
         public bool Is(int amountHp) => AmountHp == amountHp;
-        public int MaxHpUnit(UnitEffectsC unitEffectsC, UnitTypes unitType) => UnitValues.StandMaxHpUnit(unitEffectsC.Have(StatTypes.Health), unitType);
-        public int MaxHpUnit(bool haveBonus, UnitTypes unitType) => UnitValues.StandMaxHpUnit(haveBonus, unitType);
-        public bool HaveMaxHpUnit(UnitEffectsC effectsC, UnitTypes unitType) => AmountHp >= MaxHpUnit(effectsC, unitType);
-        public bool HaveMaxHpUnit(bool haveBonus, UnitTypes unitType) => AmountHp >= MaxHpUnit(haveBonus, unitType);
-        public void AddHealHp(UnitEffectsC unitEffC, UnitTypes unitType) => AmountHp += (int)(MaxHpUnit(unitEffC, unitType) * UnitValues.PercentForAddingHp(unitType));
-        public void SetMaxHp(UnitEffectsC unitEffC, UnitTypes unitType) => AmountHp = MaxHpUnit(unitEffC, unitType);
 
-        public bool TryAddBonusHp(UnitEffectsC unitEffC, UnitTypes unitType)
+        public int MaxHpUnit(UnitTypes unitType, bool haveBonus, float upgPercent)
         {
-            if (unitEffC.Have(StatTypes.Health))
+            if (unitType == default) throw new Exception();
+
+            var maxHp = 0;
+            var standHp = UnitValues.StandMaxHpUnit(unitType);
+
+            maxHp = standHp;
+
+            if (haveBonus) maxHp += (int)(standHp * 0.5f);
+            maxHp += (int)(standHp * upgPercent);
+
+            return maxHp;
+        }
+        public bool HaveMaxHpUnit(UnitTypes unitType, bool haveBonus, float upgPercent) => AmountHp >= MaxHpUnit(unitType, haveBonus,  upgPercent);
+        public void AddHealHp(UnitTypes unitType, bool haveBonus, float upgPercent) => AmountHp += (int)(MaxHpUnit(unitType, haveBonus,  upgPercent) * UnitValues.PercentForAddingHp(unitType));
+        public void SetMaxHp(UnitTypes unitType, bool haveBonus, float upgPercent) => AmountHp = MaxHpUnit(unitType, haveBonus,  upgPercent);
+
+        public bool TryAddBonusHp(UnitTypes unitType, bool haveBonus, float upgPercent)
+        {
+            if (haveBonus)
             {
-                if (!HaveMaxHpUnit(true, unitType))
+                if (!HaveMaxHpUnit(unitType, haveBonus, 0))
                 {
-                    AmountHp += MaxHpUnit(true, unitType) - MaxHpUnit(false, unitType);
-                    if (AmountHp > MaxHpUnit(true, unitType)) AmountHp = MaxHpUnit(true, unitType);
+                    AmountHp += MaxHpUnit(unitType, haveBonus, 0) - MaxHpUnit(unitType, false, 0);
+                    if (AmountHp > MaxHpUnit(unitType, haveBonus, 0)) AmountHp = MaxHpUnit(unitType, false, 0);
                     return true;
                 }
                 else return false;
             }
             else return false;
         }
-        public bool TryTakeBonusHp(UnitEffectsC unitEffC, UnitTypes unitType)
+        public bool TryTakeBonusHp(UnitTypes unitType, bool haveBonus)
         {
-            if (unitEffC.Have(StatTypes.Health))
+            if (haveBonus)
             {
                 if (HaveHp)
                 {
-                    AmountHp -= MaxHpUnit(true, unitType) - MaxHpUnit(false, unitType);
+                    AmountHp -= MaxHpUnit(unitType, haveBonus, 0) - MaxHpUnit(unitType, false, 0);
                     if (AmountHp <= 0) AmountHp = 1;
                     return true;
                 }
@@ -69,7 +81,7 @@ namespace Scripts.Game
             else return false;
         }
 
-        public void TakeHpThirsty(UnitEffectsC unitEffC, UnitTypes unitType)
+        public void TakeHpThirsty(UnitTypes unitType, bool haveBonus, float upgPercent)
         {
             float percent = 0;
             switch (unitType)
@@ -83,7 +95,7 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
 
-            TakeHp((int)(MaxHpUnit(unitEffC, unitType) * percent));
+            TakeHp((int)(MaxHpUnit(unitType, haveBonus, upgPercent) * percent));
         }
     }
 }

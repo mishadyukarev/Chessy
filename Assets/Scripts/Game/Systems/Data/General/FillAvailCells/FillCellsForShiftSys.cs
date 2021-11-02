@@ -18,14 +18,14 @@ namespace Scripts.Game
                 CellsForShiftCom.Clear(PlayerTypes.First, idx_0);
                 CellsForShiftCom.Clear(PlayerTypes.Second, idx_0);
 
-                ref var unitC_0 = ref _cellUnitFilter.Get1(idx_0);
+                ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
                 ref var stepUnitC_0 = ref _cellUnitFilter.Get2(idx_0);
 
                 ref var effUnitC_0 = ref _cellUnitOthFilt.Get2(idx_0);
-                ref var ownUnitC_0 = ref _cellUnitOthFilt.Get3(idx_0);
+                ref var ownUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
 
 
-                if (unitC_0.HaveUnit)
+                if (unit_0.HaveUnit)
                 {
                     CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).XyCell, out var directs);
 
@@ -44,9 +44,9 @@ namespace Scripts.Game
                             if (!unitC_1.HaveUnit)
                             {
                                 if (stepUnitC_0.HaveStepsForDoing(envC_1, item_1.Key, trail_1) 
-                                    || stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.Unit))
+                                    || stepUnitC_0.HaveMaxSteps(effUnitC_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                                 {
-                                    CellsForShiftCom.AddIdxCell(ownUnitC_0.Owner, idx_0, idx_1);
+                                    CellsForShiftCom.AddIdxCell(ownUnit_0.Owner, idx_0, idx_1);
                                 }
                             }
                         }

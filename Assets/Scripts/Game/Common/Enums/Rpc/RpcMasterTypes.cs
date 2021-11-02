@@ -20,6 +20,7 @@
         Sound,
         CircularAttackKing,
         BonusNearUnitKing,
+        PickUpgrade,
 
         UpgradeUnit,
         OldToNewUnit,

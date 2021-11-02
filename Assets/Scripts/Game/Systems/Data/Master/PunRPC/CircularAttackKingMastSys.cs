@@ -16,13 +16,13 @@ namespace Scripts.Game
 
         public void Run()
         {
-            var sender = InfoC.Sender(MasGenOthTypes.Master);
+            var sender = InfoC.Sender(MGOTypes.Master);
             var idxCurculAttack = _forCircAttackFilter.Get1(0).IdxUnitForCirculAttack;
 
-            ref var unitC_0 = ref _cellUnitFilter.Get1(idxCurculAttack);
+            ref var unit_0 = ref _cellUnitFilter.Get1(idxCurculAttack);
 
             ref var levUnitC_0 = ref _cellUnitMainFilt.Get2(idxCurculAttack);
-            ref var ownUnitC_0 = ref _cellUnitMainFilt.Get3(idxCurculAttack);
+            ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idxCurculAttack);
 
             ref var stepUnitC_0 = ref _cellUnitFilter.Get3(idxCurculAttack);
 
@@ -30,7 +30,7 @@ namespace Scripts.Game
             ref var effUnitC_0 = ref _cellUnitOthFilt.Get4(idxCurculAttack);
 
 
-            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unitC_0.Unit))
+            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
 
@@ -52,7 +52,7 @@ namespace Scripts.Game
 
                     if (unitC_1.HaveUnit)
                     {
-                        if (!ownUnit_1.Is(ownUnitC_0.Owner))
+                        if (!ownUnit_1.Is(ownUnit_0.Owner))
                         {
                             effUnitC_1.DefAllEffects();
 
@@ -69,7 +69,7 @@ namespace Scripts.Game
                                     {
                                         if (unitC_1.Is(UnitTypes.King))
                                         {
-                                            EndGameDataUIC.PlayerWinner = ownUnitC_0.Owner;
+                                            EndGameDataUIC.PlayerWinner = ownUnit_0.Owner;
                                         }
                                         else if (unitC_1.Is(UnitTypes.Scout))
                                         {

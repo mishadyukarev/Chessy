@@ -15,14 +15,14 @@ namespace Scripts.Game
         {
             foreach (byte idx_0 in _xyCellFilter)
             {
-                ref var curUnitDatCom = ref _cellUnitFilt.Get1(idx_0);
+                ref var unit_0 = ref _cellUnitFilt.Get1(idx_0);
                 ref var curStepUnitC = ref _cellUnitFilt.Get2(idx_0);
 
                 ref var effUnitC_0 = ref _cellUnitOthFilt.Get2(idx_0);
-                ref var curOnUnitCom = ref _cellUnitOthFilt.Get3(idx_0);
+                ref var ownUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
 
 
-                if (curUnitDatCom.Is(UnitTypes.Pawn))
+                if (unit_0.Is(UnitTypes.Pawn))
                 {
                     DirectTypes curDurect1 = default;
 
@@ -42,18 +42,19 @@ namespace Scripts.Game
 
                         if (!envC_1.Have(EnvTypes.Mountain))
                         {
-                            if (curStepUnitC.HaveStepsForDoing(envC_1, item_1.Key, trail_1) || curStepUnitC.HaveMaxSteps(effUnitC_0, curUnitDatCom.Unit))
+                            if (curStepUnitC.HaveStepsForDoing(envC_1, item_1.Key, trail_1) 
+                                || curStepUnitC.HaveMaxSteps(effUnitC_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                             {
                                 if (unitC_1.HaveUnit)
                                 {
-                                    if (!ownUnitC_1.Is(curOnUnitCom.Owner))
+                                    if (!ownUnitC_1.Is(ownUnit_0.Owner))
                                     {
                                         if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
                                             || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
                                         {
-                                            CellsAttackC.Add(curOnUnitCom.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                            CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
                                         }
-                                        else CellsAttackC.Add(curOnUnitCom.Owner, AttackTypes.Unique, idx_0, idx_1);
+                                        else CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
                                     }
                                 }
                             }

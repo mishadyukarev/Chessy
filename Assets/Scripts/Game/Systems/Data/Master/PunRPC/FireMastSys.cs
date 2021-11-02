@@ -18,14 +18,14 @@ namespace Scripts.Game
 
         public void Run()
         {
-            var sender = InfoC.Sender(MasGenOthTypes.Master);
+            var sender = InfoC.Sender(MGOTypes.Master);
             var fromIdx = _fireFilter.Get1(0).FromIdx;
             var toIdx = _fireFilter.Get1(0).ToIdx;
 
-            ref var unitDatC_from = ref _cellUnitFilter.Get1(fromIdx);
+            ref var unit_from = ref _cellUnitFilter.Get1(fromIdx);
             ref var stepUnitC_from = ref _cellUnitFilter.Get2(fromIdx);
             ref var effUnitC_from = ref _cellUnitOthFilt.Get2(fromIdx);
-            ref var fromOnUnitCom = ref _cellUnitOthFilt.Get3(fromIdx);
+            ref var ownUnit_from = ref _cellUnitOthFilt.Get3(fromIdx);
 
             ref var toUnitDatCom = ref _cellUnitFilter.Get1(toIdx);
             ref var stepUnitC_to = ref _cellUnitFilter.Get2(toIdx);
@@ -34,7 +34,7 @@ namespace Scripts.Game
             ref var toEnvDatCom = ref _cellEnvFilter.Get1(toIdx);
 
 
-            if (unitDatC_from.IsMelee)
+            if (unit_from.IsMelee)
             {
                 if (stepUnitC_from.HaveMinSteps)
                 {
@@ -65,7 +65,7 @@ namespace Scripts.Game
 
             else
             {
-                if (stepUnitC_from.HaveMaxSteps(effUnitC_from, unitDatC_from.Unit))
+                if (stepUnitC_from.HaveMaxSteps(effUnitC_from, unit_from.Unit, UnitsUpgC.UpgSteps(ownUnit_from.Owner, unit_from.Unit)))
                 {
                     if (_cellsArcherArsonFilt.Get1(0).HaveIdxCell(sender.GetPlayerType(), fromIdx, toIdx))
                     {

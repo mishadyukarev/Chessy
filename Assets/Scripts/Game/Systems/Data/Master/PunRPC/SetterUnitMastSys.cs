@@ -10,20 +10,20 @@ namespace Scripts.Game
 
         private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, ThirstyUnitC> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
 
         public void Run()
         {
-            var sender = InfoC.Sender(MasGenOthTypes.Master);
+            var sender = InfoC.Sender(MGOTypes.Master);
             var unitForSet = _setterFilter.Get1(0).UnitTypeForSetting;
             var idx_0 = _setterFilter.Get1(0).IdxCellForSetting;
 
             ref var curEnvDatCom = ref _cellEnvirDataFilter.Get1(idx_0);
 
-            ref var unitC_0 = ref _cellUnitFilter.Get1(idx_0);
+            ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
 
             ref var levUnitC_0 = ref _cellUnitMainFilt.Get2(idx_0);
-            ref var ownUnitC_0 = ref _cellUnitMainFilt.Get3(idx_0);
+            ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
 
             ref var curHpUnitC = ref _cellUnitFilter.Get2(idx_0);
             ref var stepUnitC = ref _cellUnitFilter.Get3(idx_0);
@@ -39,14 +39,14 @@ namespace Scripts.Game
 
             if (CellsForSetUnitC.HaveIdxCell(playerSend, idx_0))
             {
-                unitC_0.SetUnit(unitForSet);
-                ownUnitC_0.SetOwner(playerSend);
+                unit_0.SetUnit(unitForSet);
+                ownUnit_0.SetOwner(playerSend);
                 curTwUnitC.ToolWeapType = default;
                 effUnit_0.DefAllEffects();
-                curHpUnitC.AmountHp = curHpUnitC.MaxHpUnit(effUnit_0, unitForSet);
-                stepUnitC.StepsAmount = UnitValues.StandartAmountSteps(false, unitForSet);
+                curHpUnitC.AmountHp = curHpUnitC.MaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
+                stepUnitC.StepsAmount = UnitValues.StandartAmountSteps(false, unitForSet, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
                 condUnitC.DefCondition();
-                thirUnitC_0.SetMaxWater(unitForSet);
+                thirUnitC_0.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
                 if (InventorUnitsC.HaveUnitInInv(playerSend, unitForSet, LevelUnitTypes.Iron))
                 {
                     InventorUnitsC.TakeUnitsInInv(playerSend, unitForSet, LevelUnitTypes.Iron);
@@ -57,9 +57,9 @@ namespace Scripts.Game
                     InventorUnitsC.TakeUnitsInInv(playerSend, unitForSet, LevelUnitTypes.Wood);
                     levUnitC_0.SetLevel(LevelUnitTypes.Wood);
                 }
-                WhereUnitsC.Add(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level, idx_0);
+                WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
 
-                if (unitForSet == UnitTypes.King) PickUpgZoneDataUIC.SetActive(playerSend, true);
+                if (unitForSet == UnitTypes.King) PickUpgZoneDataUIC.SetActiveParent(playerSend, true);
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
             }

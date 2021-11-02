@@ -23,7 +23,7 @@ namespace Scripts.Game
 
             if (forBuildType == BuildTypes.City)
             {
-                var sender = InfoC.Sender(MasGenOthTypes.Master);
+                var sender = InfoC.Sender(MGOTypes.Master);
                 var idxForBuild = forBuildMasCom.IdxForBuild;
 
                 ref var buildC_0 = ref _cellBuildFilter.Get1(idxForBuild);

@@ -8,8 +8,8 @@ namespace Scripts.Game
         private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
         private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataCom, HpUnitC, DamageComponent, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, ThirstyUnitC> _cellUnitEffFilt = default;
+        private EcsFilter<CellUnitDataCom, HpUnitC, DamageC, StepComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitEffFilt = default;
 
         private EcsFilter<XyCellComponent> _cellXyFilt = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
@@ -35,7 +35,7 @@ namespace Scripts.Game
             ref var stepUnitC_from = ref _cellUnitFilter.Get4(idx_from);
             ref var condUnitC_from = ref _cellUnitEffFilt.Get2(idx_from);
             ref var twUnitC_from = ref _cellUnitEffFilt.Get3(idx_from);
-            ref var effUnitC_from = ref _cellUnitEffFilt.Get4(idx_from);
+            ref var effUnit_from = ref _cellUnitEffFilt.Get4(idx_from);
             ref var thirUnitC_from = ref _cellUnitEffFilt.Get5(idx_from);
 
             ref var riverC_from = ref _cellRiverFilt.Get1(idx_from);
@@ -43,7 +43,7 @@ namespace Scripts.Game
             ref var ownBuild_from = ref _cellBuildFilter.Get2(idx_from);
 
 
-            ref var unitC_to = ref _cellUnitFilter.Get1(idx_to);
+            ref var unit_to = ref _cellUnitFilter.Get1(idx_to);
             ref var levUnitC_to = ref _cellUnitMainFilt.Get2(idx_to);
             ref var ownUnit_to = ref _cellUnitMainFilt.Get3(idx_to);
             ref var hpUnitC_to = ref _cellUnitFilter.Get2(idx_to);
@@ -51,7 +51,7 @@ namespace Scripts.Game
             ref var stepUnitC_to = ref _cellUnitFilter.Get4(idx_to);
             ref var condUnitC_to = ref _cellUnitEffFilt.Get2(idx_to);
             ref var twUnitC_to = ref _cellUnitEffFilt.Get3(idx_to);
-            ref var effUnitC_to = ref _cellUnitEffFilt.Get4(idx_to);
+            ref var effUnit_to = ref _cellUnitEffFilt.Get4(idx_to);
             ref var thirUnitC_to = ref _cellUnitEffFilt.Get5(idx_to);
 
 
@@ -76,16 +76,16 @@ namespace Scripts.Game
                 float powerDamTo = 0;
 
 
-                powerDamFrom += fromDamUnitC.DamageAttack(unit_from.Unit, levUnit_from.Level, twUnitC_from, effUnitC_from, simpUniqueType);
+                powerDamFrom += fromDamUnitC.DamageAttack(unit_from.Unit, levUnit_from.Level, twUnitC_from, effUnit_from, simpUniqueType, UnitsUpgC.UpgPercent(ownUnit_from.Owner, unit_from.Unit, UnitStatTypes.Damage));
 
                 if (unit_from.IsMelee)
                     RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
                 else RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
 
 
-                if (unitC_to.IsMelee)
+                if (unit_to.IsMelee)
                 {
-                    powerDamTo += toDamUnitC.DamageOnCell(unitC_to.Unit, levUnitC_to.Level, condUnitC_to, twUnitC_to, effUnitC_to, build_to.BuildType, env_to.Envronments);
+                    powerDamTo += toDamUnitC.DamageOnCell(unit_to.Unit, levUnitC_to.Level, condUnitC_to, twUnitC_to, effUnit_to, UnitsUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Damage), build_to.BuildType, env_to.Envronments);
                 }
 
 
@@ -131,7 +131,7 @@ namespace Scripts.Game
 
 
 
-                if (!unitC_to.IsMelee) minusTo = hpUnitC_to.MaxHpUnit(effUnitC_to, unitC_to.Unit);
+                if (!unit_to.IsMelee) minusTo = hpUnitC_to.MaxHpUnit(unit_to.Unit, effUnit_to.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Hp));
                 if (twUnitC_to.Is(ToolWeaponTypes.Shield))
                 {
                     minusTo = 0;
@@ -148,17 +148,17 @@ namespace Scripts.Game
 
                 if (!hpUnitC_to.HaveHp)
                 {
-                    if (unitC_to.Is(UnitTypes.King))
+                    if (unit_to.Is(UnitTypes.King))
                     {
                         EndGameDataUIC.PlayerWinner = ownUnit_from.Owner;
                     }
-                    else if (unitC_to.Is(UnitTypes.Scout))
+                    else if (unit_to.Is(UnitTypes.Scout))
                     {
-                        InventorUnitsC.AddUnit(ownUnit_to.Owner, unitC_to.Unit, LevelUnitTypes.Wood);
+                        InventorUnitsC.AddUnit(ownUnit_to.Owner, unit_to.Unit, LevelUnitTypes.Wood);
                     }
 
-                    WhereUnitsC.Remove(ownUnit_to.Owner, unitC_to.Unit, levUnitC_to.Level, idx_to);
-                    unitC_to.NoneUnit();
+                    WhereUnitsC.Remove(ownUnit_to.Owner, unit_to.Unit, levUnitC_to.Level, idx_to);
+                    unit_to.NoneUnit();
 
 
                     if (unit_from.IsMelee)
@@ -170,15 +170,15 @@ namespace Scripts.Game
                         }
                         else
                         {
-                            unitC_to.SetUnit(unit_from.Unit);
+                            unit_to.SetUnit(unit_from.Unit);
                             levUnitC_to.SetLevel(levUnit_from.Level);
                             hpUnitC_to.AmountHp = hpUnitC_from.AmountHp;
                             stepUnitC_to.StepsAmount = stepUnitC_from.StepsAmount;
                             condUnitC_to.CondUnitType = condUnitC_from.CondUnitType;
                             twUnitC_to.Set(twUnitC_from);
                             ownUnit_to.SetOwner(ownUnit_from.Owner);
-                            if (riverC_to.HaveNearRiver) thirUnitC_to.SetMaxWater(unitC_to.Unit);
-                            WhereUnitsC.Add(ownUnit_to.Owner, unitC_to.Unit, levUnitC_to.Level, idx_to);
+                            if (riverC_to.HaveNearRiver) thirUnitC_to.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Water));
+                            WhereUnitsC.Add(ownUnit_to.Owner, unit_to.Unit, levUnitC_to.Level, idx_to);
 
                             var dir = CellSpaceSupport.GetDirect(_cellXyFilt.Get1(idx_from).XyCell, _cellXyFilt.Get1(idx_to).XyCell);
                             trail_to.TrySetNewTrain(dir.Invert(), env_to);
@@ -215,11 +215,11 @@ namespace Scripts.Game
                     unit_from.NoneUnit();
                 }
 
-                hpUnitC_to.TryTakeBonusHp(effUnitC_to, unitC_to.Unit);
-                hpUnitC_from.TryTakeBonusHp(effUnitC_from, unit_from.Unit);
+                if(unit_to.HaveUnit) hpUnitC_to.TryTakeBonusHp(unit_to.Unit, effUnit_to.Have(UnitStatTypes.Hp));
+                if (unit_from.HaveUnit) hpUnitC_from.TryTakeBonusHp(unit_from.Unit, effUnit_from.Have(UnitStatTypes.Hp));
 
-                effUnitC_from.DefAllEffects();
-                effUnitC_to.DefAllEffects();
+                effUnit_from.DefAllEffects();
+                effUnit_to.DefAllEffects();
             }
         }
     }

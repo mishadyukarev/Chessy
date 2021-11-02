@@ -19,7 +19,7 @@ namespace Scripts.Game
                 var tWTypeForGive = _forGiveTakeToolWeapFilter.Get1(0).ToolWeapType;
                 var levelTWType = _forGiveTakeToolWeapFilter.Get1(0).LevelTWType;
 
-                var sender = InfoC.Sender(MasGenOthTypes.Master);
+                var sender = InfoC.Sender(MGOTypes.Master);
 
                 ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
 
@@ -37,7 +37,7 @@ namespace Scripts.Game
                 {
                     if (stepUnit_0.HaveMinSteps)
                     {
-                        if (_cellUnitFilter.Get2(idx_0).HaveMaxHpUnit(effUnit_0, unit_0.Unit))
+                        if (_cellUnitFilter.Get2(idx_0).HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
                         {
                             if (twUnit_0.HaveToolWeap)
                             {

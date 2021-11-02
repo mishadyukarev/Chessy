@@ -9,7 +9,7 @@ namespace Scripts.Game
 
         public void Run()
         {
-            var sender = InfoC.Sender(MasGenOthTypes.Master);
+            var sender = InfoC.Sender(MGOTypes.Master);
 
             var neededCondType = ForCondMasCom.NeededCondUnitType;
             var idxForCondit = ForCondMasCom.IdxForCondition;

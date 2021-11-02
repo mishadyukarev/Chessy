@@ -6,7 +6,7 @@ namespace Scripts.Game
     {
         #region Health
 
-        public static int StandMaxHpUnit(bool haveEffect, UnitTypes unitType)
+        public static int StandMaxHpUnit(UnitTypes unitType)
         {
             float amountHp = 0;
             switch (unitType)
@@ -19,8 +19,6 @@ namespace Scripts.Game
                 case UnitTypes.Scout: amountHp = 1; break;
                 default: throw new Exception();
             }
-
-            if (haveEffect) amountHp += amountHp* 0.5f;
 
             return (int)amountHp;
         }
@@ -170,7 +168,7 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
         }
-        public static int StandartAmountSteps(bool haveEffect, UnitTypes unitType)
+        public static int StandartAmountSteps(bool haveEffect, UnitTypes unitType, float upg)
         {
             var steps = 0;
 
@@ -186,6 +184,9 @@ namespace Scripts.Game
             }
 
             if (haveEffect) steps += 1;
+
+            steps += (int)upg;
+
             return steps;
         }
 
@@ -194,19 +195,7 @@ namespace Scripts.Game
 
         #region
 
-        public static int MaxAmountWater(UnitTypes unitType)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None: return 0;
-                case UnitTypes.King: return 7;
-                case UnitTypes.Pawn: return 7;
-                case UnitTypes.Rook: return 7;
-                case UnitTypes.Bishop: return 7;
-                case UnitTypes.Scout: return 7;
-                default: throw new Exception();
-            }
-        }
+        public static int MaxStandAmountWater => 100;
 
         #endregion
     }

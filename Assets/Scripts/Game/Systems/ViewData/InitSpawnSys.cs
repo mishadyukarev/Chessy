@@ -15,25 +15,19 @@ namespace Scripts.Game
 
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
+        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilter = default;
         private EcsFilter<CellViewC, CellDataC> _cellViewFilt = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellCloudsDataC> _cellWeatherFilt = default;
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
 
         private readonly EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt;
-        private readonly EcsFilter<CellUnitDataCom, HpUnitC, DamageComponent, StepComponent> _cellUnitStatsFilt;
-        private readonly EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, ThirstyUnitC> _cellUnitOtherFilt;
+        private readonly EcsFilter<CellUnitDataCom, HpUnitC, DamageC, StepComponent> _cellUnitStatsFilt;
+        private readonly EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, WaterUnitC> _cellUnitOtherFilt;
         private readonly EcsFilter<CellUnitDataCom, VisibleC, CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilt;
-
-
-        //internal static Dictionary<byte, EcsComponentRef<CellUnitDataCom>> CellUnitDataCRefs { get; private set; }
 
         public void Init()
         {
-            //CellUnitDataCRefs = new Dictionary<byte, EcsComponentRef<CellUnitDataCom>>();
-            //CellUnitDataCRef = _cellUnitBaseFilt.Get1Ref(0);
-
             ToggleZoneComponent.ReplaceZone(SceneTypes.Game);
 
             SoundComComp.SavedVolume = SoundComComp.Volume;
@@ -122,6 +116,7 @@ namespace Scripts.Game
                         .Replace(new CellViewC(cellView_GO))
 
                         .Replace(new CellEnvDataC(new Dictionary<EnvTypes, bool>()))
+                        .Replace(new CellEnvResC(true))
                         .Replace(new CellEnvironViewCom(curParentCell_GO))
                         .Replace(new CellFireDataC())
                         .Replace(new CellFireViewComponent(curParentCell_GO))
@@ -148,13 +143,13 @@ namespace Scripts.Game
                          .Replace(new OwnerCom())
 
                          .Replace(new HpUnitC())
-                         .Replace(new DamageComponent())
+                         .Replace(new DamageC())
                          .Replace(new StepComponent())
 
                          .Replace(new ConditionUnitC())
                          .Replace(new ToolWeaponC())
                          .Replace(new UnitEffectsC(true))
-                         .Replace(new ThirstyUnitC())
+                         .Replace(new WaterUnitC())
 
                          .Replace(new VisibleC(true))
                          .Replace(new CellUnitMainViewCom(curParentCell_GO))
@@ -190,8 +185,11 @@ namespace Scripts.Game
                 .Replace(new WhereBuildsC(true))
                 .Replace(new WindC(DirectTypes.Right))
                 .Replace(new CameraC(Camera.main, new Vector3(7.4f, 4.8f, -2)))
-                .Replace(new UpgBuildsC(true))
                 .Replace(new SoundEffectC(audioSourceParentGO))
+                .Replace(new ExtractC())
+
+                .Replace(new BuildsUpgC(true))
+                .Replace(new UnitsUpgC(true))
 
                 .Replace(new CellsForSetUnitC(true))
                 .Replace(new CellsForShiftCom(true))
@@ -305,7 +303,8 @@ namespace Scripts.Game
                     var x = curXyCell[0];
                     var y = curXyCell[1];
 
-                    ref var curEnvDatCom = ref _cellEnvFilter.Get1(curIdxCell);
+                    ref var env_0 = ref _cellEnvFilter.Get1(curIdxCell);
+                    ref var envRes_0 = ref _cellEnvFilter.Get2(curIdxCell);
                     ref var curWeatherDatCom = ref _cellWeatherFilt.Get1(curIdxCell);
 
                     if (_cellViewFilt.Get2(curIdxCell).IsActiveCell)
@@ -315,7 +314,7 @@ namespace Scripts.Game
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= EnvironValues.START_MOUNTAIN_PERCENT)
                             {
-                                curEnvDatCom.SetNew(EnvTypes.Mountain);
+                                env_0.Set(EnvTypes.Mountain);
                                 WhereEnvC.Add(EnvTypes.Mountain, curIdxCell);
                             }
 
@@ -324,14 +323,16 @@ namespace Scripts.Game
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= EnvironValues.START_FOREST_PERCENT)
                                 {
-                                    curEnvDatCom.SetNew(EnvTypes.AdultForest);
+                                    env_0.Set(EnvTypes.AdultForest);
+                                    envRes_0.SetNew(EnvTypes.AdultForest);
                                     WhereEnvC.Add(EnvTypes.AdultForest, curIdxCell);
                                 }
 
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= EnvironValues.START_HILL_PERCENT)
                                 {
-                                    curEnvDatCom.SetNew(EnvTypes.Hill);
+                                    env_0.Set(EnvTypes.Hill);
+                                    envRes_0.SetNew(EnvTypes.Hill);
                                     WhereEnvC.Add(EnvTypes.Hill, curIdxCell);
                                 }
                             }
@@ -342,7 +343,8 @@ namespace Scripts.Game
                             random = UnityEngine.Random.Range(1, 100);
                             if (random <= EnvironValues.START_FOREST_PERCENT)
                             {
-                                curEnvDatCom.SetNew(EnvTypes.AdultForest);
+                                env_0.Set(EnvTypes.AdultForest);
+                                envRes_0.SetNew(EnvTypes.AdultForest);
                                 WhereEnvC.Add(EnvTypes.AdultForest, curIdxCell);
                             }
                             else
@@ -350,7 +352,8 @@ namespace Scripts.Game
                                 random = UnityEngine.Random.Range(1, 100);
                                 if (random <= EnvironValues.START_FERTILIZER_PERCENT)
                                 {
-                                    curEnvDatCom.SetNew(EnvTypes.Fertilizer);
+                                    env_0.Set(EnvTypes.Fertilizer);
+                                    envRes_0.SetNew(EnvTypes.Fertilizer);
                                     WhereEnvC.Add(EnvTypes.Fertilizer, curIdxCell);
                                 }
                             }
@@ -456,10 +459,10 @@ namespace Scripts.Game
 
                         ref var curEnvDatCom = ref _cellEnvFilter.Get1(idx_0);
 
-                        ref var unitC_0 = ref _cellUnitStatsFilt.Get1(idx_0);
+                        ref var unit_0 = ref _cellUnitStatsFilt.Get1(idx_0);
 
                         ref var levUnitC_0 = ref _cellUnitMainFilt.Get2(idx_0);
-                        ref var ownUnitC_0 = ref _cellUnitMainFilt.Get3(idx_0);
+                        ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
 
                         ref var hpUnitC_0 = ref _cellUnitStatsFilt.Get2(idx_0);
 
@@ -485,13 +488,13 @@ namespace Scripts.Game
 
 
 
-                            unitC_0.SetUnit(UnitTypes.King);
+                            unit_0.SetUnit(UnitTypes.King);
                             levUnitC_0.SetLevel(LevelUnitTypes.Wood);
-                            ownUnitC_0.SetOwner(PlayerTypes.Second);
+                            ownUnit_0.SetOwner(PlayerTypes.Second);
                             hpUnitC_0.AmountHp = 1;
-                            thirUnitC_0.SetMaxWater(unitC_0.Unit);
+                            thirUnitC_0.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
                             condUnitC_0.CondUnitType = CondUnitTypes.Protected;
-                            WhereUnitsC.Add(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level, idx_0);
+                            WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
                         }
 
                         else if (x == 8 && y == 8)
@@ -520,9 +523,9 @@ namespace Scripts.Game
                                 WhereEnvC.Remove(EnvTypes.Mountain, idx_0);
                             }
 
-                            unitC_0.SetUnit(UnitTypes.Pawn);
+                            unit_0.SetUnit(UnitTypes.Pawn);
                             levUnitC_0.SetLevel(LevelUnitTypes.Wood);
-                            thirUnitC_0.SetMaxWater(unitC_0.Unit);
+                            
 
                             int rand = UnityEngine.Random.Range(0, 100);
 
@@ -539,9 +542,10 @@ namespace Scripts.Game
                             }
                             hpUnitC_0.AmountHp = 100;
                             condUnitC_0.CondUnitType = CondUnitTypes.Protected;
-                            ownUnitC_0.SetOwner(PlayerTypes.Second);
+                            ownUnit_0.SetOwner(PlayerTypes.Second);
+                            thirUnitC_0.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
 
-                            WhereUnitsC.Add(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level, idx_0);
+                            WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
                         }
                     }
                 }

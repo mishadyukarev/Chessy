@@ -8,7 +8,7 @@ namespace Scripts.Game
 
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellUnitDataCom, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
+        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilter = default;
 
         private EcsFilter<WhereBuildsC> _buildsFilt = default;
 
@@ -17,7 +17,7 @@ namespace Scripts.Game
             ref var forBuildMasCom = ref _forBuilderFilter.Get1(0);
             ref var buildsInGameCom = ref _buildsFilt.Get1(0);
 
-            var sender = InfoC.Sender(MasGenOthTypes.Master);
+            var sender = InfoC.Sender(MGOTypes.Master);
             var idx_0 = forBuildMasCom.IdxForBuild;
             var forBuildType = forBuildMasCom.BuildingTypeForBuidling;
 
@@ -27,6 +27,7 @@ namespace Scripts.Game
             ref var curUnitDatCom = ref _cellUnitFilter.Get1(idx_0);
             ref var curStepUnitC = ref _cellUnitFilter.Get2(idx_0);
             ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
+            ref var envRes_0 = ref _cellEnvFilter.Get2(idx_0);
 
 
             var playerSend = WhoseMoveC.WhoseMove;
@@ -57,11 +58,12 @@ namespace Scripts.Game
 
                                 if (env_0.Have(EnvTypes.Fertilizer))
                                 {
-                                    env_0.AddMaxAmountRes(EnvTypes.Fertilizer);
+                                    envRes_0.AddMaxAmountRes(EnvTypes.Fertilizer);
                                 }
                                 else
                                 {
-                                    env_0.SetNew(EnvTypes.Fertilizer);
+                                    env_0.Set(EnvTypes.Fertilizer);
+                                    envRes_0.SetNew(EnvTypes.Fertilizer);
                                     WhereEnvC.Add(EnvTypes.Fertilizer, idx_0);
                                 }
 
