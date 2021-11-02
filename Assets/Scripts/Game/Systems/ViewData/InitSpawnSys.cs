@@ -193,7 +193,7 @@ namespace Scripts.Game
                 .Replace(new UpgBuildsC(true))
                 .Replace(new SoundEffectC(audioSourceParentGO))
 
-                .Replace(new CellsForSetUnitComp(true))
+                .Replace(new CellsForSetUnitC(true))
                 .Replace(new CellsForShiftCom(true))
                 .Replace(new CellsArsonArcherComp(true))
                 .Replace(new CellsAttackC(true))
@@ -468,7 +468,7 @@ namespace Scripts.Game
                         ref var buildC_0 = ref _cellBuildFilter.Get1(idx_0);
                         ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idx_0);
 
-                        if (x == 7 && y == 6)
+                        if (x == 7 && y == 8)
                         {
                             if (curEnvDatCom.Have(EnvTypes.Mountain))
                             {
@@ -492,7 +492,7 @@ namespace Scripts.Game
                             WhereUnitsC.Add(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level, idx_0);
                         }
 
-                        else if (x == 8 && y == 6)
+                        else if (x == 8 && y == 8)
                         {
                             if (curEnvDatCom.Have(EnvTypes.Mountain))
                             {
@@ -510,7 +510,7 @@ namespace Scripts.Game
                             WhereBuildsC.Add(ownBuildC_0.Owner, buildC_0.BuildType, idx_0);
                         }
 
-                        else if (x == 6 && y == 6 || x == 9 && y == 6 || x <= 9 && x >= 6 && y == 5 || x <= 9 && x >= 6 && y == 7)
+                        else if (x == 6 && y == 8 || x == 9 && y == 8 || x <= 9 && x >= 6 && y == 7 || x <= 9 && x >= 6 && y == 9)
                         {
                             if (curEnvDatCom.Have(EnvTypes.Mountain))
                             {

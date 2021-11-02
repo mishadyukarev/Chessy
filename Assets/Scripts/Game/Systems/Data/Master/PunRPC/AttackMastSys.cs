@@ -205,6 +205,12 @@ namespace Scripts.Game
                         EndGameDataUIC.PlayerWinner = ownUnit_to.Owner;
                     }
 
+                    if (build_from.Is(BuildTypes.Camp))
+                    {
+                        WhereBuildsC.Remove(ownBuild_from.Owner, build_from.BuildType, idx_from);
+                        build_from.Reset();
+                    }
+
                     WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
                     unit_from.NoneUnit();
                 }

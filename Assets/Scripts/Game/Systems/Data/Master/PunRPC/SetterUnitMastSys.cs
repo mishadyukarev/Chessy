@@ -5,7 +5,6 @@ namespace Scripts.Game
     public sealed class SetterUnitMastSys : IEcsRunSystem
     {
         private EcsFilter<ForSettingUnitMasCom> _setterFilter = default;
-        private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
 
         private EcsFilter<CellEnvDataC> _cellEnvirDataFilter = default;
 
@@ -38,7 +37,7 @@ namespace Scripts.Game
             var playerSend = WhoseMoveC.WhoseMove;
 
 
-            if (_cellsSetUnitFilter.Get1(0).HaveIdxCell(playerSend, idx_0))
+            if (CellsForSetUnitC.HaveIdxCell(playerSend, idx_0))
             {
                 unitC_0.SetUnit(unitTypeForSet);
                 ownUnitC_0.SetOwner(playerSend);

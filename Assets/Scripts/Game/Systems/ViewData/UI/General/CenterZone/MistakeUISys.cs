@@ -40,7 +40,7 @@ namespace Scripts.Game
                             {
                                 EconomyViewUIC.SetMainColor(resType, Color.red);
                                 MistakeViewUIC.SetActiveRes(resType, true);
-                                MistakeViewUIC.SetText(resType, "<= " + (-MistakeDataUIC.NeedResAmount(resType)).ToString());
+                                MistakeViewUIC.SetText(resType, ">= " + (-MistakeDataUIC.NeedResAmount(resType)).ToString());
                             }
                             else
                             {

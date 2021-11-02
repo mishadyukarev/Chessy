@@ -1,5 +1,4 @@
 ﻿using Leopotam.Ecs;
-using System;
 
 namespace Scripts.Game
 {
@@ -10,23 +9,22 @@ namespace Scripts.Game
         private EcsFilter<CellEnvDataC> _cellEnvFilt = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuldFilt = default;
 
-        private EcsFilter<CellsForSetUnitComp> _cellsForSetUnitFilter = default;
-        private EcsFilter<WhereBuildsC> _buildsInGameFilt = default;
-
 
         public void Run()
         {
-            ref var forSetUnitCom = ref _cellsForSetUnitFilter.Get1(0);
-            ref var buildsInGameCom = ref _buildsInGameFilt.Get1(0);
-
-            forSetUnitCom.ClearIdxCells(PlayerTypes.First);
-            forSetUnitCom.ClearIdxCells(PlayerTypes.Second);
+            CellsForSetUnitC.ClearIdxCells(PlayerTypes.First);
+            CellsForSetUnitC.ClearIdxCells(PlayerTypes.Second);
 
             for (var playerType = Support.MinPlayerType; playerType < Support.MaxPlayerType; playerType++)
             {
                 if (WhereBuildsC.IsSettedCity(playerType))
                 {
-                    var listAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(WhereBuildsC.IdxCity(playerType)).XyCell);
+                    var idx_city = WhereBuildsC.IdxCity(playerType);
+                    ref var unit_city = ref _cellUnitFilter.Get1(idx_city);
+                    
+                    var listAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_city).XyCell);
+
+                    if(!unit_city.HaveUnit) CellsForSetUnitC.AddIdxCell(playerType, idx_city);
 
                     foreach (var xy in listAround)
                     {
@@ -37,7 +35,7 @@ namespace Scripts.Game
 
                         if (!curEnvDatCom.Have(EnvTypes.Mountain) && !curUnitDatCom.HaveUnit)
                         {
-                            forSetUnitCom.AddIdxCell(playerType, curIdx);
+                            CellsForSetUnitC.AddIdxCell(playerType, curIdx);
                         }
                     }
                 }
@@ -59,14 +57,14 @@ namespace Scripts.Game
                             {
                                 if (y < 3 && x > 3 && x < 12)
                                 {
-                                    forSetUnitCom.AddIdxCell(PlayerTypes.First, curIdx);
+                                    CellsForSetUnitC.AddIdxCell(PlayerTypes.First, curIdx);
                                 }
                             }
                             else
                             {
                                 if (y > 7 && x > 3 && x < 12)
                                 {
-                                    forSetUnitCom.AddIdxCell(PlayerTypes.Second, curIdx);
+                                    CellsForSetUnitC.AddIdxCell(PlayerTypes.Second, curIdx);
                                 }
                             }
                         }
@@ -74,25 +72,25 @@ namespace Scripts.Game
                 }
             }
 
-            foreach (byte curIdx in _xyCellFilter)
+            foreach (byte idx_0 in _xyCellFilter)
             {
-                ref var curBuldCom = ref _cellBuldFilt.Get1(curIdx);
-                ref var curOwnBuldCom = ref _cellBuldFilt.Get2(curIdx);
+                ref var buld_0 = ref _cellBuldFilt.Get1(idx_0);
+                ref var ownBuld_0 = ref _cellBuldFilt.Get2(idx_0);
 
-                if (curBuldCom.Is(BuildTypes.Camp))
+                if (buld_0.Is(BuildTypes.Camp))
                 {
-                    var aroundXys = CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(curIdx).XyCell);
+                    var xyAround_1 = CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).XyCell);
 
-                    foreach (var xy in aroundXys)
+                    foreach (var xy in xyAround_1)
                     {
-                        var curIdx_2 = _xyCellFilter.GetIdxCell(xy);
+                        var idx_1 = _xyCellFilter.GetIdxCell(xy);
 
-                        ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdx_2);
-                        ref var curEnvDatCom = ref _cellEnvFilt.Get1(curIdx_2);
+                        ref var unit_1 = ref _cellUnitFilter.Get1(idx_1);
+                        ref var env_1 = ref _cellEnvFilt.Get1(idx_1);
 
-                        if (!curEnvDatCom.Have(EnvTypes.Mountain) && !curUnitDatCom.HaveUnit)
+                        if (!env_1.Have(EnvTypes.Mountain) && !unit_1.HaveUnit)
                         {
-                            forSetUnitCom.AddIdxCell(curOwnBuldCom.Owner, curIdx_2);
+                            CellsForSetUnitC.AddIdxCell(ownBuld_0.Owner, idx_1);
                         }
                     }
                 }

@@ -9,7 +9,7 @@ namespace Scripts.Game
         private EcsFilter<CellUnitDataCom, CellUnitMainViewCom> _cellUnitViewFilt = default;
         private EcsFilter<CellSupViewComponent> _supViewFilter = default;
 
-        private EcsFilter<CellsForSetUnitComp> _cellsSetUnitFilter = default;
+        private EcsFilter<CellsForSetUnitC> _cellsSetUnitFilter = default;
         private EcsFilter<CellsArsonArcherComp> _cellsArcherArsonFilt = default;
 
         public void Run()
@@ -111,7 +111,7 @@ namespace Scripts.Game
             {
                 ref var cellsSetUnitCom = ref _cellsSetUnitFilter.Get1(0);
 
-                foreach (var curIdxCell in cellsSetUnitCom.GetListCells(WhoseMoveC.CurPlayer))
+                foreach (var curIdxCell in CellsForSetUnitC.GetListCells(WhoseMoveC.CurPlayer))
                 {
                     _supViewFilter.Get1(curIdxCell).EnableSR();
                     _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.Spawn);

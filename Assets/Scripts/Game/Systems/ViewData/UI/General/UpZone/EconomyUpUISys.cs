@@ -8,13 +8,9 @@ namespace Scripts.Game
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvDatFilt = default;
 
-        private EcsFilter<UpgBuildsC> _upgradeBuildsFilter = default;
-
 
         public void Run()
         {
-            ref var amountBuildUpgsCom = ref _upgradeBuildsFilter.Get1(0);
-
             byte amountUnitsInGame = 0;
             byte amountAddWood = 0;
 

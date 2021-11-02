@@ -39,8 +39,8 @@ namespace Scripts.Game
 
                     if (twUnitC_0.HaveToolWeap)
                     {
-                        twUnitC_0.ToolWeapType = default;
                         InventorTWCom.AddAmountTools(playerSender, twUnitC_0.ToolWeapType, twUnitC_0.LevelTWType);
+                        twUnitC_0.ToolWeapType = default;
                     }
 
                     unitC_0.SetUnit(_forOldNewUnitCom.Get1(0).UnitType);

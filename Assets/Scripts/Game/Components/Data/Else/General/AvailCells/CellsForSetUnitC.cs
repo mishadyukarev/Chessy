@@ -4,11 +4,11 @@ using System.Collections.Generic;
 
 namespace Scripts.Game
 {
-    public struct CellsForSetUnitComp
+    public readonly struct CellsForSetUnitC
     {
-        private Dictionary<PlayerTypes, List<byte>> _cellsForSetUnit;
+        private static Dictionary<PlayerTypes, List<byte>> _cellsForSetUnit;
 
-        public CellsForSetUnitComp(bool needNew) : this()
+        public CellsForSetUnitC(bool needNew) : this()
         {
             if (needNew)
             {
@@ -19,27 +19,27 @@ namespace Scripts.Game
             }
         }
 
-        public List<byte> GetListCells(PlayerTypes playerType)
+        public static List<byte> GetListCells(PlayerTypes playerType)
         {
             if(playerType == default) throw new Exception();
             return _cellsForSetUnit[playerType].Copy();
         }
-        public bool HaveIdxCell(PlayerTypes playerType, byte idxCell)
+        public static bool HaveIdxCell(PlayerTypes playerType, byte idxCell)
         {
             if (playerType == default) throw new Exception();
             return _cellsForSetUnit[playerType].Contains(idxCell);
         }
-        public bool RemoveIdxCell(PlayerTypes playerType, byte idxCell)
+        public static bool RemoveIdxCell(PlayerTypes playerType, byte idxCell)
         {
             if(playerType == default) throw new Exception();
             return _cellsForSetUnit[playerType].Remove(idxCell);
         }
-        public void AddIdxCell(PlayerTypes playerType, byte idxCellValue)
+        public static void AddIdxCell(PlayerTypes playerType, byte idxCellValue)
         {
             if (playerType == default) throw new Exception();
             _cellsForSetUnit[playerType].Add(idxCellValue);
         }
-        public void ClearIdxCells(PlayerTypes playerType)
+        public static void ClearIdxCells(PlayerTypes playerType)
         {
             if (playerType == default) throw new Exception();
             _cellsForSetUnit[playerType].Clear();
