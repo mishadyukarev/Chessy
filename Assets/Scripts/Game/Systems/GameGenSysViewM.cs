@@ -62,7 +62,8 @@ namespace Scripts.Game
                 .Add(new MistakeUISys())
                 .Add(new KingZoneUISys())
                 .Add(new FriendZoneUISys())
-                .Add(new ActiveHitUISys());
+                .Add(new ActiveHitUISys())
+                .Add(new PickUpgUISys());
 
 
             UpdateOnlySystems

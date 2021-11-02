@@ -244,6 +244,8 @@ namespace Scripts.Game
                 .Replace(new FriendZoneDataUIC(false))
                 .Replace(new HintDataUIC(1))
                 .Replace(new HintViewUIC(centerZone_GO.transform))
+                .Replace(new PickUpgZoneDataUIC(new Dictionary<PlayerTypes, bool>()))
+                .Replace(new PickUpgZoneViewUIC(centerZone_GO.transform))
 
                 ///Down
                 .Replace(new GetterUnitsDataUIC(new Dictionary<UnitTypes, bool>()))

@@ -15,7 +15,7 @@ namespace Scripts.Game
         public void Run()
         {
             var sender = InfoC.Sender(MasGenOthTypes.Master);
-            var unitTypeForSet = _setterFilter.Get1(0).UnitTypeForSetting;
+            var unitForSet = _setterFilter.Get1(0).UnitTypeForSetting;
             var idx_0 = _setterFilter.Get1(0).IdxCellForSetting;
 
             ref var curEnvDatCom = ref _cellEnvirDataFilter.Get1(idx_0);
@@ -39,25 +39,27 @@ namespace Scripts.Game
 
             if (CellsForSetUnitC.HaveIdxCell(playerSend, idx_0))
             {
-                unitC_0.SetUnit(unitTypeForSet);
+                unitC_0.SetUnit(unitForSet);
                 ownUnitC_0.SetOwner(playerSend);
                 curTwUnitC.ToolWeapType = default;
                 effUnit_0.DefAllEffects();
-                curHpUnitC.AmountHp = curHpUnitC.MaxHpUnit(effUnit_0, unitTypeForSet);
-                stepUnitC.StepsAmount = UnitValues.StandartAmountSteps(false, unitTypeForSet);
+                curHpUnitC.AmountHp = curHpUnitC.MaxHpUnit(effUnit_0, unitForSet);
+                stepUnitC.StepsAmount = UnitValues.StandartAmountSteps(false, unitForSet);
                 condUnitC.DefCondition();
-                thirUnitC_0.SetMaxWater(unitTypeForSet);
-                if (InventorUnitsC.HaveUnitInInv(playerSend, unitTypeForSet, LevelUnitTypes.Iron))
+                thirUnitC_0.SetMaxWater(unitForSet);
+                if (InventorUnitsC.HaveUnitInInv(playerSend, unitForSet, LevelUnitTypes.Iron))
                 {
-                    InventorUnitsC.TakeUnitsInInv(playerSend, unitTypeForSet, LevelUnitTypes.Iron);
+                    InventorUnitsC.TakeUnitsInInv(playerSend, unitForSet, LevelUnitTypes.Iron);
                     levUnitC_0.SetLevel(LevelUnitTypes.Iron);
                 }
                 else
                 {
-                    InventorUnitsC.TakeUnitsInInv(playerSend, unitTypeForSet, LevelUnitTypes.Wood);
+                    InventorUnitsC.TakeUnitsInInv(playerSend, unitForSet, LevelUnitTypes.Wood);
                     levUnitC_0.SetLevel(LevelUnitTypes.Wood);
                 }
                 WhereUnitsC.Add(ownUnitC_0.Owner, unitC_0.Unit, levUnitC_0.Level, idx_0);
+
+                if (unitForSet == UnitTypes.King) PickUpgZoneDataUIC.SetActive(playerSend, true);
 
                 RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
             }
