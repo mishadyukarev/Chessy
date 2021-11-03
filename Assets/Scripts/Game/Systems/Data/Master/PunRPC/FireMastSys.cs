@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
+using Scripts.Common;
 using System;
 
 namespace Scripts.Game
@@ -34,6 +35,9 @@ namespace Scripts.Game
             ref var toEnvDatCom = ref _cellEnvFilter.Get1(toIdx);
 
 
+            var whoseMove = WhoseMoveC.WhoseMove;
+
+
             if (unit_from.IsMelee)
             {
                 if (stepUnitC_from.HaveMinSteps)
@@ -46,7 +50,7 @@ namespace Scripts.Game
                     }
                     else if (toEnvDatCom.Have(EnvTypes.AdultForest))
                     {
-                        RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
+                        RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.Fire);
 
                         toFireDatCom.EnabFire();
                         stepUnitC_to.TakeSteps();
@@ -67,9 +71,9 @@ namespace Scripts.Game
             {
                 if (stepUnitC_from.HaveMaxSteps(effUnitC_from, unit_from.Unit, UnitsUpgC.UpgSteps(ownUnit_from.Owner, unit_from.Unit)))
                 {
-                    if (_cellsArcherArsonFilt.Get1(0).HaveIdxCell(sender.GetPlayerType(), fromIdx, toIdx))
+                    if (_cellsArcherArsonFilt.Get1(0).HaveIdxCell(whoseMove, fromIdx, toIdx))
                     {
-                        RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Fire);
+                        RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.Fire);
 
                         stepUnitC_from.ZeroSteps();
                         toFireDatCom.HaveFire = true;

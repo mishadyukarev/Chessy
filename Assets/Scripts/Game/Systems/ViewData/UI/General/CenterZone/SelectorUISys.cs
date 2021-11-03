@@ -6,13 +6,15 @@ namespace Scripts.Game
     {
         public void Run()
         {
+            SelectorUIC.DisableAll();
+
             if (!SelectorC.Is(CellClickTypes.None))
             {
                 SelectorUIC.SetActive(SelectorC.CellClickType, true);
             }
             else
             {
-                SelectorUIC.DisableAll();
+                
             }
         }
     }

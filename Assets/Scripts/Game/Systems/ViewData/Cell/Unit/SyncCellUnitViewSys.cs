@@ -27,7 +27,7 @@ namespace Scripts.Game
 
                 if (unitC_0.HaveUnit)
                 {
-                    if (visUnitC_0.IsVisibled(WhoseMoveC.CurPlayer))
+                    if (visUnitC_0.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
                         mainUnitC_0.Enable_SR(true);
                         mainUnitC_0.SetSprite(unitC_0.Unit, levelUnitC_0.Level);
@@ -47,8 +47,8 @@ namespace Scripts.Game
                         }
 
 
-                        mainUnitC_0.SetAlpha(visUnitC_0.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayer)));
-                        extraUnitC_0.SetAlpha(visUnitC_0.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayer)));
+                        mainUnitC_0.SetAlpha(visUnitC_0.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI)));
+                        extraUnitC_0.SetAlpha(visUnitC_0.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI)));
                     }
                 }
             }

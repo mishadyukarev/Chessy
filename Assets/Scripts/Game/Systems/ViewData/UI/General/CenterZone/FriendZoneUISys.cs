@@ -15,7 +15,7 @@ namespace Scripts.Game
                 {
                     FriendZoneViewUIC.SetActiveParent(true);
 
-                    if (WhoseMoveC.CurPlayer == PlayerTypes.First)
+                    if (WhoseMoveC.CurPlayerI == PlayerTypes.First)
                     {
                         FriendZoneViewUIC.SetTextPlayerMotion("1");
                     }

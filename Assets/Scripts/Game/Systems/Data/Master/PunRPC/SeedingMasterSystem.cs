@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Scripts.Common;
 using System;
 
 namespace Scripts.Game
@@ -47,7 +48,7 @@ namespace Scripts.Game
 
                                     if (!env_0.Have(EnvTypes.YoungForest))
                                     {
-                                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Seeding);
+                                        RpcSys.SoundToGeneral(sender, ClipGameTypes.Seeding);
 
                                         env_0.Set(EnvTypes.YoungForest);
                                         WhereEnvC.Add(EnvTypes.YoungForest, idx_0);

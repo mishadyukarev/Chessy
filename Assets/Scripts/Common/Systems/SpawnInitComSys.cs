@@ -58,10 +58,11 @@ namespace Scripts.Common
                 //.Replace(new CameraComC(camera))
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
                 .Replace(new CanvasCom(canvas))
-                .Replace(new SoundComComp(audioSource))
+                .Replace(new SoundComC(audioSource))
                 .Replace(new LanguageComCom(LanguageTypes.English))
                 .Replace(new AdComCom(DateTime.Now))
                 .Replace(new TimeStartGameComCom(DateTime.Now))
+                .Replace(new HintComC(true))
 
                 //Toggle
                 .Replace(new ToggleZoneComponent(new GameObject()));

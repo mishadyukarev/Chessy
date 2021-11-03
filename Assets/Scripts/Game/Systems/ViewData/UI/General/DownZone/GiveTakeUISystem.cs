@@ -14,12 +14,12 @@ namespace Scripts.Game
                 if (SelectorC.TWTypeForGive != default)
                 {
                     GiveTakeViewUIC.SetView_ButtonImage(SelectorC.TWTypeForGive, true);
-                    GiveTakeViewUIC.SetImage(SelectorC.TWTypeForGive, SelectorC.LevelTWType);
+                    GiveTakeViewUIC.SetImage(SelectorC.TWTypeForGive, GiveTakeDataUIC.Level(SelectorC.TWTypeForGive));
                 }
 
-            GiveTakeViewUIC.SetText(ToolWeaponTypes.Pick, InventorTWCom.GetAmountTools(WhoseMoveC.CurPlayer, ToolWeaponTypes.Pick, SelectorC.LevelTWType).ToString());
-            GiveTakeViewUIC.SetText(ToolWeaponTypes.Sword, InventorTWCom.GetAmountTools(WhoseMoveC.CurPlayer, ToolWeaponTypes.Sword, SelectorC.LevelTWType).ToString());
-            GiveTakeViewUIC.SetText(ToolWeaponTypes.Shield, InventorTWCom.GetAmountTools(WhoseMoveC.CurPlayer, ToolWeaponTypes.Shield, SelectorC.LevelTWType).ToString());
+            GiveTakeViewUIC.SetText(ToolWeaponTypes.Pick, InventorTWCom.GetAmountTools(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Pick, LevelTWTypes.Iron).ToString());
+            GiveTakeViewUIC.SetText(ToolWeaponTypes.Sword, InventorTWCom.GetAmountTools(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Sword, LevelTWTypes.Iron).ToString());
+            GiveTakeViewUIC.SetText(ToolWeaponTypes.Shield, InventorTWCom.GetAmountTools(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Shield, GiveTakeDataUIC.Level(ToolWeaponTypes.Shield)).ToString());
         }
     }
 }

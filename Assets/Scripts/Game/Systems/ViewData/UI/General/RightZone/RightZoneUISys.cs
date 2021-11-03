@@ -18,7 +18,7 @@ namespace Scripts.Game
             {
                 if (selUnitDatCom.HaveUnit)
                 {
-                    if (selVisUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
+                    if (selVisUnitCom.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
                         activeParent = true;
                     }

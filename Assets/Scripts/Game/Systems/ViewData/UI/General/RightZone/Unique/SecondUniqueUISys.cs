@@ -4,15 +4,20 @@ namespace Scripts.Game
 {
     public sealed class SecondUniqueUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilt = default;
 
         public void Run()
         {
-            var selUnitC = _cellUnitFilt.Get1(SelectorC.IdxSelCell);
+            var unit_sel = _cellUnitFilt.Get1(SelectorC.IdxSelCell);
+            var ownUnit_sel = _cellUnitFilt.Get2(SelectorC.IdxSelCell);
 
-            if (selUnitC.Is(UnitTypes.King))
+            if (unit_sel.Is(UnitTypes.King))
             {
-                RightUniqueViewUIC.SetActive_Button(UniqueButtonTypes.Second, true);
+                if (ownUnit_sel.Is(WhoseMoveC.CurPlayerI))
+                {
+                    RightUniqueViewUIC.SetActive_Button(UniqueButtonTypes.Second, true);
+                }
+                else RightUniqueViewUIC.SetActive_Button(UniqueButtonTypes.Second, false);
             }
             else RightUniqueViewUIC.SetActive_Button(UniqueButtonTypes.Second, false);
         }

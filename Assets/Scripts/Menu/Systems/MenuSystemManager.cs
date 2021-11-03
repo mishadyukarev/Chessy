@@ -5,11 +5,12 @@ namespace Scripts.Menu
 {
     public sealed class MenuSystemManager : SystemAbstManager
     {
-        public LaunchLikeGameAndShopSys LaunchLikeGameSys { get; private set; }
+        public EcsSystems LaunchLikeGameSys { get; private set; }
 
         public MenuSystemManager(EcsWorld menuWorld, EcsSystems allMenuSystems) : base(menuWorld, allMenuSystems)
         {
-            LaunchLikeGameSys = new LaunchLikeGameAndShopSys();
+            LaunchLikeGameSys = new EcsSystems(menuWorld)
+                .Add(new LaunchLikeGameAndShopSys());
 
 
             InitOnlySystems

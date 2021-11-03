@@ -146,7 +146,7 @@ namespace Scripts.Game
 
             if (WhereEnvC.Amount(EnvTypes.AdultForest) <= 6)
             {
-                RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Truce);
+                RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.Truce);
                 MastDataSysContainer.Run(MastDataSysTypes.Truce);
             }
 

@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Scripts.Common;
 
 namespace Scripts.Game
 {
@@ -34,34 +35,34 @@ namespace Scripts.Game
             ref var thirUnitC_0 =ref _cellUnitOthFilt.Get5(idx_0);
 
 
-            var playerSend = WhoseMoveC.WhoseMove;
+            var whoseMove = WhoseMoveC.WhoseMove;
 
 
-            if (CellsForSetUnitC.HaveIdxCell(playerSend, idx_0))
+            if (CellsForSetUnitC.HaveIdxCell(whoseMove, idx_0))
             {
                 unit_0.SetUnit(unitForSet);
-                ownUnit_0.SetOwner(playerSend);
+                ownUnit_0.SetOwner(whoseMove);
                 curTwUnitC.ToolWeapType = default;
                 effUnit_0.DefAllEffects();
                 curHpUnitC.AmountHp = curHpUnitC.MaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
                 stepUnitC.StepsAmount = UnitValues.StandartAmountSteps(false, unitForSet, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
                 condUnitC.DefCondition();
                 thirUnitC_0.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
-                if (InventorUnitsC.HaveUnitInInv(playerSend, unitForSet, LevelUnitTypes.Iron))
+                if (InventorUnitsC.HaveUnitInInv(whoseMove, unitForSet, LevelUnitTypes.Iron))
                 {
-                    InventorUnitsC.TakeUnitsInInv(playerSend, unitForSet, LevelUnitTypes.Iron);
+                    InventorUnitsC.TakeUnitsInInv(whoseMove, unitForSet, LevelUnitTypes.Iron);
                     levUnitC_0.SetLevel(LevelUnitTypes.Iron);
                 }
                 else
                 {
-                    InventorUnitsC.TakeUnitsInInv(playerSend, unitForSet, LevelUnitTypes.Wood);
+                    InventorUnitsC.TakeUnitsInInv(whoseMove, unitForSet, LevelUnitTypes.Wood);
                     levUnitC_0.SetLevel(LevelUnitTypes.Wood);
                 }
                 WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
 
-                if (unitForSet == UnitTypes.King) PickUpgZoneDataUIC.SetActiveParent(playerSend, true);
+                if (unitForSet == UnitTypes.King) PickUpgZoneDataUIC.SetActiveParent(whoseMove, true);
 
-                RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
             }
         }
     }

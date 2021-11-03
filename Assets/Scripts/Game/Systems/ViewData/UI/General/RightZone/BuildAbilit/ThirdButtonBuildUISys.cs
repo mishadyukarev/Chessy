@@ -25,13 +25,13 @@ namespace Scripts.Game
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    if (selOwnUnitCom.Is(WhoseMoveC.CurPlayer))
+                    if (selOwnUnitCom.Is(WhoseMoveC.CurPlayerI))
                     {
                         if (selBuildDatCom.HaveBuild)
                         {
-                            if (ownBuildC_sel.Is(WhoseMoveC.CurPlayer))
+                            if (ownBuildC_sel.Is(WhoseMoveC.CurPlayerI))
                             {
-                                if (!WhereBuildsC.IsSettedCity(WhoseMoveC.CurPlayer))
+                                if (!WhereBuildsC.IsSettedCity(WhoseMoveC.CurPlayerI))
                                 {
                                     needActiveThirdButt = true;
                                     BuildAbilitViewUIC.SetSpriteThird(SpriteGameTypes.City);
@@ -48,7 +48,7 @@ namespace Scripts.Game
 
                         else
                         {
-                            if (!WhereBuildsC.IsSettedCity(WhoseMoveC.CurPlayer))
+                            if (!WhereBuildsC.IsSettedCity(WhoseMoveC.CurPlayerI))
                             {
                                 needActiveThirdButt = true;
                                 BuildAbilitViewUIC.SetSpriteThird(SpriteGameTypes.City);

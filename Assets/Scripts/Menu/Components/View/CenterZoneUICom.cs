@@ -20,9 +20,9 @@ namespace Scripts.Menu
 
 
         public static float MusicVolume => _musicSlider.value;
-        public static bool InteractableHint => _hint_Toggle.interactable;
+        public static bool IsOn => _hint_Toggle.isOn;
 
-        public CenterZoneUICom(Transform centerZone_Trans, float value)
+        public CenterZoneUICom(Transform centerZone_Trans, float value, bool isOn)
         {
             _log_TextMP = centerZone_Trans.Find("Log_TextMP").GetComponent<TextMeshProUGUI>();
 
@@ -35,6 +35,8 @@ namespace Scripts.Menu
 
             _likeGame_Button = centerZone_Trans.Find("LikeGame_Button").GetComponent<Button>();
             _exit_Button = centerZone_Trans.Find("QuitButton").GetComponent<Button>();
+
+            _hint_Toggle.isOn = isOn;
         }
 
         public static void SetLogText(string text) => _log_TextMP.text = text;

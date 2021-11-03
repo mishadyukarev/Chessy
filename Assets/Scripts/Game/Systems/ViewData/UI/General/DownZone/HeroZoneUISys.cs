@@ -6,7 +6,7 @@ namespace Scripts.Game
     {
         public void Run()
         {
-            HeroZoneUIC.SetActiveScout(InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayer, UnitTypes.Scout, LevelUnitTypes.Wood));
+            HeroZoneUIC.SetActiveScout(InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, UnitTypes.Scout, LevelUnitTypes.Wood));
         }
     }
 }

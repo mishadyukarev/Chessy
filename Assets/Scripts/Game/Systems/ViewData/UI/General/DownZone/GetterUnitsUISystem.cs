@@ -35,9 +35,9 @@ namespace Scripts.Game
             }
 
 
-            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Pawn, InventorUnitsC.AmountUnitsInInv(WhoseMoveC.CurPlayer, UnitTypes.Pawn).ToString());
-            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Rook, InventorUnitsC.AmountUnitsInInv(WhoseMoveC.CurPlayer, UnitTypes.Rook).ToString());
-            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Bishop, InventorUnitsC.AmountUnitsInInv(WhoseMoveC.CurPlayer, UnitTypes.Bishop).ToString());
+            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Pawn, InventorUnitsC.AmountUnitsInInv(WhoseMoveC.CurPlayerI, UnitTypes.Pawn).ToString());
+            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Rook, InventorUnitsC.AmountUnitsInInv(WhoseMoveC.CurPlayerI, UnitTypes.Rook).ToString());
+            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Bishop, InventorUnitsC.AmountUnitsInInv(WhoseMoveC.CurPlayerI, UnitTypes.Bishop).ToString());
         }
     }
 }

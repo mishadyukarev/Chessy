@@ -31,7 +31,7 @@ namespace Scripts.Game
 
                 ref var curBuildDatCom = ref _cellBuildFilter.Get1(idx_0);
                 ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
-                ref var envRes_0 = ref _cellEnvFilter.Get1(idx_0);
+                ref var envRes_0 = ref _cellEnvFilter.Get2(idx_0);
                 ref var curFireCom = ref _cellFireFilter.Get1(idx_0);
 
 
@@ -72,7 +72,7 @@ namespace Scripts.Game
                             WhereEnvC.Remove(EnvTypes.YoungForest, idx_0);
 
                             env_0.Set(EnvTypes.AdultForest);
-                            envRes_0.Set(EnvTypes.AdultForest);
+                            envRes_0.SetNew(EnvTypes.AdultForest);
                             WhereEnvC.Add(EnvTypes.AdultForest, idx_0);
                         }
 
@@ -85,7 +85,7 @@ namespace Scripts.Game
                             if (random <= 3)
                             {
                                 env_0.Set(EnvTypes.Fertilizer);
-                                envRes_0.Set(EnvTypes.Fertilizer);
+                                envRes_0.SetNew(EnvTypes.Fertilizer);
                                 WhereEnvC.Add(EnvTypes.Fertilizer, idx_0);
                             }
                         }

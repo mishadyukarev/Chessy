@@ -6,11 +6,10 @@ namespace Scripts.Game
     {
         public void Init()
         {
-            BuildLeftZoneViewUICom.AddListenerToMelt(delegate { MeltOre(); });
+            CutyLeftZoneViewUIC.AddListenerToMelt(delegate { MeltOre(); });
 
-            BuildLeftZoneViewUICom.AddListBuildUpgrade(BuildTypes.Farm, delegate { UpgradeBuilding(BuildTypes.Farm); });
-            BuildLeftZoneViewUICom.AddListBuildUpgrade(BuildTypes.Woodcutter, delegate { UpgradeBuilding(BuildTypes.Woodcutter); });
-            BuildLeftZoneViewUICom.AddListBuildUpgrade(BuildTypes.Mine, delegate { UpgradeBuilding(BuildTypes.Mine); });
+            CutyLeftZoneViewUIC.AddListToBuyRes(ResTypes.Food, delegate { BuyRes(ResTypes.Food); });
+            CutyLeftZoneViewUIC.AddListToBuyRes(ResTypes.Wood, delegate { BuyRes(ResTypes.Wood); });
         }
 
         private void MeltOre()
@@ -18,9 +17,9 @@ namespace Scripts.Game
             if (WhoseMoveC.IsMyMove) RpcSys.MeltOreToMaster();
         }
 
-        private void UpgradeBuilding(BuildTypes buildingType)
+        private void BuyRes(ResTypes res)
         {
-            if (WhoseMoveC.IsMyMove) RpcSys.UpgradeBuildingToMaster(buildingType);
+            if (WhoseMoveC.IsMyMove) RpcSys.BuyResToMaster(res);
         }
     }
 }

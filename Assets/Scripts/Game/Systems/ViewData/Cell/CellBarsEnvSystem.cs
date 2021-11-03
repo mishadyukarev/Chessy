@@ -11,14 +11,15 @@ namespace Scripts.Game
 
         public void Run()
         {
-            ref var selBuildDatC = ref _cellBuildFilter.Get1(SelectorC.IdxSelCell);
+            //ref var selBuildDatC = ref _cellBuildFilter.Get1(SelectorC.IdxSelCell);
 
-            ref var env_sel = ref _cellEnvFilter.Get1(SelectorC.IdxSelCell);
-            ref var envRes_sel = ref _cellEnvFilter.Get2(SelectorC.IdxSelCell);
+            //ref var env_sel = ref _cellEnvFilter.Get1(SelectorC.IdxSelCell);
+            
 
             foreach (var curIdxCell in _cellBuildFilter)
             {
                 ref var env_0 = ref _cellEnvFilter.Get1(curIdxCell);
+                ref var envRes_0 = ref _cellEnvFilter.Get2(curIdxCell);
                 ref var barsView_0 = ref _cellBarsFilter.Get1(curIdxCell);
 
                 if (EnvirZoneDataUIC.IsActivatedInfo)
@@ -27,7 +28,7 @@ namespace Scripts.Game
                     {
                         barsView_0.EnableSR(CellBarTypes.Food);
 
-                        barsView_0.SetScale(CellBarTypes.Food, new Vector3(envRes_sel.AmountRes(EnvTypes.Fertilizer) / (float)(envRes_sel.MaxAmountRes(EnvTypes.Fertilizer) + envRes_sel.MaxAmountRes(EnvTypes.Fertilizer)), 0.15f, 1));
+                        barsView_0.SetScale(CellBarTypes.Food, new Vector3(envRes_0.AmountRes(EnvTypes.Fertilizer) / (float)(envRes_0.MaxAmountRes(EnvTypes.Fertilizer) + envRes_0.MaxAmountRes(EnvTypes.Fertilizer)), 0.15f, 1));
                     }
                     else
                     {
@@ -37,7 +38,7 @@ namespace Scripts.Game
                     if (env_0.Have(EnvTypes.AdultForest))
                     {
                         barsView_0.EnableSR(CellBarTypes.Wood);
-                        barsView_0.SetScale(CellBarTypes.Wood, new Vector3(envRes_sel.AmountRes(EnvTypes.AdultForest) / (float)envRes_sel.MaxAmountRes(EnvTypes.AdultForest), 0.15f, 1));
+                        barsView_0.SetScale(CellBarTypes.Wood, new Vector3(envRes_0.AmountRes(EnvTypes.AdultForest) / (float)envRes_0.MaxAmountRes(EnvTypes.AdultForest), 0.15f, 1));
                     }
                     else
                     {
@@ -47,7 +48,7 @@ namespace Scripts.Game
                     if (env_0.Have(EnvTypes.Hill))
                     {
                         barsView_0.EnableSR(CellBarTypes.Ore);
-                        barsView_0.SetScale(CellBarTypes.Ore, new Vector3(envRes_sel.AmountRes(EnvTypes.Hill) / (float)envRes_sel.MaxAmountRes(EnvTypes.Hill), 0.15f, 1));
+                        barsView_0.SetScale(CellBarTypes.Ore, new Vector3(envRes_0.AmountRes(EnvTypes.Hill) / (float)envRes_0.MaxAmountRes(EnvTypes.Hill), 0.15f, 1));
                     }
                     else
                     {

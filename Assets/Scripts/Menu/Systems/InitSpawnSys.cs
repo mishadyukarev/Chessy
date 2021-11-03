@@ -18,7 +18,7 @@ namespace Scripts.Menu
 
 
             _curMenuWorld.NewEntity()
-                .Replace(new CenterZoneUICom(centerZone_Trans, SoundComComp.Volume))
+                .Replace(new CenterZoneUICom(centerZone_Trans, SoundComC.Volume, HintComC.IsOnHint))
                 .Replace(new ShopZoneUICom(centerZone_Trans))
                 .Replace(new LikeGameUICom(centerZone_Trans));
 

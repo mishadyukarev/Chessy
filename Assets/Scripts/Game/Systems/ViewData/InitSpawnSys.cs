@@ -30,7 +30,7 @@ namespace Scripts.Game
         {
             ToggleZoneComponent.ReplaceZone(SceneTypes.Game);
 
-            SoundComComp.SavedVolume = SoundComComp.Volume;
+            SoundComC.SavedVolume = SoundComC.Volume;
 
 
             var generalZoneGO = new GameObject("GeneralZone");
@@ -187,6 +187,7 @@ namespace Scripts.Game
                 .Replace(new CameraC(Camera.main, new Vector3(7.4f, 4.8f, -2)))
                 .Replace(new SoundEffectC(audioSourceParentGO))
                 .Replace(new ExtractC())
+                .Replace(new GiveTakeDataUIC(true))
 
                 .Replace(new BuildsUpgC(true))
                 .Replace(new UnitsUpgC(true))
@@ -240,7 +241,7 @@ namespace Scripts.Game
                 .Replace(new SelectorUIC(centerZone_GO))
                 .Replace(new FriendZoneViewUIC(centerZone_GO.transform))
                 .Replace(new FriendZoneDataUIC(false))
-                .Replace(new HintDataUIC(1))
+                .Replace(new HintDataUIC(new Dictionary<VideoClipTypes, bool>()))
                 .Replace(new HintViewUIC(centerZone_GO.transform))
                 .Replace(new PickUpgZoneDataUIC(new Dictionary<PlayerTypes, bool>()))
                 .Replace(new PickUpgZoneViewUIC(centerZone_GO.transform))
@@ -253,7 +254,7 @@ namespace Scripts.Game
                 .Replace(new HeroZoneUIC(downZone_GO.transform))
 
                 ///Left
-                .Replace(new BuildLeftZoneViewUICom(leftZone_GO))
+                .Replace(new CutyLeftZoneViewUIC(leftZone_GO))
                 .Replace(new EnvirZoneDataUIC())
                 .Replace(new EnvirZoneViewUICom(leftZone_GO))
 
@@ -279,13 +280,13 @@ namespace Scripts.Game
                .Replace(new ForCreatingUnitMasCom())
                .Replace(new ForDestroyMasCom())
                .Replace(new ForFireMasCom())
-               .Replace(new ForUpgradeMasCom())
+               .Replace(new ForBuyResMasC())
                .Replace(new ForGiveTakeToolWeaponComp())
                .Replace(new UpdatedMasCom());
 
 
 
-            if (!HintComC.EnabledHint)
+            if (!HintComC.IsOnHint)
             {
                 HintViewUIC.SetActiveHintZone(false);
             }
@@ -564,16 +565,12 @@ namespace Scripts.Game
 
             else
             {
-                CameraC.SetPosRotClient(WhoseMoveC.CurPlayer, SpawnInitComSys.Main_GO.transform.position);
+                CameraC.SetPosRotClient(WhoseMoveC.CurPlayerI, SpawnInitComSys.Main_GO.transform.position);
 
                 foreach (byte curIdxCell in _xyCellFilter)
                 {
-                    _cellViewFilt.Get1(curIdxCell).SetRotForClient(WhoseMoveC.CurPlayer);
+                    _cellViewFilt.Get1(curIdxCell).SetRotForClient(WhoseMoveC.CurPlayerI);
                 }
-
-                //WhoseMoveCom.WhoseMoveOnline = PlayerTypes.First;
-
-
             }
         }
     }

@@ -84,13 +84,14 @@ namespace Scripts.Game
                         WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
 
 
-                        if (UnityEngine.Random.Range(0, 100) < 70)
+                        if (UnityEngine.Random.Range(0, 100) < 50)
                         {
                             ref var envDatCom = ref _cellEnvDataFilter.Get1(idx_0);
 
                             envDatCom.Set(EnvTypes.YoungForest);
                             WhereEnvC.Add(EnvTypes.YoungForest, idx_0);
                         }
+
 
                         fire_0.HaveFire = false;
 

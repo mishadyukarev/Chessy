@@ -12,10 +12,10 @@ namespace Scripts.Game
             switch (unitType)
             {
                 case UnitTypes.None: amountHp = 0; break;
-                case UnitTypes.King: amountHp = 300; break;
-                case UnitTypes.Pawn: amountHp = 100; break;
-                case UnitTypes.Rook: amountHp = 30; break;
-                case UnitTypes.Bishop: amountHp = 30; break;
+                case UnitTypes.King: amountHp = 500; break;
+                case UnitTypes.Pawn: amountHp = 200; break;
+                case UnitTypes.Rook: amountHp = 100; break;
+                case UnitTypes.Bishop: amountHp = 100; break;
                 case UnitTypes.Scout: amountHp = 1; break;
                 default: throw new Exception();
             }
@@ -51,7 +51,7 @@ namespace Scripts.Game
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 300;
+                        case LevelUnitTypes.Wood: return 400;
                         case LevelUnitTypes.Iron: throw new Exception();
                         default: throw new Exception();
                     }
@@ -179,7 +179,7 @@ namespace Scripts.Game
                 case UnitTypes.Pawn: steps = 2; break;
                 case UnitTypes.Rook: steps = 3; break;
                 case UnitTypes.Bishop: steps = 3; break;
-                case UnitTypes.Scout: steps = 4; break;
+                case UnitTypes.Scout: steps = 5; break;
                 default: throw new Exception();
             }
 

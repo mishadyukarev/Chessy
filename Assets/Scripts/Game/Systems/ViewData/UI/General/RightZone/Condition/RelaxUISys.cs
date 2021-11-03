@@ -20,7 +20,7 @@ namespace Scripts.Game
             {
                 if (!selUnitDatCom.Is(UnitTypes.Scout))
                 {
-                    if (selOnUnitCom.Is(WhoseMoveC.CurPlayer))
+                    if (selOnUnitCom.Is(WhoseMoveC.CurPlayerI))
                     {
                         activeButt = true;
 

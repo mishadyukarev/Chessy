@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Scripts.Common;
 
 namespace Scripts.Game
 {
@@ -30,7 +31,7 @@ namespace Scripts.Game
             ref var envRes_0 = ref _cellEnvFilter.Get2(idx_0);
 
 
-            var playerSend = WhoseMoveC.WhoseMove;
+            var whoseMove = WhoseMoveC.WhoseMove;
 
             if (forBuildType == BuildTypes.Mine)
             {
@@ -40,7 +41,7 @@ namespace Scripts.Game
                     {
                         if (env_0.Have(EnvTypes.Hill) && envRes_0.HaveRes(EnvTypes.Hill))
                         {
-                            if (InventResC.CanCreateBuild(playerSend, forBuildType, out var needRes))
+                            if (InventResC.CanCreateBuild(whoseMove, forBuildType, out var needRes))
                             {
                                 if (build_0.HaveBuild)
                                 {
@@ -48,12 +49,12 @@ namespace Scripts.Game
                                     build_0.Reset();
                                 }
 
-                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
+                                RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
 
-                                InventResC.BuyBuild(playerSend, forBuildType);
+                                InventResC.BuyBuild(whoseMove, forBuildType);
 
                                 build_0.SetBuild(forBuildType);
-                                ownBuildC_0.SetOwner(playerSend);
+                                ownBuildC_0.SetOwner(whoseMove);
                                 WhereBuildsC.Add(ownBuildC_0.Owner, build_0.BuildType, idx_0);
 
                                 curStepUnitC.TakeSteps();

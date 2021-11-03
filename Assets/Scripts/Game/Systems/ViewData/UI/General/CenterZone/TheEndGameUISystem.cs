@@ -12,7 +12,7 @@ namespace Scripts.Game
                 EndGameViewUIC.SetActiveZone(false);
             }
 
-            else if (EndGameDataUIC.PlayerWinner == WhoseMoveC.CurPlayer)
+            else if (EndGameDataUIC.PlayerWinner == WhoseMoveC.CurPlayerI)
             {
                 EndGameViewUIC.Text = LanguageComCom.GetText(GameLanguageTypes.YouAreWinner);
                 EndGameViewUIC.SetActiveZone(true);

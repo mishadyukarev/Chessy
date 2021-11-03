@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Photon.Pun;
 
 namespace Scripts.Game
 {
@@ -6,7 +7,7 @@ namespace Scripts.Game
     {
         public void Run()
         {
-            WindUIC.SetEulerRot(WhoseMoveC.CurPlayer, WindC.DirectWind);
+            WindUIC.SetEulerRot(WhoseMoveC.CurPlayerI, WindC.DirectWind);
         }
     }
 }

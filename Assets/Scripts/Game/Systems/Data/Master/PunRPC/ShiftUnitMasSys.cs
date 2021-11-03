@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Scripts.Common;
 
 namespace Scripts.Game
 {
@@ -19,10 +20,10 @@ namespace Scripts.Game
             var idx_from = ForShiftMasCom.IdxFrom;
             var idx_to = ForShiftMasCom.IdxTo;
 
-            var playerType = WhoseMoveC.WhoseMove;
+            var whoseMove = WhoseMoveC.WhoseMove;
 
 
-            if (CellsForShiftCom.HaveIdxCell(playerType, idx_from, idx_to))
+            if (CellsForShiftCom.HaveIdxCell(whoseMove, idx_from, idx_to))
             {
                 ref var envDat_from = ref _cellEnvrDataFilter.Get1(idx_from);
                 ref var trail_from = ref _cellTrailFilt.Get1(idx_from);
@@ -74,7 +75,7 @@ namespace Scripts.Game
 
                 unit_to.SetUnit(unit_from.Unit);
                 levUnitC_to.SetLevel(levUnit_from.Level);
-                ownUnit_to.SetOwner(playerType);
+                ownUnit_to.SetOwner(whoseMove);
                 hpUnitC_to.AmountHp = hpUnitC_from.AmountHp;
                 stepUnitC_to.StepsAmount = stepUnitC_from.StepsAmount;
                 condUnitC_to.DefCondition();
@@ -87,7 +88,7 @@ namespace Scripts.Game
                 WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
                 unit_from.NoneUnit();
 
-                RpcSys.SoundToGeneral(InfoC.Sender(MGOTypes.Master), SoundEffectTypes.ClickToTable);
+                RpcSys.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipGameTypes.ClickToTable);
             }
         }
     }

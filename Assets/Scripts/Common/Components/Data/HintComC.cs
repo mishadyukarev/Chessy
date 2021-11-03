@@ -2,6 +2,8 @@
 {
     public struct HintComC
     {
-        public static bool EnabledHint;
+        public static bool IsOnHint;
+
+        public HintComC(bool isOnHint) => IsOnHint = isOnHint;
     }
 }

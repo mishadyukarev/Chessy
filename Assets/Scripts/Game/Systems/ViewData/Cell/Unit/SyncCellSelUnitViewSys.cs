@@ -25,7 +25,7 @@ namespace Scripts.Game
 
                 if (curUnitDatCom.HaveUnit)
                 {
-                    if (curOwnUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
+                    if (curOwnUnitCom.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
                         preVisMainUnitViewCom.Enable_SR(true);
                         preVisMainUnitViewCom.SetSprite(SelectorC.SelUnitType, SelectorC.LevelSelUnitType);

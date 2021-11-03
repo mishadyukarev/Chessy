@@ -25,17 +25,17 @@ namespace Scripts.Game
                     InventResC.BuyCreateUnit(playerSend, unitTypeForCreating);
                     InventorUnitsC.AddUnit(playerSend, unitTypeForCreating, LevelUnitTypes.Wood);
 
-                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.SoundGoldPack);
+                    RpcSys.SoundToGeneral(sender, ClipGameTypes.SoundGoldPack);
                 }
                 else
                 {
-                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                    RpcSys.SoundToGeneral(sender, ClipGameTypes.Mistake);
                     RpcSys.MistakeEconomyToGeneral(sender, needRes);
                 }
             }
             else
             {
-                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Mistake);
+                RpcSys.SoundToGeneral(sender, ClipGameTypes.Mistake);
                 RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
             }
         }

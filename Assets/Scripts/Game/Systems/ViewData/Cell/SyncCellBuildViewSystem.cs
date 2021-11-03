@@ -20,7 +20,7 @@ namespace Scripts.Game
 
                 if (curBuildDatCom.HaveBuild)
                 {
-                    if (curVisBuildCom.IsVisibled(WhoseMoveC.CurPlayer))
+                    if (curVisBuildCom.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
                         curBuildViewCom.SetSpriteFront(curBuildDatCom.BuildType);
                         curBuildViewCom.EnableFrontSR();
@@ -28,7 +28,7 @@ namespace Scripts.Game
                         curBuildViewCom.EnableBackSR();
                         curBuildViewCom.SetSpriteBack(curBuildDatCom.BuildType);
 
-                        curBuildViewCom.SetAlpha(curVisBuildCom.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayer)));
+                        curBuildViewCom.SetAlpha(curVisBuildCom.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI)));
                         curBuildViewCom.SetBackColor(curOwnBuildCom.Owner);
                     }
                     else

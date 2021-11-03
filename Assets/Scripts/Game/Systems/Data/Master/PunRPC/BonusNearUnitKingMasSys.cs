@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Scripts.Common;
 
 namespace Scripts.Game
 {
@@ -24,10 +25,12 @@ namespace Scripts.Game
             {
                 var around = CellSpaceSupport.TryGetXyAround(_cellXyFilt.Get1(idx_0).XyCell);
 
-                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
+                RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
 
                 stepUnitC_0.ZeroSteps();
                 _cellUnitOthFilt.Get2(idx_0).DefCondition();
+
+                RpcSys.SoundToGeneral(sender, ClipGameTypes.BonusKing);
 
                 foreach (var xy in around)
                 {
@@ -57,10 +60,6 @@ namespace Scripts.Game
                             if (!effUnitC_1.Have(UnitStatTypes.Steps))
                             {
                                 effUnitC_1.Set(UnitStatTypes.Steps);
-                                //if (!stepUnitC_1.HaveMaxSteps(effUnitC_1, unitC_1.UnitType))
-                                //{
-                                //    stepUnitC_1.AddBonus();
-                                //}
                             }
                         }
                     }

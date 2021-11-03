@@ -17,12 +17,10 @@ namespace Scripts.Game
             ref var idx_0 = ref _forUpgradeUnitFilt.Get1(0).idxCellForUpgrade;
 
             ref var unit_0 = ref _cellUnitDataFilt.Get1(idx_0);
-
             ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
             ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
-
-            ref var hpUnitC = ref _cellUnitDataFilt.Get2(idx_0);
-            ref var stepUnitC_0 = ref _cellUnitDataFilt.Get3(idx_0);
+            ref var hpUnit_0 = ref _cellUnitDataFilt.Get2(idx_0);
+            ref var stepUnit_0 = ref _cellUnitDataFilt.Get3(idx_0);
             ref var effUnit_0 =ref _cellUnitDataFilt.Get4(idx_0);
 
 
@@ -30,25 +28,25 @@ namespace Scripts.Game
 
 
 
-            var playSend = WhoseMoveC.WhoseMove;
+            var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (hpUnitC.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
+            if (hpUnit_0.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
             {
-                if (stepUnitC_0.HaveMinSteps)
+                if (stepUnit_0.HaveMinSteps)
                 {
-                    if (InventResC.CanUpgradeUnit(playSend, unit_0.Unit, out var needRes))
+                    if (InventResC.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
                     {
-                        InventResC.BuyUpgradeUnit(playSend, unit_0.Unit);
+                        InventResC.BuyUpgradeUnit(whoseMove, unit_0.Unit);
 
                         WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                         levUnit_0.SetLevel(LevelUnitTypes.Iron);
                         WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                        stepUnitC_0.TakeSteps();
+                        stepUnit_0.TakeSteps();
 
-                        hpUnitC.SetMaxHp(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
+                        hpUnit_0.SetMaxHp(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
 
-                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.UpgradeUnitMelee);
+                        RpcSys.SoundToGeneral(sender, ClipGameTypes.UpgradeUnitMelee);
                     }
                     else
                     {

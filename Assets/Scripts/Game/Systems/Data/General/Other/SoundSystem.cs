@@ -7,13 +7,13 @@ namespace Scripts.Game
     {
         public void Run()
         {
-            if (SoundEffectC.IsPlaying(SoundEffectTypes.Truce))
+            if (SoundEffectC.IsPlaying(new[] { ClipGameTypes.Truce, ClipGameTypes.AfterBuildTown, ClipGameTypes.PickUpgrade }))
             {
-                SoundComComp.Volume = 0;
+                SoundComC.Volume = 0;
             }
             else
             {
-                SoundComComp.Volume = SoundComComp.SavedVolume;
+                SoundComC.Volume = SoundComC.SavedVolume;
             }
         }
     }

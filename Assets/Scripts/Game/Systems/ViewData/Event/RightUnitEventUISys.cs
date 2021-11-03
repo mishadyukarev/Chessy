@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Scripts.Common;
 using System;
 
 namespace Scripts.Game
@@ -22,6 +23,16 @@ namespace Scripts.Game
 
         private void ConditionAbilityButton(CondUnitTypes condUnitType)
         {
+            if (HintComC.IsOnHint)
+            {
+                if (!HintDataUIC.IsActive(VideoClipTypes.ProtRelax))
+                {
+                    HintViewUIC.SetActiveHintZone(true);
+                    HintViewUIC.SetVideoClip(VideoClipTypes.ProtRelax);
+                    HintDataUIC.SetActive(VideoClipTypes.ProtRelax, true);
+                }
+            }
+
             if (WhoseMoveC.IsMyMove)
             {
                 if (_cellUnitFilter.Get2(SelectorC.IdxSelCell).Is(condUnitType))
@@ -44,7 +55,8 @@ namespace Scripts.Game
                     case UniqueButtonTypes.None: throw new Exception();
                     case UniqueButtonTypes.First:
                         {
-                            switch (RightUniqueDataUIC.AbilityType(UniqueButtonTypes.First))
+                            var abil = RightUniqueDataUIC.AbilityType(UniqueButtonTypes.First);
+                            switch (abil)
                             {
                                 case UniqueAbilTypes.None: throw new Exception();
                                 case UniqueAbilTypes.FirePawn:
@@ -58,41 +70,52 @@ namespace Scripts.Game
                                     break;
                                 case UniqueAbilTypes.Seed:
                                     RpcSys.SeedEnvironmentToMaster(SelectorC.IdxSelCell, EnvTypes.YoungForest);
+
                                     break;
                                 case UniqueAbilTypes.CircularAttack:
                                     RpcSys.CircularAttackKingToMaster(SelectorC.IdxSelCell);
+                                    if (HintComC.IsOnHint)
+                                    {
+                                        if (!HintDataUIC.IsActive(VideoClipTypes.CircularAttack))
+                                        {
+                                            HintViewUIC.SetActiveHintZone(true);
+                                            HintViewUIC.SetVideoClip(VideoClipTypes.CircularAttack);
+                                            HintDataUIC.SetActive(VideoClipTypes.CircularAttack, true);
+                                        }
+                                    }
                                     break;
                                 default: throw new Exception();
+                            }
+
+                            if (HintComC.IsOnHint)
+                            {
+                                if (abil == UniqueAbilTypes.FireArcher
+                                || abil == UniqueAbilTypes.Seed
+                                || abil == UniqueAbilTypes.FirePawn
+                                || abil == UniqueAbilTypes.None)
+                                {
+                                    if (!HintDataUIC.IsActive(VideoClipTypes.SeedFire))
+                                    {
+                                        HintViewUIC.SetActiveHintZone(true);
+                                        HintViewUIC.SetVideoClip(VideoClipTypes.SeedFire);
+                                        HintDataUIC.SetActive(VideoClipTypes.SeedFire, true);
+                                    }
+                                }
                             }
                         }
                         break;
                     case UniqueButtonTypes.Second:
                         {
                             RpcSys.BonusNearUnits(SelectorC.IdxSelCell);
-                            //switch (RightUniqueDataUIC.AbilityType(UniqueButtonTypes.Second))
-                            //{
-                            //    case AbilityTypes.None: throw new Exception();
-                            //    case AbilityTypes.FirePawn:
-                            //        RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxSelCell);
-                            //        break;
-                            //    case AbilityTypes.NoneFirePawn:
-                            //        RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxSelCell);
-                            //        break;
-                            //    case AbilityTypes.FireArcher:
-                            //        SelectorC.CellClickType = CellClickTypes.PickFire;
-                            //        break;
-                            //    case AbilityTypes.Seed:
-                            //        RpcSys.SeedEnvironmentToMaster(SelectorC.IdxSelCell, EnvirTypes.YoungForest);
-                            //        break;
-                            //    case AbilityTypes.CircularAttack:
-                            //        RpcSys.CircularAttackKingToMaster(SelectorC.IdxSelCell);
-                            //        break;
-                            //    case AbilityTypes.FarmBuild: throw new Exception();
-                            //    case AbilityTypes.MineBuild: throw new Exception();
-                            //    case AbilityTypes.CityBuild: throw new Exception();
-                            //    case AbilityTypes.Destroy: throw new Exception();
-                            //    default: throw new Exception();
-                            //}
+                            if (HintComC.IsOnHint)
+                            {
+                                if (!HintDataUIC.IsActive(VideoClipTypes.BonusKing))
+                                {
+                                    HintViewUIC.SetActiveHintZone(true);
+                                    HintViewUIC.SetVideoClip(VideoClipTypes.BonusKing);
+                                    HintDataUIC.SetActive(VideoClipTypes.BonusKing, true);
+                                }
+                            }
                         }
                         break;
                     case UniqueButtonTypes.Third:
@@ -113,10 +136,28 @@ namespace Scripts.Game
 
                     case BuildButtonTypes.First:
                         RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildTypes.Farm);
+                        if (HintComC.IsOnHint)
+                        {
+                            if (!HintDataUIC.IsActive(VideoClipTypes.BuldFarms))
+                            {
+                                HintViewUIC.SetActiveHintZone(true);
+                                HintViewUIC.SetVideoClip(VideoClipTypes.BuldFarms);
+                                HintDataUIC.SetActive(VideoClipTypes.BuldFarms, true);
+                            }
+                        }
                         break;
 
                     case BuildButtonTypes.Second:
                         RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildTypes.Mine);
+                        if (HintComC.IsOnHint)
+                        {
+                            if (!HintDataUIC.IsActive(VideoClipTypes.BuildMine))
+                            {
+                                HintViewUIC.SetActiveHintZone(true);
+                                HintViewUIC.SetVideoClip(VideoClipTypes.BuildMine);
+                                HintDataUIC.SetActive(VideoClipTypes.BuildMine, true);
+                            }
+                        }
                         break;
 
                     case BuildButtonTypes.Third:

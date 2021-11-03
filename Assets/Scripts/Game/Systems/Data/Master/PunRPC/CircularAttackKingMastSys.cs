@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
+using Scripts.Common;
 
 namespace Scripts.Game
 {
@@ -32,7 +33,7 @@ namespace Scripts.Game
 
             if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
             {
-                RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
+                RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.AttackMelee);
 
                 foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idxCurculAttack).XyCell))
                 {
@@ -92,7 +93,7 @@ namespace Scripts.Game
 
                 stepUnitC_0.ZeroSteps();
 
-                RpcSys.SoundToGeneral(sender, SoundEffectTypes.AttackMelee);
+                RpcSys.SoundToGeneral(sender, ClipGameTypes.AttackMelee);
 
 
                 if (condUnitC_0.Is(CondUnitTypes.Protected) || condUnitC_0.Is(CondUnitTypes.Relaxed))

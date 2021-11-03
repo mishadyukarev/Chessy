@@ -6,13 +6,13 @@ namespace Scripts.Game
     {
         public void Run()
         {
-            var isActivatedZone = PickUpgZoneDataUIC.IsActivated(WhoseMoveC.CurPlayer);
+            var isActivatedZone = PickUpgZoneDataUIC.IsActivated(WhoseMoveC.CurPlayerI);
 
             PickUpgZoneViewUIC.SetActiveZone(isActivatedZone);
 
             if (isActivatedZone)
             {
-                foreach (var item in PickUpgZoneDataUIC.Activated_Buts(WhoseMoveC.CurPlayer))
+                foreach (var item in PickUpgZoneDataUIC.Activated_Buts(WhoseMoveC.CurPlayerI))
                 {
                     PickUpgZoneViewUIC.SetActive_But(item.Key, item.Value);
                 }

@@ -38,7 +38,7 @@ namespace Scripts.Game
                 blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
 
 
-                if (curVisUnitCom.IsVisibled(WhoseMoveC.CurPlayer))
+                if (curVisUnitCom.IsVisibled(WhoseMoveC.CurPlayerI))
                 {
                     if (unit_0.HaveUnit)
                     {

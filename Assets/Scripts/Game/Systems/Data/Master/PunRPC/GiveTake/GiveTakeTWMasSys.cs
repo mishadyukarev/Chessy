@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Scripts.Common;
 
 namespace Scripts.Game
 {
@@ -59,7 +60,7 @@ namespace Scripts.Game
                                 }
                                 WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
+                                RpcSys.SoundToGeneral(sender, ClipGameTypes.PickMelee);
                             }
 
 
@@ -75,7 +76,7 @@ namespace Scripts.Game
 
                                 stepUnit_0.TakeSteps();          
 
-                                RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
+                                RpcSys.SoundToGeneral(sender, ClipGameTypes.PickMelee);
                             }
 
                             else if (tWTypeForGive == ToolWeaponTypes.Pick)
@@ -91,7 +92,7 @@ namespace Scripts.Game
 
                                     stepUnit_0.TakeSteps();
 
-                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
+                                    RpcSys.SoundToGeneral(sender, ClipGameTypes.PickMelee);
                                 }
                                 else
                                 {
@@ -112,7 +113,7 @@ namespace Scripts.Game
 
                                     stepUnit_0.TakeSteps();
 
-                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
+                                    RpcSys.SoundToGeneral(sender, ClipGameTypes.PickMelee);
                                 }
                                 else
                                 {
@@ -134,7 +135,7 @@ namespace Scripts.Game
 
                                     stepUnit_0.TakeSteps();
 
-                                    RpcSys.SoundToGeneral(sender, SoundEffectTypes.PickMelee);
+                                    RpcSys.SoundToGeneral(sender, ClipGameTypes.PickMelee);
                                 }
                                 else
                                 {

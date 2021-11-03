@@ -71,6 +71,15 @@ namespace Scripts.Game
                                 {
                                     fire_0.HaveFire = false;
                                 }
+
+
+                                if (UnityEngine.Random.Range(0, 100) < 50)
+                                {
+                                    ref var envDatCom = ref _cellEnvFilt.Get1(idx_0);
+
+                                    envDatCom.Set(EnvTypes.YoungForest);
+                                    WhereEnvC.Add(EnvTypes.YoungForest, idx_0);
+                                }
                             }
                         }
 

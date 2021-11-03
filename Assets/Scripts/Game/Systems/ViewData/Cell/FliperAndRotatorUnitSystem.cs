@@ -25,7 +25,7 @@ namespace Scripts.Game
                 {
                     if (curUnitDatCom.HaveUnit)
                     {
-                        if (curOwnUnitCom.Is(WhoseMoveC.CurPlayer))
+                        if (curOwnUnitCom.Is(WhoseMoveC.CurPlayerI))
                         {
                             if (curUnitDatCom.Is(UnitTypes.Rook))
                             {

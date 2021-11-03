@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
+using Scripts.Common;
 
 namespace Scripts.Game
 {
@@ -9,12 +10,12 @@ namespace Scripts.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var playerSend = WhoseMoveC.WhoseMove;
+            var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (InventResC.CanMeltOre(playerSend, out var needRes))
+            if (InventResC.CanMeltOre(whoseMove, out var needRes))
             {
-                InventResC.BuyMeltOre(playerSend);
-                RpcSys.SoundToGeneral(sender, SoundEffectTypes.Melting);
+                InventResC.BuyMeltOre(whoseMove);
+                RpcSys.SoundToGeneral(sender, ClipGameTypes.Melting);
             }
             else
             {

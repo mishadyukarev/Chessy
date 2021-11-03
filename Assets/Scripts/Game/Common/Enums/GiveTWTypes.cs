@@ -1,11 +1,11 @@
-﻿namespace Scripts.Game
-{
-    public enum GiveTWTypes
-    {
-        None,
+﻿//namespace Scripts.Game
+//{
+//    public enum GiveTWTypes
+//    {
+//        None,
 
-        Pick,
-        Sword,
-        Shield,
-    }
-}
+//        Pick,
+//        Sword,
+//        Shield,
+//    }
+//}

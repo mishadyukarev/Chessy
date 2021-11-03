@@ -7,12 +7,11 @@ namespace Scripts.Menu
     {
         public void Run()
         {
-            SoundComComp.Volume = CenterZoneUICom.MusicVolume;
+            SoundComC.Volume = CenterZoneUICom.MusicVolume;
 
             ShopZoneUICom.SetTextInfo(LanguageComCom.GetText(ComLanguageTypes.InfoBuy));
 
-            HintComC.EnabledHint = CenterZoneUICom.InteractableHint;
-
+            HintComC.IsOnHint = CenterZoneUICom.IsOn;
         }
     }
 }

@@ -5,11 +5,19 @@
         None,
 
         Start,
+        Start2,
+        Start3,
+        Start4,
+        ProtRelax,
         BuldFarms,
         SeedFire,
         Woodcutter,
-        MineTools,
+        BuildMine,
         Vision,
         SpeciesAttack,
+        CircularAttack,
+        BonusKing,
+        UpgToolWeapon,
+        Pick,
     }
 }

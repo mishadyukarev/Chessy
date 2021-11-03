@@ -24,7 +24,7 @@ namespace Scripts.Game
 
             if (selUnitDatCom.HaveUnit)
             {
-                if (selOwnUnitCom.Is(WhoseMoveC.CurPlayer))
+                if (selOwnUnitCom.Is(WhoseMoveC.CurPlayerI))
                 {
                     if (selUnitDatCom.Is(UnitTypes.King))
                     {

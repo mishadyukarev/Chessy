@@ -14,15 +14,15 @@ namespace Scripts.Game
 
             if (SelectorC.IsSelCell && selUnitDataCom.Is(BuildTypes.City))
             {
-                if (selOwnUnitCom.Is(WhoseMoveC.CurPlayer))
+                if (selOwnUnitCom.Is(WhoseMoveC.CurPlayerI))
                 {
-                    BuildLeftZoneViewUICom.SetActiveZone(true);
+                    CutyLeftZoneViewUIC.SetActiveZone(true);
                 }
-                else BuildLeftZoneViewUICom.SetActiveZone(false);
+                else CutyLeftZoneViewUIC.SetActiveZone(false);
             }
             else
             {
-                BuildLeftZoneViewUICom.SetActiveZone(false);
+                CutyLeftZoneViewUIC.SetActiveZone(false);
             }
         }
     }

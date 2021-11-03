@@ -45,14 +45,19 @@ namespace Scripts.Game
                                 {
                                     if (unit_0.Is(UnitTypes.Pawn))
                                     {
-                                        var adultForest = EnvTypes.AdultForest;
-
-                                        if (env_0.Have(adultForest))
+                                        if (env_0.Have(EnvTypes.AdultForest))
                                         {
-                                            InventResC.AddAmountRes(ownUnit_0.Owner, ResTypes.Wood);
-                                            envRes_0.TakeAmountRes(adultForest);
+                                            var extract = ExtractC.ExtractOnePawnWood(levUnit_0.Level);
 
-                                            if (envRes_0.HaveRes(adultForest))
+                                            if(extract > envRes_0.AmountRes(EnvTypes.AdultForest))
+                                            {
+                                                extract = envRes_0.MaxAmountRes(EnvTypes.AdultForest);
+                                            }
+
+                                            InventResC.AddAmountRes(ownUnit_0.Owner, ResTypes.Wood, extract);
+                                            envRes_0.TakeAmountRes(EnvTypes.AdultForest, extract);
+
+                                            if (envRes_0.HaveRes(EnvTypes.AdultForest))
                                             {
                                                 if (buil_0.Is(BuildTypes.Camp))
                                                 {
@@ -87,8 +92,16 @@ namespace Scripts.Game
                                                 }
 
                                                 trail_0.ResetAll();
-                                                env_0.Reset(adultForest);
-                                                WhereEnvC.Remove(adultForest, idx_0);
+                                                env_0.Reset(EnvTypes.AdultForest);
+                                                WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
+
+                                                if (UnityEngine.Random.Range(0, 100) < 50)
+                                                {
+                                                    ref var envDatCom = ref _cellEnvFilt.Get1(idx_0);
+
+                                                    envDatCom.Set(EnvTypes.YoungForest);
+                                                    WhereEnvC.Add(EnvTypes.YoungForest, idx_0);
+                                                }
                                             }
                                         }
 

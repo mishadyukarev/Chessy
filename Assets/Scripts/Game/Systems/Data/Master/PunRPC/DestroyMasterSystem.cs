@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
+using Scripts.Common;
 
 namespace Scripts.Game
 {
@@ -10,8 +11,6 @@ namespace Scripts.Game
         private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
-
-        private EcsFilter<EndGameDataUIC> _endGameFilter = default;
 
         public void Run()
         {
@@ -27,7 +26,7 @@ namespace Scripts.Game
 
             if (_cellUnitFilter.Get2(idxCellForDestory).HaveMinSteps)
             {
-                RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.Destroy);
+                RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.Destroy);
 
                 if (buildC_0.Is(BuildTypes.City))
                 {

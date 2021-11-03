@@ -36,7 +36,7 @@ namespace Scripts.Game
                 }
                 if (unitC_0.HaveUnit)
                 {
-                    if (ownUnitC_0.Is(WhoseMoveC.CurPlayer))
+                    if (ownUnitC_0.Is(WhoseMoveC.CurPlayerI))
                     {
                         if (unitC_0.Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop }))
                         {
@@ -73,11 +73,11 @@ namespace Scripts.Game
 
                 if (selUnitDatCom.HaveUnit)
                 {
-                    if (_cellUnitFilter.Get3(SelectorC.IdxSelCell).Is(WhoseMoveC.CurPlayer))
+                    if (_cellUnitFilter.Get3(SelectorC.IdxSelCell).Is(WhoseMoveC.CurPlayerI))
                     {
                         if (SelectorC.Is(CellClickTypes.PickFire))
                         {
-                            foreach (var curIdxCell in _cellsArcherArsonFilt.Get1(0).GetListCopy(WhoseMoveC.CurPlayer, SelectorC.IdxSelCell))
+                            foreach (var curIdxCell in _cellsArcherArsonFilt.Get1(0).GetListCopy(WhoseMoveC.CurPlayerI, SelectorC.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.FireSelector);
@@ -86,19 +86,19 @@ namespace Scripts.Game
 
                         else if (SelectorC.Is(CellClickTypes.None))
                         {
-                            foreach (var curIdxCell in CellsForShiftCom.GetListCopy(WhoseMoveC.CurPlayer, SelectorC.IdxSelCell))
+                            foreach (var curIdxCell in CellsForShiftCom.GetListCopy(WhoseMoveC.CurPlayerI, SelectorC.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.Shift);
                             }
 
-                            foreach (var curIdxCell in CellsAttackC.GetListCopy(WhoseMoveC.CurPlayer, AttackTypes.Simple, SelectorC.IdxSelCell))
+                            foreach (var curIdxCell in CellsAttackC.GetListCopy(WhoseMoveC.CurPlayerI, AttackTypes.Simple, SelectorC.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.SimpleAttack);
                             }
 
-                            foreach (var curIdxCell in CellsAttackC.GetListCopy(WhoseMoveC.CurPlayer, AttackTypes.Unique, SelectorC.IdxSelCell))
+                            foreach (var curIdxCell in CellsAttackC.GetListCopy(WhoseMoveC.CurPlayerI, AttackTypes.Unique, SelectorC.IdxSelCell))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.UniqueAttack);
@@ -111,7 +111,7 @@ namespace Scripts.Game
             {
                 ref var cellsSetUnitCom = ref _cellsSetUnitFilter.Get1(0);
 
-                foreach (var curIdxCell in CellsForSetUnitC.GetListCells(WhoseMoveC.CurPlayer))
+                foreach (var curIdxCell in CellsForSetUnitC.GetListCells(WhoseMoveC.CurPlayerI))
                 {
                     _supViewFilter.Get1(curIdxCell).EnableSR();
                     _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.Spawn);

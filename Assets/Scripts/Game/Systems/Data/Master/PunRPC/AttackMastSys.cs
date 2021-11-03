@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
+using Scripts.Common;
 
 namespace Scripts.Game
 {
@@ -79,8 +80,8 @@ namespace Scripts.Game
                 powerDamFrom += fromDamUnitC.DamageAttack(unit_from.Unit, levUnit_from.Level, twUnitC_from, effUnit_from, simpUniqueType, UnitsUpgC.UpgPercent(ownUnit_from.Owner, unit_from.Unit, UnitStatTypes.Damage));
 
                 if (unit_from.IsMelee)
-                    RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackMelee);
-                else RpcSys.SoundToGeneral(RpcTarget.All, SoundEffectTypes.AttackArcher);
+                    RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.AttackMelee);
+                else RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.AttackArcher);
 
 
                 if (unit_to.IsMelee)

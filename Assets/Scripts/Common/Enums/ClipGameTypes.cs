@@ -17,7 +17,10 @@
         Seeding,
         ClickToTable,
         Truce,
+        AfterBuildTown,
         PickMelee,
         PickArcher,
+        PickUpgrade,
+        BonusKing,
     }
 }

@@ -18,7 +18,7 @@ namespace Scripts.Game
                 {
                     ref var sellOnUnitCom = ref _cellUnitFilt.Get2(SelectorC.IdxSelCell);
 
-                    if (sellOnUnitCom.Is(WhoseMoveC.CurPlayer))
+                    if (sellOnUnitCom.Is(WhoseMoveC.CurPlayerI))
                     {
                         needActiveButton = true;
                     }

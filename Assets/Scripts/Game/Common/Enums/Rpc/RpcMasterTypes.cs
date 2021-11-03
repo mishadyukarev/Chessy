@@ -26,6 +26,6 @@
         OldToNewUnit,
         GiveTakeToolWeapon,
 
-        UpgradeBuild,
+        BuyRes,
     }
 }

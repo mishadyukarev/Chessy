@@ -37,12 +37,12 @@ namespace Scripts.Game
         }
         private void ExecuteHint()
         {
-            HintDataUIC.CurNumber++;
+            HintDataUIC.CurStartNumber++;
 
-            if (HintDataUIC.CurNumber < System.Enum.GetNames(typeof(VideoClipTypes)).Length)
+            if (HintDataUIC.CurStartNumber <= (int)VideoClipTypes.Start4)
             {
-                HintViewUIC.SetVideoClip((VideoClipTypes)HintDataUIC.CurNumber);
-                HintViewUIC.SetPos(new Vector3(UnityEngine.Random.Range(-500f, 500f), UnityEngine.Random.Range(-300f, 300f)));
+                HintDataUIC.SetActive((VideoClipTypes)HintDataUIC.CurStartNumber, true);
+                HintViewUIC.SetVideoClip((VideoClipTypes)HintDataUIC.CurStartNumber);
             }
             else
             {
@@ -51,42 +51,11 @@ namespace Scripts.Game
         }
         private void ExecuteUpg_But(PickUpgradeTypes upgBut)
         {
-            PickUpgZoneDataUIC.SetActiveParent(WhoseMoveC.CurPlayer, false);
-            PickUpgZoneDataUIC.SetActive(WhoseMoveC.CurPlayer, upgBut, false);
+            PickUpgZoneDataUIC.SetActiveParent(WhoseMoveC.CurPlayerI, false);
+            PickUpgZoneDataUIC.SetActive(WhoseMoveC.CurPlayerI, upgBut, false);
 
-            //switch (upgBut)
-            //{
-            //    case PickUpgradeTypes.None: throw new Exception();
-            //    case PickUpgradeTypes.King:
-                    
-            //        break;
+            SoundEffectC.Play(ClipGameTypes.PickUpgrade);
 
-            //    case PickUpgradeTypes.Pawn:
-            //        break;
-
-            //    case PickUpgradeTypes.Archer:
-            //        break;
-
-            //    case PickUpgradeTypes.Scout:
-            //        break;
-
-            //    case PickUpgradeTypes.Water:
-            //        break;
-
-            //    case PickUpgradeTypes.Farm:
-            //        RpcSys.UpgradeBuildingToMaster(BuildTypes.Farm);
-            //        break;
-
-            //    case PickUpgradeTypes.Woodcutter:
-            //        RpcSys.UpgradeBuildingToMaster(BuildTypes.Woodcutter);
-            //        break;
-
-            //    case PickUpgradeTypes.Mine:
-            //        RpcSys.UpgradeBuildingToMaster(BuildTypes.Mine);
-            //        break;
-
-            //    default: throw new Exception();
-            //}
             RpcSys.PickUpgradeToMaster(upgBut);
         }
     }

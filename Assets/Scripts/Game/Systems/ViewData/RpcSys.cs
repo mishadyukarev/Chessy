@@ -2,6 +2,7 @@
 using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
+using Scripts.Common;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -29,7 +30,6 @@ namespace Scripts.Game
         private EcsFilter<ForSettingUnitMasCom, XyCellForDoingMasCom> _settingUnitFilter = default;
         private EcsFilter<ForSeedingMasCom, XyCellForDoingMasCom> _seedingFilter = default;
         private EcsFilter<ForFireMasCom> _fireFilter = default;
-        private EcsFilter<ForUpgradeMasCom> _upgradorFilter = default;
         private EcsFilter<ForCircularAttackMasCom, XyCellForDoingMasCom> _circularAttackFilter = default;
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGivePawnToolFilter = default;
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
@@ -61,7 +61,7 @@ namespace Scripts.Game
         public static void DoneToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[default]);
         public static void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
 
-        public static void UpgradeBuildingToMaster(BuildTypes buildingType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeBuild, new object[] { buildingType });
+        public static void BuyResToMaster(ResTypes res) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.BuyRes, new object[] { res });
         public static void PickUpgradeToMaster(PickUpgradeTypes upgBut) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.PickUpgrade, new object[] { upgBut });
 
         public static void ShiftUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { idxPreviousCell, idxSelectedCell });
@@ -103,8 +103,8 @@ namespace Scripts.Game
 
         public static void SetUniToMaster(byte idxCell, UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SetUnit, new object[] { idxCell, unitType });
 
-        public static void SoundToGeneral(RpcTarget rpcTarget, SoundEffectTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Sound, new object[] { soundEffectType });
-        public static void SoundToGeneral(Player playerTo, SoundEffectTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Sound, new object[] { soundEffectType });
+        public static void SoundToGeneral(RpcTarget rpcTarget, ClipGameTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Sound, new object[] { soundEffectType });
+        public static void SoundToGeneral(Player playerTo, ClipGameTypes eff) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Sound, new object[] { eff });
 
         #endregion
 
@@ -173,8 +173,8 @@ namespace Scripts.Game
                     _fireFilter.Get1(0).ToIdx = (byte)objects[1];
                     break;
 
-                case RpcMasterTypes.UpgradeBuild:
-                    _upgradorFilter.Get1(0).BuildingType = (BuildTypes)objects[_curNumber++];
+                case RpcMasterTypes.BuyRes:
+                    ForBuyResMasC.Res = (ResTypes)objects[_curNumber++];
                     break;
 
                 case RpcMasterTypes.CircularAttackKing:
@@ -248,11 +248,11 @@ namespace Scripts.Game
                         MistakeDataUIC.AddNeedRes(ResTypes.Gold, needRes[4]);
                     }
 
-                    SoundEffectC.Play(SoundEffectTypes.Mistake);
+                    SoundEffectC.Play(ClipGameTypes.Mistake);
                     break;
 
                 case RpcGeneralTypes.Sound:
-                    var soundEffectType = (SoundEffectTypes)objects[_curNumber++];
+                    var soundEffectType = (ClipGameTypes)objects[_curNumber++];
                     SoundEffectC.Play(soundEffectType);
                     break;
 
@@ -435,32 +435,32 @@ namespace Scripts.Game
 
 
 
-            InventResC.Set(WhoseMoveC.CurPlayer, ResTypes.Food, (int)objects[_curNumber++]);
-            InventResC.Set(WhoseMoveC.CurPlayer, ResTypes.Wood, (int)objects[_curNumber++]);
-            InventResC.Set(WhoseMoveC.CurPlayer, ResTypes.Ore, (int)objects[_curNumber++]);
-            InventResC.Set(WhoseMoveC.CurPlayer, ResTypes.Iron, (int)objects[_curNumber++]);
-            InventResC.Set(WhoseMoveC.CurPlayer, ResTypes.Gold, (int)objects[_curNumber++]);
+            InventResC.Set(WhoseMoveC.CurPlayerI, ResTypes.Food, (int)objects[_curNumber++]);
+            InventResC.Set(WhoseMoveC.CurPlayerI, ResTypes.Wood, (int)objects[_curNumber++]);
+            InventResC.Set(WhoseMoveC.CurPlayerI, ResTypes.Ore, (int)objects[_curNumber++]);
+            InventResC.Set(WhoseMoveC.CurPlayerI, ResTypes.Iron, (int)objects[_curNumber++]);
+            InventResC.Set(WhoseMoveC.CurPlayerI, ResTypes.Gold, (int)objects[_curNumber++]);
 
 
 
-            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.King, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
-            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.Pawn, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
-            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.Rook, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
-            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.Bishop, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.Pawn, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.Rook, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.Bishop, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
 
-            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.King, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
-            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.Pawn, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
-            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.Rook, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
-            InventorUnitsC.Set(WhoseMoveC.CurPlayer, UnitTypes.Bishop, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.Pawn, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.Rook, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
+            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.Bishop, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
 
 
-            InventorTWCom.Set(WhoseMoveC.CurPlayer, ToolWeaponTypes.Pick, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
-            InventorTWCom.Set(WhoseMoveC.CurPlayer, ToolWeaponTypes.Sword, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
-            InventorTWCom.Set(WhoseMoveC.CurPlayer, ToolWeaponTypes.Shield, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
+            InventorTWCom.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Pick, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
+            InventorTWCom.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Sword, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
+            InventorTWCom.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Shield, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
 
-            InventorTWCom.Set(WhoseMoveC.CurPlayer, ToolWeaponTypes.Pick, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
-            InventorTWCom.Set(WhoseMoveC.CurPlayer, ToolWeaponTypes.Sword, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
-            InventorTWCom.Set(WhoseMoveC.CurPlayer, ToolWeaponTypes.Shield, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
+            InventorTWCom.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Pick, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
+            InventorTWCom.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Sword, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
+            InventorTWCom.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Shield, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
         }
 
         #endregion

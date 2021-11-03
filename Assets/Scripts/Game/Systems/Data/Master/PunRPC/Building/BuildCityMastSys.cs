@@ -1,5 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
+using Scripts.Common;
 
 namespace Scripts.Game
 {
@@ -26,8 +27,8 @@ namespace Scripts.Game
                 var sender = InfoC.Sender(MGOTypes.Master);
                 var idxForBuild = forBuildMasCom.IdxForBuild;
 
-                ref var buildC_0 = ref _cellBuildFilter.Get1(idxForBuild);
-                ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idxForBuild);
+                ref var build_0 = ref _cellBuildFilter.Get1(idxForBuild);
+                ref var ownBuild_0 = ref _cellBuildFilter.Get2(idxForBuild);
 
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxForBuild);
                 ref var curStepUnitC = ref _cellUnitFilter.Get2(idxForBuild);
@@ -35,8 +36,7 @@ namespace Scripts.Game
                 ref var curFireCom = ref _cellFireFilter.Get1(idxForBuild);
 
 
-                var playerSend = WhoseMoveC.WhoseMove;
-
+                var whoseMove = WhoseMoveC.WhoseMove;
 
 
                 if (curStepUnitC.HaveMinSteps)
@@ -56,17 +56,18 @@ namespace Scripts.Game
 
                     if (!haveNearBorder)
                     {
-                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.Building);
+                        RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
+                        RpcSys.SoundToGeneral(sender, ClipGameTypes.AfterBuildTown);
 
-                        if (buildC_0.HaveBuild)
+                        if (build_0.HaveBuild)
                         {
-                            WhereBuildsC.Remove(ownBuildC_0.Owner, buildC_0.BuildType, idxForBuild);
-                            buildC_0.Reset();
+                            WhereBuildsC.Remove(ownBuild_0.Owner, build_0.BuildType, idxForBuild);
+                            build_0.Reset();
                         }
 
-                        buildC_0.SetBuild(forBuildType);
-                        ownBuildC_0.SetOwner(playerSend);
-                        WhereBuildsC.Add(playerSend, forBuildType, idxForBuild);
+                        build_0.SetBuild(forBuildType);
+                        ownBuild_0.SetOwner(whoseMove);
+                        WhereBuildsC.Add(whoseMove, forBuildType, idxForBuild);
 
 
                         curStepUnitC.ZeroSteps();

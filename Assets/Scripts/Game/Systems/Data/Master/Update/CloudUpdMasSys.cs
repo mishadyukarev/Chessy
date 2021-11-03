@@ -10,7 +10,7 @@ namespace Scripts.Game
 
         public void Run()
         {
-            var startWeatherC = _cellWeatherFilt.Get1(WhereCloudsC.Cloud);
+            var weather_0 = _cellWeatherFilt.Get1(WhereCloudsC.Cloud);
             var xyStart = _xyCellFilter.Get1(WhereCloudsC.Cloud).XyCell;
 
 
@@ -27,11 +27,11 @@ namespace Scripts.Game
 
             var xyNext = CellSpaceSupport.GetXyCellByDirect(xyStart, WindC.DirectWind);
 
-            if (xyNext[0] > 3 && xyNext[0] < 12 && xyNext[1] > 0 && xyNext[1] < 10)
+            if (xyNext[0] > 3 && xyNext[0] < 12 && xyNext[1] > 1 && xyNext[1] < 9)
             {
-                startWeatherC.CloudWidthType = CloudWidthTypes.None;
+                weather_0.CloudWidthType = CloudWidthTypes.None;
                 WhereCloudsC.Remove(WhereCloudsC.Cloud);
-                startWeatherC.HaveCloud = false;
+                weather_0.HaveCloud = false;
 
 
                 var idxNext = _xyCellFilter.GetIdxCell(xyNext);
@@ -53,7 +53,15 @@ namespace Scripts.Game
             }
             else
             {
-                startWeatherC.HaveCloud = false;
+                aroundList = CellSpaceSupport.TryGetXyAround(xyNext);
+                curIdx = 0;
+
+                foreach (var xYArount in aroundList)
+                {
+                    curIdx = _xyCellFilter.GetIdxCell(xYArount);
+
+                    _cellWeatherFilt.Get1(curIdx).HaveCloud = true;
+                }
 
                 RandomCloud();
             }
@@ -62,9 +70,15 @@ namespace Scripts.Game
 
         private void RandomCloud()
         {
-            //var rand = UnityEngine.Random.Range(0, 100);
-            //if (rand <= 30) 
-                WindC.DirectWind = (DirectTypes)UnityEngine.Random.Range(1, Enum.GetNames(typeof(DirectTypes)).Length);
+            var newDir = WindC.DirectWind;
+
+            newDir = newDir.Invert();
+            var newDirInt = (int)newDir;
+            newDirInt += UnityEngine.Random.Range(-1, 2);
+
+            if (newDirInt <= 0) newDirInt = 1;
+            else if(newDirInt >= typeof(DirectTypes).GetEnumNames().Length) newDirInt = newDirInt = 1;
+            WindC.DirectWind = (DirectTypes)newDirInt;
         }
     }
 }

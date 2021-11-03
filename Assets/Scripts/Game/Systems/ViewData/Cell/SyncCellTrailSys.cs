@@ -16,7 +16,7 @@ namespace Scripts.Game
 
                 foreach (var item in trailData_0.DictTrail)
                 {
-                    if (trailVisData_0.IsVisibled(WhoseMoveC.CurPlayer))
+                    if (trailVisData_0.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
                         trailView_0.SetActive(item.Key, trailData_0.Have(item.Key));
                     }

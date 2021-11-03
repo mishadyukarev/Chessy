@@ -65,9 +65,9 @@ namespace Scripts.Game
 
                     else if (SelectorC.Is(CellClickTypes.GiveTakeTW))
                     {
-                        if (UnitDatCom(SelectorC.IdxCurCell).Is(UnitTypes.Pawn) && OwnUnitCom(SelectorC.IdxCurCell).Is(WhoseMoveC.CurPlayer))
+                        if (UnitDatCom(SelectorC.IdxCurCell).Is(UnitTypes.Pawn) && OwnUnitCom(SelectorC.IdxCurCell).Is(WhoseMoveC.CurPlayerI))
                         {
-                            RpcSys.GiveTakeToolWeapon(SelectorC.TWTypeForGive, SelectorC.LevelTWType, SelectorC.IdxCurCell);
+                            RpcSys.GiveTakeToolWeapon(SelectorC.TWTypeForGive, GiveTakeDataUIC.Level(SelectorC.TWTypeForGive), SelectorC.IdxCurCell);
                         }
                         else
                         {
@@ -80,7 +80,7 @@ namespace Scripts.Game
                     else if (SelectorC.Is(CellClickTypes.UpgradeUnit))
                     {
                         if (UnitDatCom(SelectorC.IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop })
-                            && OwnUnitCom(SelectorC.IdxCurCell).Is(WhoseMoveC.CurPlayer)
+                            && OwnUnitCom(SelectorC.IdxCurCell).Is(WhoseMoveC.CurPlayerI)
                             && !LevelUnitC(SelectorC.IdxCurCell).Is(LevelUnitTypes.Iron))
                         {
                             RpcSys.UpgradeUnitToMaster(SelectorC.IdxCurCell);
@@ -94,7 +94,7 @@ namespace Scripts.Game
 
                     else if (SelectorC.Is(CellClickTypes.OldToNewUnit))
                     {
-                        if (UnitDatCom(SelectorC.IdxCurCell).Is(UnitTypes.Pawn) && OwnUnitCom(SelectorC.IdxCurCell).Is(WhoseMoveC.CurPlayer))
+                        if (UnitDatCom(SelectorC.IdxCurCell).Is(UnitTypes.Pawn) && OwnUnitCom(SelectorC.IdxCurCell).Is(WhoseMoveC.CurPlayerI))
                         {
                             RpcSys.OldToNewToMaster(SelectorC.UnitTypeOldToNew, SelectorC.IdxCurCell);
                             SelectorC.DefCellClickType();
@@ -114,19 +114,19 @@ namespace Scripts.Game
                         SelectorC.IdxSelCell = SelectorC.IdxCurCell;
 
                        
-                        if (CellsAttackC.FindByIdx(WhoseMoveC.CurPlayer, SelectorC.IdxPreCell, SelectorC.IdxSelCell) != default)
+                        if (CellsAttackC.FindByIdx(WhoseMoveC.CurPlayerI, SelectorC.IdxPreCell, SelectorC.IdxSelCell) != default)
                         {
                             RpcSys.AttackUnitToMaster(SelectorC.IdxPreCell, SelectorC.IdxSelCell);
                         }
 
-                        if (CellsForShiftCom.HaveIdxCell(WhoseMoveC.CurPlayer, SelectorC.IdxPreCell, SelectorC.IdxSelCell))
+                        if (CellsForShiftCom.HaveIdxCell(WhoseMoveC.CurPlayerI, SelectorC.IdxPreCell, SelectorC.IdxSelCell))
                         {
                             RpcSys.ShiftUnitToMaster(SelectorC.IdxPreCell, SelectorC.IdxSelCell);
                         }
 
                         else if (UnitDatCom(SelectorC.IdxSelCell).HaveUnit)
                         {
-                            if (OwnUnitCom(SelectorC.IdxSelCell).Is(WhoseMoveC.CurPlayer))
+                            if (OwnUnitCom(SelectorC.IdxSelCell).Is(WhoseMoveC.CurPlayerI))
                             {
                                 if (UnitDatCom(SelectorC.IdxSelCell).Is(UnitTypes.Scout))
                                 {
@@ -134,11 +134,11 @@ namespace Scripts.Game
                                 }
                                 else if (UnitDatCom(SelectorC.IdxSelCell).IsMelee)
                                 {
-                                    SoundEffectC.Play(SoundEffectTypes.PickMelee);
+                                    SoundEffectC.Play(ClipGameTypes.PickMelee);
                                 }
                                 else
                                 {
-                                    SoundEffectC.Play(SoundEffectTypes.PickArcher);
+                                    SoundEffectC.Play(ClipGameTypes.PickArcher);
                                 }
                             }
                         }
@@ -157,7 +157,7 @@ namespace Scripts.Game
 
                         if (UnitDatCom(SelectorC.IdxSelCell).HaveUnit)
                         {
-                            if (OwnUnitCom(SelectorC.IdxSelCell).Is(WhoseMoveC.CurPlayer))
+                            if (OwnUnitCom(SelectorC.IdxSelCell).Is(WhoseMoveC.CurPlayerI))
                             {
                                 if (UnitDatCom(SelectorC.IdxSelCell).Is(UnitTypes.Scout))
                                 {
@@ -165,11 +165,11 @@ namespace Scripts.Game
                                 }
                                 else if (UnitDatCom(SelectorC.IdxSelCell).IsMelee)
                                 {
-                                    SoundEffectC.Play(SoundEffectTypes.PickMelee);
+                                    SoundEffectC.Play(ClipGameTypes.PickMelee);
                                 }
                                 else
                                 {
-                                    SoundEffectC.Play(SoundEffectTypes.PickArcher);
+                                    SoundEffectC.Play(ClipGameTypes.PickArcher);
                                 }
                             }
                         }
@@ -200,7 +200,7 @@ namespace Scripts.Game
                 {
                     if (SelectorC.IsSelUnit)
                     {
-                        if (!UnitDatCom(SelectorC.IdxCurCell).HaveUnit || !VisUnitCom(SelectorC.IdxCurCell).IsVisibled(WhoseMoveC.CurPlayer))
+                        if (!UnitDatCom(SelectorC.IdxCurCell).HaveUnit || !VisUnitCom(SelectorC.IdxCurCell).IsVisibled(WhoseMoveC.CurPlayerI))
                         {
                             if (SelectorC.IsStartDirectToCell)
                             {

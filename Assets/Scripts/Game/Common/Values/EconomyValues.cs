@@ -77,46 +77,16 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
         }
-        public static int AmountResForUpgrade(BuildTypes buildingType, ResTypes resourceType)
+        public static int AmountResForBuyRes(ResTypes resTypeBuy)
         {
-            switch (buildingType)
+            switch (resTypeBuy)
             {
-                case BuildTypes.None: throw new Exception();
-                case BuildTypes.City: throw new Exception();
-                case BuildTypes.Farm:
-                    switch (resourceType)
-                    {
-                        case ResTypes.None: throw new Exception();
-                        case ResTypes.Food: return 0;
-                        case ResTypes.Wood: return 0;
-                        case ResTypes.Ore: return 0;
-                        case ResTypes.Iron: return 0;
-                        case ResTypes.Gold: return 3;
-                        default: throw new Exception();
-                    }
-                case BuildTypes.Woodcutter:
-                    switch (resourceType)
-                    {
-                        case ResTypes.None: throw new Exception();
-                        case ResTypes.Food: return 0;
-                        case ResTypes.Wood: return 0;
-                        case ResTypes.Ore: return 0;
-                        case ResTypes.Iron: return 0;
-                        case ResTypes.Gold: return 3;
-                        default: throw new Exception();
-                    }
-                case BuildTypes.Mine:
-                    switch (resourceType)
-                    {
-                        case ResTypes.None: throw new Exception();
-                        case ResTypes.Food: return 0;
-                        case ResTypes.Wood: return 0;
-                        case ResTypes.Ore: return 0;
-                        case ResTypes.Iron: return 0;
-                        case ResTypes.Gold: return 3;
-                        default: throw new Exception();
-                    }
-
+                case ResTypes.None: throw new Exception();
+                case ResTypes.Food: return 0;
+                case ResTypes.Wood: return 0;
+                case ResTypes.Ore: return 0;
+                case ResTypes.Iron: return 0;
+                case ResTypes.Gold: return 1;
                 default: throw new Exception();
             }
         }

@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Scripts.Common;
 using System;
 
 namespace Scripts.Game
@@ -27,7 +28,7 @@ namespace Scripts.Game
                 case CondUnitTypes.Protected:
                     if (_cellUnitFilter.Get3(idxForCondit).Is(CondUnitTypes.Protected))
                     {
-                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                        RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
 
                         _cellUnitFilter.Get3(idxForCondit).DefCondition();
                     }
@@ -36,7 +37,7 @@ namespace Scripts.Game
                     {
                         if (_cellUnitFilter.Get3(idxForCondit).Is(CondUnitTypes.Relaxed))
                         {
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                            RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
 
                             _cellUnitFilter.Get3(idxForCondit).CondUnitType = neededCondType;
 
@@ -44,7 +45,7 @@ namespace Scripts.Game
                         }
                         else
                         {
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                            RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
 
                             _cellUnitFilter.Get3(idxForCondit).CondUnitType = neededCondType;
 
@@ -62,7 +63,7 @@ namespace Scripts.Game
                 case CondUnitTypes.Relaxed:
                     if (_cellUnitFilter.Get3(idxForCondit).Is(CondUnitTypes.Relaxed))
                     {
-                        RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                        RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
                         _cellUnitFilter.Get3(idxForCondit).DefCondition();
                     }
 
@@ -70,13 +71,13 @@ namespace Scripts.Game
                     {
                         if (_cellUnitFilter.Get3(idxForCondit).Is(CondUnitTypes.Protected))
                         {
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                            RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
                             _cellUnitFilter.Get3(idxForCondit).CondUnitType = neededCondType;
                             _cellUnitFilter.Get2(idxForCondit).TakeSteps();
                         }
                         else
                         {
-                            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+                            RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
                             _cellUnitFilter.Get3(idxForCondit).CondUnitType = neededCondType;
                             _cellUnitFilter.Get2(idxForCondit).TakeSteps();
                         }

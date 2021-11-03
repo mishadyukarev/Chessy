@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Scripts.Common;
 
 namespace Scripts.Game
 {
@@ -34,13 +35,13 @@ namespace Scripts.Game
 
         private void Done()
         {
-            if (!InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayer, UnitTypes.King, LevelUnitTypes.Wood))
+            if (!InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.Wood))
             {
                 RpcSys.DoneToMaster();
             }
             else
             {
-                SoundEffectC.Play(SoundEffectTypes.Mistake);
+                SoundEffectC.Play(ClipGameTypes.Mistake);
             }
 
             SelectorC.DefCellClickType();
@@ -64,12 +65,12 @@ namespace Scripts.Game
 
             if (WhoseMoveC.IsMyMove)
             {
-                if (InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayer, unitType, LevelUnitTypes.Iron))
+                if (InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Iron))
                 {
                     SelectorC.SelUnitType = unitType;
                     SelectorC.LevelSelUnitType = LevelUnitTypes.Iron;
                 }
-                else if (InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayer, unitType, LevelUnitTypes.Wood))
+                else if (InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Wood))
                 {
                     SelectorC.SelUnitType = unitType;
                     SelectorC.LevelSelUnitType = LevelUnitTypes.Wood;
@@ -84,6 +85,28 @@ namespace Scripts.Game
 
         private void ToggleToolWeapon(ToolWeaponTypes tWType)
         {
+            if (HintComC.IsOnHint)
+            {
+                if (tWType == ToolWeaponTypes.Pick)
+                {
+                    if (!HintDataUIC.IsActive(VideoClipTypes.Pick))
+                    {
+                        HintViewUIC.SetActiveHintZone(true);
+                        HintViewUIC.SetVideoClip(VideoClipTypes.Pick);
+                        HintDataUIC.SetActive(VideoClipTypes.Pick, true);
+                    }
+                }
+                else
+                {
+                    if (!HintDataUIC.IsActive(VideoClipTypes.UpgToolWeapon))
+                    {
+                        HintViewUIC.SetActiveHintZone(true);
+                        HintViewUIC.SetVideoClip(VideoClipTypes.UpgToolWeapon);
+                        HintDataUIC.SetActive(VideoClipTypes.UpgToolWeapon, true);
+                    }
+                }
+            }
+
             if (WhoseMoveC.IsMyMove)
             {
                 if (SelectorC.Is(CellClickTypes.GiveTakeTW))
@@ -92,19 +115,19 @@ namespace Scripts.Game
                     {
                         if (SelectorC.TWTypeForGive == tWType)
                         {
-                            if (SelectorC.LevelTWType == LevelTWTypes.Wood) SelectorC.LevelTWType = LevelTWTypes.Iron;
-                            else SelectorC.LevelTWType = LevelTWTypes.Wood;
+                            if (GiveTakeDataUIC.Level(tWType) == LevelTWTypes.Wood) GiveTakeDataUIC.SetLevel(tWType, LevelTWTypes.Iron);
+                            else GiveTakeDataUIC.SetLevel(tWType, LevelTWTypes.Wood);
                         }
                         else
                         {
                             SelectorC.TWTypeForGive = tWType;
-                            SelectorC.LevelTWType = LevelTWTypes.Wood;
+                            GiveTakeDataUIC.SetLevel(tWType, LevelTWTypes.Wood);
                         }
                     }
                     else
                     {
                         SelectorC.TWTypeForGive = tWType;
-                        SelectorC.LevelTWType = LevelTWTypes.Iron;
+                        GiveTakeDataUIC.SetLevel(tWType, LevelTWTypes.Iron);
                     }
                 }
                 else
@@ -117,11 +140,23 @@ namespace Scripts.Game
                         //if(SelectorC.LevelTWType == LevelTWTypes.Iron)
                         //SelectorC.LevelTWType = LevelTWTypes.Wood;
                     }
-                    else SelectorC.LevelTWType = LevelTWTypes.Iron;
+                    else GiveTakeDataUIC.SetLevel(tWType, LevelTWTypes.Iron);
                 }
             }
         }
 
-        private void ToggleUpgradeUnit() => SelectorC.CellClickType = CellClickTypes.UpgradeUnit;
+        private void ToggleUpgradeUnit()
+        {
+            if (HintComC.IsOnHint)
+            {
+                if (!HintDataUIC.IsActive(VideoClipTypes.UpgToolWeapon))
+                {
+                    HintViewUIC.SetActiveHintZone(true);
+                    HintViewUIC.SetVideoClip(VideoClipTypes.UpgToolWeapon);
+                    HintDataUIC.SetActive(VideoClipTypes.UpgToolWeapon, true);
+                }
+            }
+            SelectorC.CellClickType = CellClickTypes.UpgradeUnit;
+        }
     }
 }

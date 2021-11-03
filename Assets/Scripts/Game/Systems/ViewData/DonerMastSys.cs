@@ -14,7 +14,7 @@ namespace Scripts.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            RpcSys.SoundToGeneral(sender, SoundEffectTypes.ClickToTable);
+            RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
 
 
             if (PhotonNetwork.OfflineMode)
@@ -26,7 +26,7 @@ namespace Scripts.Game
 
                 else if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
                 {
-                    var curPlayer = WhoseMoveC.CurPlayer;
+                    var curPlayer = WhoseMoveC.CurPlayerI;
                     var nextPlayer = WhoseMoveC.NextPlayerFrom(curPlayer);
 
                     if(nextPlayer == PlayerTypes.First)
@@ -37,7 +37,7 @@ namespace Scripts.Game
                     WhoseMoveC.SetWhoseMove(nextPlayer);
 
 
-                    curPlayer = WhoseMoveC.CurPlayer;
+                    curPlayer = WhoseMoveC.CurPlayerI;
 
                     CameraC.SetPosRotClient(curPlayer, SpawnInitComSys.Main_GO.transform.position);
                     foreach (byte curIdxCell in _cellViewFilter)
