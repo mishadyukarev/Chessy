@@ -2,9 +2,9 @@
     "name": "Game.Component.View.UI",
     "references": [
         "GUID:f8b9587ab9104e74586dec6b8477f11e",
-        "GUID:1d5fae58364006c499401c7d1bafb393",
         "GUID:37e0f2faba37c4f488f9e08f56d10742",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:1d5fae58364006c499401c7d1bafb393"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

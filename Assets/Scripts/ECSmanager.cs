@@ -12,31 +12,23 @@ namespace Scripts
     {
         #region 
 
-        private EcsWorld _comWorld;
         private EcsWorld _menuWorld;
         private EcsWorld _gameWorld;
 
         private EcsSystems _allComSystems;
-        private EcsSystems _allMenuSystems;
-        private EcsSystems _allGameSystems;
+        //private EcsSystems _allGameSystems;
 
-        private ComSysDataM _comSysDataM;
-        private MenuSystemManager _menuSysManag;
-        private GameGenSysDataM _gameGenSysDataM;
         private GameGenSysViewM _gameGenSysViewM;
-        private GameMasSysDataM _gameMasSysDataM;
+        //private GameMasSysDataM _gameMasSysDataM;
         private GameOthSysDataM _gameOthSysDataM;
 
         #endregion
 
 
-        public ECSManager(Action<SceneTypes> toggleScene_Action, GameObject main_GO)
+        public ECSManager(Action<SceneTypes> toggleScene, GameObject main_GO)
         {
-            _comWorld = new EcsWorld();
-            _allComSystems = new EcsSystems(_comWorld);
-
-            _allComSystems.Add(new SpawnInitComSys(toggleScene_Action, main_GO));
-            _comSysDataM = new ComSysDataM(_comWorld, _allComSystems);
+            _allComSystems = new EcsSystems(new EcsWorld());
+            new SpawnInitComSys(_allComSystems, toggleScene, main_GO);
             _allComSystems.Init();
         }
 
@@ -51,46 +43,29 @@ namespace Scripts
                     if (_gameWorld != default)
                     {
                         _gameWorld.Destroy();
-
-                        _gameGenSysDataM.Dispose();
-                        _gameGenSysDataM = default;
-                        _gameMasSysDataM = default;
-                        _gameOthSysDataM = default;
-                        _allGameSystems.Destroy();
+                        FillEntitiesSys.Dispose();
                     }
 
                     _menuWorld = new EcsWorld();
-                    _allMenuSystems = new EcsSystems(_menuWorld);
-
-                    _allMenuSystems.Add(new Menu.InitSpawnSys());
-                    _menuSysManag = new MenuSystemManager(_menuWorld, _allMenuSystems);
-                    _allMenuSystems.Init();
-
-
-                    _comSysDataM.LaunchAdSys.Run();
-                    _menuSysManag.LaunchLikeGameSys.Run();
+                    new Menu.InitSpawnSys(new EcsSystems(_menuWorld));
                     break;
 
                 case SceneTypes.Game:
                     if (_menuWorld != default)
                     {
                         _menuWorld.Destroy();
-
-                        _menuSysManag = default;
-                        _allMenuSystems.Destroy();
                     }
 
                     _gameWorld = new EcsWorld();
-                    _allGameSystems = new EcsSystems(_gameWorld)
-                        .Add(new Game.InitSpawnSys());
+                    new Game.FillEntitiesSys(new EcsSystems(_gameWorld));
 
-                    _gameGenSysDataM = new GameGenSysDataM(_gameWorld, _allGameSystems);
-                    _gameMasSysDataM = new GameMasSysDataM(_gameWorld, _allGameSystems);
-                    _gameOthSysDataM = new GameOthSysDataM(_gameWorld, _allGameSystems);
+                    //_gameOthSysDataM = new GameOthSysDataM(_gameWorld, systs);
 
-                    _gameGenSysViewM = new GameGenSysViewM(_gameWorld, _allGameSystems);
+                    //_gameGenSysViewM = new GameGenSysViewM(_gameWorld, systs);
 
-                    _allGameSystems.Init();
+                    //systs.Init();
+
+                    //GenViewSysC.RotateAll.Invoke();
                     break;
 
                 default:
@@ -101,7 +76,7 @@ namespace Scripts
 
         public void OwnUpdate(SceneTypes sceneType)
         {
-            _comSysDataM.RunUpdate();
+            //_comSysDataM.RunUpdate();
 
             switch (sceneType)
             {
@@ -109,15 +84,16 @@ namespace Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    _menuSysManag.RunUpdate();
+                    Menu.InitSpawnSys.Run.Run();
+                    //_menuSysManag.RunUpdate();
                     break;
 
                 case SceneTypes.Game:
-                    _gameGenSysDataM.RunUpdate();
-                    _gameGenSysViewM.RunUpdate();
+                    FillEntitiesSys.Run.Run();
+                    //_gameGenSysViewM.RunUpdate();
 
-                    if (PhotonNetwork.IsMasterClient) _gameMasSysDataM.RunUpdate();
-                    else _gameOthSysDataM.RunUpdate();
+                    //if (PhotonNetwork.IsMasterClient) _gameMasSysDataM.RunUpdate();
+                    //else _gameOthSysDataM.RunUpdate();
                     break;
 
                 default:

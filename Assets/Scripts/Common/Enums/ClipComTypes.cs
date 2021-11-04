@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Scripts.Common
+﻿namespace Scripts.Common
 {
     public enum ClipComTypes
     {
