@@ -12,9 +12,15 @@ namespace Scripts.Game
 
             if (isActivatedZone)
             {
-                foreach (var item in PickUpgZoneDataUIC.Activated_Buts(WhoseMoveC.CurPlayerI))
+                foreach (var item_0 in PickUpgZoneDataUIC.Activated_Buts)
                 {
-                    PickUpgZoneViewUIC.SetActive_But(item.Key, item.Value);
+                    if (item_0.Key == WhoseMoveC.CurPlayerI)
+                    {
+                        foreach (var item_1 in item_0.Value)
+                        {
+                            PickUpgZoneViewUIC.SetActive_But(item_1.Key, item_1.Value);
+                        }
+                    }  
                 }
             }
         }

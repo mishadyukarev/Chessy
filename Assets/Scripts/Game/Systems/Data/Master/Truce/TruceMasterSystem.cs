@@ -7,7 +7,7 @@ namespace Scripts.Game
 {
     public sealed class TruceMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<InventorUnitsC> _inventorUnitsFilter = default;
+        private EcsFilter<InvUnitsC> _inventorUnitsFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
@@ -45,14 +45,14 @@ namespace Scripts.Game
                         {
                             if (ownUnit_0.Is(PlayerTypes.First))
                             {
-                                InventorUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
+                                InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                                 unit_0.NoneUnit();
                             }
                         }
                         else
                         {
-                            InventorUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
+                            InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
                             WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                             unit_0.NoneUnit();
                         }

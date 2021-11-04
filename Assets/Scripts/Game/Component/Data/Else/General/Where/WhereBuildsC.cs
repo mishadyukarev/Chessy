@@ -7,6 +7,31 @@ namespace Scripts.Game
     {
         private static Dictionary<PlayerTypes, Dictionary<BuildTypes, List<byte>>> _buildsInGame;
 
+        public static Dictionary<PlayerTypes, Dictionary<BuildTypes, List<byte>>> BuildsInGame
+        {
+            get
+            {
+                var newDict_0 = new Dictionary<PlayerTypes, Dictionary<BuildTypes, List<byte>>>();
+
+                foreach (var item_0 in _buildsInGame)
+                {
+                    newDict_0.Add(item_0.Key, new Dictionary<BuildTypes, List<byte>>());
+
+                    foreach (var item_1 in item_0.Value)
+                    {
+                        newDict_0[item_0.Key].Add(item_1.Key, new List<byte>());
+
+                        foreach (var item_2 in item_1.Value)
+                        {
+                            newDict_0[item_0.Key][item_1.Key].Add(item_2);
+                        }
+                    }
+                }
+
+                return newDict_0;
+            }
+        }
+
         public WhereBuildsC(bool needNew) : this()
         {
             if (needNew)
@@ -30,6 +55,14 @@ namespace Scripts.Game
         {
             if (!Contains(playerType, buildType, idxCell)) _buildsInGame[playerType][buildType].Add(idxCell);
             else throw new Exception();
+        }
+        public static void Sync(PlayerTypes playerType, BuildTypes buildType, byte idxCell)
+        {
+            _buildsInGame[playerType][buildType].Add(idxCell);
+        }
+        public static void Clear(PlayerTypes playerType, BuildTypes buildType)
+        {
+            _buildsInGame[playerType][buildType].Clear();
         }
         public static void Remove(PlayerTypes playerType, BuildTypes buildType, byte idxCell)
         {

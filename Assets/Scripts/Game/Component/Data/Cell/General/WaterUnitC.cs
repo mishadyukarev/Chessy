@@ -27,5 +27,7 @@ namespace Scripts.Game
         public bool HaveMaxWater(float upgPercent) => WaterAmount >= MaxWater(upgPercent); 
         public void SetMaxWater(float upgPercent) => WaterAmount = MaxWater(upgPercent);
         public void TakeWater() => TakeWater((int)(100 * 0.15f));
+
+        public void Sync(int waterAmount) => WaterAmount = waterAmount;
     }
 }

@@ -57,24 +57,20 @@ namespace Scripts.Game
             }
             else
             {
-                //if (Wh sender.GetPlayerType() == _playerMotion)
-                //{
-                //    if (!InventorUnitsC.HaveUnitInInv(sender.GetPlayerType(), UnitTypes.King, LevelUnitTypes.Wood))
-                //    {
-                //        if (_playerMotion == PlayerTypes.First)
-                //        {
-                //            _playerMotion = PlayerTypes.Second;
-                //            WhoseMoveCom.WhoseMoveOnline = _playerMotion;
-                //        }
-                //        else
-                //        {
-                //            _playerMotion = PlayerTypes.First;
-                //            WhoseMoveCom.WhoseMoveOnline = _playerMotion;
+                var playerSend = sender.GetPlayerType();
 
-                //            GameMasterSystemManager.UpdateMotion.Run();
-                //        }
-                //    }
-                //}
+                if (WhoseMoveC.WhoseMove == playerSend)
+                {
+                    if (!InvUnitsC.HaveUnitInInv(sender.GetPlayerType(), UnitTypes.King, LevelUnitTypes.Wood))
+                    {                   
+                        if (playerSend == PlayerTypes.Second)
+                        {
+                            MastDataSysContainer.Run(MastDataSysTypes.Update);
+                        }
+
+                        WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));
+                    }
+                }
             }
         }
     }

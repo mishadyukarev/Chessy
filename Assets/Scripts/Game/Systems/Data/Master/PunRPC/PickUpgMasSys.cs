@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Scripts.Common;
 using System;
 
 namespace Scripts.Game
@@ -61,6 +62,12 @@ namespace Scripts.Game
 
                 default: throw new Exception();
             }
+
+
+            PickUpgZoneDataUIC.SetActiveParent(whoseMove, false);
+            PickUpgZoneDataUIC.SetActive_But(whoseMove, ForPickUpgMasC.UpgButType, false);
+
+            RpcSys.SoundToGeneral(sender, ClipGameTypes.PickUpgrade);
 
         }
     }

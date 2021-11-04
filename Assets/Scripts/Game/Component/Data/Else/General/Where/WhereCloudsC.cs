@@ -8,6 +8,19 @@ namespace Scripts.Game
     {
         private static List<byte> _clouds;
 
+        public static List<byte> CloudsInGame
+        {
+            get
+            {
+                var clouds = new List<byte>();
+                foreach (var idx in _clouds)
+                {
+                    clouds.Add(idx);
+                }
+                return clouds;
+            }
+        }
+
         public WhereCloudsC(bool needNew) : this()
         {
             if (needNew) _clouds = new List<byte>();

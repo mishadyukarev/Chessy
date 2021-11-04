@@ -6,7 +6,7 @@ namespace Scripts.Game
     {
         public void Run()
         {
-            if (InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.Wood))
+            if (InvUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.Wood))
             {
                 KingZoneViewUIC.EnableZone();
             }

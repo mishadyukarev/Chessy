@@ -147,9 +147,10 @@ namespace Scripts.Game
                          .Replace(new StepComponent())
 
                          .Replace(new ConditionUnitC())
-                         .Replace(new ToolWeaponC())
                          .Replace(new UnitEffectsC(true))
                          .Replace(new WaterUnitC())
+
+                         .Replace(new ToolWeaponC())
 
                          .Replace(new VisibleC(true))
                          .Replace(new CellUnitMainViewCom(curParentCell_GO))
@@ -202,9 +203,9 @@ namespace Scripts.Game
                 .Replace(new WhereEnvC(true))
                 .Replace(new WhereUnitsC(true))
 
-                .Replace(new InventorUnitsC(true))
+                .Replace(new InvUnitsC(true))
                 .Replace(new InventResC(true))
-                .Replace(new InventorTWCom(true));
+                .Replace(new InvToolWeapC(true));
 
 
             GenerZoneViewC.Attach(backGroundGO.transform);
@@ -232,7 +233,7 @@ namespace Scripts.Game
                 .Replace(new EndGameDataUIC(default))
                 .Replace(new EndGameViewUIC(centerZone_GO))
                 .Replace(new ReadyViewUIC(centerZone_GO.transform.Find("ReadyZone").gameObject))
-                .Replace(new ReadyDataUIC(new Dictionary<bool, bool>()))
+                .Replace(new ReadyDataUIC(new Dictionary<PlayerTypes, bool>()))
                 .Replace(new MotionsViewUIC(centerZone_GO))
                 .Replace(new MotionsDataUIC(default))
                 .Replace(new MistakeViewUIC(centerZone_GO))
@@ -396,7 +397,7 @@ namespace Scripts.Game
                             foreach (var dirType in dirTypes)
                             {
                                 _cellRiverFilt.Get1(curIdxCell).RiverType = riverType;
-                                _cellRiverFilt.Get1(curIdxCell).DirectTypes.Add(dirType);
+                                _cellRiverFilt.Get1(curIdxCell).AddDir(dirType);
 
                                 var xy_next = CellSpaceSupport.GetXyCellByDirect(_xyCellFilter.Get1(curIdxCell).XyCell, dirType);
                                 var idx_next = _xyCellFilter.GetIdxCell(xy_next);
@@ -405,16 +406,16 @@ namespace Scripts.Game
 
                                 if (dirType == DirectTypes.Up)
                                 {
-                                    _cellRiverFilt.Get1(idx_next).DirectTypes.Add(DirectTypes.Down);
+                                    _cellRiverFilt.Get1(idx_next).AddDir(DirectTypes.Down);
                                 }
                                 else if (dirType == DirectTypes.Right)
                                 {
-                                    _cellRiverFilt.Get1(idx_next).DirectTypes.Add(DirectTypes.Left);
+                                    _cellRiverFilt.Get1(idx_next).AddDir(DirectTypes.Left);
                                 }
 
-                                _cellRiverFilt.Get1(idx_next).IdxsNextCells.Add(curIdxCell);
+                                //_cellRiverFilt.Get1(idx_next).IdxsNextCells.Add(curIdxCell);
 
-                                _cellRiverFilt.Get1(curIdxCell).IdxsNextCells.Add(idx_next);
+                                //_cellRiverFilt.Get1(curIdxCell).IdxsNextCells.Add(idx_next);
                             }
 
 
@@ -428,16 +429,9 @@ namespace Scripts.Game
 
                         }
                     }
-
-
-
-                    //_cellViewFilt.Get1(curIdxCell).SetRotForClient(PhotonNetwork.IsMasterClient);
                 }
 
-                for (UnitTypes unitType = (UnitTypes)1; unitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; unitType++)
-                {
-                    InventorUnitsC.SetAmountUnitsInInvAll(unitType, LevelUnitTypes.Wood, EconomyValues.AmountUnits(unitType));
-                }
+                InvUnitsC.SetStartAmountUnitAll();
 
                 for (ResTypes resourceTypes = Support.MinResType; resourceTypes < Support.MaxResType; resourceTypes++)
                 {

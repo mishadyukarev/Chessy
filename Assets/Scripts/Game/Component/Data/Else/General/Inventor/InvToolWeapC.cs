@@ -3,11 +3,11 @@ using System.Collections.Generic;
 
 namespace Scripts.Game
 {
-    public struct InventorTWCom
+    public struct InvToolWeapC
     {
         private static Dictionary<PlayerTypes, Dictionary<ToolWeaponTypes, Dictionary<LevelTWTypes, byte>>> _inventorTools;
 
-        public InventorTWCom(bool needNew) : this()
+        public InvToolWeapC(bool needNew) : this()
         {
             if (needNew)
             {
@@ -34,7 +34,7 @@ namespace Scripts.Game
 
         public static bool HaveTW(PlayerTypes playerType, ToolWeaponTypes tWType, LevelTWTypes levelTWType) => _inventorTools[playerType][tWType][levelTWType] > 0;
         public static void Set(PlayerTypes playerType, ToolWeaponTypes tWType, LevelTWTypes levelTWType, byte value) => _inventorTools[playerType][tWType][levelTWType] = value;
-        public static byte GetAmountTools(PlayerTypes playerType, ToolWeaponTypes toolWeapType, LevelTWTypes levelTWType) => _inventorTools[playerType][toolWeapType][levelTWType];
+        public static byte AmountToolWeap(PlayerTypes playerType, ToolWeaponTypes toolWeapType, LevelTWTypes levelTWType) => _inventorTools[playerType][toolWeapType][levelTWType];
 
         public static void AddAmountTools(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, LevelTWTypes levelTWType, byte adding = 1) => _inventorTools[playerType][toolWeaponType][levelTWType] += adding;
         public static void TakeAmountTools(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, LevelTWTypes levelTWType, byte taking = 1) => _inventorTools[playerType][toolWeaponType][levelTWType] -= taking;

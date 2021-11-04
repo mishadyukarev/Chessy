@@ -4,16 +4,37 @@ namespace Scripts.Game
 {
     public readonly struct EconomyValues
     {
-        public static int AmountUnits(UnitTypes unitType)
+        public static int StartAmountUnits(UnitTypes unit, LevelUnitTypes level)
         {
-            switch (unitType)
+            switch (unit)
             {
                 case UnitTypes.None: throw new Exception();
-                case UnitTypes.King: return 1;
-                case UnitTypes.Pawn: return 1;
+                case UnitTypes.King:
+                    switch (level)
+                    {
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 1;
+                        case LevelUnitTypes.Iron: return 0;
+                        default: throw new Exception();
+                    }
+                case UnitTypes.Pawn:
+                    switch (level)
+                    {
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 1;
+                        case LevelUnitTypes.Iron: return 0;
+                        default: throw new Exception();
+                    }
                 case UnitTypes.Rook: return 0;
                 case UnitTypes.Bishop: return 0;
-                case UnitTypes.Scout: return 1;
+                case UnitTypes.Scout:
+                    switch (level)
+                    {
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.Wood: return 1;
+                        case LevelUnitTypes.Iron: return 0;
+                        default: throw new Exception();
+                    }
                 default: throw new Exception();
             }
         }

@@ -12,10 +12,10 @@ namespace Scripts.Game
             switch (unitType)
             {
                 case UnitTypes.None: amountHp = 0; break;
-                case UnitTypes.King: amountHp = 500; break;
-                case UnitTypes.Pawn: amountHp = 200; break;
-                case UnitTypes.Rook: amountHp = 100; break;
-                case UnitTypes.Bishop: amountHp = 100; break;
+                case UnitTypes.King: amountHp = 300; break;
+                case UnitTypes.Pawn: amountHp = 100; break;
+                case UnitTypes.Rook: amountHp = 1; break;
+                case UnitTypes.Bishop: amountHp = 1; break;
                 case UnitTypes.Scout: amountHp = 1; break;
                 default: throw new Exception();
             }

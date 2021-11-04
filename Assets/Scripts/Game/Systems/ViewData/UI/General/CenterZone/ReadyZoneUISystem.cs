@@ -8,7 +8,7 @@ namespace Scripts.Game
     {
         public void Run()
         {
-            if (ReadyDataUIC.IsReady(PhotonNetwork.IsMasterClient))
+            if (ReadyDataUIC.IsReady(WhoseMoveC.CurPlayerI))
             {
                 ReadyViewUIC.SetColorReadyButton(Color.red);
             }

@@ -155,7 +155,7 @@ namespace Scripts.Game
                     }
                     else if (unit_to.Is(UnitTypes.Scout))
                     {
-                        InventorUnitsC.AddUnit(ownUnit_to.Owner, unit_to.Unit, LevelUnitTypes.Wood);
+                        InvUnitsC.AddUnit(ownUnit_to.Owner, unit_to.Unit, LevelUnitTypes.Wood);
                     }
 
                     WhereUnitsC.Remove(ownUnit_to.Owner, unit_to.Unit, levUnitC_to.Level, idx_to);

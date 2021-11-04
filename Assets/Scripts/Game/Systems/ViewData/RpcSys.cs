@@ -12,20 +12,20 @@ namespace Scripts.Game
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
         private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent, ConditionUnitC, ToolWeaponC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitStatFilt = default;
+        private EcsFilter<CellUnitDataCom, ConditionUnitC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataCom, ToolWeaponC> _cellUnitTWFilt = default;
+
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvrFilter = default;
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
-
-        private EcsFilter<SelectorC> _selectorFilter = default;
-
+        private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
+        private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
 
         private EcsFilter<ForBuildingMasCom, XyCellForDoingMasCom> _buildFilter = default;
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
-        private EcsFilter<ForShiftMasCom> _shiftFilter = default;
         private EcsFilter<ForAttackMasCom> _attackFilter = default;
-        private EcsFilter<ForCondMasCom, XyCellForDoingMasCom> _conditionFilter = default;
         private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
         private EcsFilter<ForSettingUnitMasCom, XyCellForDoingMasCom> _settingUnitFilter = default;
         private EcsFilter<ForSeedingMasCom, XyCellForDoingMasCom> _seedingFilter = default;
@@ -112,7 +112,7 @@ namespace Scripts.Game
         [PunRPC]
         private void MasterRPC(RpcMasterTypes rpcType, object[] objects, PhotonMessageInfo infoFrom)
         {
-            _curNumber = default;
+            _curNumber = 0;
 
             InfoC.AddInfo(MGOTypes.Master, infoFrom);
 
@@ -219,8 +219,6 @@ namespace Scripts.Game
             _curNumber = 0;
             InfoC.AddInfo(MGOTypes.General, infoFrom);
 
-            ref var selectorCom = ref _selectorFilter.Get1(0);
-
             switch (rpcGeneralType)
             {
                 case RpcGeneralTypes.None:
@@ -287,90 +285,170 @@ namespace Scripts.Game
         [PunRPC]
         private void SyncAllMaster()
         {
-            var listObjects = new List<object>();
+            var objs = new List<object>();
 
-            listObjects.Add(WhoseMoveC.WhoseMove);
+            objs.Add(WhoseMoveC.WhoseMove);
 
-            listObjects.Add(EndGameDataUIC.PlayerWinner);
+            objs.Add(EndGameDataUIC.PlayerWinner);
 
-            listObjects.Add(ReadyDataUIC.IsStartedGame);
-            listObjects.Add(ReadyDataUIC.IsReady(false));
+            objs.Add(ReadyDataUIC.IsStartedGame);
+            objs.Add(ReadyDataUIC.IsReady(PlayerTypes.Second));
 
-            listObjects.Add(MotionsDataUIC.AmountMotions);
+            objs.Add(MotionsDataUIC.AmountMotions);
 
-            foreach (var idx_0 in _cellUnitFilter)
+            objs.Add(PickUpgZoneDataUIC.IsActivated(PlayerTypes.Second));
+            foreach (var item_0 in PickUpgZoneDataUIC.Activated_Buts)
             {
-                ref var unitC_0 = ref _cellUnitFilter.Get1(idx_0);            
-                listObjects.Add(unitC_0.Unit);
-                listObjects.Add(_cellUnitMainFilt.Get2(idx_0).Level);
+                foreach (var item_1 in item_0.Value)
+                {
+                    objs.Add(PickUpgZoneDataUIC.Activated_Buts[item_0.Key][item_1.Key]);
+                }
+            }
 
-                ref var curHpUnitC = ref _cellUnitFilter.Get2(idx_0);
-                listObjects.Add(curHpUnitC.AmountHp);
+            foreach (var idx_0 in _cellUnitOthFilt)
+            {
+                ref var unitC_0 = ref _cellUnitMainFilt.Get1(idx_0);
+                objs.Add(unitC_0.Unit);
+                objs.Add(_cellUnitMainFilt.Get3(idx_0).Owner);
+                objs.Add(_cellUnitMainFilt.Get2(idx_0).Level);
+                ref var hpUnit_0 = ref _cellUnitStatFilt.Get2(idx_0);
+                objs.Add(hpUnit_0.AmountHp);
+                objs.Add(_cellUnitStatFilt.Get3(idx_0).StepsAmount);
 
-                listObjects.Add(_cellUnitFilter.Get3(idx_0).StepsAmount);
-                listObjects.Add(_cellUnitFilter.Get4(idx_0).CondUnitType);
-                listObjects.Add(_cellUnitFilter.Get5(idx_0).ToolWeapType);
+                objs.Add(_cellUnitOthFilt.Get2(idx_0).CondUnitType);
+                foreach (var item in _cellUnitOthFilt.Get3(idx_0).Effects) objs.Add(item.Value);
+                objs.Add(_cellUnitOthFilt.Get4(idx_0).WaterAmount);
 
-                listObjects.Add(_cellUnitMainFilt.Get3(idx_0).Owner);
+                objs.Add(_cellUnitTWFilt.Get2(idx_0).ToolWeapType);
+                objs.Add(_cellUnitTWFilt.Get2(idx_0).LevelTWType);
+                objs.Add(_cellUnitTWFilt.Get2(idx_0).ShieldProt);
 
 
-
-                listObjects.Add(_cellBuildFilter.Get1(idx_0).BuildType);
-                listObjects.Add(_cellBuildFilter.Get2(idx_0).Owner);
+                objs.Add(_cellBuildFilter.Get1(idx_0).BuildType);
+                objs.Add(_cellBuildFilter.Get2(idx_0).Owner);
 
 
 
                 ref var env_0 = ref _cellEnvrFilter.Get1(idx_0);
                 ref var envRes_0 = ref _cellEnvrFilter.Get2(idx_0);
 
-                listObjects.Add(env_0.Have(EnvTypes.Fertilizer));
-                listObjects.Add(envRes_0.AmountRes(EnvTypes.Fertilizer));
-                listObjects.Add(env_0.Have(EnvTypes.YoungForest));
-                listObjects.Add(envRes_0.AmountRes(EnvTypes.YoungForest));
-                listObjects.Add(env_0.Have(EnvTypes.AdultForest));
-                listObjects.Add(envRes_0.AmountRes(EnvTypes.AdultForest));
-                listObjects.Add(env_0.Have(EnvTypes.Hill));
-                listObjects.Add(envRes_0.AmountRes(EnvTypes.Hill));
-                listObjects.Add(env_0.Have(EnvTypes.Mountain));
-                listObjects.Add(envRes_0.AmountRes(EnvTypes.Mountain));
+                objs.Add(env_0.Have(EnvTypes.Fertilizer));
+                objs.Add(envRes_0.AmountRes(EnvTypes.Fertilizer));
+                objs.Add(env_0.Have(EnvTypes.YoungForest));
+                objs.Add(envRes_0.AmountRes(EnvTypes.YoungForest));
+                objs.Add(env_0.Have(EnvTypes.AdultForest));
+                objs.Add(envRes_0.AmountRes(EnvTypes.AdultForest));
+                objs.Add(env_0.Have(EnvTypes.Hill));
+                objs.Add(envRes_0.AmountRes(EnvTypes.Hill));
+                objs.Add(env_0.Have(EnvTypes.Mountain));
+                objs.Add(envRes_0.AmountRes(EnvTypes.Mountain));
 
 
-                listObjects.Add(_cellFireFilter.Get1(idx_0).HaveFire);
+                objs.Add(_cellRiverFilt.Get1(idx_0).RiverType);
+                foreach (var item_0 in _cellRiverFilt.Get1(idx_0).Directs)
+                    objs.Add(item_0.Value);
+
+
+                foreach (var item_0 in _cellTrailFilt.Get1(idx_0).Health)
+                    objs.Add(item_0.Value);
+                
+
+
+                objs.Add(_cellFireFilter.Get1(idx_0).HaveFire);
             }
 
+            #region Inventor
+
+            foreach (var item_0 in InventResC.AmountResour)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    objs.Add(InventResC.AmountResour[item_0.Key][item_1.Key]);
+                }
+            }
+
+            foreach (var item_0 in InvUnitsC.Units)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    foreach (var item_2 in item_1.Value)
+                    {
+                        objs.Add(InvUnitsC.Units[item_0.Key][item_1.Key][item_2.Key]);
+                    }
+                }
+            }
+
+            objs.Add(InvToolWeapC.AmountToolWeap(PlayerTypes.Second, ToolWeaponTypes.Pick, LevelTWTypes.Wood));
+            objs.Add(InvToolWeapC.AmountToolWeap(PlayerTypes.Second, ToolWeaponTypes.Sword, LevelTWTypes.Wood));
+            objs.Add(InvToolWeapC.AmountToolWeap(PlayerTypes.Second, ToolWeaponTypes.Shield, LevelTWTypes.Wood));
+
+            objs.Add(InvToolWeapC.AmountToolWeap(PlayerTypes.Second, ToolWeaponTypes.Pick, LevelTWTypes.Iron));
+            objs.Add(InvToolWeapC.AmountToolWeap(PlayerTypes.Second, ToolWeaponTypes.Sword, LevelTWTypes.Iron));
+            objs.Add(InvToolWeapC.AmountToolWeap(PlayerTypes.Second, ToolWeaponTypes.Shield, LevelTWTypes.Iron));
+
+            #endregion
 
 
-            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResTypes.Food));
-            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResTypes.Wood));
-            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResTypes.Ore));
-            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResTypes.Iron));
-            listObjects.Add(InventResC.AmountRes(PlayerTypes.Second, ResTypes.Gold));
+            #region Where
+
+            foreach (var item_0 in WhereUnitsC.UnitsInGame)
+                foreach (var item_1 in item_0.Value)
+                    foreach (var item_2 in item_1.Value)
+                    {
+                        if (item_2.Value.Count == 0) objs.Add(true);
+                        else
+                        {
+                            foreach (var item_3 in item_2.Value)
+                            {
+                                objs.Add(false);
+                                objs.Add(item_3);
+                            }
+
+                            objs.Add(true);
+                        }
+                    }
+
+            foreach (var item_0 in WhereBuildsC.BuildsInGame)
+                foreach (var item_1 in item_0.Value)
+                {
+                    if (item_1.Value.Count == 0) objs.Add(true);
+                    else
+                    {
+                        foreach (var item_3 in item_1.Value)
+                        {
+                            objs.Add(false);
+                            objs.Add(item_3);
+                        }
+
+                        objs.Add(true);
+                    }
+                }
+
+            foreach (var item_0 in WhereEnvC.EnvInGame)
+                if (item_0.Value.Count == 0) objs.Add(true);
+                else
+                {
+                    foreach (var item_3 in item_0.Value)
+                    {
+                        objs.Add(false);
+                        objs.Add(item_3);
+                    }
+
+                    objs.Add(true);
+                }
+
+            #endregion
+
+
+            #region
 
 
 
-            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.King, LevelUnitTypes.Wood));
-            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Pawn, LevelUnitTypes.Wood));
-            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Rook, LevelUnitTypes.Wood));
-            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Bishop, LevelUnitTypes.Wood));
-
-            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.King, LevelUnitTypes.Iron));
-            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Pawn, LevelUnitTypes.Iron));
-            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Rook, LevelUnitTypes.Iron));
-            listObjects.Add(InventorUnitsC.AmountUnitsInInv(PlayerTypes.Second, UnitTypes.Bishop, LevelUnitTypes.Iron));
+            #endregion
 
 
-
-            listObjects.Add(InventorTWCom.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick, LevelTWTypes.Wood));
-            listObjects.Add(InventorTWCom.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword, LevelTWTypes.Wood));
-            listObjects.Add(InventorTWCom.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Shield, LevelTWTypes.Wood));
-
-            listObjects.Add(InventorTWCom.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Pick, LevelTWTypes.Iron));
-            listObjects.Add(InventorTWCom.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Sword, LevelTWTypes.Iron));
-            listObjects.Add(InventorTWCom.GetAmountTools(PlayerTypes.Second, ToolWeaponTypes.Shield, LevelTWTypes.Iron));
-
-
-            var objects = new object[listObjects.Count];
-            for (int i = 0; i < objects.Length; i++) objects[i] = listObjects[i];
+            var objects = new object[objs.Count];
+            for (int i = 0; i < objects.Length; i++) objects[i] = objs[i];
 
 
             PhotonView.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
@@ -386,25 +464,39 @@ namespace Scripts.Game
             EndGameDataUIC.PlayerWinner = (PlayerTypes)objects[_curNumber++];
 
             ReadyDataUIC.IsStartedGame = (bool)objects[_curNumber++];
-            ReadyDataUIC.SetIsReady(PhotonNetwork.IsMasterClient, (bool)objects[_curNumber++]);
+            ReadyDataUIC.SetIsReady(WhoseMoveC.CurPlayerI, (bool)objects[_curNumber++]);
 
             MotionsDataUIC.AmountMotions = (int)objects[_curNumber++];
 
-            foreach (var idx_0 in _cellUnitFilter)
+            PickUpgZoneDataUIC.SetActiveParent(PlayerTypes.Second, (bool)objects[_curNumber++]);
+            foreach (var item_0 in PickUpgZoneDataUIC.Activated_Buts)
             {
-                ref var curUnitDatC = ref _cellUnitFilter.Get1(idx_0);
-                curUnitDatC.Sync((UnitTypes)objects[_curNumber++]);
-                _cellUnitMainFilt.Get2(idx_0).SyncLevelUnit((LevelUnitTypes)objects[_curNumber++]);
-                _cellUnitMainFilt.Get3(idx_0).SyncOwner((PlayerTypes)objects[_curNumber++]);
-                _cellUnitFilter.Get2(idx_0).AmountHp = (int)objects[_curNumber++];
-                _cellUnitFilter.Get3(idx_0).StepsAmount = (int)objects[_curNumber++];
-                _cellUnitFilter.Get4(idx_0).CondUnitType = (CondUnitTypes)objects[_curNumber++];
-                _cellUnitFilter.Get5(idx_0).ToolWeapType = (ToolWeaponTypes)objects[_curNumber++];
-                
+                foreach (var item_1 in item_0.Value)
+                {
+                    PickUpgZoneDataUIC.SetActive_But(item_0.Key, item_1.Key, (bool)objects[_curNumber++]);
+                }
+            }
 
-                
-                var buildType = (BuildTypes)objects[_curNumber++];
-                _cellBuildFilter.Get1(idx_0).Sync(buildType);
+            foreach (var idx_0 in _cellUnitOthFilt)
+            {
+                ref var unit_0 = ref _cellUnitOthFilt.Get1(idx_0);
+                unit_0.Sync((UnitTypes)objects[_curNumber++]);
+                _cellUnitMainFilt.Get3(idx_0).SyncOwner((PlayerTypes)objects[_curNumber++]);
+                _cellUnitMainFilt.Get2(idx_0).SyncLevelUnit((LevelUnitTypes)objects[_curNumber++]);
+                _cellUnitStatFilt.Get2(idx_0).AmountHp = (int)objects[_curNumber++];
+                _cellUnitStatFilt.Get3(idx_0).StepsAmount = (int)objects[_curNumber++];
+
+                _cellUnitOthFilt.Get2(idx_0).CondUnitType = (CondUnitTypes)objects[_curNumber++];
+                foreach (var item in _cellUnitOthFilt.Get3(idx_0).Effects) _cellUnitOthFilt.Get3(idx_0).Sync(item.Key, (bool)objects[_curNumber++]);
+                _cellUnitOthFilt.Get4(idx_0).Sync((int)objects[_curNumber++]);
+
+                _cellUnitTWFilt.Get2(idx_0).ToolWeapType = (ToolWeaponTypes)objects[_curNumber++];
+                _cellUnitTWFilt.Get2(idx_0).LevelTWType = (LevelTWTypes)objects[_curNumber++];
+                _cellUnitTWFilt.Get2(idx_0).SyncShield((int)objects[_curNumber++]);
+
+
+
+                _cellBuildFilter.Get1(idx_0).Sync((BuildTypes)objects[_curNumber++]);
                 _cellBuildFilter.Get2(idx_0).SyncOwner((PlayerTypes)objects[_curNumber++]);
 
 
@@ -412,55 +504,123 @@ namespace Scripts.Game
                 ref var env_0 = ref _cellEnvrFilter.Get1(idx_0);
                 ref var envRes_0 = ref _cellEnvrFilter.Get2(idx_0);
 
-                env_0.Set(EnvTypes.Fertilizer, (bool)objects[_curNumber++]);
-                envRes_0.SetAmountRes(EnvTypes.Fertilizer, (byte)objects[_curNumber++]);
+                env_0.Sync(EnvTypes.Fertilizer, (bool)objects[_curNumber++]);
+                envRes_0.SetRes(EnvTypes.Fertilizer, (int)objects[_curNumber++]);
 
-                env_0.Set(EnvTypes.YoungForest, (bool)objects[_curNumber++]);
-                envRes_0.SetAmountRes(EnvTypes.YoungForest, (byte)objects[_curNumber++]);
+                env_0.Sync(EnvTypes.YoungForest, (bool)objects[_curNumber++]);
+                envRes_0.SetRes(EnvTypes.YoungForest, (int)objects[_curNumber++]);
 
-                env_0.Set(EnvTypes.AdultForest, (bool)objects[_curNumber++]);
-                envRes_0.SetAmountRes(EnvTypes.AdultForest, (byte)objects[_curNumber++]);
+                env_0.Sync(EnvTypes.AdultForest, (bool)objects[_curNumber++]);
+                envRes_0.SetRes(EnvTypes.AdultForest, (int)objects[_curNumber++]);
 
-                env_0.Set(EnvTypes.Hill, (bool)objects[_curNumber++]);
-                envRes_0.SetAmountRes(EnvTypes.Hill, (byte)objects[_curNumber++]);
+                env_0.Sync(EnvTypes.Hill, (bool)objects[_curNumber++]);
+                envRes_0.SetRes(EnvTypes.Hill, (int)objects[_curNumber++]);
 
-                env_0.Set(EnvTypes.Mountain, (bool)objects[_curNumber++]);
-                envRes_0.SetAmountRes(EnvTypes.Mountain, (byte)objects[_curNumber++]);
+                env_0.Sync(EnvTypes.Mountain, (bool)objects[_curNumber++]);
+                envRes_0.SetRes(EnvTypes.Mountain, (int)objects[_curNumber++]);
 
 
+                var river_0 = _cellRiverFilt.Get1(idx_0);
+                river_0.RiverType = (RiverTypes)objects[_curNumber++];
+                foreach (var item_0 in river_0.Directs)
+                    river_0.Sync(item_0.Key, (bool)objects[_curNumber++]);
 
-                ref var curFireDatCom = ref _cellFireFilter.Get1(idx_0);
-                curFireDatCom.HaveFire = (bool)objects[_curNumber++];
+
+                var trail_0 = _cellTrailFilt.Get1(idx_0);
+                foreach (var item_0 in trail_0.Health)
+                    trail_0.SyncTrail(item_0.Key, (int)objects[_curNumber++]);
+
+
+                ref var fire_0 = ref _cellFireFilter.Get1(idx_0);
+                fire_0.HaveFire = (bool)objects[_curNumber++];
             }
 
 
+            foreach (var item_0 in InventResC.AmountResour)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    InventResC.Set(item_0.Key, item_1.Key, (int)objects[_curNumber++]);
+                }
+            }
+            foreach (var item_0 in InvUnitsC.Units)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    foreach (var item_2 in item_1.Value)
+                    {
+                        InvUnitsC.Set(item_0.Key, item_1.Key, item_2.Key, (int)objects[_curNumber++]);
+                    }
+                }
+            }
 
-            InventResC.Set(WhoseMoveC.CurPlayerI, ResTypes.Food, (int)objects[_curNumber++]);
-            InventResC.Set(WhoseMoveC.CurPlayerI, ResTypes.Wood, (int)objects[_curNumber++]);
-            InventResC.Set(WhoseMoveC.CurPlayerI, ResTypes.Ore, (int)objects[_curNumber++]);
-            InventResC.Set(WhoseMoveC.CurPlayerI, ResTypes.Iron, (int)objects[_curNumber++]);
-            InventResC.Set(WhoseMoveC.CurPlayerI, ResTypes.Gold, (int)objects[_curNumber++]);
+
+            InvToolWeapC.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Pick, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
+            InvToolWeapC.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Sword, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
+            InvToolWeapC.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Shield, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
+
+            InvToolWeapC.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Pick, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
+            InvToolWeapC.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Sword, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
+            InvToolWeapC.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Shield, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
 
 
+            #region
 
-            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
-            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.Pawn, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
-            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.Rook, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
-            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.Bishop, LevelUnitTypes.Wood, (int)objects[_curNumber++]);
+            foreach (var item_0 in WhereUnitsC.UnitsInGame)
+                foreach (var item_1 in item_0.Value)
+                    foreach (var item_2 in item_1.Value)
+                    {
+                        var needContinue = false;
 
-            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
-            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.Pawn, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
-            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.Rook, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
-            InventorUnitsC.Set(WhoseMoveC.CurPlayerI, UnitTypes.Bishop, LevelUnitTypes.Iron, (int)objects[_curNumber++]);
+                        WhereUnitsC.Clear(item_0.Key, item_1.Key, item_2.Key);
+                        for (int i = 0; i < Byte.MaxValue; i++)
+                        {
+                            var obj = objects[_curNumber++];
+                            needContinue = (bool)obj;
+                            if (needContinue == true) break;
+  
+                            WhereUnitsC.Sync(item_0.Key, item_1.Key, item_2.Key, (byte)objects[_curNumber++]);
+                        }      
+
+                        if (needContinue) continue;
+                    }
+
+            foreach (var item_0 in WhereBuildsC.BuildsInGame)
+                foreach (var item_1 in item_0.Value)
+                {
+                    var needContinue = false;
+
+                    WhereBuildsC.Clear(item_0.Key, item_1.Key);
+                    for (int i = 0; i < Byte.MaxValue; i++)
+                    {
+                        var obj = objects[_curNumber++];
+                        needContinue = (bool)obj;
+                        if (needContinue == true) break;
+
+                        WhereBuildsC.Sync(item_0.Key, item_1.Key, (byte)objects[_curNumber++]);
+                    }
+
+                    if (needContinue) continue;
+                }
+
+            foreach (var item_0 in WhereEnvC.EnvInGame)
+            {
+                var needContinue = false;
+
+                WhereEnvC.Clear(item_0.Key);
+                for (int i = 0; i < Byte.MaxValue; i++)
+                {
+                    var obj = objects[_curNumber++];
+                    needContinue = (bool)obj;
+                    if (needContinue == true) break;
+
+                    WhereEnvC.SyncAdd(item_0.Key, (byte)objects[_curNumber++]);
+                }
+                if (needContinue) continue;
+            }
 
 
-            InventorTWCom.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Pick, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
-            InventorTWCom.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Sword, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
-            InventorTWCom.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Shield, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
-
-            InventorTWCom.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Pick, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
-            InventorTWCom.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Sword, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
-            InventorTWCom.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Shield, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
+            #endregion
         }
 
         #endregion

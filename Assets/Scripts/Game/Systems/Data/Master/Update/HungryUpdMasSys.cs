@@ -33,7 +33,7 @@ namespace Scripts.Game
 
                                 if (unit_0.Is(UnitTypes.Scout))
                                 {
-                                    InventorUnitsC.AddUnit(player, UnitTypes.Scout, LevelUnitTypes.Wood);
+                                    InvUnitsC.AddUnit(player, UnitTypes.Scout, LevelUnitTypes.Wood);
                                 }
 
                                 if (build_0.Is(BuildTypes.Camp))

@@ -33,6 +33,7 @@ namespace Scripts.Game
                 ToolWeapType = ToolWeaponTypes.None;
             }
         }
+        public void SyncShield(int shieldProt) => _shieldProt = shieldProt;
 
         public void Set(ToolWeaponC tWC)
         {

@@ -6,6 +6,20 @@ namespace Scripts.Game
     {
         private readonly Dictionary<DirectTypes, int> _health;
 
+        public Dictionary<DirectTypes, int> Health
+        {
+            get
+            {
+                var dict_0 = new Dictionary<DirectTypes, int>();
+
+                foreach (var item_0 in _health)
+                {
+                    dict_0.Add(item_0.Key, item_0.Value);
+                }
+
+                return dict_0;
+            }
+        }
         public Dictionary<DirectTypes, bool> DictTrail
         {
             get
@@ -48,6 +62,11 @@ namespace Scripts.Game
             {
                 _health[dir] = 0;
             }
+        }
+
+        public void SyncTrail(DirectTypes dir, int amount)
+        {
+            _health[dir] = amount;
         }
     }
 }

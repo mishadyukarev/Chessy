@@ -4,20 +4,22 @@ namespace Scripts.Game
 {
     public struct ReadyDataUIC
     {
-        private static Dictionary<bool, bool> _isActivatedButton;
+        private static Dictionary<PlayerTypes, bool> _isActivatedButton;
 
         public static bool IsStartedGame { get; set; }
 
 
-        public ReadyDataUIC(Dictionary<bool, bool> dict) : this()
+        public ReadyDataUIC(Dictionary<PlayerTypes, bool> dict) : this()
         {
             _isActivatedButton = dict;
 
-            dict.Add(true, default);
-            dict.Add(false, default);
+            dict.Add(PlayerTypes.First, false);
+            dict.Add(PlayerTypes.Second, false);
+
+            IsStartedGame = false;
         }
 
-        public static bool IsReady(bool key) => _isActivatedButton[key];
-        public static void SetIsReady(bool key, bool value) => _isActivatedButton[key] = value;
+        public static bool IsReady(PlayerTypes player) => _isActivatedButton[player];
+        public static void SetIsReady(PlayerTypes player, bool value) => _isActivatedButton[player] = value;
     }
 }

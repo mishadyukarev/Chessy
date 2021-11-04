@@ -48,14 +48,14 @@ namespace Scripts.Game
                 stepUnitC.StepsAmount = UnitValues.StandartAmountSteps(false, unitForSet, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
                 condUnitC.DefCondition();
                 thirUnitC_0.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
-                if (InventorUnitsC.HaveUnitInInv(whoseMove, unitForSet, LevelUnitTypes.Iron))
+                if (InvUnitsC.HaveUnitInInv(whoseMove, unitForSet, LevelUnitTypes.Iron))
                 {
-                    InventorUnitsC.TakeUnitsInInv(whoseMove, unitForSet, LevelUnitTypes.Iron);
+                    InvUnitsC.TakeUnitsInInv(whoseMove, unitForSet, LevelUnitTypes.Iron);
                     levUnitC_0.SetLevel(LevelUnitTypes.Iron);
                 }
                 else
                 {
-                    InventorUnitsC.TakeUnitsInInv(whoseMove, unitForSet, LevelUnitTypes.Wood);
+                    InvUnitsC.TakeUnitsInInv(whoseMove, unitForSet, LevelUnitTypes.Wood);
                     levUnitC_0.SetLevel(LevelUnitTypes.Wood);
                 }
                 WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);

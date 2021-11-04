@@ -29,13 +29,16 @@ namespace Scripts.Game
 
         private void ExecuteScout()
         {
-            SelectorC.CellClickType = CellClickTypes.OldToNewUnit;
-            SelectorC.UnitTypeOldToNew = UnitTypes.Scout;
+            if (WhoseMoveC.IsMyMove)
+            {
+                SelectorC.CellClickType = CellClickTypes.OldToNewUnit;
+                SelectorC.UnitTypeOldToNew = UnitTypes.Scout;
+            }
         }
 
         private void Done()
         {
-            if (!InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.Wood))
+            if (!InvUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.Wood))
             {
                 RpcSys.DoneToMaster();
             }
@@ -50,9 +53,12 @@ namespace Scripts.Game
 
         private void CreateUnit(UnitTypes unitType)
         {
-            GetterUnitsDataUIC.ResetCurTimer(unitType);
+            if (WhoseMoveC.IsMyMove)
+            {
+                GetterUnitsDataUIC.ResetCurTimer(unitType);
 
-            if (WhoseMoveC.IsMyMove) RpcSys.CreateUnitToMaster(unitType);
+                RpcSys.CreateUnitToMaster(unitType);
+            }
         }
 
         private void GetUnit(UnitTypes unitType)
@@ -65,12 +71,12 @@ namespace Scripts.Game
 
             if (WhoseMoveC.IsMyMove)
             {
-                if (InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Iron))
+                if (InvUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Iron))
                 {
                     SelectorC.SelUnitType = unitType;
                     SelectorC.LevelSelUnitType = LevelUnitTypes.Iron;
                 }
-                else if (InventorUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Wood))
+                else if (InvUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Wood))
                 {
                     SelectorC.SelUnitType = unitType;
                     SelectorC.LevelSelUnitType = LevelUnitTypes.Wood;
@@ -79,36 +85,35 @@ namespace Scripts.Game
                 {
                     GetterUnitsDataUIC.ActiveNeedCreateButton(unitType, true);
                 }
-
             }
         }
 
         private void ToggleToolWeapon(ToolWeaponTypes tWType)
         {
-            if (HintComC.IsOnHint)
-            {
-                if (tWType == ToolWeaponTypes.Pick)
-                {
-                    if (!HintDataUIC.IsActive(VideoClipTypes.Pick))
-                    {
-                        HintViewUIC.SetActiveHintZone(true);
-                        HintViewUIC.SetVideoClip(VideoClipTypes.Pick);
-                        HintDataUIC.SetActive(VideoClipTypes.Pick, true);
-                    }
-                }
-                else
-                {
-                    if (!HintDataUIC.IsActive(VideoClipTypes.UpgToolWeapon))
-                    {
-                        HintViewUIC.SetActiveHintZone(true);
-                        HintViewUIC.SetVideoClip(VideoClipTypes.UpgToolWeapon);
-                        HintDataUIC.SetActive(VideoClipTypes.UpgToolWeapon, true);
-                    }
-                }
-            }
-
             if (WhoseMoveC.IsMyMove)
             {
+                if (HintComC.IsOnHint)
+                {
+                    if (tWType == ToolWeaponTypes.Pick)
+                    {
+                        if (!HintDataUIC.IsActive(VideoClipTypes.Pick))
+                        {
+                            HintViewUIC.SetActiveHintZone(true);
+                            HintViewUIC.SetVideoClip(VideoClipTypes.Pick);
+                            HintDataUIC.SetActive(VideoClipTypes.Pick, true);
+                        }
+                    }
+                    else
+                    {
+                        if (!HintDataUIC.IsActive(VideoClipTypes.UpgToolWeapon))
+                        {
+                            HintViewUIC.SetActiveHintZone(true);
+                            HintViewUIC.SetVideoClip(VideoClipTypes.UpgToolWeapon);
+                            HintDataUIC.SetActive(VideoClipTypes.UpgToolWeapon, true);
+                        }
+                    }
+                }
+
                 if (SelectorC.Is(CellClickTypes.GiveTakeTW))
                 {
                     if (tWType == ToolWeaponTypes.Shield)
@@ -147,16 +152,19 @@ namespace Scripts.Game
 
         private void ToggleUpgradeUnit()
         {
-            if (HintComC.IsOnHint)
+            if (WhoseMoveC.IsMyMove)
             {
-                if (!HintDataUIC.IsActive(VideoClipTypes.UpgToolWeapon))
+                if (HintComC.IsOnHint)
                 {
-                    HintViewUIC.SetActiveHintZone(true);
-                    HintViewUIC.SetVideoClip(VideoClipTypes.UpgToolWeapon);
-                    HintDataUIC.SetActive(VideoClipTypes.UpgToolWeapon, true);
+                    if (!HintDataUIC.IsActive(VideoClipTypes.UpgToolWeapon))
+                    {
+                        HintViewUIC.SetActiveHintZone(true);
+                        HintViewUIC.SetVideoClip(VideoClipTypes.UpgToolWeapon);
+                        HintDataUIC.SetActive(VideoClipTypes.UpgToolWeapon, true);
+                    }
                 }
+                SelectorC.CellClickType = CellClickTypes.UpgradeUnit;
             }
-            SelectorC.CellClickType = CellClickTypes.UpgradeUnit;
         }
     }
 }

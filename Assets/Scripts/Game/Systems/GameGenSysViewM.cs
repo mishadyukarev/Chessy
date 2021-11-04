@@ -48,7 +48,7 @@ namespace Scripts.Game
             .Add(new DonerUISystem())
                 .Add(new GetterUnitsUISystem())
                 .Add(new GiveTakeUISystem())
-                .Add(new HeroZoneUISys())
+                .Add(new ScoutZoneUISys())
 
             ///up
             .Add(new EconomyUpUISys())

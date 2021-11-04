@@ -8,10 +8,12 @@ namespace Scripts.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
+            var playerSend = sender.GetPlayerType();
 
-            ReadyDataUIC.SetIsReady(sender.IsMasterClient, !ReadyDataUIC.IsReady(sender.IsMasterClient));
 
-            if (ReadyDataUIC.IsReady(true) && ReadyDataUIC.IsReady(false))
+            ReadyDataUIC.SetIsReady(playerSend, !ReadyDataUIC.IsReady(playerSend));
+
+            if (ReadyDataUIC.IsReady(PlayerTypes.First) && ReadyDataUIC.IsReady(PlayerTypes.Second))
             {
                 ReadyDataUIC.IsStartedGame = true;
             }

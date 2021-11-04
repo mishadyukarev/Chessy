@@ -23,7 +23,7 @@ namespace Scripts.Game
                 if (InventResC.CanCreateUnit(playerSend, unitTypeForCreating, out var needRes))
                 {
                     InventResC.BuyCreateUnit(playerSend, unitTypeForCreating);
-                    InventorUnitsC.AddUnit(playerSend, unitTypeForCreating, LevelUnitTypes.Wood);
+                    InvUnitsC.AddUnit(playerSend, unitTypeForCreating, LevelUnitTypes.Wood);
 
                     RpcSys.SoundToGeneral(sender, ClipGameTypes.SoundGoldPack);
                 }

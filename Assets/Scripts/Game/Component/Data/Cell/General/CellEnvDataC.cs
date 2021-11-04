@@ -59,5 +59,9 @@ namespace Scripts.Game
 
             _haveEnvir[envType] = false;
         }
+        public void Sync(EnvTypes envType, bool haveEnv = true)
+        {
+            _haveEnvir[envType] = haveEnv;
+        }
     }
 }

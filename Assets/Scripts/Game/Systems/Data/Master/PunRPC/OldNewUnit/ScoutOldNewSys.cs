@@ -31,13 +31,13 @@ namespace Scripts.Game
             {
                 if (stepUnitC.HaveMaxSteps(effUnit_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                 {
-                    InventorUnitsC.TakeUnitsInInv(ownUnit_0.Owner, UnitTypes.Scout, LevelUnitTypes.Wood);
+                    InvUnitsC.TakeUnitsInInv(ownUnit_0.Owner, UnitTypes.Scout, LevelUnitTypes.Wood);
                     WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
                     unit_0.NoneUnit();
 
                     if (twUnitC_0.HaveToolWeap)
                     {
-                        InventorTWCom.AddAmountTools(ownUnit_0.Owner, twUnitC_0.ToolWeapType, twUnitC_0.LevelTWType);
+                        InvToolWeapC.AddAmountTools(ownUnit_0.Owner, twUnitC_0.ToolWeapType, twUnitC_0.LevelTWType);
                         twUnitC_0.ToolWeapType = default;
                     }
 

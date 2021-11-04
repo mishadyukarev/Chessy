@@ -42,7 +42,7 @@ namespace Scripts.Game
                         {
                             if (twUnit_0.HaveToolWeap)
                             {
-                                InventorTWCom.AddAmountTools(ownUnit_0.Owner, twUnit_0.ToolWeapType, twUnit_0.LevelTWType);
+                                InvToolWeapC.AddAmountTools(ownUnit_0.Owner, twUnit_0.ToolWeapType, twUnit_0.LevelTWType);
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                                 stepUnit_0.TakeSteps();
@@ -64,9 +64,9 @@ namespace Scripts.Game
                             }
 
 
-                            else if (InventorTWCom.HaveTW(ownUnit_0.Owner, tWTypeForGive, levelTWType))
+                            else if (InvToolWeapC.HaveTW(ownUnit_0.Owner, tWTypeForGive, levelTWType))
                             {
-                                InventorTWCom.TakeAmountTools(ownUnit_0.Owner, tWTypeForGive, levelTWType);
+                                InvToolWeapC.TakeAmountTools(ownUnit_0.Owner, tWTypeForGive, levelTWType);
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                                 twUnit_0.ToolWeapType = tWTypeForGive;

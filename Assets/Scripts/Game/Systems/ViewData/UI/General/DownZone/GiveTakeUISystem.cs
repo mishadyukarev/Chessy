@@ -17,9 +17,9 @@ namespace Scripts.Game
                     GiveTakeViewUIC.SetImage(SelectorC.TWTypeForGive, GiveTakeDataUIC.Level(SelectorC.TWTypeForGive));
                 }
 
-            GiveTakeViewUIC.SetText(ToolWeaponTypes.Pick, InventorTWCom.GetAmountTools(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Pick, LevelTWTypes.Iron).ToString());
-            GiveTakeViewUIC.SetText(ToolWeaponTypes.Sword, InventorTWCom.GetAmountTools(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Sword, LevelTWTypes.Iron).ToString());
-            GiveTakeViewUIC.SetText(ToolWeaponTypes.Shield, InventorTWCom.GetAmountTools(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Shield, GiveTakeDataUIC.Level(ToolWeaponTypes.Shield)).ToString());
+            GiveTakeViewUIC.SetText(ToolWeaponTypes.Pick, InvToolWeapC.AmountToolWeap(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Pick, LevelTWTypes.Iron).ToString());
+            GiveTakeViewUIC.SetText(ToolWeaponTypes.Sword, InvToolWeapC.AmountToolWeap(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Sword, LevelTWTypes.Iron).ToString());
+            GiveTakeViewUIC.SetText(ToolWeaponTypes.Shield, InvToolWeapC.AmountToolWeap(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Shield, GiveTakeDataUIC.Level(ToolWeaponTypes.Shield)).ToString());
         }
     }
 }

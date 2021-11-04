@@ -26,7 +26,7 @@ namespace Scripts.Game
             if (envType == default) throw new Exception();
             return _amountResours[envType];
         }
-        public void SetAmountRes(EnvTypes envType, int value)
+        public void SetRes(EnvTypes envType, int value)
         {
             if (envType == default) throw new Exception();
             _amountResours[envType] = value;
@@ -36,10 +36,10 @@ namespace Scripts.Game
             if (envType == default) throw new Exception();
             return EnvironValues.MaxAmount(envType);
         }
-        public void SetMaxAmountRes(EnvTypes envType) => SetAmountRes(envType, MaxAmountRes(envType));
-        public void AddAmountRes(EnvTypes envType, int adding = 1) => SetAmountRes(envType, AmountRes(envType) + adding);
-        public void AddMaxAmountRes(EnvTypes envType) => SetAmountRes(envType, AmountRes(envType) + MaxAmountRes(envType));
-        public void TakeAmountRes(EnvTypes envType, int taking = 1) => SetAmountRes(envType, AmountRes(envType) - taking);
+        public void SetMaxAmountRes(EnvTypes envType) => SetRes(envType, MaxAmountRes(envType));
+        public void AddAmountRes(EnvTypes envType, int adding = 1) => SetRes(envType, AmountRes(envType) + adding);
+        public void AddMaxAmountRes(EnvTypes envType) => SetRes(envType, AmountRes(envType) + MaxAmountRes(envType));
+        public void TakeAmountRes(EnvTypes envType, int taking = 1) => SetRes(envType, AmountRes(envType) - taking);
         public bool HaveRes(EnvTypes envType) => AmountRes(envType) > 0;
         public bool HaveMaxRes(EnvTypes envType) => AmountRes(envType) >= MaxAmountRes(envType);
 
@@ -72,7 +72,7 @@ namespace Scripts.Game
                 default:
                     throw new Exception();
             }
-            SetAmountRes(envType, randAmountRes);
+            SetRes(envType, randAmountRes);
         }
     }
 }

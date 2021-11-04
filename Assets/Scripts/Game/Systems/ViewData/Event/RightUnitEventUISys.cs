@@ -23,18 +23,18 @@ namespace Scripts.Game
 
         private void ConditionAbilityButton(CondUnitTypes condUnitType)
         {
-            if (HintComC.IsOnHint)
-            {
-                if (!HintDataUIC.IsActive(VideoClipTypes.ProtRelax))
-                {
-                    HintViewUIC.SetActiveHintZone(true);
-                    HintViewUIC.SetVideoClip(VideoClipTypes.ProtRelax);
-                    HintDataUIC.SetActive(VideoClipTypes.ProtRelax, true);
-                }
-            }
-
             if (WhoseMoveC.IsMyMove)
             {
+                if (HintComC.IsOnHint)
+                {
+                    if (!HintDataUIC.IsActive(VideoClipTypes.ProtRelax))
+                    {
+                        HintViewUIC.SetActiveHintZone(true);
+                        HintViewUIC.SetVideoClip(VideoClipTypes.ProtRelax);
+                        HintDataUIC.SetActive(VideoClipTypes.ProtRelax, true);
+                    }
+                }
+
                 if (_cellUnitFilter.Get2(SelectorC.IdxSelCell).Is(condUnitType))
                 {
                     RpcSys.ConditionUnitToMaster(CondUnitTypes.None, SelectorC.IdxSelCell);

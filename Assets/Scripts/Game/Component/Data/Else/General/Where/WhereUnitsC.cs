@@ -5,7 +5,37 @@ namespace Scripts.Game
 {
     public struct WhereUnitsC
     {
-        private static Dictionary<PlayerTypes, Dictionary<UnitTypes,Dictionary<LevelUnitTypes, List<byte>>>> _unitsInGame;
+        private static Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelUnitTypes, List<byte>>>> _unitsInGame;
+
+        public static Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelUnitTypes, List<byte>>>> UnitsInGame
+        {
+            get
+            {
+                var newDict_0 = new Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelUnitTypes, List<byte>>>>();
+
+                foreach (var item_0 in _unitsInGame)
+                {
+                    newDict_0.Add(item_0.Key, new Dictionary<UnitTypes, Dictionary<LevelUnitTypes, List<byte>>>());
+
+                    foreach (var item_1 in item_0.Value)
+                    {
+                        newDict_0[item_0.Key].Add(item_1.Key, new Dictionary<LevelUnitTypes, List<byte>>());
+
+                        foreach (var item_2 in item_1.Value)
+                        {
+                            newDict_0[item_0.Key][item_1.Key].Add(item_2.Key, new List<byte>());
+
+                            foreach (var item_3 in item_2.Value)
+                            {
+                                newDict_0[item_0.Key][item_1.Key][item_2.Key].Add(item_3);
+                            }
+                        }
+                    }
+                }
+
+                return newDict_0;
+            }
+        }
 
         public WhereUnitsC(bool needNew) : this()
         {
@@ -43,6 +73,14 @@ namespace Scripts.Game
             if (Contains(playerType, unitType, levelUnit, idxCell)) _unitsInGame[playerType][unitType][levelUnit].Remove(idxCell);
             else throw new Exception();
         }
+        public static void Sync(PlayerTypes playerType, UnitTypes unitType, LevelUnitTypes levelUnit, byte idx)
+        {
+            _unitsInGame[playerType][unitType][levelUnit].Add(idx);
+        }
+        public static void Clear(PlayerTypes playerType, UnitTypes unitType, LevelUnitTypes levelUnit)
+        {
+            _unitsInGame[playerType][unitType][levelUnit].Clear();
+        }
         public static byte AmountUnits(PlayerTypes playerType, UnitTypes unitType, LevelUnitTypes levelUnit) => (byte)_unitsInGame[playerType][unitType][levelUnit].Count;
         public static List<byte> IdxsUnits(PlayerTypes player, UnitTypes unit, LevelUnitTypes levelUnit) => _unitsInGame[player][unit][levelUnit].Copy();
 
@@ -50,13 +88,19 @@ namespace Scripts.Game
         {
             var amountUnits = 0;
 
-            for (var unitType = (UnitTypes)1; unitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; unitType++)
+            foreach (var item_0 in _unitsInGame)
             {
-                if(unitType != unit)
+                if (item_0.Key == player)
                 {
-                    for (var levUnit = (LevelUnitTypes)1; levUnit < (LevelUnitTypes)typeof(LevelUnitTypes).GetEnumNames().Length; levUnit++)
+                    foreach (var item_1 in item_0.Value)
                     {
-                        amountUnits += _unitsInGame[player][unitType][levUnit].Count;
+                        if (item_1.Key != unit)
+                        {
+                            foreach (var item_2 in item_1.Value)
+                            {
+                                amountUnits += item_2.Value.Count;
+                            }
+                        }
                     }
                 }
             }

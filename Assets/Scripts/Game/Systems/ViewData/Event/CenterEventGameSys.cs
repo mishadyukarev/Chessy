@@ -51,11 +51,6 @@ namespace Scripts.Game
         }
         private void ExecuteUpg_But(PickUpgradeTypes upgBut)
         {
-            PickUpgZoneDataUIC.SetActiveParent(WhoseMoveC.CurPlayerI, false);
-            PickUpgZoneDataUIC.SetActive(WhoseMoveC.CurPlayerI, upgBut, false);
-
-            SoundEffectC.Play(ClipGameTypes.PickUpgrade);
-
             RpcSys.PickUpgradeToMaster(upgBut);
         }
     }
