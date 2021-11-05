@@ -2,8 +2,10 @@
     "name": "Menu.System",
     "references": [
         "GUID:f8b9587ab9104e74586dec6b8477f11e",
-        "GUID:acbdf067e3a6255479a3ded49d7ea001",
         "GUID:087d8f159035f4543b00398caf40f939",
+        "GUID:d6628453e5cc38045ae324d9b2320d7b",
+        "GUID:c8947d8bbd711b540b0d02988db7c5d9",
+        "GUID:7b95aa437e3651a489c8cced86ff7c98",
         "GUID:656c2c43d3cfe4855bd40e058874b0be",
         "GUID:57c32fc907df0f54e8e6e8f0d2488336",
         "GUID:831409e8f9d13b5479a3baef9822ad34"

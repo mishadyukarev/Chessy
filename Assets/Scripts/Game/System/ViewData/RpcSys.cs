@@ -21,6 +21,7 @@ namespace Scripts.Game
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
+        private EcsFilter<CellCloudDataC> _cellCloudFilt = default;
 
 
         private EcsFilter<ForBuildingMasCom, XyCellForDoingMasCom> _buildFilter = default;
@@ -35,7 +36,7 @@ namespace Scripts.Game
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
         private EcsFilter<ForOldNewUnitCom> _forOldToNewUnitFilt = default;
 
-        private static PhotonView PhotonView => PhotonRpcViewC.PhotonView;
+        private static PhotonView PhotonView => RpcViewC.PhotonView;
 
         private static string MasterRPCName => nameof(MasterRPC);
         private static string GeneralRPCName => nameof(GeneralRPC);
@@ -48,7 +49,11 @@ namespace Scripts.Game
         {
             PhotonPeer.RegisterType(typeof(Vector2Int), 242, SerializeVector2Int, DeserializeVector2Int);
 
-            if (!PhotonNetwork.IsMasterClient) SyncAllToMaster();
+            if (!PhotonNetwork.IsMasterClient)
+            {
+                SyncAllToMaster();
+                RotateAllToMaster();
+            }
         }
 
 
@@ -60,6 +65,9 @@ namespace Scripts.Game
 
         public static void DoneToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[default]);
         public static void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
+        
+        public static void RotateAllToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.RotateAll, new object[default]);
+        public static void RotateAllToMaster(Player sender) => PhotonView.RPC(GeneralRPCName, sender, RpcGeneralTypes.RotateAll, new object[default]);
 
         public static void BuyResToMaster(ResTypes res) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.BuyRes, new object[] { res });
         public static void PickUpgradeToMaster(PickUpgradeTypes upgBut) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.PickUpgrade, new object[] { upgBut });
@@ -204,11 +212,15 @@ namespace Scripts.Game
                     _forGivePawnToolFilter.Get1(0).IdxCell = (byte)objects[_curNumber++];
                     break;
 
+                case RpcMasterTypes.RotateAll:
+                    RotateAllToMaster(infoFrom.Sender);
+                    break;
+
                 default:
                     throw new Exception();
             }
 
-            MastDataSysC.Run(rpcType);
+            MastSysDataC.InvokeRun(rpcType);
 
             SyncAllToMaster();
         }
@@ -254,6 +266,10 @@ namespace Scripts.Game
                     SoundEffectC.Play(soundEffectType);
                     break;
 
+                case RpcGeneralTypes.RotateAll:
+                    GameGenSysDataViewC.RotateAll.Invoke();
+                    break;
+
                 default:
                     throw new Exception();
             }
@@ -296,7 +312,7 @@ namespace Scripts.Game
 
             objs.Add(MotionsDataUIC.AmountMotions);
 
-            objs.Add(PickUpgZoneDataUIC.IsActivated(PlayerTypes.Second));
+            objs.Add(PickUpgZoneDataUIC.HaveUpgrade(PlayerTypes.Second));
             foreach (var item_0 in PickUpgZoneDataUIC.Activated_Buts)
             {
                 foreach (var item_1 in item_0.Value)
@@ -304,6 +320,27 @@ namespace Scripts.Game
                     objs.Add(PickUpgZoneDataUIC.Activated_Buts[item_0.Key][item_1.Key]);
                 }
             }
+
+            objs.Add(WindC.DirectWind);
+
+            foreach (var item_0 in UnitsUpgC.PercUpgs)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    foreach (var item_2 in item_1.Value)
+                    {
+                        objs.Add(UnitsUpgC.UpgPercent(item_0.Key, item_1.Key, item_2.Key));
+                    }
+                }
+            }
+            foreach (var item_0 in UnitsUpgC.StepUpgs)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    objs.Add(UnitsUpgC.UpgSteps(item_0.Key, item_1.Key));
+                }
+            }
+
 
             foreach (var idx_0 in _cellUnitOthFilt)
             {
@@ -344,10 +381,7 @@ namespace Scripts.Game
                 objs.Add(envRes_0.AmountRes(EnvTypes.Mountain));
 
 
-                if(_cellRiverFilt.Get1(idx_0).RiverType == RiverTypes.Start)
-                {
 
-                }
                 objs.Add(_cellRiverFilt.Get1(idx_0).RiverType);
                 foreach (var item_0 in _cellRiverFilt.Get1(idx_0).Directs)
                     objs.Add(item_0.Value);
@@ -355,7 +389,11 @@ namespace Scripts.Game
 
                 foreach (var item_0 in _cellTrailFilt.Get1(idx_0).Health)
                     objs.Add(item_0.Value);
-                
+
+
+                ref var cloud_0 = ref _cellCloudFilt.Get1(idx_0);
+                objs.Add(cloud_0.HaveCloud);
+                objs.Add(cloud_0.CloudWidthType);
 
 
                 objs.Add(_cellFireFilter.Get1(idx_0).HaveFire);
@@ -382,13 +420,16 @@ namespace Scripts.Game
                 }
             }
 
-            objs.Add(InvToolWeapC.AmountToolWeap(PlayerTypes.Second, ToolWeaponTypes.Pick, LevelTWTypes.Wood));
-            objs.Add(InvToolWeapC.AmountToolWeap(PlayerTypes.Second, ToolWeaponTypes.Sword, LevelTWTypes.Wood));
-            objs.Add(InvToolWeapC.AmountToolWeap(PlayerTypes.Second, ToolWeaponTypes.Shield, LevelTWTypes.Wood));
-
-            objs.Add(InvToolWeapC.AmountToolWeap(PlayerTypes.Second, ToolWeaponTypes.Pick, LevelTWTypes.Iron));
-            objs.Add(InvToolWeapC.AmountToolWeap(PlayerTypes.Second, ToolWeaponTypes.Sword, LevelTWTypes.Iron));
-            objs.Add(InvToolWeapC.AmountToolWeap(PlayerTypes.Second, ToolWeaponTypes.Shield, LevelTWTypes.Iron));
+            foreach (var item_0 in InvToolWeapC.ToolWeapons)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    foreach (var item_2 in item_1.Value)
+                    {
+                        objs.Add(InvToolWeapC.AmountToolWeap(item_0.Key, item_1.Key, item_2.Key));
+                    }
+                }
+            }
 
             #endregion
 
@@ -472,14 +513,40 @@ namespace Scripts.Game
 
             MotionsDataUIC.AmountMotions = (int)objects[_curNumber++];
 
-            PickUpgZoneDataUIC.SetActiveParent(PlayerTypes.Second, (bool)objects[_curNumber++]);
+            PickUpgZoneDataUIC.SetHaveUpgrade(PlayerTypes.Second, (bool)objects[_curNumber++]);
             foreach (var item_0 in PickUpgZoneDataUIC.Activated_Buts)
             {
                 foreach (var item_1 in item_0.Value)
                 {
-                    PickUpgZoneDataUIC.SetActive_But(item_0.Key, item_1.Key, (bool)objects[_curNumber++]);
+                    PickUpgZoneDataUIC.SetHave_But(item_0.Key, item_1.Key, (bool)objects[_curNumber++]);
                 }
             }
+
+            WindC.DirectWind = (DirectTypes)objects[_curNumber++];
+
+
+            #region Upgrades
+
+            foreach (var item_0 in UnitsUpgC.PercUpgs)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    foreach (var item_2 in item_1.Value)
+                    {
+                        UnitsUpgC.SetUpg(item_0.Key, item_1.Key, item_2.Key, (float)objects[_curNumber++]);
+                    }
+                }
+            }
+            foreach (var item_0 in UnitsUpgC.StepUpgs)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    UnitsUpgC.SetStepUpg(item_0.Key, item_1.Key, (int)objects[_curNumber++]);
+                }
+            }
+
+            #endregion
+
 
             foreach (var idx_0 in _cellUnitOthFilt)
             {
@@ -524,14 +591,12 @@ namespace Scripts.Game
                 envRes_0.SetRes(EnvTypes.Mountain, (int)objects[_curNumber++]);
 
 
+
                 ref var river_0 = ref _cellRiverFilt.Get1(idx_0);
                 river_0.RiverType = (RiverTypes)objects[_curNumber++];
-                if (river_0.RiverType == RiverTypes.Start)
-                {
-
-                }
                 foreach (var item_0 in river_0.Directs)
                     river_0.Sync(item_0.Key, (bool)objects[_curNumber++]);
+
 
 
                 ref var trail_0 = ref _cellTrailFilt.Get1(idx_0);
@@ -539,10 +604,19 @@ namespace Scripts.Game
                     trail_0.SyncTrail(item_0.Key, (int)objects[_curNumber++]);
 
 
+
+                ref var cloud_0 = ref _cellCloudFilt.Get1(idx_0);
+                cloud_0.HaveCloud = (bool)objects[_curNumber++];
+                cloud_0.CloudWidthType = (CloudWidthTypes)objects[_curNumber++];
+
+
+
                 ref var fire_0 = ref _cellFireFilter.Get1(idx_0);
                 fire_0.HaveFire = (bool)objects[_curNumber++];
             }
 
+
+            #region Inventor
 
             foreach (var item_0 in InventResC.AmountResour)
             {
@@ -561,18 +635,21 @@ namespace Scripts.Game
                     }
                 }
             }
+            foreach (var item_0 in InvToolWeapC.ToolWeapons)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    foreach (var item_2 in item_1.Value)
+                    {
+                        InvToolWeapC.Set(item_0.Key, item_1.Key, item_2.Key, (int)objects[_curNumber++]);
+                    }
+                }
+            }
+
+            #endregion
 
 
-            InvToolWeapC.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Pick, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
-            InvToolWeapC.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Sword, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
-            InvToolWeapC.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Shield, LevelTWTypes.Wood, (byte)objects[_curNumber++]);
-
-            InvToolWeapC.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Pick, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
-            InvToolWeapC.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Sword, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
-            InvToolWeapC.Set(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Shield, LevelTWTypes.Iron, (byte)objects[_curNumber++]);
-
-
-            #region
+            #region Where
 
             foreach (var item_0 in WhereUnitsC.UnitsInGame)
                 foreach (var item_1 in item_0.Value)

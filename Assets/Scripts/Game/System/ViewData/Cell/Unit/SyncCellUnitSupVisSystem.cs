@@ -47,7 +47,7 @@ namespace Scripts.Game
                             barsViewCom.EnableSR(CellBarTypes.Hp);
                             barsViewCom.SetColorHp(Color.red);
 
-                            float maxHpUnit_0 = hpUnit_0.MaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
+                            float maxHpUnit_0 = HpUnitC.MAX_HP;
 
                             float xCordinate = (float)hpUnit_0.AmountHp / maxHpUnit_0;
                             barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));

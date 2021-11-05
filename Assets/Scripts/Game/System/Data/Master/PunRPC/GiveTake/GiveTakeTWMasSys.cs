@@ -38,7 +38,7 @@ namespace Scripts.Game
                 {
                     if (stepUnit_0.HaveMinSteps)
                     {
-                        if (_cellUnitFilter.Get2(idx_0).HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
+                        if (_cellUnitFilter.Get2(idx_0).HaveMaxHpUnit)
                         {
                             if (twUnit_0.HaveToolWeap)
                             {

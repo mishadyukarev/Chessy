@@ -47,7 +47,7 @@ namespace Scripts.Game
                 case ResTypes.Food: return 25;
                 case ResTypes.Wood: return 25;
                 case ResTypes.Ore:  return 0;
-                case ResTypes.Iron: return 5;
+                case ResTypes.Iron: return 0;
                 case ResTypes.Gold: return 0;
                 default: throw new Exception();
             }

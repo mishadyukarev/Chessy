@@ -18,8 +18,9 @@ namespace Scripts.Game
 
         public bool Have(UnitStatTypes statType)
         {
-            if (_effects.ContainsKey(statType)) return _effects[statType];
-            else throw new Exception();
+            if (!_effects.ContainsKey(statType)) throw new Exception();
+
+            return _effects[statType];
         }
 
 
@@ -28,7 +29,6 @@ namespace Scripts.Game
             if (needNew)
             {
                 _effects = new Dictionary<UnitStatTypes, bool>();
-                _effects.Add(UnitStatTypes.Hp, default);
                 _effects.Add(UnitStatTypes.Damage, default);
                 _effects.Add(UnitStatTypes.Steps, default);
             }
@@ -41,14 +41,16 @@ namespace Scripts.Game
         }
         public void Set(UnitEffectsC effectsC)
         {
-            Set(UnitStatTypes.Hp, effectsC.Have(UnitStatTypes.Hp));
             Set(UnitStatTypes.Damage, effectsC.Have(UnitStatTypes.Damage));
             Set(UnitStatTypes.Steps, effectsC.Have(UnitStatTypes.Steps));
         }
-        public void Def(UnitStatTypes statType) => Set(statType, false);
+        public void Def(UnitStatTypes statType)
+        {
+            if (!_effects.ContainsKey(statType)) throw new Exception();
+            Set(statType, false);
+        }
         public void DefAllEffects()
         {
-            Set(UnitStatTypes.Hp, false);
             Set(UnitStatTypes.Damage, false);
             Set(UnitStatTypes.Steps, false);
         }

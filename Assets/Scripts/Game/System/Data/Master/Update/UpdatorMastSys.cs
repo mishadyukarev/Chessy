@@ -58,13 +58,13 @@ namespace Scripts.Game
                         {
                             if (ownUnit_0.Is(PlayerTypes.Second))
                             {
-                                if (!hpUnit_0.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
+                                if (!hpUnit_0.HaveMaxHpUnit)
                                 {
                                     hpUnit_0.AddHp(100);
 
-                                    if (hpUnit_0.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
+                                    if (hpUnit_0.HaveMaxHpUnit)
                                     {
-                                        hpUnit_0.SetMaxHp(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
+                                        hpUnit_0.SetMaxHp();
                                     }
                                 }
                             }
@@ -82,7 +82,7 @@ namespace Scripts.Game
                         {
                             if (condUnit_0.Is(CondUnitTypes.Protected))
                             {
-                                if (hpUnit_0.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
+                                if (hpUnit_0.HaveMaxHpUnit)
                                 {
                                     if (unit_0.Is(UnitTypes.Pawn))
                                     {
@@ -147,7 +147,7 @@ namespace Scripts.Game
             if (WhereEnvC.Amount(EnvTypes.AdultForest) <= 6)
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.Truce);
-                MastDataSysC.Run(MastDataSysTypes.Truce);
+                MastSysDataC.InvokeRun(MastDataSysTypes.Truce);
             }
 
             if (MotionsDataUIC.AmountMotions % 3 == 0)

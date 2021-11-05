@@ -18,30 +18,31 @@ namespace Scripts.Game
         private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilter = default;
         private EcsFilter<CellViewC, CellDataC> _cellViewFilt = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
-        private EcsFilter<CellCloudsDataC> _cellWeatherFilt = default;
+        private EcsFilter<CellCloudDataC> _cellWeatherFilt = default;
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
 
         private readonly EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
         private readonly EcsFilter<CellUnitDataCom, HpUnitC, DamageC, StepComponent> _cellUnitStatsFilt = default;
         private readonly EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, WaterUnitC> _cellUnitOtherFilt = default;
-        private readonly EcsFilter<CellUnitDataCom, VisibleC, CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilt = default;
 
-        public static EcsSystems Run { get; private set; }
-
-
-        public FillEntitiesSys(EcsSystems gameSystems)
+        public FillEntitiesSys(EcsSystems gameSysts)
         {
-            var gameWorld = gameSystems.World;
+            var gameWorld = gameSysts.World;
 
+            #region Data
 
-            new PhotonRpcViewC(true);
+            #region General
+
+            var runGenData = new EcsSystems(gameWorld);
+
+            new RpcViewC(new GameObject("RpcView"));
 
             var rpcGameSys = new EcsSystems(gameWorld)
-                .Add(PhotonRpcViewC.RpcView_GO.AddComponent<RpcSys>());
+                .Add(RpcViewC.RpcView_GO.AddComponent<RpcSys>());
 
-            Run = new EcsSystems(gameWorld)
-                .Add(new SoundSystem())
 
+            var fillAvailCells = new EcsSystems(gameWorld)
+                 .Add(new SoundSystem())
                 .Add(new ClearAvailCellsSys())
                 .Add(new FillCellsForAttackKingSys())
                 .Add(new FillCellsForAttackPawnSys())
@@ -60,18 +61,20 @@ namespace Scripts.Game
                 .Add(new RightUnitEventUISys());
 
 
-            gameSystems
-                .Add(this)
-                .Add(eventExecuters)
+            runGenData
                 .Add(new InputSystem())
                 .Add(new RaySystem())
                 .Add(new SelectorSystem())
-
-                .Add(Run)
-
-                .Add(rpcGameSys);
+                .Add(fillAvailCells)
+                .Add(eventExecuters);
 
 
+            new GameGenSysDataC(runGenData.Run);
+
+            #endregion
+
+
+            #region Master
 
             var rpcSystems = new Dictionary<RpcMasterTypes, EcsSystems>();
 
@@ -96,10 +99,7 @@ namespace Scripts.Game
             rpcSystems.Add(RpcMasterTypes.OldToNewUnit, new EcsSystems(gameWorld).Add(new ScoutOldNewSys()));
             rpcSystems.Add(RpcMasterTypes.BonusNearUnitKing, new EcsSystems(gameWorld).Add(new BonusNearUnitKingMasSys()));
             rpcSystems.Add(RpcMasterTypes.PickUpgrade, new EcsSystems(gameWorld).Add(new PickUpgMasSys()));
-
-            var giveTakeSystems = new EcsSystems(gameWorld)
-                .Add(new GiveTakeTWMasSys());
-            rpcSystems.Add(RpcMasterTypes.GiveTakeToolWeapon, giveTakeSystems);
+            rpcSystems.Add(RpcMasterTypes.GiveTakeToolWeapon, new EcsSystems(gameWorld).Add(new GiveTakeTWMasSys()));
 
 
             var updateMotion = new EcsSystems(gameWorld)
@@ -115,21 +115,112 @@ namespace Scripts.Game
                 .Add(new TruceMasterSystem());
 
 
-            gameSystems
+
+            var systs = new Dictionary<MastDataSysTypes, Action>();
+            systs.Add(MastDataSysTypes.Update, updateMotion.Run);
+            systs.Add(MastDataSysTypes.Truce, truceSystems.Run);
+
+            var rpcSystsAction = new Dictionary<RpcMasterTypes, Action>();
+            foreach (var item_0 in rpcSystems) rpcSystsAction.Add(item_0.Key, item_0.Value.Run);
+
+            new MastSysDataC(systs, rpcSystsAction);
+
+
+            #endregion
+
+            #endregion
+
+
+            #region ViewData
+
+            var syncCellViewSyss = new EcsSystems(gameWorld)
+                .Add(new VisibElseSys())
+                .Add(new SyncCellUnitViewSys())
+                .Add(new SyncCellSelUnitViewSys())
+                .Add(new SyncCellUnitSupVisSystem())
+                .Add(new SyncCellBuildViewSystem())
+                .Add(new SyncCellEnvirsVisSystem())
+                .Add(new SyncCellEffectsVisSystem())
+                .Add(new SyncSupportViewSystem())
+                .Add(new CellWeatherViewSys())
+                .Add(new CellRiverViewSys())
+                .Add(new FliperAndRotatorUnitSystem())
+                .Add(new CellBarsEnvSystem())
+                .Add(new SyncCellTrailSys());
+
+
+            var syncCanvasViewSyss = new EcsSystems(gameWorld)
+            ///left
+            .Add(new BuildZoneUISys())
+               .Add(new EnvironmentUISystem())
+
+            ///right
+            .Add(new RightZoneUISys())
+                .Add(new StatsUISystem())
+                .Add(new ProtectUISys())
+                .Add(new RelaxUISys())
+                .Add(new UniqueAbilitUISys())
+                .Add(new SecondUniqueUISys())
+                .Add(new FirstButtonBuildUISys())
+                .Add(new SecButtonBuildUISys())
+                .Add(new ThirdButtonBuildUISys())
+                .Add(new ShieldUISys())
+                .Add(new EffectsUISys())
+
+            ///down
+            .Add(new DonerUISystem())
+                .Add(new GetterUnitsUISystem())
+                .Add(new GiveTakeUISystem())
+                .Add(new ScoutZoneUISys())
+
+            ///up
+            .Add(new EconomyUpUISys())
+            .Add(new WindUISys())
+
+            ///center
+            .Add(new SelectorUISys())
+                .Add(new TheEndGameUISystem())
+                .Add(new MotionCenterUISystem())
+                .Add(new ReadyZoneUISystem())
+                .Add(new MistakeUISys())
+                .Add(new KingZoneUISys())
+                .Add(new FriendZoneUISys())
+                .Add(new ActiveHitUISys())
+                .Add(new PickUpgUISys());
+
+
+            var rotateCurPlayer = new EcsSystems(gameWorld)
+                .Add(new RotateAllSys());
+
+
+            var sysGenDataView = new EcsSystems(gameWorld)
+                .Add(syncCellViewSyss)
+                .Add(syncCanvasViewSyss);
+
+
+            new GameGenSysDataViewC(sysGenDataView.Run, rotateCurPlayer.Run);
+
+            #endregion
+
+
+
+
+            gameSysts
+                 .Add(this)
+
+                .Add(runGenData)
+                .Add(rpcGameSys)
                 .Add(truceSystems)
-                .Add(updateMotion);
+                .Add(updateMotion)
+                .Add(rotateCurPlayer)
+                .Add(sysGenDataView);
 
-            foreach (var system in rpcSystems.Values) gameSystems.Add(system);
-
-
-            var systs = new Dictionary<MastDataSysTypes, EcsSystems>();
-            systs.Add(MastDataSysTypes.Update, updateMotion);
-            systs.Add(MastDataSysTypes.Truce, truceSystems);
-
-            new MastDataSysC(systs, rpcSystems);
+            foreach (var system in rpcSystems.Values) gameSysts.Add(system);
 
 
-            gameSystems.Init();
+            gameSysts.Init();
+
+            GameGenSysDataViewC.RotateAll.Invoke();
         }
 
 
@@ -167,12 +258,12 @@ namespace Scripts.Game
                     {
                         if (x % 2 == 0)
                         {
-                            curParentCell_GO = CreateGameObject(cellGO, blackCellSR, x, y, MainGOComC.Main_GO);
+                            curParentCell_GO = CreateGameObject(cellGO, blackCellSR, x, y, MainGoVC.Main_GO);
                             SetActive(curParentCell_GO, x, y);
                         }
                         if (x % 2 != 0)
                         {
-                            curParentCell_GO = CreateGameObject(cellGO, whiteCellSR, x, y, MainGOComC.Main_GO);
+                            curParentCell_GO = CreateGameObject(cellGO, whiteCellSR, x, y, MainGoVC.Main_GO);
                             SetActive(curParentCell_GO, x, y);
                         }
                     }
@@ -180,12 +271,12 @@ namespace Scripts.Game
                     {
                         if (x % 2 != 0)
                         {
-                            curParentCell_GO = CreateGameObject(cellGO, blackCellSR, x, y, MainGOComC.Main_GO);
+                            curParentCell_GO = CreateGameObject(cellGO, blackCellSR, x, y, MainGoVC.Main_GO);
                             SetActive(curParentCell_GO, x, y);
                         }
                         if (x % 2 == 0)
                         {
-                            curParentCell_GO = CreateGameObject(cellGO, whiteCellSR, x, y, MainGOComC.Main_GO);
+                            curParentCell_GO = CreateGameObject(cellGO, whiteCellSR, x, y, MainGoVC.Main_GO);
                             SetActive(curParentCell_GO, x, y);
                         }
                     }
@@ -230,8 +321,8 @@ namespace Scripts.Game
                         .Replace(new CellBlocksViewComponent(curParentCell_GO))
                         .Replace(new CellBarsViewComponent(curParentCell_GO))
                         .Replace(new CellSupViewComponent(curParentCell_GO))
-                        .Replace(new CellCloudsDataC())
-                        .Replace(new CellWeatherViewCom(curParentCell_GO))
+                        .Replace(new CellCloudDataC())
+                        .Replace(new CellCloudViewC(curParentCell_GO))
                         .Replace(new CellRiverDataC(new List<byte>()))
                         .Replace(new CellRiverViewC(curParentCell_GO.transform));
 
@@ -277,7 +368,7 @@ namespace Scripts.Game
             ///Else
             ///
             var backGroundGO = GameObject.Instantiate(PrefabsResComCom.BackGroundCollider2D,
-                MainGOComC.Main_GO.transform.position + new Vector3(7, 5.5f, 2), MainGOComC.Main_GO.transform.rotation);
+                MainGoVC.Main_GO.transform.position + new Vector3(7, 5.5f, 2), MainGoVC.Main_GO.transform.rotation);
 
 
             var audioSourceParentGO = new GameObject("AudioSource");
@@ -668,16 +759,16 @@ namespace Scripts.Game
             {
                 //CameraC.SetPosRotClient(WhoseMoveC.CurPlayerI, SpawnInitComSys.Main_GO.transform.position);
 
-                foreach (byte curIdxCell in _xyCellFilter)
-                {
-                    _cellViewFilt.Get1(curIdxCell).SetRotForClient(WhoseMoveC.CurPlayerI);
-                }
+                //foreach (byte curIdxCell in _xyCellFilter)
+                //{
+                //    _cellViewFilt.Get1(curIdxCell).SetRotForClient(WhoseMoveC.CurPlayerI);
+                //}
             }
         }
 
         public static void Dispose()
         {
-            UnityEngine.Object.Destroy(PhotonRpcViewC.RpcView_GO);
+            UnityEngine.Object.Destroy(RpcViewC.RpcView_GO);
         }
     }
 }

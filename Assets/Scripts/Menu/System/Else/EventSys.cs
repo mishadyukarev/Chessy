@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Scripts.Menu
 {
-    internal sealed class EventSys : IEcsInitSystem
+    public sealed class EventSys : IEcsInitSystem
     {
         private EcsFilter<ConnectButtonUICom, OnlineZoneUICom, BackgroundMenuUICom> _rightZoneFilter = default;
         private EcsFilter<ConnectButtonUICom, OfflineZoneUICom, BackgroundMenuUICom> _leftZoneFilter = default;

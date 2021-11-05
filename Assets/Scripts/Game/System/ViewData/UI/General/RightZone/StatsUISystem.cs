@@ -41,7 +41,7 @@ namespace Scripts.Game
                 StatZoneViewUIC.SetTextToStat(UnitStatTypes.Steps, selStepUnitC.StepsAmount.ToString());
                 StatZoneViewUIC.SetTextToStat(UnitStatTypes.Water, thirUnitC_sel.WaterAmount.ToString());
 
-                StatZoneViewUIC.FillAmount(UnitStatTypes.Hp, selHpUnitC.AmountHp, selHpUnitC.MaxHpUnit(unit_sel.Unit, effUnit_sel.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit, UnitStatTypes.Hp)));
+                StatZoneViewUIC.FillAmount(UnitStatTypes.Hp, selHpUnitC.AmountHp, HpUnitC.MAX_HP);
                 StatZoneViewUIC.FillAmount(UnitStatTypes.Damage, selDamUnitC.DamageOnCell(unit_sel.Unit, levUnit_sel.Level, selConUnitC, twUnit_sel, effUnit_sel, UnitsUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit, UnitStatTypes.Damage), selBuildC.BuildType, selEnvC.Envronments), selDamUnitC.DamageAttack(unit_sel.Unit, levUnit_sel.Level, twUnit_sel, effUnit_sel, AttackTypes.Simple, UnitsUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit, UnitStatTypes.Damage)));
                 StatZoneViewUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.StepsAmount, selStepUnitC.MaxSteps(effUnit_sel, unit_sel.Unit, UnitsUpgC.UpgSteps(ownUnit_sel.Owner, unit_sel.Unit)));
                 StatZoneViewUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.WaterAmount, thirUnitC_sel.MaxWater(UnitsUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit, UnitStatTypes.Water)));

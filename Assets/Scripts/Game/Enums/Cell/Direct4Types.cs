@@ -1,12 +1,12 @@
-﻿namespace Scripts.Game
-{
-    public enum Direct4Types
-    {
-        None,
+﻿//namespace Scripts.Game
+//{
+//    public enum Direct4Types
+//    {
+//        None,
 
-        Up,
-        Right,
-        Down,
-        Left,
-    }
-}
+//        Up,
+//        Right,
+//        Down,
+//        Left,
+//    }
+//}

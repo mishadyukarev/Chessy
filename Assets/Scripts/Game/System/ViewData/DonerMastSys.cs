@@ -17,7 +17,7 @@ namespace Scripts.Game
             {
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
-                    MastDataSysC.Run(MastDataSysTypes.Update);
+                    MastSysDataC.InvokeRun(MastDataSysTypes.Update);
                 }
 
                 else if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
@@ -27,7 +27,7 @@ namespace Scripts.Game
 
                     if(nextPlayer == PlayerTypes.First)
                     {
-                        MastDataSysC.Run(MastDataSysTypes.Update);
+                        MastSysDataC.InvokeRun(MastDataSysTypes.Update);
                     }
 
                     WhoseMoveC.SetWhoseMove(nextPlayer);
@@ -35,7 +35,7 @@ namespace Scripts.Game
 
                     curPlayer = WhoseMoveC.CurPlayerI;
 
-                    GenViewSysC.RotateAll.Invoke(); 
+                    GameGenSysDataViewC.RotateAll.Invoke(); 
 
                     FriendZoneDataUIC.IsActiveFriendZone = true;     
                 }
@@ -50,7 +50,7 @@ namespace Scripts.Game
                     {                   
                         if (playerSend == PlayerTypes.Second)
                         {
-                            MastDataSysC.Run(MastDataSysTypes.Update);
+                            MastSysDataC.InvokeRun(MastDataSysTypes.Update);
                         }
 
                         WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));

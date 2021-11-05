@@ -47,11 +47,6 @@ namespace Scripts.Game
                     {
                         if (ownUnit_1.Is(ownUnit_0.Owner))
                         {
-                            if (!effUnitC_1.Have(UnitStatTypes.Hp))
-                            {
-                                effUnitC_1.Set(UnitStatTypes.Hp);
-                                hpUnitC_1.TryAddBonusHp(unit_1.Unit, effUnitC_1.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_1.Owner, unit_1.Unit, UnitStatTypes.Hp));
-                            }
                             if (!effUnitC_1.Have(UnitStatTypes.Damage))
                             {
                                 effUnitC_1.Set(UnitStatTypes.Damage);

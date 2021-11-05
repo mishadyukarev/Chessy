@@ -7,8 +7,6 @@ namespace Scripts.Game
 {
     public sealed class TruceMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<InvUnitsC> _inventorUnitsFilter = default;
-
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
         private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilter = default;
@@ -16,11 +14,10 @@ namespace Scripts.Game
         private EcsFilter<CellDataC> _cellDataFilt = default;
 
         private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, ToolWeaponC> _cellUnitTwFilt = default;
 
         public void Run()
         {
-            ref var invUnitsCom = ref _inventorUnitsFilter.Get1(0);
-
             int random;
 
             foreach (byte idx_0 in _xyCellFilter)
@@ -28,8 +25,9 @@ namespace Scripts.Game
                 ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
                 ref var levUnit_0 = ref _cellUnitFilter.Get2(idx_0);
                 ref var ownUnit_0 = ref _cellUnitFilter.Get3(idx_0);
+                ref var tw_0 = ref _cellUnitTwFilt.Get2(idx_0);
 
-                ref var curBuildDatCom = ref _cellBuildFilter.Get1(idx_0);
+                ref var build_0 = ref _cellBuildFilter.Get1(idx_0);
                 ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
                 ref var envRes_0 = ref _cellEnvFilter.Get2(idx_0);
                 ref var curFireCom = ref _cellFireFilter.Get1(idx_0);
@@ -45,6 +43,12 @@ namespace Scripts.Game
                         {
                             if (ownUnit_0.Is(PlayerTypes.First))
                             {
+                                if (tw_0.HaveToolWeap)
+                                {
+                                    InvToolWeapC.AddAmountTools(ownUnit_0.Owner, tw_0.ToolWeapType, tw_0.LevelTWType);
+                                    tw_0.ToolWeapType = default;
+                                }
+
                                 InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                                 unit_0.NoneUnit();
@@ -52,6 +56,13 @@ namespace Scripts.Game
                         }
                         else
                         {
+
+                            if (tw_0.HaveToolWeap)
+                            {
+                                InvToolWeapC.AddAmountTools(ownUnit_0.Owner, tw_0.ToolWeapType, tw_0.LevelTWType);
+                                tw_0.ToolWeapType = default;
+                            }
+
                             InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
                             WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                             unit_0.NoneUnit();
@@ -59,9 +70,13 @@ namespace Scripts.Game
                     }
 
 
-                    if (curBuildDatCom.HaveBuild)
+                    if (build_0.HaveBuild)
                     {
-
+                        if (build_0.Is(BuildTypes.Camp))
+                        {
+                            WhereBuildsC.Remove(ownUnit_0.Owner, build_0.BuildType, idx_0);
+                            build_0.Reset();
+                        }
                     }
 
                     else

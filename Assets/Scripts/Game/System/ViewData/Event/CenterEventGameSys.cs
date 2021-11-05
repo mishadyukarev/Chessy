@@ -51,7 +51,11 @@ namespace Scripts.Game
         }
         private void ExecuteUpg_But(PickUpgradeTypes upgBut)
         {
-            RpcSys.PickUpgradeToMaster(upgBut);
+            if (WhoseMoveC.IsMyMove)
+            {
+                RpcSys.PickUpgradeToMaster(upgBut);
+            }
+            
         }
     }
 }

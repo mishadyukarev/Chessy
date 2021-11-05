@@ -6,7 +6,7 @@ namespace Scripts.Game
     {
         public void Run()
         {
-            var isActivatedZone = PickUpgZoneDataUIC.IsActivated(WhoseMoveC.CurPlayerI);
+            var isActivatedZone = PickUpgZoneDataUIC.HaveUpgrade(WhoseMoveC.CurPlayerI);
 
             PickUpgZoneViewUIC.SetActiveZone(isActivatedZone);
 

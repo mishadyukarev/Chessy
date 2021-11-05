@@ -16,11 +16,11 @@ namespace Scripts.Game
             foreach (byte idx_0 in _cellViewFilter)
             {
                 _cellViewFilter.Get1(idx_0).SetRotForClient(curPlayer);
-                _cellRiverFilt.Get1(idx_0).Rotate();
-                _cellTrailFilt.Get1(idx_0).Rotate();
+                _cellRiverFilt.Get1(idx_0).Rotate(curPlayer);
+                _cellTrailFilt.Get1(idx_0).Rotate(curPlayer);
             }
 
-            CameraC.SetPosRotClient(curPlayer, MainGOComC.Main_GO.transform.position);
+            CameraC.SetPosRotClient(curPlayer, MainGoVC.Main_GO.transform.position);
         }
     }
 }

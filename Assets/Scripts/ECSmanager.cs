@@ -1,5 +1,4 @@
 ﻿using Leopotam.Ecs;
-using Photon.Pun;
 using Scripts.Common;
 using Scripts.Game;
 using Scripts.Menu;
@@ -12,24 +11,17 @@ namespace Scripts
     {
         #region 
 
+        private EcsWorld _comWorld;
         private EcsWorld _menuWorld;
         private EcsWorld _gameWorld;
-
-        private EcsSystems _allComSystems;
-        //private EcsSystems _allGameSystems;
-
-        private GameGenSysViewM _gameGenSysViewM;
-        //private GameMasSysDataM _gameMasSysDataM;
-        private GameOthSysDataM _gameOthSysDataM;
 
         #endregion
 
 
         public ECSManager(Action<SceneTypes> toggleScene, GameObject main_GO)
         {
-            _allComSystems = new EcsSystems(new EcsWorld());
-            new SpawnInitComSys(_allComSystems, toggleScene, main_GO);
-            _allComSystems.Init();
+            _comWorld = new EcsWorld();
+            new Common.FillEntitiesSys(_comWorld, toggleScene, main_GO);
         }
 
         public void ToggleScene(SceneTypes sceneType)
@@ -43,11 +35,11 @@ namespace Scripts
                     if (_gameWorld != default)
                     {
                         _gameWorld.Destroy();
-                        FillEntitiesSys.Dispose();
+                        Game.FillEntitiesSys.Dispose();
                     }
 
                     _menuWorld = new EcsWorld();
-                    new Menu.InitSpawnSys(new EcsSystems(_menuWorld));
+                    new Menu.FillEntitieSys(_menuWorld);
                     break;
 
                 case SceneTypes.Game:
@@ -58,25 +50,16 @@ namespace Scripts
 
                     _gameWorld = new EcsWorld();
                     new Game.FillEntitiesSys(new EcsSystems(_gameWorld));
-
-                    //_gameOthSysDataM = new GameOthSysDataM(_gameWorld, systs);
-
-                    //_gameGenSysViewM = new GameGenSysViewM(_gameWorld, systs);
-
-                    //systs.Init();
-
-                    //GenViewSysC.RotateAll.Invoke();
                     break;
 
-                default:
-                    throw new Exception();
+                default: throw new Exception();
             }
         }
 
 
         public void OwnUpdate(SceneTypes sceneType)
         {
-            //_comSysDataM.RunUpdate();
+            ComSysDataC.Invoke(EventDataTypes.RunUpdate);
 
             switch (sceneType)
             {
@@ -84,16 +67,12 @@ namespace Scripts
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    Menu.InitSpawnSys.Run.Run();
-                    //_menuSysManag.RunUpdate();
+                    MenuSysDataC.RunUpdate.Invoke();
                     break;
 
                 case SceneTypes.Game:
-                    FillEntitiesSys.Run.Run();
-                    //_gameGenSysViewM.RunUpdate();
-
-                    //if (PhotonNetwork.IsMasterClient) _gameMasSysDataM.RunUpdate();
-                    //else _gameOthSysDataM.RunUpdate();
+                    GameGenSysDataC.RunUpdate.Invoke();
+                    GameGenSysDataViewC.RunUpdate.Invoke();
                     break;
 
                 default:

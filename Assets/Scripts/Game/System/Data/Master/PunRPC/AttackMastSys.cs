@@ -69,80 +69,101 @@ namespace Scripts.Game
             {
                 stepUnitC_from.ZeroSteps();
                 condUnitC_from.DefCondition();
-                //stepUnitC_to.ZeroSteps();
-                //condUnitC_to.DefCondition();
 
 
-                float powerDamFrom = 0;
-                float powerDamTo = 0;
+                float powerDam_from = 0;
+                float powerDam_to = 0;
 
 
-                powerDamFrom += fromDamUnitC.DamageAttack(unit_from.Unit, levUnit_from.Level, twUnitC_from, effUnit_from, simpUniqueType, UnitsUpgC.UpgPercent(ownUnit_from.Owner, unit_from.Unit, UnitStatTypes.Damage));
+                powerDam_from += fromDamUnitC.DamageAttack(unit_from.Unit, levUnit_from.Level, twUnitC_from, effUnit_from, simpUniqueType, UnitsUpgC.UpgPercent(ownUnit_from.Owner, unit_from.Unit, UnitStatTypes.Damage));
 
                 if (unit_from.IsMelee)
                     RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.AttackMelee);
                 else RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.AttackArcher);
 
 
-                if (unit_to.IsMelee)
+
+                powerDam_to += toDamUnitC.DamageOnCell(unit_to.Unit, levUnitC_to.Level, condUnitC_to, twUnitC_to, effUnit_to, UnitsUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Damage), build_to.BuildType, env_to.Envronments);
+                
+
+
+                //var pawnUpg_from = UnitsUpgC.UpgPercent(ownUnit_from.Owner, unit_from.Unit, UnitStatTypes.Hp);
+                //var maxHp_from = HpUnitC.MAX_HP;
+
+                //var pawnUpg_to = UnitsUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Hp);
+                //var maxHp_to = HpUnitC.MAX_HP;
+
+
+                float min_limit = 0;
+                float max_limit = 0;
+                float minus_to = 0;
+                float minus_from = 0;
+
+                var maxDamage = 100;
+                var minDamage = 0;
+
+                if (!unit_to.IsMelee) powerDam_to /= 2;
+
+                if (powerDam_to > powerDam_from)
                 {
-                    powerDamTo += toDamUnitC.DamageOnCell(unit_to.Unit, levUnitC_to.Level, condUnitC_to, twUnitC_to, effUnit_to, UnitsUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Damage), build_to.BuildType, env_to.Envronments);
-                }
+                    max_limit = powerDam_to * 2f;
+                    min_limit = powerDam_to / 2f;
 
+                    if (min_limit > powerDam_from)
+                    {
+                        minus_from = maxDamage;
+                        powerDam_to = minDamage;
+                    }
+                    else
+                    {
+                        minus_to = maxDamage * powerDam_from / max_limit;
 
-                float min = 0;
-                float max = 0;
-                float minusTo = 0;
-                float minusFrom = 0;
-
-                if (powerDamTo > powerDamFrom)
-                {
-                    max = powerDamTo * 2f;
-                    min = powerDamTo / 2f;
-                    if (min < powerDamFrom) minusTo = 100 * powerDamFrom / max;
-
-                    max = powerDamFrom * 2;
-                    minusFrom = 100 * powerDamTo / max;
+                        max_limit = powerDam_from * 2;
+                        minus_from = maxDamage * powerDam_to / max_limit;
+                    }
                 }
                 else
                 {
-                    max = powerDamTo * 2f;
-                    minusTo = 100 * powerDamFrom / max;
+                    max_limit = powerDam_from * 2;
+                    min_limit = powerDam_from / 2;
 
-                    max = powerDamFrom * 2;
-                    min = powerDamFrom / 2;
-                    if (min < powerDamTo) minusFrom = 100 * powerDamTo / max;
+                    if (min_limit > powerDam_to)
+                    {
+                        minus_to = maxDamage;
+                        minus_from = minDamage;
+                    }
+                    else
+                    {
+                        minus_from = maxDamage * powerDam_to / max_limit;
+
+                        max_limit = powerDam_to * 2f;
+                        minus_to = maxDamage * powerDam_from / max_limit;
+                    }
                 }
 
 
-
-                if (!unit_from.IsMelee) minusFrom = 0;
-                if (twUnitC_from.Is(ToolWeaponTypes.Shield))
+                if (unit_from.IsMelee)
                 {
-                    minusFrom = 0;
-                    twUnitC_from.TakeShieldProtect();
+                    if (twUnitC_from.Is(ToolWeaponTypes.Shield))
+                    {
+                        twUnitC_from.TakeShieldProtect();
+                    }
+                    else if (minus_from > 0)
+                    {
+                        hpUnitC_from.TakeHp((int)minus_from);
+                        if (hpUnitC_from.IsHpDeathAfterAttack) hpUnitC_from.SetMinHp();
+                    }
                 }
 
-                if (minusFrom > 0)
-                {
-                    hpUnitC_from.TakeHp((int)minusFrom);
-                    if (hpUnitC_from.IsHpDeathAfterAttack) hpUnitC_from.ZeroHp();
-                }
 
-
-
-
-                if (!unit_to.IsMelee) minusTo = hpUnitC_to.MaxHpUnit(unit_to.Unit, effUnit_to.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Hp));
                 if (twUnitC_to.Is(ToolWeaponTypes.Shield))
                 {
-                    minusTo = 0;
                     twUnitC_to.TakeShieldProtect();
                 }
-
-                if (minusTo > 0)
+                else if (minus_to > 0)
                 {
-                    hpUnitC_to.TakeHp((int)minusTo);
-                    if (hpUnitC_to.IsHpDeathAfterAttack) hpUnitC_to.ZeroHp();
+                    hpUnitC_to.TakeHp((int)minus_to);
+                    if (hpUnitC_to.IsHpDeathAfterAttack) hpUnitC_to.SetMinHp();
                 }
 
 
@@ -202,7 +223,6 @@ namespace Scripts.Game
                 {
                     if (unit_from.Is(UnitTypes.King))
                     {
-                        ownUnit_from.SetOwner(ownUnit_to.Owner);
                         EndGameDataUIC.PlayerWinner = ownUnit_to.Owner;
                     }
 
@@ -216,8 +236,8 @@ namespace Scripts.Game
                     unit_from.NoneUnit();
                 }
 
-                if(unit_to.HaveUnit) hpUnitC_to.TryTakeBonusHp(unit_to.Unit, effUnit_to.Have(UnitStatTypes.Hp));
-                if (unit_from.HaveUnit) hpUnitC_from.TryTakeBonusHp(unit_from.Unit, effUnit_from.Have(UnitStatTypes.Hp));
+                //if(unit_to.HaveUnit) hpUnitC_to.TryTakeBonusHp(unit_to.Unit, effUnit_to.Have(UnitStatTypes.Hp));
+                //if (unit_from.HaveUnit) hpUnitC_from.TryTakeBonusHp(unit_from.Unit, effUnit_from.Have(UnitStatTypes.Hp));
 
                 effUnit_from.DefAllEffects();
                 effUnit_to.DefAllEffects();

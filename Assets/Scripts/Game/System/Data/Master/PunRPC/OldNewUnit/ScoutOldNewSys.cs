@@ -27,7 +27,7 @@ namespace Scripts.Game
 
             //var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (hpUnitC.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
+            if (hpUnitC.HaveMaxHpUnit)
             {
                 if (stepUnitC.HaveMaxSteps(effUnit_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                 {
@@ -44,7 +44,7 @@ namespace Scripts.Game
                     unit_0.SetUnit(_forOldNewUnitCom.Get1(0).UnitType);
                     levUnitC_0.SetLevel(LevelUnitTypes.Wood);
 
-                    hpUnitC.SetMaxHp(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
+                    hpUnitC.SetMaxHp();
                     stepUnitC.SetMaxSteps(effUnit_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
                     _cellUnitOthFilt.Get2(idx_0).DefCondition();
                     WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);

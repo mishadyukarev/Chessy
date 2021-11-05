@@ -27,5 +27,7 @@
         GiveTakeToolWeapon,
 
         BuyRes,
+
+        RotateAll,
     }
 }

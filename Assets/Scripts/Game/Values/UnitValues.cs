@@ -4,42 +4,6 @@ namespace Scripts.Game
 {
     public static class UnitValues
     {
-        #region Health
-
-        public static int StandMaxHpUnit(UnitTypes unitType)
-        {
-            float amountHp = 0;
-            switch (unitType)
-            {
-                case UnitTypes.None: amountHp = 0; break;
-                case UnitTypes.King: amountHp = 300; break;
-                case UnitTypes.Pawn: amountHp = 100; break;
-                case UnitTypes.Rook: amountHp = 1; break;
-                case UnitTypes.Bishop: amountHp = 1; break;
-                case UnitTypes.Scout: amountHp = 1; break;
-                default: throw new Exception();
-            }
-
-            return (int)amountHp;
-        }
-
-        public static float PercentForAddingHp(UnitTypes unitType)
-        {
-            switch (unitType)
-            {
-                case UnitTypes.None: throw new Exception();
-                case UnitTypes.King: return 0.3f;
-                case UnitTypes.Pawn: return 1;
-                case UnitTypes.Rook: return 1;
-                case UnitTypes.Bishop: return 1;
-                case UnitTypes.Scout: return 1;
-                default: throw new Exception();
-            }
-        }
-
-        #endregion
-
-
         #region Damage
 
         public static int StandDamage(UnitTypes unitType, LevelUnitTypes upgUnitType)
@@ -51,7 +15,7 @@ namespace Scripts.Game
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 400;
+                        case LevelUnitTypes.Wood: return 300;
                         case LevelUnitTypes.Iron: throw new Exception();
                         default: throw new Exception();
                     }
@@ -59,8 +23,8 @@ namespace Scripts.Game
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 150;
-                        case LevelUnitTypes.Iron: return 200;
+                        case LevelUnitTypes.Wood: return 100;
+                        case LevelUnitTypes.Iron: return 150;
                         default: throw new Exception();
                     }
                 case UnitTypes.Rook:
@@ -83,7 +47,7 @@ namespace Scripts.Game
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 1;
+                        case LevelUnitTypes.Wood: return 50;
                         case LevelUnitTypes.Iron: throw new Exception();
                         default: throw new Exception();
                     }
@@ -140,7 +104,7 @@ namespace Scripts.Game
             switch (buildType)
             {
                 case BuildTypes.None: return 0;
-                case BuildTypes.City: return 0.25f;
+                case BuildTypes.City: return 0.2f;
                 case BuildTypes.Farm: return -0.1f;
                 case BuildTypes.Woodcutter: return -0.1f;
                 case BuildTypes.Mine: return -0.1f;

@@ -27,6 +27,20 @@ namespace Scripts.Game
 
             _trails_SRs[dir].enabled = enabled;
         }
-        public void Rotate() => _parent_Trans.eulerAngles += new Vector3(0, 0, 180);
+        public void Rotate(PlayerTypes player)
+        {
+            switch (player)
+            {
+                case PlayerTypes.None: throw new Exception();
+                case PlayerTypes.First:
+                    _parent_Trans.localEulerAngles = new Vector3(0, 0, 0);
+                    break;
+                case PlayerTypes.Second:
+                    _parent_Trans.localEulerAngles = new Vector3(0, 0, 180);
+                    break;
+                default: throw new Exception();
+            }
+            
+        }
     }
 }

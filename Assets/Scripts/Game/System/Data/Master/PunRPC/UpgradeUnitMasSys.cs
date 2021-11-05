@@ -30,7 +30,7 @@ namespace Scripts.Game
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (hpUnit_0.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
+            if (hpUnit_0.HaveMaxHpUnit)
             {
                 if (stepUnit_0.HaveMinSteps)
                 {
@@ -44,7 +44,7 @@ namespace Scripts.Game
 
                         stepUnit_0.TakeSteps();
 
-                        hpUnit_0.SetMaxHp(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
+                        hpUnit_0.SetMaxHp();
 
                         RpcSys.SoundToGeneral(sender, ClipGameTypes.UpgradeUnitMelee);
                     }

@@ -50,7 +50,7 @@ namespace Scripts.Game
                             thirUnitC_0.TakeWater();
                             if (!thirUnitC_0.HaveWater)
                             {
-                                hpUnitC_0.TakeHpThirsty(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
+                                hpUnitC_0.TakeHpThirsty(unit_0.Unit);
 
                                 if (!hpUnitC_0.HaveHp)
                                 {

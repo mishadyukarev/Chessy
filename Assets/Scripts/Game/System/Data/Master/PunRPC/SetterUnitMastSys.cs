@@ -44,7 +44,7 @@ namespace Scripts.Game
                 ownUnit_0.SetOwner(whoseMove);
                 curTwUnitC.ToolWeapType = default;
                 effUnit_0.DefAllEffects();
-                curHpUnitC.AmountHp = curHpUnitC.MaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
+                curHpUnitC.SetMaxHp();
                 stepUnitC.StepsAmount = UnitValues.StandartAmountSteps(false, unitForSet, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
                 condUnitC.DefCondition();
                 thirUnitC_0.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
@@ -60,7 +60,7 @@ namespace Scripts.Game
                 }
                 WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
 
-                if (unitForSet == UnitTypes.King) PickUpgZoneDataUIC.SetActiveParent(whoseMove, true);
+                if (unitForSet == UnitTypes.King) PickUpgZoneDataUIC.SetHaveUpgrade(whoseMove, true);
 
                 RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
             }

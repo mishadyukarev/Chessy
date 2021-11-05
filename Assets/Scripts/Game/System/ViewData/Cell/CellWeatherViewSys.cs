@@ -4,7 +4,7 @@ namespace Scripts.Game
 {
     public sealed class CellWeatherViewSys : IEcsRunSystem
     {
-        private EcsFilter<CellCloudsDataC, CellWeatherViewCom> _cellWeathFilt = default;
+        private EcsFilter<CellCloudDataC, CellCloudViewC> _cellWeathFilt = default;
 
         public void Run()
         {

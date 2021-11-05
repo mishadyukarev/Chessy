@@ -3,7 +3,7 @@ using Photon.Pun;
 
 namespace Scripts.Menu
 {
-    internal sealed class ConnectorMenuSys : IEcsRunSystem
+    public sealed class ConnectorMenuSys : IEcsRunSystem
     {
         private EcsFilter<ConnectButtonUICom, OnlineZoneUICom, BackgroundMenuUICom> _rightZoneFilter = default;
         private EcsFilter<ConnectButtonUICom, OfflineZoneUICom, BackgroundMenuUICom> _leftZoneFilter = default;

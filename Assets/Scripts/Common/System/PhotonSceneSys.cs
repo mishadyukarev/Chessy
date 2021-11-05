@@ -15,7 +15,7 @@ namespace Scripts.Common
         {
             base.OnLeftRoom();
 
-            CommonDataC.ToggleScene(SceneTypes.Menu);
+            ComSysDataC.ToggleScene(SceneTypes.Menu);
         }
 
         //public override sealed void OnPhotonPlayerDisconnected(Player otherPlayer)
@@ -30,7 +30,7 @@ namespace Scripts.Common
             base.OnPlayerLeftRoom(otherPlayer);
 
             PhotonNetwork.LeaveRoom();
-            CommonDataC.ToggleScene(SceneTypes.Menu);
+            ComSysDataC.ToggleScene(SceneTypes.Menu);
         }
 
         public override sealed void OnMasterClientSwitched(Player newMasterClient)
@@ -48,7 +48,7 @@ namespace Scripts.Common
 
         public override sealed void OnJoinedRoom()
         {
-            CommonDataC.ToggleScene(SceneTypes.Game);
+            ComSysDataC.ToggleScene(SceneTypes.Game);
         }
 
         public override void OnPlayerEnteredRoom(Player newPlayer)

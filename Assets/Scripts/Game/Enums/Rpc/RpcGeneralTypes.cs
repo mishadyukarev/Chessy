@@ -10,5 +10,7 @@
         Mistake,
         GetUnit,
         Sound,
+
+        RotateAll,
     }
 }

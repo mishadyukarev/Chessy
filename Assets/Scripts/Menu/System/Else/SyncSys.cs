@@ -3,7 +3,7 @@ using Scripts.Common;
 
 namespace Scripts.Menu
 {
-    internal sealed class SyncSys : IEcsRunSystem
+    public sealed class SyncSys : IEcsRunSystem
     {
         public void Run()
         {

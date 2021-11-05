@@ -6,7 +6,7 @@ namespace Scripts.Game
     public sealed class CloudUpdMasSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellCloudsDataC> _cellWeatherFilt = default;
+        private EcsFilter<CellCloudDataC> _cellWeatherFilt = default;
 
         public void Run()
         {

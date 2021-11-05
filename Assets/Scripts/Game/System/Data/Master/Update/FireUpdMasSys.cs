@@ -15,7 +15,7 @@ namespace Scripts.Game
         private EcsFilter<CellFireDataC> _cellFireDataFilter = default;
         private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvDataFilter = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
-        private EcsFilter<CellCloudsDataC> _cellCloudsFilt = default;
+        private EcsFilter<CellCloudDataC> _cellCloudsFilt = default;
 
         public void Run()
         {

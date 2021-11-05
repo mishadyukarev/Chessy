@@ -41,7 +41,7 @@ namespace Scripts.Game
 
                             if (condUnit_0.Is(CondUnitTypes.Relaxed))
                             {
-                                if (hpUnit_0.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
+                                if (hpUnit_0.HaveMaxHpUnit)
                                 {
                                     if (unit_0.Is(UnitTypes.Pawn))
                                     {
@@ -145,10 +145,10 @@ namespace Scripts.Game
 
                                 else
                                 {
-                                    hpUnit_0.AddHealHp(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
-                                    if (hpUnit_0.HaveMaxHpUnit(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp)))
+                                    hpUnit_0.AddHealHp();
+                                    if (hpUnit_0.HaveMaxHpUnit)
                                     {
-                                        hpUnit_0.SetMaxHp(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Hp), UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Hp));
+                                        hpUnit_0.SetMaxHp();
                                     }
                                 }
                             }

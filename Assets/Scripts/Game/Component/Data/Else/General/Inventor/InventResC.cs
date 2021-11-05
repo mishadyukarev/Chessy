@@ -150,7 +150,7 @@ namespace Scripts.Game
         {
             for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
             {
-                Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForBuyRes(res));
+                Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForBuyRes(resType));
             }
 
             var amount = 0;
