@@ -20,7 +20,9 @@ namespace Scripts.Menu
 
 
 
-            CenterZoneUICom.AddListHelp_But(Help);
+            CenterZoneUICom.AddListShop_But(ShopZone);
+            ShopZoneUICom.AddListExit_Button(ExitShop);
+
             CenterZoneUICom.AddListDiscord_But(delegate { Application.OpenURL(URL.URL_DISCORD); });
             CenterZoneUICom.AddListLikeGame_But(delegate { Application.OpenURL(URL.URL_GAME_IN_GOOGLE_PLAY); });
             CenterZoneUICom.AddListQuit_But(delegate { Application.Quit(); });
@@ -39,7 +41,7 @@ namespace Scripts.Menu
             _leftZoneFilter.Get2(0).AddListFriend(delegate { CreateOffGame(GameModes.WithFriendOff); });
 
 
-            ShopZoneUICom.AddListExit_Button(ExitShop);
+
             LikeGameUICom.AddListLikeGame_But(delegate { Application.OpenURL(URL.URL_GAME_IN_GOOGLE_PLAY); });
             LikeGameUICom.AddListenerExit_But(ExitLikeGame);
         }
@@ -113,7 +115,7 @@ namespace Scripts.Menu
             PhotonNetwork.CreateRoom(default);
         }
 
-        private void Help()
+        private void ShopZone()
         {
             ShopZoneUICom.EnableZone();
         }

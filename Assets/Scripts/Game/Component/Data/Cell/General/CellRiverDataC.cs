@@ -37,7 +37,7 @@ namespace Scripts.Game
         public void AddDir(DirectTypes dir)
         {
             if (_directs[dir] == true) throw new Exception();
-            if(!_directs.ContainsKey(dir)) throw new Exception();
+            if (!_directs.ContainsKey(dir)) throw new Exception();
             _directs[dir] = true;
         }
         public void RemoveDir(DirectTypes dir)

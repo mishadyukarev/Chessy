@@ -17,15 +17,23 @@ namespace Scripts.Game
             _ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             SelectorC.RaycastHit2D = Physics2D.Raycast(_ray.origin, _ray.direction, RAY_DISTANCE);
 
-#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
 
-        if (EventSystem.current.IsPointerOverGameObject())
-        {
-            SelectorC.RaycastGettedType = RaycastGettedTypes.UI;
-            return;
-        }
 
-#endif
+            if (EventSystem.current.IsPointerOverGameObject())
+            {
+                SelectorC.RaycastGettedType = RaycastGettedTypes.UI;
+                return;
+            }
+
+//#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
+
+//            if (EventSystem.current.IsPointerOverGameObject())
+//        {
+//            SelectorC.RaycastGettedType = RaycastGettedTypes.UI;
+//            return;
+//        }
+
+//#endif
 
             if (SelectorC.RaycastHit2D)
             {
@@ -52,7 +60,7 @@ namespace Scripts.Game
         {
             if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             {
-                SelectorCom.RaycastGettedType = RaycastGettedTypes.UI;
+                SelectorC.RaycastGettedType = RaycastGettedTypes.UI;
             }
         }
 #endif

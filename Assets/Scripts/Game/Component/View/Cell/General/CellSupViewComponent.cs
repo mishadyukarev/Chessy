@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Scripts.Game
 {
@@ -13,7 +12,7 @@ namespace Scripts.Game
             _supVis_SR = parentGO.GetComponent<SpriteRenderer>();
         }
 
-        public void SetColor(SupVisTypes supVisType)=> _supVis_SR.color = ColorsValues.Color(supVisType);
+        public void SetColor(SupVisTypes supVisType) => _supVis_SR.color = ColorsValues.Color(supVisType);
 
         public void EnableSR() => _supVis_SR.enabled = true;
         public void DisableSR() => _supVis_SR.enabled = false;

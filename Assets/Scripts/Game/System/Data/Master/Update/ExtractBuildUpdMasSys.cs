@@ -42,7 +42,7 @@ namespace Scripts.Game
                                 env_0.Reset(EnvTypes.Fertilizer);
                                 WhereEnvC.Remove(EnvTypes.Fertilizer, idx_0);
 
-                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.BuildType, idx_0);
+                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
                                 build_0.Reset();
                             }
                         }
@@ -62,7 +62,7 @@ namespace Scripts.Game
                                 env_0.Reset(EnvTypes.AdultForest);
                                 WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
 
-                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.BuildType, idx_0);
+                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
                                 build_0.Reset();
 
                                 _cellTrailFilt.Get1(idx_0).ResetAll();
@@ -95,7 +95,7 @@ namespace Scripts.Game
 
                             if (!envRes_0.HaveRes(EnvTypes.Hill))
                             {
-                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.BuildType, idx_0);
+                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
                                 build_0.Reset();
                             }
                         }

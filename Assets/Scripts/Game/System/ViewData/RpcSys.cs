@@ -64,7 +64,6 @@ namespace Scripts.Game
         public static void ReadyToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Ready, new object[default]);
 
         public static void DoneToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[default]);
-        public static void ActiveAmountMotionUIToGeneral(RpcTarget rpcTarget) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.ActiveAmountMotionUI, new object[default]);
         
         public static void RotateAllToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.RotateAll, new object[default]);
         public static void RotateAllToMaster(Player sender) => PhotonView.RPC(GeneralRPCName, sender, RpcGeneralTypes.RotateAll, new object[default]);
@@ -236,10 +235,6 @@ namespace Scripts.Game
                 case RpcGeneralTypes.None:
                     throw new Exception();
 
-                case RpcGeneralTypes.ActiveAmountMotionUI:
-                    MotionsDataUIC.IsActivatedUI = true;
-                    break;
-
                 case RpcGeneralTypes.Mistake:
                     var mistakeType = (MistakeTypes)objects[_curNumber++];
                     MistakeDataUIC.MistakeType = mistakeType;
@@ -309,7 +304,8 @@ namespace Scripts.Game
 
             objs.Add(ReadyDataUIC.IsStartedGame);
             objs.Add(ReadyDataUIC.IsReady(PlayerTypes.Second));
-
+             
+            foreach (var item_0 in MotionsDataUIC.IsActivatedUI) objs.Add(item_0.Value);
             objs.Add(MotionsDataUIC.AmountMotions);
 
             objs.Add(PickUpgZoneDataUIC.HaveUpgrade(PlayerTypes.Second));
@@ -323,21 +319,21 @@ namespace Scripts.Game
 
             objs.Add(WindC.DirectWind);
 
-            foreach (var item_0 in UnitsUpgC.PercUpgs)
+            foreach (var item_0 in UnitPercUpgC.PercUpgs)
             {
                 foreach (var item_1 in item_0.Value)
                 {
                     foreach (var item_2 in item_1.Value)
                     {
-                        objs.Add(UnitsUpgC.UpgPercent(item_0.Key, item_1.Key, item_2.Key));
+                        objs.Add(UnitPercUpgC.UpgPercent(item_0.Key, item_1.Key, item_2.Key));
                     }
                 }
             }
-            foreach (var item_0 in UnitsUpgC.StepUpgs)
+            foreach (var item_0 in UnitStepUpgC.StepUpgs)
             {
                 foreach (var item_1 in item_0.Value)
                 {
-                    objs.Add(UnitsUpgC.UpgSteps(item_0.Key, item_1.Key));
+                    objs.Add(UnitStepUpgC.UpgSteps(item_0.Key, item_1.Key));
                 }
             }
 
@@ -349,19 +345,19 @@ namespace Scripts.Game
                 objs.Add(_cellUnitMainFilt.Get3(idx_0).Owner);
                 objs.Add(_cellUnitMainFilt.Get2(idx_0).Level);
                 ref var hpUnit_0 = ref _cellUnitStatFilt.Get2(idx_0);
-                objs.Add(hpUnit_0.AmountHp);
-                objs.Add(_cellUnitStatFilt.Get3(idx_0).StepsAmount);
+                objs.Add(hpUnit_0.Hp);
+                objs.Add(_cellUnitStatFilt.Get3(idx_0).Steps);
 
-                objs.Add(_cellUnitOthFilt.Get2(idx_0).CondUnitType);
+                objs.Add(_cellUnitOthFilt.Get2(idx_0).Condition);
                 foreach (var item in _cellUnitOthFilt.Get3(idx_0).Effects) objs.Add(item.Value);
-                objs.Add(_cellUnitOthFilt.Get4(idx_0).WaterAmount);
+                objs.Add(_cellUnitOthFilt.Get4(idx_0).Water);
 
                 objs.Add(_cellUnitTWFilt.Get2(idx_0).ToolWeapType);
                 objs.Add(_cellUnitTWFilt.Get2(idx_0).LevelTWType);
                 objs.Add(_cellUnitTWFilt.Get2(idx_0).ShieldProt);
 
 
-                objs.Add(_cellBuildFilter.Get1(idx_0).BuildType);
+                objs.Add(_cellBuildFilter.Get1(idx_0).Build);
                 objs.Add(_cellBuildFilter.Get2(idx_0).Owner);
 
 
@@ -511,6 +507,7 @@ namespace Scripts.Game
             ReadyDataUIC.IsStartedGame = (bool)objects[_curNumber++];
             ReadyDataUIC.SetIsReady(WhoseMoveC.CurPlayerI, (bool)objects[_curNumber++]);
 
+            foreach (var item_0 in MotionsDataUIC.IsActivatedUI) MotionsDataUIC.Sync(item_0.Key, item_0.Value);
             MotionsDataUIC.AmountMotions = (int)objects[_curNumber++];
 
             PickUpgZoneDataUIC.SetHaveUpgrade(PlayerTypes.Second, (bool)objects[_curNumber++]);
@@ -527,21 +524,21 @@ namespace Scripts.Game
 
             #region Upgrades
 
-            foreach (var item_0 in UnitsUpgC.PercUpgs)
+            foreach (var item_0 in UnitPercUpgC.PercUpgs)
             {
                 foreach (var item_1 in item_0.Value)
                 {
                     foreach (var item_2 in item_1.Value)
                     {
-                        UnitsUpgC.SetUpg(item_0.Key, item_1.Key, item_2.Key, (float)objects[_curNumber++]);
+                        UnitPercUpgC.SetUpg(item_0.Key, item_1.Key, item_2.Key, (float)objects[_curNumber++]);
                     }
                 }
             }
-            foreach (var item_0 in UnitsUpgC.StepUpgs)
+            foreach (var item_0 in UnitStepUpgC.StepUpgs)
             {
                 foreach (var item_1 in item_0.Value)
                 {
-                    UnitsUpgC.SetStepUpg(item_0.Key, item_1.Key, (int)objects[_curNumber++]);
+                    UnitStepUpgC.SetStepUpg(item_0.Key, item_1.Key, (int)objects[_curNumber++]);
                 }
             }
 
@@ -552,12 +549,12 @@ namespace Scripts.Game
             {
                 ref var unit_0 = ref _cellUnitOthFilt.Get1(idx_0);
                 unit_0.Sync((UnitTypes)objects[_curNumber++]);
-                _cellUnitMainFilt.Get3(idx_0).SyncOwner((PlayerTypes)objects[_curNumber++]);
-                _cellUnitMainFilt.Get2(idx_0).SyncLevelUnit((LevelUnitTypes)objects[_curNumber++]);
-                _cellUnitStatFilt.Get2(idx_0).AmountHp = (int)objects[_curNumber++];
-                _cellUnitStatFilt.Get3(idx_0).StepsAmount = (int)objects[_curNumber++];
+                _cellUnitMainFilt.Get3(idx_0).Sync((PlayerTypes)objects[_curNumber++]);
+                _cellUnitMainFilt.Get2(idx_0).Sync((LevelUnitTypes)objects[_curNumber++]);
+                _cellUnitStatFilt.Get2(idx_0).Sync((int)objects[_curNumber++]);
+                _cellUnitStatFilt.Get3(idx_0).Sync((int)objects[_curNumber++]);
 
-                _cellUnitOthFilt.Get2(idx_0).CondUnitType = (CondUnitTypes)objects[_curNumber++];
+                _cellUnitOthFilt.Get2(idx_0).Sync((CondUnitTypes)objects[_curNumber++]);
                 foreach (var item in _cellUnitOthFilt.Get3(idx_0).Effects) _cellUnitOthFilt.Get3(idx_0).Sync(item.Key, (bool)objects[_curNumber++]);
                 _cellUnitOthFilt.Get4(idx_0).Sync((int)objects[_curNumber++]);
 
@@ -568,7 +565,7 @@ namespace Scripts.Game
 
 
                 _cellBuildFilter.Get1(idx_0).Sync((BuildTypes)objects[_curNumber++]);
-                _cellBuildFilter.Get2(idx_0).SyncOwner((PlayerTypes)objects[_curNumber++]);
+                _cellBuildFilter.Get2(idx_0).Sync((PlayerTypes)objects[_curNumber++]);
 
 
 

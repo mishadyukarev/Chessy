@@ -27,9 +27,9 @@ namespace Scripts.Game
 
 
 
-        public void SetUnit(UnitTypes unitType) 
+        public void SetUnit(UnitTypes unitType)
         {
-            if(unitType == UnitTypes.None) throw new Exception();
+            if (unitType == UnitTypes.None) throw new Exception();
             if (HaveUnit) throw new Exception("It's got unit");
 
             _unitType = unitType;

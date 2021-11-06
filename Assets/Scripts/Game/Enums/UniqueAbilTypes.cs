@@ -1,13 +1,13 @@
-﻿namespace Scripts.Game
-{
-    public enum UniqueAbilTypes
-    {
-        None,
+﻿//namespace Scripts.Game
+//{
+//    public enum UniqueAbilTypes
+//    {
+//        None,
 
-        FirePawn,
-        NoneFirePawn,
-        FireArcher,
-        Seed,
-        CircularAttack,
-    }
-}
+//        FirePawn,
+//        NoneFirePawn,
+//        FireArcher,
+//        Seed,
+//        CircularAttack,
+//    }
+//}

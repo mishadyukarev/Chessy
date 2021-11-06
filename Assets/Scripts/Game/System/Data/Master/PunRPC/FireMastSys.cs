@@ -25,7 +25,7 @@ namespace Scripts.Game
 
             ref var unit_from = ref _cellUnitFilter.Get1(fromIdx);
             ref var stepUnitC_from = ref _cellUnitFilter.Get2(fromIdx);
-            ref var effUnitC_from = ref _cellUnitOthFilt.Get2(fromIdx);
+            ref var effUnit_from = ref _cellUnitOthFilt.Get2(fromIdx);
             ref var ownUnit_from = ref _cellUnitOthFilt.Get3(fromIdx);
 
             ref var toUnitDatCom = ref _cellUnitFilter.Get1(toIdx);
@@ -69,13 +69,13 @@ namespace Scripts.Game
 
             else
             {
-                if (stepUnitC_from.HaveMaxSteps(effUnitC_from, unit_from.Unit, UnitsUpgC.UpgSteps(ownUnit_from.Owner, unit_from.Unit)))
+                if (stepUnitC_from.HaveMaxSteps(unit_from.Unit, effUnit_from.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_from.Owner, unit_from.Unit)))
                 {
                     if (_cellsArcherArsonFilt.Get1(0).HaveIdxCell(whoseMove, fromIdx, toIdx))
                     {
                         RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.Fire);
 
-                        stepUnitC_from.ZeroSteps();
+                        stepUnitC_from.DefSteps();
                         toFireDatCom.HaveFire = true;
                     }
                 }

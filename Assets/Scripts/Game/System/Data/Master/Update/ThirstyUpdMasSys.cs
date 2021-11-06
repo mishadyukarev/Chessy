@@ -43,7 +43,7 @@ namespace Scripts.Game
                     {
                         if (riverC_0.HaveNearRiver)
                         {
-                            thirUnitC_0.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
+                            thirUnitC_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
                         }
                         else
                         {
@@ -61,7 +61,7 @@ namespace Scripts.Game
 
                                     if (build_0.Is(BuildTypes.Camp))
                                     {
-                                        WhereBuildsC.Remove(ownBuild_0.Owner, build_0.BuildType, idx_0);
+                                        WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
                                         build_0.Reset();
                                     }
 

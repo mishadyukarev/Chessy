@@ -12,7 +12,7 @@ namespace Scripts.Game
             if (levelUnit == LevelUnitTypes.None) throw new Exception();
             _levelUnitType = levelUnit;
         }
-        public void SyncLevelUnit(LevelUnitTypes levelUnit) => _levelUnitType = levelUnit;
+        public void Sync(LevelUnitTypes levelUnit) => _levelUnitType = levelUnit;
         public bool Is(LevelUnitTypes levelUnitType) => _levelUnitType == levelUnitType;
     }
 }

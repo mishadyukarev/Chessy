@@ -29,7 +29,7 @@ namespace Scripts.Game
             ref var curHpUnitC = ref _cellUnitFilter.Get2(idx_0);
             ref var stepUnitC = ref _cellUnitFilter.Get3(idx_0);
 
-            ref var condUnitC = ref _cellUnitOthFilt.Get2(idx_0);
+            ref var condUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
             ref var curTwUnitC = ref _cellUnitOthFilt.Get3(idx_0);
             ref var effUnit_0 = ref _cellUnitOthFilt.Get4(idx_0);
             ref var thirUnitC_0 =ref _cellUnitOthFilt.Get5(idx_0);
@@ -45,9 +45,9 @@ namespace Scripts.Game
                 curTwUnitC.ToolWeapType = default;
                 effUnit_0.DefAllEffects();
                 curHpUnitC.SetMaxHp();
-                stepUnitC.StepsAmount = UnitValues.StandartAmountSteps(false, unitForSet, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
-                condUnitC.DefCondition();
-                thirUnitC_0.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
+                stepUnitC.SetMaxSteps(unitForSet, false, UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
+                if(condUnit_0.HaveCondition) condUnit_0.Def();
+                thirUnitC_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
                 if (InvUnitsC.HaveUnitInInv(whoseMove, unitForSet, LevelUnitTypes.Iron))
                 {
                     InvUnitsC.TakeUnitsInInv(whoseMove, unitForSet, LevelUnitTypes.Iron);

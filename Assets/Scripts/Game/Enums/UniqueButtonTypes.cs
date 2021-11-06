@@ -1,11 +1,10 @@
-﻿namespace Scripts.Game
-{
-    public enum UniqueButtonTypes
-    {
-        None,
+﻿//namespace Scripts.Game
+//{
+//    public enum UniqueButtonTypes
+//    {
+//        None,
 
-        First,
-        Second,
-        Third
-    }
-}
+//        Second,
+//        Third
+//    }
+//}

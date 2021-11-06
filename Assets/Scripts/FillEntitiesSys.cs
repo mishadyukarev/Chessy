@@ -159,8 +159,8 @@ namespace Scripts.Game
                 .Add(new StatsUISystem())
                 .Add(new ProtectUISys())
                 .Add(new RelaxUISys())
-                .Add(new UniqueAbilitUISys())
-                .Add(new SecondUniqueUISys())
+                .Add(new UniqFirstButUISys())
+                .Add(new UniqSecButUISys())
                 .Add(new FirstButtonBuildUISys())
                 .Add(new SecButtonBuildUISys())
                 .Add(new ThirdButtonBuildUISys())
@@ -237,7 +237,7 @@ namespace Scripts.Game
 
             ///Cells
             ///
-            var cellGO = PrefabsResComCom.CellGO;
+            var cellGO = PrefabResComC.CellGO;
             var whiteCellSR = SpritesResComC.Sprite(SpriteGameTypes.WhiteCell);
             var blackCellSR = SpritesResComC.Sprite(SpriteGameTypes.BlackCell);
 
@@ -345,8 +345,10 @@ namespace Scripts.Game
                          .Replace(new StepComponent())
 
                          .Replace(new ConditionUnitC())
+                         .Replace(new MoveInCondC(true))
+
                          .Replace(new UnitEffectsC(true))
-                         .Replace(new WaterUnitC())
+                         .Replace(new WaterUnitC())                       
 
                          .Replace(new ToolWeaponC())
 
@@ -367,7 +369,7 @@ namespace Scripts.Game
 
             ///Else
             ///
-            var backGroundGO = GameObject.Instantiate(PrefabsResComCom.BackGroundCollider2D,
+            var backGroundGO = GameObject.Instantiate(PrefabResComC.BackGroundCollider2D,
                 MainGoVC.Main_GO.transform.position + new Vector3(7, 5.5f, 2), MainGoVC.Main_GO.transform.rotation);
 
 
@@ -389,7 +391,8 @@ namespace Scripts.Game
                 .Replace(new GiveTakeDataUIC(true))
 
                 .Replace(new BuildsUpgC(true))
-                .Replace(new UnitsUpgC(true))
+                .Replace(new UnitPercUpgC(true))
+                .Replace(new UnitStepUpgC(new Dictionary<PlayerTypes, Dictionary<UnitTypes, int>>()))
 
                 .Replace(new CellsForSetUnitC(true))
                 .Replace(new CellsForShiftCom(true))
@@ -413,18 +416,22 @@ namespace Scripts.Game
             ///Canvas
             ///
 
-            CanvasCom.ReplaceZone(SceneTypes.Game);
+            CanvasC.SetCurZone(SceneTypes.Game);
 
-            var upZone_GO = CanvasCom.FindUnderParent("UpZone");
-            var centerZone_GO = CanvasCom.FindUnderParent("CenterZone");
-            var downZone_GO = CanvasCom.FindUnderParent("DownZone");
-            var leftZone_GO = CanvasCom.FindUnderParent("LeftZone");
-            var rightZone_GO = CanvasCom.FindUnderParent("RightZone");
+            var upZone_GO = CanvasC.FindUnderCurZone("UpZone");
+            var centerZone_GO = CanvasC.FindUnderCurZone("CenterZone");
+            var downZone_GO = CanvasC.FindUnderCurZone("DownZone");
+            var leftZone_GO = CanvasC.FindUnderCurZone("LeftZone");
+            var rightZone_GO = CanvasC.FindUnderCurZone("RightZone");
+
+
+            var uniqAbilZone_trans = rightZone_GO.transform.Find("UniqueAbilitiesZone");
+
 
             var canvasEnt = _curGameWorld.NewEntity()
                 ///Up
                 .Replace(new EconomyViewUIC(upZone_GO))
-                .Replace(new LeaveViewUIC(CanvasCom.FindUnderParent<Button>("ButtonLeave")))
+                .Replace(new LeaveViewUIC(CanvasC.FindUnderCurZone<Button>("ButtonLeave")))
                 .Replace(new WindUIC(upZone_GO.transform))
 
                 ///Center
@@ -460,8 +467,16 @@ namespace Scripts.Game
                 ///Right
                 .Replace(new StatZoneViewUIC(rightZone_GO))
                 .Replace(new CondUnitUIC(rightZone_GO.transform.Find("ConditionZone")))
-                .Replace(new RightUniqueDataUIC(true))
-                .Replace(new RightUniqueViewUIC(rightZone_GO.transform.Find("UniqueAbilitiesZone")))
+
+                //.Replace(new RightUniqueViewUIC(rightZone_GO.transform.Find("UniqueAbilitiesZone")))
+
+                .Replace(new UniqFirstButDataC())
+                .Replace(new UniqFirstButViewC(uniqAbilZone_trans))
+                .Replace(new UniqSecButDataC())
+                .Replace(new UniqSecButViewC(uniqAbilZone_trans))
+                .Replace(new UniqThirdButDataC())
+                .Replace(new UniqThirdButViewC(uniqAbilZone_trans))
+
                 .Replace(new BuildAbilitDataUIC(true))
                 .Replace(new BuildAbilitViewUIC(rightZone_GO.transform.Find("BuildingZone")))
                 .Replace(new ExtraTWZoneUIC(rightZone_GO.transform))
@@ -654,13 +669,13 @@ namespace Scripts.Game
 
                         ref var unit_0 = ref _cellUnitStatsFilt.Get1(idx_0);
 
-                        ref var levUnitC_0 = ref _cellUnitMainFilt.Get2(idx_0);
+                        ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
                         ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
 
                         ref var hpUnitC_0 = ref _cellUnitStatsFilt.Get2(idx_0);
 
-                        ref var condUnitC_0 = ref _cellUnitOtherFilt.Get2(idx_0);
-                        ref var twUnitC = ref _cellUnitOtherFilt.Get3(idx_0);
+                        ref var condUnit_0 = ref _cellUnitOtherFilt.Get2(idx_0);
+                        ref var twUnit_0 = ref _cellUnitOtherFilt.Get3(idx_0);
                         ref var thirUnitC_0 = ref _cellUnitOtherFilt.Get4(idx_0);
 
                         ref var buildC_0 = ref _cellBuildFilter.Get1(idx_0);
@@ -682,12 +697,12 @@ namespace Scripts.Game
 
 
                             unit_0.SetUnit(UnitTypes.King);
-                            levUnitC_0.SetLevel(LevelUnitTypes.Wood);
+                            levUnit_0.SetLevel(LevelUnitTypes.Wood);
                             ownUnit_0.SetOwner(PlayerTypes.Second);
-                            hpUnitC_0.AmountHp = 1;
-                            thirUnitC_0.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
-                            condUnitC_0.CondUnitType = CondUnitTypes.Protected;
-                            WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
+                            hpUnitC_0.SetMaxHp();
+                            thirUnitC_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
+                            condUnit_0.SetNew(CondUnitTypes.Protected);
+                            WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                         }
 
                         else if (x == 8 && y == 8)
@@ -703,9 +718,9 @@ namespace Scripts.Game
                                 WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
                             }
 
-                            buildC_0.SetBuild(BuildTypes.City);
+                            buildC_0.Build = BuildTypes.City;
                             ownBuildC_0.SetOwner(PlayerTypes.Second);
-                            WhereBuildsC.Add(ownBuildC_0.Owner, buildC_0.BuildType, idx_0);
+                            WhereBuildsC.Add(ownBuildC_0.Owner, buildC_0.Build, idx_0);
                         }
 
                         else if (x == 6 && y == 8 || x == 9 && y == 8 || x <= 9 && x >= 6 && y == 7 || x <= 9 && x >= 6 && y == 9)
@@ -717,28 +732,28 @@ namespace Scripts.Game
                             }
 
                             unit_0.SetUnit(UnitTypes.Pawn);
-                            levUnitC_0.SetLevel(LevelUnitTypes.Wood);
+                            levUnit_0.SetLevel(LevelUnitTypes.Wood);
                             
 
                             int rand = UnityEngine.Random.Range(0, 100);
 
                             if (rand >= 50)
                             {
-                                twUnitC.ToolWeapType = ToolWeaponTypes.Sword;
-                                twUnitC.LevelTWType = LevelTWTypes.Iron;
+                                twUnit_0.ToolWeapType = ToolWeaponTypes.Sword;
+                                twUnit_0.LevelTWType = LevelTWTypes.Iron;
                             }
                             else
                             {
-                                twUnitC.ToolWeapType = ToolWeaponTypes.Shield;
-                                twUnitC.LevelTWType = LevelTWTypes.Wood;
-                                twUnitC.AddShieldProtect(LevelTWTypes.Wood);
+                                twUnit_0.ToolWeapType = ToolWeaponTypes.Shield;
+                                twUnit_0.LevelTWType = LevelTWTypes.Wood;
+                                twUnit_0.AddShieldProtect(LevelTWTypes.Wood);
                             }
-                            hpUnitC_0.AmountHp = 100;
-                            condUnitC_0.CondUnitType = CondUnitTypes.Protected;
+                            hpUnitC_0.SetMaxHp();
+                            condUnit_0.SetNew(CondUnitTypes.Protected);
                             ownUnit_0.SetOwner(PlayerTypes.Second);
-                            thirUnitC_0.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
+                            thirUnitC_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
 
-                            WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
+                            WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                         }
                     }
                 }
@@ -757,12 +772,7 @@ namespace Scripts.Game
 
             else
             {
-                //CameraC.SetPosRotClient(WhoseMoveC.CurPlayerI, SpawnInitComSys.Main_GO.transform.position);
 
-                //foreach (byte curIdxCell in _xyCellFilter)
-                //{
-                //    _cellViewFilt.Get1(curIdxCell).SetRotForClient(WhoseMoveC.CurPlayerI);
-                //}
             }
         }
 

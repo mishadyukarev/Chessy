@@ -1,17 +1,37 @@
-﻿namespace Scripts.Game
+﻿using System;
+
+namespace Scripts.Game
 {
     public struct ConditionUnitC
     {
-        public CondUnitTypes CondUnitType { get; set; }
-        public bool HaveCondition => CondUnitType != default;
+        private CondUnitTypes _condition;
 
-        public void DefCondition() => CondUnitType = default;
-        public bool Is(CondUnitTypes condUnitType) => CondUnitType == condUnitType;
-        public bool Is(CondUnitTypes[] condUnitTypes)
+        public CondUnitTypes Condition => _condition;
+        public bool HaveCondition => Condition != default;
+
+        public void SetNew(CondUnitTypes cond)
         {
-            foreach (var condUnitType in condUnitTypes)
+            if (_condition == cond) throw new Exception();
+            if (cond == default) throw new Exception();
+
+            _condition = cond;
+        }
+        public void Def()
+        {
+            if (_condition == default) throw new Exception();
+
+            _condition = default;
+        }
+
+        public bool Is(CondUnitTypes cond) => Condition == cond;
+        public bool Is(CondUnitTypes[] cond)
+        {
+            foreach (var condUnitType in cond)
                 if (Is(condUnitType)) return true;
             return false;
         }
+
+
+        public void Sync(CondUnitTypes cond) => _condition = cond;
     }
 }

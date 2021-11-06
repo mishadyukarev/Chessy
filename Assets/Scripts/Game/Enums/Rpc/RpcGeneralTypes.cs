@@ -4,9 +4,6 @@
     {
         None,
 
-        SetDonerActiveUI,
-        ActiveAmountMotionUI,
-        GetAvailableCellsForSetting,
         Mistake,
         GetUnit,
         Sound,

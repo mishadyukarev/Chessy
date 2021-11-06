@@ -1,11 +1,18 @@
 ﻿using Leopotam.Ecs;
 using System;
 using UnityEngine.Advertisements;
+using UnityEngine.Purchasing;
 
 namespace Scripts.Common
 {
-    public class LaunchAdComSys : IEcsRunSystem
+    public class LaunchAdComSys : IEcsInitSystem, IEcsRunSystem
     {
+
+        public void Init()
+        {
+
+        }
+
         public void Run()
         {
             var difTime = DateTime.Now - AdComCom.LastTimeAd;

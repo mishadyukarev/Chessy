@@ -18,26 +18,26 @@ namespace Scripts.Game
                     case PickUpgradeTypes.None: throw new Exception();
 
                     case PickUpgradeTypes.King:
-                        UnitsUpgC.SetUpg(whoseMove, UnitTypes.King, UnitStatTypes.Damage, 0.2f);
+                        UnitPercUpgC.SetUpg(whoseMove, UnitTypes.King, UnitStatTypes.Damage, 0.2f);
                         break;
 
                     case PickUpgradeTypes.Pawn:
-                        UnitsUpgC.SetUpg(whoseMove, UnitTypes.Pawn, UnitStatTypes.Damage, 0.2f);
+                        UnitPercUpgC.SetUpg(whoseMove, UnitTypes.Pawn, UnitStatTypes.Damage, 0.2f);
                         break;
 
                     case PickUpgradeTypes.Archer:
-                        UnitsUpgC.SetUpg(whoseMove, UnitTypes.Rook, UnitStatTypes.Damage, 0.2f);
-                        UnitsUpgC.SetUpg(whoseMove, UnitTypes.Bishop, UnitStatTypes.Damage, 0.2f);
+                        UnitPercUpgC.SetUpg(whoseMove, UnitTypes.Rook, UnitStatTypes.Damage, 0.2f);
+                        UnitPercUpgC.SetUpg(whoseMove, UnitTypes.Bishop, UnitStatTypes.Damage, 0.2f);
                         break;
 
                     case PickUpgradeTypes.Scout:
-                        UnitsUpgC.SetStepUpg(whoseMove, UnitTypes.Scout, 3);
+                        UnitStepUpgC.SetStepUpg(whoseMove, UnitTypes.Scout, 3);
                         break;
 
                     case PickUpgradeTypes.Water:
                         for (var unit = (UnitTypes)1; unit < (UnitTypes)typeof(UnitTypes).GetEnumNames().Length; unit++)
                         {
-                            UnitsUpgC.SetUpg(whoseMove, unit, UnitStatTypes.Water, 0.2f);
+                            UnitPercUpgC.SetUpg(whoseMove, unit, UnitStatTypes.Water, 0.2f);
                         }
                         break;
 

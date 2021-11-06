@@ -40,8 +40,8 @@ namespace Scripts.Game
         }
         public bool Have(EnvTypes[] envTypes)
         {
-            if(envTypes == default)
-            foreach (var envType in envTypes) if (Have(envType)) return true;
+            if (envTypes == default)
+                foreach (var envType in envTypes) if (Have(envType)) return true;
             return false;
         }
 

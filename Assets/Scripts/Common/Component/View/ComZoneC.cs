@@ -2,11 +2,11 @@
 
 namespace Scripts.Common
 {
-    public struct ComZoneComp
+    public struct ComZoneC
     {
         private GameObject _comZoneGO;
 
-        public ComZoneComp(GameObject commonZoneGO) => _comZoneGO = commonZoneGO;
+        public ComZoneC(GameObject commonZoneGO) => _comZoneGO = commonZoneGO;
 
         public void Attach(Transform transform) => transform.SetParent(_comZoneGO.transform);
     }

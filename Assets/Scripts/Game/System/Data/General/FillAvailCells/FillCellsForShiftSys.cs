@@ -21,7 +21,7 @@ namespace Scripts.Game
                 ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
                 ref var stepUnitC_0 = ref _cellUnitFilter.Get2(idx_0);
 
-                ref var effUnitC_0 = ref _cellUnitOthFilt.Get2(idx_0);
+                ref var effUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
                 ref var ownUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
 
 
@@ -44,7 +44,7 @@ namespace Scripts.Game
                             if (!unitC_1.HaveUnit)
                             {
                                 if (stepUnitC_0.HaveStepsForDoing(envC_1, item_1.Key, trail_1) 
-                                    || stepUnitC_0.HaveMaxSteps(effUnitC_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+                                    || stepUnitC_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                                 {
                                     CellsForShiftCom.AddIdxCell(ownUnit_0.Owner, idx_0, idx_1);
                                 }

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
-using Scripts.Common;
 
 namespace Scripts.Game
 {
@@ -64,7 +62,7 @@ namespace Scripts.Game
         public static void SetText(ToolWeaponTypes giveTakeType, string text) => _toolWeaponAmount_texsMPs[giveTakeType].text = text;
         public static void SetImage(ToolWeaponTypes giveTakeType, LevelTWTypes levelTWType)
         {
-            if(levelTWType == LevelTWTypes.Wood)
+            if (levelTWType == LevelTWTypes.Wood)
             {
                 _toolWeapon_Images[giveTakeType][levelTWType].gameObject.SetActive(true);
                 _toolWeapon_Images[giveTakeType][LevelTWTypes.Iron].gameObject.SetActive(false);

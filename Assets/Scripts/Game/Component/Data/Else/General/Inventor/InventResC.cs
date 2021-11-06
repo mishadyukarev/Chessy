@@ -55,7 +55,7 @@ namespace Scripts.Game
         }
         public static bool HaveRes(PlayerTypes player, ResTypes res) => AmountRes(player, res) > 0;
         public static bool IsMinusRes(PlayerTypes player, ResTypes res) => AmountRes(player, res) < 0;
-        public static void ResetRes(PlayerTypes player, ResTypes res) => Set(player, res, 0); 
+        public static void ResetRes(PlayerTypes player, ResTypes res) => Set(player, res, 0);
 
         public static void AddAmountRes(PlayerTypes playerType, ResTypes resourceType, int adding = 1) => Set(playerType, resourceType, AmountRes(playerType, resourceType) + adding);
         public static void TakeAmountRes(PlayerTypes playerType, ResTypes resourceType, int taking = 1) => Set(playerType, resourceType, AmountRes(playerType, resourceType) - taking);
@@ -117,7 +117,7 @@ namespace Scripts.Game
                 var difAmountRes = AmountRes(playerType, resType) - EconomyValues.AmountResForMelting(resType);
                 needRes.Add(resType, difAmountRes);
 
-                if(canCreatBuild) canCreatBuild = difAmountRes >= 0;
+                if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
             }
 
             return canCreatBuild;

@@ -40,9 +40,9 @@ namespace Scripts.Game
             }
         }
 
-        public static void Add(EnvTypes envirType, byte idx) 
+        public static void Add(EnvTypes envirType, byte idx)
         {
-            if (envirType == EnvTypes.None) throw new Exception(); 
+            if (envirType == EnvTypes.None) throw new Exception();
             _envInGame[envirType].Add(idx);
         }
 

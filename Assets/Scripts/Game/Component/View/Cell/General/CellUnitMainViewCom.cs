@@ -17,7 +17,7 @@ namespace Scripts.Game
         public void Enable_SR(bool enabled) => _main_SR.enabled = enabled;
 
         public void SetSprite(UnitTypes unitType, LevelUnitTypes upgradeUnitType)
-        {   
+        {
             switch (unitType)
             {
                 case UnitTypes.None:
@@ -34,7 +34,7 @@ namespace Scripts.Game
                         case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnWood); break;
                         case LevelUnitTypes.Iron: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnIron); break;
                         default: throw new Exception();
-                    }                  
+                    }
                     break;
                 case UnitTypes.Rook:
                     switch (upgradeUnitType)
@@ -43,7 +43,7 @@ namespace Scripts.Game
                         case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.RookBow); break;
                         case LevelUnitTypes.Iron: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.RookCrossbow); break;
                         default: throw new Exception();
-                    }      
+                    }
                     break;
                 case UnitTypes.Bishop:
                     switch (upgradeUnitType)
@@ -69,7 +69,7 @@ namespace Scripts.Game
         }
         public void SetAlpha(bool isVisible)
         {
-            if(isVisible) _main_SR.color = new Color(_main_SR.color.r, _main_SR.color.g, _main_SR.color.b, 1);
+            if (isVisible) _main_SR.color = new Color(_main_SR.color.r, _main_SR.color.g, _main_SR.color.b, 1);
             else _main_SR.color = new Color(_main_SR.color.r, _main_SR.color.g, _main_SR.color.b, 0.8f);
         }
 

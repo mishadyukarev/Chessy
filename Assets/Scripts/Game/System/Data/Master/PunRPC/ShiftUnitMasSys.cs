@@ -37,27 +37,27 @@ namespace Scripts.Game
                 ref var unit_from = ref _cellUnitFilter.Get1(idx_from);
                 ref var levUnit_from = ref _cellUnitMainFilt.Get2(idx_from);
                 ref var ownUnit_from = ref _cellUnitMainFilt.Get3(idx_from);
-                ref var hpUnitC_from = ref _cellUnitFilter.Get2(idx_from);
-                ref var stepUnitC_from = ref _cellUnitFilter.Get3(idx_from);
-                ref var twUnitC_from = ref _cellUnitOthFilt.Get3(idx_from);
-                ref var effUnitC_from = ref _cellUnitOthFilt.Get4(idx_from);
-                ref var thirUnitC_from = ref _cellUnitOthFilt.Get5(idx_from);
+                ref var hpUnit_from = ref _cellUnitFilter.Get2(idx_from);
+                ref var stepUnit_from = ref _cellUnitFilter.Get3(idx_from);
+                ref var twUnit_from = ref _cellUnitOthFilt.Get3(idx_from);
+                ref var effUnit_from = ref _cellUnitOthFilt.Get4(idx_from);
+                ref var thirUnit_from = ref _cellUnitOthFilt.Get5(idx_from);
 
                 ref var unit_to = ref _cellUnitFilter.Get1(idx_to);
                 ref var levUnitC_to = ref _cellUnitMainFilt.Get2(idx_to);
                 ref var ownUnit_to = ref _cellUnitMainFilt.Get3(idx_to);
-                ref var hpUnitC_to = ref _cellUnitFilter.Get2(idx_to);
-                ref var stepUnitC_to = ref _cellUnitFilter.Get3(idx_to);
-                ref var condUnitC_to = ref _cellUnitOthFilt.Get2(idx_to);
-                ref var twUnitC_to = ref _cellUnitOthFilt.Get3(idx_to);
-                ref var effUnitC_to = ref _cellUnitOthFilt.Get4(idx_to);
-                ref var thirUnitC_to = ref _cellUnitOthFilt.Get5(idx_to);
+                ref var hpUnit_to = ref _cellUnitFilter.Get2(idx_to);
+                ref var stepUnit_to = ref _cellUnitFilter.Get3(idx_to);
+                ref var condUnit_to = ref _cellUnitOthFilt.Get2(idx_to);
+                ref var twUnit_to = ref _cellUnitOthFilt.Get3(idx_to);
+                ref var effUnit_to = ref _cellUnitOthFilt.Get4(idx_to);
+                ref var thirUnit_to = ref _cellUnitOthFilt.Get5(idx_to);
 
 
 
                 var dir_from = CellSpaceSupport.GetDirect(_cellXyFilt.Get1(idx_from).XyCell, _cellXyFilt.Get1(idx_to).XyCell);
 
-                stepUnitC_from.TakeStepsForDoing(envDat_to, dir_from, trail_to);
+                stepUnit_from.TakeStepsForDoing(envDat_to, dir_from, trail_to);
 
                 trail_to.TrySetNewTrain(dir_from.Invert(), envDat_to);
                 trail_from.TrySetNewTrain(dir_from, envDat_from);
@@ -67,7 +67,7 @@ namespace Scripts.Game
                 ref var ownBuild_from = ref _cellBuildFilt.Get2(idx_from);
                 if (build_from.Is(BuildTypes.Camp))
                 {
-                    WhereBuildsC.Remove(ownBuild_from.Owner, build_from.BuildType, idx_from);
+                    WhereBuildsC.Remove(ownBuild_from.Owner, build_from.Build, idx_from);
                     build_from.Reset();
                 }
 
@@ -76,13 +76,13 @@ namespace Scripts.Game
                 unit_to.SetUnit(unit_from.Unit);
                 levUnitC_to.SetLevel(levUnit_from.Level);
                 ownUnit_to.SetOwner(whoseMove);
-                hpUnitC_to.AmountHp = hpUnitC_from.AmountHp;
-                stepUnitC_to.StepsAmount = stepUnitC_from.StepsAmount;
-                condUnitC_to.DefCondition();
-                twUnitC_to.Set(twUnitC_from);
-                effUnitC_to.Set(effUnitC_from);
-                thirUnitC_to.Set(thirUnitC_from);
-                if (river_to.HaveNearRiver) thirUnitC_to.SetMaxWater(UnitsUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Water));
+                hpUnit_to = hpUnit_from;
+                stepUnit_to = stepUnit_from;
+                if(condUnit_to.HaveCondition) condUnit_to.Def();
+                twUnit_to = twUnit_from;
+                effUnit_to.Set(effUnit_from);
+                thirUnit_to = thirUnit_from;
+                if (river_to.HaveNearRiver) thirUnit_to.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Water));
                 WhereUnitsC.Add(ownUnit_to.Owner, unit_to.Unit, levUnitC_to.Level, idx_to);
 
                 WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);

@@ -36,33 +36,32 @@ namespace Scripts.Menu
 
 
 
-            ComSysDataC.Invoke(EventDataTypes.LaunchAdd);
+            ComSysDataC.Invoke(ActionDataTypes.LaunchAdd);
             MenuSysDataViewC.LaunchLikeGame.Invoke();
         }
 
         public void Init()
         {
-            CanvasCom.ReplaceZone(SceneTypes.Menu);
+            CanvasC.SetCurZone(SceneTypes.Menu);
             ToggleZoneComponent.ReplaceZone(SceneTypes.Menu);
 
 
-            var centerZone_Trans = CanvasCom.FindUnderParent<Transform>("CenterZone");
+            var centerZone_Trans = CanvasC.FindUnderCurZone<Transform>("CenterZone");
 
 
             _curMenuWorld.NewEntity()
                 .Replace(new CenterZoneUICom(centerZone_Trans, SoundComC.Volume, HintComC.IsOnHint))
-                .Replace(new ShopZoneUICom(centerZone_Trans))
                 .Replace(new LikeGameUICom(centerZone_Trans));
 
 
-            var rightZone = CanvasCom.FindUnderParent<RectTransform>("OnlineRightZone");
+            var rightZone = CanvasC.FindUnderCurZone<RectTransform>("OnlineRightZone");
             _curMenuWorld.NewEntity()
                 .Replace(new OnlineZoneUICom(rightZone))
                 .Replace(new ConnectButtonUICom(true, rightZone))
                 .Replace(new BackgroundMenuUICom(true, rightZone));
 
 
-            var leftZone = CanvasCom.FindUnderParent<RectTransform>("OfflineLeftZone");
+            var leftZone = CanvasC.FindUnderCurZone<RectTransform>("OfflineLeftZone");
             _curMenuWorld.NewEntity()
                 .Replace(new OfflineZoneUICom(leftZone))
                 .Replace(new ConnectButtonUICom(false, leftZone))

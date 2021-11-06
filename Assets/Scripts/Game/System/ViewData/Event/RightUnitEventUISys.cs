@@ -10,8 +10,8 @@ namespace Scripts.Game
 
         public void Init()
         {
-            RightUniqueViewUIC.AddListener_Button(UniqueButtonTypes.First, delegate { ExecuteUnique_Button(UniqueButtonTypes.First); });
-            RightUniqueViewUIC.AddListener_Button(UniqueButtonTypes.Second, delegate { ExecuteUnique_Button(UniqueButtonTypes.Second); });
+            UniqFirstButViewC.AddListener(UniqFirstBut);
+            UniqSecButViewC.AddListener(UniqSecBut);
 
             BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.First, delegate { ExecuteBuild_Button(BuildButtonTypes.First); });
             BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.Second, delegate { ExecuteBuild_Button(BuildButtonTypes.Second); });
@@ -46,82 +46,85 @@ namespace Scripts.Game
             }
         }
 
-        private void ExecuteUnique_Button(UniqueButtonTypes uniqueButtonType)
+        private void UniqFirstBut()
         {
-            if (WhoseMoveC.IsMyMove)
+            var abil = UniqFirstButDataC.Ability;
+
+            switch (abil)
             {
-                switch (uniqueButtonType)
+                case UniqFirstAbilTypes.None: throw new Exception();
+
+                case UniqFirstAbilTypes.Seed:
+                    RpcSys.SeedEnvironmentToMaster(SelectorC.IdxSelCell, EnvTypes.YoungForest);
+                    break;
+
+                case UniqFirstAbilTypes.FirePawn:
+                    RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxSelCell);
+                    break;
+
+                case UniqFirstAbilTypes.PutOutFirePawn:
+                    RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxSelCell);
+                    break;
+
+                case UniqFirstAbilTypes.FireArcher:
+                    SelectorC.CellClickType = CellClickTypes.PickFire;
+                    break;
+
+                case UniqFirstAbilTypes.CircularAttack:
+                    RpcSys.CircularAttackKingToMaster(SelectorC.IdxSelCell);
+                    if (HintComC.IsOnHint)
+                    {
+                        if (!HintDataUIC.IsActive(VideoClipTypes.CircularAttack))
+                        {
+                            HintViewUIC.SetActiveHintZone(true);
+                            HintViewUIC.SetVideoClip(VideoClipTypes.CircularAttack);
+                            HintDataUIC.SetActive(VideoClipTypes.CircularAttack, true);
+                        }
+                    }
+                    break;
+
+                default: throw new Exception();
+            }
+
+            if (HintComC.IsOnHint)
+            {
+                if (abil == UniqFirstAbilTypes.FireArcher
+                || abil == UniqFirstAbilTypes.Seed
+                || abil == UniqFirstAbilTypes.FirePawn
+                || abil == UniqFirstAbilTypes.None)
                 {
-                    case UniqueButtonTypes.None: throw new Exception();
-                    case UniqueButtonTypes.First:
-                        {
-                            var abil = RightUniqueDataUIC.AbilityType(UniqueButtonTypes.First);
-                            switch (abil)
-                            {
-                                case UniqueAbilTypes.None: throw new Exception();
-                                case UniqueAbilTypes.FirePawn:
-                                    RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxSelCell);
-                                    break;
-                                case UniqueAbilTypes.NoneFirePawn:
-                                    RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxSelCell);
-                                    break;
-                                case UniqueAbilTypes.FireArcher:
-                                    SelectorC.CellClickType = CellClickTypes.PickFire;
-                                    break;
-                                case UniqueAbilTypes.Seed:
-                                    RpcSys.SeedEnvironmentToMaster(SelectorC.IdxSelCell, EnvTypes.YoungForest);
-
-                                    break;
-                                case UniqueAbilTypes.CircularAttack:
-                                    RpcSys.CircularAttackKingToMaster(SelectorC.IdxSelCell);
-                                    if (HintComC.IsOnHint)
-                                    {
-                                        if (!HintDataUIC.IsActive(VideoClipTypes.CircularAttack))
-                                        {
-                                            HintViewUIC.SetActiveHintZone(true);
-                                            HintViewUIC.SetVideoClip(VideoClipTypes.CircularAttack);
-                                            HintDataUIC.SetActive(VideoClipTypes.CircularAttack, true);
-                                        }
-                                    }
-                                    break;
-                                default: throw new Exception();
-                            }
-
-                            if (HintComC.IsOnHint)
-                            {
-                                if (abil == UniqueAbilTypes.FireArcher
-                                || abil == UniqueAbilTypes.Seed
-                                || abil == UniqueAbilTypes.FirePawn
-                                || abil == UniqueAbilTypes.None)
-                                {
-                                    if (!HintDataUIC.IsActive(VideoClipTypes.SeedFire))
-                                    {
-                                        HintViewUIC.SetActiveHintZone(true);
-                                        HintViewUIC.SetVideoClip(VideoClipTypes.SeedFire);
-                                        HintDataUIC.SetActive(VideoClipTypes.SeedFire, true);
-                                    }
-                                }
-                            }
-                        }
-                        break;
-                    case UniqueButtonTypes.Second:
-                        {
-                            RpcSys.BonusNearUnits(SelectorC.IdxSelCell);
-                            if (HintComC.IsOnHint)
-                            {
-                                if (!HintDataUIC.IsActive(VideoClipTypes.BonusKing))
-                                {
-                                    HintViewUIC.SetActiveHintZone(true);
-                                    HintViewUIC.SetVideoClip(VideoClipTypes.BonusKing);
-                                    HintDataUIC.SetActive(VideoClipTypes.BonusKing, true);
-                                }
-                            }
-                        }
-                        break;
-                    case UniqueButtonTypes.Third:
-                        break;
-                    default: throw new Exception();
+                    if (!HintDataUIC.IsActive(VideoClipTypes.SeedFire))
+                    {
+                        HintViewUIC.SetActiveHintZone(true);
+                        HintViewUIC.SetVideoClip(VideoClipTypes.SeedFire);
+                        HintDataUIC.SetActive(VideoClipTypes.SeedFire, true);
+                    }
                 }
+            }
+        }
+
+        private void UniqSecBut()
+        {
+            var abil = UniqSecButDataC.Ability;
+
+            switch (abil)
+            {
+                case UniqSecAbilTypes.None: throw new Exception();
+
+                case UniqSecAbilTypes.Effects:
+                    RpcSys.BonusNearUnits(SelectorC.IdxSelCell);
+                    if (HintComC.IsOnHint)
+                    {
+                        if (!HintDataUIC.IsActive(VideoClipTypes.BonusKing))
+                        {
+                            HintViewUIC.SetActiveHintZone(true);
+                            HintViewUIC.SetVideoClip(VideoClipTypes.BonusKing);
+                            HintDataUIC.SetActive(VideoClipTypes.BonusKing, true);
+                        }
+                    }
+                    break;
+
+                default: throw new Exception();
             }
         }
 

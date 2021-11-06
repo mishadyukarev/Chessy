@@ -1,5 +1,4 @@
 ﻿using Scripts.Common;
-using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;

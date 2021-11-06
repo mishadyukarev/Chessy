@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,10 +6,10 @@ namespace Scripts.Game
 {
     public struct ExtraTWZoneUIC
     {
-        private static Dictionary<ToolWeaponTypes,Dictionary<LevelTWTypes, Image>> _tw_Images;
+        private static Dictionary<ToolWeaponTypes, Dictionary<LevelTWTypes, Image>> _tw_Images;
 
         public ExtraTWZoneUIC(Transform right_Trans)
-        {      
+        {
             var additionZone_Trans = right_Trans.Find("AdditionZone");
 
             _tw_Images = new Dictionary<ToolWeaponTypes, Dictionary<LevelTWTypes, Image>>();

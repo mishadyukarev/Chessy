@@ -1,6 +1,6 @@
 ﻿namespace Scripts.Common
 {
-    public enum EventDataTypes
+    public enum ActionDataTypes
     {
         None,
 

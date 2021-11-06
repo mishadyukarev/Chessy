@@ -20,12 +20,12 @@ namespace Scripts.Common
 
             var launchAdd = new EcsSystems(comWorld)
                 .Add(new LaunchAdComSys());
-            
 
 
-            var dict = new Dictionary<EventDataTypes, Action>();
-            dict.Add(EventDataTypes.RunUpdate, runUpdate.Run);
-            dict.Add(EventDataTypes.LaunchAdd, launchAdd.Run);
+
+            var dict = new Dictionary<ActionDataTypes, Action>();
+            dict.Add(ActionDataTypes.RunUpdate, runUpdate.Run);
+            dict.Add(ActionDataTypes.LaunchAdd, launchAdd.Run);
 
             new ComSysDataC(dict, toggleScene);
             new MainGoVC(main_GO);
@@ -36,6 +36,7 @@ namespace Scripts.Common
 
             comSysts
                 .Add(this)
+                .Add(new EventSys())
                 .Add(photScene)
                 .Add(launchAdd)
                 .Add(runUpdate);
@@ -48,18 +49,18 @@ namespace Scripts.Common
             var commonZoneEnt = _curComWorld.NewEntity()
                 .Replace(new VideoClipsResCom(true))
                 .Replace(new SpritesResComC(true))
-                .Replace(new PrefabsResComCom(true))
+                .Replace(new PrefabResComC(true))
                 .Replace(new ClipsResComCom(true));
 
 
 
-            var camera = UnityEngine.Object.Instantiate(PrefabsResComCom.Camera, MainGoVC.Main_GO.transform.position, MainGoVC.Main_GO.transform.rotation);
+            var camera = UnityEngine.Object.Instantiate(PrefabResComC.Camera, MainGoVC.Main_GO.transform.position, MainGoVC.Main_GO.transform.rotation);
             camera.name = "Camera";
             camera.orthographicSize = 5.7f;
 
             var goES = new GameObject("EventSystem");
 
-            var canvas = GameObject.Instantiate(PrefabsResComCom.Canvas);
+            var canvas = GameObject.Instantiate(PrefabResComC.Canvas);
             canvas.name = "Canvas";
 
             var audioSource = new GameObject("AudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
@@ -70,10 +71,9 @@ namespace Scripts.Common
 
             commonZoneEnt
                 //Common
-                .Replace(new ComZoneComp(new GameObject(NameConst.COMMON_ZONE)))
-                //.Replace(new CameraComC(camera))
+                .Replace(new ComZoneC(new GameObject(NameConst.COMMON_ZONE)))
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
-                .Replace(new CanvasCom(canvas))
+                .Replace(new CanvasC(canvas))
                 .Replace(new SoundComC(audioSource))
                 .Replace(new LanguageComCom(LanguageTypes.English))
                 .Replace(new AdComCom(DateTime.Now))
@@ -84,7 +84,17 @@ namespace Scripts.Common
                 .Replace(new ToggleZoneComponent(new GameObject()));
 
 
-            ref var comZoneCom = ref commonZoneEnt.Get<ComZoneComp>();
+            var shopZoneUI_Trans = CanvasC.FindUnderComZone<Transform>("ShopZone");
+
+
+
+
+            commonZoneEnt
+                .Replace(new ShopZoneUICom(shopZoneUI_Trans));
+
+
+
+            ref var comZoneCom = ref commonZoneEnt.Get<ComZoneC>();
             comZoneCom.Attach(camera.transform);
             comZoneCom.Attach(MainGoVC.Main_GO.transform);
             comZoneCom.Attach(goES.transform);
@@ -94,7 +104,7 @@ namespace Scripts.Common
             //camera.transform.position += CameraComComp._gamePosCamera;
 
 
-            ref var commonZoneCom = ref commonZoneEnt.Get<ComZoneComp>();
+            ref var commonZoneCom = ref commonZoneEnt.Get<ComZoneC>();
             commonZoneCom.Attach(audioSource.transform);
 
 

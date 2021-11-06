@@ -18,7 +18,7 @@ namespace Scripts.Game
                 ref var unit_0 = ref _cellUnitFilt.Get1(idx_0);
                 ref var curStepUnitC = ref _cellUnitFilt.Get2(idx_0);
 
-                ref var effUnitC_0 = ref _cellUnitOthFilt.Get2(idx_0);
+                ref var effUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
                 ref var ownUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
 
 
@@ -43,7 +43,7 @@ namespace Scripts.Game
                         if (!envC_1.Have(EnvTypes.Mountain))
                         {
                             if (curStepUnitC.HaveStepsForDoing(envC_1, item_1.Key, trail_1) 
-                                || curStepUnitC.HaveMaxSteps(effUnitC_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+                                || curStepUnitC.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                             {
                                 if (unitC_1.HaveUnit)
                                 {

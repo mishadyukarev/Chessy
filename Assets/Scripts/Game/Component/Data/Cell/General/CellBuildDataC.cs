@@ -4,29 +4,34 @@ namespace Scripts.Game
 {
     public struct CellBuildDataC
     {
-        private BuildTypes _buildType;
+        private BuildTypes _build;
 
-        public BuildTypes BuildType => _buildType;
-        public bool HaveBuild => BuildType != BuildTypes.None;
+        public BuildTypes Build
+        {
+            get => _build;
+            set
+            {
+                if (value == default) throw new Exception("BuildType is None");
+                if (Is(value)) throw new Exception("It's got yet");
+                if (HaveBuild) throw new Exception("It's got building");
+                _build = value;
+            }
+        }
+        public bool HaveBuild => Build != default;
 
-        public bool Is(BuildTypes buildType) => _buildType == buildType;
+
+
+        public bool Is(BuildTypes buildType) => _build == buildType;
         public bool Is(BuildTypes[] buildTypes)
         {
-            foreach (var buildType in buildTypes) if (buildType == _buildType) return true;
+            foreach (var buildType in buildTypes) if (buildType == _build) return true;
             return false;
         }
-        public void SetBuild(BuildTypes buildType)
-        {
-            if(buildType == BuildTypes.None) throw new Exception("BuildType is None");
-            if (Is(buildType)) throw new Exception("It's got yet");
-            if (HaveBuild) throw new Exception("It's got building");
-            _buildType = buildType;
-        }
-        public void Sync(BuildTypes buildType) => _buildType = buildType;
         public void Reset()
         {
             if (!HaveBuild) throw new Exception();
-            _buildType = BuildTypes.None;
+            _build = BuildTypes.None;
         }
+        public void Sync(BuildTypes buildType) => _build = buildType;
     }
 }

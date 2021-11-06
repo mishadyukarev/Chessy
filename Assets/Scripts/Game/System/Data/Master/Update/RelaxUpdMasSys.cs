@@ -64,15 +64,15 @@ namespace Scripts.Game
                                                     WhereBuildsC.Remove(ownUnit_0.Owner, BuildTypes.Camp, idx_0);
                                                     buil_0.Reset();
 
-                                                    buil_0.SetBuild(BuildTypes.Woodcutter);
+                                                    buil_0.Build = BuildTypes.Woodcutter;
                                                     ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.BuildType, idx_0);
+                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Build, idx_0);
                                                 }
                                                 else if (!buil_0.HaveBuild)
                                                 {
-                                                    buil_0.SetBuild(BuildTypes.Woodcutter);
+                                                    buil_0.Build = BuildTypes.Woodcutter;
                                                     ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.BuildType, idx_0);
+                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Build, idx_0);
                                                 }
                                                 else if (buil_0.Is(BuildTypes.Woodcutter))
                                                 {
@@ -80,14 +80,14 @@ namespace Scripts.Game
                                                 }
                                                 else
                                                 {
-                                                    condUnit_0.CondUnitType = CondUnitTypes.Protected;
+                                                    condUnit_0.SetNew(CondUnitTypes.Protected);
                                                 }
                                             }
                                             else
                                             {
                                                 if (buil_0.HaveBuild)
                                                 {
-                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.BuildType, idx_0);
+                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
                                                     buil_0.Reset();
                                                 }
 
@@ -111,13 +111,13 @@ namespace Scripts.Game
                                             {
                                                 if (buil_0.HaveBuild)
                                                 {
-                                                    condUnit_0.CondUnitType = CondUnitTypes.Protected;
+                                                    condUnit_0.SetNew(CondUnitTypes.Protected);
                                                 }
                                                 else
                                                 {
                                                     if (envRes_0.HaveMaxRes(EnvTypes.Hill))
                                                     {
-                                                        condUnit_0.CondUnitType = CondUnitTypes.Protected;
+                                                        condUnit_0.SetNew(CondUnitTypes.Protected);
                                                     }
                                                     else
                                                     {
@@ -127,25 +127,25 @@ namespace Scripts.Game
                                             }
                                             else
                                             {
-                                                condUnit_0.CondUnitType = CondUnitTypes.Protected;
+                                                condUnit_0.SetNew(CondUnitTypes.Protected);
                                             }
                                         }
 
                                         else
                                         {
-                                            condUnit_0.CondUnitType = CondUnitTypes.Protected;
+                                            condUnit_0.SetNew(CondUnitTypes.Protected);
                                         }
                                     }
 
                                     else
                                     {
-                                        condUnit_0.CondUnitType = CondUnitTypes.Protected;
+                                        condUnit_0.SetNew(CondUnitTypes.Protected);
                                     }
                                 }
 
                                 else
                                 {
-                                    hpUnit_0.AddHealHp();
+                                    hpUnit_0.SetMaxHp();
                                     if (hpUnit_0.HaveMaxHpUnit)
                                     {
                                         hpUnit_0.SetMaxHp();

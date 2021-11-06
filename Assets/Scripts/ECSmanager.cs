@@ -59,7 +59,7 @@ namespace Scripts
 
         public void OwnUpdate(SceneTypes sceneType)
         {
-            ComSysDataC.Invoke(EventDataTypes.RunUpdate);
+            ComSysDataC.Invoke(ActionDataTypes.RunUpdate);
 
             switch (sceneType)
             {

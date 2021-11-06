@@ -42,7 +42,7 @@ namespace Scripts.Menu
         public static void SetLogText(string text) => _log_TextMP.text = text;
 
         public static void AddListDiscord_But(UnityAction unityAction) => _discord_But.onClick.AddListener(unityAction);
-        public static void AddListHelp_But(UnityAction unityAction) => _help_Button.onClick.AddListener(unityAction);
+        public static void AddListShop_But(UnityAction unityAction) => _help_Button.onClick.AddListener(unityAction);
         public static void AddListLikeGame_But(UnityAction unityAction) => _likeGame_Button.onClick.AddListener(unityAction);
         public static void AddListQuit_But(UnityAction unityAction) => _exit_Button.onClick.AddListener(unityAction);
     }

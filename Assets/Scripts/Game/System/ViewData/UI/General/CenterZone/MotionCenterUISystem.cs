@@ -9,7 +9,7 @@ namespace Scripts.Game
 
         public void Run()
         {
-            if (MotionsDataUIC.IsActivatedUI)
+            if (MotionsDataUIC.IsActivatedUI[WhoseMoveC.CurPlayerI])
             {
                 MotionsViewUIC.Text = MotionsDataUIC.AmountMotions.ToString();
                 MotionsViewUIC.SetActiveParent(true);
@@ -19,7 +19,7 @@ namespace Scripts.Game
                 if (_timer >= 1)
                 {
                     MotionsViewUIC.SetActiveParent(false);
-                    MotionsDataUIC.IsActivatedUI = false;
+                    MotionsDataUIC.Set(WhoseMoveC.CurPlayerI, false);
                     _timer = 0;
                 }
             }

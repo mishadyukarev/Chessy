@@ -40,7 +40,7 @@ namespace Scripts.Game
                     WhereEnvC.Remove(EnvTypes.Fertilizer, idxCellForDestory);
                 }
 
-                WhereBuildsC.Remove(ownBuildC_0.Owner, buildC_0.BuildType, idxCellForDestory);
+                WhereBuildsC.Remove(ownBuildC_0.Owner, buildC_0.Build, idxCellForDestory);
                 buildC_0.Reset();
             }
             else

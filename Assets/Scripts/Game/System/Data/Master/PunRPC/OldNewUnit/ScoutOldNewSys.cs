@@ -23,13 +23,14 @@ namespace Scripts.Game
             ref var stepUnitC = ref _cellUnitFilt.Get3(idx_0);
             ref var twUnitC_0 = ref _cellUnitOthFilt.Get3(idx_0);
             ref var effUnit_0 = ref _cellUnitOthFilt.Get4(idx_0);
+            ref var condUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
 
 
             //var whoseMove = WhoseMoveC.WhoseMove;
 
             if (hpUnitC.HaveMaxHpUnit)
             {
-                if (stepUnitC.HaveMaxSteps(effUnit_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+                if (stepUnitC.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                 {
                     InvUnitsC.TakeUnitsInInv(ownUnit_0.Owner, UnitTypes.Scout, LevelUnitTypes.Wood);
                     WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
@@ -45,8 +46,8 @@ namespace Scripts.Game
                     levUnitC_0.SetLevel(LevelUnitTypes.Wood);
 
                     hpUnitC.SetMaxHp();
-                    stepUnitC.SetMaxSteps(effUnit_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
-                    _cellUnitOthFilt.Get2(idx_0).DefCondition();
+                    stepUnitC.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
+                    if (condUnit_0.HaveCondition) condUnit_0.Def();
                     WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
 
                     RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);

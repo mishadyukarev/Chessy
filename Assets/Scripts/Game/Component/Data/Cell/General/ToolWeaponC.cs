@@ -34,12 +34,5 @@ namespace Scripts.Game
             }
         }
         public void SyncShield(int shieldProt) => _shieldProt = shieldProt;
-
-        public void Set(ToolWeaponC tWC)
-        {
-            ToolWeapType = tWC.ToolWeapType;
-            LevelTWType = tWC.LevelTWType;
-            _shieldProt = tWC.ShieldProt;
-        }
     }
 }

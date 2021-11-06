@@ -31,7 +31,7 @@ namespace Scripts.Game
             if (playerType == PlayerTypes.First) return PlayerTypes.Second;
             else return PlayerTypes.First;
         }
-       
+
 
 
         public WhoseMoveC(PlayerTypes playerType)

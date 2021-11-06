@@ -6,7 +6,7 @@ namespace Scripts.Game
 {
     public sealed class ConditionMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, StepComponent, ConditionUnitC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataCom, StepComponent, ConditionUnitC> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -15,41 +15,41 @@ namespace Scripts.Game
             var neededCondType = ForCondMasCom.NeededCondUnitType;
             var idxForCondit = ForCondMasCom.IdxForCondition;
 
-            ref var curCellUnitDataCom = ref _cellUnitFilter.Get1(idxForCondit);
-            ref var curOwnerCellUnitDataCom = ref _cellUnitFilter.Get3(idxForCondit);
+            ref var stepUnit_0 = ref _cellUnitFilter.Get2(idxForCondit);
+            ref var condUnit_0 = ref _cellUnitFilter.Get3(idxForCondit);
 
 
             switch (neededCondType)
             {
                 case CondUnitTypes.None:
-                    _cellUnitFilter.Get3(idxForCondit).DefCondition();
+                    condUnit_0.Def();
                     break;
 
                 case CondUnitTypes.Protected:
-                    if (_cellUnitFilter.Get3(idxForCondit).Is(CondUnitTypes.Protected))
+                    if (condUnit_0.Is(CondUnitTypes.Protected))
                     {
                         RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
 
-                        _cellUnitFilter.Get3(idxForCondit).DefCondition();
+                        condUnit_0.Def();
                     }
 
-                    else if (_cellUnitFilter.Get2(idxForCondit).HaveMinSteps)
+                    else if (stepUnit_0.HaveMinSteps)
                     {
-                        if (_cellUnitFilter.Get3(idxForCondit).Is(CondUnitTypes.Relaxed))
+                        if (condUnit_0.Is(CondUnitTypes.Relaxed))
                         {
                             RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
 
-                            _cellUnitFilter.Get3(idxForCondit).CondUnitType = neededCondType;
+                            condUnit_0.SetNew(neededCondType);
 
-                            _cellUnitFilter.Get2(idxForCondit).TakeSteps();
+                            stepUnit_0.TakeSteps();
                         }
                         else
                         {
                             RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
 
-                            _cellUnitFilter.Get3(idxForCondit).CondUnitType = neededCondType;
+                            condUnit_0.SetNew(neededCondType);
 
-                            _cellUnitFilter.Get2(idxForCondit).TakeSteps();
+                            stepUnit_0.TakeSteps();
                         }
                     }
 
@@ -61,25 +61,25 @@ namespace Scripts.Game
 
 
                 case CondUnitTypes.Relaxed:
-                    if (_cellUnitFilter.Get3(idxForCondit).Is(CondUnitTypes.Relaxed))
+                    if (condUnit_0.Is(CondUnitTypes.Relaxed))
                     {
                         RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
-                        _cellUnitFilter.Get3(idxForCondit).DefCondition();
+                        condUnit_0.Def();
                     }
 
-                    else if (_cellUnitFilter.Get2(idxForCondit).HaveMinSteps)
+                    else if (stepUnit_0.HaveMinSteps)
                     {
-                        if (_cellUnitFilter.Get3(idxForCondit).Is(CondUnitTypes.Protected))
+                        if (condUnit_0.Is(CondUnitTypes.Protected))
                         {
                             RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
-                            _cellUnitFilter.Get3(idxForCondit).CondUnitType = neededCondType;
-                            _cellUnitFilter.Get2(idxForCondit).TakeSteps();
+                            condUnit_0.SetNew(neededCondType);
+                            stepUnit_0.TakeSteps();
                         }
                         else
                         {
                             RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
-                            _cellUnitFilter.Get3(idxForCondit).CondUnitType = neededCondType;
-                            _cellUnitFilter.Get2(idxForCondit).TakeSteps();
+                            condUnit_0.SetNew(neededCondType);
+                            stepUnit_0.TakeSteps();
                         }
                     }
 

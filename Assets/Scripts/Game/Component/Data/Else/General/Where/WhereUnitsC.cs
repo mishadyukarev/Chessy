@@ -57,7 +57,7 @@ namespace Scripts.Game
                         _unitsInGame[PlayerTypes.First][unitType].Add(levUnit, new List<byte>());
                         _unitsInGame[PlayerTypes.Second][unitType].Add(levUnit, new List<byte>());
                     }
-                    
+
                 }
             }
         }

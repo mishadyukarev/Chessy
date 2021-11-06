@@ -27,11 +27,11 @@ namespace Scripts.Game
 
             ref var stepUnitC_0 = ref _cellUnitFilter.Get3(idxCurculAttack);
 
-            ref var condUnitC_0 = ref _cellUnitOthFilt.Get2(idxCurculAttack);
-            ref var effUnitC_0 = ref _cellUnitOthFilt.Get4(idxCurculAttack);
+            ref var condUnit_0 = ref _cellUnitOthFilt.Get2(idxCurculAttack);
+            ref var effUnit_0 = ref _cellUnitOthFilt.Get4(idxCurculAttack);
 
 
-            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+            if (stepUnitC_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.AttackMelee);
 
@@ -91,15 +91,12 @@ namespace Scripts.Game
                     }
                 }
 
-                stepUnitC_0.ZeroSteps();
+                stepUnitC_0.DefSteps();
 
                 RpcSys.SoundToGeneral(sender, ClipGameTypes.AttackMelee);
 
 
-                if (condUnitC_0.Is(CondUnitTypes.Protected) || condUnitC_0.Is(CondUnitTypes.Relaxed))
-                {
-                    condUnitC_0.DefCondition();
-                }
+                if (condUnit_0.HaveCondition) condUnit_0.Def();
             }
             else
             {

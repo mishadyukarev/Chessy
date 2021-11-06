@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Scripts.Menu
+namespace Scripts.Common
 {
     public struct ShopZoneUICom
     {
@@ -11,9 +11,9 @@ namespace Scripts.Menu
         private static TextMeshProUGUI _infoBuy_TextMP;
         private static Button _exit_Button;
 
-        public ShopZoneUICom(Transform centerZone_Trans)
+        public ShopZoneUICom(Transform shopZone_Trans)
         {
-            _shopZone_GO = centerZone_Trans.Find("ShopZone").gameObject;
+            _shopZone_GO = shopZone_Trans.gameObject;
             _infoBuy_TextMP = _shopZone_GO.transform.Find("BuyInfo_TextMP").GetComponent<TextMeshProUGUI>();
             _exit_Button = _shopZone_GO.transform.Find("Exit_Button").GetComponent<Button>();
         }

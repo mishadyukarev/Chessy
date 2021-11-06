@@ -6,7 +6,7 @@ namespace Scripts.Game
 {
     public struct InfoC
     {
-       private static Dictionary<MGOTypes, PhotonMessageInfo> _info;
+        private static Dictionary<MGOTypes, PhotonMessageInfo> _info;
 
         public InfoC(bool needNew) : this()
         {

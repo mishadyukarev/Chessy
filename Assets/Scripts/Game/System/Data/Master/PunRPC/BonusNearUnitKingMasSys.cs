@@ -13,22 +13,23 @@ namespace Scripts.Game
         {
             var idx_0 = ForBonusNearUnitC.IdxCell;
             ref var unit_0 = ref _cellUnitFilt.Get1(idx_0);
-            ref var stepUnitC_0 =ref _cellUnitFilt.Get3(idx_0);
+            ref var stepUnit_0 =ref _cellUnitFilt.Get3(idx_0);
+            ref var condUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
 
-            ref var effUnitC_0 = ref _cellUnitOthFilt.Get3(idx_0);
+            ref var effUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
             ref var ownUnit_0 = ref _cellUnitOthFilt.Get4(idx_0);
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
 
-            if (stepUnitC_0.HaveMaxSteps(effUnitC_0, unit_0.Unit, UnitsUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+            if (stepUnit_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
             {
                 var around = CellSpaceSupport.TryGetXyAround(_cellXyFilt.Get1(idx_0).XyCell);
 
                 RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
 
-                stepUnitC_0.ZeroSteps();
-                _cellUnitOthFilt.Get2(idx_0).DefCondition();
+                stepUnit_0.DefSteps();
+                if(condUnit_0.HaveCondition) condUnit_0.Def();
 
                 RpcSys.SoundToGeneral(sender, ClipGameTypes.BonusKing);
 

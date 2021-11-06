@@ -45,7 +45,7 @@ namespace Scripts.Game
                             {
                                 if (build_0.HaveBuild)
                                 {
-                                    WhereBuildsC.Remove(ownBuildC_0.Owner, build_0.BuildType, idx_0);
+                                    WhereBuildsC.Remove(ownBuildC_0.Owner, build_0.Build, idx_0);
                                     build_0.Reset();
                                 }
 
@@ -53,9 +53,9 @@ namespace Scripts.Game
 
                                 InventResC.BuyBuild(whoseMove, forBuildType);
 
-                                build_0.SetBuild(forBuildType);
+                                build_0.Build = forBuildType;
                                 ownBuildC_0.SetOwner(whoseMove);
-                                WhereBuildsC.Add(ownBuildC_0.Owner, build_0.BuildType, idx_0);
+                                WhereBuildsC.Add(ownBuildC_0.Owner, build_0.Build, idx_0);
 
                                 curStepUnitC.TakeSteps();
                             }

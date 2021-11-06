@@ -61,16 +61,16 @@ namespace Scripts.Game
 
                         if (build_0.HaveBuild)
                         {
-                            WhereBuildsC.Remove(ownBuild_0.Owner, build_0.BuildType, idxForBuild);
+                            WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idxForBuild);
                             build_0.Reset();
                         }
 
-                        build_0.SetBuild(forBuildType);
+                        build_0.Build = forBuildType;
                         ownBuild_0.SetOwner(whoseMove);
                         WhereBuildsC.Add(whoseMove, forBuildType, idxForBuild);
 
 
-                        curStepUnitC.ZeroSteps();
+                        curStepUnitC.DefSteps();
 
 
                         curFireCom.DisableFire();

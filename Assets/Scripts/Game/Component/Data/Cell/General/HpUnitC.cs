@@ -4,15 +4,22 @@ namespace Scripts.Game
 {
     public struct HpUnitC
     {
+        private int _hp;
         public const int MIN_HP = 0;
         public const int MAX_HP = 100;
 
-        public int AmountHp { get; set; }
 
-        public bool HaveHp => AmountHp > MIN_HP;
-        public bool IsMinusHp => AmountHp < MIN_HP;
-        public bool IsZeroHp => AmountHp == MIN_HP;
-        public bool IsHpDeathAfterAttack => AmountHp <= UnitValues.HP_FOR_DEATH_AFTER_ATTACK;
+        public int Hp => _hp;
+        public int MinHp => MIN_HP;
+        public int MaxHp => MAX_HP;
+
+        public bool HaveMaxHpUnit => Hp >= MAX_HP;
+        public bool HaveHp => Hp > MIN_HP;
+        public bool IsMinusHp => Hp < MIN_HP;
+        public bool IsZeroHp => Hp == MIN_HP;
+        public bool IsHpDeathAfterAttack => Hp <= UnitValues.HP_FOR_DEATH_AFTER_ATTACK;
+
+
 
 
 
@@ -20,7 +27,7 @@ namespace Scripts.Game
         {
             if (adding < MIN_HP) throw new Exception("Need a positive number");
             else if (adding == MIN_HP) throw new Exception("You're adding zero");
-            AmountHp += adding;
+            _hp += adding;
         }
         public void TakeHp(int taking = 1)
         {
@@ -28,19 +35,15 @@ namespace Scripts.Game
             {
                 if (taking < MIN_HP) throw new Exception("Need a positive number");
                 else if (taking == MIN_HP) throw new Exception("You're taking zero");
-                AmountHp -= taking;
+                _hp -= taking;
 
-                if (IsMinusHp) AmountHp = MIN_HP;
+                if (IsMinusHp) _hp = MIN_HP;
             }
             else throw new Exception("Hp <= 0");
         }
 
-        public int SetMinHp() => AmountHp = MIN_HP;
-        public bool Is(int amountHp) => AmountHp == amountHp;
-
-        public bool HaveMaxHpUnit => AmountHp >= MAX_HP;
-        public void AddHealHp() => AmountHp += (int)(MAX_HP * 1);
-        public void SetMaxHp() => AmountHp = MAX_HP;
+        public void SetMaxHp() => _hp = MAX_HP;
+        public int SetMinHp() => _hp = MIN_HP;
 
         public void TakeHpThirsty(UnitTypes unitType)
         {
@@ -58,5 +61,7 @@ namespace Scripts.Game
 
             TakeHp((int)(MAX_HP * percent));
         }
+
+        public void Sync(int hp) => _hp = hp;
     }
 }

@@ -4,30 +4,32 @@ namespace Scripts.Game
 {
     public struct WaterUnitC
     {
-        public int WaterAmount { get; set; }
-        public bool HaveWater => WaterAmount > 0;
-        public bool IsMinusWater => WaterAmount < 0;
-        public bool NeedWater => WaterAmount < 100 * 0.4f;
+        private int _water;
+
+        public int Water => _water;
+        public bool HaveWater => _water > 0;
+        public bool IsMinusWater => _water < 0;
+        public bool NeedWater => _water <= 100 * 0.4f;
+
 
 
         public void AddWater(int adding = 1)
         {
             if (adding <= 0) throw new Exception();
-            WaterAmount += adding;
+            _water += adding;
         }
         public void TakeWater(int taking = 1)
         {
             if (taking <= 0) throw new Exception();
-            WaterAmount -= taking;
-            if (IsMinusWater) WaterAmount = 0;
+            _water -= taking;
+            if (IsMinusWater) _water = 0;
         }
-        public void Set(WaterUnitC thirstyC) => WaterAmount = thirstyC.WaterAmount;
 
-        public int MaxWater(float upgPercent) => (int)(100 + 100 * upgPercent);
-        public bool HaveMaxWater(float upgPercent) => WaterAmount >= MaxWater(upgPercent); 
-        public void SetMaxWater(float upgPercent) => WaterAmount = MaxWater(upgPercent);
+        public int MaxWater(float upgPerc) => (int)(100 + 100 * upgPerc);
+        public bool HaveMaxWater(float upgPerc) => _water >= MaxWater(upgPerc);
+        public void SetMaxWater(float upgPerc) => _water = MaxWater(upgPerc);
         public void TakeWater() => TakeWater((int)(100 * 0.15f));
 
-        public void Sync(int waterAmount) => WaterAmount = waterAmount;
+        public void Sync(int waterAmount) => _water = waterAmount;
     }
 }

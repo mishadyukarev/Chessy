@@ -40,7 +40,7 @@ namespace Scripts.Game
                     break;
                 default: throw new Exception();
             }
-            
+
         }
     }
 }

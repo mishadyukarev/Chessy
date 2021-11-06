@@ -1,6 +1,4 @@
-﻿using Scripts.Common;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Scripts.Game
 {
@@ -35,7 +33,7 @@ namespace Scripts.Game
         {
             for (var attackType = Support.MinAttackType; attackType < Support.MaxAttackType; attackType++)
             {
-                if(_cellsForAttack[playerType][attackType][idxCell].Contains(idxForFind)) return attackType;
+                if (_cellsForAttack[playerType][attackType][idxCell].Contains(idxForFind)) return attackType;
             }
 
             return AttackTypes.None;

@@ -132,7 +132,7 @@ namespace Scripts.Game
                 default: throw new Exception();
             }
         }
-        public static int StandartAmountSteps(bool haveEffect, UnitTypes unitType, float upg)
+        public static int StandartAmountSteps(UnitTypes unitType, bool haveEffect, float upg)
         {
             var steps = 0;
 
