@@ -5,9 +5,9 @@ namespace Scripts.Game
 {
     public sealed class ThirstyUpdMasSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataCom, HpUnitC> _cellUnitFilt = default;
-        private EcsFilter<CellUnitDataCom, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, HpUnitC> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
 
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;

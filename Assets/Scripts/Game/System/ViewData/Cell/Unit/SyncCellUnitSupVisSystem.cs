@@ -5,9 +5,9 @@ namespace Scripts.Game
 {
     public sealed class SyncCellUnitSupVisSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent, ConditionUnitC, OwnerCom, VisibleC> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, UnitEffectsC, WaterUnitC, OwnerCom> _cellUnitOthFilt = default;
-        private EcsFilter<CellUnitDataCom, VisibleC> _cellUnitViewFilt = default;
+        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent, ConditionUnitC, OwnerCom, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, ConditionUnitC, UnitEffectsC, WaterUnitC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, VisibleC> _cellUnitViewFilt = default;
         private EcsFilter<CellUnitMainViewCom> _cellUnitViewFilter = default;
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
         private EcsFilter<CellBlocksViewComponent> _cellBlocksFilter = default;

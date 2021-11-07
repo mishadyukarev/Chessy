@@ -8,7 +8,7 @@ namespace Scripts.Game
         private EcsFilter<SelectorC> _selComFilter = default;
 
         private EcsFilter<CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {

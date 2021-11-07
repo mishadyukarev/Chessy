@@ -12,13 +12,7 @@ namespace Scripts.Game
             get
             {
                 var envrs = new Dictionary<EnvTypes, bool>();
-
-                for (var envType = Support.MinEnvironType; envType < Support.MaxEnvironType; envType++)
-                {
-                    if (_haveEnvir[envType]) envrs.Add(envType, true);
-                    else envrs.Add(envType, false);
-                }
-
+                foreach (var item in _haveEnvir) envrs.Add(item.Key, item.Value);
                 return envrs;
             }
         }

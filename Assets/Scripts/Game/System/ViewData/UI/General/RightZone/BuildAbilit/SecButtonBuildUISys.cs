@@ -4,7 +4,7 @@ namespace Scripts.Game
 {
     public sealed class SecButtonBuildUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataC, OwnerCom> _cellUnitFilt = default;
 
         public void Run()
         {

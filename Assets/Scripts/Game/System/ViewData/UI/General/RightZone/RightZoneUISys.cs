@@ -4,7 +4,7 @@ namespace Scripts.Game
 {
     public sealed class RightZoneUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, OwnerCom, VisibleC> _cellUnitFilter = default;
 
         public void Run()
         {

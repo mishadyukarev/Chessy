@@ -4,9 +4,9 @@ namespace Scripts.Game
 {
     public sealed class StatsUISystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataCom, HpUnitC, DamageC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOtherFill = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, HpUnitC, DamageC, StepComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, ConditionUnitC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOtherFill = default;
         private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
 

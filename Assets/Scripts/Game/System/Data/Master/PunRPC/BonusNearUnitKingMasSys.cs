@@ -6,8 +6,8 @@ namespace Scripts.Game
     public sealed class BonusNearUnitKingMasSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _cellXyFilt = default;
-        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitFilt = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataC, ConditionUnitC, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
 
         public void Run()
         {
@@ -33,6 +33,9 @@ namespace Scripts.Game
 
                 RpcSys.SoundToGeneral(sender, ClipGameTypes.BonusKing);
 
+                if (!effUnit_0.Have(UnitStatTypes.Damage)) effUnit_0.Set(UnitStatTypes.Damage);
+                if (!effUnit_0.Have(UnitStatTypes.Steps)) effUnit_0.Set(UnitStatTypes.Steps);
+
                 foreach (var xy in around)
                 {
                     var idxCell = _cellXyFilt.GetIdxCell(xy);
@@ -52,7 +55,6 @@ namespace Scripts.Game
                             {
                                 effUnitC_1.Set(UnitStatTypes.Damage);
                             }
-
                             if (!effUnitC_1.Have(UnitStatTypes.Steps))
                             {
                                 effUnitC_1.Set(UnitStatTypes.Steps);

@@ -5,8 +5,8 @@ namespace Scripts.Game
     public sealed class SyncSupportViewSystem : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, CellUnitMainViewCom> _cellUnitViewFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, CellUnitMainViewCom> _cellUnitViewFilt = default;
         private EcsFilter<CellSupViewComponent> _supViewFilter = default;
 
         private EcsFilter<CellsForSetUnitC> _cellsSetUnitFilter = default;

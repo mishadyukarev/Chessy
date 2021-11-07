@@ -8,7 +8,7 @@ namespace Scripts.Game
     {
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
 
-        private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, StepComponent, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
 

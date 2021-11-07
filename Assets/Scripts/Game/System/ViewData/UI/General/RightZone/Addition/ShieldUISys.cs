@@ -4,7 +4,7 @@ namespace Scripts.Game
 {
     public sealed class ShieldUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, ToolWeaponC> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitFilt = default;
 
         public void Run()
         {

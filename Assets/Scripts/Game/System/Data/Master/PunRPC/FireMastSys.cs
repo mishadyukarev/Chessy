@@ -9,8 +9,8 @@ namespace Scripts.Game
     {
         private EcsFilter<ForFireMasCom> _fireFilter = default;
 
-        private EcsFilter<CellUnitDataCom, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, StepComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
 

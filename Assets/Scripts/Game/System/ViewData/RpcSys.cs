@@ -11,10 +11,10 @@ namespace Scripts.Game
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
-        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitStatFilt = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
-        private EcsFilter<CellUnitDataCom, ToolWeaponC> _cellUnitTWFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitStatFilt = default;
+        private EcsFilter<CellUnitDataC, ConditionUnitC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitTWFilt = default;
 
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
         private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvrFilter = default;
@@ -364,17 +364,8 @@ namespace Scripts.Game
 
                 ref var env_0 = ref _cellEnvrFilter.Get1(idx_0);
                 ref var envRes_0 = ref _cellEnvrFilter.Get2(idx_0);
-
-                objs.Add(env_0.Have(EnvTypes.Fertilizer));
-                objs.Add(envRes_0.AmountRes(EnvTypes.Fertilizer));
-                objs.Add(env_0.Have(EnvTypes.YoungForest));
-                objs.Add(envRes_0.AmountRes(EnvTypes.YoungForest));
-                objs.Add(env_0.Have(EnvTypes.AdultForest));
-                objs.Add(envRes_0.AmountRes(EnvTypes.AdultForest));
-                objs.Add(env_0.Have(EnvTypes.Hill));
-                objs.Add(envRes_0.AmountRes(EnvTypes.Hill));
-                objs.Add(env_0.Have(EnvTypes.Mountain));
-                objs.Add(envRes_0.AmountRes(EnvTypes.Mountain));
+                foreach (var item in env_0.Envronments) objs.Add(item.Value);
+                foreach (var item in envRes_0.Resources) objs.Add(item.Value);
 
 
 
@@ -571,22 +562,8 @@ namespace Scripts.Game
 
                 ref var env_0 = ref _cellEnvrFilter.Get1(idx_0);
                 ref var envRes_0 = ref _cellEnvrFilter.Get2(idx_0);
-
-                env_0.Sync(EnvTypes.Fertilizer, (bool)objects[_curNumber++]);
-                envRes_0.SetRes(EnvTypes.Fertilizer, (int)objects[_curNumber++]);
-
-                env_0.Sync(EnvTypes.YoungForest, (bool)objects[_curNumber++]);
-                envRes_0.SetRes(EnvTypes.YoungForest, (int)objects[_curNumber++]);
-
-                env_0.Sync(EnvTypes.AdultForest, (bool)objects[_curNumber++]);
-                envRes_0.SetRes(EnvTypes.AdultForest, (int)objects[_curNumber++]);
-
-                env_0.Sync(EnvTypes.Hill, (bool)objects[_curNumber++]);
-                envRes_0.SetRes(EnvTypes.Hill, (int)objects[_curNumber++]);
-
-                env_0.Sync(EnvTypes.Mountain, (bool)objects[_curNumber++]);
-                envRes_0.SetRes(EnvTypes.Mountain, (int)objects[_curNumber++]);
-
+                foreach (var item in env_0.Envronments) env_0.Sync(item.Key, item.Value);
+                foreach (var item in envRes_0.Resources) envRes_0.Sync(item.Key, item.Value);
 
 
                 ref var river_0 = ref _cellRiverFilt.Get1(idx_0);

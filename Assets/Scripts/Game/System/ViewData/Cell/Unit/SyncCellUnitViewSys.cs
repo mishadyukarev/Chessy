@@ -4,8 +4,8 @@ namespace Scripts.Game
 {
     public sealed class SyncCellUnitViewSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, ToolWeaponC> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitLevFilter = default;
+        private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitLevFilter = default;
         private EcsFilter<VisibleC, CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilt = default;
 
         public void Run()

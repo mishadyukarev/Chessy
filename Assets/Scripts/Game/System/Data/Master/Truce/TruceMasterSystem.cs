@@ -13,8 +13,8 @@ namespace Scripts.Game
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
 
-        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, ToolWeaponC> _cellUnitTwFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitTwFilt = default;
 
         public void Run()
         {

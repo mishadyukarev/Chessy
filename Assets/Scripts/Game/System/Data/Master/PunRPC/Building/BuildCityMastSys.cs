@@ -11,7 +11,7 @@ namespace Scripts.Game
         private EcsFilter<XyCellComponent> _xyCellFilt = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
-        private EcsFilter<CellUnitDataCom, StepComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
 

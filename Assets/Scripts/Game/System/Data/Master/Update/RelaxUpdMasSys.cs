@@ -4,10 +4,10 @@ namespace Scripts.Game
 {
     public sealed class RelaxUpdMasSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataCom, HpUnitC> _cellUnitStatFilt = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, UnitEffectsC> _cellUnitOthFilt = default;
-        private EcsFilter<CellUnitDataCom, ToolWeaponC> _cellUnitTWFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, HpUnitC> _cellUnitStatFilt = default;
+        private EcsFilter<CellUnitDataC, ConditionUnitC, UnitEffectsC> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitTWFilt = default;
 
         private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilt = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;

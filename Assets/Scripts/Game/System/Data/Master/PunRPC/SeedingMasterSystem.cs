@@ -8,7 +8,7 @@ namespace Scripts.Game
     {
         private EcsFilter<ForSeedingMasCom> _seedingFilter = default;
 
-        private EcsFilter<CellUnitDataCom, StepComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
 

@@ -21,9 +21,9 @@ namespace Scripts.Game
         private EcsFilter<CellCloudDataC> _cellWeatherFilt = default;
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
 
-        private readonly EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
-        private readonly EcsFilter<CellUnitDataCom, HpUnitC, DamageC, StepComponent> _cellUnitStatsFilt = default;
-        private readonly EcsFilter<CellUnitDataCom, ConditionUnitC, ToolWeaponC, WaterUnitC> _cellUnitOtherFilt = default;
+        private readonly EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private readonly EcsFilter<CellUnitDataC, HpUnitC, DamageC, StepComponent> _cellUnitStatsFilt = default;
+        private readonly EcsFilter<CellUnitDataC, ConditionUnitC, ToolWeaponC, WaterUnitC> _cellUnitOtherFilt = default;
 
         public FillEntitiesSys(EcsSystems gameSysts)
         {
@@ -39,6 +39,10 @@ namespace Scripts.Game
 
             var rpcGameSys = new EcsSystems(gameWorld)
                 .Add(RpcViewC.RpcView_GO.AddComponent<RpcSys>());
+
+
+            var syncAbilities = new EcsSystems(gameWorld)
+                .Add(new AbilSyncMasSys());
 
 
             var fillAvailCells = new EcsSystems(gameWorld)
@@ -65,6 +69,7 @@ namespace Scripts.Game
                 .Add(new InputSystem())
                 .Add(new RaySystem())
                 .Add(new SelectorSystem())
+                .Add(syncAbilities)
                 .Add(fillAvailCells)
                 .Add(eventExecuters);
 
@@ -159,8 +164,7 @@ namespace Scripts.Game
                 .Add(new StatsUISystem())
                 .Add(new ProtectUISys())
                 .Add(new RelaxUISys())
-                .Add(new UniqFirstButUISys())
-                .Add(new UniqSecButUISys())
+                .Add(new UniqButSyncUISys())
                 .Add(new FirstButtonBuildUISys())
                 .Add(new SecButtonBuildUISys())
                 .Add(new ThirdButtonBuildUISys())
@@ -335,7 +339,7 @@ namespace Scripts.Game
 
 
                     _curGameWorld.NewEntity()
-                         .Replace(new CellUnitDataCom())
+                         .Replace(new CellUnitDataC())
 
                          .Replace(new LevelUnitC())
                          .Replace(new OwnerCom())
@@ -346,6 +350,9 @@ namespace Scripts.Game
 
                          .Replace(new ConditionUnitC())
                          .Replace(new MoveInCondC(true))
+
+                         .Replace(new Uniq1C())
+                         .Replace(new Uniq2C())
 
                          .Replace(new UnitEffectsC(true))
                          .Replace(new WaterUnitC())                       
@@ -471,7 +478,7 @@ namespace Scripts.Game
                 //.Replace(new RightUniqueViewUIC(rightZone_GO.transform.Find("UniqueAbilitiesZone")))
 
                 .Replace(new UniqFirstButDataC())
-                .Replace(new UniqFirstButViewC(uniqAbilZone_trans))
+                .Replace(new UniqButtonsViewC(uniqAbilZone_trans))
                 .Replace(new UniqSecButDataC())
                 .Replace(new UniqSecButViewC(uniqAbilZone_trans))
                 .Replace(new UniqThirdButDataC())

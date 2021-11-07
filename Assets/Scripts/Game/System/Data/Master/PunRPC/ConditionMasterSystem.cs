@@ -6,7 +6,7 @@ namespace Scripts.Game
 {
     public sealed class ConditionMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, StepComponent, ConditionUnitC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, StepComponent, ConditionUnitC> _cellUnitFilter = default;
 
         public void Run()
         {

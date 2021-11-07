@@ -7,7 +7,7 @@ namespace Scripts.Game
         private EcsFilter<CellsArsonArcherComp> _cellsArsonFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
 

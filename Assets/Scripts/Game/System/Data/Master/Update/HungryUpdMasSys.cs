@@ -5,7 +5,7 @@ namespace Scripts.Game
     public sealed class HungryUpdMasSys : IEcsRunSystem
     {
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
-        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
 
         public void Run()
         {

@@ -6,7 +6,7 @@ namespace Scripts.Game
     {
         private EcsFilter<CellsGiveTWComp> _cellsGiveFilter = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {

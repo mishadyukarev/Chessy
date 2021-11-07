@@ -8,10 +8,11 @@ namespace Scripts.Game
     {
         private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
-        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataCom, HpUnitC, DamageC, StepComponent> _cellUnitFilt = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, UnitEffectsC, WaterUnitC> _cellUnitEffFilt = default;
-        private EcsFilter<CellUnitDataCom, ToolWeaponC> _cellUnitTwFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, HpUnitC, DamageC, StepComponent> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataC, UnitEffectsC, WaterUnitC> _cellUnitEffFilt = default;
+        private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitTwFilt = default;
+        private EcsFilter<CellUnitDataC, ConditionUnitC, MoveInCondC> _unitCondFilt = default;
 
         private EcsFilter<XyCellComponent> _cellXyFilt = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
@@ -35,10 +36,10 @@ namespace Scripts.Game
             ref var hpUnitC_from = ref _cellUnitFilt.Get2(idx_from);
             ref var damUnit_from = ref _cellUnitFilt.Get3(idx_from);
             ref var stepUnit_from = ref _cellUnitFilt.Get4(idx_from);
-            ref var condUnit_from = ref _cellUnitEffFilt.Get2(idx_from);
-            ref var effUnit_from = ref _cellUnitEffFilt.Get3(idx_from);
-            ref var waterUnit_from = ref _cellUnitEffFilt.Get4(idx_from);
+            ref var effUnit_from = ref _cellUnitEffFilt.Get2(idx_from);
+            ref var waterUnit_from = ref _cellUnitEffFilt.Get3(idx_from);
             ref var twUnit_from = ref _cellUnitTwFilt.Get2(idx_from);
+            ref var condUnit_from = ref _unitCondFilt.Get2(idx_from);
 
             ref var river_from = ref _cellRiverFilt.Get1(idx_from);
             ref var build_from = ref _cellBuildFilter.Get1(idx_from);
@@ -53,10 +54,11 @@ namespace Scripts.Game
             ref var hpUnit_to = ref _cellUnitFilt.Get2(idx_to);
             ref var damUnit_to =ref _cellUnitFilt.Get3(idx_to);
             ref var stepUnit_to = ref _cellUnitFilt.Get4(idx_to);
-            ref var condUnit_to = ref _cellUnitEffFilt.Get2(idx_to); 
-            ref var effUnit_to = ref _cellUnitEffFilt.Get3(idx_to);
-            ref var waterUnit_to = ref _cellUnitEffFilt.Get4(idx_to);
+            ref var effUnit_to = ref _cellUnitEffFilt.Get2(idx_to);
+            ref var waterUnit_to = ref _cellUnitEffFilt.Get3(idx_to);
             ref var twUnit_to = ref _cellUnitTwFilt.Get2(idx_to);
+            ref var condUnit_to = ref _unitCondFilt.Get2(idx_to);
+            ref var moveCond_to = ref _unitCondFilt.Get3(idx_to);
 
 
             ref var river_to = ref _cellRiverFilt.Get1(idx_to);
@@ -86,15 +88,7 @@ namespace Scripts.Game
 
 
 
-                powerDam_to += damUnit_to.DamageOnCell(unit_to.Unit, levUnitC_to.Level, condUnit_to, twUnit_to, effUnit_to, UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Damage), build_to.Build, env_to.Envronments);
-                
-
-
-                //var pawnUpg_from = UnitsUpgC.UpgPercent(ownUnit_from.Owner, unit_from.Unit, UnitStatTypes.Hp);
-                //var maxHp_from = HpUnitC.MAX_HP;
-
-                //var pawnUpg_to = UnitsUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Hp);
-                //var maxHp_to = HpUnitC.MAX_HP;
+                powerDam_to += damUnit_to.DamageOnCell(unit_to.Unit, levUnitC_to.Level, condUnit_to, twUnit_to, effUnit_to, UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Damage), build_to.Build, env_to.Envronments);   
 
 
                 float min_limit = 0;
@@ -203,6 +197,7 @@ namespace Scripts.Game
                             twUnit_to = twUnit_from;
                             ownUnit_to = ownUnit_from;
                             waterUnit_to = waterUnit_from;
+                            moveCond_to.ResetAll();
                             if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Water));
                             WhereUnitsC.Add(ownUnit_to.Owner, unit_to.Unit, levUnitC_to.Level, idx_to);
 

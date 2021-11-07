@@ -5,7 +5,7 @@ namespace Scripts.Game
     public sealed class FillCellsForSetUnitSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC> _cellUnitFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilt = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuldFilt = default;
 

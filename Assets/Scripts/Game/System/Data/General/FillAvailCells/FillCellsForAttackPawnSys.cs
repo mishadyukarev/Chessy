@@ -8,8 +8,8 @@ namespace Scripts.Game
         private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
-        private EcsFilter<CellUnitDataCom, StepComponent, OwnerCom> _cellUnitFilt = default;
-        private EcsFilter<CellUnitDataCom, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, StepComponent, OwnerCom> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataC, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
 
         public void Run()
         {

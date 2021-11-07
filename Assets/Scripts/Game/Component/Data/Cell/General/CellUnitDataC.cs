@@ -2,11 +2,9 @@
 
 namespace Scripts.Game
 {
-    public struct CellUnitDataCom
+    public struct CellUnitDataC
     {
-        private UnitTypes _unitType;
-
-        public UnitTypes Unit => _unitType;
+        public UnitTypes Unit { get; private set; }
         public bool HaveUnit => Unit != UnitTypes.None;
         public bool IsMelee
         {
@@ -32,17 +30,17 @@ namespace Scripts.Game
             if (unitType == UnitTypes.None) throw new Exception();
             if (HaveUnit) throw new Exception("It's got unit");
 
-            _unitType = unitType;
+            Unit = unitType;
         }
         public void NoneUnit()
         {
             if (!HaveUnit) throw new Exception("It's not got unit");
 
-            _unitType = UnitTypes.None;
+            Unit = UnitTypes.None;
         }
         public void Sync(UnitTypes unitType)
         {
-            _unitType = unitType;
+            Unit = unitType;
         }
 
         public bool Is(UnitTypes unitType) => Unit.Is(unitType);

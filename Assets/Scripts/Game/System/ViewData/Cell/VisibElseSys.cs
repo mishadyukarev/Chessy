@@ -8,7 +8,7 @@ namespace Scripts.Game
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellTrailDataC, VisibleC> _cellTrailFilt = default;
 
-        private EcsFilter<CellUnitDataCom, OwnerCom, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, OwnerCom, VisibleC> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataC, OwnerCom, VisibleC> _cellBuildFilt = default;
 
         public void Run()

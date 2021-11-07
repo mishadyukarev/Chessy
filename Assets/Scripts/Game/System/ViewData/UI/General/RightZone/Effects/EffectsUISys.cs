@@ -4,7 +4,7 @@ namespace Scripts.Game
 {
     public sealed class EffectsUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, UnitEffectsC> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataC, UnitEffectsC> _cellUnitFilt = default;
 
         public void Run()
         {

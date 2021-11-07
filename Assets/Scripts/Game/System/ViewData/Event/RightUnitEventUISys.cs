@@ -6,12 +6,13 @@ namespace Scripts.Game
 {
     public sealed class RightUnitEventUISys : IEcsInitSystem
     {
-        private EcsFilter<CellUnitDataCom, ConditionUnitC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, ConditionUnitC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, Uniq1C, Uniq2C> _unitUniqFilt = default;
 
         public void Init()
         {
-            UniqFirstButViewC.AddListener(UniqFirstBut);
-            UniqSecButViewC.AddListener(UniqSecBut);
+            UniqButtonsViewC.AddListener(UniqButtonTypes.First, UniqFirstBut);
+            UniqButtonsViewC.AddListener(UniqButtonTypes.Second, UniqSecBut);
 
             BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.First, delegate { ExecuteBuild_Button(BuildButtonTypes.First); });
             BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.Second, delegate { ExecuteBuild_Button(BuildButtonTypes.Second); });
@@ -48,29 +49,31 @@ namespace Scripts.Game
 
         private void UniqFirstBut()
         {
-            var abil = UniqFirstButDataC.Ability;
+            ref var firstUniq_sel = ref _unitUniqFilt.Get2(SelectorC.IdxSelCell);
 
-            switch (abil)
+            var abil = firstUniq_sel.Ability;
+
+            switch (firstUniq_sel.Ability)
             {
-                case UniqFirstAbilTypes.None: throw new Exception();
+                case UniqAbilTypes.None: throw new Exception();
 
-                case UniqFirstAbilTypes.Seed:
+                case UniqAbilTypes.FirePawn:
+                    RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxSelCell);
+                    break;
+
+                case UniqAbilTypes.NoneFirePawn:
+                    RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxSelCell);
+                    break;
+
+                case UniqAbilTypes.Seed:
                     RpcSys.SeedEnvironmentToMaster(SelectorC.IdxSelCell, EnvTypes.YoungForest);
                     break;
 
-                case UniqFirstAbilTypes.FirePawn:
-                    RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxSelCell);
-                    break;
-
-                case UniqFirstAbilTypes.PutOutFirePawn:
-                    RpcSys.FireToMaster(SelectorC.IdxSelCell, SelectorC.IdxSelCell);
-                    break;
-
-                case UniqFirstAbilTypes.FireArcher:
+                case UniqAbilTypes.FireArcher:
                     SelectorC.CellClickType = CellClickTypes.PickFire;
                     break;
 
-                case UniqFirstAbilTypes.CircularAttack:
+                case UniqAbilTypes.CircularAttack:
                     RpcSys.CircularAttackKingToMaster(SelectorC.IdxSelCell);
                     if (HintComC.IsOnHint)
                     {
@@ -83,15 +86,16 @@ namespace Scripts.Game
                     }
                     break;
 
+                case UniqAbilTypes.BonusNear: throw new Exception();
                 default: throw new Exception();
             }
 
             if (HintComC.IsOnHint)
             {
-                if (abil == UniqFirstAbilTypes.FireArcher
-                || abil == UniqFirstAbilTypes.Seed
-                || abil == UniqFirstAbilTypes.FirePawn
-                || abil == UniqFirstAbilTypes.None)
+                if (abil == UniqAbilTypes.FireArcher
+                || abil == UniqAbilTypes.Seed
+                || abil == UniqAbilTypes.FirePawn
+                || abil == UniqAbilTypes.NoneFirePawn)
                 {
                     if (!HintDataUIC.IsActive(VideoClipTypes.SeedFire))
                     {
@@ -105,13 +109,20 @@ namespace Scripts.Game
 
         private void UniqSecBut()
         {
-            var abil = UniqSecButDataC.Ability;
+            ref var secUniq_sel = ref _unitUniqFilt.Get3(SelectorC.IdxSelCell);
+
+            var abil = secUniq_sel.Ability;
 
             switch (abil)
             {
-                case UniqSecAbilTypes.None: throw new Exception();
+                case UniqAbilTypes.None: throw new Exception();
+                case UniqAbilTypes.FirePawn: throw new Exception();
+                case UniqAbilTypes.NoneFirePawn: throw new Exception();
+                case UniqAbilTypes.Seed: throw new Exception();
+                case UniqAbilTypes.FireArcher: throw new Exception();
+                case UniqAbilTypes.CircularAttack: throw new Exception();
 
-                case UniqSecAbilTypes.Effects:
+                case UniqAbilTypes.BonusNear:
                     RpcSys.BonusNearUnits(SelectorC.IdxSelCell);
                     if (HintComC.IsOnHint)
                     {

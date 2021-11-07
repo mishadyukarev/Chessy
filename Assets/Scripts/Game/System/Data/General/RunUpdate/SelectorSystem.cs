@@ -5,10 +5,10 @@ namespace Scripts.Game
 {
     public sealed class SelectorSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom, VisibleC> _cellUnitFilter = default;
         public void Run()
         {
-            CellUnitDataCom UnitDatCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
+            CellUnitDataC UnitDatCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
             LevelUnitC LevelUnitC(byte idx) => _cellUnitFilter.Get2(idx);
             OwnerCom OwnUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
             VisibleC VisUnitCom(byte idxCell) => _cellUnitFilter.Get4(idxCell);

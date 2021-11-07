@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Scripts.Game
+﻿namespace Scripts.Game
 {
     public enum UniqThirdAbilTypes
     {

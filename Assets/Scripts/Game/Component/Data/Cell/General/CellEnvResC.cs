@@ -6,6 +6,19 @@ namespace Scripts.Game
     public struct CellEnvResC
     {
         private Dictionary<EnvTypes, int> _amountResours;
+        
+        public Dictionary<EnvTypes, int > Resources
+        {
+            get
+            {
+                var dict = new Dictionary<EnvTypes, int>();
+                foreach (var item in _amountResours)
+                {
+                    dict.Add(item.Key, item.Value);
+                }
+                return dict;
+            }
+        }
 
         public CellEnvResC(bool needNew)
         {
@@ -42,7 +55,6 @@ namespace Scripts.Game
         public void TakeAmountRes(EnvTypes envType, int taking = 1) => SetRes(envType, AmountRes(envType) - taking);
         public bool HaveRes(EnvTypes envType) => AmountRes(envType) > 0;
         public bool HaveMaxRes(EnvTypes envType) => AmountRes(envType) >= MaxAmountRes(envType);
-
         public void SetNew(EnvTypes envType)
         {
             byte randAmountRes = 0;
@@ -63,7 +75,7 @@ namespace Scripts.Game
                     break;
 
                 case EnvTypes.Hill:
-                    randAmountRes = 0;
+                    randAmountRes = 1;
                     break;
 
                 case EnvTypes.Mountain:
@@ -73,6 +85,11 @@ namespace Scripts.Game
                     throw new Exception();
             }
             SetRes(envType, randAmountRes);
+        }
+
+        public void Sync(EnvTypes env, int amount)
+        {
+            _amountResours[env] = amount;
         }
     }
 }

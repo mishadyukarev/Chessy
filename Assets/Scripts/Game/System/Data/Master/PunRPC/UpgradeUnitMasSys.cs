@@ -7,8 +7,8 @@ namespace Scripts.Game
     {
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
 
-        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent, UnitEffectsC> _cellUnitDataFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent, UnitEffectsC> _cellUnitDataFilt = default;
         private EcsFilter<InventResC> _invResFilt = default;
 
         public void Run()

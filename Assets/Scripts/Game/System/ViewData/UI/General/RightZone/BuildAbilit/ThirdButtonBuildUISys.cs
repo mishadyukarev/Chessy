@@ -5,7 +5,7 @@ namespace Scripts.Game
 {
     public sealed class ThirdButtonBuildUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, OwnerCom> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
 
         public void Run()

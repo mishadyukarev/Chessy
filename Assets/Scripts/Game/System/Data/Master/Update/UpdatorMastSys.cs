@@ -14,10 +14,10 @@ namespace Scripts.Game
         private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
-        private EcsFilter<CellUnitDataCom, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataCom, HpUnitC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataCom, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
 
         public void Run()
         {
@@ -51,7 +51,7 @@ namespace Scripts.Game
 
                 if (unit_0.HaveUnit)
                 {
-                    moveCond_0.AddMoveCond(condUnit_0.Condition);
+                    moveCond_0.AddMove(condUnit_0.Condition);
 
                     if (!unit_0.Is(UnitTypes.King)) InventResC.TakeAmountRes(ownUnit_0.Owner, ResTypes.Food);
 

@@ -7,7 +7,22 @@ namespace Scripts.Game
     {
         private Dictionary<CondUnitTypes, int> _moveInCond;
 
+        public Dictionary<CondUnitTypes, int> MovesInCond
+        {
+            get
+            {
+                var dict = new Dictionary<CondUnitTypes, int>();
+                foreach (var item in _moveInCond)
+                {
+                    dict.Add(item.Key, item.Value);
+                }
+                return dict;
+            }
+        }
         public bool HaveForBuldCamp => _moveInCond[CondUnitTypes.Protected] >= 4;
+        public int AmountMoves(CondUnitTypes cond) => _moveInCond[cond];
+        public bool HaveMoves(CondUnitTypes cond) => _moveInCond[cond] > 0;
+
 
         public MoveInCondC(bool needNew)
         {
@@ -22,7 +37,12 @@ namespace Scripts.Game
             else throw new Exception();
         }
 
-        public int MoveInCond(CondUnitTypes cond) => _moveInCond[cond];
-        public void AddMoveCond(CondUnitTypes cond) => _moveInCond[cond] += 1;
+
+        public void AddMove(CondUnitTypes cond) => _moveInCond[cond] += 1;
+        public void ResetAll()
+        {
+            foreach (var item in MovesInCond) 
+                _moveInCond[item.Key] = 0;
+        }
     }
 }

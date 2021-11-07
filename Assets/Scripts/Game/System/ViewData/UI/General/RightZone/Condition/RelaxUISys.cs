@@ -5,7 +5,7 @@ namespace Scripts.Game
 {
     public sealed class RelaxUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataCom, ConditionUnitC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, ConditionUnitC, OwnerCom> _cellUnitFilter = default;
 
         public void Run()
         {
