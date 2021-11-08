@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Scripts.Common
+namespace Chessy.Common
 {
     public struct ClipsResComCom
     {

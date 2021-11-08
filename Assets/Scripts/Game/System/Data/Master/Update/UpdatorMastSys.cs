@@ -1,9 +1,9 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using Scripts.Common;
+using Chessy.Common;
 using System;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class UpdatorMastSys : IEcsRunSystem
     {

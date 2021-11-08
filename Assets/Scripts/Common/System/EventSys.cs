@@ -1,14 +1,17 @@
 ﻿using Leopotam.Ecs;
-using UnityEditor;
-using UnityEngine;
 
-namespace Scripts.Common
+namespace Chessy.Common
 {
-    public sealed class EventSys : IEcsRunSystem
+    public sealed class EventSys : IEcsInitSystem
     {
-        public void Run()
+        public void Init()
         {
-            
+            ShopUIC.AddListExit_Button(ExitShop);
+        }
+
+        private void ExitShop()
+        {
+            ShopUIC.DisableZone();
         }
     }
 }

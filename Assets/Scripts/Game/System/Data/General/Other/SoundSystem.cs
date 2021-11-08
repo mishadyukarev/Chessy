@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
-using Scripts.Common;
+using Chessy.Common;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class SoundSystem : IEcsRunSystem
     {

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct SelectorUIC
     {
@@ -18,7 +18,7 @@ namespace Scripts.Game
             _back_Image = selZone_Trans.Find("Back_Image").GetComponent<Image>();
             _selZones_GOs.Add(CellClickTypes.PickFire, selZone_Trans.Find("PickAdultForestZone").gameObject);
             _selZones_GOs.Add(CellClickTypes.GiveTakeTW, selZone_Trans.Find("GiveTakeToolZone").gameObject);
-            _selZones_GOs.Add(CellClickTypes.OldToNewUnit, selZone_Trans.Find("ScoutZone").gameObject);
+            _selZones_GOs.Add(CellClickTypes.OldNewUnit, selZone_Trans.Find("ScoutZone").gameObject);
             _selZones_GOs.Add(CellClickTypes.UpgradeUnit, selZone_Trans.Find("UpgradeUnitZone").gameObject);
         }
 

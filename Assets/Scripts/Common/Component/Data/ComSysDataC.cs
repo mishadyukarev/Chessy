@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Scripts.Common
+namespace Chessy.Common
 {
     public struct ComSysDataC
     {

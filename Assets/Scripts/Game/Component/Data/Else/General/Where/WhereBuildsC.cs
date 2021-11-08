@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct WhereBuildsC
     {
@@ -32,20 +32,27 @@ namespace Scripts.Game
             }
         }
 
-        public WhereBuildsC(bool needNew) : this()
+        static WhereBuildsC()
         {
-            if (needNew)
+            _buildsInGame = new Dictionary<PlayerTypes, Dictionary<BuildTypes, List<byte>>>();
+
+            _buildsInGame.Add(PlayerTypes.First, new Dictionary<BuildTypes, List<byte>>());
+            _buildsInGame.Add(PlayerTypes.Second, new Dictionary<BuildTypes, List<byte>>());
+
+
+            for (var build = (BuildTypes)1; build < (BuildTypes)Enum.GetNames(typeof(BuildTypes)).Length; build++)
             {
-                _buildsInGame = new Dictionary<PlayerTypes, Dictionary<BuildTypes, List<byte>>>();
-
-                _buildsInGame.Add(PlayerTypes.First, new Dictionary<BuildTypes, List<byte>>());
-                _buildsInGame.Add(PlayerTypes.Second, new Dictionary<BuildTypes, List<byte>>());
-
-
-                for (BuildTypes buildingType = 0; buildingType < (BuildTypes)Enum.GetNames(typeof(BuildTypes)).Length; buildingType++)
+                _buildsInGame[PlayerTypes.First].Add(build, new List<byte>());
+                _buildsInGame[PlayerTypes.Second].Add(build, new List<byte>());
+            }
+        }
+        public static void Start()
+        {
+            foreach (var item_0 in _buildsInGame)
+            {
+                foreach (var item_1 in item_0.Value)
                 {
-                    _buildsInGame[PlayerTypes.First].Add(buildingType, new List<byte>());
-                    _buildsInGame[PlayerTypes.Second].Add(buildingType, new List<byte>());
+                    _buildsInGame[item_0.Key][item_1.Key].Clear();
                 }
             }
         }
@@ -60,10 +67,7 @@ namespace Scripts.Game
         {
             _buildsInGame[playerType][buildType].Add(idxCell);
         }
-        public static void Clear(PlayerTypes playerType, BuildTypes buildType)
-        {
-            _buildsInGame[playerType][buildType].Clear();
-        }
+       
         public static void Remove(PlayerTypes playerType, BuildTypes buildType, byte idxCell)
         {
             if (Contains(playerType, buildType, idxCell)) _buildsInGame[playerType][buildType].Remove(idxCell);
@@ -74,5 +78,10 @@ namespace Scripts.Game
 
         public static bool IsSettedCity(PlayerTypes playerType) => _buildsInGame[playerType][BuildTypes.City].Count >= 1;
         public static byte IdxCity(PlayerTypes playerType) => _buildsInGame[playerType][BuildTypes.City][0];
+
+        public static void Clear(PlayerTypes playerType, BuildTypes buildType)
+        {
+            _buildsInGame[playerType][buildType].Clear();
+        }
     }
 }

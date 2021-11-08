@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scripts.Menu
+namespace Chessy.Menu
 {
     public struct MenuSysDataC
     {

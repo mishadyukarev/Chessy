@@ -1,8 +1,8 @@
 ﻿using Leopotam.Ecs;
-using Scripts.Common;
+using Chessy.Common;
 using System;
 
-namespace Scripts.Menu
+namespace Chessy.Menu
 {
     public class LaunchLikeGameAndShopSys : IEcsRunSystem
     {
@@ -17,7 +17,7 @@ namespace Scripts.Menu
                     LikeGameUICom.SetActiveZone(true);
                     TimeStartGameComCom.WasLikeGameZone = true;
 
-                    ShopZoneUICom.EnableZone();
+                    ShopUIC.EnableZone();
                 }
             }
         }

@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Video;
 
-namespace Scripts.Common
+namespace Chessy.Common
 {
     public struct VideoClipsResCom
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Scripts.Common
+namespace Chessy.Common
 {
     public readonly struct ToggleZoneComponent
     {

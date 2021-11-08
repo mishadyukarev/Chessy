@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.EventSystems;
 
-namespace Scripts.Common
+namespace Chessy.Common
 {
     public class FillEntitiesSys : IEcsInitSystem
     {
@@ -75,7 +75,7 @@ namespace Scripts.Common
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
                 .Replace(new CanvasC(canvas))
                 .Replace(new SoundComC(audioSource))
-                .Replace(new LanguageComCom(LanguageTypes.English))
+                .Replace(new LanguageComC(LanguageTypes.English))
                 .Replace(new AdComCom(DateTime.Now))
                 .Replace(new TimeStartGameComCom(DateTime.Now))
                 .Replace(new HintComC(true))
@@ -90,7 +90,7 @@ namespace Scripts.Common
 
 
             commonZoneEnt
-                .Replace(new ShopZoneUICom(shopZoneUI_Trans));
+                .Replace(new ShopUIC(shopZoneUI_Trans));
 
 
 

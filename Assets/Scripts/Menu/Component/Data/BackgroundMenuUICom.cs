@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.Menu
+namespace Chessy.Menu
 {
     public struct BackgroundMenuUICom
     {

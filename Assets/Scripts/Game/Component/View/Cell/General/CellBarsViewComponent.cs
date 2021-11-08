@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct CellBarsViewComponent
     {

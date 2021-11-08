@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using System.Collections.Generic;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct WhoseMoveC
     {
@@ -32,14 +32,12 @@ namespace Scripts.Game
             else return PlayerTypes.First;
         }
 
-
-
-        public WhoseMoveC(PlayerTypes playerType)
+        static WhoseMoveC()
         {
             _whoseMove = new Dictionary<bool, PlayerTypes>();
 
-            _whoseMove.Add(true, playerType);
-            _whoseMove.Add(false, playerType);
+            _whoseMove.Add(true, PlayerTypes.First);
+            _whoseMove.Add(false, PlayerTypes.First);
         }
 
 

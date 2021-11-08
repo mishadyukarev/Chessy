@@ -1,9 +1,9 @@
 ﻿using Leopotam.Ecs;
-using Scripts.Common;
+using Chessy.Common;
 using System;
 using UnityEngine.Events;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class GameGenSysViewM : SystemAbstManager
     {

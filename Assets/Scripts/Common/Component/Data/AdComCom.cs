@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scripts.Common
+namespace Chessy.Common
 {
     public struct AdComCom
     {

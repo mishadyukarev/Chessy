@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class SyncCellSelUnitViewSys : IEcsRunSystem
     {
@@ -10,7 +10,7 @@ namespace Scripts.Game
 
         public void Run()
         {
-            if (SelectorC.IsSelUnit)
+            if (SelUnitC.IsSelUnit)
             {
                 var idxCurCell = SelectorC.IdxCurCell;
                 var idxPreCell = SelectorC.IdxPreVisionCell;
@@ -28,20 +28,20 @@ namespace Scripts.Game
                     if (curOwnUnitCom.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
                         preVisMainUnitViewCom.Enable_SR(true);
-                        preVisMainUnitViewCom.SetSprite(SelectorC.SelUnitType, SelectorC.LevelSelUnitType);
+                        preVisMainUnitViewCom.SetSprite(SelUnitC.SelUnitType, SelUnitC.LevelSelUnitType);
                     }
 
                     else
                     {
                         curMainUnitViewCom.Enable_SR(true);
-                        curMainUnitViewCom.SetSprite(SelectorC.SelUnitType, SelectorC.LevelSelUnitType);
+                        curMainUnitViewCom.SetSprite(SelUnitC.SelUnitType, SelUnitC.LevelSelUnitType);
                     }
                 }
 
                 else
                 {
                     curMainUnitViewCom.Enable_SR(true);
-                    curMainUnitViewCom.SetSprite(SelectorC.SelUnitType, SelectorC.LevelSelUnitType);
+                    curMainUnitViewCom.SetSprite(SelUnitC.SelUnitType, SelUnitC.LevelSelUnitType);
                 }
             }
         }

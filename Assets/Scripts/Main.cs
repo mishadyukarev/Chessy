@@ -1,7 +1,7 @@
-﻿using Scripts.Common;
+﻿using Chessy.Common;
 using UnityEngine;
 
-namespace Scripts
+namespace Chessy
 {
     public sealed class Main : MonoBehaviour
     {

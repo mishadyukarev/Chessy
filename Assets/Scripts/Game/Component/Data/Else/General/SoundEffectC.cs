@@ -1,9 +1,9 @@
-﻿using Scripts.Common;
+﻿using Chessy.Common;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct SoundEffectC
     {

@@ -1,10 +1,10 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
-using Scripts.Common;
+using Chessy.Common;
 using UnityEngine;
 
-namespace Scripts.Menu
+namespace Chessy.Menu
 {
     public sealed class EventSys : IEcsInitSystem
     {
@@ -21,7 +21,6 @@ namespace Scripts.Menu
 
 
             CenterZoneUICom.AddListShop_But(ShopZone);
-            ShopZoneUICom.AddListExit_Button(ExitShop);
 
             CenterZoneUICom.AddListDiscord_But(delegate { Application.OpenURL(URL.URL_DISCORD); });
             CenterZoneUICom.AddListLikeGame_But(delegate { Application.OpenURL(URL.URL_GAME_IN_GOOGLE_PLAY); });
@@ -117,11 +116,7 @@ namespace Scripts.Menu
 
         private void ShopZone()
         {
-            ShopZoneUICom.EnableZone();
-        }
-        private void ExitShop()
-        {
-            ShopZoneUICom.DisableZone();
+            ShopUIC.EnableZone();
         }
         private void ExitLikeGame()
         {

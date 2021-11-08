@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct StatZoneViewUIC
     {

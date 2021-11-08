@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class VisibElseSys : IEcsRunSystem
     {

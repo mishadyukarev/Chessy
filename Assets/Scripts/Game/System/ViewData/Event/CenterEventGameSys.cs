@@ -1,10 +1,10 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using Scripts.Common;
+using Chessy.Common;
 using System;
 using UnityEngine;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class CenterEventUISys : IEcsInitSystem
     {
@@ -12,30 +12,28 @@ namespace Scripts.Game
         {
             ReadyViewUIC.AddListenerToReadyButton(Ready);
             LeaveViewUIC.AddListener(delegate { PhotonNetwork.LeaveRoom(); });
-            FriendZoneViewUIC.AddListenerReady(ReadyFriend);
-            HintViewUIC.AddListHint_But(ExecuteHint);
+            FriendZoneViewUIC.AddListenerReady(FriendReady);
+            HintViewUIC.AddListHint_But(Hint);
 
-            //for (PickUpgradeTypes upgBut = (PickUpgradeTypes)1; upgBut < (PickUpgradeTypes)*typeof(PickUpgradeTypes).GetEnumNames().Length; upgBut++)
-            //{
-            //    PickUpgZoneViewUIC.AddList_But(upgBut, delegate { ExecuteUpg_But(upgBut); });
-            //}
+            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.King, delegate { Upgrade(PickUpgradeTypes.King); });
+            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Pawn, delegate { Upgrade(PickUpgradeTypes.Pawn); });
+            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Archer, delegate { Upgrade(PickUpgradeTypes.Archer); });
+            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Scout, delegate { Upgrade(PickUpgradeTypes.Scout); });
+            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Water, delegate { Upgrade(PickUpgradeTypes.Water); });
+            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Farm, delegate { Upgrade(PickUpgradeTypes.Farm); });
+            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Woodcutter, delegate { Upgrade(PickUpgradeTypes.Woodcutter); });
+            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Mine, delegate { Upgrade(PickUpgradeTypes.Mine); });
 
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.King, delegate { ExecuteUpg_But(PickUpgradeTypes.King); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Pawn, delegate { ExecuteUpg_But(PickUpgradeTypes.Pawn); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Archer, delegate { ExecuteUpg_But(PickUpgradeTypes.Archer); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Scout, delegate { ExecuteUpg_But(PickUpgradeTypes.Scout); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Water, delegate { ExecuteUpg_But(PickUpgradeTypes.Water); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Farm, delegate { ExecuteUpg_But(PickUpgradeTypes.Farm); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Woodcutter, delegate { ExecuteUpg_But(PickUpgradeTypes.Woodcutter); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Mine, delegate { ExecuteUpg_But(PickUpgradeTypes.Mine); });
+            HeroesViewUIC.AddListElf(Elf);
+            HeroesViewUIC.AddListPremium(OpenShop);
         }
 
         private void Ready() => RpcSys.ReadyToMaster();
-        private void ReadyFriend()
+        private void FriendReady()
         {
             FriendZoneDataUIC.IsActiveFriendZone = false;
         }
-        private void ExecuteHint()
+        private void Hint()
         {
             HintDataUIC.CurStartNumber++;
 
@@ -49,13 +47,27 @@ namespace Scripts.Game
                 HintViewUIC.SetActiveHintZone(false);
             }
         }
-        private void ExecuteUpg_But(PickUpgradeTypes upgBut)
+        private void Upgrade(PickUpgradeTypes upgBut)
         {
             if (WhoseMoveC.IsMyMove)
             {
                 RpcSys.PickUpgradeToMaster(upgBut);
+
+                HeroesViewUIC.SetActiveZone(true);
             }
-            
+        }
+
+        private void Elf()
+        {
+            if (WhoseMoveC.IsMyMove)
+            {
+                RpcSys.GetHero(UnitTypes.Elfemale);
+            }
+        }
+
+        private void OpenShop()
+        {
+            ShopUIC.EnableZone();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace Scripts.Common
+namespace Chessy.Common
 {
     public struct UnityEventBaseComponent
     {

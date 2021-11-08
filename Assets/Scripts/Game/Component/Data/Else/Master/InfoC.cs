@@ -2,21 +2,18 @@
 using Photon.Realtime;
 using System.Collections.Generic;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct InfoC
     {
         private static Dictionary<MGOTypes, PhotonMessageInfo> _info;
 
-        public InfoC(bool needNew) : this()
+        static InfoC()
         {
-            if (needNew)
-            {
-                _info = new Dictionary<MGOTypes, PhotonMessageInfo>();
-                _info.Add(MGOTypes.Master, default);
-                _info.Add(MGOTypes.General, default);
-                _info.Add(MGOTypes.Other, default);
-            }
+            _info = new Dictionary<MGOTypes, PhotonMessageInfo>();
+            _info.Add(MGOTypes.Master, default);
+            _info.Add(MGOTypes.General, default);
+            _info.Add(MGOTypes.Other, default);
         }
 
 
@@ -36,8 +33,5 @@ namespace Scripts.Game
             if (_info.ContainsKey(mGOType)) return _info[mGOType].Sender;
             else throw new System.Exception();
         }
-
-        //public PhotonMessageInfo FromInfo { get; set; }
-        //public Player Sender => FromInfo.Sender;
     }
 }

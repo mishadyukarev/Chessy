@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using System;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class FillCellsForAttackRookSys : IEcsRunSystem
     {

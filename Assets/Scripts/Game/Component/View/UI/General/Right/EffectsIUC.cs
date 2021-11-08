@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct EffectsIUC
     {

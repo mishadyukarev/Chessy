@@ -1,13 +1,13 @@
-﻿using ExitGames.Client.Photon;
+﻿using Chessy.Common;
+using ExitGames.Client.Photon;
 using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
-using Scripts.Common;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
@@ -51,8 +51,7 @@ namespace Scripts.Game
 
             if (!PhotonNetwork.IsMasterClient)
             {
-                SyncAllToMaster();
-                RotateAllToMaster();
+                SyncAllToMast();
             }
         }
 
@@ -64,12 +63,12 @@ namespace Scripts.Game
         public static void ReadyToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Ready, new object[default]);
 
         public static void DoneToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[default]);
-        
-        public static void RotateAllToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.RotateAll, new object[default]);
+
         public static void RotateAllToMaster(Player sender) => PhotonView.RPC(GeneralRPCName, sender, RpcGeneralTypes.RotateAll, new object[default]);
 
         public static void BuyResToMaster(ResTypes res) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.BuyRes, new object[] { res });
         public static void PickUpgradeToMaster(PickUpgradeTypes upgBut) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.PickUpgrade, new object[] { upgBut });
+        public static void GetHero(UnitTypes unit) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GetHero, new object[] { unit });
 
         public static void ShiftUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Shift, new object[] { idxPreviousCell, idxSelectedCell });
         public static void AttackUnitToMaster(byte idxPreviousCell, byte idxSelectedCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Attack, new object[] { idxPreviousCell, idxSelectedCell });
@@ -211,8 +210,8 @@ namespace Scripts.Game
                     _forGivePawnToolFilter.Get1(0).IdxCell = (byte)objects[_curNumber++];
                     break;
 
-                case RpcMasterTypes.RotateAll:
-                    RotateAllToMaster(infoFrom.Sender);
+                case RpcMasterTypes.GetHero:
+                    ForGetHeroMasC.Unit = (UnitTypes)objects[_curNumber++];
                     break;
 
                 default:
@@ -221,7 +220,7 @@ namespace Scripts.Game
 
             MastSysDataC.InvokeRun(rpcType);
 
-            SyncAllToMaster();
+            SyncAllToMast();
         }
 
         [PunRPC]
@@ -262,7 +261,7 @@ namespace Scripts.Game
                     break;
 
                 case RpcGeneralTypes.RotateAll:
-                    GameGenSysDataViewC.RotateAll.Invoke();
+                   
                     break;
 
                 default:
@@ -291,7 +290,7 @@ namespace Scripts.Game
 
         #region SyncData
 
-        public void SyncAllToMaster() => PhotonView.RPC(SyncMasterRPCName, RpcTarget.MasterClient);
+        public void SyncAllToMast() => PhotonView.RPC(SyncMasterRPCName, RpcTarget.MasterClient);
 
         [PunRPC]
         private void SyncAllMaster()
@@ -304,7 +303,7 @@ namespace Scripts.Game
 
             objs.Add(ReadyDataUIC.IsStartedGame);
             objs.Add(ReadyDataUIC.IsReady(PlayerTypes.Second));
-             
+
             foreach (var item_0 in MotionsDataUIC.IsActivatedUI) objs.Add(item_0.Value);
             objs.Add(MotionsDataUIC.AmountMotions);
 
@@ -484,6 +483,7 @@ namespace Scripts.Game
 
 
             PhotonView.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
+            PhotonView.RPC(nameof(UpdateVision), RpcTarget.Others, new object { });
         }
 
         [PunRPC]
@@ -637,9 +637,9 @@ namespace Scripts.Game
                             var obj = objects[_curNumber++];
                             needContinue = (bool)obj;
                             if (needContinue == true) break;
-  
+
                             WhereUnitsC.Sync(item_0.Key, item_1.Key, item_2.Key, (byte)objects[_curNumber++]);
-                        }      
+                        }
 
                         if (needContinue) continue;
                     }
@@ -680,6 +680,12 @@ namespace Scripts.Game
 
 
             #endregion
+        }
+
+        [PunRPC]
+        private void UpdateVision()
+        {
+            GameGenSysDataViewC.RotateAll.Invoke();
         }
 
         #endregion

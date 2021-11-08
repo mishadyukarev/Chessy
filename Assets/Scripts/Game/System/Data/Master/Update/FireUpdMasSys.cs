@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class FireUpdMasSys : IEcsRunSystem
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public readonly struct EconomyValues
     {
@@ -35,6 +35,7 @@ namespace Scripts.Game
                         case LevelUnitTypes.Iron: return 0;
                         default: throw new Exception();
                     }
+                case UnitTypes.Elfemale: return 0;
                 default: throw new Exception();
             }
         }

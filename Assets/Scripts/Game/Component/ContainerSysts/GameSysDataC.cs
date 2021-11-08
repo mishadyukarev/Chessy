@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct GameSysDataC
     {

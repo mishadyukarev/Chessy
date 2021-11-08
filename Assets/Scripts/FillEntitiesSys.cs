@@ -1,33 +1,33 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using Scripts.Common;
+using Chessy.Common;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using static Scripts.Game.CellValues;
+using static Chessy.Game.CellValues;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class FillEntitiesSys : IEcsInitSystem
     {
         private EcsWorld _curGameWorld = default;
 
 
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilter = default;
-        private EcsFilter<CellViewC, CellDataC> _cellViewFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
-        private EcsFilter<CellCloudDataC> _cellWeatherFilt = default;
-        private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
+        private readonly EcsFilter<XyCellComponent> _xyCellFilter = default;
+        private readonly EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilter = default;
+        private readonly EcsFilter<CellViewC, CellDataC> _cellViewFilt = default;
+        private readonly EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
+        private readonly EcsFilter<CellCloudDataC> _cellWeatherFilt = default;
+        private readonly EcsFilter<CellRiverDataC> _cellRiverFilt = default;
 
         private readonly EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
         private readonly EcsFilter<CellUnitDataC, HpUnitC, DamageC, StepComponent> _cellUnitStatsFilt = default;
         private readonly EcsFilter<CellUnitDataC, ConditionUnitC, ToolWeaponC, WaterUnitC> _cellUnitOtherFilt = default;
 
-        public FillEntitiesSys(EcsSystems gameSysts)
+        public FillEntitiesSys(EcsWorld gameWorld)
         {
-            var gameWorld = gameSysts.World;
+            var gameSysts = new EcsSystems(gameWorld);
 
             #region Data
 
@@ -68,7 +68,7 @@ namespace Scripts.Game
             runGenData
                 .Add(new InputSystem())
                 .Add(new RaySystem())
-                .Add(new SelectorSystem())
+                .Add(new SelectorS())
                 .Add(syncAbilities)
                 .Add(fillAvailCells)
                 .Add(eventExecuters);
@@ -77,7 +77,6 @@ namespace Scripts.Game
             new GameGenSysDataC(runGenData.Run);
 
             #endregion
-
 
             #region Master
 
@@ -105,6 +104,7 @@ namespace Scripts.Game
             rpcSystems.Add(RpcMasterTypes.BonusNearUnitKing, new EcsSystems(gameWorld).Add(new BonusNearUnitKingMasSys()));
             rpcSystems.Add(RpcMasterTypes.PickUpgrade, new EcsSystems(gameWorld).Add(new PickUpgMasSys()));
             rpcSystems.Add(RpcMasterTypes.GiveTakeToolWeapon, new EcsSystems(gameWorld).Add(new GiveTakeTWMasSys()));
+            rpcSystems.Add(RpcMasterTypes.GetHero, new EcsSystems(gameWorld).Add(new GetHeroMastS()));
 
 
             var updateMotion = new EcsSystems(gameWorld)
@@ -175,7 +175,8 @@ namespace Scripts.Game
             .Add(new DonerUISystem())
                 .Add(new GetterUnitsUISystem())
                 .Add(new GiveTakeUISystem())
-                .Add(new ScoutZoneUISys())
+                .Add(new ScoutSyncUIS())
+                .Add(new HeroSyncUIS())
 
             ///up
             .Add(new EconomyUpUISys())
@@ -190,7 +191,8 @@ namespace Scripts.Game
                 .Add(new KingZoneUISys())
                 .Add(new FriendZoneUISys())
                 .Add(new ActiveHitUISys())
-                .Add(new PickUpgUISys());
+                .Add(new PickUpgUISys())
+                .Add(new HeroesSyncUISys());
 
 
             var rotateCurPlayer = new EcsSystems(gameWorld)
@@ -226,7 +228,6 @@ namespace Scripts.Game
 
             GameGenSysDataViewC.RotateAll.Invoke();
         }
-
 
         public void Init()
         {
@@ -385,17 +386,12 @@ namespace Scripts.Game
 
 
             var infoEnt = _curGameWorld.NewEntity()
-                .Replace(new InputC())
-                .Replace(new SelectorC(ToolWeaponTypes.Pick))
                 .Replace(new GenerZoneViewC(generalZoneGO))
                 .Replace(new BackgroundC(backGroundGO, PhotonNetwork.IsMasterClient))
-                .Replace(new WhoseMoveC(PlayerTypes.First))
-                .Replace(new WhereBuildsC(true))
                 .Replace(new WindC(DirectTypes.Right))
                 .Replace(new CameraC(Camera.main, new Vector3(7.4f, 4.8f, -2)))
                 .Replace(new SoundEffectC(audioSourceParentGO))
                 .Replace(new ExtractC())
-                .Replace(new GiveTakeDataUIC(true))
 
                 .Replace(new BuildsUpgC(true))
                 .Replace(new UnitPercUpgC(true))
@@ -414,6 +410,8 @@ namespace Scripts.Game
                 .Replace(new InvUnitsC(true))
                 .Replace(new InventResC(true))
                 .Replace(new InvToolWeapC(true));
+
+            HeroInvC.Start();
 
 
             GenerZoneViewC.Attach(backGroundGO.transform);
@@ -458,13 +456,15 @@ namespace Scripts.Game
                 .Replace(new HintViewUIC(centerZone_GO.transform))
                 .Replace(new PickUpgZoneDataUIC(new Dictionary<PlayerTypes, bool>()))
                 .Replace(new PickUpgZoneViewUIC(centerZone_GO.transform))
+                .Replace(new HeroesViewUIC(centerZone_GO.transform))
 
                 ///Down
                 .Replace(new GetterUnitsDataUIC(new Dictionary<UnitTypes, bool>()))
                 .Replace(new GetterUnitsViewUIC(downZone_GO))
                 .Replace(new DonerUICom(downZone_GO))
                 .Replace(new GiveTakeViewUIC(downZone_GO))
-                .Replace(new HeroZoneUIC(downZone_GO.transform))
+                .Replace(new ScoutViewUIC(downZone_GO.transform))
+                .Replace(new HeroDownUIC(downZone_GO.transform))
 
                 ///Left
                 .Replace(new CutyLeftZoneViewUIC(leftZone_GO))
@@ -474,8 +474,6 @@ namespace Scripts.Game
                 ///Right
                 .Replace(new StatZoneViewUIC(rightZone_GO))
                 .Replace(new CondUnitUIC(rightZone_GO.transform.Find("ConditionZone")))
-
-                //.Replace(new RightUniqueViewUIC(rightZone_GO.transform.Find("UniqueAbilitiesZone")))
 
                 .Replace(new UniqFirstButDataC())
                 .Replace(new UniqButtonsViewC(uniqAbilZone_trans))
@@ -489,8 +487,8 @@ namespace Scripts.Game
                 .Replace(new ExtraTWZoneUIC(rightZone_GO.transform))
                 .Replace(new EffectsIUC(rightZone_GO.transform));
 
+
             _curGameWorld.NewEntity()
-               .Replace(new InfoC(true))
                .Replace(new ForSettingUnitMasCom())
                .Replace(new ForAttackMasCom())
                .Replace(new ForShiftMasCom())
@@ -511,9 +509,6 @@ namespace Scripts.Game
             {
                 HintViewUIC.SetActiveHintZone(false);
             }
-
-
-
 
             if (PhotonNetwork.IsMasterClient)
             {
@@ -786,6 +781,7 @@ namespace Scripts.Game
         public static void Dispose()
         {
             UnityEngine.Object.Destroy(RpcViewC.RpcView_GO);
+            WhereBuildsC.Start();
         }
     }
 }

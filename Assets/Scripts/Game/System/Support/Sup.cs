@@ -3,7 +3,7 @@ using System;
 using UnityEditor;
 using UnityEngine;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public static class Sup
     {

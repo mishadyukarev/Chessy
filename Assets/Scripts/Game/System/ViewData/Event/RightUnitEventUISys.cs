@@ -1,8 +1,8 @@
 ﻿using Leopotam.Ecs;
-using Scripts.Common;
+using Chessy.Common;
 using System;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class RightUnitEventUISys : IEcsInitSystem
     {
@@ -70,7 +70,7 @@ namespace Scripts.Game
                     break;
 
                 case UniqAbilTypes.FireArcher:
-                    SelectorC.CellClickType = CellClickTypes.PickFire;
+                    SelectorC.Set(CellClickTypes.PickFire);
                     break;
 
                 case UniqAbilTypes.CircularAttack:

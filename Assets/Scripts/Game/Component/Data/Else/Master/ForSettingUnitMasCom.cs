@@ -1,4 +1,4 @@
-﻿namespace Scripts.Game
+﻿namespace Chessy.Game
 {
     public struct ForSettingUnitMasCom
     {

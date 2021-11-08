@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct EnvirZoneViewUICom
     {

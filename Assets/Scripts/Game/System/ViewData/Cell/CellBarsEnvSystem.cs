@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class CellBarsEnvSystem : IEcsRunSystem
     {

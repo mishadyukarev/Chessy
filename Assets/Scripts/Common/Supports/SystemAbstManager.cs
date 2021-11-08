@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Scripts.Common
+namespace Chessy.Common
 {
     public abstract class SystemAbstManager
     {

@@ -3,7 +3,7 @@ using System;
 using UnityEngine.Advertisements;
 using UnityEngine.Purchasing;
 
-namespace Scripts.Common
+namespace Chessy.Common
 {
     public class LaunchAdComSys : IEcsInitSystem, IEcsRunSystem
     {

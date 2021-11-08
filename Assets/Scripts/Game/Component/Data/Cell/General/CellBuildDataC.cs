@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct CellBuildDataC
     {

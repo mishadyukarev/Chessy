@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class SyncSupportViewSystem : IEcsRunSystem
     {
@@ -43,7 +43,7 @@ namespace Scripts.Game
                             if (unitC_0.Is(UnitTypes.Pawn))
                             {
                                 if (SelectorC.Is(CellClickTypes.GiveTakeTW)
-                                    || SelectorC.Is(CellClickTypes.OldToNewUnit))
+                                    || SelectorC.Is(CellClickTypes.OldNewUnit))
                                 {
                                     supViewC_0.EnableSR();
                                     supViewC_0.SetColor(SupVisTypes.GivePawnTool);
@@ -107,7 +107,7 @@ namespace Scripts.Game
                     }
                 }
             }
-            if (SelectorC.IsSelUnit)
+            if (SelUnitC.IsSelUnit)
             {
                 ref var cellsSetUnitCom = ref _cellsSetUnitFilter.Get1(0);
 

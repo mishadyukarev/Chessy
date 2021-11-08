@@ -1,13 +1,13 @@
 ﻿using Leopotam.Ecs;
-using Scripts.Common;
+using Chessy.Common;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class DownEventUISys : IEcsInitSystem
     {
         public void Init()
         {
-            HeroZoneUIC.AddListScout(ExecuteScout);
+            ScoutViewUIC.AddListScout(ExecuteScout);
 
             DonerUICom.AddListener(Done);
 
@@ -25,14 +25,15 @@ namespace Scripts.Game
             GiveTakeViewUIC.AddList_Button(ToolWeaponTypes.Sword, delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
             GiveTakeViewUIC.AddList_Button(ToolWeaponTypes.Shield, delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
 
+            HeroDownUIC.AddList(Hero);
         }
 
         private void ExecuteScout()
         {
             if (WhoseMoveC.IsMyMove)
             {
-                SelectorC.CellClickType = CellClickTypes.OldToNewUnit;
-                SelectorC.UnitTypeOldToNew = UnitTypes.Scout;
+                SelectorC.Set(CellClickTypes.OldNewUnit);
+                OldNewC.Set(UnitTypes.Scout);
             }
         }
 
@@ -47,8 +48,8 @@ namespace Scripts.Game
                 SoundEffectC.Play(ClipGameTypes.Mistake);
             }
 
-            SelectorC.DefCellClickType();
-            SelectorC.DefSelectedUnit();
+            SelectorC.Reset();
+            SelUnitC.ResetSelUnit();
         }
 
         private void CreateUnit(UnitTypes unitType)
@@ -63,7 +64,7 @@ namespace Scripts.Game
 
         private void GetUnit(UnitTypes unitType)
         {
-            SelectorC.DefCellClickType();
+            SelectorC.Reset();
             SelectorC.IdxCurCell = default;
             SelectorC.IdxPreVisionCell = default;
             SelectorC.DefSelectedCell();
@@ -73,13 +74,13 @@ namespace Scripts.Game
             {
                 if (InvUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Iron))
                 {
-                    SelectorC.SelUnitType = unitType;
-                    SelectorC.LevelSelUnitType = LevelUnitTypes.Iron;
+                    SelUnitC.SelUnitType = unitType;
+                    SelUnitC.LevelSelUnitType = LevelUnitTypes.Iron;
                 }
                 else if (InvUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Wood))
                 {
-                    SelectorC.SelUnitType = unitType;
-                    SelectorC.LevelSelUnitType = LevelUnitTypes.Wood;
+                    SelUnitC.SelUnitType = unitType;
+                    SelUnitC.LevelSelUnitType = LevelUnitTypes.Wood;
                 }
                 else
                 {
@@ -118,34 +119,34 @@ namespace Scripts.Game
                 {
                     if (tWType == ToolWeaponTypes.Shield)
                     {
-                        if (SelectorC.TWTypeForGive == tWType)
+                        if (TwGiveTakeC.TWTypeForGive == tWType)
                         {
-                            if (GiveTakeDataUIC.Level(tWType) == LevelTWTypes.Wood) GiveTakeDataUIC.SetLevel(tWType, LevelTWTypes.Iron);
-                            else GiveTakeDataUIC.SetLevel(tWType, LevelTWTypes.Wood);
+                            if (TwGiveTakeC.Level(tWType) == LevelTWTypes.Wood) TwGiveTakeC.SetLevel(tWType, LevelTWTypes.Iron);
+                            else TwGiveTakeC.SetLevel(tWType, LevelTWTypes.Wood);
                         }
                         else
                         {
-                            SelectorC.TWTypeForGive = tWType;
-                            GiveTakeDataUIC.SetLevel(tWType, LevelTWTypes.Wood);
+                            TwGiveTakeC.TWTypeForGive = tWType;
+                            TwGiveTakeC.SetLevel(tWType, LevelTWTypes.Wood);
                         }
                     }
                     else
                     {
-                        SelectorC.TWTypeForGive = tWType;
-                        GiveTakeDataUIC.SetLevel(tWType, LevelTWTypes.Iron);
+                        TwGiveTakeC.TWTypeForGive = tWType;
+                        TwGiveTakeC.SetLevel(tWType, LevelTWTypes.Iron);
                     }
                 }
                 else
                 {
-                    SelectorC.CellClickType = CellClickTypes.GiveTakeTW;
-                    SelectorC.TWTypeForGive = tWType;
+                    SelectorC.Set(CellClickTypes.GiveTakeTW);
+                    TwGiveTakeC.TWTypeForGive = tWType;
 
                     if (tWType == ToolWeaponTypes.Shield)
                     {
                         //if(SelectorC.LevelTWType == LevelTWTypes.Iron)
                         //SelectorC.LevelTWType = LevelTWTypes.Wood;
                     }
-                    else GiveTakeDataUIC.SetLevel(tWType, LevelTWTypes.Iron);
+                    else TwGiveTakeC.SetLevel(tWType, LevelTWTypes.Iron);
                 }
             }
         }
@@ -163,8 +164,14 @@ namespace Scripts.Game
                         HintDataUIC.SetActive(VideoClipTypes.UpgToolWeapon, true);
                     }
                 }
-                SelectorC.CellClickType = CellClickTypes.UpgradeUnit;
+                SelectorC.Set(CellClickTypes.UpgradeUnit);
             }
+        }
+
+        private void Hero()
+        {
+            SelectorC.Set(CellClickTypes.OldNewUnit);
+            OldNewC.Set(HeroInvC.Hero(WhoseMoveC.CurPlayerI));
         }
     }
 }

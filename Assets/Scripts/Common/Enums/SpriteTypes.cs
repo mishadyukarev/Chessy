@@ -1,4 +1,4 @@
-﻿namespace Scripts.Common
+﻿namespace Chessy.Common
 {
     public enum SpriteTypes
     {

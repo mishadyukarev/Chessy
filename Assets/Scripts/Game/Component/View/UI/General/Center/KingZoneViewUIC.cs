@@ -2,12 +2,14 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct KingZoneViewUIC
     {
         private static GameObject _kingZone_GO;
         private static Button _setKing_Button;
+
+        public static bool IsActiveZone => _kingZone_GO.activeSelf;
 
         public KingZoneViewUIC(GameObject centerZone_GO)
         {

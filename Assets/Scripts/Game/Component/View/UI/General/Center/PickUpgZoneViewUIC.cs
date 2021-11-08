@@ -3,12 +3,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct PickUpgZoneViewUIC
     {
         private static GameObject _parent_GO;
         private static Dictionary<PickUpgradeTypes, Button> _buttons;
+
+        public static bool IsActiveZone => _parent_GO.activeSelf;
 
         public PickUpgZoneViewUIC(Transform center_Trans)
         {

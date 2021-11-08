@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Scripts.Common
+namespace Chessy.Common
 {
     public struct SoundComC
     {

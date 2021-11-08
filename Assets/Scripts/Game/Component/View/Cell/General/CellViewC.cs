@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct CellViewC
     {

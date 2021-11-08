@@ -1,11 +1,11 @@
 ﻿using Leopotam.Ecs;
-using Scripts.Common;
-using Scripts.Game;
-using Scripts.Menu;
+using Chessy.Common;
+using Chessy.Game;
+using Chessy.Menu;
 using System;
 using UnityEngine;
 
-namespace Scripts
+namespace Chessy
 {
     public sealed class ECSManager
     {
@@ -49,7 +49,7 @@ namespace Scripts
                     }
 
                     _gameWorld = new EcsWorld();
-                    new Game.FillEntitiesSys(new EcsSystems(_gameWorld));
+                    new Game.FillEntitiesSys(_gameWorld);
                     break;
 
                 default: throw new Exception();

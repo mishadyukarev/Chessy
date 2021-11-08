@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public struct WhereUnitsC
     {

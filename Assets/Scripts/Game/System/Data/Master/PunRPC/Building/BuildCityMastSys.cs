@@ -1,8 +1,8 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using Scripts.Common;
+using Chessy.Common;
 
-namespace Scripts.Game
+namespace Chessy.Game
 {
     public sealed class BuildCityMastSys : IEcsRunSystem
     {
