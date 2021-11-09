@@ -8,5 +8,6 @@
         GiveTakeTW,
         UpgradeUnit,
         OldNewUnit,
+        StunElfemale,
     }
 }

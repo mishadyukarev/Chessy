@@ -66,7 +66,7 @@ namespace Chessy.Game
                     break;
 
                 case UniqAbilTypes.Seed:
-                    RpcSys.SeedEnvironmentToMaster(SelectorC.IdxSelCell, EnvTypes.YoungForest);
+                    RpcSys.SeedEnvToMaster(SelectorC.IdxSelCell, EnvTypes.YoungForest);
                     break;
 
                 case UniqAbilTypes.FireArcher:
@@ -120,11 +120,6 @@ namespace Chessy.Game
             switch (abil)
             {
                 case UniqAbilTypes.None: throw new Exception();
-                case UniqAbilTypes.FirePawn: throw new Exception();
-                case UniqAbilTypes.NoneFirePawn: throw new Exception();
-                case UniqAbilTypes.Seed: throw new Exception();
-                case UniqAbilTypes.FireArcher: throw new Exception();
-                case UniqAbilTypes.CircularAttack: throw new Exception();
 
                 case UniqAbilTypes.BonusNear:
                     RpcSys.BonusNearUnits(SelectorC.IdxSelCell);
@@ -136,6 +131,12 @@ namespace Chessy.Game
                             HintViewUIC.SetVideoClip(VideoClipTypes.BonusKing);
                             HintDataUIC.SetActive(VideoClipTypes.BonusKing, true);
                         }
+                    }
+                    break;
+
+                case UniqAbilTypes.StunElfemale:
+                    {
+                        SelectorC.Set(CellClickTypes.StunElfemale);
                     }
                     break;
 

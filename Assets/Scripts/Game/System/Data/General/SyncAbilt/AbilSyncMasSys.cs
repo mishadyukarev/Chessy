@@ -69,7 +69,7 @@ namespace Chessy.Game
 
                             case UnitTypes.Elfemale:
                                 uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.GrowAdultForest);
-                                uniq_0.Reset(UniqButtonTypes.Second);
+                                uniq_0.SetAbility(UniqButtonTypes.Second, UniqAbilTypes.StunElfemale);
                                 break;
 
                             default: throw new Exception();

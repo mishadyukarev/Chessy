@@ -92,9 +92,11 @@ namespace Chessy.Game
         public static void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { mistakeType });
 
         public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
-        public static void SeedEnvironmentToMaster(byte idxCell, EnvTypes environmentType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, environmentType });
+        public static void SeedEnvToMaster(byte idxCell, EnvTypes env) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, env });
 
         public static void BonusNearUnits(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.BonusNearUnitKing, new object[] { idxCell });
+
+        public static void StunElfemaleToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.StunElfemale, new object[] { fromIdx, toIdx });
 
         public static void FromNewUnitToMas(UnitTypes unitType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ToNewUnit, new object[] { unitType, idxCell });
         public static void FromToNewUnitToMas(UnitTypes unitType, byte idxFrom, byte idxTo) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.FromToNewUnit, new object[] { unitType, idxFrom, idxTo });
@@ -224,6 +226,10 @@ namespace Chessy.Game
 
                 case RpcMasterTypes.GrowAdultForest:
                     ForGrowAdultForestMC.Set((byte)objects[_curNumber++]);
+                    break;
+
+                case RpcMasterTypes.StunElfemale:
+                    ForStunElfemaleMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
                     break;
 
                 default:

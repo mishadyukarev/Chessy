@@ -1,14 +1,14 @@
-﻿namespace Chessy.Game
-{
-    public struct UniqFirstButDataC
-    {
-        private static UniqFirstAbilTypes _ability;
+﻿//namespace Chessy.Game
+//{
+//    public struct UniqFirstButDataC
+//    {
+//        private static UniqFirstAbilTypes _ability;
 
-        public static UniqFirstAbilTypes Ability => _ability;
+//        public static UniqFirstAbilTypes Ability => _ability;
 
-        public static void SetAbility(UniqFirstAbilTypes ability)
-        {
-            _ability = ability;
-        }
-    }
-}
+//        public static void SetAbility(UniqFirstAbilTypes ability)
+//        {
+//            _ability = ability;
+//        }
+//    }
+//}

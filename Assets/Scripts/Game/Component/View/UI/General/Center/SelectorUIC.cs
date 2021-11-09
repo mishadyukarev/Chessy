@@ -20,6 +20,7 @@ namespace Chessy.Game
             _selZones_GOs.Add(CellClickTypes.GiveTakeTW, selZone_Trans.Find("GiveTakeToolZone").gameObject);
             _selZones_GOs.Add(CellClickTypes.OldNewUnit, selZone_Trans.Find("ScoutZone").gameObject);
             _selZones_GOs.Add(CellClickTypes.UpgradeUnit, selZone_Trans.Find("UpgradeUnitZone").gameObject);
+            _selZones_GOs.Add(CellClickTypes.StunElfemale, selZone_Trans.Find("UpgradeUnitZone").gameObject);
         }
 
         public static void SetActive(CellClickTypes cellClickType, bool isActive)

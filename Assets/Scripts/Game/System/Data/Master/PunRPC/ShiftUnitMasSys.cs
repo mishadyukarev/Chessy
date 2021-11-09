@@ -46,6 +46,7 @@ namespace Chessy.Game
                 ref var effUnit_from = ref _cellUnitOthFilt.Get3(idx_from);
                 ref var thirUnit_from = ref _cellUnitOthFilt.Get4(idx_from);
                 ref var moveCond_from = ref _cellUnitCondFilt.Get3(idx_from);
+                ref var uniq_from = ref _unitUniqAbilFilt.Get2(idx_from);
 
                 ref var unit_to = ref _cellUnitFilter.Get1(idx_to);
                 ref var levUnitC_to = ref _cellUnitMainFilt.Get2(idx_to);
@@ -57,7 +58,8 @@ namespace Chessy.Game
                 ref var thirUnit_to = ref _cellUnitOthFilt.Get4(idx_to);
                 ref var condUnit_to = ref _cellUnitCondFilt.Get2(idx_to);
                 ref var moveCond_to = ref _cellUnitCondFilt.Get3(idx_to);
-                ref var firstUniq_to = ref _unitUniqAbilFilt.Get2(idx_to);
+                ref var uniq_to = ref _unitUniqAbilFilt.Get2(idx_to);
+
                 ref var fire_to = ref _cellFireFilt.Get1(idx_to);
 
 
@@ -90,6 +92,7 @@ namespace Chessy.Game
                 effUnit_to.Set(effUnit_from);
                 thirUnit_to = thirUnit_from;
                 moveCond_to.ResetAll();
+                uniq_to.Replace(uniq_from);
                 if (river_to.HaveNearRiver) thirUnit_to.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Water));
 
 

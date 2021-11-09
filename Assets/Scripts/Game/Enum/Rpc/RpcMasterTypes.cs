@@ -24,6 +24,7 @@
         GetHero,
         UpgradeUnit,
         GrowAdultForest,
+        StunElfemale,
 
         ToNewUnit,
         FromToNewUnit,

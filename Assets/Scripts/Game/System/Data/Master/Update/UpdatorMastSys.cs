@@ -18,6 +18,7 @@ namespace Chessy.Game
         private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
         private EcsFilter<CellUnitDataC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
+        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqFilt = default;
 
         public void Run()
         {
@@ -38,6 +39,7 @@ namespace Chessy.Game
                 ref var effUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
                 ref var condUnit_0 = ref _cellUnitCondFilt.Get2(idx_0);
                 ref var moveCond_0 = ref _cellUnitCondFilt.Get3(idx_0);
+                ref var uniq_0 = ref _unitUniqFilt.Get2(idx_0);
 
                 ref var buil_0 = ref _cellBuildFilt.Get1(idx_0);
                 ref var ownBuil_0 = ref _cellBuildFilt.Get2(idx_0);
@@ -47,6 +49,8 @@ namespace Chessy.Game
 
 
                 foreach (var item in trail_0.DictTrail) trail_0.TakeHealth(item.Key);
+                foreach (var item in uniq_0.Cooldowns) uniq_0.TakeCooldown(item.Key);
+                
 
 
                 if (unit_0.HaveUnit)

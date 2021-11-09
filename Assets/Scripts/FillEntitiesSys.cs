@@ -107,6 +107,7 @@ namespace Chessy.Game
             rpcSystems.Add(RpcMasterTypes.GetHero, new EcsSystems(gameWorld).Add(new GetHeroMastS()));
             rpcSystems.Add(RpcMasterTypes.FromToNewUnit, new EcsSystems(gameWorld).Add(new FromToNewUnitMS()));
             rpcSystems.Add(RpcMasterTypes.GrowAdultForest, new EcsSystems(gameWorld).Add(new GrowAdultForestMS()));
+            rpcSystems.Add(RpcMasterTypes.StunElfemale, new EcsSystems(gameWorld).Add(new StunElfemaleMS()));
 
 
             var updateMotion = new EcsSystems(gameWorld)
@@ -355,9 +356,10 @@ namespace Chessy.Game
                          .Replace(new MoveInCondC(true))
 
                          .Replace(new UniqAbilC(true))
+                         .Replace(new WaterUnitC())
 
                          .Replace(new UnitEffectsC(true))
-                         .Replace(new WaterUnitC())                       
+                         .Replace(new StunUnitC())
 
                          .Replace(new ToolWeaponC())
 
@@ -386,7 +388,7 @@ namespace Chessy.Game
             audioSourceParentGO.transform.SetParent(generalZoneGO.transform);
 
 
-            var infoEnt = _curGameWorld.NewEntity()
+            _curGameWorld.NewEntity()
                 .Replace(new GenerZoneViewC(generalZoneGO))
                 .Replace(new BackgroundC(backGroundGO, PhotonNetwork.IsMasterClient))
                 .Replace(new WindC(DirectTypes.Right))
@@ -428,10 +430,10 @@ namespace Chessy.Game
             var centerZone_GO = CanvasC.FindUnderCurZone("CenterZone");
             var downZone_GO = CanvasC.FindUnderCurZone("DownZone");
             var leftZone_GO = CanvasC.FindUnderCurZone("LeftZone");
-            var rightZone_GO = CanvasC.FindUnderCurZone("RightZone");
+            var rightZone_go = CanvasC.FindUnderCurZone("RightZone");
 
 
-            var uniqAbilZone_trans = rightZone_GO.transform.Find("UniqueAbilitiesZone");
+            var uniqAbilZone_trans = rightZone_go.transform.Find("UniqueAbilitiesZone");
 
 
             var canvasEnt = _curGameWorld.NewEntity()
@@ -473,20 +475,13 @@ namespace Chessy.Game
                 .Replace(new EnvirZoneViewUICom(leftZone_GO))
 
                 ///Right
-                .Replace(new StatZoneViewUIC(rightZone_GO))
-                .Replace(new CondUnitUIC(rightZone_GO.transform.Find("ConditionZone")))
-
-                .Replace(new UniqFirstButDataC())
+                .Replace(new StatZoneViewUIC(rightZone_go))
+                .Replace(new CondUnitUIC(rightZone_go.transform.Find("ConditionZone")))
                 .Replace(new UniqButtonsViewC(uniqAbilZone_trans))
-                .Replace(new UniqSecButDataC())
-                .Replace(new UniqSecButViewC(uniqAbilZone_trans))
-                .Replace(new UniqThirdButDataC())
-                .Replace(new UniqThirdButViewC(uniqAbilZone_trans))
-
                 .Replace(new BuildAbilitDataUIC(true))
-                .Replace(new BuildAbilitViewUIC(rightZone_GO.transform.Find("BuildingZone")))
-                .Replace(new ExtraTWZoneUIC(rightZone_GO.transform))
-                .Replace(new EffectsIUC(rightZone_GO.transform));
+                .Replace(new BuildAbilitViewUIC(rightZone_go.transform.Find("BuildingZone")))
+                .Replace(new ExtraTWZoneUIC(rightZone_go.transform))
+                .Replace(new EffectsIUC(rightZone_go.transform));
 
 
             _curGameWorld.NewEntity()

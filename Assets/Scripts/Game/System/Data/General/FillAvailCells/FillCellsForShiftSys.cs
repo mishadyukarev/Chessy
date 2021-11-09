@@ -8,8 +8,9 @@ namespace Chessy.Game
         private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
+        private EcsFilter<CellUnitDataC, OwnerC> _unitMainFilt = default;
         private EcsFilter<CellUnitDataC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, UnitEffectsC, StunUnitC> _unitEffFilt = default;
 
         public void Run()
         {
@@ -21,32 +22,36 @@ namespace Chessy.Game
                 ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
                 ref var stepUnitC_0 = ref _cellUnitFilter.Get2(idx_0);
 
-                ref var effUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
-                ref var ownUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
+                ref var effUnit_0 = ref _unitEffFilt.Get2(idx_0);
+                ref var stunUnit_0 = ref _unitEffFilt.Get3(idx_0);
 
+                ref var ownUnit_0 = ref _unitMainFilt.Get2(idx_0);
 
-                if (unit_0.HaveUnit)
+                if (!stunUnit_0.IsStunned)
                 {
-                    CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).XyCell, out var directs);
-
-                    foreach (var item_1 in directs)
+                    if (unit_0.HaveUnit)
                     {
-                        var idx_1= _xyCellFilter.GetIdxCell(item_1.Value);
+                        CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).XyCell, out var directs);
 
-                        ref var trail_1 = ref _cellTrailFilt.Get1(idx_1);
-
-                        ref var unitC_1 = ref _cellUnitFilter.Get1(idx_1);
-                        ref var envC_1 = ref _cellEnvDataFilter.Get1(idx_1);
-
-
-                        if (!envC_1.Have(EnvTypes.Mountain))
+                        foreach (var item_1 in directs)
                         {
-                            if (!unitC_1.HaveUnit)
+                            var idx_1 = _xyCellFilter.GetIdxCell(item_1.Value);
+
+                            ref var trail_1 = ref _cellTrailFilt.Get1(idx_1);
+
+                            ref var unitC_1 = ref _cellUnitFilter.Get1(idx_1);
+                            ref var envC_1 = ref _cellEnvDataFilter.Get1(idx_1);
+
+
+                            if (!envC_1.Have(EnvTypes.Mountain))
                             {
-                                if (stepUnitC_0.HaveStepsForDoing(envC_1, item_1.Key, trail_1) 
-                                    || stepUnitC_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+                                if (!unitC_1.HaveUnit)
                                 {
-                                    CellsForShiftCom.AddIdxCell(ownUnit_0.Owner, idx_0, idx_1);
+                                    if (stepUnitC_0.HaveStepsForDoing(envC_1, item_1.Key, trail_1)
+                                        || stepUnitC_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+                                    {
+                                        CellsForShiftCom.AddIdxCell(ownUnit_0.Owner, idx_0, idx_1);
+                                    }
                                 }
                             }
                         }

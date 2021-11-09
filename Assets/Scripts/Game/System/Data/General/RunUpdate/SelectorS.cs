@@ -110,7 +110,7 @@ namespace Chessy.Game
 
                         if (OldNewC.Is(UnitTypes.Scout))
                         {
-                            if (UnitDatCom(IdxCurCell).Is(UnitTypes.Pawn) 
+                            if (UnitDatCom(IdxCurCell).Is(UnitTypes.Pawn)
                                 && OwnUnitCom(IdxCurCell).Is(WhoseMoveC.CurPlayerI))
                             {
                                 RpcSys.FromNewUnitToMas(OldNewC.Unit, IdxCurCell);
@@ -118,7 +118,7 @@ namespace Chessy.Game
                             }
                             else
                             {
-                                
+
                                 Reset();
                             }
                         }
@@ -143,6 +143,15 @@ namespace Chessy.Game
                         else throw new Exception();
                     }
 
+                    else if (Is(CellClickTypes.StunElfemale))
+                    {
+                        IdxPreCell = IdxSelCell;
+                        IdxSelCell = IdxCurCell;
+
+                        RpcSys.StunElfemaleToMas(IdxPreCell, IdxSelCell);
+                        Reset();
+                    }
+
                     else if (IsSelCell)
                     {
                         if (IdxSelCell != IdxCurCell)
@@ -150,7 +159,7 @@ namespace Chessy.Game
 
                         IdxSelCell = IdxCurCell;
 
-                       
+
                         if (CellsAttackC.FindByIdx(WhoseMoveC.CurPlayerI, IdxPreCell, IdxSelCell) != default)
                         {
                             RpcSys.AttackUnitToMaster(IdxPreCell, IdxSelCell);

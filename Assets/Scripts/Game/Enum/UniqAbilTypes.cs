@@ -14,5 +14,7 @@
         BonusNear,
 
         GrowAdultForest,
+
+        StunElfemale,
     }
 }

@@ -9,7 +9,7 @@ namespace Chessy.Game
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
         private EcsFilter<CellUnitDataC, StepComponent, OwnerC> _cellUnitFilt = default;
-        private EcsFilter<CellUnitDataC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, UnitEffectsC, StunUnitC> _cellUnitOthFilt = default;
 
         public void Run()
         {
@@ -19,42 +19,45 @@ namespace Chessy.Game
                 ref var curStepUnitC = ref _cellUnitFilt.Get2(idx_0);
 
                 ref var effUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
-                ref var ownUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
+                ref var ownUnit_0 = ref _cellUnitFilt.Get3(idx_0);
+                ref var stunUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
 
-
-                if (unit_0.Is(UnitTypes.Pawn))
+                if (!stunUnit_0.IsStunned)
                 {
-                    DirectTypes curDurect1 = default;
-
-                    CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).XyCell, out var dirs);
-
-                    foreach (var item_1 in dirs)
+                    if (unit_0.Is(UnitTypes.Pawn))
                     {
-                        curDurect1 += 1;
-                        var idx_1 = _xyCellFilter.GetIdxCell(item_1.Value);
+                        DirectTypes curDurect1 = default;
 
-                        ref var envC_1 = ref _cellEnvDataFilter.Get1(idx_1);
-                        ref var unitC_1 = ref _cellUnitFilt.Get1(idx_1);
-                        ref var ownUnitC_1 = ref _cellUnitFilt.Get3(idx_1);
+                        CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).XyCell, out var dirs);
 
-                        ref var trail_1 = ref _cellTrailFilt.Get1(idx_1);
-
-
-                        if (!envC_1.Have(EnvTypes.Mountain))
+                        foreach (var item_1 in dirs)
                         {
-                            if (curStepUnitC.HaveStepsForDoing(envC_1, item_1.Key, trail_1) 
-                                || curStepUnitC.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+                            curDurect1 += 1;
+                            var idx_1 = _xyCellFilter.GetIdxCell(item_1.Value);
+
+                            ref var envC_1 = ref _cellEnvDataFilter.Get1(idx_1);
+                            ref var unitC_1 = ref _cellUnitFilt.Get1(idx_1);
+                            ref var ownUnitC_1 = ref _cellUnitFilt.Get3(idx_1);
+
+                            ref var trail_1 = ref _cellTrailFilt.Get1(idx_1);
+
+
+                            if (!envC_1.Have(EnvTypes.Mountain))
                             {
-                                if (unitC_1.HaveUnit)
+                                if (curStepUnitC.HaveStepsForDoing(envC_1, item_1.Key, trail_1)
+                                    || curStepUnitC.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                                 {
-                                    if (!ownUnitC_1.Is(ownUnit_0.Owner))
+                                    if (unitC_1.HaveUnit)
                                     {
-                                        if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
-                                            || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
+                                        if (!ownUnitC_1.Is(ownUnit_0.Owner))
                                         {
-                                            CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                            if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
+                                                || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
+                                            {
+                                                CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                            }
+                                            else CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
                                         }
-                                        else CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
                                     }
                                 }
                             }
