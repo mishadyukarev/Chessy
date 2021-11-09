@@ -11,12 +11,12 @@ namespace Chessy.Game
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitStatFilt = default;
         private EcsFilter<CellUnitDataC, ConditionUnitC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
         private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitTWFilt = default;
 
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
         private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvrFilter = default;
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
@@ -96,7 +96,8 @@ namespace Chessy.Game
 
         public static void BonusNearUnits(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.BonusNearUnitKing, new object[] { idxCell });
 
-        public static void OldToNewToMaster(UnitTypes unitType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.OldToNewUnit, new object[] { unitType, idxCell });
+        public static void FromNewUnitToMas(UnitTypes unitType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ToNewUnit, new object[] { unitType, idxCell });
+        public static void FromToNewUnitToMas(UnitTypes unitType, byte idxFrom, byte idxTo) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.FromToNewUnit, new object[] { unitType, idxFrom, idxTo });
         public static void UpgradeUnitToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeUnit, new object[] { idxCell });
         public static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, LevelTWTypes levelTWType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, levelTWType, idxCell });
 
@@ -106,6 +107,7 @@ namespace Chessy.Game
 
         public static void MeltOreToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.MeltOre, new object[] { });
 
+        public static void GrowAdultForest(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GrowAdultForest, new object[] { idx });
 
         public static void SetUniToMaster(byte idxCell, UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SetUnit, new object[] { idxCell, unitType });
 
@@ -195,9 +197,15 @@ namespace Chessy.Game
                     ForPickUpgMasC.UpgButType = (PickUpgradeTypes)objects[0];
                     break;
 
-                case RpcMasterTypes.OldToNewUnit:
+                case RpcMasterTypes.ToNewUnit:
                     _forOldToNewUnitFilt.Get1(0).UnitType = (UnitTypes)objects[0];
                     _forOldToNewUnitFilt.Get1(0).IdxCell = (byte)objects[1];
+                    break;
+
+                case RpcMasterTypes.FromToNewUnit:
+                    ForFromToNewUnitC.Set((UnitTypes)objects[_curNumber++],
+                        (byte)objects[_curNumber++],
+                        (byte)objects[_curNumber++]);
                     break;
 
                 case RpcMasterTypes.UpgradeUnit:
@@ -212,6 +220,10 @@ namespace Chessy.Game
 
                 case RpcMasterTypes.GetHero:
                     ForGetHeroMasC.Unit = (UnitTypes)objects[_curNumber++];
+                    break;
+
+                case RpcMasterTypes.GrowAdultForest:
+                    ForGrowAdultForestMC.Set((byte)objects[_curNumber++]);
                     break;
 
                 default:

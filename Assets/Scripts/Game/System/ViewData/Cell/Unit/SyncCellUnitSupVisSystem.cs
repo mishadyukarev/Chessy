@@ -5,8 +5,8 @@ namespace Chessy.Game
 {
     public sealed class SyncCellUnitSupVisSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent, ConditionUnitC, OwnerCom, VisibleC> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC, UnitEffectsC, WaterUnitC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent, ConditionUnitC, OwnerC, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, ConditionUnitC, UnitEffectsC, WaterUnitC, OwnerC> _cellUnitOthFilt = default;
         private EcsFilter<CellUnitDataC, VisibleC> _cellUnitViewFilt = default;
         private EcsFilter<CellUnitMainViewCom> _cellUnitViewFilter = default;
         private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;

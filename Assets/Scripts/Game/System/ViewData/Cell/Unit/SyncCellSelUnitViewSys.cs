@@ -6,7 +6,6 @@ namespace Chessy.Game
     {
         private EcsFilter<CellUnitDataC, VisibleC> _cellUnitFilter = default;
         private EcsFilter<CellUnitMainViewCom> _cellUnitViewFilt = default;
-        private EcsFilter<SelectorC> _selectorFilter = default;
 
         public void Run()
         {
@@ -16,32 +15,32 @@ namespace Chessy.Game
                 var idxPreCell = SelectorC.IdxPreVisionCell;
 
 
-                ref var curUnitDatCom = ref _cellUnitFilter.Get1(idxCurCell);
-                ref var curOwnUnitCom = ref _cellUnitFilter.Get2(idxCurCell);
+                ref var unit_cur = ref _cellUnitFilter.Get1(idxCurCell);
+                ref var ownUnit_cur = ref _cellUnitFilter.Get2(idxCurCell);
 
-                ref var curMainUnitViewCom = ref _cellUnitViewFilt.Get1(idxCurCell);
-                ref var preVisMainUnitViewCom = ref _cellUnitViewFilt.Get1(idxPreCell);
+                ref var mainUnit_cur = ref _cellUnitViewFilt.Get1(idxCurCell);
+                ref var mainUnit_pre = ref _cellUnitViewFilt.Get1(idxPreCell);
 
 
-                if (curUnitDatCom.HaveUnit)
+                if (unit_cur.HaveUnit)
                 {
-                    if (curOwnUnitCom.IsVisibled(WhoseMoveC.CurPlayerI))
+                    if (ownUnit_cur.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
-                        preVisMainUnitViewCom.Enable_SR(true);
-                        preVisMainUnitViewCom.SetSprite(SelUnitC.SelUnitType, SelUnitC.LevelSelUnitType);
+                        mainUnit_pre.Enable_SR(true);
+                        mainUnit_pre.SetSprite(SelUnitC.SelUnit, SelUnitC.LevelSelUnit);
                     }
 
                     else
                     {
-                        curMainUnitViewCom.Enable_SR(true);
-                        curMainUnitViewCom.SetSprite(SelUnitC.SelUnitType, SelUnitC.LevelSelUnitType);
+                        mainUnit_cur.Enable_SR(true);
+                        mainUnit_cur.SetSprite(SelUnitC.SelUnit, SelUnitC.LevelSelUnit);
                     }
                 }
 
                 else
                 {
-                    curMainUnitViewCom.Enable_SR(true);
-                    curMainUnitViewCom.SetSprite(SelUnitC.SelUnitType, SelUnitC.LevelSelUnitType);
+                    mainUnit_cur.Enable_SR(true);
+                    mainUnit_cur.SetSprite(SelUnitC.SelUnit, SelUnitC.LevelSelUnit);
                 }
             }
         }

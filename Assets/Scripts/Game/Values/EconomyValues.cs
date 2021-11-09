@@ -13,16 +13,16 @@ namespace Chessy.Game
                     switch (level)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 1;
-                        case LevelUnitTypes.Iron: return 0;
+                        case LevelUnitTypes.First: return 1;
+                        case LevelUnitTypes.Second: return 0;
                         default: throw new Exception();
                     }
                 case UnitTypes.Pawn:
                     switch (level)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 1;
-                        case LevelUnitTypes.Iron: return 0;
+                        case LevelUnitTypes.First: return 1;
+                        case LevelUnitTypes.Second: return 0;
                         default: throw new Exception();
                     }
                 case UnitTypes.Rook: return 0;
@@ -31,8 +31,8 @@ namespace Chessy.Game
                     switch (level)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 1;
-                        case LevelUnitTypes.Iron: return 0;
+                        case LevelUnitTypes.First: return 1;
+                        case LevelUnitTypes.Second: return 0;
                         default: throw new Exception();
                     }
                 case UnitTypes.Elfemale: return 0;

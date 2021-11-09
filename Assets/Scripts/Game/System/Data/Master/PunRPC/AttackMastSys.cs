@@ -8,14 +8,14 @@ namespace Chessy.Game
     {
         private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC, DamageC, StepComponent> _cellUnitFilt = default;
         private EcsFilter<CellUnitDataC, UnitEffectsC, WaterUnitC> _cellUnitEffFilt = default;
         private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitTwFilt = default;
         private EcsFilter<CellUnitDataC, ConditionUnitC, MoveInCondC> _unitCondFilt = default;
 
         private EcsFilter<XyCellComponent> _cellXyFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrainFilt = default;
@@ -173,11 +173,11 @@ namespace Chessy.Game
                     }
                     else if (unit_to.Is(UnitTypes.Scout))
                     {
-                        InvUnitsC.AddUnit(ownUnit_to.Owner, unit_to.Unit, LevelUnitTypes.Wood);
+                        InvUnitsC.AddUnit(ownUnit_to.Owner, unit_to.Unit, LevelUnitTypes.First);
                     }
 
                     WhereUnitsC.Remove(ownUnit_to.Owner, unit_to.Unit, levUnitC_to.Level, idx_to);
-                    unit_to.NoneUnit();
+                    unit_to.DefUnit();
 
 
                     if (unit_from.IsMelee)
@@ -185,7 +185,7 @@ namespace Chessy.Game
                         if (!hpUnitC_from.HaveHp)
                         {
                             WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
-                            unit_from.NoneUnit();
+                            unit_from.DefUnit();
                         }
                         else
                         {
@@ -214,7 +214,7 @@ namespace Chessy.Game
 
 
                             WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
-                            unit_from.NoneUnit();
+                            unit_from.DefUnit();
                         }
                     }
                 }
@@ -233,7 +233,7 @@ namespace Chessy.Game
                     }
 
                     WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
-                    unit_from.NoneUnit();
+                    unit_from.DefUnit();
                 }
 
                 //if(unit_to.HaveUnit) hpUnitC_to.TryTakeBonusHp(unit_to.Unit, effUnit_to.Have(UnitStatTypes.Hp));

@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         private EcsFilter<CellsGiveTWComp> _cellsGiveFilter = default;
 
-        private EcsFilter<CellUnitDataC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, OwnerC> _cellUnitFilter = default;
 
         public void Run()
         {

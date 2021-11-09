@@ -7,7 +7,7 @@ namespace Chessy.Game
     {
         private EcsFilter<XyCellComponent> _cellXyFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilt = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, ConditionUnitC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
 
         public void Run()
         {
@@ -24,7 +24,7 @@ namespace Chessy.Game
 
             if (stepUnit_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
             {
-                var around = CellSpaceSupport.TryGetXyAround(_cellXyFilt.Get1(idx_0).XyCell);
+                var around = CellSpaceSupport.GetXyAround(_cellXyFilt.Get1(idx_0).XyCell);
 
                 RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
 

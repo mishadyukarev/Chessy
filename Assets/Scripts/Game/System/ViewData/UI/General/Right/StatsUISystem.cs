@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public sealed class StatsUISystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC, DamageC, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataC, ConditionUnitC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOtherFill = default;
         private EcsFilter<CellBuildDataC> _cellBuildFilter = default;

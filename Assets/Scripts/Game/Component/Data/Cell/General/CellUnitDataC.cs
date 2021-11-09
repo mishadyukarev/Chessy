@@ -18,6 +18,7 @@ namespace Chessy.Game
                     case UnitTypes.Rook: return false;
                     case UnitTypes.Bishop: return false;
                     case UnitTypes.Scout: return true;
+                    case UnitTypes.Elfemale: return false;
                     default: throw new Exception();
                 }
             }
@@ -32,7 +33,7 @@ namespace Chessy.Game
 
             Unit = unitType;
         }
-        public void NoneUnit()
+        public void DefUnit()
         {
             if (!HaveUnit) throw new Exception("It's not got unit");
 

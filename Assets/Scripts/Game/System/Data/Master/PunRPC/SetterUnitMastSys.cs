@@ -10,11 +10,11 @@ namespace Chessy.Game
         private EcsFilter<CellEnvDataC> _cellEnvirDataFilter = default;
         private EcsFilter<CellFireDataC> _fireFilt = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
         private EcsFilter<CellUnitDataC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
-        private EcsFilter<CellUnitDataC, Uniq1C> _unitUniqAbilFilt = default;
+        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqAbilFilt = default;
 
         public void Run()
         {
@@ -53,15 +53,15 @@ namespace Chessy.Game
                 if(condUnit_0.HaveCondition) condUnit_0.Def();
                 thirUnitC_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
                 moveCond_0.ResetAll();
-                if (InvUnitsC.HaveUnitInInv(whoseMove, unitForSet, LevelUnitTypes.Iron))
+                if (InvUnitsC.Have(whoseMove, unitForSet, LevelUnitTypes.Second))
                 {
-                    InvUnitsC.TakeUnitsInInv(whoseMove, unitForSet, LevelUnitTypes.Iron);
-                    levUnit_0.SetLevel(LevelUnitTypes.Iron);
+                    InvUnitsC.TakeUnit(whoseMove, unitForSet, LevelUnitTypes.Second);
+                    levUnit_0.SetLevel(LevelUnitTypes.Second);
                 }
                 else
                 {
-                    InvUnitsC.TakeUnitsInInv(whoseMove, unitForSet, LevelUnitTypes.Wood);
-                    levUnit_0.SetLevel(LevelUnitTypes.Wood);
+                    InvUnitsC.TakeUnit(whoseMove, unitForSet, LevelUnitTypes.First);
+                    levUnit_0.SetLevel(LevelUnitTypes.First);
                 }
 
 

@@ -23,7 +23,7 @@ namespace Chessy.Game
                 if (InventResC.CanCreateUnit(playerSend, unitTypeForCreating, out var needRes))
                 {
                     InventResC.BuyCreateUnit(playerSend, unitTypeForCreating);
-                    InvUnitsC.AddUnit(playerSend, unitTypeForCreating, LevelUnitTypes.Wood);
+                    InvUnitsC.AddUnit(playerSend, unitTypeForCreating, LevelUnitTypes.First);
 
                     RpcSys.SoundToGeneral(sender, ClipGameTypes.SoundGoldPack);
                 }

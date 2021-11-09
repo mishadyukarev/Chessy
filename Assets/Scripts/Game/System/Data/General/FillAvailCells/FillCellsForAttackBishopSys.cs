@@ -8,7 +8,7 @@ namespace Chessy.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellDataC> _cellDataFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataC,StepComponent, OwnerCom, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC,StepComponent, OwnerC, VisibleC> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -16,14 +16,14 @@ namespace Chessy.Game
             {
                 var xy_0 = _xyCellFilter.Get1(idxCell_0).XyCell;
 
-                ref var unitDataCom_0 = ref _cellUnitFilter.Get1(idxCell_0);
-                ref var stepUnitC_0 = ref _cellUnitFilter.Get2(idxCell_0);
-                ref var ownUnitCom_0 = ref _cellUnitFilter.Get3(idxCell_0);
+                ref var unit_0 = ref _cellUnitFilter.Get1(idxCell_0);
+                ref var stepUnit_0 = ref _cellUnitFilter.Get2(idxCell_0);
+                ref var ownUnit_0 = ref _cellUnitFilter.Get3(idxCell_0);
 
 
-                if (unitDataCom_0.Is(UnitTypes.Bishop))
+                if (unit_0.Is(new[] { UnitTypes.Bishop, UnitTypes.Elfemale }))
                 {
-                    if (stepUnitC_0.HaveMinSteps)
+                    if (stepUnit_0.HaveMinSteps)
 
                         for (DirectTypes dirType_1 = (DirectTypes)1; dirType_1 < (DirectTypes)Enum.GetNames(typeof(DirectTypes)).Length; dirType_1++)
                         {
@@ -42,13 +42,20 @@ namespace Chessy.Game
                                 {
                                     if (unitDataCom_1.HaveUnit)
                                     {
-                                        if (!ownUnitCom_1.Is(ownUnitCom_0.Owner))
+                                        if (!ownUnitCom_1.Is(ownUnit_0.Owner))
                                         {
-                                            if (dirType_1 == DirectTypes.DownLeft || dirType_1 == DirectTypes.UpLeft || dirType_1 == DirectTypes.UpRight || dirType_1 == DirectTypes.DownRight)
+                                            if (unit_0.Is(UnitTypes.Rook))
                                             {
-                                                CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Unique, idxCell_0, idxCell_1);
+                                                if (dirType_1 == DirectTypes.DownLeft || dirType_1 == DirectTypes.UpLeft || dirType_1 == DirectTypes.UpRight || dirType_1 == DirectTypes.DownRight)
+                                                {
+                                                    CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idxCell_0, idxCell_1);
+                                                }
+                                                else CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idxCell_0, idxCell_1);
                                             }
-                                            else CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Simple, idxCell_0, idxCell_1);
+                                            else
+                                            {
+                                                CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idxCell_0, idxCell_1);
+                                            }
                                         }
 
                                     }
@@ -64,23 +71,28 @@ namespace Chessy.Game
 
                                     if (unitDataCom_2.HaveUnit)
                                     {
-                                        if (visUnitCom_2.IsVisibled(ownUnitCom_0.Owner))
+                                        if (visUnitCom_2.IsVisibled(ownUnit_0.Owner))
 
-                                            if (dirType_1 == DirectTypes.Left || dirType_1 == DirectTypes.Right || dirType_1 == DirectTypes.Down || dirType_1 == DirectTypes.Up)
+                                            if (!ownUnitCom_2.Is(ownUnit_0.Owner))
                                             {
-                                                if (!ownUnitCom_2.Is(ownUnitCom_0.Owner))
+                                                if (unit_0.Is(UnitTypes.Rook))
                                                 {
-                                                    CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Simple, idxCell_0, idxCell_2);
+                                                    if (dirType_1 == DirectTypes.Left || dirType_1 == DirectTypes.Right || dirType_1 == DirectTypes.Down || dirType_1 == DirectTypes.Up)
+                                                    {
+                                                        CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idxCell_0, idxCell_2);
+                                                    }
+
+                                                    else
+                                                    {
+                                                        CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idxCell_0, idxCell_2);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idxCell_0, idxCell_2);
                                                 }
                                             }
 
-                                            else
-                                            {
-                                                if (!ownUnitCom_2.Is(ownUnitCom_0.Owner))
-                                                {
-                                                    CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Unique, idxCell_0, idxCell_2);
-                                                }
-                                            }
                                     }
                                 }
                             }

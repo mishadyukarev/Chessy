@@ -5,12 +5,12 @@ namespace Chessy.Game
 {
     public sealed class ThirstyUpdMasSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC> _cellUnitFilt = default;
         private EcsFilter<CellUnitDataC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
 
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
 
         public void Run()
         {
@@ -66,7 +66,7 @@ namespace Chessy.Game
                                     }
 
                                     WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
-                                    unit_0.NoneUnit();
+                                    unit_0.DefUnit();
                                 }
                             }
                         }

@@ -8,8 +8,8 @@ namespace Chessy.Game
     {
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
 
-        private EcsFilter<CellUnitDataC, StepComponent, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellUnitDataC, StepComponent, OwnerC> _cellUnitFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
 
         public void Run()

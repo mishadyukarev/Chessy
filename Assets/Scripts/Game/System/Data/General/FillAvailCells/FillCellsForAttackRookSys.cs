@@ -8,7 +8,7 @@ namespace Chessy.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellDataC> _cellDataFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
-        private EcsFilter<CellUnitDataC, StepComponent, OwnerCom, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, StepComponent, OwnerC, VisibleC> _cellUnitFilter = default;
 
         public void Run()
         {

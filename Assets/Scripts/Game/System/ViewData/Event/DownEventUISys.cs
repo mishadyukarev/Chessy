@@ -39,7 +39,7 @@ namespace Chessy.Game
 
         private void Done()
         {
-            if (!InvUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.Wood))
+            if (!InvUnitsC.Have(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.First))
             {
                 RpcSys.DoneToMaster();
             }
@@ -72,15 +72,13 @@ namespace Chessy.Game
 
             if (WhoseMoveC.IsMyMove)
             {
-                if (InvUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Iron))
+                if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Second))
                 {
-                    SelUnitC.SelUnitType = unitType;
-                    SelUnitC.LevelSelUnitType = LevelUnitTypes.Iron;
+                    SelUnitC.SetSelUnit(unitType, LevelUnitTypes.Second);
                 }
-                else if (InvUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Wood))
+                else if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.First))
                 {
-                    SelUnitC.SelUnitType = unitType;
-                    SelUnitC.LevelSelUnitType = LevelUnitTypes.Wood;
+                    SelUnitC.SetSelUnit(unitType, LevelUnitTypes.First);
                 }
                 else
                 {
@@ -171,7 +169,8 @@ namespace Chessy.Game
         private void Hero()
         {
             SelectorC.Set(CellClickTypes.OldNewUnit);
-            OldNewC.Set(HeroInvC.Hero(WhoseMoveC.CurPlayerI));
+            OldNewC.Set(InvUnitsC.MyHero);
+            SelectorC.IdxSelCell = default;
         }
     }
 }

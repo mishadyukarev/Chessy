@@ -9,12 +9,12 @@ namespace Chessy.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC> _cellUnitFilter = default;
 
         private EcsFilter<CellFireDataC> _cellFireDataFilter = default;
         private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvDataFilter = default;
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
         private EcsFilter<CellCloudDataC> _cellCloudsFilt = default;
 
         public void Run()
@@ -67,7 +67,7 @@ namespace Chessy.Game
                             }
 
                             WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                            unit_0.NoneUnit();
+                            unit_0.DefUnit();
                         }
                     }
 
@@ -96,7 +96,7 @@ namespace Chessy.Game
                         fire_0.HaveFire = false;
 
 
-                        var aroundXYList = CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).XyCell);
+                        var aroundXYList = CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_0).XyCell);
                         foreach (var xy1 in aroundXYList)
                         {
                             var curIdxCell1 = _xyCellFilter.GetIdxCell(xy1);

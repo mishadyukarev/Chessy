@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         public void Run()
         {
-            if (InvUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.Wood))
+            if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.First))
             {
                 KingZoneViewUIC.EnableZone();
             }

@@ -19,6 +19,7 @@
         BishopBow,
         BishopCrossbow,
         Scout,
+        Elfemale,
 
         City,
         CityNone,

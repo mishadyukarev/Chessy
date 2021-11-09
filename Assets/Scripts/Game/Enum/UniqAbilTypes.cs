@@ -12,5 +12,7 @@
 
         CircularAttack,
         BonusNear,
+
+        GrowAdultForest,
     }
 }

@@ -31,8 +31,8 @@ namespace Chessy.Game
                     switch (upgradeUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnWood); break;
-                        case LevelUnitTypes.Iron: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnIron); break;
+                        case LevelUnitTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnWood); break;
+                        case LevelUnitTypes.Second: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnIron); break;
                         default: throw new Exception();
                     }
                     break;
@@ -40,8 +40,8 @@ namespace Chessy.Game
                     switch (upgradeUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.RookBow); break;
-                        case LevelUnitTypes.Iron: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.RookCrossbow); break;
+                        case LevelUnitTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.RookBow); break;
+                        case LevelUnitTypes.Second: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.RookCrossbow); break;
                         default: throw new Exception();
                     }
                     break;
@@ -49,8 +49,8 @@ namespace Chessy.Game
                     switch (upgradeUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.BishopBow); break;
-                        case LevelUnitTypes.Iron: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.BishopCrossbow); break;
+                        case LevelUnitTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.BishopBow); break;
+                        case LevelUnitTypes.Second: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.BishopCrossbow); break;
                         default: throw new Exception();
                     }
                     break;
@@ -58,8 +58,17 @@ namespace Chessy.Game
                     switch (upgradeUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Scout); break;
-                        case LevelUnitTypes.Iron: throw new Exception();
+                        case LevelUnitTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Scout); break;
+                        case LevelUnitTypes.Second: throw new Exception();
+                        default: throw new Exception();
+                    }
+                    break;
+                case UnitTypes.Elfemale:
+                    switch (upgradeUnitType)
+                    {
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Elfemale); break;
+                        case LevelUnitTypes.Second: throw new Exception();
                         default: throw new Exception();
                     }
                     break;

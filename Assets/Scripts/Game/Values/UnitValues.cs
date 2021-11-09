@@ -15,40 +15,48 @@ namespace Chessy.Game
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 300;
-                        case LevelUnitTypes.Iron: throw new Exception();
+                        case LevelUnitTypes.First: return 300;
+                        case LevelUnitTypes.Second: throw new Exception();
                         default: throw new Exception();
                     }
                 case UnitTypes.Pawn:
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 100;
-                        case LevelUnitTypes.Iron: return 150;
+                        case LevelUnitTypes.First: return 100;
+                        case LevelUnitTypes.Second: return 150;
                         default: throw new Exception();
                     }
                 case UnitTypes.Rook:
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 100;
-                        case LevelUnitTypes.Iron: return 150;
+                        case LevelUnitTypes.First: return 100;
+                        case LevelUnitTypes.Second: return 150;
                         default: throw new Exception();
                     }
                 case UnitTypes.Bishop:
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 100;
-                        case LevelUnitTypes.Iron: return 150;
+                        case LevelUnitTypes.First: return 100;
+                        case LevelUnitTypes.Second: return 150;
                         default: throw new Exception();
                     }
                 case UnitTypes.Scout:
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.Wood: return 50;
-                        case LevelUnitTypes.Iron: throw new Exception();
+                        case LevelUnitTypes.First: return 50;
+                        case LevelUnitTypes.Second: throw new Exception();
+                        default: throw new Exception();
+                    }
+                case UnitTypes.Elfemale:
+                    switch (upgUnitType)
+                    {
+                        case LevelUnitTypes.None: throw new Exception();
+                        case LevelUnitTypes.First: return 200;
+                        case LevelUnitTypes.Second: throw new Exception();
                         default: throw new Exception();
                     }
                 default: throw new Exception();
@@ -144,6 +152,7 @@ namespace Chessy.Game
                 case UnitTypes.Rook: steps = 3; break;
                 case UnitTypes.Bishop: steps = 3; break;
                 case UnitTypes.Scout: steps = 5; break;
+                case UnitTypes.Elfemale: steps = 3; break;
                 default: throw new Exception();
             }
 
@@ -153,13 +162,6 @@ namespace Chessy.Game
 
             return steps;
         }
-
-        #endregion
-
-
-        #region
-
-        public static int MaxStandAmountWater => 100;
 
         #endregion
     }

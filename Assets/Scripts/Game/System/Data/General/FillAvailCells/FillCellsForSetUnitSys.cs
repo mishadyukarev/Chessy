@@ -7,7 +7,7 @@ namespace Chessy.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellUnitDataC> _cellUnitFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuldFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellBuldFilt = default;
 
 
         public void Run()
@@ -22,7 +22,7 @@ namespace Chessy.Game
                     var idx_city = WhereBuildsC.IdxCity(playerType);
                     ref var unit_city = ref _cellUnitFilter.Get1(idx_city);
                     
-                    var listAround = CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_city).XyCell);
+                    var listAround = CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_city).XyCell);
 
                     if(!unit_city.HaveUnit) CellsForSetUnitC.AddIdxCell(playerType, idx_city);
 
@@ -79,7 +79,7 @@ namespace Chessy.Game
 
                 if (buld_0.Is(BuildTypes.Camp))
                 {
-                    var xyAround_1 = CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).XyCell);
+                    var xyAround_1 = CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_0).XyCell);
 
                     foreach (var xy in xyAround_1)
                     {

@@ -4,8 +4,8 @@ namespace Chessy.Game
 {
     public sealed class HungryUpdMasSys : IEcsRunSystem
     {
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
 
         public void Run()
         {
@@ -33,7 +33,7 @@ namespace Chessy.Game
 
                                 if (unit_0.Is(UnitTypes.Scout))
                                 {
-                                    InvUnitsC.AddUnit(player, UnitTypes.Scout, LevelUnitTypes.Wood);
+                                    InvUnitsC.AddUnit(player, UnitTypes.Scout, LevelUnitTypes.First);
                                 }
 
                                 if (build_0.Is(BuildTypes.Camp))
@@ -43,7 +43,7 @@ namespace Chessy.Game
                                 }
 
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                                unit_0.NoneUnit();
+                                unit_0.DefUnit();
 
                                 return;
                             }

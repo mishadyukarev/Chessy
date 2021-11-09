@@ -8,8 +8,8 @@ namespace Chessy.Game
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellTrailDataC, VisibleC> _cellTrailFilt = default;
 
-        private EcsFilter<CellUnitDataC, OwnerCom, VisibleC> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataC, OwnerCom, VisibleC> _cellBuildFilt = default;
+        private EcsFilter<CellUnitDataC, OwnerC, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerC, VisibleC> _cellBuildFilt = default;
 
         public void Run()
         {
@@ -31,7 +31,7 @@ namespace Chessy.Game
                     {
                         var isVisibledNextPlayer = false;
 
-                        var list = CellSpaceSupport.TryGetXyAround(xy);
+                        var list = CellSpaceSupport.GetXyAround(xy);
 
                         foreach (var xy_1 in list)
                         {
@@ -72,7 +72,7 @@ namespace Chessy.Game
                     {
                         var isVisibledNextPlayer = false;
 
-                        var list = CellSpaceSupport.TryGetXyAround(xy);
+                        var list = CellSpaceSupport.GetXyAround(xy);
 
                         foreach (var xy_1 in list)
                         {
@@ -103,7 +103,7 @@ namespace Chessy.Game
                 {
                     ref var trailVis_0 = ref _cellTrailFilt.Get2(idx_0);
 
-                    var list = CellSpaceSupport.TryGetXyAround(xy);
+                    var list = CellSpaceSupport.GetXyAround(xy);
 
                     trailVis_0.SetVisibled(WhoseMoveC.NextPlayerFrom(PlayerTypes.First), false);
                     trailVis_0.SetVisibled(WhoseMoveC.NextPlayerFrom(PlayerTypes.Second), false);

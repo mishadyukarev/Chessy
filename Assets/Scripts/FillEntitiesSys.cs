@@ -17,11 +17,11 @@ namespace Chessy.Game
         private readonly EcsFilter<XyCellComponent> _xyCellFilter = default;
         private readonly EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilter = default;
         private readonly EcsFilter<CellViewC, CellDataC> _cellViewFilt = default;
-        private readonly EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
+        private readonly EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
         private readonly EcsFilter<CellCloudDataC> _cellWeatherFilt = default;
         private readonly EcsFilter<CellRiverDataC> _cellRiverFilt = default;
 
-        private readonly EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private readonly EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private readonly EcsFilter<CellUnitDataC, HpUnitC, DamageC, StepComponent> _cellUnitStatsFilt = default;
         private readonly EcsFilter<CellUnitDataC, ConditionUnitC, ToolWeaponC, WaterUnitC> _cellUnitOtherFilt = default;
 
@@ -100,11 +100,13 @@ namespace Chessy.Game
             rpcSystems.Add(RpcMasterTypes.SeedEnvironment, new EcsSystems(gameWorld).Add(new SeedingMasterSystem()));
             rpcSystems.Add(RpcMasterTypes.CircularAttackKing, new EcsSystems(gameWorld).Add(new CircularAttackKingMastSys()));
             rpcSystems.Add(RpcMasterTypes.UpgradeUnit, new EcsSystems(gameWorld).Add(new UpgradeUnitMasSys()));
-            rpcSystems.Add(RpcMasterTypes.OldToNewUnit, new EcsSystems(gameWorld).Add(new ScoutOldNewSys()));
+            rpcSystems.Add(RpcMasterTypes.ToNewUnit, new EcsSystems(gameWorld).Add(new ScoutOldNewSys()));
             rpcSystems.Add(RpcMasterTypes.BonusNearUnitKing, new EcsSystems(gameWorld).Add(new BonusNearUnitKingMasSys()));
             rpcSystems.Add(RpcMasterTypes.PickUpgrade, new EcsSystems(gameWorld).Add(new PickUpgMasSys()));
             rpcSystems.Add(RpcMasterTypes.GiveTakeToolWeapon, new EcsSystems(gameWorld).Add(new GiveTakeTWMasSys()));
             rpcSystems.Add(RpcMasterTypes.GetHero, new EcsSystems(gameWorld).Add(new GetHeroMastS()));
+            rpcSystems.Add(RpcMasterTypes.FromToNewUnit, new EcsSystems(gameWorld).Add(new FromToNewUnitMS()));
+            rpcSystems.Add(RpcMasterTypes.GrowAdultForest, new EcsSystems(gameWorld).Add(new GrowAdultForestMS()));
 
 
             var updateMotion = new EcsSystems(gameWorld)
@@ -334,7 +336,7 @@ namespace Chessy.Game
 
                     _curGameWorld.NewEntity()
                          .Replace(new CellBuildDataC())
-                         .Replace(new OwnerCom())
+                         .Replace(new OwnerC())
                          .Replace(new VisibleC(true))
                          .Replace(new CellBuildViewComponent(curParentCell_GO));
 
@@ -343,7 +345,7 @@ namespace Chessy.Game
                          .Replace(new CellUnitDataC())
 
                          .Replace(new LevelUnitC())
-                         .Replace(new OwnerCom())
+                         .Replace(new OwnerC())
 
                          .Replace(new HpUnitC())
                          .Replace(new DamageC())
@@ -352,8 +354,7 @@ namespace Chessy.Game
                          .Replace(new ConditionUnitC())
                          .Replace(new MoveInCondC(true))
 
-                         .Replace(new Uniq1C())
-                         .Replace(new Uniq2C())
+                         .Replace(new UniqAbilC(true))
 
                          .Replace(new UnitEffectsC(true))
                          .Replace(new WaterUnitC())                       
@@ -411,7 +412,7 @@ namespace Chessy.Game
                 .Replace(new InventResC(true))
                 .Replace(new InvToolWeapC(true));
 
-            HeroInvC.Start();
+            //HeroInvC.Start();
 
 
             GenerZoneViewC.Attach(backGroundGO.transform);
@@ -699,7 +700,7 @@ namespace Chessy.Game
 
 
                             unit_0.SetUnit(UnitTypes.King);
-                            levUnit_0.SetLevel(LevelUnitTypes.Wood);
+                            levUnit_0.SetLevel(LevelUnitTypes.First);
                             ownUnit_0.SetOwner(PlayerTypes.Second);
                             hpUnitC_0.SetMaxHp();
                             thirUnitC_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
@@ -734,7 +735,7 @@ namespace Chessy.Game
                             }
 
                             unit_0.SetUnit(UnitTypes.Pawn);
-                            levUnit_0.SetLevel(LevelUnitTypes.Wood);
+                            levUnit_0.SetLevel(LevelUnitTypes.First);
                             
 
                             int rand = UnityEngine.Random.Range(0, 100);

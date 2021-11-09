@@ -56,6 +56,7 @@ namespace Chessy.Game
                 case UnitTypes.Rook: percent = 0.5f; break;
                 case UnitTypes.Bishop: percent = 0.5f; break;
                 case UnitTypes.Scout: percent = 0.5f; break;
+                case UnitTypes.Elfemale: percent = 0.5f; break;
                 default: throw new Exception();
             }
 

@@ -9,7 +9,7 @@ namespace Chessy.Game
         private EcsFilter<ForCircularAttackMasCom> _forCircAttackFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataC, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilt = default;
@@ -35,7 +35,7 @@ namespace Chessy.Game
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.AttackMelee);
 
-                foreach (var xy1 in CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idxCurculAttack).XyCell))
+                foreach (var xy1 in CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idxCurculAttack).XyCell))
                 {
                     var idx_1 = _xyCellFilter.GetIdxCell(xy1);
 
@@ -74,17 +74,17 @@ namespace Chessy.Game
                                         }
                                         else if (unitC_1.Is(UnitTypes.Scout))
                                         {
-                                            InvUnitsC.AddUnit(ownUnit_1.Owner, UnitTypes.Scout, LevelUnitTypes.Wood);
+                                            InvUnitsC.AddUnit(ownUnit_1.Owner, UnitTypes.Scout, LevelUnitTypes.First);
                                         }
 
                                         WhereUnitsC.Remove(ownUnit_1.Owner, unitC_1.Unit, levUnit_1.Level, idx_1);
-                                        unitC_1.NoneUnit();
+                                        unitC_1.DefUnit();
                                     }
                                 }
                                 else
                                 {
                                     WhereUnitsC.Remove(ownUnit_1.Owner, unitC_1.Unit, levUnit_1.Level, idx_1);
-                                    unitC_1.NoneUnit();
+                                    unitC_1.DefUnit();
                                 }
                             }
                         }

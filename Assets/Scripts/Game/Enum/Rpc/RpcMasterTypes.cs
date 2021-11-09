@@ -23,7 +23,11 @@
         PickUpgrade,
         GetHero,
         UpgradeUnit,
-        OldToNewUnit,
+        GrowAdultForest,
+
+        ToNewUnit,
+        FromToNewUnit,
+
         GiveTakeToolWeapon,
         BuyRes,
     }

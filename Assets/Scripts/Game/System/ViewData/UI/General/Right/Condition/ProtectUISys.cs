@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public class ProtectUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, OwnerC> _cellUnitFilter = default;
 
         public void Run()
         {

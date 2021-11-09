@@ -31,6 +31,7 @@ namespace Chessy.Common
                 _gameSprites.Add(SpriteGameTypes.BishopCrossbow, Resources.Load<Sprite>("BishopCrossbow_Sprite"));
 
                 _gameSprites.Add(SpriteGameTypes.Scout, Resources.Load<Sprite>("Scout_Sprite"));
+                _gameSprites.Add(SpriteGameTypes.Elfemale, Resources.Load<Sprite>("Elfemale_Sprite"));
 
                 _gameSprites.Add(SpriteGameTypes.PickWood, Resources.Load<Sprite>("Pick_Sprite"));
                 _gameSprites.Add(SpriteGameTypes.SwordIron, Resources.Load<Sprite>("SwordIron_Sprite"));

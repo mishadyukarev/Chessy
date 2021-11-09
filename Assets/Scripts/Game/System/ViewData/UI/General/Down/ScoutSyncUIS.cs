@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         public void Run()
         {
-            ScoutViewUIC.SetActiveScout(InvUnitsC.HaveUnitInInv(WhoseMoveC.CurPlayerI, UnitTypes.Scout, LevelUnitTypes.Wood));
+            ScoutViewUIC.SetActiveScout(InvUnitsC.Have(WhoseMoveC.CurPlayerI, UnitTypes.Scout, LevelUnitTypes.First));
         }
     }
 }

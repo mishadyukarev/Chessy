@@ -11,10 +11,10 @@ namespace Chessy.Game
         private EcsFilter<CellDataC> _cellDataFilt = default;
         private EcsFilter<CellFireDataC> _cellFireDataFilter = default;
         private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvDataFilter = default;
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
         private EcsFilter<CellUnitDataC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;

@@ -5,8 +5,8 @@ namespace Chessy.Game
 {
     public sealed class ThirdButtonBuildUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, OwnerCom> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
+        private EcsFilter<CellUnitDataC, OwnerC> _cellUnitFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
 
         public void Run()
         {

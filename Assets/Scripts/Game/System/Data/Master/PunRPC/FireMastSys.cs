@@ -10,7 +10,7 @@ namespace Chessy.Game
         private EcsFilter<ForFireMasCom> _fireFilter = default;
 
         private EcsFilter<CellUnitDataC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
 

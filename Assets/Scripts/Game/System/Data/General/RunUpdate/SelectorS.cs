@@ -8,12 +8,12 @@ namespace Chessy.Game
 {
     public sealed class SelectorS : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC, VisibleC> _cellUnitFilter = default;
         public void Run()
         {
             CellUnitDataC UnitDatCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
             LevelUnitC LevelUnitC(byte idx) => _cellUnitFilter.Get2(idx);
-            OwnerCom OwnUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
+            OwnerC OwnUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
             VisibleC VisUnitCom(byte idxCell) => _cellUnitFilter.Get4(idxCell);
 
             #region else
@@ -58,8 +58,8 @@ namespace Chessy.Game
                 {
                     if (SelUnitC.IsSelUnit)
                     {
-                        RpcSys.SetUniToMaster(IdxCurCell, SelUnitC.SelUnitType);
-                        SelUnitC.SelUnitType = default;
+                        RpcSys.SetUniToMaster(IdxCurCell, SelUnitC.SelUnit);
+                        SelUnitC.ResetSelUnit();
                     }
 
                     else if (Is(CellClickTypes.PickFire))
@@ -88,7 +88,7 @@ namespace Chessy.Game
                     {
                         if (UnitDatCom(IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Rook, UnitTypes.Bishop })
                             && OwnUnitCom(IdxCurCell).Is(WhoseMoveC.CurPlayerI)
-                            && !LevelUnitC(IdxCurCell).Is(LevelUnitTypes.Iron))
+                            && !LevelUnitC(IdxCurCell).Is(LevelUnitTypes.Second))
                         {
                             RpcSys.UpgradeUnitToMaster(IdxCurCell);
                         }
@@ -101,6 +101,8 @@ namespace Chessy.Game
 
                     else if (Is(CellClickTypes.OldNewUnit))
                     {
+                        if (IdxSelCell != IdxCurCell)
+                            IdxPreCell = IdxSelCell;
                         IdxSelCell = IdxCurCell;
 
                         ref var unit_sel = ref _cellUnitFilter.Get1(IdxSelCell);
@@ -108,9 +110,10 @@ namespace Chessy.Game
 
                         if (OldNewC.Is(UnitTypes.Scout))
                         {
-                            if (UnitDatCom(IdxCurCell).Is(UnitTypes.Pawn) && OwnUnitCom(IdxCurCell).Is(WhoseMoveC.CurPlayerI))
+                            if (UnitDatCom(IdxCurCell).Is(UnitTypes.Pawn) 
+                                && OwnUnitCom(IdxCurCell).Is(WhoseMoveC.CurPlayerI))
                             {
-                                RpcSys.OldToNewToMaster(OldNewC.Unit, IdxCurCell);
+                                RpcSys.FromNewUnitToMas(OldNewC.Unit, IdxCurCell);
                                 Reset();
                             }
                             else
@@ -126,7 +129,9 @@ namespace Chessy.Game
                             {
                                 if (unit_pre.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                                 {
-                                    Debug.Log("sss");
+                                    RpcSys.FromToNewUnitToMas(OldNewC.Unit, IdxPreCell, IdxSelCell);
+
+                                    Reset();
                                 }
                             }
                             else

@@ -11,6 +11,7 @@
         Bishop,
 
         Scout,
-        Elfemale
+
+        Elfemale,
     }
 }

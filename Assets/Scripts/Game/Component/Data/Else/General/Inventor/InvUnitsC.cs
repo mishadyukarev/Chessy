@@ -47,17 +47,17 @@ namespace Chessy.Game
                     _unitsInv[PlayerTypes.Second].Add(unitType, new Dictionary<LevelUnitTypes, int>());
 
 
-                    _unitsInv[PlayerTypes.First][unitType].Add(LevelUnitTypes.Wood, default);
-                    _unitsInv[PlayerTypes.First][unitType].Add(LevelUnitTypes.Iron, default);
+                    _unitsInv[PlayerTypes.First][unitType].Add(LevelUnitTypes.First, default);
+                    _unitsInv[PlayerTypes.First][unitType].Add(LevelUnitTypes.Second, default);
 
-                    _unitsInv[PlayerTypes.Second][unitType].Add(LevelUnitTypes.Wood, default);
-                    _unitsInv[PlayerTypes.Second][unitType].Add(LevelUnitTypes.Iron, default);
+                    _unitsInv[PlayerTypes.Second][unitType].Add(LevelUnitTypes.First, default);
+                    _unitsInv[PlayerTypes.Second][unitType].Add(LevelUnitTypes.Second, default);
                 }
             }
         }
 
         public static int AmountUnitsInInv(PlayerTypes playerType, UnitTypes unitType, LevelUnitTypes levelUnitType) => _unitsInv[playerType][unitType][levelUnitType];
-        public static int AmountUnitsInInv(PlayerTypes playerType, UnitTypes unitType) => _unitsInv[playerType][unitType][LevelUnitTypes.Wood] + _unitsInv[playerType][unitType][LevelUnitTypes.Iron];
+        public static int AmountUnitsInInv(PlayerTypes playerType, UnitTypes unitType) => _unitsInv[playerType][unitType][LevelUnitTypes.First] + _unitsInv[playerType][unitType][LevelUnitTypes.Second];
         public static void Set(PlayerTypes player, UnitTypes unit, LevelUnitTypes level, int value) => _unitsInv[player][unit][level] = value;
         public static void SetStartAmountUnitAll()
         {
@@ -76,8 +76,34 @@ namespace Chessy.Game
         }
 
         public static void AddUnit(PlayerTypes playerType, UnitTypes unitType, LevelUnitTypes levelUnitType, int adding = 1) => Set(playerType, unitType, levelUnitType, AmountUnitsInInv(playerType, unitType, levelUnitType) + adding);
-        public static void TakeUnitsInInv(PlayerTypes playerType, UnitTypes unitType, LevelUnitTypes levelUnitType, int taking = 1) => Set(playerType, unitType, levelUnitType, AmountUnitsInInv(playerType, unitType, levelUnitType) - taking);
+        public static void TakeUnit(PlayerTypes playerType, UnitTypes unitType, LevelUnitTypes levelUnitType, int taking = 1) => Set(playerType, unitType, levelUnitType, AmountUnitsInInv(playerType, unitType, levelUnitType) - taking);
 
-        public static bool HaveUnitInInv(PlayerTypes playerType, UnitTypes unitType, LevelUnitTypes levelUnitType) => AmountUnitsInInv(playerType, unitType, levelUnitType) > 0;
+        public static bool Have(PlayerTypes playerType, UnitTypes unitType, LevelUnitTypes levelUnitType) => AmountUnitsInInv(playerType, unitType, levelUnitType) > 0;
+
+        public static UnitTypes MyHero
+        {
+            get
+            {
+                foreach (var item_0 in Units)
+                {
+                    if (item_0.Key == WhoseMoveC.CurPlayerI)
+                    {
+                        foreach (var item_1 in item_0.Value)
+                        {
+                            if (item_1.Key >= UnitTypes.Elfemale)
+                            {
+                                foreach (var item_2 in item_1.Value)
+                                {
+                                    if (item_2.Value > 1) throw new Exception();
+                                    else if (item_2.Value == 1) return item_1.Key;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                throw new Exception();
+            }
+        }
     }
 }

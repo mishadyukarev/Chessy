@@ -7,7 +7,7 @@ namespace Chessy.Game
         private EcsFilter<CellsArsonArcherComp> _cellsArsonFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, OwnerC> _cellUnitFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
 
@@ -24,7 +24,7 @@ namespace Chessy.Game
 
                 if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                 {
-                    foreach (var arouXy in CellSpaceSupport.TryGetXyAround(curXy))
+                    foreach (var arouXy in CellSpaceSupport.GetXyAround(curXy))
                     {
                         var arouIdx = _xyCellFilter.GetIdxCell(arouXy);
 

@@ -5,14 +5,23 @@ namespace Chessy.Game
 {
     public struct SelUnitC
     {
-        public static UnitTypes SelUnitType;
-        public static LevelUnitTypes LevelSelUnitType;
+        private static UnitTypes _selUnit;
+        private static LevelUnitTypes _levelSelUnit;
+
+        public static UnitTypes SelUnit => _selUnit;
+        public static LevelUnitTypes LevelSelUnit => _levelSelUnit;
+        public static bool IsSelUnit => SelUnit != default;
 
 
-        public static bool IsSelUnit => SelUnitType != default;
-
-
-
-        public static void ResetSelUnit() => SelUnitType = default;
+        public static void SetSelUnit(UnitTypes unit, LevelUnitTypes level)
+        {
+            _selUnit = unit;
+            _levelSelUnit = level;
+        }
+        public static void ResetSelUnit()
+        {
+            _selUnit = default;
+            _levelSelUnit = default;
+        }
     }
 }

@@ -5,7 +5,7 @@ namespace Chessy.Game
     public sealed class ExtractBuildUpdMasSys : IEcsRunSystem
     {
         private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellbuildFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellbuildFilt = default;
         private EcsFilter<CellFireDataC> _cellFireFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 

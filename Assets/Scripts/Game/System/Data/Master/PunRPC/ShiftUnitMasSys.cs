@@ -10,13 +10,13 @@ namespace Chessy.Game
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
         private EcsFilter<CellFireDataC> _cellFireFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
         private EcsFilter<CellUnitDataC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
-        private EcsFilter<CellUnitDataC, Uniq1C> _unitUniqAbilFilt = default;
+        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqAbilFilt = default;
 
         public void Run()
         {
@@ -99,7 +99,7 @@ namespace Chessy.Game
                 WhereUnitsC.Add(ownUnit_to.Owner, unit_to.Unit, levUnitC_to.Level, idx_to);
 
                 WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
-                unit_from.NoneUnit();
+                unit_from.DefUnit();
 
                 RpcSys.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipGameTypes.ClickToTable);
             }

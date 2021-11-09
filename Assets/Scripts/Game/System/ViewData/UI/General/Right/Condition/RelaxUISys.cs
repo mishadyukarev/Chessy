@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     public sealed class RelaxUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, ConditionUnitC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, ConditionUnitC, OwnerC> _cellUnitFilter = default;
 
         public void Run()
         {

@@ -10,7 +10,7 @@ namespace Chessy.Game
 
         private EcsFilter<XyCellComponent> _xyCellFilt = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
         private EcsFilter<CellUnitDataC, StepComponent> _cellUnitFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
@@ -43,7 +43,7 @@ namespace Chessy.Game
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var xy in CellSpaceSupport.TryGetXyAround(_xyCellFilt.Get1(idxForBuild).XyCell))
+                    foreach (var xy in CellSpaceSupport.GetXyAround(_xyCellFilt.Get1(idxForBuild).XyCell))
                     {
                         var curIdx = _xyCellFilt.GetIdxCell(xy);
 

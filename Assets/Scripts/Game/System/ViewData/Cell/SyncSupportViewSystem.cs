@@ -5,7 +5,7 @@ namespace Chessy.Game
     public sealed class SyncSupportViewSystem : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataC, CellUnitMainViewCom> _cellUnitViewFilt = default;
         private EcsFilter<CellSupViewComponent> _supViewFilter = default;
 
@@ -51,7 +51,7 @@ namespace Chessy.Game
 
                             }
 
-                            if (levUnitC_0.Is(LevelUnitTypes.Wood))
+                            if (levUnitC_0.Is(LevelUnitTypes.First))
                             {
                                 if (SelectorC.Is(CellClickTypes.UpgradeUnit))
                                 {

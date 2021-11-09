@@ -8,8 +8,8 @@ namespace Chessy.Game
         private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
-        private EcsFilter<CellUnitDataC, StepComponent, OwnerCom> _cellUnitFilt = default;
-        private EcsFilter<CellUnitDataC, UnitEffectsC, OwnerCom> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, StepComponent, OwnerC> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
 
         public void Run()
         {

@@ -6,7 +6,7 @@ namespace Chessy.Game
 {
     public static class CellSpaceSupport
     {
-        public static List<byte[]> TryGetXyAround(byte[] xyStartCell)
+        public static List<byte[]> GetXyAround(byte[] xyStartCell)
         {
             var xyAvailableCells = new List<byte[]>();
             var xyResultCell = new byte[XY_FOR_ARRAY];

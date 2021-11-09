@@ -22,8 +22,8 @@ namespace Chessy.Game
             switch (levelUnit)
             {
                 case LevelUnitTypes.None: throw new Exception();
-                case LevelUnitTypes.Wood: amountExtract += 1; break;
-                case LevelUnitTypes.Iron: amountExtract += 2; break;
+                case LevelUnitTypes.First: amountExtract += 1; break;
+                case LevelUnitTypes.Second: amountExtract += 2; break;
                 default: throw new Exception();
             }
 

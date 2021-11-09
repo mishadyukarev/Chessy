@@ -107,5 +107,31 @@ namespace Chessy.Game
 
             return amountUnits;
         }
+
+        public static bool HaveMyHeroInGame
+        {
+            get
+            {
+                foreach (var item_0 in UnitsInGame)
+                {
+                    if (item_0.Key == WhoseMoveC.CurPlayerI)
+                    {
+                        foreach (var item_1 in item_0.Value)
+                        {
+                            if (item_1.Key >= UnitTypes.Elfemale)
+                            {
+                                foreach (var item_2 in item_1.Value)
+                                {
+                                    if (item_2.Value.Count == 1) return true;
+                                    else if (item_2.Value.Count > 1) throw new Exception();
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return false;
+            }
+        }
     }
 }

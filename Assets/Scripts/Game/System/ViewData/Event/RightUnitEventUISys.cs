@@ -7,7 +7,7 @@ namespace Chessy.Game
     public sealed class RightUnitEventUISys : IEcsInitSystem
     {
         private EcsFilter<CellUnitDataC, ConditionUnitC> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, Uniq1C, Uniq2C> _unitUniqFilt = default;
+        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqFilt = default;
 
         public void Init()
         {
@@ -49,11 +49,11 @@ namespace Chessy.Game
 
         private void UniqFirstBut()
         {
-            ref var firstUniq_sel = ref _unitUniqFilt.Get2(SelectorC.IdxSelCell);
+            ref var uniq_sel = ref _unitUniqFilt.Get2(SelectorC.IdxSelCell);
 
-            var abil = firstUniq_sel.Ability;
+            var abil = uniq_sel.Ability(UniqButtonTypes.First);
 
-            switch (firstUniq_sel.Ability)
+            switch (abil)
             {
                 case UniqAbilTypes.None: throw new Exception();
 
@@ -87,6 +87,10 @@ namespace Chessy.Game
                     break;
 
                 case UniqAbilTypes.BonusNear: throw new Exception();
+
+                case UniqAbilTypes.GrowAdultForest:
+                    RpcSys.GrowAdultForest(SelectorC.IdxSelCell);
+                    break;
                 default: throw new Exception();
             }
 
@@ -109,9 +113,9 @@ namespace Chessy.Game
 
         private void UniqSecBut()
         {
-            ref var secUniq_sel = ref _unitUniqFilt.Get3(SelectorC.IdxSelCell);
+            ref var secUniq_sel = ref _unitUniqFilt.Get2(SelectorC.IdxSelCell);
 
-            var abil = secUniq_sel.Ability;
+            var abil = secUniq_sel.Ability(UniqButtonTypes.Second);
 
             switch (abil)
             {

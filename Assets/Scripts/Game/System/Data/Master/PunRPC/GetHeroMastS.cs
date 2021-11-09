@@ -8,7 +8,7 @@ namespace Chessy.Game
     {
         public void Run()
         {
-            HeroInvC.SetHero(WhoseMoveC.WhoseMove, ForGetHeroMasC.Unit);
+            InvUnitsC.AddUnit(WhoseMoveC.WhoseMove, ForGetHeroMasC.Unit, LevelUnitTypes.First);
         }
     }
 }

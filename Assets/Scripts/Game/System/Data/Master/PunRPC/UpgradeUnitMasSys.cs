@@ -7,7 +7,7 @@ namespace Chessy.Game
     {
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC, StepComponent, UnitEffectsC> _cellUnitDataFilt = default;
         private EcsFilter<InventResC> _invResFilt = default;
 
@@ -39,7 +39,7 @@ namespace Chessy.Game
                         InventResC.BuyUpgradeUnit(whoseMove, unit_0.Unit);
 
                         WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                        levUnit_0.SetLevel(LevelUnitTypes.Iron);
+                        levUnit_0.SetLevel(LevelUnitTypes.Second);
                         WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                         stepUnit_0.TakeSteps();

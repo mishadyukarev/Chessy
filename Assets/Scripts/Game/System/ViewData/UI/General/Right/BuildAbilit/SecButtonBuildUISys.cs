@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public sealed class SecButtonBuildUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, OwnerCom> _cellUnitFilt = default;
+        private EcsFilter<CellUnitDataC, OwnerC> _cellUnitFilt = default;
 
         public void Run()
         {

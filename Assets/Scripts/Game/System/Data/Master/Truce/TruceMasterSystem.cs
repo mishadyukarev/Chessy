@@ -13,7 +13,7 @@ namespace Chessy.Game
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitFilter = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitFilter = default;
         private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitTwFilt = default;
 
         public void Run()
@@ -51,7 +51,7 @@ namespace Chessy.Game
 
                                 InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                                unit_0.NoneUnit();
+                                unit_0.DefUnit();
                             }
                         }
                         else
@@ -65,7 +65,7 @@ namespace Chessy.Game
 
                             InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
                             WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                            unit_0.NoneUnit();
+                            unit_0.DefUnit();
                         }
                     }
 

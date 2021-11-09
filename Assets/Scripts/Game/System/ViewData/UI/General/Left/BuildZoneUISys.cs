@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public sealed class BuildZoneUISys : IEcsRunSystem
     {
-        private EcsFilter<CellBuildDataC, OwnerCom> _cellBuildFilter = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
 
         public void Run()
         {

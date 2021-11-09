@@ -7,7 +7,7 @@ namespace Chessy.Game
     {
         private EcsFilter<ForOldNewUnitCom> _forOldNewUnitCom = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerCom> _cellUnitMainFilt = default;
+        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilt = default;
         private EcsFilter<CellUnitDataC, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
 
@@ -32,9 +32,9 @@ namespace Chessy.Game
             {
                 if (stepUnitC.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                 {
-                    InvUnitsC.TakeUnitsInInv(ownUnit_0.Owner, UnitTypes.Scout, LevelUnitTypes.Wood);
+                    InvUnitsC.TakeUnit(ownUnit_0.Owner, UnitTypes.Scout, LevelUnitTypes.First);
                     WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
-                    unit_0.NoneUnit();
+                    unit_0.DefUnit();
 
                     if (twUnitC_0.HaveToolWeap)
                     {
@@ -43,7 +43,7 @@ namespace Chessy.Game
                     }
 
                     unit_0.SetUnit(_forOldNewUnitCom.Get1(0).UnitType);
-                    levUnitC_0.SetLevel(LevelUnitTypes.Wood);
+                    levUnitC_0.SetLevel(LevelUnitTypes.First);
 
                     hpUnitC.SetMaxHp();
                     stepUnitC.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));

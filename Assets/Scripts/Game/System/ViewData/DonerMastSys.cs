@@ -46,7 +46,7 @@ namespace Chessy.Game
 
                 if (WhoseMoveC.WhoseMove == playerSend)
                 {
-                    if (!InvUnitsC.HaveUnitInInv(sender.GetPlayerType(), UnitTypes.King, LevelUnitTypes.Wood))
+                    if (!InvUnitsC.Have(sender.GetPlayerType(), UnitTypes.King, LevelUnitTypes.First))
                     {                   
                         if (playerSend == PlayerTypes.Second)
                         {

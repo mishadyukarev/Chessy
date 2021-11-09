@@ -4,7 +4,7 @@
     {
         None,
 
-        Wood,
-        Iron,
+        First,
+        Second,
     }
 }

@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         public void Run()
         {
-            HeroDownUIC.SetActive(HeroInvC.HaveHero(WhoseMoveC.CurPlayerI));
+            HeroDownUIC.SetActive(InvUnitsC.Have(WhoseMoveC.CurPlayerI, UnitTypes.Elfemale, LevelUnitTypes.First));
         }
     }
 }
