@@ -41,7 +41,7 @@ namespace Chessy.Game
         public void AddMove(CondUnitTypes cond) => _moveInCond[cond] += 1;
         public void ResetAll()
         {
-            foreach (var item in MovesInCond) 
+            foreach (var item in MovesInCond)
                 _moveInCond[item.Key] = 0;
         }
     }

@@ -4,7 +4,7 @@
 //{
 //    public struct GiveTakeDataUIC
 //    {
-        
+
 
 //        public GiveTakeDataUIC(bool needNew) : this()
 //        {

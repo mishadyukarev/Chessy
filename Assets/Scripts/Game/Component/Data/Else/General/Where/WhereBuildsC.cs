@@ -67,7 +67,7 @@ namespace Chessy.Game
         {
             _buildsInGame[playerType][buildType].Add(idxCell);
         }
-       
+
         public static void Remove(PlayerTypes playerType, BuildTypes buildType, byte idxCell)
         {
             if (Contains(playerType, buildType, idxCell)) _buildsInGame[playerType][buildType].Remove(idxCell);
@@ -78,6 +78,9 @@ namespace Chessy.Game
 
         public static bool IsSettedCity(PlayerTypes playerType) => _buildsInGame[playerType][BuildTypes.City].Count >= 1;
         public static byte IdxCity(PlayerTypes playerType) => _buildsInGame[playerType][BuildTypes.City][0];
+
+        public static bool IsSettedCamp(PlayerTypes player) => _buildsInGame[player][BuildTypes.Camp].Count >= 1;
+        public static byte IdxCamp(PlayerTypes player) => _buildsInGame[player][BuildTypes.Camp][0];
 
         public static void Clear(PlayerTypes playerType, BuildTypes buildType)
         {

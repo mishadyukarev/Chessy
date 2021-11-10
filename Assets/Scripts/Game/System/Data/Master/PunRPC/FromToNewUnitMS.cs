@@ -9,7 +9,9 @@ namespace Chessy.Game
 
         public void Run()
         {
-            ForFromToNewUnitC.Get(out var unit, out var idx_from, out var idx_to);
+            UnitDoingMC.Get(out var unit);
+            FromToMC.Get(out var idx_from, out var idx_to);
+
             var whoseMove = WhoseMoveC.WhoseMove;
 
             ref var unit_from = ref _unitMainFilt.Get1(idx_from);

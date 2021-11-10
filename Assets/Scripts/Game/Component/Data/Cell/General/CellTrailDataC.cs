@@ -49,18 +49,25 @@ namespace Chessy.Game
             }
         }
 
-        public bool TrySetNewTrain(DirectTypes dir, CellEnvDataC envC)
+        public bool TrySetNewTrail(DirectTypes dir, CellEnvDataC envC)
         {
-            if (envC.Have(EnvTypes.AdultForest)) _health[dir] = 10;
+            if (envC.Have(EnvTypes.AdultForest)) _health[dir] = 7;
             return envC.Have(EnvTypes.AdultForest);
+        }
+        public void SetAllTrail()
+        {
+            foreach (var item in Health)
+            {
+                _health[item.Key] = 7;
+            }
         }
         public bool Have(DirectTypes dir) => _health[dir] > 0;
         public void TakeHealth(DirectTypes dir) => _health[dir] -= 1;
         public void ResetAll()
         {
-            for (var dir = (DirectTypes)1; dir < (DirectTypes)typeof(DirectTypes).GetEnumNames().Length; dir++)
+            foreach (var item in Health)
             {
-                _health[dir] = 0;
+                _health[item.Key] = 0;
             }
         }
 

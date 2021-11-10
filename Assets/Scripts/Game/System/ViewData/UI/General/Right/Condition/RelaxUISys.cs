@@ -9,45 +9,33 @@ namespace Chessy.Game
 
         public void Run()
         {
-            ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelectorC.IdxSelCell);
+            ref var unit_sel = ref _cellUnitFilter.Get1(SelectorC.IdxSelCell);
             ref var selCondUnitC = ref _cellUnitFilter.Get2(SelectorC.IdxSelCell);
             ref var selOnUnitCom = ref _cellUnitFilter.Get3(SelectorC.IdxSelCell);
 
 
             var activeButt = false;
 
-            if (selUnitDatCom.HaveUnit)
+            if (unit_sel.HaveUnit)
             {
-                if (!selUnitDatCom.Is(UnitTypes.Scout))
+                if (selOnUnitCom.Is(WhoseMoveC.CurPlayerI))
                 {
-                    if (selOnUnitCom.Is(WhoseMoveC.CurPlayerI))
+                    activeButt = true;
+
+                    if (selCondUnitC.Is(CondUnitTypes.Relaxed))
                     {
-                        activeButt = true;
-
-                        if (selCondUnitC.Is(CondUnitTypes.Protected))
-                        {
-                            CondUnitUIC.SetColor(CondUnitTypes.Protected, Color.yellow);
-                        }
-
-                        else
-                        {
-                            CondUnitUIC.SetColor(CondUnitTypes.Protected, Color.white);
-                        }
-
-                        if (selCondUnitC.Is(CondUnitTypes.Relaxed))
-                        {
-                            CondUnitUIC.SetColor(CondUnitTypes.Relaxed, Color.green);
-                        }
-                        else
-                        {
-                            CondUnitUIC.SetColor(CondUnitTypes.Relaxed, Color.white);
-                        }
+                        RelaxUIC.SetColor(Color.green);
                     }
+                    else
+                    {
+                        RelaxUIC.SetColor(Color.white);
+                    }
+
+                    RelaxUIC.SetZone(unit_sel.Unit);
                 }
             }
 
-
-            CondUnitUIC.SetActive(CondUnitTypes.Relaxed, activeButt);
+            RelaxUIC.SetActiveButton(activeButt);
         }
     }
 }

@@ -7,7 +7,7 @@
 //        public UniqAbilTypes Ability { get; private set; }
 //        public int Cooldown { get; set; }
 
-        
+
 
 //        public void Reset()
 //        {

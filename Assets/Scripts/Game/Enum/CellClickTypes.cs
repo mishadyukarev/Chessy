@@ -9,5 +9,6 @@
         UpgradeUnit,
         OldNewUnit,
         StunElfemale,
+        PutOutFireElfemale,
     }
 }

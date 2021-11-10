@@ -26,11 +26,10 @@ namespace Chessy.Game
 
         private EcsFilter<ForBuildingMasCom, XyCellForDoingMasCom> _buildFilter = default;
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
-        private EcsFilter<ForAttackMasCom> _attackFilter = default;
+        private EcsFilter<FromToMC> _attackFilter = default;
         private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
         private EcsFilter<ForSettingUnitMasCom, XyCellForDoingMasCom> _settingUnitFilter = default;
         private EcsFilter<ForSeedingMasCom, XyCellForDoingMasCom> _seedingFilter = default;
-        private EcsFilter<ForFireMasCom> _fireFilter = default;
         private EcsFilter<ForCircularAttackMasCom, XyCellForDoingMasCom> _circularAttackFilter = default;
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGivePawnToolFilter = default;
         private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
@@ -91,30 +90,35 @@ namespace Chessy.Game
         }
         public static void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { mistakeType });
 
-        public static void FireToMaster(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Fire, new object[] { fromIdx, toIdx });
-        public static void SeedEnvToMaster(byte idxCell, EnvTypes env) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SeedEnvironment, new object[] { idxCell, env });
+        public static void FireArcherToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.FireArcher, new object[] { fromIdx, toIdx });
+        public static void FirePawnToMas(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.FirePawn, new object[] { idx });
+        public static void PutOutFirePawnToMas(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.PutOutFirePawn, new object[] { idx });
+        public static void SeedEnvToMaster(byte idxCell, EnvTypes env) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.Seed, new object[] { idxCell, env });
 
-        public static void BonusNearUnits(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.BonusNearUnitKing, new object[] { idxCell });
+        public static void BonusNearUnits(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.BonusNear, new object[] { idxCell });
 
-        public static void StunElfemaleToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.StunElfemale, new object[] { fromIdx, toIdx });
+        public static void StunElfemaleToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.StunElfemale, new object[] { fromIdx, toIdx });
 
         public static void FromNewUnitToMas(UnitTypes unitType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ToNewUnit, new object[] { unitType, idxCell });
         public static void FromToNewUnitToMas(UnitTypes unitType, byte idxFrom, byte idxTo) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.FromToNewUnit, new object[] { unitType, idxFrom, idxTo });
         public static void UpgradeUnitToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeUnit, new object[] { idxCell });
         public static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, LevelTWTypes levelTWType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, levelTWType, idxCell });
 
-        public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CircularAttackKing, new object[] { idxCell });
+        public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.CircularAttack, new object[] { idxCell });
 
         public static void CreateUnitToMaster(UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CreateUnit, new object[] { unitType });
 
         public static void MeltOreToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.MeltOre, new object[] { });
 
-        public static void GrowAdultForest(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GrowAdultForest, new object[] { idx });
+        public static void GrowAdultForest(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.GrowAdultForest, new object[] { idx });
+        public static void PutOutFireElffToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.PutOutFireElfemale, new object[] { fromIdx, toIdx });
 
         public static void SetUniToMaster(byte idxCell, UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SetUnit, new object[] { idxCell, unitType });
 
-        public static void SoundToGeneral(RpcTarget rpcTarget, ClipGameTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.Sound, new object[] { soundEffectType });
-        public static void SoundToGeneral(Player playerTo, ClipGameTypes eff) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Sound, new object[] { eff });
+        public static void SoundToGeneral(RpcTarget rpcTarget, ClipGameTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.SoundEff, new object[] { soundEffectType });
+        public static void SoundToGeneral(RpcTarget rpcTarget, UniqAbilTypes uniq) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.SoundUniq, new object[] { uniq });
+        public static void SoundToGeneral(Player playerTo, ClipGameTypes eff) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SoundEff, new object[] { eff });
+        public static void SoundToGeneral(Player playerTo, UniqAbilTypes uniq) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SoundUniq, new object[] { uniq });
 
         #endregion
 
@@ -152,8 +156,7 @@ namespace Chessy.Game
                     break;
 
                 case RpcMasterTypes.Attack:
-                    _attackFilter.Get1(0).IdxFromCell = (byte)objects[0];
-                    _attackFilter.Get1(0).IdxToCell = (byte)objects[1];
+                    FromToMC.Set((byte)objects[0], (byte)objects[1]);
                     break;
 
                 case RpcMasterTypes.ConditionUnit:
@@ -173,26 +176,8 @@ namespace Chessy.Game
                     _settingUnitFilter.Get1(0).UnitTypeForSetting = (UnitTypes)objects[1];
                     break;
 
-                case RpcMasterTypes.SeedEnvironment:
-                    _seedingFilter.Get1(0).IdxForSeeding = (byte)objects[0];
-                    _seedingFilter.Get1(0).EnvTypeForSeeding = (EnvTypes)objects[1];
-                    break;
-
-                case RpcMasterTypes.Fire:
-                    _fireFilter.Get1(0).FromIdx = (byte)objects[0];
-                    _fireFilter.Get1(0).ToIdx = (byte)objects[1];
-                    break;
-
                 case RpcMasterTypes.BuyRes:
                     ForBuyResMasC.Res = (ResTypes)objects[_curNumber++];
-                    break;
-
-                case RpcMasterTypes.CircularAttackKing:
-                    _circularAttackFilter.Get1(0).IdxUnitForCirculAttack = (byte)objects[0];
-                    break;
-
-                case RpcMasterTypes.BonusNearUnitKing:
-                    ForBonusNearUnitC.IdxCell = (byte)objects[0];
                     break;
 
                 case RpcMasterTypes.PickUpgrade:
@@ -205,9 +190,8 @@ namespace Chessy.Game
                     break;
 
                 case RpcMasterTypes.FromToNewUnit:
-                    ForFromToNewUnitC.Set((UnitTypes)objects[_curNumber++],
-                        (byte)objects[_curNumber++],
-                        (byte)objects[_curNumber++]);
+                    UnitDoingMC.Set((UnitTypes)objects[_curNumber++]);
+                    FromToMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
                     break;
 
                 case RpcMasterTypes.UpgradeUnit:
@@ -221,25 +205,72 @@ namespace Chessy.Game
                     break;
 
                 case RpcMasterTypes.GetHero:
-                    ForGetHeroMasC.Unit = (UnitTypes)objects[_curNumber++];
-                    break;
-
-                case RpcMasterTypes.GrowAdultForest:
-                    ForGrowAdultForestMC.Set((byte)objects[_curNumber++]);
-                    break;
-
-                case RpcMasterTypes.StunElfemale:
-                    ForStunElfemaleMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
+                    UnitDoingMC.Set((UnitTypes)objects[_curNumber++]);
                     break;
 
                 default:
                     throw new Exception();
             }
 
-            MastSysDataC.InvokeRun(rpcType);
+            DataMastC.InvokeRun(rpcType);
 
             SyncAllToMast();
         }
+        [PunRPC]
+        private void MasterRPC(UniqAbilTypes uniqAbil, object[] objects, PhotonMessageInfo infoFrom)
+        {
+            _curNumber = 0;
+            InfoC.AddInfo(MGOTypes.Master, infoFrom);
+
+            switch (uniqAbil)
+            {
+                case UniqAbilTypes.None: throw new Exception();
+
+                case UniqAbilTypes.CircularAttack:
+                    _circularAttackFilter.Get1(0).IdxUnitForCirculAttack = (byte)objects[0];
+                    break;
+
+                case UniqAbilTypes.BonusNear:
+                    IdxDoingMC.Set((byte)objects[0]);
+                    break;
+
+                case UniqAbilTypes.FirePawn:
+                    IdxDoingMC.Set((byte)objects[_curNumber++]);
+                    break;
+
+                case UniqAbilTypes.PutOutFirePawn:
+                    IdxDoingMC.Set((byte)objects[_curNumber++]);
+                    break;
+
+                case UniqAbilTypes.Seed:
+                    _seedingFilter.Get1(0).IdxForSeeding = (byte)objects[0];
+                    _seedingFilter.Get1(0).EnvTypeForSeeding = (EnvTypes)objects[1];
+                    break;
+
+                case UniqAbilTypes.FireArcher:
+                    FromToMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
+                    break;
+
+                case UniqAbilTypes.GrowAdultForest:
+                    ForGrowAdultForestMC.Set((byte)objects[_curNumber++]);
+                    break;
+
+                case UniqAbilTypes.StunElfemale:
+                    FromToMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
+                    break;
+
+                case UniqAbilTypes.PutOutFireElfemale:
+                    FromToMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
+                    break;
+
+                default: throw new Exception();
+            }
+
+            DataMastC.InvokeRun(uniqAbil);
+
+            SyncAllToMast();
+        }
+
 
         [PunRPC]
         private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
@@ -273,9 +304,13 @@ namespace Chessy.Game
                     SoundEffectC.Play(ClipGameTypes.Mistake);
                     break;
 
-                case RpcGeneralTypes.Sound:
+                case RpcGeneralTypes.SoundEff:
                     var soundEffectType = (ClipGameTypes)objects[_curNumber++];
                     SoundEffectC.Play(soundEffectType);
+                    break;
+
+                case RpcGeneralTypes.SoundUniq:
+                    SoundEffectC.Play((UniqAbilTypes)objects[_curNumber++]);
                     break;
 
                 case RpcGeneralTypes.RotateAll:
@@ -286,6 +321,7 @@ namespace Chessy.Game
                     throw new Exception();
             }
         }
+
 
         [PunRPC]
         private void OtherRPC(RpcOtherTypes rpcOtherType, object[] objects, PhotonMessageInfo infoFrom)

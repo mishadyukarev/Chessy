@@ -13,7 +13,7 @@ namespace Chessy.Game
         public int MinHp => MIN_HP;
         public int MaxHp => MAX_HP;
 
-        public bool HaveMaxHpUnit => Hp >= MAX_HP;
+        public bool HaveMaxHp => Hp >= MAX_HP;
         public bool HaveHp => Hp > MIN_HP;
         public bool IsMinusHp => Hp < MIN_HP;
         public bool IsZeroHp => Hp == MIN_HP;

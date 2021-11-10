@@ -30,7 +30,7 @@ namespace Chessy.Game
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (hpUnit_0.HaveMaxHpUnit)
+            if (hpUnit_0.HaveMaxHp)
             {
                 if (stepUnit_0.HaveMinSteps)
                 {

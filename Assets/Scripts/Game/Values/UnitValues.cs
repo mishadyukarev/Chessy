@@ -116,7 +116,7 @@ namespace Chessy.Game
                 case BuildTypes.Farm: return -0.1f;
                 case BuildTypes.Woodcutter: return -0.1f;
                 case BuildTypes.Mine: return -0.1f;
-                case BuildTypes.Camp: return 0.1f;
+                case BuildTypes.Camp: return 0;
                 default: throw new Exception();
             }
         }

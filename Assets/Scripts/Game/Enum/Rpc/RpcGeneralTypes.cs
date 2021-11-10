@@ -6,7 +6,8 @@
 
         Mistake,
         GetUnit,
-        Sound,
+        SoundEff,
+        SoundUniq,
 
         RotateAll,
     }

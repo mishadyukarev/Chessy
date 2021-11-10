@@ -39,7 +39,7 @@ namespace Chessy.Game
                         {
                             RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
 
-                            condUnit_0.SetNew(neededCondType);
+                            condUnit_0.Set(neededCondType);
 
                             stepUnit_0.TakeSteps();
                         }
@@ -47,7 +47,7 @@ namespace Chessy.Game
                         {
                             RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
 
-                            condUnit_0.SetNew(neededCondType);
+                            condUnit_0.Set(neededCondType);
 
                             stepUnit_0.TakeSteps();
                         }
@@ -72,13 +72,13 @@ namespace Chessy.Game
                         if (condUnit_0.Is(CondUnitTypes.Protected))
                         {
                             RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
-                            condUnit_0.SetNew(neededCondType);
+                            condUnit_0.Set(neededCondType);
                             stepUnit_0.TakeSteps();
                         }
                         else
                         {
                             RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
-                            condUnit_0.SetNew(neededCondType);
+                            condUnit_0.Set(neededCondType);
                             stepUnit_0.TakeSteps();
                         }
                     }

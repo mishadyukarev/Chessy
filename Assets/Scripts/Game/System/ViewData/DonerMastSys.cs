@@ -17,7 +17,7 @@ namespace Chessy.Game
             {
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
-                    MastSysDataC.InvokeRun(MastDataSysTypes.Update);
+                    DataMastC.InvokeRun(MastDataSysTypes.Update);
                 }
 
                 else if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
@@ -27,7 +27,7 @@ namespace Chessy.Game
 
                     if(nextPlayer == PlayerTypes.First)
                     {
-                        MastSysDataC.InvokeRun(MastDataSysTypes.Update);
+                        DataMastC.InvokeRun(MastDataSysTypes.Update);
                     }
 
                     WhoseMoveC.SetWhoseMove(nextPlayer);
@@ -50,7 +50,7 @@ namespace Chessy.Game
                     {                   
                         if (playerSend == PlayerTypes.Second)
                         {
-                            MastSysDataC.InvokeRun(MastDataSysTypes.Update);
+                            DataMastC.InvokeRun(MastDataSysTypes.Update);
                         }
 
                         WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));

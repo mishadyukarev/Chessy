@@ -35,7 +35,7 @@ namespace Chessy
                     if (_gameWorld != default)
                     {
                         _gameWorld.Destroy();
-                        Game.FillEntitiesSys.Dispose();
+                        Game.Ents.Dispose();
                     }
 
                     _menuWorld = new EcsWorld();
@@ -49,7 +49,17 @@ namespace Chessy
                     }
 
                     _gameWorld = new EcsWorld();
-                    new Game.FillEntitiesSys(_gameWorld);
+                    var gameSysts = new EcsSystems(_gameWorld);
+
+                    gameSysts.Add(new Ents());
+                    new DataS(gameSysts);
+                    new DataMasS(gameSysts);
+                    new ViewDataS(gameSysts);
+
+                    gameSysts.Init();
+
+                    GameGenSysDataViewC.RotateAll.Invoke();
+
                     break;
 
                 default: throw new Exception();
@@ -71,7 +81,7 @@ namespace Chessy
                     break;
 
                 case SceneTypes.Game:
-                    GameGenSysDataC.RunUpdate.Invoke();
+                    DataC.RunUpdate.Invoke();
                     GameGenSysDataViewC.RunUpdate.Invoke();
                     break;
 

@@ -6,13 +6,14 @@ namespace Chessy.Game
 {
     public sealed class AttackMastSys : IEcsRunSystem
     {
-        private EcsFilter<ForAttackMasCom> _forAttackFilter = default;
+        private EcsFilter<FromToMC> _forAttackFilter = default;
 
         private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC, DamageC, StepComponent> _cellUnitFilt = default;
-        private EcsFilter<CellUnitDataC, UnitEffectsC, WaterUnitC> _cellUnitEffFilt = default;
+        private EcsFilter<CellUnitDataC, WaterUnitC> _cellUnitEffFilt = default;
         private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitTwFilt = default;
         private EcsFilter<CellUnitDataC, ConditionUnitC, MoveInCondC> _unitCondFilt = default;
+        private EcsFilter<CellUnitDataC, UnitEffectsC, StunC> _unitEffFilt = default;
 
         private EcsFilter<XyCellComponent> _cellXyFilt = default;
         private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
@@ -24,10 +25,7 @@ namespace Chessy.Game
         {
             ref var forAttackMasCom = ref _forAttackFilter.Get1(0);
 
-
-
-            var idx_from = forAttackMasCom.IdxFromCell;
-            var idx_to = forAttackMasCom.IdxToCell;
+            FromToMC.Get(out var idx_from, out var idx_to);
 
 
             ref var unit_from = ref _cellUnitFilt.Get1(idx_from);
@@ -36,10 +34,12 @@ namespace Chessy.Game
             ref var hpUnitC_from = ref _cellUnitFilt.Get2(idx_from);
             ref var damUnit_from = ref _cellUnitFilt.Get3(idx_from);
             ref var stepUnit_from = ref _cellUnitFilt.Get4(idx_from);
-            ref var effUnit_from = ref _cellUnitEffFilt.Get2(idx_from);
-            ref var waterUnit_from = ref _cellUnitEffFilt.Get3(idx_from);
+            ref var waterUnit_from = ref _cellUnitEffFilt.Get2(idx_from);
             ref var twUnit_from = ref _cellUnitTwFilt.Get2(idx_from);
             ref var condUnit_from = ref _unitCondFilt.Get2(idx_from);
+            ref var moveCond_from = ref _unitCondFilt.Get3(idx_from);
+            ref var effUnit_from = ref _unitEffFilt.Get2(idx_from);
+
 
             ref var river_from = ref _cellRiverFilt.Get1(idx_from);
             ref var build_from = ref _cellBuildFilter.Get1(idx_from);
@@ -54,11 +54,12 @@ namespace Chessy.Game
             ref var hpUnit_to = ref _cellUnitFilt.Get2(idx_to);
             ref var damUnit_to =ref _cellUnitFilt.Get3(idx_to);
             ref var stepUnit_to = ref _cellUnitFilt.Get4(idx_to);
-            ref var effUnit_to = ref _cellUnitEffFilt.Get2(idx_to);
-            ref var waterUnit_to = ref _cellUnitEffFilt.Get3(idx_to);
+            ref var effUnit_to = ref _unitEffFilt.Get2(idx_to);
+            ref var waterUnit_to = ref _cellUnitEffFilt.Get2(idx_to);
             ref var twUnit_to = ref _cellUnitTwFilt.Get2(idx_to);
             ref var condUnit_to = ref _unitCondFilt.Get2(idx_to);
             ref var moveCond_to = ref _unitCondFilt.Get3(idx_to);
+            ref var stun_to = ref _unitEffFilt.Get3(idx_to);
 
 
             ref var river_to = ref _cellRiverFilt.Get1(idx_to);
@@ -169,7 +170,9 @@ namespace Chessy.Game
                 {
                     if (unit_to.Is(UnitTypes.King))
                     {
+                        unit_to.DefUnit();
                         EndGameDataUIC.PlayerWinner = ownUnit_from.Owner;
+                        return;
                     }
                     else if (unit_to.Is(UnitTypes.Scout))
                     {
@@ -184,6 +187,13 @@ namespace Chessy.Game
                     {
                         if (!hpUnitC_from.HaveHp)
                         {
+                            if (unit_from.Is(UnitTypes.King))
+                            {
+                                unit_from.DefUnit();
+                                EndGameDataUIC.PlayerWinner = ownUnit_to.Owner;
+                                return;
+                            }
+
                             WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
                             unit_from.DefUnit();
                         }
@@ -198,19 +208,20 @@ namespace Chessy.Game
                             ownUnit_to = ownUnit_from;
                             waterUnit_to = waterUnit_from;
                             moveCond_to.ResetAll();
+                            stun_to.Reset();
                             if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Water));
                             WhereUnitsC.Add(ownUnit_to.Owner, unit_to.Unit, levUnitC_to.Level, idx_to);
 
                             var dir = CellSpaceSupport.GetDirect(_cellXyFilt.Get1(idx_from).XyCell, _cellXyFilt.Get1(idx_to).XyCell);
-                            trail_to.TrySetNewTrain(dir.Invert(), env_to);
-                            trail_from.TrySetNewTrain(dir, env_from);
+                            trail_to.TrySetNewTrail(dir.Invert(), env_to);
+                            trail_from.TrySetNewTrail(dir, env_from);
 
 
-                            if (build_from.Is(BuildTypes.Camp))
-                            {
-                                WhereBuildsC.Remove(ownBuild_from.Owner, build_from.Build, idx_from);
-                                build_from.Reset();
-                            }
+                            //if (build_from.Is(BuildTypes.Camp))
+                            //{
+                            //    WhereBuildsC.Remove(ownBuild_from.Owner, build_from.Build, idx_from);
+                            //    build_from.Reset();
+                            //}
 
 
                             WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
@@ -223,21 +234,20 @@ namespace Chessy.Game
                 {
                     if (unit_from.Is(UnitTypes.King))
                     {
+                        unit_from.DefUnit();
                         EndGameDataUIC.PlayerWinner = ownUnit_to.Owner;
+                        return;
                     }
 
-                    if (build_from.Is(BuildTypes.Camp))
-                    {
-                        WhereBuildsC.Remove(ownBuild_from.Owner, build_from.Build, idx_from);
-                        build_from.Reset();
-                    }
+                    //if (build_from.Is(BuildTypes.Camp))
+                    //{
+                    //    WhereBuildsC.Remove(ownBuild_from.Owner, build_from.Build, idx_from);
+                    //    build_from.Reset();
+                    //}
 
                     WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
                     unit_from.DefUnit();
                 }
-
-                //if(unit_to.HaveUnit) hpUnitC_to.TryTakeBonusHp(unit_to.Unit, effUnit_to.Have(UnitStatTypes.Hp));
-                //if (unit_from.HaveUnit) hpUnitC_from.TryTakeBonusHp(unit_from.Unit, effUnit_from.Have(UnitStatTypes.Hp));
 
                 effUnit_from.DefAllEffects();
                 effUnit_to.DefAllEffects();

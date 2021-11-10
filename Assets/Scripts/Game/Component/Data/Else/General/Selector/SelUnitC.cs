@@ -1,7 +1,4 @@
-﻿using UnityEditor;
-using UnityEngine;
-
-namespace Chessy.Game
+﻿namespace Chessy.Game
 {
     public struct SelUnitC
     {

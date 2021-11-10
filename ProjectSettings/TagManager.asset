@@ -83,3 +83,6 @@ TagManager:
   - name: NeedWater
     uniqueID: 2241910129
     locked: 0
+  - name: Stun
+    uniqueID: 1229242323
+    locked: 0

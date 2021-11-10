@@ -4,17 +4,21 @@
     {
         None,
 
-        FirePawn,
-        NoneFirePawn,
-        Seed,
-
-        FireArcher,
-
+        //King
         CircularAttack,
         BonusNear,
 
-        GrowAdultForest,
+        //Pawn
+        FirePawn,
+        PutOutFirePawn,
+        Seed,
 
+        //Archer
+        FireArcher,
+
+        //Elfemale
+        GrowAdultForest,
         StunElfemale,
+        PutOutFireElfemale
     }
 }

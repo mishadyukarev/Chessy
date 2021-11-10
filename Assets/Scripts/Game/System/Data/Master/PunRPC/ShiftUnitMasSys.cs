@@ -68,17 +68,17 @@ namespace Chessy.Game
 
                 stepUnit_from.TakeStepsForDoing(env_to, dir_from, trail_to);
 
-                trail_to.TrySetNewTrain(dir_from.Invert(), env_to);
-                trail_from.TrySetNewTrain(dir_from, envDat_from);
+                trail_to.TrySetNewTrail(dir_from.Invert(), env_to);
+                trail_from.TrySetNewTrail(dir_from, envDat_from);
 
 
-                ref var build_from = ref _cellBuildFilt.Get1(idx_from);
-                ref var ownBuild_from = ref _cellBuildFilt.Get2(idx_from);
-                if (build_from.Is(BuildTypes.Camp))
-                {
-                    WhereBuildsC.Remove(ownBuild_from.Owner, build_from.Build, idx_from);
-                    build_from.Reset();
-                }
+                //ref var build_from = ref _cellBuildFilt.Get1(idx_from);
+                //ref var ownBuild_from = ref _cellBuildFilt.Get2(idx_from);
+                //if (build_from.Is(BuildTypes.Camp))
+                //{
+                //    WhereBuildsC.Remove(ownBuild_from.Owner, build_from.Build, idx_from);
+                //    build_from.Reset();
+                //}
 
 
 

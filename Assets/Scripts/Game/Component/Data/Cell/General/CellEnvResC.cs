@@ -6,8 +6,8 @@ namespace Chessy.Game
     public struct CellEnvResC
     {
         private Dictionary<EnvTypes, int> _amountResours;
-        
-        public Dictionary<EnvTypes, int > Resources
+
+        public Dictionary<EnvTypes, int> Resources
         {
             get
             {
@@ -64,14 +64,14 @@ namespace Chessy.Game
                     throw new Exception();
 
                 case EnvTypes.Fertilizer:
-                    randAmountRes = (byte)UnityEngine.Random.Range(EnvironValues.MinAmount(envType), EnvironValues.MaxAmount(envType) + 1);
+                    randAmountRes = (byte)UnityEngine.Random.Range(EnvironValues.MaxAmount(envType) / 3, EnvironValues.MaxAmount(envType) / 2 + 1);
                     break;
 
                 case EnvTypes.YoungForest:
                     break;
 
                 case EnvTypes.AdultForest:
-                    randAmountRes = (byte)UnityEngine.Random.Range(EnvironValues.MinAmount(envType), EnvironValues.MaxAmount(envType) + 1);
+                    randAmountRes = (byte)UnityEngine.Random.Range(EnvironValues.MaxAmount(envType) / 3, EnvironValues.MaxAmount(envType) / 2 + 1);
                     break;
 
                 case EnvTypes.Hill:

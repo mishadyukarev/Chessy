@@ -31,7 +31,7 @@ namespace Chessy.Game
                 for (var uniqBut = (UniqButtonTypes)1; uniqBut < (UniqButtonTypes)typeof(UniqButtonTypes).GetEnumNames().Length; uniqBut++)
                 {
                     _abilities.Add(uniqBut, default);
-                    
+
                 }
 
                 for (var i = (UniqAbilTypes)1; i < (UniqAbilTypes)typeof(UniqAbilTypes).GetEnumNames().Length; i++)

@@ -1,6 +1,4 @@
 ﻿using Leopotam.Ecs;
-using UnityEditor;
-using UnityEngine;
 
 namespace Chessy.Game
 {
@@ -8,7 +6,9 @@ namespace Chessy.Game
     {
         public void Run()
         {
-            InvUnitsC.AddUnit(WhoseMoveC.WhoseMove, ForGetHeroMasC.Unit, LevelUnitTypes.First);
+            UnitDoingMC.Get(out var unit);
+
+            InvUnitsC.AddUnit(WhoseMoveC.WhoseMove, unit, LevelUnitTypes.First);
         }
     }
 }

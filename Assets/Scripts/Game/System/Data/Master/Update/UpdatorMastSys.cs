@@ -16,9 +16,9 @@ namespace Chessy.Game
 
         private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
         private EcsFilter<CellUnitDataC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
         private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<CellUnitDataC, UnitEffectsC, StunC> _unitEffFilt = default;
 
         public void Run()
         {
@@ -36,10 +36,12 @@ namespace Chessy.Game
                 ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
                 ref var hpUnit_0 = ref _cellUnitFilter.Get2(idx_0);
                 ref var stepUnit_0 = ref _cellUnitFilter.Get3(idx_0);
-                ref var effUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
                 ref var condUnit_0 = ref _cellUnitCondFilt.Get2(idx_0);
                 ref var moveCond_0 = ref _cellUnitCondFilt.Get3(idx_0);
                 ref var uniq_0 = ref _unitUniqFilt.Get2(idx_0);
+                ref var effUnit_0 = ref _unitEffFilt.Get2(idx_0);
+                ref var stun_0 = ref _unitEffFilt.Get3(idx_0);
+
 
                 ref var buil_0 = ref _cellBuildFilt.Get1(idx_0);
                 ref var ownBuil_0 = ref _cellBuildFilt.Get2(idx_0);
@@ -50,7 +52,7 @@ namespace Chessy.Game
 
                 foreach (var item in trail_0.DictTrail) trail_0.TakeHealth(item.Key);
                 foreach (var item in uniq_0.Cooldowns) uniq_0.TakeCooldown(item.Key);
-                
+                stun_0.Take();
 
 
                 if (unit_0.HaveUnit)
@@ -59,83 +61,93 @@ namespace Chessy.Game
 
                     if (!unit_0.Is(UnitTypes.King)) InventResC.TakeAmountRes(ownUnit_0.Owner, ResTypes.Food);
 
-                    if (!unit_0.Is(UnitTypes.Scout))
+                    if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                     {
-                        if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+                        if (ownUnit_0.Is(PlayerTypes.Second))
                         {
-                            if (ownUnit_0.Is(PlayerTypes.Second))
+                            if (!hpUnit_0.HaveMaxHp)
                             {
-                                if (!hpUnit_0.HaveMaxHpUnit)
-                                {
-                                    hpUnit_0.AddHp(100);
+                                hpUnit_0.AddHp(100);
 
-                                    if (hpUnit_0.HaveMaxHpUnit)
-                                    {
-                                        hpUnit_0.SetMaxHp();
-                                    }
+                                if (hpUnit_0.HaveMaxHp)
+                                {
+                                    hpUnit_0.SetMaxHp();
                                 }
                             }
                         }
+                    }
 
 
+                    if (fire_0.HaveFire)
+                    {
+                        if (condUnit_0.HaveCondition) condUnit_0.Def();
+                    }
 
-
-                        if (fire_0.HaveFire)
+                    else
+                    {
+                        if (condUnit_0.Is(CondUnitTypes.Protected))
                         {
-                            if(condUnit_0.HaveCondition) condUnit_0.Def();
-                        }
-
-                        else
-                        {
-                            if (condUnit_0.Is(CondUnitTypes.Protected))
+                            if (hpUnit_0.HaveMaxHp)
                             {
-                                if (hpUnit_0.HaveMaxHpUnit)
+                                if (unit_0.Is(UnitTypes.Scout))
                                 {
-                                    if (unit_0.Is(UnitTypes.Pawn))
+                                    if (buil_0.Is(BuildTypes.Woodcutter) || !buil_0.HaveBuild)
                                     {
-                                        if (moveCond_0.HaveForBuldCamp)
+                                        if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                                         {
-                                            if (buil_0.Is(BuildTypes.Woodcutter) || !buil_0.HaveBuild)
+                                            if (ownUnit_0.Is(PlayerTypes.First))
                                             {
-                                                if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+                                                if (buil_0.HaveBuild)
                                                 {
-                                                    if (ownUnit_0.Is(PlayerTypes.First))
-                                                    {
-                                                        if (buil_0.HaveBuild)
-                                                        {
-                                                            WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
-                                                            buil_0.Reset();
-                                                        }
-
-                                                        buil_0.Build = BuildTypes.Camp;
-                                                        ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                                        WhereBuildsC.Add(ownBuil_0.Owner, buil_0.Build, idx_0);
-                                                    }
+                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
+                                                    buil_0.Reset();
                                                 }
-                                                else
+
+                                                if (WhereBuildsC.IsSettedCamp(ownUnit_0.Owner))
                                                 {
-                                                    if (buil_0.HaveBuild)
-                                                    {
-                                                        WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
-                                                        buil_0.Reset();
-                                                    }
+                                                    var idxCamp = WhereBuildsC.IdxCamp(ownUnit_0.Owner);
 
-                                                    buil_0.Build = BuildTypes.Camp;
-                                                    ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Build, idx_0);
+                                                    WhereBuildsC.Remove(ownUnit_0.Owner, BuildTypes.Camp, idxCamp);
+                                                    _cellBuildFilt.Get1(idxCamp).Reset();
                                                 }
+
+
+                                                buil_0.Build = BuildTypes.Camp;
+                                                ownBuil_0.SetOwner(ownUnit_0.Owner);
+                                                WhereBuildsC.Add(ownBuil_0.Owner, buil_0.Build, idx_0);
                                             }
+                                        }
+                                        else
+                                        {
+                                            if (buil_0.HaveBuild)
+                                            {
+                                                WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
+                                                buil_0.Reset();
+                                            }
+
+                                            if (WhereBuildsC.IsSettedCamp(ownUnit_0.Owner))
+                                            {
+                                                var idxCamp = WhereBuildsC.IdxCamp(ownUnit_0.Owner);
+
+                                                WhereBuildsC.Remove(ownUnit_0.Owner, BuildTypes.Camp, idxCamp);
+                                                _cellBuildFilt.Get1(idxCamp).Reset();
+                                            }
+
+
+                                            buil_0.Build = BuildTypes.Camp;
+                                            ownBuil_0.SetOwner(ownUnit_0.Owner);
+                                            WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Build, idx_0);
                                         }
                                     }
                                 }
                             }
+                        }
 
-                            else if(!condUnit_0.Is(CondUnitTypes.Relaxed))
+                        else if (!condUnit_0.Is(CondUnitTypes.Relaxed))
+                        {
+                            if (stepUnit_0.HaveMinSteps)
                             {
-                                if (stepUnit_0.HaveMinSteps)
-                                {
-                                    condUnit_0.SetNew(CondUnitTypes.Protected);
-                                }
+                                condUnit_0.Set(CondUnitTypes.Protected);
                             }
                         }
                     }
@@ -143,21 +155,21 @@ namespace Chessy.Game
                     stepUnit_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
                 }
 
-                else
-                {
-                    if (buil_0.Is(BuildTypes.Camp))
-                    {
-                        WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
-                        buil_0.Reset();
-                    }
-                }
+                //else
+                //{
+                //    if (buil_0.Is(BuildTypes.Camp))
+                //    {
+                //        WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
+                //        buil_0.Reset();
+                //    }
+                //}
             }
 
 
             if (WhereEnvC.Amount(EnvTypes.AdultForest) <= 6)
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.Truce);
-                MastSysDataC.InvokeRun(MastDataSysTypes.Truce);
+                DataMastC.InvokeRun(MastDataSysTypes.Truce);
             }
 
             if (MotionsDataUIC.AmountMotions % 3 == 0)

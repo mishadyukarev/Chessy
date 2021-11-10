@@ -37,12 +37,13 @@ namespace Chessy.Game
                             case UnitTypes.King:
                                 uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.CircularAttack);
                                 uniq_0.SetAbility(UniqButtonTypes.Second, UniqAbilTypes.BonusNear);
+                                uniq_0.Reset(UniqButtonTypes.Third);
                                 break;
 
                             case UnitTypes.Pawn:
                                 if (env_0.Have(EnvTypes.AdultForest))
                                 {
-                                    if (fire_0.HaveFire) uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.NoneFirePawn);
+                                    if (fire_0.HaveFire) uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.PutOutFirePawn);
                                     else uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.FirePawn);
                                 }
                                 else
@@ -50,26 +51,31 @@ namespace Chessy.Game
                                     uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.Seed);
                                 }
                                 uniq_0.Reset(UniqButtonTypes.Second);
+                                uniq_0.Reset(UniqButtonTypes.Third);
                                 break;
 
                             case UnitTypes.Rook:
                                 uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.FireArcher);
                                 uniq_0.Reset(UniqButtonTypes.Second);
+                                uniq_0.Reset(UniqButtonTypes.Third);
                                 break;
 
                             case UnitTypes.Bishop:
                                 uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.FireArcher);
                                 uniq_0.Reset(UniqButtonTypes.Second);
+                                uniq_0.Reset(UniqButtonTypes.Third);
                                 break;
 
                             case UnitTypes.Scout:
                                 uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.None);
                                 uniq_0.Reset(UniqButtonTypes.Second);
+                                uniq_0.Reset(UniqButtonTypes.Third);
                                 break;
-
+                                    
                             case UnitTypes.Elfemale:
                                 uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.GrowAdultForest);
                                 uniq_0.SetAbility(UniqButtonTypes.Second, UniqAbilTypes.StunElfemale);
+                                uniq_0.SetAbility(UniqButtonTypes.Third, UniqAbilTypes.PutOutFireElfemale);
                                 break;
 
                             default: throw new Exception();
@@ -80,6 +86,7 @@ namespace Chessy.Game
                 {
                     uniq_0.Reset(UniqButtonTypes.First);
                     uniq_0.Reset(UniqButtonTypes.Second);
+                    uniq_0.Reset(UniqButtonTypes.Third);
                 }
             }
         }

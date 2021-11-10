@@ -9,7 +9,7 @@ namespace Chessy.Game
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
         private EcsFilter<CellUnitDataC, StepComponent, OwnerC> _cellUnitFilt = default;
-        private EcsFilter<CellUnitDataC, UnitEffectsC, StunUnitC> _cellUnitOthFilt = default;
+        private EcsFilter<CellUnitDataC, UnitEffectsC, StunC> _cellUnitOthFilt = default;
 
         public void Run()
         {

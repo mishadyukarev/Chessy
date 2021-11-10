@@ -7,9 +7,11 @@ namespace Chessy.Game
         private EcsFilter<CellsArsonArcherComp> _cellsArsonFilter = default;
 
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataC, OwnerC> _cellUnitFilter = default;
         private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
         private EcsFilter<CellFireDataC> _cellFireFilter = default;
+
+        private EcsFilter<CellUnitDataC, OwnerC> _cellUnitFilter = default;
+        private EcsFilter<CellFireDataC, StunC> _unitEffFilt = default;
 
         public void Run()
         {
@@ -21,20 +23,24 @@ namespace Chessy.Game
 
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
                 ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
+                ref var stunUnit_0 = ref _unitEffFilt.Get2(curIdxCell);
 
-                if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                if (!stunUnit_0.IsStunned)
                 {
-                    foreach (var arouXy in CellSpaceSupport.GetXyAround(curXy))
+                    if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
                     {
-                        var arouIdx = _xyCellFilter.GetIdxCell(arouXy);
-
-                        ref var arounEnvDatCom = ref _cellEnvFilter.Get1(arouIdx);
-
-                        if (!_cellFireFilter.Get1(arouIdx).HaveFire)
+                        foreach (var arouXy in CellSpaceSupport.GetXyAround(curXy))
                         {
-                            if (arounEnvDatCom.Have(EnvTypes.AdultForest))
+                            var arouIdx = _xyCellFilter.GetIdxCell(arouXy);
+
+                            ref var arounEnvDatCom = ref _cellEnvFilter.Get1(arouIdx);
+
+                            if (!_cellFireFilter.Get1(arouIdx).HaveFire)
                             {
-                                cellsArsonCom.Add(curOwnUnitCom.Owner, curIdxCell, arouIdx);
+                                if (arounEnvDatCom.Have(EnvTypes.AdultForest))
+                                {
+                                    cellsArsonCom.Add(curOwnUnitCom.Owner, curIdxCell, arouIdx);
+                                }
                             }
                         }
                     }

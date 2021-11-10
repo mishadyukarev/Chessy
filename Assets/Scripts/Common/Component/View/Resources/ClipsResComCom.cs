@@ -22,7 +22,6 @@ namespace Chessy.Common
                 _audioGameClips.Add(ClipGameTypes.PickArcher, Resources.Load<AudioClip>("PickArcher"));
                 _audioGameClips.Add(ClipGameTypes.PickMelee, Resources.Load<AudioClip>("PickMelee"));
                 _audioGameClips.Add(ClipGameTypes.Building, Resources.Load<AudioClip>("Building_Clip"));
-                _audioGameClips.Add(ClipGameTypes.Fire, Resources.Load<AudioClip>("Fire_Clip"));
                 _audioGameClips.Add(ClipGameTypes.SoundGoldPack, Resources.Load<AudioClip>("Buy_Clip"));
                 _audioGameClips.Add(ClipGameTypes.Melting, Resources.Load<AudioClip>("Melting_Clip"));
                 _audioGameClips.Add(ClipGameTypes.Destroy, Resources.Load<AudioClip>("Destroy_Clip"));

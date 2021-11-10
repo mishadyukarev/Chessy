@@ -64,7 +64,15 @@ namespace Chessy.Game
 
                     else if (Is(CellClickTypes.PickFire))
                     {
-                        RpcSys.FireToMaster(IdxSelCell, IdxCurCell);
+                        RpcSys.FireArcherToMas(IdxSelCell, IdxCurCell);
+
+                        Reset();
+                        IdxSelCell = IdxCurCell;
+                    }
+
+                    else if (Is(CellClickTypes.PutOutFireElfemale))
+                    {
+                        RpcSys.PutOutFireElffToMas(IdxSelCell, IdxCurCell);
 
                         Reset();
                         IdxSelCell = IdxCurCell;

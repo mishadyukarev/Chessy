@@ -8,10 +8,12 @@ namespace Chessy.Game
     public struct SoundEffectC
     {
         private static Dictionary<ClipGameTypes, AudioSource> _soundEffect_ASs;
+        private static Dictionary<UniqAbilTypes, AudioSource> _uniqEff;
 
         public SoundEffectC(GameObject audioSourceParent_GO)
         {
             _soundEffect_ASs = new Dictionary<ClipGameTypes, AudioSource>();
+            _uniqEff = new Dictionary<UniqAbilTypes, AudioSource>();
 
             var mistake_AS = audioSourceParent_GO.AddComponent<AudioSource>();
             mistake_AS.clip = ClipsResComCom.AudioClip(ClipGameTypes.Mistake);
@@ -54,9 +56,11 @@ namespace Chessy.Game
 
 
             var fire_AS = audioSourceParent_GO.AddComponent<AudioSource>();
-            fire_AS.clip = ClipsResComCom.AudioClip(ClipGameTypes.Fire);
+            fire_AS.clip = Resources.Load<AudioClip>("Fire_Clip");
             fire_AS.volume = 0.2f;
-            _soundEffect_ASs.Add(ClipGameTypes.Fire, fire_AS);
+            _uniqEff.Add(UniqAbilTypes.FireArcher, fire_AS);
+            _uniqEff.Add(UniqAbilTypes.FirePawn, fire_AS);
+
 
 
             var createUnit_AS = audioSourceParent_GO.AddComponent<AudioSource>();
@@ -116,9 +120,40 @@ namespace Chessy.Game
             cur_AS.clip = ClipsResComCom.AudioClip(ClipGameTypes.BonusKing);
             cur_AS.volume = 0.3f;
             _soundEffect_ASs.Add(ClipGameTypes.BonusKing, cur_AS);
+
+
+            cur_AS = audioSourceParent_GO.AddComponent<AudioSource>();
+            cur_AS.clip = Resources.Load<AudioClip>("GrowAdForestElfemale_Clip");
+            cur_AS.volume = 0.3f;
+            _uniqEff.Add(UniqAbilTypes.GrowAdultForest, cur_AS);
+
+
+            cur_AS = audioSourceParent_GO.AddComponent<AudioSource>();
+            cur_AS.clip = Resources.Load<AudioClip>("PutOutFireElfemale_Clip");
+            cur_AS.volume = 0.1f;
+            _uniqEff.Add(UniqAbilTypes.PutOutFireElfemale, cur_AS);
+
+
+            cur_AS = audioSourceParent_GO.AddComponent<AudioSource>();
+            cur_AS.clip = Resources.Load<AudioClip>("StunElfemale_Clip");
+            cur_AS.volume = 0.25f;
+            _uniqEff.Add(UniqAbilTypes.StunElfemale, cur_AS);
+
         }
 
-        public static void Play(ClipGameTypes eff) => _soundEffect_ASs[eff].Play();
+        public static void Play(ClipGameTypes eff)
+        {
+            if (!_soundEffect_ASs.ContainsKey(eff)) throw new Exception();
+
+            _soundEffect_ASs[eff].Play();
+        }
+        public static void Play(UniqAbilTypes uniq)
+        {
+            if (!_uniqEff.ContainsKey(uniq)) throw new Exception();
+
+            _uniqEff[uniq].Play();
+        }
+
         public static bool IsPlaying(ClipGameTypes eff)
         {
             if (!_soundEffect_ASs.ContainsKey(eff)) throw new Exception();

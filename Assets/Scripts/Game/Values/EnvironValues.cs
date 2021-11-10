@@ -14,23 +14,10 @@ namespace Chessy.Game
             switch (envType)
             {
                 case EnvTypes.None: throw new Exception();
-                case EnvTypes.Fertilizer: return 6;
+                case EnvTypes.Fertilizer: return 10;
                 case EnvTypes.YoungForest: return 0;
-                case EnvTypes.AdultForest: return 5;
+                case EnvTypes.AdultForest: return 10;
                 case EnvTypes.Hill: return 5;
-                case EnvTypes.Mountain: return 0;
-                default: throw new Exception();
-            }
-        }
-        public static byte MinAmount(EnvTypes envType)
-        {
-            switch (envType)
-            {
-                case EnvTypes.None: throw new Exception();
-                case EnvTypes.Fertilizer: return 5;
-                case EnvTypes.YoungForest: return 0;
-                case EnvTypes.AdultForest: return 4;
-                case EnvTypes.Hill: return 2;
                 case EnvTypes.Mountain: return 0;
                 default: throw new Exception();
             }

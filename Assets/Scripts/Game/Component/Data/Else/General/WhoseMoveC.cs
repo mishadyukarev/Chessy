@@ -40,6 +40,12 @@ namespace Chessy.Game
             _whoseMove.Add(false, PlayerTypes.First);
         }
 
+        public static void Start()
+        {
+            _whoseMove[true] = PlayerTypes.First;
+            _whoseMove[false] = PlayerTypes.First;
+        }
+
 
         public static void SetWhoseMove(PlayerTypes playerType)
         {

@@ -7,7 +7,6 @@
         AttackArcher,
         AttackMelee,
         Building,
-        Fire,
         Mistake,
         SoundGoldPack,
         Melting,

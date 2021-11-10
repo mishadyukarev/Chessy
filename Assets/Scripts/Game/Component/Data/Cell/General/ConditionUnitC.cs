@@ -9,7 +9,7 @@ namespace Chessy.Game
         public CondUnitTypes Condition => _condition;
         public bool HaveCondition => Condition != default;
 
-        public void SetNew(CondUnitTypes cond)
+        public void Set(CondUnitTypes cond)
         {
             if (_condition == cond) throw new Exception();
             if (cond == default) throw new Exception();

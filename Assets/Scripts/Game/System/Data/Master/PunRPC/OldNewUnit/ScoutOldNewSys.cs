@@ -28,7 +28,7 @@ namespace Chessy.Game
 
             //var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (hpUnitC.HaveMaxHpUnit)
+            if (hpUnitC.HaveMaxHp)
             {
                 if (stepUnitC.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                 {

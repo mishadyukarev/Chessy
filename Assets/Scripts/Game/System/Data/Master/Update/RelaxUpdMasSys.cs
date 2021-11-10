@@ -41,7 +41,7 @@ namespace Chessy.Game
 
                             if (condUnit_0.Is(CondUnitTypes.Relaxed))
                             {
-                                if (hpUnit_0.HaveMaxHpUnit)
+                                if (hpUnit_0.HaveMaxHp)
                                 {
                                     if (unit_0.Is(UnitTypes.Pawn))
                                     {
@@ -49,7 +49,7 @@ namespace Chessy.Game
                                         {
                                             var extract = ExtractC.ExtractOnePawnWood(levUnit_0.Level);
 
-                                            if(extract > envRes_0.AmountRes(EnvTypes.AdultForest))
+                                            if (extract > envRes_0.AmountRes(EnvTypes.AdultForest))
                                             {
                                                 extract = envRes_0.MaxAmountRes(EnvTypes.AdultForest);
                                             }
@@ -80,7 +80,7 @@ namespace Chessy.Game
                                                 }
                                                 else
                                                 {
-                                                    condUnit_0.SetNew(CondUnitTypes.Protected);
+                                                    condUnit_0.Set(CondUnitTypes.Protected);
                                                 }
                                             }
                                             else
@@ -111,13 +111,13 @@ namespace Chessy.Game
                                             {
                                                 if (buil_0.HaveBuild)
                                                 {
-                                                    condUnit_0.SetNew(CondUnitTypes.Protected);
+                                                    condUnit_0.Set(CondUnitTypes.Protected);
                                                 }
                                                 else
                                                 {
                                                     if (envRes_0.HaveMaxRes(EnvTypes.Hill))
                                                     {
-                                                        condUnit_0.SetNew(CondUnitTypes.Protected);
+                                                        condUnit_0.Set(CondUnitTypes.Protected);
                                                     }
                                                     else
                                                     {
@@ -127,26 +127,63 @@ namespace Chessy.Game
                                             }
                                             else
                                             {
-                                                condUnit_0.SetNew(CondUnitTypes.Protected);
+                                                condUnit_0.Set(CondUnitTypes.Protected);
                                             }
                                         }
 
                                         else
                                         {
-                                            condUnit_0.SetNew(CondUnitTypes.Protected);
+                                            condUnit_0.Set(CondUnitTypes.Protected);
+                                        }
+                                    }
+
+                                    //else if (unit_0.Is(UnitTypes.Scout))
+                                    //{
+                                    //    if (env_0.Have(EnvTypes.AdultForest))
+                                    //    {
+                                    //        trail_0.SetAllTrail();
+                                    //    }
+                                    //}
+
+                                    else if (unit_0.Is(UnitTypes.Elfemale))
+                                    {
+                                        if (env_0.Have(EnvTypes.AdultForest))
+                                        {
+                                            if (!envRes_0.HaveMaxRes(EnvTypes.AdultForest))
+                                            {
+                                                var adding = 3;
+
+                                                if (adding + envRes_0.AmountRes(EnvTypes.AdultForest)
+                                                    > envRes_0.MaxAmountRes(EnvTypes.AdultForest))
+                                                {
+                                                    envRes_0.SetMaxAmountRes(EnvTypes.AdultForest);
+                                                }
+                                                else
+                                                {
+                                                    envRes_0.AddAmountRes(EnvTypes.AdultForest, adding);
+                                                }
+                                            }
+                                            else
+                                            {
+                                                condUnit_0.Set(CondUnitTypes.Protected);
+                                            }
+                                        }
+                                        else
+                                        {
+                                            condUnit_0.Set(CondUnitTypes.Protected);
                                         }
                                     }
 
                                     else
                                     {
-                                        condUnit_0.SetNew(CondUnitTypes.Protected);
+                                        condUnit_0.Set(CondUnitTypes.Protected);
                                     }
                                 }
 
                                 else
                                 {
                                     hpUnit_0.SetMaxHp();
-                                    if (hpUnit_0.HaveMaxHpUnit)
+                                    if (hpUnit_0.HaveMaxHp)
                                     {
                                         hpUnit_0.SetMaxHp();
                                     }
