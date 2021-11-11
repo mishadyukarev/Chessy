@@ -12,7 +12,7 @@ namespace Chessy.Game
         {
             for (UnitTypes curUnitType = 0; curUnitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; curUnitType++)
             {
-                if (curUnitType == UnitTypes.Pawn || curUnitType == UnitTypes.Rook || curUnitType == UnitTypes.Bishop)
+                if (curUnitType == UnitTypes.Pawn || curUnitType == UnitTypes.Archer)
                 {
                     if (GetterUnitsDataUIC.IsActivatedButton(curUnitType))
                     {
@@ -35,9 +35,8 @@ namespace Chessy.Game
             }
 
 
-            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Pawn, InvUnitsC.AmountUnitsInInv(WhoseMoveC.CurPlayerI, UnitTypes.Pawn).ToString());
-            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Rook, InvUnitsC.AmountUnitsInInv(WhoseMoveC.CurPlayerI, UnitTypes.Rook).ToString());
-            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Bishop, InvUnitsC.AmountUnitsInInv(WhoseMoveC.CurPlayerI, UnitTypes.Bishop).ToString());
+            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Pawn, InvUnitsC.AmountUnits(WhoseMoveC.CurPlayerI, UnitTypes.Pawn).ToString());
+            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Archer, InvUnitsC.AmountUnits(WhoseMoveC.CurPlayerI, UnitTypes.Archer).ToString());
         }
     }
 }

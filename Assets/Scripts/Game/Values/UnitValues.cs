@@ -27,15 +27,7 @@ namespace Chessy.Game
                         case LevelUnitTypes.Second: return 150;
                         default: throw new Exception();
                     }
-                case UnitTypes.Rook:
-                    switch (upgUnitType)
-                    {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First: return 100;
-                        case LevelUnitTypes.Second: return 150;
-                        default: throw new Exception();
-                    }
-                case UnitTypes.Bishop:
+                case UnitTypes.Archer:
                     switch (upgUnitType)
                     {
                         case LevelUnitTypes.None: throw new Exception();
@@ -149,8 +141,7 @@ namespace Chessy.Game
                 case UnitTypes.None: steps = 0; break;
                 case UnitTypes.King: steps = 2; break;
                 case UnitTypes.Pawn: steps = 2; break;
-                case UnitTypes.Rook: steps = 3; break;
-                case UnitTypes.Bishop: steps = 3; break;
+                case UnitTypes.Archer: steps = 3; break;
                 case UnitTypes.Scout: steps = 5; break;
                 case UnitTypes.Elfemale: steps = 3; break;
                 default: throw new Exception();

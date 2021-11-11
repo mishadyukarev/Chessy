@@ -7,9 +7,9 @@ namespace Chessy.Game
 {
     public sealed class FirePawnMS : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellFireDataC> _cellFireFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
+        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
+        private EcsFilter<FireC> _cellFireFilter = default;
+        private EcsFilter<EnvC> _cellEnvFilter = default;
 
 
         public void Run()

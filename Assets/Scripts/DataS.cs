@@ -31,17 +31,10 @@ namespace Chessy.Game
                 .Add(new FillCellsForAttackPawnSys())
                 .Add(new FillCellsForAttackRookSys())
                 .Add(new FillCellsForAttackBishopSys())
-                .Add(new FillCellsForSetUnitSys())
+                .Add(new FillCellsSetUnitS())
                 .Add(new FillCellsForShiftSys())
                 .Add(new FillCellsArsonSys());
 
-
-            var eventExecuters = new EcsSystems(gameWorld)
-                .Add(new CenterEventUISys())
-                .Add(new LeftCityEventUISys())
-                .Add(new LeftEnvEventUISys())
-                .Add(new DownEventUISys())
-                .Add(new RightUnitEventUISys());
 
 
             runUpdate
@@ -49,8 +42,7 @@ namespace Chessy.Game
                 .Add(new RaySystem())
                 .Add(new SelectorS())
                 .Add(syncAbilities)
-                .Add(fillAvailCells)
-                .Add(eventExecuters);
+                .Add(fillAvailCells);
 
 
             new DataC(runUpdate.Run);

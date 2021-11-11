@@ -6,8 +6,6 @@ namespace Chessy.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
 
-        private EcsFilter<CellsArsonArcherComp> _cellsArsonFilter = default;
-
         public void Run()
         {
             foreach (byte curIdxCell in _xyCellFilter)
@@ -17,8 +15,8 @@ namespace Chessy.Game
                 CellsAttackC.Clear(PlayerTypes.First, AttackTypes.Unique, curIdxCell);
                 CellsAttackC.Clear(PlayerTypes.Second, AttackTypes.Unique, curIdxCell);
 
-                _cellsArsonFilter.Get1(0).Clear(PlayerTypes.First, curIdxCell);
-                _cellsArsonFilter.Get1(0).Clear(PlayerTypes.Second, curIdxCell);
+                CellsArsonArcherComp.Clear(PlayerTypes.First, curIdxCell);
+                CellsArsonArcherComp.Clear(PlayerTypes.Second, curIdxCell);
             }
         }
     }

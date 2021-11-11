@@ -7,7 +7,7 @@
         Economy,
         NeedMoreSteps,
         NeedOtherPlace,
-        NeedMoreHealth,
+        NeedMoreHp,
         NeedCity,
         ThatIsForOtherUnit,
         NearBorder,

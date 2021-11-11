@@ -1,7 +1,7 @@
-﻿namespace Chessy.Game
-{
-    public struct ForCircularAttackMasCom
-    {
-        public byte IdxUnitForCirculAttack;
-    }
-}
+﻿//namespace Chessy.Game
+//{
+//    public struct ForCircularAttackMasCom
+//    {
+//        public byte IdxUnitForCirculAttack;
+//    }
+//}

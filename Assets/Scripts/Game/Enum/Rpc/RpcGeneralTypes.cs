@@ -8,7 +8,6 @@
         GetUnit,
         SoundEff,
         SoundUniq,
-
-        RotateAll,
+        ActiveMotion,
     }
 }

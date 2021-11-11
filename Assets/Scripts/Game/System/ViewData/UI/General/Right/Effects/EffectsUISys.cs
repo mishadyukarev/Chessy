@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public sealed class EffectsUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, UnitEffectsC> _cellUnitFilt = default;
+        private EcsFilter<UnitC, UnitEffectsC> _cellUnitFilt = default;
 
         public void Run()
         {

@@ -4,16 +4,19 @@ namespace Chessy.Game
 {
     public sealed class SyncCellUnitViewSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitLevFilter = default;
+        private EcsFilter<UnitC, ToolWeaponC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitLevFilter = default;
+        private EcsFilter<CornerArcherC> _archerFilt = default;
+
         private EcsFilter<VisibleC, CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilt = default;
 
         public void Run()
         {
             foreach (byte idx_0 in _cellUnitFilter)
             {
-                ref var unitC_0 = ref _cellUnitFilter.Get1(idx_0);
-                ref var levelUnitC_0 = ref _cellUnitLevFilter.Get2(idx_0);
+                ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
+                ref var levelUnit_0 = ref _cellUnitLevFilter.Get2(idx_0);
+                ref var corner_0 = ref _archerFilt.Get1(idx_0);
 
                 ref var twUnitC_0 = ref _cellUnitFilter.Get2(idx_0);
 
@@ -22,19 +25,19 @@ namespace Chessy.Game
                 ref var extraUnitC_0 = ref _cellUnitViewFilt.Get3(idx_0);
 
 
-                mainUnitC_0.Enable_SR(false);
+                mainUnitC_0.SetEnabled_SR(false);
                 extraUnitC_0.Disable_SR();
 
-                if (unitC_0.HaveUnit)
+                if (unit_0.HaveUnit)
                 {
                     if (visUnitC_0.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
-                        mainUnitC_0.Enable_SR(true);
-                        mainUnitC_0.SetSprite(unitC_0.Unit, levelUnitC_0.Level);
+                        mainUnitC_0.SetEnabled_SR(true);
 
-
-                        if (unitC_0.Is(UnitTypes.Pawn))
+                        if (unit_0.Is(UnitTypes.Pawn))
                         {
+                            mainUnitC_0.SetSprite(unit_0.Unit, levelUnit_0.Level, false);
+
                             if (twUnitC_0.HaveToolWeap)
                             {
                                 extraUnitC_0.Enable_SR();
@@ -42,8 +45,14 @@ namespace Chessy.Game
                             }
                         }
 
-                        else if (unitC_0.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                        else if (unit_0.Is(UnitTypes.Archer))
                         {
+                            mainUnitC_0.SetSprite(unit_0.Unit, levelUnit_0.Level, corner_0.IsCornered);
+                        }
+
+                        else
+                        {
+                            mainUnitC_0.SetSprite(unit_0.Unit, levelUnit_0.Level, false);
                         }
 
 

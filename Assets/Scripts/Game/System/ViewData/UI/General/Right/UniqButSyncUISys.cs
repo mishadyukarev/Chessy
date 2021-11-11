@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public sealed class UniqButSyncUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, UniqAbilC> _unitAbilFilt = default;
+        private EcsFilter<UnitC, UniqAbilC> _unitAbilFilt = default;
 
         public void Run()
         {

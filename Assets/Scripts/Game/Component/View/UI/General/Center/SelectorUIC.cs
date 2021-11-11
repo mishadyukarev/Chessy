@@ -15,13 +15,11 @@ namespace Chessy.Game
 
             _selZones_GOs = new Dictionary<CellClickTypes, GameObject>();
 
-            _back_Image = selZone_Trans.Find("Back_Image").GetComponent<Image>();
-            _selZones_GOs.Add(CellClickTypes.PickFire, selZone_Trans.Find("PickAdultForestZone").gameObject);
-            _selZones_GOs.Add(CellClickTypes.GiveTakeTW, selZone_Trans.Find("GiveTakeToolZone").gameObject);
-            _selZones_GOs.Add(CellClickTypes.OldNewUnit, selZone_Trans.Find("ScoutZone").gameObject);
-            _selZones_GOs.Add(CellClickTypes.UpgradeUnit, selZone_Trans.Find("UpgradeUnitZone").gameObject);
-            _selZones_GOs.Add(CellClickTypes.StunElfemale, selZone_Trans.Find("UpgradeUnitZone").gameObject);
-            _selZones_GOs.Add(CellClickTypes.PutOutFireElfemale, selZone_Trans.Find("UpgradeUnitZone").gameObject);
+            for (var click = CellClickTypes.None + 1; click < CellClickTypes.End; click++)
+            {
+                _back_Image = selZone_Trans.Find("Back_Image").GetComponent<Image>();
+                _selZones_GOs.Add(click, selZone_Trans.Find(click.ToString()).gameObject);
+            }
         }
 
         public static void SetActive(CellClickTypes cellClickType, bool isActive)

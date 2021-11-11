@@ -9,23 +9,28 @@ namespace Chessy.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
-        private EcsFilter<CellFireDataC> _cellFireDataFilter = default;
-        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvDataFilter = default;
+        private EcsFilter<FireC> _cellFireDataFilter = default;
+        private EcsFilter<EnvC, CellEnvResC> _cellEnvDataFilter = default;
         private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
-        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqFilt = default;
-        private EcsFilter<CellUnitDataC, UnitEffectsC, StunC> _unitEffFilt = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
+        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<UnitC, UnitEffectsC, StunC> _unitEffFilt = default;
 
         public void Run()
         {
             InventResC.AddAmountRes(PlayerTypes.First, ResTypes.Food, 3);
             InventResC.AddAmountRes(PlayerTypes.Second, ResTypes.Food, 3);
-            MotionsDataUIC.Set(PlayerTypes.First, true);
-            MotionsDataUIC.Set(PlayerTypes.Second, true);
+
+
+            ScoutHeroCooldownC.TakeCooldown(PlayerTypes.First, UnitTypes.Scout);
+            ScoutHeroCooldownC.TakeCooldown(PlayerTypes.Second, UnitTypes.Scout);
+
+            ScoutHeroCooldownC.TakeCooldown(PlayerTypes.First, UnitTypes.Elfemale);
+            ScoutHeroCooldownC.TakeCooldown(PlayerTypes.Second, UnitTypes.Elfemale);
 
 
             foreach (byte idx_0 in _xyCellFilter)

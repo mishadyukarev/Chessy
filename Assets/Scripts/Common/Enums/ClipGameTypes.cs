@@ -21,5 +21,6 @@
         PickArcher,
         PickUpgrade,
         BonusKing,
+        GetHero,
     }
 }

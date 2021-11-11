@@ -37,9 +37,9 @@ namespace Chessy.Game
         {
             HintDataUIC.CurStartNumber++;
 
-            if (HintDataUIC.CurStartNumber <= (int)VideoClipTypes.Start4)
+            if (HintDataUIC.CurStartNumber <= (int)VideoClipTypes.Start5)
             {
-                HintDataUIC.SetActive((VideoClipTypes)HintDataUIC.CurStartNumber, true);
+                HintDataUIC.SetWasActived((VideoClipTypes)HintDataUIC.CurStartNumber, true);
                 HintViewUIC.SetVideoClip((VideoClipTypes)HintDataUIC.CurStartNumber);
             }
             else
@@ -55,6 +55,7 @@ namespace Chessy.Game
 
                 HeroesViewUIC.SetActiveZone(true);
             }
+            else SoundEffectC.Play(ClipGameTypes.Mistake);
         }
 
         private void Elf()
@@ -63,6 +64,7 @@ namespace Chessy.Game
             {
                 RpcSys.GetHero(UnitTypes.Elfemale);
             }
+            else SoundEffectC.Play(ClipGameTypes.Mistake);
         }
 
         private void OpenShop()

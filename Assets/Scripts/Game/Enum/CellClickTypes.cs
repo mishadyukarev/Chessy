@@ -7,8 +7,11 @@
         PickFire,
         GiveTakeTW,
         UpgradeUnit,
-        OldNewUnit,
+        GiveScout,
+        GiveHero,
         StunElfemale,
         PutOutFireElfemale,
+
+        End,
     }
 }

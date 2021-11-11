@@ -5,16 +5,13 @@ namespace Chessy.Game
 {
     public sealed class UpgradeUnitMasSys : IEcsRunSystem
     {
-        private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
-
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent, UnitEffectsC> _cellUnitDataFilt = default;
-        private EcsFilter<InventResC> _invResFilt = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, HpC, StepC, UnitEffectsC> _cellUnitDataFilt = default;
 
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            ref var idx_0 = ref _forUpgradeUnitFilt.Get1(0).idxCellForUpgrade;
+            IdxDoingMC.Get(out var idx_0);
 
             ref var unit_0 = ref _cellUnitDataFilt.Get1(idx_0);
             ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
@@ -22,10 +19,6 @@ namespace Chessy.Game
             ref var hpUnit_0 = ref _cellUnitDataFilt.Get2(idx_0);
             ref var stepUnit_0 = ref _cellUnitDataFilt.Get3(idx_0);
             ref var effUnit_0 =ref _cellUnitDataFilt.Get4(idx_0);
-
-
-            ref var invResCom = ref _invResFilt.Get1(0);
-
 
 
             var whoseMove = WhoseMoveC.WhoseMove;
@@ -60,7 +53,7 @@ namespace Chessy.Game
             }
             else
             {
-                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
+                RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
             }
         }
     }

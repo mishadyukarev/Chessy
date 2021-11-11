@@ -7,10 +7,10 @@ namespace Chessy.Game
 {
     public sealed class AbilSyncMasSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, OwnerC> _unitBaseFilt = default;
-        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqFilt = default;
-        private EcsFilter<CellEnvDataC> _envFilt = default;
-        private EcsFilter<CellFireDataC> _fireFilt = default;
+        private EcsFilter<UnitC, OwnerC> _unitBaseFilt = default;
+        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<EnvC> _envFilt = default;
+        private EcsFilter<FireC> _fireFilt = default;
 
         public void Run()
         {
@@ -54,15 +54,9 @@ namespace Chessy.Game
                                 uniq_0.Reset(UniqButtonTypes.Third);
                                 break;
 
-                            case UnitTypes.Rook:
+                            case UnitTypes.Archer:
                                 uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.FireArcher);
-                                uniq_0.Reset(UniqButtonTypes.Second);
-                                uniq_0.Reset(UniqButtonTypes.Third);
-                                break;
-
-                            case UnitTypes.Bishop:
-                                uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.FireArcher);
-                                uniq_0.Reset(UniqButtonTypes.Second);
+                                uniq_0.SetAbility(UniqButtonTypes.Second, UniqAbilTypes.ChangeCornerArcher);
                                 uniq_0.Reset(UniqButtonTypes.Third);
                                 break;
 

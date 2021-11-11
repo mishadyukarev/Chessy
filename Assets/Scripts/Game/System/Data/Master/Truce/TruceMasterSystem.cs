@@ -9,13 +9,13 @@ namespace Chessy.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
-        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilter = default;
-        private EcsFilter<CellFireDataC> _cellFireFilter = default;
+        private EcsFilter<EnvC, CellEnvResC> _cellEnvFilter = default;
+        private EcsFilter<FireC> _cellFireFilter = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
         private EcsFilter<CellTrailDataC> _trailFilt = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitTwFilt = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, ToolWeaponC> _cellUnitTwFilt = default;
 
         public void Run()
         {
@@ -54,7 +54,7 @@ namespace Chessy.Game
 
                             InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
                             WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                            unit_0.DefUnit();
+                            unit_0.Reset();
                         }
                     }
                     else
@@ -68,7 +68,7 @@ namespace Chessy.Game
 
                         InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
                         WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                        unit_0.DefUnit();
+                        unit_0.Reset();
                     }
                 }
 
@@ -109,9 +109,6 @@ namespace Chessy.Game
                     }
                 }
             }
-
-            MotionsDataUIC.Set(PlayerTypes.First, true);
-            MotionsDataUIC.Set(PlayerTypes.Second, true);
         }
     }
 }

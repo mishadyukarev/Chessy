@@ -5,8 +5,8 @@ namespace Chessy.Game
 {
     public class ProtectUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, OwnerC> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC> _cellOtherFilt = default;
+        private EcsFilter<UnitC, OwnerC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, ConditionUnitC> _cellOtherFilt = default;
 
         public void Run()
         {

@@ -7,13 +7,9 @@ namespace Chessy.Game
 {
     public sealed class FireArcherMS : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
-        private EcsFilter<CellFireDataC> _cellFireFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
-
-        private EcsFilter<CellsArsonArcherComp> _cellsArcherArsonFilt = default;
-
+        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
+        private EcsFilter<FireC> _cellFireFilter = default;
 
         public void Run()
         {
@@ -34,7 +30,7 @@ namespace Chessy.Game
 
             if (stepUnit_from.HaveMaxSteps(unit_from.Unit, effUnit_from.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_from.Owner, unit_from.Unit)))
             {
-                if (_cellsArcherArsonFilt.Get1(0).HaveIdxCell(whoseMove, idx_from, idx_to))
+                if (CellsArsonArcherComp.HaveIdxCell(whoseMove, idx_from, idx_to))
                 {
                     RpcSys.SoundToGeneral(RpcTarget.All, UniqAbilTypes.FireArcher);
 

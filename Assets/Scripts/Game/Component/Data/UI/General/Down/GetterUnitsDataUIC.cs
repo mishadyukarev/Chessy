@@ -12,15 +12,13 @@ namespace Chessy.Game
             _needCreateButtons = needCreateButtons;
 
             _needCreateButtons.Add(UnitTypes.Pawn, default);
-            _needCreateButtons.Add(UnitTypes.Rook, default);
-            _needCreateButtons.Add(UnitTypes.Bishop, default);
+            _needCreateButtons.Add(UnitTypes.Archer, default);
 
 
             _curTimers = new Dictionary<UnitTypes, float>();
 
             _curTimers.Add(UnitTypes.Pawn, default);
-            _curTimers.Add(UnitTypes.Rook, default);
-            _curTimers.Add(UnitTypes.Bishop, default);
+            _curTimers.Add(UnitTypes.Archer, default);
         }
 
         public static void ActiveNeedCreateButton(UnitTypes unitType, bool isActive) => _needCreateButtons[unitType] = isActive;

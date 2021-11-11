@@ -19,18 +19,15 @@ namespace Chessy.Game
 
             _taker_Buttons = new Dictionary<UnitTypes, Button>();
             _taker_Buttons.Add(UnitTypes.Pawn, takeUnitZone_GO.transform.Find("TakeUnit1Button").GetComponent<Button>());
-            _taker_Buttons.Add(UnitTypes.Rook, takeUnitZone_GO.transform.Find("TakeUnit2Button").GetComponent<Button>());
-            _taker_Buttons.Add(UnitTypes.Bishop, takeUnitZone_GO.transform.Find("TakeUnit3Button").GetComponent<Button>());
+            _taker_Buttons.Add(UnitTypes.Archer, takeUnitZone_GO.transform.Find("TakeUnit2Button").GetComponent<Button>());
 
             _createUnit_Buttons = new Dictionary<UnitTypes, Button>();
             _createUnit_Buttons.Add(UnitTypes.Pawn, takeUnitZone_GO.transform.Find("CreatePawn_Button").GetComponent<Button>());
-            _createUnit_Buttons.Add(UnitTypes.Rook, takeUnitZone_GO.transform.Find("CreateRook_Button").GetComponent<Button>());
-            _createUnit_Buttons.Add(UnitTypes.Bishop, takeUnitZone_GO.transform.Find("CreateBishop_Button").GetComponent<Button>());
+            _createUnit_Buttons.Add(UnitTypes.Archer, takeUnitZone_GO.transform.Find("CreateRook_Button").GetComponent<Button>());
 
             _amountUnits_TextMPs = new Dictionary<UnitTypes, TextMeshProUGUI>();
             _amountUnits_TextMPs.Add(UnitTypes.Pawn, _taker_Buttons[UnitTypes.Pawn].transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
-            _amountUnits_TextMPs.Add(UnitTypes.Rook, _taker_Buttons[UnitTypes.Rook].transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
-            _amountUnits_TextMPs.Add(UnitTypes.Bishop, _taker_Buttons[UnitTypes.Bishop].transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
+            _amountUnits_TextMPs.Add(UnitTypes.Archer, _taker_Buttons[UnitTypes.Archer].transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
         }
 
         public static void AddListener(UnitTypes unitType, UnityAction unityAction) => _taker_Buttons[unitType].onClick.AddListener(unityAction);

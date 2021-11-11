@@ -79,7 +79,7 @@ namespace Chessy.Game
                             MistakeViewUIC.ActiveNeedOtherPlace(true);
                             break;
 
-                        case MistakeTypes.NeedMoreHealth:
+                        case MistakeTypes.NeedMoreHp:
                             MistakeViewUIC.ActiveNeedMoreHealth(true);
                             break;
 

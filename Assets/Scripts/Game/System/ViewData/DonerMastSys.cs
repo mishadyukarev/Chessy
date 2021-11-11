@@ -18,6 +18,7 @@ namespace Chessy.Game
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
                     DataMastC.InvokeRun(MastDataSysTypes.Update);
+                    RpcSys.ActiveMotionZoneToGen(sender);
                 }
 
                 else if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
@@ -28,6 +29,7 @@ namespace Chessy.Game
                     if(nextPlayer == PlayerTypes.First)
                     {
                         DataMastC.InvokeRun(MastDataSysTypes.Update);
+                        RpcSys.ActiveMotionZoneToGen(sender);
                     }
 
                     WhoseMoveC.SetWhoseMove(nextPlayer);
@@ -47,10 +49,13 @@ namespace Chessy.Game
                 if (WhoseMoveC.WhoseMove == playerSend)
                 {
                     if (!InvUnitsC.Have(sender.GetPlayerType(), UnitTypes.King, LevelUnitTypes.First))
-                    {                   
+                    {
                         if (playerSend == PlayerTypes.Second)
                         {
                             DataMastC.InvokeRun(MastDataSysTypes.Update);
+
+                            RpcSys.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayerType());
+                            RpcSys.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayerType());
                         }
 
                         WhoseMoveC.SetWhoseMove(WhoseMoveC.NextPlayerFrom(playerSend));

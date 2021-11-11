@@ -6,17 +6,19 @@ namespace Chessy.Game
     public sealed class ShiftUnitMasSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _cellXyFilt = default;
-        private EcsFilter<CellEnvDataC> _cellEnvrDataFilter = default;
+        private EcsFilter<EnvC> _cellEnvrDataFilter = default;
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
-        private EcsFilter<CellFireDataC> _cellFireFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
+        private EcsFilter<FireC> _cellFireFilt = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
-        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqAbilFilt = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
+        private EcsFilter<UnitC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
+        private EcsFilter<UnitC, UniqAbilC> _unitUniqAbilFilt = default;
+        private EcsFilter<CornerArcherC> _archerFilt = default;
+
+
 
         public void Run()
         {
@@ -47,6 +49,8 @@ namespace Chessy.Game
                 ref var thirUnit_from = ref _cellUnitOthFilt.Get4(idx_from);
                 ref var moveCond_from = ref _cellUnitCondFilt.Get3(idx_from);
                 ref var uniq_from = ref _unitUniqAbilFilt.Get2(idx_from);
+                ref var corner_from = ref _archerFilt.Get1(idx_from);
+
 
                 ref var unit_to = ref _cellUnitFilter.Get1(idx_to);
                 ref var levUnitC_to = ref _cellUnitMainFilt.Get2(idx_to);
@@ -59,6 +63,7 @@ namespace Chessy.Game
                 ref var condUnit_to = ref _cellUnitCondFilt.Get2(idx_to);
                 ref var moveCond_to = ref _cellUnitCondFilt.Get3(idx_to);
                 ref var uniq_to = ref _unitUniqAbilFilt.Get2(idx_to);
+                ref var corner_to = ref _archerFilt.Get1(idx_to);
 
                 ref var fire_to = ref _cellFireFilt.Get1(idx_to);
 
@@ -84,7 +89,7 @@ namespace Chessy.Game
 
                 unit_to.SetUnit(unit_from.Unit);
                 levUnitC_to.SetLevel(levUnit_from.Level);
-                ownUnit_to.SetOwner(whoseMove);
+                ownUnit_to = ownUnit_from;
                 hpUnit_to = hpUnit_from;
                 stepUnit_to = stepUnit_from;
                 if(condUnit_to.HaveCondition) condUnit_to.Def();
@@ -93,6 +98,7 @@ namespace Chessy.Game
                 thirUnit_to = thirUnit_from;
                 moveCond_to.ResetAll();
                 uniq_to.Replace(uniq_from);
+                corner_to = corner_from;
                 if (river_to.HaveNearRiver) thirUnit_to.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Water));
 
 
@@ -102,7 +108,7 @@ namespace Chessy.Game
                 WhereUnitsC.Add(ownUnit_to.Owner, unit_to.Unit, levUnitC_to.Level, idx_to);
 
                 WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
-                unit_from.DefUnit();
+                unit_from.Reset();
 
                 RpcSys.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipGameTypes.ClickToTable);
             }

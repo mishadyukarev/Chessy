@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public sealed class SyncCellSelUnitViewSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, VisibleC> _cellUnitFilter = default;
         private EcsFilter<CellUnitMainViewCom> _cellUnitViewFilt = default;
 
         public void Run()
@@ -26,21 +26,21 @@ namespace Chessy.Game
                 {
                     if (ownUnit_cur.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
-                        mainUnit_pre.Enable_SR(true);
-                        mainUnit_pre.SetSprite(SelUnitC.SelUnit, SelUnitC.LevelSelUnit);
+                        mainUnit_pre.SetEnabled_SR(true);
+                        mainUnit_pre.SetSprite(SelUnitC.SelUnit, SelUnitC.LevelSelUnit, false);
                     }
 
                     else
                     {
-                        mainUnit_cur.Enable_SR(true);
-                        mainUnit_cur.SetSprite(SelUnitC.SelUnit, SelUnitC.LevelSelUnit);
+                        mainUnit_cur.SetEnabled_SR(true);
+                        mainUnit_cur.SetSprite(SelUnitC.SelUnit, SelUnitC.LevelSelUnit, false);
                     }
                 }
 
                 else
                 {
-                    mainUnit_cur.Enable_SR(true);
-                    mainUnit_cur.SetSprite(SelUnitC.SelUnit, SelUnitC.LevelSelUnit);
+                    mainUnit_cur.SetEnabled_SR(true);
+                    mainUnit_cur.SetSprite(SelUnitC.SelUnit, SelUnitC.LevelSelUnit, false);
                 }
             }
         }

@@ -7,6 +7,23 @@ namespace Chessy.Game
     {
         private static Dictionary<PlayerTypes, Dictionary<BuildTypes, bool>> _haveUpgrades;
 
+        public static Dictionary<PlayerTypes, Dictionary<BuildTypes, bool>> HaveUpgrades
+        {
+            get
+            {
+                var dict = new Dictionary<PlayerTypes, Dictionary<BuildTypes, bool>>();
+                foreach (var item_0 in _haveUpgrades)
+                {
+                    dict.Add(item_0.Key, new Dictionary<BuildTypes, bool>());
+                    foreach (var item_1 in item_0.Value)
+                    {
+                        dict[item_0.Key].Add(item_1.Key, item_1.Value);
+                    }
+                }
+                return dict;
+            }
+        }
+
         public BuildsUpgC(bool needNew) : this()
         {
             if (needNew)
@@ -27,5 +44,10 @@ namespace Chessy.Game
 
         public static void AddUpgrade(PlayerTypes player, BuildTypes build) => _haveUpgrades[player][build] = true;
         public static bool HaveUpgrade(PlayerTypes player, BuildTypes build) => _haveUpgrades[player][build];
+
+        public static void Sync(PlayerTypes player, BuildTypes build, bool have)
+        {
+            _haveUpgrades[player][build] = have;
+        }
     }
 }

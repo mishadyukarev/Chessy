@@ -6,21 +6,20 @@ namespace Chessy.Game
 {
     public sealed class CircularAttackKingMastSys : IEcsRunSystem
     {
-        private EcsFilter<ForCircularAttackMasCom> _forCircAttackFilter = default;
-
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
-        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
+        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
 
-        private EcsFilter<CellEnvDataC> _cellEnvFilt = default;
+        private EcsFilter<EnvC> _cellEnvFilt = default;
         private EcsFilter<CellBuildDataC> _cellBuildFilt = default;
 
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            var idx_0 = _forCircAttackFilter.Get1(0).IdxUnitForCirculAttack;
+
+            IdxDoingMC.Get(out var idx_0);
 
             ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
 
@@ -72,28 +71,21 @@ namespace Chessy.Game
                                 }
                                 else
                                 {
-                                    if (unit_1.IsMelee)
+                                    hpUnitC_1.TakeHp(25);
+                                    if (hpUnitC_1.IsHpDeathAfterAttack || !hpUnitC_1.HaveHp)
                                     {
-                                        hpUnitC_1.TakeHp(25);
-                                        if (hpUnitC_1.IsHpDeathAfterAttack || !hpUnitC_1.HaveHp)
+                                        if (unit_1.Is(UnitTypes.King))
                                         {
-                                            if (unit_1.Is(UnitTypes.King))
-                                            {
-                                                EndGameDataUIC.PlayerWinner = ownUnit_0.Owner;
-                                            }
-                                            else if (unit_1.Is(UnitTypes.Scout))
-                                            {
-                                                InvUnitsC.AddUnit(ownUnit_1.Owner, UnitTypes.Scout, LevelUnitTypes.First);
-                                            }
-
-                                            WhereUnitsC.Remove(ownUnit_1.Owner, unit_1.Unit, levUnit_1.Level, idx_1);
-                                            unit_1.DefUnit();
+                                            EndGameDataUIC.PlayerWinner = ownUnit_0.Owner;
                                         }
-                                    }
-                                    else
-                                    {
+                                        else if (unit_1.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
+                                        {
+                                            ScoutHeroCooldownC.SetStandCooldown(ownUnit_1.Owner, unit_1.Unit);
+                                            InvUnitsC.AddUnit(ownUnit_1.Owner, unit_1.Unit, levUnit_1.Level);
+                                        }
+
                                         WhereUnitsC.Remove(ownUnit_1.Owner, unit_1.Unit, levUnit_1.Level, idx_1);
-                                        unit_1.DefUnit();
+                                        unit_1.Reset();
                                     }
                                 }
                             }

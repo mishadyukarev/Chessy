@@ -9,7 +9,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            if (MotionsDataUIC.IsActivatedUI[WhoseMoveC.CurPlayerI])
+            if (MotionsDataUIC.IsActivated)
             {
                 MotionsViewUIC.Text = MotionsDataUIC.AmountMotions.ToString();
                 MotionsViewUIC.SetActiveParent(true);
@@ -19,7 +19,7 @@ namespace Chessy.Game
                 if (_timer >= 1)
                 {
                     MotionsViewUIC.SetActiveParent(false);
-                    MotionsDataUIC.Set(WhoseMoveC.CurPlayerI, false);
+                    MotionsDataUIC.IsActivated = false;
                     _timer = 0;
                 }
             }

@@ -5,7 +5,7 @@ namespace Chessy.Game
     public sealed class HungryUpdMasSys : IEcsRunSystem
     {
         private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
 
         public void Run()
         {
@@ -17,7 +17,7 @@ namespace Chessy.Game
                 {
                     InventResC.ResetRes(player, res);
 
-                    for (var unit = UnitTypes.Scout; unit >= UnitTypes.Pawn; unit--)
+                    for (var unit = UnitTypes.Pawn; unit >= UnitTypes.Elfemale; unit++)
                     {
                         for (var levUnit = (LevelUnitTypes)2; levUnit > 0; levUnit--)
                         {
@@ -31,9 +31,10 @@ namespace Chessy.Game
                                 ref var ownBuild_0 = ref _cellBuildFilt.Get2(idx_0);
 
 
-                                if (unit_0.Is(UnitTypes.Scout))
+                                if (unit_0.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale}))
                                 {
-                                    InvUnitsC.AddUnit(player, UnitTypes.Scout, LevelUnitTypes.First);
+                                    ScoutHeroCooldownC.SetStandCooldown(ownUnit_0.Owner, unit_0.Unit);
+                                    InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
                                 }
 
                                 if (build_0.Is(BuildTypes.Camp))
@@ -43,7 +44,7 @@ namespace Chessy.Game
                                 }
 
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                                unit_0.DefUnit();
+                                unit_0.Reset();
 
                                 return;
                             }

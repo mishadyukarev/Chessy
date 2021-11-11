@@ -25,8 +25,7 @@ namespace Chessy.Game
                         case LevelUnitTypes.Second: return 0;
                         default: throw new Exception();
                     }
-                case UnitTypes.Rook: return 0;
-                case UnitTypes.Bishop: return 0;
+                case UnitTypes.Archer: return 0;
                 case UnitTypes.Scout:
                     switch (level)
                     {
@@ -74,18 +73,7 @@ namespace Chessy.Game
                         case ResTypes.Gold: return 0;
                         default: throw new Exception();
                     }
-                case UnitTypes.Rook:
-                    switch (resType)
-                    {
-                        case ResTypes.None: throw new Exception();
-                        case ResTypes.Food: return 5;
-                        case ResTypes.Wood: return 5;
-                        case ResTypes.Ore: return 0;
-                        case ResTypes.Iron: return 0;
-                        case ResTypes.Gold: return 0;
-                        default: throw new Exception();
-                    }
-                case UnitTypes.Bishop:
+                case UnitTypes.Archer:
                     switch (resType)
                     {
                         case ResTypes.None: throw new Exception();
@@ -203,18 +191,7 @@ namespace Chessy.Game
                         case ResTypes.Gold: return 0;
                         default: throw new Exception();
                     }
-                case UnitTypes.Rook:
-                    switch (resourceType)
-                    {
-                        case ResTypes.None: throw new Exception();
-                        case ResTypes.Food: return 0;
-                        case ResTypes.Wood: return 0;
-                        case ResTypes.Ore: return 0;
-                        case ResTypes.Iron: return 1;
-                        case ResTypes.Gold: return 0;
-                        default: throw new Exception();
-                    }
-                case UnitTypes.Bishop:
+                case UnitTypes.Archer:
                     switch (resourceType)
                     {
                         case ResTypes.None: throw new Exception();

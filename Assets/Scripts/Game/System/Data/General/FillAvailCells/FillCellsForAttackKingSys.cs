@@ -5,12 +5,12 @@ namespace Chessy.Game
     public sealed class FillCellsForAttackKingSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
+        private EcsFilter<EnvC> _cellEnvDataFilter = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
-        private EcsFilter<CellUnitDataC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
-        private EcsFilter<CellFireDataC, StunC> _unitEffFilt = default;
+        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
+        private EcsFilter<FireC, StunC> _unitEffFilt = default;
 
         public void Run()
         {

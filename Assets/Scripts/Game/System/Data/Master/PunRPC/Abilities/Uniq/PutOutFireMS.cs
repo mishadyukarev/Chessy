@@ -4,8 +4,8 @@ namespace Chessy.Game
 {
     public sealed class PutOutFireMS : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellFireDataC> _cellFireFilter = default;
+        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
+        private EcsFilter<FireC> _cellFireFilter = default;
 
         public void Run()
         {

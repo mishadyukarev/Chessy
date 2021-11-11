@@ -5,9 +5,9 @@ namespace Chessy.Game
 {
     public class PutOutFireElfemaleMS : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _unitStatFilt = default;
-        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqFilt = default;
-        private EcsFilter<CellFireDataC> _fireFilt = default;
+        private EcsFilter<UnitC, HpC, StepC> _unitStatFilt = default;
+        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<FireC> _fireFilt = default;
 
         public void Run()
         {
@@ -41,7 +41,7 @@ namespace Chessy.Game
 
                 else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
-            else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
+            else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
 
         }
     }

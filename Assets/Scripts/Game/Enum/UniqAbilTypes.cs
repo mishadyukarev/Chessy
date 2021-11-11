@@ -15,6 +15,7 @@
 
         //Archer
         FireArcher,
+        ChangeCornerArcher,
 
         //Elfemale
         GrowAdultForest,

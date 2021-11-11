@@ -25,5 +25,7 @@
 
         GiveTakeToolWeapon,
         BuyRes,
+
+        UniqAbil,
     }
 }

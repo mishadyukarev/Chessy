@@ -6,20 +6,20 @@ namespace Chessy.Game
 {
     public sealed class StunElfemaleMS : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, OwnerC> _unitMainFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _unitStatFilt = default;
-        private EcsFilter<CellUnitDataC, StunC> _unitEffFilt = default;
-        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqFilt = default;
-        private EcsFilter<CellUnitDataC, VisibleC> _unitVisFilt = default;
+        private EcsFilter<UnitC, OwnerC> _unitMainFilt = default;
+        private EcsFilter<UnitC, HpC, StepC> _unitStatFilt = default;
+        private EcsFilter<UnitC, StunC> _unitEffFilt = default;
+        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<UnitC, VisibleC> _unitVisFilt = default;
 
-        private EcsFilter<CellEnvDataC> _envFilt = default;
+        private EcsFilter<EnvC> _envFilt = default;
 
         public void Run()
         {
             FromToMC.Get(out var idx_from, out var idx_to);
 
             var sender = InfoC.Sender(MGOTypes.Master);
-            var playerSend = sender.GetPlayerType();
+            var playerSend = WhoseMoveC.WhoseMove;
 
             ref var ownUnit_from = ref _unitMainFilt.Get2(idx_from);
             ref var hp_from = ref _unitStatFilt.Get2(idx_from);
@@ -57,7 +57,7 @@ namespace Chessy.Game
 
                                 else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                             }
-                            else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
+                            else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
                         }
                     }
                 }

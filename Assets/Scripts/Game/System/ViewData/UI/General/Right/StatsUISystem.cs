@@ -4,11 +4,11 @@ namespace Chessy.Game
 {
     public sealed class StatsUISystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC, DamageC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOtherFill = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, HpC, DamageC, StepC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, ConditionUnitC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOtherFill = default;
         private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
+        private EcsFilter<EnvC> _cellEnvFilter = default;
 
         public void Run()
         {
@@ -41,7 +41,7 @@ namespace Chessy.Game
                 StatZoneViewUIC.SetTextToStat(UnitStatTypes.Steps, selStepUnitC.Steps.ToString());
                 StatZoneViewUIC.SetTextToStat(UnitStatTypes.Water, thirUnitC_sel.Water.ToString());
 
-                StatZoneViewUIC.FillAmount(UnitStatTypes.Hp, selHpUnitC.Hp, HpUnitC.MAX_HP);
+                StatZoneViewUIC.FillAmount(UnitStatTypes.Hp, selHpUnitC.Hp, HpC.MAX_HP);
                 StatZoneViewUIC.FillAmount(UnitStatTypes.Damage, selDamUnitC.DamageOnCell(unit_sel.Unit, levUnit_sel.Level, selConUnitC, twUnit_sel, effUnit_sel, UnitPercUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit, UnitStatTypes.Damage), selBuildC.Build, selEnvC.Envronments), selDamUnitC.DamageAttack(unit_sel.Unit, levUnit_sel.Level, twUnit_sel, effUnit_sel, AttackTypes.Simple, UnitPercUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit, UnitStatTypes.Damage)));
                 StatZoneViewUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.Steps, selStepUnitC.MaxSteps(unit_sel.Unit, effUnit_sel.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_sel.Owner, unit_sel.Unit)));
                 StatZoneViewUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.Water, thirUnitC_sel.MaxWater(UnitPercUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit, UnitStatTypes.Water)));

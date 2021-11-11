@@ -6,7 +6,7 @@ namespace Chessy.Game
 {
     public sealed class ConditionMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, StepComponent, ConditionUnitC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, StepC, ConditionUnitC> _cellUnitFilter = default;
 
         public void Run()
         {

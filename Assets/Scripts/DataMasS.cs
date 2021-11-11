@@ -18,7 +18,7 @@ namespace Chessy.Game
                 .Add(new ExtractBuildUpdMS())
                 .Add(new FireUpdMasSys())
                 .Add(new CloudUpdMasSys())
-                .Add(new ThirstyUpdMasSys())
+                .Add(new ThirstyUpdMS())
                 .Add(new RelaxUpdMasSys())
                 .Add(new HungryUpdMasSys());
 
@@ -51,7 +51,7 @@ namespace Chessy.Game
             rpcSystems.Add(RpcMasterTypes.ToNewUnit, new EcsSystems(gameWorld).Add(new ScoutOldNewSys()));
             rpcSystems.Add(RpcMasterTypes.PickUpgrade, new EcsSystems(gameWorld).Add(new PickUpgMasSys()));
             rpcSystems.Add(RpcMasterTypes.GiveTakeToolWeapon, new EcsSystems(gameWorld).Add(new GiveTakeTWMasSys()));
-            rpcSystems.Add(RpcMasterTypes.GetHero, new EcsSystems(gameWorld).Add(new GetHeroMastS()));
+            rpcSystems.Add(RpcMasterTypes.GetHero, new EcsSystems(gameWorld).Add(new GetHeroMS()));
             rpcSystems.Add(RpcMasterTypes.FromToNewUnit, new EcsSystems(gameWorld).Add(new FromToNewUnitMS()));
             var rpcSystsAction = new Dictionary<RpcMasterTypes, Action>();
             foreach (var item_0 in rpcSystems) rpcSystsAction.Add(item_0.Key, item_0.Value.Run);
@@ -68,6 +68,7 @@ namespace Chessy.Game
             uniqSys.Add(UniqAbilTypes.CircularAttack, new EcsSystems(gameWorld).Add(new CircularAttackKingMastSys()));
             uniqSys.Add(UniqAbilTypes.BonusNear, new EcsSystems(gameWorld).Add(new BonusNearUnitKingMS()));
             uniqSys.Add(UniqAbilTypes.PutOutFireElfemale, new EcsSystems(gameWorld).Add(new PutOutFireElfemaleMS()));
+            uniqSys.Add(UniqAbilTypes.ChangeCornerArcher, new EcsSystems(gameWorld).Add(new ChangeCornerArcherMS()));
 
             var uniqSysAction = new Dictionary<UniqAbilTypes, Action>();   
             foreach (var item_0 in uniqSys) uniqSysAction.Add(item_0.Key, item_0.Value.Run);

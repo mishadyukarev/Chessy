@@ -11,9 +11,9 @@ namespace Chessy.Game
         private EcsFilter<XyCellComponent> _xyCellFilt = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
         private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
-        private EcsFilter<CellUnitDataC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
-        private EcsFilter<CellFireDataC> _cellFireFilter = default;
+        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
+        private EcsFilter<EnvC> _cellEnvFilter = default;
+        private EcsFilter<FireC> _cellFireFilter = default;
 
 
         public void Run()

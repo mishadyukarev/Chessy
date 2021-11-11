@@ -6,12 +6,12 @@ namespace Chessy.Game
     public sealed class GrowAdultForestMS : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyFilt = default;
-        private EcsFilter<CellEnvDataC, CellEnvResC> _envFilt = default;
+        private EcsFilter<EnvC, CellEnvResC> _envFilt = default;
 
-        private EcsFilter<CellUnitDataC, OwnerC> _unitMainFilt = default;
-        private EcsFilter<CellUnitDataC, StepComponent> _unitStatFilt = default;
-        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqFilt = default;
-        private EcsFilter<CellUnitDataC, UnitEffectsC> _unitEffFilt = default;
+        private EcsFilter<UnitC, OwnerC> _unitMainFilt = default;
+        private EcsFilter<UnitC, StepC> _unitStatFilt = default;
+        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<UnitC, UnitEffectsC> _unitEffFilt = default;
 
         public void Run()
         {

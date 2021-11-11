@@ -7,14 +7,14 @@ namespace Chessy.Game
     {
         private EcsFilter<ForSettingUnitMasCom> _setterFilter = default;
 
-        private EcsFilter<CellEnvDataC> _cellEnvirDataFilter = default;
-        private EcsFilter<CellFireDataC> _fireFilt = default;
+        private EcsFilter<EnvC> _cellEnvirDataFilter = default;
+        private EcsFilter<FireC> _fireFilt = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
-        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqAbilFilt = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
+        private EcsFilter<UnitC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
+        private EcsFilter<UnitC, UniqAbilC> _unitUniqAbilFilt = default;
 
         public void Run()
         {

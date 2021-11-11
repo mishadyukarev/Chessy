@@ -6,9 +6,9 @@ namespace Chessy.Game
     public sealed class BonusNearUnitKingMS : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _cellXyFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilt = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
-        private EcsFilter<CellUnitDataC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<UnitC, HpC, StepC> _cellUnitFilt = default;
+        private EcsFilter<UnitC, ConditionUnitC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
+        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
 
         public void Run()
         {

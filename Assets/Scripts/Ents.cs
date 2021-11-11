@@ -15,15 +15,15 @@ namespace Chessy.Game
 
 
         private readonly EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private readonly EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilter = default;
+        private readonly EcsFilter<EnvC, CellEnvResC> _cellEnvFilter = default;
         private readonly EcsFilter<CellViewC, CellDataC> _cellViewFilt = default;
         private readonly EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
         private readonly EcsFilter<CellCloudDataC> _cellWeatherFilt = default;
         private readonly EcsFilter<CellRiverDataC> _cellRiverFilt = default;
 
-        private readonly EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private readonly EcsFilter<CellUnitDataC, HpUnitC, DamageC, StepComponent> _cellUnitStatsFilt = default;
-        private readonly EcsFilter<CellUnitDataC, ConditionUnitC, ToolWeaponC, WaterUnitC> _cellUnitOtherFilt = default;
+        private readonly EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private readonly EcsFilter<UnitC, HpC, DamageC, StepC> _cellUnitStatsFilt = default;
+        private readonly EcsFilter<UnitC, ConditionUnitC, ToolWeaponC, WaterUnitC> _cellUnitOtherFilt = default;
 
 
         public void Init()
@@ -115,10 +115,10 @@ namespace Chessy.Game
                         .Replace(new CellDataC(cellView_GO))
                         .Replace(new CellViewC(cellView_GO))
 
-                        .Replace(new CellEnvDataC(new Dictionary<EnvTypes, bool>()))
+                        .Replace(new EnvC(new Dictionary<EnvTypes, bool>()))
                         .Replace(new CellEnvResC(true))
                         .Replace(new CellEnvironViewCom(curParentCell_GO))
-                        .Replace(new CellFireDataC())
+                        .Replace(new FireC())
                         .Replace(new CellFireViewComponent(curParentCell_GO))
                         .Replace(new CellSupViewComponent(curParentCell_GO))
                         .Replace(new CellCloudDataC())
@@ -135,14 +135,14 @@ namespace Chessy.Game
 
 
                     _curGameWorld.NewEntity()
-                         .Replace(new CellUnitDataC())
+                         .Replace(new UnitC())
 
                          .Replace(new LevelUnitC())
                          .Replace(new OwnerC())
 
-                         .Replace(new HpUnitC())
+                         .Replace(new HpC())
                          .Replace(new DamageC())
-                         .Replace(new StepComponent())
+                         .Replace(new StepC())
 
                          .Replace(new ConditionUnitC())
                          .Replace(new MoveInCondC(true))
@@ -163,6 +163,10 @@ namespace Chessy.Game
                          .Replace(new CellBarsViewComponent(curParentCell_GO))
                          
                          .Replace(new CellStunViewC(curParentCell_GO.transform));
+
+
+                    _curGameWorld.NewEntity()
+                         .Replace(new CornerArcherC());
 
 
                     _curGameWorld.NewEntity()
@@ -263,7 +267,7 @@ namespace Chessy.Game
                 .Replace(new GetterUnitsViewUIC(downZone_GO))
                 .Replace(new DonerUICom(downZone_GO))
                 .Replace(new GiveTakeViewUIC(downZone_GO))
-                .Replace(new ScoutViewUIC(downZone_GO.transform))
+                .Replace(new ScoutUIC(downZone_GO.transform))
                 .Replace(new HeroDownUIC(downZone_GO.transform))
 
                 ///Left
@@ -282,7 +286,9 @@ namespace Chessy.Game
                 .Replace(new RelaxUIC(rightZone_go.transform.Find("ConditionZone")));
 
 
-            WhoseMoveC.Start();
+            WhoseMoveC.StartGame();
+            ScoutHeroCooldownC.StartGame();
+            SelectorC.StartGame();
 
 
             if (!HintComC.IsOnHint)
@@ -427,6 +433,7 @@ namespace Chessy.Game
                 }
 
                 InvUnitsC.SetStartAmountUnitAll();
+
 
                 for (ResTypes resourceTypes = Support.MinResType; resourceTypes < Support.MaxResType; resourceTypes++)
                 {

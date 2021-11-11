@@ -11,28 +11,27 @@ namespace Chessy.Game
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitStatFilt = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
-        private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitTWFilt = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, HpC, StepC> _cellUnitStatFilt = default;
+        private EcsFilter<UnitC, ConditionUnitC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
+        private EcsFilter<UnitC, ToolWeaponC> _cellUnitTWFilt = default;
+        private EcsFilter<CornerArcherC> _archerFilt = default;
+        private EcsFilter<UniqAbilC> _unitUniqFilt = default;
 
         private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
-        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvrFilter = default;
-        private EcsFilter<CellFireDataC> _cellFireFilter = default;
+        private EcsFilter<EnvC, CellEnvResC> _cellEnvrFilter = default;
+        private EcsFilter<FireC> _cellFireFilter = default;
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
         private EcsFilter<CellCloudDataC> _cellCloudFilt = default;
 
 
-        private EcsFilter<ForBuildingMasCom, XyCellForDoingMasCom> _buildFilter = default;
+        private EcsFilter<ForBuildingMasCom> _buildFilter = default;
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
-        private EcsFilter<FromToMC> _attackFilter = default;
         private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
-        private EcsFilter<ForSettingUnitMasCom, XyCellForDoingMasCom> _settingUnitFilter = default;
-        private EcsFilter<ForSeedingMasCom, XyCellForDoingMasCom> _seedingFilter = default;
-        private EcsFilter<ForCircularAttackMasCom, XyCellForDoingMasCom> _circularAttackFilter = default;
+        private EcsFilter<ForSettingUnitMasCom> _settingUnitFilter = default;
+        private EcsFilter<ForSeedingMasCom> _seedingFilter = default;
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGivePawnToolFilter = default;
-        private EcsFilter<ForUpgradeUnitCom> _forUpgradeUnitFilt = default;
         private EcsFilter<ForOldNewUnitCom> _forOldToNewUnitFilt = default;
 
         private static PhotonView PhotonView => RpcViewC.PhotonView;
@@ -63,8 +62,6 @@ namespace Chessy.Game
 
         public static void DoneToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.Done, new object[default]);
 
-        public static void RotateAllToMaster(Player sender) => PhotonView.RPC(GeneralRPCName, sender, RpcGeneralTypes.RotateAll, new object[default]);
-
         public static void BuyResToMaster(ResTypes res) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.BuyRes, new object[] { res });
         public static void PickUpgradeToMaster(PickUpgradeTypes upgBut) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.PickUpgrade, new object[] { upgBut });
         public static void GetHero(UnitTypes unit) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GetHero, new object[] { unit });
@@ -90,28 +87,31 @@ namespace Chessy.Game
         }
         public static void SimpleMistakeToGeneral(MistakeTypes mistakeType, Player playerTo) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.Mistake, new object[] { mistakeType });
 
-        public static void FireArcherToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.FireArcher, new object[] { fromIdx, toIdx });
-        public static void FirePawnToMas(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.FirePawn, new object[] { idx });
-        public static void PutOutFirePawnToMas(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.PutOutFirePawn, new object[] { idx });
-        public static void SeedEnvToMaster(byte idxCell, EnvTypes env) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.Seed, new object[] { idxCell, env });
+        public static void FireArcherToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.FireArcher, fromIdx, toIdx });
+        public static void FirePawnToMas(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.FirePawn, idx });
+        public static void PutOutFirePawnToMas(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.PutOutFirePawn, idx });
+        public static void SeedEnvToMaster(byte idxCell, EnvTypes env) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.Seed, idxCell, env });
+        public static void ChangeCornerArchToMas(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.ChangeCornerArcher, idxCell });
 
-        public static void BonusNearUnits(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.BonusNear, new object[] { idxCell });
+        public static void BonusNearUnits(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.BonusNear, idxCell });
 
-        public static void StunElfemaleToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.StunElfemale, new object[] { fromIdx, toIdx });
+        public static void StunElfemaleToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.StunElfemale, fromIdx, toIdx });
 
         public static void FromNewUnitToMas(UnitTypes unitType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ToNewUnit, new object[] { unitType, idxCell });
         public static void FromToNewUnitToMas(UnitTypes unitType, byte idxFrom, byte idxTo) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.FromToNewUnit, new object[] { unitType, idxFrom, idxTo });
         public static void UpgradeUnitToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeUnit, new object[] { idxCell });
         public static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, LevelTWTypes levelTWType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, levelTWType, idxCell });
 
-        public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.CircularAttack, new object[] { idxCell });
+        public static void ActiveMotionZoneToGen(Player player) => PhotonView.RPC(GeneralRPCName, player, RpcGeneralTypes.ActiveMotion, new object[] { });
+
+        public static void CircularAttackKingToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.CircularAttack, idxCell });
 
         public static void CreateUnitToMaster(UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CreateUnit, new object[] { unitType });
 
         public static void MeltOreToMaster() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.MeltOre, new object[] { });
 
-        public static void GrowAdultForest(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.GrowAdultForest, new object[] { idx });
-        public static void PutOutFireElffToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, UniqAbilTypes.PutOutFireElfemale, new object[] { fromIdx, toIdx });
+        public static void GrowAdultForest(byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.GrowAdultForest, idx });
+        public static void PutOutFireElffToMas(byte fromIdx, byte toIdx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UniqAbil, new object[] { UniqAbilTypes.PutOutFireElfemale, fromIdx, toIdx });
 
         public static void SetUniToMaster(byte idxCell, UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.SetUnit, new object[] { idxCell, unitType });
 
@@ -130,143 +130,150 @@ namespace Chessy.Game
 
             InfoC.AddInfo(MGOTypes.Master, infoFrom);
 
-            switch (rpcType)
+            if(rpcType == RpcMasterTypes.UniqAbil)
             {
-                case RpcMasterTypes.None:
-                    throw new Exception();
+                var uniqAbil = (UniqAbilTypes)objects[_curNumber++];
 
-                case RpcMasterTypes.Ready:
-                    break;
+                switch (uniqAbil)
+                {
+                    case UniqAbilTypes.None: throw new Exception();
 
-                case RpcMasterTypes.Done:
-                    break;
+                    case UniqAbilTypes.CircularAttack:
+                        IdxDoingMC.Set((byte)objects[_curNumber++]);
+                        break;
 
-                case RpcMasterTypes.Build:
-                    _buildFilter.Get1(0).BuildingTypeForBuidling = (BuildTypes)objects[1];
-                    _buildFilter.Get1(0).IdxForBuild = (byte)objects[0];
-                    break;
+                    case UniqAbilTypes.BonusNear:
+                        IdxDoingMC.Set((byte)objects[_curNumber++]);
+                        break;
 
-                case RpcMasterTypes.DestroyBuild:
-                    _destroyFilter.Get1(0).IdxForDestroy = (byte)objects[0];
-                    break;
+                    case UniqAbilTypes.FirePawn:
+                        IdxDoingMC.Set((byte)objects[_curNumber++]);
+                        break;
 
-                case RpcMasterTypes.Shift:
-                    ForShiftMasCom.IdxFrom = (byte)objects[0];
-                    ForShiftMasCom.IdxTo = (byte)objects[1];
-                    break;
+                    case UniqAbilTypes.PutOutFirePawn:
+                        IdxDoingMC.Set((byte)objects[_curNumber++]);
+                        break;
 
-                case RpcMasterTypes.Attack:
-                    FromToMC.Set((byte)objects[0], (byte)objects[1]);
-                    break;
+                    case UniqAbilTypes.Seed:
+                        _seedingFilter.Get1(0).IdxForSeeding = (byte)objects[_curNumber++];
+                        _seedingFilter.Get1(0).EnvTypeForSeeding = (EnvTypes)objects[_curNumber++];
+                        break;
 
-                case RpcMasterTypes.ConditionUnit:
-                    ForCondMasCom.NeededCondUnitType = (CondUnitTypes)objects[0];
-                    ForCondMasCom.IdxForCondition = (byte)objects[1];
-                    break;
+                    case UniqAbilTypes.FireArcher:
+                        FromToMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
+                        break;
 
-                case RpcMasterTypes.CreateUnit:
-                    _creatorUnitFilter.Get1(0).UnitTypeForCreating = (UnitTypes)objects[0];
-                    break;
+                    case UniqAbilTypes.GrowAdultForest:
+                        ForGrowAdultForestMC.Set((byte)objects[_curNumber++]);
+                        break;
 
-                case RpcMasterTypes.MeltOre:
-                    break;
+                    case UniqAbilTypes.StunElfemale:
+                        FromToMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
+                        break;
 
-                case RpcMasterTypes.SetUnit:
-                    _settingUnitFilter.Get1(0).IdxCellForSetting = (byte)objects[0];
-                    _settingUnitFilter.Get1(0).UnitTypeForSetting = (UnitTypes)objects[1];
-                    break;
+                    case UniqAbilTypes.PutOutFireElfemale:
+                        FromToMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
+                        break;
 
-                case RpcMasterTypes.BuyRes:
-                    ForBuyResMasC.Res = (ResTypes)objects[_curNumber++];
-                    break;
+                    case UniqAbilTypes.ChangeCornerArcher:
+                        IdxDoingMC.Set((byte)objects[_curNumber++]);
+                        break;
 
-                case RpcMasterTypes.PickUpgrade:
-                    ForPickUpgMasC.UpgButType = (PickUpgradeTypes)objects[0];
-                    break;
+                    default: throw new Exception();
+                }
 
-                case RpcMasterTypes.ToNewUnit:
-                    _forOldToNewUnitFilt.Get1(0).UnitType = (UnitTypes)objects[0];
-                    _forOldToNewUnitFilt.Get1(0).IdxCell = (byte)objects[1];
-                    break;
-
-                case RpcMasterTypes.FromToNewUnit:
-                    UnitDoingMC.Set((UnitTypes)objects[_curNumber++]);
-                    FromToMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
-                    break;
-
-                case RpcMasterTypes.UpgradeUnit:
-                    _forUpgradeUnitFilt.Get1(0).idxCellForUpgrade = (byte)objects[0];
-                    break;
-
-                case RpcMasterTypes.GiveTakeToolWeapon:
-                    _forGivePawnToolFilter.Get1(0).ToolWeapType = (ToolWeaponTypes)objects[_curNumber++];
-                    _forGivePawnToolFilter.Get1(0).LevelTWType = (LevelTWTypes)objects[_curNumber++];
-                    _forGivePawnToolFilter.Get1(0).IdxCell = (byte)objects[_curNumber++];
-                    break;
-
-                case RpcMasterTypes.GetHero:
-                    UnitDoingMC.Set((UnitTypes)objects[_curNumber++]);
-                    break;
-
-                default:
-                    throw new Exception();
+                DataMastC.InvokeRun(uniqAbil);
             }
-
-            DataMastC.InvokeRun(rpcType);
-
-            SyncAllToMast();
-        }
-        [PunRPC]
-        private void MasterRPC(UniqAbilTypes uniqAbil, object[] objects, PhotonMessageInfo infoFrom)
-        {
-            _curNumber = 0;
-            InfoC.AddInfo(MGOTypes.Master, infoFrom);
-
-            switch (uniqAbil)
+            else
             {
-                case UniqAbilTypes.None: throw new Exception();
+                switch (rpcType)
+                {
+                    case RpcMasterTypes.None:
+                        throw new Exception();
 
-                case UniqAbilTypes.CircularAttack:
-                    _circularAttackFilter.Get1(0).IdxUnitForCirculAttack = (byte)objects[0];
-                    break;
+                    case RpcMasterTypes.Ready:
+                        break;
 
-                case UniqAbilTypes.BonusNear:
-                    IdxDoingMC.Set((byte)objects[0]);
-                    break;
+                    case RpcMasterTypes.Done:
+                        break;
 
-                case UniqAbilTypes.FirePawn:
-                    IdxDoingMC.Set((byte)objects[_curNumber++]);
-                    break;
+                    case RpcMasterTypes.Build:
+                        _buildFilter.Get1(0).BuildingTypeForBuidling = (BuildTypes)objects[1];
+                        _buildFilter.Get1(0).IdxForBuild = (byte)objects[0];
+                        break;
 
-                case UniqAbilTypes.PutOutFirePawn:
-                    IdxDoingMC.Set((byte)objects[_curNumber++]);
-                    break;
+                    case RpcMasterTypes.DestroyBuild:
+                        _destroyFilter.Get1(0).IdxForDestroy = (byte)objects[0];
+                        break;
 
-                case UniqAbilTypes.Seed:
-                    _seedingFilter.Get1(0).IdxForSeeding = (byte)objects[0];
-                    _seedingFilter.Get1(0).EnvTypeForSeeding = (EnvTypes)objects[1];
-                    break;
+                    case RpcMasterTypes.Shift:
+                        ForShiftMasCom.IdxFrom = (byte)objects[0];
+                        ForShiftMasCom.IdxTo = (byte)objects[1];
+                        break;
 
-                case UniqAbilTypes.FireArcher:
-                    FromToMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
-                    break;
+                    case RpcMasterTypes.Attack:
+                        FromToMC.Set((byte)objects[0], (byte)objects[1]);
+                        break;
 
-                case UniqAbilTypes.GrowAdultForest:
-                    ForGrowAdultForestMC.Set((byte)objects[_curNumber++]);
-                    break;
+                    case RpcMasterTypes.ConditionUnit:
+                        ForCondMasCom.NeededCondUnitType = (CondUnitTypes)objects[0];
+                        ForCondMasCom.IdxForCondition = (byte)objects[1];
+                        break;
 
-                case UniqAbilTypes.StunElfemale:
-                    FromToMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
-                    break;
+                    case RpcMasterTypes.CreateUnit:
+                        _creatorUnitFilter.Get1(0).UnitTypeForCreating = (UnitTypes)objects[0];
+                        break;
 
-                case UniqAbilTypes.PutOutFireElfemale:
-                    FromToMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
-                    break;
+                    case RpcMasterTypes.MeltOre:
+                        break;
 
-                default: throw new Exception();
+                    case RpcMasterTypes.SetUnit:
+                        _settingUnitFilter.Get1(0).IdxCellForSetting = (byte)objects[0];
+                        _settingUnitFilter.Get1(0).UnitTypeForSetting = (UnitTypes)objects[1];
+                        break;
+
+                    case RpcMasterTypes.BuyRes:
+                        ForBuyResMasC.Res = (ResTypes)objects[_curNumber++];
+                        break;
+
+                    case RpcMasterTypes.PickUpgrade:
+                        ForPickUpgMasC.UpgButType = (PickUpgradeTypes)objects[0];
+                        break;
+
+                    case RpcMasterTypes.ToNewUnit:
+                        _forOldToNewUnitFilt.Get1(0).UnitType = (UnitTypes)objects[0];
+                        _forOldToNewUnitFilt.Get1(0).IdxCell = (byte)objects[1];
+                        break;
+
+                    case RpcMasterTypes.FromToNewUnit:
+                        UnitDoingMC.Set((UnitTypes)objects[_curNumber++]);
+                        FromToMC.Set((byte)objects[_curNumber++], (byte)objects[_curNumber++]);
+                        break;
+
+                    case RpcMasterTypes.UpgradeUnit:
+                        IdxDoingMC.Set((byte)objects[_curNumber++]);
+                        break;
+
+                    case RpcMasterTypes.GiveTakeToolWeapon:
+                        _forGivePawnToolFilter.Get1(0).ToolWeapType = (ToolWeaponTypes)objects[_curNumber++];
+                        _forGivePawnToolFilter.Get1(0).LevelTWType = (LevelTWTypes)objects[_curNumber++];
+                        _forGivePawnToolFilter.Get1(0).IdxCell = (byte)objects[_curNumber++];
+                        break;
+
+                    case RpcMasterTypes.GetHero:
+                        UnitDoingMC.Set((UnitTypes)objects[_curNumber++]);
+                        break;
+
+                    case RpcMasterTypes.UniqAbil:
+                        UnitDoingMC.Set((UnitTypes)objects[_curNumber++]);
+                        break;
+
+                    default:
+                        throw new Exception();
+                }
+
+                DataMastC.InvokeRun(rpcType);
             }
-
-            DataMastC.InvokeRun(uniqAbil);
 
             SyncAllToMast();
         }
@@ -313,8 +320,8 @@ namespace Chessy.Game
                     SoundEffectC.Play((UniqAbilTypes)objects[_curNumber++]);
                     break;
 
-                case RpcGeneralTypes.RotateAll:
-                   
+                case RpcGeneralTypes.ActiveMotion:
+                    MotionsDataUIC.IsActivated = true;
                     break;
 
                 default:
@@ -352,13 +359,11 @@ namespace Chessy.Game
             var objs = new List<object>();
 
             objs.Add(WhoseMoveC.WhoseMove);
-
             objs.Add(EndGameDataUIC.PlayerWinner);
-
             objs.Add(ReadyDataUIC.IsStartedGame);
             objs.Add(ReadyDataUIC.IsReady(PlayerTypes.Second));
 
-            foreach (var item_0 in MotionsDataUIC.IsActivatedUI) objs.Add(item_0.Value);
+            //foreach (var item_0 in MotionsDataUIC.IsActivatedUI) objs.Add(item_0.Value);
             objs.Add(MotionsDataUIC.AmountMotions);
 
             objs.Add(PickUpgZoneDataUIC.HaveUpgrade(PlayerTypes.Second));
@@ -371,6 +376,9 @@ namespace Chessy.Game
             }
 
             objs.Add(WindC.DirectWind);
+
+
+            #region Upgrades
 
             foreach (var item_0 in UnitPercUpgC.PercUpgs)
             {
@@ -389,6 +397,28 @@ namespace Chessy.Game
                     objs.Add(UnitStepUpgC.UpgSteps(item_0.Key, item_1.Key));
                 }
             }
+            foreach (var item_0 in BuildsUpgC.HaveUpgrades)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    objs.Add(BuildsUpgC.HaveUpgrade(item_0.Key, item_1.Key));
+                }
+            }
+
+            #endregion
+
+
+            #region Cooldowns
+
+            foreach (var item_0 in ScoutHeroCooldownC.Cooldowns)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    objs.Add(ScoutHeroCooldownC.Cooldown(item_0.Key, item_1.Key));
+                }
+            }
+
+            #endregion
 
 
             foreach (var idx_0 in _cellUnitOthFilt)
@@ -408,6 +438,14 @@ namespace Chessy.Game
                 objs.Add(_cellUnitTWFilt.Get2(idx_0).ToolWeapType);
                 objs.Add(_cellUnitTWFilt.Get2(idx_0).LevelTWType);
                 objs.Add(_cellUnitTWFilt.Get2(idx_0).ShieldProt);
+
+                objs.Add(_archerFilt.Get1(idx_0).IsCornered);
+
+                foreach (var item in _unitUniqFilt.Get1(idx_0).Cooldowns)
+                    objs.Add(item.Value);
+
+
+
 
 
                 objs.Add(_cellBuildFilter.Get1(idx_0).Build);
@@ -437,6 +475,9 @@ namespace Chessy.Game
 
 
                 objs.Add(_cellFireFilter.Get1(idx_0).HaveFire);
+
+
+                
             }
 
             #region Inventor
@@ -537,7 +578,7 @@ namespace Chessy.Game
 
 
             PhotonView.RPC(nameof(SyncAllOther), RpcTarget.Others, objects);
-            PhotonView.RPC(nameof(UpdateVision), RpcTarget.Others, new object { });
+            PhotonView.RPC(nameof(UpdateVision), RpcTarget.Others);
         }
 
         [PunRPC]
@@ -546,13 +587,11 @@ namespace Chessy.Game
             _curNumber = 0;
 
             WhoseMoveC.SetWhoseMove((PlayerTypes)objects[_curNumber++]);
-
             EndGameDataUIC.PlayerWinner = (PlayerTypes)objects[_curNumber++];
-
             ReadyDataUIC.IsStartedGame = (bool)objects[_curNumber++];
             ReadyDataUIC.SetIsReady(WhoseMoveC.CurPlayerI, (bool)objects[_curNumber++]);
 
-            foreach (var item_0 in MotionsDataUIC.IsActivatedUI) MotionsDataUIC.Sync(item_0.Key, item_0.Value);
+            //foreach (var item_0 in MotionsDataUIC.IsActivatedUI) MotionsDataUIC.Sync(item_0.Key, (bool)objects[_curNumber++]);
             MotionsDataUIC.AmountMotions = (int)objects[_curNumber++];
 
             PickUpgZoneDataUIC.SetHaveUpgrade(PlayerTypes.Second, (bool)objects[_curNumber++]);
@@ -586,6 +625,26 @@ namespace Chessy.Game
                     UnitStepUpgC.SetStepUpg(item_0.Key, item_1.Key, (int)objects[_curNumber++]);
                 }
             }
+            foreach (var item_0 in BuildsUpgC.HaveUpgrades)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    BuildsUpgC.Sync(item_0.Key, item_1.Key, (bool)objects[_curNumber++]);
+                }
+            }
+
+            #endregion
+
+
+            #region Cooldowns
+
+            foreach (var item_0 in ScoutHeroCooldownC.Cooldowns)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    ScoutHeroCooldownC.Sync(item_0.Key, item_1.Key, (int)objects[_curNumber++]);
+                }
+            }
 
             #endregion
 
@@ -607,6 +666,13 @@ namespace Chessy.Game
                 _cellUnitTWFilt.Get2(idx_0).LevelTWType = (LevelTWTypes)objects[_curNumber++];
                 _cellUnitTWFilt.Get2(idx_0).SyncShield((int)objects[_curNumber++]);
 
+                _archerFilt.Get1(idx_0).Sync((bool)objects[_curNumber++]);
+
+                foreach (var item in _unitUniqFilt.Get1(idx_0).Cooldowns)
+                    _unitUniqFilt.Get1(idx_0).Sync(item.Key, (int)objects[_curNumber++]);
+
+
+
 
 
                 _cellBuildFilter.Get1(idx_0).Sync((BuildTypes)objects[_curNumber++]);
@@ -616,8 +682,8 @@ namespace Chessy.Game
 
                 ref var env_0 = ref _cellEnvrFilter.Get1(idx_0);
                 ref var envRes_0 = ref _cellEnvrFilter.Get2(idx_0);
-                foreach (var item in env_0.Envronments) env_0.Sync(item.Key, item.Value);
-                foreach (var item in envRes_0.Resources) envRes_0.Sync(item.Key, item.Value);
+                foreach (var item in env_0.Envronments) env_0.Sync(item.Key, (bool)objects[_curNumber++]);
+                foreach (var item in envRes_0.Resources) envRes_0.Sync(item.Key, (int)objects[_curNumber++]);
 
 
                 ref var river_0 = ref _cellRiverFilt.Get1(idx_0);

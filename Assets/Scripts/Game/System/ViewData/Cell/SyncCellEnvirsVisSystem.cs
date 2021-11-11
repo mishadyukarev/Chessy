@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     public sealed class SyncCellEnvirsVisSystem : IEcsRunSystem
     {
-        private EcsFilter<CellEnvDataC, CellEnvironViewCom> _cellEnvFilter = default;
+        private EcsFilter<EnvC, CellEnvironViewCom> _cellEnvFilter = default;
 
         public void Run()
         {

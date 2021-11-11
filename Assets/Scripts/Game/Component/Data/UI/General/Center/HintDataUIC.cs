@@ -9,7 +9,7 @@ namespace Chessy.Game
         private static Dictionary<VideoClipTypes, bool> _wasActivated;
         public static int CurStartNumber;
 
-        public static bool IsActive(VideoClipTypes video)
+        public static bool WasActived(VideoClipTypes video)
         {
             if (!_wasActivated.ContainsKey(video)) throw new Exception();
             return _wasActivated[video];
@@ -26,7 +26,7 @@ namespace Chessy.Game
             }
         }
 
-        public static void SetActive(VideoClipTypes video, bool isActive)
+        public static void SetWasActived(VideoClipTypes video, bool isActive)
         {
             if (!_wasActivated.ContainsKey(video)) throw new Exception();
             _wasActivated[video] = isActive;

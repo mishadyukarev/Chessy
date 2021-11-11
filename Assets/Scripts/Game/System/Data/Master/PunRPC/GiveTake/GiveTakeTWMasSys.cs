@@ -7,9 +7,9 @@ namespace Chessy.Game
     {
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGiveTakeToolWeapFilter = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
 
         public void Run()
         {

@@ -7,35 +7,63 @@ namespace Chessy.Game
     {
         public void Init()
         {
-            ScoutViewUIC.AddListScout(ExecuteScout);
+            ScoutUIC.AddListScout(ExecuteScout);
+            HeroDownUIC.AddList(Hero);
 
             DonerUICom.AddListener(Done);
 
             GetterUnitsViewUIC.AddListenerToCreateUnit(UnitTypes.Pawn, delegate { CreateUnit(UnitTypes.Pawn); });
-            GetterUnitsViewUIC.AddListenerToCreateUnit(UnitTypes.Rook, delegate { CreateUnit(UnitTypes.Rook); });
-            GetterUnitsViewUIC.AddListenerToCreateUnit(UnitTypes.Bishop, delegate { CreateUnit(UnitTypes.Bishop); });
+            GetterUnitsViewUIC.AddListenerToCreateUnit(UnitTypes.Archer, delegate { CreateUnit(UnitTypes.Archer); });
 
             KingZoneViewUIC.AddListenerToSetKing_Button(delegate { GetUnit(UnitTypes.King); });
             GetterUnitsViewUIC.AddListener(UnitTypes.Pawn, delegate { GetUnit(UnitTypes.Pawn); });
-            GetterUnitsViewUIC.AddListener(UnitTypes.Rook, delegate { GetUnit(UnitTypes.Rook); });
-            GetterUnitsViewUIC.AddListener(UnitTypes.Bishop, delegate { GetUnit(UnitTypes.Bishop); });
+            GetterUnitsViewUIC.AddListener(UnitTypes.Archer, delegate { GetUnit(UnitTypes.Archer); });
 
             GiveTakeViewUIC.AddListUpgradeButton(ToggleUpgradeUnit);
             GiveTakeViewUIC.AddList_Button(ToolWeaponTypes.Pick, delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
             GiveTakeViewUIC.AddList_Button(ToolWeaponTypes.Sword, delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
             GiveTakeViewUIC.AddList_Button(ToolWeaponTypes.Shield, delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
-
-            HeroDownUIC.AddList(Hero);
         }
 
         private void ExecuteScout()
         {
+            TryOnHint(VideoClipTypes.CreatingScout);
+
             if (WhoseMoveC.IsMyMove)
             {
-                SelectorC.Set(CellClickTypes.OldNewUnit);
-                OldNewC.Set(UnitTypes.Scout);
+                if (!ScoutHeroCooldownC.HaveCooldown(WhoseMoveC.CurPlayerI, UnitTypes.Scout))
+                {
+                    if (WhoseMoveC.IsMyMove)
+                    {
+                        SelectorC.Set(CellClickTypes.GiveScout);
+                    }
+                }
+                else
+                {
+                    SoundEffectC.Play(ClipGameTypes.Mistake);
+                }
             }
+            else SoundEffectC.Play(ClipGameTypes.Mistake);
         }
+        private void Hero()
+        {
+            TryOnHint(VideoClipTypes.CreatingHero);
+
+            if (WhoseMoveC.IsMyMove)
+            {
+                if (!ScoutHeroCooldownC.HaveCooldown(WhoseMoveC.CurPlayerI, InvUnitsC.MyHero))
+                {
+                    SelectorC.Set(CellClickTypes.GiveHero);
+                    SelectorC.IdxSelCell = default;
+                }
+                else
+                {
+                    SoundEffectC.Play(ClipGameTypes.Mistake);
+                }
+            }
+            else SoundEffectC.Play(ClipGameTypes.Mistake);
+        }
+
 
         private void Done()
         {
@@ -60,6 +88,7 @@ namespace Chessy.Game
 
                 RpcSys.CreateUnitToMaster(unitType);
             }
+            else SoundEffectC.Play(ClipGameTypes.Mistake);
         }
 
         private void GetUnit(UnitTypes unitType)
@@ -85,32 +114,20 @@ namespace Chessy.Game
                     GetterUnitsDataUIC.ActiveNeedCreateButton(unitType, true);
                 }
             }
+            else SoundEffectC.Play(ClipGameTypes.Mistake);
         }
 
         private void ToggleToolWeapon(ToolWeaponTypes tWType)
         {
             if (WhoseMoveC.IsMyMove)
             {
-                if (HintComC.IsOnHint)
+                if (tWType == ToolWeaponTypes.Pick)
                 {
-                    if (tWType == ToolWeaponTypes.Pick)
-                    {
-                        if (!HintDataUIC.IsActive(VideoClipTypes.Pick))
-                        {
-                            HintViewUIC.SetActiveHintZone(true);
-                            HintViewUIC.SetVideoClip(VideoClipTypes.Pick);
-                            HintDataUIC.SetActive(VideoClipTypes.Pick, true);
-                        }
-                    }
-                    else
-                    {
-                        if (!HintDataUIC.IsActive(VideoClipTypes.UpgToolWeapon))
-                        {
-                            HintViewUIC.SetActiveHintZone(true);
-                            HintViewUIC.SetVideoClip(VideoClipTypes.UpgToolWeapon);
-                            HintDataUIC.SetActive(VideoClipTypes.UpgToolWeapon, true);
-                        }
-                    }
+                    TryOnHint(VideoClipTypes.Pick);
+                }
+                else
+                {
+                    TryOnHint(VideoClipTypes.UpgToolWeapon);
                 }
 
                 if (SelectorC.Is(CellClickTypes.GiveTakeTW))
@@ -147,30 +164,31 @@ namespace Chessy.Game
                     else TwGiveTakeC.SetLevel(tWType, LevelTWTypes.Iron);
                 }
             }
+            else SoundEffectC.Play(ClipGameTypes.Mistake);
         }
 
         private void ToggleUpgradeUnit()
         {
             if (WhoseMoveC.IsMyMove)
             {
-                if (HintComC.IsOnHint)
-                {
-                    if (!HintDataUIC.IsActive(VideoClipTypes.UpgToolWeapon))
-                    {
-                        HintViewUIC.SetActiveHintZone(true);
-                        HintViewUIC.SetVideoClip(VideoClipTypes.UpgToolWeapon);
-                        HintDataUIC.SetActive(VideoClipTypes.UpgToolWeapon, true);
-                    }
-                }
+                TryOnHint(VideoClipTypes.UpgToolWeapon);
                 SelectorC.Set(CellClickTypes.UpgradeUnit);
             }
+            else SoundEffectC.Play(ClipGameTypes.Mistake);
         }
 
-        private void Hero()
+
+        private void TryOnHint(VideoClipTypes videoClip)
         {
-            SelectorC.Set(CellClickTypes.OldNewUnit);
-            OldNewC.Set(InvUnitsC.MyHero);
-            SelectorC.IdxSelCell = default;
+            if (HintComC.IsOnHint)
+            {
+                if (!HintDataUIC.WasActived(videoClip))
+                {
+                    HintViewUIC.SetActiveHintZone(true);
+                    HintViewUIC.SetVideoClip(videoClip);
+                    HintDataUIC.SetWasActived(videoClip, true);
+                }
+            }
         }
     }
 }

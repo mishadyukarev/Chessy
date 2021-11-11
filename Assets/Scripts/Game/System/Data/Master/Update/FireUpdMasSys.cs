@@ -9,11 +9,11 @@ namespace Chessy.Game
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellDataC> _cellDataFilt = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, HpC> _cellUnitFilter = default;
 
-        private EcsFilter<CellFireDataC> _cellFireDataFilter = default;
-        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvDataFilter = default;
+        private EcsFilter<FireC> _cellFireDataFilter = default;
+        private EcsFilter<EnvC, CellEnvResC> _cellEnvDataFilter = default;
         private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
         private EcsFilter<CellCloudDataC> _cellCloudsFilt = default;
 
@@ -56,18 +56,16 @@ namespace Chessy.Game
                         {
                             if (unit_0.Is(UnitTypes.King))
                             {
-                                if (ownUnit_0.Is(PlayerTypes.First))
-                                {
-                                    EndGameDataUIC.PlayerWinner = PlayerTypes.Second;
-                                }
-                                else
-                                {
-                                    EndGameDataUIC.PlayerWinner = PlayerTypes.First;
-                                }
+                                EndGameDataUIC.PlayerWinner = WhoseMoveC.NextPlayerFrom(ownUnit_0.Owner);
+                            }
+                            else if (unit_0.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
+                            {
+                                ScoutHeroCooldownC.SetStandCooldown(ownUnit_0.Owner, unit_0.Unit);
+                                InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
                             }
 
                             WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                            unit_0.DefUnit();
+                            unit_0.Reset();
                         }
                     }
 

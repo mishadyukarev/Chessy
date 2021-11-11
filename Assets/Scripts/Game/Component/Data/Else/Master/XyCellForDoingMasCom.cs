@@ -1,15 +1,15 @@
-﻿namespace Chessy.Game
-{
-    public struct XyCellForDoingMasCom
-    {
-        private byte[] _xyCellForDoing;
+﻿//namespace Chessy.Game
+//{
+//    public struct XyCellForDoingMasCom
+//    {
+//        private byte[] _xyCellForDoing;
 
-        public byte[] XyCellForDoing
-        {
-            get => (byte[])_xyCellForDoing.Clone();
-            set => _xyCellForDoing = (byte[])value.Clone();
-        }
+//        public byte[] XyCellForDoing
+//        {
+//            get => (byte[])_xyCellForDoing.Clone();
+//            set => _xyCellForDoing = (byte[])value.Clone();
+//        }
 
-        public XyCellForDoingMasCom(byte[] xy) => _xyCellForDoing = xy;
-    }
-}
+//        public XyCellForDoingMasCom(byte[] xy) => _xyCellForDoing = xy;
+//    }
+//}

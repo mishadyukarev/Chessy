@@ -8,6 +8,7 @@
         Start2,
         Start3,
         Start4,
+        Start5,
         ProtRelax,
         BuldFarms,
         SeedFire,
@@ -19,5 +20,10 @@
         BonusKing,
         UpgToolWeapon,
         Pick,
+        CreatingHero,
+        CreatingScout,
+        GrowingAdForesElfemale,
+        StunElfemale,
+        PutOutElfemale,
     }
 }

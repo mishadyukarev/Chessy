@@ -7,10 +7,11 @@ namespace Chessy.Game
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
         private EcsFilter<CellDataC> _cellDataFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
+        private EcsFilter<EnvC> _cellEnvDataFilter = default;
 
-        private EcsFilter<CellUnitDataC, StepComponent, OwnerC, VisibleC> _cellUnitFilter = default;
-        private EcsFilter<CellFireDataC, StunC> _unitEffFilt = default;
+        private EcsFilter<UnitC, StepC, OwnerC, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, StunC> _unitEffFilt = default;
+        private EcsFilter<CornerArcherC> _archerFilt = default;
 
         public void Run()
         {
@@ -18,77 +19,108 @@ namespace Chessy.Game
             {
                 var xy_0 = _xyCellFilter.Get1(idx_0).XyCell;
 
-                ref var unitDataCom_0 = ref _cellUnitFilter.Get1(idx_0);
-                ref var stepUnitC_0 = ref _cellUnitFilter.Get2(idx_0);
-                ref var ownUnitCom_0 = ref _cellUnitFilter.Get3(idx_0);
-                ref var stunUnit_0 = ref _unitEffFilt.Get2(idx_0);
+                ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
+                ref var step_0 = ref _cellUnitFilter.Get2(idx_0);
+                ref var ownUnit_0 = ref _cellUnitFilter.Get3(idx_0);
+                ref var stun_0 = ref _unitEffFilt.Get2(idx_0);
+                ref var corner_0 = ref _archerFilt.Get1(idx_0);
 
-                if (!stunUnit_0.IsStunned)
+
+                if (stun_0.IsStunned || !unit_0.Is(new[] { UnitTypes.Archer, UnitTypes.Elfemale }) || !step_0.HaveMinSteps) continue;
+
+
+                for (var dir_1 = (DirectTypes)1; dir_1 < (DirectTypes)Enum.GetNames(typeof(DirectTypes)).Length; dir_1++)
                 {
-                    if (unitDataCom_0.HaveUnit && unitDataCom_0.Is(UnitTypes.Rook))
+                    var xy_1 = CellSpaceSupport.GetXyCellByDirect(xy_0, dir_1);
+                    var idx_1 = _xyCellFilter.GetIdxCell(xy_1);
+
+
+                    ref var env_1 = ref _cellEnvDataFilter.Get1(idx_1);
+                    ref var unit_1 = ref _cellUnitFilter.Get1(idx_1);
+                    ref var ownUnit_1 = ref _cellUnitFilter.Get3(idx_1);
+
+
+
+
+                    if (_cellDataFilter.Get1(idx_1).IsActiveCell && !env_1.Have(EnvTypes.Mountain))
                     {
-                        if (stepUnitC_0.HaveMinSteps)
-
-                            for (DirectTypes dirType_1 = (DirectTypes)1; dirType_1 < (DirectTypes)Enum.GetNames(typeof(DirectTypes)).Length; dirType_1++)
+                        if (unit_1.HaveUnit)
+                        {
+                            if (!ownUnit_1.Is(ownUnit_0.Owner))
                             {
-                                var xy_1 = CellSpaceSupport.GetXyCellByDirect(xy_0, dirType_1);
-                                var idxCell_1 = _xyCellFilter.GetIdxCell(xy_1);
-
-
-                                ref var envrDatCom_1 = ref _cellEnvDataFilter.Get1(idxCell_1);
-                                ref var unitDatCom_1 = ref _cellUnitFilter.Get1(idxCell_1);
-                                ref var ownUnitCom_1 = ref _cellUnitFilter.Get3(idxCell_1);
-
-
-                                if (_cellDataFilter.Get1(idxCell_1).IsActiveCell)
+                                if (unit_0.Is(UnitTypes.Archer))
                                 {
-                                    if (!envrDatCom_1.Have(EnvTypes.Mountain))
+                                    if (corner_0.IsCornered)
                                     {
-                                        if (unitDatCom_1.HaveUnit)
+                                        if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
                                         {
-                                            if (!ownUnitCom_1.Is(ownUnitCom_0.Owner))
-                                            {
-                                                if (dirType_1 == DirectTypes.Left || dirType_1 == DirectTypes.Right || dirType_1 == DirectTypes.Up || dirType_1 == DirectTypes.Down)
-                                                {
-                                                    CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Unique, idx_0, idxCell_1);
-                                                }
-                                                else CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Simple, idx_0, idxCell_1);
-                                            }
+                                            CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
                                         }
-
-
-                                        var xy_2 = CellSpaceSupport.GetXyCellByDirect(xy_1, dirType_1);
-                                        var idxCell_2 = _xyCellFilter.GetIdxCell(xy_2);
-
-
-                                        ref var envrDataCom_2 = ref _cellEnvDataFilter.Get1(idxCell_2);
-                                        ref var unitDataCom_2 = ref _cellUnitFilter.Get1(idxCell_2);
-                                        ref var ownUnitCom_2 = ref _cellUnitFilter.Get3(idxCell_2);
-                                        ref var visUnitCom_2 = ref _cellUnitFilter.Get4(idxCell_2);
-
-
-
-                                        if (unitDataCom_2.HaveUnit)
+                                        else CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                    }
+                                    else
+                                    {
+                                        if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                         {
-                                            if (visUnitCom_2.IsVisibled(ownUnitCom_0.Owner))
-                                            {
-                                                if (!ownUnitCom_2.Is(ownUnitCom_0.Owner))
-                                                {
-                                                    if (dirType_1 == DirectTypes.DownLeft || dirType_1 == DirectTypes.UpLeft || dirType_1 == DirectTypes.UpRight || dirType_1 == DirectTypes.DownRight)
-                                                    {
-                                                        CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Simple, idx_0, idxCell_2);
-                                                    }
-
-                                                    else
-                                                    {
-                                                        CellsAttackC.Add(ownUnitCom_0.Owner, AttackTypes.Unique, idx_0, idxCell_2);
-                                                    }
-                                                }
-                                            }
+                                            CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
                                         }
+                                        else CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                    }
+                                }
+                                else
+                                {
+                                    CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                }
+                            }
+                        }
+
+
+                        var xy_2 = CellSpaceSupport.GetXyCellByDirect(xy_1, dir_1);
+                        var idx_2 = _xyCellFilter.GetIdxCell(xy_2);
+
+
+                        ref var envrDataCom_2 = ref _cellEnvDataFilter.Get1(idx_2);
+                        ref var unitDataCom_2 = ref _cellUnitFilter.Get1(idx_2);
+                        ref var ownUnitCom_2 = ref _cellUnitFilter.Get3(idx_2);
+                        ref var visUnit_2 = ref _cellUnitFilter.Get4(idx_2);
+
+
+
+                        if (_cellDataFilter.Get1(idx_2).IsActiveCell && unitDataCom_2.HaveUnit 
+                            && visUnit_2.IsVisibled(ownUnit_0.Owner) && !ownUnitCom_2.Is(ownUnit_0.Owner))
+                        {
+                            if (unit_0.Is(UnitTypes.Archer))
+                            {
+                                if (corner_0.IsCornered)
+                                {
+                                    if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
+                                    {
+                                        CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_2);
+                                    }
+
+                                    else
+                                    {
+                                        CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_2);
+                                    }
+                                }
+                                else
+                                {
+                                    if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Up)
+                                    {
+                                        CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_2);
+                                    }
+
+                                    else
+                                    {
+                                        CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_2);
                                     }
                                 }
                             }
+                            else
+                            {
+                                CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_2);
+                            }
+                        }
                     }
                 }
             }

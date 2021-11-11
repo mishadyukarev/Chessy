@@ -7,9 +7,9 @@ namespace Chessy.Game
     {
         private EcsFilter<ForOldNewUnitCom> _forOldNewUnitCom = default;
 
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC, StepComponent> _cellUnitFilt = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, HpC, StepC> _cellUnitFilt = default;
+        private EcsFilter<UnitC, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
 
         public void Run()
         {
@@ -34,7 +34,7 @@ namespace Chessy.Game
                 {
                     InvUnitsC.TakeUnit(ownUnit_0.Owner, UnitTypes.Scout, LevelUnitTypes.First);
                     WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
-                    unit_0.DefUnit();
+                    unit_0.Reset();
 
                     if (twUnitC_0.HaveToolWeap)
                     {
@@ -55,7 +55,7 @@ namespace Chessy.Game
 
                 else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
             }
-            else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHealth, sender);
+            else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreHp, sender);
         }
     }
 }

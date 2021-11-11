@@ -5,12 +5,12 @@ namespace Chessy.Game
     public sealed class FillCellsForShiftSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvDataFilter = default;
+        private EcsFilter<EnvC> _cellEnvDataFilter = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
 
-        private EcsFilter<CellUnitDataC, OwnerC> _unitMainFilt = default;
-        private EcsFilter<CellUnitDataC, StepComponent> _cellUnitFilter = default;
-        private EcsFilter<CellUnitDataC, UnitEffectsC, StunC> _unitEffFilt = default;
+        private EcsFilter<UnitC, OwnerC> _unitMainFilt = default;
+        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, UnitEffectsC, StunC> _unitEffFilt = default;
 
         public void Run()
         {

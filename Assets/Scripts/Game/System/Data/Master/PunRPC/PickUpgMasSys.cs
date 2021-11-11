@@ -26,8 +26,7 @@ namespace Chessy.Game
                         break;
 
                     case PickUpgradeTypes.Archer:
-                        UnitPercUpgC.SetUpg(whoseMove, UnitTypes.Rook, UnitStatTypes.Damage, 0.2f);
-                        UnitPercUpgC.SetUpg(whoseMove, UnitTypes.Bishop, UnitStatTypes.Damage, 0.2f);
+                        UnitPercUpgC.SetUpg(whoseMove, UnitTypes.Archer, UnitStatTypes.Damage, 0.2f);
                         break;
 
                     case PickUpgradeTypes.Scout:

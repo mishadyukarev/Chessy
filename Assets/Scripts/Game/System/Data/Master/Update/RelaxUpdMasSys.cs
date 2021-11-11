@@ -4,12 +4,12 @@ namespace Chessy.Game
 {
     public sealed class RelaxUpdMasSys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<CellUnitDataC, HpUnitC> _cellUnitStatFilt = default;
-        private EcsFilter<CellUnitDataC, ConditionUnitC, UnitEffectsC> _cellUnitOthFilt = default;
-        private EcsFilter<CellUnitDataC, ToolWeaponC> _cellUnitTWFilt = default;
+        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, HpC> _cellUnitStatFilt = default;
+        private EcsFilter<UnitC, ConditionUnitC, UnitEffectsC> _cellUnitOthFilt = default;
+        private EcsFilter<UnitC, ToolWeaponC> _cellUnitTWFilt = default;
 
-        private EcsFilter<CellEnvDataC, CellEnvResC> _cellEnvFilt = default;
+        private EcsFilter<EnvC, CellEnvResC> _cellEnvFilt = default;
         private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
         public void Run()

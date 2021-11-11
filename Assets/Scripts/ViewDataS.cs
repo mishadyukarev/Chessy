@@ -15,11 +15,11 @@ namespace Chessy.Game
                 .Add(new VisibElseSys())
                 .Add(new SyncCellUnitViewSys())
                 .Add(new SyncCellSelUnitViewSys())
-                .Add(new SyncCellUnitSupVisSystem())
+                .Add(new UnitStatCellSyncS())
                 .Add(new SyncCellBuildViewSystem())
                 .Add(new SyncCellEnvirsVisSystem())
                 .Add(new SyncCellEffectsVisSystem())
-                .Add(new SyncSupportViewSystem())
+                .Add(new SupportViewCellSyncS())
                 .Add(new CellWeatherViewSys())
                 .Add(new CellRiverViewSys())
                 .Add(new FliperAndRotatorUnitSystem())
@@ -27,6 +27,13 @@ namespace Chessy.Game
                 .Add(new SyncCellTrailSys())
                 .Add(new CellStunViewS());
 
+
+            var eventExecuters = new EcsSystems(gameWorld)
+                .Add(new CenterEventUISys())
+                .Add(new LeftCityEventUISys())
+                .Add(new LeftEnvEventUISys())
+                .Add(new DownEventUISys())
+                .Add(new RightUnitEventUISys());
 
             var syncCanvasViewSyss = new EcsSystems(gameWorld)
             ///left
@@ -85,7 +92,8 @@ namespace Chessy.Game
 
             gameSysts
                 .Add(rotateCurPlayer)
-                .Add(sysGenDataView);
+                .Add(sysGenDataView)
+                .Add(eventExecuters);
         }
     }
 }

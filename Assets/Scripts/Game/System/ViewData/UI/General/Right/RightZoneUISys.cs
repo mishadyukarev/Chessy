@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public sealed class RightZoneUISys : IEcsRunSystem
     {
-        private EcsFilter<CellUnitDataC, OwnerC, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, OwnerC, VisibleC> _cellUnitFilter = default;
 
         public void Run()
         {

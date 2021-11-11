@@ -7,8 +7,8 @@
         King,
 
         Pawn,
-        Rook,
-        Bishop,
+        Archer,
+        //Bishop,
 
         Scout,
 

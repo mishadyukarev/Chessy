@@ -5,8 +5,8 @@ namespace Chessy.Game
 {
     public sealed class EconomyUpUISys : IEcsRunSystem
     {
-        private readonly EcsFilter<CellEnvDataC> _cellEnvFilt = default;
-        private readonly EcsFilter<HpUnitC, ConditionUnitC> _cellUnitFilt = default;
+        private readonly EcsFilter<EnvC> _cellEnvFilt = default;
+        private readonly EcsFilter<HpC, ConditionUnitC> _cellUnitFilt = default;
 
         public void Run()
         {

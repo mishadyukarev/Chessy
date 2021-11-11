@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         private EcsFilter<CellsGiveTWComp> _cellsGiveFilter = default;
 
-        private EcsFilter<CellUnitDataC, OwnerC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, OwnerC> _cellUnitFilter = default;
 
         public void Run()
         {
@@ -25,7 +25,7 @@ namespace Chessy.Game
                         //cellsGiveTWCom.Add(ToolWeaponTypes.Axe,)
                     }
 
-                    else if (curUnitDataCom.Is(UnitTypes.Rook))
+                    else if (curUnitDataCom.Is(UnitTypes.Archer))
                     {
 
                     }

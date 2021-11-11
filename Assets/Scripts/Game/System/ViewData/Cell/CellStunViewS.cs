@@ -5,7 +5,7 @@ namespace Chessy.Game
     public sealed class CellStunViewS : IEcsRunSystem
     {
         private EcsFilter<CellStunViewC, StunC> _stunFilt = default;
-        private EcsFilter<CellUnitDataC, VisibleC> _unitVisFilt = default;
+        private EcsFilter<UnitC, VisibleC> _unitVisFilt = default;
 
         public void Run()
         {

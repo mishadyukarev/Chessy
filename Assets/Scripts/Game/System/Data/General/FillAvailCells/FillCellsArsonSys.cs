@@ -4,19 +4,15 @@ namespace Chessy.Game
 {
     public sealed class FillCellsArsonSys : IEcsRunSystem
     {
-        private EcsFilter<CellsArsonArcherComp> _cellsArsonFilter = default;
-
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
-        private EcsFilter<CellFireDataC> _cellFireFilter = default;
+        private EcsFilter<EnvC> _cellEnvFilter = default;
+        private EcsFilter<FireC> _cellFireFilter = default;
 
-        private EcsFilter<CellUnitDataC, OwnerC> _cellUnitFilter = default;
-        private EcsFilter<CellFireDataC, StunC> _unitEffFilt = default;
+        private EcsFilter<UnitC, OwnerC> _cellUnitFilter = default;
+        private EcsFilter<FireC, StunC> _unitEffFilt = default;
 
         public void Run()
         {
-            ref var cellsArsonCom = ref _cellsArsonFilter.Get1(0);
-
             foreach (byte curIdxCell in _cellEnvFilter)
             {
                 var curXy = _xyCellFilter.Get1(curIdxCell).XyCell;
@@ -27,7 +23,7 @@ namespace Chessy.Game
 
                 if (!stunUnit_0.IsStunned)
                 {
-                    if (curUnitDatCom.Is(new[] { UnitTypes.Rook, UnitTypes.Bishop }))
+                    if (curUnitDatCom.Is(UnitTypes.Archer))
                     {
                         foreach (var arouXy in CellSpaceSupport.GetXyAround(curXy))
                         {
@@ -39,7 +35,7 @@ namespace Chessy.Game
                             {
                                 if (arounEnvDatCom.Have(EnvTypes.AdultForest))
                                 {
-                                    cellsArsonCom.Add(curOwnUnitCom.Owner, curIdxCell, arouIdx);
+                                    CellsArsonArcherComp.Add(curOwnUnitCom.Owner, curIdxCell, arouIdx);
                                 }
                             }
                         }

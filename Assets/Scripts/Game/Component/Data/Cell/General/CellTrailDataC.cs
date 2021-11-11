@@ -49,7 +49,7 @@ namespace Chessy.Game
             }
         }
 
-        public bool TrySetNewTrail(DirectTypes dir, CellEnvDataC envC)
+        public bool TrySetNewTrail(DirectTypes dir, EnvC envC)
         {
             if (envC.Have(EnvTypes.AdultForest)) _health[dir] = 7;
             return envC.Have(EnvTypes.AdultForest);

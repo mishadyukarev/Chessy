@@ -5,10 +5,10 @@ namespace Chessy.Game
     public sealed class VisibElseSys : IEcsRunSystem
     {
         private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellEnvDataC> _cellEnvFilter = default;
+        private EcsFilter<EnvC> _cellEnvFilter = default;
         private EcsFilter<CellTrailDataC, VisibleC> _cellTrailFilt = default;
 
-        private EcsFilter<CellUnitDataC, OwnerC, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, OwnerC, VisibleC> _cellUnitFilter = default;
         private EcsFilter<CellBuildDataC, OwnerC, VisibleC> _cellBuildFilt = default;
 
         public void Run()
