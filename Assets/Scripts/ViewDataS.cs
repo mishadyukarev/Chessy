@@ -33,15 +33,16 @@ namespace Chessy.Game
                 .Add(new LeftCityEventUISys())
                 .Add(new LeftEnvEventUISys())
                 .Add(new DownEventUISys())
-                .Add(new RightUnitEventUISys());
+                .Add(new RightUnitEventUISys())
+                .Add(new UpEventUIS());
 
             var syncCanvasViewSyss = new EcsSystems(gameWorld)
             ///left
-            .Add(new BuildZoneUISys())
-               .Add(new EnvironmentUISystem())
+                .Add(new BuildZoneUISys())
+                .Add(new EnvironmentUISystem())
 
             ///right
-            .Add(new RightZoneUISys())
+                .Add(new RightZoneUISys())
                 .Add(new StatsUISystem())
                 .Add(new ProtectUISys())
                 .Add(new RelaxUISys())
@@ -53,18 +54,18 @@ namespace Chessy.Game
                 .Add(new EffectsUISys())
 
             ///down
-            .Add(new DonerUISystem())
+                .Add(new DonerUISystem())
                 .Add(new GetterUnitsUISystem())
                 .Add(new GiveTakeUISystem())
                 .Add(new ScoutSyncUIS())
                 .Add(new HeroSyncUIS())
 
             ///up
-            .Add(new EconomyUpUISys())
-            .Add(new WindUISys())
+                .Add(new EconomyUpUISys())
+                .Add(new WindUISys())
 
             ///center
-            .Add(new SelectorUISys())
+                .Add(new SelectorUISys())
                 .Add(new TheEndGameUISystem())
                 .Add(new MotionCenterUISystem())
                 .Add(new ReadyZoneUISystem())

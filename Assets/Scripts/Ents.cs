@@ -242,6 +242,7 @@ namespace Chessy.Game
                 .Replace(new EconomyViewUIC(upZone_GO))
                 .Replace(new LeaveViewUIC(CanvasC.FindUnderCurZone<Button>("ButtonLeave")))
                 .Replace(new WindUIC(upZone_GO.transform))
+                .Replace(new AlphaUpUIC(upZone_GO.transform))
 
                 ///Center
                 .Replace(new EndGameDataUIC(default))

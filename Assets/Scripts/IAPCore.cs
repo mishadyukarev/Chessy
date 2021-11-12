@@ -14,27 +14,27 @@ public class IAPCore : MonoBehaviour, IStoreListener //для получения
 
     private void Start()
     {
-        if (PlayerPrefs.HasKey("ads") == true)
-        {
-            //panelAds.SetActive(false);
-            //panelAds_Done.SetActive(true);
-        }
-        else
-        {
-            //panelAds.SetActive(true);
-            //panelAds_Done.SetActive(false);
-        }
+        //if (PlayerPrefs.HasKey("ads") == true)
+        //{
+        //    //panelAds.SetActive(false);
+        //    //panelAds_Done.SetActive(true);
+        //}
+        //else
+        //{
+        //    //panelAds.SetActive(true);
+        //    //panelAds_Done.SetActive(false);
+        //}
 
-        if (PlayerPrefs.HasKey("vip") == true)
-        {
-            //panelVIP.SetActive(false);
-            //panelVIP_Done.SetActive(true);
-        }
-        else
-        {
-            //panelVIP.SetActive(true);
-            //panelVIP_Done.SetActive(false);
-        }
+        //if (PlayerPrefs.HasKey("vip") == true)
+        //{
+        //    //panelVIP.SetActive(false);
+        //    //panelVIP_Done.SetActive(true);
+        //}
+        //else
+        //{
+        //    //panelVIP.SetActive(true);
+        //    //panelVIP_Done.SetActive(false);
+        //}
 
 
         if (!IsInitialized) //если еще не инициализаровали систему Unity Purchasing, тогда инициализируем
