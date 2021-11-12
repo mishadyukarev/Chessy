@@ -19,7 +19,7 @@ namespace Chessy.Common
 
 
             var launchAdd = new EcsSystems(comWorld)
-                .Add(new LaunchAdComSys());
+                .Add(new AdLaunchS());
 
 
 
@@ -39,7 +39,8 @@ namespace Chessy.Common
                 .Add(new EventSys())
                 .Add(photScene)
                 .Add(launchAdd)
-                .Add(runUpdate);
+                .Add(runUpdate)
+                .Add(new IAPCore());
 
             comSysts.Init();
         }

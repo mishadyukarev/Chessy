@@ -64,6 +64,7 @@ namespace Chessy.Game
 
             ref var river_to = ref _cellRiverFilt.Get1(idx_to);
             ref var build_to = ref _cellBuildFilter.Get1(idx_to);
+            ref var ownBuild_to = ref _cellBuildFilter.Get2(idx_to);
             ref var env_to = ref _cellEnvFilter.Get1(idx_to);
             ref var trail_to = ref _cellTrainFilt.Get1(idx_to);
 
@@ -107,7 +108,7 @@ namespace Chessy.Game
                     max_limit = powerDam_to * 2f;
                     min_limit = powerDam_to / 2f;
 
-                    if (min_limit > powerDam_from)
+                    if (min_limit >= powerDam_from)
                     {
                         minus_from = maxDamage;
                         powerDam_to = minDamage;
@@ -125,7 +126,7 @@ namespace Chessy.Game
                     max_limit = powerDam_from * 2;
                     min_limit = powerDam_from / 2;
 
-                    if (min_limit > powerDam_to)
+                    if (min_limit >= powerDam_to)
                     {
                         minus_to = maxDamage;
                         minus_from = minDamage;
@@ -218,11 +219,14 @@ namespace Chessy.Game
                             trail_from.TrySetNewTrail(dir, env_from);
 
 
-                            //if (build_from.Is(BuildTypes.Camp))
-                            //{
-                            //    WhereBuildsC.Remove(ownBuild_from.Owner, build_from.Build, idx_from);
-                            //    build_from.Reset();
-                            //}
+                            if (build_to.Is(BuildTypes.Camp))
+                            {
+                                if (!ownBuild_to.Is(ownUnit_to.Owner))
+                                {
+                                    WhereBuildsC.Remove(ownBuild_to.Owner, build_to.Build, idx_to);
+                                    build_to.Reset();
+                                }
+                            }
 
 
                             WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
@@ -239,12 +243,6 @@ namespace Chessy.Game
                         EndGameDataUIC.PlayerWinner = ownUnit_to.Owner;
                         return;
                     }
-
-                    //if (build_from.Is(BuildTypes.Camp))
-                    //{
-                    //    WhereBuildsC.Remove(ownBuild_from.Owner, build_from.Build, idx_from);
-                    //    build_from.Reset();
-                    //}
 
                     WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
                     unit_from.Reset();

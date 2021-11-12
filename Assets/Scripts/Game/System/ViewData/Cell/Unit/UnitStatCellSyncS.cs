@@ -42,8 +42,7 @@ namespace Chessy.Game
                 {
                     if (unit_0.HaveUnit)
                     {
-                        if (!unit_0.Is(UnitTypes.Scout))
-                        {
+
                             barsViewCom.EnableSR(CellBarTypes.Hp);
                             barsViewCom.SetColorHp(Color.red);
 
@@ -51,7 +50,7 @@ namespace Chessy.Game
 
                             float xCordinate = (float)hpUnit_0.Hp / maxHpUnit_0;
                             barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
-                        }
+                        
 
                         if (thirUnitC_0.NeedWater)
                         {

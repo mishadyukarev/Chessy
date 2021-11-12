@@ -6,7 +6,7 @@ namespace Chessy.Common
     {
         public void Init()
         {
-            ShopUIC.AddListExit_Button(ExitShop);
+            ShopUIC.AddListExit(ExitShop);
         }
 
         private void ExitShop()

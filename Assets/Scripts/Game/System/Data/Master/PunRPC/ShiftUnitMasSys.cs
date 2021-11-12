@@ -10,6 +10,7 @@ namespace Chessy.Game
         private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
         private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
         private EcsFilter<FireC> _cellFireFilt = default;
+        private EcsFilter<CellBuildDataC, OwnerC> _buildFilt = default;
 
         private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
@@ -66,6 +67,8 @@ namespace Chessy.Game
                 ref var corner_to = ref _archerFilt.Get1(idx_to);
 
                 ref var fire_to = ref _cellFireFilt.Get1(idx_to);
+                ref var build_to = ref _buildFilt.Get1(idx_to);
+                ref var ownBuild_to = ref _buildFilt.Get2(idx_to);
 
 
 
@@ -100,6 +103,17 @@ namespace Chessy.Game
                 uniq_to.Replace(uniq_from);
                 corner_to = corner_from;
                 if (river_to.HaveNearRiver) thirUnit_to.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Water));
+
+
+
+                if (build_to.Is(BuildTypes.Camp))
+                {
+                    if (!ownBuild_to.Is(ownUnit_to.Owner))
+                    {
+                        WhereBuildsC.Remove(ownBuild_to.Owner, build_to.Build, idx_to);
+                        build_to.Reset();
+                    }
+                }
 
 
 

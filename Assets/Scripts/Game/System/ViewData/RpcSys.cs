@@ -17,6 +17,7 @@ namespace Chessy.Game
         private EcsFilter<UnitC, ToolWeaponC> _cellUnitTWFilt = default;
         private EcsFilter<CornerArcherC> _archerFilt = default;
         private EcsFilter<UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<StunC> _unitStunFilt = default;
 
         private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
         private EcsFilter<EnvC, CellEnvResC> _cellEnvrFilter = default;
@@ -439,6 +440,9 @@ namespace Chessy.Game
                 objs.Add(_cellUnitTWFilt.Get2(idx_0).LevelTWType);
                 objs.Add(_cellUnitTWFilt.Get2(idx_0).ShieldProt);
 
+                objs.Add(_unitStunFilt.Get1(idx_0).IsStunned);
+                objs.Add(_unitStunFilt.Get1(idx_0).StepsInStun);
+
                 objs.Add(_archerFilt.Get1(idx_0).IsCornered);
 
                 foreach (var item in _unitUniqFilt.Get1(idx_0).Cooldowns)
@@ -665,6 +669,9 @@ namespace Chessy.Game
                 _cellUnitTWFilt.Get2(idx_0).ToolWeapType = (ToolWeaponTypes)objects[_curNumber++];
                 _cellUnitTWFilt.Get2(idx_0).LevelTWType = (LevelTWTypes)objects[_curNumber++];
                 _cellUnitTWFilt.Get2(idx_0).SyncShield((int)objects[_curNumber++]);
+
+                
+                _unitStunFilt.Get1(idx_0).Sync((bool)objects[_curNumber++], (int)objects[_curNumber++]);
 
                 _archerFilt.Get1(idx_0).Sync((bool)objects[_curNumber++]);
 

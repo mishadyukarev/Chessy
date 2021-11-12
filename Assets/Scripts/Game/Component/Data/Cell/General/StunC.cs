@@ -26,5 +26,11 @@
                 _isStunned = false;
             }
         }
+
+        public void Sync(bool isStunned, int steps)
+        {
+            _isStunned = isStunned;
+            _stepsInStun = steps;
+        }
     }
 }

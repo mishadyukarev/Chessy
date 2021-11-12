@@ -136,7 +136,7 @@ namespace Chessy.Game
 
             cur_AS = audioSourceParent_GO.AddComponent<AudioSource>();
             cur_AS.clip = Resources.Load<AudioClip>("StunElfemale_Clip");
-            cur_AS.volume = 0.25f;
+            cur_AS.volume = 0.3f;
             _uniqEff.Add(UniqAbilTypes.StunElfemale, cur_AS);
 
 

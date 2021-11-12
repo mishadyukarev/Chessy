@@ -22,7 +22,7 @@ namespace Chessy
             _curScene = SceneTypes.Menu;
             ToggleScene(_curScene);
 
-            Application.runInBackground = true;
+            //Application.runInBackground = false;
         }
 
         private void Update()
