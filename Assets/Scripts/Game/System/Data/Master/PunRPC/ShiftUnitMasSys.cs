@@ -5,12 +5,12 @@ namespace Chessy.Game
 {
     public sealed class ShiftUnitMasSys : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _cellXyFilt = default;
+        private EcsFilter<XyC> _cellXyFilt = default;
         private EcsFilter<EnvC> _cellEnvrDataFilter = default;
-        private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
-        private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
+        private EcsFilter<RiverC> _cellRiverFilt = default;
+        private EcsFilter<TrailC> _cellTrailFilt = default;
         private EcsFilter<FireC> _cellFireFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerC> _buildFilt = default;
+        private EcsFilter<BuildC, OwnerC> _buildFilt = default;
 
         private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
@@ -72,7 +72,7 @@ namespace Chessy.Game
 
 
 
-                var dir_from = CellSpaceSupport.GetDirect(_cellXyFilt.Get1(idx_from).XyCell, _cellXyFilt.Get1(idx_to).XyCell);
+                var dir_from = CellSpaceSupport.GetDirect(_cellXyFilt.Get1(idx_from).Xy, _cellXyFilt.Get1(idx_to).Xy);
 
                 stepUnit_from.TakeStepsForDoing(env_to, dir_from, trail_to);
 

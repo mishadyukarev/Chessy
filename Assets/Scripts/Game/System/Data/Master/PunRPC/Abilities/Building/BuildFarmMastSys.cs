@@ -7,9 +7,9 @@ namespace Chessy.Game
     {
         private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
 
-        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
+        private EcsFilter<BuildC, OwnerC> _cellBuildFilter = default;
         private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
-        private EcsFilter<EnvC, CellEnvResC> _cellEnvFilter = default;
+        private EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
 
         private EcsFilter<WhereBuildsC> _buildsFilt = default;
 

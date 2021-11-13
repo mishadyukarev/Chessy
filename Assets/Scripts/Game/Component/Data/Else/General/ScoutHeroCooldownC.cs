@@ -42,29 +42,42 @@ namespace Chessy.Game
         }
 
 
-        static ScoutHeroCooldownC()
+        public ScoutHeroCooldownC(bool isStart)
         {
-            _cooldowns = new Dictionary<PlayerTypes, Dictionary<UnitTypes, int>>();
-
-            for (var player = (PlayerTypes)1; player < (PlayerTypes)typeof(PlayerTypes).GetEnumNames().Length; player++)
+            if (isStart)
             {
-                _cooldowns.Add(player, new Dictionary<UnitTypes, int>());
+                if (_cooldowns == default)
+                {
+                    _cooldowns = new Dictionary<PlayerTypes, Dictionary<UnitTypes, int>>();
 
-                _cooldowns[player].Add(UnitTypes.Scout, 0);
-                _cooldowns[player].Add(UnitTypes.Elfemale, 0);
+                    for (var player = (PlayerTypes)1; player < (PlayerTypes)typeof(PlayerTypes).GetEnumNames().Length; player++)
+                    {
+                        _cooldowns.Add(player, new Dictionary<UnitTypes, int>());
+
+                        _cooldowns[player].Add(UnitTypes.Scout, 0);
+                        _cooldowns[player].Add(UnitTypes.Elfemale, 0);
+                    }
+                }
+
+                else
+                {
+                    foreach (var item_0 in Cooldowns)
+                    {
+                        foreach (var item_1 in item_0.Value)
+                        {
+                            _cooldowns[item_0.Key][item_1.Key] = 0;
+                        }
+                    }
+                }
             }
+
+            else throw new Exception();
         }
 
 
         public static void StartGame()
         {
-            foreach (var item_0 in Cooldowns)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    _cooldowns[item_0.Key][item_1.Key] = 0;
-                }
-            }
+
         }
 
         public static void SetStandCooldown(PlayerTypes player, UnitTypes unit)

@@ -5,14 +5,15 @@ namespace Chessy.Game
 {
     public sealed class SyncCellEnvirsVisSystem : IEcsRunSystem
     {
-        private EcsFilter<EnvC, CellEnvironViewCom> _cellEnvFilter = default;
+        private EcsFilter<EnvC> _envF = default;
+        private EcsFilter<EnvVC> _envViewF = default;
 
         public void Run()
         {
-            foreach (var idx in _cellEnvFilter)
+            foreach (var idx in _envViewF)
             {
-                ref var cellEnvrDataCom = ref _cellEnvFilter.Get1(idx);
-                ref var cellEnvrViewCom = ref _cellEnvFilter.Get2(idx);
+                ref var cellEnvrDataCom = ref _envF.Get1(idx);
+                ref var cellEnvrViewCom = ref _envViewF.Get1(idx);
 
                 for (EnvTypes curEnvirType = (EnvTypes)1; curEnvirType < (EnvTypes)Enum.GetNames(typeof(EnvTypes)).Length; curEnvirType++)
                 {

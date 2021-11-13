@@ -9,7 +9,7 @@ namespace Chessy.Game
         private EcsFilter<ForSeedingMasCom> _seedingFilter = default;
 
         private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
+        private EcsFilter<BuildC> _cellBuildFilter = default;
         private EcsFilter<EnvC> _cellEnvFilter = default;
 
         public void Run()

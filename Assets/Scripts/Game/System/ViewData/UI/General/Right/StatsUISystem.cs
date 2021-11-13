@@ -7,7 +7,7 @@ namespace Chessy.Game
         private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<UnitC, HpC, DamageC, StepC> _cellUnitFilter = default;
         private EcsFilter<UnitC, ConditionUnitC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOtherFill = default;
-        private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
+        private EcsFilter<BuildC> _cellBuildFilter = default;
         private EcsFilter<EnvC> _cellEnvFilter = default;
 
         public void Run()

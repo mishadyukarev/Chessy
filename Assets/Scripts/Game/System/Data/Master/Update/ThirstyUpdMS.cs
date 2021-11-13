@@ -10,8 +10,8 @@ namespace Chessy.Game
         private EcsFilter<UnitC, HpC> _cellUnitFilt = default;
         private EcsFilter<UnitC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
 
-        private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
+        private EcsFilter<RiverC> _cellRiverFilt = default;
+        private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
 
         public void Run()
         {
@@ -57,7 +57,7 @@ namespace Chessy.Game
                                 {
                                     if (unit_0.Is(UnitTypes.King))
                                     {
-                                        EndGameDataUIC.PlayerWinner = WhoseMoveC.NextPlayerFrom(ownUnit_0.Owner);
+                                        PlyerWinnerC.PlayerWinner = WhoseMoveC.NextPlayerFrom(ownUnit_0.Owner);
                                     }
                                     else if (unit_0.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
                                     {

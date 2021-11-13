@@ -9,9 +9,9 @@ namespace Chessy.Game
 
         public void Run()
         {
-            if (MotionsDataUIC.IsActivated)
+            if (MotionsC.IsActivated)
             {
-                MotionsViewUIC.Text = MotionsDataUIC.AmountMotions.ToString();
+                MotionsViewUIC.Text = MotionsC.AmountMotions.ToString();
                 MotionsViewUIC.SetActiveParent(true);
 
                 _timer += Time.deltaTime;
@@ -19,7 +19,7 @@ namespace Chessy.Game
                 if (_timer >= 1)
                 {
                     MotionsViewUIC.SetActiveParent(false);
-                    MotionsDataUIC.IsActivated = false;
+                    MotionsC.IsActivated = false;
                     _timer = 0;
                 }
             }

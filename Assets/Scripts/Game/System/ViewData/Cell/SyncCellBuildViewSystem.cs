@@ -4,8 +4,8 @@ namespace Chessy.Game
 {
     public sealed class SyncCellBuildViewSystem : IEcsRunSystem
     {
-        private EcsFilter<CellBuildDataC, OwnerC, VisibleC> _cellBuildFilter = default;
-        private EcsFilter<CellBuildViewComponent> _cellBuildViewFilt = default;
+        private EcsFilter<BuildC, OwnerC, VisibleC> _cellBuildFilter = default;
+        private EcsFilter<BuildVC> _cellBuildViewFilt = default;
 
         public void Run()
         {

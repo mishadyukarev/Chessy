@@ -5,10 +5,12 @@ namespace Chessy.Game
 {
     public class FliperAndRotatorUnitSystem : IEcsRunSystem
     {
-        private EcsFilter<CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilter = default;
+        private EcsFilter<UnitMainVC> _cellUnitViewFilter = default;
         private EcsFilter<UnitC, OwnerC> _cellUnitFilter = default;
 
         private EcsFilter<CornerArcherC> _archerFilt = default;
+
+        private EcsFilter<UnitExtraVC> _unitExtVF = default;
 
         public void Run()
         {
@@ -19,7 +21,7 @@ namespace Chessy.Game
                 ref var corner_0 = ref _archerFilt.Get1(idx_0);
 
                 ref var main_0 = ref _cellUnitViewFilter.Get1(idx_0);
-                ref var extra_0 = ref _cellUnitViewFilter.Get2(idx_0);
+                ref var extra_0 = ref _unitExtVF.Get1(idx_0);
 
 
                 if (SelectorC.IdxSelCell == idx_0)

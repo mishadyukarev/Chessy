@@ -4,10 +4,10 @@ namespace Chessy.Game
 {
     public sealed class FillCellsSetUnitS : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
+        private EcsFilter<XyC> _xyCellFilter = default;
         private EcsFilter<UnitC> _cellUnitFilter = default;
         private EcsFilter<EnvC> _cellEnvFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerC> _cellBuldFilt = default;
+        private EcsFilter<BuildC, OwnerC> _cellBuldFilt = default;
 
 
         public void Run()
@@ -21,7 +21,7 @@ namespace Chessy.Game
                     var idx_city = WhereBuildsC.IdxCity(player);
                     ref var unit_city = ref _cellUnitFilter.Get1(idx_city);
                     
-                    var listAround = CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_city).XyCell);
+                    var listAround = CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_city).Xy);
 
                     if(!unit_city.HaveUnit) CellsForSetUnitC.AddIdxCell(player, idx_city);
 
@@ -43,7 +43,7 @@ namespace Chessy.Game
                 {
                     foreach (byte curIdx in _xyCellFilter)
                     {
-                        var xy = _xyCellFilter.Get1(curIdx).XyCell;
+                        var xy = _xyCellFilter.Get1(curIdx).Xy;
                         var x = xy[0];
                         var y = xy[1];
 

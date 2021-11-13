@@ -1,4 +1,6 @@
-﻿namespace Chessy.Game
+﻿using System;
+
+namespace Chessy.Game
 {
     public struct SelectorC
     {
@@ -24,9 +26,15 @@
         public static void DefSelectedCell() => IdxSelCell = 0;
 
 
-        public static void StartGame()
+        public SelectorC(bool isStart)
         {
-            _click = default;
+            if (isStart)
+            {
+                _click = default;
+                IdxSelCell = default;
+            }
+
+            else throw new Exception();
         }
     }
 }

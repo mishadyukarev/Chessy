@@ -4,8 +4,8 @@ namespace Chessy.Game
 {
     public sealed class EnvironmentUISystem : IEcsRunSystem
     {
-        private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
-        private EcsFilter<EnvC, CellEnvResC> _cellEnvFilter = default;
+        private EcsFilter<BuildC> _cellBuildFilter = default;
+        private EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
 
         public void Run()
         {

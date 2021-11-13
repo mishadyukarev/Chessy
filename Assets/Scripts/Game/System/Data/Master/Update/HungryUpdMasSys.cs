@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public sealed class HungryUpdMasSys : IEcsRunSystem
     {
-        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
+        private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
         private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
 
         public void Run()

@@ -6,8 +6,8 @@ namespace Chessy.Game
 {
     public sealed class RaySystem : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellDataC> _cellDataFilt = default;
+        private EcsFilter<XyC> _xyCellFilter = default;
+        private EcsFilter<CellC> _cellDataFilt = default;
 
         private Ray _ray;
         private const float RAY_DISTANCE = 100;

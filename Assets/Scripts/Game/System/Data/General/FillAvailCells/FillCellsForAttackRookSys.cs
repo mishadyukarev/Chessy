@@ -5,8 +5,8 @@ namespace Chessy.Game
 {
     public sealed class FillCellsForAttackRookSys : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellDataC> _cellDataFilter = default;
+        private EcsFilter<XyC> _xyCellFilter = default;
+        private EcsFilter<CellC> _cellDataFilter = default;
         private EcsFilter<EnvC> _cellEnvDataFilter = default;
 
         private EcsFilter<UnitC, StepC, OwnerC, VisibleC> _cellUnitFilter = default;
@@ -17,7 +17,7 @@ namespace Chessy.Game
         {
             foreach (byte idx_0 in _xyCellFilter)
             {
-                var xy_0 = _xyCellFilter.Get1(idx_0).XyCell;
+                var xy_0 = _xyCellFilter.Get1(idx_0).Xy;
 
                 ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
                 ref var step_0 = ref _cellUnitFilter.Get2(idx_0);

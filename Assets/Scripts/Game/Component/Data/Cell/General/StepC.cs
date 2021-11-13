@@ -30,7 +30,7 @@ namespace Chessy.Game
         public bool HaveMaxSteps(UnitTypes unit, bool haveEff, float upgPerc) => Steps >= MaxSteps(unit, haveEff, upgPerc);
         public void DefSteps() => _steps = 0;
         public void SetMaxSteps(UnitTypes unit, bool haveEff, float upgPerc) => _steps = MaxSteps(unit, haveEff, upgPerc);
-        public int StepsForDoing(EnvC cellEnvC, DirectTypes dir_cur, CellTrailDataC trailC)
+        public int StepsForDoing(EnvC cellEnvC, DirectTypes dir_cur, TrailC trailC)
         {
             var needSteps = 1;
 
@@ -45,8 +45,8 @@ namespace Chessy.Game
 
             return needSteps;
         }
-        public bool HaveStepsForDoing(EnvC cellEnvC, DirectTypes dir_cur, CellTrailDataC trailC) => Steps >= StepsForDoing(cellEnvC, dir_cur, trailC);
-        public void TakeStepsForDoing(EnvC cellEnvC, DirectTypes dir_cur, CellTrailDataC trailC) => _steps -= StepsForDoing(cellEnvC, dir_cur, trailC);
+        public bool HaveStepsForDoing(EnvC cellEnvC, DirectTypes dir_cur, TrailC trailC) => Steps >= StepsForDoing(cellEnvC, dir_cur, trailC);
+        public void TakeStepsForDoing(EnvC cellEnvC, DirectTypes dir_cur, TrailC trailC) => _steps -= StepsForDoing(cellEnvC, dir_cur, trailC);
 
         public void Sync(int steps)
         {

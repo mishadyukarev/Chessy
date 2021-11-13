@@ -7,12 +7,12 @@ namespace Chessy.Game
 {
     public sealed class TruceMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
-        private EcsFilter<EnvC, CellEnvResC> _cellEnvFilter = default;
+        private EcsFilter<XyC> _xyCellFilter = default;
+        private EcsFilter<BuildC> _cellBuildFilter = default;
+        private EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
         private EcsFilter<FireC> _cellFireFilter = default;
-        private EcsFilter<CellDataC> _cellDataFilt = default;
-        private EcsFilter<CellTrailDataC> _trailFilt = default;
+        private EcsFilter<CellC> _cellDataFilt = default;
+        private EcsFilter<TrailC> _trailFilt = default;
 
         private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitFilter = default;
         private EcsFilter<UnitC, ToolWeaponC> _cellUnitTwFilt = default;

@@ -8,7 +8,7 @@ namespace Chessy.Game
     {
         public void Run()
         {
-            if (ReadyDataUIC.IsReady(WhoseMoveC.CurPlayerI))
+            if (ReadyC.IsReady(WhoseMoveC.CurPlayerI))
             {
                 ReadyViewUIC.SetColorReadyButton(Color.red);
             }
@@ -17,7 +17,7 @@ namespace Chessy.Game
                 ReadyViewUIC.SetColorReadyButton(Color.white);
             }
 
-            if (ReadyDataUIC.IsStartedGame || PhotonNetwork.OfflineMode)
+            if (ReadyC.IsStartedGame || PhotonNetwork.OfflineMode)
             {
                 ReadyViewUIC.SetActiveParent(false);
             }

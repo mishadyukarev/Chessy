@@ -7,12 +7,12 @@ namespace Chessy.Game
 {
     public sealed class UpdatorMastSys : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellDataC> _cellDataFilt = default;
+        private EcsFilter<XyC> _xyCellFilter = default;
+        private EcsFilter<CellC> _cellDataFilt = default;
         private EcsFilter<FireC> _cellFireDataFilter = default;
-        private EcsFilter<EnvC, CellEnvResC> _cellEnvDataFilter = default;
-        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
-        private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
+        private EcsFilter<EnvC, EnvResC> _cellEnvDataFilter = default;
+        private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
+        private EcsFilter<TrailC> _cellTrailFilt = default;
 
         private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
@@ -177,7 +177,7 @@ namespace Chessy.Game
                 DataMastC.InvokeRun(MastDataSysTypes.Truce);
             }
 
-            if (MotionsDataUIC.AmountMotions % 3 == 0)
+            if (MotionsC.AmountMotions % 3 == 0)
             {
                 foreach (byte idx_0 in _xyCellFilter)
                 {
@@ -199,7 +199,7 @@ namespace Chessy.Game
                 }
             }
 
-            MotionsDataUIC.AmountMotions += 1;
+            MotionsC.AmountMotions += 1;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Chessy.Game
 {
@@ -9,7 +10,7 @@ namespace Chessy.Game
         public void SetVisibled(PlayerTypes key, bool value) => _isVisibleDict[key] = value;
 
 
-        public VisibleC(bool needNew) : this()
+        public VisibleC(bool needNew)
         {
             if (needNew)
             {
@@ -20,6 +21,7 @@ namespace Chessy.Game
                     _isVisibleDict.Add(playerType, default);
                 }
             }
+            else throw new Exception();
         }
     }
 }

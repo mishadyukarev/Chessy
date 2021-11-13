@@ -7,11 +7,11 @@ namespace Chessy.Game
 {
     public static class Sup
     {
-        public static byte GetIdxCell(this EcsFilter<XyCellComponent> xyCellFilter, byte[] xy)
+        public static byte GetIdxCell(this EcsFilter<XyC> xyCellFilter, byte[] xy)
         {
             for (byte idx = 0; idx < xyCellFilter.GetEntitiesCount(); idx++)
             {
-                if (xyCellFilter.Get1(idx).XyCell.Compare(xy))
+                if (xyCellFilter.Get1(idx).Xy.Compare(xy))
                 {
                     return idx;
                 }

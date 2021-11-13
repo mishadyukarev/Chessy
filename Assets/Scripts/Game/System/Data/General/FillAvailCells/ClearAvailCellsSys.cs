@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public sealed class ClearAvailCellsSys : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
+        private EcsFilter<XyC> _xyCellFilter = default;
 
         public void Run()
         {

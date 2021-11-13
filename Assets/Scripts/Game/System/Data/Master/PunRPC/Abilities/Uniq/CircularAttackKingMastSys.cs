@@ -6,14 +6,14 @@ namespace Chessy.Game
 {
     public sealed class CircularAttackKingMastSys : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
+        private EcsFilter<XyC> _xyCellFilter = default;
         private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
         private EcsFilter<UnitC, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
         private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
 
         private EcsFilter<EnvC> _cellEnvFilt = default;
-        private EcsFilter<CellBuildDataC> _cellBuildFilt = default;
+        private EcsFilter<BuildC> _cellBuildFilt = default;
 
         public void Run()
         {
@@ -42,7 +42,7 @@ namespace Chessy.Game
 
                     uniqUnit_0.SetCooldown(UniqAbilTypes.CircularAttack, 3);
 
-                    foreach (var xy1 in CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_0).XyCell))
+                    foreach (var xy1 in CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_0).Xy))
                     {
                         var idx_1 = _xyCellFilter.GetIdxCell(xy1);
 
@@ -76,7 +76,7 @@ namespace Chessy.Game
                                     {
                                         if (unit_1.Is(UnitTypes.King))
                                         {
-                                            EndGameDataUIC.PlayerWinner = ownUnit_0.Owner;
+                                            PlyerWinnerC.PlayerWinner = ownUnit_0.Owner;
                                         }
                                         else if (unit_1.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
                                         {

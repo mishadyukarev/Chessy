@@ -60,7 +60,7 @@ namespace Chessy
                     if (_gameWorld != default)
                     {
                         _gameWorld.Destroy();
-                        Game.Ents.Dispose();
+                        Game.ViewECreating.Dispose();
                     }
 
                     _menuWorld = new EcsWorld();
@@ -76,10 +76,16 @@ namespace Chessy
                     _gameWorld = new EcsWorld();
                     var gameSysts = new EcsSystems(_gameWorld);
 
-                    gameSysts.Add(new Ents());
-                    new DataS(gameSysts);
-                    new DataMasS(gameSysts);
-                    new ViewDataS(gameSysts);
+                    gameSysts
+                        .Add(new ViewECreating())
+                        .Add(new DataECreating())
+                        .Add(new Spawn());
+
+
+
+                    new DataSCreating(gameSysts);
+                    new DataMasSCreating(gameSysts);
+                    new ViewDataSCreating(gameSysts);
 
                     gameSysts.Init();
 

@@ -1,4 +1,5 @@
 ﻿using Photon.Pun;
+using System;
 using System.Collections.Generic;
 
 namespace Chessy.Game
@@ -32,18 +33,22 @@ namespace Chessy.Game
             else return PlayerTypes.First;
         }
 
-        static WhoseMoveC()
+        public WhoseMoveC(bool start)
         {
-            _whoseMove = new Dictionary<bool, PlayerTypes>();
+            if (start)
+            {
+                if (_whoseMove == default)
+                {
+                    _whoseMove = new Dictionary<bool, PlayerTypes>();
 
-            _whoseMove.Add(true, PlayerTypes.First);
-            _whoseMove.Add(false, PlayerTypes.First);
-        }
+                    _whoseMove.Add(true, PlayerTypes.First);
+                    _whoseMove.Add(false, PlayerTypes.First);
+                }
+                _whoseMove[true] = PlayerTypes.First;
+                _whoseMove[false] = PlayerTypes.First;
+            }
 
-        public static void StartGame()
-        {
-            _whoseMove[true] = PlayerTypes.First;
-            _whoseMove[false] = PlayerTypes.First;
+            else throw new Exception();
         }
 
 

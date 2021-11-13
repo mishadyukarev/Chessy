@@ -39,7 +39,7 @@ namespace Chessy.Game
 
                     GameGenSysDataViewC.RotateAll.Invoke(); 
 
-                    FriendZoneDataUIC.IsActiveFriendZone = true;     
+                    FriendC.IsActiveFriendZone = true;     
                 }
             }
             else

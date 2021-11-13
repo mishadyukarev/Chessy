@@ -82,7 +82,7 @@ namespace Chessy.Common
                 .Replace(new HintComC(true))
 
                 //Toggle
-                .Replace(new ToggleZoneComponent(new GameObject()));
+                .Replace(new ToggleZoneVC(new GameObject()));
 
 
             var shopZoneUI_Trans = CanvasC.FindUnderComZone<Transform>("ShopZone");

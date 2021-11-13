@@ -168,7 +168,7 @@ namespace Chessy.Game
                         break;
 
                     case BuildButtonTypes.Third:
-                        switch (BuildAbilitDataUIC.AbilityType(buildBut))
+                        switch (BuildAbilC.AbilityType(buildBut))
                         {
                             case BuildAbilTypes.None: throw new Exception();
                             case BuildAbilTypes.FarmBuild: throw new Exception();
@@ -195,11 +195,11 @@ namespace Chessy.Game
         {
             if (HintComC.IsOnHint)
             {
-                if (!HintDataUIC.WasActived(videoClip))
+                if (!HintC.WasActived(videoClip))
                 {
                     HintViewUIC.SetActiveHintZone(true);
                     HintViewUIC.SetVideoClip(videoClip);
-                    HintDataUIC.SetWasActived(videoClip, true);
+                    HintC.SetWasActived(videoClip, true);
                 }
             }
         }

@@ -11,7 +11,7 @@ namespace Chessy.Game
             var sender = InfoC.Sender(MGOTypes.Master);
             var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (PickUpgZoneDataUIC.HaveUpgrade(whoseMove))
+            if (PickUpgC.HaveUpgrade(whoseMove))
             {
                 switch (ForPickUpgMasC.UpgButType)
                 {
@@ -56,8 +56,8 @@ namespace Chessy.Game
                 }
 
 
-                PickUpgZoneDataUIC.SetHaveUpgrade(whoseMove, false);
-                PickUpgZoneDataUIC.SetHave_But(whoseMove, ForPickUpgMasC.UpgButType, false);
+                PickUpgC.SetHaveUpgrade(whoseMove, false);
+                PickUpgC.SetHave_But(whoseMove, ForPickUpgMasC.UpgButType, false);
 
                 RpcSys.SoundToGeneral(sender, ClipGameTypes.PickUpgrade);
             }

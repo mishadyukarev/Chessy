@@ -27,5 +27,7 @@
         BuyRes,
 
         UniqAbil,
+
+        Sync,
     }
 }

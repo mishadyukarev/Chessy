@@ -9,7 +9,7 @@ namespace Chessy.Game
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
 
         private EcsFilter<UnitC, StepC, OwnerC> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
+        private EcsFilter<BuildC, OwnerC> _cellBuildFilter = default;
         private EcsFilter<EnvC> _cellEnvFilter = default;
 
         public void Run()
@@ -30,7 +30,7 @@ namespace Chessy.Game
 
                 if (buildC_0.Is(BuildTypes.City))
                 {
-                    EndGameDataUIC.PlayerWinner = curOwnUnitCom.Owner;
+                    PlyerWinnerC.PlayerWinner = curOwnUnitCom.Owner;
                 }
                 _cellUnitFilter.Get2(idxCellForDestory).TakeSteps();
 

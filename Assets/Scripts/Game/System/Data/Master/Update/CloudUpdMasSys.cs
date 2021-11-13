@@ -5,13 +5,13 @@ namespace Chessy.Game
 {
     public sealed class CloudUpdMasSys : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellCloudDataC> _cellWeatherFilt = default;
+        private EcsFilter<XyC> _xyCellFilter = default;
+        private EcsFilter<CloudC> _cellWeatherFilt = default;
 
         public void Run()
         {
             var weather_0 = _cellWeatherFilt.Get1(WhereCloudsC.Cloud);
-            var xyStart = _xyCellFilter.Get1(WhereCloudsC.Cloud).XyCell;
+            var xyStart = _xyCellFilter.Get1(WhereCloudsC.Cloud).Xy;
 
 
             var aroundList = CellSpaceSupport.GetXyAround(xyStart);

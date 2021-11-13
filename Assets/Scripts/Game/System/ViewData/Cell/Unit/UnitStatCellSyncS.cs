@@ -8,9 +8,8 @@ namespace Chessy.Game
         private EcsFilter<UnitC, HpC, StepC, ConditionUnitC, OwnerC, VisibleC> _cellUnitFilter = default;
         private EcsFilter<UnitC, ConditionUnitC, UnitEffectsC, WaterUnitC, OwnerC> _cellUnitOthFilt = default;
         private EcsFilter<UnitC, VisibleC> _cellUnitViewFilt = default;
-        private EcsFilter<CellUnitMainViewCom> _cellUnitViewFilter = default;
-        private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
-        private EcsFilter<CellBlocksViewComponent> _cellBlocksFilter = default;
+        private EcsFilter<BarsVC> _cellBarsFilter = default;
+        private EcsFilter<BlocksVC> _cellBlocksFilter = default;
 
         public void Run()
         {
@@ -24,8 +23,6 @@ namespace Chessy.Game
                 ref var thirUnitC_0 = ref _cellUnitOthFilt.Get4(idx);
                 ref var ownUnit_0 = ref _cellUnitOthFilt.Get5(idx);
                 ref var visUnit_0 = ref _cellUnitViewFilt.Get2(idx);
-
-                ref var curUnitViewCom = ref _cellUnitViewFilter.Get1(idx);
 
                 ref var barsViewCom = ref _cellBarsFilter.Get1(idx);
                 ref var blocksViewCom = ref _cellBlocksFilter.Get1(idx);

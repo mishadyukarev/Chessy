@@ -4,12 +4,11 @@ namespace Chessy.Game
 {
     public sealed class SupportViewCellSyncS : IEcsRunSystem
     {
-        private EcsFilter<CellSupViewComponent> _supViewFilter = default;
+        private EcsFilter<SupportVC> _supViewFilter = default;
         private EcsFilter<EnvC> _envFilt = default;
         private EcsFilter<FireC> _fireFilt = default;
 
         private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitFilter = default;
-        private EcsFilter<UnitC, CellUnitMainViewCom> _cellUnitViewFilt = default;
         private EcsFilter<UnitC, VisibleC> _unitVisFilt = default;
 
 
@@ -22,7 +21,6 @@ namespace Chessy.Game
                 ref var ownUnit_0 = ref _cellUnitFilter.Get3(idx_0);
                 ref var visUnit_0 = ref _unitVisFilt.Get2(idx_0);
 
-                ref var mainUnit_0 = ref _cellUnitViewFilt.Get2(idx_0);
                 ref var supView_0 = ref _supViewFilter.Get1(idx_0);
 
                 ref var env_0 = ref _envFilt.Get1(idx_0);

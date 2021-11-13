@@ -10,21 +10,21 @@ namespace Chessy.Game
 
         public void Run()
         {
-            if (MistakeDataUIC.MistakeType == MistakeTypes.None)
+            if (MistakeC.MistakeType == MistakeTypes.None)
             {
                 ResetAll();
             }
             else
             {
-                MistakeDataUIC.CurTime += Time.deltaTime;
+                MistakeC.CurTime += Time.deltaTime;
 
-                if (MistakeDataUIC.MistakeType == MistakeTypes.Economy)
+                if (MistakeC.MistakeType == MistakeTypes.Economy)
                 {
-                    if (MistakeDataUIC.CurTime >= _neededTimeForFading)
+                    if (MistakeC.CurTime >= _neededTimeForFading)
                     {
-                        MistakeDataUIC.CurTime = 0;
-                        MistakeDataUIC.ResetMistakeType();
-                        MistakeDataUIC.ClearAllNeeds();
+                        MistakeC.CurTime = 0;
+                        MistakeC.ResetMistakeType();
+                        MistakeC.ClearAllNeeds();
 
                         for (var resType = Support.MinResType; resType < Support.MaxResType; resType++)
                         {
@@ -36,11 +36,11 @@ namespace Chessy.Game
                     {
                         for (var resType = Support.MinResType; resType < Support.MaxResType; resType++)
                         {
-                            if (MistakeDataUIC.NeedRes(resType))
+                            if (MistakeC.NeedRes(resType))
                             {
                                 EconomyViewUIC.SetMainColor(resType, Color.red);
                                 MistakeViewUIC.SetActiveRes(resType, true);
-                                MistakeViewUIC.SetText(resType, ">= " + (-MistakeDataUIC.NeedResAmount(resType)).ToString());
+                                MistakeViewUIC.SetText(resType, ">= " + (-MistakeC.NeedResAmount(resType)).ToString());
                             }
                             else
                             {
@@ -57,13 +57,13 @@ namespace Chessy.Game
 
                     MistakeViewUIC.ActiveBackgroud(true);
 
-                    if (MistakeDataUIC.CurTime >= _neededTimeForFading)
+                    if (MistakeC.CurTime >= _neededTimeForFading)
                     {
-                        MistakeDataUIC.CurTime = 0;
-                        MistakeDataUIC.ResetMistakeType();
+                        MistakeC.CurTime = 0;
+                        MistakeC.ResetMistakeType();
                     }
 
-                    switch (MistakeDataUIC.MistakeType)
+                    switch (MistakeC.MistakeType)
                     {
                         case MistakeTypes.None:
                             break;

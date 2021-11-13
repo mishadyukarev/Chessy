@@ -5,9 +5,9 @@ namespace Chessy.Game
 {
     public sealed class CellBarsEnvSystem : IEcsRunSystem
     {
-        private EcsFilter<CellBuildDataC> _cellBuildFilter = default;
-        private EcsFilter<EnvC, CellEnvResC> _cellEnvFilter = default;
-        private EcsFilter<CellBarsViewComponent> _cellBarsFilter = default;
+        private EcsFilter<BuildC> _cellBuildFilter = default;
+        private EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
+        private EcsFilter<BarsVC> _cellBarsFilter = default;
 
         public void Run()
         {
@@ -22,7 +22,7 @@ namespace Chessy.Game
                 ref var envRes_0 = ref _cellEnvFilter.Get2(curIdxCell);
                 ref var barsView_0 = ref _cellBarsFilter.Get1(curIdxCell);
 
-                if (EnvirZoneDataUIC.IsActivatedInfo)
+                if (EnvInfoC.IsActivatedInfo)
                 {
                     if (env_0.Have(EnvTypes.Fertilizer))
                     {

@@ -4,18 +4,18 @@ namespace Chessy.Game
 {
     public sealed class VisibElseSys : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
+        private EcsFilter<XyC> _xyCellFilter = default;
         private EcsFilter<EnvC> _cellEnvFilter = default;
-        private EcsFilter<CellTrailDataC, VisibleC> _cellTrailFilt = default;
+        private EcsFilter<TrailC, VisibleC> _cellTrailFilt = default;
 
         private EcsFilter<UnitC, OwnerC, VisibleC> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataC, OwnerC, VisibleC> _cellBuildFilt = default;
+        private EcsFilter<BuildC, OwnerC, VisibleC> _cellBuildFilt = default;
 
         public void Run()
         {
             foreach (byte idx_0 in _cellUnitFilter)
             {
-                var xy = _xyCellFilter.Get1(idx_0).XyCell;
+                var xy = _xyCellFilter.Get1(idx_0).Xy;
 
                 ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
                 ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);

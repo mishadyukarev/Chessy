@@ -14,16 +14,16 @@ namespace Chessy.Game
             {
                 if (curUnitType == UnitTypes.Pawn || curUnitType == UnitTypes.Archer)
                 {
-                    if (GetterUnitsDataUIC.IsActivatedButton(curUnitType))
+                    if (GetterUnitsC.IsActivatedButton(curUnitType))
                     {
                         GetterUnitsViewUIC.SetActiveCreateButton(curUnitType, true);
-                        GetterUnitsDataUIC.AddTimer(curUnitType, Time.deltaTime);
+                        GetterUnitsC.AddTimer(curUnitType, Time.deltaTime);
 
-                        if (GetterUnitsDataUIC.GetTimer(curUnitType) >= NEEDED_TIME)
+                        if (GetterUnitsC.GetTimer(curUnitType) >= NEEDED_TIME)
                         {
                             GetterUnitsViewUIC.SetActiveCreateButton(curUnitType, false);
-                            GetterUnitsDataUIC.ActiveNeedCreateButton(curUnitType, false);
-                            GetterUnitsDataUIC.ResetCurTimer(curUnitType);
+                            GetterUnitsC.ActiveNeedCreateButton(curUnitType, false);
+                            GetterUnitsC.ResetCurTimer(curUnitType);
                         }
                     }
 

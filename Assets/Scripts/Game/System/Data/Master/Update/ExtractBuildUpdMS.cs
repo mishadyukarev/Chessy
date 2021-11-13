@@ -4,10 +4,10 @@ namespace Chessy.Game
 {
     public sealed class ExtractBuildUpdMS : IEcsRunSystem
     {
-        private EcsFilter<EnvC, CellEnvResC> _cellEnvFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerC> _cellbuildFilt = default;
+        private EcsFilter<EnvC, EnvResC> _cellEnvFilt = default;
+        private EcsFilter<BuildC, OwnerC> _cellbuildFilt = default;
         private EcsFilter<FireC> _cellFireFilt = default;
-        private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
+        private EcsFilter<TrailC> _cellTrailFilt = default;
 
         public void Run()
         {

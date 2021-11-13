@@ -9,9 +9,9 @@ namespace Chessy.Game
         private EcsFilter<UnitC, ConditionUnitC, UnitEffectsC> _cellUnitOthFilt = default;
         private EcsFilter<UnitC, ToolWeaponC> _cellUnitTWFilt = default;
 
-        private EcsFilter<EnvC, CellEnvResC> _cellEnvFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
-        private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
+        private EcsFilter<EnvC, EnvResC> _cellEnvFilt = default;
+        private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
+        private EcsFilter<TrailC> _cellTrailFilt = default;
         public void Run()
         {
             for (var player = Support.MinPlayerType; player < Support.MaxPlayerType; player++)

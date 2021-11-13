@@ -7,12 +7,12 @@ namespace Chessy.Game
     {
         public void Run()
         {
-            if (EndGameDataUIC.PlayerWinner == default)
+            if (PlyerWinnerC.PlayerWinner == default)
             {
                 EndGameViewUIC.SetActiveZone(false);
             }
 
-            else if (EndGameDataUIC.PlayerWinner == WhoseMoveC.CurPlayerI)
+            else if (PlyerWinnerC.PlayerWinner == WhoseMoveC.CurPlayerI)
             {
                 EndGameViewUIC.Text = LanguageComC.GetText(GameLanguageTypes.YouAreWinner);
                 EndGameViewUIC.SetActiveZone(true);

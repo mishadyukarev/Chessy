@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public sealed class FillCellsArsonSys : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
+        private EcsFilter<XyC> _xyCellFilter = default;
         private EcsFilter<EnvC> _cellEnvFilter = default;
         private EcsFilter<FireC> _cellFireFilter = default;
 
@@ -15,7 +15,7 @@ namespace Chessy.Game
         {
             foreach (byte curIdxCell in _cellEnvFilter)
             {
-                var curXy = _xyCellFilter.Get1(curIdxCell).XyCell;
+                var curXy = _xyCellFilter.Get1(curIdxCell).Xy;
 
                 ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
                 ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);

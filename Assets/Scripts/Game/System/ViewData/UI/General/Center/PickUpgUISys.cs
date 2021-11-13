@@ -6,13 +6,13 @@ namespace Chessy.Game
     {
         public void Run()
         {
-            var isActivatedZone = PickUpgZoneDataUIC.HaveUpgrade(WhoseMoveC.CurPlayerI);
+            var isActivatedZone = PickUpgC.HaveUpgrade(WhoseMoveC.CurPlayerI);
 
             PickUpgZoneViewUIC.SetActiveZone(isActivatedZone);
 
             if (isActivatedZone)
             {
-                foreach (var item_0 in PickUpgZoneDataUIC.Activated_Buts)
+                foreach (var item_0 in PickUpgC.Activated_Buts)
                 {
                     if (item_0.Key == WhoseMoveC.CurPlayerI)
                     {

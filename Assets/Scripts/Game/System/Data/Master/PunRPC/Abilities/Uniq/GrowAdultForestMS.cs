@@ -5,8 +5,8 @@ namespace Chessy.Game
 {
     public sealed class GrowAdultForestMS : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyFilt = default;
-        private EcsFilter<EnvC, CellEnvResC> _envFilt = default;
+        private EcsFilter<XyC> _xyFilt = default;
+        private EcsFilter<EnvC, EnvResC> _envFilt = default;
 
         private EcsFilter<UnitC, OwnerC> _unitMainFilt = default;
         private EcsFilter<UnitC, StepC> _unitStatFilt = default;
@@ -49,7 +49,7 @@ namespace Chessy.Game
 
                         if (!effUnit_0.Have(UnitStatTypes.Steps)) effUnit_0.Set(UnitStatTypes.Steps);
 
-                        var around = CellSpaceSupport.GetXyAround(_xyFilt.Get1(idx_0).XyCell);
+                        var around = CellSpaceSupport.GetXyAround(_xyFilt.Get1(idx_0).Xy);
                         foreach (var xy_1 in around)
                         {
                             var idx_1 = _xyFilt.GetIdxCell(xy_1);

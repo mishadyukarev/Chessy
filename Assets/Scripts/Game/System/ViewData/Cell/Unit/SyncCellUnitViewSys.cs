@@ -7,8 +7,9 @@ namespace Chessy.Game
         private EcsFilter<UnitC, ToolWeaponC> _cellUnitFilter = default;
         private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitLevFilter = default;
         private EcsFilter<CornerArcherC> _archerFilt = default;
+        private EcsFilter<UnitC, VisibleC> _unitF = default;
 
-        private EcsFilter<VisibleC, CellUnitMainViewCom, CellUnitExtraViewComp> _cellUnitViewFilt = default;
+        private EcsFilter<UnitMainVC, UnitExtraVC> _unitVF = default;
 
         public void Run()
         {
@@ -20,9 +21,9 @@ namespace Chessy.Game
 
                 ref var twUnitC_0 = ref _cellUnitFilter.Get2(idx_0);
 
-                ref var visUnitC_0 = ref _cellUnitViewFilt.Get1(idx_0);
-                ref var mainUnitC_0 = ref _cellUnitViewFilt.Get2(idx_0);
-                ref var extraUnitC_0 = ref _cellUnitViewFilt.Get3(idx_0);
+                ref var visUnit_0 = ref _unitF.Get2(idx_0);
+                ref var mainUnitC_0 = ref _unitVF.Get1(idx_0);
+                ref var extraUnitC_0 = ref _unitVF.Get2(idx_0);
 
 
                 mainUnitC_0.SetEnabled_SR(false);
@@ -30,7 +31,7 @@ namespace Chessy.Game
 
                 if (unit_0.HaveUnit)
                 {
-                    if (visUnitC_0.IsVisibled(WhoseMoveC.CurPlayerI))
+                    if (visUnit_0.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
                         mainUnitC_0.SetEnabled_SR(true);
 
@@ -56,8 +57,8 @@ namespace Chessy.Game
                         }
 
 
-                        mainUnitC_0.SetAlpha(visUnitC_0.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI)));
-                        extraUnitC_0.SetAlpha(visUnitC_0.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI)));
+                        mainUnitC_0.SetAlpha(visUnit_0.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI)));
+                        extraUnitC_0.SetAlpha(visUnit_0.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI)));
                     }
                 }
             }

@@ -9,5 +9,6 @@
         SoundEff,
         SoundUniq,
         ActiveMotion,
+        Sync,
     }
 }

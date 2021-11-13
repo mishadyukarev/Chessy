@@ -6,22 +6,22 @@ namespace Chessy.Game
 {
     public sealed class FireUpdMasSys : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
-        private EcsFilter<CellDataC> _cellDataFilt = default;
+        private EcsFilter<XyC> _xyCellFilter = default;
+        private EcsFilter<CellC> _cellDataFilt = default;
 
         private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<UnitC, HpC> _cellUnitFilter = default;
 
         private EcsFilter<FireC> _cellFireDataFilter = default;
-        private EcsFilter<EnvC, CellEnvResC> _cellEnvDataFilter = default;
-        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
-        private EcsFilter<CellCloudDataC> _cellCloudsFilt = default;
+        private EcsFilter<EnvC, EnvResC> _cellEnvDataFilter = default;
+        private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
+        private EcsFilter<CloudC> _cellCloudsFilt = default;
 
         public void Run()
         {
             foreach (byte idx_0 in _xyCellFilter)
             {
-                var curXy = _xyCellFilter.Get1(idx_0).XyCell;
+                var curXy = _xyCellFilter.Get1(idx_0).Xy;
 
                 ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
 
@@ -56,7 +56,7 @@ namespace Chessy.Game
                         {
                             if (unit_0.Is(UnitTypes.King))
                             {
-                                EndGameDataUIC.PlayerWinner = WhoseMoveC.NextPlayerFrom(ownUnit_0.Owner);
+                                PlyerWinnerC.PlayerWinner = WhoseMoveC.NextPlayerFrom(ownUnit_0.Owner);
                             }
                             else if (unit_0.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
                             {
@@ -94,7 +94,7 @@ namespace Chessy.Game
                         fire_0.HaveFire = false;
 
 
-                        var aroundXYList = CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_0).XyCell);
+                        var aroundXYList = CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_0).Xy);
                         foreach (var xy1 in aroundXYList)
                         {
                             var curIdxCell1 = _xyCellFilter.GetIdxCell(xy1);

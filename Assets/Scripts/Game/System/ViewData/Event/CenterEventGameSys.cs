@@ -31,16 +31,16 @@ namespace Chessy.Game
         private void Ready() => RpcSys.ReadyToMaster();
         private void FriendReady()
         {
-            FriendZoneDataUIC.IsActiveFriendZone = false;
+            FriendC.IsActiveFriendZone = false;
         }
         private void Hint()
         {
-            HintDataUIC.CurStartNumber++;
+            HintC.CurStartNumber++;
 
-            if (HintDataUIC.CurStartNumber <= (int)VideoClipTypes.Start5)
+            if (HintC.CurStartNumber <= (int)VideoClipTypes.Start5)
             {
-                HintDataUIC.SetWasActived((VideoClipTypes)HintDataUIC.CurStartNumber, true);
-                HintViewUIC.SetVideoClip((VideoClipTypes)HintDataUIC.CurStartNumber);
+                HintC.SetWasActived((VideoClipTypes)HintC.CurStartNumber, true);
+                HintViewUIC.SetVideoClip((VideoClipTypes)HintC.CurStartNumber);
             }
             else
             {

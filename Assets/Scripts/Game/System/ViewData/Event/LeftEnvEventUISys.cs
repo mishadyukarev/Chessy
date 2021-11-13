@@ -11,7 +11,7 @@ namespace Chessy.Game
 
         private void EnvironmentInfo()
         {
-            EnvirZoneDataUIC.IsActivatedInfo = !EnvirZoneDataUIC.IsActivatedInfo;
+            EnvInfoC.IsActivatedInfo = !EnvInfoC.IsActivatedInfo;
         }
     }
 }

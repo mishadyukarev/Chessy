@@ -4,9 +4,9 @@ namespace Chessy.Game
 {
     public sealed class FillCellsForAttackKingSys : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyCellFilter = default;
+        private EcsFilter<XyC> _xyCellFilter = default;
         private EcsFilter<EnvC> _cellEnvDataFilter = default;
-        private EcsFilter<CellTrailDataC> _cellTrailFilt = default;
+        private EcsFilter<TrailC> _cellTrailFilt = default;
 
         private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
         private EcsFilter<UnitC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
@@ -31,7 +31,7 @@ namespace Chessy.Game
                     {
                         DirectTypes curDir_1 = default;
 
-                        CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).XyCell, out var dirs);
+                        CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).Xy, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {

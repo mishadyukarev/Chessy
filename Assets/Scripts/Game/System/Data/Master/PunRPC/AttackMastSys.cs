@@ -15,11 +15,11 @@ namespace Chessy.Game
         private EcsFilter<UnitC, ConditionUnitC, MoveInCondC> _unitCondFilt = default;
         private EcsFilter<UnitC, UnitEffectsC, StunC> _unitEffFilt = default;
 
-        private EcsFilter<XyCellComponent> _cellXyFilt = default;
-        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilter = default;
+        private EcsFilter<XyC> _cellXyFilt = default;
+        private EcsFilter<BuildC, OwnerC> _cellBuildFilter = default;
         private EcsFilter<EnvC> _cellEnvFilter = default;
-        private EcsFilter<CellRiverDataC> _cellRiverFilt = default;
-        private EcsFilter<CellTrailDataC> _cellTrainFilt = default;
+        private EcsFilter<RiverC> _cellRiverFilt = default;
+        private EcsFilter<TrailC> _cellTrainFilt = default;
 
         public void Run()
         {
@@ -172,7 +172,7 @@ namespace Chessy.Game
                     if (unit_to.Is(UnitTypes.King))
                     {
                         unit_to.Reset();
-                        EndGameDataUIC.PlayerWinner = ownUnit_from.Owner;
+                        PlyerWinnerC.PlayerWinner = ownUnit_from.Owner;
                         return;
                     }
                     else if (unit_to.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
@@ -192,7 +192,7 @@ namespace Chessy.Game
                             if (unit_from.Is(UnitTypes.King))
                             {
                                 unit_from.Reset();
-                                EndGameDataUIC.PlayerWinner = ownUnit_to.Owner;
+                                PlyerWinnerC.PlayerWinner = ownUnit_to.Owner;
                                 return;
                             }
 
@@ -214,7 +214,7 @@ namespace Chessy.Game
                             if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Water));
                             WhereUnitsC.Add(ownUnit_to.Owner, unit_to.Unit, levUnit_to.Level, idx_to);
 
-                            var dir = CellSpaceSupport.GetDirect(_cellXyFilt.Get1(idx_from).XyCell, _cellXyFilt.Get1(idx_to).XyCell);
+                            var dir = CellSpaceSupport.GetDirect(_cellXyFilt.Get1(idx_from).Xy, _cellXyFilt.Get1(idx_to).Xy);
                             trail_to.TrySetNewTrail(dir.Invert(), env_to);
                             trail_from.TrySetNewTrail(dir, env_from);
 
@@ -240,7 +240,7 @@ namespace Chessy.Game
                     if (unit_from.Is(UnitTypes.King))
                     {
                         unit_from.Reset();
-                        EndGameDataUIC.PlayerWinner = ownUnit_to.Owner;
+                        PlyerWinnerC.PlayerWinner = ownUnit_to.Owner;
                         return;
                     }
 

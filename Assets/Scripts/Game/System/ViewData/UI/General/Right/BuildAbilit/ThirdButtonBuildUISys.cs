@@ -6,7 +6,7 @@ namespace Chessy.Game
     public sealed class ThirdButtonBuildUISys : IEcsRunSystem
     {
         private EcsFilter<UnitC, OwnerC> _cellUnitFilter = default;
-        private EcsFilter<CellBuildDataC, OwnerC> _cellBuildFilt = default;
+        private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
 
         public void Run()
         {
@@ -35,14 +35,14 @@ namespace Chessy.Game
                                 {
                                     needActiveThirdButt = true;
                                     BuildAbilitViewUIC.SetSpriteThird(SpriteGameTypes.City);
-                                    BuildAbilitDataUIC.SetAbilityType(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
+                                    BuildAbilC.SetAbilityType(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
                                 }
                             }
                             else
                             {
                                 needActiveThirdButt = true;
                                 BuildAbilitViewUIC.SetSpriteThird(SpriteGameTypes.CityNone);
-                                BuildAbilitDataUIC.SetAbilityType(BuildButtonTypes.Third, BuildAbilTypes.Destroy);
+                                BuildAbilC.SetAbilityType(BuildButtonTypes.Third, BuildAbilTypes.Destroy);
                             }
                         }
 
@@ -52,7 +52,7 @@ namespace Chessy.Game
                             {
                                 needActiveThirdButt = true;
                                 BuildAbilitViewUIC.SetSpriteThird(SpriteGameTypes.City);
-                                BuildAbilitDataUIC.SetAbilityType(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
+                                BuildAbilC.SetAbilityType(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
                             }
                         }
                     }

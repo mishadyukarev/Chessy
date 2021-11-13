@@ -84,7 +84,7 @@ namespace Chessy.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                GetterUnitsDataUIC.ResetCurTimer(unitType);
+                GetterUnitsC.ResetCurTimer(unitType);
 
                 RpcSys.CreateUnitToMaster(unitType);
             }
@@ -97,7 +97,7 @@ namespace Chessy.Game
             SelectorC.IdxCurCell = default;
             SelectorC.IdxPreVisionCell = default;
             SelectorC.DefSelectedCell();
-            GetterUnitsDataUIC.ResetCurTimer(unitType);
+            GetterUnitsC.ResetCurTimer(unitType);
 
             if (WhoseMoveC.IsMyMove)
             {
@@ -111,7 +111,7 @@ namespace Chessy.Game
                 }
                 else
                 {
-                    GetterUnitsDataUIC.ActiveNeedCreateButton(unitType, true);
+                    GetterUnitsC.ActiveNeedCreateButton(unitType, true);
                 }
             }
             else SoundEffectC.Play(ClipGameTypes.Mistake);
@@ -182,11 +182,11 @@ namespace Chessy.Game
         {
             if (HintComC.IsOnHint)
             {
-                if (!HintDataUIC.WasActived(videoClip))
+                if (!HintC.WasActived(videoClip))
                 {
                     HintViewUIC.SetActiveHintZone(true);
                     HintViewUIC.SetVideoClip(videoClip);
-                    HintDataUIC.SetWasActived(videoClip, true);
+                    HintC.SetWasActived(videoClip, true);
                 }
             }
         }

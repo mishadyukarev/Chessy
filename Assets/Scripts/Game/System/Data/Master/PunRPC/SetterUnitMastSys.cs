@@ -67,7 +67,7 @@ namespace Chessy.Game
 
                 WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                if (unitForSet == UnitTypes.King) PickUpgZoneDataUIC.SetHaveUpgrade(whoseMove, true);
+                if (unitForSet == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);
 
                 RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
             }

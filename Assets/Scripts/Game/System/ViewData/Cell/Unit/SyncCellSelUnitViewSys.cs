@@ -5,7 +5,7 @@ namespace Chessy.Game
     public sealed class SyncCellSelUnitViewSys : IEcsRunSystem
     {
         private EcsFilter<UnitC, VisibleC> _cellUnitFilter = default;
-        private EcsFilter<CellUnitMainViewCom> _cellUnitViewFilt = default;
+        private EcsFilter<UnitMainVC> _cellUnitViewFilt = default;
 
         public void Run()
         {

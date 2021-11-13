@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     public sealed class BonusNearUnitKingMS : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _cellXyFilt = default;
+        private EcsFilter<XyC> _cellXyFilt = default;
         private EcsFilter<UnitC, HpC, StepC> _cellUnitFilt = default;
         private EcsFilter<UnitC, ConditionUnitC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
         private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
@@ -41,7 +41,7 @@ namespace Chessy.Game
 
                     if (!effUnit_0.Have(UnitStatTypes.Damage)) effUnit_0.Set(UnitStatTypes.Damage);
 
-                    var around = CellSpaceSupport.GetXyAround(_cellXyFilt.Get1(idx_0).XyCell);
+                    var around = CellSpaceSupport.GetXyAround(_cellXyFilt.Get1(idx_0).Xy);
                     foreach (var xy in around)
                     {
                         var idxCell = _cellXyFilt.GetIdxCell(xy);

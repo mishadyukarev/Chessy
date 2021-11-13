@@ -5,9 +5,9 @@ namespace Chessy.Game
 {
     public sealed class RotateAllSys : IEcsRunSystem
     {
-        private EcsFilter<CellViewC> _cellViewFilter = default;
-        private EcsFilter<CellRiverViewC> _cellRiverFilt = default;
-        private EcsFilter<CellTrailViewC> _cellTrailFilt = default;
+        private EcsFilter<CellVC> _cellViewFilter = default;
+        private EcsFilter<RiverVC> _cellRiverFilt = default;
+        private EcsFilter<TrailVC> _cellTrailFilt = default;
 
         public void Run()
         {
@@ -20,7 +20,7 @@ namespace Chessy.Game
                 _cellTrailFilt.Get1(idx_0).Rotate(curPlayer);
             }
 
-            CameraC.SetPosRotClient(curPlayer, MainGoVC.Main_GO.transform.position);
+            CameraVC.SetPosRotClient(curPlayer, MainGoVC.Main_GO.transform.position);
         }
     }
 }

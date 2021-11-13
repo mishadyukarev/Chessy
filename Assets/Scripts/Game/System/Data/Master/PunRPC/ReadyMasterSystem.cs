@@ -11,16 +11,16 @@ namespace Chessy.Game
             var playerSend = sender.GetPlayerType();
 
 
-            ReadyDataUIC.SetIsReady(playerSend, !ReadyDataUIC.IsReady(playerSend));
+            ReadyC.SetIsReady(playerSend, !ReadyC.IsReady(playerSend));
 
-            if (ReadyDataUIC.IsReady(PlayerTypes.First) && ReadyDataUIC.IsReady(PlayerTypes.Second))
+            if (ReadyC.IsReady(PlayerTypes.First) && ReadyC.IsReady(PlayerTypes.Second))
             {
-                ReadyDataUIC.IsStartedGame = true;
+                ReadyC.IsStartedGame = true;
             }
 
             else
             {
-                ReadyDataUIC.IsStartedGame = false;
+                ReadyC.IsStartedGame = false;
             }
         }
     }

@@ -6,7 +6,7 @@ namespace Chessy.Game
 {
     public sealed class FromToNewUnitMS : IEcsRunSystem
     {
-        private EcsFilter<XyCellComponent> _xyFilt = default;
+        private EcsFilter<XyC> _xyFilt = default;
         private EcsFilter<UnitC, LevelUnitC, OwnerC> _unitMainFilt = default;
 
         public void Run()
@@ -32,7 +32,7 @@ namespace Chessy.Game
                 {
                     if (ownUnit_from.Is(whoseMove) && ownUnit_to.Is(whoseMove))
                     {
-                        var xy_from = _xyFilt.Get1(idx_from).XyCell;
+                        var xy_from = _xyFilt.Get1(idx_from).Xy;
 
                         var list_around = CellSpaceSupport.GetXyAround(xy_from);
 

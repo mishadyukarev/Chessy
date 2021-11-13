@@ -5,5 +5,7 @@
         None,
 
         //SetAmountMotion,
+
+        Sync,
     }
 }
