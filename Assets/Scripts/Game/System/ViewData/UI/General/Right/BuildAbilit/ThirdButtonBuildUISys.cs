@@ -27,7 +27,7 @@ namespace Chessy.Game
                 {
                     if (selOwnUnitCom.Is(WhoseMoveC.CurPlayerI))
                     {
-                        if (selBuildDatCom.HaveBuild)
+                        if (selBuildDatCom.Have)
                         {
                             if (ownBuildC_sel.Is(WhoseMoveC.CurPlayerI))
                             {

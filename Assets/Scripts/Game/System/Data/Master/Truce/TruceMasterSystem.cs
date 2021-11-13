@@ -73,12 +73,12 @@ namespace Chessy.Game
                 }
 
 
-                if (build_0.HaveBuild)
+                if (build_0.Have)
                 {
                     if (build_0.Is(BuildTypes.Camp))
                     {
-                        WhereBuildsC.Remove(ownUnit_0.Owner, build_0.Build, idx_0);
-                        build_0.Reset();
+                        WhereBuildsC.Remove(ownUnit_0.Owner, build_0.Type, idx_0);
+                        build_0.Remove();
                     }
                 }
 

@@ -59,13 +59,13 @@ namespace Chessy.Game
                         RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
                         RpcSys.SoundToGeneral(sender, ClipGameTypes.AfterBuildTown);
 
-                        if (build_0.HaveBuild)
+                        if (build_0.Have)
                         {
-                            WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idxForBuild);
-                            build_0.Reset();
+                            WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Type, idxForBuild);
+                            build_0.Remove();
                         }
 
-                        build_0.Build = forBuildType;
+                        build_0.SetNew(forBuildType);
                         ownBuild_0.SetOwner(whoseMove);
                         WhereBuildsC.Add(whoseMove, forBuildType, idxForBuild);
 

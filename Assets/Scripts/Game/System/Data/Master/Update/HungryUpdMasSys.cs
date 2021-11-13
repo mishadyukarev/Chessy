@@ -39,8 +39,8 @@ namespace Chessy.Game
 
                                 if (build_0.Is(BuildTypes.Camp))
                                 {
-                                    WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
-                                    build_0.Reset();
+                                    WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Type, idx_0);
+                                    build_0.Remove();
                                 }
 
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);

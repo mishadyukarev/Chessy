@@ -62,17 +62,17 @@ namespace Chessy.Game
                                                 if (buil_0.Is(BuildTypes.Camp))
                                                 {
                                                     WhereBuildsC.Remove(ownUnit_0.Owner, BuildTypes.Camp, idx_0);
-                                                    buil_0.Reset();
+                                                    buil_0.Remove();
 
-                                                    buil_0.Build = BuildTypes.Woodcutter;
+                                                    buil_0.SetNew(BuildTypes.Woodcutter);
                                                     ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Build, idx_0);
+                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Type, idx_0);
                                                 }
-                                                else if (!buil_0.HaveBuild)
+                                                else if (!buil_0.Have)
                                                 {
-                                                    buil_0.Build = BuildTypes.Woodcutter;
+                                                    buil_0.SetNew(BuildTypes.Woodcutter);
                                                     ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Build, idx_0);
+                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Type, idx_0);
                                                 }
                                                 else if (buil_0.Is(BuildTypes.Woodcutter))
                                                 {
@@ -85,10 +85,10 @@ namespace Chessy.Game
                                             }
                                             else
                                             {
-                                                if (buil_0.HaveBuild)
+                                                if (buil_0.Have)
                                                 {
-                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
-                                                    buil_0.Reset();
+                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Type, idx_0);
+                                                    buil_0.Remove();
                                                 }
 
                                                 trail_0.ResetAll();
@@ -109,7 +109,7 @@ namespace Chessy.Game
                                         {
                                             if (env_0.Have(EnvTypes.Hill))
                                             {
-                                                if (buil_0.HaveBuild)
+                                                if (buil_0.Have)
                                                 {
                                                     condUnit_0.Set(CondUnitTypes.Protected);
                                                 }

@@ -4,34 +4,31 @@ namespace Chessy.Game
 {
     public struct BuildC
     {
-        private BuildTypes _build;
+        private BuildTypes _type;
 
-        public BuildTypes Build
+        public BuildTypes Type => _type;
+        public bool Have => Type != default;
+        public bool Is(params BuildTypes[] buildTypes)
         {
-            get => _build;
-            set
-            {
-                if (value == default) throw new Exception("BuildType is None");
-                if (Is(value)) throw new Exception("It's got yet");
-                if (HaveBuild) throw new Exception("It's got building");
-                _build = value;
-            }
-        }
-        public bool HaveBuild => Build != default;
-
-
-
-        public bool Is(BuildTypes buildType) => _build == buildType;
-        public bool Is(BuildTypes[] buildTypes)
-        {
-            foreach (var buildType in buildTypes) if (buildType == _build) return true;
+            foreach (var buildType in buildTypes) if (buildType == _type) return true;
             return false;
         }
-        public void Reset()
+
+
+
+        public void SetNew(BuildTypes build)
         {
-            if (!HaveBuild) throw new Exception();
-            _build = BuildTypes.None;
+            if (build == default) throw new Exception("BuildType is None");
+            if (Is(build)) throw new Exception("It's got yet");
+            if (Have) throw new Exception("It's got building");
+
+            _type = build;
         }
-        public void Sync(BuildTypes buildType) => _build = buildType;
+        public void Remove()
+        {
+            if (!Have) throw new Exception();
+            _type = BuildTypes.None;
+        }
+        public void Sync(BuildTypes buildType) => _type = buildType;
     }
 }

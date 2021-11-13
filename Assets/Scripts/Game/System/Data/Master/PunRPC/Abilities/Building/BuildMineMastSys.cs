@@ -37,25 +37,25 @@ namespace Chessy.Game
             {
                 if (curStepUnitC.HaveMinSteps)
                 {
-                    if (!build_0.HaveBuild || build_0.Is(BuildTypes.Camp))
+                    if (!build_0.Have || build_0.Is(BuildTypes.Camp))
                     {
                         if (env_0.Have(EnvTypes.Hill) && envRes_0.HaveRes(EnvTypes.Hill))
                         {
                             if (InvResC.CanCreateBuild(whoseMove, forBuildType, out var needRes))
                             {
-                                if (build_0.HaveBuild)
+                                if (build_0.Have)
                                 {
-                                    WhereBuildsC.Remove(ownBuildC_0.Owner, build_0.Build, idx_0);
-                                    build_0.Reset();
+                                    WhereBuildsC.Remove(ownBuildC_0.Owner, build_0.Type, idx_0);
+                                    build_0.Remove();
                                 }
 
                                 RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
 
                                 InvResC.BuyBuild(whoseMove, forBuildType);
 
-                                build_0.Build = forBuildType;
+                                build_0.SetNew(forBuildType);
                                 ownBuildC_0.SetOwner(whoseMove);
-                                WhereBuildsC.Add(ownBuildC_0.Owner, build_0.Build, idx_0);
+                                WhereBuildsC.Add(ownBuildC_0.Owner, build_0.Type, idx_0);
 
                                 curStepUnitC.TakeSteps();
                             }

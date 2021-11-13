@@ -177,8 +177,8 @@ namespace Chessy.Game
                     ref var twUnit_0 = ref _cellUnitOtherFilt.Get3(idx_0);
                     ref var thirUnitC_0 = ref _cellUnitOtherFilt.Get4(idx_0);
 
-                    ref var buildC_0 = ref _cellBuildFilter.Get1(idx_0);
-                    ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idx_0);
+                    ref var build_0 = ref _cellBuildFilter.Get1(idx_0);
+                    ref var ownBuild_0 = ref _cellBuildFilter.Get2(idx_0);
 
                     if (x == 7 && y == 8)
                     {
@@ -217,9 +217,9 @@ namespace Chessy.Game
                             WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
                         }
 
-                        buildC_0.Build = BuildTypes.City;
-                        ownBuildC_0.SetOwner(PlayerTypes.Second);
-                        WhereBuildsC.Add(ownBuildC_0.Owner, buildC_0.Build, idx_0);
+                        build_0.SetNew(BuildTypes.City);
+                        ownBuild_0.SetOwner(PlayerTypes.Second);
+                        WhereBuildsC.Add(ownBuild_0.Owner, build_0.Type, idx_0);
                     }
 
                     else if (x == 6 && y == 8 || x == 9 && y == 8 || x <= 9 && x >= 6 && y == 7 || x <= 9 && x >= 6 && y == 9)

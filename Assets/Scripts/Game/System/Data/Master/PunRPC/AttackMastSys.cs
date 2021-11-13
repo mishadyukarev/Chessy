@@ -90,7 +90,7 @@ namespace Chessy.Game
 
 
 
-                powerDam_to += damUnit_to.DamageOnCell(unit_to.Unit, levUnit_to.Level, condUnit_to, twUnit_to, effUnit_to, UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Damage), build_to.Build, env_to.Envronments);   
+                powerDam_to += damUnit_to.DamageOnCell(unit_to.Unit, levUnit_to.Level, condUnit_to, twUnit_to, effUnit_to, UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Damage), build_to.Type, env_to.Envronments);   
 
 
                 float min_limit = 0;
@@ -223,8 +223,8 @@ namespace Chessy.Game
                             {
                                 if (!ownBuild_to.Is(ownUnit_to.Owner))
                                 {
-                                    WhereBuildsC.Remove(ownBuild_to.Owner, build_to.Build, idx_to);
-                                    build_to.Reset();
+                                    WhereBuildsC.Remove(ownBuild_to.Owner, build_to.Type, idx_to);
+                                    build_to.Remove();
                                 }
                             }
 

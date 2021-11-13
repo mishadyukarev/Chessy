@@ -110,8 +110,8 @@ namespace Chessy.Game
                 {
                     if (!ownBuild_to.Is(ownUnit_to.Owner))
                     {
-                        WhereBuildsC.Remove(ownBuild_to.Owner, build_to.Build, idx_to);
-                        build_to.Reset();
+                        WhereBuildsC.Remove(ownBuild_to.Owner, build_to.Type, idx_to);
+                        build_to.Remove();
                     }
                 }
 

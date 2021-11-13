@@ -61,7 +61,7 @@ namespace Chessy.Game
 
                 ref var curBuildCom = ref _cellBuildFilt.Get1(idx_0);
 
-                if (curBuildCom.HaveBuild)
+                if (curBuildCom.Have)
                 {
                     ref var curOwnBuildCom = ref _cellBuildFilt.Get2(idx_0);
                     ref var curVisBuildCom = ref _cellBuildFilt.Get3(idx_0);

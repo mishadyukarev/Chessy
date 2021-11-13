@@ -73,9 +73,9 @@ namespace Chessy.Game
 
                     if (!envRes_0.HaveRes(EnvTypes.AdultForest))
                     {
-                        if (buil_0.HaveBuild)
+                        if (buil_0.Have)
                         {
-                            buil_0.Reset();
+                            buil_0.Remove();
                         }
 
                         env_0.Remove(EnvTypes.AdultForest);

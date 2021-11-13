@@ -36,7 +36,7 @@ namespace Chessy.Game
                 case EnvTypes.YoungForest:
                     if (stepUnit_0.HaveMinSteps)
                     {
-                        if (build_0.HaveBuild && !build_0.Is(BuildTypes.Camp))
+                        if (build_0.Have && !build_0.Is(BuildTypes.Camp))
                         {
                             RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedOtherPlace, sender);
                         }

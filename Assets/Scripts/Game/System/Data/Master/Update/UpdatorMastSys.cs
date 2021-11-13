@@ -96,16 +96,16 @@ namespace Chessy.Game
                             {
                                 if (unit_0.Is(UnitTypes.Scout))
                                 {
-                                    if (buil_0.Is(BuildTypes.Woodcutter) || !buil_0.HaveBuild)
+                                    if (buil_0.Is(BuildTypes.Woodcutter) || !buil_0.Have)
                                     {
                                         if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                                         {
                                             if (ownUnit_0.Is(PlayerTypes.First))
                                             {
-                                                if (buil_0.HaveBuild)
+                                                if (buil_0.Have)
                                                 {
-                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
-                                                    buil_0.Reset();
+                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Type, idx_0);
+                                                    buil_0.Remove();
                                                 }
 
                                                 if (WhereBuildsC.IsSettedCamp(ownUnit_0.Owner))
@@ -113,21 +113,21 @@ namespace Chessy.Game
                                                     var idxCamp = WhereBuildsC.IdxCamp(ownUnit_0.Owner);
 
                                                     WhereBuildsC.Remove(ownUnit_0.Owner, BuildTypes.Camp, idxCamp);
-                                                    _cellBuildFilt.Get1(idxCamp).Reset();
+                                                    _cellBuildFilt.Get1(idxCamp).Remove();
                                                 }
 
 
-                                                buil_0.Build = BuildTypes.Camp;
+                                                buil_0.SetNew(BuildTypes.Camp);
                                                 ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                                WhereBuildsC.Add(ownBuil_0.Owner, buil_0.Build, idx_0);
+                                                WhereBuildsC.Add(ownBuil_0.Owner, buil_0.Type, idx_0);
                                             }
                                         }
                                         else
                                         {
-                                            if (buil_0.HaveBuild)
+                                            if (buil_0.Have)
                                             {
-                                                WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
-                                                buil_0.Reset();
+                                                WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Type, idx_0);
+                                                buil_0.Remove();
                                             }
 
                                             if (WhereBuildsC.IsSettedCamp(ownUnit_0.Owner))
@@ -135,13 +135,13 @@ namespace Chessy.Game
                                                 var idxCamp = WhereBuildsC.IdxCamp(ownUnit_0.Owner);
 
                                                 WhereBuildsC.Remove(ownUnit_0.Owner, BuildTypes.Camp, idxCamp);
-                                                _cellBuildFilt.Get1(idxCamp).Reset();
+                                                _cellBuildFilt.Get1(idxCamp).Remove();
                                             }
 
 
-                                            buil_0.Build = BuildTypes.Camp;
+                                            buil_0.SetNew(BuildTypes.Camp);
                                             ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                            WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Build, idx_0);
+                                            WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Type, idx_0);
                                         }
                                     }
                                 }

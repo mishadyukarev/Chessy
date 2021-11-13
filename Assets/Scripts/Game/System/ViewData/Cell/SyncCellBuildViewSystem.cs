@@ -18,15 +18,15 @@ namespace Chessy.Game
                 ref var curBuildViewCom = ref _cellBuildViewFilt.Get1(idx);
 
 
-                if (curBuildDatCom.HaveBuild)
+                if (curBuildDatCom.Have)
                 {
                     if (curVisBuildCom.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
-                        curBuildViewCom.SetSpriteFront(curBuildDatCom.Build);
+                        curBuildViewCom.SetSpriteFront(curBuildDatCom.Type);
                         curBuildViewCom.EnableFrontSR();
 
                         curBuildViewCom.EnableBackSR();
-                        curBuildViewCom.SetSpriteBack(curBuildDatCom.Build);
+                        curBuildViewCom.SetSpriteBack(curBuildDatCom.Type);
 
                         curBuildViewCom.SetAlpha(curVisBuildCom.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI)));
                         curBuildViewCom.SetBackColor(curOwnBuildCom.Owner);

@@ -461,7 +461,7 @@ namespace Chessy.Game
 
 
 
-                objs.Add(_cellBuildFilter.Get1(idx_0).Build);
+                objs.Add(_cellBuildFilter.Get1(idx_0).Type);
                 objs.Add(_cellBuildFilter.Get2(idx_0).Owner);
 
 
