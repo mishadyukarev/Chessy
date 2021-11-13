@@ -98,15 +98,15 @@ namespace Chessy.Game
                 float minus_to = 0;
                 float minus_from = 0;
 
-                var maxDamage = 100;
-                var minDamage = 0;
+                var maxDamage = HpC.MAX_HP;
+                var minDamage = HpC.MIN_HP;
 
                 if (!unit_to.IsMelee) powerDam_to /= 2;
 
                 if (powerDam_to > powerDam_from)
                 {
-                    max_limit = powerDam_to * 2f;
-                    min_limit = powerDam_to / 2f;
+                    max_limit = powerDam_to * 2;
+                    min_limit = powerDam_to / 3;
 
                     if (min_limit >= powerDam_from)
                     {
@@ -124,7 +124,7 @@ namespace Chessy.Game
                 else
                 {
                     max_limit = powerDam_from * 2;
-                    min_limit = powerDam_from / 2;
+                    min_limit = powerDam_from / 3;
 
                     if (min_limit >= powerDam_to)
                     {

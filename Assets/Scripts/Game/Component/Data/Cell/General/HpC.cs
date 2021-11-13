@@ -5,8 +5,8 @@ namespace Chessy.Game
     public struct HpC
     {
         private int _hp;
-        public const int MIN_HP = 0;
         public const int MAX_HP = 100;
+        public const int MIN_HP = 0;
 
 
         public int Hp => _hp;
