@@ -27,15 +27,11 @@ namespace Chessy.Game
             }
         }
 
-        public bool Have(EnvTypes envType)
+        public bool Have(params EnvTypes[] envTypes)
         {
-            if (envType == default) throw new Exception();
-            return _haveEnvir[envType];
-        }
-        public bool Have(EnvTypes[] envTypes)
-        {
-            if (envTypes == default)
-                foreach (var envType in envTypes) if (Have(envType)) return true;
+            if (envTypes == default) throw new Exception();
+
+            foreach (var env in envTypes) if (_haveEnvir[env]) return true;
             return false;
         }
 
@@ -46,7 +42,7 @@ namespace Chessy.Game
 
             _haveEnvir[envType] = haveEnv;
         }
-        public void Reset(EnvTypes envType)
+        public void Remove(EnvTypes envType)
         {
             if (envType == default) throw new Exception();
             if (!Have(envType)) throw new Exception();

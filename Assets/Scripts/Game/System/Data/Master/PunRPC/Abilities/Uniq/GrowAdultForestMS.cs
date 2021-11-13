@@ -35,7 +35,7 @@ namespace Chessy.Game
                     if (env_0.Have(EnvTypes.YoungForest))
                     {
                         WhereEnvC.Remove(EnvTypes.YoungForest, idx_0);
-                        env_0.Reset(EnvTypes.YoungForest);
+                        env_0.Remove(EnvTypes.YoungForest);
 
                         env_0.Set(EnvTypes.AdultForest);
                         envRes_0.SetMaxAmountRes(EnvTypes.AdultForest);

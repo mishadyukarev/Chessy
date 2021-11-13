@@ -35,7 +35,7 @@ namespace Chessy.Game
                     RpcSys.SoundToGeneral(RpcTarget.All, UniqAbilTypes.FireArcher);
 
                     stepUnit_from.DefSteps();
-                    toFireDatCom.HaveFire = true;
+                    toFireDatCom.Enable();
                 }
             }
 

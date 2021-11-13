@@ -20,9 +20,9 @@ namespace Chessy.Game
 
             if (WhereBuildsC.IsSettedCity(playerSend))
             {
-                if (InventResC.CanCreateUnit(playerSend, unitTypeForCreating, out var needRes))
+                if (InvResC.CanCreateUnit(playerSend, unitTypeForCreating, out var needRes))
                 {
-                    InventResC.BuyCreateUnit(playerSend, unitTypeForCreating);
+                    InvResC.BuyCreateUnit(playerSend, unitTypeForCreating);
                     InvUnitsC.AddUnit(playerSend, unitTypeForCreating, LevelUnitTypes.First);
 
                     RpcSys.SoundToGeneral(sender, ClipGameTypes.SoundGoldPack);

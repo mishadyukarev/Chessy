@@ -1,11 +1,7 @@
-﻿using Leopotam.Ecs;
+﻿using Chessy.Common;
+using Leopotam.Ecs;
 using Photon.Pun;
-using Chessy.Common;
-using System;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using static Chessy.Game.CellValues;
 
 namespace Chessy.Game
 {
@@ -30,15 +26,15 @@ namespace Chessy.Game
             var whiteCellSR = SpritesResComC.Sprite(SpriteGameTypes.WhiteCell);
             var blackCellSR = SpritesResComC.Sprite(SpriteGameTypes.BlackCell);
 
-            var cell_GOs = new GameObject[CELL_COUNT_X, CELL_COUNT_Y];
+            var cell_GOs = new GameObject[CellValues.CELL_COUNT_X, CellValues.CELL_COUNT_Y];
 
             var suppParCells = new GameObject("Cells");
             suppParCells.transform.SetParent(genZone.transform);
 
-            byte cur_idx = 0;
+            byte idx_0 = 0;
 
-            for (byte x = 0; x < CELL_COUNT_X; x++)
-                for (byte y = 0; y < CELL_COUNT_Y; y++)
+            for (byte x = 0; x < CellValues.CELL_COUNT_X; x++)
+                for (byte y = 0; y < CellValues.CELL_COUNT_Y; y++)
                 {
                     var curParCell = cell_GOs[x, y];
 
@@ -122,7 +118,7 @@ namespace Chessy.Game
 
 
 
-                    ++cur_idx;
+                    ++idx_0;
                 }
 
 
@@ -136,59 +132,6 @@ namespace Chessy.Game
             new CameraVC(Camera.main, new Vector3(7.4f, 4.8f, -2));
 
             GenerZoneVC.Attach(backGroundGO.transform);
-
-            ///Canvas
-            ///
-
-            CanvasC.SetCurZone(SceneTypes.Game);
-
-            var upZone_GO = CanvasC.FindUnderCurZone("UpZone");
-            var centerZone_GO = CanvasC.FindUnderCurZone("CenterZone");
-            var downZone_GO = CanvasC.FindUnderCurZone("DownZone");
-            var leftZone_GO = CanvasC.FindUnderCurZone("LeftZone");
-            var rightZone_go = CanvasC.FindUnderCurZone("RightZone");
-
-
-            var uniqAbilZone_trans = rightZone_go.transform.Find("UniqueAbilitiesZone");
-
-
-            ///Up
-            new EconomyViewUIC(upZone_GO);
-            new LeaveViewUIC(CanvasC.FindUnderCurZone<Button>("ButtonLeave"));
-            new WindUIC(upZone_GO.transform);
-            new AlphaUpUIC(upZone_GO.transform);
-
-            ///Center
-            new EndGameViewUIC(centerZone_GO);
-            new ReadyViewUIC(centerZone_GO.transform.Find("ReadyZone").gameObject);
-            new MotionsViewUIC(centerZone_GO);
-            new MistakeViewUIC(centerZone_GO);
-            new KingZoneViewUIC(centerZone_GO);
-            new SelectorUIC(centerZone_GO);
-            new FriendZoneViewUIC(centerZone_GO.transform);
-            new HintViewUIC(centerZone_GO.transform);
-            new PickUpgZoneViewUIC(centerZone_GO.transform);
-            new HeroesViewUIC(centerZone_GO.transform);
-
-            ///Down
-            new GetterUnitsViewUIC(downZone_GO);
-            new DonerUICom(downZone_GO);
-            new GiveTakeViewUIC(downZone_GO);
-            new ScoutUIC(downZone_GO.transform);
-            new HeroDownUIC(downZone_GO.transform);
-
-            ///Left
-            new CutyLeftZoneViewUIC(leftZone_GO);
-            new EnvirZoneViewUICom(leftZone_GO);
-
-            ///Right
-            new StatZoneViewUIC(rightZone_go);
-            new UniqButtonsViewC(uniqAbilZone_trans);
-            new BuildAbilitViewUIC(rightZone_go.transform.Find("BuildingZone"));
-            new ExtraTWZoneUIC(rightZone_go.transform);
-            new EffectsIUC(rightZone_go.transform);
-            new ProtectUIC(rightZone_go.transform.Find("ConditionZone"));
-            new RelaxUIC(rightZone_go.transform.Find("ConditionZone"));
         }
 
         public static void Dispose()

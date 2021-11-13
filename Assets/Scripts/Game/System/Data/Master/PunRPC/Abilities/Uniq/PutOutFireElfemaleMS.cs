@@ -26,9 +26,9 @@ namespace Chessy.Game
             {
                 if (step_from.HaveMinSteps)
                 {
-                    if (fire_to.HaveFire)
+                    if (fire_to.Have)
                     {
-                        fire_to.DisableFire();
+                        fire_to.Disable();
 
                         step_from.TakeSteps();
 

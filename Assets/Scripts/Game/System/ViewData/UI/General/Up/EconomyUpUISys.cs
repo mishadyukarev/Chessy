@@ -48,11 +48,11 @@ namespace Chessy.Game
 
 
 
-            EconomyViewUIC.SetMainText(ResTypes.Food, InventResC.AmountRes(curPlayer, ResTypes.Food).ToString());
-            EconomyViewUIC.SetMainText(ResTypes.Wood, InventResC.AmountRes(curPlayer, ResTypes.Wood).ToString());
-            EconomyViewUIC.SetMainText(ResTypes.Ore, InventResC.AmountRes(curPlayer, ResTypes.Ore).ToString());
-            EconomyViewUIC.SetMainText(ResTypes.Iron, InventResC.AmountRes(curPlayer, ResTypes.Iron).ToString());
-            EconomyViewUIC.SetMainText(ResTypes.Gold, InventResC.AmountRes(curPlayer, ResTypes.Gold).ToString());
+            EconomyViewUIC.SetMainText(ResTypes.Food, InvResC.AmountRes(curPlayer, ResTypes.Food).ToString());
+            EconomyViewUIC.SetMainText(ResTypes.Wood, InvResC.AmountRes(curPlayer, ResTypes.Wood).ToString());
+            EconomyViewUIC.SetMainText(ResTypes.Ore, InvResC.AmountRes(curPlayer, ResTypes.Ore).ToString());
+            EconomyViewUIC.SetMainText(ResTypes.Iron, InvResC.AmountRes(curPlayer, ResTypes.Iron).ToString());
+            EconomyViewUIC.SetMainText(ResTypes.Gold, InvResC.AmountRes(curPlayer, ResTypes.Gold).ToString());
 
         }
     }

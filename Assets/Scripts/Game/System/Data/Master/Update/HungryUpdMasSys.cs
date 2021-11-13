@@ -13,9 +13,9 @@ namespace Chessy.Game
             {
                 var res = ResTypes.Food;
 
-                if (InventResC.IsMinusRes(player, res))
+                if (InvResC.IsMinusRes(player, res))
                 {
-                    InventResC.ResetRes(player, res);
+                    InvResC.ResetRes(player, res);
 
                     for (var unit = UnitTypes.Pawn; unit >= UnitTypes.Elfemale; unit++)
                     {

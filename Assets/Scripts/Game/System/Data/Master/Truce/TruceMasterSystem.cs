@@ -35,7 +35,7 @@ namespace Chessy.Game
                 ref var trail_0 = ref _trailFilt.Get1(idx_0);
 
 
-                curFireCom.DisableFire();
+                curFireCom.Disable();
 
 
                 trail_0.ResetAll();
@@ -86,7 +86,7 @@ namespace Chessy.Game
                 {
                     if (env_0.Have(EnvTypes.YoungForest))
                     {
-                        env_0.Reset(EnvTypes.YoungForest);
+                        env_0.Remove(EnvTypes.YoungForest);
                         WhereEnvC.Remove(EnvTypes.YoungForest, idx_0);
 
                         env_0.Set(EnvTypes.AdultForest);

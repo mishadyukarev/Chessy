@@ -12,9 +12,9 @@ namespace Chessy.Game
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (InventResC.CanMeltOre(whoseMove, out var needRes))
+            if (InvResC.CanMeltOre(whoseMove, out var needRes))
             {
-                InventResC.BuyMeltOre(whoseMove);
+                InvResC.BuyMeltOre(whoseMove);
                 RpcSys.SoundToGeneral(sender, ClipGameTypes.Melting);
             }
             else

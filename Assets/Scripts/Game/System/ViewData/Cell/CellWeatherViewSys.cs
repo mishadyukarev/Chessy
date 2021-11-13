@@ -11,7 +11,7 @@ namespace Chessy.Game
         {
             foreach (var idxCell in _cloudVF)
             {
-                _cloudVF.Get1(idxCell).EnableCloud(_cloudF.Get1(idxCell).HaveCloud);
+                _cloudVF.Get1(idxCell).EnableCloud(_cloudF.Get1(idxCell).Have);
             }
         }
     }

@@ -27,9 +27,9 @@ namespace Chessy.Game
             {
                 if (stepUnit_0.HaveMinSteps)
                 {
-                    if (InventResC.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
+                    if (InvResC.CanUpgradeUnit(whoseMove, unit_0.Unit, out var needRes))
                     {
-                        InventResC.BuyUpgradeUnit(whoseMove, unit_0.Unit);
+                        InvResC.BuyUpgradeUnit(whoseMove, unit_0.Unit);
 
                         WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                         levUnit_0.SetLevel(LevelUnitTypes.Second);

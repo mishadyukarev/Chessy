@@ -25,7 +25,7 @@ namespace Chessy.Game
                         .Replace(new EnvResC(true))
                         .Replace(new FireC())
                         .Replace(new CloudC())
-                        .Replace(new RiverC(new List<byte>()));
+                        .Replace(new RiverC(true));
 
 
                     _curGameW.NewEntity()
@@ -96,7 +96,7 @@ namespace Chessy.Game
             new WhereUnitsC(true);
 
             new InvUnitsC(true);
-            new InventResC(true);
+            new InvResC(true);
             new InvToolWeapC(true);
 
 
@@ -105,16 +105,23 @@ namespace Chessy.Game
             new SelectorC(true);
 
 
-            new PlyerWinnerC(default);
+            new PlyerWinnerC(PlayerTypes.None);
             new ReadyC(new Dictionary<PlayerTypes, bool>());
             new MotionsC(0);
             new MistakeC(new Dictionary<ResTypes, int>());
-            new FriendC(false);
+
             new HintC(new Dictionary<VideoClipTypes, bool>());
             new PickUpgC(new Dictionary<PlayerTypes, bool>());
             new GetterUnitsC(new Dictionary<UnitTypes, bool>());
             new EnvInfoC();
             new BuildAbilC(true);
+            new FriendC(GameModesCom.IsGameMode(GameModes.WithFriendOff));
+
+
+            if (GameModesCom.IsGameMode(GameModes.TrainingOff))
+            {
+                InvResC.Set(PlayerTypes.Second, ResTypes.Food, 999999);
+            }
         }
     }
 }

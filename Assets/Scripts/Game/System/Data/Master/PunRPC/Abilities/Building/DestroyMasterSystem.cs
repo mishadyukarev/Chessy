@@ -36,7 +36,7 @@ namespace Chessy.Game
 
                 if (buildC_0.Is(BuildTypes.Farm))
                 {
-                    curEnvDataCom.Reset(EnvTypes.Fertilizer);
+                    curEnvDataCom.Remove(EnvTypes.Fertilizer);
                     WhereEnvC.Remove(EnvTypes.Fertilizer, idxCellForDestory);
                 }
 

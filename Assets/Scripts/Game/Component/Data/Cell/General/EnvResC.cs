@@ -20,6 +20,20 @@ namespace Chessy.Game
             }
         }
 
+        public int AmountRes(EnvTypes envType)
+        {
+            if (envType == default) throw new Exception();
+            return _amountResours[envType];
+        }
+        public byte MaxAmountRes(EnvTypes envType)
+        {
+            if (envType == default) throw new Exception();
+            return EnvironValues.MaxAmount(envType);
+        }
+        public bool HaveRes(EnvTypes envType) => AmountRes(envType) > 0;
+        public bool HaveMaxRes(EnvTypes envType) => AmountRes(envType) >= MaxAmountRes(envType);
+
+
         public EnvResC(bool needNew)
         {
             if (needNew)
@@ -34,44 +48,33 @@ namespace Chessy.Game
             else throw new Exception();
         }
 
-        public int AmountRes(EnvTypes envType)
+
+        public void SetRes(EnvTypes env, int value)
         {
-            if (envType == default) throw new Exception();
-            return _amountResours[envType];
+            if (env == default) throw new Exception();
+            _amountResours[env] = value;
         }
-        public void SetRes(EnvTypes envType, int value)
-        {
-            if (envType == default) throw new Exception();
-            _amountResours[envType] = value;
-        }
-        public byte MaxAmountRes(EnvTypes envType)
-        {
-            if (envType == default) throw new Exception();
-            return EnvironValues.MaxAmount(envType);
-        }
-        public void SetMaxAmountRes(EnvTypes envType) => SetRes(envType, MaxAmountRes(envType));
-        public void AddAmountRes(EnvTypes envType, int adding = 1) => SetRes(envType, AmountRes(envType) + adding);
-        public void AddMaxAmountRes(EnvTypes envType) => SetRes(envType, AmountRes(envType) + MaxAmountRes(envType));
-        public void TakeAmountRes(EnvTypes envType, int taking = 1) => SetRes(envType, AmountRes(envType) - taking);
-        public bool HaveRes(EnvTypes envType) => AmountRes(envType) > 0;
-        public bool HaveMaxRes(EnvTypes envType) => AmountRes(envType) >= MaxAmountRes(envType);
-        public void SetNew(EnvTypes envType)
+        public void SetMaxAmountRes(EnvTypes env) => SetRes(env, MaxAmountRes(env));
+        public void AddAmountRes(EnvTypes env, int adding = 1) => SetRes(env, AmountRes(env) + adding);
+        public void AddMaxAmountRes(EnvTypes env) => SetRes(env, AmountRes(env) + MaxAmountRes(env));
+        public void TakeAmountRes(EnvTypes env, int taking = 1) => SetRes(env, AmountRes(env) - taking);
+        public void SetNew(EnvTypes env)
         {
             byte randAmountRes = 0;
-            switch (envType)
+            switch (env)
             {
                 case EnvTypes.None:
                     throw new Exception();
 
                 case EnvTypes.Fertilizer:
-                    randAmountRes = (byte)UnityEngine.Random.Range(EnvironValues.MaxAmount(envType) / 3, EnvironValues.MaxAmount(envType) / 2 + 1);
+                    randAmountRes = (byte)UnityEngine.Random.Range(EnvironValues.MaxAmount(env) / 3, EnvironValues.MaxAmount(env) / 2 + 1);
                     break;
 
                 case EnvTypes.YoungForest:
                     break;
 
                 case EnvTypes.AdultForest:
-                    randAmountRes = (byte)UnityEngine.Random.Range(EnvironValues.MaxAmount(envType) / 3, EnvironValues.MaxAmount(envType) / 2 + 1);
+                    randAmountRes = (byte)UnityEngine.Random.Range(EnvironValues.MaxAmount(env) / 3, EnvironValues.MaxAmount(env) / 2 + 1);
                     break;
 
                 case EnvTypes.Hill:
@@ -84,7 +87,7 @@ namespace Chessy.Game
                 default:
                     throw new Exception();
             }
-            SetRes(envType, randAmountRes);
+            SetRes(env, randAmountRes);
         }
 
         public void Sync(EnvTypes env, int amount)

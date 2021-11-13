@@ -24,8 +24,6 @@ namespace Chessy.Game
             if (needNew) _clouds = new List<byte>();
         }
 
-        //public static List<byte> Clouds => _clouds.Copy();
-
         public static void Add(byte idxCell) => _clouds.Add(idxCell);
         public static void Remove(byte idxCell) => _clouds.Remove(idxCell);
 

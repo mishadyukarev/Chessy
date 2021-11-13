@@ -41,7 +41,7 @@ namespace Chessy.Game
                     {
                         if (!env_0.Have(EnvTypes.AdultForest))
                         {
-                            if (InventResC.CanCreateBuild(whoseMove, forBuildType, out var needRes))
+                            if (InvResC.CanCreateBuild(whoseMove, forBuildType, out var needRes))
                             {
                                 RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
 
@@ -54,7 +54,7 @@ namespace Chessy.Game
                                 if (env_0.Have(EnvTypes.YoungForest))
                                 {
                                     WhereEnvC.Remove(EnvTypes.YoungForest, idx_0);
-                                    env_0.Reset(EnvTypes.YoungForest);
+                                    env_0.Remove(EnvTypes.YoungForest);
                                 }
 
                                 if (env_0.Have(EnvTypes.Fertilizer))
@@ -68,7 +68,7 @@ namespace Chessy.Game
                                     WhereEnvC.Add(EnvTypes.Fertilizer, idx_0);
                                 }
 
-                                InventResC.BuyBuild(whoseMove, forBuildType);
+                                InvResC.BuyBuild(whoseMove, forBuildType);
 
                                 build_0.Build = forBuildType;
                                 ownBuildC_0.SetOwner(whoseMove);

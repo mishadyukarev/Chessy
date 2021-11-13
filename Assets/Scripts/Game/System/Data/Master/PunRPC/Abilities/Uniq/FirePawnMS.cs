@@ -32,7 +32,7 @@ namespace Chessy.Game
                 {
                     RpcSys.SoundToGeneral(RpcTarget.All, UniqAbilTypes.FirePawn);
 
-                    fire_0.EnabFire();
+                    fire_0.Enable();
                     stepUnit_0.TakeSteps();
                 }
                 else

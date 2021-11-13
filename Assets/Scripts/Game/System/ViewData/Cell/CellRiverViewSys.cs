@@ -13,7 +13,7 @@ namespace Chessy.Game
             {
                 ref var river_0 = ref _riverF.Get1(idx_0);
 
-                if(river_0.RiverType == RiverTypes.Start)
+                if(river_0.Type == RiverTypes.Start)
                 {
                     foreach (var item_0 in river_0.Directs)
                     {

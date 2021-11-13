@@ -22,23 +22,23 @@ namespace Chessy.Game
             {
                 curIdx = _xyCellFilter.GetIdxCell(xYArount);
 
-                _cellWeatherFilt.Get1(curIdx).HaveCloud = false;
+                _cellWeatherFilt.Get1(curIdx).Have = false;
             }
 
             var xyNext = CellSpaceSupport.GetXyCellByDirect(xyStart, WindC.DirectWind);
 
             if (xyNext[0] > 3 && xyNext[0] < 12 && xyNext[1] > 1 && xyNext[1] < 9)
             {
-                weather_0.CloudWidthType = CloudWidthTypes.None;
+                weather_0.CloudWidth = CloudWidthTypes.None;
                 WhereCloudsC.Remove(WhereCloudsC.Cloud);
-                weather_0.HaveCloud = false;
+                weather_0.Have = false;
 
 
                 var idxNext = _xyCellFilter.GetIdxCell(xyNext);
 
-                _cellWeatherFilt.Get1(idxNext).CloudWidthType = CloudWidthTypes.TwoBlocks;
+                _cellWeatherFilt.Get1(idxNext).CloudWidth = CloudWidthTypes.TwoBlocks;
                 WhereCloudsC.Add(idxNext);
-                _cellWeatherFilt.Get1(idxNext).HaveCloud = true;
+                _cellWeatherFilt.Get1(idxNext).Have = true;
 
 
                 aroundList = CellSpaceSupport.GetXyAround(xyNext);
@@ -48,7 +48,7 @@ namespace Chessy.Game
                 {
                     curIdx = _xyCellFilter.GetIdxCell(xYArount);
 
-                    _cellWeatherFilt.Get1(curIdx).HaveCloud = true;
+                    _cellWeatherFilt.Get1(curIdx).Have = true;
                 }
             }
             else
@@ -60,7 +60,7 @@ namespace Chessy.Game
                 {
                     curIdx = _xyCellFilter.GetIdxCell(xYArount);
 
-                    _cellWeatherFilt.Get1(curIdx).HaveCloud = true;
+                    _cellWeatherFilt.Get1(curIdx).Have = true;
                 }
 
                 RandomCloud();

@@ -35,11 +35,11 @@ namespace Chessy.Game
                                 minus_0 = envRes_0.AmountRes(EnvTypes.Fertilizer);
 
                             envRes_0.TakeAmountRes(EnvTypes.Fertilizer, minus_0);
-                            InventResC.AddAmountRes(ownBuild_0.Owner, ResTypes.Food, minus_0);
+                            InvResC.AddAmountRes(ownBuild_0.Owner, ResTypes.Food, minus_0);
 
                             if (!envRes_0.HaveRes(EnvTypes.Fertilizer))
                             {
-                                env_0.Reset(EnvTypes.Fertilizer);
+                                env_0.Remove(EnvTypes.Fertilizer);
                                 WhereEnvC.Remove(EnvTypes.Fertilizer, idx_0);
 
                                 WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
@@ -55,11 +55,11 @@ namespace Chessy.Game
                                 minus_0 = envRes_0.AmountRes(EnvTypes.AdultForest);
 
                             envRes_0.TakeAmountRes(EnvTypes.AdultForest, minus_0);
-                            InventResC.AddAmountRes(ownBuild_0.Owner, ResTypes.Wood, minus_0);
+                            InvResC.AddAmountRes(ownBuild_0.Owner, ResTypes.Wood, minus_0);
 
                             if (!envRes_0.HaveRes(EnvTypes.AdultForest))
                             {
-                                env_0.Reset(EnvTypes.AdultForest);
+                                env_0.Remove(EnvTypes.AdultForest);
                                 WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
 
                                 WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
@@ -67,9 +67,9 @@ namespace Chessy.Game
 
                                 _cellTrailFilt.Get1(idx_0).ResetAll();
 
-                                if (fire_0.HaveFire)
+                                if (fire_0.Have)
                                 {
-                                    fire_0.HaveFire = false;
+                                    fire_0.Disable();
                                 }
 
 
@@ -91,7 +91,7 @@ namespace Chessy.Game
                                 minus_0 = envRes_0.AmountRes(EnvTypes.Hill);
 
                             envRes_0.TakeAmountRes(EnvTypes.Hill, minus_0);
-                            InventResC.AddAmountRes(ownBuild_0.Owner, ResTypes.Ore, minus_0);
+                            InvResC.AddAmountRes(ownBuild_0.Owner, ResTypes.Ore, minus_0);
 
                             if (!envRes_0.HaveRes(EnvTypes.Hill))
                             {

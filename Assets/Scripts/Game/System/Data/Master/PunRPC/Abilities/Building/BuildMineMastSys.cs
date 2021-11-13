@@ -41,7 +41,7 @@ namespace Chessy.Game
                     {
                         if (env_0.Have(EnvTypes.Hill) && envRes_0.HaveRes(EnvTypes.Hill))
                         {
-                            if (InventResC.CanCreateBuild(whoseMove, forBuildType, out var needRes))
+                            if (InvResC.CanCreateBuild(whoseMove, forBuildType, out var needRes))
                             {
                                 if (build_0.HaveBuild)
                                 {
@@ -51,7 +51,7 @@ namespace Chessy.Game
 
                                 RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
 
-                                InventResC.BuyBuild(whoseMove, forBuildType);
+                                InvResC.BuyBuild(whoseMove, forBuildType);
 
                                 build_0.Build = forBuildType;
                                 ownBuildC_0.SetOwner(whoseMove);

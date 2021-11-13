@@ -11,7 +11,7 @@ namespace Chessy.Game
         {
             foreach (var idx in _fireVF)
             {
-                if (_fireF.Get1(idx).HaveFire)
+                if (_fireF.Get1(idx).Have)
                 {
                     _fireVF.Get1(idx).EnableSR();
                 }

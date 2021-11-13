@@ -7,7 +7,7 @@ namespace Chessy.Game
     {
         private Dictionary<DirectTypes, bool> _directs;
 
-        public RiverTypes RiverType { get; set; }
+        public RiverTypes Type { get; set; }
         public Dictionary<DirectTypes, bool> Directs
         {
             get
@@ -21,17 +21,22 @@ namespace Chessy.Game
             }
         }
 
-        public bool HaveNearRiver => RiverType != default;
+        public bool HaveNearRiver => Type != default;
 
-        public RiverC(List<byte> list)
+        public RiverC(bool needNew)
         {
-            RiverType = default;
-            _directs = new Dictionary<DirectTypes, bool>();
+            if (needNew)
+            {
+                Type = default;
+                _directs = new Dictionary<DirectTypes, bool>();
 
-            _directs.Add(DirectTypes.Up, false);
-            _directs.Add(DirectTypes.Right, false);
-            _directs.Add(DirectTypes.Down, false);
-            _directs.Add(DirectTypes.Left, false);
+                _directs.Add(DirectTypes.Up, false);
+                _directs.Add(DirectTypes.Right, false);
+                _directs.Add(DirectTypes.Down, false);
+                _directs.Add(DirectTypes.Left, false);
+            }
+
+            else throw new Exception();
         }
 
         public void AddDir(DirectTypes dir)
@@ -39,12 +44,6 @@ namespace Chessy.Game
             if (_directs[dir] == true) throw new Exception();
             if (!_directs.ContainsKey(dir)) throw new Exception();
             _directs[dir] = true;
-        }
-        public void RemoveDir(DirectTypes dir)
-        {
-            if (_directs[dir] == false) throw new Exception();
-            if (!_directs.ContainsKey(dir)) throw new Exception();
-            _directs[dir] = false;
         }
 
         public void Sync(DirectTypes dir, bool have)

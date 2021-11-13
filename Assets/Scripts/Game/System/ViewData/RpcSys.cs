@@ -473,7 +473,7 @@ namespace Chessy.Game
 
 
 
-                objs.Add(_cellRiverFilt.Get1(idx_0).RiverType);
+                objs.Add(_cellRiverFilt.Get1(idx_0).Type);
                 foreach (var item_0 in _cellRiverFilt.Get1(idx_0).Directs)
                     objs.Add(item_0.Value);
 
@@ -483,11 +483,11 @@ namespace Chessy.Game
 
 
                 ref var cloud_0 = ref _cellCloudFilt.Get1(idx_0);
-                objs.Add(cloud_0.HaveCloud);
-                objs.Add(cloud_0.CloudWidthType);
+                objs.Add(cloud_0.Have);
+                objs.Add(cloud_0.CloudWidth);
 
 
-                objs.Add(_cellFireFilter.Get1(idx_0).HaveFire);
+                objs.Add(_cellFireFilter.Get1(idx_0).Have);
 
 
                 
@@ -495,11 +495,11 @@ namespace Chessy.Game
 
             #region Inventor
 
-            foreach (var item_0 in InventResC.AmountResour)
+            foreach (var item_0 in InvResC.AmountResour)
             {
                 foreach (var item_1 in item_0.Value)
                 {
-                    objs.Add(InventResC.AmountResour[item_0.Key][item_1.Key]);
+                    objs.Add(InvResC.AmountResour[item_0.Key][item_1.Key]);
                 }
             }
 
@@ -703,7 +703,7 @@ namespace Chessy.Game
 
 
                 ref var river_0 = ref _cellRiverFilt.Get1(idx_0);
-                river_0.RiverType = (RiverTypes)objects[_curIdx++];
+                river_0.Type = (RiverTypes)objects[_curIdx++];
                 foreach (var item_0 in river_0.Directs)
                     river_0.Sync(item_0.Key, (bool)objects[_curIdx++]);
 
@@ -716,23 +716,22 @@ namespace Chessy.Game
 
 
                 ref var cloud_0 = ref _cellCloudFilt.Get1(idx_0);
-                cloud_0.HaveCloud = (bool)objects[_curIdx++];
-                cloud_0.CloudWidthType = (CloudWidthTypes)objects[_curIdx++];
+                cloud_0.Sync((bool)objects[_curIdx++], (CloudWidthTypes)objects[_curIdx++]);
 
 
 
                 ref var fire_0 = ref _cellFireFilter.Get1(idx_0);
-                fire_0.HaveFire = (bool)objects[_curIdx++];
+                fire_0.Sync((bool)objects[_curIdx++]);
             }
 
 
             #region Inventor
 
-            foreach (var item_0 in InventResC.AmountResour)
+            foreach (var item_0 in InvResC.AmountResour)
             {
                 foreach (var item_1 in item_0.Value)
                 {
-                    InventResC.Set(item_0.Key, item_1.Key, (int)objects[_curIdx++]);
+                    InvResC.Set(item_0.Key, item_1.Key, (int)objects[_curIdx++]);
                 }
             }
             foreach (var item_0 in InvUnitsC.Units)

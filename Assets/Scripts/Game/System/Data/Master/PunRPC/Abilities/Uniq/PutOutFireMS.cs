@@ -20,7 +20,7 @@ namespace Chessy.Game
 
             if (stepUnit_0.HaveMinSteps)
             {
-                fire_0.HaveFire = default;
+                fire_0.Disable();
 
                 stepUnit_0.TakeSteps();
             }

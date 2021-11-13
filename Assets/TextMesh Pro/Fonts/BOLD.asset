@@ -112,11 +112,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Bold
+  m_Name: BOLD
   m_EditorClassIdentifier: 
-  hashCode: 2491237
+  hashCode: 2450949
   material: {fileID: -5047424177648773291}
-  materialHashCode: -1807688539
+  materialHashCode: -617339771
   m_Version: 1.1.0
   m_SourceFontFileGUID: dcdc76555778d1243be66d1870824c0c
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: dcdc76555778d1243be66d1870824c0c,

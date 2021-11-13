@@ -80,9 +80,9 @@ namespace Chessy.Game
 
                         else if (tWTypeForGive == ToolWeaponTypes.Pick)
                         {
-                            if (InventResC.CanBuyTW(ownUnit_0.Owner, ToolWeaponTypes.Pick, levelTWType, out var needRes))
+                            if (InvResC.CanBuyTW(ownUnit_0.Owner, ToolWeaponTypes.Pick, levelTWType, out var needRes))
                             {
-                                InventResC.BuyTW(ownUnit_0.Owner, ToolWeaponTypes.Pick, levelTWType);
+                                InvResC.BuyTW(ownUnit_0.Owner, ToolWeaponTypes.Pick, levelTWType);
 
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                                 twUnit_0.ToolWeapType = tWTypeForGive;
@@ -101,9 +101,9 @@ namespace Chessy.Game
 
                         else if (tWTypeForGive == ToolWeaponTypes.Sword)
                         {
-                            if (InventResC.CanBuyTW(ownUnit_0.Owner, ToolWeaponTypes.Sword, levelTWType, out var needRes))
+                            if (InvResC.CanBuyTW(ownUnit_0.Owner, ToolWeaponTypes.Sword, levelTWType, out var needRes))
                             {
-                                InventResC.BuyTW(ownUnit_0.Owner, ToolWeaponTypes.Sword, levelTWType);
+                                InvResC.BuyTW(ownUnit_0.Owner, ToolWeaponTypes.Sword, levelTWType);
 
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                                 twUnit_0.ToolWeapType = tWTypeForGive;
@@ -122,9 +122,9 @@ namespace Chessy.Game
 
                         else if (tWTypeForGive == ToolWeaponTypes.Shield)
                         {
-                            if (InventResC.CanBuyTW(ownUnit_0.Owner, tWTypeForGive, levelTWType, out var needRes))
+                            if (InvResC.CanBuyTW(ownUnit_0.Owner, tWTypeForGive, levelTWType, out var needRes))
                             {
-                                InventResC.BuyTW(ownUnit_0.Owner, tWTypeForGive, levelTWType);
+                                InvResC.BuyTW(ownUnit_0.Owner, tWTypeForGive, levelTWType);
 
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                                 twUnit_0.ToolWeapType = tWTypeForGive;

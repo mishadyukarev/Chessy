@@ -2,8 +2,15 @@
 {
     public struct CloudC
     {
-        public bool HaveCloud;
-        public CloudWidthTypes CloudWidthType { get; set; }
-        public bool IsCenter => CloudWidthType != default;
+        public bool Have { get; set; }
+        public CloudWidthTypes CloudWidth { get; set; }
+
+        public bool IsCenter => CloudWidth != default;
+
+        public void Sync(bool haveCloud, CloudWidthTypes cloudWidth)
+        {
+            Have = haveCloud;
+            CloudWidth = cloudWidth;
+        }
     }
 }

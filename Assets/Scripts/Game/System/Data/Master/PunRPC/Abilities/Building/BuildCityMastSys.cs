@@ -73,21 +73,21 @@ namespace Chessy.Game
                         curStepUnitC.DefSteps();
 
 
-                        curFireCom.DisableFire();
+                        curFireCom.Disable();
 
                         if (curCellEnvCom.Have(EnvTypes.AdultForest))
                         {
-                            curCellEnvCom.Reset(EnvTypes.AdultForest);
+                            curCellEnvCom.Remove(EnvTypes.AdultForest);
                             WhereEnvC.Remove(EnvTypes.AdultForest, idxForBuild);
                         }
                         if (curCellEnvCom.Have(EnvTypes.Fertilizer))
                         {
-                            curCellEnvCom.Reset(EnvTypes.Fertilizer);
+                            curCellEnvCom.Remove(EnvTypes.Fertilizer);
                             WhereEnvC.Remove(EnvTypes.Fertilizer, idxForBuild);
                         }
                         if (curCellEnvCom.Have(EnvTypes.YoungForest))
                         {
-                            curCellEnvCom.Reset(EnvTypes.YoungForest);
+                            curCellEnvCom.Remove(EnvTypes.YoungForest);
                             WhereEnvC.Remove(EnvTypes.YoungForest, idxForBuild);
                         }
                     }

@@ -39,12 +39,12 @@ namespace Chessy.Game
                 ref var cloud_0 = ref _cellCloudsFilt.Get1(idx_0);
 
 
-                if (cloud_0.HaveCloud)
+                if (cloud_0.Have)
                 {
-                    fire_0.DisableFire();
+                    fire_0.Disable();
                 }
 
-                if (fire_0.HaveFire)
+                if (fire_0.Have)
                 {
                     envRes_0.TakeAmountRes(EnvTypes.AdultForest, 2);
 
@@ -78,7 +78,7 @@ namespace Chessy.Game
                             buil_0.Reset();
                         }
 
-                        env_0.Reset(EnvTypes.AdultForest);
+                        env_0.Remove(EnvTypes.AdultForest);
                         WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
 
 
@@ -91,7 +91,7 @@ namespace Chessy.Game
                         }
 
 
-                        fire_0.HaveFire = false;
+                        fire_0.Disable();
 
 
                         var aroundXYList = CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_0).Xy);
@@ -103,7 +103,7 @@ namespace Chessy.Game
                             {
                                 if (_cellEnvDataFilter.Get1(curIdxCell1).Have(EnvTypes.AdultForest))
                                 {
-                                    _cellFireDataFilter.Get1(curIdxCell1).HaveFire = true;
+                                    _cellFireDataFilter.Get1(curIdxCell1).Enable();
                                 }
                             }
                         }

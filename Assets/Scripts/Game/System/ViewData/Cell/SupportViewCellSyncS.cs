@@ -38,7 +38,7 @@ namespace Chessy.Game
                     }
                 }
 
-                if (fire_0.HaveFire)
+                if (fire_0.Have)
                 {
                     if (SelectorC.Is(CellClickTypes.PutOutFireElfemale))
                     {

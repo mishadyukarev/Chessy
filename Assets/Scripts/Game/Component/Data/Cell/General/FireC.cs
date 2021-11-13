@@ -2,8 +2,11 @@
 {
     public struct FireC
     {
-        public bool HaveFire { get; set; }
-        public bool DisableFire() => HaveFire = default;
-        public bool EnabFire() => HaveFire = true;
+        public bool Have { get; private set; }
+
+        public bool Disable() => Have = default;
+        public bool Enable() => Have = true;
+
+        public void Sync(bool have) => Have = have;
     }
 }

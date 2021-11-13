@@ -78,8 +78,9 @@ namespace Chessy
 
                     gameSysts
                         .Add(new ViewECreating())
+                        .Add(new ViewUIECreating())
                         .Add(new DataECreating())
-                        .Add(new Spawn());
+                        .Add(new FillingCells());
 
 
 

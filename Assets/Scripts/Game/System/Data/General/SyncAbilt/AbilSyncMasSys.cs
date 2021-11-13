@@ -43,7 +43,7 @@ namespace Chessy.Game
                             case UnitTypes.Pawn:
                                 if (env_0.Have(EnvTypes.AdultForest))
                                 {
-                                    if (fire_0.HaveFire) uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.PutOutFirePawn);
+                                    if (fire_0.Have) uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.PutOutFirePawn);
                                     else uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.FirePawn);
                                 }
                                 else

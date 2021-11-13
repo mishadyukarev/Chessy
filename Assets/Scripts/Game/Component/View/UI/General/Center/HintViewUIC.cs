@@ -16,7 +16,7 @@ namespace Chessy.Game
         private static Dictionary<VideoClipTypes, string> _urls;
 
 
-        public HintViewUIC(Transform centZone_Trans)
+        public HintViewUIC(Transform centZone_Trans, bool isActive)
         {
             _hintZone_Rect = centZone_Trans.Find("HintZone").GetComponent<RectTransform>();
 
@@ -46,6 +46,8 @@ namespace Chessy.Game
             _urls.Add(VideoClipTypes.PutOutElfemale, Path.Combine(Application.streamingAssetsPath, VideoClipTypes.PutOutElfemale.ToString() + ".mp4"));
 
             SetVideoClip(VideoClipTypes.Start);
+
+            _hintZone_Rect.gameObject.SetActive(isActive);
         }
 
         public static void SetActiveHintZone(bool isActive) => _hintZone_Rect.gameObject.SetActive(isActive);

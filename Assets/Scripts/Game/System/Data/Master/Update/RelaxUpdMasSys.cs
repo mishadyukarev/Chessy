@@ -54,7 +54,7 @@ namespace Chessy.Game
                                                 extract = envRes_0.MaxAmountRes(EnvTypes.AdultForest);
                                             }
 
-                                            InventResC.AddAmountRes(ownUnit_0.Owner, ResTypes.Wood, extract);
+                                            InvResC.AddAmountRes(ownUnit_0.Owner, ResTypes.Wood, extract);
                                             envRes_0.TakeAmountRes(EnvTypes.AdultForest, extract);
 
                                             if (envRes_0.HaveRes(EnvTypes.AdultForest))
@@ -92,7 +92,7 @@ namespace Chessy.Game
                                                 }
 
                                                 trail_0.ResetAll();
-                                                env_0.Reset(EnvTypes.AdultForest);
+                                                env_0.Remove(EnvTypes.AdultForest);
                                                 WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
 
                                                 if (UnityEngine.Random.Range(0, 100) < 50)

@@ -31,7 +31,7 @@ namespace Chessy.Game
 
                             ref var arounEnvDatCom = ref _cellEnvFilter.Get1(arouIdx);
 
-                            if (!_cellFireFilter.Get1(arouIdx).HaveFire)
+                            if (!_cellFireFilter.Get1(arouIdx).Have)
                             {
                                 if (arounEnvDatCom.Have(EnvTypes.AdultForest))
                                 {

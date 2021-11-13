@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Chessy.Game
 {
-    public readonly struct InventResC
+    public readonly struct InvResC
     {
         private static Dictionary<PlayerTypes, Dictionary<ResTypes, int>> _amountRes;
 
@@ -27,32 +27,36 @@ namespace Chessy.Game
             }
         }
 
-        public InventResC(bool needNew) : this()
+        public InvResC(bool needNew) : this()
         {
             if (needNew)
             {
-                _amountRes = new Dictionary<PlayerTypes, Dictionary<ResTypes, int>>();
-
-                _amountRes[PlayerTypes.First] = new Dictionary<ResTypes, int>();
-                _amountRes[PlayerTypes.Second] = new Dictionary<ResTypes, int>();
-
-                for (ResTypes resourceType = (ResTypes)1; resourceType < (ResTypes)Enum.GetNames(typeof(ResTypes)).Length; resourceType++)
+                if(_amountRes == default)
                 {
-                    _amountRes[PlayerTypes.First].Add(resourceType, default);
-                    _amountRes[PlayerTypes.Second].Add(resourceType, default);
+                    _amountRes = new Dictionary<PlayerTypes, Dictionary<ResTypes, int>>();
+
+                    _amountRes[PlayerTypes.First] = new Dictionary<ResTypes, int>();
+                    _amountRes[PlayerTypes.Second] = new Dictionary<ResTypes, int>();
+
+                    for (ResTypes resourceType = (ResTypes)1; resourceType < (ResTypes)Enum.GetNames(typeof(ResTypes)).Length; resourceType++)
+                    {
+                        _amountRes[PlayerTypes.First].Add(resourceType, default);
+                        _amountRes[PlayerTypes.Second].Add(resourceType, default);
+                    }
+                }
+
+                foreach (var item_0 in AmountResour)
+                {
+                    foreach (var item_1 in item_0.Value)
+                    {
+                        _amountRes[item_0.Key][item_1.Key] = EconomyValues.AmountResources(item_1.Key);
+                    }
                 }
             }
         }
 
         public static int AmountRes(PlayerTypes player, ResTypes res) => _amountRes[player][res];
         public static void Set(PlayerTypes player, ResTypes res, int value) => _amountRes[player][res] = value;
-        public static void SetAmountResAll(ResTypes resourceType, int value)
-        {
-            for (PlayerTypes playerType = (PlayerTypes)1; playerType < (PlayerTypes)Enum.GetNames(typeof(PlayerTypes)).Length; playerType++)
-            {
-                _amountRes[playerType][resourceType] = value;
-            }
-        }
         public static bool HaveRes(PlayerTypes player, ResTypes res) => AmountRes(player, res) > 0;
         public static bool IsMinusRes(PlayerTypes player, ResTypes res) => AmountRes(player, res) < 0;
         public static void ResetRes(PlayerTypes player, ResTypes res) => Set(player, res, 0);

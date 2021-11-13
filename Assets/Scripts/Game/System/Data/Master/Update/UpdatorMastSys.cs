@@ -22,8 +22,8 @@ namespace Chessy.Game
 
         public void Run()
         {
-            InventResC.AddAmountRes(PlayerTypes.First, ResTypes.Food, 3);
-            InventResC.AddAmountRes(PlayerTypes.Second, ResTypes.Food, 3);
+            InvResC.AddAmountRes(PlayerTypes.First, ResTypes.Food, 3);
+            InvResC.AddAmountRes(PlayerTypes.Second, ResTypes.Food, 3);
 
 
             ScoutHeroCooldownC.TakeCooldown(PlayerTypes.First, UnitTypes.Scout);
@@ -64,7 +64,7 @@ namespace Chessy.Game
                 {
                     moveCond_0.AddMove(condUnit_0.Condition);
 
-                    if (!unit_0.Is(UnitTypes.King)) InventResC.TakeAmountRes(ownUnit_0.Owner, ResTypes.Food);
+                    if (!unit_0.Is(UnitTypes.King)) InvResC.TakeAmountRes(ownUnit_0.Owner, ResTypes.Food);
 
                     if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                     {
@@ -83,7 +83,7 @@ namespace Chessy.Game
                     }
 
 
-                    if (fire_0.HaveFire)
+                    if (fire_0.Have)
                     {
                         if (condUnit_0.HaveCondition) condUnit_0.Def();
                     }

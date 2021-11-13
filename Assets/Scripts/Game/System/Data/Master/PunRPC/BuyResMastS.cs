@@ -14,9 +14,9 @@ namespace Chessy.Game
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
-            if (InventResC.CanBuyRes(whoseMove, res, out var needRes))
+            if (InvResC.CanBuyRes(whoseMove, res, out var needRes))
             {
-                InventResC.BuyRes(whoseMove, res);
+                InvResC.BuyRes(whoseMove, res);
 
                 RpcSys.SoundToGeneral(sender, ClipGameTypes.SoundGoldPack);
             }
