@@ -14,11 +14,10 @@ namespace Chessy.Game
         private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
         private EcsFilter<TrailC> _cellTrailFilt = default;
 
-        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
-        private EcsFilter<UnitC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
-        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
-        private EcsFilter<UnitC, UnitEffectsC, StunC> _unitEffFilt = default;
+        private EcsFilter<UnitC, OwnerC> _unitF = default;
+        private EcsFilter<HpC, StepC> _statUnitF = default;
+        private EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
+        private EcsFilter<CdownUniqC> _unitUniqF = default;
 
         public void Run()
         {
@@ -37,15 +36,19 @@ namespace Chessy.Game
             {
                 ref var cell_0 = ref _cellDataFilt.Get1(idx_0);
 
-                ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
-                ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
-                ref var hpUnit_0 = ref _cellUnitFilter.Get2(idx_0);
-                ref var stepUnit_0 = ref _cellUnitFilter.Get3(idx_0);
-                ref var condUnit_0 = ref _cellUnitCondFilt.Get2(idx_0);
-                ref var moveCond_0 = ref _cellUnitCondFilt.Get3(idx_0);
-                ref var uniq_0 = ref _unitUniqFilt.Get2(idx_0);
-                ref var effUnit_0 = ref _unitEffFilt.Get2(idx_0);
-                ref var stun_0 = ref _unitEffFilt.Get3(idx_0);
+                ref var unit_0 = ref _unitF.Get1(idx_0);
+                ref var own_0 = ref _unitF.Get2(idx_0);
+
+                ref var hp_0 = ref _statUnitF.Get1(idx_0);
+                ref var step_0 = ref _statUnitF.Get2(idx_0);
+
+                ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
+                ref var moveCond_0 = ref _effUnitF.Get2(idx_0);
+                ref var effUnit_0 = ref _effUnitF.Get3(idx_0);
+                ref var stun_0 = ref _effUnitF.Get4(idx_0);
+
+                ref var cdUniq_0 = ref _unitUniqF.Get1(idx_0);
+                
 
 
                 ref var buil_0 = ref _cellBuildFilt.Get1(idx_0);
@@ -56,7 +59,7 @@ namespace Chessy.Game
 
 
                 foreach (var item in trail_0.DictTrail) trail_0.TakeHealth(item.Key);
-                foreach (var item in uniq_0.Cooldowns) uniq_0.TakeCooldown(item.Key);
+                foreach (var item in cdUniq_0.Cooldowns) cdUniq_0.TakeCooldown(item.Key);
                 stun_0.Take();
 
 
@@ -64,19 +67,19 @@ namespace Chessy.Game
                 {
                     moveCond_0.AddMove(condUnit_0.Condition);
 
-                    if (!unit_0.Is(UnitTypes.King)) InvResC.TakeAmountRes(ownUnit_0.Owner, ResTypes.Food);
+                    if (!unit_0.Is(UnitTypes.King)) InvResC.TakeAmountRes(own_0.Owner, ResTypes.Food);
 
                     if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                     {
-                        if (ownUnit_0.Is(PlayerTypes.Second))
+                        if (own_0.Is(PlayerTypes.Second))
                         {
-                            if (!hpUnit_0.HaveMaxHp)
+                            if (!hp_0.HaveMaxHp)
                             {
-                                hpUnit_0.AddHp(100);
+                                hp_0.AddHp(100);
 
-                                if (hpUnit_0.HaveMaxHp)
+                                if (hp_0.HaveMaxHp)
                                 {
-                                    hpUnit_0.SetMaxHp();
+                                    hp_0.SetMaxHp();
                                 }
                             }
                         }
@@ -85,14 +88,14 @@ namespace Chessy.Game
 
                     if (fire_0.Have)
                     {
-                        if (condUnit_0.HaveCondition) condUnit_0.Def();
+                        if (condUnit_0.HaveCondition) condUnit_0.Reset();
                     }
 
                     else
                     {
                         if (condUnit_0.Is(CondUnitTypes.Protected))
                         {
-                            if (hpUnit_0.HaveMaxHp)
+                            if (hp_0.HaveMaxHp)
                             {
                                 if (unit_0.Is(UnitTypes.Scout))
                                 {
@@ -100,48 +103,48 @@ namespace Chessy.Game
                                     {
                                         if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                                         {
-                                            if (ownUnit_0.Is(PlayerTypes.First))
+                                            if (own_0.Is(PlayerTypes.First))
                                             {
                                                 if (buil_0.Have)
                                                 {
-                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Type, idx_0);
+                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
                                                     buil_0.Remove();
                                                 }
 
-                                                if (WhereBuildsC.IsSettedCamp(ownUnit_0.Owner))
+                                                if (WhereBuildsC.IsSettedCamp(own_0.Owner))
                                                 {
-                                                    var idxCamp = WhereBuildsC.IdxCamp(ownUnit_0.Owner);
+                                                    var idxCamp = WhereBuildsC.IdxCamp(own_0.Owner);
 
-                                                    WhereBuildsC.Remove(ownUnit_0.Owner, BuildTypes.Camp, idxCamp);
+                                                    WhereBuildsC.Remove(own_0.Owner, BuildTypes.Camp, idxCamp);
                                                     _cellBuildFilt.Get1(idxCamp).Remove();
                                                 }
 
 
                                                 buil_0.SetNew(BuildTypes.Camp);
-                                                ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                                WhereBuildsC.Add(ownBuil_0.Owner, buil_0.Type, idx_0);
+                                                ownBuil_0.SetOwner(own_0.Owner);
+                                                WhereBuildsC.Add(ownBuil_0.Owner, buil_0.Build, idx_0);
                                             }
                                         }
                                         else
                                         {
                                             if (buil_0.Have)
                                             {
-                                                WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Type, idx_0);
+                                                WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
                                                 buil_0.Remove();
                                             }
 
-                                            if (WhereBuildsC.IsSettedCamp(ownUnit_0.Owner))
+                                            if (WhereBuildsC.IsSettedCamp(own_0.Owner))
                                             {
-                                                var idxCamp = WhereBuildsC.IdxCamp(ownUnit_0.Owner);
+                                                var idxCamp = WhereBuildsC.IdxCamp(own_0.Owner);
 
-                                                WhereBuildsC.Remove(ownUnit_0.Owner, BuildTypes.Camp, idxCamp);
+                                                WhereBuildsC.Remove(own_0.Owner, BuildTypes.Camp, idxCamp);
                                                 _cellBuildFilt.Get1(idxCamp).Remove();
                                             }
 
 
                                             buil_0.SetNew(BuildTypes.Camp);
-                                            ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                            WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Type, idx_0);
+                                            ownBuil_0.SetOwner(own_0.Owner);
+                                            WhereBuildsC.Add(own_0.Owner, buil_0.Build, idx_0);
                                         }
                                     }
                                 }
@@ -150,14 +153,14 @@ namespace Chessy.Game
 
                         else if (!condUnit_0.Is(CondUnitTypes.Relaxed))
                         {
-                            if (stepUnit_0.HaveMinSteps)
+                            if (step_0.HaveMinSteps)
                             {
                                 condUnit_0.Set(CondUnitTypes.Protected);
                             }
                         }
                     }
 
-                    stepUnit_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
+                    step_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(own_0.Owner, unit_0.Unit));
                 }
 
                 //else

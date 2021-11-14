@@ -7,14 +7,13 @@ namespace Chessy.Game
     {
         private EcsFilter<ForSettingUnitMasCom> _setterFilter = default;
 
-        private EcsFilter<EnvC> _cellEnvirDataFilter = default;
+        private EcsFilter<EnvC> _envF = default;
         private EcsFilter<FireC> _fireFilt = default;
 
-        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
-        private EcsFilter<UnitC, ToolWeaponC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
-        private EcsFilter<UnitC, ConditionUnitC, MoveInCondC> _cellUnitCondFilt = default;
-        private EcsFilter<UnitC, UniqAbilC> _unitUniqAbilFilt = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
+        private EcsFilter<HpC, StepC, WaterUnitC> _statUnitF = default;
+        private EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         public void Run()
         {
@@ -23,20 +22,22 @@ namespace Chessy.Game
             var idx_0 = _setterFilter.Get1(0).IdxCellForSetting;
 
 
-            ref var env_0 = ref _cellEnvirDataFilter.Get1(idx_0);
+            ref var env_0 = ref _envF.Get1(idx_0);
             ref var fire_0 = ref _fireFilt.Get1(idx_0);
 
-            ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
-            ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
-            ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
-            ref var hpUnit_0 = ref _cellUnitFilter.Get2(idx_0);
-            ref var stepUnitC = ref _cellUnitFilter.Get3(idx_0);
-            ref var curTwUnitC = ref _cellUnitOthFilt.Get2(idx_0);
-            ref var effUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
-            ref var thirUnitC_0 = ref _cellUnitOthFilt.Get4(idx_0);
-            ref var condUnit_0 = ref _cellUnitCondFilt.Get2(idx_0);
-            ref var moveCond_0 = ref _cellUnitCondFilt.Get3(idx_0);
-            ref var firstUniq_0 = ref _unitUniqAbilFilt.Get2(idx_0);
+            ref var unit_0 = ref _unitF.Get1(idx_0);
+            ref var levUnit_0 = ref _unitF.Get2(idx_0);
+            ref var ownUnit_0 = ref _unitF.Get3(idx_0);
+
+            ref var hp_0 = ref _statUnitF.Get1(idx_0);
+            ref var step_0 = ref _statUnitF.Get2(idx_0);
+            ref var water_0 = ref _statUnitF.Get3(idx_0);
+            
+            ref var cond_0 = ref _effUnitF.Get1(idx_0);
+            ref var moveCond_0 = ref _effUnitF.Get2(idx_0);
+            ref var eff_0 = ref _effUnitF.Get3(idx_0);
+
+            ref var tw_0 = ref _twUnitF.Get1(idx_0);
 
 
             var whoseMove = WhoseMoveC.WhoseMove;
@@ -44,14 +45,14 @@ namespace Chessy.Game
 
             if (CellsForSetUnitC.HaveIdxCell(whoseMove, idx_0))
             {
-                unit_0.SetUnit(unitForSet);
+                unit_0.Set(unitForSet);
                 ownUnit_0.SetOwner(whoseMove);
-                curTwUnitC.ToolWeapType = default;
-                effUnit_0.DefAllEffects();
-                hpUnit_0.SetMaxHp();
-                stepUnitC.SetMaxSteps(unitForSet, false, UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
-                if(condUnit_0.HaveCondition) condUnit_0.Def();
-                thirUnitC_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
+                tw_0.ToolWeapType = default;
+                eff_0.DefAllEffects();
+                hp_0.SetMaxHp();
+                step_0.SetMaxSteps(unitForSet, false, UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
+                if(cond_0.HaveCondition) cond_0.Reset();
+                water_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
                 moveCond_0.ResetAll();
                 if (InvUnitsC.Have(whoseMove, unitForSet, LevelUnitTypes.Second))
                 {

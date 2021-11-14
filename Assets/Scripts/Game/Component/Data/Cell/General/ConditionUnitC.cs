@@ -8,6 +8,14 @@ namespace Chessy.Game
 
         public CondUnitTypes Condition => _condition;
         public bool HaveCondition => Condition != default;
+        public bool Is(params CondUnitTypes[] conds)
+        {
+            foreach (var condUnitType in conds)
+                if (Is(condUnitType)) return true;
+            return false;
+        }
+
+
 
         public void Set(CondUnitTypes cond)
         {
@@ -16,22 +24,12 @@ namespace Chessy.Game
 
             _condition = cond;
         }
-        public void Def()
+        public void Reset()
         {
             if (_condition == default) throw new Exception();
 
             _condition = default;
         }
-
-        public bool Is(CondUnitTypes cond) => Condition == cond;
-        public bool Is(CondUnitTypes[] cond)
-        {
-            foreach (var condUnitType in cond)
-                if (Is(condUnitType)) return true;
-            return false;
-        }
-
-
         public void Sync(CondUnitTypes cond) => _condition = cond;
     }
 }

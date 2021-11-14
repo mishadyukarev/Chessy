@@ -8,7 +8,7 @@ namespace Chessy.Game
         private EcsFilter<EnvC> _envFilt = default;
         private EcsFilter<FireC> _fireFilt = default;
 
-        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _cellUnitFilter = default;
         private EcsFilter<UnitC, VisibleC> _unitVisFilt = default;
 
 

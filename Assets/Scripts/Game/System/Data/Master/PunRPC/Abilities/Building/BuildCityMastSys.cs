@@ -43,7 +43,7 @@ namespace Chessy.Game
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var xy in CellSpaceSupport.GetXyAround(_xyCellFilt.Get1(idxForBuild).Xy))
+                    foreach (var xy in CellSpace.GetXyAround(_xyCellFilt.Get1(idxForBuild).Xy))
                     {
                         var curIdx = _xyCellFilt.GetIdxCell(xy);
 
@@ -61,7 +61,7 @@ namespace Chessy.Game
 
                         if (build_0.Have)
                         {
-                            WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Type, idxForBuild);
+                            WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idxForBuild);
                             build_0.Remove();
                         }
 

@@ -8,11 +8,11 @@ namespace Chessy.Game
 {
     public sealed class SelectorS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, LevelUnitC, OwnerC, VisibleC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, LevelC, OwnerC, VisibleC> _cellUnitFilter = default;
         public void Run()
         {
             UnitC UnitDatCom(byte idxCell) => _cellUnitFilter.Get1(idxCell);
-            LevelUnitC LevelUnitC(byte idx) => _cellUnitFilter.Get2(idx);
+            LevelC LevelUnitC(byte idx) => _cellUnitFilter.Get2(idx);
             OwnerC OwnUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
             VisibleC VisUnitCom(byte idxCell) => _cellUnitFilter.Get4(idxCell);
 

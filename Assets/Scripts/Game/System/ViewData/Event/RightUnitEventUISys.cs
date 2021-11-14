@@ -6,8 +6,8 @@ namespace Chessy.Game
 {
     public sealed class RightUnitEventUISys : IEcsInitSystem
     {
-        private EcsFilter<UnitC, ConditionUnitC> _cellUnitFilter = default;
-        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<ConditionUnitC> _effUnitF = default;
+        private EcsFilter<UniqAbilC, CdownUniqC> _uniqAbilF = default;
 
         public void Init()
         {
@@ -29,7 +29,7 @@ namespace Chessy.Game
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (_cellUnitFilter.Get2(SelectorC.IdxSelCell).Is(condUnitType))
+                if (_effUnitF.Get1(SelectorC.IdxSelCell).Is(condUnitType))
                 {
                     RpcSys.ConditionUnitToMaster(CondUnitTypes.None, SelectorC.IdxSelCell);
                 }
@@ -45,11 +45,13 @@ namespace Chessy.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                ref var uniq_sel = ref _unitUniqFilt.Get2(SelectorC.IdxSelCell);
+                ref var uniq_sel = ref _uniqAbilF.Get1(SelectorC.IdxSelCell);
+                ref var cdUniq_sel = ref _uniqAbilF.Get2(SelectorC.IdxSelCell);
+
                 var abil = uniq_sel.Ability(uniqBut);
 
 
-                if (!uniq_sel.HaveCooldown(abil))
+                if (!cdUniq_sel.HaveCooldown(abil))
                 {
                     switch (uniqBut)
                     {

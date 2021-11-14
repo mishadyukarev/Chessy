@@ -1,15 +1,15 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using Chessy.Common;
-using System;
 
 namespace Chessy.Game
 {
     public sealed class FireArcherMS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
-        private EcsFilter<UnitC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
-        private EcsFilter<FireC> _cellFireFilter = default;
+        private EcsFilter<UnitC, OwnerC> _unitF = default;
+        private EcsFilter<StepC> _statUnitF = default;
+        private EcsFilter<UnitEffectsC> _effUnitF = default;
+
+        private EcsFilter<FireC> _fireF = default;
 
         public void Run()
         {
@@ -17,12 +17,13 @@ namespace Chessy.Game
             FromToMC.Get(out var idx_from, out var idx_to);
 
 
-            ref var unit_from = ref _cellUnitFilter.Get1(idx_from);
-            ref var stepUnit_from = ref _cellUnitFilter.Get2(idx_from);
-            ref var effUnit_from = ref _cellUnitOthFilt.Get2(idx_from);
-            ref var ownUnit_from = ref _cellUnitOthFilt.Get3(idx_from);
+            ref var unit_from = ref _unitF.Get1(idx_from);
+            ref var ownUnit_from = ref _unitF.Get2(idx_from);
 
-            ref var toFireDatCom = ref _cellFireFilter.Get1(idx_to);
+            ref var stepUnit_from = ref _statUnitF.Get1(idx_from);
+            ref var effUnit_from = ref _effUnitF.Get1(idx_from);
+
+            ref var toFireDatCom = ref _fireF.Get1(idx_to);
 
 
             var whoseMove = WhoseMoveC.WhoseMove;

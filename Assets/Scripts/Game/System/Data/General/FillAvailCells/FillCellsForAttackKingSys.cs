@@ -8,21 +8,23 @@ namespace Chessy.Game
         private EcsFilter<EnvC> _cellEnvDataFilter = default;
         private EcsFilter<TrailC> _cellTrailFilt = default;
 
-        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
-        private EcsFilter<UnitC, UnitEffectsC, OwnerC> _cellUnitOthFilt = default;
-        private EcsFilter<FireC, StunC> _unitEffFilt = default;
+        private EcsFilter<UnitC, OwnerC> _unitF = default;
+        private EcsFilter<StepC> _statUnitF = default;
+        private EcsFilter<UnitEffectsC, StunC> _effUnitF = default;
+
+
 
         public void Run()
         {
             foreach (byte idx_0 in _xyCellFilter)
             {
-                ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
-                ref var stepUnit_0 = ref _cellUnitFilter.Get2(idx_0);
+                ref var unit_0 = ref _unitF.Get1(idx_0);
+                ref var ownUnit_0 = ref _unitF.Get2(idx_0);
 
-                ref var effUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
-                ref var ownUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
+                ref var stepUnit_0 = ref _statUnitF.Get1(idx_0);
 
-                ref var stunUnit_0 = ref _unitEffFilt.Get2(idx_0);
+                ref var effUnit_0 = ref _effUnitF.Get1(idx_0);
+                ref var stunUnit_0 = ref _effUnitF.Get2(idx_0);
 
 
                 if (!stunUnit_0.IsStunned)
@@ -31,21 +33,21 @@ namespace Chessy.Game
                     {
                         DirectTypes curDir_1 = default;
 
-                        CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).Xy, out var dirs);
+                        CellSpace.TryGetXyAround(_xyCellFilter.Get1(idx_0).Xy, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {
                             curDir_1 += 1;
 
                             var idx_1 = _xyCellFilter.GetIdxCell(item_1.Value);
+   
+
+                            ref var unit_1 = ref _unitF.Get1(idx_1);
+                            ref var ownUnit_1 = ref _unitF.Get2(idx_1);
 
                             ref var env_1 = ref _cellEnvDataFilter.Get1(idx_1);
-                            ref var unit_1 = ref _cellUnitFilter.Get1(idx_1);
-
-                            ref var effUnit_1 = ref _cellUnitOthFilt.Get2(idx_1);
-                            ref var ownUnit_1 = ref _cellUnitOthFilt.Get3(idx_1);
-
                             ref var trail_1 = ref _cellTrailFilt.Get1(idx_1);
+
 
                             if (!env_1.Have(EnvTypes.Mountain))
                             {

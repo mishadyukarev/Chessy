@@ -25,7 +25,7 @@ namespace Chessy.Game
                 {
                     if (curUnitDatCom.Is(UnitTypes.Archer))
                     {
-                        foreach (var arouXy in CellSpaceSupport.GetXyAround(curXy))
+                        foreach (var arouXy in CellSpace.GetXyAround(curXy))
                         {
                             var arouIdx = _xyCellFilter.GetIdxCell(arouXy);
 

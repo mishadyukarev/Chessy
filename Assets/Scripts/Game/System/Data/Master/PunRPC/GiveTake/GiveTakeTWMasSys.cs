@@ -7,9 +7,9 @@ namespace Chessy.Game
     {
         private EcsFilter<ForGiveTakeToolWeaponComp> _forGiveTakeToolWeapFilter = default;
 
-        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
-        private EcsFilter<UnitC, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
+        private EcsFilter<HpC, StepC> _statUnitF = default;
+        private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         public void Run()
         {
@@ -22,16 +22,14 @@ namespace Chessy.Game
 
                 var sender = InfoC.Sender(MGOTypes.Master);
 
-                ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
+                ref var unit_0 = ref _unitF.Get1(idx_0);
 
-                ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
-                ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
+                ref var levUnit_0 = ref _unitF.Get2(idx_0);
+                ref var ownUnit_0 = ref _unitF.Get3(idx_0);
 
-                ref var stepUnit_0 = ref _cellUnitFilter.Get3(idx_0);
+                ref var stepUnit_0 = ref _statUnitF.Get2(idx_0);
 
-                ref var condUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
-                ref var twUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
-                ref var effUnit_0 = ref _cellUnitOthFilt.Get4(idx_0);
+                ref var twUnit_0 = ref _twUnitF.Get1(idx_0);
 
 
                 if (unit_0.Is(UnitTypes.Pawn))

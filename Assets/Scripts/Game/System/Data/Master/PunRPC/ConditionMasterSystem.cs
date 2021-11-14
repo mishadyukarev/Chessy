@@ -6,7 +6,8 @@ namespace Chessy.Game
 {
     public sealed class ConditionMasterSystem : IEcsRunSystem
     {
-        private EcsFilter<UnitC, StepC, ConditionUnitC> _cellUnitFilter = default;
+        private EcsFilter<StepC> _statUnitF = default;
+        private EcsFilter<ConditionUnitC> _effUnitF = default;
 
         public void Run()
         {
@@ -15,14 +16,14 @@ namespace Chessy.Game
             var neededCondType = ForCondMasCom.NeededCondUnitType;
             var idxForCondit = ForCondMasCom.IdxForCondition;
 
-            ref var stepUnit_0 = ref _cellUnitFilter.Get2(idxForCondit);
-            ref var condUnit_0 = ref _cellUnitFilter.Get3(idxForCondit);
+            ref var stepUnit_0 = ref _statUnitF.Get1(idxForCondit);
+            ref var condUnit_0 = ref _effUnitF.Get1(idxForCondit);
 
 
             switch (neededCondType)
             {
                 case CondUnitTypes.None:
-                    condUnit_0.Def();
+                    condUnit_0.Reset();
                     break;
 
                 case CondUnitTypes.Protected:
@@ -30,7 +31,7 @@ namespace Chessy.Game
                     {
                         RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
 
-                        condUnit_0.Def();
+                        condUnit_0.Reset();
                     }
 
                     else if (stepUnit_0.HaveMinSteps)
@@ -64,7 +65,7 @@ namespace Chessy.Game
                     if (condUnit_0.Is(CondUnitTypes.Relaxed))
                     {
                         RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
-                        condUnit_0.Def();
+                        condUnit_0.Reset();
                     }
 
                     else if (stepUnit_0.HaveMinSteps)

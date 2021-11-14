@@ -6,67 +6,71 @@ namespace Chessy.Game
 {
     public sealed class AttackMastSys : IEcsRunSystem
     {
-        private EcsFilter<FromToMC> _forAttackFilter = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
+        private EcsFilter<HpC, DamageC, StepC, WaterUnitC> _statUnitF = default;
+        private EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
+        private EcsFilter<ToolWeaponC> _twUnitF = default;
 
-        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<UnitC, HpC, DamageC, StepC> _cellUnitFilt = default;
-        private EcsFilter<UnitC, WaterUnitC> _cellUnitEffFilt = default;
-        private EcsFilter<UnitC, ToolWeaponC> _cellUnitTwFilt = default;
-        private EcsFilter<UnitC, ConditionUnitC, MoveInCondC> _unitCondFilt = default;
-        private EcsFilter<UnitC, UnitEffectsC, StunC> _unitEffFilt = default;
-
-        private EcsFilter<XyC> _cellXyFilt = default;
-        private EcsFilter<BuildC, OwnerC> _cellBuildFilter = default;
-        private EcsFilter<EnvC> _cellEnvFilter = default;
-        private EcsFilter<RiverC> _cellRiverFilt = default;
-        private EcsFilter<TrailC> _cellTrainFilt = default;
+        private EcsFilter<XyC> _xyF = default;
+        private EcsFilter<BuildC, OwnerC> _buildF = default;
+        private EcsFilter<EnvC> _envF = default;
+        private EcsFilter<RiverC> _riverF = default;
+        private EcsFilter<TrailC> _trailF = default;
 
         public void Run()
         {
-            ref var forAttackMasCom = ref _forAttackFilter.Get1(0);
-
             FromToMC.Get(out var idx_from, out var idx_to);
 
+            #region Unit
 
-            ref var unit_from = ref _cellUnitFilt.Get1(idx_from);
-            ref var levUnit_from = ref _cellUnitMainFilt.Get2(idx_from);
-            ref var ownUnit_from = ref _cellUnitMainFilt.Get3(idx_from);
-            ref var hpUnitC_from = ref _cellUnitFilt.Get2(idx_from);
-            ref var damUnit_from = ref _cellUnitFilt.Get3(idx_from);
-            ref var stepUnit_from = ref _cellUnitFilt.Get4(idx_from);
-            ref var waterUnit_from = ref _cellUnitEffFilt.Get2(idx_from);
-            ref var twUnit_from = ref _cellUnitTwFilt.Get2(idx_from);
-            ref var condUnit_from = ref _unitCondFilt.Get2(idx_from);
-            ref var moveCond_from = ref _unitCondFilt.Get3(idx_from);
-            ref var effUnit_from = ref _unitEffFilt.Get2(idx_from);
+            ref var unit_from = ref _unitF.Get1(idx_from);
+            ref var levUnit_from = ref _unitF.Get2(idx_from);
+            ref var ownUnit_from = ref _unitF.Get3(idx_from);
 
+            ref var hpUnit_from = ref _statUnitF.Get1(idx_from);
+            ref var damUnit_from = ref _statUnitF.Get2(idx_from);
+            ref var stepUnit_from = ref _statUnitF.Get3(idx_from);
+            ref var waterUnit_from = ref _statUnitF.Get4(idx_from);  
 
-            ref var river_from = ref _cellRiverFilt.Get1(idx_from);
-            ref var build_from = ref _cellBuildFilter.Get1(idx_from);
-            ref var ownBuild_from = ref _cellBuildFilter.Get2(idx_from);
-            ref var env_from = ref _cellEnvFilter.Get1(idx_from);
-            ref var trail_from = ref _cellTrainFilt.Get1(idx_from);
+            ref var condUnit_from = ref _effUnitF.Get1(idx_from);
+            ref var moveCond_from = ref _effUnitF.Get2(idx_from);
+            ref var effUnit_from = ref _effUnitF.Get3(idx_from);
+
+            ref var twUnit_from = ref _twUnitF.Get1(idx_from);
 
 
-            ref var unit_to = ref _cellUnitFilt.Get1(idx_to);
-            ref var levUnit_to = ref _cellUnitMainFilt.Get2(idx_to);
-            ref var ownUnit_to = ref _cellUnitMainFilt.Get3(idx_to);
-            ref var hpUnit_to = ref _cellUnitFilt.Get2(idx_to);
-            ref var damUnit_to =ref _cellUnitFilt.Get3(idx_to);
-            ref var stepUnit_to = ref _cellUnitFilt.Get4(idx_to);
-            ref var effUnit_to = ref _unitEffFilt.Get2(idx_to);
-            ref var waterUnit_to = ref _cellUnitEffFilt.Get2(idx_to);
-            ref var twUnit_to = ref _cellUnitTwFilt.Get2(idx_to);
-            ref var condUnit_to = ref _unitCondFilt.Get2(idx_to);
-            ref var moveCond_to = ref _unitCondFilt.Get3(idx_to);
-            ref var stun_to = ref _unitEffFilt.Get3(idx_to);
+
+            ref var unit_to = ref _unitF.Get1(idx_to);
+            ref var levUnit_to = ref _unitF.Get2(idx_to);
+            ref var ownUnit_to = ref _unitF.Get3(idx_to);
+
+            ref var hpUnit_to = ref _statUnitF.Get1(idx_to);
+            ref var damUnit_to = ref _statUnitF.Get2(idx_to);
+            ref var stepUnit_to = ref _statUnitF.Get3(idx_to);
+            ref var waterUnit_to = ref _statUnitF.Get4(idx_to);
+
+            ref var condUnit_to = ref _effUnitF.Get1(idx_to);
+            ref var moveCond_to = ref _effUnitF.Get2(idx_to);
+            ref var effUnit_to = ref _effUnitF.Get3(idx_to);
+            ref var stun_to = ref _effUnitF.Get4(idx_to);
+
+            ref var twUnit_to = ref _twUnitF.Get1(idx_to);
+            
+            #endregion
 
 
-            ref var river_to = ref _cellRiverFilt.Get1(idx_to);
-            ref var build_to = ref _cellBuildFilter.Get1(idx_to);
-            ref var ownBuild_to = ref _cellBuildFilter.Get2(idx_to);
-            ref var env_to = ref _cellEnvFilter.Get1(idx_to);
-            ref var trail_to = ref _cellTrainFilt.Get1(idx_to);
+            ref var river_from = ref _riverF.Get1(idx_from);
+            ref var build_from = ref _buildF.Get1(idx_from);
+            ref var ownBuild_from = ref _buildF.Get2(idx_from);
+            ref var env_from = ref _envF.Get1(idx_from);
+            ref var trail_from = ref _trailF.Get1(idx_from);
+
+
+            ref var river_to = ref _riverF.Get1(idx_to);
+            ref var build_to = ref _buildF.Get1(idx_to);
+            ref var ownBuild_to = ref _buildF.Get2(idx_to);
+            ref var env_to = ref _envF.Get1(idx_to);
+            ref var trail_to = ref _trailF.Get1(idx_to);
 
 
 
@@ -75,7 +79,7 @@ namespace Chessy.Game
             if (simpUniqueType != default)
             {
                 stepUnit_from.DefSteps();
-                if(condUnit_from.HaveCondition) condUnit_from.Def();
+                if(condUnit_from.HaveCondition) condUnit_from.Reset();
 
 
                 float powerDam_from = 0;
@@ -90,7 +94,7 @@ namespace Chessy.Game
 
 
 
-                powerDam_to += damUnit_to.DamageOnCell(unit_to.Unit, levUnit_to.Level, condUnit_to, twUnit_to, effUnit_to, UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Damage), build_to.Type, env_to.Envronments);   
+                powerDam_to += damUnit_to.DamageOnCell(unit_to.Unit, levUnit_to.Level, condUnit_to, twUnit_to, effUnit_to, UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Damage), build_to.Build, env_to.Envronments);   
 
 
                 float min_limit = 0;
@@ -149,8 +153,8 @@ namespace Chessy.Game
                     }
                     else if (minus_from > 0)
                     {
-                        hpUnitC_from.TakeHp((int)minus_from);
-                        if (hpUnitC_from.IsHpDeathAfterAttack) hpUnitC_from.SetMinHp();
+                        hpUnit_from.TakeHp((int)minus_from);
+                        if (hpUnit_from.IsHpDeathAfterAttack) hpUnit_from.SetMinHp();
                     }
                 }
 
@@ -187,7 +191,7 @@ namespace Chessy.Game
 
                     if (unit_from.IsMelee)
                     {
-                        if (!hpUnitC_from.HaveHp)
+                        if (!hpUnit_from.HaveHp)
                         {
                             if (unit_from.Is(UnitTypes.King))
                             {
@@ -201,9 +205,9 @@ namespace Chessy.Game
                         }
                         else
                         {
-                            unit_to.SetUnit(unit_from.Unit);
+                            unit_to = unit_from;
                             levUnit_to.SetLevel(levUnit_from.Level);
-                            hpUnit_to = hpUnitC_from;
+                            hpUnit_to = hpUnit_from;
                             stepUnit_to = stepUnit_from;
                             condUnit_to = condUnit_from;
                             twUnit_to = twUnit_from;
@@ -214,7 +218,7 @@ namespace Chessy.Game
                             if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Water));
                             WhereUnitsC.Add(ownUnit_to.Owner, unit_to.Unit, levUnit_to.Level, idx_to);
 
-                            var dir = CellSpaceSupport.GetDirect(_cellXyFilt.Get1(idx_from).Xy, _cellXyFilt.Get1(idx_to).Xy);
+                            var dir = CellSpace.GetDirect(_xyF.Get1(idx_from).Xy, _xyF.Get1(idx_to).Xy);
                             trail_to.TrySetNewTrail(dir.Invert(), env_to);
                             trail_from.TrySetNewTrail(dir, env_from);
 
@@ -223,7 +227,7 @@ namespace Chessy.Game
                             {
                                 if (!ownBuild_to.Is(ownUnit_to.Owner))
                                 {
-                                    WhereBuildsC.Remove(ownBuild_to.Owner, build_to.Type, idx_to);
+                                    WhereBuildsC.Remove(ownBuild_to.Owner, build_to.Build, idx_to);
                                     build_to.Remove();
                                 }
                             }
@@ -235,7 +239,7 @@ namespace Chessy.Game
                     }
                 }
 
-                else if (!hpUnitC_from.HaveHp)
+                else if (!hpUnit_from.HaveHp)
                 {
                     if (unit_from.Is(UnitTypes.King))
                     {

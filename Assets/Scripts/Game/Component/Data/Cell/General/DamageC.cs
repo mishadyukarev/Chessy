@@ -4,10 +4,10 @@ namespace Chessy.Game
 {
     public struct DamageC
     {
-        public int StandDamage(UnitTypes unitType, LevelUnitTypes levelUnitType) => UnitValues.StandDamage(unitType, levelUnitType);
-        public int DamageAttack(UnitTypes unit, LevelUnitTypes levelUnit, ToolWeaponC tWC, UnitEffectsC effectsC, AttackTypes attack, float upgPerc)
+        public int StandDamage(UnitTypes unit, LevelUnitTypes level) => UnitValues.StandDamage(unit, level);
+        public int DamageAttack(UnitTypes unit, LevelUnitTypes level, ToolWeaponC tWC, UnitEffectsC effectsC, AttackTypes attack, float upgPerc)
         {
-            var standDamage = StandDamage(unit, levelUnit);
+            var standDamage = StandDamage(unit, level);
 
             float powerDamege = standDamage;
 
@@ -20,14 +20,14 @@ namespace Chessy.Game
 
             return (int)powerDamege;
         }
-        public int DamageOnCell(UnitTypes unit, LevelUnitTypes levelUnit, ConditionUnitC condUnitC, ToolWeaponC tWC, UnitEffectsC effectsC, float upgPerc, BuildTypes buildType, Dictionary<EnvTypes, bool> envrs)
+        public int DamageOnCell(UnitTypes unit, LevelUnitTypes level, ConditionUnitC condUnitC, ToolWeaponC tWC, UnitEffectsC effectsC, float upgPerc, BuildTypes build, Dictionary<EnvTypes, bool> envrs)
         {
-            float powerDamege = DamageAttack(unit, levelUnit, tWC, effectsC, AttackTypes.Simple, upgPerc);
+            float powerDamege = DamageAttack(unit, level, tWC, effectsC, AttackTypes.Simple, upgPerc);
 
-            var standDamage = StandDamage(unit, levelUnit);
+            var standDamage = StandDamage(unit, level);
 
             powerDamege += standDamage * UnitValues.Percent(condUnitC.Condition);
-            powerDamege += standDamage * UnitValues.ProtectionPercent(buildType);
+            powerDamege += standDamage * UnitValues.ProtectionPercent(build);
             foreach (var item in envrs)
             {
                 if (item.Value) powerDamege += standDamage * UnitValues.ProtectionPercent(item.Key);

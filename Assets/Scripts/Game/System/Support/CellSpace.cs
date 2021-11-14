@@ -4,7 +4,7 @@ using static Chessy.Game.CellValues;
 
 namespace Chessy.Game
 {
-    public static class CellSpaceSupport
+    public static class CellSpace
     {
         public static List<byte[]> GetXyAround(byte[] xyStartCell)
         {

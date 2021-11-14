@@ -31,7 +31,7 @@ namespace Chessy.Game
 
                 for (var dir_1 = (DirectTypes)1; dir_1 < (DirectTypes)Enum.GetNames(typeof(DirectTypes)).Length; dir_1++)
                 {
-                    var xy_1 = CellSpaceSupport.GetXyCellByDirect(xy_0, dir_1);
+                    var xy_1 = CellSpace.GetXyCellByDirect(xy_0, dir_1);
                     var idx_1 = _xyCellFilter.GetIdxCell(xy_1);
 
 
@@ -75,7 +75,7 @@ namespace Chessy.Game
                         }
 
 
-                        var xy_2 = CellSpaceSupport.GetXyCellByDirect(xy_1, dir_1);
+                        var xy_2 = CellSpace.GetXyCellByDirect(xy_1, dir_1);
                         var idx_2 = _xyCellFilter.GetIdxCell(xy_2);
 
 

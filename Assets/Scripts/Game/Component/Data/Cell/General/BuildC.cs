@@ -4,13 +4,13 @@ namespace Chessy.Game
 {
     public struct BuildC
     {
-        private BuildTypes _type;
+        private BuildTypes _build;
 
-        public BuildTypes Type => _type;
-        public bool Have => Type != default;
+        public BuildTypes Build => _build;
+        public bool Have => Build != default;
         public bool Is(params BuildTypes[] buildTypes)
         {
-            foreach (var buildType in buildTypes) if (buildType == _type) return true;
+            foreach (var buildType in buildTypes) if (buildType == _build) return true;
             return false;
         }
 
@@ -22,13 +22,13 @@ namespace Chessy.Game
             if (Is(build)) throw new Exception("It's got yet");
             if (Have) throw new Exception("It's got building");
 
-            _type = build;
+            _build = build;
         }
         public void Remove()
         {
             if (!Have) throw new Exception();
-            _type = BuildTypes.None;
+            _build = BuildTypes.None;
         }
-        public void Sync(BuildTypes buildType) => _type = buildType;
+        public void Sync(BuildTypes buildType) => _build = buildType;
     }
 }

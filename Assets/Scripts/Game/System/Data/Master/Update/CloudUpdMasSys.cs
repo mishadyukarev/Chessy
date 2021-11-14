@@ -14,7 +14,7 @@ namespace Chessy.Game
             var xyStart = _xyCellFilter.Get1(WhereCloudsC.Cloud).Xy;
 
 
-            var aroundList = CellSpaceSupport.GetXyAround(xyStart);
+            var aroundList = CellSpace.GetXyAround(xyStart);
 
             byte curIdx = 0;
 
@@ -25,7 +25,7 @@ namespace Chessy.Game
                 _cellWeatherFilt.Get1(curIdx).Have = false;
             }
 
-            var xyNext = CellSpaceSupport.GetXyCellByDirect(xyStart, WindC.DirectWind);
+            var xyNext = CellSpace.GetXyCellByDirect(xyStart, WindC.DirectWind);
 
             if (xyNext[0] > 3 && xyNext[0] < 12 && xyNext[1] > 1 && xyNext[1] < 9)
             {
@@ -41,7 +41,7 @@ namespace Chessy.Game
                 _cellWeatherFilt.Get1(idxNext).Have = true;
 
 
-                aroundList = CellSpaceSupport.GetXyAround(xyNext);
+                aroundList = CellSpace.GetXyAround(xyNext);
                 curIdx = 0;
 
                 foreach (var xYArount in aroundList)
@@ -53,7 +53,7 @@ namespace Chessy.Game
             }
             else
             {
-                aroundList = CellSpaceSupport.GetXyAround(xyNext);
+                aroundList = CellSpace.GetXyAround(xyNext);
                 curIdx = 0;
 
                 foreach (var xYArount in aroundList)

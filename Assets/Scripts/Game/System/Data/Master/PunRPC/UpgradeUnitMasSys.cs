@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     public sealed class UpgradeUnitMasSys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<UnitC, HpC, StepC, UnitEffectsC> _cellUnitDataFilt = default;
 
         public void Run()

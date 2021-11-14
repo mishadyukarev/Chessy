@@ -6,7 +6,7 @@ namespace Chessy.Game
     public class PutOutFireElfemaleMS : IEcsRunSystem
     {
         private EcsFilter<UnitC, HpC, StepC> _unitStatFilt = default;
-        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<CdownUniqC> _unitUniqFilt = default;
         private EcsFilter<FireC> _fireFilt = default;
 
         public void Run()
@@ -17,7 +17,7 @@ namespace Chessy.Game
             ref var unit_from = ref _unitStatFilt.Get1(idx_from);
             ref var hp_from = ref _unitStatFilt.Get2(idx_from);
             ref var step_from = ref _unitStatFilt.Get3(idx_from);
-            ref var uniq_from = ref _unitUniqFilt.Get2(idx_from);
+            ref var uniq_from = ref _unitUniqFilt.Get1(idx_from);
 
             ref var fire_to = ref _fireFilt.Get1(idx_to);
 

@@ -13,9 +13,9 @@ namespace Chessy.Game
             {
                 ref var river_0 = ref _riverF.Get1(idx_0);
 
-                if(river_0.Type == RiverTypes.Start)
+                if(river_0.River == RiverTypes.Start)
                 {
-                    foreach (var item_0 in river_0.Directs)
+                    foreach (var item_0 in river_0.DirectsDict)
                     {
                         _riverVF.Get1(idx_0).SetActiveRive(item_0.Key, item_0.Value);
                     }

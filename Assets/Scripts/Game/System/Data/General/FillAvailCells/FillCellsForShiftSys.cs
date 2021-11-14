@@ -8,9 +8,9 @@ namespace Chessy.Game
         private EcsFilter<EnvC> _cellEnvDataFilter = default;
         private EcsFilter<TrailC> _cellTrailFilt = default;
 
-        private EcsFilter<UnitC, OwnerC> _unitMainFilt = default;
-        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
-        private EcsFilter<UnitC, UnitEffectsC, StunC> _unitEffFilt = default;
+        private EcsFilter<UnitC, OwnerC> _unitF = default;
+        private EcsFilter<StepC> _statUnitF = default;
+        private EcsFilter<UnitEffectsC, StunC> _effUnitF = default;
 
         public void Run()
         {
@@ -19,19 +19,21 @@ namespace Chessy.Game
                 CellsForShiftCom.Clear(PlayerTypes.First, idx_0);
                 CellsForShiftCom.Clear(PlayerTypes.Second, idx_0);
 
-                ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
-                ref var stepUnitC_0 = ref _cellUnitFilter.Get2(idx_0);
+                ref var unit_0 = ref _unitF.Get1(idx_0);
+                ref var own_0 = ref _unitF.Get2(idx_0);
 
-                ref var effUnit_0 = ref _unitEffFilt.Get2(idx_0);
-                ref var stunUnit_0 = ref _unitEffFilt.Get3(idx_0);
+                ref var step_0 = ref _statUnitF.Get1(idx_0);
 
-                ref var ownUnit_0 = ref _unitMainFilt.Get2(idx_0);
+                ref var eff_0 = ref _effUnitF.Get1(idx_0);
+                ref var stun_0 = ref _effUnitF.Get2(idx_0);
 
-                if (!stunUnit_0.IsStunned)
+                
+
+                if (!stun_0.IsStunned)
                 {
                     if (unit_0.HaveUnit)
                     {
-                        CellSpaceSupport.TryGetXyAround(_xyCellFilter.Get1(idx_0).Xy, out var directs);
+                        CellSpace.TryGetXyAround(_xyCellFilter.Get1(idx_0).Xy, out var directs);
 
                         foreach (var item_1 in directs)
                         {
@@ -39,7 +41,7 @@ namespace Chessy.Game
 
                             ref var trail_1 = ref _cellTrailFilt.Get1(idx_1);
 
-                            ref var unitC_1 = ref _cellUnitFilter.Get1(idx_1);
+                            ref var unitC_1 = ref _unitF.Get1(idx_1);
                             ref var envC_1 = ref _cellEnvDataFilter.Get1(idx_1);
 
 
@@ -47,10 +49,10 @@ namespace Chessy.Game
                             {
                                 if (!unitC_1.HaveUnit)
                                 {
-                                    if (stepUnitC_0.HaveStepsForDoing(envC_1, item_1.Key, trail_1)
-                                        || stepUnitC_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+                                    if (step_0.HaveStepsForDoing(envC_1, item_1.Key, trail_1)
+                                        || step_0.HaveMaxSteps(unit_0.Unit, eff_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(own_0.Owner, unit_0.Unit)))
                                     {
-                                        CellsForShiftCom.AddIdxCell(ownUnit_0.Owner, idx_0, idx_1);
+                                        CellsForShiftCom.AddIdxCell(own_0.Owner, idx_0, idx_1);
                                     }
                                 }
                             }

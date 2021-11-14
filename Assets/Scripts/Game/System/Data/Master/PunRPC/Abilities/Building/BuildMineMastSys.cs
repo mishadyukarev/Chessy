@@ -45,7 +45,7 @@ namespace Chessy.Game
                             {
                                 if (build_0.Have)
                                 {
-                                    WhereBuildsC.Remove(ownBuildC_0.Owner, build_0.Type, idx_0);
+                                    WhereBuildsC.Remove(ownBuildC_0.Owner, build_0.Build, idx_0);
                                     build_0.Remove();
                                 }
 
@@ -55,7 +55,7 @@ namespace Chessy.Game
 
                                 build_0.SetNew(forBuildType);
                                 ownBuildC_0.SetOwner(whoseMove);
-                                WhereBuildsC.Add(ownBuildC_0.Owner, build_0.Type, idx_0);
+                                WhereBuildsC.Add(ownBuildC_0.Owner, build_0.Build, idx_0);
 
                                 curStepUnitC.TakeSteps();
                             }

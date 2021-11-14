@@ -31,7 +31,7 @@ namespace Chessy.Game
                     {
                         var isVisibledNextPlayer = false;
 
-                        var list = CellSpaceSupport.GetXyAround(xy);
+                        var list = CellSpace.GetXyAround(xy);
 
                         foreach (var xy_1 in list)
                         {
@@ -72,7 +72,7 @@ namespace Chessy.Game
                     {
                         var isVisibledNextPlayer = false;
 
-                        var list = CellSpaceSupport.GetXyAround(xy);
+                        var list = CellSpace.GetXyAround(xy);
 
                         foreach (var xy_1 in list)
                         {
@@ -103,7 +103,7 @@ namespace Chessy.Game
                 {
                     ref var trailVis_0 = ref _cellTrailFilt.Get2(idx_0);
 
-                    var list = CellSpaceSupport.GetXyAround(xy);
+                    var list = CellSpace.GetXyAround(xy);
 
                     trailVis_0.SetVisibled(WhoseMoveC.NextPlayerFrom(PlayerTypes.First), false);
                     trailVis_0.SetVisibled(WhoseMoveC.NextPlayerFrom(PlayerTypes.Second), false);

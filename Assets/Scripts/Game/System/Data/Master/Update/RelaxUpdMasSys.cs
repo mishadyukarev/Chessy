@@ -4,10 +4,10 @@ namespace Chessy.Game
 {
     public sealed class RelaxUpdMasSys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<UnitC, HpC> _cellUnitStatFilt = default;
-        private EcsFilter<UnitC, ConditionUnitC, UnitEffectsC> _cellUnitOthFilt = default;
-        private EcsFilter<UnitC, ToolWeaponC> _cellUnitTWFilt = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
+        private EcsFilter<HpC> _statUnitF = default;
+        private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         private EcsFilter<EnvC, EnvResC> _cellEnvFilt = default;
         private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
@@ -22,13 +22,13 @@ namespace Chessy.Game
                     {
                         foreach (var idx_0 in WhereUnitsC.IdxsUnits(player, unit, levUnit))
                         {
-                            ref var unit_0 = ref _cellUnitMainFilt.Get1(idx_0);
-                            ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
-                            ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
-                            ref var hpUnit_0 = ref _cellUnitStatFilt.Get2(idx_0);
-                            ref var condUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
-                            ref var effUnit_0 = ref _cellUnitOthFilt.Get3(idx_0);
-                            ref var twUnit_0 = ref _cellUnitTWFilt.Get2(idx_0);
+                            ref var unit_0 = ref _unitF.Get1(idx_0);
+                            ref var levUnit_0 = ref _unitF.Get2(idx_0);
+                            ref var ownUnit_0 = ref _unitF.Get3(idx_0);
+                            ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
+                            ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
+                            ref var effUnit_0 = ref _effUnitF.Get2(idx_0);
+                            ref var twUnit_0 = ref _twUnitF.Get1(idx_0);
 
                             ref var env_0 = ref _cellEnvFilt.Get1(idx_0);
                             ref var envRes_0 = ref _cellEnvFilt.Get2(idx_0);
@@ -66,13 +66,13 @@ namespace Chessy.Game
 
                                                     buil_0.SetNew(BuildTypes.Woodcutter);
                                                     ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Type, idx_0);
+                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Build, idx_0);
                                                 }
                                                 else if (!buil_0.Have)
                                                 {
                                                     buil_0.SetNew(BuildTypes.Woodcutter);
                                                     ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Type, idx_0);
+                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Build, idx_0);
                                                 }
                                                 else if (buil_0.Is(BuildTypes.Woodcutter))
                                                 {
@@ -87,7 +87,7 @@ namespace Chessy.Game
                                             {
                                                 if (buil_0.Have)
                                                 {
-                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Type, idx_0);
+                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
                                                     buil_0.Remove();
                                                 }
 

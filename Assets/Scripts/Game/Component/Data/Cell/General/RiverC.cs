@@ -5,50 +5,88 @@ namespace Chessy.Game
 {
     public struct RiverC
     {
-        private Dictionary<DirectTypes, bool> _directs;
+        private RiverTypes _river;
+        private List<DirectTypes> _directs;
 
-        public RiverTypes Type { get; set; }
-        public Dictionary<DirectTypes, bool> Directs
+        public RiverTypes River => _river;
+        public List<DirectTypes> Directs
+        {
+            get
+            {
+                var list = new List<DirectTypes>();
+                foreach (var item in _directs) list.Add(item);
+                return list;
+            }
+        }
+        public Dictionary<DirectTypes, bool> DirectsDict
         {
             get
             {
                 var dic = new Dictionary<DirectTypes, bool>();
-                foreach (var item_0 in _directs)
-                {
-                    dic.Add(item_0.Key, item_0.Value);
-                }
+
+                if (_directs.Contains(DirectTypes.Up)) dic.Add(DirectTypes.Up, true);
+                else dic.Add(DirectTypes.Up, false);
+
+                if (_directs.Contains(DirectTypes.Right)) dic.Add(DirectTypes.Right, true);
+                else dic.Add(DirectTypes.Right, false);
+
+                if (_directs.Contains(DirectTypes.Down)) dic.Add(DirectTypes.Down, true);
+                else dic.Add(DirectTypes.Down, false);
+
+                if (_directs.Contains(DirectTypes.Left)) dic.Add(DirectTypes.Left, true);
+                else dic.Add(DirectTypes.Left, false);
+
                 return dic;
             }
         }
+        public bool HaveNearRiver => River != default;
+        public bool Is(params DirectTypes[] dirs)
+        {
+            foreach (var dir in dirs) if (_directs.Contains(dir)) return true;
+            return false;
+        }
 
-        public bool HaveNearRiver => Type != default;
+
 
         public RiverC(bool needNew)
         {
             if (needNew)
             {
-                Type = default;
-                _directs = new Dictionary<DirectTypes, bool>();
-
-                _directs.Add(DirectTypes.Up, false);
-                _directs.Add(DirectTypes.Right, false);
-                _directs.Add(DirectTypes.Down, false);
-                _directs.Add(DirectTypes.Left, false);
+                _river = default;
+                _directs = new List<DirectTypes>();
             }
 
             else throw new Exception();
         }
 
-        public void AddDir(DirectTypes dir)
+        public void SetStart(params DirectTypes[] dirs)
         {
-            if (_directs[dir] == true) throw new Exception();
-            if (!_directs.ContainsKey(dir)) throw new Exception();
-            _directs[dir] = true;
+            if (dirs == default) throw new Exception();
+
+            _river = RiverTypes.Start;
+            foreach (var item in dirs) _directs.Add(item);
         }
 
-        public void Sync(DirectTypes dir, bool have)
+        public void SetEnd(params DirectTypes[] dirs)
         {
-            _directs[dir] = have;
+            if (dirs == default) throw new Exception();
+
+            _river = RiverTypes.End;
+        }
+
+        public void SetCorner()
+        {
+            _river = RiverTypes.Corner;
+        }
+
+
+        public void Sync(RiverTypes river)
+        {
+            _river = river;
+        }
+        public void Sync(DirectTypes dir, bool isActive)
+        {
+            if (isActive) _directs.Add(dir);
         }
     }
 }

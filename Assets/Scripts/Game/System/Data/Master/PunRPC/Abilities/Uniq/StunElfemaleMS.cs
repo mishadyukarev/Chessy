@@ -9,7 +9,7 @@ namespace Chessy.Game
         private EcsFilter<UnitC, OwnerC> _unitMainFilt = default;
         private EcsFilter<UnitC, HpC, StepC> _unitStatFilt = default;
         private EcsFilter<UnitC, StunC> _unitEffFilt = default;
-        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<CdownUniqC> _unitUniqFilt = default;
         private EcsFilter<UnitC, VisibleC> _unitVisFilt = default;
 
         private EcsFilter<EnvC> _envFilt = default;
@@ -24,7 +24,7 @@ namespace Chessy.Game
             ref var ownUnit_from = ref _unitMainFilt.Get2(idx_from);
             ref var hp_from = ref _unitStatFilt.Get2(idx_from);
             ref var step_from = ref _unitStatFilt.Get3(idx_from);
-            ref var uniqUnit_from = ref _unitUniqFilt.Get2(idx_from);
+            ref var cdUniq_from = ref _unitUniqFilt.Get1(idx_from);
 
             ref var unit_to = ref _unitMainFilt.Get1(idx_to);
             ref var ownUnit_to = ref _unitMainFilt.Get2(idx_to);
@@ -32,7 +32,7 @@ namespace Chessy.Game
             ref var env_to = ref _envFilt.Get1(idx_to);
 
 
-            if (!uniqUnit_from.HaveCooldown(UniqAbilTypes.StunElfemale))
+            if (!cdUniq_from.HaveCooldown(UniqAbilTypes.StunElfemale))
             {
                 if (visUnit_to.IsVisibled(playerSend))
                 {
@@ -47,7 +47,7 @@ namespace Chessy.Game
                                     if (!ownUnit_from.Is(ownUnit_to.Owner))
                                     {
                                         _unitEffFilt.Get2(idx_to).SetNewStun();
-                                        _unitUniqFilt.Get2(idx_from).SetCooldown(UniqAbilTypes.StunElfemale, 5);
+                                        _unitUniqFilt.Get1(idx_from).SetCooldown(UniqAbilTypes.StunElfemale, 5);
 
                                         step_from.TakeSteps();
 

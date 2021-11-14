@@ -9,8 +9,8 @@ namespace Chessy.Game
         private EcsFilter<EnvC, EnvResC> _envFilt = default;
 
         private EcsFilter<UnitC, OwnerC> _unitMainFilt = default;
-        private EcsFilter<UnitC, StepC> _unitStatFilt = default;
-        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<StepC> _statUnitF = default;
+        private EcsFilter<CdownUniqC> _unitUniqFilt = default;
         private EcsFilter<UnitC, UnitEffectsC> _unitEffFilt = default;
 
         public void Run()
@@ -20,15 +20,15 @@ namespace Chessy.Game
             var sender = InfoC.Sender(MGOTypes.Master);
 
             ref var ownUnit_0 = ref _unitMainFilt.Get2(idx_0);
-            ref var unitStep_0 = ref _unitStatFilt.Get2(idx_0);
-            ref var uniq_0 = ref _unitUniqFilt.Get2(idx_0);
+            ref var unitStep_0 = ref _statUnitF.Get2(idx_0);
+            ref var cdUniq_0 = ref _unitUniqFilt.Get1(idx_0);
             ref var effUnit_0 = ref _unitEffFilt.Get2(idx_0);
 
             ref var env_0 = ref _envFilt.Get1(idx_0);
             ref var envRes_0 = ref _envFilt.Get2(idx_0);
 
 
-            if (!uniq_0.HaveCooldown(UniqAbilTypes.GrowAdultForest))
+            if (!cdUniq_0.HaveCooldown(UniqAbilTypes.GrowAdultForest))
             {
                 if (unitStep_0.HaveMinSteps)
                 {
@@ -43,18 +43,18 @@ namespace Chessy.Game
 
                         unitStep_0.TakeSteps();
 
-                        uniq_0.SetCooldown(UniqAbilTypes.GrowAdultForest, 5);
+                        cdUniq_0.SetCooldown(UniqAbilTypes.GrowAdultForest, 5);
 
                         RpcSys.SoundToGeneral(sender, UniqAbilTypes.GrowAdultForest);
 
                         if (!effUnit_0.Have(UnitStatTypes.Steps)) effUnit_0.Set(UnitStatTypes.Steps);
 
-                        var around = CellSpaceSupport.GetXyAround(_xyFilt.Get1(idx_0).Xy);
+                        var around = CellSpace.GetXyAround(_xyFilt.Get1(idx_0).Xy);
                         foreach (var xy_1 in around)
                         {
                             var idx_1 = _xyFilt.GetIdxCell(xy_1);
 
-                            ref var unit_1 = ref _unitStatFilt.Get1(idx_1);
+                            ref var unit_1 = ref _statUnitF.Get1(idx_1);
                             ref var ownUnit_1 = ref _unitMainFilt.Get2(idx_1);
                             ref var effUnit_1 = ref _unitEffFilt.Get2(idx_1);   
 

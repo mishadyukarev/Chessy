@@ -4,11 +4,12 @@ namespace Chessy.Game
 {
     public sealed class UniqButSyncUISys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, UniqAbilC> _unitAbilFilt = default;
+        private EcsFilter<UniqAbilC, CdownUniqC> _unitAbilFilt = default;
 
         public void Run()
         {
-            ref var uniq_sel = ref _unitAbilFilt.Get2(SelectorC.IdxSelCell);
+            ref var uniq_sel = ref _unitAbilFilt.Get1(SelectorC.IdxSelCell);
+            ref var cdUniq_sel = ref _unitAbilFilt.Get2(SelectorC.IdxSelCell);
 
             var abil1 = uniq_sel.Ability(UniqButtonTypes.First);
             var abil2 = uniq_sel.Ability(UniqButtonTypes.Second);
@@ -20,18 +21,18 @@ namespace Chessy.Game
 
             if(abil1 != default)
             {
-                UniqButtonsViewC.SetActiveCooldownZone(UniqButtonTypes.First, uniq_sel.HaveCooldown(abil1));
-                UniqButtonsViewC.SetTextCooldown(UniqButtonTypes.First, uniq_sel.Cooldown(abil1).ToString());
+                UniqButtonsViewC.SetActiveCooldownZone(UniqButtonTypes.First, cdUniq_sel.HaveCooldown(abil1));
+                UniqButtonsViewC.SetTextCooldown(UniqButtonTypes.First, cdUniq_sel.Cooldown(abil1).ToString());
             }
             if(abil2 != default)
             {
-                UniqButtonsViewC.SetActiveCooldownZone(UniqButtonTypes.Second, uniq_sel.HaveCooldown(abil2));
-                UniqButtonsViewC.SetTextCooldown(UniqButtonTypes.Second, uniq_sel.Cooldown(abil2).ToString());
+                UniqButtonsViewC.SetActiveCooldownZone(UniqButtonTypes.Second, cdUniq_sel.HaveCooldown(abil2));
+                UniqButtonsViewC.SetTextCooldown(UniqButtonTypes.Second, cdUniq_sel.Cooldown(abil2).ToString());
             }
             if (abil3 != default)
             {
-                UniqButtonsViewC.SetActiveCooldownZone(UniqButtonTypes.Third, uniq_sel.HaveCooldown(abil3));
-                UniqButtonsViewC.SetTextCooldown(UniqButtonTypes.Third, uniq_sel.Cooldown(abil3).ToString());
+                UniqButtonsViewC.SetActiveCooldownZone(UniqButtonTypes.Third, cdUniq_sel.HaveCooldown(abil3));
+                UniqButtonsViewC.SetTextCooldown(UniqButtonTypes.Third, cdUniq_sel.Cooldown(abil3).ToString());
             }
         }
     }

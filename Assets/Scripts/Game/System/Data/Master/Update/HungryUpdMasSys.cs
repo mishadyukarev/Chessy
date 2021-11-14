@@ -5,7 +5,7 @@ namespace Chessy.Game
     public sealed class HungryUpdMasSys : IEcsRunSystem
     {
         private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
-        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _cellUnitMainFilt = default;
 
         public void Run()
         {
@@ -39,7 +39,7 @@ namespace Chessy.Game
 
                                 if (build_0.Is(BuildTypes.Camp))
                                 {
-                                    WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Type, idx_0);
+                                    WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
                                     build_0.Remove();
                                 }
 

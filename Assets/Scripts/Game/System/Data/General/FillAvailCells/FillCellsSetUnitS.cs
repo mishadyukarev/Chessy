@@ -21,7 +21,7 @@ namespace Chessy.Game
                     var idx_city = WhereBuildsC.IdxCity(player);
                     ref var unit_city = ref _cellUnitFilter.Get1(idx_city);
                     
-                    var listAround = CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_city).Xy);
+                    var listAround = CellSpace.GetXyAround(_xyCellFilter.Get1(idx_city).Xy);
 
                     if(!unit_city.HaveUnit) CellsForSetUnitC.AddIdxCell(player, idx_city);
 

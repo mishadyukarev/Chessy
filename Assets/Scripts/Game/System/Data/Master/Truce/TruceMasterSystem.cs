@@ -14,7 +14,7 @@ namespace Chessy.Game
         private EcsFilter<CellC> _cellDataFilt = default;
         private EcsFilter<TrailC> _trailFilt = default;
 
-        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _cellUnitFilter = default;
         private EcsFilter<UnitC, ToolWeaponC> _cellUnitTwFilt = default;
 
         public void Run()
@@ -77,7 +77,7 @@ namespace Chessy.Game
                 {
                     if (build_0.Is(BuildTypes.Camp))
                     {
-                        WhereBuildsC.Remove(ownUnit_0.Owner, build_0.Type, idx_0);
+                        WhereBuildsC.Remove(ownUnit_0.Owner, build_0.Build, idx_0);
                         build_0.Remove();
                     }
                 }

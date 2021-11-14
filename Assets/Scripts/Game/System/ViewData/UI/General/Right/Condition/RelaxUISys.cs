@@ -5,13 +5,15 @@ namespace Chessy.Game
 {
     public sealed class RelaxUISys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, ConditionUnitC, OwnerC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, OwnerC> _unitF = default;
+        private EcsFilter<ConditionUnitC> _effUnitF = default;
 
         public void Run()
         {
-            ref var unit_sel = ref _cellUnitFilter.Get1(SelectorC.IdxSelCell);
-            ref var selCondUnitC = ref _cellUnitFilter.Get2(SelectorC.IdxSelCell);
-            ref var selOnUnitCom = ref _cellUnitFilter.Get3(SelectorC.IdxSelCell);
+            ref var unit_sel = ref _unitF.Get1(SelectorC.IdxSelCell);
+            ref var selOnUnitCom = ref _unitF.Get2(SelectorC.IdxSelCell);
+
+            ref var selCondUnitC = ref _effUnitF.Get1(SelectorC.IdxSelCell);  
 
 
             var activeButt = false;

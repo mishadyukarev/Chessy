@@ -8,7 +8,7 @@ namespace Chessy.Game
     public sealed class AbilSyncMasSys : IEcsRunSystem
     {
         private EcsFilter<UnitC, OwnerC> _unitBaseFilt = default;
-        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<UniqAbilC> _unitUniqFilt = default;
         private EcsFilter<EnvC> _envFilt = default;
         private EcsFilter<FireC> _fireFilt = default;
 
@@ -16,11 +16,11 @@ namespace Chessy.Game
         {
             foreach (var idx_0 in _unitUniqFilt)
             {
-                ref var unit_0 = ref _unitUniqFilt.Get1(idx_0);
+                ref var unit_0 = ref _unitBaseFilt.Get1(idx_0);
 
                 ref var ownUnit_0 = ref _unitBaseFilt.Get2(idx_0);
 
-                ref var uniq_0 = ref _unitUniqFilt.Get2(idx_0);
+                ref var uniq_0 = ref _unitUniqFilt.Get1(idx_0);
 
                 ref var env_0 = ref _envFilt.Get1(idx_0);
                 ref var fire_0 = ref _fireFilt.Get1(idx_0);

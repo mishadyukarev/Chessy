@@ -42,7 +42,7 @@ namespace Chessy.Game
                                 env_0.Remove(EnvTypes.Fertilizer);
                                 WhereEnvC.Remove(EnvTypes.Fertilizer, idx_0);
 
-                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Type, idx_0);
+                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
                                 build_0.Remove();
                             }
                         }
@@ -62,7 +62,7 @@ namespace Chessy.Game
                                 env_0.Remove(EnvTypes.AdultForest);
                                 WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
 
-                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Type, idx_0);
+                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
                                 build_0.Remove();
 
                                 _cellTrailFilt.Get1(idx_0).ResetAll();
@@ -95,7 +95,7 @@ namespace Chessy.Game
 
                             if (!envRes_0.HaveRes(EnvTypes.Hill))
                             {
-                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Type, idx_0);
+                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
                                 build_0.Remove();
                             }
                         }

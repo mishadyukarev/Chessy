@@ -7,18 +7,19 @@ namespace Chessy.Game
 {
     public sealed class FillingCells : IEcsInitSystem
     {
-        private readonly EcsFilter<XyC> _xyCellFilter = default;
+        private readonly EcsFilter<XyC> _xyF = default;
         private readonly EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
 
         private readonly EcsFilter<CellC> _cellViewFilt = default;
 
         private readonly EcsFilter<BuildC, OwnerC> _cellBuildFilter = default;
         private readonly EcsFilter<CloudC> _cellWeatherFilt = default;
-        private readonly EcsFilter<RiverC> _cellRiverFilt = default;
+        private readonly EcsFilter<RiverC> _riverF = default;
 
-        private readonly EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private readonly EcsFilter<UnitC, HpC, DamageC, StepC> _cellUnitStatsFilt = default;
-        private readonly EcsFilter<UnitC, ConditionUnitC, ToolWeaponC, WaterUnitC> _cellUnitOtherFilt = default;
+        private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitMainF = default;
+        private readonly EcsFilter<HpC, DamageC, StepC, WaterUnitC> _unitStatsF = default;
+        private readonly EcsFilter<ToolWeaponC> _cellUnitOtherFilt = default;
+        private readonly EcsFilter<ConditionUnitC> _unitEffF = default;
 
         public void Init()
         {
@@ -26,15 +27,15 @@ namespace Chessy.Game
             {
                 int random;
 
-                foreach (byte idx_0 in _xyCellFilter)
+                foreach (byte idx_0 in _xyF)
                 {
-                    var xy_0 = _xyCellFilter.Get1(idx_0).Xy;
+                    var xy_0 = _xyF.Get1(idx_0).Xy;
                     var x = xy_0[0];
                     var y = xy_0[1];
 
                     ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
                     ref var envRes_0 = ref _cellEnvFilter.Get2(idx_0);
-                    ref var curWeatherDatCom = ref _cellWeatherFilt.Get1(idx_0);
+                    ref var cloud_0 = ref _cellWeatherFilt.Get1(idx_0);
 
                     if (_cellViewFilt.Get1(idx_0).IsActiveCell)
                     {
@@ -90,66 +91,47 @@ namespace Chessy.Game
 
                         if (xy_0[0] == 5 && xy_0[1] == 5)
                         {
-                            curWeatherDatCom.Have = true;
-                            curWeatherDatCom.CloudWidth = CloudWidthTypes.OneBlock;
+                            cloud_0.Have = true;
+                            cloud_0.CloudWidth = CloudWidthTypes.OneBlock;
                             WhereCloudsC.Add(idx_0);
                         }
 
 
-                        var riverType = RiverTypes.None;
-                        var dirTypes = new List<DirectTypes>();
+                        ref var river_0 = ref _riverF.Get1(idx_0);
+
+
                         var corners = new List<DirectTypes>();
 
                         if (x >= 3 && x <= 6 && y == 5)
                         {
-                            riverType = RiverTypes.Start;
-                            dirTypes.Add(DirectTypes.Up);
+                            river_0.SetStart(DirectTypes.Up);
                         }
                         else if (x == 7 && y == 5)
                         {
-                            riverType = RiverTypes.Start;
-                            dirTypes.Add(DirectTypes.Up);
-                            dirTypes.Add(DirectTypes.Right);
                             corners.Add(DirectTypes.UpRight);
                             corners.Add(DirectTypes.Down);
+                            river_0.SetStart(DirectTypes.Up, DirectTypes.Right);
                         }
                         else if (x >= 8 && x <= 12 && y == 4)
                         {
-                            riverType = RiverTypes.Start;
-                            dirTypes.Add(DirectTypes.Up);
+                            river_0.SetStart(DirectTypes.Up);
                         }
 
-                        if (riverType != default)
+
+                        foreach (var dir in river_0.Directs)
                         {
-                            foreach (var dirType in dirTypes)
-                            {
-                                _cellRiverFilt.Get1(idx_0).Type = riverType;
-                                _cellRiverFilt.Get1(idx_0).AddDir(dirType);
+                            var xy_next = CellSpace.GetXyCellByDirect(_xyF.Get1(idx_0).Xy, dir);
+                            var idx_next = _xyF.GetIdxCell(xy_next);
 
-                                var xy_next = CellSpaceSupport.GetXyCellByDirect(_xyCellFilter.Get1(idx_0).Xy, dirType);
-                                var idx_next = _xyCellFilter.GetIdxCell(xy_next);
+                            _riverF.Get1(idx_next).SetEnd(dir.Invert());
+                        }
 
-                                _cellRiverFilt.Get1(idx_next).Type = RiverTypes.End;
+                        foreach (var dir in corners)
+                        {
+                            var xy_next = CellSpace.GetXyCellByDirect(_xyF.Get1(idx_0).Xy, dir);
+                            var idx_next = _xyF.GetIdxCell(xy_next);
 
-                                if (dirType == DirectTypes.Up)
-                                {
-                                    _cellRiverFilt.Get1(idx_next).AddDir(DirectTypes.Down);
-                                }
-                                else if (dirType == DirectTypes.Right)
-                                {
-                                    _cellRiverFilt.Get1(idx_next).AddDir(DirectTypes.Left);
-                                }
-                            }
-
-
-                            foreach (var dirType in corners)
-                            {
-                                var xy_next = CellSpaceSupport.GetXyCellByDirect(_xyCellFilter.Get1(idx_0).Xy, dirType);
-                                var idx_next = _xyCellFilter.GetIdxCell(xy_next);
-
-                                _cellRiverFilt.Get1(idx_next).Type = RiverTypes.Corner;
-                            }
-
+                            _riverF.Get1(idx_next).SetCorner();
                         }
                     }
                 }
@@ -158,24 +140,24 @@ namespace Chessy.Game
 
             if (GameModesCom.IsGameMode(GameModes.TrainingOff))
             {
-                foreach (byte idx_0 in _xyCellFilter)
+                foreach (byte idx_0 in _xyF)
                 {
-                    var curXyCell = _xyCellFilter.Get1(idx_0).Xy;
+                    var curXyCell = _xyF.Get1(idx_0).Xy;
                     var x = curXyCell[0];
                     var y = curXyCell[1];
 
                     ref var curEnvDatCom = ref _cellEnvFilter.Get1(idx_0);
 
-                    ref var unit_0 = ref _cellUnitStatsFilt.Get1(idx_0);
+                    ref var unit_0 = ref _unitMainF.Get1(idx_0);
 
-                    ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
-                    ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
+                    ref var levUnit_0 = ref _unitMainF.Get2(idx_0);
+                    ref var ownUnit_0 = ref _unitMainF.Get3(idx_0);
 
-                    ref var hpUnitC_0 = ref _cellUnitStatsFilt.Get2(idx_0);
+                    ref var hpUnitC_0 = ref _unitStatsF.Get1(idx_0);
 
-                    ref var condUnit_0 = ref _cellUnitOtherFilt.Get2(idx_0);
-                    ref var twUnit_0 = ref _cellUnitOtherFilt.Get3(idx_0);
-                    ref var thirUnitC_0 = ref _cellUnitOtherFilt.Get4(idx_0);
+                    ref var condUnit_0 = ref _unitEffF.Get1(idx_0);
+                    ref var twUnit_0 = ref _cellUnitOtherFilt.Get1(idx_0);
+                    ref var thirUnitC_0 = ref _unitStatsF.Get4(idx_0);
 
                     ref var build_0 = ref _cellBuildFilter.Get1(idx_0);
                     ref var ownBuild_0 = ref _cellBuildFilter.Get2(idx_0);
@@ -195,7 +177,7 @@ namespace Chessy.Game
 
 
 
-                        unit_0.SetUnit(UnitTypes.King);
+                        unit_0.Set(UnitTypes.King);
                         levUnit_0.SetLevel(LevelUnitTypes.First);
                         ownUnit_0.SetOwner(PlayerTypes.Second);
                         hpUnitC_0.SetMaxHp();
@@ -219,7 +201,7 @@ namespace Chessy.Game
 
                         build_0.SetNew(BuildTypes.City);
                         ownBuild_0.SetOwner(PlayerTypes.Second);
-                        WhereBuildsC.Add(ownBuild_0.Owner, build_0.Type, idx_0);
+                        WhereBuildsC.Add(ownBuild_0.Owner, build_0.Build, idx_0);
                     }
 
                     else if (x == 6 && y == 8 || x == 9 && y == 8 || x <= 9 && x >= 6 && y == 7 || x <= 9 && x >= 6 && y == 9)
@@ -230,7 +212,7 @@ namespace Chessy.Game
                             WhereEnvC.Remove(EnvTypes.Mountain, idx_0);
                         }
 
-                        unit_0.SetUnit(UnitTypes.Pawn);
+                        unit_0.Set(UnitTypes.Pawn);
                         levUnit_0.SetLevel(LevelUnitTypes.First);
 
 

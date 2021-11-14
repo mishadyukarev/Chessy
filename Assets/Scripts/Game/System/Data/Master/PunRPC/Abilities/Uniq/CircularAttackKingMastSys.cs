@@ -7,13 +7,15 @@ namespace Chessy.Game
     public sealed class CircularAttackKingMastSys : IEcsRunSystem
     {
         private EcsFilter<XyC> _xyCellFilter = default;
-        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<UnitC, HpC, StepC> _cellUnitFilter = default;
-        private EcsFilter<UnitC, ConditionUnitC, ToolWeaponC, UnitEffectsC> _cellUnitOthFilt = default;
-        private EcsFilter<UnitC, UniqAbilC> _unitUniqFilt = default;
 
-        private EcsFilter<EnvC> _cellEnvFilt = default;
-        private EcsFilter<BuildC> _cellBuildFilt = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
+        private EcsFilter<HpC, StepC> _statUnitF = default;
+        private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
+        private EcsFilter<UniqAbilC, CdownUniqC> _uniqUnitF = default;
+        private EcsFilter<ToolWeaponC> _twUnitF = default;
+
+        private EcsFilter<EnvC> _envF = default;
+        private EcsFilter<BuildC> _buildF = default;
 
         public void Run()
         {
@@ -21,42 +23,42 @@ namespace Chessy.Game
 
             IdxDoingMC.Get(out var idx_0);
 
-            ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
+            ref var unit_0 = ref _statUnitF.Get1(idx_0);
 
-            ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
-            ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
+            ref var levUnit_0 = ref _unitF.Get2(idx_0);
+            ref var ownUnit_0 = ref _unitF.Get3(idx_0);
 
-            ref var uniqUnit_0 = ref _unitUniqFilt.Get2(idx_0);
+            ref var cdUniq_0 = ref _uniqUnitF.Get2(idx_0);
 
-            ref var stepUnit_0 = ref _cellUnitFilter.Get3(idx_0);
+            ref var stepUnit_0 = ref _statUnitF.Get2(idx_0);
 
-            ref var condUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
-            ref var effUnit_0 = ref _cellUnitOthFilt.Get4(idx_0);
+            ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
+            ref var effUnit_0 = ref _effUnitF.Get2(idx_0);
 
 
-            if (!uniqUnit_0.HaveCooldown(UniqAbilTypes.CircularAttack))
+            if (!cdUniq_0.HaveCooldown(UniqAbilTypes.CircularAttack))
             {
                 if (stepUnit_0.HaveMinSteps)
                 {
                     RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.AttackMelee);
 
-                    uniqUnit_0.SetCooldown(UniqAbilTypes.CircularAttack, 3);
+                    cdUniq_0.SetCooldown(UniqAbilTypes.CircularAttack, 3);
 
-                    foreach (var xy1 in CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_0).Xy))
+                    foreach (var xy1 in CellSpace.GetXyAround(_xyCellFilter.Get1(idx_0).Xy))
                     {
                         var idx_1 = _xyCellFilter.GetIdxCell(xy1);
 
-                        ref var unit_1 = ref _cellUnitFilter.Get1(idx_1);
+                        ref var unit_1 = ref _unitF.Get1(idx_1);
 
-                        ref var levUnit_1 = ref _cellUnitMainFilt.Get2(idx_1);
-                        ref var ownUnit_1 = ref _cellUnitMainFilt.Get3(idx_1);
+                        ref var levUnit_1 = ref _unitF.Get2(idx_1);
+                        ref var ownUnit_1 = ref _unitF.Get3(idx_1);
 
-                        ref var hpUnitC_1 = ref _cellUnitFilter.Get2(idx_1);
-                        ref var twUnitC_1 = ref _cellUnitOthFilt.Get3(idx_1);
-                        ref var effUnitC_1 = ref _cellUnitOthFilt.Get4(idx_1);
+                        ref var hpUnitC_1 = ref _statUnitF.Get1(idx_1);
+                        ref var twUnitC_1 = ref _twUnitF.Get1(idx_1);
+                        ref var effUnitC_1 = ref _effUnitF.Get2(idx_1);
 
-                        ref var envC_1 = ref _cellEnvFilt.Get1(idx_1);
-                        ref var buildC_1 = ref _cellBuildFilt.Get1(idx_1);
+                        ref var envC_1 = ref _envF.Get1(idx_1);
+                        ref var buildC_1 = ref _buildF.Get1(idx_1);
 
 
                         if (unit_1.HaveUnit)
@@ -98,7 +100,7 @@ namespace Chessy.Game
                     RpcSys.SoundToGeneral(sender, ClipGameTypes.AttackMelee);
 
 
-                    if (condUnit_0.HaveCondition) condUnit_0.Def();
+                    if (condUnit_0.HaveCondition) condUnit_0.Reset();
                 }
                 else
                 {

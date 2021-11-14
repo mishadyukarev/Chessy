@@ -7,7 +7,13 @@ namespace Chessy.Game
         private PlayerTypes _owner;
         public PlayerTypes Owner => _owner;
 
-        public bool Is(PlayerTypes playerType) => _owner == playerType;
+        public bool Is(params PlayerTypes[] players)
+        {
+            foreach (var player in players) if (player == _owner) return true;
+            return false;
+        }
+
+
         public void SetOwner(PlayerTypes playerType)
         {
             if (playerType == default) throw new Exception();

@@ -1,12 +1,11 @@
 ﻿using Leopotam.Ecs;
-using Photon.Pun;
 
 namespace Chessy.Game
 {
     public sealed class EconomyUpUISys : IEcsRunSystem
     {
         private readonly EcsFilter<EnvC> _cellEnvFilt = default;
-        private readonly EcsFilter<HpC, ConditionUnitC> _cellUnitFilt = default;
+        private readonly EcsFilter<ConditionUnitC> _cellUnitFilt = default;
 
         public void Run()
         {
@@ -27,14 +26,14 @@ namespace Chessy.Game
             var amountAddWood = 0;
             foreach (var idx_0 in WhereUnitsC.IdxsUnits(curPlayer, UnitTypes.Pawn, LevelUnitTypes.First))
             {
-                if (_cellEnvFilt.Get1(idx_0).Have(EnvTypes.AdultForest)) 
-                    if (_cellUnitFilt.Get2(idx_0).Is(CondUnitTypes.Relaxed))
-                            amountAddWood += 1;
+                if (_cellEnvFilt.Get1(idx_0).Have(EnvTypes.AdultForest))
+                    if (_cellUnitFilt.Get1(idx_0).Is(CondUnitTypes.Relaxed))
+                        amountAddWood += 1;
             }
             foreach (var idx_0 in WhereUnitsC.IdxsUnits(curPlayer, UnitTypes.Pawn, LevelUnitTypes.Second))
             {
                 if (_cellEnvFilt.Get1(idx_0).Have(EnvTypes.AdultForest))
-                    if(_cellUnitFilt.Get2(idx_0).Is(CondUnitTypes.Relaxed)) 
+                    if (_cellUnitFilt.Get1(idx_0).Is(CondUnitTypes.Relaxed))
                         amountAddWood += 2;
             }
             amountAddWood += amountWoodcutter * extOneWoodcut;

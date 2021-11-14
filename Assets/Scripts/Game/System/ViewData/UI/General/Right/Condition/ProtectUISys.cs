@@ -5,14 +5,14 @@ namespace Chessy.Game
 {
     public class ProtectUISys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, OwnerC> _cellUnitFilter = default;
-        private EcsFilter<UnitC, ConditionUnitC> _cellOtherFilt = default;
+        private EcsFilter<UnitC, OwnerC> _unitF = default;
+        private EcsFilter<ConditionUnitC> _effUnitF = default;
 
         public void Run()
         {
-            ref var unit_sel = ref _cellUnitFilter.Get1(SelectorC.IdxSelCell);
-            ref var ownUnit_sel = ref _cellUnitFilter.Get2(SelectorC.IdxSelCell);
-            ref var cond_sel = ref _cellOtherFilt.Get2(SelectorC.IdxSelCell);
+            ref var unit_sel = ref _unitF.Get1(SelectorC.IdxSelCell);
+            ref var ownUnit_sel = ref _unitF.Get2(SelectorC.IdxSelCell);
+            ref var cond_sel = ref _effUnitF.Get1(SelectorC.IdxSelCell);
 
 
             var isEnableButt = false;

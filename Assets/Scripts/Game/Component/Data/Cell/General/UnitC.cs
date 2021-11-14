@@ -44,12 +44,12 @@ namespace Chessy.Game
 
 
 
-        public void SetUnit(UnitTypes unitType)
+        public void Set(UnitTypes unit)
         {
-            if (unitType == UnitTypes.None) throw new Exception();
+            if (unit == UnitTypes.None) throw new Exception();
             if (HaveUnit) throw new Exception("It's got unit");
 
-            _unit = unitType;
+            _unit = unit;
         }
         public void Reset()
         {

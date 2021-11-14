@@ -9,7 +9,7 @@ namespace Chessy.Game
         private EcsFilter<XyC> _xyCellFilter = default;
         private EcsFilter<CellC> _cellDataFilt = default;
 
-        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _cellUnitMainFilt = default;
         private EcsFilter<UnitC, HpC> _cellUnitFilter = default;
 
         private EcsFilter<FireC> _cellFireDataFilter = default;
@@ -94,7 +94,7 @@ namespace Chessy.Game
                         fire_0.Disable();
 
 
-                        var aroundXYList = CellSpaceSupport.GetXyAround(_xyCellFilter.Get1(idx_0).Xy);
+                        var aroundXYList = CellSpace.GetXyAround(_xyCellFilter.Get1(idx_0).Xy);
                         foreach (var xy1 in aroundXYList)
                         {
                             var curIdxCell1 = _xyCellFilter.GetIdxCell(xy1);

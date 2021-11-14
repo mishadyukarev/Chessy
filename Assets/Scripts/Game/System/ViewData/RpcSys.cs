@@ -11,16 +11,17 @@ namespace Chessy.Game
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
-        private EcsFilter<UnitC, LevelUnitC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<UnitC, HpC, StepC> _cellUnitStatFilt = default;
-        private EcsFilter<UnitC, ConditionUnitC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
-        private EcsFilter<UnitC, ToolWeaponC> _cellUnitTWFilt = default;
-        private EcsFilter<CornerArcherC> _archerFilt = default;
-        private EcsFilter<UniqAbilC> _unitUniqFilt = default;
-        private EcsFilter<StunC> _unitStunFilt = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
+        private EcsFilter<HpC, StepC, WaterUnitC> _statUnitF = default;
+        private EcsFilter<ConditionUnitC, UnitEffectsC, StunC> _effUnitF = default;
 
-        private EcsFilter<BuildC, OwnerC> _cellBuildFilter = default;
-        private EcsFilter<EnvC, EnvResC> _cellEnvrFilter = default;
+        private EcsFilter<UniqAbilC, CdownUniqC> _unitUniqFilt = default;
+        private EcsFilter<ToolWeaponC> _twUnitF = default;
+        private EcsFilter<CornerArcherC> _archerFilt = default;
+
+
+        private EcsFilter<BuildC, OwnerC> _buildF = default;
+        private EcsFilter<EnvC, EnvResC> _envF = default;
         private EcsFilter<FireC> _cellFireFilter = default;
         private EcsFilter<RiverC> _cellRiverFilt = default;
         private EcsFilter<TrailC> _cellTrailFilt = default;
@@ -431,50 +432,50 @@ namespace Chessy.Game
             #endregion
 
 
-            foreach (var idx_0 in _cellUnitOthFilt)
+            foreach (var idx_0 in _effUnitF)
             {
-                ref var unitC_0 = ref _cellUnitMainFilt.Get1(idx_0);
+                ref var unitC_0 = ref _unitF.Get1(idx_0);
                 objs.Add(unitC_0.Unit);
-                objs.Add(_cellUnitMainFilt.Get3(idx_0).Owner);
-                objs.Add(_cellUnitMainFilt.Get2(idx_0).Level);
-                ref var hpUnit_0 = ref _cellUnitStatFilt.Get2(idx_0);
+                objs.Add(_unitF.Get3(idx_0).Owner);
+                objs.Add(_unitF.Get2(idx_0).Level);
+                ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
                 objs.Add(hpUnit_0.Hp);
-                objs.Add(_cellUnitStatFilt.Get3(idx_0).Steps);
+                objs.Add(_statUnitF.Get2(idx_0).Steps);
 
-                objs.Add(_cellUnitOthFilt.Get2(idx_0).Condition);
-                foreach (var item in _cellUnitOthFilt.Get3(idx_0).Effects) objs.Add(item.Value);
-                objs.Add(_cellUnitOthFilt.Get4(idx_0).Water);
+                objs.Add(_effUnitF.Get1(idx_0).Condition);
+                foreach (var item in _effUnitF.Get2(idx_0).Effects) objs.Add(item.Value);
+                objs.Add(_statUnitF.Get3(idx_0).Water);
 
-                objs.Add(_cellUnitTWFilt.Get2(idx_0).ToolWeapType);
-                objs.Add(_cellUnitTWFilt.Get2(idx_0).LevelTWType);
-                objs.Add(_cellUnitTWFilt.Get2(idx_0).ShieldProt);
+                objs.Add(_twUnitF.Get1(idx_0).ToolWeapType);
+                objs.Add(_twUnitF.Get1(idx_0).LevelTWType);
+                objs.Add(_twUnitF.Get1(idx_0).ShieldProt);
 
-                objs.Add(_unitStunFilt.Get1(idx_0).IsStunned);
-                objs.Add(_unitStunFilt.Get1(idx_0).StepsInStun);
+                objs.Add(_effUnitF.Get3(idx_0).IsStunned);
+                objs.Add(_effUnitF.Get3(idx_0).StepsInStun);
 
                 objs.Add(_archerFilt.Get1(idx_0).IsCornered);
 
-                foreach (var item in _unitUniqFilt.Get1(idx_0).Cooldowns)
+                foreach (var item in _unitUniqFilt.Get2(idx_0).Cooldowns)
                     objs.Add(item.Value);
 
 
 
 
 
-                objs.Add(_cellBuildFilter.Get1(idx_0).Type);
-                objs.Add(_cellBuildFilter.Get2(idx_0).Owner);
+                objs.Add(_buildF.Get1(idx_0).Build);
+                objs.Add(_buildF.Get2(idx_0).Owner);
 
 
 
-                ref var env_0 = ref _cellEnvrFilter.Get1(idx_0);
-                ref var envRes_0 = ref _cellEnvrFilter.Get2(idx_0);
+                ref var env_0 = ref _envF.Get1(idx_0);
+                ref var envRes_0 = ref _envF.Get2(idx_0);
                 foreach (var item in env_0.Envronments) objs.Add(item.Value);
                 foreach (var item in envRes_0.Resources) objs.Add(item.Value);
 
 
 
-                objs.Add(_cellRiverFilt.Get1(idx_0).Type);
-                foreach (var item_0 in _cellRiverFilt.Get1(idx_0).Directs)
+                objs.Add(_cellRiverFilt.Get1(idx_0).River);
+                foreach (var item_0 in _cellRiverFilt.Get1(idx_0).DirectsDict)
                     objs.Add(item_0.Value);
 
 
@@ -662,49 +663,49 @@ namespace Chessy.Game
             #endregion
 
 
-            foreach (var idx_0 in _cellUnitOthFilt)
+            foreach (var idx_0 in _effUnitF)
             {
-                ref var unit_0 = ref _cellUnitOthFilt.Get1(idx_0);
+                ref var unit_0 = ref _unitF.Get1(idx_0);
                 unit_0.Sync((UnitTypes)objects[_curIdx++]);
-                _cellUnitMainFilt.Get3(idx_0).Sync((PlayerTypes)objects[_curIdx++]);
-                _cellUnitMainFilt.Get2(idx_0).Sync((LevelUnitTypes)objects[_curIdx++]);
-                _cellUnitStatFilt.Get2(idx_0).Sync((int)objects[_curIdx++]);
-                _cellUnitStatFilt.Get3(idx_0).Sync((int)objects[_curIdx++]);
+                _unitF.Get3(idx_0).Sync((PlayerTypes)objects[_curIdx++]);
+                _unitF.Get2(idx_0).Sync((LevelUnitTypes)objects[_curIdx++]);
+                _statUnitF.Get2(idx_0).Sync((int)objects[_curIdx++]);
+                _statUnitF.Get3(idx_0).Sync((int)objects[_curIdx++]);
 
-                _cellUnitOthFilt.Get2(idx_0).Sync((CondUnitTypes)objects[_curIdx++]);
-                foreach (var item in _cellUnitOthFilt.Get3(idx_0).Effects) _cellUnitOthFilt.Get3(idx_0).Sync(item.Key, (bool)objects[_curIdx++]);
-                _cellUnitOthFilt.Get4(idx_0).Sync((int)objects[_curIdx++]);
+                _effUnitF.Get1(idx_0).Sync((CondUnitTypes)objects[_curIdx++]);
+                foreach (var item in _effUnitF.Get2(idx_0).Effects) _effUnitF.Get2(idx_0).Sync(item.Key, (bool)objects[_curIdx++]);
+                _statUnitF.Get3(idx_0).Sync((int)objects[_curIdx++]);
 
-                _cellUnitTWFilt.Get2(idx_0).ToolWeapType = (ToolWeaponTypes)objects[_curIdx++];
-                _cellUnitTWFilt.Get2(idx_0).LevelTWType = (LevelTWTypes)objects[_curIdx++];
-                _cellUnitTWFilt.Get2(idx_0).SyncShield((int)objects[_curIdx++]);
+                _twUnitF.Get1(idx_0).ToolWeapType = (ToolWeaponTypes)objects[_curIdx++];
+                _twUnitF.Get1(idx_0).LevelTWType = (LevelTWTypes)objects[_curIdx++];
+                _twUnitF.Get1(idx_0).SyncShield((int)objects[_curIdx++]);
 
                 
-                _unitStunFilt.Get1(idx_0).Sync((bool)objects[_curIdx++], (int)objects[_curIdx++]);
+                _effUnitF.Get3(idx_0).Sync((bool)objects[_curIdx++], (int)objects[_curIdx++]);
 
                 _archerFilt.Get1(idx_0).Sync((bool)objects[_curIdx++]);
 
-                foreach (var item in _unitUniqFilt.Get1(idx_0).Cooldowns)
-                    _unitUniqFilt.Get1(idx_0).Sync(item.Key, (int)objects[_curIdx++]);
+                foreach (var item in _unitUniqFilt.Get2(idx_0).Cooldowns)
+                    _unitUniqFilt.Get2(idx_0).Sync(item.Key, (int)objects[_curIdx++]);
 
 
 
 
 
-                _cellBuildFilter.Get1(idx_0).Sync((BuildTypes)objects[_curIdx++]);
-                _cellBuildFilter.Get2(idx_0).Sync((PlayerTypes)objects[_curIdx++]);
+                _buildF.Get1(idx_0).Sync((BuildTypes)objects[_curIdx++]);
+                _buildF.Get2(idx_0).Sync((PlayerTypes)objects[_curIdx++]);
 
 
 
-                ref var env_0 = ref _cellEnvrFilter.Get1(idx_0);
-                ref var envRes_0 = ref _cellEnvrFilter.Get2(idx_0);
+                ref var env_0 = ref _envF.Get1(idx_0);
+                ref var envRes_0 = ref _envF.Get2(idx_0);
                 foreach (var item in env_0.Envronments) env_0.Sync(item.Key, (bool)objects[_curIdx++]);
                 foreach (var item in envRes_0.Resources) envRes_0.Sync(item.Key, (int)objects[_curIdx++]);
 
 
                 ref var river_0 = ref _cellRiverFilt.Get1(idx_0);
-                river_0.Type = (RiverTypes)objects[_curIdx++];
-                foreach (var item_0 in river_0.Directs)
+                river_0.Sync((RiverTypes)objects[_curIdx++]);
+                foreach (var item_0 in river_0.DirectsDict)
                     river_0.Sync(item_0.Key, (bool)objects[_curIdx++]);
 
 

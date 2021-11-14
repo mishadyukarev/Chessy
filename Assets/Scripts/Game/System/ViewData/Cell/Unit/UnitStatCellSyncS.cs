@@ -5,27 +5,32 @@ namespace Chessy.Game
 {
     public sealed class UnitStatCellSyncS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, HpC, StepC, ConditionUnitC, OwnerC, VisibleC> _cellUnitFilter = default;
-        private EcsFilter<UnitC, ConditionUnitC, UnitEffectsC, WaterUnitC, OwnerC> _cellUnitOthFilt = default;
-        private EcsFilter<UnitC, VisibleC> _cellUnitViewFilt = default;
+        private EcsFilter<UnitC, OwnerC, VisibleC> _unitF = default;
+        private EcsFilter<HpC, StepC, WaterUnitC> _statUnitF = default;
+        private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
+
         private EcsFilter<BarsVC> _cellBarsFilter = default;
         private EcsFilter<BlocksVC> _cellBlocksFilter = default;
 
         public void Run()
         {
-            foreach (byte idx in _cellUnitFilter)
+            foreach (byte idx_0 in _statUnitF)
             {
-                ref var unit_0 = ref _cellUnitFilter.Get1(idx);
-                ref var hpUnit_0 = ref _cellUnitFilter.Get2(idx);
-                ref var curStepUnitC = ref _cellUnitFilter.Get3(idx);
-                ref var condUnitC = ref _cellUnitOthFilt.Get2(idx);
-                ref var effUnit_0 = ref _cellUnitOthFilt.Get3(idx);
-                ref var thirUnitC_0 = ref _cellUnitOthFilt.Get4(idx);
-                ref var ownUnit_0 = ref _cellUnitOthFilt.Get5(idx);
-                ref var visUnit_0 = ref _cellUnitViewFilt.Get2(idx);
+                ref var unit_0 = ref _unitF.Get1(idx_0);
+                ref var ownUnit_0 = ref _unitF.Get2(idx_0);
+                ref var visUnit_0 = ref _unitF.Get3(idx_0);
 
-                ref var barsViewCom = ref _cellBarsFilter.Get1(idx);
-                ref var blocksViewCom = ref _cellBlocksFilter.Get1(idx);
+                ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
+                ref var step_0 = ref _statUnitF.Get2(idx_0);
+                ref var water_0 = ref _statUnitF.Get3(idx_0);
+
+                ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
+                ref var effUnit_0 = ref _effUnitF.Get2(idx_0);
+                      
+                
+
+                ref var barsViewCom = ref _cellBarsFilter.Get1(idx_0);
+                ref var blocksViewCom = ref _cellBlocksFilter.Get1(idx_0);
 
 
                 barsViewCom.DisableSR(CellBarTypes.Hp);
@@ -49,7 +54,7 @@ namespace Chessy.Game
                             barsViewCom.SetScale(CellBarTypes.Hp, new Vector3(xCordinate * 0.67f, 0.13f, 1));
                         
 
-                        if (thirUnitC_0.NeedWater)
+                        if (water_0.NeedWater)
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.NeedWater);
                         }
@@ -58,7 +63,7 @@ namespace Chessy.Game
                             blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
                         }
 
-                        if (curStepUnitC.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+                        if (step_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.MaxSteps);
                         }
@@ -67,13 +72,13 @@ namespace Chessy.Game
                             blocksViewCom.DisableBlockSR(CellBlockTypes.MaxSteps);
                         }
 
-                        if (condUnitC.Is(CondUnitTypes.Protected))
+                        if (condUnit_0.Is(CondUnitTypes.Protected))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
                             blocksViewCom.SetColor(CellBlockTypes.Condition, Color.yellow);
                         }
 
-                        else if (condUnitC.Is(CondUnitTypes.Relaxed))
+                        else if (condUnit_0.Is(CondUnitTypes.Relaxed))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.Condition);
                             blocksViewCom.SetColor(CellBlockTypes.Condition, Color.green);

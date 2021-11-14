@@ -35,34 +35,43 @@ namespace Chessy.Game
 
 
 
+                    #region Unit
+
                     _curGameW.NewEntity()
                          .Replace(new UnitC())
-
-                         .Replace(new LevelUnitC())
+                         .Replace(new LevelC())
                          .Replace(new OwnerC())
-
-                         .Replace(new HpC())
-                         .Replace(new DamageC())
-                         .Replace(new StepC())
-
-                         .Replace(new ConditionUnitC())
-                         .Replace(new MoveInCondC(true))
-
-                         .Replace(new UniqAbilC(true))
-                         .Replace(new WaterUnitC())
-
-                         .Replace(new UnitEffectsC(true))
-                         .Replace(new StunC())
-
-                         .Replace(new ToolWeaponC())
-
                          .Replace(new VisibleC(true));
 
 
 
                     _curGameW.NewEntity()
+                         .Replace(new ConditionUnitC())
+                         .Replace(new MoveInCondC(true))
+                         .Replace(new UnitEffectsC(true))
+                         .Replace(new StunC());
+
+
+                    _curGameW.NewEntity()
+                         .Replace(new HpC())
+                         .Replace(new DamageC())
+                         .Replace(new StepC())
+                         .Replace(new WaterUnitC());
+
+
+                    _curGameW.NewEntity()
+                         .Replace(new UniqAbilC(true))
+                         .Replace(new CdownUniqC(true));
+
+
+                    _curGameW.NewEntity()
+                        .Replace(new ToolWeaponC());
+
+
+                    _curGameW.NewEntity()
                          .Replace(new CornerArcherC());
 
+                    #endregion
 
 
                     _curGameW.NewEntity()

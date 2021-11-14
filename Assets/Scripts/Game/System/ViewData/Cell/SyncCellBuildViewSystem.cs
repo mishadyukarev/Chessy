@@ -22,11 +22,11 @@ namespace Chessy.Game
                 {
                     if (curVisBuildCom.IsVisibled(WhoseMoveC.CurPlayerI))
                     {
-                        curBuildViewCom.SetSpriteFront(curBuildDatCom.Type);
+                        curBuildViewCom.SetSpriteFront(curBuildDatCom.Build);
                         curBuildViewCom.EnableFrontSR();
 
                         curBuildViewCom.EnableBackSR();
-                        curBuildViewCom.SetSpriteBack(curBuildDatCom.Type);
+                        curBuildViewCom.SetSpriteBack(curBuildDatCom.Build);
 
                         curBuildViewCom.SetAlpha(curVisBuildCom.IsVisibled(WhoseMoveC.NextPlayerFrom(WhoseMoveC.CurPlayerI)));
                         curBuildViewCom.SetBackColor(curOwnBuildCom.Owner);
