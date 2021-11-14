@@ -11,8 +11,8 @@ namespace Chessy.Game
         {
             if (SelUnitC.IsSelUnit)
             {
-                var idxCurCell = SelectorC.IdxCurCell;
-                var idxPreCell = SelectorC.IdxPreVisionCell;
+                var idxCurCell = IdxCur.Idx;
+                var idxPreCell = IdxPreVis.Idx;
 
 
                 ref var unit_cur = ref _cellUnitFilter.Get1(idxCurCell);

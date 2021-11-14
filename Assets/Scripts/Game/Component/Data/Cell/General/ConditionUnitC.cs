@@ -10,8 +10,9 @@ namespace Chessy.Game
         public bool HaveCondition => Condition != default;
         public bool Is(params CondUnitTypes[] conds)
         {
-            foreach (var condUnitType in conds)
-                if (Is(condUnitType)) return true;
+            if (conds == default) throw new Exception();
+
+            foreach (var cond in conds) if (cond == _condition) return true;
             return false;
         }
 

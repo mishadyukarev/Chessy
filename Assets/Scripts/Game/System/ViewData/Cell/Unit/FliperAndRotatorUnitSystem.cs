@@ -24,7 +24,7 @@ namespace Chessy.Game
                 ref var extra_0 = ref _unitExtVF.Get1(idx_0);
 
 
-                if (SelectorC.IdxSelCell == idx_0)
+                if (IdxSel.Idx == idx_0)
                 {
                     if (unit_0.HaveUnit)
                     {

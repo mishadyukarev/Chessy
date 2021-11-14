@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 using Chessy.Common;
-using static Chessy.Game.SelectorC;
+using static Chessy.Game.CellClickC;
 using System;
 using UnityEngine;
 
@@ -16,84 +16,57 @@ namespace Chessy.Game
             OwnerC OwnUnitCom(byte idxCell) => _cellUnitFilter.Get3(idxCell);
             VisibleC VisUnitCom(byte idxCell) => _cellUnitFilter.Get4(idxCell);
 
-            #region else
-
-            #endregion
-
 
             if (InputC.IsClicked)
             {
                 if (RayCastC.Is(RaycastTypes.UI))
                 {
-                    SelUnitC.ResetSelUnit();
+                    SelUnitC.Reset();
                 }
 
                 else if (RayCastC.Is(RaycastTypes.Cell))
                 {
                     if (!WhoseMoveC.IsMyMove)
                     {
-                        IdxPreCell = IdxSelCell;
-                        IdxSelCell = IdxCurCell;
+                        IdxPre.Idx = IdxSel.Idx;
+                        IdxSel.Idx = IdxCur.Idx;
 
                         Reset();
-
-                        //if (!IsSelCell)
-                        //{
-                        //    if (IdxPreCell != IdxSelCell)
-                        //    {
-                        //        IdxSelCell = IdxCurCell;
-                        //    }
-                        //    else
-                        //    {
-                        //        IdxSelCell = default;
-                        //    }
-
-
-                        //    IdxPreCell = IdxSelCell;
-                        //}
-
-                        //else
-                        //{
-                        //    if (IdxSelCell != IdxCurCell)
-                        //        IdxPreCell = IdxSelCell;
-
-                        //    IdxSelCell = IdxCurCell;
-                        //}
                     }
 
                     else
                     {
                         if (SelUnitC.IsSelUnit)
                         {
-                            RpcSys.SetUniToMaster(IdxCurCell, SelUnitC.SelUnit);
-                            SelUnitC.ResetSelUnit();
+                            RpcSys.SetUniToMaster(IdxCur.Idx, SelUnitC.SelUnit);
+                            SelUnitC.Reset();
                         }
 
                         else if (Is(CellClickTypes.PickFire))
                         {
-                            RpcSys.FireArcherToMas(IdxSelCell, IdxCurCell);
+                            RpcSys.FireArcherToMas(IdxSel.Idx, IdxCur.Idx);
 
                             Reset();
-                            IdxSelCell = IdxCurCell;
+                            IdxSel.Idx = IdxCur.Idx;
                         }
 
                         else if (Is(CellClickTypes.PutOutFireElfemale))
                         {
-                            RpcSys.PutOutFireElffToMas(IdxSelCell, IdxCurCell);
+                            RpcSys.PutOutFireElffToMas(IdxSel.Idx, IdxCur.Idx);
 
                             Reset();
-                            IdxSelCell = IdxCurCell;
+                            IdxSel.Idx = IdxCur.Idx;
                         }
 
                         else if (Is(CellClickTypes.GiveTakeTW))
                         {
-                            if (UnitDatCom(IdxCurCell).Is(UnitTypes.Pawn) && OwnUnitCom(IdxCurCell).Is(WhoseMoveC.CurPlayerI))
+                            if (UnitDatCom(IdxCur.Idx).Is(UnitTypes.Pawn) && OwnUnitCom(IdxCur.Idx).Is(WhoseMoveC.CurPlayerI))
                             {
-                                RpcSys.GiveTakeToolWeapon(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive), IdxCurCell);
+                                RpcSys.GiveTakeToolWeapon(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive), IdxCur.Idx);
                             }
                             else
                             {
-                                IdxSelCell = IdxCurCell;
+                                IdxSel.Idx = IdxCur.Idx;
                                 Reset();
                                 TwGiveTakeC.TWTypeForGive = default;
                             }
@@ -101,29 +74,29 @@ namespace Chessy.Game
 
                         else if (Is(CellClickTypes.UpgradeUnit))
                         {
-                            if (UnitDatCom(IdxCurCell).Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
-                                && OwnUnitCom(IdxCurCell).Is(WhoseMoveC.CurPlayerI)
-                                && !LevelUnitC(IdxCurCell).Is(LevelUnitTypes.Second))
+                            if (UnitDatCom(IdxCur.Idx).Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
+                                && OwnUnitCom(IdxCur.Idx).Is(WhoseMoveC.CurPlayerI)
+                                && !LevelUnitC(IdxCur.Idx).Is(LevelUnitTypes.Second))
                             {
-                                RpcSys.UpgradeUnitToMaster(IdxCurCell);
+                                RpcSys.UpgradeUnitToMaster(IdxCur.Idx);
                             }
                             else
                             {
-                                IdxSelCell = IdxCurCell;
+                                IdxSel.Idx = IdxCur.Idx;
                                 Reset();
                             }
                         }
 
                         else if (Is(CellClickTypes.GiveScout))
                         {
-                            if (IdxSelCell != IdxCurCell)
-                                IdxPreCell = IdxSelCell;
-                            IdxSelCell = IdxCurCell;
+                            if (IdxSel.Idx != IdxCur.Idx)
+                                IdxPre.Idx = IdxSel.Idx;
+                            IdxSel.Idx = IdxCur.Idx;
 
-                            if (UnitDatCom(IdxCurCell).Is(UnitTypes.Pawn)
-                                && OwnUnitCom(IdxCurCell).Is(WhoseMoveC.CurPlayerI))
+                            if (UnitDatCom(IdxCur.Idx).Is(UnitTypes.Pawn)
+                                && OwnUnitCom(IdxCur.Idx).Is(WhoseMoveC.CurPlayerI))
                             {
-                                RpcSys.FromNewUnitToMas(UnitTypes.Scout, IdxCurCell);
+                                RpcSys.FromNewUnitToMas(UnitTypes.Scout, IdxCur.Idx);
                                 Reset();
                             }
                             else
@@ -134,17 +107,17 @@ namespace Chessy.Game
 
                         else if (Is(CellClickTypes.GiveHero))
                         {
-                            IdxPreCell = IdxSelCell;
-                            IdxSelCell = IdxCurCell;
+                            IdxPre.Idx = IdxSel.Idx;
+                            IdxSel.Idx = IdxCur.Idx;
 
-                            ref var unit_sel = ref _cellUnitFilter.Get1(IdxSelCell);
-                            ref var unit_pre = ref _cellUnitFilter.Get1(IdxPreCell);
+                            ref var unit_sel = ref _cellUnitFilter.Get1(IdxSel.Idx);
+                            ref var unit_pre = ref _cellUnitFilter.Get1(IdxPre.Idx);
 
                             if (unit_sel.Is(UnitTypes.Archer))
                             {
                                 if (unit_pre.Is(UnitTypes.Archer))
                                 {
-                                    RpcSys.FromToNewUnitToMas(InvUnitsC.MyHero, IdxPreCell, IdxSelCell);
+                                    RpcSys.FromToNewUnitToMas(InvUnitsC.MyHero, IdxPre.Idx, IdxSel.Idx);
 
                                     Reset();
                                 }
@@ -157,40 +130,40 @@ namespace Chessy.Game
 
                         else if (Is(CellClickTypes.StunElfemale))
                         {
-                            IdxPreCell = IdxSelCell;
-                            IdxSelCell = IdxCurCell;
+                            IdxPre.Idx = IdxSel.Idx;
+                            IdxSel.Idx = IdxCur.Idx;
 
-                            RpcSys.StunElfemaleToMas(IdxPreCell, IdxSelCell);
+                            RpcSys.StunElfemaleToMas(IdxPre.Idx, IdxSel.Idx);
                             Reset();
                         }
 
-                        else if (IsSelCell)
+                        else if (IdxSel.IsSelCell)
                         {
-                            if (IdxSelCell != IdxCurCell)
-                                IdxPreCell = IdxSelCell;
+                            if (IdxSel.Idx != IdxCur.Idx)
+                                IdxPre.Idx = IdxSel.Idx;
 
-                            IdxSelCell = IdxCurCell;
+                            IdxSel.Idx = IdxCur.Idx;
 
 
-                            if (CellsAttackC.FindByIdx(WhoseMoveC.CurPlayerI, IdxPreCell, IdxSelCell) != default)
+                            if (CellsAttackC.FindByIdx(WhoseMoveC.CurPlayerI, IdxPre.Idx, IdxSel.Idx) != default)
                             {
-                                RpcSys.AttackUnitToMaster(IdxPreCell, IdxSelCell);
+                                RpcSys.AttackUnitToMaster(IdxPre.Idx, IdxSel.Idx);
                             }
 
-                            if (CellsForShiftCom.HaveIdxCell(WhoseMoveC.CurPlayerI, IdxPreCell, IdxSelCell))
+                            if (CellsForShiftCom.HaveIdxCell(WhoseMoveC.CurPlayerI, IdxPre.Idx, IdxSel.Idx))
                             {
-                                RpcSys.ShiftUnitToMaster(IdxPreCell, IdxSelCell);
+                                RpcSys.ShiftUnitToMaster(IdxPre.Idx, IdxSel.Idx);
                             }
 
-                            else if (UnitDatCom(IdxSelCell).HaveUnit)
+                            else if (UnitDatCom(IdxSel.Idx).HaveUnit)
                             {
-                                if (OwnUnitCom(IdxSelCell).Is(WhoseMoveC.CurPlayerI))
+                                if (OwnUnitCom(IdxSel.Idx).Is(WhoseMoveC.CurPlayerI))
                                 {
-                                    if (UnitDatCom(IdxSelCell).Is(UnitTypes.Scout))
+                                    if (UnitDatCom(IdxSel.Idx).Is(UnitTypes.Scout))
                                     {
 
                                     }
-                                    else if (UnitDatCom(IdxSelCell).IsMelee)
+                                    else if (UnitDatCom(IdxSel.Idx).IsMelee)
                                     {
                                         SoundEffectC.Play(ClipGameTypes.PickMelee);
                                     }
@@ -204,24 +177,24 @@ namespace Chessy.Game
 
                         else
                         {
-                            if (IdxPreCell != IdxSelCell || IdxPreCell == 0)
+                            if (IdxPre.Idx != IdxSel.Idx || IdxPre.Idx == 0)
                             {
-                                IdxSelCell = IdxCurCell;
+                                IdxSel.Idx = IdxCur.Idx;
                             }
                             else
                             {
-                                DefSelectedCell();
+                                IdxSel.Reset();
                             }
 
-                            if (UnitDatCom(IdxSelCell).HaveUnit)
+                            if (UnitDatCom(IdxSel.Idx).HaveUnit)
                             {
-                                if (OwnUnitCom(IdxSelCell).Is(WhoseMoveC.CurPlayerI))
+                                if (OwnUnitCom(IdxSel.Idx).Is(WhoseMoveC.CurPlayerI))
                                 {
-                                    if (UnitDatCom(IdxSelCell).Is(UnitTypes.Scout))
+                                    if (UnitDatCom(IdxSel.Idx).Is(UnitTypes.Scout))
                                     {
 
                                     }
-                                    else if (UnitDatCom(IdxSelCell).IsMelee)
+                                    else if (UnitDatCom(IdxSel.Idx).IsMelee)
                                     {
                                         SoundEffectC.Play(ClipGameTypes.PickMelee);
                                     }
@@ -234,15 +207,15 @@ namespace Chessy.Game
 
 
 
-                            IdxPreCell = IdxSelCell;
+                            IdxPre.Idx = IdxSel.Idx;
                         }
                     }
                 }
 
                 else
                 {
-                    SelUnitC.ResetSelUnit();
-                    DefSelectedCell();
+                    SelUnitC.Reset();
+                    IdxSel.Reset();
                     Reset();
                     TwGiveTakeC.TWTypeForGive = default;
                 }
@@ -254,16 +227,16 @@ namespace Chessy.Game
                 {
                     if (SelUnitC.IsSelUnit)
                     {
-                        if (!UnitDatCom(IdxCurCell).HaveUnit || !VisUnitCom(IdxCurCell).IsVisibled(WhoseMoveC.CurPlayerI))
+                        if (!UnitDatCom(IdxCur.Idx).HaveUnit || !VisUnitCom(IdxCur.Idx).IsVisibled(WhoseMoveC.CurPlayerI))
                         {
-                            if (IsStartDirectToCell)
+                            if (IdxCur.IsStartDirectToCell)
                             {
-                                IdxPreVisionCell = IdxCurCell;
-                                IdxCurCell = default;
+                                IdxPreVis.Idx = IdxCur.Idx;
+                                IdxCur.Idx = default;
                             }
                             else
                             {
-                                IdxPreVisionCell = IdxCurCell;
+                                IdxPreVis.Idx = IdxCur.Idx;
                             }
                         }
                     }

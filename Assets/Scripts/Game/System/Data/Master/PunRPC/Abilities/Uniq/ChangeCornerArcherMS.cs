@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     public sealed class ChangeCornerArcherMS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, HpC, StepC> _unitFilt = default;
+        private EcsFilter<HpC, StepC> _statUnitF = default;
         private EcsFilter<CornerArcherC> _archerFilt = default;
 
         public void Run()
@@ -14,9 +14,9 @@ namespace Chessy.Game
 
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            ref var unit_0 = ref _unitFilt.Get1(idx_0);
-            ref var hp_0 = ref _unitFilt.Get2(idx_0);
-            ref var step_0 = ref _unitFilt.Get3(idx_0);
+            ref var unit_0 = ref _statUnitF.Get1(idx_0);
+            ref var hp_0 = ref _statUnitF.Get1(idx_0);
+            ref var step_0 = ref _statUnitF.Get2(idx_0);
             ref var corner_0 = ref _archerFilt.Get1(idx_0);
 
             if (hp_0.HaveMaxHp)

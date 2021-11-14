@@ -9,8 +9,8 @@ namespace Chessy.Game
         private EcsFilter<XyC> _xyCellFilter = default;
         private EcsFilter<CellC> _cellDataFilt = default;
 
-        private EcsFilter<UnitC, LevelC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<UnitC, HpC> _cellUnitFilter = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
+        private EcsFilter<HpC> _statUnitF = default;
 
         private EcsFilter<FireC> _cellFireDataFilter = default;
         private EcsFilter<EnvC, EnvResC> _cellEnvDataFilter = default;
@@ -23,12 +23,11 @@ namespace Chessy.Game
             {
                 var curXy = _xyCellFilter.Get1(idx_0).Xy;
 
-                ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
+                ref var unit_0 = ref _unitF.Get1(idx_0);
+                ref var levUnit_0 = ref _unitF.Get2(idx_0);
+                ref var ownUnit_0 = ref _unitF.Get3(idx_0);
 
-                ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
-                ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
-
-                ref var hpUnit_0 = ref _cellUnitFilter.Get2(idx_0);
+                ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
 
                 ref var buil_0 = ref _cellBuildFilt.Get1(idx_0);
 

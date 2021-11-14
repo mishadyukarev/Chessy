@@ -17,9 +17,9 @@ namespace Chessy.Game
         private readonly EcsFilter<RiverC> _riverF = default;
 
         private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitMainF = default;
-        private readonly EcsFilter<HpC, DamageC, StepC, WaterUnitC> _unitStatsF = default;
-        private readonly EcsFilter<ToolWeaponC> _cellUnitOtherFilt = default;
-        private readonly EcsFilter<ConditionUnitC> _unitEffF = default;
+        private readonly EcsFilter<HpC, DamageC, StepC, WaterUnitC> _statUnitF = default;
+        private readonly EcsFilter<ToolWeaponC> _twUnitF = default;
+        private readonly EcsFilter<ConditionUnitC> _effUnitF = default;
 
         public void Init()
         {
@@ -153,11 +153,11 @@ namespace Chessy.Game
                     ref var levUnit_0 = ref _unitMainF.Get2(idx_0);
                     ref var ownUnit_0 = ref _unitMainF.Get3(idx_0);
 
-                    ref var hpUnitC_0 = ref _unitStatsF.Get1(idx_0);
+                    ref var hpUnitC_0 = ref _statUnitF.Get1(idx_0);
 
-                    ref var condUnit_0 = ref _unitEffF.Get1(idx_0);
-                    ref var twUnit_0 = ref _cellUnitOtherFilt.Get1(idx_0);
-                    ref var thirUnitC_0 = ref _unitStatsF.Get4(idx_0);
+                    ref var condUnit_0 = ref _effUnitF.Get1(idx_0);
+                    ref var twUnit_0 = ref _twUnitF.Get1(idx_0);
+                    ref var thirUnitC_0 = ref _statUnitF.Get4(idx_0);
 
                     ref var build_0 = ref _cellBuildFilter.Get1(idx_0);
                     ref var ownBuild_0 = ref _cellBuildFilter.Get2(idx_0);

@@ -8,8 +8,9 @@ namespace Chessy.Game
         private EcsFilter<EnvC> _cellEnvFilter = default;
         private EcsFilter<FireC> _cellFireFilter = default;
 
-        private EcsFilter<UnitC, OwnerC> _cellUnitFilter = default;
-        private EcsFilter<FireC, StunC> _unitEffFilt = default;
+        private EcsFilter<UnitC, OwnerC> _unitF = default;
+        private EcsFilter<StunC> _effUnitF = default;
+        private EcsFilter<FireC> _fireF = default;
 
         public void Run()
         {
@@ -17,9 +18,9 @@ namespace Chessy.Game
             {
                 var curXy = _xyCellFilter.Get1(curIdxCell).Xy;
 
-                ref var curUnitDatCom = ref _cellUnitFilter.Get1(curIdxCell);
-                ref var curOwnUnitCom = ref _cellUnitFilter.Get2(curIdxCell);
-                ref var stunUnit_0 = ref _unitEffFilt.Get2(curIdxCell);
+                ref var curUnitDatCom = ref _unitF.Get1(curIdxCell);
+                ref var curOwnUnitCom = ref _unitF.Get2(curIdxCell);
+                ref var stunUnit_0 = ref _effUnitF.Get1(curIdxCell);
 
                 if (!stunUnit_0.IsStunned)
                 {

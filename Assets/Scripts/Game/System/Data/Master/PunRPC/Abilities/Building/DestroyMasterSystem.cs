@@ -8,23 +8,27 @@ namespace Chessy.Game
     {
         private EcsFilter<ForDestroyMasCom> _destroyFilter = default;
 
-        private EcsFilter<UnitC, StepC, OwnerC> _cellUnitFilter = default;
         private EcsFilter<BuildC, OwnerC> _cellBuildFilter = default;
         private EcsFilter<EnvC> _cellEnvFilter = default;
+
+        private EcsFilter<UnitC, OwnerC> _unitF = default;
+        private EcsFilter<StepC> _statUnitF = default;
+
+
 
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
             var idxCellForDestory = _destroyFilter.Get1(0).IdxForDestroy;
 
-            ref var curUnitDataCom = ref _cellUnitFilter.Get1(idxCellForDestory);
-            ref var curOwnUnitCom = ref _cellUnitFilter.Get3(idxCellForDestory);
+            ref var curUnitDataCom = ref _unitF.Get1(idxCellForDestory);
+            ref var curOwnUnitCom = ref _unitF.Get2(idxCellForDestory);
             ref var buildC_0 = ref _cellBuildFilter.Get1(idxCellForDestory);
             ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idxCellForDestory);
             ref var curEnvDataCom = ref _cellEnvFilter.Get1(idxCellForDestory);
 
 
-            if (_cellUnitFilter.Get2(idxCellForDestory).HaveMinSteps)
+            if (_statUnitF.Get1(idxCellForDestory).HaveMinSteps)
             {
                 RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.Destroy);
 
@@ -32,7 +36,7 @@ namespace Chessy.Game
                 {
                     PlyerWinnerC.PlayerWinner = curOwnUnitCom.Owner;
                 }
-                _cellUnitFilter.Get2(idxCellForDestory).TakeSteps();
+                _statUnitF.Get1(idxCellForDestory).TakeSteps();
 
                 if (buildC_0.Is(BuildTypes.Farm))
                 {

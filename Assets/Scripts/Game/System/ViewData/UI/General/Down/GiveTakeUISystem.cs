@@ -10,7 +10,7 @@ namespace Chessy.Game
             GiveTakeViewUIC.SetView_ButtonImage(ToolWeaponTypes.Sword, false);
             GiveTakeViewUIC.SetView_ButtonImage(ToolWeaponTypes.Shield, false);
 
-            if (SelectorC.Is(CellClickTypes.GiveTakeTW))
+            if (CellClickC.Is(CellClickTypes.GiveTakeTW))
                 if (TwGiveTakeC.TWTypeForGive != default)
                 {
                     GiveTakeViewUIC.SetView_ButtonImage(TwGiveTakeC.TWTypeForGive, true);

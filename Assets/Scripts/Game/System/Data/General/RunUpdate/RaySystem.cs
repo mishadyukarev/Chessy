@@ -44,7 +44,7 @@ namespace Chessy.Game
 
                     if (one == two)
                     {
-                        SelectorC.IdxCurCell = idx;
+                        IdxCur.Idx = idx;
                         RayCastC.Set(RaycastTypes.Cell);
                         return;
                     }

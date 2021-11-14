@@ -8,9 +8,9 @@ namespace Chessy.Game
         {
             SelectorUIC.DisableAll();
 
-            if (!SelectorC.Is(CellClickTypes.None))
+            if (!CellClickC.Is(CellClickTypes.None))
             {
-                SelectorUIC.SetActive(SelectorC.CellClick, true);
+                SelectorUIC.SetActive(CellClickC.Click, true);
             }
             else
             {

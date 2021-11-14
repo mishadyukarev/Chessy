@@ -7,7 +7,7 @@ namespace Chessy.Game
     public sealed class RightUnitEventUISys : IEcsInitSystem
     {
         private EcsFilter<ConditionUnitC> _effUnitF = default;
-        private EcsFilter<UniqAbilC, CdownUniqC> _uniqAbilF = default;
+        private EcsFilter<UniqAbilC, CooldownUniqC> _uniqAbilF = default;
 
         public void Init()
         {
@@ -29,13 +29,13 @@ namespace Chessy.Game
             {
                 TryOnHint(VideoClipTypes.ProtRelax);
 
-                if (_effUnitF.Get1(SelectorC.IdxSelCell).Is(condUnitType))
+                if (_effUnitF.Get1(IdxSel.Idx).Is(condUnitType))
                 {
-                    RpcSys.ConditionUnitToMaster(CondUnitTypes.None, SelectorC.IdxSelCell);
+                    RpcSys.ConditionUnitToMaster(CondUnitTypes.None, IdxSel.Idx);
                 }
                 else
                 {
-                    RpcSys.ConditionUnitToMaster(condUnitType, SelectorC.IdxSelCell);
+                    RpcSys.ConditionUnitToMaster(condUnitType, IdxSel.Idx);
                 }
             }
             else SoundEffectC.Play(ClipGameTypes.Mistake);
@@ -45,8 +45,8 @@ namespace Chessy.Game
         {
             if (WhoseMoveC.IsMyMove)
             {
-                ref var uniq_sel = ref _uniqAbilF.Get1(SelectorC.IdxSelCell);
-                ref var cdUniq_sel = ref _uniqAbilF.Get2(SelectorC.IdxSelCell);
+                ref var uniq_sel = ref _uniqAbilF.Get1(IdxSel.Idx);
+                ref var cdUniq_sel = ref _uniqAbilF.Get2(IdxSel.Idx);
 
                 var abil = uniq_sel.Ability(uniqBut);
 
@@ -64,32 +64,32 @@ namespace Chessy.Game
                                     case UniqAbilTypes.None: throw new Exception();
 
                                     case UniqAbilTypes.FirePawn:
-                                        RpcSys.FirePawnToMas(SelectorC.IdxSelCell);
+                                        RpcSys.FirePawnToMas(IdxSel.Idx);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
                                     case UniqAbilTypes.PutOutFirePawn:
-                                        RpcSys.PutOutFirePawnToMas(SelectorC.IdxSelCell);
+                                        RpcSys.PutOutFirePawnToMas(IdxSel.Idx);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
                                     case UniqAbilTypes.Seed:
-                                        RpcSys.SeedEnvToMaster(SelectorC.IdxSelCell, EnvTypes.YoungForest);
+                                        RpcSys.SeedEnvToMaster(IdxSel.Idx, EnvTypes.YoungForest);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
                                     case UniqAbilTypes.FireArcher:
-                                        SelectorC.Set(CellClickTypes.PickFire);
+                                        CellClickC.Set(CellClickTypes.PickFire);
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
                                     case UniqAbilTypes.CircularAttack:
-                                        RpcSys.CircularAttackKingToMaster(SelectorC.IdxSelCell);
+                                        RpcSys.CircularAttackKingToMaster(IdxSel.Idx);
                                         TryOnHint(VideoClipTypes.CircularAttack);
                                         break;
 
                                     case UniqAbilTypes.GrowAdultForest:
-                                        RpcSys.GrowAdultForest(SelectorC.IdxSelCell);
+                                        RpcSys.GrowAdultForest(IdxSel.Idx);
                                         TryOnHint(VideoClipTypes.GrowingAdForesElfemale);
                                         break;
                                     default: throw new Exception();
@@ -104,20 +104,20 @@ namespace Chessy.Game
                                     case UniqAbilTypes.None: throw new Exception();
 
                                     case UniqAbilTypes.BonusNear:
-                                        RpcSys.BonusNearUnits(SelectorC.IdxSelCell);
+                                        RpcSys.BonusNearUnits(IdxSel.Idx);
                                         TryOnHint(VideoClipTypes.BonusKing);
                                         break;
 
                                     case UniqAbilTypes.StunElfemale:
                                         {
-                                            SelectorC.Set(CellClickTypes.StunElfemale);
+                                            CellClickC.Set(CellClickTypes.StunElfemale);
                                             TryOnHint(VideoClipTypes.StunElfemale);
                                         }
                                         break;
 
                                     case UniqAbilTypes.ChangeCornerArcher:
                                         {
-                                            RpcSys.ChangeCornerArchToMas(SelectorC.IdxSelCell);
+                                            RpcSys.ChangeCornerArchToMas(IdxSel.Idx);
                                         }
                                         break;
 
@@ -134,7 +134,7 @@ namespace Chessy.Game
                                     case UniqAbilTypes.PutOutFireElfemale:
                                         {
                                             TryOnHint(VideoClipTypes.PutOutElfemale);
-                                            SelectorC.Set(CellClickTypes.PutOutFireElfemale);
+                                            CellClickC.Set(CellClickTypes.PutOutFireElfemale);
                                         }
                                         break;
                                     default: throw new Exception();
@@ -160,12 +160,12 @@ namespace Chessy.Game
                         throw new Exception();
 
                     case BuildButtonTypes.First:
-                        RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildTypes.Farm);
+                        RpcSys.BuildToMaster(IdxSel.Idx, BuildTypes.Farm);
                         TryOnHint(VideoClipTypes.BuldFarms);
                         break;
 
                     case BuildButtonTypes.Second:
-                        RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildTypes.Mine);
+                        RpcSys.BuildToMaster(IdxSel.Idx, BuildTypes.Mine);
                         TryOnHint(VideoClipTypes.BuildMine);
                         break;
 
@@ -176,11 +176,11 @@ namespace Chessy.Game
                             case BuildAbilTypes.FarmBuild: throw new Exception();
                             case BuildAbilTypes.MineBuild: throw new Exception();
                             case BuildAbilTypes.CityBuild:
-                                RpcSys.BuildToMaster(SelectorC.IdxSelCell, BuildTypes.City);
+                                RpcSys.BuildToMaster(IdxSel.Idx, BuildTypes.City);
                                 break;
 
                             case BuildAbilTypes.Destroy:
-                                RpcSys.DestroyBuildingToMaster(SelectorC.IdxSelCell);
+                                RpcSys.DestroyBuildingToMaster(IdxSel.Idx);
                                 break;
 
                             default: throw new Exception();

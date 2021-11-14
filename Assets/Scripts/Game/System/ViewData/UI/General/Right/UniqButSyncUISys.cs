@@ -4,12 +4,12 @@ namespace Chessy.Game
 {
     public sealed class UniqButSyncUISys : IEcsRunSystem
     {
-        private EcsFilter<UniqAbilC, CdownUniqC> _unitAbilFilt = default;
+        private EcsFilter<UniqAbilC, CooldownUniqC> _unitAbilFilt = default;
 
         public void Run()
         {
-            ref var uniq_sel = ref _unitAbilFilt.Get1(SelectorC.IdxSelCell);
-            ref var cdUniq_sel = ref _unitAbilFilt.Get2(SelectorC.IdxSelCell);
+            ref var uniq_sel = ref _unitAbilFilt.Get1(IdxSel.Idx);
+            ref var cdUniq_sel = ref _unitAbilFilt.Get2(IdxSel.Idx);
 
             var abil1 = uniq_sel.Ability(UniqButtonTypes.First);
             var abil2 = uniq_sel.Ability(UniqButtonTypes.Second);

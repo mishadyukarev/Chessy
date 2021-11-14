@@ -4,12 +4,13 @@ namespace Chessy.Game
 {
     public sealed class EffectsUISys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, UnitEffectsC> _cellUnitFilt = default;
+        private EcsFilter<UnitC> _unitF = default;
+        private EcsFilter<UnitEffectsC> _effUnitF = default;
 
         public void Run()
         {
-            ref var unitC_sel = ref _cellUnitFilt.Get1(SelectorC.IdxSelCell);
-            ref var effUnitC_sel = ref _cellUnitFilt.Get2(SelectorC.IdxSelCell);
+            ref var unitC_sel = ref _unitF.Get1(IdxSel.Idx);
+            ref var effUnitC_sel = ref _effUnitF.Get1(IdxSel.Idx);
 
             //EffectsIUC.SetColor(UnitStatTypes.Hp, effUnitC_sel.Have(UnitStatTypes.Hp));
             EffectsIUC.SetColor(UnitStatTypes.Damage, effUnitC_sel.Have(UnitStatTypes.Damage));

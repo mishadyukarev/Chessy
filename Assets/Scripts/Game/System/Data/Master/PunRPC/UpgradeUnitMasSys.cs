@@ -5,20 +5,25 @@ namespace Chessy.Game
 {
     public sealed class UpgradeUnitMasSys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, LevelC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<UnitC, HpC, StepC, UnitEffectsC> _cellUnitDataFilt = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
+        private EcsFilter<HpC, StepC> _statUnitF = default;
+        private EcsFilter<UnitEffectsC> _effUnitF = default;
 
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
             IdxDoingMC.Get(out var idx_0);
 
-            ref var unit_0 = ref _cellUnitDataFilt.Get1(idx_0);
-            ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
-            ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
-            ref var hpUnit_0 = ref _cellUnitDataFilt.Get2(idx_0);
-            ref var stepUnit_0 = ref _cellUnitDataFilt.Get3(idx_0);
-            ref var effUnit_0 =ref _cellUnitDataFilt.Get4(idx_0);
+            ref var unit_0 = ref _unitF.Get1(idx_0);
+            ref var levUnit_0 = ref _unitF.Get2(idx_0);
+            ref var ownUnit_0 = ref _unitF.Get3(idx_0);
+
+            
+            
+            ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
+            ref var stepUnit_0 = ref _statUnitF.Get2(idx_0);
+
+            ref var effUnit_0 = ref _effUnitF.Get1(idx_0);
 
 
             var whoseMove = WhoseMoveC.WhoseMove;

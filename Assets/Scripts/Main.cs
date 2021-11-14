@@ -39,8 +39,8 @@ namespace Chessy
                     break;
 
                 case SceneTypes.Game:
-                    DataC.RunUpdate.Invoke();
-                    GameGenSysDataViewC.RunUpdate.Invoke();
+                    DataC.RunUpdate?.Invoke();
+                    GameGenSysDataViewC.RunUpdate?.Invoke();
                     break;
 
                 default:
@@ -90,7 +90,7 @@ namespace Chessy
 
                     gameSysts.Init();
 
-                    GameGenSysDataViewC.RotateAll.Invoke();
+                    GameGenSysDataViewC.RotateAll?.Invoke();
 
                     break;
 

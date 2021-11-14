@@ -28,7 +28,6 @@ namespace Chessy.Game
                 .Add(new FillCellsForAttackKingSys())
                 .Add(new FillCellsForAttackPawnSys())
                 .Add(new FillCellsForAttackRookSys())
-                .Add(new FillCellsForAttackBishopSys())
                 .Add(new FillCellsSetUnitS())
                 .Add(new FillCellsForShiftSys())
                 .Add(new FillCellsArsonSys());

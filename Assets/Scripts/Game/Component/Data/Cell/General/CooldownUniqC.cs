@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Chessy.Game
 {
-    public struct CdownUniqC
+    public struct CooldownUniqC
     {
         private Dictionary<UniqAbilTypes, int> _cooldowns;
 
@@ -22,7 +22,7 @@ namespace Chessy.Game
         public int Cooldown(UniqAbilTypes uniqAbil) => _cooldowns[uniqAbil];
 
 
-        public CdownUniqC(bool needNew)
+        public CooldownUniqC(bool needNew)
         {
             if (needNew)
             {
@@ -42,7 +42,7 @@ namespace Chessy.Game
         public void SetCooldown(UniqAbilTypes uniqAbil, int cooldown) => _cooldowns[uniqAbil] = cooldown;
         public void TakeCooldown(UniqAbilTypes uniqAbil) => _cooldowns[uniqAbil] -= 1;
 
-        public void Replace(CdownUniqC cdownUniqC)
+        public void Replace(CooldownUniqC cdownUniqC)
         {
             foreach (var item in cdownUniqC._cooldowns) _cooldowns[item.Key] = item.Value;
         }

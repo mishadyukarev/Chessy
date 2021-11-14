@@ -14,26 +14,26 @@ namespace Chessy.Game
 
         public void Run()
         {
-            ref var unit_sel = ref _unitF.Get1(SelectorC.IdxSelCell);
-            ref var levUnit_sel = ref _unitF.Get2(SelectorC.IdxSelCell);
-            ref var ownUnit_sel = ref _unitF.Get3(SelectorC.IdxSelCell);
+            ref var unit_sel = ref _unitF.Get1(IdxSel.Idx);
+            ref var levUnit_sel = ref _unitF.Get2(IdxSel.Idx);
+            ref var ownUnit_sel = ref _unitF.Get3(IdxSel.Idx);
 
-            ref var selHpUnitC = ref _statUnitF.Get1(SelectorC.IdxSelCell);
-            ref var selDamUnitC = ref _statUnitF.Get2(SelectorC.IdxSelCell);
-            ref var selStepUnitC = ref _statUnitF.Get3(SelectorC.IdxSelCell);
-            ref var thirUnitC_sel = ref _statUnitF.Get4(SelectorC.IdxSelCell);
+            ref var selHpUnitC = ref _statUnitF.Get1(IdxSel.Idx);
+            ref var selDamUnitC = ref _statUnitF.Get2(IdxSel.Idx);
+            ref var selStepUnitC = ref _statUnitF.Get3(IdxSel.Idx);
+            ref var thirUnitC_sel = ref _statUnitF.Get4(IdxSel.Idx);
 
-            ref var selConUnitC = ref _effUnitF.Get1(SelectorC.IdxSelCell);
-            ref var effUnit_sel = ref _effUnitF.Get2(SelectorC.IdxSelCell);
+            ref var selConUnitC = ref _effUnitF.Get1(IdxSel.Idx);
+            ref var effUnit_sel = ref _effUnitF.Get2(IdxSel.Idx);
 
-            ref var twUnit_sel = ref _twUnitF.Get1(SelectorC.IdxSelCell);
+            ref var twUnit_sel = ref _twUnitF.Get1(IdxSel.Idx);
             
             
 
 
 
-            ref var selBuildC = ref _buildF.Get1(SelectorC.IdxSelCell);
-            ref var selEnvC = ref _envF.Get1(SelectorC.IdxSelCell);
+            ref var selBuildC = ref _buildF.Get1(IdxSel.Idx);
+            ref var selEnvC = ref _envF.Get1(IdxSel.Idx);
 
 
             if (unit_sel.HaveUnit)

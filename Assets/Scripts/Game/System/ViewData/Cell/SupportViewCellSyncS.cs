@@ -29,9 +29,9 @@ namespace Chessy.Game
 
                 supView_0.DisableSR();
 
-                if (SelectorC.IsSelCell)
+                if (IdxSel.IsSelCell)
                 {
-                    if (SelectorC.IdxSelCell == idx_0)
+                    if (IdxSel.Idx == idx_0)
                     {
                         supView_0.EnableSR();
                         supView_0.SetColor(SupVisTypes.Selector);
@@ -40,7 +40,7 @@ namespace Chessy.Game
 
                 if (fire_0.Have)
                 {
-                    if (SelectorC.Is(CellClickTypes.PutOutFireElfemale))
+                    if (CellClickC.Is(CellClickTypes.PutOutFireElfemale))
                     {
                         supView_0.EnableSR();
                         supView_0.SetColor(SupVisTypes.GivePawnTool);
@@ -51,7 +51,7 @@ namespace Chessy.Game
                 {
                     if (ownUnit_0.Is(WhoseMoveC.CurPlayerI))
                     {
-                        if (SelectorC.Is(CellClickTypes.GiveTakeTW, CellClickTypes.GiveScout))
+                        if (CellClickC.Is(CellClickTypes.GiveTakeTW, CellClickTypes.GiveScout))
                         {
                             if (unit_0.Is(UnitTypes.Pawn))
                             {
@@ -60,7 +60,7 @@ namespace Chessy.Game
                             }
                         }
 
-                        else if (SelectorC.Is(CellClickTypes.UpgradeUnit))
+                        else if (CellClickC.Is(CellClickTypes.UpgradeUnit))
                         {
                             if (unit_0.Is(UnitTypes.Pawn, UnitTypes.Archer))
                             {
@@ -72,7 +72,7 @@ namespace Chessy.Game
                             }
                         }
 
-                        else if (SelectorC.Is(CellClickTypes.GiveHero))
+                        else if (CellClickC.Is(CellClickTypes.GiveHero))
                         {
                             if (unit_0.Is(UnitTypes.Archer))
                             {
@@ -88,7 +88,7 @@ namespace Chessy.Game
                         {
                             if (env_0.Have(EnvTypes.AdultForest))
                             {
-                                if (SelectorC.Is(CellClickTypes.StunElfemale))
+                                if (CellClickC.Is(CellClickTypes.StunElfemale))
                                 {
                                     supView_0.EnableSR();
                                     supView_0.SetColor(SupVisTypes.GivePawnTool);
@@ -100,40 +100,40 @@ namespace Chessy.Game
             }
 
 
-            if (SelectorC.IsSelCell)
+            if (IdxSel.IsSelCell)
             {
-                ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelectorC.IdxSelCell);
-                ref var selOffUnitCom = ref _cellUnitFilter.Get3(SelectorC.IdxSelCell);
+                ref var selUnitDatCom = ref _cellUnitFilter.Get1(IdxSel.Idx);
+                ref var selOffUnitCom = ref _cellUnitFilter.Get3(IdxSel.Idx);
 
 
                 if (selUnitDatCom.HaveUnit)
                 {
-                    if (_cellUnitFilter.Get3(SelectorC.IdxSelCell).Is(WhoseMoveC.CurPlayerI))
+                    if (_cellUnitFilter.Get3(IdxSel.Idx).Is(WhoseMoveC.CurPlayerI))
                     {
-                        if (SelectorC.Is(CellClickTypes.PickFire))
+                        if (CellClickC.Is(CellClickTypes.PickFire))
                         {
-                            foreach (var curIdxCell in CellsArsonArcherComp.GetListCopy(WhoseMoveC.CurPlayerI, SelectorC.IdxSelCell))
+                            foreach (var curIdxCell in CellsArsonArcherComp.GetListCopy(WhoseMoveC.CurPlayerI, IdxSel.Idx))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.FireSelector);
                             }
                         }
 
-                        else if (SelectorC.Is(CellClickTypes.None))
+                        else if (CellClickC.Is(CellClickTypes.None))
                         {
-                            foreach (var curIdxCell in CellsForShiftCom.GetListCopy(WhoseMoveC.CurPlayerI, SelectorC.IdxSelCell))
+                            foreach (var curIdxCell in CellsForShiftCom.GetListCopy(WhoseMoveC.CurPlayerI, IdxSel.Idx))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.Shift);
                             }
 
-                            foreach (var curIdxCell in CellsAttackC.GetListCopy(WhoseMoveC.CurPlayerI, AttackTypes.Simple, SelectorC.IdxSelCell))
+                            foreach (var curIdxCell in CellsAttackC.GetListCopy(WhoseMoveC.CurPlayerI, AttackTypes.Simple, IdxSel.Idx))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.SimpleAttack);
                             }
 
-                            foreach (var curIdxCell in CellsAttackC.GetListCopy(WhoseMoveC.CurPlayerI, AttackTypes.Unique, SelectorC.IdxSelCell))
+                            foreach (var curIdxCell in CellsAttackC.GetListCopy(WhoseMoveC.CurPlayerI, AttackTypes.Unique, IdxSel.Idx))
                             {
                                 _supViewFilter.Get1(curIdxCell).EnableSR();
                                 _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.UniqueAttack);

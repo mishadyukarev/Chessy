@@ -6,16 +6,17 @@ namespace Chessy.Game
 {
     public sealed class AttackMastSys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private EcsFilter<HpC, DamageC, StepC, WaterUnitC> _statUnitF = default;
-        private EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
-        private EcsFilter<ToolWeaponC> _twUnitF = default;
+        private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
+        private readonly EcsFilter<HpC, DamageC, StepC, WaterUnitC> _statUnitF = default;
+        private readonly EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
+        private readonly EcsFilter<ToolWeaponC> _twUnitF = default;
+        private readonly EcsFilter<CooldownUniqC> _uniqUnitF = default;
 
-        private EcsFilter<XyC> _xyF = default;
-        private EcsFilter<BuildC, OwnerC> _buildF = default;
-        private EcsFilter<EnvC> _envF = default;
-        private EcsFilter<RiverC> _riverF = default;
-        private EcsFilter<TrailC> _trailF = default;
+        private readonly EcsFilter<XyC> _xyF = default;
+        private readonly EcsFilter<BuildC, OwnerC> _buildF = default;
+        private readonly EcsFilter<EnvC> _envF = default;
+        private readonly EcsFilter<RiverC> _riverF = default;
+        private readonly EcsFilter<TrailC> _trailF = default;
 
         public void Run()
         {
@@ -64,6 +65,7 @@ namespace Chessy.Game
             ref var ownBuild_from = ref _buildF.Get2(idx_from);
             ref var env_from = ref _envF.Get1(idx_from);
             ref var trail_from = ref _trailF.Get1(idx_from);
+            ref var cdUniq_from = ref _uniqUnitF.Get1(idx_from);
 
 
             ref var river_to = ref _riverF.Get1(idx_to);
@@ -71,6 +73,7 @@ namespace Chessy.Game
             ref var ownBuild_to = ref _buildF.Get2(idx_to);
             ref var env_to = ref _envF.Get1(idx_to);
             ref var trail_to = ref _trailF.Get1(idx_to);
+            ref var cdUniq_to = ref _uniqUnitF.Get1(idx_to);
 
 
 
@@ -215,6 +218,7 @@ namespace Chessy.Game
                             waterUnit_to = waterUnit_from;
                             moveCond_to.ResetAll();
                             stun_to.Reset();
+                            cdUniq_to.Replace(cdUniq_from);
                             if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit, UnitStatTypes.Water));
                             WhereUnitsC.Add(ownUnit_to.Owner, unit_to.Unit, levUnit_to.Level, idx_to);
 

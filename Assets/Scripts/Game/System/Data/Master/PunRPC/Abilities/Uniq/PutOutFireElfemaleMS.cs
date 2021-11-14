@@ -5,21 +5,21 @@ namespace Chessy.Game
 {
     public class PutOutFireElfemaleMS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, HpC, StepC> _unitStatFilt = default;
-        private EcsFilter<CdownUniqC> _unitUniqFilt = default;
-        private EcsFilter<FireC> _fireFilt = default;
+        private EcsFilter<HpC, StepC> _statUnitF = default;
+        private EcsFilter<CooldownUniqC> _uniqUnitF = default;
+        private EcsFilter<FireC> _fireF = default;
 
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
             FromToMC.Get(out var idx_from, out var idx_to);
 
-            ref var unit_from = ref _unitStatFilt.Get1(idx_from);
-            ref var hp_from = ref _unitStatFilt.Get2(idx_from);
-            ref var step_from = ref _unitStatFilt.Get3(idx_from);
-            ref var uniq_from = ref _unitUniqFilt.Get1(idx_from);
+            ref var unit_from = ref _statUnitF.Get1(idx_from);
+            ref var hp_from = ref _statUnitF.Get1(idx_from);
+            ref var step_from = ref _statUnitF.Get2(idx_from);
+            ref var uniq_from = ref _uniqUnitF.Get1(idx_from);
 
-            ref var fire_to = ref _fireFilt.Get1(idx_to);
+            ref var fire_to = ref _fireF.Get1(idx_to);
 
 
             if (hp_from.HaveMaxHp)

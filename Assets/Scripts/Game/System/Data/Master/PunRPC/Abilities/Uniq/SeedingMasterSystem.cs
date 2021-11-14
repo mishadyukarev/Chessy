@@ -8,7 +8,7 @@ namespace Chessy.Game
     {
         private EcsFilter<ForSeedingMasCom> _seedingFilter = default;
 
-        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
+        private EcsFilter<StepC> _statUnitF = default;
         private EcsFilter<BuildC> _cellBuildFilter = default;
         private EcsFilter<EnvC> _cellEnvFilter = default;
 
@@ -18,8 +18,7 @@ namespace Chessy.Game
             var envType = _seedingFilter.Get1(0).EnvTypeForSeeding;
             var idx_0 = _seedingFilter.Get1(0).IdxForSeeding;
 
-            ref var unit_0 = ref _cellUnitFilter.Get1(idx_0);
-            ref var stepUnit_0 = ref _cellUnitFilter.Get2(idx_0);
+            ref var stepUnit_0 = ref _statUnitF.Get1(idx_0);
 
             ref var build_0 = ref _cellBuildFilter.Get1(idx_0);
             ref var env_0 = ref _cellEnvFilter.Get1(idx_0);

@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public sealed class PutOutFireMS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
+        private EcsFilter<StepC> _statUnitF = default;
         private EcsFilter<FireC> _cellFireFilter = default;
 
         public void Run()
@@ -13,7 +13,7 @@ namespace Chessy.Game
 
             IdxDoingMC.Get(out var idx_0);
 
-            ref var stepUnit_0 = ref _cellUnitFilter.Get2(idx_0);
+            ref var stepUnit_0 = ref _statUnitF.Get1(idx_0);
             ref var fire_0 = ref _cellFireFilter.Get1(idx_0);
 
             var whoseMove = WhoseMoveC.WhoseMove;

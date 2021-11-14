@@ -8,7 +8,7 @@ namespace Chessy.Game
         private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
 
         private EcsFilter<BuildC, OwnerC> _cellBuildFilter = default;
-        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
+        private EcsFilter<StepC> _statUnitF = default;
         private EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
 
         private EcsFilter<WhereBuildsC> _buildsFilt = default;
@@ -25,8 +25,7 @@ namespace Chessy.Game
             ref var build_0 = ref _cellBuildFilter.Get1(idx_0);
             ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idx_0);
 
-            ref var curUnitDatCom = ref _cellUnitFilter.Get1(idx_0);
-            ref var curStepUnitC = ref _cellUnitFilter.Get2(idx_0);
+            ref var curStepUnitC = ref _statUnitF.Get1(idx_0);
             ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
             ref var envRes_0 = ref _cellEnvFilter.Get2(idx_0);
 

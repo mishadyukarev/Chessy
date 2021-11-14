@@ -35,7 +35,7 @@ namespace Chessy.Game
                 {
                     if (WhoseMoveC.IsMyMove)
                     {
-                        SelectorC.Set(CellClickTypes.GiveScout);
+                        CellClickC.Set(CellClickTypes.GiveScout);
                     }
                 }
                 else
@@ -53,8 +53,8 @@ namespace Chessy.Game
             {
                 if (!ScoutHeroCooldownC.HaveCooldown(WhoseMoveC.CurPlayerI, InvUnitsC.MyHero))
                 {
-                    SelectorC.Set(CellClickTypes.GiveHero);
-                    SelectorC.IdxSelCell = default;
+                    CellClickC.Set(CellClickTypes.GiveHero);
+                    IdxSel.Idx = default;
                 }
                 else
                 {
@@ -76,8 +76,8 @@ namespace Chessy.Game
                 SoundEffectC.Play(ClipGameTypes.Mistake);
             }
 
-            SelectorC.Reset();
-            SelUnitC.ResetSelUnit();
+            CellClickC.Reset();
+            SelUnitC.Reset();
         }
 
         private void CreateUnit(UnitTypes unitType)
@@ -93,10 +93,10 @@ namespace Chessy.Game
 
         private void GetUnit(UnitTypes unitType)
         {
-            SelectorC.Reset();
-            SelectorC.IdxCurCell = default;
-            SelectorC.IdxPreVisionCell = default;
-            SelectorC.DefSelectedCell();
+            CellClickC.Reset();
+            IdxCur.Idx = default;
+            IdxPreVis.Idx = default;
+            IdxSel.Reset();
             GetterUnitsC.ResetCurTimer(unitType);
 
             if (WhoseMoveC.IsMyMove)
@@ -130,7 +130,7 @@ namespace Chessy.Game
                     TryOnHint(VideoClipTypes.UpgToolWeapon);
                 }
 
-                if (SelectorC.Is(CellClickTypes.GiveTakeTW))
+                if (CellClickC.Is(CellClickTypes.GiveTakeTW))
                 {
                     if (tWType == ToolWeaponTypes.Shield)
                     {
@@ -153,7 +153,7 @@ namespace Chessy.Game
                 }
                 else
                 {
-                    SelectorC.Set(CellClickTypes.GiveTakeTW);
+                    CellClickC.Set(CellClickTypes.GiveTakeTW);
                     TwGiveTakeC.TWTypeForGive = tWType;
 
                     if (tWType == ToolWeaponTypes.Shield)
@@ -172,7 +172,7 @@ namespace Chessy.Game
             if (WhoseMoveC.IsMyMove)
             {
                 TryOnHint(VideoClipTypes.UpgToolWeapon);
-                SelectorC.Set(CellClickTypes.UpgradeUnit);
+                CellClickC.Set(CellClickTypes.UpgradeUnit);
             }
             else SoundEffectC.Play(ClipGameTypes.Mistake);
         }

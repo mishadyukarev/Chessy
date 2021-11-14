@@ -17,7 +17,7 @@ namespace Chessy.Game
         private EcsFilter<UnitC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC> _statUnitF = default;
         private EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
-        private EcsFilter<CdownUniqC> _unitUniqF = default;
+        private EcsFilter<CooldownUniqC> _unitUniqF = default;
 
         public void Run()
         {

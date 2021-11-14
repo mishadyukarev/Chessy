@@ -1,26 +1,24 @@
 ﻿using Leopotam.Ecs;
 using System;
-using UnityEditor;
-using UnityEngine;
 
 namespace Chessy.Game
 {
     public sealed class AbilSyncMasSys : IEcsRunSystem
     {
         private EcsFilter<UnitC, OwnerC> _unitBaseFilt = default;
-        private EcsFilter<UniqAbilC> _unitUniqFilt = default;
+        private EcsFilter<UniqAbilC> _uniqUnitF = default;
         private EcsFilter<EnvC> _envFilt = default;
         private EcsFilter<FireC> _fireFilt = default;
 
         public void Run()
         {
-            foreach (var idx_0 in _unitUniqFilt)
+            foreach (var idx_0 in _uniqUnitF)
             {
                 ref var unit_0 = ref _unitBaseFilt.Get1(idx_0);
 
                 ref var ownUnit_0 = ref _unitBaseFilt.Get2(idx_0);
 
-                ref var uniq_0 = ref _unitUniqFilt.Get1(idx_0);
+                ref var uniq_0 = ref _uniqUnitF.Get1(idx_0);
 
                 ref var env_0 = ref _envFilt.Get1(idx_0);
                 ref var fire_0 = ref _fireFilt.Get1(idx_0);
@@ -65,7 +63,7 @@ namespace Chessy.Game
                                 uniq_0.Reset(UniqButtonTypes.Second);
                                 uniq_0.Reset(UniqButtonTypes.Third);
                                 break;
-                                    
+
                             case UnitTypes.Elfemale:
                                 uniq_0.SetAbility(UniqButtonTypes.First, UniqAbilTypes.GrowAdultForest);
                                 uniq_0.SetAbility(UniqButtonTypes.Second, UniqAbilTypes.StunElfemale);

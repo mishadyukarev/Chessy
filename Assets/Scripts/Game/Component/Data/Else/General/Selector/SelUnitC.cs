@@ -15,7 +15,7 @@
             _selUnit = unit;
             _levelSelUnit = level;
         }
-        public static void ResetSelUnit()
+        public static void Reset()
         {
             _selUnit = default;
             _levelSelUnit = default;

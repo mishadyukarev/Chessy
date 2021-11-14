@@ -61,7 +61,7 @@ namespace Chessy.Game
 
                     _curGameW.NewEntity()
                          .Replace(new UniqAbilC(true))
-                         .Replace(new CdownUniqC(true));
+                         .Replace(new CooldownUniqC(true));
 
 
                     _curGameW.NewEntity()
@@ -111,7 +111,8 @@ namespace Chessy.Game
 
             new WhoseMoveC(true);
             new ScoutHeroCooldownC(true);
-            new SelectorC(true);
+            new CellClickC(CellClickTypes.None);
+            new IdxSel(0);
 
 
             new PlyerWinnerC(PlayerTypes.None);

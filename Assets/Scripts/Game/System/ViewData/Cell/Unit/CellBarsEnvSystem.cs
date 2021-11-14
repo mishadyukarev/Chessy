@@ -11,9 +11,9 @@ namespace Chessy.Game
 
         public void Run()
         {
-            //ref var selBuildDatC = ref _cellBuildFilter.Get1(SelectorC.IdxSelCell);
+            //ref var selBuildDatC = ref _cellBuildFilter.Get1(SelCell.IdxSelCell);
 
-            //ref var env_sel = ref _cellEnvFilter.Get1(SelectorC.IdxSelCell);
+            //ref var env_sel = ref _cellEnvFilter.Get1(SelCell.IdxSelCell);
             
 
             foreach (var curIdxCell in _cellBuildFilter)

@@ -12,7 +12,7 @@ namespace Chessy.Game
         public void SetLevel(LevelUnitTypes level)
         {
             if (level == LevelUnitTypes.None) throw new Exception();
-            if (_levelUnit == level) throw new Exception();
+            //if (_levelUnit == level) throw new Exception();
 
             _levelUnit = level;
         }

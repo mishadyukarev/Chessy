@@ -8,11 +8,11 @@ namespace Chessy.Game
 
         public void Run()
         {
-            ref var selUnitDataCom = ref _cellBuildFilter.Get1(SelectorC.IdxSelCell);
-            ref var selOwnUnitCom = ref _cellBuildFilter.Get2(SelectorC.IdxSelCell);
+            ref var selUnitDataCom = ref _cellBuildFilter.Get1(IdxSel.Idx);
+            ref var selOwnUnitCom = ref _cellBuildFilter.Get2(IdxSel.Idx);
 
 
-            if (SelectorC.IsSelCell && selUnitDataCom.Is(BuildTypes.City))
+            if (IdxSel.IsSelCell && selUnitDataCom.Is(BuildTypes.City))
             {
                 if (selOwnUnitCom.Is(WhoseMoveC.CurPlayerI))
                 {

@@ -10,10 +10,10 @@ namespace Chessy.Game
 
         public void Run()
         {
-            ref var unit_sel = ref _unitF.Get1(SelectorC.IdxSelCell);
-            ref var selOnUnitCom = ref _unitF.Get2(SelectorC.IdxSelCell);
+            ref var unit_sel = ref _unitF.Get1(IdxSel.Idx);
+            ref var selOnUnitCom = ref _unitF.Get2(IdxSel.Idx);
 
-            ref var selCondUnitC = ref _effUnitF.Get1(SelectorC.IdxSelCell);  
+            ref var selCondUnitC = ref _effUnitF.Get1(IdxSel.Idx);  
 
 
             var activeButt = false;

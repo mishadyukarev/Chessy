@@ -4,11 +4,11 @@ namespace Chessy.Game
 {
     public sealed class ShieldUISys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, ToolWeaponC> _cellUnitFilt = default;
+        private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         public void Run()
         {
-            ref var selTwUnitC = ref _cellUnitFilt.Get2(SelectorC.IdxSelCell);
+            ref var selTwUnitC = ref _twUnitF.Get1(IdxSel.Idx);
 
             ExtraTWZoneUIC.DisableAll();
 

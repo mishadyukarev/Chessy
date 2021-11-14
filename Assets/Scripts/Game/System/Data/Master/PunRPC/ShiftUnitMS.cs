@@ -3,7 +3,7 @@ using Chessy.Common;
 
 namespace Chessy.Game
 {
-    public sealed class ShiftUnitMasSys : IEcsRunSystem
+    public sealed class ShiftUnitMS : IEcsRunSystem
     {
         private EcsFilter<XyC> _cellXyFilt = default;
         private EcsFilter<EnvC> _cellEnvrDataFilter = default;
@@ -17,7 +17,7 @@ namespace Chessy.Game
         private EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC> _effUnitF = default;
 
         private EcsFilter<ToolWeaponC> _twUnitF = default;
-        private EcsFilter<UniqAbilC> _uniqUnitF = default;
+        private EcsFilter<UniqAbilC, CooldownUniqC> _uniqUnitF = default;
         private EcsFilter<CornerArcherC> _archerF = default;
 
 
@@ -46,6 +46,7 @@ namespace Chessy.Game
                 
                 ref var twUnit_from = ref _twUnitF.Get1(idx_from);
                 ref var uniq_from = ref _uniqUnitF.Get1(idx_from);
+                ref var cdUniq_from = ref _uniqUnitF.Get2(idx_from);
                 ref var corner_from = ref _archerF.Get1(idx_from);
 
 
@@ -64,6 +65,7 @@ namespace Chessy.Game
 
                 ref var twUnit_to = ref _twUnitF.Get1(idx_to);
                 ref var uniq_to = ref _uniqUnitF.Get1(idx_to);
+                ref var cdUniq_to = ref _uniqUnitF.Get2(idx_to);
                 ref var corner_to = ref _archerF.Get1(idx_to);
 
                 #endregion
@@ -111,7 +113,8 @@ namespace Chessy.Game
                 effUnit_to.Set(eff_from);
                 water_to = water_from;
                 moveCond_to.ResetAll();
-                uniq_to.Replace(uniq_from);
+                //uniq_to.Replace(uniq_from);
+                cdUniq_to.Replace(cdUniq_from);
                 corner_to = corner_from;
                 if (river_to.HaveNearRiver) water_to.SetMaxWater(UnitPercUpgC.UpgPercent(own_to.Owner, unit_to.Unit, UnitStatTypes.Water));
 

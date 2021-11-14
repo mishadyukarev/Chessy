@@ -6,13 +6,12 @@ namespace Chessy.Game
 {
     public sealed class StunElfemaleMS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, OwnerC> _unitMainFilt = default;
-        private EcsFilter<UnitC, HpC, StepC> _unitStatFilt = default;
-        private EcsFilter<UnitC, StunC> _unitEffFilt = default;
-        private EcsFilter<CdownUniqC> _unitUniqFilt = default;
-        private EcsFilter<UnitC, VisibleC> _unitVisFilt = default;
+        private EcsFilter<UnitC, OwnerC, VisibleC> _unitF = default;
+        private EcsFilter<HpC, StepC> _statUnitF = default;
+        private EcsFilter<StunC> _effUnitF = default;
+        private EcsFilter<CooldownUniqC> _uniqUnitF = default;
 
-        private EcsFilter<EnvC> _envFilt = default;
+        private EcsFilter<EnvC> _envF = default;
 
         public void Run()
         {
@@ -21,15 +20,15 @@ namespace Chessy.Game
             var sender = InfoC.Sender(MGOTypes.Master);
             var playerSend = WhoseMoveC.WhoseMove;
 
-            ref var ownUnit_from = ref _unitMainFilt.Get2(idx_from);
-            ref var hp_from = ref _unitStatFilt.Get2(idx_from);
-            ref var step_from = ref _unitStatFilt.Get3(idx_from);
-            ref var cdUniq_from = ref _unitUniqFilt.Get1(idx_from);
+            ref var ownUnit_from = ref _unitF.Get2(idx_from);
+            ref var hp_from = ref _statUnitF.Get1(idx_from);
+            ref var step_from = ref _statUnitF.Get2(idx_from);
+            ref var cdUniq_from = ref _uniqUnitF.Get1(idx_from);
 
-            ref var unit_to = ref _unitMainFilt.Get1(idx_to);
-            ref var ownUnit_to = ref _unitMainFilt.Get2(idx_to);
-            ref var visUnit_to = ref _unitVisFilt.Get2(idx_to);
-            ref var env_to = ref _envFilt.Get1(idx_to);
+            ref var unit_to = ref _unitF.Get1(idx_to);
+            ref var ownUnit_to = ref _unitF.Get2(idx_to);
+            ref var visUnit_to = ref _unitF.Get3(idx_to);
+            ref var env_to = ref _envF.Get1(idx_to);
 
 
             if (!cdUniq_from.HaveCooldown(UniqAbilTypes.StunElfemale))
@@ -46,8 +45,8 @@ namespace Chessy.Game
                                 {
                                     if (!ownUnit_from.Is(ownUnit_to.Owner))
                                     {
-                                        _unitEffFilt.Get2(idx_to).SetNewStun();
-                                        _unitUniqFilt.Get1(idx_from).SetCooldown(UniqAbilTypes.StunElfemale, 5);
+                                        _effUnitF.Get1(idx_to).SetNewStun();
+                                        _uniqUnitF.Get1(idx_from).SetCooldown(UniqAbilTypes.StunElfemale, 5);
 
                                         step_from.TakeSteps();
 

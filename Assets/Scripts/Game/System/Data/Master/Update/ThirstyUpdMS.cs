@@ -6,23 +6,26 @@ namespace Chessy.Game
 {
     public sealed class ThirstyUpdMS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, LevelC, OwnerC> _cellUnitMainFilt = default;
-        private EcsFilter<UnitC, HpC> _cellUnitFilt = default;
-        private EcsFilter<UnitC, UnitEffectsC, WaterUnitC> _cellUnitOthFilt = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
+        private EcsFilter<HpC, WaterUnitC> _statUnitF = default;
+        private EcsFilter<UnitEffectsC> _effUnitF = default;
 
         private EcsFilter<RiverC> _cellRiverFilt = default;
         private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
 
         public void Run()
         {
-            foreach (byte idx_0 in _cellUnitOthFilt)
+            foreach (byte idx_0 in _effUnitF)
             {
-                ref var hp_0 =ref _cellUnitFilt.Get2(idx_0);
-                ref var unit_0 = ref _cellUnitOthFilt.Get1(idx_0);
-                ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
-                ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
-                ref var effUnit_0 = ref _cellUnitOthFilt.Get2(idx_0);
-                ref var thirUnitC_0 = ref _cellUnitOthFilt.Get3(idx_0);
+                ref var unit_0 = ref _unitF.Get1(idx_0);
+                ref var levUnit_0 = ref _unitF.Get2(idx_0);
+                ref var ownUnit_0 = ref _unitF.Get3(idx_0);
+
+                ref var hp_0 = ref _statUnitF.Get1(idx_0);
+                ref var water_0 = ref _statUnitF.Get2(idx_0);
+
+                ref var eff_0 = ref _effUnitF.Get1(idx_0);
+
 
                 ref var riverC_0 = ref _cellRiverFilt.Get1(idx_0);
 
@@ -44,12 +47,12 @@ namespace Chessy.Game
                     {
                         if (riverC_0.HaveNearRiver)
                         {
-                            thirUnitC_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
+                            water_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
                         }
                         else
                         {
-                            thirUnitC_0.TakeWater();
-                            if (!thirUnitC_0.HaveWater)
+                            water_0.TakeWater();
+                            if (!water_0.HaveWater)
                             {
                                 hp_0.TakeHpThirsty(unit_0.Unit);
 

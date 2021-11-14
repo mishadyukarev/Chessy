@@ -1,5 +1,4 @@
-﻿using Chessy.Common;
-using Leopotam.Ecs;
+﻿using Leopotam.Ecs;
 using Photon.Pun;
 using System;
 
@@ -7,7 +6,7 @@ namespace Chessy.Game
 {
     public sealed class FirePawnMS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, StepC> _cellUnitFilter = default;
+        private EcsFilter<StepC> _statUnitF = default;
         private EcsFilter<FireC> _cellFireFilter = default;
         private EcsFilter<EnvC> _cellEnvFilter = default;
 
@@ -18,7 +17,7 @@ namespace Chessy.Game
 
             IdxDoingMC.Get(out var idx_0);
 
-            ref var stepUnit_0 = ref _cellUnitFilter.Get2(idx_0);
+            ref var stepUnit_0 = ref _statUnitF.Get1(idx_0);
             ref var fire_0 = ref _cellFireFilter.Get1(idx_0);
             ref var env_0 = ref _cellEnvFilter.Get1(idx_0);
 

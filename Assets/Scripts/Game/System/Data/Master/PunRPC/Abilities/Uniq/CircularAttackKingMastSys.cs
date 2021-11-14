@@ -11,7 +11,7 @@ namespace Chessy.Game
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC> _statUnitF = default;
         private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
-        private EcsFilter<UniqAbilC, CdownUniqC> _uniqUnitF = default;
+        private EcsFilter<UniqAbilC, CooldownUniqC> _uniqUnitF = default;
         private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         private EcsFilter<EnvC> _envF = default;
