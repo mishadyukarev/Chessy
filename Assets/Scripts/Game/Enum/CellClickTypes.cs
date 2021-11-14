@@ -4,13 +4,12 @@
     {
         None,
 
-        PickFire,
+        SetUnit,
         GiveTakeTW,
         UpgradeUnit,
         GiveScout,
         GiveHero,
-        StunElfemale,
-        PutOutFireElfemale,
+        UniqAbil,
 
         End,
     }

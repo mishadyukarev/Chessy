@@ -7,22 +7,22 @@ namespace Chessy.Game
     {
         public void Init()
         {
-            ScoutUIC.AddListScout(ExecuteScout);
-            HeroDownUIC.AddList(Hero);
+            GetScoutUIC.AddListScout(ExecuteScout);
+            GetHeroDownUIC.AddList(Hero);
 
             DonerUICom.AddListener(Done);
 
-            GetterUnitsViewUIC.AddListenerToCreateUnit(UnitTypes.Pawn, delegate { CreateUnit(UnitTypes.Pawn); });
-            GetterUnitsViewUIC.AddListenerToCreateUnit(UnitTypes.Archer, delegate { CreateUnit(UnitTypes.Archer); });
+            GetPawnArcherUIC.AddListenerToCreateUnit(UnitTypes.Pawn, delegate { CreateUnit(UnitTypes.Pawn); });
+            GetPawnArcherUIC.AddListenerToCreateUnit(UnitTypes.Archer, delegate { CreateUnit(UnitTypes.Archer); });
 
             KingZoneViewUIC.AddListenerToSetKing_Button(delegate { GetUnit(UnitTypes.King); });
-            GetterUnitsViewUIC.AddListener(UnitTypes.Pawn, delegate { GetUnit(UnitTypes.Pawn); });
-            GetterUnitsViewUIC.AddListener(UnitTypes.Archer, delegate { GetUnit(UnitTypes.Archer); });
+            GetPawnArcherUIC.AddListener(UnitTypes.Pawn, delegate { GetUnit(UnitTypes.Pawn); });
+            GetPawnArcherUIC.AddListener(UnitTypes.Archer, delegate { GetUnit(UnitTypes.Archer); });
 
-            GiveTakeViewUIC.AddListUpgradeButton(ToggleUpgradeUnit);
-            GiveTakeViewUIC.AddList_Button(ToolWeaponTypes.Pick, delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
-            GiveTakeViewUIC.AddList_Button(ToolWeaponTypes.Sword, delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
-            GiveTakeViewUIC.AddList_Button(ToolWeaponTypes.Shield, delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
+            UpgUnitUIC.AddList(ToggleUpgradeUnit);
+            TwGiveTakeUIC.AddList_Button(ToolWeaponTypes.Pick, delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
+            TwGiveTakeUIC.AddList_Button(ToolWeaponTypes.Sword, delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
+            TwGiveTakeUIC.AddList_Button(ToolWeaponTypes.Shield, delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
         }
 
         private void ExecuteScout()
@@ -77,7 +77,6 @@ namespace Chessy.Game
             }
 
             CellClickC.Reset();
-            SelUnitC.Reset();
         }
 
         private void CreateUnit(UnitTypes unitType)
@@ -93,9 +92,9 @@ namespace Chessy.Game
 
         private void GetUnit(UnitTypes unitType)
         {
-            CellClickC.Reset();
-            IdxCur.Idx = default;
-            IdxPreVis.Idx = default;
+            //CellClickC.Reset();
+            //IdxCur.Idx = default;
+            //IdxPreVis.Idx = default;
             IdxSel.Reset();
             GetterUnitsC.ResetCurTimer(unitType);
 
@@ -103,10 +102,12 @@ namespace Chessy.Game
             {
                 if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Second))
                 {
+                    CellClickC.Set(CellClickTypes.SetUnit);
                     SelUnitC.SetSelUnit(unitType, LevelUnitTypes.Second);
                 }
                 else if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.First))
                 {
+                    CellClickC.Set(CellClickTypes.SetUnit);
                     SelUnitC.SetSelUnit(unitType, LevelUnitTypes.First);
                 }
                 else

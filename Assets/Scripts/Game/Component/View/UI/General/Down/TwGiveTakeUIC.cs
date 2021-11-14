@@ -6,19 +6,16 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public struct GiveTakeViewUIC
+    public struct TwGiveTakeUIC
     {
-        private static Button _upgradeUnit_But;
+
         private static Dictionary<ToolWeaponTypes, Button> _toolAndWeapon_Buts;
         private static Dictionary<ToolWeaponTypes, TextMeshProUGUI> _toolWeaponAmount_texsMPs;
         private static Dictionary<ToolWeaponTypes, Dictionary<LevelTWTypes, Image>> _toolWeapon_Images;
 
-        public GiveTakeViewUIC(GameObject downZone_GO)
+        public TwGiveTakeUIC(GameObject downZone_GO)
         {
             var gTZone_Trans = downZone_GO.transform.Find("GiveTakeZone");
-
-
-            _upgradeUnit_But = gTZone_Trans.Find("UpgradeUnit_Button").GetComponent<Button>();
 
 
             _toolAndWeapon_Buts = new Dictionary<ToolWeaponTypes, Button>();
@@ -56,7 +53,7 @@ namespace Chessy.Game
             else image.color = new Color(image.color.r, image.color.g, image.color.b, 0);
         }
 
-        public static void AddListUpgradeButton(UnityAction unityAction) => _upgradeUnit_But.onClick.AddListener(unityAction);
+        
         public static void AddList_Button(ToolWeaponTypes giveTakeType, UnityAction unityAction) => _toolAndWeapon_Buts[giveTakeType].onClick.AddListener(unityAction);
 
         public static void SetText(ToolWeaponTypes giveTakeType, string text) => _toolWeaponAmount_texsMPs[giveTakeType].text = text;

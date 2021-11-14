@@ -39,11 +39,14 @@ namespace Chessy.Game
             new HeroesViewUIC(centerZone_GO.transform);
 
             ///Down
-            new GetterUnitsViewUIC(downZone_GO);
+            new TwGiveTakeUIC(downZone_GO);
             new DonerUICom(downZone_GO);
-            new GiveTakeViewUIC(downZone_GO);
-            new ScoutUIC(downZone_GO.transform);
-            new HeroDownUIC(downZone_GO.transform);
+            new UpgUnitUIC(downZone_GO.transform);
+
+            var takeUnitZone = downZone_GO.transform.Find("TakeUnitZone");
+            new GetPawnArcherUIC(takeUnitZone);
+            new GetScoutUIC(takeUnitZone);
+            new GetHeroDownUIC(takeUnitZone);
 
             ///Left
             new CutyLeftZoneViewUIC(leftZone_GO);

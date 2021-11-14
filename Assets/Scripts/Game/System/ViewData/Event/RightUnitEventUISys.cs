@@ -79,7 +79,8 @@ namespace Chessy.Game
                                         break;
 
                                     case UniqAbilTypes.FireArcher:
-                                        CellClickC.Set(CellClickTypes.PickFire);
+                                        CellClickC.Set(CellClickTypes.UniqAbil);
+                                        SelUniqAbilC.UniqAbil = UniqAbilTypes.FireArcher;
                                         TryOnHint(VideoClipTypes.SeedFire);
                                         break;
 
@@ -110,7 +111,8 @@ namespace Chessy.Game
 
                                     case UniqAbilTypes.StunElfemale:
                                         {
-                                            CellClickC.Set(CellClickTypes.StunElfemale);
+                                            CellClickC.Set(CellClickTypes.UniqAbil);
+                                            SelUniqAbilC.UniqAbil = UniqAbilTypes.StunElfemale;
                                             TryOnHint(VideoClipTypes.StunElfemale);
                                         }
                                         break;
@@ -134,7 +136,8 @@ namespace Chessy.Game
                                     case UniqAbilTypes.PutOutFireElfemale:
                                         {
                                             TryOnHint(VideoClipTypes.PutOutElfemale);
-                                            CellClickC.Set(CellClickTypes.PutOutFireElfemale);
+                                            CellClickC.Set(CellClickTypes.UniqAbil);
+                                            SelUniqAbilC.UniqAbil = UniqAbilTypes.PutOutFireElfemale;
                                         }
                                         break;
                                     default: throw new Exception();

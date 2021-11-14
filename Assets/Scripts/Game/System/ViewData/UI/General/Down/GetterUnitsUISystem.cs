@@ -16,12 +16,12 @@ namespace Chessy.Game
                 {
                     if (GetterUnitsC.IsActivatedButton(curUnitType))
                     {
-                        GetterUnitsViewUIC.SetActiveCreateButton(curUnitType, true);
+                        GetPawnArcherUIC.SetActiveCreateButton(curUnitType, true);
                         GetterUnitsC.AddTimer(curUnitType, Time.deltaTime);
 
                         if (GetterUnitsC.GetTimer(curUnitType) >= NEEDED_TIME)
                         {
-                            GetterUnitsViewUIC.SetActiveCreateButton(curUnitType, false);
+                            GetPawnArcherUIC.SetActiveCreateButton(curUnitType, false);
                             GetterUnitsC.ActiveNeedCreateButton(curUnitType, false);
                             GetterUnitsC.ResetCurTimer(curUnitType);
                         }
@@ -29,14 +29,14 @@ namespace Chessy.Game
 
                     else
                     {
-                        GetterUnitsViewUIC.SetActiveCreateButton(curUnitType, false);
+                        GetPawnArcherUIC.SetActiveCreateButton(curUnitType, false);
                     }
                 }
             }
 
 
-            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Pawn, InvUnitsC.AmountUnits(WhoseMoveC.CurPlayerI, UnitTypes.Pawn).ToString());
-            GetterUnitsViewUIC.SetTextToAmountUnits(UnitTypes.Archer, InvUnitsC.AmountUnits(WhoseMoveC.CurPlayerI, UnitTypes.Archer).ToString());
+            GetPawnArcherUIC.SetTextToAmountUnits(UnitTypes.Pawn, InvUnitsC.AmountUnits(WhoseMoveC.CurPlayerI, UnitTypes.Pawn).ToString());
+            GetPawnArcherUIC.SetTextToAmountUnits(UnitTypes.Archer, InvUnitsC.AmountUnits(WhoseMoveC.CurPlayerI, UnitTypes.Archer).ToString());
         }
     }
 }

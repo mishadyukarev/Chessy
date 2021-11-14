@@ -21,7 +21,7 @@ namespace Chessy.Game
             {
                 if (RayCastC.Is(RaycastTypes.UI))
                 {
-                    SelUnitC.Reset();
+                    Reset();
                 }
 
                 else if (RayCastC.Is(RaycastTypes.Cell))
@@ -36,26 +36,41 @@ namespace Chessy.Game
 
                     else
                     {
-                        if (SelUnitC.IsSelUnit)
+                        if (Is(CellClickTypes.SetUnit))
                         {
-                            RpcSys.SetUniToMaster(IdxCur.Idx, SelUnitC.SelUnit);
-                            SelUnitC.Reset();
+                            if (SelUnitC.IsSelUnit)
+                            {
+                                RpcSys.SetUniToMaster(IdxCur.Idx, SelUnitC.SelUnit);
+                                Reset();
+                            }
                         }
 
-                        else if (Is(CellClickTypes.PickFire))
+                        else if (Is(CellClickTypes.UniqAbil))
                         {
-                            RpcSys.FireArcherToMas(IdxSel.Idx, IdxCur.Idx);
+                            if (SelUniqAbilC.Is(UniqAbilTypes.FireArcher))
+                            {
+                                RpcSys.FireArcherToMas(IdxSel.Idx, IdxCur.Idx);
 
-                            Reset();
-                            IdxSel.Idx = IdxCur.Idx;
-                        }
+                                Reset();
+                                IdxSel.Idx = IdxCur.Idx;
+                            }
 
-                        else if (Is(CellClickTypes.PutOutFireElfemale))
-                        {
-                            RpcSys.PutOutFireElffToMas(IdxSel.Idx, IdxCur.Idx);
+                            else if (SelUniqAbilC.Is(UniqAbilTypes.PutOutFireElfemale))
+                            {
+                                RpcSys.PutOutFireElffToMas(IdxSel.Idx, IdxCur.Idx);
 
-                            Reset();
-                            IdxSel.Idx = IdxCur.Idx;
+                                Reset();
+                                IdxSel.Idx = IdxCur.Idx;
+                            }
+
+                            else if (SelUniqAbilC.Is(UniqAbilTypes.StunElfemale))
+                            {
+                                IdxPre.Idx = IdxSel.Idx;
+                                IdxSel.Idx = IdxCur.Idx;
+
+                                RpcSys.StunElfemaleToMas(IdxPre.Idx, IdxSel.Idx);
+                                Reset();
+                            }
                         }
 
                         else if (Is(CellClickTypes.GiveTakeTW))
@@ -126,15 +141,6 @@ namespace Chessy.Game
                             {
                                 Reset();
                             }
-                        }
-
-                        else if (Is(CellClickTypes.StunElfemale))
-                        {
-                            IdxPre.Idx = IdxSel.Idx;
-                            IdxSel.Idx = IdxCur.Idx;
-
-                            RpcSys.StunElfemaleToMas(IdxPre.Idx, IdxSel.Idx);
-                            Reset();
                         }
 
                         else if (IdxSel.IsSelCell)
@@ -214,7 +220,6 @@ namespace Chessy.Game
 
                 else
                 {
-                    SelUnitC.Reset();
                     IdxSel.Reset();
                     Reset();
                     TwGiveTakeC.TWTypeForGive = default;

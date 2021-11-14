@@ -9,7 +9,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            if (SelUnitC.IsSelUnit)
+            if (CellClickC.Is(CellClickTypes.SetUnit))
             {
                 var idxCurCell = IdxCur.Idx;
                 var idxPreCell = IdxPreVis.Idx;

@@ -5,62 +5,53 @@ namespace Chessy.Game
 {
     public sealed class CloudUpdMasSys : IEcsRunSystem
     {
-        private EcsFilter<XyC> _xyCellFilter = default;
-        private EcsFilter<CloudC> _cellWeatherFilt = default;
+        private EcsFilter<XyC> _xyF = default;
+        private EcsFilter<CloudC> _cloudF = default;
 
         public void Run()
         {
-            var weather_0 = _cellWeatherFilt.Get1(WhereCloudsC.Cloud);
-            var xyStart = _xyCellFilter.Get1(WhereCloudsC.Cloud).Xy;
+            var weather_0 = _cloudF.Get1(CloudCenterC.Idx);
+            var xy_0 = _xyF.Get1(CloudCenterC.Idx).Xy;
 
 
-            var aroundList = CellSpace.GetXyAround(xyStart);
+            var aroundList = CellSpace.GetXyAround(xy_0);
 
-            byte curIdx = 0;
+            weather_0.Have = false;
 
-            foreach (var xYArount in aroundList)
+            foreach (var xyArount in aroundList)
             {
-                curIdx = _xyCellFilter.GetIdxCell(xYArount);
+                var idx_1 = _xyF.GetIdxCell(xyArount);
 
-                _cellWeatherFilt.Get1(curIdx).Have = false;
+                _cloudF.Get1(idx_1).Have = false;
             }
 
-            var xyNext = CellSpace.GetXyCellByDirect(xyStart, WindC.DirectWind);
+            var xy_next = CellSpace.GetXyCellByDirect(xy_0, WindC.DirectWind);
 
-            if (xyNext[0] > 3 && xyNext[0] < 12 && xyNext[1] > 1 && xyNext[1] < 9)
+
+            if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
             {
-                weather_0.CloudWidth = CloudWidthTypes.None;
-                WhereCloudsC.Remove(WhereCloudsC.Cloud);
-                weather_0.Have = false;
+                CloudCenterC.Idx = _xyF.GetIdxCell(xy_next);
+                _cloudF.Get1(CloudCenterC.Idx).Have = true;
 
-
-                var idxNext = _xyCellFilter.GetIdxCell(xyNext);
-
-                _cellWeatherFilt.Get1(idxNext).CloudWidth = CloudWidthTypes.TwoBlocks;
-                WhereCloudsC.Add(idxNext);
-                _cellWeatherFilt.Get1(idxNext).Have = true;
-
-
-                aroundList = CellSpace.GetXyAround(xyNext);
-                curIdx = 0;
+                aroundList = CellSpace.GetXyAround(xy_next);
 
                 foreach (var xYArount in aroundList)
                 {
-                    curIdx = _xyCellFilter.GetIdxCell(xYArount);
+                    var idx_0 = _xyF.GetIdxCell(xYArount);
 
-                    _cellWeatherFilt.Get1(curIdx).Have = true;
+                    _cloudF.Get1(idx_0).Have = true;
                 }
             }
             else
             {
-                aroundList = CellSpace.GetXyAround(xyNext);
-                curIdx = 0;
+                
+                aroundList = CellSpace.GetXyAround(xy_next);
 
-                foreach (var xYArount in aroundList)
+                foreach (var xyArount in aroundList)
                 {
-                    curIdx = _xyCellFilter.GetIdxCell(xYArount);
+                    var idx_1 = _xyF.GetIdxCell(xyArount);
 
-                    _cellWeatherFilt.Get1(curIdx).Have = true;
+                    _cloudF.Get1(idx_1).Have = true;
                 }
 
                 RandomCloud();

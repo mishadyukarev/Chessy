@@ -100,7 +100,7 @@ namespace Chessy.Game
             new CellsAttackC(true);
             new CellsGiveTWComp(true);
 
-            new WhereCloudsC(true);
+            //new WhereCloudsC(true);
             new WhereEnvC(true);
             new WhereUnitsC(true);
 
@@ -111,11 +111,12 @@ namespace Chessy.Game
 
             new WhoseMoveC(true);
             new ScoutHeroCooldownC(true);
-            new CellClickC(CellClickTypes.None);
+            new CellClickC(default);
             new IdxSel(0);
+            //new SelUniqAbilC(default);
 
 
-            new PlyerWinnerC(PlayerTypes.None);
+            new PlyerWinnerC(default);
             new ReadyC(new Dictionary<PlayerTypes, bool>());
             new MotionsC(0);
             new MistakeC(new Dictionary<ResTypes, int>());

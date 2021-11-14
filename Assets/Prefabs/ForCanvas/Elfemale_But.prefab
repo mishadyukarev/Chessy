@@ -258,7 +258,7 @@ GameObject:
   - component: {fileID: 3908082324592912173}
   - component: {fileID: 7062954303348110988}
   m_Layer: 5
-  m_Name: Elffemale_But
+  m_Name: Elfemale_But
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

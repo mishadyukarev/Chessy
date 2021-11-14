@@ -6,20 +6,20 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public struct GetterUnitsViewUIC
+    public struct GetPawnArcherUIC
     {
         private static Dictionary<UnitTypes, Button> _taker_Buttons;
         private static Dictionary<UnitTypes, Button> _createUnit_Buttons;
         private static Dictionary<UnitTypes, TextMeshProUGUI> _amountUnits_TextMPs;
 
-        public GetterUnitsViewUIC(GameObject downZone_GO)
+        public GetPawnArcherUIC(Transform takeUnitZone)
         {
-            var takeUnitZone_GO = downZone_GO.transform.Find("TakeUnitZone");
+            var takeUnitZone_GO = takeUnitZone;
 
 
             _taker_Buttons = new Dictionary<UnitTypes, Button>();
-            _taker_Buttons.Add(UnitTypes.Pawn, takeUnitZone_GO.transform.Find("TakeUnit1Button").GetComponent<Button>());
-            _taker_Buttons.Add(UnitTypes.Archer, takeUnitZone_GO.transform.Find("TakeUnit2Button").GetComponent<Button>());
+            _taker_Buttons.Add(UnitTypes.Pawn, takeUnitZone_GO.transform.Find(UnitTypes.Pawn.ToString()).GetComponent<Button>());
+            _taker_Buttons.Add(UnitTypes.Archer, takeUnitZone_GO.transform.Find(UnitTypes.Archer.ToString()).GetComponent<Button>());
 
             _createUnit_Buttons = new Dictionary<UnitTypes, Button>();
             _createUnit_Buttons.Add(UnitTypes.Pawn, takeUnitZone_GO.transform.Find("CreatePawn_Button").GetComponent<Button>());

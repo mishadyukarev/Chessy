@@ -40,10 +40,13 @@ namespace Chessy.Game
 
                 if (fire_0.Have)
                 {
-                    if (CellClickC.Is(CellClickTypes.PutOutFireElfemale))
+                    if (CellClickC.Is(CellClickTypes.UniqAbil))
                     {
-                        supView_0.EnableSR();
-                        supView_0.SetColor(SupVisTypes.GivePawnTool);
+                        if (SelUniqAbilC.Is(UniqAbilTypes.PutOutFireElfemale))
+                        {
+                            supView_0.EnableSR();
+                            supView_0.SetColor(SupVisTypes.GivePawnTool);
+                        }
                     }
                 }
 
@@ -88,10 +91,13 @@ namespace Chessy.Game
                         {
                             if (env_0.Have(EnvTypes.AdultForest))
                             {
-                                if (CellClickC.Is(CellClickTypes.StunElfemale))
+                                if (CellClickC.Is(CellClickTypes.UniqAbil))
                                 {
-                                    supView_0.EnableSR();
-                                    supView_0.SetColor(SupVisTypes.GivePawnTool);
+                                    if (SelUniqAbilC.Is(UniqAbilTypes.StunElfemale))
+                                    {
+                                        supView_0.EnableSR();
+                                        supView_0.SetColor(SupVisTypes.GivePawnTool);
+                                    }
                                 }
                             }
                         }
@@ -110,12 +116,15 @@ namespace Chessy.Game
                 {
                     if (_cellUnitFilter.Get3(IdxSel.Idx).Is(WhoseMoveC.CurPlayerI))
                     {
-                        if (CellClickC.Is(CellClickTypes.PickFire))
+                        if (CellClickC.Is(CellClickTypes.UniqAbil))
                         {
-                            foreach (var curIdxCell in CellsArsonArcherComp.GetListCopy(WhoseMoveC.CurPlayerI, IdxSel.Idx))
+                            if (SelUniqAbilC.Is(UniqAbilTypes.FireArcher))
                             {
-                                _supViewFilter.Get1(curIdxCell).EnableSR();
-                                _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.FireSelector);
+                                foreach (var curIdxCell in CellsArsonArcherComp.GetListCopy(WhoseMoveC.CurPlayerI, IdxSel.Idx))
+                                {
+                                    _supViewFilter.Get1(curIdxCell).EnableSR();
+                                    _supViewFilter.Get1(curIdxCell).SetColor(SupVisTypes.FireSelector);
+                                }
                             }
                         }
 
@@ -142,7 +151,7 @@ namespace Chessy.Game
                     }
                 }
             }
-            if (SelUnitC.IsSelUnit)
+            if (CellClickC.Is(CellClickTypes.SetUnit))
             {
                 foreach (var curIdxCell in CellsForSetUnitC.GetListCells(WhoseMoveC.CurPlayerI))
                 {

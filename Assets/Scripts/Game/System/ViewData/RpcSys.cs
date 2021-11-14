@@ -485,7 +485,7 @@ namespace Chessy.Game
 
                 ref var cloud_0 = ref _cellCloudFilt.Get1(idx_0);
                 objs.Add(cloud_0.Have);
-                objs.Add(cloud_0.CloudWidth);
+                //objs.Add(cloud_0.CloudWidth);
 
 
                 objs.Add(_cellFireFilter.Get1(idx_0).Have);
@@ -717,7 +717,7 @@ namespace Chessy.Game
 
 
                 ref var cloud_0 = ref _cellCloudFilt.Get1(idx_0);
-                cloud_0.Sync((bool)objects[_curIdx++], (CloudWidthTypes)objects[_curIdx++]);
+                cloud_0.Sync((bool)objects[_curIdx++]/*, (CloudWidthTypes)objects[_curIdx++]*/);
 
 
 

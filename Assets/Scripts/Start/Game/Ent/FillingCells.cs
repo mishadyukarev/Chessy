@@ -92,8 +92,8 @@ namespace Chessy.Game
                         if (xy_0[0] == 5 && xy_0[1] == 5)
                         {
                             cloud_0.Have = true;
-                            cloud_0.CloudWidth = CloudWidthTypes.OneBlock;
-                            WhereCloudsC.Add(idx_0);
+                            //cloud_0.CloudWidth = CloudWidthTypes.OneBlock;
+                            CloudCenterC.Idx = idx_0;
                         }
 
 
