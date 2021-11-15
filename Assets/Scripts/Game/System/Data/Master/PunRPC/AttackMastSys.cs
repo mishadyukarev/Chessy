@@ -92,8 +92,8 @@ namespace Chessy.Game
                 powerDam_from += damUnit_from.DamageAttack(unit_from.Unit, levUnit_from.Level, twUnit_from, effUnit_from, simpUniqueType, UnitPercUpgC.UpgPercent(ownUnit_from.Owner, unit_from.Unit, UnitStatTypes.Damage));
 
                 if (unit_from.IsMelee)
-                    RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.AttackMelee);
-                else RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.AttackArcher);
+                    RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
+                else RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackArcher);
 
 
 

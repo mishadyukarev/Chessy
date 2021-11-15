@@ -56,8 +56,8 @@ namespace Chessy.Game
 
                     if (!haveNearBorder)
                     {
-                        RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
-                        RpcSys.SoundToGeneral(sender, ClipGameTypes.AfterBuildTown);
+                        RpcSys.SoundToGeneral(sender, ClipTypes.Building);
+                        RpcSys.SoundToGeneral(sender, ClipTypes.AfterBuildTown);
 
                         if (build_0.Have)
                         {

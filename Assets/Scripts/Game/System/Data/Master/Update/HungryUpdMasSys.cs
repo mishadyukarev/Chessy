@@ -9,7 +9,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (var player = Support.MinPlayerType; player < Support.MaxPlayerType; player++)
+            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
                 var res = ResTypes.Food;
 

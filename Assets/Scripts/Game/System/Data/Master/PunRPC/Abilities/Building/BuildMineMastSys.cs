@@ -48,7 +48,7 @@ namespace Chessy.Game
                                     build_0.Remove();
                                 }
 
-                                RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
+                                RpcSys.SoundToGeneral(sender, ClipTypes.Building);
 
                                 InvResC.BuyBuild(whoseMove, forBuildType);
 

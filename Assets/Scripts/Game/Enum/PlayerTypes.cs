@@ -3,8 +3,11 @@
     public enum PlayerTypes
     {
         None,
+        Start = None,
 
         First,
         Second,
+
+        End,
     }
 }

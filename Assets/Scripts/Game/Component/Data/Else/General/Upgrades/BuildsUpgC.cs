@@ -34,7 +34,7 @@ namespace Chessy.Game
                 _haveUpgrades.Add(PlayerTypes.Second, new Dictionary<BuildTypes, bool>());
 
 
-                for (BuildTypes build = 0; build < (BuildTypes)Enum.GetNames(typeof(BuildTypes)).Length; build++)
+                for (var build = BuildTypes.None; build < BuildTypes.End; build++)
                 {
                     _haveUpgrades[PlayerTypes.First].Add(build, false);
                     _haveUpgrades[PlayerTypes.Second].Add(build, false);

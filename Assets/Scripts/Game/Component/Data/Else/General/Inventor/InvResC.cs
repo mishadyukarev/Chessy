@@ -38,10 +38,10 @@ namespace Chessy.Game
                     _amountRes[PlayerTypes.First] = new Dictionary<ResTypes, int>();
                     _amountRes[PlayerTypes.Second] = new Dictionary<ResTypes, int>();
 
-                    for (ResTypes resourceType = (ResTypes)1; resourceType < (ResTypes)Enum.GetNames(typeof(ResTypes)).Length; resourceType++)
+                    for (var res = ResTypes.First; res < ResTypes.End; res++)
                     {
-                        _amountRes[PlayerTypes.First].Add(resourceType, default);
-                        _amountRes[PlayerTypes.Second].Add(resourceType, default);
+                        _amountRes[PlayerTypes.First].Add(res, default);
+                        _amountRes[PlayerTypes.Second].Add(res, default);
                     }
                 }
 
@@ -74,10 +74,10 @@ namespace Chessy.Game
             needRes = new Dictionary<ResTypes, int>();
             var canCreatBuild = true;
 
-            for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                var difAmountRes = AmountRes(playerType, resType) - EconomyValues.AmountResForBuild(buildingType, resType);
-                needRes.Add(resType, difAmountRes);
+                var difAmountRes = AmountRes(playerType, res) - EconomyValues.AmountResForBuild(buildingType, res);
+                needRes.Add(res, difAmountRes);
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
             }
@@ -86,7 +86,7 @@ namespace Chessy.Game
         }
         public static void BuyBuild(PlayerTypes playerType, BuildTypes buildingType)
         {
-            for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
                 Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForBuild(buildingType, resType));
         }
 
@@ -95,7 +95,7 @@ namespace Chessy.Game
             needRes = new Dictionary<ResTypes, int>();
             var canCreatBuild = true;
 
-            for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
                 var difAmountRes = AmountRes(playerType, resType) - EconomyValues.AmountResForBuy(unitType, resType);
                 needRes.Add(resType, difAmountRes);
@@ -107,7 +107,7 @@ namespace Chessy.Game
         }
         public static void BuyCreateUnit(PlayerTypes playerType, UnitTypes unitType)
         {
-            for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
                 Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForBuy(unitType, resType));
         }
 
@@ -116,7 +116,7 @@ namespace Chessy.Game
             needRes = new Dictionary<ResTypes, int>();
             var canCreatBuild = true;
 
-            for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
                 var difAmountRes = AmountRes(playerType, resType) - EconomyValues.AmountResForMelting(resType);
                 needRes.Add(resType, difAmountRes);
@@ -128,7 +128,7 @@ namespace Chessy.Game
         }
         public static void BuyMeltOre(PlayerTypes playerType)
         {
-            for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
                 Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForMelting(resType));
 
             AddAmountRes(playerType, ResTypes.Iron, 4);
@@ -140,7 +140,7 @@ namespace Chessy.Game
             needRes = new Dictionary<ResTypes, int>();
             var canCreatBuild = true;
 
-            for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
                 var difAmountRes = AmountRes(playerType, resType) - EconomyValues.AmountResForBuyRes(resType);
                 needRes.Add(resType, difAmountRes);
@@ -152,7 +152,7 @@ namespace Chessy.Game
         }
         public static void BuyRes(PlayerTypes playerType, ResTypes res)
         {
-            for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
                 Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForBuyRes(resType));
             }
@@ -180,7 +180,7 @@ namespace Chessy.Game
             needRes = new Dictionary<ResTypes, int>();
             var canCreatBuild = true;
 
-            for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
                 var difAmountRes = AmountRes(playerType, resType) - EconomyValues.AmountResForUpgradeUnit(unitType, resType);
                 needRes.Add(resType, difAmountRes);
@@ -192,7 +192,7 @@ namespace Chessy.Game
         }
         public static void BuyUpgradeUnit(PlayerTypes playerType, UnitTypes unitType)
         {
-            for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
                 Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForUpgradeUnit(unitType, resType));
         }
 
@@ -203,7 +203,7 @@ namespace Chessy.Game
             needRes = new Dictionary<ResTypes, int>();
             var canCreatBuild = true;
 
-            for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
                 var difAmountRes = AmountRes(playerType, resType) - EconomyValues.AmountResForBuyTW(toolWeaponType, levelTWType, resType);
                 needRes.Add(resType, difAmountRes);
@@ -215,7 +215,7 @@ namespace Chessy.Game
         }
         public static void BuyTW(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, LevelTWTypes levelTWType)
         {
-            for (ResTypes resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
                 Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForBuyTW(toolWeaponType, levelTWType, resType));
         }
     }

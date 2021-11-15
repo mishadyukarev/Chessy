@@ -22,7 +22,7 @@ namespace Chessy.Menu
                 .Add(new ConnectorMenuSys());
 
             new MenuSysDataViewC(launchLikeGameSys.Run);
-            new MenuSysDataC(runUpdate.Run);
+            new DataSC(runUpdate.Run);
 
             
 

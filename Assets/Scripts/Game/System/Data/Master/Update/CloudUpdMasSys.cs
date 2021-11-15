@@ -25,7 +25,7 @@ namespace Chessy.Game
                 _cloudF.Get1(idx_1).Have = false;
             }
 
-            var xy_next = CellSpace.GetXyCellByDirect(xy_0, WindC.DirectWind);
+            var xy_next = CellSpace.GetXyCellByDirect(xy_0, WindC.Direct);
 
 
             if (xy_next[0] > 3 && xy_next[0] < 12 && xy_next[1] > 1 && xy_next[1] < 9)
@@ -61,7 +61,7 @@ namespace Chessy.Game
 
         private void RandomCloud()
         {
-            var newDir = WindC.DirectWind;
+            var newDir = WindC.Direct;
 
             newDir = newDir.Invert();
             var newDirInt = (int)newDir;
@@ -69,7 +69,7 @@ namespace Chessy.Game
 
             if (newDirInt <= 0) newDirInt = 1;
             else if(newDirInt >= typeof(DirectTypes).GetEnumNames().Length) newDirInt = newDirInt = 1;
-            WindC.DirectWind = (DirectTypes)newDirInt;
+            WindC.Set((DirectTypes)newDirInt);
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Chessy.Game
                 _zones.Add(uniqBut, new Dictionary<UniqAbilTypes, GameObject>());
                 _cooldowns.Add(uniqBut, _buttons[uniqBut].transform.Find("Cooldown").Find("Text (TMP)").GetComponent<TextMeshProUGUI>());
 
-                for (var uniqAbil = (UniqAbilTypes)1; uniqAbil < (UniqAbilTypes)typeof(UniqAbilTypes).GetEnumNames().Length; uniqAbil++)
+                for (var uniqAbil = UniqAbilTypes.None + 1; uniqAbil < UniqAbilTypes.End; uniqAbil++)
                 {
                     _zones[uniqBut].Add(uniqAbil, _buttons[uniqBut].transform.Find(uniqAbil.ToString()).gameObject);
                 }

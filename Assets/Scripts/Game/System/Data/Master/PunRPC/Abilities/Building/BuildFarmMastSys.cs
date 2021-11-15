@@ -42,7 +42,7 @@ namespace Chessy.Game
                         {
                             if (InvResC.CanCreateBuild(whoseMove, forBuildType, out var needRes))
                             {
-                                RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
+                                RpcSys.SoundToGeneral(sender, ClipTypes.Building);
 
                                 if (build_0.Have)
                                 {

@@ -21,9 +21,9 @@ namespace Chessy.Game
         {
             _haveEnvir = haveCellEnvironments;
 
-            for (var envirType = Support.MinEnvironType; envirType < Support.MaxEnvironType; envirType++)
+            for (var env = EnvTypes.First; env < EnvTypes.End; env++)
             {
-                _haveEnvir.Add(envirType, default);
+                _haveEnvir.Add(env, default);
             }
         }
 

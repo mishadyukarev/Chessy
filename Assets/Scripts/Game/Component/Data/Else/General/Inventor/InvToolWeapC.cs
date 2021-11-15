@@ -38,21 +38,21 @@ namespace Chessy.Game
             {
                 _toolWeapons = new Dictionary<PlayerTypes, Dictionary<ToolWeaponTypes, Dictionary<LevelTWTypes, byte>>>();
 
-                for (PlayerTypes playerType = (PlayerTypes)1; playerType < (PlayerTypes)Enum.GetNames(typeof(PlayerTypes)).Length; playerType++)
+                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
-                    _toolWeapons[playerType] = new Dictionary<ToolWeaponTypes, Dictionary<LevelTWTypes, byte>>();
+                    _toolWeapons[player] = new Dictionary<ToolWeaponTypes, Dictionary<LevelTWTypes, byte>>();
 
-                    _toolWeapons[playerType].Add(ToolWeaponTypes.Pick, new Dictionary<LevelTWTypes, byte>());
-                    _toolWeapons[playerType].Add(ToolWeaponTypes.Sword, new Dictionary<LevelTWTypes, byte>());
-                    _toolWeapons[playerType].Add(ToolWeaponTypes.Shield, new Dictionary<LevelTWTypes, byte>());
+                    _toolWeapons[player].Add(ToolWeaponTypes.Pick, new Dictionary<LevelTWTypes, byte>());
+                    _toolWeapons[player].Add(ToolWeaponTypes.Sword, new Dictionary<LevelTWTypes, byte>());
+                    _toolWeapons[player].Add(ToolWeaponTypes.Shield, new Dictionary<LevelTWTypes, byte>());
 
-                    _toolWeapons[playerType][ToolWeaponTypes.Pick].Add(LevelTWTypes.Wood, default);
-                    _toolWeapons[playerType][ToolWeaponTypes.Sword].Add(LevelTWTypes.Wood, default);
-                    _toolWeapons[playerType][ToolWeaponTypes.Shield].Add(LevelTWTypes.Wood, default);
+                    _toolWeapons[player][ToolWeaponTypes.Pick].Add(LevelTWTypes.Wood, default);
+                    _toolWeapons[player][ToolWeaponTypes.Sword].Add(LevelTWTypes.Wood, default);
+                    _toolWeapons[player][ToolWeaponTypes.Shield].Add(LevelTWTypes.Wood, default);
 
-                    _toolWeapons[playerType][ToolWeaponTypes.Pick].Add(LevelTWTypes.Iron, default);
-                    _toolWeapons[playerType][ToolWeaponTypes.Sword].Add(LevelTWTypes.Iron, default);
-                    _toolWeapons[playerType][ToolWeaponTypes.Shield].Add(LevelTWTypes.Iron, default);
+                    _toolWeapons[player][ToolWeaponTypes.Pick].Add(LevelTWTypes.Iron, default);
+                    _toolWeapons[player][ToolWeaponTypes.Sword].Add(LevelTWTypes.Iron, default);
+                    _toolWeapons[player][ToolWeaponTypes.Shield].Add(LevelTWTypes.Iron, default);
                 }
             }
         }

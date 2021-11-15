@@ -50,7 +50,7 @@ namespace Chessy.Game
                 {
                     _cooldowns = new Dictionary<PlayerTypes, Dictionary<UnitTypes, int>>();
 
-                    for (var player = (PlayerTypes)1; player < (PlayerTypes)typeof(PlayerTypes).GetEnumNames().Length; player++)
+                    for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                     {
                         _cooldowns.Add(player, new Dictionary<UnitTypes, int>());
 

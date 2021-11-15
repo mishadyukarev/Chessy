@@ -27,7 +27,7 @@ namespace Chessy.Game
 
                     step_0.TakeSteps();
 
-                    RpcSys.SoundToGeneral(sender, ClipGameTypes.PickArcher);
+                    RpcSys.SoundToGeneral(sender, ClipTypes.PickArcher);
                 }
                 else
                 {

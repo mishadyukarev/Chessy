@@ -163,7 +163,7 @@ namespace Chessy.Game
                     default: throw new Exception();
                 }
 
-                DataMastC.InvokeRun(uniqAbil);
+                DataMastSC.InvokeRun(uniqAbil);
             }
             else
             {
@@ -253,7 +253,7 @@ namespace Chessy.Game
                         throw new Exception();
                 }
 
-                DataMastC.InvokeRun(rpcType);
+                DataMastSC.InvokeRun(rpcType);
             }
 
             SyncAllToMast();
@@ -266,7 +266,7 @@ namespace Chessy.Game
 
         public static void MistakeEconomyToGeneral(Player playerTo, Dictionary<ResTypes, int> needRes)
         {
-            int[] needRes2 = new int[(int)Support.MaxResType];
+            int[] needRes2 = new int[(int)ResTypes.End];
             needRes2[0] = needRes[ResTypes.Food];
             needRes2[1] = needRes[ResTypes.Wood];
             needRes2[2] = needRes[ResTypes.Ore];
@@ -281,9 +281,9 @@ namespace Chessy.Game
 
         public static void ActiveMotionZoneToGen(Player player) => PhotonView.RPC(GeneralRPCName, player, RpcGeneralTypes.ActiveMotion, new object[] { });
 
-        public static void SoundToGeneral(RpcTarget rpcTarget, ClipGameTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.SoundEff, new object[] { soundEffectType });
+        public static void SoundToGeneral(RpcTarget rpcTarget, ClipTypes soundEffectType) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.SoundEff, new object[] { soundEffectType });
         public static void SoundToGeneral(RpcTarget rpcTarget, UniqAbilTypes uniq) => PhotonView.RPC(GeneralRPCName, rpcTarget, RpcGeneralTypes.SoundUniq, new object[] { uniq });
-        public static void SoundToGeneral(Player playerTo, ClipGameTypes eff) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SoundEff, new object[] { eff });
+        public static void SoundToGeneral(Player playerTo, ClipTypes eff) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SoundEff, new object[] { eff });
         public static void SoundToGeneral(Player playerTo, UniqAbilTypes uniq) => PhotonView.RPC(GeneralRPCName, playerTo, RpcGeneralTypes.SoundUniq, new object[] { uniq });
 
         [PunRPC]
@@ -315,11 +315,11 @@ namespace Chessy.Game
                         MistakeC.AddNeedRes(ResTypes.Gold, needRes[4]);
                     }
 
-                    SoundEffectC.Play(ClipGameTypes.Mistake);
+                    SoundEffectC.Play(ClipTypes.Mistake);
                     break;
 
                 case RpcGeneralTypes.SoundEff:
-                    var soundEffectType = (ClipGameTypes)objects[_curIdx++];
+                    var soundEffectType = (ClipTypes)objects[_curIdx++];
                     SoundEffectC.Play(soundEffectType);
                     break;
 
@@ -386,7 +386,7 @@ namespace Chessy.Game
                 }
             }
 
-            objs.Add(WindC.DirectWind);
+            objs.Add(WindC.Direct);
 
 
             #region Upgrades
@@ -617,7 +617,7 @@ namespace Chessy.Game
                 }
             }
 
-            WindC.DirectWind = (DirectTypes)objects[_curIdx++];
+            WindC.Sync((DirectTypes)objects[_curIdx++]);
 
 
             #region Upgrades
@@ -821,7 +821,7 @@ namespace Chessy.Game
         [PunRPC]
         private void UpdateVision()
         {
-            GameGenSysDataViewC.RotateAll.Invoke();
+            DataViewSC.RotateAll.Invoke();
         }
 
         #endregion

@@ -5,23 +5,23 @@ namespace Chessy.Game
 {
     public sealed class AbilSyncMasSys : IEcsRunSystem
     {
-        private EcsFilter<UnitC, OwnerC> _unitBaseFilt = default;
+        private EcsFilter<UnitC, OwnerC> _unitF = default;
         private EcsFilter<UniqAbilC> _uniqUnitF = default;
-        private EcsFilter<EnvC> _envFilt = default;
-        private EcsFilter<FireC> _fireFilt = default;
+        private EcsFilter<EnvC> _envF = default;
+        private EcsFilter<FireC> _fireF = default;
 
         public void Run()
         {
             foreach (var idx_0 in _uniqUnitF)
             {
-                ref var unit_0 = ref _unitBaseFilt.Get1(idx_0);
+                ref var unit_0 = ref _unitF.Get1(idx_0);
 
-                ref var ownUnit_0 = ref _unitBaseFilt.Get2(idx_0);
+                ref var ownUnit_0 = ref _unitF.Get2(idx_0);
 
                 ref var uniq_0 = ref _uniqUnitF.Get1(idx_0);
 
-                ref var env_0 = ref _envFilt.Get1(idx_0);
-                ref var fire_0 = ref _fireFilt.Get1(idx_0);
+                ref var env_0 = ref _envF.Get1(idx_0);
+                ref var fire_0 = ref _fireF.Get1(idx_0);
 
 
                 if (ownUnit_0.Is(WhoseMoveC.CurPlayerI))

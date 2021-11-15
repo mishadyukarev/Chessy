@@ -11,13 +11,13 @@ namespace Chessy
     {
         private SceneTypes _curScene;
 
-        private EcsWorld _menuWorld;
-        private EcsWorld _gameWorld;
+        private EcsWorld _menuW;
+        private EcsWorld _gameW;
 
         private void Start()
         {
-            var comWorld = new EcsWorld();
-            new Common.FillEntitiesSys(comWorld, ToggleScene, gameObject);
+            var comW = new EcsWorld();
+            new Common.FillEntitiesSys(comW, ToggleScene, gameObject);
 
             _curScene = SceneTypes.Menu;
             ToggleScene(_curScene);
@@ -35,12 +35,13 @@ namespace Chessy
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    MenuSysDataC.RunUpdate.Invoke();
+                    Menu.DataSC.RunUpdate();
                     break;
 
                 case SceneTypes.Game:
-                    DataC.RunUpdate?.Invoke();
-                    GameGenSysDataViewC.RunUpdate?.Invoke();
+                    Game.DataSC.RunUpdate();
+                    DataMastSC.RunUpdate();
+                    DataViewSC.RunUpdate();
                     break;
 
                 default:
@@ -57,40 +58,40 @@ namespace Chessy
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    if (_gameWorld != default)
+                    if (_gameW != default)
                     {
-                        _gameWorld.Destroy();
-                        Game.ViewECreating.Dispose();
+                        _gameW.Destroy();
+                        Game.ViewECreate.Dispose();
                     }
 
-                    _menuWorld = new EcsWorld();
-                    new Menu.FillEntitieSys(_menuWorld);
+                    _menuW = new EcsWorld();
+                    new Menu.FillEntitieSys(_menuW);
                     break;
 
                 case SceneTypes.Game:
-                    if (_menuWorld != default)
+                    if (_menuW != default)
                     {
-                        _menuWorld.Destroy();
+                        _menuW.Destroy();
                     }
 
-                    _gameWorld = new EcsWorld();
-                    var gameSysts = new EcsSystems(_gameWorld);
+                    _gameW = new EcsWorld();
+                    var gameSysts = new EcsSystems(_gameW);
 
                     gameSysts
-                        .Add(new ViewECreating())
-                        .Add(new ViewUIECreating())
-                        .Add(new DataECreating())
-                        .Add(new FillingCells());
+                        .Add(new ViewECreate())
+                        .Add(new ViewUIECreate())
+                        .Add(new DataECreate())
+                        .Add(new FillCells());
 
 
 
-                    new DataSCreating(gameSysts);
-                    new DataMasSCreating(gameSysts);
-                    new ViewDataSCreating(gameSysts);
+                    new DataSCreate(gameSysts);
+                    new DataMasSCreate(gameSysts);
+                    new ViewDataSCreate(gameSysts);
 
                     gameSysts.Init();
 
-                    GameGenSysDataViewC.RotateAll?.Invoke();
+                    DataViewSC.RotateAll?.Invoke();
 
                     break;
 

@@ -14,9 +14,9 @@ namespace Chessy.Game
         private EcsFilter<TrailC> _cellTrailFilt = default;
         public void Run()
         {
-            for (var player = Support.MinPlayerType; player < Support.MaxPlayerType; player++)
+            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                for (var unit = Support.MinUnitType; unit < Support.MaxUnitType; unit++)
+                for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
                 {
                     for (var levUnit = (LevelUnitTypes)1; levUnit < (LevelUnitTypes)typeof(LevelUnitTypes).GetEnumNames().Length; levUnit++)
                     {

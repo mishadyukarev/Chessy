@@ -33,9 +33,9 @@ namespace Chessy.Game
             {
                 _envInGame = new Dictionary<EnvTypes, List<byte>>();
 
-                for (var environType = Support.MinEnvironType; environType < Support.MaxEnvironType; environType++)
+                for (var env = EnvTypes.First; env < EnvTypes.End; env++)
                 {
-                    _envInGame.Add(environType, new List<byte>());
+                    _envInGame.Add(env, new List<byte>());
                 }
             }
         }

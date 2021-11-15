@@ -29,7 +29,7 @@ namespace Chessy.Game
                 case CondUnitTypes.Protected:
                     if (condUnit_0.Is(CondUnitTypes.Protected))
                     {
-                        RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
+                        RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
 
                         condUnit_0.Reset();
                     }
@@ -38,7 +38,7 @@ namespace Chessy.Game
                     {
                         if (condUnit_0.Is(CondUnitTypes.Relaxed))
                         {
-                            RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
+                            RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
 
                             condUnit_0.Set(neededCondType);
 
@@ -46,7 +46,7 @@ namespace Chessy.Game
                         }
                         else
                         {
-                            RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
+                            RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
 
                             condUnit_0.Set(neededCondType);
 
@@ -64,7 +64,7 @@ namespace Chessy.Game
                 case CondUnitTypes.Relaxed:
                     if (condUnit_0.Is(CondUnitTypes.Relaxed))
                     {
-                        RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
+                        RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
                         condUnit_0.Reset();
                     }
 
@@ -72,13 +72,13 @@ namespace Chessy.Game
                     {
                         if (condUnit_0.Is(CondUnitTypes.Protected))
                         {
-                            RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
+                            RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
                             condUnit_0.Set(neededCondType);
                             stepUnit_0.TakeSteps();
                         }
                         else
                         {
-                            RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
+                            RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
                             condUnit_0.Set(neededCondType);
                             stepUnit_0.TakeSteps();
                         }

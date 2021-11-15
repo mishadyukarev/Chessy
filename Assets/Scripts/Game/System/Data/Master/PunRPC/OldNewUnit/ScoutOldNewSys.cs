@@ -52,7 +52,7 @@ namespace Chessy.Game
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
                     WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnitC_0.Level, idx_0);
 
-                    RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
+                    RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
                 }
 
                 else RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);

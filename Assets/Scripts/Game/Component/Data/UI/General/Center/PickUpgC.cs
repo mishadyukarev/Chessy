@@ -34,7 +34,7 @@ namespace Chessy.Game
             _haveUpgrade = activatedZone;
             _activated_Buts = new Dictionary<PlayerTypes, Dictionary<PickUpgradeTypes, bool>>();
 
-            for (PlayerTypes player = 0; player < (PlayerTypes)typeof(PlayerTypes).GetEnumNames().Length; player++)
+            for (var player = PlayerTypes.Start; player < PlayerTypes.End; player++)
             {
                 _haveUpgrade.Add(player, false);
                 _activated_Buts.Add(player, new Dictionary<PickUpgradeTypes, bool>());

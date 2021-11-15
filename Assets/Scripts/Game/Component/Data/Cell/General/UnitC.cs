@@ -24,7 +24,12 @@ namespace Chessy.Game
                 }
             }
         }
-        public bool Is(params UnitTypes[] units) => Unit.Is(units);
+        public bool Is(params UnitTypes[] units)
+        {
+            foreach (var unit in units)
+                if (unit == _unit) return true;
+            return false;
+        }
         public bool IsHero
         {
             get

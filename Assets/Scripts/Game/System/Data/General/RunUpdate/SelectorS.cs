@@ -171,11 +171,11 @@ namespace Chessy.Game
                                     }
                                     else if (UnitDatCom(IdxSel.Idx).IsMelee)
                                     {
-                                        SoundEffectC.Play(ClipGameTypes.PickMelee);
+                                        //SoundEffectC.Play(ClipGameTypes.PickMelee);
                                     }
                                     else
                                     {
-                                        SoundEffectC.Play(ClipGameTypes.PickArcher);
+                                        //SoundEffectC.Play(ClipGameTypes.PickArcher);
                                     }
                                 }
                             }
@@ -202,11 +202,11 @@ namespace Chessy.Game
                                     }
                                     else if (UnitDatCom(IdxSel.Idx).IsMelee)
                                     {
-                                        SoundEffectC.Play(ClipGameTypes.PickMelee);
+                                        //SoundEffectC.Play(ClipGameTypes.PickMelee);
                                     }
                                     else
                                     {
-                                        SoundEffectC.Play(ClipGameTypes.PickArcher);
+                                        //SoundEffectC.Play(ClipGameTypes.PickArcher);
                                     }
                                 }
                             }

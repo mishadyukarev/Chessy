@@ -138,7 +138,7 @@ namespace Chessy.Game
                 WhereUnitsC.Remove(own_from.Owner, unit_from.Unit, lev_from.Level, idx_from);
                 unit_from.Reset();
 
-                RpcSys.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipGameTypes.ClickToTable);
+                RpcSys.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }
         }
     }

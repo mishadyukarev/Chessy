@@ -26,26 +26,26 @@ namespace Chessy.Game
                         MistakeC.ResetMistakeType();
                         MistakeC.ClearAllNeeds();
 
-                        for (var resType = Support.MinResType; resType < Support.MaxResType; resType++)
+                        for (var res = ResTypes.First; res < ResTypes.End; res++)
                         {
-                            EconomyViewUIC.SetMainColor(resType, Color.white);
+                            EconomyViewUIC.SetMainColor(res, Color.white);
                         }
                     }
 
                     else
                     {
-                        for (var resType = Support.MinResType; resType < Support.MaxResType; resType++)
+                        for (var res = ResTypes.First; res < ResTypes.End; res++)
                         {
-                            if (MistakeC.NeedRes(resType))
+                            if (MistakeC.NeedRes(res))
                             {
-                                EconomyViewUIC.SetMainColor(resType, Color.red);
-                                MistakeViewUIC.SetActiveRes(resType, true);
-                                MistakeViewUIC.SetText(resType, ">= " + (-MistakeC.NeedResAmount(resType)).ToString());
+                                EconomyViewUIC.SetMainColor(res, Color.red);
+                                MistakeViewUIC.SetActiveRes(res, true);
+                                MistakeViewUIC.SetText(res, ">= " + (-MistakeC.NeedResAmount(res)).ToString());
                             }
                             else
                             {
-                                EconomyViewUIC.SetMainColor(resType, Color.white);
-                                MistakeViewUIC.SetActiveRes(resType, false);
+                                EconomyViewUIC.SetMainColor(res, Color.white);
+                                MistakeViewUIC.SetActiveRes(res, false);
                             }
                         }
                     }
@@ -114,10 +114,10 @@ namespace Chessy.Game
             MistakeViewUIC.ActiveThatsForOtherUnit(false);
             MistakeViewUIC.ActiveNearBorderZone(false);
 
-            for (var resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                EconomyViewUIC.SetMainColor(resType, Color.white);
-                MistakeViewUIC.SetActiveRes(resType, false);
+                EconomyViewUIC.SetMainColor(res, Color.white);
+                MistakeViewUIC.SetActiveRes(res, false);
             }
         }
     }

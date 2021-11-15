@@ -62,7 +62,7 @@ namespace Chessy.Game
                 }
             }
 
-            else RpcSys.SoundToGeneral(sender, ClipGameTypes.Mistake);
+            else RpcSys.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

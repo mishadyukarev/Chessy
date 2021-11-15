@@ -3,15 +3,17 @@
     public enum UnitTypes
     {
         None,
+        Start = None,
 
         King,
+        First = King,
 
         Pawn,
         Archer,
-        //Bishop,
 
         Scout,
-
         Elfemale,
+
+        End,
     }
 }

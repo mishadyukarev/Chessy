@@ -33,7 +33,7 @@ namespace Chessy.Game
             {
                 if (stepUnit_0.HaveMinSteps)
                 {
-                    RpcSys.SoundToGeneral(sender, ClipGameTypes.Building);
+                    RpcSys.SoundToGeneral(sender, ClipTypes.Building);
 
 
                     cdUniq_0.SetCooldown(UniqAbilTypes.BonusNear, 3);
@@ -41,7 +41,7 @@ namespace Chessy.Game
                     stepUnit_0.TakeSteps();
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
 
-                    RpcSys.SoundToGeneral(sender, ClipGameTypes.BonusKing);
+                    RpcSys.SoundToGeneral(sender, UniqAbilTypes.BonusNear);
 
                     if (!effUnit_0.Have(UnitStatTypes.Damage)) effUnit_0.Set(UnitStatTypes.Damage);
 
@@ -74,7 +74,7 @@ namespace Chessy.Game
                 }
             }
 
-            else RpcSys.SoundToGeneral(sender, ClipGameTypes.Mistake);
+            else RpcSys.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

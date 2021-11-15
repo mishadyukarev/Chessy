@@ -47,7 +47,7 @@ namespace Chessy.Game
                 _unitsInGame.Add(PlayerTypes.Second, new Dictionary<UnitTypes, Dictionary<LevelUnitTypes, List<byte>>>());
 
 
-                for (var unitType = (UnitTypes)1; unitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; unitType++)
+                for (var unitType = UnitTypes.First; unitType < UnitTypes.End; unitType++)
                 {
                     _unitsInGame[PlayerTypes.First].Add(unitType, new Dictionary<LevelUnitTypes, List<byte>>());
                     _unitsInGame[PlayerTypes.Second].Add(unitType, new Dictionary<LevelUnitTypes, List<byte>>());

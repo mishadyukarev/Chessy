@@ -10,14 +10,14 @@ namespace Chessy.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
+            RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
 
 
             if (PhotonNetwork.OfflineMode)
             {
                 if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                 {
-                    DataMastC.InvokeRun(MastDataSysTypes.Update);
+                    DataMastSC.InvokeRun(MastDataSysTypes.Update);
                     RpcSys.ActiveMotionZoneToGen(sender);
                 }
 
@@ -28,7 +28,7 @@ namespace Chessy.Game
 
                     if(nextPlayer == PlayerTypes.First)
                     {
-                        DataMastC.InvokeRun(MastDataSysTypes.Update);
+                        DataMastSC.InvokeRun(MastDataSysTypes.Update);
                         RpcSys.ActiveMotionZoneToGen(sender);
                     }
 
@@ -37,7 +37,7 @@ namespace Chessy.Game
 
                     curPlayer = WhoseMoveC.CurPlayerI;
 
-                    GameGenSysDataViewC.RotateAll.Invoke(); 
+                    DataViewSC.RotateAll.Invoke(); 
 
                     FriendC.IsActiveFriendZone = true;     
                 }
@@ -52,7 +52,7 @@ namespace Chessy.Game
                     {
                         if (playerSend == PlayerTypes.Second)
                         {
-                            DataMastC.InvokeRun(MastDataSysTypes.Update);
+                            DataMastSC.InvokeRun(MastDataSysTypes.Update);
 
                             RpcSys.ActiveMotionZoneToGen(PlayerTypes.First.GetPlayerType());
                             RpcSys.ActiveMotionZoneToGen(PlayerTypes.Second.GetPlayerType());

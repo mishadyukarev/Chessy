@@ -47,7 +47,7 @@ namespace Chessy.Game
 
                                     if (!env_0.Have(EnvTypes.YoungForest))
                                     {
-                                        RpcSys.SoundToGeneral(sender, ClipGameTypes.Seeding);
+                                        RpcSys.SoundToGeneral(sender, ClipTypes.Seeding);
 
                                         env_0.Set(EnvTypes.YoungForest);
                                         WhereEnvC.Add(EnvTypes.YoungForest, idx_0);

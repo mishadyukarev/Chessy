@@ -16,9 +16,9 @@ namespace Chessy.Game
             {
                 _isVisibleDict = new Dictionary<PlayerTypes, bool>();
 
-                for (var playerType = Support.MinPlayerType; playerType < Support.MaxPlayerType; playerType++)
+                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
-                    _isVisibleDict.Add(playerType, default);
+                    _isVisibleDict.Add(player, default);
                 }
             }
             else throw new Exception();

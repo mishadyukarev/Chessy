@@ -10,7 +10,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            for (UnitTypes curUnitType = 0; curUnitType < (UnitTypes)Enum.GetNames(typeof(UnitTypes)).Length; curUnitType++)
+            for (UnitTypes curUnitType = UnitTypes.Start; curUnitType < UnitTypes.End; curUnitType++)
             {
                 if (curUnitType == UnitTypes.Pawn || curUnitType == UnitTypes.Archer)
                 {

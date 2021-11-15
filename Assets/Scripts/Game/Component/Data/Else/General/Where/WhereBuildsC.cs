@@ -40,7 +40,7 @@ namespace Chessy.Game
             _buildsInGame.Add(PlayerTypes.Second, new Dictionary<BuildTypes, List<byte>>());
 
 
-            for (var build = (BuildTypes)1; build < (BuildTypes)Enum.GetNames(typeof(BuildTypes)).Length; build++)
+            for (var build = BuildTypes.First; build < BuildTypes.End; build++)
             {
                 _buildsInGame[PlayerTypes.First].Add(build, new List<byte>());
                 _buildsInGame[PlayerTypes.Second].Add(build, new List<byte>());
@@ -57,7 +57,10 @@ namespace Chessy.Game
             }
         }
 
-        private static bool Contains(PlayerTypes playerType, BuildTypes buildType, byte idx) => _buildsInGame[playerType][buildType].Contains(idx);
+        private static bool Contains(PlayerTypes playerType, BuildTypes buildType, byte idx)
+        {
+           return  _buildsInGame[playerType][buildType].Contains(idx);
+        }
         public static void Add(PlayerTypes playerType, BuildTypes buildType, byte idxCell)
         {
             if (!Contains(playerType, buildType, idxCell)) _buildsInGame[playerType][buildType].Add(idxCell);

@@ -39,11 +39,11 @@ namespace Chessy.Game
             {
                 _percUpgs = new Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<UnitStatTypes, float>>>();
 
-                for (var player = (PlayerTypes)1; player < (PlayerTypes)typeof(PlayerTypes).GetEnumNames().Length; player++)
+                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
                     _percUpgs.Add(player, new Dictionary<UnitTypes, Dictionary<UnitStatTypes, float>>());
 
-                    for (var unit = (UnitTypes)1; unit < (UnitTypes)typeof(UnitTypes).GetEnumNames().Length; unit++)
+                    for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
                     {
                         _percUpgs[player].Add(unit, new Dictionary<UnitStatTypes, float>());
 

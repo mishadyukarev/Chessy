@@ -44,7 +44,7 @@ namespace Chessy.Game
 
                         hpUnit_0.SetMaxHp();
 
-                        RpcSys.SoundToGeneral(sender, ClipGameTypes.UpgradeUnitMelee);
+                        RpcSys.SoundToGeneral(sender, ClipTypes.UpgradeMelee);
                     }
                     else
                     {

@@ -18,7 +18,7 @@ namespace Chessy.Game
             {
                 InvResC.BuyRes(whoseMove, res);
 
-                RpcSys.SoundToGeneral(sender, ClipGameTypes.SoundGoldPack);
+                RpcSys.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
             }
             else
             {

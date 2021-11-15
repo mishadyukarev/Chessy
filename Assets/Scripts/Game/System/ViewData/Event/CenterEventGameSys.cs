@@ -55,7 +55,7 @@ namespace Chessy.Game
 
                 HeroesViewUIC.SetActiveZone(true);
             }
-            else SoundEffectC.Play(ClipGameTypes.Mistake);
+            else SoundEffectC.Play(ClipTypes.Mistake);
         }
 
         private void Elf()
@@ -64,7 +64,7 @@ namespace Chessy.Game
             {
                 RpcSys.GetHero(UnitTypes.Elfemale);
             }
-            else SoundEffectC.Play(ClipGameTypes.Mistake);
+            else SoundEffectC.Play(ClipTypes.Mistake);
         }
 
         private void OpenShop()

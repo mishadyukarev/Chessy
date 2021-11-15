@@ -40,9 +40,9 @@ namespace Chessy.Game
             {
                 _amountResours = new Dictionary<EnvTypes, int>();
 
-                for (var envirType = Support.MinEnvironType; envirType < Support.MaxEnvironType; envirType++)
+                for (var env = EnvTypes.First; env < EnvTypes.End; env++)
                 {
-                    _amountResours.Add(envirType, default);
+                    _amountResours.Add(env, default);
                 }
             }
             else throw new Exception();

@@ -15,7 +15,7 @@ namespace Chessy.Game
             if (InvResC.CanMeltOre(whoseMove, out var needRes))
             {
                 InvResC.BuyMeltOre(whoseMove);
-                RpcSys.SoundToGeneral(sender, ClipGameTypes.Melting);
+                RpcSys.SoundToGeneral(sender, ClipTypes.Melting);
             }
             else
             {

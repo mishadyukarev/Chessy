@@ -47,7 +47,7 @@ namespace Chessy.Game
 
                             if (idx_1 == idx_to)
                             {
-                                RpcSys.SoundToGeneral(sender, ClipGameTypes.GetHero);
+                                RpcSys.SoundToGeneral(sender, ClipTypes.GetHero);
                                 //RpcSys.SoundToGeneral(sender, UniqAbilTypes.GrowAdultForest);
 
                                 WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);

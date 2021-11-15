@@ -15,7 +15,7 @@ namespace Chessy.Game
             _button = condZone.Find("StandartAbilityButton2").GetComponent<Button>();
             _zones = new Dictionary<UnitTypes, GameObject>();
 
-            for (var unit = (UnitTypes)1; unit < (UnitTypes)typeof(UnitTypes).GetEnumNames().Length; unit++)
+            for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
             {
                 _zones.Add(unit, _button.transform.Find(unit.ToString()).gameObject);
             }

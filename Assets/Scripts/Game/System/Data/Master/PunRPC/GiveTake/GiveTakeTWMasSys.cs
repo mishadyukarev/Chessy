@@ -57,7 +57,7 @@ namespace Chessy.Game
                             }
                             WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                            RpcSys.SoundToGeneral(sender, ClipGameTypes.PickMelee);
+                            RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
 
@@ -73,7 +73,7 @@ namespace Chessy.Game
 
                             stepUnit_0.TakeSteps();
 
-                            RpcSys.SoundToGeneral(sender, ClipGameTypes.PickMelee);
+                            RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
                         else if (tWTypeForGive == ToolWeaponTypes.Pick)
@@ -89,7 +89,7 @@ namespace Chessy.Game
 
                                 stepUnit_0.TakeSteps();
 
-                                RpcSys.SoundToGeneral(sender, ClipGameTypes.PickMelee);
+                                RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
@@ -110,7 +110,7 @@ namespace Chessy.Game
 
                                 stepUnit_0.TakeSteps();
 
-                                RpcSys.SoundToGeneral(sender, ClipGameTypes.PickMelee);
+                                RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {
@@ -132,7 +132,7 @@ namespace Chessy.Game
 
                                 stepUnit_0.TakeSteps();
 
-                                RpcSys.SoundToGeneral(sender, ClipGameTypes.PickMelee);
+                                RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
                             }
                             else
                             {

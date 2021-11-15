@@ -176,8 +176,8 @@ namespace Chessy.Game
 
             if (WhereEnvC.Amount(EnvTypes.AdultForest) <= 6)
             {
-                RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.Truce);
-                DataMastC.InvokeRun(MastDataSysTypes.Truce);
+                RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.Truce);
+                DataMastSC.InvokeRun(MastDataSysTypes.Truce);
             }
 
             if (MotionsC.AmountMotions % 3 == 0)

@@ -25,17 +25,17 @@ namespace Chessy.Game
                     InvResC.BuyCreateUnit(playerSend, unitTypeForCreating);
                     InvUnitsC.AddUnit(playerSend, unitTypeForCreating, LevelUnitTypes.First);
 
-                    RpcSys.SoundToGeneral(sender, ClipGameTypes.SoundGoldPack);
+                    RpcSys.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }
                 else
                 {
-                    RpcSys.SoundToGeneral(sender, ClipGameTypes.Mistake);
+                    RpcSys.SoundToGeneral(sender, ClipTypes.Mistake);
                     RpcSys.MistakeEconomyToGeneral(sender, needRes);
                 }
             }
             else
             {
-                RpcSys.SoundToGeneral(sender, ClipGameTypes.Mistake);
+                RpcSys.SoundToGeneral(sender, ClipTypes.Mistake);
                 RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedCity, sender);
             }
         }

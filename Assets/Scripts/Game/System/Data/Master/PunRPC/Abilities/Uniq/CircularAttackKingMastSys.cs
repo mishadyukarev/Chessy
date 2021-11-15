@@ -40,7 +40,7 @@ namespace Chessy.Game
             {
                 if (stepUnit_0.HaveMinSteps)
                 {
-                    RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.AttackMelee);
+                    RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
                     cdUniq_0.SetCooldown(UniqAbilTypes.CircularAttack, 3);
 
@@ -97,7 +97,7 @@ namespace Chessy.Game
                     stepUnit_0.TakeSteps();
                     effUnit_0.DefAllEffects();
 
-                    RpcSys.SoundToGeneral(sender, ClipGameTypes.AttackMelee);
+                    RpcSys.SoundToGeneral(sender, ClipTypes.AttackMelee);
 
 
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
@@ -107,7 +107,7 @@ namespace Chessy.Game
                     RpcSys.SimpleMistakeToGeneral(MistakeTypes.NeedMoreSteps, sender);
                 }
             }
-            else RpcSys.SoundToGeneral(sender, ClipGameTypes.Mistake);
+            else RpcSys.SoundToGeneral(sender, ClipTypes.Mistake);
         }
     }
 }

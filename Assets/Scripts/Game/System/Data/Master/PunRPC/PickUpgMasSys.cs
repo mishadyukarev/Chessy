@@ -59,7 +59,7 @@ namespace Chessy.Game
                 PickUpgC.SetHaveUpgrade(whoseMove, false);
                 PickUpgC.SetHave_But(whoseMove, ForPickUpgMasC.UpgButType, false);
 
-                RpcSys.SoundToGeneral(sender, ClipGameTypes.PickUpgrade);
+                RpcSys.SoundToGeneral(sender, ClipTypes.PickUpgrade);
             }
         }
     }

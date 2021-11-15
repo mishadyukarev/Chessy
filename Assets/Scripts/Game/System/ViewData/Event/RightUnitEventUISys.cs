@@ -38,7 +38,7 @@ namespace Chessy.Game
                     RpcSys.ConditionUnitToMaster(condUnitType, IdxSel.Idx);
                 }
             }
-            else SoundEffectC.Play(ClipGameTypes.Mistake);
+            else SoundEffectC.Play(ClipTypes.Mistake);
         }
 
         private void UniqBut(UniqButtonTypes uniqBut)
@@ -148,9 +148,9 @@ namespace Chessy.Game
                     }
                 }
 
-                else SoundEffectC.Play(ClipGameTypes.Mistake);
+                else SoundEffectC.Play(ClipTypes.Mistake);
             }
-            else SoundEffectC.Play(ClipGameTypes.Mistake);
+            else SoundEffectC.Play(ClipTypes.Mistake);
         }
 
         private void ExecuteBuild_Button(BuildButtonTypes buildBut)
@@ -193,7 +193,7 @@ namespace Chessy.Game
                     default: throw new Exception();
                 }
             }
-            else SoundEffectC.Play(ClipGameTypes.Mistake);
+            else SoundEffectC.Play(ClipTypes.Mistake);
         }
 
         private void TryOnHint(VideoClipTypes videoClip)

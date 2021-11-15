@@ -40,10 +40,10 @@ namespace Chessy.Game
                 }
                 else
                 {
-                    SoundEffectC.Play(ClipGameTypes.Mistake);
+                    SoundEffectC.Play(ClipTypes.Mistake);
                 }
             }
-            else SoundEffectC.Play(ClipGameTypes.Mistake);
+            else SoundEffectC.Play(ClipTypes.Mistake);
         }
         private void Hero()
         {
@@ -58,10 +58,10 @@ namespace Chessy.Game
                 }
                 else
                 {
-                    SoundEffectC.Play(ClipGameTypes.Mistake);
+                    SoundEffectC.Play(ClipTypes.Mistake);
                 }
             }
-            else SoundEffectC.Play(ClipGameTypes.Mistake);
+            else SoundEffectC.Play(ClipTypes.Mistake);
         }
 
 
@@ -73,7 +73,7 @@ namespace Chessy.Game
             }
             else
             {
-                SoundEffectC.Play(ClipGameTypes.Mistake);
+                SoundEffectC.Play(ClipTypes.Mistake);
             }
 
             CellClickC.Reset();
@@ -87,7 +87,7 @@ namespace Chessy.Game
 
                 RpcSys.CreateUnitToMaster(unitType);
             }
-            else SoundEffectC.Play(ClipGameTypes.Mistake);
+            else SoundEffectC.Play(ClipTypes.Mistake);
         }
 
         private void GetUnit(UnitTypes unitType)
@@ -115,7 +115,7 @@ namespace Chessy.Game
                     GetterUnitsC.ActiveNeedCreateButton(unitType, true);
                 }
             }
-            else SoundEffectC.Play(ClipGameTypes.Mistake);
+            else SoundEffectC.Play(ClipTypes.Mistake);
         }
 
         private void ToggleToolWeapon(ToolWeaponTypes tWType)
@@ -165,7 +165,7 @@ namespace Chessy.Game
                     else TwGiveTakeC.SetLevel(tWType, LevelTWTypes.Iron);
                 }
             }
-            else SoundEffectC.Play(ClipGameTypes.Mistake);
+            else SoundEffectC.Play(ClipTypes.Mistake);
         }
 
         private void ToggleUpgradeUnit()
@@ -175,7 +175,7 @@ namespace Chessy.Game
                 TryOnHint(VideoClipTypes.UpgToolWeapon);
                 CellClickC.Set(CellClickTypes.UpgradeUnit);
             }
-            else SoundEffectC.Play(ClipGameTypes.Mistake);
+            else SoundEffectC.Play(ClipTypes.Mistake);
         }
 
 

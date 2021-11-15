@@ -7,7 +7,7 @@ namespace Chessy.Game
     {
         public void Run()
         {
-            WindUIC.SetEulerRot(WhoseMoveC.CurPlayerI, WindC.DirectWind);
+            WindUIC.SetEulerRot(WhoseMoveC.CurPlayerI, WindC.Direct);
         }
     }
 }

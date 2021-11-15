@@ -30,7 +30,7 @@ namespace Chessy.Game
 
             if (_statUnitF.Get1(idxCellForDestory).HaveMinSteps)
             {
-                RpcSys.SoundToGeneral(RpcTarget.All, ClipGameTypes.Destroy);
+                RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.Destroy);
 
                 if (buildC_0.Is(BuildTypes.City))
                 {

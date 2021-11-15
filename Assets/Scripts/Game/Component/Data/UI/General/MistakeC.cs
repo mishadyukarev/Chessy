@@ -13,7 +13,7 @@ namespace Chessy.Game
         {
             _needRes = needResources;
 
-            for (var resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
                 _needRes.Add(resType, default);
             }
@@ -26,9 +26,9 @@ namespace Chessy.Game
         public static void AddNeedRes(ResTypes resType, int amount) => _needRes[resType] = amount;
         public static void ClearAllNeeds()
         {
-            for (var resType = Support.MinResType; resType < Support.MaxResType; resType++)
+            for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                _needRes[resType] = default;
+                _needRes[res] = default;
             }
         }
     }

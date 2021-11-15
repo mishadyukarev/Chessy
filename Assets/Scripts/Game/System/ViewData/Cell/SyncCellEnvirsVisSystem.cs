@@ -12,18 +12,18 @@ namespace Chessy.Game
         {
             foreach (var idx in _envViewF)
             {
-                ref var cellEnvrDataCom = ref _envF.Get1(idx);
-                ref var cellEnvrViewCom = ref _envViewF.Get1(idx);
+                ref var envD_0 = ref _envF.Get1(idx);
+                ref var envV_0 = ref _envViewF.Get1(idx);
 
-                for (EnvTypes curEnvirType = (EnvTypes)1; curEnvirType < (EnvTypes)Enum.GetNames(typeof(EnvTypes)).Length; curEnvirType++)
+                for (var env_0 = EnvTypes.First; env_0 < EnvTypes.End; env_0++)
                 {
-                    if (cellEnvrDataCom.Have(curEnvirType))
+                    if (envD_0.Have(env_0))
                     {
-                        cellEnvrViewCom.EnableSR(curEnvirType);
+                        envV_0.EnableSR(env_0);
                     }
                     else
                     {
-                        cellEnvrViewCom.DisableSR(curEnvirType);
+                        envV_0.DisableSR(env_0);
                     }
                 }
             }

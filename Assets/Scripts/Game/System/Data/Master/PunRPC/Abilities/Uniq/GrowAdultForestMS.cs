@@ -79,7 +79,7 @@ namespace Chessy.Game
             }
             else
             {
-                RpcSys.SoundToGeneral(sender, ClipGameTypes.Mistake);
+                RpcSys.SoundToGeneral(sender, ClipTypes.Mistake);
             }
         }
     }

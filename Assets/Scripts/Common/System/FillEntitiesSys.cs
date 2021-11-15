@@ -64,18 +64,18 @@ namespace Chessy.Common
             var canvas = GameObject.Instantiate(PrefabResComC.Canvas);
             canvas.name = "Canvas";
 
-            var audioSource = new GameObject("AudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
-            audioSource.clip = ClipsResComCom.AudioClip(ClipComTypes.Music);
-            audioSource.volume = 0.2f;
-            audioSource.loop = true;
-            audioSource.Play();
+            var aS = new GameObject("AudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
+            aS.clip = ClipsResComCom.AudioClip(ClipComTypes.Music);
+            aS.volume = 0.2f;
+            aS.loop = true;
+            aS.Play();
 
             commonZoneEnt
                 //Common
                 .Replace(new ComZoneC(new GameObject(NameConst.COMMON_ZONE)))
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
                 .Replace(new CanvasC(canvas))
-                .Replace(new SoundComC(audioSource))
+                .Replace(new SoundComC(aS))
                 .Replace(new LanguageComC(LanguageTypes.English))
                 .Replace(new AdComCom(DateTime.Now))
                 .Replace(new TimeStartGameComCom(DateTime.Now))
@@ -106,7 +106,7 @@ namespace Chessy.Common
 
 
             ref var commonZoneCom = ref commonZoneEnt.Get<ComZoneC>();
-            commonZoneCom.Attach(audioSource.transform);
+            commonZoneCom.Attach(aS.transform);
 
 
 

@@ -70,7 +70,7 @@ namespace Chessy.Game
 
                 if (unitForSet == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);
 
-                RpcSys.SoundToGeneral(sender, ClipGameTypes.ClickToTable);
+                RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
             }
         }
     }
