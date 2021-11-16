@@ -375,27 +375,22 @@ namespace Chessy.Game
             //foreach (var item_0 in MotionsDataUIC.IsActivatedUI) objs.Add(item_0.Value);
             objs.Add(MotionsC.AmountMotions);
 
-            objs.Add(PickUpgC.HaveUpgrade(PlayerTypes.Second));
-            foreach (var item_0 in PickUpgC.Activated_Buts)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    objs.Add(PickUpgC.Activated_Buts[item_0.Key][item_1.Key]);
-                }
-            }
+            //objs.Add(PickUpgC.HaveUpgrade(PlayerTypes.Second));
+            //foreach (var item_0 in PickUpgC.Activated_Buts)
+            //{
+            //    foreach (var item_1 in item_0.Value)
+            //    {
+            //        objs.Add(PickUpgC.Activated_Buts[item_0.Key][item_1.Key]);
+            //    }
+            //}
 
             objs.Add(WindC.CurDirWind);
 
 
             #region Upgrades
 
-            foreach (var item_0 in UnitDamageUpgC.PercUpgs)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    objs.Add(UnitDamageUpgC.UpgPercent(item_0.Key, item_1.Key));
-                }
-            }
+            foreach (var item_0 in UnitUpgC.Upgrades) objs.Add(item_0.Value);
+
             foreach (var item_0 in UnitStepUpgC.StepUpgs)
             {
                 foreach (var item_1 in item_0.Value)
@@ -603,27 +598,22 @@ namespace Chessy.Game
             //foreach (var item_0 in MotionsDataUIC.IsActivatedUI) MotionsDataUIC.Sync(item_0.Key, (bool)objects[_curNumber++]);
             MotionsC.AmountMotions = (int)objects[_curIdx++];
 
-            PickUpgC.SetHaveUpgrade(PlayerTypes.Second, (bool)objects[_curIdx++]);
-            foreach (var item_0 in PickUpgC.Activated_Buts)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    PickUpgC.SetHave_But(item_0.Key, item_1.Key, (bool)objects[_curIdx++]);
-                }
-            }
+            //PickUpgC.SetHaveUpgrade(PlayerTypes.Second, (bool)objects[_curIdx++]);
+            //foreach (var item_0 in PickUpgC.Activated_Buts)
+            //{
+            //    foreach (var item_1 in item_0.Value)
+            //    {
+            //        PickUpgC.SetHave_But(item_0.Key, item_1.Key, (bool)objects[_curIdx++]);
+            //    }
+            //}
 
             WindC.Sync((DirectTypes)objects[_curIdx++]);
 
 
             #region Upgrades
 
-            foreach (var item_0 in UnitDamageUpgC.PercUpgs)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    UnitDamageUpgC.Sync(item_0.Key, item_1.Key, (float)objects[_curIdx++]);
-                }
-            }
+            foreach (var item_0 in UnitUpgC.Upgrades) UnitUpgC.Sync(item_0.Key, item_0.Value);
+
             foreach (var item_0 in UnitStepUpgC.StepUpgs)
             {
                 foreach (var item_1 in item_0.Value)

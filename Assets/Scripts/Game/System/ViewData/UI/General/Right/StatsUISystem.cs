@@ -38,22 +38,32 @@ namespace Chessy.Game
 
             if (unit_sel.HaveUnit)
             {
-                StatZoneViewUIC.SetActiveStatZone(true);
+                StatUIC.SetActiveStatZone(true);
 
-                StatZoneViewUIC.SetTextToStat(UnitStatTypes.Hp, selHpUnitC.Hp.ToString());
-                StatZoneViewUIC.SetTextToStat(UnitStatTypes.Damage, selDamUnitC.DamageOnCell(unit_sel.Unit, levUnit_sel.Level, selConUnitC, twUnit_sel, effUnit_sel, UnitDamageUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit), selBuildC.Build, selEnvC.Envronments).ToString());
-                StatZoneViewUIC.SetTextToStat(UnitStatTypes.Steps, selStepUnitC.Steps.ToString());
-                StatZoneViewUIC.SetTextToStat(UnitStatTypes.Water, thirUnitC_sel.Water.ToString());
+                StatUIC.SetTextToStat(UnitStatTypes.Hp, selHpUnitC.Hp.ToString());
+                StatUIC.SetTextToStat(UnitStatTypes.Damage, selDamUnitC.DamageOnCell(unit_sel.Unit, levUnit_sel.Level, selConUnitC, twUnit_sel, effUnit_sel, UnitUpgC.UpgPercent(UpgTypes.StartZone, UnitStatTypes.Damage, unit_sel.Unit, levUnit_sel.Level, ownUnit_sel.Owner), selBuildC.Build, selEnvC.Envronments).ToString());
+                StatUIC.SetTextToStat(UnitStatTypes.Steps, selStepUnitC.Steps.ToString());
+                StatUIC.SetTextToStat(UnitStatTypes.Water, thirUnitC_sel.Water.ToString());
 
-                StatZoneViewUIC.FillAmount(UnitStatTypes.Hp, selHpUnitC.Hp, HpC.MAX_HP);
-                StatZoneViewUIC.FillAmount(UnitStatTypes.Damage, selDamUnitC.DamageOnCell(unit_sel.Unit, levUnit_sel.Level, selConUnitC, twUnit_sel, effUnit_sel, UnitDamageUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit), selBuildC.Build, selEnvC.Envronments), selDamUnitC.DamageAttack(unit_sel.Unit, levUnit_sel.Level, twUnit_sel, effUnit_sel, AttackTypes.Simple, UnitDamageUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit)));
-                StatZoneViewUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.Steps, selStepUnitC.MaxSteps(unit_sel.Unit, effUnit_sel.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_sel.Owner, unit_sel.Unit)));
-                StatZoneViewUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.Water, thirUnitC_sel.MaxWater(UnitWaterUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit)));
+                StatUIC.FillAmount(UnitStatTypes.Hp, selHpUnitC.Hp, HpC.MAX_HP);
+
+
+
+                StatUIC.FillAmount(UnitStatTypes.Damage, 
+                    selDamUnitC.DamageOnCell(unit_sel.Unit, levUnit_sel.Level, selConUnitC, twUnit_sel, effUnit_sel, 
+                    UnitUpgC.UpgPercent(UpgTypes.StartZone, UnitStatTypes.Damage, unit_sel.Unit, levUnit_sel.Level, ownUnit_sel.Owner), selBuildC.Build, selEnvC.Envronments), 
+                    selDamUnitC.DamageAttack(unit_sel.Unit, levUnit_sel.Level, twUnit_sel, effUnit_sel, AttackTypes.Simple, 
+                    UnitUpgC.UpgPercent(UpgTypes.StartZone, UnitStatTypes.Damage, unit_sel.Unit, levUnit_sel.Level, ownUnit_sel.Owner)));
+
+
+
+                StatUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.Steps, selStepUnitC.MaxSteps(unit_sel.Unit, effUnit_sel.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_sel.Owner, unit_sel.Unit)));
+                StatUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.Water, thirUnitC_sel.MaxWater(UnitWaterUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit)));
             }
 
             else
             {
-                StatZoneViewUIC.SetActiveStatZone(false);
+                StatUIC.SetActiveStatZone(false);
             }
         }
     }

@@ -1,12 +1,11 @@
 ﻿namespace Chessy.Game
 {
-    public enum PlayerTypes
+    public enum UpgTypes
     {
         Start,
         None = Start,
 
-        First,
-        Second,
+        StartZone,
 
         End,
     }

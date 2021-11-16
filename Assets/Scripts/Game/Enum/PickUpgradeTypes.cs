@@ -1,18 +1,18 @@
-﻿namespace Chessy.Game
-{
-    public enum PickUpgradeTypes
-    {
-        None,
+﻿//namespace Chessy.Game
+//{
+//    public enum PickUpgradeTypes
+//    {
+//        None,
 
-        King,
-        Pawn,
-        Archer,
-        Scout,
+//        King,
+//        Pawn,
+//        Archer,
+//        Scout,
 
-        Water,
+//        Water,
 
-        Farm,
-        Woodcutter,
-        Mine,
-    }
-}
+//        Farm,
+//        Woodcutter,
+//        Mine,
+//    }
+//}

@@ -71,7 +71,7 @@ namespace Chessy.Game
                 .Add(new KingZoneUISys())
                 .Add(new FriendZoneUISys())
                 .Add(new ActiveHitUISys())
-                .Add(new PickUpgUISys())
+                .Add(new PickUpgUIS())
                 .Add(new HeroesSyncUISys());
 
 

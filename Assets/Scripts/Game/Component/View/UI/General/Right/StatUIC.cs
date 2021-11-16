@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Chessy.Game
 {
-    public struct StatZoneViewUIC
+    public struct StatUIC
     {
         private static GameObject _parentZone_GO;
 
@@ -13,7 +13,7 @@ namespace Chessy.Game
         private static Dictionary<UnitStatTypes, Image> _stats_Images;
         private static Dictionary<UnitStatTypes, TextMeshProUGUI> _stat_TextMP;
 
-        public StatZoneViewUIC(GameObject rightZone_GO)
+        public StatUIC(GameObject rightZone_GO)
         {
             _parentZone_GO = rightZone_GO;
 

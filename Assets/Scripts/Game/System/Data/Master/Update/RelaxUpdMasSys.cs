@@ -18,7 +18,7 @@ namespace Chessy.Game
             {
                 for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
                 {
-                    for (var levUnit = (LevelUnitTypes)1; levUnit < (LevelUnitTypes)typeof(LevelUnitTypes).GetEnumNames().Length; levUnit++)
+                    for (var levUnit = LevelUnitTypes.First; levUnit < LevelUnitTypes.End; levUnit++)
                     {
                         foreach (var idx_0 in WhereUnitsC.IdxsUnits(player, unit, levUnit))
                         {

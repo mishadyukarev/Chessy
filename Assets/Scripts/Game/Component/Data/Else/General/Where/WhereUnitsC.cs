@@ -52,7 +52,7 @@ namespace Chessy.Game
                     _unitsInGame[PlayerTypes.First].Add(unitType, new Dictionary<LevelUnitTypes, List<byte>>());
                     _unitsInGame[PlayerTypes.Second].Add(unitType, new Dictionary<LevelUnitTypes, List<byte>>());
 
-                    for (var levUnit = (LevelUnitTypes)1; levUnit < (LevelUnitTypes)typeof(LevelUnitTypes).GetEnumNames().Length; levUnit++)
+                    for (var levUnit = LevelUnitTypes.First; levUnit < LevelUnitTypes.End; levUnit++)
                     {
                         _unitsInGame[PlayerTypes.First][unitType].Add(levUnit, new List<byte>());
                         _unitsInGame[PlayerTypes.Second][unitType].Add(levUnit, new List<byte>());

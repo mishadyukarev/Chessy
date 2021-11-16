@@ -5,8 +5,12 @@
         None,
 
         Hp,
+        First = Hp,
+
         Damage,
         Steps,
         Water,
+
+        End,
     }
 }

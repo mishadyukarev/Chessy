@@ -11,7 +11,8 @@ namespace Chessy.Game
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
-            UnitDamageUpgC.AddUpg(whoseMove, unit, 0.2f);
+            UnitUpgC.AddUpg(UpgTypes.StartZone, UnitStatTypes.Damage, unit, LevelUnitTypes.First, whoseMove);
+            UnitUpgC.AddUpg(UpgTypes.StartZone, UnitStatTypes.Damage, unit, LevelUnitTypes.Second, whoseMove);
 
             PickUpgC.SetHaveUpgrade(whoseMove, false);
             RpcSys.SoundToGeneral(sender, ClipTypes.PickUpgrade);

@@ -25,7 +25,7 @@ namespace Chessy.Game
                 }
             }
 
-            StatZoneViewUIC.SetActiveParentZone(activeParent);
+            StatUIC.SetActiveParentZone(activeParent);
         }
     }
 }

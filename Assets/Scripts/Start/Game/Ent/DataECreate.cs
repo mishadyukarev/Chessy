@@ -91,7 +91,7 @@ namespace Chessy.Game
             new SoundEffectC(audioSourceParentGO);
 
             new BuildsUpgC(true);
-            new UnitDamageUpgC(true);
+            new UnitUpgC(new Dictionary<string, bool>());
             new UnitWaterUpgC(true);
             new UnitStepUpgC(new Dictionary<PlayerTypes, Dictionary<UnitTypes, int>>());
 

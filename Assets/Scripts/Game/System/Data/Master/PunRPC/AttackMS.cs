@@ -4,7 +4,7 @@ using Chessy.Common;
 
 namespace Chessy.Game
 {
-    public sealed class AttackMastSys : IEcsRunSystem
+    public sealed class AttackMS : IEcsRunSystem
     {
         private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private readonly EcsFilter<HpC, DamageC, StepC, WaterUnitC> _statUnitF = default;
@@ -17,6 +17,7 @@ namespace Chessy.Game
         private readonly EcsFilter<EnvC> _envF = default;
         private readonly EcsFilter<RiverC> _riverF = default;
         private readonly EcsFilter<TrailC> _trailF = default;
+
 
         public void Run()
         {

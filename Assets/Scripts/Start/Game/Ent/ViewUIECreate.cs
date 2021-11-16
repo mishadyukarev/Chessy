@@ -53,7 +53,7 @@ namespace Chessy.Game
             new EnvirZoneViewUICom(leftZone_GO);
 
             ///Right
-            new StatZoneViewUIC(rightZone_go);
+            new StatUIC(rightZone_go);
             new UniqButtonsUIC(uniqAbilZone_trans);
             new BuildAbilitViewUIC(rightZone_go.transform.Find("BuildingZone"));
             new ExtraTWZoneUIC(rightZone_go.transform);
