@@ -22,9 +22,9 @@ namespace Chessy.Game
 
             ///Cells
             ///
-            var cellGO = PrefabResComC.CellGO;
-            var whiteCellSR = SpritesResComC.Sprite(SpriteGameTypes.WhiteCell);
-            var blackCellSR = SpritesResComC.Sprite(SpriteGameTypes.BlackCell);
+            var cell = PrefabResComC.CellGO;
+            var white = SpritesResComC.Sprite(SpriteGameTypes.WhiteCell);
+            var black = SpritesResComC.Sprite(SpriteGameTypes.BlackCell);
 
             var cell_GOs = new GameObject[CellValues.CELL_COUNT_X, CellValues.CELL_COUNT_Y];
 
@@ -42,12 +42,12 @@ namespace Chessy.Game
                     {
                         if (x % 2 == 0)
                         {
-                            curParCell = CreateGameObject(cellGO, blackCellSR, x, y, MainGoVC.Main_GO);
+                            curParCell = CreateGameObject(cell, black, x, y, MainGoVC.Main_GO);
                             SetActive(curParCell, x, y);
                         }
                         if (x % 2 != 0)
                         {
-                            curParCell = CreateGameObject(cellGO, whiteCellSR, x, y, MainGoVC.Main_GO);
+                            curParCell = CreateGameObject(cell, white, x, y, MainGoVC.Main_GO);
                             SetActive(curParCell, x, y);
                         }
                     }
@@ -55,12 +55,12 @@ namespace Chessy.Game
                     {
                         if (x % 2 != 0)
                         {
-                            curParCell = CreateGameObject(cellGO, blackCellSR, x, y, MainGoVC.Main_GO);
+                            curParCell = CreateGameObject(cell, black, x, y, MainGoVC.Main_GO);
                             SetActive(curParCell, x, y);
                         }
                         if (x % 2 == 0)
                         {
-                            curParCell = CreateGameObject(cellGO, whiteCellSR, x, y, MainGoVC.Main_GO);
+                            curParCell = CreateGameObject(cell, white, x, y, MainGoVC.Main_GO);
                             SetActive(curParCell, x, y);
                         }
                     }

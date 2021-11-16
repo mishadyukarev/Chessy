@@ -10,15 +10,15 @@ namespace Chessy.Game
 
         public void Run()
         {
-            if (IdxSel.IsSelCell)
+            if (SelIdx.IsSelCell)
             {
-                var idxSelCell = IdxSel.Idx;
+                var idxSelCell = SelIdx.Idx;
 
-                ref var selUnitDatCom = ref _cellUnitFilter.Get1(IdxSel.Idx);
-                ref var selOwnUnitCom = ref _cellUnitFilter.Get2(IdxSel.Idx);
+                ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelIdx.Idx);
+                ref var selOwnUnitCom = ref _cellUnitFilter.Get2(SelIdx.Idx);
 
-                ref var selBuildDatCom = ref _cellBuildFilt.Get1(IdxSel.Idx);
-                ref var ownBuildC_sel = ref _cellBuildFilt.Get2(IdxSel.Idx);
+                ref var selBuildDatCom = ref _cellBuildFilt.Get1(SelIdx.Idx);
+                ref var ownBuildC_sel = ref _cellBuildFilt.Get2(SelIdx.Idx);
 
                 var needActiveThirdButt = false;
 

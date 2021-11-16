@@ -1,6 +1,5 @@
 ﻿using Chessy.Common;
 using Chessy.Game;
-using Chessy.Menu;
 using Leopotam.Ecs;
 using System;
 using UnityEngine;
@@ -27,7 +26,7 @@ namespace Chessy
 
         private void Update()
         {
-            ComSysDataC.Invoke(ActionDataTypes.RunUpdate);
+            Common.DataSC.Invoke(ActionDataTypes.RunUpdate);
 
             switch (_curScene)
             {

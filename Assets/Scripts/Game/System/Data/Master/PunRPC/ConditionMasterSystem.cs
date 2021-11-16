@@ -13,44 +13,44 @@ namespace Chessy.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
 
-            var neededCondType = ForCondMasCom.NeededCondUnitType;
-            var idxForCondit = ForCondMasCom.IdxForCondition;
+            CondDoingMC.Get(out var cond);
+            IdxDoingMC.Get(out var idx_0);
 
-            ref var stepUnit_0 = ref _statUnitF.Get1(idxForCondit);
-            ref var condUnit_0 = ref _effUnitF.Get1(idxForCondit);
+            ref var step_0 = ref _statUnitF.Get1(idx_0);
+            ref var cond_0 = ref _effUnitF.Get1(idx_0);
 
 
-            switch (neededCondType)
+            switch (cond)
             {
                 case CondUnitTypes.None:
-                    condUnit_0.Reset();
+                    cond_0.Reset();
                     break;
 
                 case CondUnitTypes.Protected:
-                    if (condUnit_0.Is(CondUnitTypes.Protected))
+                    if (cond_0.Is(CondUnitTypes.Protected))
                     {
                         RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
 
-                        condUnit_0.Reset();
+                        cond_0.Reset();
                     }
 
-                    else if (stepUnit_0.HaveMinSteps)
+                    else if (step_0.HaveMinSteps)
                     {
-                        if (condUnit_0.Is(CondUnitTypes.Relaxed))
+                        if (cond_0.Is(CondUnitTypes.Relaxed))
                         {
                             RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
 
-                            condUnit_0.Set(neededCondType);
+                            cond_0.Set(cond);
 
-                            stepUnit_0.TakeSteps();
+                            step_0.TakeSteps();
                         }
                         else
                         {
                             RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
 
-                            condUnit_0.Set(neededCondType);
+                            cond_0.Set(cond);
 
-                            stepUnit_0.TakeSteps();
+                            step_0.TakeSteps();
                         }
                     }
 
@@ -62,25 +62,25 @@ namespace Chessy.Game
 
 
                 case CondUnitTypes.Relaxed:
-                    if (condUnit_0.Is(CondUnitTypes.Relaxed))
+                    if (cond_0.Is(CondUnitTypes.Relaxed))
                     {
                         RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                        condUnit_0.Reset();
+                        cond_0.Reset();
                     }
 
-                    else if (stepUnit_0.HaveMinSteps)
+                    else if (step_0.HaveMinSteps)
                     {
-                        if (condUnit_0.Is(CondUnitTypes.Protected))
+                        if (cond_0.Is(CondUnitTypes.Protected))
                         {
                             RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                            condUnit_0.Set(neededCondType);
-                            stepUnit_0.TakeSteps();
+                            cond_0.Set(cond);
+                            step_0.TakeSteps();
                         }
                         else
                         {
                             RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
-                            condUnit_0.Set(neededCondType);
-                            stepUnit_0.TakeSteps();
+                            cond_0.Set(cond);
+                            step_0.TakeSteps();
                         }
                     }
 

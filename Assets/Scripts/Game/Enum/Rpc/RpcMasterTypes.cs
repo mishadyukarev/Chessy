@@ -16,7 +16,6 @@
         MeltOre,
         SetUnit,
         Sound,
-        PickUpgrade,
         GetHero,
         UpgradeUnit,
 
@@ -25,6 +24,8 @@
 
         GiveTakeToolWeapon,
         BuyRes,
+
+        UpgUnits,
 
         UniqAbil,
 

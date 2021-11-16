@@ -8,8 +8,8 @@ namespace Chessy.Menu
 {
     public sealed class EventSys : IEcsInitSystem
     {
-        private EcsFilter<ConnectButtonUICom, OnlineZoneUICom, BackgroundMenuUICom> _rightZoneFilter = default;
-        private EcsFilter<ConnectButtonUICom, OfflineZoneUICom, BackgroundMenuUICom> _leftZoneFilter = default;
+        private EcsFilter<ConnectorUIC, OnZoneUIC, BackgroundUIC> _rightZoneFilter = default;
+        private EcsFilter<ConnectorUIC, OffZoneUIC, BackgroundUIC> _leftZoneFilter = default;
 
         private const byte MAX_PLAYERS = 2;
 

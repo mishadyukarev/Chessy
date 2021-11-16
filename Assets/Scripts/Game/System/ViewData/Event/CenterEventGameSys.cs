@@ -15,14 +15,7 @@ namespace Chessy.Game
             FriendZoneViewUIC.AddListenerReady(FriendReady);
             HintViewUIC.AddListHint_But(Hint);
 
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.King, delegate { Upgrade(PickUpgradeTypes.King); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Pawn, delegate { Upgrade(PickUpgradeTypes.Pawn); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Archer, delegate { Upgrade(PickUpgradeTypes.Archer); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Scout, delegate { Upgrade(PickUpgradeTypes.Scout); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Water, delegate { Upgrade(PickUpgradeTypes.Water); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Farm, delegate { Upgrade(PickUpgradeTypes.Farm); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Woodcutter, delegate { Upgrade(PickUpgradeTypes.Woodcutter); });
-            PickUpgZoneViewUIC.AddList_But(PickUpgradeTypes.Mine, delegate { Upgrade(PickUpgradeTypes.Mine); });
+            PickUpgUIC.AddList(UnitTypes.Pawn, delegate { UpgradeUnit(UnitTypes.Pawn); });
 
             HeroesViewUIC.AddListElf(Elf);
             HeroesViewUIC.AddListPremium(OpenShop);
@@ -47,11 +40,12 @@ namespace Chessy.Game
                 HintViewUIC.SetActiveHintZone(false);
             }
         }
-        private void Upgrade(PickUpgradeTypes upgBut)
+
+        private void UpgradeUnit(UnitTypes unit)
         {
             if (WhoseMoveC.IsMyMove)
             {
-                RpcSys.PickUpgradeToMaster(upgBut);
+                RpcSys.PickUpgUnitToMas(unit);
 
                 HeroesViewUIC.SetActiveZone(true);
             }

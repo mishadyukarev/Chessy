@@ -8,7 +8,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            ref var selTwUnitC = ref _twUnitF.Get1(IdxSel.Idx);
+            ref var selTwUnitC = ref _twUnitF.Get1(SelIdx.Idx);
 
             ExtraTWZoneUIC.DisableAll();
 

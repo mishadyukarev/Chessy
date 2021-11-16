@@ -27,7 +27,7 @@ namespace Chessy.Common
             dict.Add(ActionDataTypes.RunUpdate, runUpdate.Run);
             dict.Add(ActionDataTypes.LaunchAdd, launchAdd.Run);
 
-            new ComSysDataC(dict, toggleScene);
+            new DataSC(dict, toggleScene);
             new MainGoVC(main_GO);
 
 

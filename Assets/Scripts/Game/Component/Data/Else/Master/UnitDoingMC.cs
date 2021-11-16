@@ -2,15 +2,15 @@
 {
     public struct UnitDoingMC
     {
-        private static UnitTypes _unitType;
+        private static UnitTypes _unit;
 
-        public static void Set(UnitTypes unitType)
+        public static void Set(UnitTypes unit)
         {
-            _unitType = unitType;
+            _unit = unit;
         }
-        public static void Get(out UnitTypes unitType)
+        public static void Get(out UnitTypes unit)
         {
-            unitType = _unitType;
+            unit = _unit;
         }
     }
 }

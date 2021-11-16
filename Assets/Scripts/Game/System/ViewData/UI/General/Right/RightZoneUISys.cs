@@ -8,13 +8,13 @@ namespace Chessy.Game
 
         public void Run()
         {
-            ref var selUnitDatCom = ref _cellUnitFilter.Get1(IdxSel.Idx);
-            ref var selVisUnitCom = ref _cellUnitFilter.Get3(IdxSel.Idx);
+            ref var selUnitDatCom = ref _cellUnitFilter.Get1(SelIdx.Idx);
+            ref var selVisUnitCom = ref _cellUnitFilter.Get3(SelIdx.Idx);
 
             var activeParent = false;
 
 
-            if (IdxSel.IsSelCell)
+            if (SelIdx.IsSelCell)
             {
                 if (selUnitDatCom.HaveUnit)
                 {

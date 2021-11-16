@@ -92,8 +92,14 @@ namespace Chessy.Game
                         if (xy_0[0] == 5 && xy_0[1] == 5)
                         {
                             cloud_0.Have = true;
-                            //cloud_0.CloudWidth = CloudWidthTypes.OneBlock;
                             CloudCenterC.Idx = idx_0;
+
+                            CellSpace.TryGetXyAround(xy_0, out var dirs);
+                            foreach (var item in dirs)
+                            {
+                                var idx_1 = _xyF.GetIdxCell(item.Value);
+                                WindC.Set(item.Key, idx_1);
+                            }
                         }
 
 
@@ -181,7 +187,7 @@ namespace Chessy.Game
                         levUnit_0.SetLevel(LevelUnitTypes.First);
                         ownUnit_0.SetOwner(PlayerTypes.Second);
                         hpUnitC_0.SetMaxHp();
-                        thirUnitC_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
+                        thirUnitC_0.SetMaxWater(UnitWaterUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit));
                         condUnit_0.Set(CondUnitTypes.Protected);
                         WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                     }
@@ -232,7 +238,7 @@ namespace Chessy.Game
                         hpUnitC_0.SetMaxHp();
                         condUnit_0.Set(CondUnitTypes.Protected);
                         ownUnit_0.SetOwner(PlayerTypes.Second);
-                        thirUnitC_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
+                        thirUnitC_0.SetMaxWater(UnitWaterUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit));
 
                         WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                     }

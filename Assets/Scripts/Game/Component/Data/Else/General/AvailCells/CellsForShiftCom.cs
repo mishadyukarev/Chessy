@@ -30,7 +30,7 @@ namespace Chessy.Game
             }
         }
 
-        public static List<byte> GetListCopy(PlayerTypes playerType, byte startIdxCell) => _availCellsForShift[playerType][startIdxCell].Copy();
+        public static List<byte> List(PlayerTypes playerType, byte startIdxCell) => _availCellsForShift[playerType][startIdxCell].Copy();
         public static void AddIdxCell(PlayerTypes playerType, byte startIdxCell, byte idxCell) => _availCellsForShift[playerType][startIdxCell].Add(idxCell);
         public static void Clear(PlayerTypes playerType, byte startIdxCell) => _availCellsForShift[playerType][startIdxCell].Clear();
         public static bool HaveIdxCell(PlayerTypes playerType, byte startIdxCell, byte idxCell) => _availCellsForShift[playerType][startIdxCell].Contains(idxCell);

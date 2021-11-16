@@ -35,7 +35,7 @@ namespace Chessy.Game
             new SelectorUIC(centerZone_GO);
             new FriendZoneViewUIC(centerZone_GO.transform);
             new HintViewUIC(centerZone_GO.transform, HintComC.IsOnHint);
-            new PickUpgZoneViewUIC(centerZone_GO.transform);
+            new PickUpgUIC(centerZone_GO.transform);
             new HeroesViewUIC(centerZone_GO.transform);
 
             ///Down
@@ -54,7 +54,7 @@ namespace Chessy.Game
 
             ///Right
             new StatZoneViewUIC(rightZone_go);
-            new UniqButtonsViewC(uniqAbilZone_trans);
+            new UniqButtonsUIC(uniqAbilZone_trans);
             new BuildAbilitViewUIC(rightZone_go.transform.Find("BuildingZone"));
             new ExtraTWZoneUIC(rightZone_go.transform);
             new EffectsIUC(rightZone_go.transform);

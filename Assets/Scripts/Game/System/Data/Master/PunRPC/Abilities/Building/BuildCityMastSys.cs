@@ -1,39 +1,33 @@
 ﻿using Leopotam.Ecs;
-using Photon.Pun;
-using Chessy.Common;
 
 namespace Chessy.Game
 {
     public sealed class BuildCityMastSys : IEcsRunSystem
     {
-        private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
-
-        private EcsFilter<XyC> _xyCellFilt = default;
-        private EcsFilter<CellC> _cellDataFilt = default;
-        private EcsFilter<BuildC, OwnerC> _cellBuildFilter = default;
-        private EcsFilter<EnvC> _cellEnvFilter = default;
-        private EcsFilter<FireC> _cellFireFilter = default;
+        private EcsFilter<XyC> _xyF = default;
+        private EcsFilter<CellC> _cellF = default;
+        private EcsFilter<BuildC, OwnerC> _buildF = default;
+        private EcsFilter<EnvC> _envF = default;
+        private EcsFilter<FireC> _fireF = default;
 
         private EcsFilter<StepC> _statUnitF = default;
 
 
         public void Run()
         {
-            ref var forBuildMasCom = ref _forBuilderFilter.Get1(0);
-            var forBuildType = forBuildMasCom.BuildingTypeForBuidling;
+            var sender = InfoC.Sender(MGOTypes.Master);
+            BuildDoingMC.Get(out var forBuildType);
+            IdxDoingMC.Get(out var idx_0);
 
 
             if (forBuildType == BuildTypes.City)
             {
-                var sender = InfoC.Sender(MGOTypes.Master);
-                var idxForBuild = forBuildMasCom.IdxForBuild;
+                ref var build_0 = ref _buildF.Get1(idx_0);
+                ref var ownBuild_0 = ref _buildF.Get2(idx_0);
 
-                ref var build_0 = ref _cellBuildFilter.Get1(idxForBuild);
-                ref var ownBuild_0 = ref _cellBuildFilter.Get2(idxForBuild);
-
-                ref var curStepUnitC = ref _statUnitF.Get1(idxForBuild);
-                ref var curCellEnvCom = ref _cellEnvFilter.Get1(idxForBuild);
-                ref var curFireCom = ref _cellFireFilter.Get1(idxForBuild);
+                ref var curStepUnitC = ref _statUnitF.Get1(idx_0);
+                ref var curCellEnvCom = ref _envF.Get1(idx_0);
+                ref var curFireCom = ref _fireF.Get1(idx_0);
 
 
                 var whoseMove = WhoseMoveC.WhoseMove;
@@ -43,11 +37,11 @@ namespace Chessy.Game
                 {
                     bool haveNearBorder = false;
 
-                    foreach (var xy in CellSpace.GetXyAround(_xyCellFilt.Get1(idxForBuild).Xy))
+                    foreach (var xy in CellSpace.GetXyAround(_xyF.Get1(idx_0).Xy))
                     {
-                        var curIdx = _xyCellFilt.GetIdxCell(xy);
+                        var curIdx = _xyF.GetIdxCell(xy);
 
-                        if (!_cellDataFilt.Get1(curIdx).IsActiveCell)
+                        if (!_cellF.Get1(curIdx).IsActiveCell)
                         {
                             haveNearBorder = true;
                             break;
@@ -61,13 +55,13 @@ namespace Chessy.Game
 
                         if (build_0.Have)
                         {
-                            WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idxForBuild);
+                            WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
                             build_0.Remove();
                         }
 
                         build_0.SetNew(forBuildType);
                         ownBuild_0.SetOwner(whoseMove);
-                        WhereBuildsC.Add(whoseMove, forBuildType, idxForBuild);
+                        WhereBuildsC.Add(whoseMove, forBuildType, idx_0);
 
 
                         curStepUnitC.DefSteps();
@@ -78,17 +72,17 @@ namespace Chessy.Game
                         if (curCellEnvCom.Have(EnvTypes.AdultForest))
                         {
                             curCellEnvCom.Remove(EnvTypes.AdultForest);
-                            WhereEnvC.Remove(EnvTypes.AdultForest, idxForBuild);
+                            WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
                         }
                         if (curCellEnvCom.Have(EnvTypes.Fertilizer))
                         {
                             curCellEnvCom.Remove(EnvTypes.Fertilizer);
-                            WhereEnvC.Remove(EnvTypes.Fertilizer, idxForBuild);
+                            WhereEnvC.Remove(EnvTypes.Fertilizer, idx_0);
                         }
                         if (curCellEnvCom.Have(EnvTypes.YoungForest))
                         {
                             curCellEnvCom.Remove(EnvTypes.YoungForest);
-                            WhereEnvC.Remove(EnvTypes.YoungForest, idxForBuild);
+                            WhereEnvC.Remove(EnvTypes.YoungForest, idx_0);
                         }
                     }
 

@@ -91,13 +91,14 @@ namespace Chessy.Game
             new SoundEffectC(audioSourceParentGO);
 
             new BuildsUpgC(true);
-            new UnitPercUpgC(true);
+            new UnitDamageUpgC(true);
+            new UnitWaterUpgC(true);
             new UnitStepUpgC(new Dictionary<PlayerTypes, Dictionary<UnitTypes, int>>());
 
             new CellsForSetUnitC(true);
             new CellsForShiftCom(true);
             new CellsArsonArcherComp(true);
-            new CellsAttackC(true);
+            new AttackCellsC(true);
             new CellsGiveTWComp(true);
 
             //new WhereCloudsC(true);
@@ -112,7 +113,7 @@ namespace Chessy.Game
             new WhoseMoveC(true);
             new ScoutHeroCooldownC(true);
             new CellClickC(default);
-            new IdxSel(0);
+            new SelIdx(0);
             //new SelUniqAbilC(default);
 
 

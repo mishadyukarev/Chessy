@@ -11,7 +11,7 @@ namespace Chessy.Game
             var xyAvailableCells = new List<byte[]>();
             var xyResultCell = new byte[XY_FOR_ARRAY];
 
-            for (var dir = (DirectTypes)1; dir < (DirectTypes)typeof(DirectTypes).GetEnumNames().Length; dir++)
+            for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
             {
                 var xyDirectCell = GetXyDirect(dir);
 
@@ -28,7 +28,7 @@ namespace Chessy.Game
             directs = new Dictionary<DirectTypes, byte[]>();
             var xyResultCell = new byte[XY_FOR_ARRAY];
 
-            for (var dir = (DirectTypes)1; dir < (DirectTypes)typeof(DirectTypes).GetEnumNames().Length; dir++)
+            for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
             {
                 var xyDirectCell = GetXyDirect(dir);
 

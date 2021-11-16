@@ -1,25 +1,21 @@
 ﻿using Leopotam.Ecs;
-using Chessy.Common;
 
 namespace Chessy.Game
 {
     public sealed class GiveTakeTWMasSys : IEcsRunSystem
     {
-        private EcsFilter<ForGiveTakeToolWeaponComp> _forGiveTakeToolWeapFilter = default;
-
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC> _statUnitF = default;
         private EcsFilter<ToolWeaponC> _twUnitF = default;
 
         public void Run()
         {
-            var idx_0 = _forGiveTakeToolWeapFilter.Get1(0).IdxCell;
+            IdxDoingMC.Get(out var idx_0);
+            TWDoingMC.Get(out var tWTypeForGive, out var levelTWType);
+
 
             if (idx_0 != default)
             {
-                var tWTypeForGive = _forGiveTakeToolWeapFilter.Get1(0).ToolWeapType;
-                var levelTWType = _forGiveTakeToolWeapFilter.Get1(0).LevelTWType;
-
                 var sender = InfoC.Sender(MGOTypes.Master);
 
                 ref var unit_0 = ref _unitF.Get1(idx_0);

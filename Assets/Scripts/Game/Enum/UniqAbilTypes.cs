@@ -2,10 +2,12 @@
 {
     public enum UniqAbilTypes
     {
-        None,
+        Start,
+        None = Start,
 
         //King
         CircularAttack,
+        First = CircularAttack,
         BonusNear,
 
         //Pawn
@@ -20,7 +22,7 @@
         //Elfemale
         GrowAdultForest,
         StunElfemale,
-        PutOutFireElfemale,
+        ChangeDirWind,
 
         End
     }

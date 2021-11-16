@@ -15,7 +15,7 @@ namespace Chessy.Game
 
             _parent_Trans = cell_Trans.Find("TrailZone");
 
-            for (var dir = (DirectTypes)1; dir < (DirectTypes)typeof(DirectTypes).GetEnumNames().Length; dir++)
+            for (var dir = DirectTypes.First; dir < DirectTypes.End; dir++)
             {
                 _trails_SRs.Add(dir, _parent_Trans.Find(dir.ToString()).GetComponent<SpriteRenderer>());
             }

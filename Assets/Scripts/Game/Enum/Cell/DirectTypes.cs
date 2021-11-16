@@ -2,15 +2,20 @@
 {
     public enum DirectTypes : byte
     {
-        None,
+        Start,
+        None = Start,
 
         Up,
+        First = Up,
+
         UpRight,
         Right,
         DownRight,
         Down,
         DownLeft,
         Left,
-        UpLeft
+        UpLeft,
+
+        End
     }
 }

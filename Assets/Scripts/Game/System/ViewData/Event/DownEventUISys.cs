@@ -54,7 +54,7 @@ namespace Chessy.Game
                 if (!ScoutHeroCooldownC.HaveCooldown(WhoseMoveC.CurPlayerI, InvUnitsC.MyHero))
                 {
                     CellClickC.Set(CellClickTypes.GiveHero);
-                    IdxSel.Idx = default;
+                    SelIdx.Idx = default;
                 }
                 else
                 {
@@ -95,7 +95,7 @@ namespace Chessy.Game
             //CellClickC.Reset();
             //IdxCur.Idx = default;
             //IdxPreVis.Idx = default;
-            IdxSel.Reset();
+            SelIdx.Reset();
             GetterUnitsC.ResetCurTimer(unitType);
 
             if (WhoseMoveC.IsMyMove)

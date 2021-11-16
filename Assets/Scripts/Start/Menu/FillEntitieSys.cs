@@ -36,7 +36,7 @@ namespace Chessy.Menu
 
 
 
-            ComSysDataC.Invoke(ActionDataTypes.LaunchAdd);
+            Common.DataSC.Invoke(ActionDataTypes.LaunchAdd);
             MenuSysDataViewC.LaunchLikeGame.Invoke();
         }
 
@@ -56,16 +56,16 @@ namespace Chessy.Menu
 
             var rightZone = CanvasC.FindUnderCurZone<RectTransform>("OnlineRightZone");
             _curMenuWorld.NewEntity()
-                .Replace(new OnlineZoneUICom(rightZone))
-                .Replace(new ConnectButtonUICom(true, rightZone))
-                .Replace(new BackgroundMenuUICom(true, rightZone));
+                .Replace(new OnZoneUIC(rightZone))
+                .Replace(new ConnectorUIC(true, rightZone))
+                .Replace(new BackgroundUIC(true, rightZone));
 
 
             var leftZone = CanvasC.FindUnderCurZone<RectTransform>("OfflineLeftZone");
             _curMenuWorld.NewEntity()
-                .Replace(new OfflineZoneUICom(leftZone))
-                .Replace(new ConnectButtonUICom(false, leftZone))
-                .Replace(new BackgroundMenuUICom(false, leftZone));
+                .Replace(new OffZoneUIC(leftZone))
+                .Replace(new ConnectorUIC(false, leftZone))
+                .Replace(new BackgroundUIC(false, leftZone));
         }
     }
 }

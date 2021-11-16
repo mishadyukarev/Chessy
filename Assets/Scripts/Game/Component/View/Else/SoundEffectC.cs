@@ -129,9 +129,9 @@ namespace Chessy.Game
 
 
             cur_AS = aSParent_GO.AddComponent<AudioSource>();
-            cur_AS.clip = ClipResourcesVC.AudioClip(UniqAbilTypes.PutOutFireElfemale);
+            cur_AS.clip = ClipResourcesVC.AudioClip(UniqAbilTypes.ChangeDirWind);
             cur_AS.volume = 0.1f;
-            _uniqEff.Add(UniqAbilTypes.PutOutFireElfemale, cur_AS);
+            _uniqEff.Add(UniqAbilTypes.ChangeDirWind, cur_AS);
 
 
             cur_AS = aSParent_GO.AddComponent<AudioSource>();

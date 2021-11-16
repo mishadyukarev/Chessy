@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         public void Run()
         {
-            if (!KingZoneViewUIC.IsActiveZone && !PickUpgZoneViewUIC.IsActiveZone && !WhereUnitsC.HaveMyHeroInGame)
+            if (!KingZoneViewUIC.IsActiveZone && !PickUpgUIC.IsActiveZone && !WhereUnitsC.HaveMyHeroInGame)
             {
                 HeroesViewUIC.SetActiveZone(!InvUnitsC.Have(WhoseMoveC.CurPlayerI, UnitTypes.Elfemale, LevelUnitTypes.First));
             }

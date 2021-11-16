@@ -9,13 +9,13 @@ namespace Chessy.Game
 
         public void Run()
         {
-            ref var selBuildDatC = ref _cellBuildFilter.Get1(IdxSel.Idx);
+            ref var selBuildDatC = ref _cellBuildFilter.Get1(SelIdx.Idx);
 
-            ref var env_sel = ref _cellEnvFilter.Get1(IdxSel.Idx);
-            ref var envRes_sel = ref _cellEnvFilter.Get2(IdxSel.Idx);
+            ref var env_sel = ref _cellEnvFilter.Get1(SelIdx.Idx);
+            ref var envRes_sel = ref _cellEnvFilter.Get2(SelIdx.Idx);
 
 
-            if (IdxSel.IsSelCell && !selBuildDatC.Is(BuildTypes.City))
+            if (SelIdx.IsSelCell && !selBuildDatC.Is(BuildTypes.City))
             {
                 EnvirZoneViewUICom.SetActiveParent(true);
             }

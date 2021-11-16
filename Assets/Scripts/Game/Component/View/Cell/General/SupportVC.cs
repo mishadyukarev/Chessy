@@ -12,9 +12,11 @@ namespace Chessy.Game
             _supVis_SR = parentGO.GetComponent<SpriteRenderer>();
         }
 
-        public void SetColor(SupVisTypes supVisType) => _supVis_SR.color = ColorsValues.Color(supVisType);
-
-        public void EnableSR() => _supVis_SR.enabled = true;
+        public void EnableSR(SupVisTypes supVis)
+        {
+            _supVis_SR.enabled = true;
+            _supVis_SR.color = ColorsValues.Color(supVis);
+        }
         public void DisableSR() => _supVis_SR.enabled = false;
     }
 }

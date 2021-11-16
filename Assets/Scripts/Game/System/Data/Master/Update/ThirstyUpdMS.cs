@@ -47,7 +47,7 @@ namespace Chessy.Game
                     {
                         if (riverC_0.HaveNearRiver)
                         {
-                            water_0.SetMaxWater(UnitPercUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit, UnitStatTypes.Water));
+                            water_0.SetMaxWater(UnitWaterUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit));
                         }
                         else
                         {

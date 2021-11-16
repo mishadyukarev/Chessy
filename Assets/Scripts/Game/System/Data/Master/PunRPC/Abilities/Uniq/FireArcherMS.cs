@@ -14,7 +14,7 @@ namespace Chessy.Game
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-            FromToMC.Get(out var idx_from, out var idx_to);
+            FromToDoingMC.Get(out var idx_from, out var idx_to);
 
 
             ref var unit_from = ref _unitF.Get1(idx_from);

@@ -23,8 +23,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            var idx_from = ForShiftMasCom.IdxFrom;
-            var idx_to = ForShiftMasCom.IdxTo;
+            FromToDoingMC.Get(out var idx_from, out var idx_to);
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
@@ -116,7 +115,7 @@ namespace Chessy.Game
                 //uniq_to.Replace(uniq_from);
                 cdUniq_to.Replace(cdUniq_from);
                 corner_to = corner_from;
-                if (river_to.HaveNearRiver) water_to.SetMaxWater(UnitPercUpgC.UpgPercent(own_to.Owner, unit_to.Unit, UnitStatTypes.Water));
+                if (river_to.HaveNearRiver) water_to.SetMaxWater(UnitWaterUpgC.UpgPercent(own_to.Owner, unit_to.Unit));
 
 
 

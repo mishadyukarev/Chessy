@@ -56,9 +56,9 @@ namespace Chessy.Game
                                             if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
                                                 || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
                                             {
-                                                CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                                AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
                                             }
-                                            else CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
+                                            else AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
                                         }
                                     }
                                 }

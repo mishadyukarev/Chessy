@@ -15,7 +15,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            FromToMC.Get(out var idx_from, out var idx_to);
+            FromToDoingMC.Get(out var idx_from, out var idx_to);
 
             var sender = InfoC.Sender(MGOTypes.Master);
             var playerSend = WhoseMoveC.WhoseMove;
@@ -46,7 +46,7 @@ namespace Chessy.Game
                                     if (!ownUnit_from.Is(ownUnit_to.Owner))
                                     {
                                         _effUnitF.Get1(idx_to).SetNewStun();
-                                        _uniqUnitF.Get1(idx_from).SetCooldown(UniqAbilTypes.StunElfemale, 5);
+                                        _uniqUnitF.Get1(idx_from).SetCooldown(UniqAbilTypes.StunElfemale, 3);
 
                                         step_from.TakeSteps();
 

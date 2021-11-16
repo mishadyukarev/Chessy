@@ -31,7 +31,7 @@ namespace Chessy.Game
                 if (stun_0.IsStunned || !unit_0.Is(new[] { UnitTypes.Archer, UnitTypes.Elfemale }) || !step_0.HaveMinSteps) continue;
 
 
-                for (var dir_1 = (DirectTypes)1; dir_1 < (DirectTypes)Enum.GetNames(typeof(DirectTypes)).Length; dir_1++)
+                for (var dir_1 = DirectTypes.First; dir_1 < DirectTypes.End; dir_1++)
                 {
                     var xy_1 = CellSpace.GetXyCellByDirect(xy_0, dir_1);
                     var idx_1 = _xyF.GetIdxCell(xy_1);
@@ -56,22 +56,22 @@ namespace Chessy.Game
                                     {
                                         if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
                                         {
-                                            CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
+                                            AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
                                         }
-                                        else CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                        else AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
                                     }
                                     else
                                     {
                                         if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                         {
-                                            CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
+                                            AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
                                         }
-                                        else CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                        else AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
                                     }
                                 }
                                 else
                                 {
-                                    CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                    AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
                                 }
                             }
                         }
@@ -97,30 +97,30 @@ namespace Chessy.Game
                                 {
                                     if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                     {
-                                        CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_2);
+                                        AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_2);
                                     }
 
                                     else
                                     {
-                                        CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_2);
+                                        AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_2);
                                     }
                                 }
                                 else
                                 {
                                     if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Up)
                                     {
-                                        CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_2);
+                                        AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_2);
                                     }
 
                                     else
                                     {
-                                        CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_2);
+                                        AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_2);
                                     }
                                 }
                             }
                             else
                             {
-                                CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_2);
+                                AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_2);
                             }
                         }
                     }

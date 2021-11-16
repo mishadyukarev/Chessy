@@ -58,7 +58,7 @@ namespace Chessy.Game
                                     {
                                         if (!ownUnit_1.Is(ownUnit_0.Owner))
                                         {
-                                            CellsAttackC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                            AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
                                         }
                                     }
                                 }

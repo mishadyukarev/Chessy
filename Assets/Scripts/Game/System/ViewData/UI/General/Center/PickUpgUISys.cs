@@ -8,7 +8,7 @@ namespace Chessy.Game
         {
             var isActivatedZone = PickUpgC.HaveUpgrade(WhoseMoveC.CurPlayerI);
 
-            PickUpgZoneViewUIC.SetActiveZone(isActivatedZone);
+            PickUpgUIC.SetActiveZone(isActivatedZone);
 
             if (isActivatedZone)
             {
@@ -16,10 +16,10 @@ namespace Chessy.Game
                 {
                     if (item_0.Key == WhoseMoveC.CurPlayerI)
                     {
-                        foreach (var item_1 in item_0.Value)
-                        {
-                            PickUpgZoneViewUIC.SetActive_But(item_1.Key, item_1.Value);
-                        }
+                        //foreach (var item_1 in item_0.Value)
+                        //{
+                        //    PickUpgUIC.SetActive_But(item_1.Key, item_1.Value);
+                        //}
                     }  
                 }
             }

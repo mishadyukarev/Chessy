@@ -8,31 +8,31 @@ namespace Chessy.Game
 
         public void Run()
         {
-            ref var uniq_sel = ref _unitAbilFilt.Get1(IdxSel.Idx);
-            ref var cdUniq_sel = ref _unitAbilFilt.Get2(IdxSel.Idx);
+            ref var uniq_sel = ref _unitAbilFilt.Get1(SelIdx.Idx);
+            ref var cdUniq_sel = ref _unitAbilFilt.Get2(SelIdx.Idx);
 
-            var abil1 = uniq_sel.Ability(UniqButtonTypes.First);
-            var abil2 = uniq_sel.Ability(UniqButtonTypes.Second);
-            var abil3 = uniq_sel.Ability(UniqButtonTypes.Third);
+            var abil1 = uniq_sel.Ability(UniqButTypes.First);
+            var abil2 = uniq_sel.Ability(UniqButTypes.Second);
+            var abil3 = uniq_sel.Ability(UniqButTypes.Third);
 
-            UniqButtonsViewC.SetActive(UniqButtonTypes.First, abil1);
-            UniqButtonsViewC.SetActive(UniqButtonTypes.Second, abil2);
-            UniqButtonsViewC.SetActive(UniqButtonTypes.Third, abil3);
+            UniqButtonsUIC.SetActive(UniqButTypes.First, abil1);
+            UniqButtonsUIC.SetActive(UniqButTypes.Second, abil2);
+            UniqButtonsUIC.SetActive(UniqButTypes.Third, abil3);
 
             if(abil1 != default)
             {
-                UniqButtonsViewC.SetActiveCooldownZone(UniqButtonTypes.First, cdUniq_sel.HaveCooldown(abil1));
-                UniqButtonsViewC.SetTextCooldown(UniqButtonTypes.First, cdUniq_sel.Cooldown(abil1).ToString());
+                UniqButtonsUIC.SetActiveCooldownZone(UniqButTypes.First, cdUniq_sel.HaveCooldown(abil1));
+                UniqButtonsUIC.SetTextCooldown(UniqButTypes.First, cdUniq_sel.Cooldown(abil1).ToString());
             }
             if(abil2 != default)
             {
-                UniqButtonsViewC.SetActiveCooldownZone(UniqButtonTypes.Second, cdUniq_sel.HaveCooldown(abil2));
-                UniqButtonsViewC.SetTextCooldown(UniqButtonTypes.Second, cdUniq_sel.Cooldown(abil2).ToString());
+                UniqButtonsUIC.SetActiveCooldownZone(UniqButTypes.Second, cdUniq_sel.HaveCooldown(abil2));
+                UniqButtonsUIC.SetTextCooldown(UniqButTypes.Second, cdUniq_sel.Cooldown(abil2).ToString());
             }
             if (abil3 != default)
             {
-                UniqButtonsViewC.SetActiveCooldownZone(UniqButtonTypes.Third, cdUniq_sel.HaveCooldown(abil3));
-                UniqButtonsViewC.SetTextCooldown(UniqButtonTypes.Third, cdUniq_sel.Cooldown(abil3).ToString());
+                UniqButtonsUIC.SetActiveCooldownZone(UniqButTypes.Third, cdUniq_sel.HaveCooldown(abil3));
+                UniqButtonsUIC.SetTextCooldown(UniqButTypes.Third, cdUniq_sel.Cooldown(abil3).ToString());
             }
         }
     }

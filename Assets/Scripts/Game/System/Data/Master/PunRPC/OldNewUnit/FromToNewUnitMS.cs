@@ -13,7 +13,7 @@ namespace Chessy.Game
         {
             var sender = InfoC.Sender(MGOTypes.Master);
             UnitDoingMC.Get(out var unit);
-            FromToMC.Get(out var idx_from, out var idx_to);
+            FromToDoingMC.Get(out var idx_from, out var idx_to);
 
             var whoseMove = WhoseMoveC.WhoseMove;
 

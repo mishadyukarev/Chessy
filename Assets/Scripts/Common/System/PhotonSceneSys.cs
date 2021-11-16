@@ -15,7 +15,7 @@ namespace Chessy.Common
         {
             base.OnLeftRoom();
 
-            ComSysDataC.ToggleScene(SceneTypes.Menu);
+            DataSC.ToggleScene(SceneTypes.Menu);
         }
 
         //public override sealed void OnPhotonPlayerDisconnected(Player otherPlayer)
@@ -30,7 +30,7 @@ namespace Chessy.Common
             base.OnPlayerLeftRoom(otherPlayer);
 
             PhotonNetwork.LeaveRoom();
-            ComSysDataC.ToggleScene(SceneTypes.Menu);
+            DataSC.ToggleScene(SceneTypes.Menu);
         }
 
         public override sealed void OnMasterClientSwitched(Player newMasterClient)
@@ -48,7 +48,7 @@ namespace Chessy.Common
 
         public override sealed void OnJoinedRoom()
         {
-            ComSysDataC.ToggleScene(SceneTypes.Game);
+            DataSC.ToggleScene(SceneTypes.Game);
         }
 
         public override void OnPlayerEnteredRoom(Player newPlayer)

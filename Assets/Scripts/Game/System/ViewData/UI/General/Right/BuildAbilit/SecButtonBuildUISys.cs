@@ -10,13 +10,13 @@ namespace Chessy.Game
         {
             var needActiveButton = false;
 
-            if (IdxSel.IsSelCell)
+            if (SelIdx.IsSelCell)
             {
-                ref var selUnitDatCom = ref _cellUnitFilt.Get1(IdxSel.Idx);
+                ref var selUnitDatCom = ref _cellUnitFilt.Get1(SelIdx.Idx);
 
                 if (selUnitDatCom.Is(UnitTypes.Pawn))
                 {
-                    ref var sellOnUnitCom = ref _cellUnitFilt.Get2(IdxSel.Idx);
+                    ref var sellOnUnitCom = ref _cellUnitFilt.Get2(SelIdx.Idx);
 
                     if (sellOnUnitCom.Is(WhoseMoveC.CurPlayerI))
                     {

@@ -1,18 +1,13 @@
 ﻿using Leopotam.Ecs;
-using Photon.Pun;
-using Chessy.Common;
 
 namespace Chessy.Game
 {
     public sealed class CreateUnitMastSys : IEcsRunSystem
     {
-        private EcsFilter<ForCreatingUnitMasCom> _creatorUnitFilter = default;
-
         public void Run()
         {
             var sender = InfoC.Sender(MGOTypes.Master);
-
-            var unitTypeForCreating = _creatorUnitFilter.Get1(0).UnitTypeForCreating;
+            UnitDoingMC.Get(out var unit);
 
 
             var playerSend = WhoseMoveC.WhoseMove;
@@ -20,10 +15,10 @@ namespace Chessy.Game
 
             if (WhereBuildsC.IsSettedCity(playerSend))
             {
-                if (InvResC.CanCreateUnit(playerSend, unitTypeForCreating, out var needRes))
+                if (InvResC.CanCreateUnit(playerSend, unit, out var needRes))
                 {
-                    InvResC.BuyCreateUnit(playerSend, unitTypeForCreating);
-                    InvUnitsC.AddUnit(playerSend, unitTypeForCreating, LevelUnitTypes.First);
+                    InvResC.BuyCreateUnit(playerSend, unit);
+                    InvUnitsC.AddUnit(playerSend, unit, LevelUnitTypes.First);
 
                     RpcSys.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }

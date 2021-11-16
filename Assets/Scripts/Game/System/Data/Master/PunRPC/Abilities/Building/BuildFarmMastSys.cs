@@ -5,22 +5,16 @@ namespace Chessy.Game
 {
     public sealed class BuildFarmMastSys : IEcsRunSystem
     {
-        private EcsFilter<ForBuildingMasCom> _forBuilderFilter = default;
-
         private EcsFilter<BuildC, OwnerC> _cellBuildFilter = default;
         private EcsFilter<StepC> _statUnitF = default;
         private EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
 
-        private EcsFilter<WhereBuildsC> _buildsFilt = default;
-
         public void Run()
         {
-            ref var forBuildMasCom = ref _forBuilderFilter.Get1(0);
-            ref var buildsInGameCom = ref _buildsFilt.Get1(0);
-
             var sender = InfoC.Sender(MGOTypes.Master);
-            var idx_0 = forBuildMasCom.IdxForBuild;
-            var forBuildType = forBuildMasCom.BuildingTypeForBuidling;
+
+            BuildDoingMC.Get(out var forBuildType);
+            IdxDoingMC.Get(out var idx_0);
 
             ref var build_0 = ref _cellBuildFilter.Get1(idx_0);
             ref var ownBuildC_0 = ref _cellBuildFilter.Get2(idx_0);
