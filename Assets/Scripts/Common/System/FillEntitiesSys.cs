@@ -110,7 +110,7 @@ namespace Chessy.Common
 
 
 
-            if (Advertisement.isSupported) Advertisement.Initialize("4097313", false);
+            //if (Advertisement.isSupported) Advertisement.Initialize("4097313", false);
         }
     }
 }

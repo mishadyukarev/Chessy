@@ -1,6 +1,5 @@
 ﻿using Leopotam.Ecs;
 using System;
-using UnityEngine.Advertisements;
 
 namespace Chessy.Common
 {
@@ -13,14 +12,14 @@ namespace Chessy.Common
 
             if (!ShopComC.HasReceipt(ShopComC.PREMIUM_NAME))
             {
-                if (difTime.Minutes >= AdComCom.MINUTES_FOR_AD)
-                {
-                    if (Advertisement.IsReady())
-                    {
-                        Advertisement.Show();
-                        AdComCom.LastTimeAd = DateTime.Now;
-                    }
-                }
+                //if (difTime.Minutes >= AdComCom.MINUTES_FOR_AD)
+                //{
+                //    if (Advertisement.IsReady())
+                //    {
+                //        Advertisement.Show();
+                //        AdComCom.LastTimeAd = DateTime.Now;
+                //    }
+                //}
             }
         }
     }
