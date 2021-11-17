@@ -6,7 +6,7 @@ namespace Chessy.Game
     {
         #region Damage
 
-        public static int StandDamage(UnitTypes unitType, LevelUnitTypes upgUnitType)
+        public static int StandDamage(UnitTypes unitType, LevelTypes upgUnitType)
         {
             switch (unitType)
             {
@@ -14,55 +14,55 @@ namespace Chessy.Game
                 case UnitTypes.King:
                     switch (upgUnitType)
                     {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First: return 300;
-                        case LevelUnitTypes.Second: throw new Exception();
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: return 300;
+                        case LevelTypes.Second: throw new Exception();
                         default: throw new Exception();
                     }
                 case UnitTypes.Pawn:
                     switch (upgUnitType)
                     {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First: return 100;
-                        case LevelUnitTypes.Second: return 150;
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: return 100;
+                        case LevelTypes.Second: return 150;
                         default: throw new Exception();
                     }
                 case UnitTypes.Archer:
                     switch (upgUnitType)
                     {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First: return 100;
-                        case LevelUnitTypes.Second: return 150;
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: return 100;
+                        case LevelTypes.Second: return 150;
                         default: throw new Exception();
                     }
                 case UnitTypes.Scout:
                     switch (upgUnitType)
                     {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First: return 50;
-                        case LevelUnitTypes.Second: throw new Exception();
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: return 50;
+                        case LevelTypes.Second: throw new Exception();
                         default: throw new Exception();
                     }
                 case UnitTypes.Elfemale:
                     switch (upgUnitType)
                     {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First: return 200;
-                        case LevelUnitTypes.Second: throw new Exception();
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: return 200;
+                        case LevelTypes.Second: throw new Exception();
                         default: throw new Exception();
                     }
                 default: throw new Exception();
             }
         }
-        public static float PercentTW(ToolWeaponTypes tlWType)
+        public static float PercentTW(TWTypes tlWType)
         {
             switch (tlWType)
             {
-                case ToolWeaponTypes.None: return 0;
-                case ToolWeaponTypes.Hoe: throw new Exception();
-                case ToolWeaponTypes.Pick: return 0;
-                case ToolWeaponTypes.Sword: return 0.5f;
-                case ToolWeaponTypes.Shield: return 0;
+                case TWTypes.None: return 0;
+                case TWTypes.Hoe: throw new Exception();
+                case TWTypes.Pick: return 0;
+                case TWTypes.Sword: return 0.5f;
+                case TWTypes.Shield: return 0;
                 default: throw new Exception();
             }
         }

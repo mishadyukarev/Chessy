@@ -67,7 +67,7 @@ namespace Chessy.Game
                             {
                                 effUnitC_1.DefAllEffects();
 
-                                if (twUnitC_1.Is(ToolWeaponTypes.Shield))
+                                if (twUnitC_1.Is(TWTypes.Shield))
                                 {
                                     twUnitC_1.TakeShieldProtect();
                                 }

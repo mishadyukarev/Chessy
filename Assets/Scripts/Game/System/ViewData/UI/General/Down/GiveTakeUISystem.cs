@@ -6,9 +6,9 @@ namespace Chessy.Game
     {
         public void Run()
         {
-            TwGiveTakeUIC.SetView_ButtonImage(ToolWeaponTypes.Pick, false);
-            TwGiveTakeUIC.SetView_ButtonImage(ToolWeaponTypes.Sword, false);
-            TwGiveTakeUIC.SetView_ButtonImage(ToolWeaponTypes.Shield, false);
+            TwGiveTakeUIC.SetView_ButtonImage(TWTypes.Pick, false);
+            TwGiveTakeUIC.SetView_ButtonImage(TWTypes.Sword, false);
+            TwGiveTakeUIC.SetView_ButtonImage(TWTypes.Shield, false);
 
             if (CellClickC.Is(CellClickTypes.GiveTakeTW))
                 if (TwGiveTakeC.TWTypeForGive != default)
@@ -17,9 +17,9 @@ namespace Chessy.Game
                     TwGiveTakeUIC.SetImage(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive));
                 }
 
-            TwGiveTakeUIC.SetText(ToolWeaponTypes.Pick, InvToolWeapC.AmountToolWeap(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Pick, LevelTWTypes.Iron).ToString());
-            TwGiveTakeUIC.SetText(ToolWeaponTypes.Sword, InvToolWeapC.AmountToolWeap(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Sword, LevelTWTypes.Iron).ToString());
-            TwGiveTakeUIC.SetText(ToolWeaponTypes.Shield, InvToolWeapC.AmountToolWeap(WhoseMoveC.CurPlayerI, ToolWeaponTypes.Shield, TwGiveTakeC.Level(ToolWeaponTypes.Shield)).ToString());
+            TwGiveTakeUIC.SetText(TWTypes.Pick, InvTWC.AmountToolWeap(WhoseMoveC.CurPlayerI, TWTypes.Pick, LevelTypes.Second).ToString());
+            TwGiveTakeUIC.SetText(TWTypes.Sword, InvTWC.AmountToolWeap(WhoseMoveC.CurPlayerI, TWTypes.Sword, LevelTypes.Second).ToString());
+            TwGiveTakeUIC.SetText(TWTypes.Shield, InvTWC.AmountToolWeap(WhoseMoveC.CurPlayerI, TWTypes.Shield, TwGiveTakeC.Level(TWTypes.Shield)).ToString());
         }
     }
 }

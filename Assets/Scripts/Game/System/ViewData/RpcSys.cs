@@ -97,7 +97,7 @@ namespace Chessy.Game
         public static void FromNewUnitToMas(UnitTypes unitType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.ToNewUnit, new object[] { unitType, idxCell });
         public static void FromToNewUnitToMas(UnitTypes unitType, byte idxFrom, byte idxTo) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.FromToNewUnit, new object[] { unitType, idxFrom, idxTo });
         public static void UpgradeUnitToMaster(byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgradeUnit, new object[] { idxCell });
-        public static void GiveTakeToolWeapon(ToolWeaponTypes toolAndWeaponType, LevelTWTypes levelTWType, byte idxCell) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { toolAndWeaponType, levelTWType, idxCell });
+        public static void GiveTakeToolWeapon(TWTypes tw, LevelTypes level, byte idx) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.GiveTakeToolWeapon, new object[] { tw, level, idx });
 
         public static void CreateUnitToMaster(UnitTypes unitType) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.CreateUnit, new object[] { unitType });
 
@@ -235,7 +235,7 @@ namespace Chessy.Game
                         break;
 
                     case RpcMasterTypes.GiveTakeToolWeapon:
-                        TWDoingMC.Set((ToolWeaponTypes)objects[_curIdx++], (LevelTWTypes)objects[_curIdx++]);
+                        TWDoingMC.Set((TWTypes)objects[_curIdx++], (LevelTypes)objects[_curIdx++]);
                         IdxDoingMC.Set((byte)objects[_curIdx++]);
                         break;
 
@@ -391,13 +391,6 @@ namespace Chessy.Game
 
             foreach (var item_0 in UnitUpgC.Upgrades) objs.Add(item_0.Value);
 
-            foreach (var item_0 in UnitStepUpgC.StepUpgs)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    objs.Add(UnitStepUpgC.UpgSteps(item_0.Key, item_1.Key));
-                }
-            }
             foreach (var item_0 in BuildsUpgC.HaveUpgrades)
             {
                 foreach (var item_1 in item_0.Value)
@@ -436,7 +429,7 @@ namespace Chessy.Game
                 foreach (var item in _effUnitF.Get2(idx_0).Effects) objs.Add(item.Value);
                 objs.Add(_statUnitF.Get3(idx_0).Water);
 
-                objs.Add(_twUnitF.Get1(idx_0).ToolWeapType);
+                objs.Add(_twUnitF.Get1(idx_0).ToolWeapon);
                 objs.Add(_twUnitF.Get1(idx_0).LevelTWType);
                 objs.Add(_twUnitF.Get1(idx_0).ShieldProt);
 
@@ -505,13 +498,13 @@ namespace Chessy.Game
                 }
             }
 
-            foreach (var item_0 in InvToolWeapC.ToolWeapons)
+            foreach (var item_0 in InvTWC.ToolWeapons)
             {
                 foreach (var item_1 in item_0.Value)
                 {
                     foreach (var item_2 in item_1.Value)
                     {
-                        objs.Add(InvToolWeapC.AmountToolWeap(item_0.Key, item_1.Key, item_2.Key));
+                        objs.Add(InvTWC.AmountToolWeap(item_0.Key, item_1.Key, item_2.Key));
                     }
                 }
             }
@@ -614,13 +607,6 @@ namespace Chessy.Game
 
             foreach (var item_0 in UnitUpgC.Upgrades) UnitUpgC.Sync(item_0.Key, item_0.Value);
 
-            foreach (var item_0 in UnitStepUpgC.StepUpgs)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    UnitStepUpgC.SetStepUpg(item_0.Key, item_1.Key, (int)objects[_curIdx++]);
-                }
-            }
             foreach (var item_0 in BuildsUpgC.HaveUpgrades)
             {
                 foreach (var item_1 in item_0.Value)
@@ -650,7 +636,7 @@ namespace Chessy.Game
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 unit_0.Sync((UnitTypes)objects[_curIdx++]);
                 _unitF.Get3(idx_0).Sync((PlayerTypes)objects[_curIdx++]);
-                _unitF.Get2(idx_0).Sync((LevelUnitTypes)objects[_curIdx++]);
+                _unitF.Get2(idx_0).Sync((LevelTypes)objects[_curIdx++]);
                 _statUnitF.Get2(idx_0).Sync((int)objects[_curIdx++]);
                 _statUnitF.Get3(idx_0).Sync((int)objects[_curIdx++]);
 
@@ -658,8 +644,8 @@ namespace Chessy.Game
                 foreach (var item in _effUnitF.Get2(idx_0).Effects) _effUnitF.Get2(idx_0).Sync(item.Key, (bool)objects[_curIdx++]);
                 _statUnitF.Get3(idx_0).Sync((int)objects[_curIdx++]);
 
-                _twUnitF.Get1(idx_0).ToolWeapType = (ToolWeaponTypes)objects[_curIdx++];
-                _twUnitF.Get1(idx_0).LevelTWType = (LevelTWTypes)objects[_curIdx++];
+                _twUnitF.Get1(idx_0).ToolWeapon = (TWTypes)objects[_curIdx++];
+                _twUnitF.Get1(idx_0).LevelTWType = (LevelTypes)objects[_curIdx++];
                 _twUnitF.Get1(idx_0).SyncShield((int)objects[_curIdx++]);
 
                 
@@ -727,13 +713,13 @@ namespace Chessy.Game
                     }
                 }
             }
-            foreach (var item_0 in InvToolWeapC.ToolWeapons)
+            foreach (var item_0 in InvTWC.ToolWeapons)
             {
                 foreach (var item_1 in item_0.Value)
                 {
                     foreach (var item_2 in item_1.Value)
                     {
-                        InvToolWeapC.Set(item_0.Key, item_1.Key, item_2.Key, (int)objects[_curIdx++]);
+                        InvTWC.Set(item_0.Key, item_1.Key, item_2.Key, (int)objects[_curIdx++]);
                     }
                 }
             }

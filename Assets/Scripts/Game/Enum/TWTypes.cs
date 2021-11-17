@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game
 {
-    public enum ToolWeaponTypes
+    public enum TWTypes
     {
         None,
 

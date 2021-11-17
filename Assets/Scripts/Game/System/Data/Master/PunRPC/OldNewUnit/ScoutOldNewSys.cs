@@ -32,23 +32,23 @@ namespace Chessy.Game
 
             if (hpUnit_0.HaveMaxHp)
             {
-                if (stepUnit_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+                if (stepUnit_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner)))
                 {
-                    InvUnitsC.TakeUnit(ownUnit_0.Owner, UnitTypes.Scout, LevelUnitTypes.First);
+                    InvUnitsC.TakeUnit(ownUnit_0.Owner, UnitTypes.Scout, LevelTypes.First);
                     WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                     unit_0.Reset();
 
                     if (twUnitC_0.HaveToolWeap)
                     {
-                        InvToolWeapC.AddAmountTools(ownUnit_0.Owner, twUnitC_0.ToolWeapType, twUnitC_0.LevelTWType);
-                        twUnitC_0.ToolWeapType = default;
+                        InvTWC.AddAmountTools(ownUnit_0.Owner, twUnitC_0.ToolWeapon, twUnitC_0.LevelTWType);
+                        twUnitC_0.ToolWeapon = default;
                     }
 
                     unit_0.Set(unit);
-                    levUnit_0.SetLevel(LevelUnitTypes.First);
+                    levUnit_0.SetLevel(LevelTypes.First);
 
                     hpUnit_0.SetMaxHp();
-                    stepUnit_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
+                    stepUnit_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
                     WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 

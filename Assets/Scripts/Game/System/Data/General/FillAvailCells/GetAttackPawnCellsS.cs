@@ -8,7 +8,7 @@ namespace Chessy.Game
         private EcsFilter<EnvC> _envF = default;
         private EcsFilter<TrailC> _trailF = default;
 
-        private EcsFilter<UnitC, OwnerC> _unitF = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<StepC> _statUnitF = default;
         private EcsFilter<UnitEffectsC, StunC> _effUnitF = default;
 
@@ -17,7 +17,8 @@ namespace Chessy.Game
             foreach (byte idx_0 in _xyF)
             {
                 ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var ownUnit_0 = ref _unitF.Get2(idx_0);
+                ref var level_0 = ref _unitF.Get2(idx_0);
+                ref var ownUnit_0 = ref _unitF.Get3(idx_0);
 
                 ref var step_0 = ref _statUnitF.Get1(idx_0);
 
@@ -28,33 +29,33 @@ namespace Chessy.Game
                 {
                     if (unit_0.Is(UnitTypes.Pawn))
                     {
-                        DirectTypes curDurect1 = default;
+                        DirectTypes dir_cur = default;
 
                         CellSpace.TryGetXyAround(_xyF.Get1(idx_0).Xy, out var dirs);
 
                         foreach (var item_1 in dirs)
                         {
-                            curDurect1 += 1;
+                            dir_cur += 1;
                             var idx_1 = _xyF.GetIdxCell(item_1.Value);
 
-                            ref var envC_1 = ref _envF.Get1(idx_1);
-                            ref var unitC_1 = ref _unitF.Get1(idx_1);
-                            ref var ownUnitC_1 = ref _unitF.Get2(idx_1);
+                            ref var env_1 = ref _envF.Get1(idx_1);
+                            ref var unit_1 = ref _unitF.Get1(idx_1);
+                            ref var own_1 = ref _unitF.Get3(idx_1);
 
                             ref var trail_1 = ref _trailF.Get1(idx_1);
 
 
-                            if (!envC_1.Have(EnvTypes.Mountain))
+                            if (!env_1.Have(EnvTypes.Mountain))
                             {
-                                if (step_0.HaveStepsForDoing(envC_1, item_1.Key, trail_1)
-                                    || step_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+                                if (step_0.HaveStepsForDoing(env_1, item_1.Key, trail_1)
+                                    || step_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, ownUnit_0.Owner)))
                                 {
-                                    if (unitC_1.HaveUnit)
+                                    if (unit_1.HaveUnit)
                                     {
-                                        if (!ownUnitC_1.Is(ownUnit_0.Owner))
+                                        if (!own_1.Is(ownUnit_0.Owner))
                                         {
-                                            if (curDurect1 == DirectTypes.Left || curDurect1 == DirectTypes.Right
-                                                || curDurect1 == DirectTypes.Up || curDurect1 == DirectTypes.Down)
+                                            if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
+                                                || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)
                                             {
                                                 AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
                                             }

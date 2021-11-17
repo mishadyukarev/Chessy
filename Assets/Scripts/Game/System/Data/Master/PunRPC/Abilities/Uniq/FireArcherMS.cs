@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     public sealed class FireArcherMS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, OwnerC> _unitF = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<StepC> _statUnitF = default;
         private EcsFilter<UnitEffectsC> _effUnitF = default;
 
@@ -18,25 +18,26 @@ namespace Chessy.Game
 
 
             ref var unit_from = ref _unitF.Get1(idx_from);
-            ref var ownUnit_from = ref _unitF.Get2(idx_from);
+            ref var level_from = ref _unitF.Get2(idx_from);
+            ref var own_from = ref _unitF.Get3(idx_from);
 
-            ref var stepUnit_from = ref _statUnitF.Get1(idx_from);
-            ref var effUnit_from = ref _effUnitF.Get1(idx_from);
+            ref var step_from = ref _statUnitF.Get1(idx_from);
+            ref var eff_from = ref _effUnitF.Get1(idx_from);
 
-            ref var toFireDatCom = ref _fireF.Get1(idx_to);
+            ref var fire_to = ref _fireF.Get1(idx_to);
 
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
 
-            if (stepUnit_from.HaveMaxSteps(unit_from.Unit, effUnit_from.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_from.Owner, unit_from.Unit)))
+            if (step_from.HaveMaxSteps(unit_from.Unit, eff_from.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_from.Unit, level_from.Level, own_from.Owner)))
             {
                 if (CellsArsonArcherComp.HaveIdxCell(whoseMove, idx_from, idx_to))
                 {
                     RpcSys.SoundToGeneral(RpcTarget.All, UniqAbilTypes.FireArcher);
 
-                    stepUnit_from.DefSteps();
-                    toFireDatCom.Enable();
+                    step_from.DefSteps();
+                    fire_to.Enable();
                 }
             }
 

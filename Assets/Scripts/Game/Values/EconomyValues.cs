@@ -4,7 +4,7 @@ namespace Chessy.Game
 {
     public readonly struct EconomyValues
     {
-        public static int StartAmountUnits(UnitTypes unit, LevelUnitTypes level)
+        public static int StartAmountUnits(UnitTypes unit, LevelTypes level)
         {
             switch (unit)
             {
@@ -12,26 +12,26 @@ namespace Chessy.Game
                 case UnitTypes.King:
                     switch (level)
                     {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First: return 1;
-                        case LevelUnitTypes.Second: return 0;
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: return 1;
+                        case LevelTypes.Second: return 0;
                         default: throw new Exception();
                     }
                 case UnitTypes.Pawn:
                     switch (level)
                     {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First: return 1;
-                        case LevelUnitTypes.Second: return 0;
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: return 1;
+                        case LevelTypes.Second: return 0;
                         default: throw new Exception();
                     }
                 case UnitTypes.Archer: return 0;
                 case UnitTypes.Scout:
                     switch (level)
                     {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First: return 1;
-                        case LevelUnitTypes.Second: return 0;
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: return 1;
+                        case LevelTypes.Second: return 0;
                         default: throw new Exception();
                     }
                 case UnitTypes.Elfemale: return 0;
@@ -205,19 +205,19 @@ namespace Chessy.Game
                 default: throw new Exception();
             }
         }
-        public static int AmountResForBuyTW(ToolWeaponTypes toolWeaponType, LevelTWTypes levelTWType, ResTypes resourceType)
+        public static int AmountResForBuyTW(TWTypes toolWeaponType, LevelTypes levelTWType, ResTypes resourceType)
         {
             switch (levelTWType)
             {
-                case LevelTWTypes.None: throw new Exception();
-                case LevelTWTypes.Wood:
+                case LevelTypes.None: throw new Exception();
+                case LevelTypes.First:
                     switch (toolWeaponType)
                     {
-                        case ToolWeaponTypes.None: throw new Exception();
-                        case ToolWeaponTypes.Hoe: throw new Exception();
-                        case ToolWeaponTypes.Pick: throw new Exception();
-                        case ToolWeaponTypes.Sword: throw new Exception();
-                        case ToolWeaponTypes.Shield:
+                        case TWTypes.None: throw new Exception();
+                        case TWTypes.Hoe: throw new Exception();
+                        case TWTypes.Pick: throw new Exception();
+                        case TWTypes.Sword: throw new Exception();
+                        case TWTypes.Shield:
                             switch (resourceType)
                             {
                                 case ResTypes.None: throw new Exception();
@@ -230,12 +230,12 @@ namespace Chessy.Game
                             }
                         default: throw new Exception();
                     }
-                case LevelTWTypes.Iron:
+                case LevelTypes.Second:
                     switch (toolWeaponType)
                     {
-                        case ToolWeaponTypes.None: throw new Exception();
-                        case ToolWeaponTypes.Hoe: throw new Exception();
-                        case ToolWeaponTypes.Pick:
+                        case TWTypes.None: throw new Exception();
+                        case TWTypes.Hoe: throw new Exception();
+                        case TWTypes.Pick:
                             switch (resourceType)
                             {
                                 case ResTypes.None: throw new Exception();
@@ -246,7 +246,7 @@ namespace Chessy.Game
                                 case ResTypes.Gold: return 0;
                                 default: throw new Exception();
                             }
-                        case ToolWeaponTypes.Sword:
+                        case TWTypes.Sword:
                             switch (resourceType)
                             {
                                 case ResTypes.None: throw new Exception();
@@ -257,7 +257,7 @@ namespace Chessy.Game
                                 case ResTypes.Gold: return 0;
                                 default: throw new Exception();
                             }
-                        case ToolWeaponTypes.Shield:
+                        case TWTypes.Shield:
                             switch (resourceType)
                             {
                                 case ResTypes.None: throw new Exception();

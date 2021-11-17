@@ -24,13 +24,13 @@ namespace Chessy.Game
             var amountWoodcutter = WhereBuildsC.AmountBuilds(curPlayer, BuildTypes.Woodcutter);
             var extOneWoodcut = ExtractC.GetExtractOneBuild(BuildsUpgC.HaveUpgrade(curPlayer, BuildTypes.Woodcutter));
             var amountAddWood = 0;
-            foreach (var idx_0 in WhereUnitsC.IdxsUnits(curPlayer, UnitTypes.Pawn, LevelUnitTypes.First))
+            foreach (var idx_0 in WhereUnitsC.IdxsUnits(curPlayer, UnitTypes.Pawn, LevelTypes.First))
             {
                 if (_cellEnvFilt.Get1(idx_0).Have(EnvTypes.AdultForest))
                     if (_cellUnitFilt.Get1(idx_0).Is(CondUnitTypes.Relaxed))
                         amountAddWood += 1;
             }
-            foreach (var idx_0 in WhereUnitsC.IdxsUnits(curPlayer, UnitTypes.Pawn, LevelUnitTypes.Second))
+            foreach (var idx_0 in WhereUnitsC.IdxsUnits(curPlayer, UnitTypes.Pawn, LevelTypes.Second))
             {
                 if (_cellEnvFilt.Get1(idx_0).Have(EnvTypes.AdultForest))
                     if (_cellUnitFilt.Get1(idx_0).Is(CondUnitTypes.Relaxed))

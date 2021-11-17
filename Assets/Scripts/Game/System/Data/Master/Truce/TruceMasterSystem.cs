@@ -48,8 +48,8 @@ namespace Chessy.Game
                         {
                             if (tw_0.HaveToolWeap)
                             {
-                                InvToolWeapC.AddAmountTools(ownUnit_0.Owner, tw_0.ToolWeapType, tw_0.LevelTWType);
-                                tw_0.ToolWeapType = default;
+                                InvTWC.AddAmountTools(ownUnit_0.Owner, tw_0.ToolWeapon, tw_0.LevelTWType);
+                                tw_0.ToolWeapon = default;
                             }
 
                             InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
@@ -62,8 +62,8 @@ namespace Chessy.Game
 
                         if (tw_0.HaveToolWeap)
                         {
-                            InvToolWeapC.AddAmountTools(ownUnit_0.Owner, tw_0.ToolWeapType, tw_0.LevelTWType);
-                            tw_0.ToolWeapType = default;
+                            InvTWC.AddAmountTools(ownUnit_0.Owner, tw_0.ToolWeapon, tw_0.LevelTWType);
+                            tw_0.ToolWeapon = default;
                         }
 
                         InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);

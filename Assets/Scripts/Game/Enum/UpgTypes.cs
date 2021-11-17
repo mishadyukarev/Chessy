@@ -5,7 +5,8 @@
         Start,
         None = Start,
 
-        StartZone,
+        PickCenter,
+        First = PickCenter,
 
         End,
     }

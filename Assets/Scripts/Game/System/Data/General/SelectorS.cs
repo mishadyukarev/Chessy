@@ -91,7 +91,7 @@ namespace Chessy.Game
                         {
                             if (UnitDatCom(IdxCur.Idx).Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
                                 && OwnUnitCom(IdxCur.Idx).Is(WhoseMoveC.CurPlayerI)
-                                && !LevelUnitC(IdxCur.Idx).Is(LevelUnitTypes.Second))
+                                && !LevelUnitC(IdxCur.Idx).Is(LevelTypes.Second))
                             {
                                 RpcSys.UpgradeUnitToMaster(IdxCur.Idx);
                             }

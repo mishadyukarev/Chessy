@@ -15,15 +15,15 @@ namespace Chessy.Game
             return 3 + amountFarm * GetExtractOneBuild(haveUpg) - amountUnits;
         }
 
-        public static int ExtractOnePawnWood(LevelUnitTypes levelUnit)
+        public static int ExtractOnePawnWood(LevelTypes levelUnit)
         {
             var amountExtract = 0;
 
             switch (levelUnit)
             {
-                case LevelUnitTypes.None: throw new Exception();
-                case LevelUnitTypes.First: amountExtract += 1; break;
-                case LevelUnitTypes.Second: amountExtract += 2; break;
+                case LevelTypes.None: throw new Exception();
+                case LevelTypes.First: amountExtract += 1; break;
+                case LevelTypes.Second: amountExtract += 2; break;
                 default: throw new Exception();
             }
 

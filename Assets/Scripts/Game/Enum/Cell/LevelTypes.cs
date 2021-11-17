@@ -1,6 +1,6 @@
 ﻿namespace Chessy.Game
 {
-    public enum LevelUnitTypes
+    public enum LevelTypes
     {
         None,
 

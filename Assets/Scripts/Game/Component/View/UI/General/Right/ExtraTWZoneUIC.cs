@@ -6,24 +6,24 @@ namespace Chessy.Game
 {
     public struct ExtraTWZoneUIC
     {
-        private static Dictionary<ToolWeaponTypes, Dictionary<LevelTWTypes, Image>> _tw_Images;
+        private static Dictionary<TWTypes, Dictionary<LevelTypes, Image>> _tw_Images;
 
         public ExtraTWZoneUIC(Transform right_Trans)
         {
             var additionZone_Trans = right_Trans.Find("AdditionZone");
 
-            _tw_Images = new Dictionary<ToolWeaponTypes, Dictionary<LevelTWTypes, Image>>();
-            _tw_Images.Add(ToolWeaponTypes.Pick, new Dictionary<LevelTWTypes, Image>());
-            _tw_Images.Add(ToolWeaponTypes.Sword, new Dictionary<LevelTWTypes, Image>());
-            _tw_Images.Add(ToolWeaponTypes.Shield, new Dictionary<LevelTWTypes, Image>());
+            _tw_Images = new Dictionary<TWTypes, Dictionary<LevelTypes, Image>>();
+            _tw_Images.Add(TWTypes.Pick, new Dictionary<LevelTypes, Image>());
+            _tw_Images.Add(TWTypes.Sword, new Dictionary<LevelTypes, Image>());
+            _tw_Images.Add(TWTypes.Shield, new Dictionary<LevelTypes, Image>());
 
-            _tw_Images[ToolWeaponTypes.Pick].Add(LevelTWTypes.Iron, additionZone_Trans.Find("PickIron_Image").GetComponent<Image>());
-            _tw_Images[ToolWeaponTypes.Sword].Add(LevelTWTypes.Iron, additionZone_Trans.Find("SwordIron_Image").GetComponent<Image>());
-            _tw_Images[ToolWeaponTypes.Shield].Add(LevelTWTypes.Wood, additionZone_Trans.Find("ShieldWood_Image").GetComponent<Image>());
-            _tw_Images[ToolWeaponTypes.Shield].Add(LevelTWTypes.Iron, additionZone_Trans.Find("ShieldIron_Image").GetComponent<Image>());
+            _tw_Images[TWTypes.Pick].Add(LevelTypes.Second, additionZone_Trans.Find("PickIron_Image").GetComponent<Image>());
+            _tw_Images[TWTypes.Sword].Add(LevelTypes.Second, additionZone_Trans.Find("SwordIron_Image").GetComponent<Image>());
+            _tw_Images[TWTypes.Shield].Add(LevelTypes.First, additionZone_Trans.Find("ShieldWood_Image").GetComponent<Image>());
+            _tw_Images[TWTypes.Shield].Add(LevelTypes.Second, additionZone_Trans.Find("ShieldIron_Image").GetComponent<Image>());
         }
 
-        public static void Toggle(ToolWeaponTypes tWType, LevelTWTypes level, bool isActive) => _tw_Images[tWType][level].gameObject.SetActive(isActive);
+        public static void Toggle(TWTypes tWType, LevelTypes level, bool isActive) => _tw_Images[tWType][level].gameObject.SetActive(isActive);
         public static void DisableAll()
         {
             foreach (var ss in _tw_Images.Values)

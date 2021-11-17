@@ -14,7 +14,7 @@ namespace Chessy.Game
         private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
         private EcsFilter<TrailC> _cellTrailFilt = default;
 
-        private EcsFilter<UnitC, OwnerC> _unitF = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<HpC, StepC> _statUnitF = default;
         private EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
         private EcsFilter<CooldownUniqC> _unitUniqF = default;
@@ -37,7 +37,8 @@ namespace Chessy.Game
                 ref var cell_0 = ref _cellDataFilt.Get1(idx_0);
 
                 ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var own_0 = ref _unitF.Get2(idx_0);
+                ref var level_0 = ref _unitF.Get2(idx_0);
+                ref var own_0 = ref _unitF.Get3(idx_0);
 
                 ref var hp_0 = ref _statUnitF.Get1(idx_0);
                 ref var step_0 = ref _statUnitF.Get2(idx_0);
@@ -160,7 +161,7 @@ namespace Chessy.Game
                         }
                     }
 
-                    step_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(own_0.Owner, unit_0.Unit));
+                    step_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, own_0.Owner));
                 }
 
                 //else

@@ -1,12 +1,10 @@
-﻿using Leopotam.Ecs;
+﻿using Chessy.Common;
+using Leopotam.Ecs;
 using Photon.Pun;
-using Chessy.Common;
-using System;
-using UnityEngine;
 
 namespace Chessy.Game
 {
-    public sealed class CenterEventUISys : IEcsInitSystem
+    public sealed class CenterEventUIS : IEcsInitSystem
     {
         public void Init()
         {
@@ -15,7 +13,16 @@ namespace Chessy.Game
             FriendZoneViewUIC.AddListenerReady(FriendReady);
             HintViewUIC.AddListHint_But(Hint);
 
+            for (var unit = UnitTypes.First; unit < UnitTypes.Scout; unit++)
+            {
+                
+            }
+
+            PickUpgUIC.AddList(UnitTypes.King, delegate { UpgradeUnit(UnitTypes.King); });
             PickUpgUIC.AddList(UnitTypes.Pawn, delegate { UpgradeUnit(UnitTypes.Pawn); });
+            PickUpgUIC.AddList(UnitTypes.Archer, delegate { UpgradeUnit(UnitTypes.Archer); });
+            PickUpgUIC.AddList(UnitTypes.Scout, delegate { UpgradeUnit(UnitTypes.Scout); });
+
 
             HeroesViewUIC.AddListElf(Elf);
             HeroesViewUIC.AddListPremium(OpenShop);

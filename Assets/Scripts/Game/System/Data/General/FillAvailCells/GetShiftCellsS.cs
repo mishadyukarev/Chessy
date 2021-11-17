@@ -8,7 +8,7 @@ namespace Chessy.Game
         private EcsFilter<EnvC> _envF = default;
         private EcsFilter<TrailC> _trailF = default;
 
-        private EcsFilter<UnitC, OwnerC> _unitF = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private EcsFilter<StepC> _statUnitF = default;
         private EcsFilter<UnitEffectsC, StunC> _effUnitF = default;
 
@@ -20,7 +20,8 @@ namespace Chessy.Game
                 CellsForShiftCom.Clear(PlayerTypes.Second, idx_0);
 
                 ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var own_0 = ref _unitF.Get2(idx_0);
+                ref var level_0 = ref _unitF.Get2(idx_0);
+                ref var own_0 = ref _unitF.Get3(idx_0);
 
                 ref var step_0 = ref _statUnitF.Get1(idx_0);
 
@@ -50,7 +51,7 @@ namespace Chessy.Game
                                 if (!unitC_1.HaveUnit)
                                 {
                                     if (step_0.HaveStepsForDoing(envC_1, item_1.Key, trail_1)
-                                        || step_0.HaveMaxSteps(unit_0.Unit, eff_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(own_0.Owner, unit_0.Unit)))
+                                        || step_0.HaveMaxSteps(unit_0.Unit, eff_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, own_0.Owner)))
                                     {
                                         CellsForShiftCom.AddIdxCell(own_0.Owner, idx_0, idx_1);
                                     }

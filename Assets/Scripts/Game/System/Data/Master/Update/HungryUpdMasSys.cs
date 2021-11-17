@@ -19,7 +19,7 @@ namespace Chessy.Game
 
                     for (var unit = UnitTypes.Pawn; unit >= UnitTypes.Elfemale; unit++)
                     {
-                        for (var levUnit = (LevelUnitTypes)2; levUnit > 0; levUnit--)
+                        for (var levUnit = (LevelTypes)2; levUnit > 0; levUnit--)
                         {
                             foreach (var idx_0 in WhereUnitsC.IdxsUnits(player, unit, levUnit))
                             {

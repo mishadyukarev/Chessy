@@ -198,7 +198,7 @@ namespace Chessy.Game
 
 
 
-        public static bool CanBuyTW(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, LevelTWTypes levelTWType, out Dictionary<ResTypes, int> needRes)
+        public static bool CanBuyTW(PlayerTypes playerType, TWTypes toolWeaponType, LevelTypes levelTWType, out Dictionary<ResTypes, int> needRes)
         {
             needRes = new Dictionary<ResTypes, int>();
             var canCreatBuild = true;
@@ -213,7 +213,7 @@ namespace Chessy.Game
 
             return canCreatBuild;
         }
-        public static void BuyTW(PlayerTypes playerType, ToolWeaponTypes toolWeaponType, LevelTWTypes levelTWType)
+        public static void BuyTW(PlayerTypes playerType, TWTypes toolWeaponType, LevelTypes levelTWType)
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
                 Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForBuyTW(toolWeaponType, levelTWType, resType));

@@ -35,20 +35,20 @@ namespace Chessy.Game
 
                         if (twUnit_0.HaveToolWeap)
                         {
-                            InvToolWeapC.AddAmountTools(ownUnit_0.Owner, twUnit_0.ToolWeapType, twUnit_0.LevelTWType);
+                            InvTWC.AddAmountTools(ownUnit_0.Owner, twUnit_0.ToolWeapon, twUnit_0.LevelTWType);
                             WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                             stepUnit_0.TakeSteps();
 
-                            if (twUnit_0.Is(ToolWeaponTypes.Shield)
-                                && tWTypeForGive == ToolWeaponTypes.Shield
+                            if (twUnit_0.Is(TWTypes.Shield)
+                                && tWTypeForGive == TWTypes.Shield
                                 && twUnit_0.LevelTWType != levelTWType)
                             {
                                 twUnit_0.LevelTWType = levelTWType;
                             }
                             else
                             {
-                                twUnit_0.ToolWeapType = default;
+                                twUnit_0.ToolWeapon = default;
                                 twUnit_0.LevelTWType = default;
                             }
                             WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
@@ -57,14 +57,14 @@ namespace Chessy.Game
                         }
 
 
-                        else if (InvToolWeapC.HaveTW(ownUnit_0.Owner, tWTypeForGive, levelTWType))
+                        else if (InvTWC.HaveTW(ownUnit_0.Owner, tWTypeForGive, levelTWType))
                         {
-                            InvToolWeapC.TakeAmountTools(ownUnit_0.Owner, tWTypeForGive, levelTWType);
+                            InvTWC.TakeAmountTools(ownUnit_0.Owner, tWTypeForGive, levelTWType);
                             WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
-                            twUnit_0.ToolWeapType = tWTypeForGive;
+                            twUnit_0.ToolWeapon = tWTypeForGive;
                             twUnit_0.LevelTWType = levelTWType;
-                            if (twUnit_0.Is(ToolWeaponTypes.Shield)) twUnit_0.AddShieldProtect(levelTWType);
+                            if (twUnit_0.Is(TWTypes.Shield)) twUnit_0.AddShieldProtect(levelTWType);
                             WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                             stepUnit_0.TakeSteps();
@@ -72,14 +72,14 @@ namespace Chessy.Game
                             RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }
 
-                        else if (tWTypeForGive == ToolWeaponTypes.Pick)
+                        else if (tWTypeForGive == TWTypes.Pick)
                         {
-                            if (InvResC.CanBuyTW(ownUnit_0.Owner, ToolWeaponTypes.Pick, levelTWType, out var needRes))
+                            if (InvResC.CanBuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTWType, out var needRes))
                             {
-                                InvResC.BuyTW(ownUnit_0.Owner, ToolWeaponTypes.Pick, levelTWType);
+                                InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTWType);
 
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                                twUnit_0.ToolWeapType = tWTypeForGive;
+                                twUnit_0.ToolWeapon = tWTypeForGive;
                                 twUnit_0.LevelTWType = levelTWType;
                                 WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
@@ -93,14 +93,14 @@ namespace Chessy.Game
                             }
                         }
 
-                        else if (tWTypeForGive == ToolWeaponTypes.Sword)
+                        else if (tWTypeForGive == TWTypes.Sword)
                         {
-                            if (InvResC.CanBuyTW(ownUnit_0.Owner, ToolWeaponTypes.Sword, levelTWType, out var needRes))
+                            if (InvResC.CanBuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTWType, out var needRes))
                             {
-                                InvResC.BuyTW(ownUnit_0.Owner, ToolWeaponTypes.Sword, levelTWType);
+                                InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTWType);
 
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                                twUnit_0.ToolWeapType = tWTypeForGive;
+                                twUnit_0.ToolWeapon = tWTypeForGive;
                                 twUnit_0.LevelTWType = levelTWType;
                                 WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
@@ -114,14 +114,14 @@ namespace Chessy.Game
                             }
                         }
 
-                        else if (tWTypeForGive == ToolWeaponTypes.Shield)
+                        else if (tWTypeForGive == TWTypes.Shield)
                         {
                             if (InvResC.CanBuyTW(ownUnit_0.Owner, tWTypeForGive, levelTWType, out var needRes))
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, tWTypeForGive, levelTWType);
 
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                                twUnit_0.ToolWeapType = tWTypeForGive;
+                                twUnit_0.ToolWeapon = tWTypeForGive;
                                 twUnit_0.LevelTWType = levelTWType;
                                 twUnit_0.AddShieldProtect(levelTWType);
                                 WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);

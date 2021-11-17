@@ -18,7 +18,7 @@ namespace Chessy.Game
             {
                 for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
                 {
-                    for (var levUnit = LevelUnitTypes.First; levUnit < LevelUnitTypes.End; levUnit++)
+                    for (var levUnit = LevelTypes.First; levUnit < LevelTypes.End; levUnit++)
                     {
                         foreach (var idx_0 in WhereUnitsC.IdxsUnits(player, unit, levUnit))
                         {
@@ -105,7 +105,7 @@ namespace Chessy.Game
                                             }
                                         }
 
-                                        else if (twUnit_0.Is(ToolWeaponTypes.Pick))
+                                        else if (twUnit_0.Is(TWTypes.Pick))
                                         {
                                             if (env_0.Have(EnvTypes.Hill))
                                             {

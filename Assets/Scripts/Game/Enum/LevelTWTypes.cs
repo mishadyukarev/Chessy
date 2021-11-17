@@ -1,10 +1,10 @@
-﻿namespace Chessy.Game
-{
-    public enum LevelTWTypes
-    {
-        None,
+﻿//namespace Chessy.Game
+//{
+//    public enum LevelTypes
+//    {
+//        None,
 
-        Wood,
-        Iron,
-    }
-}
+//        Wood,
+//        Iron,
+//    }
+//}

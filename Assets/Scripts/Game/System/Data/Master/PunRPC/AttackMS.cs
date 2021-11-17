@@ -151,7 +151,7 @@ namespace Chessy.Game
 
                 if (unit_from.IsMelee)
                 {
-                    if (twUnit_from.Is(ToolWeaponTypes.Shield))
+                    if (twUnit_from.Is(TWTypes.Shield))
                     {
                         twUnit_from.TakeShieldProtect();
                     }
@@ -163,7 +163,7 @@ namespace Chessy.Game
                 }
 
 
-                if (twUnit_to.Is(ToolWeaponTypes.Shield))
+                if (twUnit_to.Is(TWTypes.Shield))
                 {
                     twUnit_to.TakeShieldProtect();
                 }

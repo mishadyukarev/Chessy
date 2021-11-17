@@ -4,23 +4,23 @@ namespace Chessy.Game
 {
     public struct TwGiveTakeC
     {
-        private static Dictionary<ToolWeaponTypes, LevelTWTypes> _curToolWeap;
+        private static Dictionary<TWTypes, LevelTypes> _curToolWeap;
 
-        public static ToolWeaponTypes TWTypeForGive { get; set; }
-        public static LevelTWTypes Level(ToolWeaponTypes tw) => _curToolWeap[tw];
+        public static TWTypes TWTypeForGive { get; set; }
+        public static LevelTypes Level(TWTypes tw) => _curToolWeap[tw];
         public static bool IsSelTW => TWTypeForGive != default;
 
         static TwGiveTakeC()
         {
-            _curToolWeap = new Dictionary<ToolWeaponTypes, LevelTWTypes>();
+            _curToolWeap = new Dictionary<TWTypes, LevelTypes>();
 
-            _curToolWeap.Add(ToolWeaponTypes.Pick, LevelTWTypes.Iron);
-            _curToolWeap.Add(ToolWeaponTypes.Sword, LevelTWTypes.Iron);
-            _curToolWeap.Add(ToolWeaponTypes.Shield, LevelTWTypes.Wood);
+            _curToolWeap.Add(TWTypes.Pick, LevelTypes.Second);
+            _curToolWeap.Add(TWTypes.Sword, LevelTypes.Second);
+            _curToolWeap.Add(TWTypes.Shield, LevelTypes.First);
         }
 
 
         public static void ResetTW() => TWTypeForGive = default;
-        public static void SetLevel(ToolWeaponTypes tw, LevelTWTypes levelTW) => _curToolWeap[tw] = levelTW;
+        public static void SetLevel(TWTypes tw, LevelTypes levelTW) => _curToolWeap[tw] = levelTW;
     }
 }

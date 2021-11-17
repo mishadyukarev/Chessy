@@ -43,7 +43,7 @@ namespace Chessy.Game
                             if (twUnitC_0.HaveToolWeap)
                             {
                                 extraUnitC_0.Enable_SR();
-                                extraUnitC_0.SetToolWeapon_Sprite(twUnitC_0.ToolWeapType, twUnitC_0.LevelTWType);
+                                extraUnitC_0.SetToolWeapon_Sprite(twUnitC_0.ToolWeapon, twUnitC_0.LevelTWType);
                             }
                         }
 

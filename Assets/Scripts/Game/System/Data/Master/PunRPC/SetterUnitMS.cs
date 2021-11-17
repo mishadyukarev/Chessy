@@ -45,23 +45,23 @@ namespace Chessy.Game
             {
                 unit_0.Set(unit);
                 ownUnit_0.SetOwner(whoseMove);
-                tw_0.ToolWeapType = default;
+                tw_0.ToolWeapon = default;
                 eff_0.DefAllEffects();
                 hp_0.SetMaxHp();
-                step_0.SetMaxSteps(unit, false, UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit));
                 if (cond_0.HaveCondition) cond_0.Reset();
                 water_0.SetMaxWater(UnitWaterUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit));
                 moveCond_0.ResetAll();
-                if (InvUnitsC.Have(whoseMove, unit, LevelUnitTypes.Second))
+                if (InvUnitsC.Have(whoseMove, unit, LevelTypes.Second))
                 {
-                    InvUnitsC.TakeUnit(whoseMove, unit, LevelUnitTypes.Second);
-                    levUnit_0.SetLevel(LevelUnitTypes.Second);
+                    InvUnitsC.TakeUnit(whoseMove, unit, LevelTypes.Second);
+                    levUnit_0.SetLevel(LevelTypes.Second);
                 }
                 else
                 {
-                    InvUnitsC.TakeUnit(whoseMove, unit, LevelUnitTypes.First);
-                    levUnit_0.SetLevel(LevelUnitTypes.First);
+                    InvUnitsC.TakeUnit(whoseMove, unit, LevelTypes.First);
+                    levUnit_0.SetLevel(LevelTypes.First);
                 }
+                step_0.SetMaxSteps(unit, false, UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
 
 
                 WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);

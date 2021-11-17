@@ -18,7 +18,7 @@ namespace Chessy.Game
                 if (InvResC.CanCreateUnit(playerSend, unit, out var needRes))
                 {
                     InvResC.BuyCreateUnit(playerSend, unit);
-                    InvUnitsC.AddUnit(playerSend, unit, LevelUnitTypes.First);
+                    InvUnitsC.AddUnit(playerSend, unit, LevelTypes.First);
 
                     RpcSys.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }

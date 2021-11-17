@@ -27,7 +27,7 @@ namespace Chessy.Game
 
 
             var eventExecuters = new EcsSystems(gameWorld)
-                .Add(new CenterEventUISys())
+                .Add(new CenterEventUIS())
                 .Add(new LeftCityEventUISys())
                 .Add(new LeftEnvEventUISys())
                 .Add(new DownEventUISys())

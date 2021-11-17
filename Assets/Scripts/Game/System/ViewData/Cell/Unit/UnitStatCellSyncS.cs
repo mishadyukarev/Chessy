@@ -5,7 +5,7 @@ namespace Chessy.Game
 {
     public sealed class UnitStatCellSyncS : IEcsRunSystem
     {
-        private EcsFilter<UnitC, OwnerC, VisibleC> _unitF = default;
+        private EcsFilter<UnitC, LevelC, OwnerC, VisibleC> _unitF = default;
         private EcsFilter<HpC, StepC, WaterUnitC> _statUnitF = default;
         private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
 
@@ -17,8 +17,9 @@ namespace Chessy.Game
             foreach (byte idx_0 in _statUnitF)
             {
                 ref var unit_0 = ref _unitF.Get1(idx_0);
-                ref var ownUnit_0 = ref _unitF.Get2(idx_0);
-                ref var visUnit_0 = ref _unitF.Get3(idx_0);
+                ref var level_0 = ref _unitF.Get2(idx_0);
+                ref var ownUnit_0 = ref _unitF.Get3(idx_0);
+                ref var visUnit_0 = ref _unitF.Get4(idx_0);
 
                 ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
                 ref var step_0 = ref _statUnitF.Get2(idx_0);
@@ -63,7 +64,7 @@ namespace Chessy.Game
                             blocksViewCom.DisableBlockSR(CellBlockTypes.NeedWater);
                         }
 
-                        if (step_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_0.Owner, unit_0.Unit)))
+                        if (step_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, ownUnit_0.Owner)))
                         {
                             blocksViewCom.EnableBlockSR(CellBlockTypes.MaxSteps);
                         }

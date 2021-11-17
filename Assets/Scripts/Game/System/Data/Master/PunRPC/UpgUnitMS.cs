@@ -37,7 +37,7 @@ namespace Chessy.Game
                         InvResC.BuyUpgradeUnit(whoseMove, unit_0.Unit);
 
                         WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                        levUnit_0.SetLevel(LevelUnitTypes.Second);
+                        levUnit_0.SetLevel(LevelTypes.Second);
                         WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                         stepUnit_0.TakeSteps();

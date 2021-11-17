@@ -4,14 +4,14 @@ namespace Chessy.Game
 {
     public struct DamageC
     {
-        public int StandDamage(UnitTypes unit, LevelUnitTypes level) => UnitValues.StandDamage(unit, level);
-        public int DamageAttack(UnitTypes unit, LevelUnitTypes level, ToolWeaponC tWC, UnitEffectsC effectsC, AttackTypes attack, float upgPerc)
+        public int StandDamage(UnitTypes unit, LevelTypes level) => UnitValues.StandDamage(unit, level);
+        public int DamageAttack(UnitTypes unit, LevelTypes level, ToolWeaponC tWC, UnitEffectsC effectsC, AttackTypes attack, float upgPerc)
         {
             var standDamage = StandDamage(unit, level);
 
             float powerDamege = standDamage;
 
-            powerDamege += standDamage * UnitValues.PercentTW(tWC.ToolWeapType);
+            powerDamege += standDamage * UnitValues.PercentTW(tWC.ToolWeapon);
             if (attack == AttackTypes.Unique) powerDamege += standDamage * UnitValues.UNIQUE_PERCENT_DAMAGE;
 
             if (effectsC.Have(UnitStatTypes.Damage)) powerDamege += standDamage * 0.2f;
@@ -20,7 +20,7 @@ namespace Chessy.Game
 
             return (int)powerDamege;
         }
-        public int DamageOnCell(UnitTypes unit, LevelUnitTypes level, ConditionUnitC condUnitC, ToolWeaponC tWC, UnitEffectsC effectsC, float upgPerc, BuildTypes build, Dictionary<EnvTypes, bool> envrs)
+        public int DamageOnCell(UnitTypes unit, LevelTypes level, ConditionUnitC condUnitC, ToolWeaponC tWC, UnitEffectsC effectsC, float upgPerc, BuildTypes build, Dictionary<EnvTypes, bool> envrs)
         {
             float powerDamege = DamageAttack(unit, level, tWC, effectsC, AttackTypes.Simple, upgPerc);
 

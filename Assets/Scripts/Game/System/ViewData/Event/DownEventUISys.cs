@@ -20,9 +20,9 @@ namespace Chessy.Game
             GetPawnArcherUIC.AddListener(UnitTypes.Archer, delegate { GetUnit(UnitTypes.Archer); });
 
             UpgUnitUIC.AddList(ToggleUpgradeUnit);
-            TwGiveTakeUIC.AddList_Button(ToolWeaponTypes.Pick, delegate { ToggleToolWeapon(ToolWeaponTypes.Pick); });
-            TwGiveTakeUIC.AddList_Button(ToolWeaponTypes.Sword, delegate { ToggleToolWeapon(ToolWeaponTypes.Sword); });
-            TwGiveTakeUIC.AddList_Button(ToolWeaponTypes.Shield, delegate { ToggleToolWeapon(ToolWeaponTypes.Shield); });
+            TwGiveTakeUIC.AddList_Button(TWTypes.Pick, delegate { ToggleToolWeapon(TWTypes.Pick); });
+            TwGiveTakeUIC.AddList_Button(TWTypes.Sword, delegate { ToggleToolWeapon(TWTypes.Sword); });
+            TwGiveTakeUIC.AddList_Button(TWTypes.Shield, delegate { ToggleToolWeapon(TWTypes.Shield); });
         }
 
         private void ExecuteScout()
@@ -67,7 +67,7 @@ namespace Chessy.Game
 
         private void Done()
         {
-            if (!InvUnitsC.Have(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelUnitTypes.First))
+            if (!InvUnitsC.Have(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelTypes.First))
             {
                 RpcSys.DoneToMaster();
             }
@@ -100,15 +100,15 @@ namespace Chessy.Game
 
             if (WhoseMoveC.IsMyMove)
             {
-                if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.Second))
+                if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, unitType, LevelTypes.Second))
                 {
                     CellClickC.Set(CellClickTypes.SetUnit);
-                    SelUnitC.SetSelUnit(unitType, LevelUnitTypes.Second);
+                    SelUnitC.SetSelUnit(unitType, LevelTypes.Second);
                 }
-                else if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, unitType, LevelUnitTypes.First))
+                else if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, unitType, LevelTypes.First))
                 {
                     CellClickC.Set(CellClickTypes.SetUnit);
-                    SelUnitC.SetSelUnit(unitType, LevelUnitTypes.First);
+                    SelUnitC.SetSelUnit(unitType, LevelTypes.First);
                 }
                 else
                 {
@@ -118,11 +118,11 @@ namespace Chessy.Game
             else SoundEffectC.Play(ClipTypes.Mistake);
         }
 
-        private void ToggleToolWeapon(ToolWeaponTypes tWType)
+        private void ToggleToolWeapon(TWTypes tWType)
         {
             if (WhoseMoveC.IsMyMove)
             {
-                if (tWType == ToolWeaponTypes.Pick)
+                if (tWType == TWTypes.Pick)
                 {
                     TryOnHint(VideoClipTypes.Pick);
                 }
@@ -133,23 +133,23 @@ namespace Chessy.Game
 
                 if (CellClickC.Is(CellClickTypes.GiveTakeTW))
                 {
-                    if (tWType == ToolWeaponTypes.Shield)
+                    if (tWType == TWTypes.Shield)
                     {
                         if (TwGiveTakeC.TWTypeForGive == tWType)
                         {
-                            if (TwGiveTakeC.Level(tWType) == LevelTWTypes.Wood) TwGiveTakeC.SetLevel(tWType, LevelTWTypes.Iron);
-                            else TwGiveTakeC.SetLevel(tWType, LevelTWTypes.Wood);
+                            if (TwGiveTakeC.Level(tWType) == LevelTypes.First) TwGiveTakeC.SetLevel(tWType, LevelTypes.Second);
+                            else TwGiveTakeC.SetLevel(tWType, LevelTypes.First);
                         }
                         else
                         {
                             TwGiveTakeC.TWTypeForGive = tWType;
-                            TwGiveTakeC.SetLevel(tWType, LevelTWTypes.Wood);
+                            TwGiveTakeC.SetLevel(tWType, LevelTypes.First);
                         }
                     }
                     else
                     {
                         TwGiveTakeC.TWTypeForGive = tWType;
-                        TwGiveTakeC.SetLevel(tWType, LevelTWTypes.Iron);
+                        TwGiveTakeC.SetLevel(tWType, LevelTypes.Second);
                     }
                 }
                 else
@@ -157,12 +157,12 @@ namespace Chessy.Game
                     CellClickC.Set(CellClickTypes.GiveTakeTW);
                     TwGiveTakeC.TWTypeForGive = tWType;
 
-                    if (tWType == ToolWeaponTypes.Shield)
+                    if (tWType == TWTypes.Shield)
                     {
                         //if(SelectorC.LevelTWType == LevelTWTypes.Iron)
                         //SelectorC.LevelTWType = LevelTWTypes.Wood;
                     }
-                    else TwGiveTakeC.SetLevel(tWType, LevelTWTypes.Iron);
+                    else TwGiveTakeC.SetLevel(tWType, LevelTypes.Second);
                 }
             }
             else SoundEffectC.Play(ClipTypes.Mistake);

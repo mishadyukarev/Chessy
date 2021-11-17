@@ -5,21 +5,21 @@ namespace Chessy.Game
 {
     public struct InvUnitsC
     {
-        private static Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelUnitTypes, int>>> _unitsInv;
+        private static Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelTypes, int>>> _unitsInv;
 
-        public static Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelUnitTypes, int>>> Units
+        public static Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelTypes, int>>> Units
         {
             get
             {
-                var dict_0 = new Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelUnitTypes, int>>>();
+                var dict_0 = new Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelTypes, int>>>();
 
                 foreach (var item_0 in _unitsInv)
                 {
-                    dict_0.Add(item_0.Key, new Dictionary<UnitTypes, Dictionary<LevelUnitTypes, int>>());
+                    dict_0.Add(item_0.Key, new Dictionary<UnitTypes, Dictionary<LevelTypes, int>>());
 
                     foreach (var item_1 in item_0.Value)
                     {
-                        dict_0[item_0.Key].Add(item_1.Key, new Dictionary<LevelUnitTypes, int>());
+                        dict_0[item_0.Key].Add(item_1.Key, new Dictionary<LevelTypes, int>());
                         foreach (var item_2 in item_1.Value)
                         {
                             dict_0[item_0.Key][item_1.Key].Add(item_2.Key, item_2.Value);
@@ -37,23 +37,23 @@ namespace Chessy.Game
             {
                 if (_unitsInv == default)
                 {
-                    _unitsInv = new Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelUnitTypes, int>>>();
+                    _unitsInv = new Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelTypes, int>>>();
 
-                    _unitsInv.Add(PlayerTypes.First, new Dictionary<UnitTypes, Dictionary<LevelUnitTypes, int>>());
-                    _unitsInv.Add(PlayerTypes.Second, new Dictionary<UnitTypes, Dictionary<LevelUnitTypes, int>>());
+                    _unitsInv.Add(PlayerTypes.First, new Dictionary<UnitTypes, Dictionary<LevelTypes, int>>());
+                    _unitsInv.Add(PlayerTypes.Second, new Dictionary<UnitTypes, Dictionary<LevelTypes, int>>());
 
 
                     for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
                     {
-                        _unitsInv[PlayerTypes.First].Add(unit, new Dictionary<LevelUnitTypes, int>());
-                        _unitsInv[PlayerTypes.Second].Add(unit, new Dictionary<LevelUnitTypes, int>());
+                        _unitsInv[PlayerTypes.First].Add(unit, new Dictionary<LevelTypes, int>());
+                        _unitsInv[PlayerTypes.Second].Add(unit, new Dictionary<LevelTypes, int>());
 
 
-                        _unitsInv[PlayerTypes.First][unit].Add(LevelUnitTypes.First, default);
-                        _unitsInv[PlayerTypes.First][unit].Add(LevelUnitTypes.Second, default);
+                        _unitsInv[PlayerTypes.First][unit].Add(LevelTypes.First, default);
+                        _unitsInv[PlayerTypes.First][unit].Add(LevelTypes.Second, default);
 
-                        _unitsInv[PlayerTypes.Second][unit].Add(LevelUnitTypes.First, default);
-                        _unitsInv[PlayerTypes.Second][unit].Add(LevelUnitTypes.Second, default);
+                        _unitsInv[PlayerTypes.Second][unit].Add(LevelTypes.First, default);
+                        _unitsInv[PlayerTypes.Second][unit].Add(LevelTypes.Second, default);
                     }
                 }
 
@@ -72,17 +72,17 @@ namespace Chessy.Game
             }
         }
 
-        public static int AmountUnits(PlayerTypes player, UnitTypes unit, LevelUnitTypes level) => _unitsInv[player][unit][level];
-        public static int AmountUnits(PlayerTypes playerType, UnitTypes unitType) => _unitsInv[playerType][unitType][LevelUnitTypes.First] + _unitsInv[playerType][unitType][LevelUnitTypes.Second];
-        public static void Set(PlayerTypes player, UnitTypes unit, LevelUnitTypes level, int value) => _unitsInv[player][unit][level] = value;
+        public static int AmountUnits(PlayerTypes player, UnitTypes unit, LevelTypes level) => _unitsInv[player][unit][level];
+        public static int AmountUnits(PlayerTypes playerType, UnitTypes unitType) => _unitsInv[playerType][unitType][LevelTypes.First] + _unitsInv[playerType][unitType][LevelTypes.Second];
+        public static void Set(PlayerTypes player, UnitTypes unit, LevelTypes level, int value) => _unitsInv[player][unit][level] = value;
 
-        public static void AddUnit(PlayerTypes player, UnitTypes unit, LevelUnitTypes level, int adding = 1) => Set(player, unit, level, AmountUnits(player, unit, level) + adding);
-        public static void TakeUnit(PlayerTypes player, UnitTypes unit, LevelUnitTypes level, int taking = 1)
+        public static void AddUnit(PlayerTypes player, UnitTypes unit, LevelTypes level, int adding = 1) => Set(player, unit, level, AmountUnits(player, unit, level) + adding);
+        public static void TakeUnit(PlayerTypes player, UnitTypes unit, LevelTypes level, int taking = 1)
         {
             _unitsInv[player][unit][level] -= taking;
         }
 
-        public static bool Have(PlayerTypes player, UnitTypes unit, LevelUnitTypes level) => AmountUnits(player, unit, level) > 0;
+        public static bool Have(PlayerTypes player, UnitTypes unit, LevelTypes level) => AmountUnits(player, unit, level) > 0;
 
         public static UnitTypes MyHero
         {

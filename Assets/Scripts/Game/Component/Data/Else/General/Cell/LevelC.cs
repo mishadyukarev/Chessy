@@ -4,18 +4,18 @@ namespace Chessy.Game
 {
     public struct LevelC
     {
-        private LevelUnitTypes _levelUnit;
-        public LevelUnitTypes Level => _levelUnit;
-        public bool Is(LevelUnitTypes level) => _levelUnit == level;
+        private LevelTypes _levelUnit;
+        public LevelTypes Level => _levelUnit;
+        public bool Is(LevelTypes level) => _levelUnit == level;
 
 
-        public void SetLevel(LevelUnitTypes level)
+        public void SetLevel(LevelTypes level)
         {
-            if (level == LevelUnitTypes.None) throw new Exception();
+            if (level == LevelTypes.None) throw new Exception();
             //if (_levelUnit == level) throw new Exception();
 
             _levelUnit = level;
         }
-        public void Sync(LevelUnitTypes level) => _levelUnit = level;   
+        public void Sync(LevelTypes level) => _levelUnit = level;   
     }
 }

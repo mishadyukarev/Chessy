@@ -14,7 +14,7 @@ namespace Chessy.Game
 
             if (selTwUnitC.HaveToolWeap)
             {
-                ExtraTWZoneUIC.Toggle(selTwUnitC.ToolWeapType, selTwUnitC.LevelTWType, true);
+                ExtraTWZoneUIC.Toggle(selTwUnitC.ToolWeapon, selTwUnitC.LevelTWType, true);
             }
         }
     }

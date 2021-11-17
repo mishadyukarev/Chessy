@@ -16,34 +16,34 @@ namespace Chessy.Game
         public void Enable_SR() => _extraUnit_SR.enabled = true;
         public void Disable_SR() => _extraUnit_SR.enabled = false;
 
-        public void SetToolWeapon_Sprite(ToolWeaponTypes tWType, LevelTWTypes levelTWType)
+        public void SetToolWeapon_Sprite(TWTypes tWType, LevelTypes levelTWType)
         {
             switch (tWType)
             {
-                case ToolWeaponTypes.None: throw new Exception();
-                case ToolWeaponTypes.Hoe: throw new Exception();
-                case ToolWeaponTypes.Pick:
+                case TWTypes.None: throw new Exception();
+                case TWTypes.Hoe: throw new Exception();
+                case TWTypes.Pick:
                     switch (levelTWType)
                     {
-                        case LevelTWTypes.None: throw new Exception();
-                        case LevelTWTypes.Wood: throw new Exception();
-                        case LevelTWTypes.Iron: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PickWood); return;
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: throw new Exception();
+                        case LevelTypes.Second: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PickWood); return;
                         default: throw new Exception();
                     }
-                case ToolWeaponTypes.Sword:
+                case TWTypes.Sword:
                     switch (levelTWType)
                     {
-                        case LevelTWTypes.None: throw new Exception();
-                        case LevelTWTypes.Wood: throw new Exception();
-                        case LevelTWTypes.Iron: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.SwordIron); return;
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: throw new Exception();
+                        case LevelTypes.Second: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.SwordIron); return;
                         default: throw new Exception();
                     }
-                case ToolWeaponTypes.Shield:
+                case TWTypes.Shield:
                     switch (levelTWType)
                     {
-                        case LevelTWTypes.None: throw new Exception();
-                        case LevelTWTypes.Wood: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.ShieldWood); return;
-                        case LevelTWTypes.Iron: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.ShieldIron); return;
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.ShieldWood); return;
+                        case LevelTypes.Second: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.ShieldIron); return;
                         default: throw new Exception();
                     }
                 default: throw new Exception();

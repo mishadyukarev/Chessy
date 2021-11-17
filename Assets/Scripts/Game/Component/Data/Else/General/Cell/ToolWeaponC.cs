@@ -4,24 +4,24 @@ namespace Chessy.Game
 {
     public struct ToolWeaponC
     {
-        public ToolWeaponTypes ToolWeapType;
-        public bool Is(ToolWeaponTypes tWType) => ToolWeapType == tWType;
-        public bool HaveToolWeap => ToolWeapType != default;
+        public TWTypes ToolWeapon;
+        public bool Is(TWTypes tWType) => ToolWeapon == tWType;
+        public bool HaveToolWeap => ToolWeapon != default;
 
 
-        public LevelTWTypes LevelTWType;
-        public bool Is(LevelTWTypes levelTWType) => LevelTWType == levelTWType;
+        public LevelTypes LevelTWType;
+        public bool Is(LevelTypes levelTWType) => LevelTWType == levelTWType;
 
 
         private int _shieldProt;
         public int ShieldProt => _shieldProt;
-        public void AddShieldProtect(LevelTWTypes levelTWType)
+        public void AddShieldProtect(LevelTypes levelTWType)
         {
             switch (levelTWType)
             {
-                case LevelTWTypes.None: throw new Exception();
-                case LevelTWTypes.Wood: _shieldProt = 1; return;
-                case LevelTWTypes.Iron: _shieldProt = 3; return;
+                case LevelTypes.None: throw new Exception();
+                case LevelTypes.First: _shieldProt = 1; return;
+                case LevelTypes.Second: _shieldProt = 3; return;
                 default: throw new Exception();
             }
         }
@@ -30,7 +30,7 @@ namespace Chessy.Game
             _shieldProt -= taking;
             if (ShieldProt <= 0)
             {
-                ToolWeapType = ToolWeaponTypes.None;
+                ToolWeapon = TWTypes.None;
             }
         }
         public void SyncShield(int shieldProt) => _shieldProt = shieldProt;

@@ -184,7 +184,7 @@ namespace Chessy.Game
 
 
                         unit_0.Set(UnitTypes.King);
-                        levUnit_0.SetLevel(LevelUnitTypes.First);
+                        levUnit_0.SetLevel(LevelTypes.First);
                         ownUnit_0.SetOwner(PlayerTypes.Second);
                         hpUnitC_0.SetMaxHp();
                         thirUnitC_0.SetMaxWater(UnitWaterUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit));
@@ -219,21 +219,21 @@ namespace Chessy.Game
                         }
 
                         unit_0.Set(UnitTypes.Pawn);
-                        levUnit_0.SetLevel(LevelUnitTypes.First);
+                        levUnit_0.SetLevel(LevelTypes.First);
 
 
                         int rand = UnityEngine.Random.Range(0, 100);
 
                         if (rand >= 50)
                         {
-                            twUnit_0.ToolWeapType = ToolWeaponTypes.Sword;
-                            twUnit_0.LevelTWType = LevelTWTypes.Iron;
+                            twUnit_0.ToolWeapon = TWTypes.Sword;
+                            twUnit_0.LevelTWType = LevelTypes.Second;
                         }
                         else
                         {
-                            twUnit_0.ToolWeapType = ToolWeaponTypes.Shield;
-                            twUnit_0.LevelTWType = LevelTWTypes.Wood;
-                            twUnit_0.AddShieldProtect(LevelTWTypes.Wood);
+                            twUnit_0.ToolWeapon = TWTypes.Shield;
+                            twUnit_0.LevelTWType = LevelTypes.First;
+                            twUnit_0.AddShieldProtect(LevelTypes.First);
                         }
                         hpUnitC_0.SetMaxHp();
                         condUnit_0.Set(CondUnitTypes.Protected);

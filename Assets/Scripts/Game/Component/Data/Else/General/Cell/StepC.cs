@@ -27,6 +27,7 @@ namespace Chessy.Game
             return needSteps;
         }
         public bool HaveStepsForDoing(EnvC cellEnvC, DirectTypes dir_cur, TrailC trailC) => Steps >= StepsForDoing(cellEnvC, dir_cur, trailC);
+        public int MaxSteps(UnitTypes unit, bool haveEff, float upgPerc) => UnitValues.StandartAmountSteps(unit, haveEff, upgPerc);
 
 
 
@@ -44,8 +45,6 @@ namespace Chessy.Game
             _steps -= taking;
             if (IsMinusSteps) DefSteps();
         }
-
-        public int MaxSteps(UnitTypes unit, bool haveEff, float upgPerc) => UnitValues.StandartAmountSteps(unit, haveEff, upgPerc);       
         public void DefSteps() => _steps = 0;
         public void SetMaxSteps(UnitTypes unit, bool haveEff, float upgPerc) => _steps = MaxSteps(unit, haveEff, upgPerc);
 

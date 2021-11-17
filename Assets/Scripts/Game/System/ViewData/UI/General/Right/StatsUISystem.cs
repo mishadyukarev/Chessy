@@ -16,7 +16,7 @@ namespace Chessy.Game
         {
             ref var unit_sel = ref _unitF.Get1(SelIdx.Idx);
             ref var levUnit_sel = ref _unitF.Get2(SelIdx.Idx);
-            ref var ownUnit_sel = ref _unitF.Get3(SelIdx.Idx);
+            ref var own_sel = ref _unitF.Get3(SelIdx.Idx);
 
             ref var selHpUnitC = ref _statUnitF.Get1(SelIdx.Idx);
             ref var selDamUnitC = ref _statUnitF.Get2(SelIdx.Idx);
@@ -41,7 +41,7 @@ namespace Chessy.Game
                 StatUIC.SetActiveStatZone(true);
 
                 StatUIC.SetTextToStat(UnitStatTypes.Hp, selHpUnitC.Hp.ToString());
-                StatUIC.SetTextToStat(UnitStatTypes.Damage, selDamUnitC.DamageOnCell(unit_sel.Unit, levUnit_sel.Level, selConUnitC, twUnit_sel, effUnit_sel, UnitUpgC.UpgPercent(UpgTypes.StartZone, UnitStatTypes.Damage, unit_sel.Unit, levUnit_sel.Level, ownUnit_sel.Owner), selBuildC.Build, selEnvC.Envronments).ToString());
+                StatUIC.SetTextToStat(UnitStatTypes.Damage, selDamUnitC.DamageOnCell(unit_sel.Unit, levUnit_sel.Level, selConUnitC, twUnit_sel, effUnit_sel, UnitUpgC.UpgPercent(UnitStatTypes.Damage, unit_sel.Unit, levUnit_sel.Level, own_sel.Owner), selBuildC.Build, selEnvC.Envronments).ToString());
                 StatUIC.SetTextToStat(UnitStatTypes.Steps, selStepUnitC.Steps.ToString());
                 StatUIC.SetTextToStat(UnitStatTypes.Water, thirUnitC_sel.Water.ToString());
 
@@ -51,14 +51,14 @@ namespace Chessy.Game
 
                 StatUIC.FillAmount(UnitStatTypes.Damage, 
                     selDamUnitC.DamageOnCell(unit_sel.Unit, levUnit_sel.Level, selConUnitC, twUnit_sel, effUnit_sel, 
-                    UnitUpgC.UpgPercent(UpgTypes.StartZone, UnitStatTypes.Damage, unit_sel.Unit, levUnit_sel.Level, ownUnit_sel.Owner), selBuildC.Build, selEnvC.Envronments), 
+                    UnitUpgC.UpgPercent(UnitStatTypes.Damage, unit_sel.Unit, levUnit_sel.Level, own_sel.Owner), selBuildC.Build, selEnvC.Envronments), 
                     selDamUnitC.DamageAttack(unit_sel.Unit, levUnit_sel.Level, twUnit_sel, effUnit_sel, AttackTypes.Simple, 
-                    UnitUpgC.UpgPercent(UpgTypes.StartZone, UnitStatTypes.Damage, unit_sel.Unit, levUnit_sel.Level, ownUnit_sel.Owner)));
+                    UnitUpgC.UpgPercent(UnitStatTypes.Damage, unit_sel.Unit, levUnit_sel.Level, own_sel.Owner)));
 
 
 
-                StatUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.Steps, selStepUnitC.MaxSteps(unit_sel.Unit, effUnit_sel.Have(UnitStatTypes.Steps), UnitStepUpgC.UpgSteps(ownUnit_sel.Owner, unit_sel.Unit)));
-                StatUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.Water, thirUnitC_sel.MaxWater(UnitWaterUpgC.UpgPercent(ownUnit_sel.Owner, unit_sel.Unit)));
+                StatUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.Steps, selStepUnitC.MaxSteps(unit_sel.Unit, effUnit_sel.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_sel.Unit, levUnit_sel.Level, own_sel.Owner)));
+                StatUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.Water, thirUnitC_sel.MaxWater(UnitWaterUpgC.UpgPercent(own_sel.Owner, unit_sel.Unit)));
             }
 
             else

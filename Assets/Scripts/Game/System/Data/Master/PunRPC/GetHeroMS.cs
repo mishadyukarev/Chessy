@@ -10,7 +10,7 @@ namespace Chessy.Game
             var sender = InfoC.Sender(MGOTypes.Master);
             UnitDoingMC.Get(out var unit);
 
-            InvUnitsC.AddUnit(WhoseMoveC.WhoseMove, unit, LevelUnitTypes.First);
+            InvUnitsC.AddUnit(WhoseMoveC.WhoseMove, unit, LevelTypes.First);
         }
     }
 }

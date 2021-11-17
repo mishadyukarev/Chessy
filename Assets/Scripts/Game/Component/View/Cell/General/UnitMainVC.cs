@@ -16,7 +16,7 @@ namespace Chessy.Game
 
         public void SetEnabled_SR(bool enabled) => _main_SR.enabled = enabled;
 
-        public void SetSprite(UnitTypes unit, LevelUnitTypes levUnit, bool isCornered)
+        public void SetSprite(UnitTypes unit, LevelTypes levUnit, bool isCornered)
         {
             switch (unit)
             {
@@ -30,23 +30,23 @@ namespace Chessy.Game
                 case UnitTypes.Pawn:
                     switch (levUnit)
                     {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnWood); break;
-                        case LevelUnitTypes.Second: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnIron); break;
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnWood); break;
+                        case LevelTypes.Second: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnIron); break;
                         default: throw new Exception();
                     }
                     break;
                 case UnitTypes.Archer:
                     switch (levUnit)
                     {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First:
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First:
                             {
                                 if(isCornered) _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.RookBow);
                                 else _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.BishopBow);
                             }
                             break;
-                        case LevelUnitTypes.Second:
+                        case LevelTypes.Second:
                             {
                                 if(isCornered) _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.RookCrossbow);
                                 else _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.BishopCrossbow);
@@ -58,18 +58,18 @@ namespace Chessy.Game
                 case UnitTypes.Scout:
                     switch (levUnit)
                     {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Scout); break;
-                        case LevelUnitTypes.Second: throw new Exception();
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Scout); break;
+                        case LevelTypes.Second: throw new Exception();
                         default: throw new Exception();
                     }
                     break;
                 case UnitTypes.Elfemale:
                     switch (levUnit)
                     {
-                        case LevelUnitTypes.None: throw new Exception();
-                        case LevelUnitTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Elfemale); break;
-                        case LevelUnitTypes.Second: throw new Exception();
+                        case LevelTypes.None: throw new Exception();
+                        case LevelTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Elfemale); break;
+                        case LevelTypes.Second: throw new Exception();
                         default: throw new Exception();
                     }
                     break;

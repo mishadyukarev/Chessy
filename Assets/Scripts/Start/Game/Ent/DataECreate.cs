@@ -93,7 +93,6 @@ namespace Chessy.Game
             new BuildsUpgC(true);
             new UnitUpgC(new Dictionary<string, bool>());
             new UnitWaterUpgC(true);
-            new UnitStepUpgC(new Dictionary<PlayerTypes, Dictionary<UnitTypes, int>>());
 
             new CellsForSetUnitC(true);
             new CellsForShiftCom(true);
@@ -107,7 +106,7 @@ namespace Chessy.Game
 
             new InvUnitsC(true);
             new InvResC(true);
-            new InvToolWeapC(true);
+            new InvTWC(true);
 
 
             new WhoseMoveC(true);

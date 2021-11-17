@@ -63,7 +63,7 @@ namespace Chessy.Game
                         {
                             if (unit_0.Is(UnitTypes.Pawn, UnitTypes.Archer))
                             {
-                                if (levUnit_0.Is(LevelUnitTypes.First))
+                                if (levUnit_0.Is(LevelTypes.First))
                                 {
                                     supView_0.EnableSR(SupVisTypes.GivePawnTool);
                                 }

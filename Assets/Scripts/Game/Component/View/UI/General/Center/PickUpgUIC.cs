@@ -18,7 +18,7 @@ namespace Chessy.Game
             _parent_GO = center_Trans.Find("PickUpgradeZone").gameObject;
 
             _units = new Dictionary<UnitTypes, Button>();
-            for (var unit = UnitTypes.First; unit < UnitTypes.Scout; unit++)
+            for (var unit = UnitTypes.First; unit <= UnitTypes.Scout; unit++)
             {
                 _units.Add(unit, _parent_GO.transform.Find(unit + "_Button").GetComponent<Button>());
             }
