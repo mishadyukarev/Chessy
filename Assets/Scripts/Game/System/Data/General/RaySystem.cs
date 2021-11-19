@@ -30,6 +30,11 @@ namespace Game.Game
 
             if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             {
+#if UNITY_
+
+#endif
+
+
 #if UNITY_ANDROID
                 if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
                 {
