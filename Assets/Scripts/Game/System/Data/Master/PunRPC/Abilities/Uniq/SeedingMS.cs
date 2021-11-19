@@ -1,8 +1,8 @@
 ﻿using Leopotam.Ecs;
-using Chessy.Common;
+using Game.Common;
 using System;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class SeedingMS : IEcsRunSystem
     {
@@ -46,7 +46,7 @@ namespace Chessy.Game
 
                                     if (!env_0.Have(EnvTypes.YoungForest))
                                     {
-                                        RpcSys.SoundToGeneral(sender, ClipTypes.Seeding);
+                                        RpcSys.SoundToGeneral(sender, UniqAbilTypes.Seed);
 
                                         env_0.Set(EnvTypes.YoungForest);
                                         WhereEnvC.Add(EnvTypes.YoungForest, idx_0);

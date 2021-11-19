@@ -1,10 +1,12 @@
-﻿namespace Chessy.Game
+﻿namespace Game.Game
 {
     public enum ClipTypes
     {
         None,
 
         AttackArcher,
+        First = AttackArcher,
+
         AttackMelee,
         Building,
         Mistake,
@@ -13,7 +15,7 @@
         Destroy,
         UpgradeMelee,
         UpgradeUnitArcher,
-        Seeding,
+        //Seeding,
         ClickToTable,
         Truce,
         AfterBuildTown,

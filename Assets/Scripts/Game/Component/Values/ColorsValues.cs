@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public readonly struct ColorsValues
     {

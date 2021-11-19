@@ -2,7 +2,7 @@
 using Photon.Realtime;
 using System.Collections.Generic;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct InfoC
     {

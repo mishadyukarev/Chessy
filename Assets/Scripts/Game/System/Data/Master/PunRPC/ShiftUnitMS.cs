@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
-using Chessy.Common;
+using Game.Common;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class ShiftUnitMS : IEcsRunSystem
     {
@@ -28,7 +28,7 @@ namespace Chessy.Game
             var whoseMove = WhoseMoveC.WhoseMove;
 
 
-            if (CellsForShiftCom.HaveIdxCell(whoseMove, idx_from, idx_to))
+            if (CellsShiftC.HaveIdxCell(whoseMove, idx_from, idx_to))
             {
                 #region Unit
 

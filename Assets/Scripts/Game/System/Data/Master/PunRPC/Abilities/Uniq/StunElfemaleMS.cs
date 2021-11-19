@@ -1,8 +1,8 @@
-﻿using Chessy.Common;
+﻿using Game.Common;
 using Leopotam.Ecs;
 using Photon.Pun;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class StunElfemaleMS : IEcsRunSystem
     {
@@ -46,7 +46,7 @@ namespace Chessy.Game
                                     if (!ownUnit_from.Is(ownUnit_to.Owner))
                                     {
                                         _effUnitF.Get1(idx_to).SetNewStun();
-                                        _uniqUnitF.Get1(idx_from).SetCooldown(UniqAbilTypes.StunElfemale, 3);
+                                        _uniqUnitF.Get1(idx_from).SetCooldown(UniqAbilTypes.StunElfemale, 2);
 
                                         step_from.TakeSteps();
 

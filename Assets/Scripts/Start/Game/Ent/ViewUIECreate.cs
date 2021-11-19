@@ -1,8 +1,8 @@
-﻿using Chessy.Common;
+﻿using Game.Common;
 using Leopotam.Ecs;
 using UnityEngine.UI;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class ViewUIECreate : IEcsInitSystem
     {

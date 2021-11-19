@@ -1,16 +1,18 @@
-﻿namespace Chessy.Game
+﻿namespace Game.Game
 {
     public struct SelIdx
     {
-        public static byte Idx { get; set; }
-
-
-        public static bool IsSelCell => Idx != default;
-        public static void Reset() => Idx = 0;
+        private static byte _idx;
+        public static byte Idx => _idx;
 
         public SelIdx(byte idx)
         {
-            Idx = idx;
+            _idx = idx;
+        }
+
+        public static void Set(byte idx)
+        {
+            _idx = idx;
         }
     }
 }

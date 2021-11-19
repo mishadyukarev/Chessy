@@ -1,10 +1,16 @@
-﻿namespace Chessy.Game
+﻿namespace Game.Game
 {
     public enum RaycastTypes
     {
-        None,
+        Start,
+        None = Start,
 
         Cell,
+        First = Cell,
+
         UI,
+        Background,
+
+        End,
     }
 }

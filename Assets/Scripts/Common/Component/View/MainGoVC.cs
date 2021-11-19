@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Chessy.Common
+namespace Game.Common
 {
     public struct MainGoVC
     {

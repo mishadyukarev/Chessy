@@ -1,8 +1,8 @@
-﻿using Chessy.Common;
+﻿using Game.Common;
 using Leopotam.Ecs;
 using Photon.Pun;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class CenterEventUIS : IEcsInitSystem
     {
@@ -13,15 +13,14 @@ namespace Chessy.Game
             FriendZoneViewUIC.AddListenerReady(FriendReady);
             HintViewUIC.AddListHint_But(Hint);
 
-            for (var unit = UnitTypes.First; unit < UnitTypes.Scout; unit++)
-            {
-                
-            }
-
             PickUpgUIC.AddList(UnitTypes.King, delegate { UpgradeUnit(UnitTypes.King); });
             PickUpgUIC.AddList(UnitTypes.Pawn, delegate { UpgradeUnit(UnitTypes.Pawn); });
             PickUpgUIC.AddList(UnitTypes.Archer, delegate { UpgradeUnit(UnitTypes.Archer); });
             PickUpgUIC.AddList(UnitTypes.Scout, delegate { UpgradeUnit(UnitTypes.Scout); });
+
+            PickUpgUIC.AddList(BuildTypes.Farm, delegate { UpgradeBuild(BuildTypes.Farm); });
+            PickUpgUIC.AddList(BuildTypes.Woodcutter, delegate { UpgradeBuild(BuildTypes.Woodcutter); });
+            PickUpgUIC.AddList(BuildTypes.Mine, delegate { UpgradeBuild(BuildTypes.Mine); });
 
 
             HeroesViewUIC.AddListElf(Elf);
@@ -53,6 +52,17 @@ namespace Chessy.Game
             if (WhoseMoveC.IsMyMove)
             {
                 RpcSys.PickUpgUnitToMas(unit);
+
+                HeroesViewUIC.SetActiveZone(true);
+            }
+            else SoundEffectC.Play(ClipTypes.Mistake);
+        }
+
+        private void UpgradeBuild(BuildTypes build)
+        {
+            if (WhoseMoveC.IsMyMove)
+            {
+                RpcSys.PickUpgBuildToMas(build);
 
                 HeroesViewUIC.SetActiveZone(true);
             }

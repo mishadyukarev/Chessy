@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct BackgroundVC
     {
         private static GameObject _background_GO;
+
+        public static string Name => _background_GO.name;
 
         public BackgroundVC(GameObject background_GO, bool isMaster)
         {

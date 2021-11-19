@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
-using Chessy.Common;
+using Game.Common;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class BonusNearUnitKingMS : IEcsRunSystem
     {
@@ -33,9 +33,6 @@ namespace Chessy.Game
             {
                 if (stepUnit_0.HaveMinSteps)
                 {
-                    RpcSys.SoundToGeneral(sender, ClipTypes.Building);
-
-
                     cdUniq_0.SetCooldown(UniqAbilTypes.BonusNear, 3);
 
                     stepUnit_0.TakeSteps();

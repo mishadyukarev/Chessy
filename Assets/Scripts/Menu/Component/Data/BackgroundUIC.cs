@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Menu
+namespace Game.Menu
 {
     public struct BackgroundUIC
     {

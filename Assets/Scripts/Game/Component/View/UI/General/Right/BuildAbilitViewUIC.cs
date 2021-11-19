@@ -1,10 +1,10 @@
-﻿using Chessy.Common;
+﻿using Game.Common;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct BuildAbilitViewUIC
 

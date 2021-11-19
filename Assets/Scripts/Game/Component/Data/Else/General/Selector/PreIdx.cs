@@ -1,9 +1,9 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
-    public struct IdxPre
+    public struct PreIdx
     {
         public static byte Idx { get; set; }
     }

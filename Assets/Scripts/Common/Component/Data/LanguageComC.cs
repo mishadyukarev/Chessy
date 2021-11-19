@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Chessy.Common
+namespace Game.Common
 {
     public struct LanguageComC
     {

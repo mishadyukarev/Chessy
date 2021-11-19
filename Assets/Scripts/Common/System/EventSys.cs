@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-namespace Chessy.Common
+namespace Game.Common
 {
     public sealed class EventSys : IEcsInitSystem
     {

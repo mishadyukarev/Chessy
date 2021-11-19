@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Purchasing; //библиотека с покупками, будет доступна когда активируем сервисы
 using UnityEngine.UI;
 
-namespace Chessy.Common
+namespace Game.Common
 {
     public sealed class IAPCore : IEcsInitSystem, IStoreListener //для получения сообщений из Unity Purchasing
     {

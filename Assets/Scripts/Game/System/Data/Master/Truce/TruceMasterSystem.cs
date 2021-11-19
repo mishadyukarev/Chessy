@@ -1,9 +1,9 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using Chessy.Common;
+using Game.Common;
 using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class TruceMasterSystem : IEcsRunSystem
     {

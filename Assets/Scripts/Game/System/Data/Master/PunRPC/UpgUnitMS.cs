@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
-using Chessy.Common;
+using Game.Common;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class UpgUnitMS : IEcsRunSystem
     {

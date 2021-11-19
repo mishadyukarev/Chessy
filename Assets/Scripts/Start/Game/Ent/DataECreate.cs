@@ -1,9 +1,9 @@
-﻿using Chessy.Common;
+﻿using Game.Common;
 using Leopotam.Ecs;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class DataECreate : IEcsInitSystem
     {
@@ -13,14 +13,14 @@ namespace Chessy.Game
 
         public void Init()
         {
-            byte curIdx = 0;
+            byte idx_cur = 0;
 
             for (byte x = 0; x < CellValues.CELL_COUNT_X; x++)
                 for (byte y = 0; y < CellValues.CELL_COUNT_Y; y++)
                 {
                     _curGameW.NewEntity()
-                        .Replace(new XyC(curIdx, new byte[] { x, y }))
-                        .Replace(new CellC(_cellVF.Get1(curIdx).Cell))
+                        .Replace(new XyC(idx_cur, new byte[] { x, y }))
+                        .Replace(new CellC(_cellVF.Get1(idx_cur).Cell))
                         .Replace(new EnvC(new Dictionary<EnvTypes, bool>()))
                         .Replace(new EnvResC(true))
                         .Replace(new FireC())
@@ -79,7 +79,7 @@ namespace Chessy.Game
                         .Replace(new VisibleC(true));
 
 
-                    ++curIdx;
+                    ++idx_cur;
                 }
 
             //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -95,7 +95,7 @@ namespace Chessy.Game
             new UnitWaterUpgC(true);
 
             new CellsForSetUnitC(true);
-            new CellsForShiftCom(true);
+            new CellsShiftC(true);
             new CellsArsonArcherComp(true);
             new AttackCellsC(true);
             new CellsGiveTWComp(true);
@@ -107,6 +107,8 @@ namespace Chessy.Game
             new InvUnitsC(true);
             new InvResC(true);
             new InvTWC(true);
+
+            new BackgroundC(BackgroundVC.Name);
 
 
             new WhoseMoveC(true);

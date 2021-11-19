@@ -1,4 +1,4 @@
-﻿using Chessy.Common;
+﻿using Game.Common;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.Video;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct HintViewUIC
     {

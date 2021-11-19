@@ -1,9 +1,9 @@
-﻿namespace Chessy.Game
+﻿namespace Game.Game
 {
     public enum UniqAbilTypes
     {
-        Start,
-        None = Start,
+        None,
+        Start = None,
 
         //King
         CircularAttack,

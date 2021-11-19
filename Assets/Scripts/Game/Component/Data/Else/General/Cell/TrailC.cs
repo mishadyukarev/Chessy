@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct TrailC
     {

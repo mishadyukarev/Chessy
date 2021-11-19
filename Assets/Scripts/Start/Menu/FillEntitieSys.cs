@@ -1,8 +1,8 @@
 ﻿using Leopotam.Ecs;
-using Chessy.Common;
+using Game.Common;
 using UnityEngine;
 
-namespace Chessy.Menu
+namespace Game.Menu
 {
     public sealed class FillEntitieSys : IEcsInitSystem
     {

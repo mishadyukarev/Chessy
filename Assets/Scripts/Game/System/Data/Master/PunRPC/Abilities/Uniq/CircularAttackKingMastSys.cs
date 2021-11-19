@@ -1,8 +1,8 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
-using Chessy.Common;
+using Game.Common;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class CircularAttackKingMastSys : IEcsRunSystem
     {
@@ -42,7 +42,7 @@ namespace Chessy.Game
                 {
                     RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
 
-                    cdUniq_0.SetCooldown(UniqAbilTypes.CircularAttack, 3);
+                    cdUniq_0.SetCooldown(UniqAbilTypes.CircularAttack, 2);
 
                     foreach (var xy1 in CellSpace.GetXyAround(_xyCellFilter.Get1(idx_0).Xy))
                     {

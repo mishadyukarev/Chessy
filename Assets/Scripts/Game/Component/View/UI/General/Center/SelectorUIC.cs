@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct SelectorUIC
     {
@@ -15,23 +15,25 @@ namespace Chessy.Game
 
             _selZones_GOs = new Dictionary<CellClickTypes, GameObject>();
 
-            for (var click = CellClickTypes.None + 1; click < CellClickTypes.End; click++)
+
+            _back_Image = selZone_Trans.Find("Back_Image").GetComponent<Image>();
+
+            for (var click = CellClickTypes.Third; click < CellClickTypes.End; click++)
             {
-                _back_Image = selZone_Trans.Find("Back_Image").GetComponent<Image>();
                 _selZones_GOs.Add(click, selZone_Trans.Find(click.ToString()).gameObject);
             }
         }
 
-        public static void SetActive(CellClickTypes cellClickType, bool isActive)
-        {
-            _back_Image.gameObject.SetActive(true);
-            if (_selZones_GOs.ContainsKey(cellClickType)) _selZones_GOs[cellClickType].SetActive(isActive);
-            else throw new System.Exception();
-        }
-        public static void DisableAll()
+        public static void SyncView(CellClickTypes click)
         {
             _back_Image.gameObject.SetActive(false);
             foreach (var item in _selZones_GOs.Keys) _selZones_GOs[item].SetActive(false);
+
+            if (_selZones_GOs.ContainsKey(click))
+            {
+                _back_Image.gameObject.SetActive(true);
+                _selZones_GOs[click].SetActive(true);
+            }
         }
     }
 }

@@ -1,14 +1,14 @@
-﻿using Chessy.Common;
+﻿using Game.Common;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct ClipResourcesVC
     {
         private static Dictionary<ClipTypes, AudioClip> _clips;
-        private static Dictionary<UniqAbilTypes, AudioClip> _uniqAbilClips;
+        private static Dictionary<UniqAbilTypes, AudioClip> _uniq;
 
         public ClipResourcesVC(bool needUpload) : this()
         {
@@ -16,22 +16,22 @@ namespace Chessy.Game
             {
                 _clips = new Dictionary<ClipTypes, AudioClip>();
 
-                for (var clip = ClipTypes.None + 1; clip < ClipTypes.End; clip++)
+                for (var clip = ClipTypes.First; clip < ClipTypes.End; clip++)
                 {
                     _clips.Add(clip, Resources.Load<AudioClip>(clip + "_Clip"));
                 }
 
 
-                _uniqAbilClips = new Dictionary<UniqAbilTypes, AudioClip>();
+                _uniq = new Dictionary<UniqAbilTypes, AudioClip>();
 
-                for (var uniq = UniqAbilTypes.None + 1; uniq < UniqAbilTypes.End; uniq++)
+                for (var uniq = UniqAbilTypes.First; uniq < UniqAbilTypes.End; uniq++)
                 {
                     string name = "Uniq/";
                     
                     if(uniq == UniqAbilTypes.FireArcher || uniq == UniqAbilTypes.FirePawn) name += "Fire";
                     else name += uniq;
 
-                    _uniqAbilClips.Add(uniq, Resources.Load<AudioClip>(name + "_Clip"));
+                    _uniq.Add(uniq, Resources.Load<AudioClip>(name + "_Clip"));
                 }
             }
 
@@ -49,9 +49,9 @@ namespace Chessy.Game
 
         public static AudioClip AudioClip(UniqAbilTypes uniqAbil)
         {
-            if (!_uniqAbilClips.ContainsKey(uniqAbil)) throw new Exception();
+            if (!_uniq.ContainsKey(uniqAbil)) throw new Exception();
 
-            return _uniqAbilClips[uniqAbil];
+            return _uniq[uniqAbil];
         }
     }
 }

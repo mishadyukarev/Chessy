@@ -1,9 +1,9 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
-    public struct IdxCur
+    public struct CurIdx
     {
         public static byte Idx { get; set; }
         public static bool IsStartDirectToCell => Idx == default;

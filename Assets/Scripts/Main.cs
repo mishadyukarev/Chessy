@@ -1,10 +1,10 @@
-﻿using Chessy.Common;
-using Chessy.Game;
+﻿using Game.Common;
+using Game.Game;
 using Leopotam.Ecs;
 using System;
 using UnityEngine;
 
-namespace Chessy
+namespace Game
 {
     public sealed class Main : MonoBehaviour
     {
@@ -12,6 +12,7 @@ namespace Chessy
 
         private EcsWorld _menuW;
         private EcsWorld _gameW;
+
 
         private void Start()
         {

@@ -1,4 +1,4 @@
-﻿using Chessy.Common;
+﻿using Game.Common;
 using ExitGames.Client.Photon;
 using Leopotam.Ecs;
 using Photon.Pun;
@@ -7,7 +7,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
@@ -74,6 +74,7 @@ namespace Chessy.Game
         #region Upgrades
 
         public static void PickUpgUnitToMas(UnitTypes unit) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgUnits, new object[] { unit });
+        public static void PickUpgBuildToMas(BuildTypes build) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgBuilds, new object[] { build });
 
         #endregion
 
@@ -245,6 +246,10 @@ namespace Chessy.Game
 
                     case RpcMasterTypes.UpgUnits:
                         UnitDoingMC.Set((UnitTypes)objects[_curIdx++]);
+                        break;
+
+                    case RpcMasterTypes.UpgBuilds:
+                        BuildDoingMC.Set((BuildTypes)objects[_curIdx++]);
                         break;
 
                     default:

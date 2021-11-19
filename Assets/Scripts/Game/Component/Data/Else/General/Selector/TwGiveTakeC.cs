@@ -1,26 +1,30 @@
 ﻿using System.Collections.Generic;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct TwGiveTakeC
     {
-        private static Dictionary<TWTypes, LevelTypes> _curToolWeap;
+        private static TWTypes _tWType;
+        private static Dictionary<TWTypes, LevelTypes> _curTW;
 
-        public static TWTypes TWTypeForGive { get; set; }
-        public static LevelTypes Level(TWTypes tw) => _curToolWeap[tw];
-        public static bool IsSelTW => TWTypeForGive != default;
+        public static TWTypes TWTypeForGive => _tWType;
+        public static LevelTypes Level(TWTypes tw) => _curTW[tw];
+
 
         static TwGiveTakeC()
         {
-            _curToolWeap = new Dictionary<TWTypes, LevelTypes>();
+            _curTW = new Dictionary<TWTypes, LevelTypes>();
 
-            _curToolWeap.Add(TWTypes.Pick, LevelTypes.Second);
-            _curToolWeap.Add(TWTypes.Sword, LevelTypes.Second);
-            _curToolWeap.Add(TWTypes.Shield, LevelTypes.First);
+            _curTW.Add(TWTypes.Pick, LevelTypes.Second);
+            _curTW.Add(TWTypes.Sword, LevelTypes.Second);
+            _curTW.Add(TWTypes.Shield, LevelTypes.First);
         }
 
 
-        public static void ResetTW() => TWTypeForGive = default;
-        public static void SetLevel(TWTypes tw, LevelTypes levelTW) => _curToolWeap[tw] = levelTW;
+        public static void SetInDown(TWTypes tw, LevelTypes levelTW) => _curTW[tw] = levelTW;
+        public static void Set(TWTypes tw)
+        {
+            _tWType = tw;
+        }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Chessy.Game.CellValues;
+using static Game.Game.CellValues;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public static class CellSpace
     {

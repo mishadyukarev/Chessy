@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 
-namespace Chessy.Game
+namespace Game.Game
 {
-    public struct CellsForShiftCom
+    public struct CellsShiftC
     {
         private static Dictionary<PlayerTypes, Dictionary<byte, List<byte>>> _availCellsForShift;
 
-        public CellsForShiftCom(bool needNew) : this()
+        public CellsShiftC(bool needNew) : this()
         {
             if (needNew)
             {

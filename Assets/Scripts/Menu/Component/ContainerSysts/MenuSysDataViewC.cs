@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Chessy.Menu
+namespace Game.Menu
 {
     public struct MenuSysDataViewC
     {

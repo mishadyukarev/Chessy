@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
-using Chessy.Common;
+using Game.Common;
 
-namespace Chessy.Menu
+namespace Game.Menu
 {
     public sealed class SyncSys : IEcsRunSystem
     {

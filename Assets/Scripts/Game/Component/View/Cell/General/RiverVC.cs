@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct RiverVC
     {

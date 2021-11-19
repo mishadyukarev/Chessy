@@ -1,8 +1,8 @@
-﻿using Chessy.Common;
+﻿using Game.Common;
 using System;
 using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct UnitExtraVC
     {

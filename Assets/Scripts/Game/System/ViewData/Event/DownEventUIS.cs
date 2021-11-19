@@ -1,9 +1,9 @@
 ﻿using Leopotam.Ecs;
-using Chessy.Common;
+using Game.Common;
 
-namespace Chessy.Game
+namespace Game.Game
 {
-    public sealed class DownEventUISys : IEcsInitSystem
+    public sealed class DownEventUIS : IEcsInitSystem
     {
         public void Init()
         {
@@ -54,7 +54,6 @@ namespace Chessy.Game
                 if (!ScoutHeroCooldownC.HaveCooldown(WhoseMoveC.CurPlayerI, InvUnitsC.MyHero))
                 {
                     CellClickC.Set(CellClickTypes.GiveHero);
-                    SelIdx.Idx = default;
                 }
                 else
                 {
@@ -75,8 +74,6 @@ namespace Chessy.Game
             {
                 SoundEffectC.Play(ClipTypes.Mistake);
             }
-
-            CellClickC.Reset();
         }
 
         private void CreateUnit(UnitTypes unitType)
@@ -92,10 +89,7 @@ namespace Chessy.Game
 
         private void GetUnit(UnitTypes unitType)
         {
-            //CellClickC.Reset();
-            //IdxCur.Idx = default;
-            //IdxPreVis.Idx = default;
-            SelIdx.Reset();
+            CellClickC.Reset();
             GetterUnitsC.ResetCurTimer(unitType);
 
             if (WhoseMoveC.IsMyMove)
@@ -137,32 +131,32 @@ namespace Chessy.Game
                     {
                         if (TwGiveTakeC.TWTypeForGive == tWType)
                         {
-                            if (TwGiveTakeC.Level(tWType) == LevelTypes.First) TwGiveTakeC.SetLevel(tWType, LevelTypes.Second);
-                            else TwGiveTakeC.SetLevel(tWType, LevelTypes.First);
+                            if (TwGiveTakeC.Level(tWType) == LevelTypes.First) TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
+                            else TwGiveTakeC.SetInDown(tWType, LevelTypes.First);
                         }
                         else
                         {
-                            TwGiveTakeC.TWTypeForGive = tWType;
-                            TwGiveTakeC.SetLevel(tWType, LevelTypes.First);
+                            TwGiveTakeC.Set(tWType);
+                            TwGiveTakeC.SetInDown(tWType, LevelTypes.First);
                         }
                     }
                     else
                     {
-                        TwGiveTakeC.TWTypeForGive = tWType;
-                        TwGiveTakeC.SetLevel(tWType, LevelTypes.Second);
+                        TwGiveTakeC.Set(tWType);
+                        TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
                     }
                 }
                 else
                 {
                     CellClickC.Set(CellClickTypes.GiveTakeTW);
-                    TwGiveTakeC.TWTypeForGive = tWType;
+                    TwGiveTakeC.Set(tWType);
 
                     if (tWType == TWTypes.Shield)
                     {
                         //if(SelectorC.LevelTWType == LevelTWTypes.Iron)
                         //SelectorC.LevelTWType = LevelTWTypes.Wood;
                     }
-                    else TwGiveTakeC.SetLevel(tWType, LevelTypes.Second);
+                    else TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
                 }
             }
             else SoundEffectC.Play(ClipTypes.Mistake);

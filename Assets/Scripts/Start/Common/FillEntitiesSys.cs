@@ -5,11 +5,11 @@ using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.EventSystems;
 
-namespace Chessy.Common
+namespace Game.Common
 {
-    public class FillEntitiesSys : IEcsInitSystem
+    public sealed class FillEntitiesSys : IEcsInitSystem
     {
-        private EcsWorld _curComWorld = default;
+        private EcsWorld _curComW = default;
 
         public FillEntitiesSys(EcsWorld comWorld, Action<SceneTypes> toggleScene, GameObject main_GO)
         {
@@ -33,21 +33,21 @@ namespace Chessy.Common
 
             var photScene = MainGoVC.Main_GO.AddComponent<PhotonSceneSys>();
 
-
             comSysts
                 .Add(this)
                 .Add(new EventSys())
                 .Add(photScene)
                 .Add(launchAdd)
                 .Add(runUpdate)
-                .Add(new IAPCore());
+                .Add(new IAPCore())
+                .Add(new MyYodo());
 
             comSysts.Init();
         }
 
         public void Init()
         {
-            var commonZoneEnt = _curComWorld.NewEntity()
+            var commonZoneEnt = _curComW.NewEntity()
                 .Replace(new VideoClipsResCom(true))
                 .Replace(new SpritesResComC(true))
                 .Replace(new PrefabResComC(true))

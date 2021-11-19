@@ -1,23 +1,23 @@
 ﻿using Leopotam.Ecs;
-using Chessy.Common;
+using Game.Common;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class RotateAllSys : IEcsRunSystem
     {
-        private EcsFilter<CellVC> _cellViewFilter = default;
-        private EcsFilter<RiverVC> _cellRiverFilt = default;
-        private EcsFilter<TrailVC> _cellTrailFilt = default;
+        private EcsFilter<CellVC> _cellVF = default;
+        private EcsFilter<RiverVC> _riverF = default;
+        private EcsFilter<TrailVC> _trailF = default;
 
         public void Run()
         {
             var curPlayer = WhoseMoveC.CurPlayerI;
 
-            foreach (byte idx_0 in _cellViewFilter)
+            foreach (byte idx_0 in _cellVF)
             {
-                _cellViewFilter.Get1(idx_0).SetRotForClient(curPlayer);
-                _cellRiverFilt.Get1(idx_0).Rotate(curPlayer);
-                _cellTrailFilt.Get1(idx_0).Rotate(curPlayer);
+                _cellVF.Get1(idx_0).SetRotForClient(curPlayer);
+                _riverF.Get1(idx_0).Rotate(curPlayer);
+                _trailF.Get1(idx_0).Rotate(curPlayer);
             }
 
             CameraVC.SetPosRotClient(curPlayer, MainGoVC.Main_GO.transform.position);

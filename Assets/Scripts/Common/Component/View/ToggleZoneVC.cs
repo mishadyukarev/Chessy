@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Chessy.Common
+namespace Game.Common
 {
     public readonly struct ToggleZoneVC
     {

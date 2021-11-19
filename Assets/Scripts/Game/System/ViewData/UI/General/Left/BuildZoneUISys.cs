@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class BuildZoneUISys : IEcsRunSystem
     {
@@ -8,13 +8,13 @@ namespace Chessy.Game
 
         public void Run()
         {
-            ref var selUnitDataCom = ref _cellBuildFilter.Get1(SelIdx.Idx);
-            ref var selOwnUnitCom = ref _cellBuildFilter.Get2(SelIdx.Idx);
+            ref var unit_sel = ref _cellBuildFilter.Get1(SelIdx.Idx);
+            ref var own_sel = ref _cellBuildFilter.Get2(SelIdx.Idx);
 
 
-            if (SelIdx.IsSelCell && selUnitDataCom.Is(BuildTypes.City))
+            if (CellClickC.Is(CellClickTypes.SelCell) && unit_sel.Is(BuildTypes.City))
             {
-                if (selOwnUnitCom.Is(WhoseMoveC.CurPlayerI))
+                if (own_sel.Is(WhoseMoveC.CurPlayerI))
                 {
                     CutyLeftZoneViewUIC.SetActiveZone(true);
                 }

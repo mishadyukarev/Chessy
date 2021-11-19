@@ -1,4 +1,4 @@
-﻿namespace Chessy.Common
+﻿namespace Game.Common
 {
     public enum SpriteGameTypes
     {

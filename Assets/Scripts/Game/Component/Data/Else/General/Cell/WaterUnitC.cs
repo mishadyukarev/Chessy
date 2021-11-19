@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct WaterUnitC
     {

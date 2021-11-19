@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class DataMasSCreate
     {
@@ -53,6 +53,7 @@ namespace Chessy.Game
             rpcSystems.Add(RpcMasterTypes.GetHero, new EcsSystems(gameWorld).Add(new GetHeroMS()));
             rpcSystems.Add(RpcMasterTypes.FromToNewUnit, new EcsSystems(gameWorld).Add(new FromToNewUnitMS()));
             rpcSystems.Add(RpcMasterTypes.UpgUnits, new EcsSystems(gameWorld).Add(new PickUpgUnitsMS()));
+            rpcSystems.Add(RpcMasterTypes.UpgBuilds, new EcsSystems(gameWorld).Add(new PickUpgBuildsMS()));
             var rpcSystsAction = new Dictionary<RpcMasterTypes, Action>();
             foreach (var item_0 in rpcSystems) rpcSystsAction.Add(item_0.Key, item_0.Value.Run);
 

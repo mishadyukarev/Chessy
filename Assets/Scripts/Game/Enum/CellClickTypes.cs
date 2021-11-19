@@ -1,11 +1,20 @@
-﻿namespace Chessy.Game
+﻿namespace Game.Game
 {
     public enum CellClickTypes
     {
-        None,
+        Start,
+        None = Start,
+
+        SelCell,
+        First = SelCell,
 
         SetUnit,
+        Second = SetUnit,
+
         GiveTakeTW,
+        Third = GiveTakeTW,
+
+
         UpgradeUnit,
         GiveScout,
         GiveHero,

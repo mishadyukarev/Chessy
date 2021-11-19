@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct VisibleC
     {
         private Dictionary<PlayerTypes, bool> _isVisibleDict;
         public bool IsVisibled(PlayerTypes key) => _isVisibleDict[key];
-        public void SetVisibled(PlayerTypes key, bool value) => _isVisibleDict[key] = value;
-
+        
 
         public VisibleC(bool needNew)
         {
@@ -23,5 +22,7 @@ namespace Chessy.Game
             }
             else throw new Exception();
         }
+
+        public void SetVisibled(PlayerTypes key, bool value) => _isVisibleDict[key] = value;
     }
 }

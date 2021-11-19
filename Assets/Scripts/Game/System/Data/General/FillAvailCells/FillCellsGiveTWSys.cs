@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     internal sealed class FillCellsGiveTWSys : IEcsRunSystem
     {

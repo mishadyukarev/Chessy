@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class ChangeDirWindMS : IEcsRunSystem
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine.Purchasing;
 
-namespace Chessy.Common
+namespace Game.Common
 {
     public struct ShopComC
     {

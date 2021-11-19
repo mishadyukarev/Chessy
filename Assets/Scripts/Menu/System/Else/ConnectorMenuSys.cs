@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
 
-namespace Chessy.Menu
+namespace Game.Menu
 {
     public sealed class ConnectorMenuSys : IEcsRunSystem
     {

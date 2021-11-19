@@ -1,7 +1,7 @@
-﻿using Chessy.Common;
+﻿using Game.Common;
 using Leopotam.Ecs;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class UpEventUIS : IEcsInitSystem
     {

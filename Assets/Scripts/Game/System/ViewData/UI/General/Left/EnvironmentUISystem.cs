@@ -1,21 +1,21 @@
 ﻿using Leopotam.Ecs;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class EnvironmentUISystem : IEcsRunSystem
     {
-        private EcsFilter<BuildC> _cellBuildFilter = default;
-        private EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
+        private EcsFilter<BuildC> _buildF = default;
+        private EcsFilter<EnvC, EnvResC> _envF = default;
 
         public void Run()
         {
-            ref var selBuildDatC = ref _cellBuildFilter.Get1(SelIdx.Idx);
+            ref var build_sel = ref _buildF.Get1(SelIdx.Idx);
 
-            ref var env_sel = ref _cellEnvFilter.Get1(SelIdx.Idx);
-            ref var envRes_sel = ref _cellEnvFilter.Get2(SelIdx.Idx);
+            ref var env_sel = ref _envF.Get1(SelIdx.Idx);
+            ref var envRes_sel = ref _envF.Get2(SelIdx.Idx);
 
 
-            if (SelIdx.IsSelCell && !selBuildDatC.Is(BuildTypes.City))
+            if (CellClickC.Is(CellClickTypes.SelCell) && !build_sel.Is(BuildTypes.City))
             {
                 EnvirZoneViewUICom.SetActiveParent(true);
             }

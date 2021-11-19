@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct EconomyViewUIC
     {

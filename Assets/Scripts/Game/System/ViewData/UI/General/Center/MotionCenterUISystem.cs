@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class MotionCenterUISystem : IEcsRunSystem
     {

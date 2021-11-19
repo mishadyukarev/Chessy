@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
 using System;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class SyncCellEnvirsVisSystem : IEcsRunSystem
     {

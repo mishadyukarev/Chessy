@@ -1,7 +1,7 @@
 ﻿using Leopotam.Ecs;
-using Chessy.Common;
+using Game.Common;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class ThirdButtonBuildUISys : IEcsRunSystem
     {
@@ -10,7 +10,7 @@ namespace Chessy.Game
 
         public void Run()
         {
-            if (SelIdx.IsSelCell)
+            if (CellClickC.Is(CellClickTypes.SelCell))
             {
                 var idxSelCell = SelIdx.Idx;
 

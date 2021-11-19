@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public interface IGetSet
     {

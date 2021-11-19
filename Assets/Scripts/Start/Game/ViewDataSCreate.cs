@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class ViewDataSCreate
     {
@@ -17,7 +17,7 @@ namespace Chessy.Game
                 .Add(new SyncCellBuildViewSystem())
                 .Add(new SyncCellEnvirsVisSystem())
                 .Add(new CellEffsVisSyncS())
-                .Add(new SupportViewCellSyncS())
+                .Add(new SupportSyncVS())
                 .Add(new CellWeatherViewSys())
                 .Add(new CellRiverViewSys())
                 .Add(new FliperAndRotatorUnitSystem())
@@ -30,7 +30,7 @@ namespace Chessy.Game
                 .Add(new CenterEventUIS())
                 .Add(new LeftCityEventUISys())
                 .Add(new LeftEnvEventUISys())
-                .Add(new DownEventUISys())
+                .Add(new DownEventUIS())
                 .Add(new RightUnitEventUISys())
                 .Add(new UpEventUIS());
 
@@ -75,23 +75,24 @@ namespace Chessy.Game
                 .Add(new HeroesSyncUISys());
 
 
-            var rotateCurPlayer = new EcsSystems(gameWorld)
+            var rotateAll = new EcsSystems(gameWorld)
                 .Add(new RotateAllSys());
 
 
-            var sysGenDataView = new EcsSystems(gameWorld)
+            var runUpdate = new EcsSystems(gameWorld)
                 .Add(syncCellViewSyss)
-                .Add(syncCanvasViewSyss);
+                .Add(syncCanvasViewSyss)
+                .Add(new SoundClickCellS());
 
 
-            new DataViewSC(sysGenDataView.Run, rotateCurPlayer.Run);
+            new DataViewSC(runUpdate.Run, rotateAll.Run);
 
 
 
 
             gameSysts
-                .Add(rotateCurPlayer)
-                .Add(sysGenDataView)
+                .Add(rotateAll)
+                .Add(runUpdate)
                 .Add(eventExecuters);
         }
     }

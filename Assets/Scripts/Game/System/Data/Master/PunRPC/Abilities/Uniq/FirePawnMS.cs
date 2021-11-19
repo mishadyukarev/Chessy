@@ -2,7 +2,7 @@
 using Photon.Pun;
 using System;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public sealed class FirePawnMS : IEcsRunSystem
     {

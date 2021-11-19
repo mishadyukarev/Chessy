@@ -1,10 +1,10 @@
 ﻿using Leopotam.Ecs;
 using Photon.Pun;
 using Photon.Realtime;
-using Chessy.Common;
+using Game.Common;
 using UnityEngine;
 
-namespace Chessy.Menu
+namespace Game.Menu
 {
     public sealed class EventSys : IEcsInitSystem
     {

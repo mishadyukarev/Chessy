@@ -1,8 +1,8 @@
 ﻿using Leopotam.Ecs;
-using Chessy.Common;
+using Game.Common;
 using System;
 
-namespace Chessy.Menu
+namespace Game.Menu
 {
     public class LaunchLikeGameAndShopSys : IEcsRunSystem
     {

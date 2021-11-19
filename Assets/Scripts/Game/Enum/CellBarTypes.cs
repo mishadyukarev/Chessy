@@ -1,4 +1,4 @@
-﻿namespace Chessy.Game
+﻿namespace Game.Game
 {
     public enum CellBarTypes
     {

@@ -2,7 +2,7 @@
 using UnityEngine.Events;
 using UnityEngine.UI;
 
-namespace Chessy.Game
+namespace Game.Game
 {
     public struct DonerUICom
     {

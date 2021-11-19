@@ -1,4 +1,4 @@
-﻿namespace Chessy.Game
+﻿namespace Game.Game
 {
     public enum RpcMasterTypes
     {
@@ -26,6 +26,7 @@
         BuyRes,
 
         UpgUnits,
+        UpgBuilds,
 
         UniqAbil,
 
