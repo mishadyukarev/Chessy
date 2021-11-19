@@ -5,7 +5,7 @@ using Yodo1.MAS;
 
 namespace Game.Common
 {
-    public class AdLaunchS : IEcsRunSystem
+    public sealed class AdLaunchS : IEcsRunSystem
     {
         public void Run()
         {
@@ -14,7 +14,7 @@ namespace Game.Common
 
             if (!ShopComC.HasReceipt(ShopComC.PREMIUM_NAME))
             {
-                if (difTime.Seconds >= AdComCom.MINUTES_FOR_AD)
+                if (difTime.Minutes >= AdComCom.MINUTES_FOR_AD)
                 {
                     //if (Advertisement.IsReady())
                     //{

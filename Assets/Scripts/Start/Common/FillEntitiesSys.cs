@@ -14,7 +14,8 @@ namespace Game.Common
         public FillEntitiesSys(EcsWorld comWorld, Action<SceneTypes> toggleScene, GameObject main_GO)
         {
             var comSysts = new EcsSystems(comWorld);
-            var runUpdate = new EcsSystems(comWorld);
+            var runUpdate = new EcsSystems(comWorld)
+                .Add(new MyYodo());
 
 
 
@@ -39,8 +40,7 @@ namespace Game.Common
                 .Add(photScene)
                 .Add(launchAdd)
                 .Add(runUpdate)
-                .Add(new IAPCore())
-                .Add(new MyYodo());
+                .Add(new IAPCore());
 
             comSysts.Init();
         }

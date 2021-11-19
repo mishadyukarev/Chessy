@@ -233,7 +233,7 @@ namespace Game.Game
                         {
                             twUnit_0.ToolWeapon = TWTypes.Shield;
                             twUnit_0.LevelTWType = LevelTypes.First;
-                            twUnit_0.AddShieldProtect(LevelTypes.First);
+                            twUnit_0.SetShieldProtect(LevelTypes.First);
                         }
                         hpUnitC_0.SetMaxHp();
                         condUnit_0.Set(CondUnitTypes.Protected);

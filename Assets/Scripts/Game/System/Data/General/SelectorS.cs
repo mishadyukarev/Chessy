@@ -198,11 +198,6 @@ namespace Game.Game
                     Set(CellClickTypes.Firstlick);
                     SelIdx.Reset();
                 }
-
-                else
-                {
-                    throw new Exception();
-                }
             }
 
             else

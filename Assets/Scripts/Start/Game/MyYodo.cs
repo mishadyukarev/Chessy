@@ -4,7 +4,7 @@ using Yodo1.MAS;
 
 namespace Game.Common
 {
-    public sealed class MyYodo : IEcsInitSystem
+    public sealed class MyYodo : IEcsInitSystem, IEcsRunSystem
     {
         public void Init()
         {
@@ -31,6 +31,14 @@ namespace Game.Common
             //ShowRewarded();
         }
 
+        public void Run()
+        {
+            //if (Input.GetMouseButtonDown(0))
+            //{
+            //    ShowInterstitial();
+            //}
+        }
+
         public void ShowBanner()
         {
             int align = Yodo1U3dBannerAlign.BannerBottom | Yodo1U3dBannerAlign.BannerHorizontalCenter;
@@ -43,17 +51,17 @@ namespace Game.Common
             Yodo1U3dMas.DismissBannerAd();
         }
 
-        //public void ShowInterstitial()
-        //{
-        //    if (Yodo1U3dMas.IsInterstitialAdLoaded())
-        //    {
-        //        Yodo1U3dMas.ShowInterstitialAd();
-        //    }
-        //    else
-        //    {
-        //        Debug.Log("[Yodo1 Mas] Interstitial ad has not been cached.");
-        //    }
-        //}
+        public static void ShowInterstitial()
+        {
+            if (Yodo1U3dMas.IsInterstitialAdLoaded())
+            {
+                Yodo1U3dMas.ShowInterstitialAd();
+            }
+            else
+            {
+                Debug.Log("[Yodo1 Mas] Interstitial ad has not been cached.");
+            }
+        }
 
         public void ShowRewarded()
         {
@@ -66,8 +74,6 @@ namespace Game.Common
                 Debug.Log("[Yodo1 Mas] Reward video ad has not been cached.");
             }
         }
-
-
 
         private void SetDelegates()
         {
@@ -101,7 +107,6 @@ namespace Game.Common
                         break;
                 }
             });
-
 
             Yodo1U3dMas.SetInterstitialAdDelegate((Yodo1U3dAdEvent adEvent, Yodo1U3dAdError error) =>
             {

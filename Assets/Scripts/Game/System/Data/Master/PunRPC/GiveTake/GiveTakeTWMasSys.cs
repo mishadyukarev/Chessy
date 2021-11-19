@@ -44,6 +44,7 @@ namespace Game.Game
                                 && tWTypeForGive == TWTypes.Shield
                                 && twUnit_0.LevelTWType != levelTWType)
                             {
+                                twUnit_0.SetShieldProtect(levelTWType);
                                 twUnit_0.LevelTWType = levelTWType;
                             }
                             else
@@ -64,7 +65,7 @@ namespace Game.Game
 
                             twUnit_0.ToolWeapon = tWTypeForGive;
                             twUnit_0.LevelTWType = levelTWType;
-                            if (twUnit_0.Is(TWTypes.Shield)) twUnit_0.AddShieldProtect(levelTWType);
+                            if (twUnit_0.Is(TWTypes.Shield)) twUnit_0.SetShieldProtect(levelTWType);
                             WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                             stepUnit_0.TakeSteps();
@@ -123,7 +124,7 @@ namespace Game.Game
                                 WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                                 twUnit_0.ToolWeapon = tWTypeForGive;
                                 twUnit_0.LevelTWType = levelTWType;
-                                twUnit_0.AddShieldProtect(levelTWType);
+                                twUnit_0.SetShieldProtect(levelTWType);
                                 WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                                 stepUnit_0.TakeSteps();

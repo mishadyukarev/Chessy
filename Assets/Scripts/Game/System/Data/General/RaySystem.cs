@@ -22,28 +22,23 @@ namespace Game.Game
 
 
 
-            //if (EventSystem.current.IsPointerOverGameObject())
-            //{
-            //    RayCastC.Set(RaycastTypes.UI);
-            //}
-
-
-            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+            if (EventSystem.current.IsPointerOverGameObject())
             {
-#if UNITY_
-
-#endif
-
-
-#if UNITY_ANDROID
-                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-                {
-                    RayCastC.Set(RaycastTypes.UI);
-                }
-#endif
+                RayCastC.Set(RaycastTypes.UI);
+                return;
             }
 
-            else if (raycast)
+            //#if UNITY_STANDALONE || UNITY_EDITOR || UNITY_WEBGL
+
+            //            if (EventSystem.current.IsPointerOverGameObject())
+            //        {
+            //            SelectorC.RaycastGettedType = RaycastGettedTypes.UI;
+            //            return;
+            //        }
+
+            //#endif
+
+            if (raycast)
             {
                 foreach (byte idx in _xyF)
                 {
@@ -54,33 +49,23 @@ namespace Game.Game
                     {
                         CurIdx.Idx = idx;
                         RayCastC.Set(RaycastTypes.Cell);
+                        return;
                     }
                 }
+
+                RayCastC.Reset();
             }
 
-            else
-            {
-                if (raycast.collider.name == BackgroundC.Name)
-                {
-                    RayCastC.Set(RaycastTypes.Background);
-                }
-
-                else
-                {
-                    throw new Exception();
-                }
-            }
 
 
 #if UNITY_ANDROID
-
-            //if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-            //{
-            //    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-            //    {
-            //        RayCastC.Set(RaycastTypes.UI);
-            //    }
-            //}
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            {
+                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+                {
+                    RayCastC.Set(RaycastTypes.UI);
+                }
+            }
 #endif
 
 

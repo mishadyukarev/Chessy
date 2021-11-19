@@ -5,17 +5,17 @@ namespace Game.Game
     public struct ToolWeaponC
     {
         public TWTypes ToolWeapon;
-        public bool Is(TWTypes tWType) => ToolWeapon == tWType;
+        public bool Is(TWTypes tW) => ToolWeapon == tW;
         public bool HaveToolWeap => ToolWeapon != default;
 
 
         public LevelTypes LevelTWType;
-        public bool Is(LevelTypes levelTWType) => LevelTWType == levelTWType;
+        public bool Is(LevelTypes level) => LevelTWType == level;
 
 
         private int _shieldProt;
         public int ShieldProt => _shieldProt;
-        public void AddShieldProtect(LevelTypes levelTWType)
+        public void SetShieldProtect(LevelTypes levelTWType)
         {
             switch (levelTWType)
             {
