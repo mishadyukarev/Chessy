@@ -12,7 +12,7 @@ namespace Game.Game
     public sealed class RpcSys : MonoBehaviour, IEcsInitSystem
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private EcsFilter<HpC, StepC, WaterUnitC> _statUnitF = default;
+        private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
         private EcsFilter<ConditionUnitC, UnitEffectsC, StunC> _effUnitF = default;
 
         private EcsFilter<UniqAbilC, CooldownUniqC> _uniqUnitF = default;
@@ -75,6 +75,7 @@ namespace Game.Game
 
         public static void PickUpgUnitToMas(UnitTypes unit) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgUnits, new object[] { unit });
         public static void PickUpgBuildToMas(BuildTypes build) => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgBuilds, new object[] { build });
+        public static void UpgWater() => PhotonView.RPC(MasterRPCName, RpcTarget.MasterClient, RpcMasterTypes.UpgWater, new object[] { });
 
         #endregion
 
@@ -250,6 +251,9 @@ namespace Game.Game
 
                     case RpcMasterTypes.UpgBuilds:
                         BuildDoingMC.Set((BuildTypes)objects[_curIdx++]);
+                        break;
+
+                    case RpcMasterTypes.UpgWater:
                         break;
 
                     default:

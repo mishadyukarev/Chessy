@@ -5,7 +5,7 @@ namespace Game.Game
     public sealed class StatsUISystem : IEcsRunSystem
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private EcsFilter<HpC, DamageC, StepC, WaterUnitC> _statUnitF = default;
+        private EcsFilter<HpC, DamageC, StepC, WaterC> _statUnitF = default;
         private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
         private EcsFilter<ToolWeaponC> _twUnitF = default;
 
@@ -58,7 +58,7 @@ namespace Game.Game
 
 
                 StatUIC.FillAmount(UnitStatTypes.Steps, selStepUnitC.Steps, selStepUnitC.MaxSteps(unit_sel.Unit, effUnit_sel.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_sel.Unit, levUnit_sel.Level, own_sel.Owner)));
-                StatUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.Water, thirUnitC_sel.MaxWater(UnitWaterUpgC.UpgPercent(own_sel.Owner, unit_sel.Unit)));
+                StatUIC.FillAmount(UnitStatTypes.Water, thirUnitC_sel.Water, thirUnitC_sel.MaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_sel.Unit, levUnit_sel.Level, own_sel.Owner)));
             }
 
             else

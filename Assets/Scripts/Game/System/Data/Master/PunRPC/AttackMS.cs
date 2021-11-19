@@ -7,7 +7,7 @@ namespace Game.Game
     public sealed class AttackMS : IEcsRunSystem
     {
         private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private readonly EcsFilter<HpC, DamageC, StepC, WaterUnitC> _statUnitF = default;
+        private readonly EcsFilter<HpC, DamageC, StepC, WaterC> _statUnitF = default;
         private readonly EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC, StunC> _effUnitF = default;
         private readonly EcsFilter<ToolWeaponC> _twUnitF = default;
         private readonly EcsFilter<CooldownUniqC> _uniqUnitF = default;
@@ -90,7 +90,7 @@ namespace Game.Game
                 float powerDam_to = 0;
 
 
-                powerDam_from += damUnit_from.DamageAttack(unit_from.Unit, levUnit_from.Level, twUnit_from, effUnit_from, simpUniqueType, UnitWaterUpgC.UpgPercent(ownUnit_from.Owner, unit_from.Unit));
+                powerDam_from += damUnit_from.DamageAttack(unit_from.Unit, levUnit_from.Level, twUnit_from, effUnit_from, simpUniqueType, UnitUpgC.UpgPercent(UnitStatTypes.Damage, unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner));
 
                 if (unit_from.IsMelee)
                     RpcSys.SoundToGeneral(RpcTarget.All, ClipTypes.AttackMelee);
@@ -98,7 +98,7 @@ namespace Game.Game
 
 
 
-                powerDam_to += damUnit_to.DamageOnCell(unit_to.Unit, levUnit_to.Level, condUnit_to, twUnit_to, effUnit_to, UnitWaterUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit), build_to.Build, env_to.Envronments);   
+                powerDam_to += damUnit_to.DamageOnCell(unit_to.Unit, levUnit_to.Level, condUnit_to, twUnit_to, effUnit_to, UnitUpgC.UpgPercent(UnitStatTypes.Damage, unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner), build_to.Build, env_to.Envronments);   
 
 
                 float min_limit = 0;
@@ -220,7 +220,7 @@ namespace Game.Game
                             moveCond_to.ResetAll();
                             stun_to.Reset();
                             cdUniq_to.Replace(cdUniq_from);
-                            if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitWaterUpgC.UpgPercent(ownUnit_to.Owner, unit_to.Unit));
+                            if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner));
                             WhereUnitsC.Add(ownUnit_to.Owner, unit_to.Unit, levUnit_to.Level, idx_to);
 
                             var dir = CellSpace.GetDirect(_xyF.Get1(idx_from).Xy, _xyF.Get1(idx_to).Xy);

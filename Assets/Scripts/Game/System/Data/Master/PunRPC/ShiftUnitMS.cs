@@ -13,7 +13,7 @@ namespace Game.Game
         private EcsFilter<BuildC, OwnerC> _buildFilt = default;
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private EcsFilter<HpC, StepC, WaterUnitC> _statUnitF = default;
+        private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
         private EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC> _effUnitF = default;
 
         private EcsFilter<ToolWeaponC> _twUnitF = default;
@@ -115,7 +115,7 @@ namespace Game.Game
                 //uniq_to.Replace(uniq_from);
                 cdUniq_to.Replace(cdUniq_from);
                 corner_to = corner_from;
-                if (river_to.HaveNearRiver) water_to.SetMaxWater(UnitWaterUpgC.UpgPercent(own_to.Owner, unit_to.Unit));
+                if (river_to.HaveNearRiver) water_to.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_to.Unit, lev_to.Level, own_to.Owner));
 
 
 

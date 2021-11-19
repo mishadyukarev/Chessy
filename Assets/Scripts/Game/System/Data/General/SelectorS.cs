@@ -10,7 +10,6 @@ namespace Game.Game
 
         public void Run()
         {
-            UnitC UnitDatCom(byte idxCell) => _unitF.Get1(idxCell);
             LevelC LevelUnitC(byte idx) => _unitF.Get2(idx);
             OwnerC OwnUnitCom(byte idxCell) => _unitF.Get3(idxCell);
 
@@ -21,16 +20,22 @@ namespace Game.Game
                 {
                     if (!WhoseMoveC.IsMyMove)
                     {
-                        Set(CellClickTypes.SelCell);
                         SelIdx.Set(CurIdx.Idx);
                     }
 
                     else
                     {
+                        ref var unit_cur = ref _unitF.Get1(CurIdx.Idx);
+                        ref var levUnit_cur = ref _unitF.Get2(CurIdx.Idx);
+                        ref var ownUnit_cur = ref _unitF.Get3(CurIdx.Idx);
+
+                        ref var unit_sel = ref _unitF.Get1(SelIdx.Idx);
+
+
                         if (Is(CellClickTypes.SetUnit))
                         {
                             RpcSys.SetUniToMaster(CurIdx.Idx, SelUnitC.Unit);
-                            Reset();
+                            Set(CellClickTypes.Firstlick);
                         }
 
                         else if (Is(CellClickTypes.UniqAbil))
@@ -50,26 +55,26 @@ namespace Game.Game
                                 RpcSys.StunElfemaleToMas(SelIdx.Idx, CurIdx.Idx);
                             }
 
-                            Set(CellClickTypes.SelCell);
+                            Set(CellClickTypes.Firstlick);
                             SelIdx.Set(CurIdx.Idx);
                         }
 
                         else if (Is(CellClickTypes.GiveTakeTW))
                         {
-                            if (UnitDatCom(CurIdx.Idx).Is(UnitTypes.Pawn) && OwnUnitCom(CurIdx.Idx).Is(WhoseMoveC.CurPlayerI))
+                            if (unit_cur.Is(UnitTypes.Pawn) && OwnUnitCom(CurIdx.Idx).Is(WhoseMoveC.CurPlayerI))
                             {
                                 RpcSys.GiveTakeToolWeapon(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive), CurIdx.Idx);
                             }
                             else
                             {
-                                Set(CellClickTypes.SelCell);
+                                Set(CellClickTypes.Firstlick);
                                 SelIdx.Set(CurIdx.Idx);
                             }
                         }
 
                         else if (Is(CellClickTypes.UpgradeUnit))
                         {
-                            if (UnitDatCom(CurIdx.Idx).Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
+                            if (unit_cur.Is(new[] { UnitTypes.Pawn, UnitTypes.Archer })
                                 && OwnUnitCom(CurIdx.Idx).Is(WhoseMoveC.CurPlayerI)
                                 && !LevelUnitC(CurIdx.Idx).Is(LevelTypes.Second))
                             {
@@ -77,38 +82,33 @@ namespace Game.Game
                             }
                             else
                             {
-                                Set(CellClickTypes.SelCell);
+                                Set(CellClickTypes.Firstlick);
                                 SelIdx.Set(CurIdx.Idx);
                             }
                         }
 
                         else if (Is(CellClickTypes.GiveScout))
                         {
-                            Set(CellClickTypes.SelCell);
-                            SelIdx.Set(CurIdx.Idx);
-
-                            if (UnitDatCom(CurIdx.Idx).Is(UnitTypes.Pawn)
+                            if (unit_cur.Is(UnitTypes.Pawn)
                                 && OwnUnitCom(CurIdx.Idx).Is(WhoseMoveC.CurPlayerI))
                             {
                                 RpcSys.FromNewUnitToMas(UnitTypes.Scout, CurIdx.Idx);
                             }
+
+                            Set(CellClickTypes.Firstlick);
+                            SelIdx.Set(CurIdx.Idx);
                         }
 
                         else if (Is(CellClickTypes.GiveHero))
                         {
-                            PreIdx.Idx = SelIdx.Idx;
-                            SelIdx.Set(CurIdx.Idx);
 
 
-                            ref var unit_sel = ref _unitF.Get1(SelIdx.Idx);
-                            ref var unit_pre = ref _unitF.Get1(PreIdx.Idx);
-
-                            if (unit_sel.Is(UnitTypes.Archer))
+                            if (unit_cur.Is(UnitTypes.Archer))
                             {
-                                if (unit_pre.Is(UnitTypes.Archer))
+                                if (unit_sel.Is(UnitTypes.Archer))
                                 {
-                                    RpcSys.FromToNewUnitToMas(InvUnitsC.MyHero, PreIdx.Idx, SelIdx.Idx);
-                                    Reset();
+                                    RpcSys.FromToNewUnitToMas(InvUnitsC.MyHero, SelIdx.Idx, CurIdx.Idx);
+                                    Set(CellClickTypes.Firstlick);
 
                                     NeedSoundEffC.Clip = ClipTypes.PickArcher;
                                 }
@@ -117,43 +117,37 @@ namespace Game.Game
                             }
                             else
                             {
-                                Reset();
+                                Set(CellClickTypes.Firstlick);
                             }
+
+                            SelIdx.Set(CurIdx.Idx);
                         }
 
-                        else if (Is(CellClickTypes.SelCell))
+                        else if (SelIdx.IsSelCell)
                         {
-                            if (SelIdx.Idx != CurIdx.Idx)
+                            if (AttackCellsC.FindByIdx(WhoseMoveC.CurPlayerI, SelIdx.Idx, CurIdx.Idx) != default)
                             {
-                                PreIdx.Idx = SelIdx.Idx;
-                                SelIdx.Set(CurIdx.Idx);
+                                RpcSys.AttackUnitToMaster(SelIdx.Idx, CurIdx.Idx);
                             }
 
-                            ref var unit_sel = ref _unitF.Get1(SelIdx.Idx);
-                            ref var ownUnit_sel = ref _unitF.Get3(SelIdx.Idx);
-
-
-                            if (AttackCellsC.FindByIdx(WhoseMoveC.CurPlayerI, PreIdx.Idx, SelIdx.Idx) != default)
+                            else if (CellsShiftC.HaveIdxCell(WhoseMoveC.CurPlayerI, SelIdx.Idx, CurIdx.Idx))
                             {
-                                RpcSys.AttackUnitToMaster(PreIdx.Idx, SelIdx.Idx);
-                            }
-
-                            else if (CellsShiftC.HaveIdxCell(WhoseMoveC.CurPlayerI, PreIdx.Idx, SelIdx.Idx))
-                            {
-                                RpcSys.ShiftUnitToMaster(PreIdx.Idx, SelIdx.Idx);
+                                RpcSys.ShiftUnitToMaster(SelIdx.Idx, CurIdx.Idx);
                             }
 
                             else
                             {
-                                if (unit_sel.HaveUnit)
+                                
+
+                                if (unit_cur.HaveUnit)
                                 {
-                                    if (ownUnit_sel.Is(WhoseMoveC.CurPlayerI))
+                                    if (ownUnit_cur.Is(WhoseMoveC.CurPlayerI))
                                     {
-                                        if (unit_sel.Is(UnitTypes.Scout))
+                                        if (unit_cur.Is(UnitTypes.Scout))
                                         {
 
                                         }
-                                        else if (unit_sel.IsMelee)
+                                        else if (unit_cur.IsMelee)
                                         {
                                             NeedSoundEffC.Clip = ClipTypes.PickMelee;
                                         }
@@ -164,26 +158,21 @@ namespace Game.Game
                                     }
                                 }
                             }
+
+                            SelIdx.Set(CurIdx.Idx);
                         }
 
-                        else if (Is(CellClickTypes.None))
+                        else if (Is(CellClickTypes.Firstlick))
                         {
-                            SelIdx.Set(CurIdx.Idx);
-                            Set(CellClickTypes.SelCell);
-                            PreIdx.Idx = SelIdx.Idx;
-
-                            ref var unit_sel = ref _unitF.Get1(SelIdx.Idx);
-                            ref var ownUnit_sel = ref _unitF.Get3(SelIdx.Idx);
-
-                            if (unit_sel.HaveUnit)
+                            if (unit_cur.HaveUnit)
                             {
-                                if (ownUnit_sel.Is(WhoseMoveC.CurPlayerI))
+                                if (ownUnit_cur.Is(WhoseMoveC.CurPlayerI))
                                 {
-                                    if (unit_sel.Is(UnitTypes.Scout))
+                                    if (unit_cur.Is(UnitTypes.Scout))
                                     {
 
                                     }
-                                    else if (unit_sel.IsMelee)
+                                    else if (unit_cur.IsMelee)
                                     {
                                         NeedSoundEffC.Clip = ClipTypes.PickMelee;
                                     }
@@ -193,11 +182,8 @@ namespace Game.Game
                                     }
                                 }
                             }
-                        }
 
-                        else
-                        {
-                            throw new Exception();
+                            SelIdx.Set(CurIdx.Idx);
                         }
                     }
                 }
@@ -209,7 +195,8 @@ namespace Game.Game
 
                 else if (RayCastC.Is(RaycastTypes.Background))
                 {
-                    Reset();
+                    Set(CellClickTypes.Firstlick);
+                    SelIdx.Reset();
                 }
 
                 else

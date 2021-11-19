@@ -37,7 +37,7 @@ namespace Game.Game
             var syncCanvasViewSyss = new EcsSystems(gameWorld)
             ///left
                 .Add(new BuildZoneUISys())
-                .Add(new EnvironmentUISystem())
+                .Add(new EnvUIS())
 
             ///right
                 .Add(new RightZoneUISys())

@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            SelectorUIC.SyncView(CellClickC.Click);
+            SelectorUIC.SyncView(CellClickC.Click, SelUniqAbilC.UniqAbil);
         }
     }
 }

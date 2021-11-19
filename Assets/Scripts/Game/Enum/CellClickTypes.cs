@@ -2,19 +2,13 @@
 {
     public enum CellClickTypes
     {
-        Start,
-        None = Start,
+        None,
+        Start = None,
 
-        SelCell,
-        First = SelCell,
+        Firstlick,
 
         SetUnit,
-        Second = SetUnit,
-
         GiveTakeTW,
-        Third = GiveTakeTW,
-
-
         UpgradeUnit,
         GiveScout,
         GiveHero,

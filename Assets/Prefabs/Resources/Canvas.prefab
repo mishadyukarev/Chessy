@@ -676,7 +676,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2997936876543458045}
   m_Layer: 5
-  m_Name: PickFire
+  m_Name: FireArcher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24677,7 +24677,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7847435928734967494}
   m_Layer: 5
-  m_Name: PutOutFireElfemale
+  m_Name: ChangeDirWind
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38778,8 +38778,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 12.885, y: 5.1341}
-  m_SizeDelta: {x: 136.11467, y: 142.75995}
+  m_AnchoredPosition: {x: 10.465, y: 0.33309}
+  m_SizeDelta: {x: 148.54341, y: 155.9346}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5187950012132005950
 CanvasRenderer:

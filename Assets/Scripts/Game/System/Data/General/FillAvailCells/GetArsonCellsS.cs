@@ -35,7 +35,7 @@ namespace Game.Game
                             {
                                 if (env_1.Have(EnvTypes.AdultForest))
                                 {
-                                    CellsArsonArcherComp.Add(ownUnit_0.Owner, idx_0, idx_1);
+                                    CellsArsonArcherC.Add(ownUnit_0.Owner, idx_0, idx_1);
                                 }
                             }
                         }

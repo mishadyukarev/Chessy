@@ -10,7 +10,7 @@ namespace Game.Game
 
         public void Run()
         {
-            if (CellClickC.Is(CellClickTypes.SelCell))
+            if (SelIdx.IsSelCell)
             {
                 var idxSelCell = SelIdx.Idx;
 

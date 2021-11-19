@@ -22,6 +22,8 @@ namespace Game.Game
             PickUpgUIC.AddList(BuildTypes.Woodcutter, delegate { UpgradeBuild(BuildTypes.Woodcutter); });
             PickUpgUIC.AddList(BuildTypes.Mine, delegate { UpgradeBuild(BuildTypes.Mine); });
 
+            PickUpgUIC.AddListWater(UpgradeWater);
+
 
             HeroesViewUIC.AddListElf(Elf);
             HeroesViewUIC.AddListPremium(OpenShop);
@@ -63,6 +65,17 @@ namespace Game.Game
             if (WhoseMoveC.IsMyMove)
             {
                 RpcSys.PickUpgBuildToMas(build);
+
+                HeroesViewUIC.SetActiveZone(true);
+            }
+            else SoundEffectC.Play(ClipTypes.Mistake);
+        }
+
+        private void UpgradeWater()
+        {
+            if (WhoseMoveC.IsMyMove)
+            {
+                RpcSys.UpgWater();
 
                 HeroesViewUIC.SetActiveZone(true);
             }

@@ -8,7 +8,7 @@ namespace Game.Game
         private EcsFilter<FireC> _fireF = default;
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private EcsFilter<HpC, StepC, WaterUnitC> _statUnitF = default;
+        private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
         private EcsFilter<ConditionUnitC, MoveInCondC, UnitEffectsC> _effUnitF = default;
         private EcsFilter<ToolWeaponC> _twUnitF = default;
 
@@ -49,7 +49,7 @@ namespace Game.Game
                 eff_0.DefAllEffects();
                 hp_0.SetMaxHp();
                 if (cond_0.HaveCondition) cond_0.Reset();
-                water_0.SetMaxWater(UnitWaterUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit));
+                
                 moveCond_0.ResetAll();
                 if (InvUnitsC.Have(whoseMove, unit, LevelTypes.Second))
                 {
@@ -62,6 +62,7 @@ namespace Game.Game
                     levUnit_0.SetLevel(LevelTypes.First);
                 }
                 step_0.SetMaxSteps(unit, false, UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
+                water_0.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
 
 
                 WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);

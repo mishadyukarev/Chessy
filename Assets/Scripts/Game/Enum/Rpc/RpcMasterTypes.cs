@@ -27,6 +27,7 @@
 
         UpgUnits,
         UpgBuilds,
+        UpgWater,
 
         UniqAbil,
 

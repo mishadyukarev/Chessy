@@ -5,6 +5,6 @@ namespace Game.Game
 {
     public struct PreIdx
     {
-        public static byte Idx { get; set; }
+        //public static byte Idx { get; set; }
     }
 }

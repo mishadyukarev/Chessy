@@ -12,7 +12,7 @@ namespace Game.Game
             ref var own_sel = ref _cellBuildFilter.Get2(SelIdx.Idx);
 
 
-            if (CellClickC.Is(CellClickTypes.SelCell) && unit_sel.Is(BuildTypes.City))
+            if (SelIdx.IsSelCell && unit_sel.Is(BuildTypes.City))
             {
                 if (own_sel.Is(WhoseMoveC.CurPlayerI))
                 {

@@ -7,7 +7,7 @@ namespace Game.Game
     public sealed class ThirstyUpdMS : IEcsRunSystem
     {
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
-        private EcsFilter<HpC, WaterUnitC> _statUnitF = default;
+        private EcsFilter<HpC, WaterC> _statUnitF = default;
         private EcsFilter<UnitEffectsC> _effUnitF = default;
 
         private EcsFilter<RiverC> _cellRiverFilt = default;
@@ -47,12 +47,12 @@ namespace Game.Game
                     {
                         if (riverC_0.HaveNearRiver)
                         {
-                            water_0.SetMaxWater(UnitWaterUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit));
+                            water_0.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
                         }
                         else
                         {
                             water_0.TakeWater();
-                            if (!water_0.HaveWater)
+                            if (!water_0.Have)
                             {
                                 hp_0.TakeHpThirsty(unit_0.Unit);
 

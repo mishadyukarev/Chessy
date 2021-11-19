@@ -6,7 +6,7 @@ namespace Game.Game
     public sealed class UnitStatCellSyncS : IEcsRunSystem
     {
         private EcsFilter<UnitC, LevelC, OwnerC, VisibleC> _unitF = default;
-        private EcsFilter<HpC, StepC, WaterUnitC> _statUnitF = default;
+        private EcsFilter<HpC, StepC, WaterC> _statUnitF = default;
         private EcsFilter<ConditionUnitC, UnitEffectsC> _effUnitF = default;
 
         private EcsFilter<BarsVC> _cellBarsFilter = default;

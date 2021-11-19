@@ -27,6 +27,8 @@ namespace Game.Game
 
         private void ExecuteScout()
         {
+            SelIdx.Reset();
+
             TryOnHint(VideoClipTypes.CreatingScout);
 
             if (WhoseMoveC.IsMyMove)
@@ -47,6 +49,7 @@ namespace Game.Game
         }
         private void Hero()
         {
+            SelIdx.Reset();
             TryOnHint(VideoClipTypes.CreatingHero);
 
             if (WhoseMoveC.IsMyMove)
@@ -89,7 +92,9 @@ namespace Game.Game
 
         private void GetUnit(UnitTypes unitType)
         {
-            CellClickC.Reset();
+            CellClickC.Set(CellClickTypes.Firstlick);
+            SelIdx.Reset();
+
             GetterUnitsC.ResetCurTimer(unitType);
 
             if (WhoseMoveC.IsMyMove)
@@ -114,6 +119,8 @@ namespace Game.Game
 
         private void ToggleToolWeapon(TWTypes tWType)
         {
+            SelIdx.Reset();
+
             if (WhoseMoveC.IsMyMove)
             {
                 if (tWType == TWTypes.Pick)
@@ -164,6 +171,8 @@ namespace Game.Game
 
         private void ToggleUpgradeUnit()
         {
+            SelIdx.Reset();
+
             if (WhoseMoveC.IsMyMove)
             {
                 TryOnHint(VideoClipTypes.UpgToolWeapon);

@@ -2,11 +2,11 @@
 
 namespace Game.Game
 {
-    public struct CellsArsonArcherComp
+    public struct CellsArsonArcherC
     {
         private static Dictionary<PlayerTypes, Dictionary<byte, List<byte>>> _cellsArcherArson;
 
-        public CellsArsonArcherComp(bool needNew) : this()
+        public CellsArsonArcherC(bool needNew) : this()
         {
             if (needNew)
             {
@@ -24,7 +24,7 @@ namespace Game.Game
         }
 
         public static void Add(PlayerTypes playerType, byte idxCell, byte addIdxCell) => _cellsArcherArson[playerType][idxCell].Add(addIdxCell);
-        public static List<byte> GetListCopy(PlayerTypes playerType, byte idxCell) => _cellsArcherArson[playerType][idxCell].Copy();
+        public static List<byte> List(PlayerTypes playerType, byte idxCell) => _cellsArcherArson[playerType][idxCell].Copy();
         public static bool HaveIdxCell(PlayerTypes playerType, byte onIdxCell, byte inIdxCell) => _cellsArcherArson[playerType][onIdxCell].Contains(inIdxCell);
         public static void Clear(PlayerTypes playerType, byte onIdxCell) => _cellsArcherArson[playerType][onIdxCell].Clear();
     }

@@ -2,7 +2,7 @@
 
 namespace Game.Game
 {
-    public sealed class EnvironmentUISystem : IEcsRunSystem
+    public sealed class EnvUIS : IEcsRunSystem
     {
         private EcsFilter<BuildC> _buildF = default;
         private EcsFilter<EnvC, EnvResC> _envF = default;
@@ -15,7 +15,7 @@ namespace Game.Game
             ref var envRes_sel = ref _envF.Get2(SelIdx.Idx);
 
 
-            if (CellClickC.Is(CellClickTypes.SelCell) && !build_sel.Is(BuildTypes.City))
+            if (SelIdx.IsSelCell && !build_sel.Is(BuildTypes.City))
             {
                 EnvirZoneViewUICom.SetActiveParent(true);
             }

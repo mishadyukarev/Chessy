@@ -17,7 +17,7 @@ namespace Game.Game
         private readonly EcsFilter<RiverC> _riverF = default;
 
         private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitMainF = default;
-        private readonly EcsFilter<HpC, DamageC, StepC, WaterUnitC> _statUnitF = default;
+        private readonly EcsFilter<HpC, DamageC, StepC, WaterC> _statUnitF = default;
         private readonly EcsFilter<ToolWeaponC> _twUnitF = default;
         private readonly EcsFilter<ConditionUnitC> _effUnitF = default;
 
@@ -187,7 +187,7 @@ namespace Game.Game
                         levUnit_0.SetLevel(LevelTypes.First);
                         ownUnit_0.SetOwner(PlayerTypes.Second);
                         hpUnitC_0.SetMaxHp();
-                        thirUnitC_0.SetMaxWater(UnitWaterUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit));
+                        thirUnitC_0.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
                         condUnit_0.Set(CondUnitTypes.Protected);
                         WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                     }
@@ -238,7 +238,7 @@ namespace Game.Game
                         hpUnitC_0.SetMaxHp();
                         condUnit_0.Set(CondUnitTypes.Protected);
                         ownUnit_0.SetOwner(PlayerTypes.Second);
-                        thirUnitC_0.SetMaxWater(UnitWaterUpgC.UpgPercent(ownUnit_0.Owner, unit_0.Unit));
+                        thirUnitC_0.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
 
                         WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                     }

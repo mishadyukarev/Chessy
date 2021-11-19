@@ -20,9 +20,22 @@ namespace Game.Game
 
 
 
-            if (EventSystem.current.IsPointerOverGameObject())
+
+
+            //if (EventSystem.current.IsPointerOverGameObject())
+            //{
+            //    RayCastC.Set(RaycastTypes.UI);
+            //}
+
+
+            if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
             {
-                RayCastC.Set(RaycastTypes.UI);
+#if UNITY_ANDROID
+                if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+                {
+                    RayCastC.Set(RaycastTypes.UI);
+                }
+#endif
             }
 
             else if (raycast)
@@ -36,10 +49,12 @@ namespace Game.Game
                     {
                         CurIdx.Idx = idx;
                         RayCastC.Set(RaycastTypes.Cell);
-                        return;
                     }
                 }
+            }
 
+            else
+            {
                 if (raycast.collider.name == BackgroundC.Name)
                 {
                     RayCastC.Set(RaycastTypes.Background);
@@ -53,14 +68,17 @@ namespace Game.Game
 
 
 #if UNITY_ANDROID
-            else if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-            {
-                if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
-                {
-                    RayCastC.Set(RaycastTypes.UI);
-                }
-            }
+
+            //if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            //{
+            //    if (EventSystem.current.IsPointerOverGameObject(Input.GetTouch(0).fingerId))
+            //    {
+            //        RayCastC.Set(RaycastTypes.UI);
+            //    }
+            //}
 #endif
+
+
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Game.Game
             var activeParent = false;
 
 
-            if (CellClickC.Is(CellClickTypes.SelCell))
+            if (SelIdx.IsSelCell)
             {
                 if (unitD_sel.HaveUnit)
                 {

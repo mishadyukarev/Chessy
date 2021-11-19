@@ -2,13 +2,13 @@
 
 namespace Game.Game
 {
-    public struct WaterUnitC
+    public struct WaterC
     {
         private int _water;
 
         public int Water => _water;
-        public bool HaveWater => _water > 0;
-        public bool IsMinusWater => _water < 0;
+        public bool Have => _water > 0;
+        public bool IsMinus => _water < 0;
         public bool NeedWater => _water <= 100 * 0.4f;
 
 
@@ -22,7 +22,7 @@ namespace Game.Game
         {
             if (taking <= 0) throw new Exception();
             _water -= taking;
-            if (IsMinusWater) _water = 0;
+            if (IsMinus) _water = 0;
         }
 
         public int MaxWater(float upgPerc) => (int)(100 + 100 * upgPerc);

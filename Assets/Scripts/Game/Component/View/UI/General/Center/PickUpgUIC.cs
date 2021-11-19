@@ -11,6 +11,7 @@ namespace Game.Game
         private static GameObject _parent_GO;
         private static Dictionary<UnitTypes, Button> _units;
         private static Dictionary<BuildTypes, Button> _builds;
+        private static Button _upgWater;
 
         public static bool IsActiveZone => _parent_GO.activeSelf;
 
@@ -29,6 +30,8 @@ namespace Game.Game
             {
                 _builds.Add(build, _parent_GO.transform.Find(build + "_Button").GetComponent<Button>());
             }
+
+            _upgWater = _parent_GO.transform.Find(UnitStatTypes.Water.ToString() + "_Button").GetComponent<Button>();
         }
 
         public static void SetActiveZone(bool isActive) => _parent_GO.SetActive(isActive);
@@ -44,6 +47,10 @@ namespace Game.Game
             if (!_builds.ContainsKey(build)) throw new Exception();
 
             _builds[build].onClick.AddListener(action);
+        }
+        public static void AddListWater(UnityAction action)
+        {
+            _upgWater.onClick.AddListener(action);
         }
     }
 }

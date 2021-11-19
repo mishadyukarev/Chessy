@@ -15,8 +15,8 @@ namespace Game.Game
                 AttackCellsC.Clear(PlayerTypes.First, AttackTypes.Unique, idx_0);
                 AttackCellsC.Clear(PlayerTypes.Second, AttackTypes.Unique, idx_0);
 
-                CellsArsonArcherComp.Clear(PlayerTypes.First, idx_0);
-                CellsArsonArcherComp.Clear(PlayerTypes.Second, idx_0);
+                CellsArsonArcherC.Clear(PlayerTypes.First, idx_0);
+                CellsArsonArcherC.Clear(PlayerTypes.Second, idx_0);
             }
         }
     }

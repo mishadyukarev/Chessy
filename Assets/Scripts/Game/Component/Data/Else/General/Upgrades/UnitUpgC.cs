@@ -35,7 +35,17 @@ namespace Game.Game
                 var key = Key(upg, stat, unit, level, player);
                 if (!_upgrades.ContainsKey(key)) throw new Exception();
 
-                if (_upgrades[key]) percent += 0.2f;
+                if (_upgrades[key])
+                {
+                    if (stat == UnitStatTypes.Damage)
+                    {
+                        percent += 0.2f;
+                    }
+                    else if (stat == UnitStatTypes.Water)
+                    {
+                        percent += 0.2f;
+                    }
+                }
             }
 
             return percent;

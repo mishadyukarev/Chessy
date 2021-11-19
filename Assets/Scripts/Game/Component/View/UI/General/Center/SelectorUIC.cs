@@ -6,33 +6,53 @@ namespace Game.Game
 {
     public struct SelectorUIC
     {
-        private static Image _back_Image;
-        private static Dictionary<CellClickTypes, GameObject> _selZones_GOs;
+        private static Image _back;
+        private static Dictionary<CellClickTypes, GameObject> _selZones;
+        private static Dictionary<UniqAbilTypes, GameObject> _uniqZones;
 
-        public SelectorUIC(GameObject centerZone_GO)
+        public SelectorUIC(GameObject centerZone)
         {
-            var selZone_Trans = centerZone_GO.transform.Find("SelectorTypeZone");
+            var selZone = centerZone.transform.Find("SelectorTypeZone");
 
-            _selZones_GOs = new Dictionary<CellClickTypes, GameObject>();
+            _selZones = new Dictionary<CellClickTypes, GameObject>();
+            _uniqZones = new Dictionary<UniqAbilTypes, GameObject>();
 
+            _back = selZone.Find("Back_Image").GetComponent<Image>();
 
-            _back_Image = selZone_Trans.Find("Back_Image").GetComponent<Image>();
-
-            for (var click = CellClickTypes.Third; click < CellClickTypes.End; click++)
+            for (var click = CellClickTypes.SetUnit; click < CellClickTypes.End; click++)
             {
-                _selZones_GOs.Add(click, selZone_Trans.Find(click.ToString()).gameObject);
+                click = (CellClickTypes)((int)click);
+                var str = click.ToString();
+                var go = selZone.Find(str).gameObject;
+
+                _selZones.Add(click, go);
+
+                
+                if(click == CellClickTypes.UniqAbil)
+                {
+                    _uniqZones.Add(UniqAbilTypes.FireArcher, go.transform.Find(UniqAbilTypes.FireArcher.ToString()).gameObject);
+                    _uniqZones.Add(UniqAbilTypes.StunElfemale, go.transform.Find(UniqAbilTypes.StunElfemale.ToString()).gameObject);
+                    _uniqZones.Add(UniqAbilTypes.ChangeDirWind, go.transform.Find(UniqAbilTypes.ChangeDirWind.ToString()).gameObject);
+                }
             }
         }
 
-        public static void SyncView(CellClickTypes click)
+        public static void SyncView(CellClickTypes click, UniqAbilTypes uniqAbil)
         {
-            _back_Image.gameObject.SetActive(false);
-            foreach (var item in _selZones_GOs.Keys) _selZones_GOs[item].SetActive(false);
+            _back.gameObject.SetActive(false);
+            foreach (var item in _selZones.Keys) _selZones[item].SetActive(false);
+            foreach (var item in _uniqZones.Keys) _uniqZones[item].SetActive(false);
 
-            if (_selZones_GOs.ContainsKey(click))
+            if (_selZones.ContainsKey(click))
             {
-                _back_Image.gameObject.SetActive(true);
-                _selZones_GOs[click].SetActive(true);
+                _back.gameObject.SetActive(true);
+                _selZones[click].SetActive(true);
+
+
+                if (_uniqZones.ContainsKey(uniqAbil))
+                {
+                    _uniqZones[uniqAbil].SetActive(true);
+                }
             }
         }
     }

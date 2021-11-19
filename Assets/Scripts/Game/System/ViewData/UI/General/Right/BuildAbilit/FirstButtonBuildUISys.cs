@@ -10,7 +10,7 @@ namespace Game.Game
         {
             var needActiveButton = false;
 
-            if (CellClickC.Is(CellClickTypes.SelCell))
+            if (SelIdx.IsSelCell)
             {
                 ref var selUnitDatCom = ref _unitF.Get1(SelIdx.Idx);
 

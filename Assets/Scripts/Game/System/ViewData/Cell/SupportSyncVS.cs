@@ -28,13 +28,10 @@ namespace Game.Game
 
                 supV_0.DisableSR();
 
-                if (CellClickC.Is(CellClickTypes.SelCell))
+                if (SelIdx.Idx == idx_0)
                 {
-                    if (SelIdx.Idx == idx_0)
-                    {
-                        supV_0.EnableSR(SupVisTypes.Selector);
-                    }
-                }
+                    supV_0.EnableSR(SupVisTypes.Selector);
+                }      
 
                 if (fire_0.Have)
                 {
@@ -98,7 +95,17 @@ namespace Game.Game
                 }
             }
 
-            if (CellClickC.Is(CellClickTypes.SelCell)) 
+            if (CellClickC.Is(CellClickTypes.UniqAbil))
+            {
+                if (SelUniqAbilC.Is(UniqAbilTypes.FireArcher))
+                {
+                    foreach (var idx_0 in CellsArsonArcherC.List(WhoseMoveC.CurPlayerI, SelIdx.Idx))
+                    {
+                        _supVF.Get1(idx_0).EnableSR(SupVisTypes.FireSelector);
+                    }
+                }
+            }
+            else
             {
                 foreach (var idx_0 in CellsShiftC.List(WhoseMoveC.CurPlayerI, SelIdx.Idx))
                 {
@@ -113,14 +120,6 @@ namespace Game.Game
                 foreach (var idx_0 in AttackCellsC.List(WhoseMoveC.CurPlayerI, AttackTypes.Unique, SelIdx.Idx))
                 {
                     _supVF.Get1(idx_0).EnableSR(SupVisTypes.UniqueAttack);
-                }
-
-                if (SelUniqAbilC.Is(UniqAbilTypes.FireArcher))
-                {
-                    foreach (var idx_0 in CellsArsonArcherComp.GetListCopy(WhoseMoveC.CurPlayerI, SelIdx.Idx))
-                    {
-                        _supVF.Get1(idx_0).EnableSR(SupVisTypes.FireSelector);
-                    }
                 }
             }
 

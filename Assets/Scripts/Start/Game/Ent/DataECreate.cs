@@ -56,7 +56,7 @@ namespace Game.Game
                          .Replace(new HpC())
                          .Replace(new DamageC())
                          .Replace(new StepC())
-                         .Replace(new WaterUnitC());
+                         .Replace(new WaterC());
 
 
                     _curGameW.NewEntity()
@@ -92,11 +92,10 @@ namespace Game.Game
 
             new BuildsUpgC(true);
             new UnitUpgC(new Dictionary<string, bool>());
-            new UnitWaterUpgC(true);
 
             new CellsForSetUnitC(true);
             new CellsShiftC(true);
-            new CellsArsonArcherComp(true);
+            new CellsArsonArcherC(true);
             new AttackCellsC(true);
             new CellsGiveTWComp(true);
 

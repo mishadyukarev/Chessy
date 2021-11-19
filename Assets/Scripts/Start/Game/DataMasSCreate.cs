@@ -54,6 +54,7 @@ namespace Game.Game
             rpcSystems.Add(RpcMasterTypes.FromToNewUnit, new EcsSystems(gameWorld).Add(new FromToNewUnitMS()));
             rpcSystems.Add(RpcMasterTypes.UpgUnits, new EcsSystems(gameWorld).Add(new PickUpgUnitsMS()));
             rpcSystems.Add(RpcMasterTypes.UpgBuilds, new EcsSystems(gameWorld).Add(new PickUpgBuildsMS()));
+            rpcSystems.Add(RpcMasterTypes.UpgWater, new EcsSystems(gameWorld).Add(new WaterUpgMS()));
             var rpcSystsAction = new Dictionary<RpcMasterTypes, Action>();
             foreach (var item_0 in rpcSystems) rpcSystsAction.Add(item_0.Key, item_0.Value.Run);
 

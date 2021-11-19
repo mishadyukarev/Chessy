@@ -8,17 +8,22 @@ namespace Game.Game
         public static CellClickTypes Click => _click;
         public static bool Is(params CellClickTypes[] clicks)
         {
-            foreach (var click in clicks) if (click == _click) return true;
+            foreach (var click in clicks) 
+                if (click == _click) return true;
             return false;
         }
-
-        public static void Reset() => _click = default;
-        public static void Set(CellClickTypes click) => _click = click;
-
 
 
         public CellClickC(CellClickTypes click)
         {
+            _click = click;
+        }
+
+
+        public static void Set(CellClickTypes click)
+        {
+            if (click == CellClickTypes.None) throw new Exception();
+
             _click = click;
         }
     }
