@@ -36,6 +36,20 @@ namespace Game.Game
 
         public static void SetActiveZone(bool isActive) => _parent_GO.SetActive(isActive);
 
+        public static void SetActive(UnitTypes unit, bool isActive)
+        {
+            _units[unit].gameObject.SetActive(isActive);
+        }
+        public static void SetActive(BuildTypes build, bool isActive)
+        {
+            _builds[build].gameObject.SetActive(isActive);
+        }
+        public static void SetWater(bool isActive)
+        {
+            _upgWater.gameObject.SetActive(isActive);
+        }
+
+
         public static void AddList(UnitTypes unit, UnityAction action)
         {
             if (!_units.ContainsKey(unit)) throw new Exception();

@@ -82,16 +82,16 @@ namespace Game.Game
                     ++idx_cur;
                 }
 
-            //!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            var audioSourceParentGO = new GameObject("AudioSource");
-            //audioSourceParentGO.transform.SetParent(genZone.transform);
-
 
             new WindC(DirectTypes.Right);
-            new SoundEffectC(audioSourceParentGO);
+
 
             new BuildsUpgC(true);
             new UnitUpgC(new Dictionary<string, bool>());
+            UnitAvailPickUpgC.StartGame();
+            new BuildAvailPickUpgC(new Dictionary<string, bool>());
+            new WaterAvailPickUpgC(new Dictionary<PlayerTypes, bool>());
+
 
             new CellsForSetUnitC(true);
             new CellsShiftC(true);
@@ -99,9 +99,9 @@ namespace Game.Game
             new AttackCellsC(true);
             new CellsGiveTWComp(true);
 
-            //new WhereCloudsC(true);
             new WhereEnvC(true);
             new WhereUnitsC(true);
+            WhereBuildsC.StartGame();
 
             new InvUnitsC(true);
             new InvResC(true);

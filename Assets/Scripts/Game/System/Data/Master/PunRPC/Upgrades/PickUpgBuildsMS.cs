@@ -13,6 +13,7 @@ namespace Game.Game
 
             BuildsUpgC.AddUpgrade(whoseMove, build);
 
+            BuildAvailPickUpgC.Set(build, whoseMove, false);
             PickUpgC.SetHaveUpgrade(whoseMove, false);
             RpcSys.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }

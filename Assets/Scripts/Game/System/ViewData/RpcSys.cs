@@ -28,14 +28,14 @@ namespace Game.Game
         private EcsFilter<CloudC> _cloudF = default;
 
 
-        private static PhotonView PhotonView => RpcViewC.PhotonView;
+        private static PhotonView PhotonView => RpcVC.PhotonView;
 
         private static string MasterRPCName => nameof(MasterRPC);
         private static string GeneralRPCName => nameof(GeneralRPC);
         private static string OtherRPCName => nameof(OtherRPC);
         private static string SyncMasterRPCName => nameof(SyncAllMaster);
 
-        private int _curIdx;
+        private int _idx_cur;
 
         public void Init()
         {
@@ -113,57 +113,57 @@ namespace Game.Game
         [PunRPC]
         private void MasterRPC(RpcMasterTypes rpcType, object[] objects, PhotonMessageInfo infoFrom)
         {
-            _curIdx = 0;
+            _idx_cur = 0;
 
             InfoC.AddInfo(MGOTypes.Master, infoFrom);
 
             if(rpcType == RpcMasterTypes.UniqAbil)
             {
-                var uniqAbil = (UniqAbilTypes)objects[_curIdx++];
+                var uniqAbil = (UniqAbilTypes)objects[_idx_cur++];
 
                 switch (uniqAbil)
                 {
                     case UniqAbilTypes.None: throw new Exception();
 
                     case UniqAbilTypes.CircularAttack:
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
                     case UniqAbilTypes.BonusNear:
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
                     case UniqAbilTypes.FirePawn:
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
                     case UniqAbilTypes.PutOutFirePawn:
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
                     case UniqAbilTypes.Seed:
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
-                        EnvDoingMC.Set((EnvTypes)objects[_curIdx++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        EnvDoingMC.Set((EnvTypes)objects[_idx_cur++]);
                         break;
 
                     case UniqAbilTypes.FireArcher:
-                        FromToDoingMC.Set((byte)objects[_curIdx++], (byte)objects[_curIdx++]);
+                        FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case UniqAbilTypes.GrowAdultForest:
-                        ForGrowAdultForestMC.Set((byte)objects[_curIdx++]);
+                        ForGrowAdultForestMC.Set((byte)objects[_idx_cur++]);
                         break;
 
                     case UniqAbilTypes.StunElfemale:
-                        FromToDoingMC.Set((byte)objects[_curIdx++], (byte)objects[_curIdx++]);
+                        FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case UniqAbilTypes.ChangeDirWind:
-                        FromToDoingMC.Set((byte)objects[_curIdx++], (byte)objects[_curIdx++]);
+                        FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case UniqAbilTypes.ChangeCornerArcher:
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
                     default: throw new Exception();
@@ -185,72 +185,72 @@ namespace Game.Game
                         break;
 
                     case RpcMasterTypes.Build: 
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
-                        BuildDoingMC.Set((BuildTypes)objects[_curIdx++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        BuildDoingMC.Set((BuildTypes)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.DestroyBuild:
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.Shift:
-                        FromToDoingMC.Set((byte)objects[_curIdx++], (byte)objects[_curIdx++]);
+                        FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.Attack:
-                        FromToDoingMC.Set((byte)objects[_curIdx++], (byte)objects[_curIdx++]);
+                        FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.ConditionUnit:
-                        CondDoingMC.Set((CondUnitTypes)objects[_curIdx++]);
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
+                        CondDoingMC.Set((CondUnitTypes)objects[_idx_cur++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.CreateUnit:
-                        UnitDoingMC.Set((UnitTypes)objects[_curIdx++]);
+                        UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.MeltOre:
                         break;
 
                     case RpcMasterTypes.SetUnit:
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
-                        UnitDoingMC.Set((UnitTypes)objects[_curIdx++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
+                        UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.BuyRes:
-                        ForBuyResMasC.Res = (ResTypes)objects[_curIdx++];
+                        ForBuyResMasC.Res = (ResTypes)objects[_idx_cur++];
                         break;
 
                     case RpcMasterTypes.ToNewUnit:
-                        UnitDoingMC.Set((UnitTypes)objects[_curIdx++]);
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
+                        UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.FromToNewUnit:
-                        UnitDoingMC.Set((UnitTypes)objects[_curIdx++]);
-                        FromToDoingMC.Set((byte)objects[_curIdx++], (byte)objects[_curIdx++]);
+                        UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
+                        FromToDoingMC.Set((byte)objects[_idx_cur++], (byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.UpgradeUnit:
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.GiveTakeToolWeapon:
-                        TWDoingMC.Set((TWTypes)objects[_curIdx++], (LevelTypes)objects[_curIdx++]);
-                        IdxDoingMC.Set((byte)objects[_curIdx++]);
+                        TWDoingMC.Set((TWTypes)objects[_idx_cur++], (LevelTypes)objects[_idx_cur++]);
+                        IdxDoingMC.Set((byte)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.GetHero:
-                        UnitDoingMC.Set((UnitTypes)objects[_curIdx++]);
+                        UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.UpgUnits:
-                        UnitDoingMC.Set((UnitTypes)objects[_curIdx++]);
+                        UnitDoingMC.Set((UnitTypes)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.UpgBuilds:
-                        BuildDoingMC.Set((BuildTypes)objects[_curIdx++]);
+                        BuildDoingMC.Set((BuildTypes)objects[_idx_cur++]);
                         break;
 
                     case RpcMasterTypes.UpgWater:
@@ -296,7 +296,7 @@ namespace Game.Game
         [PunRPC]
         private void GeneralRPC(RpcGeneralTypes rpcGeneralType, object[] objects, PhotonMessageInfo infoFrom)
         {
-            _curIdx = 0;
+            _idx_cur = 0;
             InfoC.AddInfo(MGOTypes.General, infoFrom);
 
             switch (rpcGeneralType)
@@ -305,7 +305,7 @@ namespace Game.Game
                     throw new Exception();
 
                 case RpcGeneralTypes.Mistake:
-                    var mistakeType = (MistakeTypes)objects[_curIdx++];
+                    var mistakeType = (MistakeTypes)objects[_idx_cur++];
                     MistakeC.MistakeType = mistakeType;
                     MistakeC.CurTime = default;
 
@@ -313,7 +313,7 @@ namespace Game.Game
                     {
                         MistakeC.ClearAllNeeds();
 
-                        var needRes = (int[])objects[_curIdx++];
+                        var needRes = (int[])objects[_idx_cur++];
 
                         MistakeC.AddNeedRes(ResTypes.Food, needRes[0]);
                         MistakeC.AddNeedRes(ResTypes.Wood, needRes[1]);
@@ -326,12 +326,12 @@ namespace Game.Game
                     break;
 
                 case RpcGeneralTypes.SoundEff:
-                    var soundEffectType = (ClipTypes)objects[_curIdx++];
+                    var soundEffectType = (ClipTypes)objects[_idx_cur++];
                     SoundEffectC.Play(soundEffectType);
                     break;
 
                 case RpcGeneralTypes.SoundUniq:
-                    SoundEffectC.Play((UniqAbilTypes)objects[_curIdx++]);
+                    SoundEffectC.Play((UniqAbilTypes)objects[_idx_cur++]);
                     break;
 
                 case RpcGeneralTypes.ActiveMotion:
@@ -351,7 +351,7 @@ namespace Game.Game
         [PunRPC]
         private void OtherRPC(RpcOtherTypes rpcOtherType, object[] objects, PhotonMessageInfo infoFrom)
         {
-            _curIdx = 0;
+            _idx_cur = 0;
             InfoC.AddInfo(MGOTypes.Other, infoFrom);
 
             switch (rpcOtherType)
@@ -375,53 +375,6 @@ namespace Game.Game
         private void SyncAllMaster()
         {
             var objs = new List<object>();
-
-            objs.Add(WhoseMoveC.WhoseMove);
-            objs.Add(PlyerWinnerC.PlayerWinner);
-            objs.Add(ReadyC.IsStartedGame);
-            objs.Add(ReadyC.IsReady(PlayerTypes.Second));
-
-            //foreach (var item_0 in MotionsDataUIC.IsActivatedUI) objs.Add(item_0.Value);
-            objs.Add(MotionsC.AmountMotions);
-
-            //objs.Add(PickUpgC.HaveUpgrade(PlayerTypes.Second));
-            //foreach (var item_0 in PickUpgC.Activated_Buts)
-            //{
-            //    foreach (var item_1 in item_0.Value)
-            //    {
-            //        objs.Add(PickUpgC.Activated_Buts[item_0.Key][item_1.Key]);
-            //    }
-            //}
-
-            objs.Add(WindC.CurDirWind);
-
-
-            #region Upgrades
-
-            foreach (var item_0 in UnitUpgC.Upgrades) objs.Add(item_0.Value);
-
-            foreach (var item_0 in BuildsUpgC.HaveUpgrades)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    objs.Add(BuildsUpgC.HaveUpgrade(item_0.Key, item_1.Key));
-                }
-            }
-
-            #endregion
-
-
-            #region Cooldowns
-
-            foreach (var item_0 in ScoutHeroCooldownC.Cooldowns)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    objs.Add(ScoutHeroCooldownC.Cooldown(item_0.Key, item_1.Key));
-                }
-            }
-
-            #endregion
 
 
             foreach (var idx_0 in _effUnitF)
@@ -485,6 +438,35 @@ namespace Game.Game
 
                 
             }
+
+
+            #region Cooldowns
+
+            foreach (var item_0 in ScoutHeroCooldownC.Cooldowns)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    objs.Add(ScoutHeroCooldownC.Cooldown(item_0.Key, item_1.Key));
+                }
+            }
+
+            #endregion
+
+
+            #region Upgrades
+
+            foreach (var item_0 in UnitUpgC.Upgrades) objs.Add(item_0.Value);
+
+            foreach (var item_0 in BuildsUpgC.HaveUpgrades)
+            {
+                foreach (var item_1 in item_0.Value)
+                {
+                    objs.Add(BuildsUpgC.HaveUpgrade(item_0.Key, item_1.Key));
+                }
+            }
+
+            #endregion
+
 
             #region Inventor
 
@@ -572,9 +554,26 @@ namespace Game.Game
             #endregion
 
 
-            #region
+            #region PickUpgade
+
+            foreach (var item in PickUpgC.HaveUpgrades) objs.Add(item.Value);
+            foreach (var item in UnitAvailPickUpgC.Available_0) objs.Add(item.Value);
+            foreach (var item in BuildAvailPickUpgC.Available) objs.Add(item.Value);
+            foreach (var item in WaterAvailPickUpgC.Available) objs.Add(item.Value);
+
+            #endregion
 
 
+            #region Other
+
+            objs.Add(WhoseMoveC.WhoseMove);
+            objs.Add(PlyerWinnerC.PlayerWinner);
+            objs.Add(ReadyC.IsStartedGame);
+            objs.Add(ReadyC.IsReady(PlayerTypes.Second));
+
+            objs.Add(MotionsC.AmountMotions);
+
+            objs.Add(WindC.CurDirWind);
 
             #endregion
 
@@ -590,41 +589,70 @@ namespace Game.Game
         [PunRPC]
         private void SyncAllOther(object[] objects)
         {
-            _curIdx = 0;
-
-            WhoseMoveC.SetWhoseMove((PlayerTypes)objects[_curIdx++]);
-            PlyerWinnerC.PlayerWinner = (PlayerTypes)objects[_curIdx++];
-            ReadyC.IsStartedGame = (bool)objects[_curIdx++];
-            ReadyC.SetIsReady(WhoseMoveC.CurPlayerI, (bool)objects[_curIdx++]);
-
-            //foreach (var item_0 in MotionsDataUIC.IsActivatedUI) MotionsDataUIC.Sync(item_0.Key, (bool)objects[_curNumber++]);
-            MotionsC.AmountMotions = (int)objects[_curIdx++];
-
-            //PickUpgC.SetHaveUpgrade(PlayerTypes.Second, (bool)objects[_curIdx++]);
-            //foreach (var item_0 in PickUpgC.Activated_Buts)
-            //{
-            //    foreach (var item_1 in item_0.Value)
-            //    {
-            //        PickUpgC.SetHave_But(item_0.Key, item_1.Key, (bool)objects[_curIdx++]);
-            //    }
-            //}
-
-            WindC.Sync((DirectTypes)objects[_curIdx++]);
+            _idx_cur = 0;
 
 
-            #region Upgrades
-
-            foreach (var item_0 in UnitUpgC.Upgrades) UnitUpgC.Sync(item_0.Key, item_0.Value);
-
-            foreach (var item_0 in BuildsUpgC.HaveUpgrades)
+            foreach (var idx_0 in _effUnitF)
             {
-                foreach (var item_1 in item_0.Value)
-                {
-                    BuildsUpgC.Sync(item_0.Key, item_1.Key, (bool)objects[_curIdx++]);
-                }
-            }
+                ref var unit_0 = ref _unitF.Get1(idx_0);
+                unit_0.Sync((UnitTypes)objects[_idx_cur++]);
+                _unitF.Get3(idx_0).Sync((PlayerTypes)objects[_idx_cur++]);
+                _unitF.Get2(idx_0).Sync((LevelTypes)objects[_idx_cur++]);
+                _statUnitF.Get1(idx_0).Sync((int)objects[_idx_cur++]);
+                _statUnitF.Get2(idx_0).Sync((int)objects[_idx_cur++]);
 
-            #endregion
+                _effUnitF.Get1(idx_0).Sync((CondUnitTypes)objects[_idx_cur++]);
+                foreach (var item in _effUnitF.Get2(idx_0).Effects) _effUnitF.Get2(idx_0).Sync(item.Key, (bool)objects[_idx_cur++]);
+                _statUnitF.Get3(idx_0).Sync((int)objects[_idx_cur++]);
+
+                _twUnitF.Get1(idx_0).ToolWeapon = (TWTypes)objects[_idx_cur++];
+                _twUnitF.Get1(idx_0).LevelTWType = (LevelTypes)objects[_idx_cur++];
+                _twUnitF.Get1(idx_0).SyncShield((int)objects[_idx_cur++]);
+
+                
+                _effUnitF.Get3(idx_0).Sync((bool)objects[_idx_cur++], (int)objects[_idx_cur++]);
+
+                _archerF.Get1(idx_0).Sync((bool)objects[_idx_cur++]);
+
+                foreach (var item in _uniqUnitF.Get2(idx_0).Cooldowns)
+                    _uniqUnitF.Get2(idx_0).Sync(item.Key, (int)objects[_idx_cur++]);
+
+
+
+
+
+                _buildF.Get1(idx_0).Sync((BuildTypes)objects[_idx_cur++]);
+                _buildF.Get2(idx_0).Sync((PlayerTypes)objects[_idx_cur++]);
+
+
+
+                ref var env_0 = ref _envF.Get1(idx_0);
+                ref var envRes_0 = ref _envF.Get2(idx_0);
+                foreach (var item in env_0.Envronments) env_0.Sync(item.Key, (bool)objects[_idx_cur++]);
+                foreach (var item in envRes_0.Resources) envRes_0.Sync(item.Key, (int)objects[_idx_cur++]);
+
+
+                ref var river_0 = ref _riverF.Get1(idx_0);
+                river_0.Sync((RiverTypes)objects[_idx_cur++]);
+                foreach (var item_0 in river_0.DirectsDict)
+                    river_0.Sync(item_0.Key, (bool)objects[_idx_cur++]);
+
+
+
+                ref var trail_0 = ref _trailF.Get1(idx_0);
+                foreach (var item_0 in trail_0.Health)
+                    trail_0.SyncTrail(item_0.Key, (int)objects[_idx_cur++]);
+
+
+
+                ref var cloud_0 = ref _cloudF.Get1(idx_0);
+                cloud_0.Sync((bool)objects[_idx_cur++]/*, (CloudWidthTypes)objects[_curIdx++]*/);
+
+
+
+                ref var fire_0 = ref _fireF.Get1(idx_0);
+                fire_0.Sync((bool)objects[_idx_cur++]);
+            }
 
 
             #region Cooldowns
@@ -633,74 +661,26 @@ namespace Game.Game
             {
                 foreach (var item_1 in item_0.Value)
                 {
-                    ScoutHeroCooldownC.Sync(item_0.Key, item_1.Key, (int)objects[_curIdx++]);
+                    ScoutHeroCooldownC.Sync(item_0.Key, item_1.Key, (int)objects[_idx_cur++]);
                 }
             }
 
             #endregion
 
 
-            foreach (var idx_0 in _effUnitF)
+            #region Upgrades
+
+            foreach (var item_0 in UnitUpgC.Upgrades) UnitUpgC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
+
+            foreach (var item_0 in BuildsUpgC.HaveUpgrades)
             {
-                ref var unit_0 = ref _unitF.Get1(idx_0);
-                unit_0.Sync((UnitTypes)objects[_curIdx++]);
-                _unitF.Get3(idx_0).Sync((PlayerTypes)objects[_curIdx++]);
-                _unitF.Get2(idx_0).Sync((LevelTypes)objects[_curIdx++]);
-                _statUnitF.Get2(idx_0).Sync((int)objects[_curIdx++]);
-                _statUnitF.Get3(idx_0).Sync((int)objects[_curIdx++]);
-
-                _effUnitF.Get1(idx_0).Sync((CondUnitTypes)objects[_curIdx++]);
-                foreach (var item in _effUnitF.Get2(idx_0).Effects) _effUnitF.Get2(idx_0).Sync(item.Key, (bool)objects[_curIdx++]);
-                _statUnitF.Get3(idx_0).Sync((int)objects[_curIdx++]);
-
-                _twUnitF.Get1(idx_0).ToolWeapon = (TWTypes)objects[_curIdx++];
-                _twUnitF.Get1(idx_0).LevelTWType = (LevelTypes)objects[_curIdx++];
-                _twUnitF.Get1(idx_0).SyncShield((int)objects[_curIdx++]);
-
-                
-                _effUnitF.Get3(idx_0).Sync((bool)objects[_curIdx++], (int)objects[_curIdx++]);
-
-                _archerF.Get1(idx_0).Sync((bool)objects[_curIdx++]);
-
-                foreach (var item in _uniqUnitF.Get2(idx_0).Cooldowns)
-                    _uniqUnitF.Get2(idx_0).Sync(item.Key, (int)objects[_curIdx++]);
-
-
-
-
-
-                _buildF.Get1(idx_0).Sync((BuildTypes)objects[_curIdx++]);
-                _buildF.Get2(idx_0).Sync((PlayerTypes)objects[_curIdx++]);
-
-
-
-                ref var env_0 = ref _envF.Get1(idx_0);
-                ref var envRes_0 = ref _envF.Get2(idx_0);
-                foreach (var item in env_0.Envronments) env_0.Sync(item.Key, (bool)objects[_curIdx++]);
-                foreach (var item in envRes_0.Resources) envRes_0.Sync(item.Key, (int)objects[_curIdx++]);
-
-
-                ref var river_0 = ref _riverF.Get1(idx_0);
-                river_0.Sync((RiverTypes)objects[_curIdx++]);
-                foreach (var item_0 in river_0.DirectsDict)
-                    river_0.Sync(item_0.Key, (bool)objects[_curIdx++]);
-
-
-
-                ref var trail_0 = ref _trailF.Get1(idx_0);
-                foreach (var item_0 in trail_0.Health)
-                    trail_0.SyncTrail(item_0.Key, (int)objects[_curIdx++]);
-
-
-
-                ref var cloud_0 = ref _cloudF.Get1(idx_0);
-                cloud_0.Sync((bool)objects[_curIdx++]/*, (CloudWidthTypes)objects[_curIdx++]*/);
-
-
-
-                ref var fire_0 = ref _fireF.Get1(idx_0);
-                fire_0.Sync((bool)objects[_curIdx++]);
+                foreach (var item_1 in item_0.Value)
+                {
+                    BuildsUpgC.Sync(item_0.Key, item_1.Key, (bool)objects[_idx_cur++]);
+                }
             }
+
+            #endregion
 
 
             #region Inventor
@@ -709,7 +689,7 @@ namespace Game.Game
             {
                 foreach (var item_1 in item_0.Value)
                 {
-                    InvResC.Set(item_0.Key, item_1.Key, (int)objects[_curIdx++]);
+                    InvResC.Set(item_0.Key, item_1.Key, (int)objects[_idx_cur++]);
                 }
             }
             foreach (var item_0 in InvUnitsC.Units)
@@ -718,7 +698,7 @@ namespace Game.Game
                 {
                     foreach (var item_2 in item_1.Value)
                     {
-                        InvUnitsC.Set(item_0.Key, item_1.Key, item_2.Key, (int)objects[_curIdx++]);
+                        InvUnitsC.Set(item_0.Key, item_1.Key, item_2.Key, (int)objects[_idx_cur++]);
                     }
                 }
             }
@@ -728,7 +708,7 @@ namespace Game.Game
                 {
                     foreach (var item_2 in item_1.Value)
                     {
-                        InvTWC.Set(item_0.Key, item_1.Key, item_2.Key, (int)objects[_curIdx++]);
+                        InvTWC.Set(item_0.Key, item_1.Key, item_2.Key, (int)objects[_idx_cur++]);
                     }
                 }
             }
@@ -747,11 +727,11 @@ namespace Game.Game
                         WhereUnitsC.Clear(item_0.Key, item_1.Key, item_2.Key);
                         for (int i = 0; i < Byte.MaxValue; i++)
                         {
-                            var obj = objects[_curIdx++];
+                            var obj = objects[_idx_cur++];
                             needContinue = (bool)obj;
                             if (needContinue == true) break;
 
-                            WhereUnitsC.Sync(item_0.Key, item_1.Key, item_2.Key, (byte)objects[_curIdx++]);
+                            WhereUnitsC.Sync(item_0.Key, item_1.Key, item_2.Key, (byte)objects[_idx_cur++]);
                         }
 
                         if (needContinue) continue;
@@ -765,11 +745,11 @@ namespace Game.Game
                     WhereBuildsC.Clear(item_0.Key, item_1.Key);
                     for (int i = 0; i < Byte.MaxValue; i++)
                     {
-                        var obj = objects[_curIdx++];
+                        var obj = objects[_idx_cur++];
                         needContinue = (bool)obj;
                         if (needContinue == true) break;
 
-                        WhereBuildsC.Sync(item_0.Key, item_1.Key, (byte)objects[_curIdx++]);
+                        WhereBuildsC.Sync(item_0.Key, item_1.Key, (byte)objects[_idx_cur++]);
                     }
 
                     if (needContinue) continue;
@@ -782,15 +762,40 @@ namespace Game.Game
                 WhereEnvC.Clear(item_0.Key);
                 for (int i = 0; i < Byte.MaxValue; i++)
                 {
-                    var obj = objects[_curIdx++];
+                    var obj = objects[_idx_cur++];
                     needContinue = (bool)obj;
                     if (needContinue == true) break;
 
-                    WhereEnvC.SyncAdd(item_0.Key, (byte)objects[_curIdx++]);
+                    WhereEnvC.SyncAdd(item_0.Key, (byte)objects[_idx_cur++]);
                 }
                 if (needContinue) continue;
             }
 
+
+            #endregion
+
+
+            #region PickUpgade
+
+            foreach (var item in PickUpgC.HaveUpgrades) PickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
+            foreach (var item in UnitAvailPickUpgC.Available_0) UnitAvailPickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
+            foreach (var item in BuildAvailPickUpgC.Available) BuildAvailPickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
+            foreach (var item in WaterAvailPickUpgC.Available) WaterAvailPickUpgC.Sync(item.Key, (bool)objects[_idx_cur++]);
+
+            #endregion
+
+
+            #region Other
+
+            WhoseMoveC.SetWhoseMove((PlayerTypes)objects[_idx_cur++]);
+            PlyerWinnerC.PlayerWinner = (PlayerTypes)objects[_idx_cur++];
+            ReadyC.IsStartedGame = (bool)objects[_idx_cur++];
+            ReadyC.SetIsReady(WhoseMoveC.CurPlayerI, (bool)objects[_idx_cur++]);
+
+
+            MotionsC.AmountMotions = (int)objects[_idx_cur++];
+
+            WindC.Sync((DirectTypes)objects[_idx_cur++]);
 
             #endregion
         }

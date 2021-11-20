@@ -1,10 +1,10 @@
-﻿namespace Game.Common
-{
-    public enum ActionDataTypes
-    {
-        None,
+﻿//namespace Game.Common
+//{
+//    public enum ActionDataTypes
+//    {
+//        None,
 
-        RunUpdate,
-        LaunchAdd,
-    }
-}
+//        RunUpdate,
+//        LaunchAdd,
+//    }
+//}

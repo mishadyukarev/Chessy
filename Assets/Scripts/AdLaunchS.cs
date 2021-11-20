@@ -1,4 +1,5 @@
 ﻿using Leopotam.Ecs;
+using Photon.Pun;
 using System;
 using UnityEngine;
 using Yodo1.MAS;
@@ -14,18 +15,19 @@ namespace Game.Common
 
             if (!ShopComC.HasReceipt(ShopComC.PREMIUM_NAME))
             {
-                if (difTime.Minutes >= AdComCom.MINUTES_FOR_AD)
+                if (PhotonNetwork.OfflineMode || CurSceneC.Is(SceneTypes.Menu))
                 {
-                    //if (Advertisement.IsReady())
-                    //{
-                    //    Advertisement.Show();
-                    //    AdComCom.LastTimeAd = DateTime.Now;
-                    //}
-
-                    if (Yodo1U3dMas.IsInterstitialAdLoaded())
+                    if (difTime.Minutes >= AdComCom.MINUTES_FOR_AD)
                     {
-                        Yodo1U3dMas.ShowInterstitialAd();
-                        AdComCom.LastTimeAd = DateTime.Now;
+                        if (Yodo1U3dMas.IsInterstitialAdLoaded())
+                        {
+                            Yodo1U3dMas.ShowInterstitialAd();
+                            AdComCom.LastTimeAd = DateTime.Now;
+                        }
+                        else
+                        {
+                            Debug.Log("my");
+                        }
                     }
                 }
             }

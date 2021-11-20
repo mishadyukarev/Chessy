@@ -22,8 +22,8 @@ namespace Game.Game
                 UnitUpgC.AddUpg(UpgTypes.PickCenter, UnitStatTypes.Damage, unit, LevelTypes.Second, whoseMove);
             }
 
-            
 
+            UnitAvailPickUpgC.Set(unit, whoseMove, false);
             PickUpgC.SetHaveUpgrade(whoseMove, false);
             RpcSys.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }

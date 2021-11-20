@@ -125,7 +125,7 @@ namespace Game.Game
 
             if (CellClickC.Is(CellClickTypes.SetUnit))
             {
-                foreach (var idx_0 in CellsForSetUnitC.GetListCells(WhoseMoveC.CurPlayerI))
+                foreach (var idx_0 in CellsForSetUnitC.List(WhoseMoveC.CurPlayerI))
                 {
                     _supVF.Get1(idx_0).EnableSR(SupVisTypes.Spawn);
                 }

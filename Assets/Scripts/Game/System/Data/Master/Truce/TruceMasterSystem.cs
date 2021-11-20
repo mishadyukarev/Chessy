@@ -48,7 +48,7 @@ namespace Game.Game
                         {
                             if (tw_0.HaveToolWeap)
                             {
-                                InvTWC.AddAmountTools(ownUnit_0.Owner, tw_0.ToolWeapon, tw_0.LevelTWType);
+                                InvTWC.Add(ownUnit_0.Owner, tw_0.ToolWeapon, tw_0.LevelTWType);
                                 tw_0.ToolWeapon = default;
                             }
 
@@ -62,7 +62,7 @@ namespace Game.Game
 
                         if (tw_0.HaveToolWeap)
                         {
-                            InvTWC.AddAmountTools(ownUnit_0.Owner, tw_0.ToolWeapon, tw_0.LevelTWType);
+                            InvTWC.Add(ownUnit_0.Owner, tw_0.ToolWeapon, tw_0.LevelTWType);
                             tw_0.ToolWeapon = default;
                         }
 

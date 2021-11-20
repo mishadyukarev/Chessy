@@ -5,16 +5,16 @@ namespace Game.Common
 {
     public struct DataSC
     {
-        private static Dictionary<ActionDataTypes, Action> _events;
+        private static Action _runUpdate;
         private static Action<SceneTypes> _toggleScene;
 
-        public DataSC(Dictionary<ActionDataTypes, Action> dict, Action<SceneTypes> toggleScene)
+        public DataSC(Action runUpd, Action<SceneTypes> toggleScene)
         {
-            _events = dict;
+            _runUpdate = runUpd;
             _toggleScene = toggleScene;
         }
 
-        public static void Invoke(ActionDataTypes eventData) => _events[eventData].Invoke();
+        public static void RunUpdate() => _runUpdate.Invoke();
         public static void ToggleScene(SceneTypes scene) => _toggleScene(scene);
     }
 }

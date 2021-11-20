@@ -19,6 +19,7 @@ namespace Game.Game
                 }
             }
 
+            WaterAvailPickUpgC.Set(whoseMove, false);
             PickUpgC.SetHaveUpgrade(whoseMove, false);
             RpcSys.SoundToGeneral(sender, ClipTypes.PickUpgrade);
         }

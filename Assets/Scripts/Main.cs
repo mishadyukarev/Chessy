@@ -1,6 +1,7 @@
 ﻿using Game.Common;
 using Game.Game;
 using Leopotam.Ecs;
+using Photon.Pun;
 using System;
 using UnityEngine;
 
@@ -8,8 +9,6 @@ namespace Game
 {
     public sealed class Main : MonoBehaviour
     {
-        private SceneTypes _curScene;
-
         private EcsWorld _menuW;
         private EcsWorld _gameW;
 
@@ -17,19 +16,17 @@ namespace Game
         private void Start()
         {
             var comW = new EcsWorld();
-            new Common.FillEntitiesSys(comW, ToggleScene, gameObject);
+            var comSysts = new EcsSystems(comW);
+            new Common.FillEntitiesSys(comSysts, ToggleScene, gameObject);
 
-            _curScene = SceneTypes.Menu;
-            ToggleScene(_curScene);
-
-            //Application.runInBackground = false;
+            ToggleScene(SceneTypes.Menu);
         }
 
         private void Update()
         {
-            Common.DataSC.Invoke(ActionDataTypes.RunUpdate);
+            Common.DataSC.RunUpdate();
 
-            switch (_curScene)
+            switch (CurSceneC.Scene)
             {
                 case SceneTypes.None:
                     throw new Exception();
@@ -51,7 +48,7 @@ namespace Game
 
         private void ToggleScene(SceneTypes scene)
         {
-            _curScene = scene;
+            CurSceneC.Scene = scene;
             switch (scene)
             {
                 case SceneTypes.None:
@@ -61,7 +58,6 @@ namespace Game
                     if (_gameW != default)
                     {
                         _gameW.Destroy();
-                        Game.ViewECreate.Dispose();
                     }
 
                     _menuW = new EcsWorld();
@@ -84,14 +80,56 @@ namespace Game
                         .Add(new FillCells());
 
 
+                    #region Creating
+
+                    ToggleZoneVC.ReplaceZone(SceneTypes.Game);
+
+                    var genZone = new GameObject("GeneralZone");
+                    ToggleZoneVC.Attach(genZone.transform);
+
+
+                    SoundComC.SavedVolume = SoundComC.Volume;
+
+
+                    var backGroundGO = GameObject.Instantiate(PrefabResComC.BackGroundCollider2D,
+                        MainGoVC.Main_GO.transform.position + new Vector3(7, 5.5f, 2), MainGoVC.Main_GO.transform.rotation);
+
+                    var aSParent = new GameObject("AudioSource");
+                    aSParent.transform.SetParent(genZone.transform);
+
+
+
+
+
+                    new ClipResourcesVC(true);
+                    new SoundEffectC(aSParent);
+                    new BackgroundVC(backGroundGO, PhotonNetwork.IsMasterClient);
+                    new GenerZoneVC(genZone);
+                    new CameraVC(Camera.main, new Vector3(7.4f, 4.8f, -2));
+
+                    var rpc = new GameObject("RpcView");
+                    rpc.AddComponent<RpcSys>();
+                    GenerZoneVC.Attach(rpc.transform);
+                    new RpcVC(rpc);
+
+                    GenerZoneVC.Attach(backGroundGO.transform);
+
+                    #endregion
+
+
 
                     new DataSCreate(gameSysts);
                     new DataMasSCreate(gameSysts);
                     new ViewDataSCreate(gameSysts);
 
+
+                    gameSysts.Add(RpcVC.RpcView_GO.GetComponent<RpcSys>());
+
                     gameSysts.Init();
 
                     DataViewSC.RotateAll?.Invoke();
+
+                    
 
                     break;
 

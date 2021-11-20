@@ -53,7 +53,7 @@ namespace Game.Game
                     }
                 }
 
-                RayCastC.Reset();
+                RayCastC.Set(RaycastTypes.Background);
             }
 
 

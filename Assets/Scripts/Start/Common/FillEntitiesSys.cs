@@ -2,33 +2,24 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Advertisements;
 using UnityEngine.EventSystems;
 
 namespace Game.Common
 {
     public sealed class FillEntitiesSys : IEcsInitSystem
     {
-        private EcsWorld _curComW = default;
+        private readonly EcsWorld _curComW = default;
 
-        public FillEntitiesSys(EcsWorld comWorld, Action<SceneTypes> toggleScene, GameObject main_GO)
+        public FillEntitiesSys(EcsSystems comSysts, Action<SceneTypes> toggleScene, GameObject main_GO)
         {
-            var comSysts = new EcsSystems(comWorld);
-            var runUpdate = new EcsSystems(comWorld)
-                .Add(new MyYodo());
+            var comW = comSysts.World;
 
-
-
-            var launchAdd = new EcsSystems(comWorld)
+            var runUpdate = new EcsSystems(comW)
+                .Add(new MyYodo())
                 .Add(new AdLaunchS());
 
 
-
-            var dict = new Dictionary<ActionDataTypes, Action>();
-            dict.Add(ActionDataTypes.RunUpdate, runUpdate.Run);
-            dict.Add(ActionDataTypes.LaunchAdd, launchAdd.Run);
-
-            new DataSC(dict, toggleScene);
+            new DataSC(runUpdate.Run, toggleScene);
             new MainGoVC(main_GO);
 
 
@@ -38,7 +29,6 @@ namespace Game.Common
                 .Add(this)
                 .Add(new EventSys())
                 .Add(photScene)
-                .Add(launchAdd)
                 .Add(runUpdate)
                 .Add(new IAPCore());
 

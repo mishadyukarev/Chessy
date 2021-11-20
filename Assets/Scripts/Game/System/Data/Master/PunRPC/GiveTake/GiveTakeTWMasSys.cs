@@ -35,24 +35,10 @@ namespace Game.Game
 
                         if (twUnit_0.HaveToolWeap)
                         {
-                            InvTWC.AddAmountTools(ownUnit_0.Owner, twUnit_0.ToolWeapon, twUnit_0.LevelTWType);
-                            WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+                            InvTWC.Add(ownUnit_0.Owner, twUnit_0.ToolWeapon, twUnit_0.LevelTWType);
+                            twUnit_0.ToolWeapon = default;
 
                             stepUnit_0.TakeSteps();
-
-                            if (twUnit_0.Is(TWTypes.Shield)
-                                && tWTypeForGive == TWTypes.Shield
-                                && twUnit_0.LevelTWType != levelTWType)
-                            {
-                                twUnit_0.SetShieldProtect(levelTWType);
-                                twUnit_0.LevelTWType = levelTWType;
-                            }
-                            else
-                            {
-                                twUnit_0.ToolWeapon = default;
-                                twUnit_0.LevelTWType = default;
-                            }
-                            WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                             RpcSys.SoundToGeneral(sender, ClipTypes.PickMelee);
                         }

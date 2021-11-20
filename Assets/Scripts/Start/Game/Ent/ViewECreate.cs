@@ -11,15 +11,6 @@ namespace Game.Game
 
         public void Init()
         {
-            ToggleZoneVC.ReplaceZone(SceneTypes.Game);
-
-            var genZone = new GameObject("GeneralZone");
-            ToggleZoneVC.Attach(genZone.transform);
-
-
-            SoundComC.SavedVolume = SoundComC.Volume;
-
-
             ///Cells
             ///
             var cell = PrefabResComC.CellGO;
@@ -29,7 +20,7 @@ namespace Game.Game
             var cell_GOs = new GameObject[CellValues.CELL_COUNT_X, CellValues.CELL_COUNT_Y];
 
             var suppParCells = new GameObject("Cells");
-            suppParCells.transform.SetParent(genZone.transform);
+            GenerZoneVC.Attach(suppParCells.transform);
 
             byte idx_0 = 0;
 
@@ -120,25 +111,6 @@ namespace Game.Game
 
                     ++idx_0;
                 }
-
-
-
-            var backGroundGO = GameObject.Instantiate(PrefabResComC.BackGroundCollider2D,
-                MainGoVC.Main_GO.transform.position + new Vector3(7, 5.5f, 2), MainGoVC.Main_GO.transform.rotation);
-
-            new ClipResourcesVC(true);
-            new BackgroundVC(backGroundGO, PhotonNetwork.IsMasterClient);
-            new GenerZoneVC(genZone);
-            new CameraVC(Camera.main, new Vector3(7.4f, 4.8f, -2));
-            
-
-            GenerZoneVC.Attach(backGroundGO.transform);
-        }
-
-        public static void Dispose()
-        {
-            UnityEngine.Object.Destroy(RpcViewC.RpcView_GO);
-            WhereBuildsC.Start();
         }
     }
 }

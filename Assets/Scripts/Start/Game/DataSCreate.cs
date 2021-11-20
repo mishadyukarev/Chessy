@@ -12,11 +12,6 @@ namespace Game.Game
 
             var runUpd = new EcsSystems(gameWorld);
 
-            new RpcViewC(new GameObject("RpcView"));
-
-            var rpcGameSys = new EcsSystems(gameWorld)
-                .Add(RpcViewC.RpcView_GO.AddComponent<RpcSys>());
-
 
             var syncAbilities = new EcsSystems(gameWorld)
                 .Add(new AbilSyncMasSys());
@@ -51,8 +46,7 @@ namespace Game.Game
 
 
             gameSysts
-                .Add(runUpd)
-                .Add(rpcGameSys);
+                .Add(runUpd);
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Game.Menu
 {
     public sealed class FillEntitieSys : IEcsInitSystem
     {
-        private EcsWorld _curMenuWorld = default;
+        private EcsWorld _curMenuW = default;
 
         public FillEntitieSys(EcsWorld menuWorld)
         {
@@ -34,9 +34,6 @@ namespace Game.Menu
 
             menuSysts.Init();
 
-
-
-            Common.DataSC.Invoke(ActionDataTypes.LaunchAdd);
             MenuSysDataViewC.LaunchLikeGame.Invoke();
         }
 
@@ -49,20 +46,20 @@ namespace Game.Menu
             var centerZone_Trans = CanvasC.FindUnderCurZone<Transform>("CenterZone");
 
 
-            _curMenuWorld.NewEntity()
+            _curMenuW.NewEntity()
                 .Replace(new CenterZoneUICom(centerZone_Trans, SoundComC.Volume, HintComC.IsOnHint))
                 .Replace(new LikeGameUICom(centerZone_Trans));
 
 
             var rightZone = CanvasC.FindUnderCurZone<RectTransform>("OnlineRightZone");
-            _curMenuWorld.NewEntity()
+            _curMenuW.NewEntity()
                 .Replace(new OnZoneUIC(rightZone))
                 .Replace(new ConnectorUIC(true, rightZone))
                 .Replace(new BackgroundUIC(true, rightZone));
 
 
             var leftZone = CanvasC.FindUnderCurZone<RectTransform>("OfflineLeftZone");
-            _curMenuWorld.NewEntity()
+            _curMenuW.NewEntity()
                 .Replace(new OffZoneUIC(leftZone))
                 .Replace(new ConnectorUIC(false, leftZone))
                 .Replace(new BackgroundUIC(false, leftZone));
