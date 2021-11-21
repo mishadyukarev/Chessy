@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Init()
         {
-            EnvirZoneViewUICom.AddListenerToEnvInfo(EnvironmentInfo);
+            EnvirUIC.AddListenerToEnvInfo(EnvironmentInfo);
         }
 
         private void EnvironmentInfo()

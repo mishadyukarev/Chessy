@@ -10,32 +10,27 @@ namespace Game.Game
         private static Dictionary<ClipTypes, AudioClip> _clips;
         private static Dictionary<UniqAbilTypes, AudioClip> _uniq;
 
-        public ClipResourcesVC(bool needUpload) : this()
+        static ClipResourcesVC()
         {
-            if (needUpload)
+            _clips = new Dictionary<ClipTypes, AudioClip>();
+
+            for (var clip = ClipTypes.First; clip < ClipTypes.End; clip++)
             {
-                _clips = new Dictionary<ClipTypes, AudioClip>();
-
-                for (var clip = ClipTypes.First; clip < ClipTypes.End; clip++)
-                {
-                    _clips.Add(clip, Resources.Load<AudioClip>(clip + "_Clip"));
-                }
-
-
-                _uniq = new Dictionary<UniqAbilTypes, AudioClip>();
-
-                for (var uniq = UniqAbilTypes.First; uniq < UniqAbilTypes.End; uniq++)
-                {
-                    string name = "Uniq/";
-                    
-                    if(uniq == UniqAbilTypes.FireArcher || uniq == UniqAbilTypes.FirePawn) name += "Fire";
-                    else name += uniq;
-
-                    _uniq.Add(uniq, Resources.Load<AudioClip>(name + "_Clip"));
-                }
+                _clips.Add(clip, Resources.Load<AudioClip>(clip + "_Clip"));
             }
 
-            else throw new Exception();
+
+            _uniq = new Dictionary<UniqAbilTypes, AudioClip>();
+
+            for (var uniq = UniqAbilTypes.First; uniq < UniqAbilTypes.End; uniq++)
+            {
+                string name = "Uniq/";
+
+                if (uniq == UniqAbilTypes.FireArcher || uniq == UniqAbilTypes.FirePawn) name += "Fire";
+                else name += uniq;
+
+                _uniq.Add(uniq, Resources.Load<AudioClip>(name + "_Clip"));
+            }
         }
 
         public static AudioClip AudioClip(ClipTypes clip)

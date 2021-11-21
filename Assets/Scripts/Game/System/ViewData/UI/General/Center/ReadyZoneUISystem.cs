@@ -10,20 +10,20 @@ namespace Game.Game
         {
             if (ReadyC.IsReady(WhoseMoveC.CurPlayerI))
             {
-                ReadyViewUIC.SetColorReadyButton(Color.red);
+                ReadyUIC.SetColorReadyButton(Color.red);
             }
             else
             {
-                ReadyViewUIC.SetColorReadyButton(Color.white);
+                ReadyUIC.SetColorReadyButton(Color.white);
             }
 
             if (ReadyC.IsStartedGame || PhotonNetwork.OfflineMode)
             {
-                ReadyViewUIC.SetActiveParent(false);
+                ReadyUIC.SetActiveParent(false);
             }
             else
             {
-                ReadyViewUIC.SetActiveParent(true);
+                ReadyUIC.SetActiveParent(true);
             }
         }
     }

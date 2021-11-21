@@ -11,7 +11,7 @@ namespace Game.Game
 
             if (NeedSoundEffC.Clip != default)
             {
-                SoundEffectC.Play(NeedSoundEffC.Clip);
+                SoundEffectVC.Play(NeedSoundEffC.Clip);
             }
 
 

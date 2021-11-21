@@ -16,13 +16,13 @@ namespace Game.Game
             {
                 if (own_sel.Is(WhoseMoveC.CurPlayerI))
                 {
-                    CutyLeftZoneViewUIC.SetActiveZone(true);
+                    CutyLeftUIC.SetActiveZone(true);
                 }
-                else CutyLeftZoneViewUIC.SetActiveZone(false);
+                else CutyLeftUIC.SetActiveZone(false);
             }
             else
             {
-                CutyLeftZoneViewUIC.SetActiveZone(false);
+                CutyLeftUIC.SetActiveZone(false);
             }
         }
     }

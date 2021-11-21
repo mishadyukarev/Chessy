@@ -25,7 +25,7 @@ namespace Game.Game
                 }
             }
 
-            BuildAbilitViewUIC.SetActive_Button(BuildButtonTypes.First, needActiveButton);
+            BuildAbilitUIC.SetActive_Button(BuildButtonTypes.First, needActiveButton);
         }
     }
 }

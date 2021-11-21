@@ -29,7 +29,7 @@ namespace Game.Game
 
                         if (build_0.Is(BuildTypes.Farm))
                         {
-                            minus_0 =  ExtractC.GetExtractOneBuild(BuildsUpgC.HaveUpgrade(ownBuild_0.Owner, BuildTypes.Farm));
+                            minus_0 =  Extractor.GetExtractOneBuild(BuildsUpgC.PercUpg(BuildTypes.Farm, ownBuild_0.Owner));
 
                             if (minus_0 > envRes_0.AmountRes(EnvTypes.Fertilizer)) 
                                 minus_0 = envRes_0.AmountRes(EnvTypes.Fertilizer);
@@ -49,7 +49,7 @@ namespace Game.Game
 
                         else if (build_0.Is(BuildTypes.Woodcutter))
                         {
-                            minus_0 = ExtractC.GetExtractOneBuild(BuildsUpgC.HaveUpgrade(ownBuild_0.Owner, BuildTypes.Woodcutter));
+                            minus_0 = Extractor.GetExtractOneBuild(BuildsUpgC.PercUpg(BuildTypes.Woodcutter, ownBuild_0.Owner));
 
                             if (minus_0 > envRes_0.AmountRes(EnvTypes.AdultForest))
                                 minus_0 = envRes_0.AmountRes(EnvTypes.AdultForest);
@@ -85,7 +85,7 @@ namespace Game.Game
 
                         else if (build_0.Is(BuildTypes.Mine))
                         {
-                            minus_0 = ExtractC.GetExtractOneBuild(BuildsUpgC.HaveUpgrade(ownBuild_0.Owner, BuildTypes.Mine));
+                            minus_0 = Extractor.GetExtractOneBuild(BuildsUpgC.PercUpg(BuildTypes.Mine, ownBuild_0.Owner));
 
                             if (minus_0 > envRes_0.AmountRes(EnvTypes.Hill))
                                 minus_0 = envRes_0.AmountRes(EnvTypes.Hill);

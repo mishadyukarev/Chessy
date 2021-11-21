@@ -47,7 +47,7 @@ namespace Game.Game
                                     {
                                         if (env_0.Have(EnvTypes.AdultForest))
                                         {
-                                            var extract = ExtractC.ExtractOnePawnWood(levUnit_0.Level);
+                                            var extract = Extractor.ExtractOnePawnWood(levUnit_0.Level);
 
                                             if (extract > envRes_0.AmountRes(EnvTypes.AdultForest))
                                             {

@@ -22,8 +22,8 @@ namespace Game.Menu
 
             CenterZoneUICom.AddListShop_But(ShopZone);
 
-            CenterZoneUICom.AddListDiscord_But(delegate { Application.OpenURL(URL.URL_DISCORD); });
-            CenterZoneUICom.AddListLikeGame_But(delegate { Application.OpenURL(URL.URL_GAME_IN_GOOGLE_PLAY); });
+            CenterZoneUICom.AddListDiscord_But(delegate { Application.OpenURL(URLC.URL_DISCORD); });
+            CenterZoneUICom.AddListLikeGame_But(delegate { Application.OpenURL(URLC.URL_GAME_IN_GOOGLE_PLAY); });
             CenterZoneUICom.AddListQuit_But(delegate { Application.Quit(); });
 
 
@@ -41,7 +41,7 @@ namespace Game.Menu
 
 
 
-            LikeGameUICom.AddListLikeGame_But(delegate { Application.OpenURL(URL.URL_GAME_IN_GOOGLE_PLAY); });
+            LikeGameUICom.AddListLikeGame_But(delegate { Application.OpenURL(URLC.URL_GAME_IN_GOOGLE_PLAY); });
             LikeGameUICom.AddListenerExit_But(ExitLikeGame);
         }
 

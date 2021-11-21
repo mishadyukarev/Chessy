@@ -71,52 +71,18 @@ namespace Game
                     }
 
                     _gameW = new EcsWorld();
-                    var gameSysts = new EcsSystems(_gameW);
 
-                    gameSysts
-                        .Add(new ViewECreate())
-                        .Add(new ViewUIECreate())
-                        .Add(new DataECreate())
+
+
+                    new CreateVCs();
+                    new CreateComps();
+
+
+
+                    var gameSysts = new EcsSystems(_gameW)
+                        .Add(new CreateVEnts())
+                        .Add(new CreateEnts())
                         .Add(new FillCells());
-
-
-                    #region Creating
-
-                    ToggleZoneVC.ReplaceZone(SceneTypes.Game);
-
-                    var genZone = new GameObject("GeneralZone");
-                    ToggleZoneVC.Attach(genZone.transform);
-
-
-                    SoundComC.SavedVolume = SoundComC.Volume;
-
-
-                    var backGroundGO = GameObject.Instantiate(PrefabResComC.BackGroundCollider2D,
-                        MainGoVC.Main_GO.transform.position + new Vector3(7, 5.5f, 2), MainGoVC.Main_GO.transform.rotation);
-
-                    var aSParent = new GameObject("AudioSource");
-                    aSParent.transform.SetParent(genZone.transform);
-
-
-
-
-
-                    new ClipResourcesVC(true);
-                    new SoundEffectC(aSParent);
-                    new BackgroundVC(backGroundGO, PhotonNetwork.IsMasterClient);
-                    new GenerZoneVC(genZone);
-                    new CameraVC(Camera.main, new Vector3(7.4f, 4.8f, -2));
-
-                    var rpc = new GameObject("RpcView");
-                    rpc.AddComponent<RpcSys>();
-                    GenerZoneVC.Attach(rpc.transform);
-                    new RpcVC(rpc);
-
-                    GenerZoneVC.Attach(backGroundGO.transform);
-
-                    #endregion
-
-
 
                     new DataSCreate(gameSysts);
                     new DataMasSCreate(gameSysts);

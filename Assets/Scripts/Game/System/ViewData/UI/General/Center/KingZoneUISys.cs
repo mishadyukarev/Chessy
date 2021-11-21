@@ -8,11 +8,11 @@ namespace Game.Game
         {
             if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelTypes.First))
             {
-                KingZoneViewUIC.EnableZone();
+                KingZoneUIC.EnableZone();
             }
             else
             {
-                KingZoneViewUIC.DisableZone();
+                KingZoneUIC.DisableZone();
             }
         }
     }

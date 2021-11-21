@@ -17,17 +17,17 @@ namespace Game.Game
 
             if (SelIdx.IsSelCell && !build_sel.Is(BuildTypes.City))
             {
-                EnvirZoneViewUICom.SetActiveParent(true);
+                EnvirUIC.SetActiveParent(true);
             }
             else
             {
-                EnvirZoneViewUICom.SetActiveParent(false);
+                EnvirUIC.SetActiveParent(false);
             }
 
 
-            EnvirZoneViewUICom.SetTextResour(ResTypes.Food, envRes_sel.AmountRes(EnvTypes.Fertilizer).ToString());
-            EnvirZoneViewUICom.SetTextResour(ResTypes.Wood, envRes_sel.AmountRes(EnvTypes.AdultForest).ToString());
-            EnvirZoneViewUICom.SetTextResour(ResTypes.Ore, envRes_sel.AmountRes(EnvTypes.Hill).ToString());
+            EnvirUIC.SetTextResour(ResTypes.Food, envRes_sel.AmountRes(EnvTypes.Fertilizer).ToString());
+            EnvirUIC.SetTextResour(ResTypes.Wood, envRes_sel.AmountRes(EnvTypes.AdultForest).ToString());
+            EnvirUIC.SetTextResour(ResTypes.Ore, envRes_sel.AmountRes(EnvTypes.Hill).ToString());
         }
     }
 }

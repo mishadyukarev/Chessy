@@ -11,7 +11,7 @@ namespace Game.Game
 
             var whoseMove = WhoseMoveC.WhoseMove;
 
-            BuildsUpgC.AddUpgrade(whoseMove, build);
+            BuildsUpgC.AddUpgrade(build, whoseMove, UpgTypes.PickCenter);
 
             BuildAvailPickUpgC.Set(build, whoseMove, false);
             PickUpgC.SetHaveUpgrade(whoseMove, false);

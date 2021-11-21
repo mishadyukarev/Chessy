@@ -13,8 +13,8 @@ namespace Game.Game
             ref var effUnitC_sel = ref _effUnitF.Get1(SelIdx.Idx);
 
             //EffectsIUC.SetColor(UnitStatTypes.Hp, effUnitC_sel.Have(UnitStatTypes.Hp));
-            EffectsIUC.SetColor(UnitStatTypes.Damage, effUnitC_sel.Have(UnitStatTypes.Damage));
-            EffectsIUC.SetColor(UnitStatTypes.Steps, effUnitC_sel.Have(UnitStatTypes.Steps));
+            EffectsUIC.SetColor(UnitStatTypes.Damage, effUnitC_sel.Have(UnitStatTypes.Damage));
+            EffectsUIC.SetColor(UnitStatTypes.Steps, effUnitC_sel.Have(UnitStatTypes.Steps));
         }
     }
 }

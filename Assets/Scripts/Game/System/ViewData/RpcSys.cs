@@ -322,16 +322,16 @@ namespace Game.Game
                         MistakeC.AddNeedRes(ResTypes.Gold, needRes[4]);
                     }
 
-                    SoundEffectC.Play(ClipTypes.Mistake);
+                    SoundEffectVC.Play(ClipTypes.Mistake);
                     break;
 
                 case RpcGeneralTypes.SoundEff:
                     var soundEffectType = (ClipTypes)objects[_idx_cur++];
-                    SoundEffectC.Play(soundEffectType);
+                    SoundEffectVC.Play(soundEffectType);
                     break;
 
                 case RpcGeneralTypes.SoundUniq:
-                    SoundEffectC.Play((UniqAbilTypes)objects[_idx_cur++]);
+                    SoundEffectVC.Play((UniqAbilTypes)objects[_idx_cur++]);
                     break;
 
                 case RpcGeneralTypes.ActiveMotion:
@@ -456,14 +456,7 @@ namespace Game.Game
             #region Upgrades
 
             foreach (var item_0 in UnitUpgC.Upgrades) objs.Add(item_0.Value);
-
-            foreach (var item_0 in BuildsUpgC.HaveUpgrades)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    objs.Add(BuildsUpgC.HaveUpgrade(item_0.Key, item_1.Key));
-                }
-            }
+            foreach (var item_0 in BuildsUpgC.HaveUpgrades) objs.Add(item_0.Value);
 
             #endregion
 
@@ -672,13 +665,7 @@ namespace Game.Game
 
             foreach (var item_0 in UnitUpgC.Upgrades) UnitUpgC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
 
-            foreach (var item_0 in BuildsUpgC.HaveUpgrades)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    BuildsUpgC.Sync(item_0.Key, item_1.Key, (bool)objects[_idx_cur++]);
-                }
-            }
+            foreach (var item_0 in BuildsUpgC.HaveUpgrades) BuildsUpgC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
 
             #endregion
 

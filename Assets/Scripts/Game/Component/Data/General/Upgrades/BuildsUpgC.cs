@@ -5,49 +5,62 @@ namespace Game.Game
 {
     public struct BuildsUpgC
     {
-        private static Dictionary<PlayerTypes, Dictionary<BuildTypes, bool>> _haveUpgrades;
+        private static Dictionary<string, bool> _haveUpgrades;
 
-        public static Dictionary<PlayerTypes, Dictionary<BuildTypes, bool>> HaveUpgrades
+        public static Dictionary<string, bool> HaveUpgrades
         {
             get
             {
-                var dict = new Dictionary<PlayerTypes, Dictionary<BuildTypes, bool>>();
-                foreach (var item_0 in _haveUpgrades)
-                {
-                    dict.Add(item_0.Key, new Dictionary<BuildTypes, bool>());
-                    foreach (var item_1 in item_0.Value)
-                    {
-                        dict[item_0.Key].Add(item_1.Key, item_1.Value);
-                    }
-                }
+                var dict = new Dictionary<string, bool>();
+                foreach (var item in _haveUpgrades) dict.Add(item.Key, item.Value);
                 return dict;
             }
         }
+        public static string Key(BuildTypes build, PlayerTypes player, UpgTypes upg) => build.ToString() + player + upg;
 
-        public BuildsUpgC(bool needNew) : this()
+        public static float PercUpg(BuildTypes build, PlayerTypes player)
         {
-            if (needNew)
+            var percent = 0f;
+
+            for (var upg = UpgTypes.First; upg < UpgTypes.End; upg++)
             {
-                _haveUpgrades = new Dictionary<PlayerTypes, Dictionary<BuildTypes, bool>>();
-
-                _haveUpgrades.Add(PlayerTypes.First, new Dictionary<BuildTypes, bool>());
-                _haveUpgrades.Add(PlayerTypes.Second, new Dictionary<BuildTypes, bool>());
-
-
-                for (var build = BuildTypes.None; build < BuildTypes.End; build++)
+                if (_haveUpgrades[Key(build, player, upg)])
                 {
-                    _haveUpgrades[PlayerTypes.First].Add(build, false);
-                    _haveUpgrades[PlayerTypes.Second].Add(build, false);
+                    percent = 1;
+                }
+            }
+
+            return percent;
+        }
+
+
+        static BuildsUpgC()
+        {
+            _haveUpgrades = new Dictionary<string, bool>();
+
+            for (var build = BuildTypes.First; build < BuildTypes.End; build++)
+            {
+                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+                {
+                    for (var upg = UpgTypes.First; upg < UpgTypes.End; upg++)
+                    {
+                        _haveUpgrades.Add(Key(build, player, upg), default);
+                    }
                 }
             }
         }
 
-        public static void AddUpgrade(PlayerTypes player, BuildTypes build) => _haveUpgrades[player][build] = true;
-        public static bool HaveUpgrade(PlayerTypes player, BuildTypes build) => _haveUpgrades[player][build];
-
-        public static void Sync(PlayerTypes player, BuildTypes build, bool have)
+        public static void Start()
         {
-            _haveUpgrades[player][build] = have;
+            foreach (var item in HaveUpgrades) _haveUpgrades[item.Key] = false;
+        }
+
+
+        public static void AddUpgrade(BuildTypes build, PlayerTypes player, UpgTypes upg) => _haveUpgrades[Key(build, player, upg)] = true;
+
+        public static void Sync(string key, bool have)
+        {
+            _haveUpgrades[key] = have;
         }
     }
 }

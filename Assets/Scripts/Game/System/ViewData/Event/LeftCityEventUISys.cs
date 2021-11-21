@@ -6,10 +6,10 @@ namespace Game.Game
     {
         public void Init()
         {
-            CutyLeftZoneViewUIC.AddListenerToMelt(delegate { MeltOre(); });
+            CutyLeftUIC.AddListenerToMelt(delegate { MeltOre(); });
 
-            CutyLeftZoneViewUIC.AddListToBuyRes(ResTypes.Food, delegate { BuyRes(ResTypes.Food); });
-            CutyLeftZoneViewUIC.AddListToBuyRes(ResTypes.Wood, delegate { BuyRes(ResTypes.Wood); });
+            CutyLeftUIC.AddListToBuyRes(ResTypes.Food, delegate { BuyRes(ResTypes.Food); });
+            CutyLeftUIC.AddListToBuyRes(ResTypes.Wood, delegate { BuyRes(ResTypes.Wood); });
         }
 
         private void MeltOre()

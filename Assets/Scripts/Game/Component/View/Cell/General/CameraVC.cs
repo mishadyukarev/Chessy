@@ -5,12 +5,12 @@ namespace Game.Game
     public struct CameraVC
     {
         private static Camera _camera;
-        private static Vector3 _gamePosCamera;
+        private static readonly Vector3 _gamePosCamera;
 
-        public CameraVC(Camera camera, Vector3 gamePosCamera)
+        static CameraVC()
         {
-            _camera = camera;
-            _gamePosCamera = gamePosCamera;
+            _camera = Camera.main;
+            _gamePosCamera = new Vector3(7.4f, 4.8f, -2);
         }
 
         public static void SetPosRotClient(PlayerTypes playerType, Vector3 posMain)

@@ -7,7 +7,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            WindUIC.SetEulerRot(WhoseMoveC.CurPlayerI, WindC.CurDirWind);
+            DirWindUIC.SetEulerRot(WhoseMoveC.CurPlayerI, WindC.CurDirWind);
         }
     }
 }

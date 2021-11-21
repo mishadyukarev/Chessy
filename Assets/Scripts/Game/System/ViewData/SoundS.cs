@@ -7,7 +7,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (SoundEffectC.IsPlaying(new[] { ClipTypes.Truce, ClipTypes.AfterBuildTown, ClipTypes.PickUpgrade }))
+            if (SoundEffectVC.IsPlaying(new[] { ClipTypes.Truce, ClipTypes.AfterBuildTown, ClipTypes.PickUpgrade }))
             {
                 SoundComC.Volume = 0;
             }

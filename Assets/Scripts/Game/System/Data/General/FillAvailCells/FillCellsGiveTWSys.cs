@@ -4,7 +4,7 @@ namespace Game.Game
 {
     internal sealed class FillCellsGiveTWSys : IEcsRunSystem
     {
-        private EcsFilter<CellsGiveTWComp> _cellsGiveFilter = default;
+        private EcsFilter<CellsGiveTWC> _cellsGiveFilter = default;
 
         private EcsFilter<UnitC, OwnerC> _cellUnitFilter = default;
 

@@ -53,11 +53,11 @@ namespace Game.Game
             }
         }
 
-        public static void StartGame()
+        public UnitAvailPickUpgC(bool haveUpg)
         {
             foreach (var item in Available_0)
             {
-                _available[item.Key] = true;
+                _available[item.Key] = haveUpg;
             }
         }
 

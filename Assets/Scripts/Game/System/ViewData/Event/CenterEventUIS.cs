@@ -8,9 +8,9 @@ namespace Game.Game
     {
         public void Init()
         {
-            ReadyViewUIC.AddListenerToReadyButton(Ready);
-            LeaveViewUIC.AddListener(delegate { PhotonNetwork.LeaveRoom(); });
-            FriendZoneViewUIC.AddListenerReady(FriendReady);
+            ReadyUIC.AddListenerToReadyButton(Ready);
+            LeaveUIC.AddListener(delegate { PhotonNetwork.LeaveRoom(); });
+            FriendZoneUIC.AddListenerReady(FriendReady);
             HintViewUIC.AddListHint_But(Hint);
 
             PickUpgUIC.AddList(UnitTypes.King, delegate { UpgradeUnit(UnitTypes.King); });
@@ -57,7 +57,7 @@ namespace Game.Game
 
                 HeroesViewUIC.SetActiveZone(true);
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
 
         private void UpgradeBuild(BuildTypes build)
@@ -68,7 +68,7 @@ namespace Game.Game
 
                 HeroesViewUIC.SetActiveZone(true);
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
 
         private void UpgradeWater()
@@ -79,7 +79,7 @@ namespace Game.Game
 
                 HeroesViewUIC.SetActiveZone(true);
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
 
         private void Elf()
@@ -88,7 +88,7 @@ namespace Game.Game
             {
                 RpcSys.GetHero(UnitTypes.Elfemale);
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
 
         private void OpenShop()

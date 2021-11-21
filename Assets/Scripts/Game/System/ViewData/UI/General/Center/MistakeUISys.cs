@@ -28,7 +28,7 @@ namespace Game.Game
 
                         for (var res = ResTypes.First; res < ResTypes.End; res++)
                         {
-                            EconomyViewUIC.SetMainColor(res, Color.white);
+                            EconomyUIC.SetMainColor(res, Color.white);
                         }
                     }
 
@@ -38,14 +38,14 @@ namespace Game.Game
                         {
                             if (MistakeC.NeedRes(res))
                             {
-                                EconomyViewUIC.SetMainColor(res, Color.red);
-                                MistakeViewUIC.SetActiveRes(res, true);
-                                MistakeViewUIC.SetText(res, ">= " + (-MistakeC.NeedResAmount(res)).ToString());
+                                EconomyUIC.SetMainColor(res, Color.red);
+                                MistakeUIC.SetActiveRes(res, true);
+                                MistakeUIC.SetText(res, ">= " + (-MistakeC.NeedResAmount(res)).ToString());
                             }
                             else
                             {
-                                EconomyViewUIC.SetMainColor(res, Color.white);
-                                MistakeViewUIC.SetActiveRes(res, false);
+                                EconomyUIC.SetMainColor(res, Color.white);
+                                MistakeUIC.SetActiveRes(res, false);
                             }
                         }
                     }
@@ -55,7 +55,7 @@ namespace Game.Game
                 {
                     ResetAll();
 
-                    MistakeViewUIC.ActiveBackgroud(true);
+                    MistakeUIC.ActiveBackgroud(true);
 
                     if (MistakeC.CurTime >= _neededTimeForFading)
                     {
@@ -72,27 +72,27 @@ namespace Game.Game
                             throw new Exception();
 
                         case MistakeTypes.NeedMoreSteps:
-                            MistakeViewUIC.ActiveNeedSteps(true);
+                            MistakeUIC.ActiveNeedSteps(true);
                             break;
 
                         case MistakeTypes.NeedOtherPlace:
-                            MistakeViewUIC.ActiveNeedOtherPlace(true);
+                            MistakeUIC.ActiveNeedOtherPlace(true);
                             break;
 
                         case MistakeTypes.NeedMoreHp:
-                            MistakeViewUIC.ActiveNeedMoreHealth(true);
+                            MistakeUIC.ActiveNeedMoreHealth(true);
                             break;
 
                         case MistakeTypes.NeedCity:
-                            MistakeViewUIC.ActiveNeedCity(true);
+                            MistakeUIC.ActiveNeedCity(true);
                             break;
 
                         case MistakeTypes.ThatIsForOtherUnit:
-                            MistakeViewUIC.ActiveThatsForOtherUnit(true);
+                            MistakeUIC.ActiveThatsForOtherUnit(true);
                             break;
 
                         case MistakeTypes.NearBorder:
-                            MistakeViewUIC.ActiveNearBorderZone(true);
+                            MistakeUIC.ActiveNearBorderZone(true);
                             break;
 
                         default:
@@ -104,20 +104,20 @@ namespace Game.Game
 
         private void ResetAll()
         {
-            MistakeViewUIC.ActiveBackgroud(false);
+            MistakeUIC.ActiveBackgroud(false);
 
-            MistakeViewUIC.ActiveTextZone(false);
-            MistakeViewUIC.ActiveNeedSteps(false);
-            MistakeViewUIC.ActiveNeedMoreHealth(false);
-            MistakeViewUIC.ActiveNeedOtherPlace(false);
-            MistakeViewUIC.ActiveNeedCity(false);
-            MistakeViewUIC.ActiveThatsForOtherUnit(false);
-            MistakeViewUIC.ActiveNearBorderZone(false);
+            MistakeUIC.ActiveTextZone(false);
+            MistakeUIC.ActiveNeedSteps(false);
+            MistakeUIC.ActiveNeedMoreHealth(false);
+            MistakeUIC.ActiveNeedOtherPlace(false);
+            MistakeUIC.ActiveNeedCity(false);
+            MistakeUIC.ActiveThatsForOtherUnit(false);
+            MistakeUIC.ActiveNearBorderZone(false);
 
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                EconomyViewUIC.SetMainColor(res, Color.white);
-                MistakeViewUIC.SetActiveRes(res, false);
+                EconomyUIC.SetMainColor(res, Color.white);
+                MistakeUIC.SetActiveRes(res, false);
             }
         }
     }

@@ -78,10 +78,9 @@ namespace Game.Game
             return steps;
         }
 
-
-        public UnitUpgC(Dictionary<string, bool> upgrades) : this()
+        static UnitUpgC()
         {
-            _upgrades = upgrades;
+            _upgrades = new Dictionary<string, bool>();
 
             for (var upg = UpgTypes.First; upg < UpgTypes.End; upg++)
             {
@@ -100,6 +99,12 @@ namespace Game.Game
                 }
             }
         }
+
+        public static void StartGame()
+        {
+            foreach (var item in Upgrades) _upgrades[item.Key] = false;
+        }
+
 
         public static void AddUpg(UpgTypes upg, UnitStatTypes stat, UnitTypes unit, LevelTypes level, PlayerTypes player)
         {

@@ -15,9 +15,9 @@ namespace Game.Game
             UniqButtonsUIC.AddListener(UniqButTypes.Second, delegate { UniqBut(UniqButTypes.Second); });
             UniqButtonsUIC.AddListener(UniqButTypes.Third, delegate { UniqBut(UniqButTypes.Third); });
 
-            BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.First, delegate { ExecuteBuild_Button(BuildButtonTypes.First); });
-            BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.Second, delegate { ExecuteBuild_Button(BuildButtonTypes.Second); });
-            BuildAbilitViewUIC.AddListener_Button(BuildButtonTypes.Third, delegate { ExecuteBuild_Button(BuildButtonTypes.Third); });
+            BuildAbilitUIC.AddListener_Button(BuildButtonTypes.First, delegate { ExecuteBuild_Button(BuildButtonTypes.First); });
+            BuildAbilitUIC.AddListener_Button(BuildButtonTypes.Second, delegate { ExecuteBuild_Button(BuildButtonTypes.Second); });
+            BuildAbilitUIC.AddListener_Button(BuildButtonTypes.Third, delegate { ExecuteBuild_Button(BuildButtonTypes.Third); });
 
             ProtectUIC.AddListener(delegate { ConditionAbilityButton(CondUnitTypes.Protected); });
             RelaxUIC.AddListener(delegate { ConditionAbilityButton(CondUnitTypes.Relaxed); });
@@ -38,7 +38,7 @@ namespace Game.Game
                     RpcSys.ConditionUnitToMaster(condUnitType, SelIdx.Idx);
                 }
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
 
         private void UniqBut(UniqButTypes uniqBut)
@@ -148,9 +148,9 @@ namespace Game.Game
                     }
                 }
 
-                else SoundEffectC.Play(ClipTypes.Mistake);
+                else SoundEffectVC.Play(ClipTypes.Mistake);
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
 
         private void ExecuteBuild_Button(BuildButtonTypes buildBut)
@@ -193,7 +193,7 @@ namespace Game.Game
                     default: throw new Exception();
                 }
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
 
         private void TryOnHint(VideoClipTypes videoClip)

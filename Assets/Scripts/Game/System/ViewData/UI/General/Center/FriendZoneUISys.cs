@@ -7,21 +7,21 @@ namespace Game.Game
     {
         public void Run()
         {
-            FriendZoneViewUIC.SetActiveParent(false);
+            FriendZoneUIC.SetActiveParent(false);
 
             if (GameModesCom.IsGameMode(GameModes.WithFriendOff))
             {
                 if (FriendC.IsActiveFriendZone)
                 {
-                    FriendZoneViewUIC.SetActiveParent(true);
+                    FriendZoneUIC.SetActiveParent(true);
 
                     if (WhoseMoveC.CurPlayerI == PlayerTypes.First)
                     {
-                        FriendZoneViewUIC.SetTextPlayerMotion("1");
+                        FriendZoneUIC.SetTextPlayerMotion("1");
                     }
                     else
                     {
-                        FriendZoneViewUIC.SetTextPlayerMotion("2");
+                        FriendZoneUIC.SetTextPlayerMotion("2");
                     }
                 }
             }

@@ -15,7 +15,7 @@ namespace Game.Game
             GetPawnArcherUIC.AddListenerToCreateUnit(UnitTypes.Pawn, delegate { CreateUnit(UnitTypes.Pawn); });
             GetPawnArcherUIC.AddListenerToCreateUnit(UnitTypes.Archer, delegate { CreateUnit(UnitTypes.Archer); });
 
-            KingZoneViewUIC.AddListenerToSetKing_Button(delegate { GetUnit(UnitTypes.King); });
+            KingZoneUIC.AddListenerToSetKing_Button(delegate { GetUnit(UnitTypes.King); });
             GetPawnArcherUIC.AddListener(UnitTypes.Pawn, delegate { GetUnit(UnitTypes.Pawn); });
             GetPawnArcherUIC.AddListener(UnitTypes.Archer, delegate { GetUnit(UnitTypes.Archer); });
 
@@ -42,10 +42,10 @@ namespace Game.Game
                 }
                 else
                 {
-                    SoundEffectC.Play(ClipTypes.Mistake);
+                    SoundEffectVC.Play(ClipTypes.Mistake);
                 }
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
         private void Hero()
         {
@@ -60,10 +60,10 @@ namespace Game.Game
                 }
                 else
                 {
-                    SoundEffectC.Play(ClipTypes.Mistake);
+                    SoundEffectVC.Play(ClipTypes.Mistake);
                 }
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
 
 
@@ -75,7 +75,7 @@ namespace Game.Game
             }
             else
             {
-                SoundEffectC.Play(ClipTypes.Mistake);
+                SoundEffectVC.Play(ClipTypes.Mistake);
             }
         }
 
@@ -87,7 +87,7 @@ namespace Game.Game
 
                 RpcSys.CreateUnitToMaster(unitType);
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
 
         private void GetUnit(UnitTypes unitType)
@@ -114,7 +114,7 @@ namespace Game.Game
                     GetterUnitsC.ActiveNeedCreateButton(unitType, true);
                 }
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
 
         private void ToggleToolWeapon(TWTypes tWType)
@@ -166,7 +166,7 @@ namespace Game.Game
                     else TwGiveTakeC.SetInDown(tWType, LevelTypes.Second);
                 }
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
 
         private void ToggleUpgradeUnit()
@@ -178,7 +178,7 @@ namespace Game.Game
                 TryOnHint(VideoClipTypes.UpgToolWeapon);
                 CellClickC.Set(CellClickTypes.UpgradeUnit);
             }
-            else SoundEffectC.Play(ClipTypes.Mistake);
+            else SoundEffectVC.Play(ClipTypes.Mistake);
         }
 
 

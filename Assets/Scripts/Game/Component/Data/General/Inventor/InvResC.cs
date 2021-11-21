@@ -27,6 +27,11 @@ namespace Game.Game
             }
         }
 
+        public static int AmountRes(PlayerTypes player, ResTypes res) => _amountRes[player][res];
+        public static bool Have(PlayerTypes player, ResTypes res) => AmountRes(player, res) > 0;
+        public static bool IsMinusRes(PlayerTypes player, ResTypes res) => AmountRes(player, res) < 0;
+
+
         public InvResC(bool needNew) : this()
         {
             if (needNew)
@@ -55,15 +60,11 @@ namespace Game.Game
             }
         }
 
-        public static int AmountRes(PlayerTypes player, ResTypes res) => _amountRes[player][res];
-        public static void Set(PlayerTypes player, ResTypes res, int value) => _amountRes[player][res] = value;
-        public static bool HaveRes(PlayerTypes player, ResTypes res) => AmountRes(player, res) > 0;
-        public static bool IsMinusRes(PlayerTypes player, ResTypes res) => AmountRes(player, res) < 0;
-        public static void ResetRes(PlayerTypes player, ResTypes res) => Set(player, res, 0);
 
+        public static void Set(PlayerTypes player, ResTypes res, int value) => _amountRes[player][res] = value;
+        public static void ResetRes(PlayerTypes player, ResTypes res) => Set(player, res, 0);
         public static void AddAmountRes(PlayerTypes playerType, ResTypes resourceType, int adding = 1) => Set(playerType, resourceType, AmountRes(playerType, resourceType) + adding);
         public static void TakeAmountRes(PlayerTypes playerType, ResTypes resourceType, int taking = 1) => Set(playerType, resourceType, AmountRes(playerType, resourceType) - taking);
-
 
 
 

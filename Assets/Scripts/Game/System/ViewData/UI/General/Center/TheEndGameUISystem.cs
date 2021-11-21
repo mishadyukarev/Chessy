@@ -9,18 +9,18 @@ namespace Game.Game
         {
             if (PlyerWinnerC.PlayerWinner == default)
             {
-                EndGameViewUIC.SetActiveZone(false);
+                EndGameUIC.SetActiveZone(false);
             }
 
             else if (PlyerWinnerC.PlayerWinner == WhoseMoveC.CurPlayerI)
             {
-                EndGameViewUIC.Text = LanguageComC.GetText(GameLanguageTypes.YouAreWinner);
-                EndGameViewUIC.SetActiveZone(true);
+                EndGameUIC.Text = LanguageComC.GetText(GameLanguageTypes.YouAreWinner);
+                EndGameUIC.SetActiveZone(true);
             }
             else
             {
-                EndGameViewUIC.Text = LanguageComC.GetText(GameLanguageTypes.YouAreLoser);
-                EndGameViewUIC.SetActiveZone(true);
+                EndGameUIC.Text = LanguageComC.GetText(GameLanguageTypes.YouAreLoser);
+                EndGameUIC.SetActiveZone(true);
             }
         }
     }
