@@ -10,23 +10,19 @@ namespace Game.Common
     {
         public void Run()
         {
-            var difTime = DateTime.Now - AdComCom.LastTimeAd;
+            var difTime = DateTime.Now - AdComC.LastTimeAd;
 
 
             if (!ShopComC.HasReceipt(ShopComC.PREMIUM_NAME))
             {
                 if (PhotonNetwork.OfflineMode || CurSceneC.Is(SceneTypes.Menu))
                 {
-                    if (difTime.Minutes >= AdComCom.MINUTES_FOR_AD)
+                    if (difTime.Minutes >= AdComC.MINUTES_FOR_AD)
                     {
                         if (Yodo1U3dMas.IsInterstitialAdLoaded())
                         {
                             Yodo1U3dMas.ShowInterstitialAd();
-                            AdComCom.LastTimeAd = DateTime.Now;
-                        }
-                        else
-                        {
-                            Debug.Log("my");
+                            AdComC.LastTimeAd = DateTime.Now;
                         }
                     }
                 }

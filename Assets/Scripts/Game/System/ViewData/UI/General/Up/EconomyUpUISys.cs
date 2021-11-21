@@ -4,8 +4,8 @@ namespace Game.Game
 {
     public sealed class EconomyUpUISys : IEcsRunSystem
     {
-        private readonly EcsFilter<EnvC> _cellEnvFilt = default;
-        private readonly EcsFilter<ConditionUnitC> _cellUnitFilt = default;
+        private readonly EcsFilter<EnvC> _envF = default;
+        private readonly EcsFilter<ConditionUnitC> _unitF = default;
 
         public void Run()
         {
@@ -26,14 +26,14 @@ namespace Game.Game
             var amountAddWood = 0;
             foreach (var idx_0 in WhereUnitsC.IdxsUnits(curPlayer, UnitTypes.Pawn, LevelTypes.First))
             {
-                if (_cellEnvFilt.Get1(idx_0).Have(EnvTypes.AdultForest))
-                    if (_cellUnitFilt.Get1(idx_0).Is(CondUnitTypes.Relaxed))
+                if (_envF.Get1(idx_0).Have(EnvTypes.AdultForest))
+                    if (_unitF.Get1(idx_0).Is(CondUnitTypes.Relaxed))
                         amountAddWood += 1;
             }
             foreach (var idx_0 in WhereUnitsC.IdxsUnits(curPlayer, UnitTypes.Pawn, LevelTypes.Second))
             {
-                if (_cellEnvFilt.Get1(idx_0).Have(EnvTypes.AdultForest))
-                    if (_cellUnitFilt.Get1(idx_0).Is(CondUnitTypes.Relaxed))
+                if (_envF.Get1(idx_0).Have(EnvTypes.AdultForest))
+                    if (_unitF.Get1(idx_0).Is(CondUnitTypes.Relaxed))
                         amountAddWood += 2;
             }
             amountAddWood += amountWoodcutter * extOneWoodcut;

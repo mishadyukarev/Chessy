@@ -15,13 +15,13 @@ namespace Game.Game
 
 
             var updateMotion = new EcsSystems(gameWorld)
-                .Add(new UpdatorMastSys())
+                .Add(new UpdatorMS())
                 .Add(new ExtractBuildUpdMS())
                 .Add(new FireUpdMasSys())
                 .Add(new CloudUpdMS())
                 .Add(new ThirstyUpdMS())
                 .Add(new RelaxUpdMasSys())
-                .Add(new HungryUpdMasSys());
+                .Add(new HungryUpdMS());
 
             var truceSystems = new EcsSystems(gameWorld)
                 .Add(new TruceMasterSystem());

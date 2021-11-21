@@ -1,0 +1,59 @@
+﻿using Leopotam.Ecs;
+
+namespace Game.Game
+{
+    public sealed class HungryUpdMS : IEcsRunSystem
+    {
+        private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
+        private EcsFilter<UnitC, LevelC, OwnerC> _cellUnitMainFilt = default;
+
+        public void Run()
+        {
+            for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+            {
+                var res = ResTypes.Food;
+
+
+
+                if (InvResC.IsMinusRes(player, res))
+                {
+                    InvResC.ResetRes(player, res);
+
+                    for (var unit = UnitTypes.Elfemale; unit >= UnitTypes.Pawn; unit--)
+                    {
+                        for (var levUnit = LevelTypes.Second; levUnit > LevelTypes.None; levUnit--)
+                        {
+                            foreach (var idx_0 in WhereUnitsC.IdxsUnits(player, unit, levUnit))
+                            {
+                                ref var unit_0 = ref _cellUnitMainFilt.Get1(idx_0);
+                                ref var levUnit_0 = ref _cellUnitMainFilt.Get2(idx_0);
+                                ref var ownUnit_0 = ref _cellUnitMainFilt.Get3(idx_0);
+
+                                ref var build_0 = ref _cellBuildFilt.Get1(idx_0);
+                                ref var ownBuild_0 = ref _cellBuildFilt.Get2(idx_0);
+
+
+                                if (unit_0.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale}))
+                                {
+                                    ScoutHeroCooldownC.SetStandCooldown(ownUnit_0.Owner, unit_0.Unit);
+                                    InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
+                                }
+
+                                if (build_0.Is(BuildTypes.Camp))
+                                {
+                                    WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
+                                    build_0.Remove();
+                                }
+
+                                WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+                                unit_0.Reset();
+
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
