@@ -50,14 +50,14 @@ namespace Game.Game
                                 RpcSys.SoundToGeneral(sender, ClipTypes.GetHero);
                                 //RpcSys.SoundToGeneral(sender, UniqAbilTypes.GrowAdultForest);
 
-                                unit_from.Remove(unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner);
-                                unit_to.Remove(unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner);
+                                unit_from.Clean(levUnit_from.Level, ownUnit_from.Owner);
+                                unit_to.Clean(levUnit_to.Level, ownUnit_to.Owner);
                                 
 
                                 unit_to.SetNew(unit, levUnit_to.Level, ownUnit_to.Owner);
 
 
-                                InvUnitsC.TakeUnit(ownUnit_to.Owner, unit_to.Unit, levUnit_to.Level);
+                                InvUnitsC.Take(ownUnit_to.Owner, unit_to.Unit, levUnit_to.Level);
 
                                 break;
                             }

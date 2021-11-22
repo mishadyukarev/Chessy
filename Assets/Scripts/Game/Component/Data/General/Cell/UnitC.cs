@@ -67,11 +67,29 @@ namespace Game.Game
             WhereUnitsC.Set(unit, level, owner, _idx, true);
         }
 
-        public void Remove(UnitTypes unit, LevelTypes level, PlayerTypes owner)
+        public void Kill(LevelTypes level, PlayerTypes owner)
         {
             if (!HaveUnit) throw new Exception("It's not got unit");
 
-            WhereUnitsC.Set(unit, level, owner, _idx, false);
+            if (Is(UnitTypes.King))
+            {
+                PlyerWinnerC.PlayerWinner = owner;
+            }
+            else if (Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
+            {
+                ScoutHeroCooldownC.SetStandCooldown(_unit, owner);
+                InvUnitsC.Add(_unit, level, owner);
+            }
+
+            WhereUnitsC.Set(_unit, level, owner, _idx, false);
+            _unit = UnitTypes.None;
+        }
+
+        public void Clean(LevelTypes level, PlayerTypes owner)
+        {
+            if (!HaveUnit) throw new Exception("It's not got unit");
+
+            WhereUnitsC.Set(_unit, level, owner, _idx, false);
             _unit = UnitTypes.None;
         }
 

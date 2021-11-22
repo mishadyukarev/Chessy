@@ -2,13 +2,13 @@
 using UnityEngine;
 using UnityEngine.Video;
 
-namespace Game.Common
+namespace Game.Game
 {
-    public struct VideoClipsResCom
+    public struct VideoClipsResC
     {
         private static Dictionary<VideoClipTypes, VideoClip> _videoClips;
 
-        public VideoClipsResCom(bool needUpload) : this()
+        public VideoClipsResC(bool needUpload) : this()
         {
             if (needUpload)
             {

@@ -23,7 +23,7 @@ namespace Game.Common
             new MainGoVC(main_GO);
 
 
-            var photScene = MainGoVC.Main_GO.AddComponent<PhotonSceneSys>();
+            var photScene = MainGoVC.AddComponent<PhotonSceneSys>();
 
             comSysts
                 .Add(this)
@@ -38,20 +38,18 @@ namespace Game.Common
         public void Init()
         {
             var commonZoneEnt = _curComW.NewEntity()
-                .Replace(new VideoClipsResCom(true))
-                .Replace(new SpritesResComC(true))
-                .Replace(new PrefabResComC(true))
+                .Replace(new PrefabResC(true))
                 .Replace(new ClipsResComCom(true));
 
 
 
-            var camera = UnityEngine.Object.Instantiate(PrefabResComC.Camera, MainGoVC.Main_GO.transform.position, MainGoVC.Main_GO.transform.rotation);
+            var camera = UnityEngine.Object.Instantiate(PrefabResC.Camera, MainGoVC.Pos, MainGoVC.Rot);
             camera.name = "Camera";
             camera.orthographicSize = 5.7f;
 
             var goES = new GameObject("EventSystem");
 
-            var canvas = GameObject.Instantiate(PrefabResComC.Canvas);
+            var canvas = GameObject.Instantiate(PrefabResC.Canvas);
             canvas.name = "Canvas";
 
             var aS = new GameObject("AudioSource", typeof(AudioSource)).GetComponent<AudioSource>();
@@ -65,7 +63,7 @@ namespace Game.Common
                 .Replace(new ComZoneC(new GameObject(NameConst.COMMON_ZONE)))
                 .Replace(new UnityEventBaseComponent(goES.AddComponent<EventSystem>(), goES.AddComponent<StandaloneInputModule>()))
                 .Replace(new CanvasC(canvas))
-                .Replace(new SoundComC(aS))
+                .Replace(new SoundC(aS))
                 .Replace(new LanguageComC(LanguageTypes.English))
                 .Replace(new AdComC(DateTime.Now))
                 .Replace(new TimeStartGameComCom(DateTime.Now))
@@ -87,7 +85,7 @@ namespace Game.Common
 
             ref var comZoneCom = ref commonZoneEnt.Get<ComZoneC>();
             comZoneCom.Attach(camera.transform);
-            comZoneCom.Attach(MainGoVC.Main_GO.transform);
+            comZoneCom.Attach(MainGoVC.Trans);
             comZoneCom.Attach(goES.transform);
             comZoneCom.Attach(canvas.transform);
 

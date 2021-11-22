@@ -18,14 +18,17 @@ namespace Game.Game
             ToggleZoneVC.Attach(genZone.transform);
 
 
-            SoundComC.SavedVolume = SoundComC.Volume;
+            new VideoClipsResC(true);
+            new SpritesResC(true);
+
+            SoundC.SavedVolume = SoundC.Volume;
 
 
 
             new GenerZoneVC(genZone);
 
-            var backGroundGO = GameObject.Instantiate(PrefabResComC.BackGroundCollider2D,
-                MainGoVC.Main_GO.transform.position + new Vector3(7, 5.5f, 2), MainGoVC.Main_GO.transform.rotation);
+            var backGroundGO = GameObject.Instantiate(PrefabResC.BackGroundCollider2D,
+                MainGoVC.Pos + new Vector3(7, 5.5f, 2), MainGoVC.Rot);
 
             GenerZoneVC.Attach(backGroundGO.transform);
 

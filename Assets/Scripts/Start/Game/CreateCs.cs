@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace Game.Game
 {
-    public sealed class CreateComps
+    public sealed class CreateCs
     {
-        public CreateComps()
+        public CreateCs()
         {
             new WindC(DirectTypes.Right);
 

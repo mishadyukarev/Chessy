@@ -13,98 +13,60 @@ namespace Game.Game
         {
             ///Cells
             ///
-            var cell = PrefabResComC.CellGO;
-            var white = SpritesResComC.Sprite(SpriteGameTypes.WhiteCell);
-            var black = SpritesResComC.Sprite(SpriteGameTypes.BlackCell);
-
-            var cell_GOs = new GameObject[CellValuesC.CELL_COUNT_X, CellValuesC.CELL_COUNT_Y];
-
-            var suppParCells = new GameObject("Cells");
-            GenerZoneVC.Attach(suppParCells.transform);
+            var parCells = new GameObject("Cells");
+            GenerZoneVC.Attach(parCells.transform);
 
             byte idx_0 = 0;
 
             for (byte x = 0; x < CellValuesC.CELL_COUNT_X; x++)
                 for (byte y = 0; y < CellValuesC.CELL_COUNT_Y; y++)
                 {
-                    var curParCell = cell_GOs[x, y];
+                    var sprite = y % 2 == 0 && x % 2 != 0 || y % 2 != 0 && x % 2 == 0
+                        ? SpritesResC.Sprite(SpriteTypes.WhiteCell)
+                        : SpritesResC.Sprite(SpriteTypes.BlackCell);
 
-                    if (y % 2 == 0)
+
+                    var cell = GameObject.Instantiate(PrefabResC.CellGO, MainGoVC.Pos + new Vector3(x, y, MainGoVC.Pos.z), MainGoVC.Rot);
+                    cell.name = "Cell";
+                    cell.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
+
+                    if (y == 0 || y == 10 && x >= 0 && x < 15 ||
+                            y >= 1 && y < 10 && x >= 0 && x <= 2 || x >= 13 && x < 15 ||
+
+                            y == 1 && x == 3 || y == 1 && x == 12 ||
+                            y == 9 && x == 3 || y == 9 && x == 12)
                     {
-                        if (x % 2 == 0)
-                        {
-                            curParCell = CreateGameObject(cell, black, x, y, MainGoVC.Main_GO);
-                            SetActive(curParCell, x, y);
-                        }
-                        if (x % 2 != 0)
-                        {
-                            curParCell = CreateGameObject(cell, white, x, y, MainGoVC.Main_GO);
-                            SetActive(curParCell, x, y);
-                        }
-                    }
-                    if (y % 2 != 0)
-                    {
-                        if (x % 2 != 0)
-                        {
-                            curParCell = CreateGameObject(cell, black, x, y, MainGoVC.Main_GO);
-                            SetActive(curParCell, x, y);
-                        }
-                        if (x % 2 == 0)
-                        {
-                            curParCell = CreateGameObject(cell, white, x, y, MainGoVC.Main_GO);
-                            SetActive(curParCell, x, y);
-                        }
+                        cell.SetActive(false);
                     }
 
-                    GameObject CreateGameObject(GameObject cellGOForCreation, Sprite sprite, int xxx, int yyy, GameObject mainGame_GO)
-                    {
-                        var go = GameObject.Instantiate(cellGOForCreation, mainGame_GO.transform.position + new Vector3(xxx, yyy, mainGame_GO.transform.position.z), mainGame_GO.transform.rotation);
-                        go.name = "Cell";
-                        go.transform.Find("Cell").GetComponent<SpriteRenderer>().sprite = sprite;
-
-                        return go;
-                    }
-
-                    void SetActive(GameObject go, int xx, int yy)
-                    {
-                        if (yy == 0 || yy == 10 && xx >= 0 && xx < 15 ||
-                            yy >= 1 && yy < 10 && xx >= 0 && xx <= 2 || xx >= 13 && xx < 15 ||
-
-                            yy == 1 && xx == 3 || yy == 1 && xx == 12 ||
-                            yy == 9 && xx == 3 || yy == 9 && xx == 12)
-                        {
-                            go.SetActive(false);
-                        }
-                    }
-
-                    curParCell.transform.SetParent(suppParCells.transform);
+                    cell.transform.SetParent(parCells.transform);
 
 
-                    var cellView_GO = curParCell.transform.Find("Cell").gameObject;
+                    var cellView_GO = cell.transform.Find("Cell").gameObject;
 
                     _curGameW.NewEntity()
                         .Replace(new CellVC(cellView_GO))
-                        .Replace(new EnvVC(curParCell))
-                        .Replace(new FireVC(curParCell))
-                        .Replace(new SupportVC(curParCell))
-                        .Replace(new CloudVC(curParCell))
-                        .Replace(new RiverVC(curParCell.transform));
+                        .Replace(new EnvVC(cell))
+                        .Replace(new FireVC(cell))
+                        .Replace(new SupportVC(cell))
+                        .Replace(new CloudVC(cell))
+                        .Replace(new RiverVC(cell.transform));
 
 
                     _curGameW.NewEntity()
-                         .Replace(new BuildVC(curParCell));
+                         .Replace(new BuildVC(cell));
 
 
                     _curGameW.NewEntity()
-                         .Replace(new UnitMainVC(curParCell))
-                         .Replace(new UnitExtraVC(curParCell))
-                         .Replace(new BlocksVC(curParCell))
-                         .Replace(new BarsVC(curParCell))
-                         .Replace(new StunVC(curParCell.transform));
+                         .Replace(new UnitMainVC(cell))
+                         .Replace(new UnitExtraVC(cell))
+                         .Replace(new BlocksVC(cell))
+                         .Replace(new BarsVC(cell))
+                         .Replace(new StunVC(cell.transform));
 
 
                     _curGameW.NewEntity()
-                        .Replace(new TrailVC(curParCell.transform));
+                        .Replace(new TrailVC(cell.transform));
 
 
 

@@ -51,8 +51,8 @@ namespace Game.Game
                                 tw_0.TW = default;
                             }
 
-                            InvUnitsC.AddUnit(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
-                            unit_0.Remove(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
+                            InvUnitsC.Add(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
+                            unit_0.Clean(levUnit_0.Level, ownUnit_0.Owner);
                         }
                     }
                     else
@@ -64,8 +64,8 @@ namespace Game.Game
                             tw_0.TW = default;
                         }
 
-                        InvUnitsC.AddUnit(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
-                        unit_0.Remove(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
+                        InvUnitsC.Add(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
+                        unit_0.Clean(levUnit_0.Level, ownUnit_0.Owner);
                     }
                 }
 

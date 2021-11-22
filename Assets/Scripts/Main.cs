@@ -75,9 +75,7 @@ namespace Game
 
 
                     new CreateVCs();
-                    new CreateComps();
-
-
+                    new CreateCs();
 
                     var gameSysts = new EcsSystems(_gameW)
                         .Add(new CreateVEnts())

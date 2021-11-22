@@ -20,7 +20,7 @@ namespace Game.Game
                 _trailF.Get1(idx_0).Rotate(curPlayer);
             }
 
-            CameraVC.SetPosRotClient(curPlayer, MainGoVC.Main_GO.transform.position);
+            CameraVC.SetPosRotClient(curPlayer, MainGoVC.Pos);
         }
     }
 }

@@ -18,7 +18,7 @@ namespace Game.Game
                 if (InvResC.CanCreateUnit(playerSend, unit, out var needRes))
                 {
                     InvResC.BuyCreateUnit(playerSend, unit);
-                    InvUnitsC.AddUnit(unit, LevelTypes.First, playerSend);
+                    InvUnitsC.Add(unit, LevelTypes.First, playerSend);
 
                     RpcSys.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }

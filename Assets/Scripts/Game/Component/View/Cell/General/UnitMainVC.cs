@@ -24,15 +24,15 @@ namespace Game.Game
                     throw new Exception();
 
                 case UnitTypes.King:
-                    _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.King);
+                    _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.King);
                     break;
 
                 case UnitTypes.Pawn:
                     switch (levUnit)
                     {
                         case LevelTypes.None: throw new Exception();
-                        case LevelTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnWood); break;
-                        case LevelTypes.Second: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PawnIron); break;
+                        case LevelTypes.First: _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.PawnWood); break;
+                        case LevelTypes.Second: _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.PawnIron); break;
                         default: throw new Exception();
                     }
                     break;
@@ -42,14 +42,14 @@ namespace Game.Game
                         case LevelTypes.None: throw new Exception();
                         case LevelTypes.First:
                             {
-                                if(isCornered) _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.RookBow);
-                                else _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.BishopBow);
+                                if(isCornered) _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.RookBow);
+                                else _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.BishopBow);
                             }
                             break;
                         case LevelTypes.Second:
                             {
-                                if(isCornered) _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.RookCrossbow);
-                                else _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.BishopCrossbow);
+                                if(isCornered) _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.RookCrossbow);
+                                else _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.BishopCrossbow);
                             }
                             break;
                         default: throw new Exception();
@@ -59,7 +59,7 @@ namespace Game.Game
                     switch (levUnit)
                     {
                         case LevelTypes.None: throw new Exception();
-                        case LevelTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Scout); break;
+                        case LevelTypes.First: _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.Scout); break;
                         case LevelTypes.Second: throw new Exception();
                         default: throw new Exception();
                     }
@@ -68,7 +68,7 @@ namespace Game.Game
                     switch (levUnit)
                     {
                         case LevelTypes.None: throw new Exception();
-                        case LevelTypes.First: _main_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Elfemale); break;
+                        case LevelTypes.First: _main_SR.sprite = SpritesResC.Sprite(SpriteTypes.Elfemale); break;
                         case LevelTypes.Second: throw new Exception();
                         default: throw new Exception();
                     }

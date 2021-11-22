@@ -10,7 +10,7 @@ namespace Game.Game
             var sender = InfoC.Sender(MGOTypes.Master);
             UnitDoingMC.Get(out var unit);
 
-            InvUnitsC.AddUnit(unit, LevelTypes.First, WhoseMoveC.WhoseMove);
+            InvUnitsC.Add(unit, LevelTypes.First, WhoseMoveC.WhoseMove);
         }
     }
 }

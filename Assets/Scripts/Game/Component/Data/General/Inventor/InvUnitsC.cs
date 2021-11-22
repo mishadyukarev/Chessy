@@ -49,33 +49,48 @@ namespace Game.Game
                 }
             }
         }
-        public InvUnitsC(bool needReset) : this()
+        public InvUnitsC(bool @new) : this()
         {
-            if (needReset) foreach (var item in Units) _units[item.Key] = 0;
+            if (@new)
+            {
+                for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
+                {
+                    for (var level = LevelTypes.First; level < LevelTypes.End; level++)
+                    {
+                        for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+                        {
+                            _units[Key(unit, level, player)] = EconomyValues.StartAmountUnits(unit, level);
+                        }
+                    }
+                }
+            }
             else throw new Exception();
         }
 
 
-        public static void Sync(string key, int value)
-        {
-            if (!ContainsKey(key)) throw new Exception();
 
-            _units[key] = value;
-        }
-        public static void AddUnit(UnitTypes unit, LevelTypes level, PlayerTypes player, int adding = 1)
+        public static void Add(UnitTypes unit, LevelTypes level, PlayerTypes player, int adding = 1)
         {
             var key = Key(unit, level, player);
 
             if (!ContainsKey(key)) throw new Exception();
             _units[Key(unit, level, player)] += adding;
         }
-        public static void TakeUnit(PlayerTypes player, UnitTypes unit, LevelTypes level, int taking = 1)
+
+        public static void Take(PlayerTypes player, UnitTypes unit, LevelTypes level, int taking = 1)
         {
             var key = Key(unit, level, player);
 
             if (!ContainsKey(key)) throw new Exception();
 
             _units[Key(unit, level, player)] -= taking;
+        }
+
+        public static void Sync(string key, int value)
+        {
+            if (!ContainsKey(key)) throw new Exception();
+
+            _units[key] = value;
         }
     }
 }

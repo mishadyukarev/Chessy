@@ -58,22 +58,12 @@ namespace Game.Game
 
                                 if (!hp_0.HaveHp)
                                 {
-                                    if (unit_0.Is(UnitTypes.King))
-                                    {
-                                        PlyerWinnerC.PlayerWinner = WhoseMoveC.NextPlayerFrom(ownUnit_0.Owner);
-                                    }
-                                    else if (unit_0.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
-                                    {
-                                        ScoutHeroCooldownC.SetStandCooldown(ownUnit_0.Owner, unit_0.Unit);
-                                        InvUnitsC.AddUnit(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
-                                    }
-
                                     if (build_0.Is(BuildTypes.Camp))
                                     {
                                         build_0.Remove(ownBuild_0.Owner);
                                     }
 
-                                    unit_0.Remove(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
+                                    unit_0.Kill(levUnit_0.Level, ownUnit_0.Owner);
                                 }
                             }
                         }

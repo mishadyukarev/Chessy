@@ -34,8 +34,8 @@ namespace Game.Game
             {
                 if (stepUnit_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner)))
                 {
-                    InvUnitsC.TakeUnit(ownUnit_0.Owner, UnitTypes.Scout, LevelTypes.First);
-                    unit_0.Remove(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
+                    InvUnitsC.Take(ownUnit_0.Owner, UnitTypes.Scout, LevelTypes.First);
+                    unit_0.Clean(levUnit_0.Level, ownUnit_0.Owner);
 
                     if (twUnitC_0.HaveTW)
                     {

@@ -177,32 +177,14 @@ namespace Game.Game
 
                 if (!hpUnit_to.HaveHp)
                 {
-                    if (unit_to.Is(UnitTypes.King))
-                    {
-                        PlyerWinnerC.PlayerWinner = ownUnit_from.Owner;
-                        return;
-                    }
-                    else if (unit_to.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
-                    {
-                        ScoutHeroCooldownC.SetStandCooldown(ownUnit_to.Owner, unit_to.Unit);
-                        InvUnitsC.AddUnit(unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner);
-                    }
-
-                    unit_to.Remove(unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner);
+                    unit_to.Kill(levUnit_to.Level, ownUnit_to.Owner);
 
 
                     if (unit_from.IsMelee)
                     {
                         if (!hpUnit_from.HaveHp)
                         {
-                            if (unit_from.Is(UnitTypes.King))
-                            {
-                                unit_from.Remove(unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner);
-                                PlyerWinnerC.PlayerWinner = ownUnit_to.Owner;
-                                return;
-                            }
-
-                            unit_from.Remove(unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner);
+                            unit_from.Kill(levUnit_from.Level, ownUnit_from.Owner);
                         }
                         else
                         {
@@ -233,20 +215,14 @@ namespace Game.Game
                             }
 
 
-                            unit_from.Remove(unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner);
+                            unit_from.Clean(levUnit_from.Level, ownUnit_from.Owner);
                         }
                     }
                 }
 
                 else if (!hpUnit_from.HaveHp)
                 {
-                    if (unit_from.Is(UnitTypes.King))
-                    {
-                        PlyerWinnerC.PlayerWinner = ownUnit_to.Owner;
-                        return;
-                    }
-
-                    unit_from.Remove(unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner);
+                    unit_from.Kill(levUnit_from.Level, ownUnit_from.Owner);
                 }
 
                 effUnit_from.DefAllEffects();

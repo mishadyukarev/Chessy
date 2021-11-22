@@ -2,9 +2,10 @@
 
 namespace Game.Common
 {
-    public struct SoundComC
+    public struct SoundC
     {
         private static AudioSource _audioSource;
+        public static float SavedVolume;
 
         public static float Volume
         {
@@ -12,9 +13,7 @@ namespace Game.Common
             set => _audioSource.volume = value;
         }
 
-        public static float SavedVolume;
-
-        public SoundComC(AudioSource audioSource)
+        public SoundC(AudioSource audioSource)
         {
             _audioSource = audioSource;
         }

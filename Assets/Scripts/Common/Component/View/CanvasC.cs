@@ -21,8 +21,8 @@ namespace Game.Common
 
             _toggle_Trans = _canvas.transform.Find("Toggle");
 
-            GameObject.Destroy(_toggle_Trans.Find(PrefabResComC.GameZone_GO.name).gameObject);
-            GameObject.Destroy(_toggle_Trans.Find(PrefabResComC.MenuZone_GO.name).gameObject);
+            GameObject.Destroy(_toggle_Trans.Find(PrefabResC.GameZone_GO.name).gameObject);
+            GameObject.Destroy(_toggle_Trans.Find(PrefabResC.MenuZone_GO.name).gameObject);
         }
 
         public static void SetCurZone(SceneTypes sceneType)
@@ -35,11 +35,11 @@ namespace Game.Common
                     throw new Exception();
 
                 case SceneTypes.Menu:
-                    _curZone_GO = GameObject.Instantiate(PrefabResComC.MenuZone_GO, _toggle_Trans);
+                    _curZone_GO = GameObject.Instantiate(PrefabResC.MenuZone_GO, _toggle_Trans);
                     break;
 
                 case SceneTypes.Game:
-                    _curZone_GO = GameObject.Instantiate(PrefabResComC.GameZone_GO, _toggle_Trans);
+                    _curZone_GO = GameObject.Instantiate(PrefabResC.GameZone_GO, _toggle_Trans);
                     break;
 
                 default:

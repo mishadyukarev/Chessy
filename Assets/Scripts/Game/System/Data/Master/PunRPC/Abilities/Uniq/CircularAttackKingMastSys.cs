@@ -76,17 +76,7 @@ namespace Game.Game
                                     hpUnitC_1.TakeHp(25);
                                     if (hpUnitC_1.IsHpDeathAfterAttack || !hpUnitC_1.HaveHp)
                                     {
-                                        if (unit_1.Is(UnitTypes.King))
-                                        {
-                                            PlyerWinnerC.PlayerWinner = ownUnit_0.Owner;
-                                        }
-                                        else if (unit_1.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
-                                        {
-                                            ScoutHeroCooldownC.SetStandCooldown(ownUnit_1.Owner, unit_1.Unit);
-                                            InvUnitsC.AddUnit(unit_1.Unit, levUnit_1.Level, ownUnit_1.Owner);
-                                        }
-
-                                        unit_1.Remove(unit_1.Unit, levUnit_1.Level, ownUnit_1.Owner);
+                                        unit_1.Kill(levUnit_1.Level, ownUnit_1.Owner);
                                     }
                                 }
                             }

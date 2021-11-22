@@ -1,4 +1,4 @@
-﻿namespace Game.Common
+﻿namespace Game.Game
 {
     public enum VideoClipTypes
     {

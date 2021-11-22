@@ -33,7 +33,7 @@ namespace Game.Game
 
             if (WhoseMoveC.IsMyMove)
             {
-                if (!ScoutHeroCooldownC.HaveCooldown(WhoseMoveC.CurPlayerI, UnitTypes.Scout))
+                if (!ScoutHeroCooldownC.HaveCooldown(UnitTypes.Scout, WhoseMoveC.CurPlayerI))
                 {
                     if (WhoseMoveC.IsMyMove)
                     {
@@ -54,7 +54,7 @@ namespace Game.Game
 
             if (WhoseMoveC.IsMyMove)
             {
-                if (!ScoutHeroCooldownC.HaveCooldown(WhoseMoveC.CurPlayerI, UnitTypes.Elfemale))
+                if (!ScoutHeroCooldownC.HaveCooldown(UnitTypes.Elfemale, WhoseMoveC.CurPlayerI))
                 {
                     CellClickC.Set(CellClickTypes.GiveHero);
                 }

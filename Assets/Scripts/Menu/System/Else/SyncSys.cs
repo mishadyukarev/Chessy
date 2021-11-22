@@ -7,7 +7,7 @@ namespace Game.Menu
     {
         public void Run()
         {
-            SoundComC.Volume = CenterZoneUICom.MusicVolume;
+            SoundC.Volume = CenterZoneUICom.MusicVolume;
 
             HintComC.IsOnHint = CenterZoneUICom.IsOn;
         }

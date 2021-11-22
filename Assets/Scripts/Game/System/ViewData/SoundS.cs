@@ -9,11 +9,11 @@ namespace Game.Game
         {
             if (SoundEffectVC.IsPlaying(new[] { ClipTypes.Truce, ClipTypes.AfterBuildTown, ClipTypes.PickUpgrade }))
             {
-                SoundComC.Volume = 0;
+                SoundC.Volume = 0;
             }
             else
             {
-                SoundComC.Volume = SoundComC.SavedVolume;
+                SoundC.Volume = SoundC.SavedVolume;
             }
         }
     }

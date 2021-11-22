@@ -442,13 +442,7 @@ namespace Game.Game
 
             #region Cooldowns
 
-            foreach (var item_0 in ScoutHeroCooldownC.Cooldowns)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    objs.Add(ScoutHeroCooldownC.Cooldown(item_0.Key, item_1.Key));
-                }
-            }
+            foreach (var item_0 in ScoutHeroCooldownC.Cooldowns) objs.Add(item_0.Value);
 
             #endregion
 
@@ -584,13 +578,7 @@ namespace Game.Game
 
             #region Cooldowns
 
-            foreach (var item_0 in ScoutHeroCooldownC.Cooldowns)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    ScoutHeroCooldownC.Sync(item_0.Key, item_1.Key, (int)objects[_idx_cur++]);
-                }
-            }
+            foreach (var item_0 in ScoutHeroCooldownC.Cooldowns) ScoutHeroCooldownC.Sync(item_0.Key, (int)objects[_idx_cur++]);
 
             #endregion
 

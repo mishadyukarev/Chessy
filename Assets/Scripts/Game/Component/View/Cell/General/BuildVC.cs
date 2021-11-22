@@ -26,23 +26,23 @@ namespace Game.Game
                     throw new Exception();
 
                 case BuildTypes.City:
-                    _build_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.City);
+                    _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.City);
                     break;
 
                 case BuildTypes.Farm:
-                    _build_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Farm);
+                    _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.Farm);
                     break;
 
                 case BuildTypes.Woodcutter:
-                    _build_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Woodcutter);
+                    _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.Woodcutter);
                     break;
 
                 case BuildTypes.Mine:
-                    _build_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Mine);
+                    _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.Mine);
                     break;
 
                 case BuildTypes.Camp:
-                    _build_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.Camp);
+                    _build_SR.sprite = SpritesResC.Sprite(SpriteTypes.Camp);
                     break;
 
                 default:
@@ -70,23 +70,23 @@ namespace Game.Game
                     throw new Exception();
 
                 case BuildTypes.City:
-                    _buildBack_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.CityBack);
+                    _buildBack_SR.sprite = SpritesResC.Sprite(SpriteTypes.CityBack);
                     break;
 
                 case BuildTypes.Farm:
-                    _buildBack_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.FarmBack);
+                    _buildBack_SR.sprite = SpritesResC.Sprite(SpriteTypes.FarmBack);
                     break;
 
                 case BuildTypes.Woodcutter:
-                    _buildBack_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.WoodcutterBack);
+                    _buildBack_SR.sprite = SpritesResC.Sprite(SpriteTypes.WoodcutterBack);
                     break;
 
                 case BuildTypes.Mine:
-                    _buildBack_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.MineBack);
+                    _buildBack_SR.sprite = SpritesResC.Sprite(SpriteTypes.MineBack);
                     break;
 
                 case BuildTypes.Camp:
-                    _buildBack_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.CampBack);
+                    _buildBack_SR.sprite = SpritesResC.Sprite(SpriteTypes.CampBack);
                     break;
 
                 default:

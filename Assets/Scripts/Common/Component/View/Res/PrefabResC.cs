@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Game.Common
 {
-    public struct PrefabResComC
+    public struct PrefabResC
     {
         public static Canvas Canvas { get; private set; }
         public static GameObject MenuZone_GO { get; private set; }
@@ -13,7 +13,7 @@ namespace Game.Common
         public static GameObject CellGO { get; private set; }
         public static GameObject BackGroundCollider2D { get; private set; }
 
-        public PrefabResComC(bool needUpload) : this()
+        public PrefabResC(bool needUpload) : this()
         {
             if (needUpload)
             {

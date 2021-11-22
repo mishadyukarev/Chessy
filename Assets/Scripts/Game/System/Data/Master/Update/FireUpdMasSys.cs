@@ -7,15 +7,15 @@ namespace Game.Game
     public sealed class FireUpdMasSys : IEcsRunSystem
     {
         private readonly EcsFilter<XyC> _xyF = default;
-        private readonly EcsFilter<CellC> _cellDataFilt = default;
+        private readonly EcsFilter<CellC> _cellF = default;
 
         private readonly EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
         private readonly EcsFilter<HpC> _statUnitF = default;
 
-        private readonly EcsFilter<FireC> _cellFireDataFilter = default;
-        private readonly EcsFilter<EnvC, EnvResC> _cellEnvDataFilter = default;
-        private readonly EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
-        private readonly EcsFilter<CloudC> _cellCloudsFilt = default;
+        private readonly EcsFilter<FireC> _fireF = default;
+        private readonly EcsFilter<EnvC, EnvResC> _envF = default;
+        private readonly EcsFilter<BuildC, OwnerC> _buildF = default;
+        private readonly EcsFilter<CloudC> _cloudsF = default;
 
         public void Run()
         {
@@ -29,14 +29,14 @@ namespace Game.Game
 
                 ref var hpUnit_0 = ref _statUnitF.Get1(idx_0);
 
-                ref var buil_0 = ref _cellBuildFilt.Get1(idx_0);
-                ref var ownBuil_0 = ref _cellBuildFilt.Get2(idx_0);
+                ref var buil_0 = ref _buildF.Get1(idx_0);
+                ref var ownBuil_0 = ref _buildF.Get2(idx_0);
 
-                ref var fire_0 = ref _cellFireDataFilter.Get1(idx_0);
-                ref var env_0 = ref _cellEnvDataFilter.Get1(idx_0);
-                ref var envRes_0 = ref _cellEnvDataFilter.Get2(idx_0);
+                ref var fire_0 = ref _fireF.Get1(idx_0);
+                ref var env_0 = ref _envF.Get1(idx_0);
+                ref var envRes_0 = ref _envF.Get2(idx_0);
 
-                ref var cloud_0 = ref _cellCloudsFilt.Get1(idx_0);
+                ref var cloud_0 = ref _cloudsF.Get1(idx_0);
 
 
                 if (cloud_0.Have)
@@ -54,17 +54,7 @@ namespace Game.Game
 
                         if (!hpUnit_0.HaveHp)
                         {
-                            if (unit_0.Is(UnitTypes.King))
-                            {
-                                PlyerWinnerC.PlayerWinner = WhoseMoveC.NextPlayerFrom(ownUnit_0.Owner);
-                            }
-                            else if (unit_0.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
-                            {
-                                ScoutHeroCooldownC.SetStandCooldown(ownUnit_0.Owner, unit_0.Unit);
-                                InvUnitsC.AddUnit(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
-                            }
-
-                            unit_0.Remove(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
+                            unit_0.Kill(levUnit_0.Level, ownUnit_0.Owner);
                         }
                     }
 
@@ -82,7 +72,7 @@ namespace Game.Game
 
                         if (UnityEngine.Random.Range(0, 100) < 50)
                         {
-                            ref var envDatCom = ref _cellEnvDataFilter.Get1(idx_0);
+                            ref var envDatCom = ref _envF.Get1(idx_0);
 
                             envDatCom.SetNew(EnvTypes.YoungForest);
                         }
@@ -96,11 +86,11 @@ namespace Game.Game
                         {
                             var curIdxCell1 = _xyF.GetIdxCell(xy1);
 
-                            if (_cellDataFilt.Get1(curIdxCell1).IsActiveCell)
+                            if (_cellF.Get1(curIdxCell1).IsActiveCell)
                             {
-                                if (_cellEnvDataFilter.Get1(curIdxCell1).Have(EnvTypes.AdultForest))
+                                if (_envF.Get1(curIdxCell1).Have(EnvTypes.AdultForest))
                                 {
-                                    _cellFireDataFilter.Get1(curIdxCell1).Enable();
+                                    _fireF.Get1(curIdxCell1).Enable();
                                 }
                             }
                         }

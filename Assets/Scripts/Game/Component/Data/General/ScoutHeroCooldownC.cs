@@ -5,105 +5,82 @@ namespace Game.Game
 {
     public struct ScoutHeroCooldownC
     {
-        private static Dictionary<PlayerTypes, Dictionary<UnitTypes, int>> _cooldowns;
+        private static Dictionary<string, int> _cooldowns;
 
-        public static Dictionary<PlayerTypes, Dictionary<UnitTypes, int>> Cooldowns
+
+        private static string Key(UnitTypes unit, PlayerTypes player) => unit.ToString() + player;
+        private static bool ContainsKey(string key) => _cooldowns.ContainsKey(key);
+
+        public static Dictionary<string, int> Cooldowns
         {
             get
             {
-                var dict = new Dictionary<PlayerTypes, Dictionary<UnitTypes, int>>();
-                foreach (var item_0 in _cooldowns)
-                {
-                    dict.Add(item_0.Key, new Dictionary<UnitTypes, int>());
-                    foreach (var item_1 in item_0.Value)
-                    {
-                        dict[item_0.Key].Add(item_1.Key, item_1.Value);
-                    }
-                }
-
+                var dict = new Dictionary<string, int>();
+                foreach (var item in _cooldowns) dict.Add(item.Key, item.Value);
                 return dict;
             }
         }
 
-        public static bool HaveCooldown(PlayerTypes player, UnitTypes unit)
+        public static int Cooldown(UnitTypes unit, PlayerTypes player)
         {
-            if (!_cooldowns.ContainsKey(player)) throw new Exception();
-            if (!_cooldowns[player].ContainsKey(unit)) throw new Exception();
+            var key = Key(unit, player);
+            if (!ContainsKey(key)) throw new Exception();
 
-            return _cooldowns[player][unit] > 0;
+            return _cooldowns[key];
         }
+        public static bool HaveCooldown(UnitTypes unit, PlayerTypes player) => Cooldown(unit, player) > 0;
 
-        public static int Cooldown(PlayerTypes player, UnitTypes unit)
+
+        static ScoutHeroCooldownC()
         {
-            if (!_cooldowns.ContainsKey(player)) throw new Exception();
-            if (!_cooldowns[player].ContainsKey(unit)) throw new Exception();
+            _cooldowns = new Dictionary<string, int>();
 
-            return _cooldowns[player][unit];
-        }
-
-
-        public ScoutHeroCooldownC(bool isStart)
-        {
-            if (isStart)
+            for (var unit = UnitTypes.Scout; unit < UnitTypes.End; unit++)
             {
-                if (_cooldowns == default)
+                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
-                    _cooldowns = new Dictionary<PlayerTypes, Dictionary<UnitTypes, int>>();
-
-                    for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
-                    {
-                        _cooldowns.Add(player, new Dictionary<UnitTypes, int>());
-
-                        _cooldowns[player].Add(UnitTypes.Scout, 0);
-                        _cooldowns[player].Add(UnitTypes.Elfemale, 0);
-                    }
-                }
-
-                else
-                {
-                    foreach (var item_0 in Cooldowns)
-                    {
-                        foreach (var item_1 in item_0.Value)
-                        {
-                            _cooldowns[item_0.Key][item_1.Key] = 0;
-                        }
-                    }
+                    _cooldowns.Add(Key(unit, player), default);
                 }
             }
-
+        }
+        public ScoutHeroCooldownC(bool needReset)
+        {
+            if (needReset) foreach (var item in Cooldowns) _cooldowns[item.Key] = 0;
             else throw new Exception();
         }
 
-        public static void SetStandCooldown(PlayerTypes player, UnitTypes unit)
+        public static void SetStandCooldown(UnitTypes unit, PlayerTypes player)
         {
-            if (!_cooldowns.ContainsKey(player)) throw new Exception();
-            if (!_cooldowns[player].ContainsKey(unit)) throw new Exception();
+            var key = Key(unit, player);
+            if (!ContainsKey(key)) throw new Exception();
 
             switch (unit)
             {
                 case UnitTypes.Scout:
-                    _cooldowns[player][unit] = 3;
+                    _cooldowns[key] = 3;
                     break;
 
                 case UnitTypes.Elfemale:
-                    _cooldowns[player][unit] = 5;
+                    _cooldowns[key] = 5;
                     break;
 
                 default: throw new Exception();
             }
         }
 
-        public static void TakeCooldown(PlayerTypes player, UnitTypes unit)
+        public static void TakeCooldown(UnitTypes unit, PlayerTypes player)
         {
-            if (!_cooldowns.ContainsKey(player)) throw new Exception();
-            if (!_cooldowns[player].ContainsKey(unit)) throw new Exception();
+            var key = Key(unit, player);
+            if (!ContainsKey(key)) throw new Exception();
 
-            _cooldowns[player][unit] -= 1;
+            _cooldowns[key] -= 1;
         }
 
-        public static void Sync(PlayerTypes player, UnitTypes unit, int cooldown)
+        public static void Sync(string key, int cooldown)
         {
-            _cooldowns[player][unit] = cooldown;
+            if (!ContainsKey(key)) throw new Exception();
+
+            _cooldowns[key] = cooldown;
         }
     }
 }

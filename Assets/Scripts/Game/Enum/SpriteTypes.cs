@@ -1,4 +1,4 @@
-﻿namespace Game.Common
+﻿namespace Game.Game
 {
     public enum SpriteTypes
     {
@@ -8,15 +8,21 @@
         WhiteCell,
 
         King,
-        Pawn,
-        Pick,
-        Sword,
+        PawnWood,
+        PawnIron,
+        PickWood,
+        SwordIron,
+        ShieldWood,
+        ShieldIron,
         RookBow,
         RookCrossbow,
         BishopBow,
         BishopCrossbow,
+        Scout,
+        Elfemale,
 
         City,
+        CityNone,
         CityBack,
         Farm,
         FarmBack,
@@ -25,6 +31,8 @@
         WoodcutterBack,
         Mine,
         MineBack,
+        Camp,
+        CampBack,
 
         YoungForest,
 

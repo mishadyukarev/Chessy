@@ -26,7 +26,7 @@ namespace Game.Game
                     {
                         case LevelTypes.None: throw new Exception();
                         case LevelTypes.First: throw new Exception();
-                        case LevelTypes.Second: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.PickWood); return;
+                        case LevelTypes.Second: _extraUnit_SR.sprite = SpritesResC.Sprite(SpriteTypes.PickWood); return;
                         default: throw new Exception();
                     }
                 case TWTypes.Sword:
@@ -34,15 +34,15 @@ namespace Game.Game
                     {
                         case LevelTypes.None: throw new Exception();
                         case LevelTypes.First: throw new Exception();
-                        case LevelTypes.Second: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.SwordIron); return;
+                        case LevelTypes.Second: _extraUnit_SR.sprite = SpritesResC.Sprite(SpriteTypes.SwordIron); return;
                         default: throw new Exception();
                     }
                 case TWTypes.Shield:
                     switch (levelTWType)
                     {
                         case LevelTypes.None: throw new Exception();
-                        case LevelTypes.First: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.ShieldWood); return;
-                        case LevelTypes.Second: _extraUnit_SR.sprite = SpritesResComC.Sprite(SpriteGameTypes.ShieldIron); return;
+                        case LevelTypes.First: _extraUnit_SR.sprite = SpritesResC.Sprite(SpriteTypes.ShieldWood); return;
+                        case LevelTypes.Second: _extraUnit_SR.sprite = SpritesResC.Sprite(SpriteTypes.ShieldIron); return;
                         default: throw new Exception();
                     }
                 default: throw new Exception();

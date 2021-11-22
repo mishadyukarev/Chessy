@@ -45,12 +45,12 @@ namespace Game.Game
             {
                 if (InvUnitsC.Have(unit, LevelTypes.Second, whoseMove))
                 {
-                    InvUnitsC.TakeUnit(whoseMove, unit, LevelTypes.Second);
+                    InvUnitsC.Take(whoseMove, unit, LevelTypes.Second);
                     levUnit_0.SetLevel(LevelTypes.Second);
                 }
                 else
                 {
-                    InvUnitsC.TakeUnit(whoseMove, unit, LevelTypes.First);
+                    InvUnitsC.Take(whoseMove, unit, LevelTypes.First);
                     levUnit_0.SetLevel(LevelTypes.First);
                 }
                 ownUnit_0.SetOwner(whoseMove);

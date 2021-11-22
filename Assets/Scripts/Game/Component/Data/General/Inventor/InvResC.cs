@@ -44,9 +44,18 @@ namespace Game.Game
                 }
             }
         }
-        public InvResC(bool needReset)
+        public InvResC(bool isStartGame)
         {
-            if (needReset) foreach (var item in Resources) _resources[item.Key] = 0;
+            if (isStartGame)
+            {
+                for (var res = ResTypes.First; res < ResTypes.End; res++)
+                {
+                    for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+                    {
+                        _resources[Key(res, player)] = EconomyValues.AmountResources(res);
+                    }
+                }
+            }
             else throw new Exception();
         }
 
@@ -64,7 +73,7 @@ namespace Game.Game
 
             _resources[key] = value;
         }
-        public static void ResetRes(ResTypes res, PlayerTypes player) => Set(res, player,  0);
+        public static void Reset(ResTypes res, PlayerTypes player) => Set(res, player,  0);
         public static void Add(ResTypes res, PlayerTypes player, int adding = 1)
         {
             var key = Key(res, player);

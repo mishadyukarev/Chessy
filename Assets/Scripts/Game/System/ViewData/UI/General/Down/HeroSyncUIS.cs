@@ -7,7 +7,7 @@ namespace Game.Game
         public void Run()
         {
             GetHeroDownUIC.SetActiveScout(InvUnitsC.Have(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveC.CurPlayerI), 
-                ScoutHeroCooldownC.Cooldown(WhoseMoveC.CurPlayerI, UnitTypes.Elfemale));
+                ScoutHeroCooldownC.Cooldown(UnitTypes.Elfemale, WhoseMoveC.CurPlayerI));
         }
     }
 }

@@ -34,14 +34,14 @@ namespace Game.Game
                                 if (!WhereBuildsC.IsSetted(BuildTypes.City, WhoseMoveC.CurPlayerI))
                                 {
                                     needActiveThirdButt = true;
-                                    BuildAbilitUIC.SetSpriteThird(SpriteGameTypes.City);
+                                    BuildAbilitUIC.SetSpriteThird(SpriteTypes.City);
                                     BuildAbilC.SetAbility(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
                                 }
                             }
                             else
                             {
                                 needActiveThirdButt = true;
-                                BuildAbilitUIC.SetSpriteThird(SpriteGameTypes.CityNone);
+                                BuildAbilitUIC.SetSpriteThird(SpriteTypes.CityNone);
                                 BuildAbilC.SetAbility(BuildButtonTypes.Third, BuildAbilTypes.Destroy);
                             }
                         }
@@ -51,7 +51,7 @@ namespace Game.Game
                             if (!WhereBuildsC.IsSetted(BuildTypes.City, WhoseMoveC.CurPlayerI))
                             {
                                 needActiveThirdButt = true;
-                                BuildAbilitUIC.SetSpriteThird(SpriteGameTypes.City);
+                                BuildAbilitUIC.SetSpriteThird(SpriteTypes.City);
                                 BuildAbilC.SetAbility(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
                             }
                         }

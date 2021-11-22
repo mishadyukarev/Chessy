@@ -119,7 +119,7 @@ namespace Game.Game
                     }
                 }
 
-                unit_from.Remove(unit_from.Unit, lev_from.Level, own_from.Owner);
+                unit_from.Clean(lev_from.Level, own_from.Owner);
 
                 RpcSys.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }

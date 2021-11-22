@@ -26,11 +26,11 @@ namespace Game.Game
             InvResC.Add(ResTypes.Food, PlayerTypes.Second,  4);
 
 
-            ScoutHeroCooldownC.TakeCooldown(PlayerTypes.First, UnitTypes.Scout);
-            ScoutHeroCooldownC.TakeCooldown(PlayerTypes.Second, UnitTypes.Scout);
+            ScoutHeroCooldownC.TakeCooldown(UnitTypes.Scout, PlayerTypes.First);
+            ScoutHeroCooldownC.TakeCooldown(UnitTypes.Scout, PlayerTypes.Second);
 
-            ScoutHeroCooldownC.TakeCooldown(PlayerTypes.First, UnitTypes.Elfemale);
-            ScoutHeroCooldownC.TakeCooldown(PlayerTypes.Second, UnitTypes.Elfemale);
+            ScoutHeroCooldownC.TakeCooldown(UnitTypes.Elfemale, PlayerTypes.First);
+            ScoutHeroCooldownC.TakeCooldown(UnitTypes.Elfemale, PlayerTypes.Second);
 
 
             foreach (byte idx_0 in _xyCellFilter)

@@ -47,7 +47,7 @@ namespace Game.Menu
 
 
             _curMenuW.NewEntity()
-                .Replace(new CenterZoneUICom(centerZone_Trans, SoundComC.Volume, HintComC.IsOnHint))
+                .Replace(new CenterZoneUICom(centerZone_Trans, SoundC.Volume, HintComC.IsOnHint))
                 .Replace(new LikeGameUICom(centerZone_Trans));
 
 
