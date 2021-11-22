@@ -11,7 +11,7 @@ namespace Game.Game
 
             float powerDamege = standDamage;
 
-            powerDamege += standDamage * UnitValues.PercentTW(tWC.ToolWeapon);
+            powerDamege += standDamage * UnitValues.PercentTW(tWC.TW);
             if (attack == AttackTypes.Unique) powerDamege += standDamage * UnitValues.UNIQUE_PERCENT_DAMAGE;
 
             if (effectsC.Have(UnitStatTypes.Damage)) powerDamege += standDamage * 0.2f;

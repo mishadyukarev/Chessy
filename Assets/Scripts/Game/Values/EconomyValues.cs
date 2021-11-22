@@ -214,7 +214,6 @@ namespace Game.Game
                     switch (toolWeaponType)
                     {
                         case TWTypes.None: throw new Exception();
-                        case TWTypes.Hoe: throw new Exception();
                         case TWTypes.Pick: throw new Exception();
                         case TWTypes.Sword: throw new Exception();
                         case TWTypes.Shield:
@@ -234,7 +233,6 @@ namespace Game.Game
                     switch (toolWeaponType)
                     {
                         case TWTypes.None: throw new Exception();
-                        case TWTypes.Hoe: throw new Exception();
                         case TWTypes.Pick:
                             switch (resourceType)
                             {

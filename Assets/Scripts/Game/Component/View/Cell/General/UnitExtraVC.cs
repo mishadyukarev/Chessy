@@ -21,7 +21,6 @@ namespace Game.Game
             switch (tWType)
             {
                 case TWTypes.None: throw new Exception();
-                case TWTypes.Hoe: throw new Exception();
                 case TWTypes.Pick:
                     switch (levelTWType)
                     {

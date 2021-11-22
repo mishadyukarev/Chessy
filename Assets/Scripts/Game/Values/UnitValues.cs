@@ -59,7 +59,6 @@ namespace Game.Game
             switch (tlWType)
             {
                 case TWTypes.None: return 0;
-                case TWTypes.Hoe: throw new Exception();
                 case TWTypes.Pick: return 0;
                 case TWTypes.Sword: return 0.5f;
                 case TWTypes.Shield: return 0;

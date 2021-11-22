@@ -57,7 +57,7 @@ namespace Game.Game
                 unit_0.SetNew(unit, levUnit_0.Level, ownUnit_0.Owner);
 
 
-                tw_0.ToolWeapon = default;
+                tw_0.TW = default;
                 eff_0.DefAllEffects();
                 hp_0.SetMaxHp();
                 if (cond_0.HaveCondition) cond_0.Reset();  

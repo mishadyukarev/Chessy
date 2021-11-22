@@ -40,10 +40,10 @@ namespace Game.Game
                         {
                             mainUnitC_0.SetSprite(unit_0.Unit, levelUnit_0.Level, false);
 
-                            if (twUnitC_0.HaveToolWeap)
+                            if (twUnitC_0.HaveTW)
                             {
                                 extraUnitC_0.Enable_SR();
-                                extraUnitC_0.SetToolWeapon_Sprite(twUnitC_0.ToolWeapon, twUnitC_0.LevelTWType);
+                                extraUnitC_0.SetToolWeapon_Sprite(twUnitC_0.TW, twUnitC_0.Level);
                             }
                         }
 

@@ -74,12 +74,6 @@ namespace Game.Game
             else throw new Exception();
         }
 
-
-        public static void StartGame()
-        {
-
-        }
-
         public static void SetStandCooldown(PlayerTypes player, UnitTypes unit)
         {
             if (!_cooldowns.ContainsKey(player)) throw new Exception();

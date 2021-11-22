@@ -213,13 +213,13 @@ namespace Game.Game
 
                         if (rand >= 50)
                         {
-                            twUnit_0.ToolWeapon = TWTypes.Sword;
-                            twUnit_0.LevelTWType = LevelTypes.Second;
+                            twUnit_0.TW = TWTypes.Sword;
+                            twUnit_0.Level = LevelTypes.Second;
                         }
                         else
                         {
-                            twUnit_0.ToolWeapon = TWTypes.Shield;
-                            twUnit_0.LevelTWType = LevelTypes.First;
+                            twUnit_0.TW = TWTypes.Shield;
+                            twUnit_0.Level = LevelTypes.First;
                             twUnit_0.SetShieldProtect(LevelTypes.First);
                         }
 

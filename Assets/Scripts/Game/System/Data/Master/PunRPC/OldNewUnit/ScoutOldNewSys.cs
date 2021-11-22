@@ -37,10 +37,10 @@ namespace Game.Game
                     InvUnitsC.TakeUnit(ownUnit_0.Owner, UnitTypes.Scout, LevelTypes.First);
                     unit_0.Remove(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
 
-                    if (twUnitC_0.HaveToolWeap)
+                    if (twUnitC_0.HaveTW)
                     {
-                        InvTWC.Add(ownUnit_0.Owner, twUnitC_0.ToolWeapon, twUnitC_0.LevelTWType);
-                        twUnitC_0.ToolWeapon = default;
+                        InvTWC.Add(twUnitC_0.TW, twUnitC_0.Level, ownUnit_0.Owner);
+                        twUnitC_0.TW = default;
                     }
 
 

@@ -4,13 +4,13 @@ namespace Game.Game
 {
     public struct ToolWeaponC
     {
-        public TWTypes ToolWeapon;
-        public bool Is(TWTypes tW) => ToolWeapon == tW;
-        public bool HaveToolWeap => ToolWeapon != default;
+        public TWTypes TW;
+        public bool Is(TWTypes tW) => TW == tW;
+        public bool HaveTW => TW != default;
 
 
-        public LevelTypes LevelTWType;
-        public bool Is(LevelTypes level) => LevelTWType == level;
+        public LevelTypes Level;
+        public bool Is(LevelTypes level) => Level == level;
 
 
         private int _shieldProt;
@@ -30,7 +30,7 @@ namespace Game.Game
             _shieldProt -= taking;
             if (ShieldProt <= 0)
             {
-                ToolWeapon = TWTypes.None;
+                TW = TWTypes.None;
             }
         }
         public void SyncShield(int shieldProt) => _shieldProt = shieldProt;

@@ -391,8 +391,8 @@ namespace Game.Game
                 foreach (var item in _effUnitF.Get2(idx_0).Effects) objs.Add(item.Value);
                 objs.Add(_statUnitF.Get3(idx_0).Water);
 
-                objs.Add(_twUnitF.Get1(idx_0).ToolWeapon);
-                objs.Add(_twUnitF.Get1(idx_0).LevelTWType);
+                objs.Add(_twUnitF.Get1(idx_0).TW);
+                objs.Add(_twUnitF.Get1(idx_0).Level);
                 objs.Add(_twUnitF.Get1(idx_0).ShieldProt);
 
                 objs.Add(_effUnitF.Get3(idx_0).IsStunned);
@@ -465,17 +465,7 @@ namespace Game.Game
 
             foreach (var item_0 in InvResC.Resources) objs.Add(item_0.Value);
             foreach (var item_0 in InvUnitsC.Units) objs.Add(item_0.Value);
-
-            foreach (var item_0 in InvTWC.ToolWeapons)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    foreach (var item_2 in item_1.Value)
-                    {
-                        objs.Add(InvTWC.Amount(item_0.Key, item_1.Key, item_2.Key));
-                    }
-                }
-            }
+            foreach (var item_0 in InvTWC.ToolWeapons) objs.Add(item_0.Value);
 
             #endregion
 
@@ -542,8 +532,8 @@ namespace Game.Game
                 foreach (var item in _effUnitF.Get2(idx_0).Effects) _effUnitF.Get2(idx_0).Sync(item.Key, (bool)objects[_idx_cur++]);
                 _statUnitF.Get3(idx_0).Sync((int)objects[_idx_cur++]);
 
-                _twUnitF.Get1(idx_0).ToolWeapon = (TWTypes)objects[_idx_cur++];
-                _twUnitF.Get1(idx_0).LevelTWType = (LevelTypes)objects[_idx_cur++];
+                _twUnitF.Get1(idx_0).TW = (TWTypes)objects[_idx_cur++];
+                _twUnitF.Get1(idx_0).Level = (LevelTypes)objects[_idx_cur++];
                 _twUnitF.Get1(idx_0).SyncShield((int)objects[_idx_cur++]);
 
                 
@@ -618,16 +608,7 @@ namespace Game.Game
 
             foreach (var item_0 in InvResC.Resources) InvResC.Sync(item_0.Key, (int)objects[_idx_cur++]);
             foreach (var item_0 in InvUnitsC.Units) InvUnitsC.Sync(item_0.Key, (int)objects[_idx_cur++]);
-            foreach (var item_0 in InvTWC.ToolWeapons)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    foreach (var item_2 in item_1.Value)
-                    {
-                        InvTWC.Sync(item_0.Key, item_1.Key, item_2.Key, (int)objects[_idx_cur++]);
-                    }
-                }
-            }
+            foreach (var item_0 in InvTWC.ToolWeapons) InvTWC.Sync(item_0.Key, (int)objects[_idx_cur++]);
 
             #endregion
 

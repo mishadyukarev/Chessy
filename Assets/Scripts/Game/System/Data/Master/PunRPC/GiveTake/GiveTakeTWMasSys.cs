@@ -11,7 +11,7 @@ namespace Game.Game
         public void Run()
         {
             IdxDoingMC.Get(out var idx_0);
-            TWDoingMC.Get(out var tWTypeForGive, out var levelTWType);
+            TWDoingMC.Get(out var tWTypeForGive, out var levelTW);
 
 
             if (idx_0 != default)
@@ -33,10 +33,10 @@ namespace Game.Game
                     if (stepUnit_0.HaveMinSteps)
                     {
 
-                        if (twUnit_0.HaveToolWeap)
+                        if (twUnit_0.HaveTW)
                         {
-                            InvTWC.Add(ownUnit_0.Owner, twUnit_0.ToolWeapon, twUnit_0.LevelTWType);
-                            twUnit_0.ToolWeapon = default;
+                            InvTWC.Add(twUnit_0.TW, twUnit_0.Level, ownUnit_0.Owner);
+                            twUnit_0.TW = default;
 
                             stepUnit_0.TakeSteps();
 
@@ -44,13 +44,13 @@ namespace Game.Game
                         }
 
 
-                        else if (InvTWC.Have(ownUnit_0.Owner, tWTypeForGive, levelTWType))
+                        else if (InvTWC.Have(tWTypeForGive, levelTW, ownUnit_0.Owner))
                         {
-                            InvTWC.Take(ownUnit_0.Owner, tWTypeForGive, levelTWType);
+                            InvTWC.Take(tWTypeForGive, levelTW, ownUnit_0.Owner);
 
-                            twUnit_0.ToolWeapon = tWTypeForGive;
-                            twUnit_0.LevelTWType = levelTWType;
-                            if (twUnit_0.Is(TWTypes.Shield)) twUnit_0.SetShieldProtect(levelTWType);
+                            twUnit_0.TW = tWTypeForGive;
+                            twUnit_0.Level = levelTW;
+                            if (twUnit_0.Is(TWTypes.Shield)) twUnit_0.SetShieldProtect(levelTW);
 
                             stepUnit_0.TakeSteps();
 
@@ -59,12 +59,12 @@ namespace Game.Game
 
                         else if (tWTypeForGive == TWTypes.Pick)
                         {
-                            if (InvResC.CanBuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTWType, out var needRes))
+                            if (InvResC.CanBuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTW, out var needRes))
                             {
-                                InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTWType);
+                                InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTW);
 
-                                twUnit_0.ToolWeapon = tWTypeForGive;
-                                twUnit_0.LevelTWType = levelTWType;
+                                twUnit_0.TW = tWTypeForGive;
+                                twUnit_0.Level = levelTW;
 
                                 stepUnit_0.TakeSteps();
 
@@ -78,12 +78,12 @@ namespace Game.Game
 
                         else if (tWTypeForGive == TWTypes.Sword)
                         {
-                            if (InvResC.CanBuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTWType, out var needRes))
+                            if (InvResC.CanBuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTW, out var needRes))
                             {
-                                InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTWType);
+                                InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTW);
 
-                                twUnit_0.ToolWeapon = tWTypeForGive;
-                                twUnit_0.LevelTWType = levelTWType;
+                                twUnit_0.TW = tWTypeForGive;
+                                twUnit_0.Level = levelTW;
 
                                 stepUnit_0.TakeSteps();
 
@@ -97,13 +97,13 @@ namespace Game.Game
 
                         else if (tWTypeForGive == TWTypes.Shield)
                         {
-                            if (InvResC.CanBuyTW(ownUnit_0.Owner, tWTypeForGive, levelTWType, out var needRes))
+                            if (InvResC.CanBuyTW(ownUnit_0.Owner, tWTypeForGive, levelTW, out var needRes))
                             {
-                                InvResC.BuyTW(ownUnit_0.Owner, tWTypeForGive, levelTWType);
+                                InvResC.BuyTW(ownUnit_0.Owner, tWTypeForGive, levelTW);
 
-                                twUnit_0.ToolWeapon = tWTypeForGive;
-                                twUnit_0.LevelTWType = levelTWType;
-                                twUnit_0.SetShieldProtect(levelTWType);
+                                twUnit_0.TW = tWTypeForGive;
+                                twUnit_0.Level = levelTW;
+                                twUnit_0.SetShieldProtect(levelTW);
 
                                 stepUnit_0.TakeSteps();
 

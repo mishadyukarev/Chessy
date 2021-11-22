@@ -24,7 +24,7 @@ namespace Game.Game
                 .Add(new HungryUpdMS());
 
             var truceSystems = new EcsSystems(gameWorld)
-                .Add(new TruceMasterSystem());
+                .Add(new TruceMS());
 
             var systs = new Dictionary<MastDataSysTypes, Action>();
             systs.Add(MastDataSysTypes.Update, updateMotion.Run);

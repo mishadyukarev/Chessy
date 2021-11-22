@@ -12,9 +12,9 @@ namespace Game.Game
 
             ExtraTWZoneUIC.DisableAll();
 
-            if (selTwUnitC.HaveToolWeap)
+            if (selTwUnitC.HaveTW)
             {
-                ExtraTWZoneUIC.Toggle(selTwUnitC.ToolWeapon, selTwUnitC.LevelTWType, true);
+                ExtraTWZoneUIC.Toggle(selTwUnitC.TW, selTwUnitC.Level, true);
             }
         }
     }

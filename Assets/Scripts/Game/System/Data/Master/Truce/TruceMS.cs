@@ -5,13 +5,12 @@ using UnityEngine;
 
 namespace Game.Game
 {
-    public sealed class TruceMasterSystem : IEcsRunSystem
+    public sealed class TruceMS : IEcsRunSystem
     {
         private EcsFilter<XyC> _xyCellFilter = default;
         private EcsFilter<BuildC> _cellBuildFilter = default;
         private EcsFilter<EnvC, EnvResC> _cellEnvFilter = default;
         private EcsFilter<FireC> _cellFireFilter = default;
-        private EcsFilter<CellC> _cellDataFilt = default;
         private EcsFilter<TrailC> _trailFilt = default;
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
@@ -46,10 +45,10 @@ namespace Game.Game
                     {
                         if (ownUnit_0.Is(PlayerTypes.First))
                         {
-                            if (tw_0.HaveToolWeap)
+                            if (tw_0.HaveTW)
                             {
-                                InvTWC.Add(ownUnit_0.Owner, tw_0.ToolWeapon, tw_0.LevelTWType);
-                                tw_0.ToolWeapon = default;
+                                InvTWC.Add(tw_0.TW, tw_0.Level, ownUnit_0.Owner);
+                                tw_0.TW = default;
                             }
 
                             InvUnitsC.AddUnit(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
@@ -59,10 +58,10 @@ namespace Game.Game
                     else
                     {
 
-                        if (tw_0.HaveToolWeap)
+                        if (tw_0.HaveTW)
                         {
-                            InvTWC.Add(ownUnit_0.Owner, tw_0.ToolWeapon, tw_0.LevelTWType);
-                            tw_0.ToolWeapon = default;
+                            InvTWC.Add(tw_0.TW, tw_0.Level, ownUnit_0.Owner);
+                            tw_0.TW = default;
                         }
 
                         InvUnitsC.AddUnit(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
