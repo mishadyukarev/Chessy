@@ -39,7 +39,7 @@ namespace Game.Game
                 {
                     if (stat == UnitStatTypes.Damage)
                     {
-                        percent += 0.2f;
+                        percent += 0.1f;
                     }
                     else if (stat == UnitStatTypes.Water)
                     {

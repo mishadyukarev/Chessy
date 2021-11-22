@@ -67,7 +67,7 @@ namespace Game.Common
                 .Replace(new CanvasC(canvas))
                 .Replace(new SoundComC(aS))
                 .Replace(new LanguageComC(LanguageTypes.English))
-                .Replace(new AdComCom(DateTime.Now))
+                .Replace(new AdComC(DateTime.Now))
                 .Replace(new TimeStartGameComCom(DateTime.Now))
                 .Replace(new HintComC(true))
 

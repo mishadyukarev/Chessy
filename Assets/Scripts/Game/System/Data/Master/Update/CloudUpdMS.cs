@@ -42,7 +42,7 @@ namespace Game.Game
                 newDirInt += UnityEngine.Random.Range(-1, 2);
 
                 if (newDirInt <= 0) newDirInt = 1;
-                else if (newDirInt >= typeof(DirectTypes).GetEnumNames().Length) newDirInt = newDirInt = 1;
+                else if (newDirInt >= (int)DirectTypes.End) newDirInt = newDirInt = 1;
                 WindC.Set((DirectTypes)newDirInt);
             }
 

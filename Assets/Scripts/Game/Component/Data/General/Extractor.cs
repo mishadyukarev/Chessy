@@ -12,7 +12,7 @@ namespace Game.Game
         }
         public static int GetAddFood(float percUpg, int amountFarm, int amountUnits)
         {
-            return 3 + amountFarm * GetExtractOneBuild(percUpg) - amountUnits;
+            return 4 + amountFarm * GetExtractOneBuild(percUpg) - amountUnits;
         }
 
         public static int ExtractOnePawnWood(LevelTypes levelUnit)

@@ -566,6 +566,8 @@ namespace Game.Game
 
             objs.Add(MotionsC.AmountMotions);
 
+            objs.Add(CloudCenterC.Idx);
+            foreach (var item in WindC.Directs) objs.Add(item.Value);
             objs.Add(WindC.CurDirWind);
 
             #endregion
@@ -782,6 +784,8 @@ namespace Game.Game
 
             MotionsC.AmountMotions = (int)objects[_idx_cur++];
 
+            CloudCenterC.Sync((byte)objects[_idx_cur++]);
+            foreach (var item in WindC.Directs) WindC.Sync(item.Key, (byte)objects[_idx_cur++]);
             WindC.Sync((DirectTypes)objects[_idx_cur++]);
 
             #endregion
