@@ -16,8 +16,8 @@ namespace Game.Game
         {
             foreach (byte idx_0 in _xyF)
             {
-                CellsShiftC.Clear(PlayerTypes.First, idx_0);
-                CellsShiftC.Clear(PlayerTypes.Second, idx_0);
+                ShiftCellsC.Clear(PlayerTypes.First, idx_0);
+                ShiftCellsC.Clear(PlayerTypes.Second, idx_0);
 
                 ref var unit_0 = ref _unitF.Get1(idx_0);
                 ref var level_0 = ref _unitF.Get2(idx_0);
@@ -53,7 +53,7 @@ namespace Game.Game
                                     if (step_0.HaveStepsForDoing(envC_1, item_1.Key, trail_1)
                                         || step_0.HaveMaxSteps(unit_0.Unit, eff_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, level_0.Level, own_0.Owner)))
                                     {
-                                        CellsShiftC.AddIdxCell(own_0.Owner, idx_0, idx_1);
+                                        ShiftCellsC.AddIdxCell(own_0.Owner, idx_0, idx_1);
                                     }
                                 }
                             }

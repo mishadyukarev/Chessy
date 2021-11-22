@@ -4,9 +4,12 @@
     {
         None,
 
-        Hoe,
         Pick,
+        First = Pick,
+
         Sword,
         Shield,
+
+        End,
     }
 }

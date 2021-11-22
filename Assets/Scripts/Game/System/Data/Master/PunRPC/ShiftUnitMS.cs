@@ -28,7 +28,7 @@ namespace Game.Game
             var whoseMove = WhoseMoveC.WhoseMove;
 
 
-            if (CellsShiftC.HaveIdxCell(whoseMove, idx_from, idx_to))
+            if (ShiftCellsC.HaveIdxCell(whoseMove, idx_from, idx_to))
             {
                 #region Unit
 
@@ -92,19 +92,11 @@ namespace Game.Game
                 trail_from.TrySetNewTrail(dir_from, envDat_from);
 
 
-                //ref var build_from = ref _cellBuildFilt.Get1(idx_from);
-                //ref var ownBuild_from = ref _cellBuildFilt.Get2(idx_from);
-                //if (build_from.Is(BuildTypes.Camp))
-                //{
-                //    WhereBuildsC.Remove(ownBuild_from.Owner, build_from.Build, idx_from);
-                //    build_from.Reset();
-                //}
 
-
-
-                unit_to = unit_from;
-                lev_to.SetLevel(lev_from.Level);
                 own_to = own_from;
+                lev_to.SetLevel(lev_from.Level);
+                unit_to.SetNew(unit_from.Unit, lev_to.Level, own_to.Owner);
+
                 hp_to = hp_from;
                 step_to = step_from;
                 if(cond_to.HaveCondition) cond_to.Reset();
@@ -123,19 +115,11 @@ namespace Game.Game
                 {
                     if (!ownBuild_to.Is(own_to.Owner))
                     {
-                        WhereBuildsC.Remove(ownBuild_to.Owner, build_to.Build, idx_to);
-                        build_to.Remove();
+                        build_to.Remove(ownBuild_to.Owner);
                     }
                 }
 
-
-
-
-
-                WhereUnitsC.Add(own_to.Owner, unit_to.Unit, lev_to.Level, idx_to);
-
-                WhereUnitsC.Remove(own_from.Owner, unit_from.Unit, lev_from.Level, idx_from);
-                unit_from.Reset();
+                unit_from.Remove(unit_from.Unit, lev_from.Level, own_from.Owner);
 
                 RpcSys.SoundToGeneral(InfoC.Sender(MGOTypes.Master), ClipTypes.ClickToTable);
             }

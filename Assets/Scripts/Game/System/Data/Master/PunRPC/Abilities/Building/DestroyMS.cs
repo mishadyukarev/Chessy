@@ -37,11 +37,9 @@ namespace Game.Game
                 if (buildC_0.Is(BuildTypes.Farm))
                 {
                     curEnvDataCom.Remove(EnvTypes.Fertilizer);
-                    WhereEnvC.Remove(EnvTypes.Fertilizer, idx_0);
                 }
 
-                WhereBuildsC.Remove(ownBuildC_0.Owner, buildC_0.Build, idx_0);
-                buildC_0.Remove();
+                buildC_0.Remove(ownBuildC_0.Owner);
             }
             else
             {

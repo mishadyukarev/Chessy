@@ -463,24 +463,8 @@ namespace Game.Game
 
             #region Inventor
 
-            foreach (var item_0 in InvResC.AmountResour)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    objs.Add(InvResC.AmountResour[item_0.Key][item_1.Key]);
-                }
-            }
-
-            foreach (var item_0 in InvUnitsC.Units)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    foreach (var item_2 in item_1.Value)
-                    {
-                        objs.Add(InvUnitsC.Units[item_0.Key][item_1.Key][item_2.Key]);
-                    }
-                }
-            }
+            foreach (var item_0 in InvResC.Resources) objs.Add(item_0.Value);
+            foreach (var item_0 in InvUnitsC.Units) objs.Add(item_0.Value);
 
             foreach (var item_0 in InvTWC.ToolWeapons)
             {
@@ -488,7 +472,7 @@ namespace Game.Game
                 {
                     foreach (var item_2 in item_1.Value)
                     {
-                        objs.Add(InvTWC.AmountToolWeap(item_0.Key, item_1.Key, item_2.Key));
+                        objs.Add(InvTWC.Amount(item_0.Key, item_1.Key, item_2.Key));
                     }
                 }
             }
@@ -498,51 +482,9 @@ namespace Game.Game
 
             #region Where
 
-            foreach (var item_0 in WhereUnitsC.UnitsInGame)
-                foreach (var item_1 in item_0.Value)
-                    foreach (var item_2 in item_1.Value)
-                    {
-                        if (item_2.Value.Count == 0) objs.Add(true);
-                        else
-                        {
-                            foreach (var item_3 in item_2.Value)
-                            {
-                                objs.Add(false);
-                                objs.Add(item_3);
-                            }
-
-                            objs.Add(true);
-                        }
-                    }
-
-            foreach (var item_0 in WhereBuildsC.BuildsInGame)
-                foreach (var item_1 in item_0.Value)
-                {
-                    if (item_1.Value.Count == 0) objs.Add(true);
-                    else
-                    {
-                        foreach (var item_3 in item_1.Value)
-                        {
-                            objs.Add(false);
-                            objs.Add(item_3);
-                        }
-
-                        objs.Add(true);
-                    }
-                }
-
-            foreach (var item_0 in WhereEnvC.EnvInGame)
-                if (item_0.Value.Count == 0) objs.Add(true);
-                else
-                {
-                    foreach (var item_3 in item_0.Value)
-                    {
-                        objs.Add(false);
-                        objs.Add(item_3);
-                    }
-
-                    objs.Add(true);
-                }
+            foreach (var item in WhereUnitsC.Units) objs.Add(item.Value);
+            foreach (var item in WhereBuildsC.Cells) objs.Add(item.Value);
+            foreach (var item in WhereEnvC.Envs) objs.Add(item.Value);
 
             #endregion
 
@@ -674,30 +616,15 @@ namespace Game.Game
 
             #region Inventor
 
-            foreach (var item_0 in InvResC.AmountResour)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    InvResC.Set(item_0.Key, item_1.Key, (int)objects[_idx_cur++]);
-                }
-            }
-            foreach (var item_0 in InvUnitsC.Units)
-            {
-                foreach (var item_1 in item_0.Value)
-                {
-                    foreach (var item_2 in item_1.Value)
-                    {
-                        InvUnitsC.Set(item_0.Key, item_1.Key, item_2.Key, (int)objects[_idx_cur++]);
-                    }
-                }
-            }
+            foreach (var item_0 in InvResC.Resources) InvResC.Sync(item_0.Key, (int)objects[_idx_cur++]);
+            foreach (var item_0 in InvUnitsC.Units) InvUnitsC.Sync(item_0.Key, (int)objects[_idx_cur++]);
             foreach (var item_0 in InvTWC.ToolWeapons)
             {
                 foreach (var item_1 in item_0.Value)
                 {
                     foreach (var item_2 in item_1.Value)
                     {
-                        InvTWC.Set(item_0.Key, item_1.Key, item_2.Key, (int)objects[_idx_cur++]);
+                        InvTWC.Sync(item_0.Key, item_1.Key, item_2.Key, (int)objects[_idx_cur++]);
                     }
                 }
             }
@@ -707,59 +634,9 @@ namespace Game.Game
 
             #region Where
 
-            foreach (var item_0 in WhereUnitsC.UnitsInGame)
-                foreach (var item_1 in item_0.Value)
-                    foreach (var item_2 in item_1.Value)
-                    {
-                        var needContinue = false;
-
-                        WhereUnitsC.Clear(item_0.Key, item_1.Key, item_2.Key);
-                        for (int i = 0; i < Byte.MaxValue; i++)
-                        {
-                            var obj = objects[_idx_cur++];
-                            needContinue = (bool)obj;
-                            if (needContinue == true) break;
-
-                            WhereUnitsC.Sync(item_0.Key, item_1.Key, item_2.Key, (byte)objects[_idx_cur++]);
-                        }
-
-                        if (needContinue) continue;
-                    }
-
-            foreach (var item_0 in WhereBuildsC.BuildsInGame)
-                foreach (var item_1 in item_0.Value)
-                {
-                    var needContinue = false;
-
-                    WhereBuildsC.Clear(item_0.Key, item_1.Key);
-                    for (int i = 0; i < Byte.MaxValue; i++)
-                    {
-                        var obj = objects[_idx_cur++];
-                        needContinue = (bool)obj;
-                        if (needContinue == true) break;
-
-                        WhereBuildsC.Sync(item_0.Key, item_1.Key, (byte)objects[_idx_cur++]);
-                    }
-
-                    if (needContinue) continue;
-                }
-
-            foreach (var item_0 in WhereEnvC.EnvInGame)
-            {
-                var needContinue = false;
-
-                WhereEnvC.Clear(item_0.Key);
-                for (int i = 0; i < Byte.MaxValue; i++)
-                {
-                    var obj = objects[_idx_cur++];
-                    needContinue = (bool)obj;
-                    if (needContinue == true) break;
-
-                    WhereEnvC.SyncAdd(item_0.Key, (byte)objects[_idx_cur++]);
-                }
-                if (needContinue) continue;
-            }
-
+            foreach (var item_0 in WhereUnitsC.Units) WhereUnitsC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
+            foreach (var item_0 in WhereBuildsC.Cells) WhereBuildsC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
+            foreach (var item_0 in WhereEnvC.Envs) WhereEnvC.Sync(item_0.Key, (bool)objects[_idx_cur++]);
 
             #endregion
 

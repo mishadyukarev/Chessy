@@ -13,9 +13,9 @@ namespace Game.Game
         {
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                for (var build = BuildTypes.None + 1; build < BuildTypes.End; build++)
+                for (var build = BuildTypes.First; build < BuildTypes.End; build++)
                 {
-                    foreach (var idx_0 in WhereBuildsC.IdxBuilds(player, build))
+                    foreach (var idx_0 in WhereBuildsC.IdxBuilds(build, player))
                     {
                         ref var build_0 = ref _cellbuildFilt.Get1(idx_0);
                         ref var ownBuild_0 = ref _cellbuildFilt.Get2(idx_0);
@@ -35,15 +35,13 @@ namespace Game.Game
                                 minus_0 = envRes_0.AmountRes(EnvTypes.Fertilizer);
 
                             envRes_0.TakeAmountRes(EnvTypes.Fertilizer, minus_0);
-                            InvResC.AddAmountRes(ownBuild_0.Owner, ResTypes.Food, minus_0);
+                            InvResC.Add(ResTypes.Food, ownBuild_0.Owner, minus_0);
 
                             if (!envRes_0.HaveRes(EnvTypes.Fertilizer))
                             {
                                 env_0.Remove(EnvTypes.Fertilizer);
-                                WhereEnvC.Remove(EnvTypes.Fertilizer, idx_0);
 
-                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
-                                build_0.Remove();
+                                build_0.Remove(ownBuild_0.Owner);
                             }
                         }
 
@@ -55,15 +53,13 @@ namespace Game.Game
                                 minus_0 = envRes_0.AmountRes(EnvTypes.AdultForest);
 
                             envRes_0.TakeAmountRes(EnvTypes.AdultForest, minus_0);
-                            InvResC.AddAmountRes(ownBuild_0.Owner, ResTypes.Wood, minus_0);
+                            InvResC.Add(ResTypes.Wood, ownBuild_0.Owner, minus_0);
 
                             if (!envRes_0.HaveRes(EnvTypes.AdultForest))
                             {
                                 env_0.Remove(EnvTypes.AdultForest);
-                                WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
 
-                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
-                                build_0.Remove();
+                                build_0.Remove(ownBuild_0.Owner);
 
                                 _cellTrailFilt.Get1(idx_0).ResetAll();
 
@@ -77,8 +73,7 @@ namespace Game.Game
                                 {
                                     ref var envDatCom = ref _cellEnvFilt.Get1(idx_0);
 
-                                    envDatCom.Set(EnvTypes.YoungForest);
-                                    WhereEnvC.Add(EnvTypes.YoungForest, idx_0);
+                                    envDatCom.SetNew(EnvTypes.YoungForest);
                                 }
                             }
                         }
@@ -91,12 +86,11 @@ namespace Game.Game
                                 minus_0 = envRes_0.AmountRes(EnvTypes.Hill);
 
                             envRes_0.TakeAmountRes(EnvTypes.Hill, minus_0);
-                            InvResC.AddAmountRes(ownBuild_0.Owner, ResTypes.Ore, minus_0);
+                            InvResC.Add(ResTypes.Ore, ownBuild_0.Owner, minus_0);
 
                             if (!envRes_0.HaveRes(EnvTypes.Hill))
                             {
-                                WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
-                                build_0.Remove();
+                                build_0.Remove(ownBuild_0.Owner);
                             }
                         }
                     }

@@ -56,22 +56,22 @@ namespace Game.Game
                                     {
                                         if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Up || dir_1 == DirectTypes.Down)
                                         {
-                                            AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
+                                            AttackCellsC.Add(AttackTypes.Unique, ownUnit_0.Owner,  idx_0, idx_1);
                                         }
-                                        else AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                        else AttackCellsC.Add(AttackTypes.Simple, ownUnit_0.Owner,  idx_0, idx_1);
                                     }
                                     else
                                     {
                                         if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                         {
-                                            AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
+                                            AttackCellsC.Add(AttackTypes.Unique, ownUnit_0.Owner,  idx_0, idx_1);
                                         }
-                                        else AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                        else AttackCellsC.Add(AttackTypes.Simple, ownUnit_0.Owner,  idx_0, idx_1);
                                     }
                                 }
                                 else
                                 {
-                                    AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                    AttackCellsC.Add(AttackTypes.Simple, ownUnit_0.Owner, idx_0, idx_1);
                                 }
                             }
                         }
@@ -97,30 +97,30 @@ namespace Game.Game
                                 {
                                     if (dir_1 == DirectTypes.DownLeft || dir_1 == DirectTypes.UpLeft || dir_1 == DirectTypes.UpRight || dir_1 == DirectTypes.DownRight)
                                     {
-                                        AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_2);
+                                        AttackCellsC.Add(AttackTypes.Simple, ownUnit_0.Owner,  idx_0, idx_2);
                                     }
 
                                     else
                                     {
-                                        AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_2);
+                                        AttackCellsC.Add(AttackTypes.Unique, ownUnit_0.Owner,  idx_0, idx_2);
                                     }
                                 }
                                 else
                                 {
                                     if (dir_1 == DirectTypes.Left || dir_1 == DirectTypes.Right || dir_1 == DirectTypes.Down || dir_1 == DirectTypes.Up)
                                     {
-                                        AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_2);
+                                        AttackCellsC.Add(AttackTypes.Simple, ownUnit_0.Owner,  idx_0, idx_2);
                                     }
 
                                     else
                                     {
-                                        AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_2);
+                                        AttackCellsC.Add(AttackTypes.Unique, ownUnit_0.Owner,  idx_0, idx_2);
                                     }
                                 }
                             }
                             else
                             {
-                                AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_2);
+                                AttackCellsC.Add(AttackTypes.Simple, ownUnit_0.Owner,  idx_0, idx_2);
                             }
                         }
                     }

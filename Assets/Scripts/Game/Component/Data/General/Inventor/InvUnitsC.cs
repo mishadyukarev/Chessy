@@ -5,109 +5,77 @@ namespace Game.Game
 {
     public struct InvUnitsC
     {
-        private static Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelTypes, int>>> _unitsInv;
+        private static Dictionary<string, int> _units;
 
-        public static Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelTypes, int>>> Units
+        private static string Key(UnitTypes unit, LevelTypes level, PlayerTypes player) => unit.ToString() + level + player;
+        private static bool ContainsKey(string key) => _units.ContainsKey(key);
+
+        public static Dictionary<string, int> Units
         {
             get
             {
-                var dict_0 = new Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelTypes, int>>>();
-
-                foreach (var item_0 in _unitsInv)
-                {
-                    dict_0.Add(item_0.Key, new Dictionary<UnitTypes, Dictionary<LevelTypes, int>>());
-
-                    foreach (var item_1 in item_0.Value)
-                    {
-                        dict_0[item_0.Key].Add(item_1.Key, new Dictionary<LevelTypes, int>());
-                        foreach (var item_2 in item_1.Value)
-                        {
-                            dict_0[item_0.Key][item_1.Key].Add(item_2.Key, item_2.Value);
-                        }
-                    }
-                }
-
-                return dict_0;
+                var dict = new Dictionary<string, int>();
+                foreach (var item in _units) dict.Add(item.Key, item.Value);
+                return dict;
             }
         }
-
-        public InvUnitsC(bool needNew) : this()
+        public static bool Have(UnitTypes unit, LevelTypes level, PlayerTypes player) => Amount(unit, level, player) > 0;
+        public static int Amount(UnitTypes unit, LevelTypes level, PlayerTypes player)
         {
-            if (needNew)
-            {
-                if (_unitsInv == default)
-                {
-                    _unitsInv = new Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelTypes, int>>>();
+            var key = Key(unit, level, player);
 
-                    _unitsInv.Add(PlayerTypes.First, new Dictionary<UnitTypes, Dictionary<LevelTypes, int>>());
-                    _unitsInv.Add(PlayerTypes.Second, new Dictionary<UnitTypes, Dictionary<LevelTypes, int>>());
+            if (!ContainsKey(key)) throw new Exception();
 
-
-                    for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
-                    {
-                        _unitsInv[PlayerTypes.First].Add(unit, new Dictionary<LevelTypes, int>());
-                        _unitsInv[PlayerTypes.Second].Add(unit, new Dictionary<LevelTypes, int>());
-
-
-                        _unitsInv[PlayerTypes.First][unit].Add(LevelTypes.First, default);
-                        _unitsInv[PlayerTypes.First][unit].Add(LevelTypes.Second, default);
-
-                        _unitsInv[PlayerTypes.Second][unit].Add(LevelTypes.First, default);
-                        _unitsInv[PlayerTypes.Second][unit].Add(LevelTypes.Second, default);
-                    }
-                }
-
-                var dict = Units;
-                foreach (var item_0 in _unitsInv)
-                {
-                    foreach (var item_1 in item_0.Value)
-                    {
-                        foreach (var item_2 in item_1.Value)
-                        {
-                            dict[item_0.Key][item_1.Key][item_2.Key] = EconomyValues.StartAmountUnits(item_1.Key, item_2.Key);
-                        }
-                    }
-                }
-                _unitsInv = dict;
-            }
+            return _units[key];
+        }
+        public static int AmountUnits(UnitTypes unit, PlayerTypes player)
+        {
+            return Amount(unit, LevelTypes.First, player) + Amount(unit, LevelTypes.Second, player);
         }
 
-        public static int AmountUnits(PlayerTypes player, UnitTypes unit, LevelTypes level) => _unitsInv[player][unit][level];
-        public static int AmountUnits(PlayerTypes playerType, UnitTypes unitType) => _unitsInv[playerType][unitType][LevelTypes.First] + _unitsInv[playerType][unitType][LevelTypes.Second];
-        public static void Set(PlayerTypes player, UnitTypes unit, LevelTypes level, int value) => _unitsInv[player][unit][level] = value;
 
-        public static void AddUnit(PlayerTypes player, UnitTypes unit, LevelTypes level, int adding = 1) => Set(player, unit, level, AmountUnits(player, unit, level) + adding);
+
+        static InvUnitsC()
+        {
+            _units = new Dictionary<string, int>();
+            for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
+            {
+                for (var level = LevelTypes.First; level < LevelTypes.End; level++)
+                {
+                    for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+                    {
+                        _units.Add(Key(unit, level, player), default);
+                    }
+                }
+            }
+        }
+        public InvUnitsC(bool needReset) : this()
+        {
+            if (needReset) foreach (var item in Units) _units[item.Key] = 0;
+            else throw new Exception();
+        }
+
+
+        public static void Sync(string key, int value)
+        {
+            if (!ContainsKey(key)) throw new Exception();
+
+            _units[key] = value;
+        }
+        public static void AddUnit(UnitTypes unit, LevelTypes level, PlayerTypes player, int adding = 1)
+        {
+            var key = Key(unit, level, player);
+
+            if (!ContainsKey(key)) throw new Exception();
+            _units[Key(unit, level, player)] += adding;
+        }
         public static void TakeUnit(PlayerTypes player, UnitTypes unit, LevelTypes level, int taking = 1)
         {
-            _unitsInv[player][unit][level] -= taking;
-        }
+            var key = Key(unit, level, player);
 
-        public static bool Have(PlayerTypes player, UnitTypes unit, LevelTypes level) => AmountUnits(player, unit, level) > 0;
+            if (!ContainsKey(key)) throw new Exception();
 
-        public static UnitTypes MyHero
-        {
-            get
-            {
-                foreach (var item_0 in Units)
-                {
-                    if (item_0.Key == WhoseMoveC.CurPlayerI)
-                    {
-                        foreach (var item_1 in item_0.Value)
-                        {
-                            if (item_1.Key >= UnitTypes.Elfemale)
-                            {
-                                foreach (var item_2 in item_1.Value)
-                                {
-                                    if (item_2.Value > 1) throw new Exception();
-                                    else if (item_2.Value == 1) return item_1.Key;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                throw new Exception();
-            }
+            _units[Key(unit, level, player)] -= taking;
         }
     }
 }

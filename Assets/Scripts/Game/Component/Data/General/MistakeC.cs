@@ -9,6 +9,11 @@ namespace Game.Game
         public static MistakeTypes MistakeType { get; set; }
         public static float CurTime { get; set; }
 
+        public static bool NeedRes(ResTypes resType) => _needRes[resType] < 0;
+        public static int NeedResAmount(ResTypes resType) => _needRes[resType];
+
+
+
         public MistakeC(Dictionary<ResTypes, int> needResources) : this()
         {
             _needRes = needResources;
@@ -19,10 +24,9 @@ namespace Game.Game
             }
         }
 
-        public static void ResetMistakeType() => MistakeType = default;
 
-        public static bool NeedRes(ResTypes resType) => _needRes[resType] < 0;
-        public static int NeedResAmount(ResTypes resType) => _needRes[resType];
+
+        public static void ResetMistakeType() => MistakeType = default;
         public static void AddNeedRes(ResTypes resType, int amount) => _needRes[resType] = amount;
         public static void ClearAllNeeds()
         {

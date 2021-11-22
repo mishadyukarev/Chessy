@@ -41,17 +41,9 @@ namespace Game.Game
             var whoseMove = WhoseMoveC.WhoseMove;
 
 
-            if (CellsForSetUnitC.HaveIdxCell(whoseMove, idx_0))
+            if (SetUnitCellsC.HaveIdxCell(whoseMove, idx_0))
             {
-                unit_0.Set(unit);
-                ownUnit_0.SetOwner(whoseMove);
-                tw_0.ToolWeapon = default;
-                eff_0.DefAllEffects();
-                hp_0.SetMaxHp();
-                if (cond_0.HaveCondition) cond_0.Reset();
-                
-                moveCond_0.ResetAll();
-                if (InvUnitsC.Have(whoseMove, unit, LevelTypes.Second))
+                if (InvUnitsC.Have(unit, LevelTypes.Second, whoseMove))
                 {
                     InvUnitsC.TakeUnit(whoseMove, unit, LevelTypes.Second);
                     levUnit_0.SetLevel(LevelTypes.Second);
@@ -61,11 +53,19 @@ namespace Game.Game
                     InvUnitsC.TakeUnit(whoseMove, unit, LevelTypes.First);
                     levUnit_0.SetLevel(LevelTypes.First);
                 }
+                ownUnit_0.SetOwner(whoseMove);
+                unit_0.SetNew(unit, levUnit_0.Level, ownUnit_0.Owner);
+
+
+                tw_0.ToolWeapon = default;
+                eff_0.DefAllEffects();
+                hp_0.SetMaxHp();
+                if (cond_0.HaveCondition) cond_0.Reset();  
+                moveCond_0.ResetAll();
                 step_0.SetMaxSteps(unit, false, UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
                 water_0.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
 
-
-                WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+      
 
                 if (unit == UnitTypes.King) PickUpgC.SetHaveUpgrade(whoseMove, true);
 

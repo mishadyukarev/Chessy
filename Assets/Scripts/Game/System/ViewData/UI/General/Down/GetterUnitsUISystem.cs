@@ -35,8 +35,8 @@ namespace Game.Game
             }
 
 
-            GetPawnArcherUIC.SetTextToAmountUnits(UnitTypes.Pawn, InvUnitsC.AmountUnits(WhoseMoveC.CurPlayerI, UnitTypes.Pawn).ToString());
-            GetPawnArcherUIC.SetTextToAmountUnits(UnitTypes.Archer, InvUnitsC.AmountUnits(WhoseMoveC.CurPlayerI, UnitTypes.Archer).ToString());
+            GetPawnArcherUIC.SetTextToAmountUnits(UnitTypes.Pawn, InvUnitsC.AmountUnits(UnitTypes.Pawn, WhoseMoveC.CurPlayerI).ToString());
+            GetPawnArcherUIC.SetTextToAmountUnits(UnitTypes.Archer, InvUnitsC.AmountUnits(UnitTypes.Archer, WhoseMoveC.CurPlayerI).ToString());
         }
     }
 }

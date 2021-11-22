@@ -78,7 +78,7 @@ namespace Game.Game
 
 
 
-            var simpUniqueType = AttackCellsC.FindByIdx(ownUnit_from.Owner, idx_from, idx_to);
+            var simpUniqueType = AttackCellsC.WhichAttack(ownUnit_from.Owner, idx_from, idx_to);
 
             if (simpUniqueType != default)
             {
@@ -179,18 +179,16 @@ namespace Game.Game
                 {
                     if (unit_to.Is(UnitTypes.King))
                     {
-                        unit_to.Reset();
                         PlyerWinnerC.PlayerWinner = ownUnit_from.Owner;
                         return;
                     }
                     else if (unit_to.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
                     {
                         ScoutHeroCooldownC.SetStandCooldown(ownUnit_to.Owner, unit_to.Unit);
-                        InvUnitsC.AddUnit(ownUnit_to.Owner, unit_to.Unit, levUnit_to.Level);
+                        InvUnitsC.AddUnit(unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner);
                     }
 
-                    WhereUnitsC.Remove(ownUnit_to.Owner, unit_to.Unit, levUnit_to.Level, idx_to);
-                    unit_to.Reset();
+                    unit_to.Remove(unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner);
 
 
                     if (unit_from.IsMelee)
@@ -199,13 +197,12 @@ namespace Game.Game
                         {
                             if (unit_from.Is(UnitTypes.King))
                             {
-                                unit_from.Reset();
+                                unit_from.Remove(unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner);
                                 PlyerWinnerC.PlayerWinner = ownUnit_to.Owner;
                                 return;
                             }
 
-                            WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
-                            unit_from.Reset();
+                            unit_from.Remove(unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner);
                         }
                         else
                         {
@@ -221,7 +218,6 @@ namespace Game.Game
                             stun_to.Reset();
                             cdUniq_to.Replace(cdUniq_from);
                             if (river_to.HaveNearRiver) waterUnit_to.SetMaxWater(UnitUpgC.UpgPercent(UnitStatTypes.Water, unit_to.Unit, levUnit_to.Level, ownUnit_to.Owner));
-                            WhereUnitsC.Add(ownUnit_to.Owner, unit_to.Unit, levUnit_to.Level, idx_to);
 
                             var dir = CellSpace.GetDirect(_xyF.Get1(idx_from).Xy, _xyF.Get1(idx_to).Xy);
                             trail_to.TrySetNewTrail(dir.Invert(), env_to);
@@ -232,14 +228,12 @@ namespace Game.Game
                             {
                                 if (!ownBuild_to.Is(ownUnit_to.Owner))
                                 {
-                                    WhereBuildsC.Remove(ownBuild_to.Owner, build_to.Build, idx_to);
-                                    build_to.Remove();
+                                    build_to.Remove(ownBuild_to.Owner);
                                 }
                             }
 
 
-                            WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
-                            unit_from.Reset();
+                            unit_from.Remove(unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner);
                         }
                     }
                 }
@@ -248,13 +242,11 @@ namespace Game.Game
                 {
                     if (unit_from.Is(UnitTypes.King))
                     {
-                        unit_from.Reset();
                         PlyerWinnerC.PlayerWinner = ownUnit_to.Owner;
                         return;
                     }
 
-                    WhereUnitsC.Remove(ownUnit_from.Owner, unit_from.Unit, levUnit_from.Level, idx_from);
-                    unit_from.Reset();
+                    unit_from.Remove(unit_from.Unit, levUnit_from.Level, ownUnit_from.Owner);
                 }
 
                 effUnit_from.DefAllEffects();

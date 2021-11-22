@@ -5,67 +5,80 @@ namespace Game.Game
 {
     public readonly struct InvResC
     {
-        private static Dictionary<PlayerTypes, Dictionary<ResTypes, int>> _amountRes;
+        private static Dictionary<string, int> _resources;
 
-        public static Dictionary<PlayerTypes, Dictionary<ResTypes, int>> AmountResour
+        private static string Key(ResTypes res, PlayerTypes player) => res.ToString() + player;
+        private static bool ContainsKey(string key) => _resources.ContainsKey(key);
+
+        public static Dictionary<string, int> Resources
         {
             get
             {
-                var dict_0 = new Dictionary<PlayerTypes, Dictionary<ResTypes, int>>();
-
-                foreach (var item_0 in _amountRes)
-                {
-                    dict_0.Add(item_0.Key, new Dictionary<ResTypes, int>());
-
-                    foreach (var item_1 in item_0.Value)
-                    {
-                        dict_0[item_0.Key].Add(item_1.Key, item_1.Value);
-                    }
-                }
-
-                return dict_0;
+                var dict = new Dictionary<string, int>();
+                foreach (var item in _resources) dict.Add(item.Key, item.Value);
+                return dict;
             }
         }
 
-        public static int AmountRes(PlayerTypes player, ResTypes res) => _amountRes[player][res];
-        public static bool Have(PlayerTypes player, ResTypes res) => AmountRes(player, res) > 0;
-        public static bool IsMinusRes(PlayerTypes player, ResTypes res) => AmountRes(player, res) < 0;
-
-
-        public InvResC(bool needNew) : this()
+        public static int AmountRes(ResTypes res, PlayerTypes player)
         {
-            if (needNew)
+            var key = Key(res, player);
+
+            if (!ContainsKey(key)) throw new Exception();
+
+            return _resources[key];
+        }
+        public static bool Have(ResTypes res, PlayerTypes player) => AmountRes(res, player) > 0;
+        public static bool IsMinusRes(ResTypes res, PlayerTypes player) => AmountRes(res, player) < 0;
+
+
+
+        static InvResC()
+        {
+            _resources = new Dictionary<string, int>();
+            for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                if(_amountRes == default)
+                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
-                    _amountRes = new Dictionary<PlayerTypes, Dictionary<ResTypes, int>>();
-
-                    _amountRes[PlayerTypes.First] = new Dictionary<ResTypes, int>();
-                    _amountRes[PlayerTypes.Second] = new Dictionary<ResTypes, int>();
-
-                    for (var res = ResTypes.First; res < ResTypes.End; res++)
-                    {
-                        _amountRes[PlayerTypes.First].Add(res, default);
-                        _amountRes[PlayerTypes.Second].Add(res, default);
-                    }
-                }
-
-                foreach (var item_0 in AmountResour)
-                {
-                    foreach (var item_1 in item_0.Value)
-                    {
-                        _amountRes[item_0.Key][item_1.Key] = EconomyValues.AmountResources(item_1.Key);
-                    }
+                    _resources.Add(Key(res, player), default);
                 }
             }
         }
+        public InvResC(bool needReset)
+        {
+            if (needReset) foreach (var item in Resources) _resources[item.Key] = 0;
+            else throw new Exception();
+        }
 
 
-        public static void Set(PlayerTypes player, ResTypes res, int value) => _amountRes[player][res] = value;
-        public static void ResetRes(PlayerTypes player, ResTypes res) => Set(player, res, 0);
-        public static void AddAmountRes(PlayerTypes playerType, ResTypes resourceType, int adding = 1) => Set(playerType, resourceType, AmountRes(playerType, resourceType) + adding);
-        public static void TakeAmountRes(PlayerTypes playerType, ResTypes resourceType, int taking = 1) => Set(playerType, resourceType, AmountRes(playerType, resourceType) - taking);
+        public static void Set(ResTypes res, PlayerTypes player, int value)
+        {
+            var key = Key(res, player);
+            if (!ContainsKey(key)) throw new Exception();
 
+            _resources[key] = value;
+        }
+        public static void Sync(string key, int value)
+        {
+            if (!ContainsKey(key)) throw new Exception();
+
+            _resources[key] = value;
+        }
+        public static void ResetRes(ResTypes res, PlayerTypes player) => Set(res, player,  0);
+        public static void Add(ResTypes res, PlayerTypes player, int adding = 1)
+        {
+            var key = Key(res, player);
+            if (!ContainsKey(key)) throw new Exception();
+
+            _resources[key] += adding;
+        }
+        public static void Take(ResTypes res, PlayerTypes player, int taking = 1)
+        {
+            var key = Key(res, player);
+            if (!ContainsKey(key)) throw new Exception();
+
+            _resources[key] -= taking;
+        }
 
 
 
@@ -77,7 +90,7 @@ namespace Game.Game
 
             for (var res = ResTypes.First; res < ResTypes.End; res++)
             {
-                var difAmountRes = AmountRes(playerType, res) - EconomyValues.AmountResForBuild(buildingType, res);
+                var difAmountRes = AmountRes(res, playerType) - EconomyValues.AmountResForBuild(buildingType, res);
                 needRes.Add(res, difAmountRes);
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -88,7 +101,7 @@ namespace Game.Game
         public static void BuyBuild(PlayerTypes playerType, BuildTypes buildingType)
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
-                Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForBuild(buildingType, resType));
+                Set(resType, playerType, AmountRes(resType, playerType) - EconomyValues.AmountResForBuild(buildingType, resType));
         }
 
         public static bool CanCreateUnit(PlayerTypes playerType, UnitTypes unitType, out Dictionary<ResTypes, int> needRes)
@@ -98,7 +111,7 @@ namespace Game.Game
 
             for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
-                var difAmountRes = AmountRes(playerType, resType) - EconomyValues.AmountResForBuy(unitType, resType);
+                var difAmountRes = AmountRes(resType, playerType) - EconomyValues.AmountResForBuy(unitType, resType);
                 needRes.Add(resType, difAmountRes);
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -109,7 +122,7 @@ namespace Game.Game
         public static void BuyCreateUnit(PlayerTypes playerType, UnitTypes unitType)
         {
             for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
-                Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForBuy(unitType, resType));
+                Set(resType, playerType,  AmountRes(resType, playerType) - EconomyValues.AmountResForBuy(unitType, resType));
         }
 
         public static bool CanMeltOre(PlayerTypes playerType, out Dictionary<ResTypes, int> needRes)
@@ -119,7 +132,7 @@ namespace Game.Game
 
             for (ResTypes resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
-                var difAmountRes = AmountRes(playerType, resType) - EconomyValues.AmountResForMelting(resType);
+                var difAmountRes = AmountRes(resType, playerType) - EconomyValues.AmountResForMelting(resType);
                 needRes.Add(resType, difAmountRes);
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -130,10 +143,10 @@ namespace Game.Game
         public static void BuyMeltOre(PlayerTypes playerType)
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
-                Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForMelting(resType));
+                Set(resType, playerType,  AmountRes(resType, playerType) - EconomyValues.AmountResForMelting(resType));
 
-            AddAmountRes(playerType, ResTypes.Iron, 4);
-            AddAmountRes(playerType, ResTypes.Gold, 1);
+            Add(ResTypes.Iron, playerType,  4);
+            Add(ResTypes.Gold, playerType,  1);
         }
 
         public static bool CanBuyRes(PlayerTypes playerType, ResTypes res, out Dictionary<ResTypes, int> needRes)
@@ -143,7 +156,7 @@ namespace Game.Game
 
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
-                var difAmountRes = AmountRes(playerType, resType) - EconomyValues.AmountResForBuyRes(resType);
+                var difAmountRes = AmountRes(resType, playerType) - EconomyValues.AmountResForBuyRes(resType);
                 needRes.Add(resType, difAmountRes);
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -155,7 +168,7 @@ namespace Game.Game
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
-                Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForBuyRes(resType));
+                Set(resType, playerType,  AmountRes(resType, playerType) - EconomyValues.AmountResForBuyRes(resType));
             }
 
             var amount = 0;
@@ -171,7 +184,7 @@ namespace Game.Game
                 default: throw new Exception();
             }
 
-            AddAmountRes(playerType, res, amount);
+            Add(res, playerType,  amount);
         }
 
 
@@ -183,7 +196,7 @@ namespace Game.Game
 
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
-                var difAmountRes = AmountRes(playerType, resType) - EconomyValues.AmountResForUpgradeUnit(unitType, resType);
+                var difAmountRes = AmountRes(resType, playerType) - EconomyValues.AmountResForUpgradeUnit(unitType, resType);
                 needRes.Add(resType, difAmountRes);
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -194,7 +207,7 @@ namespace Game.Game
         public static void BuyUpgradeUnit(PlayerTypes playerType, UnitTypes unitType)
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
-                Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForUpgradeUnit(unitType, resType));
+                Set(resType, playerType, AmountRes(resType, playerType) - EconomyValues.AmountResForUpgradeUnit(unitType, resType));
         }
 
 
@@ -206,7 +219,7 @@ namespace Game.Game
 
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
             {
-                var difAmountRes = AmountRes(playerType, resType) - EconomyValues.AmountResForBuyTW(toolWeaponType, levelTWType, resType);
+                var difAmountRes = AmountRes(resType, playerType) - EconomyValues.AmountResForBuyTW(toolWeaponType, levelTWType, resType);
                 needRes.Add(resType, difAmountRes);
 
                 if (canCreatBuild) canCreatBuild = difAmountRes >= 0;
@@ -217,7 +230,7 @@ namespace Game.Game
         public static void BuyTW(PlayerTypes playerType, TWTypes toolWeaponType, LevelTypes levelTWType)
         {
             for (var resType = ResTypes.First; resType < ResTypes.End; resType++)
-                Set(playerType, resType, AmountRes(playerType, resType) - EconomyValues.AmountResForBuyTW(toolWeaponType, levelTWType, resType));
+                Set(resType, playerType,  AmountRes(resType, playerType) - EconomyValues.AmountResForBuyTW(toolWeaponType, levelTWType, resType));
         }
     }
 }

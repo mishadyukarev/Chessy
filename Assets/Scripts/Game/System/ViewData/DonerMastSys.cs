@@ -48,7 +48,7 @@ namespace Game.Game
 
                 if (WhoseMoveC.WhoseMove == playerSend)
                 {
-                    if (!InvUnitsC.Have(sender.GetPlayerType(), UnitTypes.King, LevelTypes.First))
+                    if (!InvUnitsC.Have(UnitTypes.King, LevelTypes.First, sender.GetPlayerType()))
                     {
                         if (playerSend == PlayerTypes.Second)
                         {

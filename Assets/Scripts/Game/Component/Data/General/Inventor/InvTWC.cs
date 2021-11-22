@@ -5,63 +5,70 @@ namespace Game.Game
 {
     public struct InvTWC
     {
-        private static Dictionary<PlayerTypes, Dictionary<TWTypes, Dictionary<LevelTypes, byte>>> _toolWeapons;
+        private static Dictionary<string, int> _tWs;
 
-        public static Dictionary<PlayerTypes, Dictionary<TWTypes, Dictionary<LevelTypes, byte>>> ToolWeapons
+        private static string Key(TWTypes tw, LevelTypes level, PlayerTypes player) => tw.ToString() + level + player;
+        private static bool ContainsKey(string key) => _tWs.ContainsKey(key);
+
+        public static Dictionary<string, int> ToolWeapons
         {
             get
             {
-                var dict = new Dictionary<PlayerTypes, Dictionary<TWTypes, Dictionary<LevelTypes, byte>>>();
-
-                foreach (var item_0 in _toolWeapons)
-                {
-                    dict.Add(item_0.Key, new Dictionary<TWTypes, Dictionary<LevelTypes, byte>>());
-
-                    foreach (var item_1 in item_0.Value)
-                    {
-                        dict[item_0.Key].Add(item_1.Key, new Dictionary<LevelTypes, byte>());
-
-                        foreach (var item_2 in item_1.Value)
-                        {
-                            dict[item_0.Key][item_1.Key].Add(item_2.Key, item_2.Value);
-                        }
-                    }
-                }
-
+                var dict = new Dictionary<string, int>();
+                foreach (var item in _tWs) dict.Add(item.Key, item.Value);
                 return dict;
             }
         }
-
-        public InvTWC(bool needNew) : this()
+        public static int Amount(TWTypes tw, LevelTypes level, PlayerTypes player)
         {
-            if (needNew)
+            var key = Key(tw, level, player);
+            if (!ContainsKey(key)) throw new Exception();
+
+            return _tWs[key];
+        }
+        public static bool Have(TWTypes tW, LevelTypes level, PlayerTypes player) => Amount(tW, level, player) > 0;
+
+
+        static InvTWC()
+        {
+            _tWs = new Dictionary<string, int>();
+
+            for (var tw = TWTypes.First; tw < TWTypes.End; tw++)
             {
-                _toolWeapons = new Dictionary<PlayerTypes, Dictionary<TWTypes, Dictionary<LevelTypes, byte>>>();
-
-                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+                for (var level = LevelTypes.First; level < LevelTypes.End; level++)
                 {
-                    _toolWeapons[player] = new Dictionary<TWTypes, Dictionary<LevelTypes, byte>>();
-
-                    _toolWeapons[player].Add(TWTypes.Pick, new Dictionary<LevelTypes, byte>());
-                    _toolWeapons[player].Add(TWTypes.Sword, new Dictionary<LevelTypes, byte>());
-                    _toolWeapons[player].Add(TWTypes.Shield, new Dictionary<LevelTypes, byte>());
-
-                    _toolWeapons[player][TWTypes.Pick].Add(LevelTypes.First, default);
-                    _toolWeapons[player][TWTypes.Sword].Add(LevelTypes.First, default);
-                    _toolWeapons[player][TWTypes.Shield].Add(LevelTypes.First, default);
-
-                    _toolWeapons[player][TWTypes.Pick].Add(LevelTypes.Second, default);
-                    _toolWeapons[player][TWTypes.Sword].Add(LevelTypes.Second, default);
-                    _toolWeapons[player][TWTypes.Shield].Add(LevelTypes.Second, default);
+                    for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+                    {
+                        _tWs.Add(Key(tw, level, player), default);
+                    }
                 }
             }
         }
+        public InvTWC(bool needReset)
+        {
+            if (needReset) foreach (var item in ToolWeapons) _tWs[item.Key] = 0;
+            else throw new Exception();
+        }
 
-        public static bool HaveTW(PlayerTypes player, TWTypes tWType, LevelTypes level) => _toolWeapons[player][tWType][level] > 0;
-        public static void Set(PlayerTypes player, TWTypes tWType, LevelTypes level, int value) => _toolWeapons[player][tWType][level] = (byte)value;
-        public static int AmountToolWeap(PlayerTypes player, TWTypes tw, LevelTypes level) => _toolWeapons[player][tw][level];
 
-        public static void Add(PlayerTypes player, TWTypes tw, LevelTypes level, byte adding = 1) => _toolWeapons[player][tw][level] += adding;
-        public static void TakeAmountTools(PlayerTypes player, TWTypes tw, LevelTypes level, byte taking = 1) => _toolWeapons[player][tw][level] -= taking;
+        public static void Add(TWTypes tw, LevelTypes level, PlayerTypes player, byte adding = 1)
+        {
+            var key = Key(tw, level, player);
+            if (!ContainsKey(key)) throw new Exception();
+
+            _tWs[key] += adding;
+        }
+        public static void Take(TWTypes tw, LevelTypes level, PlayerTypes player, byte taking = 1)
+        {
+            var key = Key(tw, level, player);
+            if (!ContainsKey(key)) throw new Exception();
+
+            _tWs[key] -= taking;
+        }
+        public static void Sync(string key, int value)
+        {
+            if (!ContainsKey(key)) throw new Exception();
+            _tWs[key] = (byte)value;
+        }
     }
 }

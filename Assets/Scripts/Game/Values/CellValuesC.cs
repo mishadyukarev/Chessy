@@ -1,6 +1,6 @@
 ﻿namespace Game.Game
 {
-    public static class CellValues
+    public struct CellValuesC
     {
         public const byte CELL_COUNT_X = 15;
         public const byte CELL_COUNT_Y = 11;

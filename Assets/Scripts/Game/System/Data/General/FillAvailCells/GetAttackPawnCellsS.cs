@@ -57,9 +57,9 @@ namespace Game.Game
                                             if (dir_cur == DirectTypes.Left || dir_cur == DirectTypes.Right
                                                 || dir_cur == DirectTypes.Up || dir_cur == DirectTypes.Down)
                                             {
-                                                AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                                AttackCellsC.Add(AttackTypes.Simple, ownUnit_0.Owner,  idx_0, idx_1);
                                             }
-                                            else AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Unique, idx_0, idx_1);
+                                            else AttackCellsC.Add(AttackTypes.Unique, ownUnit_0.Owner,  idx_0, idx_1);
                                         }
                                     }
                                 }

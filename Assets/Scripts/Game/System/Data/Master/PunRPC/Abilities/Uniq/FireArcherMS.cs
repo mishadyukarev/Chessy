@@ -32,7 +32,7 @@ namespace Game.Game
 
             if (step_from.HaveMaxSteps(unit_from.Unit, eff_from.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_from.Unit, level_from.Level, own_from.Owner)))
             {
-                if (CellsArsonArcherC.HaveIdxCell(whoseMove, idx_from, idx_to))
+                if (ArsonCellsC.ContainIdx(whoseMove, idx_from, idx_to))
                 {
                     RpcSys.SoundToGeneral(RpcTarget.All, UniqAbilTypes.FireArcher);
 

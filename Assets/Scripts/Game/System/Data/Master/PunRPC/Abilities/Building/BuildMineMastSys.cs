@@ -37,17 +37,16 @@ namespace Game.Game
                             {
                                 if (build_0.Have)
                                 {
-                                    WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
-                                    build_0.Remove();
+                                    build_0.Remove(ownBuild_0.Owner);
                                 }
 
                                 RpcSys.SoundToGeneral(sender, ClipTypes.Building);
 
                                 InvResC.BuyBuild(whoseMove, build);
 
-                                build_0.SetNew(build);
+                                
                                 ownBuild_0.SetOwner(whoseMove);
-                                WhereBuildsC.Add(ownBuild_0.Owner, build_0.Build, idx_0);
+                                build_0.SetNew(build, ownBuild_0.Owner);
 
                                 curStepUnitC.TakeSteps();
                             }

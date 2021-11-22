@@ -40,13 +40,11 @@ namespace Game.Game
 
                                 if (build_0.Have)
                                 {
-                                    WhereBuildsC.Remove(ownBuildC_0.Owner, build_0.Build, idx_0);
-                                    build_0.Remove();
+                                    build_0.Remove(ownBuildC_0.Owner);
                                 }
 
                                 if (env_0.Have(EnvTypes.YoungForest))
                                 {
-                                    WhereEnvC.Remove(EnvTypes.YoungForest, idx_0);
                                     env_0.Remove(EnvTypes.YoungForest);
                                 }
 
@@ -56,16 +54,15 @@ namespace Game.Game
                                 }
                                 else
                                 {
-                                    env_0.Set(EnvTypes.Fertilizer);
+                                    env_0.SetNew(EnvTypes.Fertilizer);
                                     envRes_0.SetNew(EnvTypes.Fertilizer);
-                                    WhereEnvC.Add(EnvTypes.Fertilizer, idx_0);
                                 }
 
                                 InvResC.BuyBuild(whoseMove, forBuildType);
 
-                                build_0.SetNew(forBuildType);
+                                
                                 ownBuildC_0.SetOwner(whoseMove);
-                                WhereBuildsC.Add(ownBuildC_0.Owner, build_0.Build, idx_0);
+                                build_0.SetNew(forBuildType, ownBuildC_0.Owner);
 
                                 curStepUnitC.TakeSteps();
                             }

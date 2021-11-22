@@ -12,7 +12,7 @@ namespace Game.Game
         private EcsFilter<CellC> _cellDataFilt = default;
         private EcsFilter<FireC> _cellFireDataFilter = default;
         private EcsFilter<EnvC, EnvResC> _cellEnvDataFilter = default;
-        private EcsFilter<BuildC, OwnerC> _cellBuildFilt = default;
+        private EcsFilter<BuildC, OwnerC> _buildF = default;
         private EcsFilter<TrailC> _cellTrailFilt = default;
 
         private EcsFilter<UnitC, LevelC, OwnerC> _unitF = default;
@@ -22,8 +22,8 @@ namespace Game.Game
 
         public void Run()
         {
-            InvResC.AddAmountRes(PlayerTypes.First, ResTypes.Food, 4);
-            InvResC.AddAmountRes(PlayerTypes.Second, ResTypes.Food, 4);
+            InvResC.Add(ResTypes.Food, PlayerTypes.First,  4);
+            InvResC.Add(ResTypes.Food, PlayerTypes.Second,  4);
 
 
             ScoutHeroCooldownC.TakeCooldown(PlayerTypes.First, UnitTypes.Scout);
@@ -53,8 +53,8 @@ namespace Game.Game
                 
 
 
-                ref var buil_0 = ref _cellBuildFilt.Get1(idx_0);
-                ref var ownBuil_0 = ref _cellBuildFilt.Get2(idx_0);
+                ref var buil_0 = ref _buildF.Get1(idx_0);
+                ref var ownBuil_0 = ref _buildF.Get2(idx_0);
                 ref var fire_0 = ref _cellFireDataFilter.Get1(idx_0);
                 ref var env_0 = ref _cellEnvDataFilter.Get1(idx_0);
                 ref var trail_0 = ref _cellTrailFilt.Get1(idx_0);
@@ -69,7 +69,7 @@ namespace Game.Game
                 {
                     moveCond_0.AddMove(condUnit_0.Condition);
 
-                    if (!unit_0.Is(UnitTypes.King)) InvResC.TakeAmountRes(own_0.Owner, ResTypes.Food);
+                    if (!unit_0.Is(UnitTypes.King)) InvResC.Take(ResTypes.Food, own_0.Owner);
 
                     if (GameModesCom.IsGameMode(GameModes.TrainingOff))
                     {
@@ -109,44 +109,40 @@ namespace Game.Game
                                             {
                                                 if (buil_0.Have)
                                                 {
-                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
-                                                    buil_0.Remove();
+                                                    buil_0.Remove(ownBuil_0.Owner);
                                                 }
 
-                                                if (WhereBuildsC.IsSettedCamp(own_0.Owner))
+                                                if (WhereBuildsC.IsSetted(BuildTypes.Camp, own_0.Owner))
                                                 {
-                                                    var idxCamp = WhereBuildsC.IdxCamp(own_0.Owner);
+                                                    var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, own_0.Owner);
 
-                                                    WhereBuildsC.Remove(own_0.Owner, BuildTypes.Camp, idxCamp);
-                                                    _cellBuildFilt.Get1(idxCamp).Remove();
+                                                    _buildF.Get1(idxCamp).Remove(own_0.Owner);
                                                 }
 
 
-                                                buil_0.SetNew(BuildTypes.Camp);
+                                               
                                                 ownBuil_0.SetOwner(own_0.Owner);
-                                                WhereBuildsC.Add(ownBuil_0.Owner, buil_0.Build, idx_0);
+                                                buil_0.SetNew(BuildTypes.Camp, ownBuil_0.Owner);
                                             }
                                         }
                                         else
                                         {
                                             if (buil_0.Have)
                                             {
-                                                WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
-                                                buil_0.Remove();
+                                                buil_0.Remove(ownBuil_0.Owner);
                                             }
 
-                                            if (WhereBuildsC.IsSettedCamp(own_0.Owner))
+                                            if (WhereBuildsC.IsSetted(BuildTypes.Camp, own_0.Owner))
                                             {
-                                                var idxCamp = WhereBuildsC.IdxCamp(own_0.Owner);
+                                                var idxCamp = WhereBuildsC.Idx(BuildTypes.Camp, own_0.Owner);
 
-                                                WhereBuildsC.Remove(own_0.Owner, BuildTypes.Camp, idxCamp);
-                                                _cellBuildFilt.Get1(idxCamp).Remove();
+                                                _buildF.Get1(idxCamp).Remove(own_0.Owner);
                                             }
 
 
-                                            buil_0.SetNew(BuildTypes.Camp);
+                                            
                                             ownBuil_0.SetOwner(own_0.Owner);
-                                            WhereBuildsC.Add(own_0.Owner, buil_0.Build, idx_0);
+                                            buil_0.SetNew(BuildTypes.Camp, ownBuil_0.Owner);
                                         }
                                     }
                                 }
@@ -189,7 +185,7 @@ namespace Game.Game
                     ref var env_0 = ref _cellEnvDataFilter.Get1(idx_0);
                     ref var envRes_0 = ref _cellEnvDataFilter.Get2(idx_0);
 
-                    ref var build_0 = ref _cellBuildFilt.Get1(idx_0);
+                    ref var build_0 = ref _buildF.Get1(idx_0);
 
                     if (env_0.Have(EnvTypes.Hill))
                     {

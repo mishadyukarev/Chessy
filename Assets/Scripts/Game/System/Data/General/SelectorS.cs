@@ -107,7 +107,7 @@ namespace Game.Game
                             {
                                 if (unit_sel.Is(UnitTypes.Archer))
                                 {
-                                    RpcSys.FromToNewUnitToMas(InvUnitsC.MyHero, SelIdx.Idx, CurIdx.Idx);
+                                    RpcSys.FromToNewUnitToMas(UnitTypes.Elfemale, SelIdx.Idx, CurIdx.Idx);
                                     Set(CellClickTypes.Firstlick);
 
                                     NeedSoundEffC.Clip = ClipTypes.PickArcher;
@@ -125,12 +125,12 @@ namespace Game.Game
 
                         else if (SelIdx.IsSelCell)
                         {
-                            if (AttackCellsC.FindByIdx(WhoseMoveC.CurPlayerI, SelIdx.Idx, CurIdx.Idx) != default)
+                            if (AttackCellsC.WhichAttack(WhoseMoveC.CurPlayerI, SelIdx.Idx, CurIdx.Idx) != default)
                             {
                                 RpcSys.AttackUnitToMaster(SelIdx.Idx, CurIdx.Idx);
                             }
 
-                            else if (CellsShiftC.HaveIdxCell(WhoseMoveC.CurPlayerI, SelIdx.Idx, CurIdx.Idx))
+                            else if (ShiftCellsC.HaveIdxCell(WhoseMoveC.CurPlayerI, SelIdx.Idx, CurIdx.Idx))
                             {
                                 RpcSys.ShiftUnitToMaster(SelIdx.Idx, CurIdx.Idx);
                             }

@@ -31,28 +31,28 @@ namespace Game.Game
                         {
                             if (ownBuildC_sel.Is(WhoseMoveC.CurPlayerI))
                             {
-                                if (!WhereBuildsC.IsSettedCity(WhoseMoveC.CurPlayerI))
+                                if (!WhereBuildsC.IsSetted(BuildTypes.City, WhoseMoveC.CurPlayerI))
                                 {
                                     needActiveThirdButt = true;
                                     BuildAbilitUIC.SetSpriteThird(SpriteGameTypes.City);
-                                    BuildAbilC.SetAbilityType(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
+                                    BuildAbilC.SetAbility(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
                                 }
                             }
                             else
                             {
                                 needActiveThirdButt = true;
                                 BuildAbilitUIC.SetSpriteThird(SpriteGameTypes.CityNone);
-                                BuildAbilC.SetAbilityType(BuildButtonTypes.Third, BuildAbilTypes.Destroy);
+                                BuildAbilC.SetAbility(BuildButtonTypes.Third, BuildAbilTypes.Destroy);
                             }
                         }
 
                         else
                         {
-                            if (!WhereBuildsC.IsSettedCity(WhoseMoveC.CurPlayerI))
+                            if (!WhereBuildsC.IsSetted(BuildTypes.City, WhoseMoveC.CurPlayerI))
                             {
                                 needActiveThirdButt = true;
                                 BuildAbilitUIC.SetSpriteThird(SpriteGameTypes.City);
-                                BuildAbilC.SetAbilityType(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
+                                BuildAbilC.SetAbility(BuildButtonTypes.Third, BuildAbilTypes.CityBuild);
                             }
                         }
                     }

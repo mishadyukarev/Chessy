@@ -83,11 +83,10 @@ namespace Game.Game
                                         else if (unit_1.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
                                         {
                                             ScoutHeroCooldownC.SetStandCooldown(ownUnit_1.Owner, unit_1.Unit);
-                                            InvUnitsC.AddUnit(ownUnit_1.Owner, unit_1.Unit, levUnit_1.Level);
+                                            InvUnitsC.AddUnit(unit_1.Unit, levUnit_1.Level, ownUnit_1.Owner);
                                         }
 
-                                        WhereUnitsC.Remove(ownUnit_1.Owner, unit_1.Unit, levUnit_1.Level, idx_1);
-                                        unit_1.Reset();
+                                        unit_1.Remove(unit_1.Unit, levUnit_1.Level, ownUnit_1.Owner);
                                     }
                                 }
                             }

@@ -17,9 +17,9 @@ namespace Game.Game
                     TwGiveTakeUIC.SetImage(TwGiveTakeC.TWTypeForGive, TwGiveTakeC.Level(TwGiveTakeC.TWTypeForGive));
                 }
 
-            TwGiveTakeUIC.SetText(TWTypes.Pick, InvTWC.AmountToolWeap(WhoseMoveC.CurPlayerI, TWTypes.Pick, LevelTypes.Second).ToString());
-            TwGiveTakeUIC.SetText(TWTypes.Sword, InvTWC.AmountToolWeap(WhoseMoveC.CurPlayerI, TWTypes.Sword, LevelTypes.Second).ToString());
-            TwGiveTakeUIC.SetText(TWTypes.Shield, InvTWC.AmountToolWeap(WhoseMoveC.CurPlayerI, TWTypes.Shield, TwGiveTakeC.Level(TWTypes.Shield)).ToString());
+            TwGiveTakeUIC.SetText(TWTypes.Pick, InvTWC.Amount(WhoseMoveC.CurPlayerI, TWTypes.Pick, LevelTypes.Second).ToString());
+            TwGiveTakeUIC.SetText(TWTypes.Sword, InvTWC.Amount(WhoseMoveC.CurPlayerI, TWTypes.Sword, LevelTypes.Second).ToString());
+            TwGiveTakeUIC.SetText(TWTypes.Shield, InvTWC.Amount(WhoseMoveC.CurPlayerI, TWTypes.Shield, TwGiveTakeC.Level(TWTypes.Shield)).ToString());
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using static Game.Game.CellValues;
+using static Game.Game.CellValuesC;
 
 namespace Game.Game
 {

@@ -13,12 +13,12 @@ namespace Game.Game
             var playerSend = WhoseMoveC.WhoseMove;
 
 
-            if (WhereBuildsC.IsSettedCity(playerSend))
+            if (WhereBuildsC.IsSetted(BuildTypes.City, playerSend))
             {
                 if (InvResC.CanCreateUnit(playerSend, unit, out var needRes))
                 {
                     InvResC.BuyCreateUnit(playerSend, unit);
-                    InvUnitsC.AddUnit(playerSend, unit, LevelTypes.First);
+                    InvUnitsC.AddUnit(unit, LevelTypes.First, playerSend);
 
                     RpcSys.SoundToGeneral(sender, ClipTypes.SoundGoldPack);
                 }

@@ -14,16 +14,16 @@ namespace Game.Game
         {
             for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
             {
-                CellsForSetUnitC.ClearIdxCells(player);
+                SetUnitCellsC.Clear(player);
 
-                if (WhereBuildsC.IsSettedCity(player))
+                if (WhereBuildsC.IsSetted(BuildTypes.City, player))
                 {
-                    var idx_city = WhereBuildsC.IdxCity(player);
+                    var idx_city = WhereBuildsC.Idx(BuildTypes.City, player);
                     ref var unit_city = ref _unitF.Get1(idx_city);
                     
                     var listAround = CellSpace.GetXyAround(_xyF.Get1(idx_city).Xy);
 
-                    if(!unit_city.HaveUnit) CellsForSetUnitC.AddIdxCell(player, idx_city);
+                    if(!unit_city.HaveUnit) SetUnitCellsC.AddIdxCell(player, idx_city);
 
                     foreach (var xy in listAround)
                     {
@@ -34,7 +34,7 @@ namespace Game.Game
 
                         if (!curEnvDatCom.Have(EnvTypes.Mountain) && !curUnitDatCom.HaveUnit)
                         {
-                            CellsForSetUnitC.AddIdxCell(player, curIdx);
+                            SetUnitCellsC.AddIdxCell(player, curIdx);
                         }
                     }
                 }
@@ -56,14 +56,14 @@ namespace Game.Game
                             {
                                 if (y < 3 && x > 3 && x < 12)
                                 {
-                                    CellsForSetUnitC.AddIdxCell(PlayerTypes.First, curIdx);
+                                    SetUnitCellsC.AddIdxCell(PlayerTypes.First, curIdx);
                                 }
                             }
                             else
                             {
                                 if (y > 7 && x > 3 && x < 12)
                                 {
-                                    CellsForSetUnitC.AddIdxCell(PlayerTypes.Second, curIdx);
+                                    SetUnitCellsC.AddIdxCell(PlayerTypes.Second, curIdx);
                                 }
                             }
                         }
@@ -82,7 +82,7 @@ namespace Game.Game
                 {
                     if (!env_0.Have(EnvTypes.Mountain) && !unit_0.HaveUnit)
                     {
-                        CellsForSetUnitC.AddIdxCell(ownBuld_0.Owner, idx_0);
+                        SetUnitCellsC.AddIdxCell(ownBuld_0.Owner, idx_0);
                     }
                 }
             }

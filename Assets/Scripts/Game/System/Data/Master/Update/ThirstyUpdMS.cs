@@ -65,17 +65,15 @@ namespace Game.Game
                                     else if (unit_0.Is(new[] { UnitTypes.Scout, UnitTypes.Elfemale }))
                                     {
                                         ScoutHeroCooldownC.SetStandCooldown(ownUnit_0.Owner, unit_0.Unit);
-                                        InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
+                                        InvUnitsC.AddUnit(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
                                     }
 
                                     if (build_0.Is(BuildTypes.Camp))
                                     {
-                                        WhereBuildsC.Remove(ownBuild_0.Owner, build_0.Build, idx_0);
-                                        build_0.Remove();
+                                        build_0.Remove(ownBuild_0.Owner);
                                     }
 
-                                    WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                                    unit_0.Reset();
+                                    unit_0.Remove(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
                                 }
                             }
                         }

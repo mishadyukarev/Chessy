@@ -5,6 +5,7 @@ namespace Game.Game
     public struct UnitC
     {
         private UnitTypes _unit;
+        private readonly byte _idx;
 
         public UnitTypes Unit => _unit;
         public bool HaveUnit => Unit != UnitTypes.None;
@@ -49,19 +50,31 @@ namespace Game.Game
 
 
 
-        public void Set(UnitTypes unit)
+        public UnitC(UnitTypes unit, byte idx)
+        {
+            _unit = unit;
+            _idx = idx;
+        }
+
+
+
+        public void SetNew(UnitTypes unit, LevelTypes level, PlayerTypes owner)
         {
             if (unit == UnitTypes.None) throw new Exception();
             if (HaveUnit) throw new Exception("It's got unit");
-
+ 
             _unit = unit;
+            WhereUnitsC.Set(unit, level, owner, _idx, true);
         }
-        public void Reset()
+
+        public void Remove(UnitTypes unit, LevelTypes level, PlayerTypes owner)
         {
             if (!HaveUnit) throw new Exception("It's not got unit");
 
+            WhereUnitsC.Set(unit, level, owner, _idx, false);
             _unit = UnitTypes.None;
         }
+
         public void Sync(UnitTypes unitType)
         {
             _unit = unitType;

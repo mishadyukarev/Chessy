@@ -35,8 +35,7 @@ namespace Game.Game
                 if (stepUnit_0.HaveMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner)))
                 {
                     InvUnitsC.TakeUnit(ownUnit_0.Owner, UnitTypes.Scout, LevelTypes.First);
-                    WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                    unit_0.Reset();
+                    unit_0.Remove(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
 
                     if (twUnitC_0.HaveToolWeap)
                     {
@@ -44,13 +43,13 @@ namespace Game.Game
                         twUnitC_0.ToolWeapon = default;
                     }
 
-                    unit_0.Set(unit);
-                    levUnit_0.SetLevel(LevelTypes.First);
 
+                    levUnit_0.SetLevel(LevelTypes.First);
                     hpUnit_0.SetMaxHp();
                     stepUnit_0.SetMaxSteps(unit_0.Unit, effUnit_0.Have(UnitStatTypes.Steps), UnitUpgC.Steps(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner));
                     if (condUnit_0.HaveCondition) condUnit_0.Reset();
-                    WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+
+                    unit_0.SetNew(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
 
                     RpcSys.SoundToGeneral(sender, ClipTypes.ClickToTable);
                 }

@@ -20,7 +20,7 @@ namespace Game.Game
                 {
                     for (var levUnit = LevelTypes.First; levUnit < LevelTypes.End; levUnit++)
                     {
-                        foreach (var idx_0 in WhereUnitsC.IdxsUnits(player, unit, levUnit))
+                        foreach (var idx_0 in WhereUnitsC.Idxs(unit, levUnit, player))
                         {
                             ref var unit_0 = ref _unitF.Get1(idx_0);
                             ref var levUnit_0 = ref _unitF.Get2(idx_0);
@@ -54,25 +54,23 @@ namespace Game.Game
                                                 extract = envRes_0.MaxAmountRes(EnvTypes.AdultForest);
                                             }
 
-                                            InvResC.AddAmountRes(ownUnit_0.Owner, ResTypes.Wood, extract);
+                                            InvResC.Add(ResTypes.Wood, ownUnit_0.Owner, extract);
                                             envRes_0.TakeAmountRes(EnvTypes.AdultForest, extract);
 
                                             if (envRes_0.HaveRes(EnvTypes.AdultForest))
                                             {
                                                 if (buil_0.Is(BuildTypes.Camp))
                                                 {
-                                                    WhereBuildsC.Remove(ownUnit_0.Owner, BuildTypes.Camp, idx_0);
-                                                    buil_0.Remove();
+                                                    buil_0.Remove(ownUnit_0.Owner);
 
-                                                    buil_0.SetNew(BuildTypes.Woodcutter);
+                                                    
                                                     ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Build, idx_0);
+                                                    buil_0.SetNew(BuildTypes.Woodcutter, ownBuil_0.Owner);
                                                 }
                                                 else if (!buil_0.Have)
                                                 {
-                                                    buil_0.SetNew(BuildTypes.Woodcutter);
                                                     ownBuil_0.SetOwner(ownUnit_0.Owner);
-                                                    WhereBuildsC.Add(ownUnit_0.Owner, buil_0.Build, idx_0);
+                                                    buil_0.SetNew(BuildTypes.Woodcutter, ownUnit_0.Owner);
                                                 }
                                                 else if (buil_0.Is(BuildTypes.Woodcutter))
                                                 {
@@ -85,22 +83,16 @@ namespace Game.Game
                                             }
                                             else
                                             {
-                                                if (buil_0.Have)
-                                                {
-                                                    WhereBuildsC.Remove(ownBuil_0.Owner, buil_0.Build, idx_0);
-                                                    buil_0.Remove();
-                                                }
+                                                if (buil_0.Have) buil_0.Remove(ownBuil_0.Owner);
 
                                                 trail_0.ResetAll();
                                                 env_0.Remove(EnvTypes.AdultForest);
-                                                WhereEnvC.Remove(EnvTypes.AdultForest, idx_0);
 
                                                 if (UnityEngine.Random.Range(0, 100) < 50)
                                                 {
                                                     ref var envDatCom = ref _cellEnvFilt.Get1(idx_0);
 
-                                                    envDatCom.Set(EnvTypes.YoungForest);
-                                                    WhereEnvC.Add(EnvTypes.YoungForest, idx_0);
+                                                    envDatCom.SetNew(EnvTypes.YoungForest);
                                                 }
                                             }
                                         }

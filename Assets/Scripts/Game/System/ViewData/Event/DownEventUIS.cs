@@ -54,7 +54,7 @@ namespace Game.Game
 
             if (WhoseMoveC.IsMyMove)
             {
-                if (!ScoutHeroCooldownC.HaveCooldown(WhoseMoveC.CurPlayerI, InvUnitsC.MyHero))
+                if (!ScoutHeroCooldownC.HaveCooldown(WhoseMoveC.CurPlayerI, UnitTypes.Elfemale))
                 {
                     CellClickC.Set(CellClickTypes.GiveHero);
                 }
@@ -69,7 +69,7 @@ namespace Game.Game
 
         private void Done()
         {
-            if (!InvUnitsC.Have(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelTypes.First))
+            if (!InvUnitsC.Have(UnitTypes.King, LevelTypes.First, WhoseMoveC.CurPlayerI))
             {
                 RpcSys.DoneToMaster();
             }
@@ -99,12 +99,12 @@ namespace Game.Game
 
             if (WhoseMoveC.IsMyMove)
             {
-                if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, unitType, LevelTypes.Second))
+                if (InvUnitsC.Have(unitType, LevelTypes.Second, WhoseMoveC.CurPlayerI))
                 {
                     CellClickC.Set(CellClickTypes.SetUnit);
                     SelUnitC.SetSelUnit(unitType, LevelTypes.Second);
                 }
-                else if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, unitType, LevelTypes.First))
+                else if (InvUnitsC.Have(unitType, LevelTypes.First, WhoseMoveC.CurPlayerI))
                 {
                     CellClickC.Set(CellClickTypes.SetUnit);
                     SelUnitC.SetSelUnit(unitType, LevelTypes.First);

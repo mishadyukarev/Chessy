@@ -6,6 +6,9 @@ namespace Game.Game
     {
         private static Dictionary<BuildButtonTypes, BuildAbilTypes> _abilities;
 
+        public static BuildAbilTypes AbilityType(BuildButtonTypes buildBut) => _abilities[buildBut];
+
+
         public BuildAbilC(bool needNew) : this()
         {
             if (needNew)
@@ -18,7 +21,7 @@ namespace Game.Game
             }
         }
 
-        public static BuildAbilTypes AbilityType(BuildButtonTypes buildButType) => _abilities[buildButType];
-        public static void SetAbilityType(BuildButtonTypes buildButType, BuildAbilTypes abilityType) => _abilities[buildButType] = abilityType;
+
+        public static void SetAbility(BuildButtonTypes buildBut, BuildAbilTypes ability) => _abilities[buildBut] = ability;
     }
 }

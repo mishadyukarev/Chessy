@@ -5,53 +5,62 @@ namespace Game.Game
 {
     public struct EnvC
     {
-        private Dictionary<EnvTypes, bool> _haveEnvir;
+        private Dictionary<EnvTypes, bool> _envs;
+        private readonly byte _idx;
 
         public Dictionary<EnvTypes, bool> Envronments
         {
             get
             {
                 var envrs = new Dictionary<EnvTypes, bool>();
-                foreach (var item in _haveEnvir) envrs.Add(item.Key, item.Value);
+                foreach (var item in _envs) envrs.Add(item.Key, item.Value);
                 return envrs;
             }
         }
-
-        public EnvC(Dictionary<EnvTypes, bool> haveCellEnvironments)
+        public bool Have(params EnvTypes[] envs)
         {
-            _haveEnvir = haveCellEnvironments;
+            if (envs == default) throw new Exception();
 
-            for (var env = EnvTypes.First; env < EnvTypes.End; env++)
-            {
-                _haveEnvir.Add(env, default);
-            }
-        }
-
-        public bool Have(params EnvTypes[] envTypes)
-        {
-            if (envTypes == default) throw new Exception();
-
-            foreach (var env in envTypes) if (_haveEnvir[env]) return true;
+            foreach (var env in envs) if (_envs[env]) return true;
             return false;
         }
 
-        public void Set(EnvTypes envType, bool haveEnv = true)
-        {
-            if (envType == default) throw new Exception();
-            if (Have(envType)) throw new Exception();
 
-            _haveEnvir[envType] = haveEnv;
-        }
-        public void Remove(EnvTypes envType)
-        {
-            if (envType == default) throw new Exception();
-            if (!Have(envType)) throw new Exception();
 
-            _haveEnvir[envType] = false;
-        }
-        public void Sync(EnvTypes envType, bool haveEnv = true)
+        public EnvC(Dictionary<EnvTypes, bool> haveEnvs, byte idx)
         {
-            _haveEnvir[envType] = haveEnv;
+            _envs = haveEnvs;
+            _idx = idx;
+
+            for (var env = EnvTypes.First; env < EnvTypes.End; env++)
+            {
+                _envs.Add(env, default);
+            }
+        }
+
+
+
+        public void SetNew(EnvTypes env)
+        {
+            if (env == default) throw new Exception();
+            if (Have(env)) throw new Exception();
+
+            WhereEnvC.Set(env, _idx, true);
+            _envs[env] = true;
+        }
+        public void Remove(EnvTypes env)
+        {
+            if (env == default) throw new Exception();
+            if (!Have(env)) throw new Exception();
+
+            WhereEnvC.Set(env, _idx, false);
+            _envs[env] = false;
+        }
+        public void Sync(EnvTypes env, bool have)
+        {
+            if (!_envs.ContainsKey(env)) throw new Exception();
+
+            _envs[env] = have;
         }
     }
 }

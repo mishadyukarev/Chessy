@@ -5,133 +5,89 @@ namespace Game.Game
 {
     public struct WhereUnitsC
     {
-        private static Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelTypes, List<byte>>>> _unitsInGame;
+        private static Dictionary<string, bool> _units;
 
-        public static Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelTypes, List<byte>>>> UnitsInGame
+
+        private static bool ContainsKey(string key) => _units.ContainsKey(key);
+        private static string Key(UnitTypes unit, LevelTypes level, PlayerTypes player, byte idx) => unit.ToString() + level + player + idx;
+
+        public static Dictionary<string, bool> Units
         {
             get
             {
-                var newDict_0 = new Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelTypes, List<byte>>>>();
-
-                foreach (var item_0 in _unitsInGame)
-                {
-                    newDict_0.Add(item_0.Key, new Dictionary<UnitTypes, Dictionary<LevelTypes, List<byte>>>());
-
-                    foreach (var item_1 in item_0.Value)
-                    {
-                        newDict_0[item_0.Key].Add(item_1.Key, new Dictionary<LevelTypes, List<byte>>());
-
-                        foreach (var item_2 in item_1.Value)
-                        {
-                            newDict_0[item_0.Key][item_1.Key].Add(item_2.Key, new List<byte>());
-
-                            foreach (var item_3 in item_2.Value)
-                            {
-                                newDict_0[item_0.Key][item_1.Key][item_2.Key].Add(item_3);
-                            }
-                        }
-                    }
-                }
-
-                return newDict_0;
+                var dict = new Dictionary<string, bool>();
+                foreach (var item in _units) dict.Add(item.Key, item.Value);
+                return dict;
             }
         }
-
-        public WhereUnitsC(bool needNew) : this()
+        public static List<byte> Idxs(UnitTypes unit, LevelTypes lev, PlayerTypes player)
         {
-            if (needNew)
+            var list = new List<byte>();
+
+            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
             {
-                _unitsInGame = new Dictionary<PlayerTypes, Dictionary<UnitTypes, Dictionary<LevelTypes, List<byte>>>>();
-
-                _unitsInGame.Add(PlayerTypes.First, new Dictionary<UnitTypes, Dictionary<LevelTypes, List<byte>>>());
-                _unitsInGame.Add(PlayerTypes.Second, new Dictionary<UnitTypes, Dictionary<LevelTypes, List<byte>>>());
-
-
-                for (var unitType = UnitTypes.First; unitType < UnitTypes.End; unitType++)
-                {
-                    _unitsInGame[PlayerTypes.First].Add(unitType, new Dictionary<LevelTypes, List<byte>>());
-                    _unitsInGame[PlayerTypes.Second].Add(unitType, new Dictionary<LevelTypes, List<byte>>());
-
-                    for (var levUnit = LevelTypes.First; levUnit < LevelTypes.End; levUnit++)
-                    {
-                        _unitsInGame[PlayerTypes.First][unitType].Add(levUnit, new List<byte>());
-                        _unitsInGame[PlayerTypes.Second][unitType].Add(levUnit, new List<byte>());
-                    }
-
-                }
+                if (_units[Key(unit, lev, player, idx)])
+                    list.Add(idx);
             }
+            return list;
         }
-
-        private static bool Contains(PlayerTypes playerType, UnitTypes unitType, LevelTypes levelUnit, byte idx) => _unitsInGame[playerType][unitType][levelUnit].Contains(idx);
-        public static void Add(PlayerTypes playerType, UnitTypes unitType, LevelTypes levelUnit, byte idxCell)
-        {
-            if (!Contains(playerType, unitType, levelUnit, idxCell)) _unitsInGame[playerType][unitType][levelUnit].Add(idxCell);
-            else throw new Exception();
-        }
-        public static void Remove(PlayerTypes playerType, UnitTypes unitType, LevelTypes levelUnit, byte idxCell)
-        {
-            if (Contains(playerType, unitType, levelUnit, idxCell)) _unitsInGame[playerType][unitType][levelUnit].Remove(idxCell);
-            else throw new Exception();
-        }
-        public static void Sync(PlayerTypes playerType, UnitTypes unitType, LevelTypes levelUnit, byte idx)
-        {
-            _unitsInGame[playerType][unitType][levelUnit].Add(idx);
-        }
-        public static void Clear(PlayerTypes playerType, UnitTypes unitType, LevelTypes levelUnit)
-        {
-            _unitsInGame[playerType][unitType][levelUnit].Clear();
-        }
-        public static byte AmountUnits(PlayerTypes playerType, UnitTypes unitType, LevelTypes levelUnit) => (byte)_unitsInGame[playerType][unitType][levelUnit].Count;
-        public static List<byte> IdxsUnits(PlayerTypes player, UnitTypes unit, LevelTypes levelUnit) => _unitsInGame[player][unit][levelUnit].Copy();
-
-        public static int AmountUnitsExcept(PlayerTypes player, UnitTypes unit)
-        {
-            var amountUnits = 0;
-
-            foreach (var item_0 in _unitsInGame)
-            {
-                if (item_0.Key == player)
-                {
-                    foreach (var item_1 in item_0.Value)
-                    {
-                        if (item_1.Key != unit)
-                        {
-                            foreach (var item_2 in item_1.Value)
-                            {
-                                amountUnits += item_2.Value.Count;
-                            }
-                        }
-                    }
-                }
-            }
-
-            return amountUnits;
-        }
-
         public static bool HaveMyHeroInGame
         {
             get
             {
-                foreach (var item_0 in UnitsInGame)
+                for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
                 {
-                    if (item_0.Key == WhoseMoveC.CurPlayerI)
+                    if (_units[Key(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveC.CurPlayerI, idx)])
                     {
-                        foreach (var item_1 in item_0.Value)
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+
+
+        static WhereUnitsC()
+        {
+            _units = new Dictionary<string, bool>();
+
+            for (var unit = UnitTypes.First; unit < UnitTypes.End; unit++)
+            {
+                for (var lev = LevelTypes.First; lev < LevelTypes.End; lev++)
+                {
+                    for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+                    {
+                        for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
                         {
-                            if (item_1.Key >= UnitTypes.Elfemale)
-                            {
-                                foreach (var item_2 in item_1.Value)
-                                {
-                                    if (item_2.Value.Count == 1) return true;
-                                    else if (item_2.Value.Count > 1) throw new Exception();
-                                }
-                            }
+                            _units.Add(Key(unit, lev, player, idx), false);
                         }
                     }
                 }
-
-                return false;
             }
+        }
+        public WhereUnitsC(bool needReset)
+        {
+            if (needReset) foreach (var item in Units) _units[item.Key] = false;
+            else throw new Exception();
+        }
+
+
+        
+        public static void Set(UnitTypes unit, LevelTypes lev, PlayerTypes player, byte idx, bool have)
+        {
+            var key = Key(unit, lev, player, idx);
+
+            if (!ContainsKey(key)) throw new Exception();
+            if (_units[key] == have) throw new Exception();
+
+            _units[key] = have;
+        }
+        public static void Sync(string key, bool have)
+        {
+            if (!ContainsKey(key)) throw new Exception();
+
+            _units[key] = have;
         }
     }
 }

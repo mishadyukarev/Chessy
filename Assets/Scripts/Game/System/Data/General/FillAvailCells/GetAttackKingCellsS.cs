@@ -59,7 +59,7 @@ namespace Game.Game
                                     {
                                         if (!ownUnit_1.Is(ownUnit_0.Owner))
                                         {
-                                            AttackCellsC.Add(ownUnit_0.Owner, AttackTypes.Simple, idx_0, idx_1);
+                                            AttackCellsC.Add(AttackTypes.Simple, ownUnit_0.Owner,  idx_0, idx_1);
                                         }
                                     }
                                 }

@@ -17,15 +17,15 @@ namespace Game.Game
             var white = SpritesResComC.Sprite(SpriteGameTypes.WhiteCell);
             var black = SpritesResComC.Sprite(SpriteGameTypes.BlackCell);
 
-            var cell_GOs = new GameObject[CellValues.CELL_COUNT_X, CellValues.CELL_COUNT_Y];
+            var cell_GOs = new GameObject[CellValuesC.CELL_COUNT_X, CellValuesC.CELL_COUNT_Y];
 
             var suppParCells = new GameObject("Cells");
             GenerZoneVC.Attach(suppParCells.transform);
 
             byte idx_0 = 0;
 
-            for (byte x = 0; x < CellValues.CELL_COUNT_X; x++)
-                for (byte y = 0; y < CellValues.CELL_COUNT_Y; y++)
+            for (byte x = 0; x < CellValuesC.CELL_COUNT_X; x++)
+                for (byte y = 0; y < CellValuesC.CELL_COUNT_Y; y++)
                 {
                     var curParCell = cell_GOs[x, y];
 

@@ -2,11 +2,11 @@
 
 namespace Game.Game
 {
-    public struct CellsShiftC
+    public struct ShiftCellsC
     {
         private static Dictionary<PlayerTypes, Dictionary<byte, List<byte>>> _availCellsForShift;
 
-        public CellsShiftC(bool needNew) : this()
+        public ShiftCellsC(bool needNew) : this()
         {
             if (needNew)
             {
@@ -16,8 +16,8 @@ namespace Game.Game
                 var dict2 = new Dictionary<byte, List<byte>>();
 
                 byte curIdx = 0;
-                for (byte x = 0; x < CellValues.CELL_COUNT_X; x++)
-                    for (byte y = 0; y < CellValues.CELL_COUNT_Y; y++)
+                for (byte x = 0; x < CellValuesC.CELL_COUNT_X; x++)
+                    for (byte y = 0; y < CellValuesC.CELL_COUNT_Y; y++)
                     {
                         dict1.Add(curIdx, new List<byte>());
                         dict2.Add(curIdx, new List<byte>());

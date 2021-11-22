@@ -5,63 +5,66 @@ namespace Game.Game
 {
     public readonly struct WhereEnvC
     {
-        private static Dictionary<EnvTypes, List<byte>> _envInGame;
+        private static Dictionary<string, bool> _envs;
 
-        public static Dictionary<EnvTypes, List<byte>> EnvInGame
+
+        private static string Key(EnvTypes env, byte idx) => env.ToString() + idx;
+        private static bool ContainsKey(string key) => _envs.ContainsKey(key);
+
+        public static Dictionary<string, bool> Envs
         {
             get
             {
-                var newDict_0 = new Dictionary<EnvTypes, List<byte>>();
-
-                foreach (var item_0 in _envInGame)
-                {
-                    newDict_0.Add(item_0.Key, new List<byte>());
-
-                    foreach (var item_1 in item_0.Value)
-                    {
-                        newDict_0[item_0.Key].Add(item_1);
-                    }
-                }
-
-                return newDict_0;
+                var dict = new Dictionary<string, bool>();
+                foreach (var item in _envs) dict.Add(item.Key, item.Value);
+                return dict;
             }
         }
-
-        public WhereEnvC(bool needNew) : this()
+        public static byte Amount(EnvTypes env)
         {
-            if (needNew)
+            byte amount = 0;
+            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
             {
-                _envInGame = new Dictionary<EnvTypes, List<byte>>();
+                if (_envs[Key(env, idx)]) ++amount;
+            }
+            return amount;
+        }
 
-                for (var env = EnvTypes.First; env < EnvTypes.End; env++)
+
+        static WhereEnvC()
+        {
+            _envs = new Dictionary<string, bool>();
+
+            for (var env = EnvTypes.First; env < EnvTypes.End; env++)
+            {
+                for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
                 {
-                    _envInGame.Add(env, new List<byte>());
+                    _envs.Add(Key(env, idx), default);
                 }
             }
         }
-
-        public static void Add(EnvTypes envirType, byte idx)
+        public WhereEnvC(bool needReset) : this()
         {
-            if (envirType == EnvTypes.None) throw new Exception();
-            _envInGame[envirType].Add(idx);
-        }
-
-        public static void Remove(EnvTypes envirType, byte idx)
-        {
-            if (envirType == EnvTypes.None) throw new Exception();
-
-            if (_envInGame[envirType].Contains(idx)) _envInGame[envirType].Remove(idx);
+            if (needReset) foreach (var item in Envs) _envs[item.Key] = false;
             else throw new Exception();
         }
 
-        public static void SyncAdd(EnvTypes envirType, byte idx)
+
+
+        public static void Set(EnvTypes env, byte idx, bool have)
         {
-            _envInGame[envirType].Add(idx);
+            var key = Key(env, idx);
+
+            if (!ContainsKey(key)) throw new Exception();
+            if (_envs[key] == have) throw new Exception();
+
+            _envs[key] = have;
         }
-        public static void Clear(EnvTypes envirType)
+        public static void Sync(string key, bool have)
         {
-            _envInGame[envirType].Clear();
+            if (!ContainsKey(key)) throw new Exception();
+
+            _envs[key] = have;
         }
-        public static byte Amount(EnvTypes env) => (byte)_envInGame[env].Count;
     }
 }

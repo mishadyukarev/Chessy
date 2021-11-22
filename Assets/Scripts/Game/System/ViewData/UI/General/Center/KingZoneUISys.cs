@@ -6,7 +6,7 @@ namespace Game.Game
     {
         public void Run()
         {
-            if (InvUnitsC.Have(WhoseMoveC.CurPlayerI, UnitTypes.King, LevelTypes.First))
+            if (InvUnitsC.Have(UnitTypes.King, LevelTypes.First, WhoseMoveC.CurPlayerI))
             {
                 KingZoneUIC.EnableZone();
             }

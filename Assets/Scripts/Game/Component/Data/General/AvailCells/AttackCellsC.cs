@@ -1,44 +1,69 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Game.Game
 {
     public struct AttackCellsC
     {
-        private static Dictionary<PlayerTypes, Dictionary<AttackTypes, Dictionary<byte, List<byte>>>> _cellsForAttack;
+        private static Dictionary<string, List<byte>> _cells;
 
-        public AttackCellsC(bool needNew) : this()
+        private static string Key(AttackTypes attack, PlayerTypes player, byte idx) => attack.ToString() + player + idx;
+        
+        public static Dictionary<string, List<byte>> Cells
         {
-            if (needNew)
+            get
             {
-                _cellsForAttack = new Dictionary<PlayerTypes, Dictionary<AttackTypes, Dictionary<byte, List<byte>>>>();
-
-
-                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
-                {
-                    _cellsForAttack[player] = new Dictionary<AttackTypes, Dictionary<byte, List<byte>>>();
-                    _cellsForAttack[player].Add(AttackTypes.Simple, new Dictionary<byte, List<byte>>());
-                    _cellsForAttack[player].Add(AttackTypes.Unique, new Dictionary<byte, List<byte>>());
-
-                    for (byte idx = 0; idx < CellValues.AMOUNT_ALL_CELLS; idx++)
-                    {
-                        _cellsForAttack[player][AttackTypes.Simple].Add(idx, new List<byte>());
-                        _cellsForAttack[player][AttackTypes.Unique].Add(idx, new List<byte>());
-                    }
-                }
+                var dict = new Dictionary<string, List<byte>>();
+                foreach (var item in _cells) dict.Add(item.Key, item.Value.Copy());
+                return dict;
             }
         }
-
-        public static List<byte> List(PlayerTypes playerType, AttackTypes attackType, byte idxCell) => _cellsForAttack[playerType][attackType][idxCell].Copy();
-        public static AttackTypes FindByIdx(PlayerTypes playerType, byte idxCell, byte idxForFind)
+        public static List<byte> List(PlayerTypes player, AttackTypes attack, byte idx) => _cells[Key(attack, player, idx)].Copy();
+        public static AttackTypes WhichAttack(PlayerTypes player, byte idx, byte idxForFind)
         {
-            for (var attackType = AttackTypes.First; attackType < AttackTypes.End; attackType++)
+            for (var attack = AttackTypes.First; attack < AttackTypes.End; attack++)
             {
-                if (_cellsForAttack[playerType][attackType][idxCell].Contains(idxForFind)) return attackType;
+                if (_cells[Key(attack, player, idx)].Contains(idxForFind)) return attack;
             }
 
             return AttackTypes.None;
         }
-        public static void Add(PlayerTypes playerType, AttackTypes attackType, byte idxCell, byte value) => _cellsForAttack[playerType][attackType][idxCell].Add(value);
-        public static void Clear(PlayerTypes playerType, AttackTypes attackType, byte idxCell) => _cellsForAttack[playerType][attackType][idxCell].Clear();
+        public static bool ContainsKey(AttackTypes attack, PlayerTypes player, byte idx) => _cells.ContainsKey(Key(attack, player, idx));
+
+
+        static AttackCellsC()
+        {
+            _cells = new Dictionary<string, List<byte>>();
+
+            for (var attack = AttackTypes.First; attack < AttackTypes.End; attack++)
+            {
+                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
+                {
+                    for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+                    {
+                        _cells.Add(Key(attack, player, idx), new List<byte>());
+                    }
+                }
+            }
+        }
+        public AttackCellsC(bool needReset)
+        {
+            if (needReset) foreach (var item in Cells) _cells[item.Key].Clear();
+            else throw new Exception();
+        }
+
+
+        public static void Add(AttackTypes attack, PlayerTypes player, byte idx, byte value)
+        {
+            if (!ContainsKey(attack, player, idx)) throw new Exception();
+
+            _cells[Key(attack, player, idx)].Add(value);
+        }
+        public static void Clear(AttackTypes attack, PlayerTypes player, byte idx)
+        {
+            if (!ContainsKey(attack, player, idx)) throw new Exception();
+
+            _cells[Key(attack, player, idx)].Clear();
+        }
     }
 }

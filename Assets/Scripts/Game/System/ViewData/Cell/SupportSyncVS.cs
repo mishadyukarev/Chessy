@@ -99,7 +99,7 @@ namespace Game.Game
             {
                 if (SelUniqAbilC.Is(UniqAbilTypes.FireArcher))
                 {
-                    foreach (var idx_0 in CellsArsonArcherC.List(WhoseMoveC.CurPlayerI, SelIdx.Idx))
+                    foreach (var idx_0 in ArsonCellsC.List(WhoseMoveC.CurPlayerI, SelIdx.Idx))
                     {
                         _supVF.Get1(idx_0).EnableSR(SupVisTypes.FireSelector);
                     }
@@ -107,7 +107,7 @@ namespace Game.Game
             }
             else
             {
-                foreach (var idx_0 in CellsShiftC.List(WhoseMoveC.CurPlayerI, SelIdx.Idx))
+                foreach (var idx_0 in ShiftCellsC.List(WhoseMoveC.CurPlayerI, SelIdx.Idx))
                 {
                     _supVF.Get1(idx_0).EnableSR(SupVisTypes.Shift);
                 }
@@ -125,7 +125,7 @@ namespace Game.Game
 
             if (CellClickC.Is(CellClickTypes.SetUnit))
             {
-                foreach (var idx_0 in CellsForSetUnitC.List(WhoseMoveC.CurPlayerI))
+                foreach (var idx_0 in SetUnitCellsC.List(WhoseMoveC.CurPlayerI))
                 {
                     _supVF.Get1(idx_0).EnableSR(SupVisTypes.Spawn);
                 }

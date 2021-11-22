@@ -52,9 +52,8 @@ namespace Game.Game
                                 tw_0.ToolWeapon = default;
                             }
 
-                            InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
-                            WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                            unit_0.Reset();
+                            InvUnitsC.AddUnit(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
+                            unit_0.Remove(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
                         }
                     }
                     else
@@ -66,9 +65,8 @@ namespace Game.Game
                             tw_0.ToolWeapon = default;
                         }
 
-                        InvUnitsC.AddUnit(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level);
-                        WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
-                        unit_0.Reset();
+                        InvUnitsC.AddUnit(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
+                        unit_0.Remove(unit_0.Unit, levUnit_0.Level, ownUnit_0.Owner);
                     }
                 }
 
@@ -77,8 +75,7 @@ namespace Game.Game
                 {
                     if (build_0.Is(BuildTypes.Camp))
                     {
-                        WhereBuildsC.Remove(ownUnit_0.Owner, build_0.Build, idx_0);
-                        build_0.Remove();
+                        build_0.Remove(ownUnit_0.Owner);
                     }
                 }
 
@@ -87,11 +84,9 @@ namespace Game.Game
                     if (env_0.Have(EnvTypes.YoungForest))
                     {
                         env_0.Remove(EnvTypes.YoungForest);
-                        WhereEnvC.Remove(EnvTypes.YoungForest, idx_0);
 
-                        env_0.Set(EnvTypes.AdultForest);
+                        env_0.SetNew(EnvTypes.AdultForest);
                         envRes_0.SetNew(EnvTypes.AdultForest);
-                        WhereEnvC.Add(EnvTypes.AdultForest, idx_0);
                     }
 
                     if (!env_0.Have(EnvTypes.Fertilizer)
@@ -102,9 +97,8 @@ namespace Game.Game
 
                         if (random <= 3)
                         {
-                            env_0.Set(EnvTypes.Fertilizer);
+                            env_0.SetNew(EnvTypes.Fertilizer);
                             envRes_0.SetNew(EnvTypes.Fertilizer);
-                            WhereEnvC.Add(EnvTypes.Fertilizer, idx_0);
                         }
                     }
                 }

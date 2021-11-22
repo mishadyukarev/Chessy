@@ -48,8 +48,7 @@ namespace Game.Game
                                     {
                                         RpcSys.SoundToGeneral(sender, UniqAbilTypes.Seed);
 
-                                        env_0.Set(EnvTypes.YoungForest);
-                                        WhereEnvC.Add(EnvTypes.YoungForest, idx_0);
+                                        env_0.SetNew(EnvTypes.YoungForest);
 
                                         stepUnit_0.TakeSteps();
                                     }

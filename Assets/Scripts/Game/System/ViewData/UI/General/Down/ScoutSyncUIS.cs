@@ -8,7 +8,8 @@ namespace Game.Game
         {
             var curPlayer = WhoseMoveC.CurPlayerI;
 
-            GetScoutUIC.SetActiveScout(InvUnitsC.Have(curPlayer, UnitTypes.Scout, LevelTypes.First), ScoutHeroCooldownC.Cooldown(curPlayer, UnitTypes.Scout));
+            GetScoutUIC.SetActiveScout(InvUnitsC.Have(UnitTypes.Scout, LevelTypes.First, curPlayer),
+                ScoutHeroCooldownC.Cooldown(curPlayer, UnitTypes.Scout));
         }
     }
 }

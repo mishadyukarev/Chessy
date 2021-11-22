@@ -44,15 +44,13 @@ namespace Game.Game
                         }
 
 
-                        else if (InvTWC.HaveTW(ownUnit_0.Owner, tWTypeForGive, levelTWType))
+                        else if (InvTWC.Have(ownUnit_0.Owner, tWTypeForGive, levelTWType))
                         {
-                            InvTWC.TakeAmountTools(ownUnit_0.Owner, tWTypeForGive, levelTWType);
-                            WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
+                            InvTWC.Take(ownUnit_0.Owner, tWTypeForGive, levelTWType);
 
                             twUnit_0.ToolWeapon = tWTypeForGive;
                             twUnit_0.LevelTWType = levelTWType;
                             if (twUnit_0.Is(TWTypes.Shield)) twUnit_0.SetShieldProtect(levelTWType);
-                            WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                             stepUnit_0.TakeSteps();
 
@@ -65,10 +63,8 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Pick, levelTWType);
 
-                                WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                                 twUnit_0.ToolWeapon = tWTypeForGive;
                                 twUnit_0.LevelTWType = levelTWType;
-                                WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                                 stepUnit_0.TakeSteps();
 
@@ -86,10 +82,8 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, TWTypes.Sword, levelTWType);
 
-                                WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                                 twUnit_0.ToolWeapon = tWTypeForGive;
                                 twUnit_0.LevelTWType = levelTWType;
-                                WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                                 stepUnit_0.TakeSteps();
 
@@ -107,11 +101,9 @@ namespace Game.Game
                             {
                                 InvResC.BuyTW(ownUnit_0.Owner, tWTypeForGive, levelTWType);
 
-                                WhereUnitsC.Remove(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
                                 twUnit_0.ToolWeapon = tWTypeForGive;
                                 twUnit_0.LevelTWType = levelTWType;
                                 twUnit_0.SetShieldProtect(levelTWType);
-                                WhereUnitsC.Add(ownUnit_0.Owner, unit_0.Unit, levUnit_0.Level, idx_0);
 
                                 stepUnit_0.TakeSteps();
 

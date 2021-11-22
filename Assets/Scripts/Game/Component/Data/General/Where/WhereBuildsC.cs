@@ -5,89 +5,94 @@ namespace Game.Game
 {
     public struct WhereBuildsC
     {
-        private static Dictionary<PlayerTypes, Dictionary<BuildTypes, List<byte>>> _buildsInGame;
+        private static Dictionary<string, bool> _cells;
 
-        public static Dictionary<PlayerTypes, Dictionary<BuildTypes, List<byte>>> BuildsInGame
+        private static string Key(BuildTypes build, PlayerTypes owner, byte idx) => build.ToString() + owner + idx;
+        private static bool ContainsKey(string key) => _cells.ContainsKey(key);
+
+        public static Dictionary<string, bool> Cells
         {
             get
             {
-                var newDict_0 = new Dictionary<PlayerTypes, Dictionary<BuildTypes, List<byte>>>();
-
-                foreach (var item_0 in _buildsInGame)
-                {
-                    newDict_0.Add(item_0.Key, new Dictionary<BuildTypes, List<byte>>());
-
-                    foreach (var item_1 in item_0.Value)
-                    {
-                        newDict_0[item_0.Key].Add(item_1.Key, new List<byte>());
-
-                        foreach (var item_2 in item_1.Value)
-                        {
-                            newDict_0[item_0.Key][item_1.Key].Add(item_2);
-                        }
-                    }
-                }
-
-                return newDict_0;
+                var dict = new Dictionary<string, bool>();
+                foreach (var item in _cells) dict.Add(item.Key, item.Value);
+                return dict;
             }
         }
+        public static byte Amount(BuildTypes build, PlayerTypes player)
+        {
+            byte amount = 0;
+            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            {
+                if (_cells[Key(build, player, idx)]) ++amount;
+            }
+            return amount;
+        }
+        public static List<byte> IdxBuilds(BuildTypes build, PlayerTypes player)
+        {
+            var list = new List<byte>();
+            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            {
+                if(_cells[Key(build, player, idx)]) list.Add(idx);
+            }
+            return list;
+        }
+        public static bool IsSetted(BuildTypes build, PlayerTypes player)
+        {
+            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            {
+                if (_cells[Key(build, player, idx)]) return true;
+            }
+            return false;
+        }
+        public static byte Idx(BuildTypes build, PlayerTypes player)
+        {
+            for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+            {
+                if (_cells[Key(build, player, idx)]) return idx;
+            }
+            throw new Exception();
+        }
+
+
 
         static WhereBuildsC()
         {
-            _buildsInGame = new Dictionary<PlayerTypes, Dictionary<BuildTypes, List<byte>>>();
-
-            _buildsInGame.Add(PlayerTypes.First, new Dictionary<BuildTypes, List<byte>>());
-            _buildsInGame.Add(PlayerTypes.Second, new Dictionary<BuildTypes, List<byte>>());
-
+            _cells = new Dictionary<string, bool>();
 
             for (var build = BuildTypes.First; build < BuildTypes.End; build++)
             {
-                _buildsInGame[PlayerTypes.First].Add(build, new List<byte>());
-                _buildsInGame[PlayerTypes.Second].Add(build, new List<byte>());
-            }
-        }
-        public static void StartGame()
-        {
-            foreach (var item_0 in _buildsInGame)
-            {
-                foreach (var item_1 in item_0.Value)
+                for (var player = PlayerTypes.First; player < PlayerTypes.End; player++)
                 {
-                    _buildsInGame[item_0.Key][item_1.Key].Clear();
+
+                    for (byte idx = 0; idx < CellValuesC.AMOUNT_ALL_CELLS; idx++)
+                    {
+                        _cells.Add(Key(build, player, idx), default);
+                    }
                 }
             }
         }
-
-        private static bool Contains(PlayerTypes playerType, BuildTypes buildType, byte idx)
+        public WhereBuildsC(bool needReset)
         {
-           return  _buildsInGame[playerType][buildType].Contains(idx);
-        }
-        public static void Add(PlayerTypes playerType, BuildTypes buildType, byte idxCell)
-        {
-            if (!Contains(playerType, buildType, idxCell)) _buildsInGame[playerType][buildType].Add(idxCell);
+            if (needReset) foreach (var item in Cells) _cells[item.Key] = false;
             else throw new Exception();
         }
-        public static void Sync(PlayerTypes playerType, BuildTypes buildType, byte idxCell)
+
+
+
+        public static void Set(BuildTypes build, PlayerTypes player, byte idx, bool have)
         {
-            _buildsInGame[playerType][buildType].Add(idxCell);
+            var key = Key(build, player, idx);
+
+            if (!ContainsKey(key)) throw new Exception();
+
+            _cells[key] = have;
         }
 
-        public static void Remove(PlayerTypes playerType, BuildTypes buildType, byte idxCell)
+        public static void Sync(string key, bool have)
         {
-            if (Contains(playerType, buildType, idxCell)) _buildsInGame[playerType][buildType].Remove(idxCell);
-            else throw new Exception();
-        }
-        public static byte AmountBuilds(PlayerTypes playerType, BuildTypes buildType) => (byte)_buildsInGame[playerType][buildType].Count;
-        public static List<byte> IdxBuilds(PlayerTypes playerType, BuildTypes buildType) => _buildsInGame[playerType][buildType].Copy();
-
-        public static bool IsSettedCity(PlayerTypes playerType) => _buildsInGame[playerType][BuildTypes.City].Count >= 1;
-        public static byte IdxCity(PlayerTypes playerType) => _buildsInGame[playerType][BuildTypes.City][0];
-
-        public static bool IsSettedCamp(PlayerTypes player) => _buildsInGame[player][BuildTypes.Camp].Count >= 1;
-        public static byte IdxCamp(PlayerTypes player) => _buildsInGame[player][BuildTypes.Camp][0];
-
-        public static void Clear(PlayerTypes playerType, BuildTypes buildType)
-        {
-            _buildsInGame[playerType][buildType].Clear();
+            if (!ContainsKey(key)) throw new Exception();
+            _cells[key] = have;
         }
     }
 }

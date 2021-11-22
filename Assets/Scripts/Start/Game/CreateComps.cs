@@ -17,15 +17,15 @@ namespace Game.Game
             new WaterAvailPickUpgC(new Dictionary<PlayerTypes, bool>());
 
 
-            new CellsForSetUnitC(true);
-            new CellsShiftC(true);
-            new CellsArsonArcherC(true);
+            new SetUnitCellsC(true);
+            new ShiftCellsC(true);
+            new ArsonCellsC(true);
             new AttackCellsC(true);
             new CellsGiveTWC(true);
 
             new WhereEnvC(true);
             new WhereUnitsC(true);
-            WhereBuildsC.StartGame();
+            new WhereBuildsC(true);
 
             new InvUnitsC(true);
             new InvResC(true);
@@ -38,7 +38,6 @@ namespace Game.Game
             new ScoutHeroCooldownC(true);
             new CellClickC(default);
             new SelIdx(0);
-            //new SelUniqAbilC(default);
 
 
             new PlyerWinnerC(default);
@@ -56,7 +55,7 @@ namespace Game.Game
 
             if (GameModesCom.IsGameMode(GameModes.TrainingOff))
             {
-                InvResC.Set(PlayerTypes.Second, ResTypes.Food, 999999);
+                InvResC.Set(ResTypes.Food, PlayerTypes.Second, 999999);
             }
         }
     }

@@ -8,7 +8,7 @@ namespace Game.Game
         {
             if (!KingZoneUIC.IsActiveZone && !PickUpgUIC.IsActiveZone && !WhereUnitsC.HaveMyHeroInGame)
             {
-                HeroesViewUIC.SetActiveZone(!InvUnitsC.Have(WhoseMoveC.CurPlayerI, UnitTypes.Elfemale, LevelTypes.First));
+                HeroesViewUIC.SetActiveZone(!InvUnitsC.Have(UnitTypes.Elfemale, LevelTypes.First, WhoseMoveC.CurPlayerI));
             }
             else
             {
